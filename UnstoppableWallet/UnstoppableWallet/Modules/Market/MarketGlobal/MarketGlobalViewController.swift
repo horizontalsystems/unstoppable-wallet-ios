@@ -7,12 +7,12 @@ import SnapKit
 import HUD
 import Chart
 
-class MarketGlobalViewController: ThemeViewController {
-    private let chartViewModel: MarketGlobalChartViewModel
-    private let listViewModel: MarketListViewModel
+class MarketGlobalViewController: ThemeActionSheetController {
+    private let viewModel: MarketGlobalChartViewModel
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let titleView = BottomSheetTitleView()
+    private let tableView = SelfSizedSectionsTableView(style: .grouped)
 
     /* Chart section */
     private let currentRateCell: MarketGlobalCurrentInfoCell
@@ -23,16 +23,10 @@ class MarketGlobalViewController: ThemeViewController {
     private let chartViewCell: ChartViewCell
     private let chartRow: StaticRow
 
-    /* List Section */
-    private let headerView = MarketListHeaderView()
+    init(viewModel: MarketGlobalChartViewModel, configuration: ChartConfiguration) {
+        self.viewModel = viewModel
 
-    private var state: MarketListViewModel.State = .loading
-
-    init(chartViewModel: MarketGlobalChartViewModel, listViewModel: MarketListViewModel, configuration: ChartConfiguration) {
-        self.chartViewModel = chartViewModel
-        self.listViewModel = listViewModel
-
-        currentRateCell = MarketGlobalCurrentInfoCell(viewModel: chartViewModel)
+        currentRateCell = MarketGlobalCurrentInfoCell(viewModel: viewModel)
 
         intervalRow = StaticRow(
                 cell: chartIntervalAndSelectedRateCell,
@@ -40,7 +34,7 @@ class MarketGlobalViewController: ThemeViewController {
                 height: .heightSingleLineCell
         )
 
-        chartViewCell = ChartViewCell(configuration: configuration)
+        chartViewCell = ChartViewCell(configuration: configuration, isLast: false)
         chartRow = StaticRow(
                 cell: chartViewCell,
                 id: "chartView",
@@ -49,9 +43,7 @@ class MarketGlobalViewController: ThemeViewController {
 
         super.init()
 
-        chartViewCell.delegate = chartViewModel
-
-        hidesBottomBarWhenPushed = true
+        chartViewCell.delegate = viewModel
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,14 +53,29 @@ class MarketGlobalViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        titleView.bind(
+                title: viewModel.title,
+                subtitle: "market.global.subtitle".localized,
+                image: UIImage(named: "chart_2_24"),
+                tintColor: .themeJacob
+        )
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin4)
         }
 
-        title = chartViewModel.title
+        title = viewModel.title
 
         tableView.sectionDataSource = self
 
@@ -79,45 +86,36 @@ class MarketGlobalViewController: ThemeViewController {
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
+        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
 
-        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
+        chartIntervalAndSelectedRateCell.bind(filters: viewModel.chartTypes.map {
             .item(title: $0)
         })
         chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
-            self?.chartViewModel.onSelectType(at: index)
+            self?.viewModel.onSelectType(at: index)
         }
+
+        chartIntervalAndSelectedRateCell.set(backgroundColor: .clear)
 
         tableView.buildSections()
         subscribeViewModels()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
-    }
-
     private func subscribeViewModels() {
-        // chart section
         intervalRow.onReady = { [weak self] in self?.subscribeToInterval() }
         chartRow.onReady = { [weak self] in self?.subscribeToChart() }
-
-        // page section
-        subscribe(disposeBag, listViewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
     }
 
     private func subscribeToInterval() {
-        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
-        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
+        subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
+        subscribe(disposeBag, viewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
     }
 
     private func subscribeToChart() {
-        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
-        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
-        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
-    }
-
-    @objc private func onTapInfo() {
-        // todo: tap info!
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
+        subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
     }
 
     private func reloadTable() {
@@ -130,15 +128,6 @@ class MarketGlobalViewController: ThemeViewController {
 }
 
 extension MarketGlobalViewController {
-
-    // Page section
-
-    private func sync(state: MarketListViewModel.State) {
-        self.state = state
-        tableView.reload()
-    }
-
-    // Chart section
 
     private func syncChart(viewItem: MarketGlobalChartViewModel.ViewItem?) {
         guard let viewItem = viewItem else {
@@ -184,8 +173,16 @@ extension MarketGlobalViewController {
 extension MarketGlobalViewController {
 
     private var chartSection: SectionProtocol {
-        Section(
+        let description = viewModel.description
+        let footerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
+            view.bind(text: description)
+        }, dynamicHeight: { [unowned self] _ in
+            TopDescriptionHeaderFooterView.height(containerWidth: tableView.bounds.width, text: description)
+        })
+
+        return Section(
                 id: "chart",
+                footerState: footerState,
                 rows: [
                     StaticRow(
                             cell: currentRateCell,
@@ -197,101 +194,12 @@ extension MarketGlobalViewController {
                 ])
     }
 
-    private func headerRow(title: String) -> RowProtocol {
-        Row<B4Cell>(
-                id: "header_cell_\(title)",
-                hash: title,
-                height: .heightSingleLineCell,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.title = title
-                    cell.selectionStyle = .none
-                }
-        )
-    }
-
-    private var spinnerSection: SectionProtocol {
-        Section(
-                id: "spinner",
-                rows: [
-                    Row<SpinnerCell>(
-                            id: "spinner",
-                            height: 100
-                    )
-                ]
-        )
-    }
-
-    private func errorSection(text: String) -> SectionProtocol {
-        Section(
-                id: "error",
-                rows: [
-                    Row<ErrorCell>(
-                            id: "error",
-                            dynamicHeight: { [weak self] _ in
-                                100 // todo: calculate height in ErrorCell
-                            },
-                            bind: { cell, _ in
-                                cell.errorText = text
-                            }
-                    )
-                ]
-        )
-    }
-
-    private func row(viewItem: MarketModule.ViewItem, isLast: Bool) -> RowProtocol {
-        Row<G14Cell>(
-                id: viewItem.coinType.id,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    MarketModule.bind(cell: cell, viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                })
-    }
-
-    private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
 }
 
 extension MarketGlobalViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        sections.append(chartSection)
-
-        var rows = [RowProtocol]()
-
-        switch state {
-        case .loading:
-            sections.append(spinnerSection)
-
-        case .loaded(let viewItems):
-            if viewItems.isEmpty {
-                rows = []
-            } else {
-                rows = viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
-            }
-        case .error(description: let error):
-            sections.append(errorSection(text: error))
-        }
-
-        let headerState: ViewState<MarketListHeaderView> = .static(view: headerView, height: MarketListHeaderView.height)
-
-        return sections + [
-            Section(
-                    id: "tokens",
-                    headerState: headerState,
-                    rows: rows
-            )
-        ]
+        [chartSection]
     }
 
 }

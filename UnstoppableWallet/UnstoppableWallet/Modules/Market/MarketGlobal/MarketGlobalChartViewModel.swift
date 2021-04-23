@@ -21,6 +21,7 @@ class MarketGlobalChartViewModel {
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     var title: String { service.metricsType.title }
+    var description: String { service.metricsType.description }
 
     init(service: MarketGlobalChartService, factory: MarketGlobalChartFactory) {
         self.service = service

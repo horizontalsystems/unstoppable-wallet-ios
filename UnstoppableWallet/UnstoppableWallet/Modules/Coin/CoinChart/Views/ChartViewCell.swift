@@ -1,12 +1,14 @@
 import UIKit
 import Chart
 import HUD
+import ThemeKit
 
 class ChartViewCell: UITableViewCell {
     public static let cellHeight: CGFloat = 182
 
     private let chartView: RateChartView
     private let loadingView = HUDActivityView.create(with: .medium24)
+    private let bottomSeparator = UIView()
 
     var delegate: IChartViewTouchDelegate? {
         get {
@@ -17,7 +19,7 @@ class ChartViewCell: UITableViewCell {
         }
     }
 
-    init(delegate: IChartViewTouchDelegate? = nil, configuration: ChartConfiguration) {
+    init(delegate: IChartViewTouchDelegate? = nil, configuration: ChartConfiguration, isLast: Bool = true) {
         chartView = RateChartView(configuration: configuration)
         chartView.delegate = delegate
 
@@ -38,6 +40,16 @@ class ChartViewCell: UITableViewCell {
             maker.center.equalTo(chartView)
         }
         loadingView.set(hidden: true)
+
+        contentView.addSubview(bottomSeparator)
+        bottomSeparator.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        bottomSeparator.backgroundColor = .themeSteel10
+        bottomSeparator.isHidden = isLast
     }
 
     required init?(coder aDecoder: NSCoder) {

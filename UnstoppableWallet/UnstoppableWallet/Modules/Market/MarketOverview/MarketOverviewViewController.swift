@@ -126,8 +126,7 @@ class MarketOverviewViewController: ThemeViewController {
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
         let viewController = MarketGlobalModule.viewController(type: metricType)
-        parentNavigationController?.pushViewController(viewController, animated: true)
-
+        present(viewController, animated: true)
     }
 
     private func didTapSeeAll(listType: MarketModule.ListType) {
