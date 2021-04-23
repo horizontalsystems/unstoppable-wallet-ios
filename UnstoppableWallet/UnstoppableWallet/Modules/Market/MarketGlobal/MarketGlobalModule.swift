@@ -11,14 +11,9 @@ class MarketGlobalModule {
         let factory = MarketGlobalChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MarketGlobalChartViewModel(service: chartService, factory: factory)
 
-        let fetcher = MarketDiscoveryService(rateManager: App.shared.rateManager)
-        let listService = MarketListService(currencyKit: App.shared.currencyKit, fetcher: fetcher)
-        let listViewModel = MarketListViewModel(service: listService)
-        
         return MarketGlobalViewController(
-                chartViewModel: chartViewModel,
-                listViewModel: listViewModel,
-                configuration: ChartConfiguration.chartWithoutIndicators)
+                viewModel: chartViewModel,
+                configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
     }
 
 }
@@ -34,6 +29,15 @@ extension MarketGlobalModule {
             case .volume24h: return "market.global.volume_24h.title".localized
             case .defiCap: return "market.global.defi_cap.title".localized
             case .tvlInDefi: return "market.global.tvl_in_defi.title".localized
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .btcDominance: return "market.global.btc_dominance.description".localized
+            case .volume24h: return "market.global.volume_24h.description".localized
+            case .defiCap: return "market.global.defi_cap.description".localized
+            case .tvlInDefi: return "market.global.tvl_in_defi.description".localized
             }
         }
 

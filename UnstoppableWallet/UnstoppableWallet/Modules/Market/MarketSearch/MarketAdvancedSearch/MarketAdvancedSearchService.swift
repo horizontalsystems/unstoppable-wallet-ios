@@ -208,15 +208,22 @@ class MarketAdvancedSearchService {
         cache.first(where: { $0.coinData.coinType == coinType })
     }
 
-    private func outperformed(value: Decimal, coinType: CoinType) -> Bool {
-        guard let coinMarket = coinMarket(coinType: coinType) else {
+    private func outperformed(value: Decimal?, coinType: CoinType) -> Bool {
+        guard let coinMarket = coinMarket(coinType: coinType),
+              let value = value,
+              let diff = coinMarket.marketInfo.rateDiffPeriod else {
+
             return false
         }
 
-        return coinMarket.marketInfo.rateDiffPeriod < value
+        return diff < value
     }
 
-    private func inBounds(value: Decimal, lower: Decimal?, upper: Decimal?) -> Bool {
+    private func inBounds(value: Decimal?, lower: Decimal?, upper: Decimal?) -> Bool {
+        guard let value = value else {
+            return false
+        }
+
         if let lower = lower, value < lower {
             return false
         }

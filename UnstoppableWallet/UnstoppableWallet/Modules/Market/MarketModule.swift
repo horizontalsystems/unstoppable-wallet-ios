@@ -29,8 +29,12 @@ struct MarketModule {
         switch marketDataValue {
         case .diff(let diff):
             title = nil
-            value = ValueFormatter.instance.format(percentValue: diff)
-            color = diff.isSignMinus ? .themeLucian : .themeRemus
+            value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) }
+            if let diff = diff {
+                color = diff.isSignMinus ? .themeLucian : .themeRemus
+            } else {
+                color = .themeGray50
+            }
         case .volume(let volume):
             title = "market.top.volume.title".localized
             value = volume
@@ -169,7 +173,7 @@ extension MarketModule { // Service Items
         let dilutedMarketCap: Decimal?
         let liquidity: Decimal?
         let price: Decimal
-        let diff: Decimal
+        let diff: Decimal?
         let volume: Decimal
 
         init(coinMarket: CoinMarket, score: Score? = nil) {
@@ -198,8 +202,15 @@ extension Array where Element == MarketModule.Item {
             case .lowestCap: return item.marketCap < item2.marketCap
             case .highestVolume: return item.volume > item2.volume
             case .lowestVolume: return item.volume < item2.volume
-            case .topGainers: return item.diff > item2.diff
-            case .topLosers: return item.diff < item2.diff
+            case .topGainers, .topLosers:
+                guard let diff2 = item2.diff else {
+                    return false
+                }
+                guard let diff1 = item.diff else {
+                    return true
+                }
+
+                return sortingField == .topGainers ? diff1 > diff2 : diff1 < diff2
             }
         }
     }
@@ -221,10 +232,19 @@ extension MarketModule {  // ViewModel Items
     }
 
     enum MarketDataValue {
-        case diff(Decimal)
+        case diff(Decimal?)
         case volume(String)
         case marketCap(String)
         case dilutedMarketCap(String)
+
+        var description: String? {
+            switch self {
+            case let .diff(value): return value?.description
+            case let .volume(value): return value.description
+            case let .marketCap(value): return value.description
+            case let .dilutedMarketCap(value): return value.description
+            }
+        }
     }
 
     struct ViewItem {

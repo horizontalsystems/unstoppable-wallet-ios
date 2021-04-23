@@ -13,6 +13,7 @@ extension ChartConfiguration {
     static var chartWithoutIndicators: ChartConfiguration {
         let configuration = ChartConfiguration().applyColors()
         configuration.showIndicators = false
+        configuration.timelineInsets = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
 
         return configuration
     }
@@ -51,7 +52,7 @@ extension ChartConfiguration {
         limitLinesColor = .themeNina
         limitTextColor = .themeNina
         limitTextFont = .caption
-        verticalLinesColor = .themeSteel20
+        verticalLinesColor = .themeSteel10
         volumeBarsFillColor = .themeSteel20
         timelineTextColor = .themeGray
         timelineFont = .caption
