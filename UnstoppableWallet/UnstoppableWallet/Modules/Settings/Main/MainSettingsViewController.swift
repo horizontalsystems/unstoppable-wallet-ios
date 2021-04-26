@@ -174,7 +174,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "base-currency",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(App.shared.currencyKit.baseCurrencySettingsModule, animated: true)
+                        self?.navigationController?.pushViewController(BaseCurrencySettingsModule.viewController(), animated: true)
                     }
             ),
             StaticRow(

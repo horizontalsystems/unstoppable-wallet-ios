@@ -7,12 +7,12 @@ class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let localStorage: ILocalStorage
 
     private let disposeBag = DisposeBag()
 
-    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyKit: ICurrencyKit, localStorage: ILocalStorage) {
+    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage

@@ -10,7 +10,7 @@ class CoinChartService {
 
     private let rateManager: IRateManager
     private let chartTypeStorage: IChartTypeStorage
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let coinType: CoinType
 
     private let chartTypeRelay = PublishRelay<ChartType>()
@@ -44,7 +44,7 @@ class CoinChartService {
         }
     }
 
-    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currencyKit: ICurrencyKit, coinType: CoinType) {
+    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currencyKit: CurrencyKit.Kit, coinType: CoinType) {
         self.rateManager = rateManager
         self.chartTypeStorage = chartTypeStorage
         self.currencyKit = currencyKit

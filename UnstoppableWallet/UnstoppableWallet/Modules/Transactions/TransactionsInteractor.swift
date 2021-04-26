@@ -16,13 +16,13 @@ class TransactionsInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit

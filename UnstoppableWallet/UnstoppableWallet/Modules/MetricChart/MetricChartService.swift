@@ -9,7 +9,7 @@ class MetricChartService {
     private var disposeBag = DisposeBag()
 
     private let chartFetcher: IMetricChartFetcher
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
     private let chartTypeRelay = PublishRelay<ChartType>()
     var chartType: ChartType = .day {
@@ -29,7 +29,7 @@ class MetricChartService {
         }
     }
 
-    init(currencyKit: ICurrencyKit, chartFetcher: IMetricChartFetcher) {
+    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher) {
         self.currencyKit = currencyKit
         self.chartFetcher = chartFetcher
 

@@ -9,7 +9,7 @@ class MarketAdvancedSearchService {
     private let allTimeDeltaPercent: Decimal = 10
 
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
     private var stateUpdatedRelay = PublishRelay<DataStatus<Int>>()
     private(set) var state: DataStatus<Int> = .loading {
@@ -154,7 +154,7 @@ class MarketAdvancedSearchService {
         }
     }
 
-    init(rateManager: IRateManager, currencyKit: ICurrencyKit) {
+    init(rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
 

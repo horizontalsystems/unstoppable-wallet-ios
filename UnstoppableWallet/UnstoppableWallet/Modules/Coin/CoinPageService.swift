@@ -12,7 +12,7 @@ class CoinPageService {
 
     private let coinKit: CoinKit.Kit
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: IAppConfigProvider
 
     let coinType: CoinType
@@ -26,7 +26,7 @@ class CoinPageService {
         }
     }
 
-    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider, coinType: CoinType, coinTitle: String, coinCode: String) {
+    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider, coinType: CoinType, coinTitle: String, coinCode: String) {
         self.coinKit = coinKit
         self.rateManager = rateManager
         self.currencyKit = currencyKit

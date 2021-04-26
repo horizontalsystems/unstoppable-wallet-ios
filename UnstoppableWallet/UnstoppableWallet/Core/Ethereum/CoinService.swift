@@ -4,10 +4,10 @@ import CoinKit
 
 class CoinService {
     let coin: Coin
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
 
-    init(coin: Coin, currencyKit: ICurrencyKit, rateManager: IRateManager) {
+    init(coin: Coin, currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.coin = coin
         self.currencyKit = currencyKit
         self.rateManager = rateManager

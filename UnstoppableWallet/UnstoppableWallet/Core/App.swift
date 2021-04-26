@@ -35,7 +35,7 @@ class App {
 
     let walletManager: IWalletManager
 
-    let currencyKit: ICurrencyKit
+    let currencyKit: CurrencyKit.Kit
 
     let rateManager: IRateManager & IPostsManager
     let favoritesManager: IFavoritesManager
@@ -125,7 +125,7 @@ class App {
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage, kitCleaner: kitCleaner)
 
-        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default, currencyCodes: appConfigProvider.currencyCodes)
+        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
         feeCoinProvider = FeeCoinProvider(coinKit: coinKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)

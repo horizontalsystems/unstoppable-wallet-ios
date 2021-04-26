@@ -10,9 +10,9 @@ class MarketTickerService {
     private let marketTickerRelay = BehaviorRelay<DataStatus<[Item]>>(value: .loading)
     private var marketTicker: DataStatus<[Item]> = .loading
 
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
-    init(currencyKit: ICurrencyKit) {
+    init(currencyKit: CurrencyKit.Kit) {
         self.currencyKit = currencyKit
 
         fetchTickerData()

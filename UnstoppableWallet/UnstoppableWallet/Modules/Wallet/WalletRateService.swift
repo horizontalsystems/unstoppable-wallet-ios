@@ -12,7 +12,7 @@ protocol IWalletRateServiceDelegate: AnyObject {
 class WalletRateService {
     weak var delegate: IWalletRateServiceDelegate?
 
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
     private let scheduler: ImmediateSchedulerType
     private let disposeBag = DisposeBag()
@@ -20,7 +20,7 @@ class WalletRateService {
 
     private var coinTypes = [CoinType]()
 
-    init(currencyKit: ICurrencyKit, rateManager: IRateManager, scheduler: ImmediateSchedulerType) {
+    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager, scheduler: ImmediateSchedulerType) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
         self.scheduler = scheduler
