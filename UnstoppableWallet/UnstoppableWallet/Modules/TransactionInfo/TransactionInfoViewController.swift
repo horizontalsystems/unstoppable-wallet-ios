@@ -3,6 +3,7 @@ import ActionSheet
 import ThemeKit
 import SectionsTableView
 import CurrencyKit
+import ComponentKit
 
 class TransactionInfoViewController: ThemeActionSheetController {
     private let delegate: ITransactionInfoViewDelegate

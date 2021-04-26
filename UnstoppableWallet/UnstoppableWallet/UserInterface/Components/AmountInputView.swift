@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class AmountInputView: UIView {
     let viewHeight: CGFloat = 85

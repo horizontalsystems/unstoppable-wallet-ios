@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 import CoinKit
+import ComponentKit
 
 class LeftCoinCellView: UIView {
     private let coinImageView = UIImageView()

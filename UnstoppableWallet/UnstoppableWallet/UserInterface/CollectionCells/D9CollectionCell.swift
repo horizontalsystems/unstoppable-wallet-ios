@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class D9CollectionCell: BaseThemeCollectionCell {
     private let leftView = LeftDView()

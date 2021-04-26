@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class SwapConfirmationAmountCell: BaseThemeCell {
     static let height: CGFloat = 72

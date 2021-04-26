@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import RxSwift
 import CoinKit
+import ComponentKit
 
 class SwapCoinCardCell: UITableViewCell {
     let cellHeight: CGFloat = 170 + 2 * .margin12

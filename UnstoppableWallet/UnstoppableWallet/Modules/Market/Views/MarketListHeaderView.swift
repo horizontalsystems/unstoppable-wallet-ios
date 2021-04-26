@@ -2,6 +2,7 @@ import UIKit
 import UIExtensions
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class MarketListHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell

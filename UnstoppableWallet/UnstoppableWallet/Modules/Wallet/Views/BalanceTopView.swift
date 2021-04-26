@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class BalanceTopView: UIView {
     static let height: CGFloat = 50

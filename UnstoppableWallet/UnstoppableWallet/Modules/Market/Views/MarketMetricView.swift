@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import Chart
 import ThemeKit
+import ComponentKit
 
 class MarketMetricView: UIView {
     static let height: CGFloat = 84

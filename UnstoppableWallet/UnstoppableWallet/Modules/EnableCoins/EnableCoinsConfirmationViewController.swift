@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class EnableCoinsConfirmationViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()

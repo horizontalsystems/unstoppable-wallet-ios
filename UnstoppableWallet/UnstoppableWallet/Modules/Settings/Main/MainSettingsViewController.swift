@@ -7,6 +7,7 @@ import ModuleKit
 import RxSwift
 import RxCocoa
 import SafariServices
+import ComponentKit
 
 class MainSettingsViewController: ThemeViewController {
     private let viewModel: MainSettingsViewModel

@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class PrivacyViewController: ThemeViewController {
     let delegate: IPrivacyViewDelegate

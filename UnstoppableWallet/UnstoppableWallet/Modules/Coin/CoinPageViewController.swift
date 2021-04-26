@@ -6,6 +6,7 @@ import SectionsTableView
 import SnapKit
 import HUD
 import Chart
+import ComponentKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel

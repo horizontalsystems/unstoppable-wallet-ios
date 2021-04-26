@@ -3,6 +3,7 @@ import RxSwift
 import SnapKit
 import ThemeKit
 import CoinKit
+import ComponentKit
 
 class SendViewController: ThemeViewController {
     private let disposeBag = DisposeBag()

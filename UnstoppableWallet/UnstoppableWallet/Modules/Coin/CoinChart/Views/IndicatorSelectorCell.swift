@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class IndicatorSelectorCell: UITableViewCell {
     private let topSeparatorView = UIView()

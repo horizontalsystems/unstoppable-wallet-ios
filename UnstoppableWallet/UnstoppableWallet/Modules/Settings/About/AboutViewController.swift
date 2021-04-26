@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import MessageUI
 import SafariServices
+import ComponentKit
 
 class AboutViewController: ThemeViewController {
     private let viewModel: AboutViewModel

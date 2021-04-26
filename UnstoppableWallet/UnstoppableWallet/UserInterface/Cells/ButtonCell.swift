@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class ButtonCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin4x

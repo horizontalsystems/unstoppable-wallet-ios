@@ -5,6 +5,7 @@ import HUD
 import RxSwift
 import RxCocoa
 import SectionsTableView
+import ComponentKit
 
 class SwapViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2

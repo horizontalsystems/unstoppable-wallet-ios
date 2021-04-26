@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 import RxSwift
 
 class BaseCurrencySettingsViewController: ThemeViewController {

@@ -2,6 +2,7 @@ import UIKit
 import SectionsTableView
 import ThemeKit
 import RxSwift
+import ComponentKit
 
 class ThemeSettingsViewController: ThemeViewController {
     private let viewModel: ThemeSettingsViewModel

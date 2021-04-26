@@ -1,6 +1,7 @@
 import UIKit
 import ActionSheet
 import ThemeKit
+import ComponentKit
 
 class AddTokenSelectorViewController: ThemeActionSheetController {
     private let delegate: IAddTokenSelectorViewDelegate

@@ -69,6 +69,15 @@ PODS:
     - ObjectMapper (~> 4.0)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
+  - ComponentKit.swift (1.0):
+    - AlamofireImage (~> 4.1)
+    - HUD.swift (~> 1.2)
+    - LanguageKit.swift (~> 1.0)
+    - RxCocoa (~> 5.0)
+    - SkeletonView (~> 1.11)
+    - SnapKit (~> 5.0)
+    - ThemeKit.swift (~> 1.0)
+    - UIExtensions.swift (~> 1.1)
   - CryptoSwift (1.3.8)
   - Cuckoo (1.4.2):
     - Cuckoo/Swift (= 1.4.2)
@@ -143,6 +152,7 @@ PODS:
     - SwiftNIOWebSocket
   - HUD.swift (1.2):
     - SnapKit (~> 5.0)
+    - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1.1)
   - KeychainAccess (4.2.2)
   - LanguageKit.swift (1.0):
@@ -158,14 +168,15 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - Logging (1.4.0)
   - ModuleKit.swift (1.0):
+    - ComponentKit.swift (~> 1.0)
     - LanguageKit.swift (~> 1.0)
     - SectionsTableView.swift (~> 1.1)
-    - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
   - Nimble (9.0.0)
   - ObjectMapper (4.2.0)
   - OpenSslKit.swift (1.2.2)
   - PinKit.swift (1.0):
+    - ComponentKit.swift (~> 1.0)
     - LanguageKit.swift (~> 1.0)
     - RxSwift
     - StorageKit.swift (~> 1.0)
@@ -202,6 +213,7 @@ PODS:
     - RxCocoa (~> 5.0)
     - RxSwiftExt/Core
   - ScanQrKit.swift (1.0):
+    - ComponentKit.swift (~> 1.0)
     - LanguageKit.swift (~> 1.0)
     - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
@@ -217,6 +229,7 @@ PODS:
   - StorageKit.swift (1.0):
     - KeychainAccess (~> 4.1)
     - LanguageKit.swift (~> 1.0)
+    - SnapKit (~> 5.0)
     - ThemeKit.swift (~> 1.0)
   - SwiftNIO (2.27.0):
     - CNIODarwin (= 2.27.0)
@@ -261,12 +274,7 @@ PODS:
   - SwiftProtobuf (1.16.0)
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
-    - AlamofireImage (~> 4.1)
-    - HUD.swift (~> 1.2)
-    - LanguageKit.swift (~> 1.0)
     - RxCocoa (~> 5.0)
-    - SkeletonView (~> 1.11)
-    - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1.1)
   - UniswapKit.swift (0.9.3):
@@ -307,6 +315,7 @@ DEPENDENCIES:
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - CoinKit.swift (from `https://github.com/horizontalsystems/coin-kit-ios`)
+  - ComponentKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -415,6 +424,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/gui-kit/
   CoinKit.swift:
     :git: https://github.com/horizontalsystems/coin-kit-ios
+  ComponentKit.swift:
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
@@ -483,8 +494,11 @@ CHECKOUT OPTIONS:
   CoinKit.swift:
     :commit: 4f62bb32580eca30bb29f249ce7a8c536e2a2bbf
     :git: https://github.com/horizontalsystems/coin-kit-ios
+  ComponentKit.swift:
+    :commit: 6414e4819318101c4819919f3d006f3277685983
+    :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
-    :commit: b5d01dabeaac1f2dc608da851e603df823687c8f
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
@@ -508,10 +522,10 @@ CHECKOUT OPTIONS:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: e77aa1414ea715dad182bfb55a08a9517a6af4be
+    :commit: 46bf41874988e0b637b306f1ddbfec4933f8cecd
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
+    :commit: b2bf8108f9ea114b99ff8d5769070476254d712e
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
@@ -520,22 +534,22 @@ CHECKOUT OPTIONS:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   PinKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: b5d01dabeaac1f2dc608da851e603df823687c8f
+    :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
@@ -573,6 +587,7 @@ SPEC CHECKSUMS:
   CNIOSHA1: f9ce281bdb9a1ed0792da24358ed8004761258d0
   CNIOWindows: f2baa102255e986467578337ffa2f777cb6bdf7f
   CoinKit.swift: 5fe0db6364858c95be2e328eb53c15ab8b1af0fd
+  ComponentKit.swift: 190a7c49a0747c020f5316f6b7f35358cfe159e8
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   Cuckoo: 4a54e93502b9ad06addcbd868ed203d96a64a299
   CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
@@ -589,16 +604,16 @@ SPEC CHECKSUMS:
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: b51336461b7e179e236a07ad0039dcaa7e55d551
   HsToolKit.swift: a72793d6b052cfbe36198353d57f99dac2bba948
-  HUD.swift: 0260e8e89a290380fd23d95002b0ddbea890b6c9
+  HUD.swift: 28fe655f5946e0f12fe3d24be54a57716d983c69
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 410f5c39b7a094100f089629dc5bd961b6c3b6f4
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
-  ModuleKit.swift: be0a865fab11a0f11be3fce84da887ca537bdf13
+  ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
-  PinKit.swift: 510fb2fac8664946dc17ce60cdbac5948c31700a
+  PinKit.swift: a2e489a5391f8e1be11b328ec9e488cdd6888a86
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
@@ -606,13 +621,13 @@ SPEC CHECKSUMS:
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   RxSwiftExt: 4ca80336f43c28f11a2825cdd2fc61dd6c044697
-  ScanQrKit.swift: 5cafc1b60c4a7f30daba6479a41d71261c0ae04f
+  ScanQrKit.swift: c6f0c2c8593fe6e9d85e8b094ea33ab07fe6b68c
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
   SkeletonView: cac18a3ac4f893b09d99e65072d806ef08377aae
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  StorageKit.swift: b971dfbd82d7672a6878634e1cad3dbf77ecb3f2
+  StorageKit.swift: 57d9ac343c15902ced373bbb2febb748f613ebb4
   SwiftNIO: 81d33ce8c500b7e41b6cdde5f2f12330b9750219
   SwiftNIOConcurrencyHelpers: 23fc68bac541a465162d7225d2c743edd2f1012c
   SwiftNIOFoundationCompat: 0e52ac0e2c9b7b60ff9141eebb64f5a82d974118
@@ -625,7 +640,7 @@ SPEC CHECKSUMS:
   SwiftNIOWebSocket: 375808226f357aaaac832ee02132ce29ec2ff5b4
   SwiftProtobuf: 4e16842b83c6fda06b10fac50d73b3f1fce8ab7b
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: 3d811f6b57daecbf87b5735b35c586bcaa1bff14
+  ThemeKit.swift: 2a118eb5bdd9c49bdd41daa3f7ca2033628f98be
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: a0037722fad19c4fbfe905025468d828ebd26470
   UnstoppableDomainsResolution: 63abb84858d3e91eb838a5bfa6f7e3c0e0593f24
@@ -634,6 +649,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
-PODFILE CHECKSUM: 1854171b578ac6a6320b875d26c7a56e4f49ff8a
+PODFILE CHECKSUM: 483c15e1015d1c4879bdb6f071dae51583889845
 
 COCOAPODS: 1.10.1

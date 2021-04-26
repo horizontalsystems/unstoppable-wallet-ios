@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import AlamofireImage
+import ComponentKit
 
 class GuideCell: UITableViewCell {
     private static let cardTopMargin: CGFloat = 0

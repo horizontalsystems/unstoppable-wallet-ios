@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class FaqCell: BaseSelectableThemeCell {
     private static let padding: CGFloat = .margin16

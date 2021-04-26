@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TitledHighlightedDescriptionCell: BaseThemeCell {
     private static let horizontalMargin: CGFloat = .margin16

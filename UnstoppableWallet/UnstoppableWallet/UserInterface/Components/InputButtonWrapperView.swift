@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class InputButtonWrapperView: UIView, ISizeAwareView {
     private let style: ThemeButtonStyle

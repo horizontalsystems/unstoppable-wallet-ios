@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TransactionInfoPendingStatusCell: BaseThemeCell {
     private let leftView = LeftCView()

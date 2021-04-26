@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class ChartMarketPerformanceCell: BaseThemeCell {
     private let weekPerformanceView = MultiTextMetricsView()

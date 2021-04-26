@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class AlertItemCell: BaseThemeCell {
     private let button = UIButton()

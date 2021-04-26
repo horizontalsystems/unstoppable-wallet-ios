@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class MarketInfoCell: BaseThemeCell {
     public static let cellHeight: CGFloat = 152

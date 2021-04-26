@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import HUD
 import Chart
+import ComponentKit
 
 class MarketMetricsCellNew: UITableViewCell {
     static let cellHeight: CGFloat = 268

@@ -2,6 +2,7 @@ import UIKit
 import UIExtensions
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class SingleSelectorView: UIView {
     private let stackView = UIStackView()

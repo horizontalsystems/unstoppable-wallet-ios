@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class OnboardingBalanceViewController: ThemeViewController {
 

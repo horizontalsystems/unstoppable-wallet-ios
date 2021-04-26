@@ -5104,7 +5104,6 @@
 			children = (
 				58AAAA3930D3CB65CC545658 /* GradientPercentCircle.swift */,
 				58AAA00AD494F535EB833531 /* SingleSelectorView.swift */,
-				58AAA4BC2A3A101A2276F906,
 				58AAA8895A76AF3EA5361D6B /* MarketMetricLargeView.swift */,
 				58AAA50A504CFA74CA19A415 /* MarketMetricView.swift */,
 				3AB682C825BADDE0002197A5 /* MarketSectionHeaderView.swift */,
@@ -7508,7 +7507,6 @@
 				11B35124A95011BC659DCD5A /* TextFieldCell.swift in Sources */,
 				11B35B1E24DBF5608EC29AFC /* IndexedTextFieldCell.swift in Sources */,
 				58AAA7D0F48E04323E18732A /* MarketListHeaderView.swift in Sources */,
-				58AAA0256C1A533FF2519E76,
 				58AAAE6CFB04C47AC24A69D7 /* MarketGlobalFetcher.swift in Sources */,
 				58AAA4AEC3E593C4732D85FF /* MetricChartViewModel.swift in Sources */,
 				58AAA900E2644527A2C78863 /* MetricChartService.swift in Sources */,

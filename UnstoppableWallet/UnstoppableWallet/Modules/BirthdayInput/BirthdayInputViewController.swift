@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import CoinKit
+import ComponentKit
 
 protocol IBirthdayInputDelegate: AnyObject {
     func didEnter(birthdayHeight: Int)

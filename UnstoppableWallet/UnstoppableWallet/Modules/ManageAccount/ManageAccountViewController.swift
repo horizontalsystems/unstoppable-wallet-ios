@@ -4,6 +4,7 @@ import SectionsTableView
 import SnapKit
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class ManageAccountViewController: ThemeViewController {
     private let viewModel: ManageAccountViewModel

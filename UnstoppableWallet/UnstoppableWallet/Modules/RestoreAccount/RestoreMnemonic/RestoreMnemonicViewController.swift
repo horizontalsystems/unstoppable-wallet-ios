@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import SectionsTableView
 import SnapKit
+import ComponentKit
 
 class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let viewModel: RestoreMnemonicViewModel
