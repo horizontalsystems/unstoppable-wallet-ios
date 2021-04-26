@@ -127,7 +127,7 @@ class AccountStorage {
 
 }
 
-extension AccountStorage: IAccountStorage {
+extension AccountStorage {
 
     var allAccounts: [Account] {
         storage.allAccountRecords.compactMap { createAccount(record: $0) }
@@ -139,7 +139,7 @@ extension AccountStorage: IAccountStorage {
         }
     }
 
-    func lostAccountIds() -> [String] {
+    var lostAccountIds: [String] {
         storage.allAccountRecords.compactMap { accountRecord in
             if createAccount(record: accountRecord) == nil {
                 return accountRecord.id

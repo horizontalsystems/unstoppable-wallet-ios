@@ -38,7 +38,8 @@ class ManageAccountService {
 
         newName = account.name
 
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.handleUpdated(accounts: $0) }
+        subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
 
         syncState()
     }
@@ -51,13 +52,16 @@ class ManageAccountService {
         }
     }
 
-    private func handleUpdated(accounts: [Account]) {
-        guard let account = accounts.first(where: { $0 == account }) else {
-            accountDeletedRelay.accept(())
-            return
+    private func handleUpdated(account: Account) {
+        if account.id == self.account.id {
+            self.account = account
         }
+    }
 
-        self.account = account
+    private func handleDeleted(account: Account) {
+        if account.id == self.account.id {
+            accountDeletedRelay.accept(())
+        }
     }
 
 }

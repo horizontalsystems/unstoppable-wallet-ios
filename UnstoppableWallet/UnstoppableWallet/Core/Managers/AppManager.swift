@@ -50,7 +50,6 @@ extension AppManager {
 
         keychainKit.handleLaunch()
         accountManager.handleLaunch()
-        accountManager.preloadAccounts()
         walletManager.preloadWallets()
         pinKit.didFinishLaunching()
         notificationManager.removeNotifications()

@@ -50,10 +50,10 @@ class WalletService {
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
             self?.activeAccountRelay.accept($0)
         }
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in
-            self?.handleUpdate(accounts: $0)
+        subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
+            self?.handleUpdated(account: $0)
         }
-        subscribe(disposeBag, accountManager.lostAccountsObservable) { [weak self] isAccountsLost in
+        subscribe(disposeBag, accountManager.accountsLostObservable) { [weak self] isAccountsLost in
             if isAccountsLost {
                 self?.accountsLostRelay.accept(())
             }
@@ -68,9 +68,8 @@ class WalletService {
         sync(wallets: walletManager.activeWallets)
     }
 
-    private func handleUpdate(accounts: [Account]) {
-        let activeAccount = accountManager.activeAccount
-        if let account = accounts.first(where: { $0 == activeAccount }) {
+    private func handleUpdated(account: Account) {
+        if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
     }

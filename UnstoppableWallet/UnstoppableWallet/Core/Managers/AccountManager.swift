@@ -3,18 +3,16 @@ import RxRelay
 import CoinKit
 
 class AccountManager {
-    private let storage: IAccountStorage
-    private let activeAccountStorage: IActiveAccountStorage
-    private let cache: AccountsCache = AccountsCache()
+    private let storage: AccountCachedStorage
 
     private let activeAccountRelay = PublishRelay<Account?>()
-    private let accountsSubject = PublishSubject<[Account]>()
-    private let deleteAccountSubject = PublishSubject<Account>()
-    private let lostAccountsRelay = BehaviorRelay<Bool>(value: false)
+    private let accountsRelay = PublishRelay<[Account]>()
+    private let accountUpdatedRelay = PublishRelay<Account>()
+    private let accountDeletedRelay = PublishRelay<Account>()
+    private let accountsLostRelay = BehaviorRelay<Bool>(value: false)
 
-    init(storage: IAccountStorage, activeAccountStorage: IActiveAccountStorage) {
+    init(storage: AccountCachedStorage) {
         self.storage = storage
-        self.activeAccountStorage = activeAccountStorage
     }
 
     private func clearAccounts(ids: [String]) {
@@ -22,8 +20,8 @@ class AccountManager {
             storage.delete(accountId: $0)
         }
 
-        if storage.allAccounts.isEmpty {
-            lostAccountsRelay.accept(true)
+        if storage.accounts.isEmpty {
+            accountsLostRelay.accept(true)
         }
     }
 
@@ -31,87 +29,83 @@ class AccountManager {
 
 extension AccountManager: IAccountManager {
 
-    var activeAccount: Account? {
-        cache.activeAccount
-    }
-
-    func set(activeAccountId: String?) {
-        guard cache.activeAccount?.id != activeAccountId else {
-            return
-        }
-
-        activeAccountStorage.activeAccountId = activeAccountId
-        cache.set(activeAccountId: activeAccountId)
-        activeAccountRelay.accept(activeAccount)
-    }
-
-    var accounts: [Account] {
-        cache.accounts
-    }
-
-    func account(id: String) -> Account? {
-        accounts.first { $0.id == id }
-    }
-
     var activeAccountObservable: Observable<Account?> {
         activeAccountRelay.asObservable()
     }
 
     var accountsObservable: Observable<[Account]> {
-        accountsSubject.asObservable()
+        accountsRelay.asObservable()
     }
 
-    var deleteAccountObservable: Observable<Account> {
-        deleteAccountSubject.asObservable()
+    var accountUpdatedObservable: Observable<Account> {
+        accountUpdatedRelay.asObservable()
     }
 
-    var lostAccountsObservable: Observable<Bool> {
-        lostAccountsRelay.asObservable()
+    var accountDeletedObservable: Observable<Account> {
+        accountDeletedRelay.asObservable()
     }
 
-    func preloadAccounts() {
-        cache.set(accounts: storage.allAccounts)
-        cache.set(activeAccountId: activeAccountStorage.activeAccountId)
+    var accountsLostObservable: Observable<Bool> {
+        accountsLostRelay.asObservable()
+    }
+
+    var activeAccount: Account? {
+        storage.activeAccount
+    }
+
+    func set(activeAccountId: String?) {
+        guard storage.activeAccount?.id != activeAccountId else {
+            return
+        }
+
+        storage.set(activeAccountId: activeAccountId)
+        activeAccountRelay.accept(storage.activeAccount)
+    }
+
+    var accounts: [Account] {
+        storage.accounts
+    }
+
+    func account(id: String) -> Account? {
+        storage.account(id: id)
     }
 
     func update(account: Account) {
         storage.save(account: account)
-        cache.update(account: account)
 
-        accountsSubject.onNext(accounts)
+        accountsRelay.accept(storage.accounts)
+        accountUpdatedRelay.accept(account)
     }
 
     func save(account: Account) {
         storage.save(account: account)
-        cache.insert(account: account)
 
-        accountsSubject.onNext(accounts)
+        accountsRelay.accept(storage.accounts)
 
         set(activeAccountId: account.id)
     }
 
     func delete(account: Account) {
         storage.delete(account: account)
-        cache.remove(account: account)
 
-        accountsSubject.onNext(accounts)
-        deleteAccountSubject.onNext(account)
+        accountsRelay.accept(storage.accounts)
+        accountDeletedRelay.accept(account)
 
-        if account == activeAccount {
-            set(activeAccountId: accounts.first?.id)
+        if account == storage.activeAccount {
+            set(activeAccountId: storage.accounts.first?.id)
         }
     }
 
     func clear() {
         storage.clear()
-        cache.set(accounts: [])
 
-        accountsSubject.onNext(accounts)
+        accountsRelay.accept(storage.accounts)
+
         set(activeAccountId: nil)
     }
 
     func handleLaunch() {
-        let lostAccountIds = storage.lostAccountIds()
+        let lostAccountIds = storage.lostAccountIds
         guard !lostAccountIds.isEmpty else {
             return
         }
@@ -120,58 +114,82 @@ extension AccountManager: IAccountManager {
     }
 
     func handleForeground() {
-        let lostAccountIds = storage.lostAccountIds()
+        let oldAccounts = storage.accounts
+
+        let lostAccountIds = storage.lostAccountIds
         guard !lostAccountIds.isEmpty else {
             return
         }
 
         clearAccounts(ids: lostAccountIds)
 
-        let lostAccounts = cache.accounts.filter { account in
+        let lostAccounts = oldAccounts.filter { account in
             lostAccountIds.contains(account.id)
         }
 
         lostAccounts.forEach { account in
-            cache.remove(account: account)
-            deleteAccountSubject.onNext(account)
+            accountDeletedRelay.accept(account)
         }
 
-        accountsSubject.onNext(accounts)
+        accountsRelay.accept(storage.accounts)
     }
 
 }
 
-extension AccountManager {
+class AccountCachedStorage {
+    private let accountStorage: AccountStorage
+    private let activeAccountStorage: IActiveAccountStorage
 
-    private class AccountsCache {
-        private var array = [Account]()
-        var activeAccount: Account?
+    private var _accounts: [String: Account]
+    private var _activeAccount: Account?
 
-        var accounts: [Account] {
-            array
-        }
+    init(accountStorage: AccountStorage, activeAccountStorage: IActiveAccountStorage) {
+        self.accountStorage = accountStorage
+        self.activeAccountStorage = activeAccountStorage
 
-        func set(accounts: [Account]) {
-            array = accounts
-        }
+        _accounts = accountStorage.allAccounts.reduce(into: [String: Account]()) { $0[$1.id] = $1 }
+        _activeAccount = activeAccountStorage.activeAccountId.flatMap { _accounts[$0] }
+    }
 
-        func insert(account: Account) {
-            array.append(account)
-        }
+    var accounts: [Account] {
+        Array(_accounts.values)
+    }
 
-        func update(account: Account) {
-            if let index = array.firstIndex(of: account) {
-                array[index] = account
-            }
-        }
+    var activeAccount: Account? {
+        _activeAccount
+    }
 
-        func remove(account: Account) {
-            array.removeAll { $0 == account }
-        }
+    var lostAccountIds: [String] {
+        accountStorage.lostAccountIds
+    }
 
-        func set(activeAccountId: String?) {
-            activeAccount = array.first { $0.id == activeAccountId }
-        }
+    func account(id: String) -> Account? {
+        _accounts[id]
+    }
+
+    func set(activeAccountId: String?) {
+        activeAccountStorage.activeAccountId = activeAccountId
+        _activeAccount = activeAccountId.flatMap { _accounts[$0] }
+    }
+
+    func save(account: Account) {
+        accountStorage.save(account: account)
+        _accounts[account.id] = account
+    }
+
+    func delete(account: Account) {
+        accountStorage.delete(account: account)
+        _accounts.removeValue(forKey: account.id)
+    }
+
+    func delete(accountId: String) {
+        accountStorage.delete(accountId: accountId)
+        _accounts.removeValue(forKey: accountId)
+    }
+
+    func clear() {
+        accountStorage.clear()
+        _accounts = [:]
     }
 
 }

@@ -13,7 +13,7 @@ class WalletConnectSessionManager {
         self.storage = storage
         self.accountManager = accountManager
 
-        accountManager.deleteAccountObservable
+        accountManager.accountDeletedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] account in
                     self?.handleDeleted(account: account)
