@@ -2,16 +2,21 @@ import UIKit
 import RxSwift
 import Chart
 import LanguageKit
+import XRatesKit
 
 class MarketGlobalModule {
 
     static func viewController(type: MetricsType) -> UIViewController {
-        let chartService = MarketGlobalChartService(rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, metricsType: type)
+        let chartFetcher = MarketGlobalFetcher(rateManager: App.shared.rateManager, metricsType: type)
+        let chartService = MetricChartService(
+                currencyKit: App.shared.currencyKit,
+                chartFetcher: chartFetcher
+        )
 
-        let factory = MarketGlobalChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = MarketGlobalChartViewModel(service: chartService, factory: factory)
+        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        return MarketGlobalViewController(
+        return MetricChartViewController(
                 viewModel: chartViewModel,
                 configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
     }

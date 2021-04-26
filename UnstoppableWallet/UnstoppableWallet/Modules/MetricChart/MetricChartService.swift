@@ -5,12 +5,11 @@ import XRatesKit
 import CoinKit
 import CurrencyKit
 
-class MarketGlobalChartService {
+class MetricChartService {
     private var disposeBag = DisposeBag()
 
-    private let rateManager: IRateManager
+    private let chartFetcher: IMetricChartFetcher
     private let currencyKit: ICurrencyKit
-    let metricsType: MarketGlobalModule.MetricsType
 
     private let chartTypeRelay = PublishRelay<ChartType>()
     var chartType: ChartType = .day {
@@ -23,17 +22,16 @@ class MarketGlobalChartService {
         }
     }
 
-    private let stateRelay = PublishRelay<DataStatus<[GlobalCoinMarketPoint]>>()
-    private(set) var state: DataStatus<[GlobalCoinMarketPoint]> = .loading {
+    private let stateRelay = PublishRelay<DataStatus<[MetricChartModule.Item]>>()
+    private(set) var state: DataStatus<[MetricChartModule.Item]> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(rateManager: IRateManager, currencyKit: ICurrencyKit, metricsType: MarketGlobalModule.MetricsType) {
-        self.rateManager = rateManager
+    init(currencyKit: ICurrencyKit, chartFetcher: IMetricChartFetcher) {
         self.currencyKit = currencyKit
-        self.metricsType = metricsType
+        self.chartFetcher = chartFetcher
 
         fetchChartData()
     }
@@ -42,11 +40,11 @@ class MarketGlobalChartService {
         disposeBag = DisposeBag()
         state = .loading
 
-        rateManager
-                .globalMarketInfoPointsSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
+        chartFetcher
+                .fetchSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] chartPoints in
-                    self?.state = .completed(chartPoints)
+                .subscribe(onSuccess: { [weak self] items in
+                    self?.state = .completed(items)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -55,7 +53,7 @@ class MarketGlobalChartService {
 
 }
 
-extension MarketGlobalChartService {
+extension MetricChartService {
 
     var chartTypes: [ChartType] { [.day, .week, .month] }
 
@@ -63,7 +61,7 @@ extension MarketGlobalChartService {
         chartTypeRelay.asObservable()
     }
 
-    var stateObservable: Observable<DataStatus<[GlobalCoinMarketPoint]>> {
+    var stateObservable: Observable<DataStatus<[MetricChartModule.Item]>> {
         stateRelay.asObservable()
     }
 

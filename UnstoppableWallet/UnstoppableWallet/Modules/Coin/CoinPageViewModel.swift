@@ -32,7 +32,7 @@ class CoinPageViewModel {
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
                     links: links(info: info),
-                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvl: info.defiTvl, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
@@ -68,11 +68,12 @@ class CoinPageViewModel {
         }
     }
 
-    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
         marketViewItemFactory.viewItem(
                 marketCap: marketCap,
                 dilutedMarketCap: dilutedMarketCap,
                 volume24h: volume24h,
+                tvl: tvl,
                 circulatingSupply: circulatingSupply,
                 totalSupply: totalSupply,
                 currency: service.currency,
@@ -83,6 +84,10 @@ class CoinPageViewModel {
 }
 
 extension CoinPageViewModel {
+
+    var coinType: CoinType {
+        service.coinType
+    }
 
     var title: String {
         service.coinCode
@@ -196,6 +201,7 @@ extension CoinPageViewModel {
     struct MarketInfo {
         public let marketCap: String?
         public let volume24h: String?
+        public let tvl: String?
         public let circulatingSupply: String?
         public let totalSupply: String?
         public let dilutedMarketCap: String?

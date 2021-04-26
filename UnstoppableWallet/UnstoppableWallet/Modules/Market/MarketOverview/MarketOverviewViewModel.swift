@@ -36,11 +36,10 @@ class MarketOverviewViewModel {
         [
             sectionViewItem(by: .topGainers),
             sectionViewItem(by: .topLosers),
-            sectionViewItem(by: .topVolume)
         ]
     }
 
-    private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 3) -> SectionViewItem {
+    private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 5) -> SectionViewItem {
         let viewItems: [MarketModule.ViewItem] = Array(service.items
             .sort(by: listType.sortingField)
             .map {

@@ -14,8 +14,8 @@ class CoinPageService {
     private let rateManager: IRateManager
     private let currencyKit: ICurrencyKit
     private let appConfigProvider: IAppConfigProvider
-    private let coinType: CoinType
 
+    let coinType: CoinType
     let coinTitle: String
     let coinCode: String
 

@@ -88,6 +88,7 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: B1Cell.self)
         tableView.registerCell(forClass: B4Cell.self)
+        tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
@@ -484,6 +485,31 @@ extension CoinPageViewController {
         }
     }
 
+    private func tvlSection(tvl: String?) -> SectionProtocol? {
+        guard let tvl = tvl else {
+            return nil
+        }
+
+        let tvlRow = Row<D6Cell>(
+                id: "tvl_chart",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                    cell.title = "coin_page.tvl".localized
+                    cell.value = tvl
+                    cell.valueColor = .themeOz
+                    cell.valueImage = UIImage(named: "chart_20")
+                    cell.valueImageTintColor = .themeGray
+                },
+                action: { [weak self] _ in
+                    self?.openTvl()
+                }
+        )
+
+        return Section(id: "markets", headerState: .margin(height: .margin12), rows: [tvlRow])
+    }
+
     private func openMarkets(tickers: [MarketTicker]) {
         let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, tickers: tickers)
         navigationController?.pushViewController(viewController, animated: true)
@@ -492,6 +518,11 @@ extension CoinPageViewController {
     private func openFundsInvested(fundCategories: [CoinFundCategory]) {
         let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openTvl() {
+        let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType)
+        present(viewController, animated: true)
     }
 
     private func returnOfInvestmentsSection(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> SectionProtocol {
@@ -646,6 +677,10 @@ extension CoinPageViewController: SectionsDataSource {
 
             if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
                 sections.append(marketsSection)
+            }
+
+            if let tvlSection = tvlSection(tvl: viewItem.marketInfo.tvl) {
+                sections.append(tvlSection)
             }
 
             if !viewItem.description.isEmpty {

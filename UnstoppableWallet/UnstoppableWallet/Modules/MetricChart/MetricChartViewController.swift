@@ -7,15 +7,15 @@ import SnapKit
 import HUD
 import Chart
 
-class MarketGlobalViewController: ThemeActionSheetController {
-    private let viewModel: MarketGlobalChartViewModel
+class MetricChartViewController: ThemeActionSheetController {
+    private let viewModel: MetricChartViewModel
     private let disposeBag = DisposeBag()
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
 
     /* Chart section */
-    private let currentRateCell: MarketGlobalCurrentInfoCell
+    private let currentRateCell: MetricChartCurrentInfoCell
 
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
     private let intervalRow: StaticRow
@@ -23,10 +23,10 @@ class MarketGlobalViewController: ThemeActionSheetController {
     private let chartViewCell: ChartViewCell
     private let chartRow: StaticRow
 
-    init(viewModel: MarketGlobalChartViewModel, configuration: ChartConfiguration) {
+    init(viewModel: MetricChartViewModel, configuration: ChartConfiguration) {
         self.viewModel = viewModel
 
-        currentRateCell = MarketGlobalCurrentInfoCell(viewModel: viewModel)
+        currentRateCell = MetricChartCurrentInfoCell(viewModel: viewModel)
 
         intervalRow = StaticRow(
                 cell: chartIntervalAndSelectedRateCell,
@@ -127,9 +127,9 @@ class MarketGlobalViewController: ThemeActionSheetController {
 
 }
 
-extension MarketGlobalViewController {
+extension MetricChartViewController {
 
-    private func syncChart(viewItem: MarketGlobalChartViewModel.ViewItem?) {
+    private func syncChart(viewItem: MetricChartViewModel.ViewItem?) {
         guard let viewItem = viewItem else {
             return
         }
@@ -170,14 +170,14 @@ extension MarketGlobalViewController {
 
 }
 
-extension MarketGlobalViewController {
+extension MetricChartViewController {
 
     private var chartSection: SectionProtocol {
         let description = viewModel.description
         let footerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
             view.bind(text: description)
         }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: tableView.bounds.width, text: description)
+            TopDescriptionHeaderFooterView.height(containerWidth: tableView.bounds.width, text: description ?? "")
         })
 
         return Section(
@@ -196,7 +196,7 @@ extension MarketGlobalViewController {
 
 }
 
-extension MarketGlobalViewController: SectionsDataSource {
+extension MetricChartViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         [chartSection]
