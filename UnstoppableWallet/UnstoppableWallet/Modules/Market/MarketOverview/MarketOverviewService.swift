@@ -7,7 +7,7 @@ import RxRelay
 class MarketOverviewService {
     private var disposeBag = DisposeBag()
 
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
 
     private let stateRelay = PublishRelay<State>()
@@ -19,7 +19,7 @@ class MarketOverviewService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: ICurrencyKit, rateManager: IRateManager) {
+    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
 

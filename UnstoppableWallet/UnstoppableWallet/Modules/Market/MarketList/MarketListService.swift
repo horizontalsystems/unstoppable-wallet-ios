@@ -8,7 +8,7 @@ protocol IMarketListFetcher {
 }
 
 class MarketListService {
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let fetcher: IMarketListFetcher
 
     private var disposeBag = DisposeBag()
@@ -23,7 +23,7 @@ class MarketListService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: ICurrencyKit, fetcher: IMarketListFetcher) {
+    init(currencyKit: CurrencyKit.Kit, fetcher: IMarketListFetcher) {
         self.currencyKit = currencyKit
         self.fetcher = fetcher
 

@@ -74,11 +74,8 @@ PODS:
     - Cuckoo/Swift (= 1.4.2)
   - Cuckoo/Swift (1.4.2)
   - CurrencyKit.swift (1.0):
-    - LanguageKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
-    - SectionsTableView.swift (~> 1.1)
     - StorageKit.swift (~> 1.0)
-    - ThemeKit.swift (~> 1.0)
   - DashKit.swift (0.16.1):
     - BigInt (~> 5.0)
     - BitcoinCore.swift (~> 0.16)
@@ -487,7 +484,7 @@ CHECKOUT OPTIONS:
     :commit: 4f62bb32580eca30bb29f249ce7a8c536e2a2bbf
     :git: https://github.com/horizontalsystems/coin-kit-ios
   CurrencyKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: b5d01dabeaac1f2dc608da851e603df823687c8f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
@@ -538,7 +535,7 @@ CHECKOUT OPTIONS:
     :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: d301ea5bdcec12b99b50cd1122bfef7b98909078
+    :commit: b5d01dabeaac1f2dc608da851e603df823687c8f
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
@@ -578,7 +575,7 @@ SPEC CHECKSUMS:
   CoinKit.swift: 5fe0db6364858c95be2e328eb53c15ab8b1af0fd
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   Cuckoo: 4a54e93502b9ad06addcbd868ed203d96a64a299
-  CurrencyKit.swift: 19b9e053c910003cc758689a74b312c3a809648c
+  CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
   DashKit.swift: 31914a4bf92a907f06dc3bbd7ece7d839bae5b80
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: 01f155f9d7e99673c667efd2218709c3b9a8bc13

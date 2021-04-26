@@ -9,7 +9,7 @@ class FiatService {
     private var latestRateDisposeBag = DisposeBag()
 
     private let switchService: AmountTypeSwitchService
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
 
     private var coin: Coin?
@@ -46,7 +46,7 @@ class FiatService {
 
     var coinAmountLocked = false
 
-    init(switchService: AmountTypeSwitchService, currencyKit: ICurrencyKit, rateManager: IRateManager) {
+    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.switchService = switchService
         self.currencyKit = currencyKit
         self.rateManager = rateManager

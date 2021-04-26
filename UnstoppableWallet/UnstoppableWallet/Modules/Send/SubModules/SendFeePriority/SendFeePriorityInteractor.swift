@@ -7,9 +7,9 @@ class SendFeePriorityInteractor {
 
     private var disposeBag = DisposeBag()
     private let provider: IFeeRateProvider
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
-    init(provider: IFeeRateProvider, currencyKit: ICurrencyKit) {
+    init(provider: IFeeRateProvider, currencyKit: CurrencyKit.Kit) {
         self.provider = provider
         self.currencyKit = currencyKit
     }

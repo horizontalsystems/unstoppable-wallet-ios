@@ -12,12 +12,12 @@ class MainSettingsService {
     private let termsManager: ITermsManager
     private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: IAppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
 
     init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
-         systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider,
+         systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager) {
         self.backupManager = backupManager
         self.pinKit = pinKit

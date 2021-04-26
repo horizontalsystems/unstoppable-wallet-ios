@@ -5,12 +5,12 @@ import CoinKit
 class TransactionInfoInteractor {
     private let adapter: ITransactionsAdapter
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: IFeeCoinProvider
     private let pasteboardManager: IPasteboardManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: ICurrencyKit, feeCoinProvider: IFeeCoinProvider, pasteboardManager: IPasteboardManager, appConfigProvider: IAppConfigProvider) {
+    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider, pasteboardManager: IPasteboardManager, appConfigProvider: IAppConfigProvider) {
         self.adapter = adapter
         self.rateManager = rateManager
         self.currencyKit = currencyKit

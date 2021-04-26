@@ -12,9 +12,9 @@ class MarketMetricsService {
     private let globalMarketInfoRelay = BehaviorRelay<DataStatus<GlobalCoinMarket>>(value: .loading)
 
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
-    init(rateManager: IRateManager, appManager: IAppManager, currencyKit: ICurrencyKit) {
+    init(rateManager: IRateManager, appManager: IAppManager, currencyKit: CurrencyKit.Kit) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
 
