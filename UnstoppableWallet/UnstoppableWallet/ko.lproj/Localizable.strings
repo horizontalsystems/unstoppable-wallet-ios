@@ -512,6 +512,9 @@
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
 
+"coin_page.tvl" = "Total Value Locked";
+"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
 "coin_page.bep2_symbol" = "BEP2 Symbol";
