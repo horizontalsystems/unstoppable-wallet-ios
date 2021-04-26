@@ -101,6 +101,7 @@ class TransactionInfoViewController: ThemeActionSheetController {
                     cell.value = "tx_info.status.completed".localized
                     cell.valueImage = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
                     cell.valueImageTintColor = .themeRemus
+                    cell.selectionStyle = .none
                 }
         )
     }

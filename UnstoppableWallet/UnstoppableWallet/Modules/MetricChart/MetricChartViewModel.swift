@@ -7,9 +7,10 @@ import Chart
 import CurrencyKit
 import HUD
 
-class MarketGlobalChartViewModel {
-    private let service: MarketGlobalChartService
-    private let factory: MarketGlobalChartFactory
+class MetricChartViewModel {
+    private let service: MetricChartService
+    private let chartConfiguration: IMetricChartConfiguration
+    private let factory: MetricChartFactory
     private let disposeBag = DisposeBag()
 
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -17,14 +18,15 @@ class MarketGlobalChartViewModel {
 
     private let chartTypeIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let chartInfoRelay = BehaviorRelay<MarketGlobalChartViewModel.ViewItem?>(value: nil)
+    private let chartInfoRelay = BehaviorRelay<MetricChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    var title: String { service.metricsType.title }
-    var description: String { service.metricsType.description }
+    var title: String { chartConfiguration.title }
+    var description: String? { chartConfiguration.description }
 
-    init(service: MarketGlobalChartService, factory: MarketGlobalChartFactory) {
+    init(service: MetricChartService, chartConfiguration: IMetricChartConfiguration, factory: MetricChartFactory) {
         self.service = service
+        self.chartConfiguration = chartConfiguration
         self.factory = factory
 
         subscribe(disposeBag, service.chartTypeObservable) { [weak self] in self?.sync(chartType: $0) }
@@ -38,7 +40,7 @@ class MarketGlobalChartViewModel {
         chartTypeIndexRelay.accept(service.chartTypes.firstIndex(of: chartType) ?? 0)
     }
 
-    private func sync(state: DataStatus<[GlobalCoinMarketPoint]>) {
+    private func sync(state: DataStatus<[MetricChartModule.Item]>) {
         loadingRelay.accept(state.isLoading)
         errorRelay.accept(state.error?.smartDescription)
         if state.error != nil {
@@ -52,12 +54,12 @@ class MarketGlobalChartViewModel {
             return
         }
 
-        chartInfoRelay.accept(factory.convert(items: items, chartType: service.chartType, metricsType: service.metricsType, currency: service.currency))
+        chartInfoRelay.accept(factory.convert(items: items, chartType: service.chartType, valueType: chartConfiguration.valueType, currency: service.currency))
     }
 
 }
 
-extension MarketGlobalChartViewModel {
+extension MetricChartViewModel {
 
     var pointSelectModeEnabledDriver: Driver<Bool> {
         pointSelectModeEnabledRelay.asDriver()
@@ -75,7 +77,7 @@ extension MarketGlobalChartViewModel {
         loadingRelay.asDriver()
     }
 
-    var chartInfoDriver: Driver<MarketGlobalChartViewModel.ViewItem?> {
+    var chartInfoDriver: Driver<MetricChartViewModel.ViewItem?> {
         chartInfoRelay.asDriver()
     }
 
@@ -96,7 +98,7 @@ extension MarketGlobalChartViewModel {
 
 }
 
-extension MarketGlobalChartViewModel: IChartViewTouchDelegate {
+extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func touchDown() {
         pointSelectModeEnabledRelay.accept(true)
@@ -104,7 +106,7 @@ extension MarketGlobalChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, metricsType: service.metricsType, currency: service.currency))
+        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, valueType: chartConfiguration.valueType, currency: service.currency))
     }
 
     public func touchUp() {
@@ -113,7 +115,7 @@ extension MarketGlobalChartViewModel: IChartViewTouchDelegate {
 
 }
 
-extension MarketGlobalChartViewModel {
+extension MetricChartViewModel {
 
     struct ViewItem {
         let chartData: ChartData

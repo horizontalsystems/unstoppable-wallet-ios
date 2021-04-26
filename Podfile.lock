@@ -538,7 +538,7 @@ CHECKOUT OPTIONS:
     :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 82ae15086f4b4a4e2101f3ac5c4ae4ba23792790
+    :commit: d301ea5bdcec12b99b50cd1122bfef7b98909078
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
@@ -550,7 +550,7 @@ CHECKOUT OPTIONS:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: fab417b0943f424126dc103dc0ead9c9f3706f94
+    :commit: 45877825d3db2cf43c202fb1939cda375a38e68e
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:

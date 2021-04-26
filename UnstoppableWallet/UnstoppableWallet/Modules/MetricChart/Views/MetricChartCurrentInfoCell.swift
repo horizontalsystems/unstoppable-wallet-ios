@@ -1,10 +1,10 @@
 import RxSwift
 
-class MarketGlobalCurrentInfoCell: ChartCurrentRateCell {
+class MetricChartCurrentInfoCell: ChartCurrentRateCell {
     private let disposeBag = DisposeBag()
-    private let viewModel: MarketGlobalChartViewModel
+    private let viewModel: MetricChartViewModel
 
-    init(viewModel: MarketGlobalChartViewModel) {
+    init(viewModel: MetricChartViewModel) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)
@@ -20,7 +20,7 @@ class MarketGlobalCurrentInfoCell: ChartCurrentRateCell {
         self.rate = rate
     }
 
-    private func sync(chartInfo: MarketGlobalChartViewModel.ViewItem?) {
+    private func sync(chartInfo: MetricChartViewModel.ViewItem?) {
         rate = chartInfo?.currentValue
         set(diff: chartInfo?.chartDiff)
     }
