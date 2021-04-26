@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import HUD
+import ComponentKit
 
 class BalanceCoinIconHolder: GrayIconHolder {
     private let syncSpinner = HUDProgressView(

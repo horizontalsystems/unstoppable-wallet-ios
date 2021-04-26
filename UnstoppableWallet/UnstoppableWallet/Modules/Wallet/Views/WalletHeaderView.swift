@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class WalletHeaderView: UICollectionReusableView {
     static let height: CGFloat = 84

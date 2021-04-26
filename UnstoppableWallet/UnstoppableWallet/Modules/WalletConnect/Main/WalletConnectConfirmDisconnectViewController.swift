@@ -1,4 +1,5 @@
 import ThemeKit
+import ComponentKit
 
 class WalletConnectConfirmDisconnectViewController: ThemeActionSheetController {
     private let remotePeerName: String?

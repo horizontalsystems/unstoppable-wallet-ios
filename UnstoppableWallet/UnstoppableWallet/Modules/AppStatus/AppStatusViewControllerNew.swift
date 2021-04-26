@@ -1,6 +1,7 @@
 import SnapKit
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class AppStatusViewControllerNew: ThemeViewController {
     private let viewModel: AppStatusViewModel

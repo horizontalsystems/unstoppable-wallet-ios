@@ -2,6 +2,7 @@ import UIKit
 import UIExtensions
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class TransactionCell: BaseSelectableThemeCell {
     private let typeIconImageView = UIImageView()

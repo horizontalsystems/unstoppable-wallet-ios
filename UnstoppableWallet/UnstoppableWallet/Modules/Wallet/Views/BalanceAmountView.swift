@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class BalanceAmountView: UIView {
     static let height: CGFloat = 32

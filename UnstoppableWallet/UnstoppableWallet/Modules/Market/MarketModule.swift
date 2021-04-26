@@ -3,6 +3,7 @@ import ThemeKit
 import XRatesKit
 import CurrencyKit
 import CoinKit
+import ComponentKit
 
 struct MarketModule {
     static func viewController() -> UIViewController {

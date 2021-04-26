@@ -3,6 +3,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ThemeKit
+import ComponentKit
 
 struct SendPriorityViewItem {
     let title: String

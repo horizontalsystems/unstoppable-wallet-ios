@@ -2,6 +2,7 @@ import ThemeKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import ComponentKit
 
 class EnableCoinsView {
     private let viewModel: EnableCoinsViewModel

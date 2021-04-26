@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class MarketOverviewViewController: ThemeViewController {
     private let marketViewModel: MarketViewModel

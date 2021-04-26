@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import PinKit
 import SectionsTableView
+import ComponentKit
 
 class BackupKeyViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2

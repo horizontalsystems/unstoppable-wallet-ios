@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class RateListHeaderFooterView: UITableViewHeaderFooterView {
     static let height: CGFloat = 66

@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TransactionInfoWarningCell: BaseThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x

@@ -4,6 +4,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import SectionsTableView
+import ComponentKit
 
 class BackupConfirmKeyViewController: KeyboardAwareViewController {
     private let viewModel: BackupConfirmKeyViewModel

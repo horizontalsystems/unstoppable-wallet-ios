@@ -1,6 +1,7 @@
 import ThemeKit
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class WalletConnectRequestViewController: SendEvmTransactionViewController {
     private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel

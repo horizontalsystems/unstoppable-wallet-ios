@@ -6,6 +6,7 @@ import RxCocoa
 import DeepDiff
 import HUD
 import CoinKit
+import ComponentKit
 
 class WalletViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
@@ -264,7 +265,6 @@ class WalletViewController: ThemeViewController {
         if let module = DepositRouter.module(wallet: wallet) {
             present(module, animated: true)
         }
-
     }
 
     private func openSend(wallet: Wallet) {

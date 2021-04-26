@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import MessageUI
+import ComponentKit
 
 class BalanceErrorViewController: ThemeActionSheetController {
     private let delegate: IBalanceErrorViewDelegate

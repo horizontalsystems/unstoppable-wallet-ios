@@ -5,6 +5,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import CoinKit
+import ComponentKit
 
 class MarketSearchViewController: ThemeSearchViewController {
     private let viewModel: MarketSearchViewModel

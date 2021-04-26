@@ -3,6 +3,7 @@ import ThemeKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class WalletConnectListViewController: ThemeViewController {
     private let viewModel: WalletConnectListViewModel

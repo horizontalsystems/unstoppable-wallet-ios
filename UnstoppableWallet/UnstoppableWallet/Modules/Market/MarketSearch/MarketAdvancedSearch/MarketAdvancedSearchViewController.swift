@@ -5,6 +5,7 @@ import ThemeKit
 import RxSwift
 import CoinKit
 import HUD
+import ComponentKit
 
 class MarketAdvancedSearchViewController: ThemeViewController {
     private let viewModel: MarketAdvancedSearchViewModel

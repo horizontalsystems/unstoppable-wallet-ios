@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class NotificationSettingsViewController: ThemeViewController {
     private let delegate: INotificationSettingsViewDelegate

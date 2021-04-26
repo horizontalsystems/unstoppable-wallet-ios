@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 protocol IBottomMultiSelectorDelegate: AnyObject {
     func bottomSelectorOnSelect(indexes: [Int])

@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class BitcoinHodlingViewController: ThemeViewController {
     private let delegate: IBitcoinHodlingViewDelegate

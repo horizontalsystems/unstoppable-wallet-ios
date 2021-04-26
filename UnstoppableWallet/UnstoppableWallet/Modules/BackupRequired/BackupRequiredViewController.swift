@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class BackupRequiredViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()

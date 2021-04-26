@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class PrivacyEthereumRpcModeViewController: ThemeActionSheetController {
     private let delegate: IPrivacyEthereumRpcModeViewDelegate

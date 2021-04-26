@@ -1,4 +1,5 @@
 import ThemeKit
+import ComponentKit
 
 class WalletConnectErrorViewController: ThemeViewController {
     private let error: Error

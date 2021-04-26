@@ -6,6 +6,7 @@ import SectionsTableView
 import SnapKit
 import HUD
 import Chart
+import ComponentKit
 
 class MetricChartViewController: ThemeActionSheetController {
     private let viewModel: MetricChartViewModel

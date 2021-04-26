@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import ThemeKit
 import ScanQrKit
+import ComponentKit
 
 protocol IScanQrViewControllerDelegate: AnyObject {
     func didScan(string: String)

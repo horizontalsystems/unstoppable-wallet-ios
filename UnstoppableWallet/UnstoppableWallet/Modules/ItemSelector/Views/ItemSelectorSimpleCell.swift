@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 open class ItemSelectorSimpleCell: BaseSelectableThemeCell {
     private let titleLabel = UILabel()

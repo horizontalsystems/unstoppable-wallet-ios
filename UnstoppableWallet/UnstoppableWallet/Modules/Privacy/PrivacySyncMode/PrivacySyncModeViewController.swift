@@ -3,6 +3,7 @@ import ActionSheet
 import ThemeKit
 import SectionsTableView
 import CoinKit
+import ComponentKit
 
 class PrivacySyncModeViewController: ThemeActionSheetController {
     private let delegate: IPrivacySyncModeViewDelegate

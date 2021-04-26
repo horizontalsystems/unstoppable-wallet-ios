@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class AddressInputView: UIView {
     private let formValidatedView: FormValidatedView

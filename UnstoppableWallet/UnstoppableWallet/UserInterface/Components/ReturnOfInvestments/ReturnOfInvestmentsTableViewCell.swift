@@ -3,6 +3,7 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
     private let disposeBag = DisposeBag()

@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class WelcomeScreenViewController: UIViewController {
     private let bottomInset: CGFloat = 118
