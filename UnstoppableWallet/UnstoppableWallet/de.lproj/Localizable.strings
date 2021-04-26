@@ -573,6 +573,13 @@
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized";
 
+// Settings -> Base Currency
+
+"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.popular" = "Popular";
+"settings.base_currency.all" = "All";
+"settings.base_currency.provided_by" = "Real-time and historical exchange rates provided by CryptoCompare.com";
+
 // Settings -> Notifications
 
 "settings_notifications.title" = "Benachrichtigungen";
