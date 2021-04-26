@@ -7,26 +7,20 @@ class BackupManager {
         self.accountManager = accountManager
     }
 
-    private func isAllBackedUp(accounts: [Account]) -> Bool {
-        return accounts.allSatisfy { $0.backedUp }
-    }
-
 }
 
 extension BackupManager: IBackupManager {
 
     var allBackedUp: Bool {
-        return isAllBackedUp(accounts: accountManager.accounts)
+        accountManager.accounts.allSatisfy { $0.backedUp }
     }
 
     var allBackedUpObservable: Observable<Bool> {
-        return accountManager.accountsObservable.map { [unowned self] accounts in
-            return self.isAllBackedUp(accounts: accounts)
-        }
+        accountManager.accountsObservable.map { $0.allSatisfy { $0.backedUp } }
     }
 
     func setAccountBackedUp(id: String) {
-        guard let account = accountManager.accounts.first(where: { $0.id == id }) else {
+        guard let account = accountManager.account(id: id) else {
             return
         }
 

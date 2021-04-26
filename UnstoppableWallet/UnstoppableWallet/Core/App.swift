@@ -112,8 +112,9 @@ class App {
 
         wordsManager = WordsManager()
 
-        let accountStorage: IAccountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
-        accountManager = AccountManager(storage: accountStorage, activeAccountStorage: storage)
+        let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: storage)
+        let accountCachedStorage = AccountCachedStorage(accountStorage: accountStorage, activeAccountStorage: storage)
+        accountManager = AccountManager(storage: accountCachedStorage)
         accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)
 
