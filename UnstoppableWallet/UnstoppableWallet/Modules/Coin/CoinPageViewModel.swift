@@ -202,6 +202,7 @@ extension CoinPageViewModel {
         public let marketCap: String?
         public let volume24h: String?
         public let tvl: String?
+        public let marketCapTvlRatio: String?
         public let circulatingSupply: String?
         public let totalSupply: String?
         public let dilutedMarketCap: String?

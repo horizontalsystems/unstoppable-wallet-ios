@@ -509,15 +509,16 @@ bch.horizontalsystems.xyz/apg";
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
 
+"coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
 
 "coin_page.tvl" = "Total Value Locked";
+"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
 "coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.category" = "Category";

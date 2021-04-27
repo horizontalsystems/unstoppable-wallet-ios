@@ -22,7 +22,7 @@ class CoinPageViewController: ThemeViewController {
     private var alertButtonItem: UIBarButtonItem?
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let subtitleCell = AdditionalDataCell()
+    private let subtitleCell = ACell()
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
@@ -87,8 +87,9 @@ class CoinPageViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: A1Cell.self)
-        tableView.registerCell(forClass: B1Cell.self)
         tableView.registerCell(forClass: B4Cell.self)
+        tableView.registerCell(forClass: D1Cell.self)
+        tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
@@ -117,7 +118,11 @@ class CoinPageViewController: ThemeViewController {
             self?.reloadTable()
         }
 
-        subtitleCell.bind(title: viewModel.subtitle, value: nil)
+        subtitleCell.set(backgroundStyle: .transparent, isFirst: true)
+        subtitleCell.title = viewModel.subtitle
+        subtitleCell.titleColor = .themeGray
+        subtitleCell.titleImage = .image(coinType: viewModel.coinType)
+        subtitleCell.titleImageTintColor = .themeGray
 
         tableView.buildSections()
 
@@ -311,11 +316,14 @@ extension CoinPageViewController {
 
     private var subtitleSection: SectionProtocol {
         Section(id: "subtitle",
-                rows: [StaticRow(
-                        cell: subtitleCell,
-                        id: "subtitle",
-                        height: AdditionalDataCell.height
-                )])
+                rows: [
+                    StaticRow(
+                            cell: subtitleCell,
+                            id: "subtitle",
+                            height: .heightCell48
+                    )
+                ]
+        )
     }
 
     private var chartSection: SectionProtocol {
@@ -438,21 +446,21 @@ extension CoinPageViewController {
         )
     }
 
-    private func marketsSection(fundCategories: [CoinFundCategory], tickers: [MarketTicker]) -> SectionProtocol? {
+    private func marketsSection(marketInfo: CoinPageViewModel.MarketInfo, fundCategories: [CoinFundCategory], tickers: [MarketTicker]) -> SectionProtocol? {
         var rows = [RowProtocol]()
 
-        let hasMarkets = !tickers.isEmpty
+        let hasVolume = marketInfo.volume24h != nil
         let hasInvestors = !fundCategories.isEmpty
 
-        if !tickers.isEmpty {
-            let marketsTitle = "coin_page.markets".localized(viewModel.coinCode)
-            let marketsRow = Row<B1Cell>(
-                    id: "markets",
+        if let volume = marketInfo.volume24h {
+            let marketsRow = Row<D2Cell>(
+                    id: "trading-volume",
                     height: .heightCell48,
-                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasInvestors)
-                        cell.title = marketsTitle
+                        cell.title = "coin_page.trading_volume".localized
+                        cell.value = volume
+                        cell.valueColor = .themeOz
                     },
                     action: { [weak self] _ in
                         self?.openMarkets(tickers: tickers)
@@ -463,13 +471,12 @@ extension CoinPageViewController {
         }
 
         if !fundCategories.isEmpty {
-            let fundsInvestedTitle = "coin_page.funds_invested".localized
-            let fundsInvestedRow = Row<B1Cell>(
+            let fundsInvestedRow = Row<D1Cell>(
                     id: "funds-invested",
                     height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasMarkets, isLast: true)
-                        cell.title = fundsInvestedTitle
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasVolume, isLast: true)
+                        cell.title = "coin_page.funds_invested".localized
                     },
                     action: { [weak self] _ in
                         self?.openFundsInvested(fundCategories: fundCategories)
@@ -486,17 +493,19 @@ extension CoinPageViewController {
         }
     }
 
-    private func tvlSection(tvl: String?) -> SectionProtocol? {
-        guard let tvl = tvl else {
+    private func tvlSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
+        guard let tvl = marketInfo.tvl else {
             return nil
         }
+
+        let hasRatio = marketInfo.marketCapTvlRatio != nil
 
         let tvlRow = Row<D6Cell>(
                 id: "tvl_chart",
                 height: .heightCell48,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio)
                     cell.title = "coin_page.tvl".localized
                     cell.value = tvl
                     cell.valueColor = .themeOz
@@ -508,7 +517,23 @@ extension CoinPageViewController {
                 }
         )
 
-        return Section(id: "markets", headerState: .margin(height: .margin12), rows: [tvlRow])
+        var rows: [RowProtocol] = [tvlRow]
+
+        if let marketCapTvlRatio = marketInfo.marketCapTvlRatio {
+            let marketCapTvlRatioRow = Row<D7Cell>(
+                    id: "market-cap-tvl-ratio",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+                        cell.title = "coin_page.market_cap_tvl_ratio".localized
+                        cell.value = marketCapTvlRatio
+                    }
+            )
+
+            rows.append(marketCapTvlRatioRow)
+        }
+
+        return Section(id: "markets", headerState: .margin(height: .margin12), rows: rows)
     }
 
     private func openMarkets(tickers: [MarketTicker]) {
@@ -598,7 +623,6 @@ extension CoinPageViewController {
     private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
         let datas = [
             marketInfo.marketCap.map { (id: "market_cap", title: "coin_page.market_cap".localized, text: $0) },
-            marketInfo.volume24h.map { (id: "volume_24h", title: "coin_page.volume_24h".localized, text: $0) },
             marketInfo.circulatingSupply.map { (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0) },
             marketInfo.totalSupply.map { (id: "total_supply", title: "coin_page.total_supply".localized, text: $0) },
             marketInfo.dilutedMarketCap.map { (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0) }
@@ -676,16 +700,12 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(marketInfoSection)
             }
 
-            if let marketsSection = marketsSection(fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
+            if let marketsSection = marketsSection(marketInfo: viewItem.marketInfo, fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
                 sections.append(marketsSection)
             }
 
-            if let tvlSection = tvlSection(tvl: viewItem.marketInfo.tvl) {
+            if let tvlSection = tvlSection(marketInfo: viewItem.marketInfo) {
                 sections.append(tvlSection)
-            }
-
-            if !viewItem.description.isEmpty {
-                sections.append(descriptionSection(description: viewItem.description))
             }
 
             if let categories = viewItem.categories {
@@ -694,6 +714,10 @@ extension CoinPageViewController: SectionsDataSource {
 
             if let contractInfo = viewItem.contractInfo {
                 sections.append(contractInfoSection(contractInfo: contractInfo))
+            }
+
+            if !viewItem.description.isEmpty {
+                sections.append(descriptionSection(description: viewItem.description))
             }
 
             if viewItem.guideUrl != nil || !viewItem.links.isEmpty {

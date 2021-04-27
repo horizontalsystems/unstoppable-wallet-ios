@@ -10,6 +10,15 @@ class MarketViewItemFactory {
         return formatter
     }()
 
+    private let ratioFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.roundingMode = .halfUp
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
     private func roundedFormat(coinCode: String, value: Decimal?) -> String? {
         guard let value = value, !value.isZero, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
             return nil
@@ -27,10 +36,18 @@ class MarketViewItemFactory {
         let supplyString = roundedFormat(coinCode: coinCode, value: circulatingSupply)
         let totalSupplyString = roundedFormat(coinCode: coinCode, value: totalSupply)
 
+        var marketCapTvlRatio: String?
+
+        if let marketCap = marketCap, let tvl = tvl {
+            let ratio = marketCap / tvl
+            marketCapTvlRatio = ratioFormatter.string(from: ratio as NSNumber)
+        }
+
         return CoinPageViewModel.MarketInfo(
                 marketCap: marketCapString,
                 volume24h: volumeString,
-                tvl:tvlString,
+                tvl: tvlString,
+                marketCapTvlRatio: marketCapTvlRatio,
                 circulatingSupply: supplyString,
                 totalSupply: totalSupplyString,
                 dilutedMarketCap: dilutedMarketCapString
