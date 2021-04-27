@@ -498,7 +498,7 @@ CHECKOUT OPTIONS:
     :commit: 6414e4819318101c4819919f3d006f3277685983
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
-    :commit: 6414e4819318101c4819919f3d006f3277685983
+    :commit: 766cb31b36cc511829b89a7761d5cec343c63314
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
     :commit: 260099bd8a5371c20472d00b40a0a2cb296a778e
