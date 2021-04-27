@@ -57,6 +57,7 @@ extension ChartConfiguration {
         timelineTextColor = .themeGray
         timelineFont = .caption
         touchLineColor = .themeNina
+        touchCircleColor = .themeLeah
         emaShortColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
         emaLongColor = UIColor.themeJacob.withAlphaComponent(0.5)
         macdSignalColor = UIColor.themeStronbuy.withAlphaComponent(0.5)
