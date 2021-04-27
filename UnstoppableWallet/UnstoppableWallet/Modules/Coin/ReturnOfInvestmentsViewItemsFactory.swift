@@ -16,19 +16,18 @@ class ReturnOfInvestmentsViewItemsFactory {
         var titleRow = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
-        coinCodes.forEach { coinCode in
-            titleRow.append(.subtitle(coinCode.uppercased()))
+        timePeriods.forEach { timePeriod in
+            titleRow.append(.subtitle(timePeriod.roiTitle))
         }
 
         viewItems.append(titleRow)
 
-        timePeriods.forEach { timePeriod in
+        coinCodes.forEach { coinCode in
             var row = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
-            row.append(.content(timePeriod.roiTitle))
+            row.append(.content("vs \(coinCode.uppercased())"))
 
-            let values = info.rateDiffs[timePeriod]
-
-            coinCodes.forEach { coinCode in
+            timePeriods.forEach { timePeriod in
+                let values = info.rateDiffs[timePeriod]
                 row.append(.value(values?[coinCode]))
             }
             viewItems.append(row)
