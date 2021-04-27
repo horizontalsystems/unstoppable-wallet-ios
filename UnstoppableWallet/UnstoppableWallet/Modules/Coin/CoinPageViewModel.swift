@@ -33,7 +33,7 @@ class CoinPageViewModel {
                     guideUrl: service.guideUrl,
                     links: links(info: info),
                     marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvl: info.defiTvl, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
-                    description: info.meta.description
+                    description: info.meta.description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
         case .failed:
