@@ -9,6 +9,7 @@ import RxCocoa
 class MarkdownViewController: ThemeViewController {
     private let viewModel: MarkdownViewModel
     private let showClose: Bool
+    private let handleRelativeUrl: Bool
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -16,9 +17,10 @@ class MarkdownViewController: ThemeViewController {
 
     private var viewItems: [MarkdownBlockViewItem]?
 
-    init(viewModel: MarkdownViewModel, showClose: Bool = false) {
+    init(viewModel: MarkdownViewModel, showClose: Bool = false, handleRelativeUrl: Bool) {
         self.viewModel = viewModel
         self.showClose = showClose
+        self.handleRelativeUrl = handleRelativeUrl
 
         super.init()
 
@@ -260,7 +262,7 @@ extension MarkdownViewController: SectionsDataSource {
 extension MarkdownViewController: UITextViewDelegate {
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard URL.pathExtension == "md" else {
+        guard handleRelativeUrl, URL.pathExtension == "md" else {
             return true
         }
 
