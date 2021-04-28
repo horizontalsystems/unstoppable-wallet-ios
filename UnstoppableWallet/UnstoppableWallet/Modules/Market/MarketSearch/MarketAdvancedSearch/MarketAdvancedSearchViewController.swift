@@ -162,7 +162,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
                     action?(index)
                 })
 
-        present(alertController.toBottomSheet, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertController.toBottomSheet, animated: true)
+        }
     }
 
     private func onTapCoinListCell() {
