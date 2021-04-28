@@ -122,7 +122,7 @@ extension FaqViewController: SectionsDataSource {
                                         return
                                     }
 
-                                    let module = MarkdownModule.viewController(url: url)
+                                    let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
                                     self?.navigationController?.pushViewController(module, animated: true)
                                 }
                         )
