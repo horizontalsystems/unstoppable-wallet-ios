@@ -580,9 +580,10 @@
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Base Currency";
-"settings.base_currency.popular" = "Popular";
-"settings.base_currency.all" = "All";
-"settings.base_currency.provided_by" = "Real-time and historical exchange rates provided by CryptoCompare.com";
+"settings.base_currency.other" = "Other";
+"settings.base_currency.disclaimer" = "Disclaimer";
+"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.i_understand" = "I Understand";
 
 // Settings -> Notifications
 
