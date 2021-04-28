@@ -32,7 +32,7 @@ class CoinPageViewModel {
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
                     links: links(info: info),
-                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvl: info.defiTvl, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
@@ -68,12 +68,14 @@ class CoinPageViewModel {
         }
     }
 
-    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvlInfo: DefiTvlInfo?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
         marketViewItemFactory.viewItem(
                 marketCap: marketCap,
                 dilutedMarketCap: dilutedMarketCap,
                 volume24h: volume24h,
-                tvl: tvl,
+                tvl: tvlInfo?.tvl,
+                tvlRank: tvlInfo?.tvlRank,
+                tvlRatio: tvlInfo?.tvlRatio,
                 circulatingSupply: circulatingSupply,
                 totalSupply: totalSupply,
                 currency: service.currency,
@@ -202,7 +204,8 @@ extension CoinPageViewModel {
         public let marketCap: String?
         public let volume24h: String?
         public let tvl: String?
-        public let marketCapTvlRatio: String?
+        public let tvlRank: String?
+        public let tvlRatio: String?
         public let circulatingSupply: String?
         public let totalSupply: String?
         public let dilutedMarketCap: String?
