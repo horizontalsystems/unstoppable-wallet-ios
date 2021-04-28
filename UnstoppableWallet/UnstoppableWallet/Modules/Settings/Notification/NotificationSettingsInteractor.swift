@@ -50,6 +50,16 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
         priceAlertManager.priceAlerts
     }
 
+    var activeAlerts: [PriceAlert] {
+        priceAlertManager.priceAlerts.compactMap { alert -> PriceAlert? in
+            if alert.trendState == .off, alert.changeState == .off {
+                return nil
+            }
+
+            return alert
+        }
+    }
+
     var apnsTokenReceived: Bool {
         notificationManager.token != nil
     }

@@ -31,30 +31,7 @@ extension PriceAlertManager: IPriceAlertManager {
     }
 
     var priceAlerts: [PriceAlert] {
-        var alerts = storage.priceAlerts
-
-        let walletAlerts = walletManager.wallets.compactMap { wallet -> PriceAlert? in
-            let coin = wallet.coin
-
-            if let alertIndex = alerts.firstIndex(where: { $0.coinType == coin.type }) {
-                let walletAlert = alerts[alertIndex]
-                alerts.remove(at: alertIndex)
-
-                return walletAlert
-            }
-
-            return PriceAlert(coinType: coin.type, coinTitle: coin.title, changeState: .off, trendState: .off)
-        }
-
-        let savedOtherAlerts = alerts.compactMap { alert -> PriceAlert? in
-            if alert.trendState == .off, alert.changeState == .off {
-                return nil
-            }
-
-            return alert
-        }
-
-        return walletAlerts + savedOtherAlerts
+        storage.priceAlerts
     }
 
     func priceAlert(coinType: CoinType, title: String) -> PriceAlert? {
