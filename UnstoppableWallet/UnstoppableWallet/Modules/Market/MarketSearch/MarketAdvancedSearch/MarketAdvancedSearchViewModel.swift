@@ -273,6 +273,12 @@ extension MarketAdvancedSearchViewModel {
         service.liquidity = .none
         service.period = .day
         service.priceChange = .none
+
+        service.outperformedBtc = false
+        service.outperformedEth = false
+        service.outperformedBnb = false
+        service.priceCloseToATL = false
+        service.priceCloseToATH = false
     }
 
 }
