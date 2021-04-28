@@ -498,14 +498,15 @@ extension CoinPageViewController {
             return nil
         }
 
-        let hasRatio = marketInfo.marketCapTvlRatio != nil
+        let hasRank = marketInfo.tvlRank != nil
+        let hasRatio = marketInfo.tvlRatio != nil
 
         let tvlRow = Row<D6Cell>(
                 id: "tvl_chart",
                 height: .heightCell48,
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio)
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio && !hasRank)
                     cell.title = "coin_page.tvl".localized
                     cell.value = tvl
                     cell.valueColor = .themeOz
@@ -519,7 +520,22 @@ extension CoinPageViewController {
 
         var rows: [RowProtocol] = [tvlRow]
 
-        if let marketCapTvlRatio = marketInfo.marketCapTvlRatio {
+        if let tvlRank = marketInfo.tvlRank {
+            let tvlRankRow = Row<D7Cell>(
+                    id: "market-cap-tvl-rank",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: !hasRank)
+                        cell.title = "coin_page.tvl_rank".localized
+                        cell.value = tvlRank
+                    }
+            )
+
+            rows.append(tvlRankRow)
+        }
+
+
+        if let marketCapTvlRatio = marketInfo.tvlRatio {
             let marketCapTvlRatioRow = Row<D7Cell>(
                     id: "market-cap-tvl-ratio",
                     height: .heightCell48,
