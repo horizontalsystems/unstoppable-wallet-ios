@@ -85,6 +85,7 @@ class CoinPageViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
 
         tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: B4Cell.self)
