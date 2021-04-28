@@ -3,27 +3,37 @@ import RxRelay
 import CurrencyKit
 
 class BaseCurrencySettingsService {
-    private static let popularCurrencyCodes = ["AUD", "EUR", "USD", "BTC", "ETH", "BNB"]
+    private static let popularCurrencyCodes = ["USD", "EUR", "GBP", "JPY"]
+    private static let cryptoCurrencyCodes = ["BTC", "ETH", "BNB"]
 
     private let currencyKit: CurrencyKit.Kit
 
     let popularCurrencies: [Currency]
-    let allCurrencies: [Currency]
+    let cryptoCurrencies: [Currency]
+    let otherCurrencies: [Currency]
 
     init(currencyKit: CurrencyKit.Kit) {
         self.currencyKit = currencyKit
 
         var popularCurrencies = [Currency]()
-        var allCurrencies = currencyKit.currencies
+        var cryptoCurrencies = [Currency]()
+        var currencies = currencyKit.currencies
 
         for code in BaseCurrencySettingsService.popularCurrencyCodes {
-            if let index = allCurrencies.firstIndex(where: { $0.code == code }) {
-                popularCurrencies.append(allCurrencies.remove(at: index))
+            if let index = currencies.firstIndex(where: { $0.code == code }) {
+                popularCurrencies.append(currencies.remove(at: index))
+            }
+        }
+
+        for code in BaseCurrencySettingsService.cryptoCurrencyCodes {
+            if let index = currencies.firstIndex(where: { $0.code == code }) {
+                cryptoCurrencies.append(currencies.remove(at: index))
             }
         }
 
         self.popularCurrencies = popularCurrencies
-        self.allCurrencies = allCurrencies
+        self.cryptoCurrencies = cryptoCurrencies
+        otherCurrencies = currencies
     }
 
 }
