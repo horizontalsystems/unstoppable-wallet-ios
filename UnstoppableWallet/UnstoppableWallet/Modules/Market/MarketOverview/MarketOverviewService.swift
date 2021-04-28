@@ -6,6 +6,7 @@ import RxRelay
 
 class MarketOverviewService {
     private var disposeBag = DisposeBag()
+    private var topMarketsDisposeBag = DisposeBag()
 
     private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
@@ -23,12 +24,14 @@ class MarketOverviewService {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.fetch() }
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
+            self?.fetch()
+        }
         fetch()
     }
 
     private func fetch() {
-        disposeBag = DisposeBag()
+        topMarketsDisposeBag = DisposeBag()
 
         state = .loading
 
@@ -38,7 +41,7 @@ class MarketOverviewService {
                 }, onError: { [weak self] error in
                     self?.onFetchFailed(error: error)
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: topMarketsDisposeBag)
     }
 
     private func onFetchSuccess(items: [CoinMarket]) {

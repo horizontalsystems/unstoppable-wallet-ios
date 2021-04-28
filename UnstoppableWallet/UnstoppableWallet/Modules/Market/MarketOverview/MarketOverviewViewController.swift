@@ -6,7 +6,9 @@ import ComponentKit
 
 class MarketOverviewViewController: ThemeViewController {
     private let marketViewModel: MarketViewModel
-    private let viewModel: MarketOverviewViewModel
+    private let postViewModel: MarketPostViewModel
+    private let overviewViewModel: MarketOverviewViewModel
+    private let urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -16,11 +18,14 @@ class MarketOverviewViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    private var state: MarketOverviewViewModel.State = .loading
+    private var overviewState: MarketOverviewViewModel.State = .loading
+    private var postState: MarketPostViewModel.State = .loading
 
-    init(marketViewModel: MarketViewModel, viewModel: MarketOverviewViewModel) {
+    init(marketViewModel: MarketViewModel, postViewModel: MarketPostViewModel, overviewViewModel: MarketOverviewViewModel, urlManager: IUrlManager) {
         self.marketViewModel = marketViewModel
-        self.viewModel = viewModel
+        self.postViewModel = postViewModel
+        self.overviewViewModel = overviewViewModel
+        self.urlManager = urlManager
 
         marketMetricsCell = MarketMetricsModule.cell()
 
@@ -50,13 +55,20 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
         tableView.registerCell(forClass: G14Cell.self)
+        tableView.registerCell(forClass: ACell.self)
         tableView.registerCell(forClass: A2Cell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
+        tableView.registerCell(forClass: MarketPostCell.self)
 
-        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
-            self?.state = state
+        subscribe(disposeBag, overviewViewModel.stateDriver) { [weak self] state in
+            self?.overviewState = state
+            self?.tableView.reload()
+        }
+
+        subscribe(disposeBag, postViewModel.stateDriver) { [weak self] state in
+            self?.postState = state
             self?.tableView.reload()
         }
 
@@ -120,9 +132,28 @@ class MarketOverviewViewController: ThemeViewController {
         )
     }
 
+    private func row(viewItem: MarketPostViewModel.ViewItem) -> RowProtocol {
+        Row<MarketPostCell>(
+                id: viewItem.title,
+                height: MarketPostCell.height,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                    cell.set(source: viewItem.source, title: viewItem.title, description: viewItem.body, date: viewItem.timestamp)
+                },
+                action: { [weak self] _ in
+                    self?.onSelect(viewItem: viewItem)
+                }
+        )
+    }
+
     private func onSelect(viewItem: MarketModule.ViewItem) {
         let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
         parentNavigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func onSelect(viewItem: MarketPostViewModel.ViewItem) {
+        urlManager.open(url: viewItem.url, from: parentNavigationController)
     }
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
@@ -132,6 +163,63 @@ class MarketOverviewViewController: ThemeViewController {
 
     private func didTapSeeAll(listType: MarketModule.ListType) {
         marketViewModel.handleTapSeeAll(listType: listType)
+    }
+
+    private var postSections: [SectionProtocol] {
+        var sections = [SectionProtocol]()
+
+        sections.append(
+                Section(id: "header_posts",
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            Row<ACell>(
+                                    id: "posts_header_section",
+                                    height: .heightSingleLineCell,
+                                    autoDeselect: true,
+                                    bind: { cell, _ in
+                                        cell.set(backgroundStyle: .transparent)
+
+                                        cell.titleImage = UIImage(named: "message_square_20")
+                                        cell.title = "market.top.section.header.news".localized
+
+                                        cell.selectionStyle = .none
+                                    }
+                            )]
+                )
+        )
+
+        switch postState {
+        case .loading:
+            let row = Row<SpinnerCell>(
+                    id: "post_spinner",
+                    height: .heightCell48
+            )
+
+            sections.append(Section(id: "post_spinner", rows: [row]))
+        case .error(let errorDescription):
+            let row = Row<ErrorCell>(
+                    id: "post_error",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.errorText = errorDescription
+                    }
+            )
+
+            sections.append(Section(id: "post_error", rows: [row]))
+        case .loaded(let postViewItems):
+            guard !postViewItems.isEmpty else {
+                return sections
+            }
+
+            sections.append(contentsOf:
+                    postViewItems.enumerated().map { (index, item) in Section(
+                            id: "post_\(index)",
+                            footerState: .margin(height: .margin12),
+                            rows: [row(viewItem: item)]
+                    )})
+        }
+
+        return sections
     }
 
 }
@@ -152,7 +240,7 @@ extension MarketOverviewViewController: SectionsDataSource {
             )
         ]
 
-        switch state {
+        switch overviewState {
         case .loading:
             let row = Row<SpinnerCell>(
                     id: "spinner",
@@ -182,6 +270,9 @@ extension MarketOverviewViewController: SectionsDataSource {
                                 })
                 )
             }
+
+            // posts state showed only when completed coin request
+            sections.append(contentsOf: postSections)
 
             let brandText = "Powered by CoinGecko API"
 
@@ -222,7 +313,8 @@ extension MarketOverviewViewController: SectionsDataSource {
 
     public func refresh() {
         marketMetricsCell.refresh()
-        viewModel.refresh()
+        overviewViewModel.refresh()
+        postViewModel.refresh()
     }
 
 }
