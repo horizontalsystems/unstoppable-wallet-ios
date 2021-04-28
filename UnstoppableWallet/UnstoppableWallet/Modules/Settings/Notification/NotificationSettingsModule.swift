@@ -18,6 +18,7 @@ protocol INotificationSettingsViewDelegate {
 
 protocol INotificationSettingsInteractor: AnyObject {
     var alerts: [PriceAlert] { get }
+    var activeAlerts: [PriceAlert] { get }
     var pushNotificationsOn: Bool { get set }
     var apnsTokenReceived: Bool { get }
     func coin(coinType: CoinType) -> Coin?

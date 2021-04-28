@@ -21,12 +21,22 @@ class NotificationSettingsPresenter {
         router.openSettings(coinType: alert.coinType, coinTitle: alert.coinTitle, mode: mode)
     }
 
+    private func merge(allAlerts: [PriceAlert]) {
+        let updatedAlerts = alerts.compactMap { alert in
+            allAlerts.first(where: { newAlert in
+                newAlert.coinType == alert.coinType
+            })
+        }
+
+        alerts = updatedAlerts
+    }
+
 }
 
 extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 
     func viewDidLoad() {
-        alerts = interactor.alerts
+        alerts = interactor.activeAlerts
 
         updateViewItems()
         view?.set(pushNotificationsOn: interactor.pushNotificationsOn)
@@ -62,7 +72,7 @@ extension NotificationSettingsPresenter: INotificationSettingsViewDelegate {
 extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate {
 
     func onAlertsUpdate() {
-        alerts = interactor.alerts
+        merge(allAlerts: interactor.alerts)
 
         updateViewItems()
     }
@@ -92,13 +102,13 @@ extension NotificationSettingsPresenter: INotificationSettingsInteractorDelegate
     }
 
     func didSaveAlerts() {
-        alerts = interactor.alerts
+        merge(allAlerts: interactor.alerts)
 
         updateViewItems()
     }
 
     func didFailSaveAlerts(error: Error) {
-        alerts = interactor.alerts
+        merge(allAlerts: interactor.alerts)
 
         updateViewItems()
 
