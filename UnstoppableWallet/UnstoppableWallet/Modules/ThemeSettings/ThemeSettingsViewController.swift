@@ -9,6 +9,7 @@ class ThemeSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private var isLoaded = false
 
     private var viewItems = [ThemeSettingsViewModel.ViewItem]()
 
@@ -43,10 +44,21 @@ class ThemeSettingsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] viewItems in
             self?.viewItems = viewItems
-            self?.tableView.reload(animated: true)
+
+            self?.reloadTable()
         }
 
         tableView.buildSections()
+
+        isLoaded = true
+    }
+
+    private func reloadTable() {
+        guard isLoaded else {
+            return
+        }
+
+        tableView.reload(animated: true)
     }
 
 }
