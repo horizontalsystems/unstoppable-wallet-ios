@@ -351,6 +351,7 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
 "market.top.diluted_market_cap.title" = "Diluted M.Cap";
