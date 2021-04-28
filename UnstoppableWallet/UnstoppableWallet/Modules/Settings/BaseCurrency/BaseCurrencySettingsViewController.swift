@@ -37,12 +37,20 @@ class BaseCurrencySettingsViewController: ThemeViewController {
 
         tableView.registerCell(forClass: G4Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
+        subscribe(disposeBag, viewModel.disclaimerSignal) { [weak self] in self?.openDisclaimer(codes: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
         tableView.buildSections()
+    }
+
+    private func openDisclaimer(codes: String) {
+        let viewController = BaseCurrencyDisclaimerViewController(codes: codes) { [weak self] in
+            self?.viewModel.onAcceptDisclaimer()
+        }
+
+        present(viewController.toBottomSheet, animated: true)
     }
 
 }
@@ -53,6 +61,7 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
         Row<G4Cell>(
                 id: viewItem.code,
                 height: .heightDoubleLineCell,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = viewItem.code
@@ -67,6 +76,12 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
         )
     }
 
+    private func rows(viewItems: [BaseCurrencySettingsViewModel.ViewItem]) -> [RowProtocol] {
+        viewItems.enumerated().map { index, viewItem in
+            row(viewItem: viewItem, isFirst: index == 0, isLast: index == viewItems.count - 1)
+        }
+    }
+
     private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
         .cellType(
                 hash: text,
@@ -79,37 +94,27 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
         )
     }
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { containerWidth in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "popular",
-                    headerState: header(text: "settings.base_currency.popular".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: viewModel.popularViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, isFirst: index == 0, isLast: index == viewModel.popularViewItems.count - 1)
-                    }
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin12),
+                    rows: rows(viewItems: viewModel.popularViewItems)
             ),
             Section(
-                    id: "all",
-                    headerState: header(text: "settings.base_currency.all".localized),
-                    footerState: footer(text: "settings.base_currency.provided_by".localized),
-                    rows: viewModel.allViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, isFirst: index == 0, isLast: index == viewModel.allViewItems.count - 1)
-                    }
+                    id: "other",
+                    headerState: header(text: "settings.base_currency.other".localized.uppercased()),
+                    footerState: .margin(height: .margin32),
+                    rows: rows(viewItems: viewModel.otherViewItems)
+            ),
+            Section(
+                    id: "crypto",
+                    footerState: .margin(height: .margin32),
+                    rows: rows(viewItems: viewModel.cryptoViewItems)
             )
         ]
     }
 
 }
+
