@@ -34,8 +34,8 @@ class FaqCell: BaseSelectableThemeCell {
 
 extension FaqCell {
 
-    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textWidth = containerWidth - 2 * padding
+    static func height(containerWidth: CGFloat, text: String, backgroundStyle: BackgroundStyle) -> CGFloat {
+        let textWidth = containerWidth - 2 * padding - Self.margin(backgroundStyle: backgroundStyle).width
         let textHeight = text.height(forContainerWidth: textWidth, font: font)
 
         return padding + textHeight + padding
