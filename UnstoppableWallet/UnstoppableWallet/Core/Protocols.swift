@@ -547,7 +547,3 @@ protocol IWalletConnectSessionStorage {
     func deleteSession(peerId: String)
     func deleteSessions(accountId: String)
 }
-
-protocol ITextValidator {
-    func validate(text: String?) -> Bool
-}

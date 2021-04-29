@@ -57,6 +57,14 @@ class RestoreMnemonicViewModel {
         }
     }
 
+    func validatePassphrase(text: String?) -> Bool {
+        let validated = service.validate(text: text)
+        if !validated {
+            passphraseCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
+        }
+        return validated
+    }
+
 }
 
 extension RestoreMnemonicViewModel {
@@ -104,6 +112,8 @@ extension RestoreMnemonicViewModel {
     }
 
     func onTapProceed() {
+        passphraseCautionRelay.accept(nil)
+
         guard state.invalidItems.isEmpty else {
             invalidRangesRelay.accept(state.invalidItems.map { $0.range })
             return

@@ -99,14 +99,9 @@ extension TextFieldCell {
         set { stackView.onReturn = newValue }
     }
 
-    var onSpaceKey: (() -> Bool)? {
-        get { stackView.onSpaceKey }
-        set { stackView.onSpaceKey = newValue }
-    }
-
-    var isAllowedText: ((String?) -> Bool)? {
-        get { stackView.isAllowedText }
-        set { stackView.isAllowedText = newValue }
+    var isValidText: ((String?) -> Bool)? {
+        get { stackView.isValidText }
+        set { stackView.isValidText = newValue }
     }
 
 }

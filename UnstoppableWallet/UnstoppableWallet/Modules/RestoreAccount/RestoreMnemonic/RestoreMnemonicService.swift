@@ -8,11 +8,13 @@ class RestoreMnemonicService {
 
     private let wordList = Mnemonic.wordList(for: .english).map(String.init)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let passphraseValidator: PassphraseValidator
 
     var passphrase: String = ""
 
-    init(wordsManager: IWordsManager) {
+    init(wordsManager: IWordsManager, passphraseValidator: PassphraseValidator) {
         self.wordsManager = wordsManager
+        self.passphraseValidator = passphraseValidator
     }
 
 }
@@ -37,6 +39,10 @@ extension RestoreMnemonicService {
 
     func doesWordPartiallyExist(word: String) -> Bool {
         wordList.contains { $0.hasPrefix(word) }
+    }
+
+    func validate(text: String?) -> Bool {
+        passphraseValidator.validate(text: text)
     }
 
     func accountType(words: [String]) throws -> AccountType {
