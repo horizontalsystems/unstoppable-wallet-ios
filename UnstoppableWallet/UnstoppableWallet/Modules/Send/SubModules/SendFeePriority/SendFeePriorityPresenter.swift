@@ -52,8 +52,6 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         fetchedFeeRate = nil
         error = nil
 
-        view?.set(enabled: false)
-
         interactor.syncFeeRate(priority: feeRatePriority)
     }
 
@@ -126,8 +124,6 @@ extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
 
     func didUpdate(feeRate: Int) {
         fetchedFeeRate = feeRate
-
-        view?.set(enabled: true)
 
         delegate?.onUpdateFeePriority()
     }

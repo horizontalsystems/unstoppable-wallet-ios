@@ -63,27 +63,21 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         coinListCell.title = "market.advanced_search.choose_set".localized
-        coinListCell.valueActionEnabled = false
 
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         marketCapCell.title = "market.advanced_search.market_cap".localized
-        marketCapCell.valueActionEnabled = false
 
         volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
         volumeCell.title = "market.advanced_search.volume".localized
-        volumeCell.valueActionEnabled = false
 
         liquidityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         liquidityCell.title = "market.advanced_search.liquidity".localized
-        liquidityCell.valueActionEnabled = false
 
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         priceChangeCell.title = "market.advanced_search.price_change".localized
-        priceChangeCell.valueActionEnabled = false
 
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         periodCell.title = "market.advanced_search.price_period".localized
-        periodCell.valueActionEnabled = false
 
         outperformedBtcCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         outperformedBtcCell.title = "market.advanced_search.outperformed_btc".localized

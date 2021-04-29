@@ -5,7 +5,6 @@ protocol ISendFeePriorityView: class {
     func setPriority()
     func set(customVisible: Bool)
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>)
-    func set(enabled: Bool)
 }
 
 protocol ISendFeePriorityViewDelegate {
