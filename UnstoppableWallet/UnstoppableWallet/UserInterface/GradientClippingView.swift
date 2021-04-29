@@ -32,8 +32,13 @@ class GradientClippingView: UIView {
 
         maskLayer.frame = bounds
         let startPosition: CGFloat = (height - clippingHeight) / height
-        maskLayer.startPoint = CGPoint(x: 0.5, y: isClipping ? startPosition : 1)
+        maskLayer.startPoint = CGPoint(x: 0.5, y: startPosition)
         maskLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        if isClipping {
+            layer.mask = maskLayer
+        } else {
+            layer.mask = nil
+        }
     }
 
 }
