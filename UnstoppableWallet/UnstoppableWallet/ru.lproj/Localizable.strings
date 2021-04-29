@@ -510,6 +510,7 @@
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.genesis_date" = "Launch Date";
 
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
