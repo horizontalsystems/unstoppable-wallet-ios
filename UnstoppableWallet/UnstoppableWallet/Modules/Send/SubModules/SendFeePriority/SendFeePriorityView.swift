@@ -94,12 +94,6 @@ extension SendFeePriorityView: ISendFeePriorityView {
         selectableValueView.value = delegate.feeRatePriority.title
     }
 
-    func set(enabled: Bool) {
-        DispatchQueue.main.async {
-            self.selectableValueView.valueActionEnabled = enabled
-        }
-    }
-
     func set(customVisible: Bool) {
         snp.updateConstraints { maker in
             maker.height.equalTo(customVisible ? 90 : 57)

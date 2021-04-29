@@ -53,7 +53,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         mnemonicCell.titleImage = UIImage(named: "key_20")
         mnemonicCell.title = "create_wallet.mnemonic".localized
-        mnemonicCell.valueAction = { [weak self] in self?.viewModel.onTapKind() }
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         passphraseToggleCell.titleImage = UIImage(named: "key_phrase_20")
@@ -161,7 +160,11 @@ extension CreateAccountViewController: SectionsDataSource {
                         StaticRow(
                                 cell: mnemonicCell,
                                 id: "mnemonic",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.viewModel.onTapKind()
+                                }
                         )
                     ]
             ),

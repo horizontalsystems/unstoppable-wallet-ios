@@ -86,13 +86,14 @@ class PrivacyViewController: ThemeViewController {
                             id: "sorting_cell",
                             hash: "\(sortModeTitle)",
                             height: .heightCell48,
+                            autoDeselect: true,
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                 cell.title = "settings_privacy.sorting_title".localized
                                 cell.value = sortModeTitle
-                                cell.valueAction = { [weak self] in
-                                    self?.delegate.onSelectSortMode()
-                                }
+                            },
+                            action: { [weak self] _ in
+                                self?.delegate.onSelectSortMode()
                             }
                     )
                 ]
@@ -131,14 +132,15 @@ class PrivacyViewController: ThemeViewController {
                     id: id,
                     hash: "\(item.value)",
                     height: .heightCell48,
+                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                         cell.titleImage = UIImage(named: item.iconName)
                         cell.title = item.title
                         cell.value = item.value
-                        cell.valueAction = {
-                            action?()
-                        }
+                    },
+                    action: { _ in
+                        action?()
                     }
             )
         } else {
