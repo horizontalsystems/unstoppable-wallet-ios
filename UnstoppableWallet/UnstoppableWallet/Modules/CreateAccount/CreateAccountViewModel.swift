@@ -6,6 +6,8 @@ class CreateAccountViewModel {
     private let service: CreateAccountService
     private let disposeBag = DisposeBag()
 
+    private let passphraseWrongTextRelay = PublishRelay<()>()
+    private let passphraseConfirmationWrongTextRelay = PublishRelay<()>()
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let passphraseConfirmationCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
@@ -55,6 +57,14 @@ extension CreateAccountViewModel {
         passphraseConfirmationCautionRelay.asDriver()
     }
 
+    var passphraseWrongTextSignal: Signal<()> {
+        passphraseWrongTextRelay.asSignal()
+    }
+
+    var passphraseConfirmationWrongTextSignal: Signal<()> {
+        passphraseConfirmationWrongTextRelay.asSignal()
+    }
+
     var clearInputsSignal: Signal<Void> {
         clearInputsRelay.asSignal()
     }
@@ -97,7 +107,27 @@ extension CreateAccountViewModel {
         clearCautions()
     }
 
+    func validatePassphrase(text: String?) -> Bool {
+        let validated = service.validate(text: text)
+        if !validated {
+            passphraseWrongTextRelay.accept(())
+            passphraseCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
+        }
+        return validated
+    }
+
+    func validatePassphraseConfirmation(text: String?) -> Bool {
+        let validated = service.validate(text: text)
+        if !validated {
+            passphraseConfirmationWrongTextRelay.accept(())
+            passphraseConfirmationCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
+        }
+        return validated
+    }
+
     func onTapCreate() {
+        passphraseCautionRelay.accept(nil)
+        passphraseConfirmationCautionRelay.accept(nil)
         do {
             try service.createAccount()
             finishRelay.accept(())

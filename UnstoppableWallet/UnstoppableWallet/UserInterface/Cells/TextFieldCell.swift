@@ -104,4 +104,9 @@ extension TextFieldCell {
         set { stackView.onSpaceKey = newValue }
     }
 
+    var isAllowedText: ((String?) -> Bool)? {
+        get { stackView.isAllowedText }
+        set { stackView.isAllowedText = newValue }
+    }
+
 }
