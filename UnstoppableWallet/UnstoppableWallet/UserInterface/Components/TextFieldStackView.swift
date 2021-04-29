@@ -9,7 +9,7 @@ class TextFieldStackView: UIView {
     var onChangeText: ((String?) -> ())?
     var onReturn: (() -> ())?
     var onSpaceKey: (() -> Bool)?
-    var isAllowedText: ((String?) -> Bool)?
+    var isValidText: ((String?) -> Bool)?
 
     init() {
         super.init(frame: .zero)
@@ -60,16 +60,13 @@ extension TextFieldStackView: UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let isAllowed = isAllowedText {
-            return isAllowed(string)
+        let isValid = isValidText?(string) ?? true
+
+        if !isValid {
+            shakeView()
         }
 
-        switch string {
-        case " ":
-            return onSpaceKey?() ?? true
-        default:
-            return true
-        }
+        return isValid
     }
 
 }

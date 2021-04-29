@@ -62,25 +62,23 @@ class CreateAccountViewController: KeyboardAwareViewController {
         passphraseCell.inputPlaceholder = "create_wallet.input.passphrase".localized
         passphraseCell.isSecureTextEntry = true
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
-        passphraseCell.isAllowedText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
+        passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         passphraseConfirmationCell.inputPlaceholder = "create_wallet.input.confirm".localized
         passphraseConfirmationCell.isSecureTextEntry = true
         passphraseConfirmationCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphraseConfirmation: $0 ?? "") }
-        passphraseConfirmationCell.isAllowedText = { [weak self] in self?.viewModel.validatePassphraseConfirmation(text: $0) ?? true }
+        passphraseConfirmationCell.isValidText = { [weak self] in self?.viewModel.validatePassphraseConfirmation(text: $0) ?? true }
 
         passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         subscribe(disposeBag, viewModel.kindDriver) { [weak self] in self?.mnemonicCell.value = $0 }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
-        subscribe(disposeBag, viewModel.passphraseWrongTextSignal) { [weak self] in self?.passphraseCell.shakeView() }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
             self?.passphraseCautionCell.set(caution: caution)
         }
-        subscribe(disposeBag, viewModel.passphraseConfirmationWrongTextSignal) { [weak self] in self?.passphraseConfirmationCell.shakeView() }
         subscribe(disposeBag, viewModel.passphraseConfirmationCautionDriver) { [weak self] caution in
             self?.passphraseConfirmationCell.set(cautionType: caution?.type)
             self?.passphraseConfirmationCautionCell.set(caution: caution)
