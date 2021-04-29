@@ -27,13 +27,14 @@ class MarketViewItemFactory {
         return "\(formattedValue) \(coinCode)"
     }
 
-    func viewItem(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, tvlRank: Int?, tvlRatio: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
+    func viewItem(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, tvlRank: Int?, tvlRatio: Decimal?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
         let marketCapString = marketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
 
         let volumeString = volume24h.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
         let tvlString = tvl.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
         let tvlRatioString = tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) }
         let dilutedMarketCapString = dilutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
+        let genesisDateString = genesisDate.map { DateHelper.instance.formatFullDateOnly(from: Date(timeIntervalSince1970: $0)) }
         let supplyString = roundedFormat(coinCode: coinCode, value: circulatingSupply)
         let totalSupplyString = roundedFormat(coinCode: coinCode, value: totalSupply)
 
@@ -43,6 +44,7 @@ class MarketViewItemFactory {
                 tvl: tvlString,
                 tvlRank: tvlRank.map { "#\($0)" },
                 tvlRatio: tvlRatioString,
+                genesisDate: genesisDateString,
                 circulatingSupply: supplyString,
                 totalSupply: totalSupplyString,
                 dilutedMarketCap: dilutedMarketCapString
