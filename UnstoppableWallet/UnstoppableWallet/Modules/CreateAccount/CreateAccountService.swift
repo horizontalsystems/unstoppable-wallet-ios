@@ -7,6 +7,7 @@ class CreateAccountService {
     private let wordsManager: IWordsManager
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
+    private let textValidator: ITextValidator
     private let coinKit: CoinKit.Kit
 
     private let kindRelay = BehaviorRelay<CreateAccountModule.Kind>(value: .mnemonic12)
@@ -15,11 +16,12 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, coinKit: CoinKit.Kit) {
+    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, textValidator: ITextValidator, coinKit: CoinKit.Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.textValidator = textValidator
         self.coinKit = coinKit
     }
 
@@ -92,6 +94,10 @@ extension CreateAccountService {
 
     func set(passphraseEnabled: Bool) {
         passphraseEnabledRelay.accept(passphraseEnabled)
+    }
+
+    func validate(text: String?) -> Bool {
+        textValidator.validate(text: text)
     }
 
     func createAccount() throws {

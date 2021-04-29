@@ -9,6 +9,7 @@ struct CreateAccountModule {
                 wordsManager: App.shared.wordsManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                textValidator: PassphraseValidator(),
                 coinKit: App.shared.coinKit
         )
         let viewModel = CreateAccountViewModel(service: service)
