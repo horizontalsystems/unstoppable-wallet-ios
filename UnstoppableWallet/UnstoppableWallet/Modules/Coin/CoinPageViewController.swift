@@ -642,7 +642,8 @@ extension CoinPageViewController {
             marketInfo.marketCap.map { (id: "market_cap", title: "coin_page.market_cap".localized, text: $0) },
             marketInfo.circulatingSupply.map { (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0) },
             marketInfo.totalSupply.map { (id: "total_supply", title: "coin_page.total_supply".localized, text: $0) },
-            marketInfo.dilutedMarketCap.map { (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0) }
+            marketInfo.dilutedMarketCap.map { (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0) },
+            marketInfo.genesisDate.map { (id: "genesis_date", title: "coin_page.genesis_date".localized, text: $0) }
         ].compactMap { $0 }
 
         guard !datas.isEmpty else {
