@@ -1,4 +1,4 @@
-protocol ISendMemoView: class {
+protocol ISendMemoView: AnyObject {
     var memo: String? { get }
 }
 

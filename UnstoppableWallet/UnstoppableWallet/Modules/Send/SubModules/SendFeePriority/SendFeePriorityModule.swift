@@ -1,7 +1,7 @@
 import UIKit
 import CurrencyKit
 
-protocol ISendFeePriorityView: class {
+protocol ISendFeePriorityView: AnyObject {
     func setPriority()
     func set(customVisible: Bool)
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>)
@@ -31,7 +31,7 @@ protocol ISendFeePriorityRouter {
     func openFeeInfo()
 }
 
-protocol ISendFeePriorityDelegate: class {
+protocol ISendFeePriorityDelegate: AnyObject {
     func onUpdateFeePriority()
 }
 

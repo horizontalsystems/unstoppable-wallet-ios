@@ -16,7 +16,7 @@ protocol IRandomManager {
     func getRandomIndexes(max: Int, count: Int) -> [Int]
 }
 
-protocol ILocalStorage: class {
+protocol ILocalStorage: AnyObject {
     var agreementAccepted: Bool { get set }
     var sortType: SortType? { get set }
     var debugLog: String? { get set }
@@ -46,11 +46,11 @@ protocol ILogRecordStorage {
     func removeFirstLogs(count: Int)
 }
 
-protocol IChartTypeStorage: class {
+protocol IChartTypeStorage: AnyObject {
     var chartType: ChartType? { get set }
 }
 
-protocol IAdapterManager: class {
+protocol IAdapterManager: AnyObject {
     var adaptersReadyObservable: Observable<Void> { get }
     func adapter(for wallet: Wallet) -> IAdapter?
     func adapter(for coin: Coin) -> IAdapter?
@@ -66,7 +66,7 @@ protocol IAdapterFactory {
     func adapter(wallet: Wallet) -> IAdapter?
 }
 
-protocol IWalletManager: class {
+protocol IWalletManager: AnyObject {
     var activeWallets: [Wallet] { get }
     var activeWalletsUpdatedObservable: Observable<[Wallet]> { get }
 
@@ -93,7 +93,7 @@ protocol IPriceAlertManager {
     func updateTopics() -> Observable<[()]>
 }
 
-protocol IAdapter: class {
+protocol IAdapter: AnyObject {
     func start()
     func stop()
     func refresh()

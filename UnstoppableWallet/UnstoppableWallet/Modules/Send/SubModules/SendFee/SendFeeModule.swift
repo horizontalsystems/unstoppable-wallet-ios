@@ -3,7 +3,7 @@ import CurrencyKit
 import XRatesKit
 import CoinKit
 
-protocol ISendFeeView: class {
+protocol ISendFeeView: AnyObject {
     func set(loading: Bool)
     func set(fee: AmountInfo, convertedFee: AmountInfo?)
     func set(error: String?)
@@ -21,7 +21,7 @@ protocol ISendFeeInteractor {
     func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
 }
 
-protocol ISendFeeInteractorDelegate: class {
+protocol ISendFeeInteractorDelegate: AnyObject {
     func didReceive(latestRate: LatestRate)
 }
 

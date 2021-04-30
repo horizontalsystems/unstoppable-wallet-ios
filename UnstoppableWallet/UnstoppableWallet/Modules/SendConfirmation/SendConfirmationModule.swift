@@ -1,9 +1,9 @@
-protocol ISendConfirmationDelegate: class {
+protocol ISendConfirmationDelegate: AnyObject {
     func onSendClicked()
     func onCancelClicked()
 }
 
-protocol ISendConfirmationView: class {
+protocol ISendConfirmationView: AnyObject {
     func show(viewItem: SendConfirmationAmountViewItem)
     func show(viewItem: SendConfirmationMemoViewItem)
     func show(viewItem: SendConfirmationFeeViewItem)
