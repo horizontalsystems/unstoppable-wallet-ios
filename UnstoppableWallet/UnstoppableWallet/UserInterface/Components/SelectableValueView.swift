@@ -88,6 +88,6 @@ class SelectableValueView: UIView {
 
 }
 
-protocol ISelectableValueViewDelegate: class {
+protocol ISelectableValueViewDelegate: AnyObject {
     func onSelectorTap()
 }

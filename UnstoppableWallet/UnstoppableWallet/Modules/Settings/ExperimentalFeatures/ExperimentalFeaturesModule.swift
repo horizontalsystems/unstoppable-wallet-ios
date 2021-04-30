@@ -2,6 +2,6 @@ protocol IExperimentalFeaturesRouter {
     func showBitcoinHodling()
 }
 
-protocol IExperimentalFeaturesViewDelegate: class {
+protocol IExperimentalFeaturesViewDelegate: AnyObject {
     func didTapBitcoinHodling()
 }

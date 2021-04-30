@@ -1,4 +1,4 @@
-protocol IDebugView: class {
+protocol IDebugView: AnyObject {
     func set(logs: [String])
 }
 
@@ -12,7 +12,7 @@ protocol IDebugInteractor {
     func clearLogs()
 }
 
-protocol IDebugInteractorDelegate: class {
+protocol IDebugInteractorDelegate: AnyObject {
     func didEnterForeground()
 }
 

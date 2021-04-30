@@ -1,4 +1,4 @@
-protocol IDoubleSpendInfoView: class {
+protocol IDoubleSpendInfoView: AnyObject {
     func set(transactionHash: String, conflictingTransactionHash: String)
     func showCopied()
 }

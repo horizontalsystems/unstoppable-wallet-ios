@@ -1,6 +1,6 @@
 import PinKit
 
-protocol ISecuritySettingsView: class {
+protocol ISecuritySettingsView: AnyObject {
     func refresh()
 
     func set(backupAlertVisible: Bool)
@@ -28,7 +28,7 @@ protocol ISecuritySettingsInteractor: AnyObject {
     func disablePin() throws
 }
 
-protocol ISecuritySettingsInteractorDelegate: class {
+protocol ISecuritySettingsInteractorDelegate: AnyObject {
     func didUpdate(allBackedUp: Bool)
     func didUpdate(pinSet: Bool)
     func didUpdate(biometryType: BiometryType)

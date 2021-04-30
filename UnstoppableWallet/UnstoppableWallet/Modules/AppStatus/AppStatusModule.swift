@@ -1,4 +1,4 @@
-protocol IAppStatusView: class {
+protocol IAppStatusView: AnyObject {
     func set(logs: [(String, Any)])
 }
 

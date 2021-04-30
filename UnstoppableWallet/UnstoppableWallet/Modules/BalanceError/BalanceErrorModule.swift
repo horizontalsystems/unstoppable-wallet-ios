@@ -1,4 +1,4 @@
-protocol IBalanceErrorView: class {
+protocol IBalanceErrorView: AnyObject {
     func set(coinTitle: String)
     func setChangeSourceButton(hidden: Bool)
     func openReport(email: String, error: String)
@@ -18,7 +18,7 @@ protocol IBalanceErrorInteractor {
     func refresh(wallet: Wallet)
 }
 
-protocol IBalanceErrorInteractorDelegate: class {
+protocol IBalanceErrorInteractorDelegate: AnyObject {
 }
 
 protocol IBalanceErrorRouter {

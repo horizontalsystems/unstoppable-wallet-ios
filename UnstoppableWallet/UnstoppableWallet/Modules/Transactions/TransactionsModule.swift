@@ -3,7 +3,7 @@ import DeepDiff
 import CurrencyKit
 import CoinKit
 
-protocol ITransactionsView: class {
+protocol ITransactionsView: AnyObject {
     func set(status: TransactionViewStatus)
     func show(filters: [FilterHeaderView.ViewItem])
     func show(transactions: [TransactionViewItem], animated: Bool)
@@ -31,7 +31,7 @@ protocol ITransactionsInteractor {
     func fetchRate(coin: Coin, date: Date)
 }
 
-protocol ITransactionsInteractorDelegate: class {
+protocol ITransactionsInteractorDelegate: AnyObject {
     func onUpdate(selectedCoins: [Wallet])
     func onUpdate(walletsData: [(Wallet, LastBlockInfo?)])
     func onUpdateBaseCurrency()

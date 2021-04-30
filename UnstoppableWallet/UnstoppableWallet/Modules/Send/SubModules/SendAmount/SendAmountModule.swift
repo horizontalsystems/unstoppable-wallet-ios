@@ -1,7 +1,7 @@
 import UIKit
 import CurrencyKit
 
-protocol ISendAmountView: class {
+protocol ISendAmountView: AnyObject {
     func set(loading: Bool)
     func set(prefix: String?)
     func set(availableAmount: AmountInfo?)
@@ -55,7 +55,7 @@ protocol ISendAmountModule: AnyObject {
     func set(minimumRequiredBalance: Decimal)
 }
 
-protocol ISendAmountDelegate: class {
+protocol ISendAmountDelegate: AnyObject {
     func onChangeAmount()
     func onChange(inputType: SendInputType)
 }

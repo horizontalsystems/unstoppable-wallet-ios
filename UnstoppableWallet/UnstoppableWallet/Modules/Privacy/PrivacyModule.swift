@@ -17,7 +17,7 @@ protocol IPrivacyInteractor {
     func save(sortSetting: TransactionDataSortMode)
 }
 
-protocol IPrivacyView: class {
+protocol IPrivacyView: AnyObject {
     func updateUI()
     func set(sortMode: String)
     func set(connectionItems: [PrivacyViewItem])
