@@ -2,8 +2,8 @@ import UIKit
 import SnapKit
 
 class GradientPercentCircle: UIView {
-    static let width: CGFloat = 52
-    static let height: CGFloat = 52
+    static let width: CGFloat = 44
+    static let height: CGFloat = 44
     static let gradient = UIImage(named: "gradient_layer_circle")
     static let gradientWidth: CGFloat = 156
 

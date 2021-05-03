@@ -20,7 +20,8 @@ class MarketMetricLargeView: UIView {
 
         addSubview(gradientCircle)
         gradientCircle.snp.makeConstraints { maker in
-            maker.trailing.top.equalToSuperview()
+            maker.trailing.equalToSuperview()
+            maker.centerY.equalToSuperview()
             maker.width.equalTo(GradientPercentCircle.width)
             maker.height.equalTo(GradientPercentCircle.height)
         }
