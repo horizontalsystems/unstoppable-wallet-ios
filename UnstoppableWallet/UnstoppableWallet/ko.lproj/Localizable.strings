@@ -236,6 +236,7 @@
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
 "send.lock_time" = "시간 자물쇠";
 
