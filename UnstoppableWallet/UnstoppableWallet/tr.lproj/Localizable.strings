@@ -236,6 +236,7 @@
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
 "send.lock_time" = "TimeLock";
 
