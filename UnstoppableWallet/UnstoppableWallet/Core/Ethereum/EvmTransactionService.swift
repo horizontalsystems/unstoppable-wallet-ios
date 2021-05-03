@@ -17,6 +17,9 @@ class EvmTransactionService {
     }
     private let gasPriceTypeRelay = PublishRelay<GasPriceType>()
 
+    private var recommendedGasPrice: Int?
+    private let warningOfStuckRelay = PublishRelay<Bool>()
+
     private(set) var transactionStatus: DataStatus<Transaction> = .failed(GasDataError.noTransactionData) {
         didSet {
             transactionStatusRelay.accept(transactionStatus)
@@ -33,11 +36,24 @@ class EvmTransactionService {
     }
 
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
+        var recommendedSingle: Single<Int> = feeRateProvider.feeRate(priority: .recommended).map { [weak self] in
+            self?.recommendedGasPrice = $0
+            return $0
+        }
+
         switch gasPriceType {
         case .recommended:
-            return feeRateProvider.feeRate(priority: .recommended)
+            warningOfStuckRelay.accept(false)
+            return recommendedSingle
         case .custom(let gasPrice):
-            return Single.just(gasPrice)
+            if let recommendedGasPrice = recommendedGasPrice {
+                recommendedSingle = .just(recommendedGasPrice)
+            }
+
+            return recommendedSingle.map { [weak self] recommendedGasPrice in
+                self?.warningOfStuckRelay.accept(gasPrice < recommendedGasPrice)
+                return gasPrice
+            }
         }
     }
 
@@ -115,6 +131,10 @@ extension EvmTransactionService {
 
     var gasPriceTypeObservable: Observable<GasPriceType> {
         gasPriceTypeRelay.asObservable()
+    }
+
+    var warningOfStuckObservable: Observable<Bool> {
+        warningOfStuckRelay.asObservable()
     }
 
     var transactionStatusObservable: Observable<DataStatus<Transaction>> {
