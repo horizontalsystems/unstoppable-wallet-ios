@@ -63,7 +63,7 @@ class CoinPageService {
         var codes = [String]()
 
         codes.append(currencyKit.baseCurrency.code)
-        codes.append(contentsOf: [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum)].compactMap { $0?.code })
+        codes.append(contentsOf: [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum), coinKit.coin(type: .binanceSmartChain)].compactMap { $0?.code })
 
         return codes
     }
