@@ -22,6 +22,7 @@ protocol ILocalStorage: AnyObject {
     var debugLog: String? { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
+    var jailbreakShownOnce: Bool { get set }
     var transactionDataSortMode: TransactionDataSortMode? { get set }
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }

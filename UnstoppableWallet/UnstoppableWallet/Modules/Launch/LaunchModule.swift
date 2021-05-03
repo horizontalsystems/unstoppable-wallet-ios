@@ -5,7 +5,6 @@ protocol ILaunchInteractor {
     var passcodeLocked: Bool { get }
     var isPinSet: Bool { get }
     var mainShownOnce: Bool { get }
-    var jailbroken: Bool { get }
 }
 
 protocol ILaunchPresenter {
@@ -13,7 +12,6 @@ protocol ILaunchPresenter {
 }
 
 enum LaunchMode {
-    case jailbreak
     case noPasscode
     case intro
     case unlock

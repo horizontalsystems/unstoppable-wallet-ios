@@ -227,6 +227,7 @@ PODS:
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
   - StorageKit.swift (1.0):
+    - ComponentKit.swift (~> 1.0)
     - KeychainAccess (~> 4.1)
     - LanguageKit.swift (~> 1.0)
     - SnapKit (~> 5.0)
@@ -546,7 +547,7 @@ CHECKOUT OPTIONS:
     :commit: cdd45d3d29c230c14b68dbd03fae9b7f9c42a3ab
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
-    :commit: 6414e4819318101c4819919f3d006f3277685983
+    :commit: 951b0a0539062a411930ec0b11d710f4cdd5877c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
     :commit: 1c1c4ee43659cf60470ee441b53d42a02c81349c
@@ -627,7 +628,7 @@ SPEC CHECKSUMS:
   SkeletonView: cac18a3ac4f893b09d99e65072d806ef08377aae
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  StorageKit.swift: 57d9ac343c15902ced373bbb2febb748f613ebb4
+  StorageKit.swift: 1a041c9f9a80c3388373e4ba105aadd09339ff7a
   SwiftNIO: 81d33ce8c500b7e41b6cdde5f2f12330b9750219
   SwiftNIOConcurrencyHelpers: 23fc68bac541a465162d7225d2c743edd2f1012c
   SwiftNIOFoundationCompat: 0e52ac0e2c9b7b60ff9141eebb64f5a82d974118
