@@ -233,7 +233,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
-"send.amount_error.balance" = "Баланс %@";
+"send.amount_error.balance" = "Not Enough Balance";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
