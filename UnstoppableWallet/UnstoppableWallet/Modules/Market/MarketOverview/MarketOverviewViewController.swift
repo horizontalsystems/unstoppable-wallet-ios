@@ -59,7 +59,6 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: A2Cell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
-        tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: MarketPostCell.self)
 
         subscribe(disposeBag, overviewViewModel.stateDriver) { [weak self] state in
@@ -273,26 +272,6 @@ extension MarketOverviewViewController: SectionsDataSource {
 
             // posts state showed only when completed coin request
             sections.append(contentsOf: postSections)
-
-            let brandText = "Powered by CoinGecko API"
-
-            sections.append(
-                    Section(
-                            id: "brand",
-                            headerState: .margin(height: .margin24),
-                            rows: [
-                                Row<BrandFooterCell>(
-                                        id: "brand",
-                                        dynamicHeight: { containerWidth in
-                                            BrandFooterCell.height(containerWidth: containerWidth, title: brandText)
-                                        },
-                                        bind: { cell, _ in
-                                            cell.title = brandText
-                                        }
-                                )
-                            ]
-                    )
-            )
 
         case .error(let errorDescription):
             let row = Row<ErrorCell>(
