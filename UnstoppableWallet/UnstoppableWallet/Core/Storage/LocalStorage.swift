@@ -10,6 +10,7 @@ class LocalStorage {
     private let keySendInputType = "send_input_type_key"
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
+    private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
     private let keyTransactionDataSortMode = "transaction_data_sort_mode"
     private let keyLockTimeEnabled = "lock_time_enabled"
@@ -69,6 +70,11 @@ extension LocalStorage: ILocalStorage {
     var mainShownOnce: Bool {
         get { storage.value(for: mainShownOnceKey) ?? false }
         set { storage.set(value: newValue, for: mainShownOnceKey) }
+    }
+
+    var jailbreakShownOnce: Bool {
+        get { storage.value(for: jailbreakShownOnceKey) ?? false }
+        set { storage.set(value: newValue, for: jailbreakShownOnceKey) }
     }
 
     var transactionDataSortMode: TransactionDataSortMode? {

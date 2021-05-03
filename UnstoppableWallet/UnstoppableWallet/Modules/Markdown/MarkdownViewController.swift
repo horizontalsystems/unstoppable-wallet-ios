@@ -9,6 +9,7 @@ import RxCocoa
 class MarkdownViewController: ThemeViewController {
     private let viewModel: MarkdownViewModel
     private let showClose: Bool
+    private let closeHandler: (() -> ())?
     private let handleRelativeUrl: Bool
     private let disposeBag = DisposeBag()
 
@@ -17,9 +18,10 @@ class MarkdownViewController: ThemeViewController {
 
     private var viewItems: [MarkdownBlockViewItem]?
 
-    init(viewModel: MarkdownViewModel, showClose: Bool = false, handleRelativeUrl: Bool) {
+    init(viewModel: MarkdownViewModel, showClose: Bool = false, closeHandler: (() -> ())? = nil, handleRelativeUrl: Bool) {
         self.viewModel = viewModel
         self.showClose = showClose
+        self.closeHandler = closeHandler
         self.handleRelativeUrl = handleRelativeUrl
 
         super.init()
@@ -87,7 +89,9 @@ class MarkdownViewController: ThemeViewController {
     }
 
     @objc private func onClose() {
-        dismiss(animated: true)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.closeHandler?()
+        })
     }
 
     private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {

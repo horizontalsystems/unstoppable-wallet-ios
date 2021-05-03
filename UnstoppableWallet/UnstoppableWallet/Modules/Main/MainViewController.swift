@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import RxSwift
 import RxCocoa
+import StorageKit
 
 class MainViewController: ThemeTabBarController {
     private let disposeBag = DisposeBag()
@@ -13,6 +14,8 @@ class MainViewController: ThemeTabBarController {
     private let onboardingModule = ThemeNavigationController(rootViewController: OnboardingBalanceViewController())
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsRouter.module())
     private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
+
+    private var showAlerts = [(() -> ())]()
 
     init(viewModel: MainViewModel, selectedIndex: Int) {
         self.viewModel = viewModel
@@ -35,7 +38,16 @@ class MainViewController: ThemeTabBarController {
 
         subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
 
+        if viewModel.needToShowJailbreakAlert {
+            showJailbreakAlert()
+        }
+
         viewModel.onLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showNextAlert()
     }
 
     private func sync(balanceTabState: MainViewModel.BalanceTabState) {
@@ -67,8 +79,35 @@ class MainViewController: ThemeTabBarController {
             return
         }
 
-        let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url)
-        present(ThemeNavigationController(rootViewController: module), animated: true)
+        showAlerts.append({
+            let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, closeHandler: { [weak self] in
+                self?.showNextAlert()
+            })
+            DispatchQueue.main.async {
+                self.present(ThemeNavigationController(rootViewController: module), animated: true)
+            }
+        })
+    }
+
+    private func showJailbreakAlert() {
+        showAlerts.append({
+            let jailbreakAlertController = NoPasscodeViewController(mode: .jailbreak, completion: { [weak self] in
+                self?.viewModel.onSuccessJailbreakAlert()
+                self?.showNextAlert()
+            })
+            DispatchQueue.main.async {
+                self.present(jailbreakAlertController, animated: true)
+            }
+        })
+    }
+
+    private func showNextAlert() {
+        guard let alert = showAlerts.first else {
+            return
+        }
+
+        alert()
+        showAlerts.removeFirst()
     }
 
 }

@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-class WhatsNewService {
+class ReleaseNotesService {
     private let appVersionManager: IAppVersionManager
 
     init(appVersionManager: IAppVersionManager) {
