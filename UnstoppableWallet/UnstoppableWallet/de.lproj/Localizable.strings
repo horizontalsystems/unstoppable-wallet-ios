@@ -236,6 +236,7 @@
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
 "send.lock_time" = "TimeLock";
 
