@@ -4,6 +4,7 @@ import CurrencyKit
 protocol ISendFeePriorityView: AnyObject {
     func setPriority()
     func set(customVisible: Bool)
+    func set(riskOfStuckVisible: Bool)
     func set(customFeeRateValue: Int, customFeeRateRange: ClosedRange<Int>)
 }
 
