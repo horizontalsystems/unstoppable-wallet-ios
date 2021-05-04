@@ -165,7 +165,7 @@
 "balance.synced_through" = "hasta %@";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You don’t have an added coins. Add the coins you will be using.";
+"balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "Configuración avanzada";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
-"swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
+"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
 "swap.approving_button" = "Aprobando...";
 "swap.amount_error.maximum_amount" = "Saldo %@";
@@ -490,10 +490,10 @@
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The market dominance of bitcoin, or the largest cryptocurrency's value as a share of the overall market.";
-"market.global.volume_24h.description" = "Volume refers to the total amount of transactions that traders conducted in a  markets.";
-"market.global.defi_cap.description" = "DeFi Cap chart shows a change of DeFi tokens capitalisation.";
-"market.global.tvl_in_defi.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
 
 // Coin Page
 
@@ -982,7 +982,7 @@ poner en peligro la seguridad de mis fondos.";
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
+"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
 
