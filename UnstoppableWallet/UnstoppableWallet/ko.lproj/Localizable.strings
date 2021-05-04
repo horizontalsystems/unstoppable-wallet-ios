@@ -165,7 +165,7 @@
 "balance.synced_through" = "%@ 까지";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You don’t have an added coins. Add the coins you will be using.";
+"balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "고급 설정";
 "swap.proceed_button" = "다음";
 "swap.approve.title" = "스왑 승인";
-"swap.approve.description" = "귀하를 대신하여 주어진 토큰을 교환할 수 있는 스마트 계약에 권한을 부여해야 합니다. 이 허가는 스마트 계약으로 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만, 승인거래를 하기 위해서는 소정의 수수료가 필요합니다.\n\n각 거래 전에 주문형으로 할 수 있지만, 향후 거래에서는 더 많은 금액을 미리 승인하는 것이 더 저렴합니다.";
+"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
 "swap.approving_button" = "승인 중...";
 "swap.amount_error.maximum_amount" = "잔액 %@";
@@ -490,10 +490,10 @@
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The market dominance of bitcoin, or the largest cryptocurrency's value as a share of the overall market.";
-"market.global.volume_24h.description" = "Volume refers to the total amount of transactions that traders conducted in a  markets.";
-"market.global.defi_cap.description" = "DeFi Cap chart shows a change of DeFi tokens capitalisation.";
-"market.global.tvl_in_defi.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
 
 // Coin Page
 
@@ -981,7 +981,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing";
+"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
 
