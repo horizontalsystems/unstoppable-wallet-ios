@@ -99,7 +99,7 @@ class SendEvmTransactionViewModel {
     private func transferItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem] {
         var viewItems: [ViewItem] = [
             .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.coin.title),
-            .value(title: "send.confirmation.amount".localized, value: coinServiceFactory.baseCoinService.amountData(value: value).formattedString, type: .outgoing)
+            .value(title: "send.confirmation.amount".localized, value: coinServiceFactory.baseCoinService.amountData(value: value).formattedRawString, type: .outgoing)
         ]
 
         if let to = to {
@@ -118,7 +118,7 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(title: "send.confirmation.you_send".localized, value: coinService.coin.title),
-            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedString, type: .outgoing)
+            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .outgoing)
         ]
 
         let addressValue = to.eip55
@@ -138,7 +138,7 @@ class SendEvmTransactionViewModel {
 
         let viewItems: [ViewItem] = [
             .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.coin.title),
-            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedString, type: .regular),
+            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .regular),
             .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
 
@@ -158,24 +158,24 @@ class SendEvmTransactionViewModel {
         case let .exactIn(amountIn, amountOutMin):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
-                .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedString, type: .outgoing)
+                .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedRawString, type: .outgoing)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
-                estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedString }, type: .incoming),
-                .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedString, type: .regular)
+                estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedRawString }, type: .incoming),
+                .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedRawString, type: .regular)
             ]))
         case let .exactOut(amountOut, amountInMax):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
-                estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedString }, type: .outgoing),
-                .value(title: "swap.confirmation.maximum".localized, value: coinServiceIn.amountData(value: amountInMax).formattedString, type: .regular)
+                estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedRawString }, type: .outgoing),
+                .value(title: "swap.confirmation.maximum".localized, value: coinServiceIn.amountData(value: amountInMax).formattedRawString, type: .regular)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
-                .value(title: "send.confirmation.amount".localized, value: coinServiceOut.amountData(value: amountOut).formattedString, type: .incoming)
+                .value(title: "send.confirmation.amount".localized, value: coinServiceOut.amountData(value: amountOut).formattedRawString, type: .incoming)
             ]))
         }
 
@@ -229,7 +229,7 @@ class SendEvmTransactionViewModel {
         let addressValue = transactionData.to.eip55
 
         let viewItems: [ViewItem] = [
-            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedString, type: .outgoing),
+            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
             .address(title: "To", valueTitle: addressValue, value: addressValue),
             .input(value: transactionData.input.toHexString())
         ]

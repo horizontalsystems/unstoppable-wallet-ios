@@ -136,6 +136,7 @@ class PrivacyViewController: ThemeViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                         cell.titleImage = UIImage(named: item.iconName)
+                        cell.set(titleImageSize: .iconSize24)
                         cell.title = item.title
                         cell.value = item.value
                     },
@@ -151,6 +152,7 @@ class PrivacyViewController: ThemeViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                         cell.titleImage = UIImage(named: item.iconName)
+                        cell.set(titleImageSize: .iconSize24)
                         cell.title = item.title
                         cell.value = item.value
                     }
