@@ -40,7 +40,7 @@ extension MarketDiscoveryFilter {
         case .dexEs: return "arrow_swap_2_24"
         case .lending: return "arrow_swap_approval_2_24"
         case .privacy: return "shield_24"
-        case .investmentTools: return "markets24"
+        case .investmentTools: return "markets_24"
         case .oracles: return "eye_24"
         case .predictionMarkets: return "prediction_24"
         case .scaling: return "scale_24"

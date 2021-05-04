@@ -151,6 +151,15 @@ enum AmountInfo {
         }
     }
 
+    var formattedRawString: String? {
+        switch self {
+        case .coinValue(let coinValue):
+            return coinValue.formattedRawString
+        case .currencyValue(let currencyValue):
+            return ValueFormatter.instance.format(currencyValue: currencyValue)
+        }
+    }
+
     var value: Decimal {
         switch self {
         case .currencyValue(let currencyValue): return currencyValue.value
@@ -184,6 +193,21 @@ struct AmountData {
 
         return parts.joined(separator: "  |  ")
     }
+
+    var formattedRawString: String {
+        var parts = [String]()
+
+        if let formatted = primary.formattedRawString {
+            parts.append(formatted)
+        }
+
+        if let formatted = secondary?.formattedRawString {
+            parts.append(formatted)
+        }
+
+        return parts.joined(separator: "  |  ")
+    }
+
 }
 
 class SendConfirmationViewItem {
