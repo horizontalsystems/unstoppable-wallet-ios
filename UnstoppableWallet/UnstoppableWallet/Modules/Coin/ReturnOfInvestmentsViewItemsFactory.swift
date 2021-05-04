@@ -5,13 +5,9 @@ import XRatesKit
 
 class ReturnOfInvestmentsViewItemsFactory {
 
-    func viewItems(info: CoinMarketInfo, diffCoinCodes: [String], currentCoinCode: String, timePeriods: [TimePeriod]) -> [[CoinPageViewModel.ReturnOfInvestmentsViewItem]] {
+    func viewItems(info: CoinMarketInfo, diffCoinCodes: [String], timePeriods: [TimePeriod]) -> [[CoinPageViewModel.ReturnOfInvestmentsViewItem]] {
         var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
-
-        var coinCodes = diffCoinCodes.map { $0.lowercased() }
-        if let index = coinCodes.firstIndex(of: currentCoinCode.lowercased()) {
-            coinCodes.remove(at: index)
-        }
+        let coinCodes = diffCoinCodes.map { $0.lowercased() }
 
         var titleRow = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))

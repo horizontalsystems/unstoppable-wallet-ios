@@ -110,7 +110,7 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
             ),
             Section(
                     id: "crypto",
-                    footerState: .margin(height: .margin32),
+                    footerState: .margin(height: viewModel.cryptoViewItems.isEmpty ? 0 : .margin32),
                     rows: rows(viewItems: viewModel.cryptoViewItems)
             )
         ]

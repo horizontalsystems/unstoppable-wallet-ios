@@ -27,7 +27,8 @@ class BaseCurrencySettingsService {
 
         for code in BaseCurrencySettingsService.cryptoCurrencyCodes {
             if let index = currencies.firstIndex(where: { $0.code == code }) {
-                cryptoCurrencies.append(currencies.remove(at: index))
+//                cryptoCurrencies.append(currencies.remove(at: index))
+                _ = currencies.remove(at: index)
             }
         }
 

@@ -6,7 +6,6 @@ struct CoinPageModule {
 
     static func viewController(launchMode: ChartModule.LaunchMode) -> UIViewController {
         let coinPageService = CoinPageService(
-                coinKit: App.shared.coinKit,
                 rateManager: App.shared.rateManager,
                 currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider,

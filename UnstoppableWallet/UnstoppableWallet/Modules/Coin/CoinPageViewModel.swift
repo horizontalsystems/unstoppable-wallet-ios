@@ -25,7 +25,7 @@ class CoinPageViewModel {
             stateRelay.accept(.loading)
         case .completed(let info):
             let viewItem = ViewItem(
-                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods),
+                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, timePeriods: CoinPageService.timePeriods),
                     tickers: info.tickers,
                     fundCategories: info.meta.fundCategories,
                     categories: categories(info: info),
