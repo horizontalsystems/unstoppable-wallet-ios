@@ -4,6 +4,7 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import CoinKit
+import ComponentKit
 
 class CoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CoinSelectViewModel
@@ -35,7 +36,7 @@ class CoinSelectViewController: ThemeSearchViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: SwapTokenSelectCell.self)
+        tableView.registerCell(forClass: G12Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -78,16 +79,17 @@ extension CoinSelectViewController: SectionsDataSource {
                     rows: viewItems.enumerated().map { index, viewItem in
                         let isLast = index == viewItems.count - 1
 
-                        return Row<SwapTokenSelectCell>(
+                        return Row<G12Cell>(
                                 id: "coin_\(viewItem.coin.id)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .claude, isLast: isLast)
-                                    cell.bind(
-                                            coin: viewItem.coin,
-                                            balance: viewItem.balance
-                                    )
+                                    cell.leftImage = .image(coinType: viewItem.coin.type)
+                                    cell.topText = viewItem.coin.title
+                                    cell.bottomText = viewItem.coin.code
+                                    cell.valueTopText = viewItem.balance
+                                    cell.valueBottomText = viewItem.fiatBalance
                                 },
                                 action: { [weak self] _ in
                                     self?.onSelect(coin: viewItem.coin)
