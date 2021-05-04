@@ -124,6 +124,8 @@ class CoinPageViewController: ThemeViewController {
         subtitleCell.titleColor = .themeGray
         subtitleCell.titleImage = .image(coinType: viewModel.coinType)
         subtitleCell.titleImageTintColor = .themeGray
+        subtitleCell.set(titleImageSize: .iconSize24)
+        subtitleCell.selectionStyle = .none
 
         tableView.buildSections()
 
