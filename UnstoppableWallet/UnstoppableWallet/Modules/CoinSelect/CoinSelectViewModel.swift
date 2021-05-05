@@ -24,6 +24,7 @@ class CoinSelectViewModel {
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
             let fiatFormatted = item.rate
+                    .flatMap { rate in item.balance.map { $0 * rate } }
                     .flatMap { CurrencyValue(currency: service.currency, value: $0) }
                     .flatMap { ValueFormatter.instance.format(currencyValue: $0) }
 
