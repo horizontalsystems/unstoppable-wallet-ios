@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CoinKit
+import CurrencyKit
 
 class CoinSelectViewModel {
     private let service: CoinSelectService
@@ -22,7 +23,11 @@ class CoinSelectViewModel {
                     .flatMap { CoinValue(coin: item.coin, value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
-            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: nil)
+            let fiatFormatted = item.rate
+                    .flatMap { CurrencyValue(currency: service.currency, value: $0) }
+                    .flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+
+            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: fiatFormatted)
         }
 
         viewItemsRelay.accept(viewItems)
