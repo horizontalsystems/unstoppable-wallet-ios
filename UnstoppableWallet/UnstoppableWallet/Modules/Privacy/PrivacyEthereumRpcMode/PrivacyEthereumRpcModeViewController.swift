@@ -33,8 +33,7 @@ class PrivacyEthereumRpcModeViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "settings_privacy.alert_connection.title".localized,
                 subtitle: "Ethereum",
-                image: UIImage(named: "eth"),
-                tintColor: .themeGray
+                image: UIImage(named: "ethereum")
         )
 
         titleView.onTapClose = { [weak self] in

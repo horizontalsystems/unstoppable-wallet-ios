@@ -111,8 +111,7 @@ extension PrivacySyncModeViewController: IPrivacySyncModeView {
         titleView.bind(
                 title: "settings_privacy.alert_sync.title".localized,
                 subtitle: coinTitle,
-                image: UIImage.image(coinType: coinType),
-                tintColor: .themeGray
+                image: UIImage.image(coinType: coinType)
         )
 
         descriptionView.text = "settings_privacy.alert_sync.description".localized(coinTitle)

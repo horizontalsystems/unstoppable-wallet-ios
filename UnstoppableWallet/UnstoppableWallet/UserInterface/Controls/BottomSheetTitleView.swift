@@ -74,11 +74,14 @@ class BottomSheetTitleView: UIView {
         onTapClose?()
     }
 
-    func bind(title: String?, subtitle: String?, image: UIImage?, tintColor: UIColor?) {
+    func bind(title: String?, subtitle: String?, image: UIImage?, tintColor: UIColor? = nil) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
-        iconImageView.image = image?.withRenderingMode(.alwaysTemplate)
-        iconImageView.tintColor = tintColor
+        iconImageView.image = tintColor == nil ? image : image?.withRenderingMode(.alwaysTemplate)
+
+        if let tintColor = tintColor {
+            iconImageView.tintColor = tintColor
+        }
     }
 
     var titleColor: UIColor {

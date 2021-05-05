@@ -34,7 +34,7 @@ class CoinSettingsViewModel {
     private func derivationConfig(coin: Coin, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .image(coinType: coin.type),
-                iconTint: .themeGray,
+                iconTint: nil,
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
                 description: "blockchain_settings.description".localized(coin.title),
@@ -51,7 +51,7 @@ class CoinSettingsViewModel {
     private func bitcoinCashCoinTypeConfig(coin: Coin, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .image(coinType: coin.type),
-                iconTint: .themeGray,
+                iconTint: nil,
                 title: "blockchain_settings.title".localized,
                 subtitle: coin.title,
                 description: "blockchain_settings.description".localized(coin.title),
