@@ -21,7 +21,7 @@
 "button.approve" = "Разрешить";
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
-"button.save" = "Save";
+"button.save" = "Сохранить";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -39,7 +39,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
-"price" = "Price";
+"price" = "Цена";
 "note" = "Примечание";
 
 "version" = "Версия %@";
@@ -165,10 +165,10 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
+"balance.add_coin" = "Добавить Токен";
+"balance.empty.add_coins" = "Добавить Токены";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
+"balance.sort_by" = "Сортировать по";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
