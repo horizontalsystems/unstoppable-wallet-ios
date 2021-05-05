@@ -11,6 +11,7 @@ class WalletService {
     private let sortTypeManager: ISortTypeManager
     private let localStorage: ILocalStorage
     private let rateAppManager: IRateAppManager
+    private let feeCoinProvider: IFeeCoinProvider
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
 
@@ -36,7 +37,7 @@ class WalletService {
 
     private var sortType: SortType
 
-    init(adapterService: WalletAdapterService, rateService: WalletRateService, accountManager: IAccountManager, walletManager: IWalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, scheduler: ImmediateSchedulerType) {
+    init(adapterService: WalletAdapterService, rateService: WalletRateService, accountManager: IAccountManager, walletManager: IWalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: IFeeCoinProvider, scheduler: ImmediateSchedulerType) {
         self.adapterService = adapterService
         self.rateService = rateService
         self.accountManager = accountManager
@@ -44,6 +45,7 @@ class WalletService {
         self.sortTypeManager = sortTypeManager
         self.localStorage = localStorage
         self.rateAppManager = rateAppManager
+        self.feeCoinProvider = feeCoinProvider
 
         sortType = sortTypeManager.sortType
 
@@ -95,7 +97,10 @@ class WalletService {
         syncTotalItem()
 
         adapterService.set(wallets: wallets)
-        rateService.set(coinTypes: Array(Set(wallets.map { $0.coin.type })))
+
+        let coinTypes = Set(wallets.map { $0.coin.type })
+        let feeCoinTypes = Set(wallets.compactMap { feeCoinProvider.feeCoin(coin: $0.coin)?.type })
+        rateService.set(coinTypes: Array(coinTypes.union(feeCoinTypes)))
     }
 
     private func items(coinType: CoinType) -> [Item] {

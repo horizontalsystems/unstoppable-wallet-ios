@@ -26,6 +26,7 @@ struct WalletModule {
                 sortTypeManager: App.shared.sortTypeManager,
                 localStorage: App.shared.localStorage,
                 rateAppManager: App.shared.rateAppManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
                 scheduler: scheduler
         )
 
