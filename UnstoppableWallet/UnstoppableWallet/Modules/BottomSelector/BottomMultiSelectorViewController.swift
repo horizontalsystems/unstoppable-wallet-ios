@@ -172,7 +172,7 @@ extension BottomMultiSelectorViewController {
 
     struct Config {
         let icon: UIImage?
-        let iconTint: UIColor
+        let iconTint: UIColor?
         let title: String
         let subtitle: String
         let description: String?

@@ -109,8 +109,7 @@ extension DepositViewController: IDepositView {
         titleView.bind(
                 title: "deposit.receive_coin".localized(viewItem.coinCode),
                 subtitle: viewItem.coinTitle,
-                image: UIImage.image(coinType: viewItem.coinType),
-                tintColor: .themeGray
+                image: .image(coinType: viewItem.coinType)
         )
 
         var addressTitle = "deposit.your_address".localized

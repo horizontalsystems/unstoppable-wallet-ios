@@ -23,8 +23,7 @@ class EnableCoinsConfirmationViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "enable_coins.title".localized,
                 subtitle: tokenType,
-                image: UIImage(named: tokenType.lowercased()),
-                tintColor: .themeGray
+                image: UIImage(named: tokenType.lowercased())
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
