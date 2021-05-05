@@ -8,10 +8,19 @@ class UrlManager: IUrlManager {
         self.inApp = inApp
     }
 
+    private func urlWithScheme(url: String) -> String {
+        if url.hasPrefix("http://") || url.hasPrefix("https://") {
+            return url
+        } else {
+            return "https://\(url)"
+        }
+    }
+
     func open(url: String, from controller: UIViewController?) {
-        guard let  url = URL(string: url) else {
+        guard let url = URL(string: urlWithScheme(url: url)) else {
             return
         }
+
         if let controller = controller, inApp {
             controller.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
         } else {
