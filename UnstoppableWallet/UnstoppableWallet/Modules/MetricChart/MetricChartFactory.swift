@@ -6,6 +6,8 @@ import Chart
 import CoinKit
 
 class MetricChartFactory {
+    static private let noChangesLimitPercent: Decimal = 0.2
+
     private let timelineHelper: ITimelineHelper
     private let dateFormatter = DateFormatter()
 
@@ -57,8 +59,14 @@ extension MetricChartFactory {
 
         // calculate min and max limit texts
         let values = data.values(name: .rate)
-        let min = format(value: values.min(), currency: currency, valueType: valueType)
-        let max = format(value: values.max(), currency: currency, valueType: valueType)
+        var min = values.min()
+        var max = values.max()
+        if let minValue = min, let maxValue = max, minValue == maxValue {
+            min = minValue * (1 - Self.noChangesLimitPercent)
+            max = maxValue * (1 + Self.noChangesLimitPercent)
+        }
+        let minString = format(value: min, currency: currency, valueType: valueType)
+        let maxString = format(value: max, currency: currency, valueType: valueType)
 
         // determine chart growing state. when chart not full - it's nil
         var chartTrend: MovementTrend = .neutral
@@ -80,7 +88,7 @@ extension MetricChartFactory {
                     ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
                 }
 
-        return MetricChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, currentValue: value, minValue: min, maxValue: max, chartDiff: valueDiff, timeline: timeline)
+        return MetricChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, currentValue: value, minValue: minString, maxValue: maxString, chartDiff: valueDiff, timeline: timeline)
     }
 
     func selectedPointViewItem(chartItem: ChartItem, type: ChartType, valueType: MetricChartModule.ValueType, currency: Currency) -> SelectedPointViewItem? {
