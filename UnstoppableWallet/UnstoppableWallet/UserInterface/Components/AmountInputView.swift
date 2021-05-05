@@ -115,6 +115,11 @@ extension AmountInputView {
         }
     }
 
+    var textColor: UIColor? {
+        get { inputStackView.textColor }
+        set { inputStackView.textColor = newValue }
+    }
+
     var prefix: String? {
         get { prefixView.label.text }
         set {
@@ -123,9 +128,20 @@ extension AmountInputView {
         }
     }
 
+    var prefixColor: UIColor? {
+        get { prefixView.textColor }
+        set { prefixView.textColor = newValue }
+    }
+
+
     var secondaryButtonText: String? {
         get { secondaryButton.title(for: .normal) }
         set { secondaryButton.setTitle(newValue, for: .normal) }
+    }
+
+    var secondaryButtonTextColor: UIColor? {
+        get { secondaryButton.titleColor(for: .normal) }
+        set { secondaryButton.setTitleColor(newValue, for: .normal) }
     }
 
     var secondaryButtonEnabled: Bool {
@@ -136,6 +152,11 @@ extension AmountInputView {
     var isValidText: ((String) -> Bool)? {
         get { inputStackView.isValidText }
         set { inputStackView.isValidText = newValue }
+    }
+
+    var inputColor: UIColor? {
+        get { inputStackView.textColor }
+        set { inputStackView.textColor = newValue }
     }
 
 }

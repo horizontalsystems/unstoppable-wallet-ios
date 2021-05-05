@@ -129,7 +129,7 @@ extension SendAmountView: ISendAmountView {
     }
 
     func set(amount: AmountInfo?) {
-        guard let amount = amount else {
+         guard let amount = amount else {
             amountInput.inputText = nil
             return
         }
@@ -139,6 +139,17 @@ extension SendAmountView: ISendAmountView {
             amountInput.inputText = format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             amountInput.inputText = format(currencyValue: currencyValue)
+        }
+    }
+
+    func setAmountColor(inputType: SendInputType) {
+        switch inputType {
+        case .currency:
+            amountInput.textColor = .themeJacob
+            amountInput.prefixColor = .themeJacob
+        case .coin:
+            amountInput.textColor = .themeOz
+            amountInput.prefixColor = .themeOz
         }
     }
 
@@ -164,6 +175,16 @@ extension SendAmountView: ISendAmountView {
 
     func set(hint: AmountInfo?) {
         amountInput.secondaryButtonText = hint?.formattedString ?? "n/a".localized
+    }
+
+
+    func setHintColor(inputType: SendInputType) {
+        switch inputType {
+        case .currency:
+            amountInput.secondaryButtonTextColor = .themeJacob
+        case .coin:
+            amountInput.secondaryButtonTextColor = .themeOz
+        }
     }
 
     func set(error: Error?) {

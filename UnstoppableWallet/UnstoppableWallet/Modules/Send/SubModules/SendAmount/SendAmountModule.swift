@@ -6,7 +6,9 @@ protocol ISendAmountView: AnyObject {
     func set(prefix: String?)
     func set(availableAmount: AmountInfo?)
     func set(amount: AmountInfo?)
+    func setAmountColor(inputType: SendInputType)
     func set(hint: AmountInfo?)
+    func setHintColor(inputType: SendInputType)
     func set(error: Error?)
 
     func set(switchButtonEnabled: Bool)
