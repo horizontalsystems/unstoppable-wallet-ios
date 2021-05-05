@@ -35,6 +35,8 @@ class SendAmountPresenter {
     }
 
     private func syncAmountType() {
+        view?.setAmountColor(inputType: inputType)
+
         switch inputType {
         case .coin: view?.set(prefix: nil)
         case .currency: view?.set(prefix: currency.symbol)
@@ -58,6 +60,7 @@ class SendAmountPresenter {
         let hintAmount = amount ?? 0
 
         view?.set(hint: secondaryAmountInfo(amount: hintAmount))
+        view?.setHintColor(inputType: inputType.reversed)
     }
 
     private func syncAmount() {

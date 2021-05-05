@@ -35,3 +35,12 @@ class InputPrefixWrapperView: UIView, ISizeAwareView {
     }
 
 }
+
+extension InputPrefixWrapperView {
+
+    var textColor: UIColor? {
+        get { label.textColor }
+        set { label.textColor = newValue }
+    }
+
+}

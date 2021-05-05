@@ -92,6 +92,11 @@ extension FormTextView {
         }
     }
 
+    var textColor: UIColor? {
+        get { textView.textColor }
+        set { textView.textColor = newValue }
+    }
+
     var placeholder: String? {
         get { placeholderLabel.text }
         set { placeholderLabel.text = newValue }

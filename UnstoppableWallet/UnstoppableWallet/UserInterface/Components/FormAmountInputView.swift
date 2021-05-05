@@ -31,6 +31,10 @@ class FormAmountInputView: UIView {
         subscribe(disposeBag, viewModel.isMaxEnabledDriver) { [weak self] in self?.amountInputView.maxButtonVisible = $0 }
         subscribe(disposeBag, viewModel.switchEnabledDriver) { [weak self] in self?.amountInputView.secondaryButtonEnabled = $0 }
         subscribe(disposeBag, viewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
+
+        subscribe(disposeBag, viewModel.prefixTypeDriver) { [weak self] in self?.amountInputView.prefixColor = self?.textColor(inputType: $0) }
+        subscribe(disposeBag, viewModel.amountTypeDriver) { [weak self] in self?.amountInputView.textColor = self?.textColor(inputType: $0) }
+        subscribe(disposeBag, viewModel.secondaryTextTypeDriver) { [weak self] in self?.amountInputView.secondaryButtonTextColor = self?.textColor(inputType: $0) }
     }
 
     required init?(coder: NSCoder) {
@@ -47,6 +51,13 @@ class FormAmountInputView: UIView {
         }
 
         amountInputView.inputText = amount
+    }
+
+    private func textColor(inputType: AmountInputViewModel.InputType) -> UIColor {
+        switch inputType {
+        case .coin: return .themeOz
+        case .currency: return .themeJacob
+        }
     }
 
     private func set(prefix: String?) {
