@@ -68,10 +68,10 @@
 "restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами.";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12 или 24 слова. Длина вашей мнемонической фразы составляет: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
-"restore.passphrase" = "Парольная фраза";
-"restore.input.passphrase" = "Парольная фраза";
-"restore.passphrase_description" = "Введите свою парольную фразу, которую вы использовали при создании этой мнемонической фразы";
-"restore.error.empty_passphrase" = "Поле для парольной фразы не может быть пустым";
+"restore.passphrase" = "Кодовая фраза";
+"restore.input.passphrase" = "Кодовая фраза";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
+"restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 
 // Coin Settings
 
@@ -107,7 +107,7 @@
 "show_key.button_show" = "Показать";
 "show_key.tab.recovery_phrase" = "Фраза для восстановления";
 "show_key.tab.private_keys" = "Приватные ключи";
-"show_key.passphrase" = "Парольная фраза";
+"show_key.passphrase" = "Кодовая фраза";
 
 // Backup Key
 
@@ -115,16 +115,16 @@
 "backup_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "backup_key.button_show" = "Показать";
 "backup_key.button_backup" = "Резервная Копия";
-"backup_key.passphrase" = "Парольная фраза";
+"backup_key.passphrase" = "Кодовая фраза";
 
 "backup_key.confirmation.description" = "Введите фразы для восстановления в правильном порядке, чтобы подтвердить";
-"backup_key.confirmation.passphrase" = "Парольная фраза";
-"backup_key.confirmation.passphrase_description" = "Введите парольную фразу!";
+"backup_key.confirmation.passphrase" = "Кодовая фраза";
+"backup_key.confirmation.passphrase_description" = "Введите кодовую фразу";
 
 "backup_key.confirmation.empty_word" = "Отсутствует слово";
 "backup_key.confirmation.invalid_word" = "Неверное слово";
-"backup_key.confirmation.empty_passphrase" = "Отсутствует парольная фраза";
-"backup_key.confirmation.invalid_passphrase" = "Неверная парольная фраза";
+"backup_key.confirmation.empty_passphrase" = "Отсутствует кодовая фраза";
+"backup_key.confirmation.invalid_passphrase" = "Неверная кодовая фраза";
 
 // Backup
 
@@ -829,13 +829,13 @@
 "create_wallet.create_button" = "Создать";
 "create_wallet.mnemonic" = "Мнемоническая фраза";
 "create_wallet.n_words" = "%@ слов";
-"create_wallet.passphrase" = "Парольная фраза";
-"create_wallet.input.passphrase" = "Парольная фраза";
+"create_wallet.passphrase" = "Кодовая фраза";
+"create_wallet.input.passphrase" = "Кодовая фраза";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.passphrase_description" = "Кодовые фразы обеспечивают дополнительную защиту для кошельков, позволяя пользователям создавать несколько независимых мультивалютных кошельков, использующих одну мнемоническую фразу для восстановления, но имеющих разные пароли.\n\nДля восстановления этих кошельков пользователю потребуются мнемоническая фраза для восстановления, а также пароль для каждого восстанавливаемого кошелька.";
+"create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
+"create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только латинские буквы и цифры для кодовой фразы";
+"create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
 
 // Select Coins
 
@@ -974,19 +974,19 @@
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ слов";
+"manage_accounts.n_words_with_passphrase" = "%@ слов с кодовой фразой";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "Имя";
+"manage_account.show_recovery_phrase" = "Показать фразу";
+"manage_account.backup_recovery_phrase" = "Резервная фраза";
+"manage_account.unlink" = "Отключить";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "Высота блока";
+"birthday_input.description" = "Если вы знаете высоту блока вашего Zcash кошелька, добавьте ее ниже для ускорения процесса синхронизации.";
+"birthday_input.input_placeholder" = "%@ (опционально)";
+"restore_setting.birthday_height" = "%@ Высота блока";
