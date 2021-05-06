@@ -101,28 +101,28 @@
 // Show Key
 
 "show_key.title" = "密钥";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
-"show_key.passphrase" = "Passphrase";
+"show_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"show_key.button_show" = "显示";
+"show_key.tab.recovery_phrase" = "恢复码";
+"show_key.tab.private_keys" = "私钥";
+"show_key.passphrase" = "密码";
 
 // Backup Key
 
-"backup_key.title" = "Backup";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
-"backup_key.passphrase" = "Passphrase";
+"backup_key.title" = "备份";
+"backup_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"backup_key.button_show" = "显示";
+"backup_key.button_backup" = "备份";
+"backup_key.passphrase" = "密码";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.description" = "以正确顺序输入恢复码进行确认";
+"backup_key.confirmation.passphrase" = "密码";
+"backup_key.confirmation.passphrase_description" = "输入密码";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "空单词";
+"backup_key.confirmation.invalid_word" = "无效单词";
+"backup_key.confirmation.empty_passphrase" = "空密码";
+"backup_key.confirmation.invalid_passphrase" = "无效密码";
 
 // Backup
 
@@ -165,8 +165,8 @@
 "balance.synced_through" = "直到 %@";
 "balance.add_coin" = "添加代币";
 "balance.empty.add_coins" = "添加代币";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
+"balance.empty.description" = "您还没有添加任何代币到此钱包中。";
+"balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -179,7 +179,7 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
 
 // Send
 
@@ -236,7 +236,7 @@
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
 
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "高级设置";
 "swap.proceed_button" = "继续";
 "swap.approve.title" = "互兑批准";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
+"swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
 "swap.approving_button" = "审批中...";
 "swap.amount_error.maximum_amount" = "余额 %@";
@@ -352,7 +352,7 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
-"market.top.section.header.news" = "News";
+"market.top.section.header.news" = "新闻";
 "market.top.volume.title" = "交易量";
 "market.top.market_cap.title" = "市场价值";
 "market.top.diluted_market_cap.title" = "Diluted M.Cap";
@@ -578,17 +578,17 @@
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
-"settings.theme" = "Theme";
+"settings.theme" = "主题";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "基本货币";
-"settings.base_currency.other" = "Other";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.other" = "其他";
+"settings.base_currency.disclaimer" = "声明";
+"settings.base_currency.disclaimer.description" = "汇率数据由第三方服务Coingecko.com提供\n\nUnstoppable钱包应用不保证这是数值总是准确以及和市场数据匹配。如果您选择任何基础货币而不是%@，那么出现不一致的机会将较高。";
+"settings.base_currency.disclaimer.i_understand" = "我理解";
 
 // Settings -> Notifications
 
@@ -727,10 +727,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.title" = "主题";
+"settings_theme.system" = "系统";
+"settings_theme.dark" = "深色";
+"settings_theme.light" = "浅色";
 
 // Set PIN
 
@@ -825,15 +825,15 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
-"create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.mnemonic" = "助记词";
+"create_wallet.n_words" = "%@ 个单词";
+"create_wallet.passphrase" = "密码";
+"create_wallet.input.passphrase" = "密码";
+"create_wallet.input.confirm" = "确认";
+"create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
+"create_wallet.error.empty_passphrase" = "密码不能为空";
+"create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
+"create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 
 // Select Coins
 
@@ -882,7 +882,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "add_token_selector.choose_blockchain" = "选择区块链";
 "add_token_selector.add_token" = "添加代币";
-"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.erc20_token" = "ERC20 代币";
 "add_token_selector.bep20_token" = "BEP20 代币";
 "add_token_selector.bep2_token" = "BEP2 代币";
 
@@ -972,19 +972,19 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ 个单词";
+"manage_accounts.n_words_with_passphrase" = "%@ 个单词的密码";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "名称";
+"manage_account.show_recovery_phrase" = "显示恢复码";
+"manage_account.backup_recovery_phrase" = "备份码";
+"manage_account.unlink" = "取消链接";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "生日高度";
+"birthday_input.description" = "如果您知道您Zcash钱包的生日高度，请将其添加至下方以加速同步过程。";
+"birthday_input.input_placeholder" = "%@ （可选）";
+"restore_setting.birthday_height" = "%@ 生日高度";
