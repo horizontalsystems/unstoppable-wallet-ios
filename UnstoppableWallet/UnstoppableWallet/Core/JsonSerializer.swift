@@ -12,7 +12,7 @@ class JsonSerializer: ISerializer {
             return nil
         }
 
-        return String(data: data, encoding: .ascii)
+        return String(data: data, encoding: .utf8)
     }
 
     func deserialize(_ string: String) -> [String: Any]? {
