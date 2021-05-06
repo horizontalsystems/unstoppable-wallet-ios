@@ -25,6 +25,7 @@ class MarketOverviewService {
         self.rateManager = rateManager
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
+            self?.items = []
             self?.fetch()
         }
         fetch()
@@ -53,6 +54,7 @@ class MarketOverviewService {
     }
 
     private func onFetchFailed(error: Error) {
+        items = []
         state = .failed(error: error)
     }
 
