@@ -325,7 +325,7 @@ extension MarketAdvancedSearchService.ValueFilter {
         switch self {
         case .none: return "market.advanced_search.any".localized
         case .lessM5: return "market.advanced_search.less_5_m".localized
-        case .m5m10: return "market.advanced_search.m_5_m_10".localized
+        case .m5m20: return "market.advanced_search.m_5_m_20".localized
         case .m20m100: return "market.advanced_search.m_20_m_100".localized
         case .m100b1: return "market.advanced_search.m_100_b_1".localized
         case .b1b5: return "market.advanced_search.b_1_b_5".localized

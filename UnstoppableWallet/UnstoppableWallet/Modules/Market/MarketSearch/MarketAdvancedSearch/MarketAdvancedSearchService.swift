@@ -343,7 +343,7 @@ extension MarketAdvancedSearchService {
     enum ValueFilter: CaseIterable {
         case none
         case lessM5
-        case m5m10
+        case m5m20
         case m20m100
         case m100b1
         case b1b5
@@ -352,7 +352,7 @@ extension MarketAdvancedSearchService {
         var lowerBound: Decimal? {
             switch self {
             case .none, .lessM5: return nil
-            case .m5m10: return 5_000_000
+            case .m5m20: return 5_000_000
             case .m20m100: return 20_000_000
             case .m100b1: return 100_000_000
             case .b1b5: return 1_000_000_000
@@ -363,7 +363,7 @@ extension MarketAdvancedSearchService {
         var upperBound: Decimal? {
             switch self {
             case .lessM5: return 5_000_000
-            case .m5m10: return 10_000_000
+            case .m5m20: return 20_000_000
             case .m20m100: return 100_000_000
             case .m100b1: return 1_000_000_000
             case .b1b5: return 5_000_000_000
