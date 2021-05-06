@@ -8,8 +8,6 @@ guides_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/blockc
 faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq_ios.json
 uniswap_graph_url = https:/$()/api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
 cryptocompare_com_api_key =
-pns_username = user
-pns_password = secret
 
 default_words =
 default_words_12 =

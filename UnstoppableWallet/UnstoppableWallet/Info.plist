@@ -58,10 +58,6 @@
 	<string>We use Face ID to unlock wallet.</string>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
-	<key>PnsPassword</key>
-	<string>${pns_password}</string>
-	<key>PnsUsername</key>
-	<string>${pns_username}</string>
 	<key>Sandbox</key>
 	<string>${Sandbox}</string>
 	<key>ShowBuildNumber</key>

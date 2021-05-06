@@ -284,8 +284,6 @@ protocol IAppConfigProvider {
     var feeRateAdjustedForCurrencyCodes: [String] { get }
 
     var pnsUrl: String { get }
-    var pnsPassword: String { get }
-    var pnsUsername: String { get }
 
     var featuredCoinTypes: [CoinType] { get }
     func defaultWords(count: Int) -> String
