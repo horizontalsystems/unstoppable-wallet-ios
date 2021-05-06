@@ -21,7 +21,7 @@
 "button.approve" = "Genehmigen";
 "button.reject" = "Verwerfen";
 "button.connect" = "Verbinden";
-"button.save" = "Save";
+"button.save" = "Speichern";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -39,7 +39,7 @@
 "offline" = "Offline";
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
-"price" = "Price";
+"price" = "Preis";
 "note" = "Hinweis";
 
 "version" = "Version %@";
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "Erweiterte Einstellungen";
 "swap.proceed_button" = "Weiter";
 "swap.approve.title" = "Tausch genehmigen";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
+"swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
 "swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
 "swap.approving_button" = "Wird bestätigt...";
 "swap.amount_error.maximum_amount" = "Guthaben %@";
@@ -584,7 +584,7 @@
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.title" = "Basiswährung";
 "settings.base_currency.other" = "Other";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
@@ -712,7 +712,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_manage_keys.restore" = "Wiederherstellen";
 "settings_manage_keys.settings" = "Adressformatierung";
 "settings_manage_keys.delete.title" = "Wallet löschen";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
+"settings_manage_keys.delete.confirmation_remove" = "Damit wird das Wallet von diesem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_loose" = "ACHTUNG: Wenn Sie den privaten Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugriff auf Ihr Guthaben.";
 
 // Settings -> About App
