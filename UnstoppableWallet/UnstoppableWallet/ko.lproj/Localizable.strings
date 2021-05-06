@@ -21,7 +21,7 @@
 "button.approve" = "승인";
 "button.reject" = "거절";
 "button.connect" = "연결";
-"button.save" = "Save";
+"button.save" = "저장";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -39,7 +39,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
-"price" = "Price";
+"price" = "금액";
 "note" = "참고";
 
 "version" = "버전 %@";
@@ -163,8 +163,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
+"balance.add_coin" = "코인 추가";
+"balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "정렬 기준";
