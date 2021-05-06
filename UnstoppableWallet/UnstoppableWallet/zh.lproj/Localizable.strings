@@ -163,8 +163,8 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
+"balance.add_coin" = "添加代币";
+"balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "排序方式";
@@ -584,7 +584,7 @@
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.title" = "基本货币";
 "settings.base_currency.other" = "Other";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
