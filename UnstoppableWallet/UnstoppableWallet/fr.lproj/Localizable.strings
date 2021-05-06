@@ -21,7 +21,7 @@
 "button.approve" = "Approuver";
 "button.reject" = "Rejeter";
 "button.connect" = "Connecter";
-"button.save" = "Save";
+"button.save" = "Sauvegarder";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -39,7 +39,7 @@
 "offline" = "Déconnecté";
 "confirm" = "Confirmer";
 "connect" = "Connecter";
-"price" = "Price";
+"price" = "Prix";
 "note" = "Remarque";
 
 "version" = "Version %@";
