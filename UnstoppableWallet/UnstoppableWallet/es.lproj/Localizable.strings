@@ -21,7 +21,7 @@
 "button.approve" = "Aprobar";
 "button.reject" = "Rechazar";
 "button.connect" = "Conectar";
-"button.save" = "Save";
+"button.save" = "Guardar";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -39,7 +39,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Price";
+"price" = "Precio";
 "note" = "Nota";
 
 "version" = "Versión %@";
@@ -163,10 +163,10 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
+"balance.add_coin" = "Añadir Monedas";
+"balance.empty.add_coins" = "Añadir Monedas";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
+"balance.sort_by" = "Ordenar por";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "Configuración avanzada";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
+"swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
 "swap.approving_button" = "Aprobando...";
 "swap.amount_error.maximum_amount" = "Saldo %@";
@@ -584,7 +584,7 @@
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Other";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
@@ -713,7 +713,7 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.restore" = "Restaurar";
 "settings_manage_keys.settings" = "Formato de Dirección";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos  de este dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
 
 // Settings -> About App
