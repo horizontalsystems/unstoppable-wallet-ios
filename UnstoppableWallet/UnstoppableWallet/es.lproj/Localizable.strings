@@ -63,13 +63,13 @@
 
 "restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
+"restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
+"restore_error.mnemonic_word_count" = "La cantidad ingresada de palabras es incorrecta. Deberian ser 12 o 24. Usted a ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "Passphrase cannot be empty";
+"restore.passphrase" = "Frase de contraseña";
+"restore.input.passphrase" = "Frase de contraseña";
+"restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica";
+"restore.error.empty_passphrase" = "La frase de contraseña no puede estar vacío";
 
 // Coin Settings
 
@@ -96,33 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
-"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+"blockchain_settings.description" = "Elija el formato de dirección para su monedero %@. Cada formato seleccionado representa un monedero diferente en la pestaña de saldo de la aplicación.";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
-"show_key.passphrase" = "Passphrase";
+"show_key.title" = "Clave";
+"show_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"show_key.button_show" = "Mostrar";
+"show_key.tab.recovery_phrase" = "Frase de Recuperación";
+"show_key.tab.private_keys" = "Claves privadas";
+"show_key.passphrase" = "Frase de contraseña";
 
 // Backup Key
 
-"backup_key.title" = "Backup";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
-"backup_key.passphrase" = "Passphrase";
+"backup_key.title" = "Copia de seguridad";
+"backup_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"backup_key.button_show" = "Mostrar";
+"backup_key.button_backup" = "Copia de seguridad";
+"backup_key.passphrase" = "Frase de contraseña";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.description" = "Introduzca la frase de recuperación en su orden correcto para confirmar";
+"backup_key.confirmation.passphrase" = "Frase de contraseña";
+"backup_key.confirmation.passphrase_description" = "Introduzca su frase de contraseña";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "Palabra vacía";
+"backup_key.confirmation.invalid_word" = "Palabra no válida";
+"backup_key.confirmation.empty_passphrase" = "Frase de contraseña vacía";
+"backup_key.confirmation.invalid_passphrase" = "Frase de contraseña inválida";
 
 // Backup
 
@@ -165,7 +165,7 @@
 "balance.synced_through" = "hasta %@";
 "balance.add_coin" = "Añadir Monedas";
 "balance.empty.add_coins" = "Añadir Monedas";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.empty.description" = "No has añadido ninguna moneda a este monedero.";
 "balance.sort_by" = "Ordenar por";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -179,7 +179,7 @@
 
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
 
 // Send
 
@@ -236,7 +236,7 @@
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
 "send.lock_time" = "TimeLock";
 
@@ -578,17 +578,17 @@
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
+"settings.theme" = "Tema";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Moneda principal";
-"settings.base_currency.other" = "Other";
+"settings.base_currency.other" = "Otro";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
 // Settings -> Notifications
 
@@ -728,10 +728,10 @@ poner en peligro la seguridad de mis fondos.";
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.title" = "Tema";
+"settings_theme.system" = "Sistema";
+"settings_theme.dark" = "Oscuro";
+"settings_theme.light" = "Claro";
 
 // Set PIN
 
@@ -826,15 +826,15 @@ poner en peligro la seguridad de mis fondos.";
 
 "create_wallet.title" = "Nuevo Monedero";
 "create_wallet.create_button" = "Crear";
-"create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.mnemonic" = "Mnemotécnica";
+"create_wallet.n_words" = "%@ palabras";
+"create_wallet.passphrase" = "Frase de contraseña";
+"create_wallet.input.passphrase" = "Frase de contraseña";
+"create_wallet.input.confirm" = "Confirmar";
+"create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
+"create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
+"create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
+"create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Select Coins
 
@@ -973,19 +973,19 @@ poner en peligro la seguridad de mis fondos.";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ palabras";
+"manage_accounts.n_words_with_passphrase" = "%@ palabras con frase de contraseña";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "Nombre";
+"manage_account.show_recovery_phrase" = "Mostrar Frase";
+"manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
+"manage_account.unlink" = "Desenlazar";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "Altura de Cumpleaños";
+"birthday_input.description" = "Si conoce una altura de cumpleaños para su monedero Zcash añádela abajo para acelerar el proceso de sincronización.";
+"birthday_input.input_placeholder" = "%@ (opcional)";
+"restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
