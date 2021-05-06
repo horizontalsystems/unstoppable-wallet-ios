@@ -31,7 +31,7 @@ class MarketListService {
             self?.refetch()
         }
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.fetch() }
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.refetch() }
         fetch()
     }
 
