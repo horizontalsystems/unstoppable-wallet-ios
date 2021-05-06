@@ -89,7 +89,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Новый";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Старые кошельки (до августа 2017 г.)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Новые кошельки";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Новые Кошельки";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.change_alert.title" = "Формат Адреса";
 "blockchain_settings.change_alert.content" = "После того, как данное изменение вступит в силу, кошелек должен будет повторно синхронизироваться с блокчейном %@.\n\nПри изменении формата адреса для %@ текущий баланс и история транзакций больше не будут отображаться. При возвращении предыдущих настроек баланс и история восстановятся после того, как кошелек повторно синхронизируется с блокчейном. Рекомендуем не менять настройки, если вы не уверены, что это такое.";
@@ -136,7 +136,7 @@
 "backup.intro.title_show" = "Показать Ключ";
 "backup.intro.subtitle" = "Приватный ключ, который будет показан далее, является единственным способом восстановления ваших средств в случае утери, кражи или поломки вашего телефона. \n\nУбедитесь, что никто не смотрит в ваш экран.\n\nЭтот ключ контролирует следующие токены: %@";
 "backup.intro.later" = "Позже";
-"backup.intro.backup_now" = "Резервная копия";
+"backup.intro.backup_now" = "Резервная Копия";
 "backup.intro.show_key" = "Показать Ключ";
 
 "backup.words.confirmation_description" = "Введите слова из вашего %@ ключа";
@@ -218,7 +218,7 @@
 "send.fee_info.description" = "При использования блокчейнов Bitcoin и Ethereum пользователи должны платить комиссию при отправке транзакций.\n\nUnstoppable использует общественные сервисы оценки сумм комиссионных сборов, чтобы помогать пользователю определять размеры соответствующих комиссий на данный момент. Размеры комиссий возрастают при совершении большого количества транзакций и понижаются при меньшей занятости блокчейна.";
 "send.fee_info.header_slow" = "Медленно";
 "send.fee_info.content_slow" = "Выбор значения из данного диапазона может привести к откладыванию транзакции на некоторое время или ее полному отклонению. Чем меньше размер транзакции, тем дольше займет процесс ее подтверждения.";
-"send.fee_info.header_average" = "Умеренно";
+"send.fee_info.header_average" = "Рекомендовано";
 "send.fee_info.content_average" = "Обычно для этого диапазона комиссий характерна обработка транзакций в течение нескольких минут/часа для Bitcoin и в течение нескольких минут для Ethereum.";
 "send.fee_info.header_fast" = "Быстро";
 "send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
@@ -473,7 +473,7 @@
 
 "market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5М";
-"market.advanced_search.m_5_m_10" = "5М-20М";
+"market.advanced_search.m_5_m_20" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20М - 100М";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
 "market.advanced_search.b_1_b_5" = "1B - 5B";
