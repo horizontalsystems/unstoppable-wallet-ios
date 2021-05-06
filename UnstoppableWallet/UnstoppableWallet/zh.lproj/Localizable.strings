@@ -21,7 +21,7 @@
 "button.approve" = "批准";
 "button.reject" = "拒绝";
 "button.connect" = "连接";
-"button.save" = "Save";
+"button.save" = "保存";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -39,7 +39,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "Price";
+"price" = "价格";
 "note" = "备注";
 
 "version" = "版本%@";
@@ -63,13 +63,13 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
+"restore.mnemonic.description" = "输入助记词，其中应包含12或24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore_error.mnemonic_word_count" = "字数有误。必须为12或24个。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "Passphrase cannot be empty";
+"restore.passphrase" = "密码";
+"restore.input.passphrase" = "密码";
+"restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
+"restore.error.empty_passphrase" = "助记词不能为空";
 
 // Coin Settings
 
@@ -96,11 +96,11 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
-"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+"blockchain_settings.description" = "选择您 %@ 钱包的地址格式。每个选中的格式代表应用的余额选项卡上不同的钱包。";
 
 // Show Key
 
-"show_key.title" = "Key";
+"show_key.title" = "密钥";
 "show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
 "show_key.button_show" = "Show";
 "show_key.tab.recovery_phrase" = "Recovery Phrase";
