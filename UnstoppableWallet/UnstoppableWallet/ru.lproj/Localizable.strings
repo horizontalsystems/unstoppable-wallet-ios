@@ -111,10 +111,10 @@
 
 // Backup Key
 
-"backup_key.title" = "Backup";
+"backup_key.title" = "Резервная Копия";
 "backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
 "backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
+"backup_key.button_backup" = "Резервная Копия";
 "backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
@@ -377,9 +377,9 @@
 "market.top.period_24h" = "24 hours";
 "market.top.period_day_start" = "Day Start";
 "market.top.period_one_day" = "1 day";
-"market.top.period_one_week" = "1 неделя";
+"market.top.period_one_week" = "1 week";
 "market.top.period_one_month" = "1 month";
-"market.top.period_one_year" = "1 год1 year";
+"market.top.period_one_year" = "1 year";
 
 "market_discovery.filter_title.rated" = "Rated";
 "market_discovery.filter_title.blockchain" = "Blockchains";
@@ -473,7 +473,7 @@
 
 "market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5М";
-"market.advanced_search.m_5_m_20" = "5M - 20M";
+"market.advanced_search.m_5_m_20" = "5М - 20М";
 "market.advanced_search.m_20_m_100" = "20М - 100М";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
 "market.advanced_search.b_1_b_5" = "1B - 5B";
@@ -603,7 +603,7 @@
 "settings.notifications.settings_button" = "Включить в настройках";
 "settings_notifications.trend_short" = "Краткосрочно 7Д";
 "settings_notifications.trend_long" = "Долгосрочно 6М";
-"settings_notifications.reset_all_title" = "Сбросить всё";
+"settings_notifications.reset_all_title" = "Сбросить Всё";
 "settings_notifications.trend_settings_title" = "Тенденция Цен";
 
 // Settings -> Manage Wallet
@@ -903,7 +903,7 @@
 "add_bep20_token.title" = "Добавить BEP20";
 
 "add_bep2_token.title" = "Добавить BEP2";
-"add_bep2_token.token_symbol" = "Символ токена";
+"add_bep2_token.token_symbol" = "Символ Токена";
 "add_bep2_token.token_not_exist" = "Токен не найден";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
@@ -937,9 +937,9 @@
 
 "app_status.title" = "Статус Приложения";
 "app_status.application_status" = "Статус приложения";
-"app_status.linked_wallets" = "Связанные кошельки";
+"app_status.linked_wallets" = "Связанные Кошельки";
 "app_status.version_history" = "История Версий";
-"app_status.blockchain_status" = "Статус блокчейна";
+"app_status.blockchain_status" = "Статус Блокчейна";
 
 // FAQ
 
@@ -959,7 +959,7 @@
 
 // Enable Coins
 
-"enable_coins.title" = "Активировать монеты";
+"enable_coins.title" = "Активировать Монеты";
 "enable_coins.description" = "Активировать все %@ монеты с любым балансом";
 "enable_coins.enable_button" = "Активировать";
 "enable_coins.enabling" = "Идет активация...";
