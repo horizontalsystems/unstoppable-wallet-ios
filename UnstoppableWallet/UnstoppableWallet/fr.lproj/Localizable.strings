@@ -252,14 +252,14 @@
 "swap.title" = "Echanger";
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
-"swap.balance" = "Balance";
+"swap.balance" = "Solde";
 "swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Sélectionner";
 "swap.advanced_settings" = "Configuration avancée";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
+"swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation./n/nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
 "swap.amount_error.maximum_amount" = "Balance %@";
@@ -578,17 +578,17 @@
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
+"settings.theme" = "Thème";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Devise de Base";
-"settings.base_currency.other" = "Other";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.other" = "Autre";
+"settings.base_currency.disclaimer" = "Avertissement";
+"settings.base_currency.disclaimer.description" = "Les données relatives aux taux de change fournies par un service tiers Coingecko.com\n\nUnstoppable wallet app ne garantit pas que ces valeurs sont toujours correctes et correspondent aux données du marché. Le risque de divergence est plus élevé si vous sélectionnez une devise de base autre que %@.";
+"settings.base_currency.disclaimer.i_understand" = "J’ai Compris";
 
 // Settings -> Notifications
 
@@ -712,7 +712,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings_manage_keys.restore" = "Restaurer";
 "settings_manage_keys.settings" = "Format de l'adresse";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
+"settings_manage_keys.delete.confirmation_remove" = "L'action va supprimer ce portefeuille de l'appareil.";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
 
 // Settings -> About App
@@ -727,10 +727,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.title" = "Thème";
+"settings_theme.system" = "Système";
+"settings_theme.dark" = "Sombre";
+"settings_theme.light" = "Classique";
 
 // Set PIN
 
@@ -825,15 +825,15 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "create_wallet.title" = "Nouveau porte-monnaie";
 "create_wallet.create_button" = "Créer";
-"create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.mnemonic" = "Mnémonique";
+"create_wallet.n_words" = "%@ mots";
+"create_wallet.passphrase" = "Phrase d'authentification";
+"create_wallet.input.passphrase" = "Phrase d'authentification";
+"create_wallet.input.confirm" = "Confirmer";
+"create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. /n/nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
+"create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
+"create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement des lettres et des chiffres latins pour la phrase d'authentification";
+"create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
 
 // Select Coins
 
@@ -972,19 +972,19 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ mots";
+"manage_accounts.n_words_with_passphrase" = "%@ mots avec phrase d'authentification";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "Nom";
+"manage_account.show_recovery_phrase" = "Afficher la phrase";
+"manage_account.backup_recovery_phrase" = "Sauvegarder la phrase";
+"manage_account.unlink" = "Dissocier";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "Hauteur de l'anniversaire";
+"birthday_input.description" = "Si vous savez quelle est la hauteur de l'anniversaire de votre portefeuille Zcash, ajoutez-la ci-dessous pour accélérer le processus de synchronisation.";
+"birthday_input.input_placeholder" = "%@ (optionnel)";
+"restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
