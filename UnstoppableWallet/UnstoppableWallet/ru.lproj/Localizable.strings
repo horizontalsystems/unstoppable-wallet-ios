@@ -986,7 +986,7 @@
 
 // Birthday Input
 
-"birthday_input.title" = "Высота блока";
-"birthday_input.description" = "Если вы знаете высоту блока вашего Zcash кошелька, добавьте ее ниже для ускорения процесса синхронизации.";
+"birthday_input.title" = "Дата рождения";
+"birthday_input.description" = "Если вы знаете дату рождения вашего Zcash кошелька, добавьте ее ниже для ускорения процесса синхронизации.";
 "birthday_input.input_placeholder" = "%@ (опционально)";
-"restore_setting.birthday_height" = "%@ Высота блока";
+"restore_setting.birthday_height" = "%@ Дата рождения";
