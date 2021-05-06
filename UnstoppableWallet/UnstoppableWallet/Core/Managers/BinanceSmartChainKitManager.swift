@@ -32,7 +32,7 @@ class BinanceSmartChainKitManager {
                 syncSource: syncSource,
                 etherscanApiKey: appConfigProvider.bscscanKey,
                 walletId: account.id,
-                minLogLevel: .verbose
+                minLogLevel: .error
         )
 
         evmKit.add(decorator: Erc20Kit.Kit.getDecorator())
