@@ -970,6 +970,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
