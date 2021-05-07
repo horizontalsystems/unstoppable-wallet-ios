@@ -49,6 +49,7 @@ class ManageAccountsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: G19Cell.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
         createCell.titleImage = UIImage(named: "plus_20")?.tinted(with: .themeJacob)
@@ -135,7 +136,14 @@ extension ManageAccountsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
+        let hint = "onboarding.balance.password_hint".localized
+        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "hint_footer", binder: { view in
+            view.bind(text: hint)
+        }, dynamicHeight: { containerWidth in
+            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: hint)
+        })
+
+        return [
             Section(
                     id: "view-items",
                     headerState: .margin(height: .margin12),
@@ -146,7 +154,7 @@ extension ManageAccountsViewController: SectionsDataSource {
             ),
             Section(
                     id: "actions",
-                    footerState: .margin(height: .margin32),
+                    footerState: footerState,
                     rows: [
                         StaticRow(
                                 cell: createCell,
