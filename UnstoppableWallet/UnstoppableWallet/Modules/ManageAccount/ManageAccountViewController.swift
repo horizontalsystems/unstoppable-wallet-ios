@@ -4,6 +4,7 @@ import SectionsTableView
 import SnapKit
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class ManageAccountViewController: ThemeViewController {
     private let viewModel: ManageAccountViewModel
@@ -11,7 +12,7 @@ class ManageAccountViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let nameCell = InputCell()
+    private let nameCell = TextFieldCell()
     private let showRecoveryPhraseCell = A1Cell()
     private let backupRecoveryPhraseCell = A3Cell()
     private let unlinkCell = ACell()
@@ -46,19 +47,18 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: A9Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
-        nameCell.isValidText = { [weak self] in self?.viewModel.isValid(name: $0) ?? true }
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-        nameCell.onChangeHeight = { [weak self] in self?.syncTable() }
 
-        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         showRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         showRecoveryPhraseCell.title = "manage_account.show_recovery_phrase".localized
 
-        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         backupRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         backupRecoveryPhraseCell.title = "manage_account.backup_recovery_phrase".localized
         backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
@@ -73,6 +73,9 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionState = $0
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
+        subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
+        subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
         tableView.buildSections()
@@ -88,26 +91,33 @@ class ManageAccountViewController: ThemeViewController {
         viewModel.onSave()
     }
 
-    private func onTapShowRecoveryPhrase() {
-//        let viewController = CreateAccountModule.viewController()
-//        present(viewController, animated: true)
+    private func openShowKey(account: Account) {
+        guard let viewController = ShowKeyModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
-    private func onTapBackupRecoveryPhrase() {
+    private func openBackupKey(account: Account) {
+        guard let viewController = BackupKeyModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
     private func onTapUnlink() {
-//        let viewController = UnlinkRouter.module(account: account, predefinedAccountType: predefinedAccountType)
-//        present(viewController, animated: true)
+        viewModel.onTapUnlink()
     }
 
-    private func syncTable() {
-        tableView.beginUpdates()
-        tableView.endUpdates()
+    private func openUnlink(account: Account) {
+        let viewController = UnlinkModule.viewController(account: account)
+        present(viewController, animated: true)
     }
 
     private func reloadTable() {
-        guard !isLoaded else {
+        guard isLoaded else {
             return
         }
 
@@ -135,8 +145,9 @@ extension ManageAccountViewController: SectionsDataSource {
                     cell: showRecoveryPhraseCell,
                     id: "show-recovery-phrase",
                     height: .heightCell48,
+                    autoDeselect: true,
                     action: { [weak self] in
-                        self?.onTapShowRecoveryPhrase()
+                        self?.viewModel.onTapShowKey()
                     }
             )
         case .backupRecoveryPhrase:
@@ -144,16 +155,38 @@ extension ManageAccountViewController: SectionsDataSource {
                     cell: backupRecoveryPhraseCell,
                     id: "backup-recovery-phrase",
                     height: .heightCell48,
+                    autoDeselect: true,
                     action: { [weak self] in
-                        self?.onTapBackupRecoveryPhrase()
+                        self?.viewModel.onTapBackupKey()
                     }
             )
+        }
+
+        var rows = [row]
+
+        let viewItems = viewModel.additionalViewItems
+
+        for (index, viewItem) in viewItems.enumerated() {
+            let isLast = index == viewItems.count - 1
+
+            let additionalRow = Row<A9Cell>(
+                    id: "additional-\(index)",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
+                        cell.title = viewItem.title
+                        cell.titleImage = viewItem.icon
+                        cell.viewItem = .init(value: viewItem.value)
+                    }
+            )
+
+            rows.append(additionalRow)
         }
 
         return Section(
                 id: "key-action",
                 footerState: .margin(height: .margin32),
-                rows: [row]
+                rows: rows
         )
     }
 
@@ -165,15 +198,13 @@ extension ManageAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "name",
-                    headerState: header(text: "Name"),
+                    headerState: header(text: "manage_account.name".localized),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: nameCell,
                                 id: "name",
-                                dynamicHeight: { [weak self] width in
-                                    self?.nameCell.height(containerWidth: width) ?? 0
-                                }
+                                height: .heightSingleLineCell
                         )
                     ]
             ),

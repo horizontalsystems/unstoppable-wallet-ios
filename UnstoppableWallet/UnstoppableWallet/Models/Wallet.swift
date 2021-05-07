@@ -1,18 +1,33 @@
 import CoinKit
 
 struct Wallet {
-    let coin: Coin
+    let configuredCoin: ConfiguredCoin
     let account: Account
+
+    init(configuredCoin: ConfiguredCoin, account: Account) {
+        self.configuredCoin = configuredCoin
+        self.account = account
+    }
+
+    init(coin: Coin, account: Account) {
+        configuredCoin = ConfiguredCoin(coin: coin)
+        self.account = account
+    }
+
+    var coin: Coin {
+        configuredCoin.coin
+    }
+
 }
 
 extension Wallet: Hashable {
 
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
-        lhs.coin == rhs.coin && lhs.account == rhs.account
+        lhs.configuredCoin == rhs.configuredCoin && lhs.account == rhs.account
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(coin)
+        hasher.combine(configuredCoin)
         hasher.combine(account)
     }
 

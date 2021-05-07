@@ -4,6 +4,7 @@ import ThemeKit
 import CurrencyKit
 import PinKit
 import WalletConnect
+import ThemeKit
 
 class MainSettingsService {
     private let backupManager: IBackupManager
@@ -11,12 +12,12 @@ class MainSettingsService {
     private let termsManager: ITermsManager
     private let themeManager: ThemeManager
     private let systemInfoManager: ISystemInfoManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: IAppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
 
     init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
-         systemInfoManager: ISystemInfoManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider,
+         systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager) {
         self.backupManager = backupManager
         self.pinKit = pinKit
@@ -80,29 +81,16 @@ extension MainSettingsService {
         currencyKit.baseCurrencyUpdatedObservable
     }
 
-    var lightMode: Bool {
-        get {
-            themeManager.lightMode
-        }
-        set {
-            themeManager.lightMode = newValue
-        }
+    var themeModeObservable: Observable<ThemeMode> {
+        themeManager.changeThemeSignal.asObservable()
     }
 
-    var telegramAccount: String {
-        appConfigProvider.telegramAccount
-    }
-
-    var twitterAccount: String {
-        appConfigProvider.twitterAccount
-    }
-
-    var redditAccount: String {
-        appConfigProvider.redditAccount
+    var themeMode: ThemeMode {
+        themeManager.themeMode
     }
 
     var appVersion: String {
-        systemInfoManager.appVersion
+        systemInfoManager.appVersion.description
     }
 
 }

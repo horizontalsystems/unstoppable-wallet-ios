@@ -5,7 +5,7 @@ import XRatesKit
 import HsToolKit
 import CoinKit
 
-protocol ISendView: class {
+protocol ISendView: AnyObject {
     func set(coin: Coin)
 
     func showCopied()
@@ -70,7 +70,7 @@ protocol ISendBitcoinInteractor {
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], logger: Logger) -> Single<Void>
 }
 
-protocol ISendBitcoinInteractorDelegate: class {
+protocol ISendBitcoinInteractorDelegate: AnyObject {
     func didFetch(availableBalance: Decimal)
     func didFetch(maximumAmount: Decimal?)
     func didFetch(minimumAmount: Decimal)
@@ -85,7 +85,7 @@ protocol ISendDashInteractor {
     func sendSingle(amount: Decimal, address: String, logger: Logger) -> Single<Void>
 }
 
-protocol ISendDashInteractorDelegate: class {
+protocol ISendDashInteractorDelegate: AnyObject {
     func didFetch(availableBalance: Decimal)
     func didFetch(minimumAmount: Decimal)
     func didFetch(fee: Decimal)
@@ -118,7 +118,7 @@ protocol ISendZcashInteractor {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
-protocol ISendRouter: class {
+protocol ISendRouter: AnyObject {
     func showConfirmation(viewItems: [ISendConfirmationViewItemNew], delegate: ISendConfirmationDelegate)
     func dismiss()
 }
@@ -146,6 +146,15 @@ enum AmountInfo {
         switch self {
         case .coinValue(let coinValue):
             return coinValue.formattedString
+        case .currencyValue(let currencyValue):
+            return ValueFormatter.instance.format(currencyValue: currencyValue)
+        }
+    }
+
+    var formattedRawString: String? {
+        switch self {
+        case .coinValue(let coinValue):
+            return coinValue.formattedRawString
         case .currencyValue(let currencyValue):
             return ValueFormatter.instance.format(currencyValue: currencyValue)
         }
@@ -184,6 +193,21 @@ struct AmountData {
 
         return parts.joined(separator: "  |  ")
     }
+
+    var formattedRawString: String {
+        var parts = [String]()
+
+        if let formatted = primary.formattedRawString {
+            parts.append(formatted)
+        }
+
+        if let formatted = secondary?.formattedRawString {
+            parts.append(formatted)
+        }
+
+        return parts.joined(separator: "  |  ")
+    }
+
 }
 
 class SendConfirmationViewItem {

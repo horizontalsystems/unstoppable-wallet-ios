@@ -5,30 +5,25 @@ import XRatesKit
 
 class ReturnOfInvestmentsViewItemsFactory {
 
-    func viewItems(info: CoinMarketInfo, diffCoinCodes: [String], currentCoinCode: String, timePeriods: [TimePeriod]) -> [[CoinPageViewModel.ReturnOfInvestmentsViewItem]] {
+    func viewItems(info: CoinMarketInfo, diffCoinCodes: [String], timePeriods: [TimePeriod]) -> [[CoinPageViewModel.ReturnOfInvestmentsViewItem]] {
         var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
-
-        var coinCodes = diffCoinCodes.map { $0.lowercased() }
-        if let index = coinCodes.firstIndex(of: currentCoinCode.lowercased()) {
-            coinCodes.remove(at: index)
-        }
+        let coinCodes = diffCoinCodes.map { $0.lowercased() }
 
         var titleRow = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
-        coinCodes.forEach { coinCode in
-            titleRow.append(.subtitle(coinCode.uppercased()))
+        timePeriods.forEach { timePeriod in
+            titleRow.append(.subtitle(timePeriod.roiTitle))
         }
 
         viewItems.append(titleRow)
 
-        timePeriods.forEach { timePeriod in
+        coinCodes.forEach { coinCode in
             var row = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
-            row.append(.content(timePeriod.roiTitle))
+            row.append(.content("vs \(coinCode.uppercased())"))
 
-            let values = info.rateDiffs[timePeriod]
-
-            coinCodes.forEach { coinCode in
+            timePeriods.forEach { timePeriod in
+                let values = info.rateDiffs[timePeriod]
                 row.append(.value(values?[coinCode]))
             }
             viewItems.append(row)

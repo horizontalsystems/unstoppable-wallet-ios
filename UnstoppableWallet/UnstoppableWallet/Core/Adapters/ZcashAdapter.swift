@@ -11,6 +11,7 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     var fee: Decimal { defaultFee() }
 
+    private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool
@@ -43,8 +44,8 @@ class ZcashAdapter {
         return Decimal(fee) / Self.coinRate
     }
 
-    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
-        guard case let .zcash(words, birthdayHeight) = wallet.account.type else {
+    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
+        guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
@@ -52,10 +53,10 @@ class ZcashAdapter {
 
         uniqueId = wallet.account.id
         let birthday: Int
-        switch syncMode {
-        case .new: birthday = Self.newBirthdayHeight
-        default:
-            if let height = birthdayHeight {
+        switch wallet.account.origin {
+        case .created: birthday = Self.newBirthdayHeight
+        case .restored:
+            if let height = restoreSettings.birthdayHeight {
                 birthday = WalletBirthday.birthday(with: max(height, ZcashSDK.SAPLING_ACTIVATION_HEIGHT)).height
             } else {
                 birthday = ZcashSDK.SAPLING_ACTIVATION_HEIGHT
@@ -70,8 +71,7 @@ class ZcashAdapter {
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
                 loggerProxy: loggingProxy)
 
-
-        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
+        let seedData = [UInt8](seed)
         try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
                 walletBirthday: BlockHeight(birthday))
 
@@ -230,10 +230,33 @@ class ZcashAdapter {
         return isExist
     }
 
+    func fixPendingTransactionsIfNeeded() {
+        // check if we need to perform the fix or leave
+        guard !localStorage.zcashAlwaysPendingRewind else {
+            return
+        }
+
+        do {
+            // get all the pending transactions
+            let txs = try synchronizer.allPendingTransactions()
+
+            // fetch the first one that's reported to be unmined
+            guard let firstUnmined = txs.filter({ !$0.isMined }).first?.transactionEntity else {
+                localStorage.zcashAlwaysPendingRewind = true
+                return
+            }
+
+            try synchronizer.rewind(.transaction(firstUnmined))
+            localStorage.zcashAlwaysPendingRewind = true
+        } catch {
+            loggingProxy.error("attempt to fix pending transactions failed with error: \(error)", file: #file, function: #function, line: 0)
+        }
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
-        self.synchronizer.blockProcessor?.stop()
-        self.synchronizer.stop()
+        synchronizer.blockProcessor?.stop()
+        synchronizer.stop()
     }
 
 }
@@ -241,7 +264,7 @@ class ZcashAdapter {
 extension ZcashAdapter {
 
     public static var newBirthdayHeight: Int {
-        WalletBirthday.birthday(with: 0).height
+        WalletBirthday.birthday(with: Int.max).height
     }
 
     private static func dataDirectoryUrl() throws -> URL {
@@ -309,6 +332,7 @@ extension ZcashAdapter: IAdapter {
 
     private func sync() {
         do {
+            fixPendingTransactionsIfNeeded()
             try synchronizer.start()
         } catch {
             balanceState = .notSynced(error: error)

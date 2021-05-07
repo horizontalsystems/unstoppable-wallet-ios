@@ -16,6 +16,7 @@ class EthereumFeeViewModel {
     private let priorityRelay = BehaviorRelay<String>(value: "")
     private let openSelectPriorityRelay = PublishRelay<[SendPriorityViewItem]>()
     private let feeSliderRelay = BehaviorRelay<SendFeeSliderViewItem?>(value: nil)
+    private let warningOfStuckRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: EvmTransactionService, coinService: CoinService) {
         self.service = service
@@ -24,19 +25,9 @@ class EthereumFeeViewModel {
         sync(transactionStatus: service.transactionStatus)
         sync(gasPriceType: service.gasPriceType)
 
-        service.transactionStatusObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] transactionStatus in
-                    self?.sync(transactionStatus: transactionStatus)
-                })
-                .disposed(by: disposeBag)
-
-        service.gasPriceTypeObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] gasPriceType in
-                    self?.sync(gasPriceType: gasPriceType)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, service.transactionStatusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
+        subscribe(disposeBag, service.gasPriceTypeObservable) { [weak self] in self?.sync(gasPriceType: $0) }
+        subscribe(disposeBag, service.warningOfStuckObservable) { [weak self] in self?.sync(warningOfStuck: $0) }
     }
 
     private func sync(transactionStatus: DataStatus<EvmTransactionService.Transaction>) {
@@ -44,6 +35,10 @@ class EthereumFeeViewModel {
 
         estimatedFeeStatusRelay.accept(estimatedFeeStatus)
         feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))
+    }
+
+    private func sync(warningOfStuck: Bool) {
+        warningOfStuckRelay.accept(warningOfStuck)
     }
 
     private func estimatedFeeStatus(transactionStatus: DataStatus<EvmTransactionService.Transaction>) -> String {
@@ -124,6 +119,10 @@ extension EthereumFeeViewModel: ISendFeePriorityViewModel {
 
     var feeSliderDriver: Driver<SendFeeSliderViewItem?> {
         feeSliderRelay.asDriver()
+    }
+
+    var warningOfStuckDriver: Driver<Bool> {
+        warningOfStuckRelay.asDriver()
     }
 
     func openSelectPriority() {

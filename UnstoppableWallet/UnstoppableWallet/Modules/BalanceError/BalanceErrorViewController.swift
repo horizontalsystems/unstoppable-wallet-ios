@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import MessageUI
+import ComponentKit
 
 class BalanceErrorViewController: ThemeActionSheetController {
     private let delegate: IBalanceErrorViewDelegate
@@ -87,7 +88,12 @@ class BalanceErrorViewController: ThemeActionSheetController {
 extension BalanceErrorViewController: IBalanceErrorView {
 
     func set(coinTitle: String) {
-        titleView.bind(title: "balance_error.sync_error".localized, subtitle: coinTitle, image: UIImage(named: "warning_2_24")?.tinted(with: .themeLucian))
+        titleView.bind(
+                title: "balance_error.sync_error".localized,
+                subtitle: coinTitle,
+                image: UIImage(named: "warning_2_24"),
+                tintColor: .themeLucian
+        )
     }
 
     func setChangeSourceButton(hidden: Bool) {

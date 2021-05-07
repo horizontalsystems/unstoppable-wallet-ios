@@ -2,33 +2,6 @@ import CoinKit
 
 extension CoinType {
 
-    func canSupport(accountType: AccountType) -> Bool {
-        switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20:
-            if case let .mnemonic(words, salt) = accountType, words.count == 12, salt == nil { return true }
-            return false
-        case .binanceSmartChain, .bep20, .bep2:
-            if case let .mnemonic(words, salt) = accountType, words.count == 24, salt == nil { return true }
-            return false
-        case .zcash:
-            if case .zcash = accountType { return true }
-            return false
-        case .unsupported:
-            return false
-        }
-    }
-
-    var predefinedAccountType: PredefinedAccountType {
-        switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .erc20, .unsupported:
-            return .standard
-        case .binanceSmartChain, .bep20, .bep2:
-            return .binance
-        case .zcash:
-            return .zcash
-        }
-    }
-
     var blockchainType: String? {
         switch self {
         case .erc20: return "ERC20"
@@ -63,6 +36,29 @@ extension CoinType {
         case .litecoin: return "Litecoin"
         case .bitcoinCash: return "Bitcoin Cash"
         default: return ""
+        }
+    }
+
+    var coinSettingTypes: [CoinSettingType] {
+        switch self {
+        case .bitcoin, .litecoin: return [.derivation]
+        case .bitcoinCash: return [.bitcoinCashCoinType]
+        default: return []
+        }
+    }
+
+    var defaultSettingsArray: [CoinSettings] {
+        switch self {
+        case .bitcoin, .litecoin: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+        case .bitcoinCash: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
+        default: return []
+        }
+    }
+
+    var restoreSettingTypes: [RestoreSettingType] {
+        switch self {
+        case .zcash: return [.birthdayHeight]
+        default: return []
         }
     }
 

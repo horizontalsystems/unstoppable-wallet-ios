@@ -33,9 +33,12 @@ class AmountInputViewModel {
     }()
 
     private var prefixRelay = BehaviorRelay<String?>(value: nil)
+    private var prefixTypeRelay = BehaviorRelay<InputType>(value: .coin)
     private var amountRelay = BehaviorRelay<String?>(value: nil)
+    private var amountTypeRelay = BehaviorRelay<InputType>(value: .coin)
     private var isMaxEnabledRelay = BehaviorRelay<Bool>(value: false)
     private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
+    private var secondaryTextTypeRelay = BehaviorRelay<InputType>(value: .currency)
     private var switchEnabledRelay: BehaviorRelay<Bool>
 
     private var coinDecimal = AmountInputViewModel.maxCoinDecimal
@@ -57,7 +60,6 @@ class AmountInputViewModel {
 
         sync(amount: service.amount)
         sync(coin: service.coin)
-        syncCoin(amount: fiatService.coinAmount)
         sync(primaryInfo: fiatService.primaryInfo)
         syncSecondary(amountInfo: fiatService.secondaryAmountInfo)
     }
@@ -90,13 +92,18 @@ class AmountInputViewModel {
             case .currencyValue(let currencyValue): return currencyValue.currency.symbol
             default: return nil
             }
-        default: return nil
+        default:
+            prefixTypeRelay.accept(.coin)
+
+            return nil
         }
     }
 
     private func amountString(primaryInfo: FiatService.PrimaryInfo) -> String? {
         switch primaryInfo {
         case .amountInfo(let amountInfo):
+            amountTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
+
             guard let amountInfo = amountInfo else {
                 return nil
             }
@@ -108,6 +115,8 @@ class AmountInputViewModel {
             decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimal)
             return decimalFormatter.string(from: amountInfo.value as NSNumber)
         case .amount(let amount):
+            amountTypeRelay.accept(.coin)
+
             if amount == 0 {
                 return nil
             }
@@ -118,11 +127,21 @@ class AmountInputViewModel {
     }
 
     private func sync(primaryInfo: FiatService.PrimaryInfo) {
+        switch primaryInfo {
+        case .amountInfo(let amountInfo):
+            amountTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
+            prefixTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
+        case .amount:
+            amountTypeRelay.accept(.coin)
+            prefixTypeRelay.accept(.coin)
+        }
+
         amountRelay.accept(amountString(primaryInfo: primaryInfo))
         prefixRelay.accept(prefix(primaryInfo: primaryInfo))
     }
 
     private func syncSecondary(amountInfo: AmountInfo?) {
+        secondaryTextTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
         secondaryTextRelay.accept(amountInfo?.formattedString)
     }
 
@@ -152,8 +171,16 @@ extension AmountInputViewModel {
         prefixRelay.asDriver()
     }
 
+    var prefixTypeDriver: Driver<InputType> {
+        prefixTypeRelay.distinctUntilChanged().asDriver(onErrorJustReturn: .coin)
+    }
+
     var amountDriver: Driver<String?> {
         amountRelay.asDriver()
+    }
+
+    var amountTypeDriver: Driver<InputType> {
+        amountTypeRelay.distinctUntilChanged().asDriver(onErrorJustReturn: .coin)
     }
 
     var isMaxEnabledDriver: Driver<Bool> {
@@ -168,6 +195,10 @@ extension AmountInputViewModel {
         secondaryTextRelay.asDriver()
     }
 
+    var secondaryTextTypeDriver: Driver<InputType> {
+        secondaryTextTypeRelay.distinctUntilChanged().asDriver(onErrorJustReturn: .coin)
+    }
+
     func onChange(amount: String?) {
         let amount = decimalParser.parseAnyDecimal(from: amount) ?? 0
 
@@ -179,11 +210,27 @@ extension AmountInputViewModel {
             return
         }
 
-        fiatService.set(coinAmount: balance)
+        fiatService.set(coinAmount: balance, notify: true)
     }
 
     func onSwitch() {
         switchService.toggle()
+    }
+
+}
+
+extension AmountInputViewModel {
+
+    enum InputType {
+        case coin
+        case currency
+
+        static func inputType(amountInfo: AmountInfo?) -> Self {
+            switch amountInfo {
+            case .currencyValue: return .currency
+            default: return .coin
+            }
+        }
     }
 
 }

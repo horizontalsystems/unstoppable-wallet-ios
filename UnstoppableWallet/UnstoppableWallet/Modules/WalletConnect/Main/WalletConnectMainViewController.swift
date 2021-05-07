@@ -5,6 +5,7 @@ import UIExtensions
 import HUD
 import SectionsTableView
 import SnapKit
+import ComponentKit
 
 class WalletConnectMainViewController: ThemeViewController {
     private let baseViewModel: WalletConnectViewModel

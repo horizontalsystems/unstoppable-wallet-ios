@@ -6,16 +6,16 @@ import CoinKit
 import CurrencyKit
 
 class CoinPageService {
+    private let roiCoinCodes = ["BTC", "ETH", "BNB"]
     static let timePeriods: [TimePeriod] = [.day7, .day30]
 
     private var disposeBag = DisposeBag()
 
-    private let coinKit: CoinKit.Kit
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: IAppConfigProvider
-    private let coinType: CoinType
 
+    let coinType: CoinType
     let coinTitle: String
     let coinCode: String
 
@@ -26,8 +26,7 @@ class CoinPageService {
         }
     }
 
-    init(coinKit: CoinKit.Kit, rateManager: IRateManager, currencyKit: ICurrencyKit, appConfigProvider: IAppConfigProvider, coinType: CoinType, coinTitle: String, coinCode: String) {
-        self.coinKit = coinKit
+    init(rateManager: IRateManager, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider, coinType: CoinType, coinTitle: String, coinCode: String) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
@@ -60,12 +59,8 @@ class CoinPageService {
     }
 
     var diffCoinCodes: [String] {
-        var codes = [String]()
-
-        codes.append(currencyKit.baseCurrency.code)
-        codes.append(contentsOf: [coinKit.coin(type: .bitcoin), coinKit.coin(type: .ethereum)].compactMap { $0?.code })
-
-        return codes
+        let baseCurrencyCode = currencyKit.baseCurrency.code
+        return [baseCurrencyCode].filter { $0 != coinCode } + roiCoinCodes.filter { $0 != baseCurrencyCode && $0 != coinCode }
     }
 
     var guideUrl: URL? {

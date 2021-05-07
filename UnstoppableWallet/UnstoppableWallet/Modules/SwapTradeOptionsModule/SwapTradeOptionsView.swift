@@ -2,6 +2,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import SectionsTableView
+import ComponentKit
 
 class SwapTradeOptionsView: ThemeViewController {
     private let disposeBag = DisposeBag()

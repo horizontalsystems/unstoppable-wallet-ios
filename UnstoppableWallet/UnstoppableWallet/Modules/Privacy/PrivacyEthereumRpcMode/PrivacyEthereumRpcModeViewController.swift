@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class PrivacyEthereumRpcModeViewController: ThemeActionSheetController {
     private let delegate: IPrivacyEthereumRpcModeViewDelegate
@@ -32,7 +33,7 @@ class PrivacyEthereumRpcModeViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "settings_privacy.alert_connection.title".localized,
                 subtitle: "Ethereum",
-                image: UIImage(named: "eth")?.tinted(with: .themeGray)
+                image: UIImage(named: "ethereum")
         )
 
         titleView.onTapClose = { [weak self] in
@@ -89,7 +90,8 @@ extension PrivacyEthereumRpcModeViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                                    cell.valueImageTintColor = .themeJacob
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.onTapViewItem(index: index)

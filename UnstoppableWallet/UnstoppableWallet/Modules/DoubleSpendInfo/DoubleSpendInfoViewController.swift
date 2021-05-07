@@ -5,6 +5,7 @@ import HUD
 import SnapKit
 import RxSwift
 import ThemeKit
+import ComponentKit
 
 class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
     private let delegate: IDoubleSpendInfoViewDelegate

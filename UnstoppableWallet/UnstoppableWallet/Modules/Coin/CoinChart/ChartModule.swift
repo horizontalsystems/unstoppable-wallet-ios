@@ -55,7 +55,7 @@ enum MovementTrend {
 }
 
 struct ChartIndicatorSet: OptionSet, Hashable {
-    static let none = ChartIndicatorSet(rawValue: 0)
+    static let none = ChartIndicatorSet([])
 
     let rawValue: UInt8
 
@@ -115,6 +115,7 @@ struct SelectedPointViewItem {
     let rightSideMode: RightSideMode
 
     enum RightSideMode {
+        case none
         case volume(value: String?)
         case macd(macdInfo: MacdInfo)
     }

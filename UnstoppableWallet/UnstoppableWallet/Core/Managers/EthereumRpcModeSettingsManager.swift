@@ -22,7 +22,7 @@ extension EthereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager {
     func save(rpcMode: EthereumRpcMode) {
         localStorage.ethereumRpcMode = rpcMode
 
-        let walletsForUpdate = walletManager.wallets.filter { wallet in
+        let walletsForUpdate = walletManager.activeWallets.filter { wallet in
             switch wallet.coin.type {
             case .ethereum, .erc20: return true
             default: return false

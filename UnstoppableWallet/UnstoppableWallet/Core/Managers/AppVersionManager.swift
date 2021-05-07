@@ -1,25 +1,30 @@
-import Foundation
+import RxSwift
+import RxRelay
 
 class AppVersionManager {
     private let systemInfoManager: ISystemInfoManager
-    private let localStorage: ILocalStorage
+    private let storage: IAppVersionStorage
 
-    init(systemInfoManager: ISystemInfoManager, localStorage: ILocalStorage) {
+    private let newVersionRelay = BehaviorRelay<AppVersion?>(value: nil)
+
+    init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage) {
         self.systemInfoManager = systemInfoManager
-        self.localStorage = localStorage
+        self.storage = storage
     }
 
     private func addLatestVersion() {
-        let latestVersion = AppVersion(version: systemInfoManager.appVersion, date: Date())
-        var appVersions = localStorage.appVersions
-        guard let lastVersion = appVersions.last else {
-            localStorage.appVersions = [latestVersion]
+        let currentVersion = systemInfoManager.appVersion
+
+        guard let lastVersion = storage.appVersions.last else {
+            storage.save(appVersions: [currentVersion])
             return
         }
 
-        if lastVersion.version != latestVersion.version {
-            appVersions.append(latestVersion)
-            localStorage.appVersions = appVersions
+        if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
+            storage.save(appVersions: [currentVersion])
+        }
+        if lastVersion.version != currentVersion.version {
+            newVersionRelay.accept(currentVersion)
         }
     }
 
@@ -31,6 +36,10 @@ extension AppVersionManager: IAppVersionManager {
         DispatchQueue.global(qos: .background).async {
             self.addLatestVersion()
         }
+    }
+
+    var newVersionObservable: Observable<AppVersion?> {
+        newVersionRelay.asObservable()
     }
 
 }

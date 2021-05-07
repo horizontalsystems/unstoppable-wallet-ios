@@ -1,6 +1,7 @@
 import UIKit
 import ActionSheet
 import ThemeKit
+import ComponentKit
 
 class AddTokenSelectorViewController: ThemeActionSheetController {
     private let delegate: IAddTokenSelectorViewDelegate
@@ -31,7 +32,8 @@ class AddTokenSelectorViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "add_token_selector.choose_blockchain".localized,
                 subtitle: "add_token_selector.add_token".localized,
-                image: UIImage(named: "circle_plus_24")?.tinted(with: .themeGray)
+                image: UIImage(named: "circle_plus_24"),
+                tintColor: .themeGray
         )
 
         titleView.onTapClose = { [weak self] in

@@ -76,9 +76,9 @@ extension AddTokenService {
             return
         }
 
-        coinManager.save(coin: coin)
+        coinManager.save(coins: [coin])
 
-        guard let account = accountManager.account(coinType: coin.type) else {
+        guard let account = accountManager.activeAccount else {
             return
         }
 

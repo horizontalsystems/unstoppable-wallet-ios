@@ -111,7 +111,7 @@ extension FaqViewController: SectionsDataSource {
                         return Row<FaqCell>(
                                 id: "faq_\(index)",
                                 dynamicHeight: { containerWidth in
-                                    FaqCell.height(containerWidth: containerWidth, text: item.text)
+                                    FaqCell.height(containerWidth: containerWidth, text: item.text, backgroundStyle: .lawrence)
                                 },
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
@@ -122,7 +122,7 @@ extension FaqViewController: SectionsDataSource {
                                         return
                                     }
 
-                                    let module = MarkdownModule.viewController(url: url)
+                                    let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
                                     self?.navigationController?.pushViewController(module, animated: true)
                                 }
                         )

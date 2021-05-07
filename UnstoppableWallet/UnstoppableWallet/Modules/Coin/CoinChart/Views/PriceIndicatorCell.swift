@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class PriceIndicatorCell: BaseThemeCell {
     static let cellHeight: CGFloat = 67

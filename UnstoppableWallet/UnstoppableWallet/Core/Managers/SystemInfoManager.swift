@@ -4,20 +4,20 @@ import RxSwift
 
 class SystemInfoManager: ISystemInfoManager {
 
-    var appVersion: String {
-        let showBuildNumber = Bundle.main.object(forInfoDictionaryKey: "ShowBuildNumber") as? String == "true"
-        var version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    private var version: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
 
-        if showBuildNumber {
-            let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
-            version += " (\(build))"
-        }
+    private var build: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+    }
 
-        return version
+    var appVersion: AppVersion {
+        AppVersion(version: version, build: build, date: Date())
     }
 
     var passcodeSet: Bool {
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
     }
 
     var deviceModel: String {

@@ -95,7 +95,7 @@ class SendEvmViewController: ThemeViewController {
 
         if !keyboardShown {
             keyboardShown = true
-            amountCell.becomeFirstResponder()
+            _ = amountCell.becomeFirstResponder()
         }
     }
 

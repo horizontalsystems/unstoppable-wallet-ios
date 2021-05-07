@@ -6,8 +6,9 @@ import RxRelay
 
 class MarketOverviewService {
     private var disposeBag = DisposeBag()
+    private var topMarketsDisposeBag = DisposeBag()
 
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
 
     private let stateRelay = PublishRelay<State>()
@@ -19,25 +20,29 @@ class MarketOverviewService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: ICurrencyKit, rateManager: IRateManager) {
+    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
 
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
+            self?.items = []
+            self?.fetch()
+        }
         fetch()
     }
 
     private func fetch() {
-        disposeBag = DisposeBag()
+        topMarketsDisposeBag = DisposeBag()
 
         state = .loading
 
-        rateManager.topMarketsSingle(currencyCode: currency.code, fetchDiffPeriod: .hour24, itemCount: 250)
+        rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, fetchDiffPeriod: .hour24, itemCount: 250)
                 .subscribe(onSuccess: { [weak self] in
                     self?.onFetchSuccess(items: $0)
                 }, onError: { [weak self] error in
                     self?.onFetchFailed(error: error)
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: topMarketsDisposeBag)
     }
 
     private func onFetchSuccess(items: [CoinMarket]) {
@@ -49,6 +54,7 @@ class MarketOverviewService {
     }
 
     private func onFetchFailed(error: Error) {
+        items = []
         state = .failed(error: error)
     }
 
@@ -57,8 +63,7 @@ class MarketOverviewService {
 extension MarketOverviewService {
 
     var currency: Currency {
-        //todo: refactor to use current currency and handle changing
-        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
+        currencyKit.baseCurrency
     }
 
     var stateObservable: Observable<State> {

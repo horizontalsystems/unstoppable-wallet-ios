@@ -18,42 +18,43 @@ class MarketMetricLargeView: UIView {
     init() {
         super.init(frame: .zero)
 
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-        }
-
-        titleLabel.numberOfLines = 2
-        titleLabel.font = .micro
-        titleLabel.textColor = .themeGray
-
-        addSubview(valueLabel)
-        valueLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin12)
-        }
-
-        valueLabel.font = .headline1
-        valueLabel.textColor = .themeLeah
-        valueLabel.adjustsFontSizeToFitWidth = true
-
         addSubview(gradientCircle)
         gradientCircle.snp.makeConstraints { maker in
-            maker.leading.bottom.equalToSuperview()
-//            maker.top.equalTo(valueLabel.snp.bottom).offset(10)
+            maker.trailing.equalToSuperview()
+            maker.centerY.equalToSuperview()
             maker.width.equalTo(GradientPercentCircle.width)
             maker.height.equalTo(GradientPercentCircle.height)
         }
 
-        addSubview(diffLabel)
-        diffLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin32)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { maker in
+            maker.leading.top.equalToSuperview()
+            maker.trailing.equalTo(gradientCircle.snp.leading).offset(CGFloat.margin12)
         }
 
-        diffLabel.font = .body
-        diffLabel.textAlignment = .center
+        titleLabel.font = .caption
+        titleLabel.textColor = .themeGray
+
+        addSubview(valueLabel)
+        valueLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8)
+        }
+
+        valueLabel.font = .title3
+        valueLabel.textColor = .themeOz
+        valueLabel.setContentHuggingPriority(.required, for: .horizontal)
+        valueLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        addSubview(diffLabel)
+        diffLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(valueLabel.snp.trailing).offset(CGFloat.margin8)
+            maker.trailing.equalTo(gradientCircle.snp.leading).offset(CGFloat.margin12)
+            maker.bottom.equalTo(valueLabel.snp.bottom)
+        }
+
+        diffLabel.font = .headline2
     }
 
     required init?(coder: NSCoder) {
@@ -64,8 +65,12 @@ class MarketMetricLargeView: UIView {
 
 extension MarketMetricLargeView {
 
-    public func set(title: String?, value: String?, diff: Decimal?) {
-        titleLabel.text = title
+    var title: String? {
+        get { titleLabel.text }
+        set { titleLabel.text = newValue }
+    }
+
+    func set(value: String?, diff: Decimal?) {
         valueLabel.text = value
 
         guard let diff = diff else {
@@ -81,7 +86,6 @@ extension MarketMetricLargeView {
     }
 
     public func clear() {
-        titleLabel.text = nil
         valueLabel.text = nil
         diffLabel.clear()
     }

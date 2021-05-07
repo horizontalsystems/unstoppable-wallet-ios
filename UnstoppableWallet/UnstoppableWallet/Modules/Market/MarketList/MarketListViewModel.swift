@@ -69,6 +69,10 @@ extension MarketListViewModel {
         marketFieldRelay.asDriver()
     }
 
+    var allMarketFields: [MarketModule.MarketField] {
+        service.allMarketFields
+    }
+
     var sortingFieldViewItems: [SortingFieldViewItem] {
         MarketModule.SortingField.allCases.map {
             SortingFieldViewItem(

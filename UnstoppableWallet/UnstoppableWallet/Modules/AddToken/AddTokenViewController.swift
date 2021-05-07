@@ -3,6 +3,7 @@ import SnapKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class AddTokenViewController: ThemeViewController {
     private let viewModel: AddTokenViewModel

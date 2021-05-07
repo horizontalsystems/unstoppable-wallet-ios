@@ -3,40 +3,31 @@ import ThemeKit
 
 struct ManageWalletsModule {
 
-    static func instance() -> UIViewController {
-        let blockchainSettingsService = BlockchainSettingsService(
-                derivationSettingsManager: App.shared.derivationSettingsManager,
-                bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager
-        )
+    static func viewController() -> UIViewController? {
+        let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
+        let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
+        let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
 
-        let blockchainSettingsViewModel = BlockchainSettingsViewModel(service: blockchainSettingsService)
-        let blockchainSettingsView = BlockchainSettingsView(viewModel: blockchainSettingsViewModel)
+        let coinSettingsService = CoinSettingsService()
+        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
+        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
 
-        let enableCoinsService = EnableCoinsService(
-                appConfigProvider: App.shared.appConfigProvider,
-                erc20Provider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
-                bep20Provider: EnableCoinsBep20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager),
-                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
-                coinManager: App.shared.coinManager
-        )
-
-        let enableCoinsViewModel = EnableCoinsViewModel(service: enableCoinsService)
-        let enableCoinsView = EnableCoinsView(viewModel: enableCoinsViewModel)
-
-        let service = ManageWalletsService(
+        guard let service = ManageWalletsService(
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
-                enableCoinsService: enableCoinsService,
-                blockchainSettingsService: blockchainSettingsService
-        )
+                restoreSettingsService: restoreSettingsService,
+                coinSettingsService: coinSettingsService
+        ) else {
+            return nil
+        }
 
         let viewModel = ManageWalletsViewModel(service: service)
 
         let viewController = ManageWalletsViewController(
                 viewModel: viewModel,
-                blockchainSettingsView: blockchainSettingsView,
-                enableCoinsView: enableCoinsView
+                restoreSettingsView: restoreSettingsView,
+                coinSettingsView: coinSettingsView
         )
 
         return ThemeNavigationController(rootViewController: viewController)

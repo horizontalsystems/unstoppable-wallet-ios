@@ -7,15 +7,19 @@ project 'UnstoppableWallet/UnstoppableWallet'
 
 def appPods
   pod 'BitcoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'BitcoinKit.swift', path: '../bitcoin-kit-ios/'
   pod 'LitecoinKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'LitecoinKit.swift', path: '../bitcoin-kit-ios/'
   pod 'BitcoinCashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCashKit.swift', path: '../bitcoin-kit-ios/'
   pod 'DashKit.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'DashKit.swift', path: '../bitcoin-kit-ios/'
   pod 'Hodler.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
 
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
+  # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit.git'
+  pod 'ZcashLightClientKit', '~> 0.10.0'
 
   pod 'CoinKit.swift', git: 'https://github.com/horizontalsystems/coin-kit-ios'
   # pod 'CoinKit.swift', path: '../coin-kit-ios/'
@@ -43,6 +47,8 @@ def appPods
 
   pod 'UIExtensions.swift', git: 'https://github.com/horizontalsystems/gui-kit/'
   # pod 'UIExtensions.swift', path: '../gui-kit/'
+  pod 'ComponentKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
+  # pod 'ComponentKit.swift', path: '../component-kit-ios/'
   pod 'ThemeKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
   # pod 'ThemeKit.swift', path: '../component-kit-ios/'
   pod 'LanguageKit.swift', git: 'https://github.com/horizontalsystems/component-kit-ios/'
@@ -119,6 +125,8 @@ post_install do |installer|
       if target.name == 'ZcashLightClientKit'
          config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "MAINNET"
       end
+
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
     end
   end
 end

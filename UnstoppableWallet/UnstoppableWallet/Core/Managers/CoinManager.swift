@@ -1,11 +1,12 @@
 import RxSwift
+import RxRelay
 import CoinKit
 
 class CoinManager {
     private let appConfigProvider: IAppConfigProvider
     private let coinKit: CoinKit.Kit
 
-    private let subject = PublishSubject<Coin>()
+    private let coinsAddedRelay = PublishRelay<[Coin]>()
 
     init(appConfigProvider: IAppConfigProvider, coinKit: CoinKit.Kit) {
         self.appConfigProvider = appConfigProvider
@@ -16,8 +17,8 @@ class CoinManager {
 
 extension CoinManager: ICoinManager {
 
-    var coinAddedObservable: Observable<Coin> {
-        subject.asObservable()
+    var coinsAddedObservable: Observable<[Coin]> {
+        coinsAddedRelay.asObservable()
     }
 
     var coins: [Coin] {
@@ -26,12 +27,10 @@ extension CoinManager: ICoinManager {
 
     var groupedCoins: (featured: [Coin], regular: [Coin]) {
         var featured = [Coin]()
-        var regular = [Coin]()
-
         var coins = coinKit.coins
 
         for featuredCoinType in appConfigProvider.featuredCoinTypes {
-            if let index = coins.firstIndex { $0.type == featuredCoinType } {
+            if let index = coins.firstIndex(where: { $0.type == featuredCoinType }) {
                 featured.append(coins.remove(at: index))
             }
         }
@@ -43,9 +42,9 @@ extension CoinManager: ICoinManager {
         coinKit.coin(type: type)
     }
 
-    func save(coin: Coin) {
-        coinKit.save(coin: coin)
-        subject.onNext(coin)
+    func save(coins: [Coin]) {
+        coinKit.save(coins: coins)
+        coinsAddedRelay.accept(coins)
     }
 
 }

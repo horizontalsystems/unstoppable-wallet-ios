@@ -8,7 +8,7 @@ class RestoreSelectViewModel {
 
     private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
     private let disableCoinRelay = PublishRelay<Coin>()
-    private let enabledCoinsRelay = PublishRelay<[Coin]>()
+    private let successRelay = PublishRelay<()>()
 
     init(service: RestoreSelectService) {
         self.service = service
@@ -22,7 +22,8 @@ class RestoreSelectViewModel {
     private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModel.ViewItem {
         CoinToggleViewModel.ViewItem(
                 coin: item.coin,
-                state: .toggleVisible(enabled: item.enabled)
+                hasSettings: item.hasSettings,
+                enabled: item.enabled
         )
     }
 
@@ -53,6 +54,10 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
         service.disable(coin: coin)
     }
 
+    func onTapSettings(coin: Coin) {
+        service.configure(coin: coin)
+    }
+
     func onUpdate(filter: String?) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.service.set(filter: filter)
@@ -71,12 +76,13 @@ extension RestoreSelectViewModel {
         service.canRestoreObservable.asDriver(onErrorJustReturn: false)
     }
 
-    var enabledCoinsSignal: Signal<[Coin]> {
-        enabledCoinsRelay.asSignal()
+    var successSignal: Signal<()> {
+        successRelay.asSignal()
     }
 
     func onRestore() {
-        enabledCoinsRelay.accept(Array(service.enabledCoins))
+        service.restore()
+        successRelay.accept(())
     }
 
 }

@@ -20,18 +20,18 @@ class EthereumKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type, words.count == 12 else {
+        guard let seed = account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
-        let networkType: NetworkType = appConfigProvider.testMode ? .ropsten : .ethMainNet
+        let networkType = self.networkType
 
         guard let syncSource = EthereumKit.Kit.infuraWebsocketSyncSource(networkType: networkType, projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret) else {
             throw AdapterError.wrongParameters
         }
 
         let evmKit = try EthereumKit.Kit.instance(
-                words: words,
+                seed: seed,
                 networkType: networkType,
                 syncSource: syncSource,
                 etherscanApiKey: appConfigProvider.etherscanKey,
@@ -41,6 +41,7 @@ class EthereumKitManager {
 
         evmKit.add(decorator: Erc20Kit.Kit.getDecorator())
         evmKit.add(decorator: UniswapKit.Kit.getDecorator())
+        evmKit.add(transactionSyncer: Erc20Kit.Kit.getTransactionSyncer(evmKit: evmKit))
 
         evmKit.start()
 
@@ -48,6 +49,10 @@ class EthereumKitManager {
         currentAccount = account
 
         return evmKit
+    }
+
+    var networkType: NetworkType {
+        appConfigProvider.testMode ? .ropsten : .ethMainNet
     }
 
     var statusInfo: [(String, Any)]? {

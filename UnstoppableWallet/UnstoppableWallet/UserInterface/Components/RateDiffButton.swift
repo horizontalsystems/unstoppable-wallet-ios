@@ -14,9 +14,6 @@ class RateDiffButton: UIButton {
         layer.borderWidth = .heightOneDp
         layer.cornerRadius = .cornerRadius2x
 
-        setBackgroundColor(color: .themeLawrence, forState: .normal)
-        setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
-
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
@@ -43,17 +40,31 @@ class RateDiffButton: UIButton {
 
         label.textAlignment = .center
         label.font = .captionSB
+
+        updateUITheme()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateUITheme()
+    }
+
+    private func updateUITheme() {
+        setBackgroundColor(color: .themeLawrence, forState: .normal)
+        setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
+    }
+
     func show(value: Decimal, dimmed: Bool) {
         let color: UIColor = dimmed ? .themeGray50 : (value.isSignMinus ? .themeLucian : .themeRemus)
         let imageName = value.isSignMinus ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
 
-        iconImageView.image = UIImage(named: imageName)?.tinted(with: color)
+        iconImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        iconImageView.tintColor = color
 
         let formattedDiff = RateDiffButton.formatter.string(from: abs(value) as NSNumber)
 
@@ -62,7 +73,8 @@ class RateDiffButton: UIButton {
     }
 
     func showNotAvailable() {
-        iconImageView.image = UIImage(named: "Up")?.tinted(with: .themeGray50)
+        iconImageView.image = UIImage(named: "Up")?.withRenderingMode(.alwaysTemplate)
+        iconImageView.tintColor = .themeGray50
         label.textColor = .themeGray50
         label.text = "n/a"
     }

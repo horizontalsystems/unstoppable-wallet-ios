@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TransactionInfoPendingStatusCell: BaseThemeCell {
     private let leftView = LeftCView()
@@ -32,7 +33,8 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
         barsProgressView.set(barsCount: BarsProgressView.progressStepsCount)
 
         leftView.text = "status".localized
-        leftView.image = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
+        leftView.image = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
+        leftView.imageTintColor = .themeJacob
     }
 
     required init?(coder: NSCoder) {

@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class NotificationSettingsViewController: ThemeViewController {
     private let delegate: INotificationSettingsViewDelegate
@@ -163,13 +164,14 @@ extension NotificationSettingsViewController: SectionsDataSource {
                 id: "item_row_\(index)",
                 hash: "\(viewItem.value)",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = viewItem.title.localized
                     cell.value = viewItem.value
-                    cell.valueAction = {
-                        viewItem.onTap()
-                    }
+                },
+                action: { _ in
+                    viewItem.onTap()
                 }
         )
     }

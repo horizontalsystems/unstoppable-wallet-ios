@@ -5,6 +5,7 @@ import RxCocoa
 import XRatesKit
 import Chart
 import CurrencyKit
+import HUD
 
 class CoinChartViewModel {
     private let service: CoinChartService
@@ -120,6 +121,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
     }
 
     public func select(item: ChartItem) {
+        HapticGenerator.instance.notification(.feedback(.soft))
         pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, currency: service.currency, macdSelected: service.selectedIndicator.contains(.macd)))
     }
 

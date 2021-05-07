@@ -5,15 +5,15 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import CoinKit
+import ComponentKit
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
-
     let disposeBag = DisposeBag()
-    private var viewState: CoinToggleViewModel.ViewState = .empty
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private var viewState: CoinToggleViewModel.ViewState = .empty
     private var isLoaded = false
 
     init(viewModel: ICoinToggleViewModel) {
@@ -29,8 +29,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.registerCell(forClass: G4Cell.self)
-        tableView.registerCell(forClass: G11Cell.self)
+        tableView.registerCell(forClass: G21Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -41,11 +40,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             maker.edges.equalToSuperview()
         }
 
-        viewModel.viewStateDriver
-                .drive(onNext: { [weak self] viewState in
-                    self?.onUpdate(viewState: viewState)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.onUpdate(viewState: $0) }
 
         tableView.buildSections()
 
@@ -62,68 +57,34 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func isAnimated(viewItemsA: [CoinToggleViewModel.ViewItem], viewItemsB: [CoinToggleViewModel.ViewItem]) -> Bool {
-        guard viewItemsA.count == viewItemsB.count else {
-            return false
-        }
-
-        for (index, viewItemA) in viewItemsA.enumerated() {
-            let viewItemB = viewItemsB[index]
-
-            switch (viewItemA.state, viewItemB.state) {
-            case (.toggleHidden, .toggleVisible), (.toggleVisible, .toggleHidden): return false
-            default: ()
-            }
-        }
-
-        return true
+        viewItemsA.count == viewItemsB.count
     }
 
     private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { index, viewItem in
-            let isFirst = index == 0
             let isLast = index == viewItems.count - 1
 
-            switch viewItem.state {
-            case .toggleHidden:
-                return Row<G4Cell>(
-                        id: "coin_\(viewItem.coin.id)",
-                        hash: "coin_\(viewItem.state)_\(isFirst)_\(isLast)",
-                        height: .heightDoubleLineCell,
-                        autoDeselect: true,
-                        bind: { cell, _ in
-                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            cell.titleImage = .image(coinType: viewItem.coin.type)
-                            cell.title = viewItem.coin.title
-                            cell.subtitle = viewItem.coin.code
-                            cell.rightBadgeText = viewItem.coin.type.blockchainType
-                            cell.valueImage = UIImage(named: "plus_20")
-                        },
-                        action: { [weak self] _ in
-                            self?.onSelect(viewItem: viewItem)
+            return Row<G21Cell>(
+                    id: "coin_\(viewItem.coin.id)",
+                    hash: "coin_\(viewItem.enabled)_\(isLast)",
+                    height: .heightDoubleLineCell,
+                    bind: { [weak self] cell, _ in
+                        cell.set(backgroundStyle: .claude, isLast: isLast)
+                        cell.titleImage = .image(coinType: viewItem.coin.type)
+                        cell.title = viewItem.coin.title
+                        cell.subtitle = viewItem.coin.code
+                        cell.rightBadgeText = viewItem.coin.type.blockchainType
+                        cell.isOn = viewItem.enabled
+                        cell.onToggle = { [weak self] enabled in
+                            self?.onToggle(viewItem: viewItem, enabled: enabled)
                         }
-                )
-            case .toggleVisible(let enabled):
-                return Row<G11Cell>(
-                        id: "coin_\(viewItem.coin.id)",
-                        hash: "coin_\(viewItem.state)_\(isFirst)_\(isLast)",
-                        height: .heightDoubleLineCell,
-                        bind: { [weak self] cell, _ in
-                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            cell.titleImage = .image(coinType: viewItem.coin.type)
-                            cell.title = viewItem.coin.title
-                            cell.subtitle = viewItem.coin.code
-                            cell.rightBadgeText = viewItem.coin.type.blockchainType
-                            cell.isOn = enabled
-                            cell.onToggle = { [weak self] enabled in
-                                self?.onToggle(viewItem: viewItem, enabled: enabled)
-                            }
+                        cell.rightButtonImage = viewItem.hasSettings ? UIImage(named: "edit_20") : nil
+                        cell.onTapRightButton = { [weak self] in
+                            self?.viewModel.onTapSettings(coin: viewItem.coin)
                         }
-                )
-            }
+                    }
+            )
         }
-    }
-
-    func onSelect(viewItem: CoinToggleViewModel.ViewItem) {
     }
 
     override func onUpdate(filter: String?) {
@@ -148,7 +109,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             return
         }
 
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G11Cell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G21Cell else {
             return
         }
 
@@ -163,13 +124,13 @@ extension CoinToggleViewController: SectionsDataSource {
         [
             Section(
                     id: "featured_coins",
-                    headerState: .margin(height: .margin1x),
-                    footerState: .margin(height: viewState.featuredViewItems.isEmpty ? 0 : .margin8x),
+                    headerState: .margin(height: .margin4),
+                    footerState: .margin(height: viewState.featuredViewItems.isEmpty ? 0 : .margin32),
                     rows: rows(viewItems: viewState.featuredViewItems)
             ),
             Section(
                     id: "coins",
-                    footerState: .margin(height: .margin8x),
+                    footerState: .margin(height: .margin32),
                     rows: rows(viewItems: viewState.viewItems)
             )
         ]

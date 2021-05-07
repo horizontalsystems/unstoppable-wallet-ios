@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class PrivacySortModeViewController: ThemeActionSheetController {
     private let delegate: IPrivacySortModeViewDelegate
@@ -32,7 +33,8 @@ class PrivacySortModeViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "settings_privacy.alert_sort.title".localized,
                 subtitle: "settings_privacy.alert_sort.subtitle".localized,
-                image: UIImage(named: "transaction_24")?.tinted(with: .themeGray)
+                image: UIImage(named: "transaction_24"),
+                tintColor: .themeGray
         )
 
         titleView.onTapClose = { [weak self] in
@@ -89,7 +91,8 @@ extension PrivacySortModeViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                                    cell.valueImageTintColor = .themeJacob
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.onTapViewItem(index: index)

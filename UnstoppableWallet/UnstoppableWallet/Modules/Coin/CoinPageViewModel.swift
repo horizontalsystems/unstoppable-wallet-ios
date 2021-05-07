@@ -25,15 +25,15 @@ class CoinPageViewModel {
             stateRelay.accept(.loading)
         case .completed(let info):
             let viewItem = ViewItem(
-                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, currentCoinCode: service.coinCode, timePeriods: CoinPageService.timePeriods),
+                    returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, timePeriods: CoinPageService.timePeriods),
                     tickers: info.tickers,
                     fundCategories: info.meta.fundCategories,
                     categories: categories(info: info),
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
                     links: links(info: info),
-                    marketInfo: marketInfo(marketCap: info.marketCap, volume24h: info.volume24h, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
-                    description: info.meta.description
+                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    description: info.meta.description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
         case .failed:
@@ -68,10 +68,15 @@ class CoinPageViewModel {
         }
     }
 
-    private func marketInfo(marketCap: Decimal?, volume24h: Decimal?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvlInfo: DefiTvlInfo?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
         marketViewItemFactory.viewItem(
                 marketCap: marketCap,
+                dilutedMarketCap: dilutedMarketCap,
                 volume24h: volume24h,
+                tvl: tvlInfo?.tvl,
+                tvlRank: tvlInfo?.tvlRank,
+                tvlRatio: tvlInfo?.tvlRatio,
+                genesisDate: genesisDate,
                 circulatingSupply: circulatingSupply,
                 totalSupply: totalSupply,
                 currency: service.currency,
@@ -82,6 +87,10 @@ class CoinPageViewModel {
 }
 
 extension CoinPageViewModel {
+
+    var coinType: CoinType {
+        service.coinType
+    }
 
     var title: String {
         service.coinCode
@@ -195,9 +204,13 @@ extension CoinPageViewModel {
     struct MarketInfo {
         public let marketCap: String?
         public let volume24h: String?
+        public let tvl: String?
+        public let tvlRank: String?
+        public let tvlRatio: String?
+        public let genesisDate: String?
         public let circulatingSupply: String?
         public let totalSupply: String?
-        public let dillutedMarketCap: String?
+        public let dilutedMarketCap: String?
     }
 
 }

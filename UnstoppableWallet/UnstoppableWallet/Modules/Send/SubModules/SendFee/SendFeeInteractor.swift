@@ -5,14 +5,14 @@ import CoinKit
 
 class SendFeeInteractor {
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: IFeeCoinProvider
 
     weak var delegate: ISendFeeInteractorDelegate?
 
     var disposeBag = DisposeBag()
 
-    init(rateManager: IRateManager, currencyKit: ICurrencyKit, feeCoinProvider: IFeeCoinProvider) {
+    init(rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider

@@ -9,7 +9,7 @@ protocol ITransactionInfoView: AnyObject {
     func showCopied()
 }
 
-protocol ITransactionInfoViewDelegate: class {
+protocol ITransactionInfoViewDelegate: AnyObject {
     func onLoad()
     func onTapFrom()
     func onTapTo()

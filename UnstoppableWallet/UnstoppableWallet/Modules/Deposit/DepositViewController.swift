@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class DepositViewController: ThemeActionSheetController {
     private static let qrCodeSideSize: CGFloat = 120

@@ -1,6 +1,7 @@
 import ThemeKit
 import SnapKit
 import SectionsTableView
+import ComponentKit
 
 class CoinInvestorsViewController: ThemeViewController {
     private let viewModel: CoinInvestorsViewModel

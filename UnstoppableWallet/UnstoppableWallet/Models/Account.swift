@@ -23,9 +23,6 @@ extension Account: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-        hasher.combine(name)
-        hasher.combine(type)
-        hasher.combine(origin)
     }
 
 }

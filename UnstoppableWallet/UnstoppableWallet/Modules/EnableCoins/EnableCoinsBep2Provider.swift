@@ -12,8 +12,8 @@ class EnableCoinsBep2Provider {
 
 extension EnableCoinsBep2Provider {
 
-    func tokenSymbolsSingle(words: [String]) throws -> Single<[String]> {
-        try provider.accountSingle(words: words).map { account in
+    func tokenSymbolsSingle(seed: Data) throws -> Single<[String]> {
+        try provider.accountSingle(seed: seed).map { account in
             account.balances.compactMap { balance in
                 balance.free > 0 ? balance.symbol : nil
             }

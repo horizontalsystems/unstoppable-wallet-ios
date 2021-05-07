@@ -2,7 +2,6 @@ import Foundation
 
 enum AppError: Error {
     case noConnection
-    case incubedNotReachable
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
     case ethereum(reason: EthereumError)
@@ -33,7 +32,6 @@ extension AppError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noConnection: return "alert.no_internet".localized
-        case .incubedNotReachable: return "error.incubed_not_reachable".localized
         case .binance(let reason):
             switch reason {
             case .memoRequired: return "error.send_binance.memo_required".localized

@@ -5,6 +5,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import CoinKit
+import ComponentKit
 
 class MarketSearchViewController: ThemeSearchViewController {
     private let viewModel: MarketSearchViewModel
@@ -35,6 +36,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
         title = "market.search.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -50,7 +52,8 @@ class MarketSearchViewController: ThemeSearchViewController {
         tableView.keyboardDismissMode = .interactive
 
         advancedSearchCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        advancedSearchCell.titleImage = UIImage(named: "sort_6_20")?.tinted(with: .themeGray)
+        advancedSearchCell.titleImage = UIImage(named: "sort_6_20")?.withRenderingMode(.alwaysTemplate)
+        advancedSearchCell.titleImageTintColor = .themeGray
         advancedSearchCell.title = "market.advanced_search.title".localized
 
         view.addSubview(emptyLabel)
@@ -65,11 +68,6 @@ class MarketSearchViewController: ThemeSearchViewController {
         emptyLabel.textColor = .themeGray
         emptyLabel.textAlignment = .center
 
-        navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.hidesSearchBarWhenScrolling = false
-
         Driver.zip(viewModel.viewItemsDriver, viewModel.showAdvancedSearchDriver)
                 .drive(onNext: { [weak self] in self?.sync(viewItems: $0, showAdvancedSearch: $1) })
                 .disposed(by: disposeBag)
@@ -77,6 +75,12 @@ class MarketSearchViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.emptyResultDriver) { [weak self] in self?.sync(emptyResults: $0) }
 
         isLoaded = true
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationItem.searchController?.isActive = true
     }
 
     @objc func onTapClose() {
@@ -134,6 +138,7 @@ class MarketSearchViewController: ThemeSearchViewController {
                         cell.subtitle = viewItem.coinCode
                         cell.leftBadgeText = viewItem.blockchainType
                         cell.titleImage = UIImage.image(coinType: viewItem.coinType)
+                        cell.titleImageTintColor = .themeGray
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)

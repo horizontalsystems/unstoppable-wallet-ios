@@ -16,13 +16,13 @@ class TransactionsInteractor {
 
     private let walletManager: IWalletManager
     private let adapterManager: IAdapterManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: ICurrencyKit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: IWalletManager, adapterManager: IAdapterManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
@@ -36,7 +36,7 @@ class TransactionsInteractor {
         var walletsData = [(Wallet, LastBlockInfo?)]()
         var states = [Coin: AdapterState]()
 
-        for wallet in walletManager.wallets {
+        for wallet in walletManager.activeWallets {
             if let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 walletsData.append((wallet, adapter.lastBlockInfo))
                 states[wallet.coin] = adapter.transactionState
@@ -103,7 +103,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func fetchLastBlockHeights() {
         lastBlockHeightsDisposeBag = DisposeBag()
 
-        for wallet in walletManager.wallets {
+        for wallet in walletManager.activeWallets {
             guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
                 continue
             }
@@ -130,7 +130,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         var singles = [Single<(Wallet, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let wallet = walletManager.wallets.first(where: { $0 == fetchData.wallet })
+            let wallet = walletManager.activeWallets.first(where: { $0 == fetchData.wallet })
             let single: Single<(Wallet, [TransactionRecord])>
 
             if let wallet = wallet, let adapter = adapterManager.transactionsAdapter(for: wallet) {

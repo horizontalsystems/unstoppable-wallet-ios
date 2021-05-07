@@ -8,13 +8,11 @@ class LaunchRouter {
                 accountManager: App.shared.accountManager,
                 pinKit: App.shared.pinKit,
                 keychainKit: App.shared.keychainKit,
-                localStorage: App.shared.localStorage,
-                jailbreakTestManager: JailbreakTestManager()
+                localStorage: App.shared.localStorage
         )
         let presenter: ILaunchPresenter = LaunchPresenter(interactor: interactor)
 
         switch presenter.launchMode {
-        case .jailbreak: return NoPasscodeViewController(mode: .jailbreak)
         case .noPasscode: return NoPasscodeViewController(mode: .noPasscode)
         case .intro: return WelcomeScreenViewController()
         case .unlock: return LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: true)

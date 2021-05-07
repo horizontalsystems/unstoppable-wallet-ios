@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 import CurrencyKit
 
 class SendConfirmationViewController: ThemeViewController, SectionsDataSource {

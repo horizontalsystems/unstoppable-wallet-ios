@@ -5,18 +5,18 @@
       "scale" : "1x"
     },
     {
+      "filename" : "bep20_0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb@2x.png",
       "idiom" : "universal",
-      "filename" : "SFP@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "bep20_0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb@3x.png",
       "idiom" : "universal",
-      "filename" : "SFP@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

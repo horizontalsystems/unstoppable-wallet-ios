@@ -12,7 +12,7 @@ class FeeCoinProvider {
             return nil
         }
 
-        return coinKit.coin(type: .bep2(symbol: symbol))
+        return coinKit.coin(type: .bep2(symbol: "BNB"))
     }
 
     private func binanceFeeCoinProtocol(symbol: String) -> String? {

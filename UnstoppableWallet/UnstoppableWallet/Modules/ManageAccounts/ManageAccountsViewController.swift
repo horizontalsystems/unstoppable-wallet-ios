@@ -1,15 +1,25 @@
 import UIKit
-import SectionsTableView
 import ThemeKit
+import SectionsTableView
+import SnapKit
+import RxSwift
+import RxCocoa
+import ComponentKit
 
 class ManageAccountsViewController: ThemeViewController {
-    private let delegate: IManageAccountsViewDelegate
+    private let viewModel: ManageAccountsViewModel
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private var viewItems = [ManageAccountViewItem]()
 
-    init(delegate: IManageAccountsViewDelegate) {
-        self.delegate = delegate
+    private let createCell = ACell()
+    private let restoreCell = ACell()
+
+    private var viewItems = [ManageAccountsViewModel.ViewItem]()
+    private var isLoaded = false
+
+    init(viewModel: ManageAccountsViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -24,108 +34,141 @@ class ManageAccountsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "settings_manage_keys.title".localized
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
-        tableView.registerCell(forClass: TitleManageAccountCell.self)
-        tableView.registerCell(forClass: ProceedManageAccountCell.self)
-
-        tableView.sectionDataSource = self
-
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
+        if viewModel.isDoneVisible {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        delegate.viewDidLoad()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.sectionDataSource = self
+        tableView.registerCell(forClass: G19Cell.self)
+
+        createCell.set(backgroundStyle: .lawrence, isFirst: true)
+        createCell.titleImage = UIImage(named: "plus_20")?.tinted(with: .themeJacob)
+        createCell.title = "onboarding.balance.create".localized
+        createCell.titleColor = .themeJacob
+
+        restoreCell.set(backgroundStyle: .lawrence, isLast: true)
+        restoreCell.titleImage = UIImage(named: "download_20")?.tinted(with: .themeJacob)
+        restoreCell.title = "onboarding.balance.restore".localized
+        restoreCell.titleColor = .themeJacob
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
+
+        tableView.buildSections()
+
+        isLoaded = true
     }
 
-    private func rows(viewItem: ManageAccountViewItem, index: Int) -> [RowProtocol] {
-        var rows = [RowProtocol]()
-
-        rows.append(
-            Row<TitleManageAccountCell>(
-                    id: "account_\(viewItem.title)",
-                    autoDeselect: true,
-                    dynamicHeight: { [weak self] _ in
-                        TitleManageAccountCell.height(forContainerWidth: self?.tableView.width ?? 0, viewItem: viewItem)
-                    },
-                    bind: { [weak self] cell, _ in
-                        let height = TitleManageAccountCell.height(forContainerWidth: self?.tableView.width ?? 0, viewItem: viewItem)
-                        cell.bind(viewItem: viewItem, height: height)
-                    }
-            )
-        )
-
-        let states = [viewItem.topButtonState, viewItem.middleButtonState, viewItem.bottomButtonState].compactMap { $0 }
-        rows.append(contentsOf: states.enumerated().map { stateIndex, state in
-            let last = states.count - 1 == stateIndex
-
-            return Row<ProceedManageAccountCell>(
-                    id: "account_\(state.rawValue)",
-                    autoDeselect: true,
-                    dynamicHeight: { _ in
-                        ProceedManageAccountCell.height
-                    },
-                    bind: { cell, _ in
-                        cell.bind(state: state, highlighted: viewItem.highlighted, position: last ? .bottom : .inbetween)
-                    },
-                    action: { [weak self] _ in
-                        self?.action(state: state, index: index)
-                    }
-            )
-        })
-
-        return rows
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    private func action(state: ManageAccountButtonState, index: Int) {
-        switch state {
-        case .create:
-            delegate.didTapCreate(index: index)
-        case .backup, .show:
-            delegate.didTapBackup(index: index)
-        case .restore:
-            delegate.didTapRestore(index: index)
-        case .delete:
-            delegate.didTapUnlink(index: index)
-        case .settings:
-            delegate.didTapSettings(index: index)
+    @objc private func onTapDoneButton() {
+        dismiss(animated: true)
+    }
+
+    private func onTapCreate() {
+        let viewController = CreateAccountModule.viewController()
+        present(viewController, animated: true)
+    }
+
+    private func onTapRestore() {
+        let viewController = RestoreMnemonicModule.viewController()
+        present(viewController, animated: true)
+    }
+
+    private func onTapEdit(accountId: String) {
+        guard let viewController = ManageAccountModule.viewController(accountId: accountId) else {
+            return
         }
+
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func sync(viewItems: [ManageAccountsViewModel.ViewItem]) {
+        self.viewItems = viewItems
+        reloadTable()
+    }
+
+    private func reloadTable() {
+        guard isLoaded else {
+            return
+        }
+
+        tableView.reload(animated: true)
     }
 
 }
 
 extension ManageAccountsViewController: SectionsDataSource {
 
+    private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<G19Cell>(
+                id: viewItem.accountId,
+                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(isFirst)-\(isLast)",
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { [weak self] cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.tinted(with: .themeJacob) : UIImage(named: "circle_radiooff_24")
+                    cell.title = viewItem.title
+                    cell.subtitle = viewItem.subtitle
+                    cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+                    cell.valueButtonImage = UIImage(named: "more_2_20")
+                    cell.onTapValue = { [weak self] in
+                        self?.onTapEdit(accountId: viewItem.accountId)
+                    }
+                },
+                action: { [weak self] _ in
+                    self?.viewModel.onSelect(accountId: viewItem.accountId)
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
-        viewItems.enumerated().map { index, viewItem in
+        [
             Section(
-                    id: "wallets",
-                    headerState: .margin(height: .margin2x),
-                    footerState: .margin(height: .margin1x),
-                    rows: rows(viewItem: viewItem, index: index)
+                    id: "view-items",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: viewItems.isEmpty ? 0 : .margin32),
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
+                    }
+            ),
+            Section(
+                    id: "actions",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: createCell,
+                                id: "create",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapCreate()
+                                }
+                        ),
+                        StaticRow(
+                                cell: restoreCell,
+                                id: "restore",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapRestore()
+                                }
+                        )
+                    ]
             )
-        }
-    }
-
-}
-
-extension ManageAccountsViewController: IManageAccountsView {
-
-    func set(viewItems: [ManageAccountViewItem]) {
-        self.viewItems = viewItems
-        tableView.reload()
-    }
-
-    func show(error: Error) {
-        HudHelper.instance.showError(title: error.smartDescription)
-    }
-
-    func showSuccess() {
-        HudHelper.instance.showSuccess()
+        ]
     }
 
 }

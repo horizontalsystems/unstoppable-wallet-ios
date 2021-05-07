@@ -7,6 +7,7 @@ import ModuleKit
 import RxSwift
 import RxCocoa
 import SafariServices
+import ComponentKit
 
 class MainSettingsViewController: ThemeViewController {
     private let viewModel: MainSettingsViewModel
@@ -19,7 +20,7 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = A2Cell()
     private let baseCurrencyCell = A2Cell()
     private let languageCell = A2Cell()
-    private let lightModeCell = A11Cell()
+    private let themeModeCell = A2Cell()
     private let aboutCell = A3Cell()
     private let footerCell = MainSettingsFooterCell()
 
@@ -74,14 +75,9 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.title = "settings.language".localized
         languageCell.value = viewModel.currentLanguage
 
-        lightModeCell.set(backgroundStyle: .lawrence)
-        lightModeCell.titleImage = UIImage(named: "light_20")
-        lightModeCell.title = "settings.light_mode".localized
-        lightModeCell.isOn = viewModel.lightMode
-        lightModeCell.onToggle = { [weak self] isOn in
-            self?.viewModel.onSwitch(lightMode: isOn)
-            UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance(selectedTab: .settings))
-        }
+        themeModeCell.set(backgroundStyle: .lawrence)
+        themeModeCell.titleImage = UIImage(named: "light_20")
+        themeModeCell.title = "settings.theme".localized
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         aboutCell.titleImage = UIImage(named: "uw_20")
@@ -93,10 +89,12 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] alert in
-            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.manageAccountsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.manageAccountsCell.valueImageTintColor = .themeLucian
         }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
-            self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.securityCenterCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.securityCenterCell.valueImageTintColor = .themeLucian
         }
         subscribe(disposeBag, viewModel.walletConnectSessionCountDriver) { [weak self] count in
             self?.walletConnectCell.value = count
@@ -105,7 +103,11 @@ class MainSettingsViewController: ThemeViewController {
             self?.baseCurrencyCell.value = baseCurrency
         }
         subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
-            self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.aboutCell.valueImageTintColor = .themeLucian
+        }
+        subscribe(disposeBag, viewModel.themeModeDriver) { [weak self] themeMode in
+            self?.themeModeCell.value = themeMode.description
         }
 
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
@@ -126,7 +128,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "manage-accounts",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(ManageAccountsRouter.module(), animated: true)
+                        self?.navigationController?.pushViewController(ManageAccountsModule.viewController(mode: .manage), animated: true)
                     }
             ),
             StaticRow(
@@ -148,7 +150,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightCell48,
                     autoDeselect: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+                        self?.openWalletConnect()
                     }
             )
         ]
@@ -173,7 +175,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "base-currency",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(App.shared.currencyKit.baseCurrencySettingsModule, animated: true)
+                        self?.navigationController?.pushViewController(BaseCurrencySettingsModule.viewController(), animated: true)
                     }
             ),
             StaticRow(
@@ -186,9 +188,12 @@ class MainSettingsViewController: ThemeViewController {
                     }
             ),
             StaticRow(
-                    cell: lightModeCell,
-                    id: "light-mode",
-                    height: .heightCell48
+                    cell: themeModeCell,
+                    id: "theme-mode",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        self?.navigationController?.pushViewController(ThemeSettingsModule.viewController(), animated: true)
+                    }
             ),
             Row<A1Cell>(
                     id: "experimental-features",
@@ -234,50 +239,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private var contactRows: [RowProtocol] {
-        [
-            Row<A1Cell>(
-                    id: "telegram",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.titleImage = UIImage(named: "telegram_20")
-                        cell.title = "Telegram"
-                    },
-                    action: { [weak self] _ in
-                        self?.openTelegram()
-                    }
-            ),
-            Row<A1Cell>(
-                    id: "twitter",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence)
-                        cell.titleImage = UIImage(named: "twitter_20")
-                        cell.title = "Twitter"
-                    },
-                    action: { [weak self] _ in
-                        self?.openTwitter()
-                    }
-            ),
-            Row<A1Cell>(
-                    id: "reddit",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
-                        cell.titleImage = UIImage(named: "reddit_20")
-                        cell.title = "Reddit"
-                    },
-                    action: { [weak self] _ in
-                        self?.openReddit()
-                    }
-            )
-        ]
-    }
-
     private var aboutRows: [RowProtocol] {
         [
             StaticRow(
@@ -301,29 +262,12 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private func openTelegram() {
-        let account = viewModel.telegramAccount
-
-        if let appUrl = URL(string: "tg://resolve?domain=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-            UIApplication.shared.open(appUrl)
-        } else if let webUrl = URL(string: "https://t.me/\(account)") {
-            UIApplication.shared.open(webUrl)
-        }
-    }
-
-    private func openTwitter() {
-        let account = viewModel.twitterAccount
-
-        if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-            UIApplication.shared.open(appUrl)
-        } else if let webUrl = URL(string: "https://twitter.com/\(account)") {
-            UIApplication.shared.open(webUrl)
-        }
-    }
-
-    private func openReddit() {
-        if let url = URL(string: "https://reddit.com/r/\(viewModel.redditAccount)") {
-            UIApplication.shared.open(url)
+    private func openWalletConnect() {
+        switch viewModel.walletConnectOpenMode {
+        case .sessionList:
+            navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+        case .qrScanner:
+            WalletConnectModule.start(sourceViewController: self)
         }
     }
 
@@ -337,7 +281,6 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "contact", headerState: .margin(height: .margin32), rows: contactRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)
         ]

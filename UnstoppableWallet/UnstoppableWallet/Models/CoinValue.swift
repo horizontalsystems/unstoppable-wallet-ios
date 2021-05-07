@@ -8,6 +8,11 @@ struct CoinValue {
     var formattedString: String {
         ValueFormatter.instance.format(coinValue: self) ?? ""
     }
+
+    var formattedRawString: String {
+        ValueFormatter.instance.format(coinValue: self, showCode: false) ?? ""
+    }
+
 }
 
 extension CoinValue: Equatable {

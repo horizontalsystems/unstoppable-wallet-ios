@@ -12,9 +12,9 @@ class MarketMetricsService {
     private let globalMarketInfoRelay = BehaviorRelay<DataStatus<GlobalCoinMarket>>(value: .loading)
 
     private let rateManager: IRateManager
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
 
-    init(rateManager: IRateManager, appManager: IAppManager, currencyKit: ICurrencyKit) {
+    init(rateManager: IRateManager, appManager: IAppManager, currencyKit: CurrencyKit.Kit) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
 
@@ -24,6 +24,7 @@ class MarketMetricsService {
                 })
                 .disposed(by: disposeBag)
 
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.fetchMarketMetrics() }
         fetchMarketMetrics()
     }
 
@@ -33,7 +34,7 @@ class MarketMetricsService {
             globalMarketInfoRelay.accept(.loading)
         }
 
-        rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code)
+        rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code, period: .hour24)
             .subscribe(onSuccess: { [weak self] info in
                 self?.globalMarketInfoRelay.accept(.completed(info))
             }, onError: { [weak self] error in
@@ -47,8 +48,7 @@ class MarketMetricsService {
 extension MarketMetricsService {
 
     public var currency: Currency {
-        //todo: refactor to use current currency and handle changing
-        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
+        currencyKit.baseCurrency
     }
 
     public var globalMarketInfoObservable: Observable<DataStatus<GlobalCoinMarket>> {

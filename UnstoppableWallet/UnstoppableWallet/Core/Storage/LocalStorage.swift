@@ -10,8 +10,8 @@ class LocalStorage {
     private let keySendInputType = "send_input_type_key"
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
+    private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
-    private let keyAppVersions = "app_versions"
     private let keyTransactionDataSortMode = "transaction_data_sort_mode"
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
@@ -21,6 +21,7 @@ class LocalStorage {
     private let keyPushToken = "push_token"
     private let keyPushNotificationsOn = "push_notifications_on"
     private let keyDefaultMarketCategory = "default_market_category"
+    private let keyZCashRewind = "z_cash_always_pending_rewind"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -71,16 +72,9 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: mainShownOnceKey) }
     }
 
-    var appVersions: [AppVersion] {
-        get {
-            guard let data: Data = storage.value(for: keyAppVersions), let versions = try? JSONDecoder().decode([AppVersion].self, from: data) else {
-                return []
-            }
-            return versions
-        }
-        set {
-            storage.set(value: try? JSONEncoder().encode(newValue), for: keyAppVersions)
-        }
+    var jailbreakShownOnce: Bool {
+        get { storage.value(for: jailbreakShownOnceKey) ?? false }
+        set { storage.set(value: newValue, for: jailbreakShownOnceKey) }
     }
 
     var transactionDataSortMode: TransactionDataSortMode? {
@@ -140,6 +134,11 @@ extension LocalStorage: ILocalStorage {
     var marketCategory: Int? {
         get { storage.value(for: keyDefaultMarketCategory) }
         set { storage.set(value: newValue, for: keyDefaultMarketCategory) }
+    }
+
+    var zcashAlwaysPendingRewind: Bool {
+        get { storage.value(for: keyZCashRewind) ?? false }
+        set { storage.set(value: newValue, for: keyZCashRewind) }
     }
 
 }

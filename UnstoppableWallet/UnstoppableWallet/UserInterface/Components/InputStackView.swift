@@ -48,6 +48,11 @@ extension InputStackView {
         set { formTextView.text = newValue }
     }
 
+    var textColor: UIColor? {
+        get { formTextView.textColor }
+        set { formTextView.textColor = newValue }
+    }
+
     var isEditable: Bool {
         get { formTextView.isEditable }
         set { formTextView.isEditable = newValue }

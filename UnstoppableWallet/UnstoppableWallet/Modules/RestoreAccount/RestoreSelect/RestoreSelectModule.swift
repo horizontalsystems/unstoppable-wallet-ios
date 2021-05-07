@@ -4,18 +4,18 @@ import RxSwift
 struct RestoreSelectModule {
 
     static func viewController(accountType: AccountType) -> UIViewController {
-        let blockchainSettingsService = BlockchainSettingsService(
-                derivationSettingsManager: App.shared.derivationSettingsManager,
-                bitcoinCashCoinTypeManager: App.shared.bitcoinCashCoinTypeManager
-        )
+        let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
+        let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
+        let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
 
-        let blockchainSettingsViewModel = BlockchainSettingsViewModel(service: blockchainSettingsService)
-        let blockchainSettingsView = BlockchainSettingsView(viewModel: blockchainSettingsViewModel)
+        let coinSettingsService = CoinSettingsService()
+        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
+        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
 
         let enableCoinsService = EnableCoinsService(
                 appConfigProvider: App.shared.appConfigProvider,
-                erc20Provider: EnableCoinsErc20Provider(networkManager: App.shared.networkManager),
-                bep20Provider: EnableCoinsBep20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager),
+                erc20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .erc20),
+                bep20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .bep20),
                 bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
                 coinManager: App.shared.coinManager
         )
@@ -25,16 +25,21 @@ struct RestoreSelectModule {
 
         let service = RestoreSelectService(
                 accountType: accountType,
+                accountFactory: App.shared.accountFactory,
+                accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager,
                 coinManager: App.shared.coinManager,
                 enableCoinsService: enableCoinsService,
-                blockchainSettingsService: blockchainSettingsService
+                restoreSettingsService: restoreSettingsService,
+                coinSettingsService: coinSettingsService
         )
 
         let viewModel = RestoreSelectViewModel(service: service)
 
         return RestoreSelectViewController(
                 viewModel: viewModel,
-                blockchainSettingsView: blockchainSettingsView,
+                restoreSettingsView: restoreSettingsView,
+                coinSettingsView: coinSettingsView,
                 enableCoinsView: enableCoinsView
         )
     }

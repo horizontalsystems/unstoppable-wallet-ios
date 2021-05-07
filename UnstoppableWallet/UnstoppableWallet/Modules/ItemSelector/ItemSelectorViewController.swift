@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 class ItemSelectorViewController: ThemeActionSheetController {
     private var titleView: UIView?
@@ -118,7 +119,8 @@ class ItemSelectorViewController: ThemeActionSheetController {
                             cell.subtitle = subtitle
                             cell.subtitleColor = viewItem.subtitleColor
 
-                            cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                            cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                            cell.valueImageTintColor = .themeJacob
                         },
                         action: { [weak self] _ in
                             self?.onTap(at: rowIndex)
@@ -135,7 +137,8 @@ class ItemSelectorViewController: ThemeActionSheetController {
                         cell.title = viewItem.title
                         cell.titleColor = viewItem.titleColor
 
-                        cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                        cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                        cell.valueImageTintColor = .themeJacob
                     },
                     action: { [weak self] _ in
                         self?.onTap(at: rowIndex)
@@ -158,7 +161,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
             return
         }
 
-        titleView.bind(title: viewItem.title, subtitle: viewItem.subtitle, image: viewItem.image)
+        titleView.bind(title: viewItem.title, subtitle: viewItem.subtitle, image: viewItem.image, tintColor: viewItem.tintColor)
         titleView.titleColor = viewItem.titleColor
         titleView.subtitleColor = viewItem.subtitleColor
         titleView.onTapClose = { [weak self] in self?.onTapClose() }

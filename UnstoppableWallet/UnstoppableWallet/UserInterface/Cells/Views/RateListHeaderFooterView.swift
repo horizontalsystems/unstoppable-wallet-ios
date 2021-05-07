@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class RateListHeaderFooterView: UITableViewHeaderFooterView {
     static let height: CGFloat = 66
@@ -7,7 +8,7 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
     private let dateLabel = UILabel()
     private let separatorView = UIView()
     private let titleLabel = UILabel()
-    private let sortButton = UIButton()
+    private let sortButton = ThemeButton()
 
     private var onTapSort: (() -> ())?
 
@@ -53,7 +54,8 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
             maker.width.equalTo(CGFloat.margin4x + 24 + CGFloat.margin4x)
         }
 
-        sortButton.setImage(UIImage(named: "sort_6_24")?.tinted(with: .themeJacob), for: .normal)
+        sortButton.setImageTintColor(.themeJacob, for: .normal)
+        sortButton.setImage(UIImage(named: "sort_6_24"), for: .normal)
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
     }
 

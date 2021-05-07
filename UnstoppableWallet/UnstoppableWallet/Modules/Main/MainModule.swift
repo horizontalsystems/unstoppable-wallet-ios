@@ -17,8 +17,15 @@ struct MainModule {
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager
         )
+        let releaseNotesService = ReleaseNotesService(
+                appVersionManager: App.shared.appVersionManager
+        )
+        let jailbreakService = JailbreakService(
+                localStorage: App.shared.localStorage,
+                jailbreakTestManager: JailbreakTestManager()
+        )
 
-        let viewModel = MainViewModel(service: service, badgeService: badgeService)
+        let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService)
         let viewController = MainViewController(viewModel: viewModel, selectedIndex: selectedTab.rawValue)
 
         App.shared.pinKitDelegate.viewController = viewController

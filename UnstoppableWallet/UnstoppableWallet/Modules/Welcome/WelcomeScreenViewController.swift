@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import ComponentKit
 
 class WelcomeScreenViewController: UIViewController {
     private let bottomInset: CGFloat = 118
@@ -132,7 +133,7 @@ class WelcomeScreenViewController: UIViewController {
     }
 
     @objc private func onTapStart() {
-        UIApplication.shared.keyWindow?.set(newRootController: MainModule.instance())
+        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
     }
 
     private func onSwitchSlide(index: Int) {

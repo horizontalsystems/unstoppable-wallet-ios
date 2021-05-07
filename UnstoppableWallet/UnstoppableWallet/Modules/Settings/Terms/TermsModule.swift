@@ -1,4 +1,4 @@
-protocol ITermsView: class {
+protocol ITermsView: AnyObject {
     func set(terms: [Term])
     func refresh()
 }

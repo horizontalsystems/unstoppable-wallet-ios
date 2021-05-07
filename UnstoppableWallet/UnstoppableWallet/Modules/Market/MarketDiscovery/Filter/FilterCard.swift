@@ -123,7 +123,7 @@ class FilterCard: UICollectionViewCell {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
         let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
 
-        return CGSize(width: selected ? 212 : unselectedWidth, height: 94)
+        return CGSize(width: selected ? 212 : unselectedWidth, height: 84)
     }
 
 }

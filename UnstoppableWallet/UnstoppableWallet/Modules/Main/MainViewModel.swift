@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -5,14 +6,18 @@ import RxCocoa
 class MainViewModel {
     private let service: MainService
     private let badgeService: MainBadgeService
+    private let releaseNotesService: ReleaseNotesService
+    private let jailbreakService: JailbreakService
     private let disposeBag = DisposeBag()
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
 
-    init(service: MainService, badgeService: MainBadgeService) {
+    init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService) {
         self.service = service
         self.badgeService = badgeService
+        self.releaseNotesService = releaseNotesService
+        self.jailbreakService = jailbreakService
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
 
@@ -32,6 +37,14 @@ extension MainViewModel {
         badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: false)
     }
 
+    var releaseNotesUrlDriver: Driver<URL?> {
+        releaseNotesService.releaseNotesUrlObservable.asDriver(onErrorJustReturn: nil)
+    }
+
+    var needToShowJailbreakAlert: Bool {
+        jailbreakService.needToShowAlert
+    }
+
     var balanceTabStateDriver: Driver<BalanceTabState> {
         balanceTabStateRelay.asDriver()
     }
@@ -42,6 +55,10 @@ extension MainViewModel {
 
     func onLoad() {
         service.setMainShownOnce()
+    }
+
+    func onSuccessJailbreakAlert() {
+        jailbreakService.setAlertShown()
     }
 
 }

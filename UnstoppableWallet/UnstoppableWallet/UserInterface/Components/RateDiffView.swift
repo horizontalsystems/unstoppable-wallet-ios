@@ -47,7 +47,8 @@ class RateDiffView: UIView {
         let color: UIColor = value.isSignMinus ? .themeLucian : .themeRemus
         let imageName = value.isSignMinus ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
 
-        imageView.image = UIImage(named: imageName)?.tinted(with: color)
+        imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = color
 
         let formattedDiff = RateDiffView.formatter.string(from: abs(value) as NSNumber)
 

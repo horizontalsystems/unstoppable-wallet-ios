@@ -6,9 +6,6 @@ class AppConfigProvider: IAppConfigProvider {
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
     let reportEmail = "support.unstoppable@protonmail.com"
-    let telegramAccount = "unstoppable_announcements"
-    let twitterAccount = "UnstoppableByHS"
-    let redditAccount = "UNSTOPPABLEWallet"
 
     var guidesIndexUrl: URL {
         URL(string: (Bundle.main.object(forInfoDictionaryKey: "GuidesIndexUrl") as! String))!
@@ -66,17 +63,9 @@ class AppConfigProvider: IAppConfigProvider {
 
     var pnsUrl: String {
         let development = "https://pns-dev.horizontalsystems.xyz/api/v1/"
-        let production = "https://pns.horizontalsystems.xyz/api/v1/"
+        let production = "https://pns-ext.horizontalsystems.xyz/api/v1/"
 
         return sandbox ? development : production
-    }
-
-    var pnsUsername: String {
-        (Bundle.main.object(forInfoDictionaryKey: "PnsUsername") as? String) ?? ""
-    }
-
-    var pnsPassword: String {
-        (Bundle.main.object(forInfoDictionaryKey: "PnsPassword") as? String) ?? ""
     }
 
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]

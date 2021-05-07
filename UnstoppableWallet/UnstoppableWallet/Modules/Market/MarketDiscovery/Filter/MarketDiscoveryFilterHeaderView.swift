@@ -1,8 +1,8 @@
 import UIKit
 import SnapKit
 
-class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
-    public static var headerHeight: CGFloat = 118
+class MarketDiscoveryFilterHeaderView: UIView {
+    public static var headerHeight: CGFloat = 108
 
     private var filters = [MarketFilterViewItem]()
 
@@ -10,18 +10,15 @@ class MarketDiscoveryFilterHeaderView: UITableViewHeaderFooterView {
 
     var onSelect: ((Int?) -> ())?
 
-    init() {
+    override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
-        super.init(reuseIdentifier: nil)
+        super.init(frame: frame)
 
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = .themeNavigationBarBackground
-
-        contentView.addSubview(collectionView)
+        addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }

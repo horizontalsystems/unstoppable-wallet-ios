@@ -1,17 +1,17 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class ReadMoreTextCell: BaseThemeCell {
-    private static let font: UIFont = .subhead2
-    private static let collapsedNumberOfLines: Int = 8
+    private static let collapsedHeight: CGFloat = 160
+    private static let readMoreButtonOverlayHeight: CGFloat = 37
     private static let horizontalPadding: CGFloat = .margin24
     private static let verticalPadding: CGFloat = .margin12
     private static let gradientOffset: CGFloat = -.margin6
     private static let buttonHeight: CGFloat = 33
 
-    private let gradientView = BottomGradientHolder()
-    private let labelWrapper = UIView()
+    private let labelWrapper = GradientClippingView(clippingHeight: .margin16)
     private let readMoreTextLabel = UILabel()
     private let collapseButton = UIButton()
 
@@ -39,16 +39,8 @@ class ReadMoreTextCell: BaseThemeCell {
             maker.top.leading.trailing.equalToSuperview()
         }
 
-        readMoreTextLabel.font = ReadMoreTextCell.font
-        readMoreTextLabel.textColor = .themeGray
         readMoreTextLabel.numberOfLines = 0
         readMoreTextLabel.lineBreakMode = .byTruncatingTail
-
-        contentView.addSubview(gradientView)
-        gradientView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.gradientOffset)
-        }
 
         contentView.addSubview(collapseButton)
         collapseButton.snp.makeConstraints { maker in
@@ -74,30 +66,27 @@ class ReadMoreTextCell: BaseThemeCell {
     @objc private func onTapCollapse() {
         collapsed = !collapsed
         collapseButton.setTitle(collapsed ? "chart.about.read_more".localized : "chart.about.read_less".localized, for: .normal)
+        labelWrapper.isClipping = collapsed
 
         onChangeHeight?()
     }
 
-    var contentText: String? {
-        get { readMoreTextLabel.text }
+    var contentText: NSAttributedString? {
+        get { readMoreTextLabel.attributedText }
         set {
-            readMoreTextLabel.text = newValue
+            readMoreTextLabel.attributedText = newValue
             updateLayout()
         }
     }
 
     private var textHeight: CGFloat {
-        readMoreTextLabel.text?.height(forContainerWidth: containerWidth - 2 * ReadMoreTextCell.horizontalPadding, font: ReadMoreTextCell.font) ?? 0
-    }
-
-    private func collapsedLabelHeight(lines: Int) -> CGFloat {
-        ceil(CGFloat(lines) * ReadMoreTextCell.font.lineHeight)
+        readMoreTextLabel.attributedText?.height(containerWidth: containerWidth - 2 * ReadMoreTextCell.horizontalPadding) ?? 0
     }
 
     func cellHeight(containerWidth: CGFloat) -> CGFloat {
         self.containerWidth = containerWidth
 
-        let labelHeight = collapsed ? min(collapsedLabelHeight(lines: ReadMoreTextCell.collapsedNumberOfLines), textHeight) : textHeight
+        let labelHeight = collapsed ? min(Self.collapsedHeight, textHeight) : textHeight
         return labelHeight + 2 * ReadMoreTextCell.verticalPadding + (expandable ? ReadMoreTextCell.buttonHeight : 0)
     }
 
@@ -106,21 +95,20 @@ class ReadMoreTextCell: BaseThemeCell {
             return
         }
 
-        if textHeight <= (collapsedLabelHeight(lines: Self.collapsedNumberOfLines + 2)), expandable {
+        if textHeight <= (Self.collapsedHeight + Self.readMoreButtonOverlayHeight), expandable {
             collapseButton.snp.removeConstraints()
-            gradientView.snp.removeConstraints()
             labelWrapper.snp.remakeConstraints { maker in
                 maker.top.bottom.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
             }
 
             collapseButton.isHidden = true
-            gradientView.isHidden = true
+            labelWrapper.isClipping = false
             expandable = false
-            if textHeight >= (collapsedLabelHeight(lines: Self.collapsedNumberOfLines)) {
+            if textHeight >= (Self.collapsedHeight) {
                 collapsed = false
             }
-        } else if textHeight > (collapsedLabelHeight(lines: Self.collapsedNumberOfLines + 2)), !expandable {
+        } else if textHeight > (Self.collapsedHeight + Self.readMoreButtonOverlayHeight), !expandable {
             labelWrapper.snp.remakeConstraints { maker in
                 maker.top.equalToSuperview().inset(ReadMoreTextCell.verticalPadding)
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
@@ -131,13 +119,8 @@ class ReadMoreTextCell: BaseThemeCell {
                 maker.bottom.equalToSuperview()
                 maker.height.equalTo(ReadMoreTextCell.buttonHeight)
             }
-            gradientView.snp.makeConstraints { maker in
-                maker.leading.trailing.bottom.equalToSuperview()
-                maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.gradientOffset)
-            }
 
             collapseButton.isHidden = false
-            gradientView.isHidden = false
             expandable = true
         }
     }

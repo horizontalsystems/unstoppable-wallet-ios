@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class FilterHeaderCell: UICollectionViewCell {
     private static let buttonStyle: ThemeButtonStyle = .secondaryTransparent

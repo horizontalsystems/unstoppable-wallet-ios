@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class PrivacyViewController: ThemeViewController {
     let delegate: IPrivacyViewDelegate
@@ -28,7 +29,8 @@ class PrivacyViewController: ThemeViewController {
 
         title = "settings_privacy.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.tinted(with: .themeJacob), style: .plain, target: self, action: #selector(onTapInfo))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onTapInfo))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: A5Cell.self)
@@ -84,13 +86,14 @@ class PrivacyViewController: ThemeViewController {
                             id: "sorting_cell",
                             hash: "\(sortModeTitle)",
                             height: .heightCell48,
+                            autoDeselect: true,
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                 cell.title = "settings_privacy.sorting_title".localized
                                 cell.value = sortModeTitle
-                                cell.valueAction = { [weak self] in
-                                    self?.delegate.onSelectSortMode()
-                                }
+                            },
+                            action: { [weak self] _ in
+                                self?.delegate.onSelectSortMode()
                             }
                     )
                 ]
@@ -129,14 +132,16 @@ class PrivacyViewController: ThemeViewController {
                     id: id,
                     hash: "\(item.value)",
                     height: .heightCell48,
+                    autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                         cell.titleImage = UIImage(named: item.iconName)
+                        cell.set(titleImageSize: .iconSize24)
                         cell.title = item.title
                         cell.value = item.value
-                        cell.valueAction = {
-                            action?()
-                        }
+                    },
+                    action: { _ in
+                        action?()
                     }
             )
         } else {
@@ -147,6 +152,7 @@ class PrivacyViewController: ThemeViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                         cell.titleImage = UIImage(named: item.iconName)
+                        cell.set(titleImageSize: .iconSize24)
                         cell.title = item.title
                         cell.value = item.value
                     }

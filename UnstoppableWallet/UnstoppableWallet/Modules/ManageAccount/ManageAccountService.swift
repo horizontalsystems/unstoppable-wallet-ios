@@ -1,5 +1,6 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class ManageAccountService {
     private let accountRelay = PublishRelay<Account>()
@@ -10,6 +11,8 @@ class ManageAccountService {
     }
 
     private let accountManager: IAccountManager
+    private let walletManager: IWalletManager
+    private let restoreSettingsManager: RestoreSettingsManager
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
@@ -19,19 +22,24 @@ class ManageAccountService {
         }
     }
 
+    private let accountDeletedRelay = PublishRelay<()>()
+
     private var newName: String
 
-    init?(accountId: String, accountManager: IAccountManager) {
+    init?(accountId: String, accountManager: IAccountManager, walletManager: IWalletManager, restoreSettingsManager: RestoreSettingsManager) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
 
         self.account = account
         self.accountManager = accountManager
+        self.walletManager = walletManager
+        self.restoreSettingsManager = restoreSettingsManager
 
         newName = account.name
 
-        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.handleUpdated(accounts: $0) }
+        subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
 
         syncState()
     }
@@ -44,12 +52,16 @@ class ManageAccountService {
         }
     }
 
-    private func handleUpdated(accounts: [Account]) {
-        guard let account = accounts.first(where: { $0 == account }) else {
-            return
+    private func handleUpdated(account: Account) {
+        if account.id == self.account.id {
+            self.account = account
         }
+    }
 
-        self.account = account
+    private func handleDeleted(account: Account) {
+        if account.id == self.account.id {
+            accountDeletedRelay.accept(())
+        }
     }
 
 }
@@ -62,6 +74,27 @@ extension ManageAccountService {
 
     var accountObservable: Observable<Account> {
         accountRelay.asObservable()
+    }
+
+    var accountDeletedObservable: Observable<()> {
+        accountDeletedRelay.asObservable()
+    }
+
+    var accountSettingsInfo: [(Coin, RestoreSettingType, String)] {
+        let accountWallets = walletManager.wallets(account: account)
+
+        return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { coinType, restoreSettingType, value in
+            guard let wallet = accountWallets.first(where: { $0.coin.type == coinType }) else {
+                return nil
+            }
+
+            // hide birthday height if it is set to 0
+            if restoreSettingType == .birthdayHeight && value == "0" {
+                return nil
+            }
+
+            return (wallet.coin, restoreSettingType, value)
+        }
     }
 
     func set(name: String) {

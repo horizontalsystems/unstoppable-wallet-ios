@@ -7,11 +7,11 @@ class DepositPresenter {
     private let interactor: IDepositInteractor
     private let router: IDepositRouter
 
-    private let coin: Coin
+    private let wallet: Wallet
     private let address: String
 
-    init(coin: Coin, interactor: IDepositInteractor, router: IDepositRouter) {
-        self.coin = coin
+    init(wallet: Wallet, interactor: IDepositInteractor, router: IDepositRouter) {
+        self.wallet = wallet
         self.interactor = interactor
         self.router = router
 
@@ -24,11 +24,11 @@ extension DepositPresenter: IDepositViewDelegate {
 
     func onLoad() {
         let viewItem = DepositModule.AddressViewItem(
-                coinTitle: coin.title,
-                coinCode: coin.code,
-                coinType: coin.type,
+                coinTitle: wallet.coin.title,
+                coinCode: wallet.coin.code,
+                coinType: wallet.coin.type,
                 address: address,
-                additionalInfo: interactor.derivationSetting(coinType: coin.type)?.derivation.addressType
+                additionalInfo: wallet.configuredCoin.settings.derivation?.addressType
         )
 
         view?.set(viewItem: viewItem)

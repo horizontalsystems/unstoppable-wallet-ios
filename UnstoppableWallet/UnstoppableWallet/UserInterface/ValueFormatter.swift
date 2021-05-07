@@ -29,11 +29,11 @@ class ValueFormatter {
         return formatter
     }()
 
-    func format(coinValue: CoinValue, fractionPolicy: FractionPolicy = .full) -> String? {
-        format(value: coinValue.value, decimalCount: coinValue.coin.decimal, symbol: coinValue.coin.code, fractionPolicy: fractionPolicy)
+    func format(coinValue: CoinValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
+        format(value: coinValue.value, decimalCount: coinValue.coin.decimal, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
 
-    func format(value: Decimal, decimalCount: Int, symbol: String, fractionPolicy: FractionPolicy = .full) -> String? {
+    func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
         let absoluteValue = abs(value)
 
         let formatter = coinFormatter
@@ -50,7 +50,7 @@ class ValueFormatter {
             return nil
         }
 
-        var result = "\(formattedValue) \(symbol)"
+        var result = symbol.map { "\(formattedValue) \($0)" } ?? formattedValue
 
         if value.isSignMinus {
             result = "- \(result)"

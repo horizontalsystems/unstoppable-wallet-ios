@@ -38,7 +38,7 @@ extension AboutService {
     }
 
     var appVersion: String {
-        systemInfoManager.appVersion
+        systemInfoManager.appVersion.description
     }
 
     func rateApp() {

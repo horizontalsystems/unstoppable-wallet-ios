@@ -2,12 +2,22 @@ import UIKit
 
 struct MarkdownModule {
 
-    static func viewController(url: URL) -> UIViewController {
+    static func viewController(url: URL, handleRelativeUrl: Bool = true) -> UIViewController {
+        let provider = MarkdownPlainContentProvider(url: url, networkManager: App.shared.networkManager)
+        let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()
-        let service = MarkdownService(url: url, networkManager: App.shared.networkManager)
         let viewModel = MarkdownViewModel(service: service, parser: parser)
 
-        return MarkdownViewController(viewModel: viewModel)
+        return MarkdownViewController(viewModel: viewModel, handleRelativeUrl: handleRelativeUrl)
+    }
+
+    static func gitReleaseNotesMarkdownViewController(url: URL, closeHandler: (() -> ())? = nil) -> UIViewController {
+        let provider = MarkdownGitReleaseContentProvider(url: url, networkManager: App.shared.networkManager)
+        let service = MarkdownService(provider: provider)
+        let parser = MarkdownParser()
+        let viewModel = MarkdownViewModel(service: service, parser: parser)
+
+        return MarkdownViewController(viewModel: viewModel, showClose: true, closeHandler: closeHandler, handleRelativeUrl: false)
     }
 
 }

@@ -8,6 +8,9 @@ import RxCocoa
 
 class MarkdownViewController: ThemeViewController {
     private let viewModel: MarkdownViewModel
+    private let showClose: Bool
+    private let closeHandler: (() -> ())?
+    private let handleRelativeUrl: Bool
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -15,8 +18,11 @@ class MarkdownViewController: ThemeViewController {
 
     private var viewItems: [MarkdownBlockViewItem]?
 
-    init(viewModel: MarkdownViewModel) {
+    init(viewModel: MarkdownViewModel, showClose: Bool = false, closeHandler: (() -> ())? = nil, handleRelativeUrl: Bool) {
         self.viewModel = viewModel
+        self.showClose = showClose
+        self.closeHandler = closeHandler
+        self.handleRelativeUrl = handleRelativeUrl
 
         super.init()
 
@@ -30,6 +36,10 @@ class MarkdownViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if showClose {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -76,6 +86,12 @@ class MarkdownViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+    }
+
+    @objc private func onClose() {
+        dismiss(animated: true, completion: { [weak self] in
+            self?.closeHandler?()
+        })
     }
 
     private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
@@ -250,7 +266,7 @@ extension MarkdownViewController: SectionsDataSource {
 extension MarkdownViewController: UITextViewDelegate {
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard URL.pathExtension == "md" else {
+        guard handleRelativeUrl, URL.pathExtension == "md" else {
             return true
         }
 

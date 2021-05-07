@@ -3,6 +3,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ThemeKit
+import ComponentKit
 
 struct SendPriorityViewItem {
     let title: String
@@ -19,6 +20,7 @@ protocol ISendFeePriorityViewModel {
     var priorityDriver: Driver<String> { get }
     var openSelectPrioritySignal: Signal<[SendPriorityViewItem]> { get }
     var feeSliderDriver: Driver<SendFeeSliderViewItem?> { get }
+    var warningOfStuckDriver: Driver<Bool> { get }
     func openSelectPriority()
     func selectPriority(index: Int)
     func changeCustomPriority(value: Int)
@@ -33,6 +35,7 @@ protocol IDynamicHeightCellDelegate: AnyObject {
 }
 
 class SendFeePriorityCell: UITableViewCell {
+    static private let warningOfStuckString = "send.stuck_warning".localized
     weak var delegate: ISendFeePriorityCellDelegate?
 
     private let viewModel: ISendFeePriorityViewModel
@@ -40,6 +43,7 @@ class SendFeePriorityCell: UITableViewCell {
     private let selectableValueView = C5Cell(style: .default, reuseIdentifier: nil)
 
     private let feeSliderWrapper = FeeSliderWrapper()
+    private let warningOfStuckView = HighlightedDescriptionView()
 
     private let disposeBag = DisposeBag()
 
@@ -69,7 +73,8 @@ class SendFeePriorityCell: UITableViewCell {
         }
 
         selectableValueView.title = "send.tx_speed".localized
-        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.tinted(with: .themeJacob)
+        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
+        selectableValueView.titleImageTintColor = .themeJacob
         selectableValueView.titleImageAction = { [weak self] in
             self?.openFeeInfo()
         }
@@ -86,20 +91,17 @@ class SendFeePriorityCell: UITableViewCell {
             self?.finishTracking(value: value)
         }
 
-        viewModel.priorityDriver
-                .drive(onNext: { [weak self] priority in
-                    self?.selectableValueView.value = priority
-                })
-                .disposed(by: disposeBag)
+        contentView.addSubview(warningOfStuckView)
+        warningOfStuckView.snp.makeConstraints { maker in
+            maker.top.equalTo(feeSliderWrapper.snp.bottom).offset(CGFloat.margin16 + .margin12)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+        }
+        warningOfStuckView.text = Self.warningOfStuckString
 
-        viewModel.openSelectPrioritySignal
-                .emit(onNext: { [weak self] viewItems in
-                    self?.openSelectPriority(viewItems: viewItems)
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.feeSliderDriver
-                .drive(onNext: { [weak self] viewItem in
+        subscribe(disposeBag, viewModel.priorityDriver) { [weak self] priority in self?.selectableValueView.value = priority }
+        subscribe(disposeBag, viewModel.openSelectPrioritySignal) { [weak self] viewItems in self?.openSelectPriority(viewItems: viewItems) }
+        subscribe(disposeBag, viewModel.warningOfStuckDriver) { [weak self] in self?.show(warningOfStuck: $0) }
+        subscribe(disposeBag, viewModel.feeSliderDriver) { [weak self] viewItem in
                     if let viewItem = viewItem {
                         self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: viewItem.unit)
                         self?.feeSliderWrapper.isHidden = false
@@ -108,8 +110,7 @@ class SendFeePriorityCell: UITableViewCell {
                     }
 
                     self?.delegate?.onChangeHeight()
-                })
-                .disposed(by: disposeBag)
+                }
     }
 
     required init?(coder: NSCoder) {
@@ -142,12 +143,21 @@ class SendFeePriorityCell: UITableViewCell {
         viewModel.changeCustomPriority(value: value)
     }
 
+    private func show(warningOfStuck: Bool) {
+        warningOfStuckView.isHidden = !warningOfStuck
+
+        delegate?.onChangeHeight()
+    }
+
 }
 
 extension SendFeePriorityCell {
 
     var cellHeight: CGFloat {
-        isVisible ? (feeSliderWrapper.isHidden ? .heightSingleLineCell : 73) : 0
+        let feeSliderHeight: CGFloat = feeSliderWrapper.isHidden ? 0 : 29
+        let warningOfStuckHeight = warningOfStuckView.isHidden ? 0 : (HighlightedDescriptionView.height(containerWidth: warningOfStuckView.width, text: Self.warningOfStuckString) + .margin16 + .margin12)
+
+        return isVisible ? (CGFloat.heightSingleLineCell + feeSliderHeight + warningOfStuckHeight) : 0
     }
 
 }

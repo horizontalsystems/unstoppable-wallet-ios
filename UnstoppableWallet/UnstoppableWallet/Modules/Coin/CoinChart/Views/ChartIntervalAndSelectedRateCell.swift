@@ -64,4 +64,8 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         selectedRateView.bind(viewItem: selectedPointViewItem)
     }
 
+    func set(backgroundColor: UIColor?) {
+        intervalSelectView.backgroundView?.backgroundColor = backgroundColor
+    }
+
 }

@@ -13,54 +13,24 @@ class RateManager {
 
     private let kit: XRatesKit
 
-    init(walletManager: IWalletManager, currencyKit: ICurrencyKit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String) {
+    init(walletManager: IWalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 10 * 60, topMarketsCount: 100, minLogLevel: .error)
-
-        walletManager.walletsUpdatedObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.onUpdate(wallets: wallets)
-                })
-                .disposed(by: disposeBag)
-
-        currencyKit.baseCurrencyUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] baseCurrency in
-                    self?.onUpdate(baseCurrency: baseCurrency)
-                })
-                .disposed(by: disposeBag)
-    }
-
-    private func onUpdate(wallets: [Wallet]) {
-        let allCoins = wallets.reduce(into: [Coin]()) { result, wallet in
-            result.append(wallet.coin)
-
-            if let feeCoin = feeCoinProvider.feeCoin(coin: wallet.coin) {
-                result.append(feeCoin)
-            }
-        }
-        let uniqueCoinTypes = Array(Set(allCoins.map { $0.type }))
-        kit.set(coinTypes: uniqueCoinTypes)
-    }
-
-    private func onUpdate(baseCurrency: Currency) {
-        kit.set(currencyCode: baseCurrency.code)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 60, topMarketsCount: 100, minLogLevel: .error)
     }
 
 }
 
 extension RateManager: IRateManager {
 
-    func refresh() {
-        kit.refresh()
+    func refresh(currencyCode: String) {
+        kit.refresh(currencyCode: currencyCode)
     }
 
-    func globalMarketInfoSingle(currencyCode: String) -> Single<GlobalCoinMarket> {
-        kit.globalMarketInfoSingle(currencyCode: currencyCode)
+    func globalMarketInfoSingle(currencyCode: String, period: TimePeriod) -> Single<GlobalCoinMarket> {
+        kit.globalMarketInfoSingle(currencyCode: currencyCode, timePeriod: period)
     }
 
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]> {
@@ -83,8 +53,8 @@ extension RateManager: IRateManager {
         kit.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
     }
 
-    func latestRatesObservable(currencyCode: String) -> Observable<[CoinType: LatestRate]> {
-        kit.latestRatesObservable(currencyCode: currencyCode)
+    func latestRatesObservable(coinTypes: [CoinType], currencyCode: String) -> Observable<[CoinType: LatestRate]> {
+        kit.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyCode)
     }
 
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
@@ -107,12 +77,20 @@ extension RateManager: IRateManager {
         kit.coinMarketInfoSingle(coinType: coinType, currencyCode: currencyCode, rateDiffTimePeriods: rateDiffTimePeriods, rateDiffCoinCodes: rateDiffCoinCodes)
     }
 
-    func notificationCoinData(coinTypes: [CoinType]) -> [CoinType: ProviderCoinData] {
-        kit.notificationCoinData(coinTypes: coinTypes)
+    func globalMarketInfoPointsSingle(currencyCode: String, timePeriod: TimePeriod) -> Single<[GlobalCoinMarketPoint]> {
+        kit.globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
     }
 
-    func notificationDataExist(coinType: CoinType) -> Bool {
-        kit.notificationDataExist(coinType: coinType)
+    public func topDefiTvl(currencyCode: String, fetchDiffPeriod: TimePeriod, itemsCount: Int) -> Single<[DefiTvl]> {
+        kit.topDefiTvl(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod, itemsCount: itemsCount)
+    }
+
+    public func defiTvlPoints(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[DefiTvlPoint]> {
+        kit.defiTvlPoints(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod)
+    }
+
+    public func defiTvl(coinType: CoinType, currencyCode: String) -> Single<DefiTvl?> {
+        kit.defiTvl(coinType: coinType, currencyCode: currencyCode)
     }
 
     func coinTypes(for category: String) -> [CoinType] {

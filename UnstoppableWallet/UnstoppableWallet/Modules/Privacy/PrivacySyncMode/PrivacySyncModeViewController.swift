@@ -3,6 +3,7 @@ import ActionSheet
 import ThemeKit
 import SectionsTableView
 import CoinKit
+import ComponentKit
 
 class PrivacySyncModeViewController: ThemeActionSheetController {
     private let delegate: IPrivacySyncModeViewDelegate
@@ -90,7 +91,8 @@ extension PrivacySyncModeViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                                    cell.valueImageTintColor = .themeJacob
                                 },
                                 action: { [weak self] _ in
                                     self?.delegate.onTapViewItem(index: index)
@@ -109,7 +111,7 @@ extension PrivacySyncModeViewController: IPrivacySyncModeView {
         titleView.bind(
                 title: "settings_privacy.alert_sync.title".localized,
                 subtitle: coinTitle,
-                image: .image(coinType: coinType)
+                image: UIImage.image(coinType: coinType)
         )
 
         descriptionView.text = "settings_privacy.alert_sync.description".localized(coinTitle)

@@ -8,16 +8,23 @@ class ManageAccountViewModel {
 
     private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .showRecoveryPhrase)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let openShowKeyRelay = PublishRelay<Account>()
+    private let openBackupKeyRelay = PublishRelay<Account>()
+    private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
+
+    private(set) var additionalViewItems = [AdditionalViewItem]()
 
     init(service: ManageAccountService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.accountObservable) { [weak self] in self?.sync(account: $0) }
+        subscribe(disposeBag, service.accountDeletedObservable) { [weak self] in self?.finishRelay.accept(()) }
 
         sync(state: service.state)
         sync(account: service.account)
+        syncAccountSettings()
     }
 
     private func sync(state: ManageAccountService.State) {
@@ -29,6 +36,16 @@ class ManageAccountViewModel {
 
     private func sync(account: Account) {
         keyActionStateRelay.accept(account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase)
+    }
+
+    private func syncAccountSettings() {
+        additionalViewItems = service.accountSettingsInfo.map { coin, restoreSettingType, value in
+            AdditionalViewItem(
+                    icon: .image(coinType: coin.type),
+                    title: restoreSettingType.title(coin: coin),
+                    value: value
+            )
+        }
     }
 
 }
@@ -43,16 +60,24 @@ extension ManageAccountViewModel {
         keyActionStateRelay.asDriver()
     }
 
+    var openShowKeySignal: Signal<Account> {
+        openShowKeyRelay.asSignal()
+    }
+
+    var openBackupKeySignal: Signal<Account> {
+        openBackupKeyRelay.asSignal()
+    }
+
+    var openUnlinkSignal: Signal<Account> {
+        openUnlinkRelay.asSignal()
+    }
+
     var finishSignal: Signal<()> {
         finishRelay.asSignal()
     }
 
     var accountName: String {
         service.account.name
-    }
-
-    func isValid(name: String?) -> Bool {
-        !(name ?? "").contains("\n")
     }
 
     func onChange(name: String?) {
@@ -64,6 +89,18 @@ extension ManageAccountViewModel {
         finishRelay.accept(())
     }
 
+    func onTapShowKey() {
+        openShowKeyRelay.accept(service.account)
+    }
+
+    func onTapBackupKey() {
+        openBackupKeyRelay.accept(service.account)
+    }
+
+    func onTapUnlink() {
+        openUnlinkRelay.accept(service.account)
+    }
+
 }
 
 extension ManageAccountViewModel {
@@ -71,6 +108,12 @@ extension ManageAccountViewModel {
     enum KeyActionState {
         case showRecoveryPhrase
         case backupRecoveryPhrase
+    }
+
+    struct AdditionalViewItem {
+        let icon: UIImage?
+        let title: String
+        let value: String
     }
 
 }

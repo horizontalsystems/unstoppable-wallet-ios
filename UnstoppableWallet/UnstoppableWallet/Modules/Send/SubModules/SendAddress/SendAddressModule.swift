@@ -12,7 +12,7 @@ protocol ISendAddressModule: AnyObject {
     func validAddress() throws -> Address
 }
 
-protocol ISendAddressDelegate: class {
+protocol ISendAddressDelegate: AnyObject {
     func validate(address: String) throws
 
     func onUpdateAddress()

@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TransactionInfoTransactionIdCell: BaseThemeCell {
     private let titleView = TransactionInfoTitleView()

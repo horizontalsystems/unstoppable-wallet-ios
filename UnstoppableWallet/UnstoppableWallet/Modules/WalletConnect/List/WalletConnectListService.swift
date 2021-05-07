@@ -2,47 +2,21 @@ import RxSwift
 import EthereumKit
 
 class WalletConnectListService {
-    private let predefinedAccountTypeManager: IPredefinedAccountTypeManager
     private let sessionManager: WalletConnectSessionManager
 
-    init(predefinedAccountTypeManager: IPredefinedAccountTypeManager, sessionManager: WalletConnectSessionManager) {
-        self.predefinedAccountTypeManager = predefinedAccountTypeManager
+    init(sessionManager: WalletConnectSessionManager) {
         self.sessionManager = sessionManager
     }
 
-    private func evmAddress(chainId: Int, accountType: AccountType) -> EthereumKit.Address? {
-        guard case let .mnemonic(words, _) = accountType else {
-            return nil
-        }
-
-        if chainId == 1 {
-            return try? EthereumKit.Kit.address(words: words, networkType: .ethMainNet)
-        }
-
-        if chainId == 56 {
-            return try? EthereumKit.Kit.address(words: words, networkType: .bscMainNet)
-        }
-
-        return nil
-    }
-
     private func items(sessions: [WalletConnectSession]) -> [Item] {
-        predefinedAccountTypeManager.allTypes.compactMap { type in
-            guard let account = predefinedAccountTypeManager.account(predefinedAccountType: type) else {
+        Chain.allCases.compactMap { chain in
+            let sessions = sessions.filter { $0.chainId == chain.rawValue }
+
+            guard !sessions.isEmpty else {
                 return nil
             }
 
-            let accountSessions = sessions.filter { $0.accountId == account.id }
-
-            guard !accountSessions.isEmpty else {
-                return nil
-            }
-
-            guard let address = evmAddress(chainId: accountSessions[0].chainId, accountType: account.type) else {
-                return nil
-            }
-
-            return Item(predefinedAccountType: type, address: address, sessions: accountSessions)
+            return Item(chain: chain, sessions: sessions)
         }
     }
 
@@ -64,9 +38,13 @@ extension WalletConnectListService {
 
 extension WalletConnectListService {
 
+    enum Chain: Int, CaseIterable {
+        case ethereum = 1
+        case binanceSmartChain = 56
+    }
+
     struct Item {
-        let predefinedAccountType: PredefinedAccountType
-        let address: EthereumKit.Address
+        let chain: Chain
         let sessions: [WalletConnectSession]
     }
 

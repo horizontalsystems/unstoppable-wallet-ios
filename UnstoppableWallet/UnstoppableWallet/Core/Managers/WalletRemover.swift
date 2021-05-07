@@ -8,7 +8,7 @@ class WalletRemover {
     init(accountManager: IAccountManager, walletManager: IWalletManager) {
         self.walletManager = walletManager
 
-        accountManager.deleteAccountObservable
+        accountManager.accountDeletedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] account in
                     self?.handleDelete(account: account)

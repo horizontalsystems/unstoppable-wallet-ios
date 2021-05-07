@@ -3,6 +3,7 @@ import ThemeKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = ThemeButton()

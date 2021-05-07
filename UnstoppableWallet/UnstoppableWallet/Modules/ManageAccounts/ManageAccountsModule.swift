@@ -1,35 +1,20 @@
-protocol IManageAccountsView: class {
-    func set(viewItems: [ManageAccountViewItem])
-    func show(error: Error)
-    func showSuccess()
+import UIKit
+
+struct ManageAccountsModule {
+
+    static func viewController(mode: Mode) -> UIViewController {
+        let service = ManageAccountsService(accountManager: App.shared.accountManager)
+        let viewModel = ManageAccountsViewModel(service: service, mode: mode)
+        return ManageAccountsViewController(viewModel: viewModel)
+    }
+
 }
 
-protocol IManageAccountsViewDelegate {
-    func viewDidLoad()
+extension ManageAccountsModule {
 
-    func didTapUnlink(index: Int)
-    func didTapBackup(index: Int)
-    func didTapCreate(index: Int)
-    func didTapRestore(index: Int)
-    func didTapSettings(index: Int)
-}
+    enum Mode {
+        case manage
+        case switcher
+    }
 
-protocol IManageAccountsInteractor {
-    var predefinedAccountTypes: [PredefinedAccountType] { get }
-    var hasAddressFormatSettings: Bool { get }
-    func account(predefinedAccountType: PredefinedAccountType) -> Account?
-}
-
-protocol IManageAccountsInteractorDelegate: class {
-    func didUpdateAccounts()
-    func didUpdateWallets()
-}
-
-protocol IManageAccountsRouter {
-    func showUnlink(account: Account, predefinedAccountType: PredefinedAccountType)
-    func showBackup(account: Account, predefinedAccountType: PredefinedAccountType)
-    func showBackupRequired(account: Account, predefinedAccountType: PredefinedAccountType)
-    func showCreateWallet(predefinedAccountType: PredefinedAccountType)
-    func showRestore(predefinedAccountType: PredefinedAccountType)
-    func showSettings()
 }

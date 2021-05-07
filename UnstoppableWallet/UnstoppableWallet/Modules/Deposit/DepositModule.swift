@@ -1,6 +1,6 @@
 import CoinKit
 
-protocol IDepositView: class {
+protocol IDepositView: AnyObject {
     func set(viewItem: DepositModule.AddressViewItem)
     func showCopied()
 }
@@ -14,11 +14,10 @@ protocol IDepositViewDelegate {
 
 protocol IDepositInteractor {
     var address: String { get }
-    func derivationSetting(coinType: CoinType) -> DerivationSetting?
     func copy(address: String)
 }
 
-protocol IDepositInteractorDelegate: class {
+protocol IDepositInteractorDelegate: AnyObject {
 }
 
 protocol IDepositRouter {

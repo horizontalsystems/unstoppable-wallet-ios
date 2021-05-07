@@ -1,12 +1,14 @@
 import UIKit
 import Chart
 import HUD
+import ThemeKit
 
 class ChartViewCell: UITableViewCell {
     public static let cellHeight: CGFloat = 182
 
     private let chartView: RateChartView
     private let loadingView = HUDActivityView.create(with: .medium24)
+    private let bottomSeparator = UIView()
 
     var delegate: IChartViewTouchDelegate? {
         get {
@@ -17,7 +19,7 @@ class ChartViewCell: UITableViewCell {
         }
     }
 
-    init(delegate: IChartViewTouchDelegate? = nil, configuration: ChartConfiguration) {
+    init(delegate: IChartViewTouchDelegate? = nil, configuration: ChartConfiguration, isLast: Bool = true) {
         chartView = RateChartView(configuration: configuration)
         chartView.delegate = delegate
 
@@ -38,6 +40,16 @@ class ChartViewCell: UITableViewCell {
             maker.center.equalTo(chartView)
         }
         loadingView.set(hidden: true)
+
+        contentView.addSubview(bottomSeparator)
+        bottomSeparator.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        bottomSeparator.backgroundColor = .themeSteel10
+        bottomSeparator.isHidden = isLast
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,11 +73,11 @@ class ChartViewCell: UITableViewCell {
     public func bind(data: ChartDataViewItem, viewItem: ChartViewItem) {
         switch data.chartTrend {
         case .neutral:
-            chartView.setCurve(color: .themeGray)
+            chartView.setCurve(colorType: .neutral)
         case .up:
-            chartView.setCurve(color: .themeGreenD)
+            chartView.setCurve(colorType: .up)
         case .down:
-            chartView.setCurve(color: .themeRedD)
+            chartView.setCurve(colorType: .down)
         }
 
         chartView.set(chartData: data.chartData)
@@ -77,19 +89,19 @@ class ChartViewCell: UITableViewCell {
         chartView.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
     }
 
-    func set(data: CoinChartViewModel.ViewItem) {
-        switch data.chartTrend {
+    func set(data: ChartData, trend: MovementTrend, min: String?, max: String?, timeline: [ChartTimelineItem]) {
+        switch trend {
         case .neutral:
-            chartView.setCurve(color: .themeGray)
+            chartView.setCurve(colorType: .neutral)
         case .up:
-            chartView.setCurve(color: .themeGreenD)
+            chartView.setCurve(colorType: .up)
         case .down:
-            chartView.setCurve(color: .themeRedD)
+            chartView.setCurve(colorType: .down)
         }
 
-        chartView.set(chartData: data.chartData)
-        chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
-        chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
+        chartView.set(chartData: data)
+        chartView.set(timeline: timeline, start: data.startWindow, end: data.endWindow)
+        chartView.set(highLimitText: max, lowLimitText: min)
     }
 
     func setVolumes(hidden: Bool, limitHidden: Bool) {

@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
 class TransactionInfoNoteCell: BaseThemeCell {
     private static let imageViewLeadingMargin: CGFloat = .margin4x
@@ -37,8 +38,9 @@ class TransactionInfoNoteCell: BaseThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(image: UIImage?, text: String) {
+    func bind(image: UIImage?, imageTintColor: UIColor?, text: String) {
         iconImageView.image = image
+        iconImageView.tintColor = imageTintColor
         label.text = text
     }
 

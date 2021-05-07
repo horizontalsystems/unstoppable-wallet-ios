@@ -74,7 +74,7 @@ class SwapTradeService {
     var swapTradeOptions = SwapTradeOptions() {
         didSet {
             swapTradeOptionsRelay.accept(swapTradeOptions)
-            syncTradeData()
+            _ = syncTradeData()
         }
     }
 
@@ -106,30 +106,32 @@ class SwapTradeService {
                 .swapDataSingle(coinIn: coinIn, coinOut: coinOut)
                 .subscribe(onSuccess: { [weak self] swapData in
                     self?.swapData = swapData
-                    self?.syncTradeData()
+                    _ = self?.syncTradeData()
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error])
                 })
                 .disposed(by: swapDataDisposeBag)
     }
 
-    private func syncTradeData() {
+    private func syncTradeData() -> Bool {
         guard let swapData = swapData else {
-            return
+            return false
         }
 
         let amount = tradeType == .exactIn ? amountIn : amountOut
 
         guard amount > 0 else {
             state = .notReady(errors: [])
-            return
+            return false
         }
 
         do {
             let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: swapTradeOptions.tradeOptions)
             handle(tradeData: tradeData)
+            return true
         } catch {
             state = .notReady(errors: [error])
+            return false
         }
     }
 
@@ -229,9 +231,10 @@ extension SwapTradeService {
         tradeType = .exactIn
 
         self.amountIn = amountIn
-        amountOut = 0
 
-        syncTradeData()
+        if !syncTradeData() {
+            amountOut = 0
+        }
     }
 
     func set(amountOut: Decimal) {
@@ -242,9 +245,10 @@ extension SwapTradeService {
         tradeType = .exactOut
 
         self.amountOut = amountOut
-        amountIn = 0
 
-        syncTradeData()
+        if !syncTradeData() {
+            amountIn = 0
+        }
     }
 
     func switchCoins() {

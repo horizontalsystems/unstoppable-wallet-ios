@@ -6,8 +6,8 @@ import CoinKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
-    private let erc20Provider: EnableCoinsErc20Provider
-    private let bep20Provider: EnableCoinsBep20Provider
+    private let erc20Provider: EnableCoinsEip20Provider
+    private let bep20Provider: EnableCoinsEip20Provider
     private let bep2Provider: EnableCoinsBep2Provider
     private let coinManager: ICoinManager
     private let disposeBag = DisposeBag()
@@ -21,7 +21,7 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsErc20Provider, bep20Provider: EnableCoinsBep20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
+    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
         self.appConfigProvider = appConfigProvider
         self.erc20Provider = erc20Provider
         self.bep20Provider = bep20Provider
@@ -30,18 +30,18 @@ class EnableCoinsService {
     }
 
     private func resolveTokenType(coinType: CoinType, accountType: AccountType) -> TokenType? {
-        switch (coinType, accountType) {
-        case (.ethereum, .mnemonic(let words, _)):
-            if words.count == 12 {
-                return .erc20(words: words)
-            }
-        case (.binanceSmartChain, .mnemonic(let words, _)):
-            if words.count == 24 {
-                return .bep20(words: words)
-            }
-        case (.bep2(let symbol), .mnemonic(let words, _)):
-            if symbol == "BNB", words.count == 24 {
-                return .bep2(words: words)
+        guard let seed = accountType.mnemonicSeed else {
+            return nil
+        }
+
+        switch coinType {
+        case .ethereum:
+            return .erc20(seed: seed)
+        case .binanceSmartChain:
+            return .bep20(seed: seed)
+        case .bep2(let symbol):
+            if symbol == "BNB" {
+                return .bep2(seed: seed)
             }
         default:
             ()
@@ -50,16 +50,17 @@ class EnableCoinsService {
         return nil
     }
 
-    private func fetchErc20Tokens(words: [String]) {
+    private func fetchErc20Tokens(seed: Data) {
         do {
-            let address = try Kit.address(words: words, networkType: appConfigProvider.testMode ? .ropsten : .ethMainNet)
+            let address = try Kit.address(seed: seed, networkType: appConfigProvider.testMode ? .ropsten : .ethMainNet)
 
             state = .loading
 
-            erc20Provider.contractAddressesSingle(address: address.hex)
+            erc20Provider.coinsSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] addresses in
-                        self?.handleFetchErc20(addresses: addresses)
+                    .subscribe(onSuccess: { [weak self] coins in
+                        self?.state = .success(coins: coins)
+                        self?.enableCoinsRelay.accept(coins)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -69,29 +70,17 @@ class EnableCoinsService {
         }
     }
 
-    private func handleFetchErc20(addresses: [String]) {
-        let allCoins = coinManager.coins
-
-        let coins = addresses.compactMap { address in
-            allCoins.first { coin in
-                coin.type == .erc20(address: address)
-            }
-        }
-
-        state = .success(coins: coins)
-        enableCoinsRelay.accept(coins)
-    }
-
-    private func fetchBep20Tokens(words: [String]) {
+    private func fetchBep20Tokens(seed: Data) {
         do {
-            let address = try Kit.address(words: words, networkType: .bscMainNet)
+            let address = try Kit.address(seed: seed, networkType: .bscMainNet)
 
             state = .loading
 
-            bep20Provider.contractAddressesSingle(address: address.hex)
+            bep20Provider.coinsSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] addresses in
-                        self?.handleFetchBep20(addresses: addresses)
+                    .subscribe(onSuccess: { [weak self] coins in
+                        self?.state = .success(coins: coins)
+                        self?.enableCoinsRelay.accept(coins)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -101,22 +90,9 @@ class EnableCoinsService {
         }
     }
 
-    private func handleFetchBep20(addresses: [String]) {
-        let allCoins = coinManager.coins
-
-        let coins = addresses.compactMap { address in
-            allCoins.first { coin in
-                coin.type == .bep20(address: address)
-            }
-        }
-
-        state = .success(coins: coins)
-        enableCoinsRelay.accept(coins)
-    }
-
-    private func fetchBep2Tokens(words: [String]) {
+    private func fetchBep2Tokens(seed: Data) {
         do {
-            let single = try bep2Provider.tokenSymbolsSingle(words: words)
+            let single = try bep2Provider.tokenSymbolsSingle(seed: seed)
 
             state = .loading
 
@@ -176,12 +152,12 @@ extension EnableCoinsService {
         }
 
         switch tokenType {
-        case .erc20(let words):
-            fetchErc20Tokens(words: words)
-        case .bep20(let words):
-            fetchBep20Tokens(words: words)
-        case .bep2(let words):
-            fetchBep2Tokens(words: words)
+        case .erc20(let seed):
+            fetchErc20Tokens(seed: seed)
+        case .bep20(let seed):
+            fetchBep20Tokens(seed: seed)
+        case .bep2(let seed):
+            fetchBep2Tokens(seed: seed)
         }
     }
 
@@ -198,9 +174,9 @@ extension EnableCoinsService {
     }
 
     enum TokenType {
-        case erc20(words: [String])
-        case bep20(words: [String])
-        case bep2(words: [String])
+        case erc20(seed: Data)
+        case bep20(seed: Data)
+        case bep2(seed: Data)
 
         var title: String {
             switch self {

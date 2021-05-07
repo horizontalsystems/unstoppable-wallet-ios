@@ -41,13 +41,15 @@ extension ItemSelectorModule {
         let subtitle: String?
         let subtitleColor: UIColor
         let image: UIImage?
+        let tintColor: UIColor?
 
-        init(title: String?, titleColor: UIColor = .themeOz, subtitle: String?, subtitleColor: UIColor = .themeGray, image: UIImage?) {
+        init(title: String?, titleColor: UIColor = .themeOz, subtitle: String?, subtitleColor: UIColor = .themeGray, image: UIImage?, tintColor: UIColor?) {
             self.title = title
             self.titleColor = titleColor
             self.subtitle = subtitle
             self.subtitleColor = titleColor
             self.image = image
+            self.tintColor = tintColor
         }
     }
 

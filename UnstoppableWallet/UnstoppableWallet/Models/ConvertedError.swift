@@ -36,15 +36,6 @@ extension NetworkManager.RequestError: ConvertibleError {
     }
 }
 
-extension IncubedRpcApiProvider.IncubedError: ConvertibleError {
-    var convertedError: Error {
-        switch self {
-        case .notReachable: return AppError.incubedNotReachable
-        default: return self
-        }
-    }
-}
-
 extension BinanceError: ConvertibleError {
     var convertedError: Error {
         if message.contains("requires non-empty memo in transfer transaction") {
@@ -109,7 +100,7 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
     }
 }
 
-extension EthereumKit.WebSocketState.StateError: ConvertibleError {
+extension HsToolKit.WebSocketState.StateError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .notConnected: return AppError.noConnection

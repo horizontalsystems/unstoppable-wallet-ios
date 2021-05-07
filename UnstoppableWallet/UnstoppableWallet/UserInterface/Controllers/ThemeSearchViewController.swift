@@ -16,11 +16,24 @@ class ThemeSearchViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.largeTitleDisplayMode = .never
+
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.showsCancelButton = false
         searchController.searchResultsUpdater = self
-        definesPresentationContext = true
+        searchController.delegate = self
 
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+
+    override func dismiss(animated flag: Bool, completion: (() -> ())? = nil) {
+        if searchController.isActive {
+            searchController.dismiss(animated: false)
+        }
+
+        super.dismiss(animated: flag, completion: completion)
     }
 
     override func viewWillLayoutSubviews() {
@@ -37,6 +50,16 @@ class ThemeSearchViewController: KeyboardAwareViewController {
     }
 
     func onUpdate(filter: String?) {
+    }
+
+}
+
+extension ThemeSearchViewController: UISearchControllerDelegate {
+
+    public func didPresentSearchController(_ searchController: UISearchController) {
+        DispatchQueue.main.async {
+            self.searchController.searchBar.becomeFirstResponder()
+        }
     }
 
 }

@@ -65,16 +65,13 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "restore.title" = "Choose Wallet";
 "restore.enter_key" = "Enter Key";
-"restore.item_title" = "%@ Wallet";
-"restore.words.description" = "Enter your private key for %@ wallet which consists of %@ words. The words needs to be entered in correct order and separated by spaces.";
 "restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore.birthday_height.placeholder" = "Wallet Birthday (optional)";
-"restore.birthday_height.description" = "This allows wallet app to sync with Zcash blockchain much faster. Leave blank if you don’t remember it.";
-"restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
-"restore_error.words_count" = "Wrong words count. Must be %@. You entered: %@";
 "restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
+"restore.passphrase" = "Passphrase";
+"restore.input.passphrase" = "Passphrase";
+"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
+"restore.error.empty_passphrase" = "Passphrase cannot be empty";
 
 // Coin Settings
 
@@ -104,6 +101,33 @@ bch.horizontalsystems.xyz/apg";
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Address Format";
+"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+
+// Show Key
+
+"show_key.title" = "Key";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"show_key.button_show" = "Show";
+"show_key.tab.recovery_phrase" = "Recovery Phrase";
+"show_key.tab.private_keys" = "Private Keys";
+"show_key.passphrase" = "Passphrase";
+
+// Backup Key
+
+"backup_key.title" = "Backup";
+"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"backup_key.button_show" = "Show";
+"backup_key.button_backup" = "Backup";
+"backup_key.passphrase" = "Passphrase";
+
+"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
+"backup_key.confirmation.passphrase" = "Passphrase";
+"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+
+"backup_key.confirmation.empty_word" = "Empty word";
+"backup_key.confirmation.invalid_word" = "Invalid word";
+"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
+"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
 
 // Backup
 
@@ -120,14 +144,11 @@ bch.horizontalsystems.xyz/apg";
 
 "backup.words.confirmation_description" = "Enter words from your %@ Key";
 
-"backup.birthday_height" = "Birthday Height";
-
 "error.send.self_transfer" = "Sending to self is not supported";
 "error.send_ethereum.wrong_parameters" = "Wrong parameters";
 "error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
 "error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
 "error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
-"error.incubed_not_reachable" = "Incubed servers not reachable";
 
 "backup.confirmation.title" = "Check ...";
 
@@ -147,7 +168,10 @@ bch.horizontalsystems.xyz/apg";
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";
 "balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coins";
+"balance.add_coin" = "Add Coin";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
@@ -160,7 +184,7 @@ bch.horizontalsystems.xyz/apg";
 
 "deposit.receive_coin" = "Receive %@";
 "deposit.your_address" = "Your Address";
-"receive_alert.not_backed_up_description" = "You need to backup the %@ Wallet before you may receive %@.";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 
 // Send
 
@@ -217,6 +241,7 @@ bch.horizontalsystems.xyz/apg";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
 "send.lock_time" = "TimeLock";
 
@@ -239,7 +264,7 @@ bch.horizontalsystems.xyz/apg";
 "swap.advanced_settings" = "Advanced Settings";
 "swap.proceed_button" = "Next";
 "swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for us in future trades.";
+"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
 "swap.approving_button" = "Approving...";
 "swap.amount_error.maximum_amount" = "Balance %@";
@@ -320,7 +345,7 @@ bch.horizontalsystems.xyz/apg";
 "market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total\nMarket Cap";
+"market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "DeFi Cap";
@@ -332,10 +357,13 @@ bch.horizontalsystems.xyz/apg";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted M.Cap";
 
 "market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted M.Cap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -382,9 +410,10 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.governance" = "Governance";
 "market_discovery.filter_title.cross_chain" = "Cross Chain";
 "market_discovery.filter_title.computing" = "Computing";
+"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
+"market_discovery.filter_title.investment_tools" = "Investment Tools";
 
 "market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
@@ -412,9 +441,10 @@ bch.horizontalsystems.xyz/apg";
 "market_discovery.filter_description.b2b" = "B2B service providers.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
 "market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
+"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
 
 "market_watchlist.empty.caption" = "Watchlist is empty. \nYou may add coins to watchlist using star icon on a coin page.";
 
@@ -426,6 +456,8 @@ bch.horizontalsystems.xyz/apg";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
+"market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
@@ -433,12 +465,18 @@ bch.horizontalsystems.xyz/apg";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
 
+"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_eth" = "Outperformed ETH";
+"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
 
 "market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5M";
-"market.advanced_search.m_5_m_10" = "5M - 20M";
+"market.advanced_search.m_5_m_20" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
 "market.advanced_search.b_1_b_5" = "1B - 5B";
@@ -451,6 +489,21 @@ bch.horizontalsystems.xyz/apg";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+
+"market.global.subtitle" = "Chart";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hour";
@@ -462,13 +515,19 @@ bch.horizontalsystems.xyz/apg";
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.genesis_date" = "Launch Date";
 
+"coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.tvl" = "Total Value Locked";
+"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
+"coin_page.tvl_rank" = "TVL Rank";
+"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
@@ -524,9 +583,17 @@ bch.horizontalsystems.xyz/apg";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Light Mode";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized app";
+
+// Settings -> Base Currency
+
+"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.other" = "Other";
+"settings.base_currency.disclaimer" = "Disclaimer";
+"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.i_understand" = "I Understand";
 
 // Settings -> Notifications
 
@@ -649,10 +716,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "settings_manage_keys.create" = "Create";
 "settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.settings" = "Address Format";
-"settings_manage_keys.delete.cant_delete" = "You need to backup the private key for this wallet before it can be deleted from this phone.";
 "settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete the %@ Wallet from this device.";
-"settings_manage_keys.delete.confirmation_disable" = "Coins that will be disabled: %@";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't backup the private key for this wallet, you will lose access to your funds.";
 
 // Settings -> About App
@@ -664,6 +729,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Tell Friends";
 "settings.about_app.email_copied" = "Email address copied";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Set PIN
 
@@ -760,6 +832,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "create_wallet.create_button" = "Create";
 "create_wallet.mnemonic" = "Mnemonic";
 "create_wallet.n_words" = "%@ words";
+"create_wallet.passphrase" = "Passphrase";
+"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.input.confirm" = "Confirm";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
+"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Select Coins
 
@@ -896,8 +975,21 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
 
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+
 // Manage Account
 
-"manage_account.show_recovery_phrase" = "Show Recovery Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.name" = "Name";
+"manage_account.show_recovery_phrase" = "Show Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Phrase";
 "manage_account.unlink" = "Unlink";
+
+// Birthday Input
+
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
+"birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";

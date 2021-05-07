@@ -2,18 +2,24 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import RxSwift
+import RxCocoa
+import ComponentKit
 
 class UnlinkViewController: ThemeActionSheetController {
-    private let delegate: IUnlinkViewDelegate
+    private let viewModel: UnlinkViewModel
+    private let disposeBag = DisposeBag()
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let deleteButton = ThemeButton()
 
-    private var viewItems = [UnlinkModule.ViewItem]()
+    private var viewItems = [UnlinkViewModel.ViewItem]()
+    private var isLoaded = false
 
-    init(delegate: IUnlinkViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: UnlinkViewModel) {
+        self.viewModel = viewModel
+
         super.init()
     }
 
@@ -30,8 +36,15 @@ class UnlinkViewController: ThemeActionSheetController {
         }
 
         titleView.onTapClose = { [weak self] in
-            self?.delegate.onTapClose()
+            self?.dismiss(animated: true)
         }
+
+        titleView.bind(
+                title: "settings_manage_keys.delete.title".localized,
+                subtitle: viewModel.accountName,
+                image: UIImage(named: "warning_2_24"),
+                tintColor: .themeLucian
+        )
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -44,60 +57,64 @@ class UnlinkViewController: ThemeActionSheetController {
 
         view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin6x)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
         deleteButton.apply(style: .primaryRed)
         deleteButton.setTitle("security_settings.delete_alert_button".localized, for: .normal)
-        deleteButton.addTarget(self, action: #selector(_onTapDelete), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 
-        delegate.onLoad()
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in
+            self?.viewItems = $0
+            self?.reloadTable()
+        }
+        subscribe(disposeBag, viewModel.deleteEnabledDriver) { [weak self] in self?.deleteButton.isEnabled = $0 }
+        subscribe(disposeBag, viewModel.successSignal) { [weak self] in
+            HudHelper.instance.showSuccess()
+            self?.dismiss(animated: true)
+        }
 
-        tableView.reload()
+        tableView.buildSections()
+
+        isLoaded = true
     }
 
-    @objc private func _onTapDelete() {
-        delegate.onTapDelete()
+    @objc private func onTapDeleteButton() {
+        viewModel.onTapDelete()
     }
 
-    private func checkboxRow(viewItem: UnlinkModule.ViewItem, index: Int) -> RowProtocol {
-        let checkboxText = text(itemType: viewItem.type)
+    private func reloadTable() {
+        guard isLoaded else {
+            return
+        }
 
-        return Row<CheckboxCell>(
+        tableView.reload(animated: true)
+    }
+}
+
+extension UnlinkViewController: SectionsDataSource {
+
+    private func checkboxRow(viewItem: UnlinkViewModel.ViewItem, index: Int) -> RowProtocol {
+        Row<CheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(viewItem.checked)",
                 dynamicHeight: { width in
-                    CheckboxCell.height(containerWidth: width, text: checkboxText)
+                    CheckboxCell.height(containerWidth: width, text: viewItem.text)
                 },
                 bind: { cell, _ in
                     cell.bind(
-                            text: checkboxText,
+                            text: viewItem.text,
                             checked: viewItem.checked
                     )
                 },
                 action: { [weak self] _ in
-                    self?.delegate.onTapViewItem(index: index)
+                    self?.viewModel.onTap(index: index)
                 }
         )
     }
-
-    private func text(itemType: UnlinkModule.ItemType) -> String {
-        switch itemType {
-        case .deleteAccount(let accountTypeTitle):
-            return "settings_manage_keys.delete.confirmation_remove".localized(accountTypeTitle)
-        case .disableCoins(let coinCodes):
-            return "settings_manage_keys.delete.confirmation_disable".localized(coinCodes)
-        case .loseAccess:
-            return "settings_manage_keys.delete.confirmation_loose".localized
-        }
-    }
-
-}
-
-extension UnlinkViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
@@ -108,31 +125,6 @@ extension UnlinkViewController: SectionsDataSource {
                     }
             )
         ]
-    }
-
-}
-
-extension UnlinkViewController: IUnlinkView {
-
-    func set(accountTypeTitle: String) {
-        titleView.bind(
-                title: "settings_manage_keys.delete.title".localized,
-                subtitle: accountTypeTitle,
-                image: UIImage(named: "warning_2_24")?.tinted(with: .themeLucian)
-        )
-    }
-
-    func set(viewItems: [UnlinkModule.ViewItem]) {
-        self.viewItems = viewItems
-        tableView.reload()
-    }
-
-    func set(deleteButtonEnabled: Bool) {
-        deleteButton.isEnabled = deleteButtonEnabled
-    }
-
-    func showSuccess() {
-        HudHelper.instance.showSuccess()
     }
 
 }

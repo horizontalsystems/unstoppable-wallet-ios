@@ -14,6 +14,7 @@ class SendFeePriorityPresenter {
     private var feeRateAdjustmentInfo: FeeRateAdjustmentInfo
     private var customFeeRate: Int?
     private var fetchedFeeRate: Int?
+    private var recommendedFeeRate: Int?
 
     private var error: Error?
     private(set) var feeRatePriority: FeeRatePriority
@@ -52,8 +53,6 @@ extension SendFeePriorityPresenter: ISendFeePriorityModule {
         fetchedFeeRate = nil
         error = nil
 
-        view?.set(enabled: false)
-
         interactor.syncFeeRate(priority: feeRatePriority)
     }
 
@@ -89,6 +88,9 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
         self.feeRatePriority = feeRatePriority
         if case let .custom(value, _) = feeRatePriority {
             customFeeRate = value
+
+            let riskOfStuck = (recommendedFeeRate ?? 0) > value
+            view?.set(riskOfStuckVisible: riskOfStuck)
         }
 
         delegate?.onUpdateFeePriority()
@@ -104,8 +106,11 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
             value = min(value, range.upperBound)                 // value can't be more than slider upper range
             feeRatePriority = .custom(value: value, range: range)
 
+            let riskOfStuck = (recommendedFeeRate ?? 0) > value
             view?.set(customVisible: true)
+            view?.set(riskOfStuckVisible: riskOfStuck)
             view?.set(customFeeRateValue: value, customFeeRateRange: range)
+
             view?.setPriority()
 
             delegate?.onUpdateFeePriority()
@@ -114,6 +119,8 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
             feeRatePriority = selectedItem.priority
 
             view?.set(customVisible: false)
+            view?.set(riskOfStuckVisible: selectedItem.priority == .low)
+
             view?.setPriority()
 
             fetchFeeRate()
@@ -125,9 +132,11 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
 
     func didUpdate(feeRate: Int) {
-        fetchedFeeRate = feeRate
+        if feeRatePriority == .recommended || feeRatePriority == .medium {
+            recommendedFeeRate = feeRate
+        }
 
-        view?.set(enabled: true)
+        fetchedFeeRate = feeRate
 
         delegate?.onUpdateFeePriority()
     }

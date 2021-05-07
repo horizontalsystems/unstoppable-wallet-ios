@@ -3,24 +3,22 @@ import RxRelay
 import CoinKit
 
 class ManageWalletsService {
+    private let account: Account
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
-    private let accountManager: IAccountManager
-    private let enableCoinsService: EnableCoinsService
-    private let blockchainSettingsService: BlockchainSettingsService
+    private let restoreSettingsService: RestoreSettingsService
+    private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
     private var featuredCoins = [Coin]()
     private var coins = [Coin]()
-    private var wallets = [Coin: Wallet]()
+    private var wallets = Set<Wallet>()
+    private var filter: String?
 
     private let stateRelay = PublishRelay<State>()
-    private let enableCoinRelay = PublishRelay<Coin>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
 
     private var addedCoins = [Coin]()
-    private var coinToEnable: Coin?
-    private var resyncCoins = false
 
     var state = State.empty {
         didSet {
@@ -28,76 +26,52 @@ class ManageWalletsService {
         }
     }
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.manage-wallets-service", qos: .userInitiated)
+    init?(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+        guard let account = accountManager.activeAccount else {
+            return nil
+        }
 
-    init(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, enableCoinsService: EnableCoinsService, blockchainSettingsService: BlockchainSettingsService) {
+        self.account = account
         self.coinManager = coinManager
         self.walletManager = walletManager
-        self.accountManager = accountManager
-        self.enableCoinsService = enableCoinsService
-        self.blockchainSettingsService = blockchainSettingsService
+        self.restoreSettingsService = restoreSettingsService
+        self.coinSettingsService = coinSettingsService
 
-        accountManager.accountsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.handleAccountsChanged()
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
+            self?.handleUpdated(wallets: wallets)
+        }
+        subscribe(disposeBag, coinManager.coinsAddedObservable) { [weak self] coins in
+            self?.handleAdded(coins: coins)
+        }
+        subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
+            self?.handleApproveRestoreSettings(coin: coinWithSettings.coin, settings: coinWithSettings.settings)
+        }
+        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
+            self?.handleRejectApproveRestoreSettings(coin: coin)
+        }
+        subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
+            self?.handleApproveCoinSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
+        }
+        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
+            self?.handleRejectApproveCoinSettings(coin: coin)
+        }
 
-        walletManager.walletsUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.handleUpdated(wallets: wallets)
-                })
-                .disposed(by: disposeBag)
-
-        coinManager.coinAddedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.handleAdded(coin: coin)
-                })
-                .disposed(by: disposeBag)
-
-        enableCoinsService.enableCoinsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coins in
-                    self?.enable(coins: coins, resyncCoins: true)
-                })
-                .disposed(by: disposeBag)
-
-        blockchainSettingsService.approveEnableCoinObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.handleApproveEnable(coin: coin)
-                })
-                .disposed(by: disposeBag)
-
-        blockchainSettingsService.rejectEnableCoinObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coin in
-                    self?.cancelEnableCoinRelay.accept(coin)
-                })
-                .disposed(by: disposeBag)
-
-        sync(wallets: walletManager.wallets)
         syncCoins()
+        sync(wallets: walletManager.activeWallets)
+        sortCoins()
         syncState()
     }
 
-    private func sync(wallets: [Wallet]) {
-        self.wallets = [:]
-
-        for wallet in wallets {
-            self.wallets[wallet.coin] = wallet
-        }
+    private func syncCoins() {
+        (featuredCoins, coins) = coinManager.groupedCoins
     }
 
-    private func syncCoins() {
-        let (featuredCoins, regularCoins) = coinManager.groupedCoins
+    private func isEnabled(coin: Coin) -> Bool {
+        wallets.contains { $0.coin == coin }
+    }
 
-        self.featuredCoins = featuredCoins
-
-        coins = regularCoins.sorted { lhsCoin, rhsCoin in
+    private func sortCoins() {
+        coins.sort { lhsCoin, rhsCoin in
             let lhsAdded = addedCoins.contains(lhsCoin)
             let rhsAdded = addedCoins.contains(rhsCoin)
 
@@ -105,8 +79,8 @@ class ManageWalletsService {
                 return lhsAdded
             }
 
-            let lhsEnabled = wallets[lhsCoin] != nil
-            let rhsEnabled = wallets[rhsCoin] != nil
+            let lhsEnabled = isEnabled(coin: lhsCoin)
+            let rhsEnabled = isEnabled(coin: rhsCoin)
 
             if lhsEnabled != rhsEnabled {
                 return lhsEnabled
@@ -116,89 +90,104 @@ class ManageWalletsService {
         }
     }
 
-    private func item(coin: Coin) -> Item {
-        let state: ItemState
-
-        if let account = account(coinType: coin.type) {
-            state = .hasAccount(account: account, hasWallet: wallets[coin] != nil)
-        } else {
-            state = .noAccount
-        }
-
-        return Item(coin: coin, state: state)
+    private func sync(wallets: [Wallet]) {
+        self.wallets = Set(wallets)
     }
 
-    private func syncState() {
-        state = State(
-            featuredItems: featuredCoins.map { item(coin: $0) },
-            items: coins.map { item(coin: $0) }
+    private func item(coin: Coin) -> Item {
+        let enabled = isEnabled(coin: coin)
+
+        return Item(
+                coin: coin,
+                hasSettings: enabled && !coin.type.coinSettingTypes.isEmpty,
+                enabled: enabled
         )
     }
 
-    private func wallet(coin: Coin) -> Wallet? {
-        guard let item = state.item(coin: coin), case .hasAccount(let account, _) = item.state else {
-            return nil // impossible case
+    private func filtered(coins: [Coin]) -> [Coin] {
+        guard let filter = filter else {
+            return coins
         }
 
-        return Wallet(coin: coin, account: account)
+        return coins.filter { coin in
+            coin.title.localizedCaseInsensitiveContains(filter) || coin.code.localizedCaseInsensitiveContains(filter)
+        }
+    }
+
+    private func syncState() {
+        let filteredFeaturedCoins = filtered(coins: featuredCoins)
+        let filteredCoins = filtered(coins: coins)
+
+        state = State(
+                featuredItems: filteredFeaturedCoins.map { item(coin: $0) },
+                items: filteredCoins.map { item(coin: $0) }
+        )
     }
 
     private func handleUpdated(wallets: [Wallet]) {
-        queue.async {
-            self.sync(wallets: wallets)
+        sync(wallets: wallets)
+        syncState()
+    }
 
-            if self.resyncCoins {
-                self.syncCoins()
-                self.resyncCoins = false
-            }
-
-            self.syncState()
+    private func configuredCoins(coin: Coin, settingsArray: [CoinSettings]) -> [ConfiguredCoin] {
+        if settingsArray.isEmpty {
+            return [ConfiguredCoin(coin: coin)]
+        } else {
+            return settingsArray.map { ConfiguredCoin(coin: coin, settings: $0) }
         }
     }
 
-    private func handleApproveEnable(coin: Coin) {
-        enable(coins: [coin])
+    private func handleApproveRestoreSettings(coin: Coin, settings: RestoreSettings = [:]) {
+        restoreSettingsService.save(settings: settings, account: account, coin: coin)
 
-        guard let account = account(coinType: coin.type), account.origin == .restored else {
-            return
-        }
-
-        enableCoinsService.handle(coinType: coin.type, accountType: account.type)
-    }
-
-    private func enable(coins: [Coin], resyncCoins: Bool = false) {
-        queue.async {
-            let nonEnabledCoins = coins.filter { coin in
-                !self.wallets.keys.contains(coin)
-            }
-
-            self.walletManager.save(wallets: nonEnabledCoins.compactMap { self.wallet(coin: $0) })
-
-            self.resyncCoins = resyncCoins
+        if coin.type.coinSettingTypes.isEmpty {
+            handleApproveCoinSettings(coin: coin)
+        } else {
+            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
         }
     }
 
-    private func handleAccountsChanged() {
-        queue.async {
-            self.syncState()
-        }
-
-        guard let coinToEnable = coinToEnable else {
-            return
-        }
-
-        enableCoinRelay.accept(coinToEnable)
-        enable(coin: coinToEnable)
-
-        self.coinToEnable = nil
+    private func handleRejectApproveRestoreSettings(coin: Coin) {
+        cancelEnableCoinRelay.accept(coin)
     }
 
-    private func handleAdded(coin: Coin) {
-        queue.async {
-            self.addedCoins.append(coin)
-            self.syncCoins()
-            self.syncState()
+    private func handleApproveCoinSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
+        let configuredCoins = self.configuredCoins(coin: coin, settingsArray: settingsArray)
+
+        if isEnabled(coin: coin) {
+            applySettings(coin: coin, configuredCoins: configuredCoins)
+        } else {
+            let wallets = configuredCoins.map { Wallet(configuredCoin: $0, account: account) }
+            walletManager.save(wallets: wallets)
         }
+    }
+
+    private func handleRejectApproveCoinSettings(coin: Coin) {
+        if !isEnabled(coin: coin) {
+            cancelEnableCoinRelay.accept(coin)
+        }
+    }
+
+    private func applySettings(coin: Coin, configuredCoins: [ConfiguredCoin]) {
+        let existingWallets = wallets.filter { $0.coin == coin }
+        let existingConfiguredCoins = existingWallets.map { $0.configuredCoin }
+
+        let newConfiguredCoins = configuredCoins.filter { !existingConfiguredCoins.contains($0) }
+        let removedWallets = existingWallets.filter { !configuredCoins.contains($0.configuredCoin) }
+
+        let newWallets = newConfiguredCoins.map { Wallet(configuredCoin: $0, account: account) }
+
+        if !newWallets.isEmpty || !removedWallets.isEmpty {
+            walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))
+        }
+    }
+
+    private func handleAdded(coins: [Coin]) {
+        addedCoins.append(contentsOf: coins)
+
+        syncCoins()
+        sortCoins()
+        syncState()
     }
 
 }
@@ -209,40 +198,39 @@ extension ManageWalletsService {
         stateRelay.asObservable()
     }
 
-    var enableCoinObservable: Observable<Coin> {
-        enableCoinRelay.asObservable()
-    }
-
     var cancelEnableCoinObservable: Observable<Coin> {
         cancelEnableCoinRelay.asObservable()
     }
 
-    func account(coinType: CoinType) -> Account? {
-        accountManager.account(coinType: coinType)
+    func set(filter: String?) {
+        self.filter = filter
+
+        sortCoins()
+        syncState()
     }
 
     func enable(coin: Coin) {
-        queue.async {
-            guard let item = self.state.item(coin: coin), case .hasAccount(let account, _) = item.state else {
-                return // impossible case
-            }
-
-            self.blockchainSettingsService.approveEnable(coin: coin, accountOrigin: account.origin)
+        if coin.type.restoreSettingTypes.isEmpty {
+            handleApproveRestoreSettings(coin: coin)
+        } else {
+            restoreSettingsService.approveSettings(coin: coin, account: account)
         }
     }
 
     func disable(coin: Coin) {
-        queue.async {
-            guard let wallet = self.wallets[coin] else {
-                return
-            }
-
-            self.walletManager.delete(wallets: [wallet])
-        }
+        let walletsToDelete = wallets.filter { $0.coin == coin }
+        walletManager.delete(wallets: Array(walletsToDelete))
     }
 
-    func storeCoinToEnable(coin: Coin) {
-        coinToEnable = coin
+    func configure(coin: Coin) {
+        guard !coin.type.coinSettingTypes.isEmpty else {
+            return
+        }
+
+        let coinWallets = wallets.filter { $0.coin == coin }
+        let settingsArray = coinWallets.map { $0.configuredCoin.settings }
+
+        coinSettingsService.approveSettings(coin: coin, settingsArray: settingsArray)
     }
 
 }
@@ -253,13 +241,6 @@ extension ManageWalletsService {
         let featuredItems: [Item]
         let items: [Item]
 
-        func item(coin: Coin) -> Item? {
-            let allItems = featuredItems + items
-            return allItems.first { item in
-                item.coin == coin
-            }
-        }
-
         static var empty: State {
             State(featuredItems: [], items: [])
         }
@@ -267,17 +248,8 @@ extension ManageWalletsService {
 
     struct Item {
         let coin: Coin
-        var state: ItemState
-
-        init(coin: Coin, state: ItemState) {
-            self.coin = coin
-            self.state = state
-        }
-    }
-
-    enum ItemState: CustomStringConvertible {
-        case noAccount
-        case hasAccount(account: Account, hasWallet: Bool)
+        let hasSettings: Bool
+        let enabled: Bool
     }
 
 }

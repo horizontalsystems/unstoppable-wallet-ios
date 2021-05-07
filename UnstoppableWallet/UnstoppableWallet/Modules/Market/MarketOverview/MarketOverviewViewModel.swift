@@ -20,10 +20,8 @@ class MarketOverviewViewModel {
     private func sync(state: MarketOverviewService.State) {
         switch state {
         case .loading:
-            switch stateRelay.value {
-            case .loading, .error:
+            if service.items.isEmpty {
                 stateRelay.accept(.loading)
-            default: ()
             }
         case .loaded:
             stateRelay.accept(.loaded(sectionViewItems: sectionViewItems))
@@ -36,11 +34,10 @@ class MarketOverviewViewModel {
         [
             sectionViewItem(by: .topGainers),
             sectionViewItem(by: .topLosers),
-            sectionViewItem(by: .topVolume)
         ]
     }
 
-    private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 3) -> SectionViewItem {
+    private func sectionViewItem(by listType: MarketModule.ListType, count: Int = 5) -> SectionViewItem {
         let viewItems: [MarketModule.ViewItem] = Array(service.items
             .sort(by: listType.sortingField)
             .map {

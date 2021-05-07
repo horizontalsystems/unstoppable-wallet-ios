@@ -8,7 +8,7 @@ protocol IMarketListFetcher {
 }
 
 class MarketListService {
-    private let currencyKit: ICurrencyKit
+    private let currencyKit: CurrencyKit.Kit
     private let fetcher: IMarketListFetcher
 
     private var disposeBag = DisposeBag()
@@ -23,15 +23,15 @@ class MarketListService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: ICurrencyKit, fetcher: IMarketListFetcher) {
+    init(currencyKit: CurrencyKit.Kit, fetcher: IMarketListFetcher) {
         self.currencyKit = currencyKit
         self.fetcher = fetcher
 
         subscribe(disposeBag, fetcher.refetchObservable) { [weak self] in
-            self?.items = []
-            self?.fetch()
+            self?.refetch()
         }
 
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.refetch() }
         fetch()
     }
 
@@ -40,7 +40,7 @@ class MarketListService {
 
         state = .loading
 
-        fetcher.fetchSingle(currencyCode: currency.code)
+        fetcher.fetchSingle(currencyCode: currencyKit.baseCurrency.code)
                 .subscribe(onSuccess: { [weak self] items in
                     self?.items = items
                     self?.state = .loaded
@@ -54,9 +54,12 @@ class MarketListService {
 
 extension MarketListService {
 
+    var allMarketFields: [MarketModule.MarketField] {
+        [.marketCap, .volume, .price]
+    }
+
     var currency: Currency {
-        //todo: refactor to use current currency and handle changing
-        currencyKit.currencies.first { $0.code == "USD" } ?? currencyKit.currencies[0]
+        currencyKit.baseCurrency
     }
 
     var stateObservable: Observable<State> {

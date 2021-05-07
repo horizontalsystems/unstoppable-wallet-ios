@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class EnableCoinsConfirmationViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()
@@ -22,7 +23,7 @@ class EnableCoinsConfirmationViewController: ThemeActionSheetController {
         titleView.bind(
                 title: "enable_coins.title".localized,
                 subtitle: tokenType,
-                image: UIImage(named: tokenType.lowercased())?.tinted(with: .themeGray)
+                image: UIImage(named: tokenType.lowercased())
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)

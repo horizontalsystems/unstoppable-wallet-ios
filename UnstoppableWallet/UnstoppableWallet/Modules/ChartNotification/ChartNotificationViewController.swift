@@ -1,6 +1,7 @@
 import UIKit
 import SectionsTableView
 import ThemeKit
+import ComponentKit
 
 class ChartNotificationViewController: ThemeViewController {
     private let delegate: IChartNotificationViewDelegate
@@ -144,7 +145,8 @@ extension ChartNotificationViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: last)
                     cell.title = rowModel.title
-                    cell.valueImage = rowModel.selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                    cell.valueImageTintColor = .themeJacob
+                    cell.valueImage = rowModel.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
                 },
                 action: { _ in
                     rowModel.action(rowIndex)
@@ -166,7 +168,8 @@ extension ChartNotificationViewController: IChartNotificationView {
         titleView.bind(
                 title: titleViewModel.title.localized,
                 subtitle: titleViewModel.subtitle,
-                image: UIImage(named: "bell_24")?.tinted(with: .themeJacob)
+                image: UIImage(named: "bell_24"),
+                tintColor: .themeJacob
         )
     }
 

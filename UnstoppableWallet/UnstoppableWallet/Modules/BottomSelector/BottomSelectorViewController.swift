@@ -2,6 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
+import ComponentKit
 
 protocol IBottomSelectorDelegate: AnyObject {
     func bottomSelectorOnSelect(index: Int)
@@ -43,7 +44,8 @@ class BottomSelectorViewController: ThemeActionSheetController {
         titleView.bind(
                 title: config.title,
                 subtitle: config.subtitle,
-                image: config.icon
+                image: config.icon,
+                tintColor: config.iconTintColor
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -110,7 +112,8 @@ extension BottomSelectorViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
+                                    cell.valueImageTintColor = .themeJacob
                                 },
                                 action: { [weak self] _ in
                                     self?.currentIndex = index
@@ -128,6 +131,7 @@ extension BottomSelectorViewController {
 
     struct Config {
         let icon: UIImage?
+        let iconTintColor: UIColor?
         let title: String
         let subtitle: String
         let selectedIndex: Int

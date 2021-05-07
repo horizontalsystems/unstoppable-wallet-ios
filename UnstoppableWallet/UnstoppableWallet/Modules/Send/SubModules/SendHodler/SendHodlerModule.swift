@@ -1,6 +1,6 @@
 import Hodler
 
-protocol ISendHodlerView: class {
+protocol ISendHodlerView: AnyObject {
     func setLockTimeInterval(lockTimeInterval: HodlerPlugin.LockTimeInterval?)
 }
 
@@ -12,7 +12,7 @@ protocol ISendHodlerRouter {
     func openLockTimeIntervals(selected: HodlerPlugin.LockTimeInterval?, delegate: ISendHodlerLockTimeIntervalDelegate)
 }
 
-protocol ISendHodlerDelegate: class {
+protocol ISendHodlerDelegate: AnyObject {
     func onUpdateLockTimeInterval()
 }
 

@@ -15,6 +15,12 @@ class MarketAdvancedSearchViewModel {
     private let periodViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
 
+    private let outperformedBtcRelay = BehaviorRelay<Bool>(value: false)
+    private let outperformedEthRelay = BehaviorRelay<Bool>(value: false)
+    private let outperformedBnbRelay = BehaviorRelay<Bool>(value: false)
+    private let priceCloseToATHRelay = BehaviorRelay<Bool>(value: false)
+    private let priceCloseToATLRelay = BehaviorRelay<Bool>(value: false)
+
     private let showErrorRelay = PublishRelay<String>()
     private let showResultTitleRelay = BehaviorRelay<String?>(value: nil)
     private let showResultEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -31,6 +37,12 @@ class MarketAdvancedSearchViewModel {
         subscribe(disposeBag, service.liquidityUpdatedObservable) { [weak self] in self?.sync(liquidity: $0) }
         subscribe(disposeBag, service.periodUpdatedObservable) { [weak self] in self?.sync(period: $0) }
         subscribe(disposeBag, service.priceChangeUpdatedObservable) { [weak self] in self?.sync(priceChange: $0) }
+
+        subscribe(disposeBag, service.outperformedBtcUpdatedObservable) { [weak self] in self?.sync(isOutperformedBtcOn: $0) }
+        subscribe(disposeBag, service.outperformedEthUpdatedObservable) { [weak self] in self?.sync(isOutperformedEthOn: $0) }
+        subscribe(disposeBag, service.outperformedBnbUpdatedObservable) { [weak self] in self?.sync(isOutperformedBnbOn: $0) }
+        subscribe(disposeBag, service.priceCloseToATHUpdatedObservable) { [weak self] in self?.sync(isPriceCloseToATHOn: $0) }
+        subscribe(disposeBag, service.priceCloseToATLUpdatedObservable) { [weak self] in self?.sync(isPriceCloseToATLOn: $0) }
 
         sync(coinList: service.coinListCount)
         sync(marketCap: service.marketCap)
@@ -84,6 +96,26 @@ class MarketAdvancedSearchViewModel {
         priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueColor: service.priceChange.valueColor))
     }
 
+    private func sync(isOutperformedBtcOn: Bool) {
+        outperformedBtcRelay.accept(isOutperformedBtcOn)
+    }
+
+    private func sync(isOutperformedEthOn: Bool) {
+        outperformedEthRelay.accept(isOutperformedEthOn)
+    }
+
+    private func sync(isOutperformedBnbOn: Bool) {
+        outperformedBnbRelay.accept(isOutperformedBnbOn)
+    }
+
+    private func sync(isPriceCloseToATHOn: Bool) {
+        priceCloseToATHRelay.accept(isPriceCloseToATHOn)
+    }
+
+    private func sync(isPriceCloseToATLOn: Bool) {
+        priceCloseToATLRelay.accept(isPriceCloseToATLOn)
+    }
+
 }
 
 extension MarketAdvancedSearchViewModel {
@@ -110,6 +142,26 @@ extension MarketAdvancedSearchViewModel {
 
     var priceChangeViewItemDriver: Driver<ViewItem?> {
         priceChangeViewItemRelay.asDriver()
+    }
+
+    var outperformedBtcDriver: Driver<Bool> {
+        outperformedBtcRelay.asDriver()
+    }
+
+    var outperformedEthDriver: Driver<Bool> {
+        outperformedEthRelay.asDriver()
+    }
+
+    var outperformedBnbDriver: Driver<Bool> {
+        outperformedBnbRelay.asDriver()
+    }
+
+    var priceCloseToATHDriver: Driver<Bool> {
+        priceCloseToATHRelay.asDriver()
+    }
+
+    var priceCloseToATLDriver: Driver<Bool> {
+        priceCloseToATLRelay.asDriver()
     }
 
     var showErrorSignal: Signal<String> {
@@ -194,6 +246,26 @@ extension MarketAdvancedSearchViewModel {
         service.priceChange = MarketAdvancedSearchService.PriceChangeFilter.allCases[index]
     }
 
+    func setOutperformedBtc(isOn: Bool) {
+        service.outperformedBtc = isOn
+    }
+
+    func setOutperformedEth(isOn: Bool) {
+        service.outperformedEth = isOn
+    }
+
+    func setOutperformedBnb(isOn: Bool) {
+        service.outperformedBnb = isOn
+    }
+
+    func setPriceCloseToATH(isOn: Bool) {
+        service.priceCloseToATH = isOn
+    }
+
+    func setPriceCloseToATL(isOn: Bool) {
+        service.priceCloseToATL = isOn
+    }
+
     func resetAll() {
         service.coinListCount = .top250
         service.volume = .none
@@ -201,6 +273,12 @@ extension MarketAdvancedSearchViewModel {
         service.liquidity = .none
         service.period = .day
         service.priceChange = .none
+
+        service.outperformedBtc = false
+        service.outperformedEth = false
+        service.outperformedBnb = false
+        service.priceCloseToATL = false
+        service.priceCloseToATH = false
     }
 
 }
@@ -247,7 +325,7 @@ extension MarketAdvancedSearchService.ValueFilter {
         switch self {
         case .none: return "market.advanced_search.any".localized
         case .lessM5: return "market.advanced_search.less_5_m".localized
-        case .m5m10: return "market.advanced_search.m_5_m_10".localized
+        case .m5m20: return "market.advanced_search.m_5_m_20".localized
         case .m20m100: return "market.advanced_search.m_20_m_100".localized
         case .m100b1: return "market.advanced_search.m_100_b_1".localized
         case .b1b5: return "market.advanced_search.b_1_b_5".localized

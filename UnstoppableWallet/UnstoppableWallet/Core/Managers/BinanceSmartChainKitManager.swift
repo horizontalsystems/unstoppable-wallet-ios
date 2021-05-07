@@ -18,17 +18,17 @@ class BinanceSmartChainKitManager {
             return evmKit
         }
 
-        guard case let .mnemonic(words, _) = account.type, words.count == 24 else {
+        guard let seed = account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let syncSource = EthereumKit.Kit.defaultBscWebsocketSyncSource() else {
+        guard let syncSource = EthereumKit.Kit.defaultBscHttpSyncSource() else {
             throw AdapterError.wrongParameters
         }
 
         let evmKit = try EthereumKit.Kit.instance(
-                words: words,
-                networkType: .bscMainNet,
+                seed: seed,
+                networkType: networkType,
                 syncSource: syncSource,
                 etherscanApiKey: appConfigProvider.bscscanKey,
                 walletId: account.id,
@@ -37,6 +37,7 @@ class BinanceSmartChainKitManager {
 
         evmKit.add(decorator: Erc20Kit.Kit.getDecorator())
         evmKit.add(decorator: UniswapKit.Kit.getDecorator())
+        evmKit.add(transactionSyncer: Erc20Kit.Kit.getTransactionSyncer(evmKit: evmKit))
 
         evmKit.start()
 
@@ -44,6 +45,10 @@ class BinanceSmartChainKitManager {
         currentAccount = account
 
         return evmKit
+    }
+
+    var networkType: NetworkType {
+        .bscMainNet
     }
 
     var statusInfo: [(String, Any)]? {
