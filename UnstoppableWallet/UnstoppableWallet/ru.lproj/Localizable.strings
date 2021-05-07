@@ -971,6 +971,7 @@
 "onboarding.balance.description" = "У вас пока нет кошельков. Создайте новый или восстановите существующий";
 "onboarding.balance.create" = "Создать";
 "onboarding.balance.restore" = "Восстановить";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
