@@ -481,13 +481,13 @@ CHECKOUT OPTIONS:
     :commit: b0d9ed6b3a54fce919e50fe7c0a350e7189f5a72
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: 42d5b1de54a7dd6ddd28dec27ca75ebc5045107d
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
     :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: 42d5b1de54a7dd6ddd28dec27ca75ebc5045107d
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -562,7 +562,7 @@ CHECKOUT OPTIONS:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: d99b40bd98b185745ae4c467ed31ca2a8b8553a9
+    :commit: c92f2ba0d347703c382b883ed8f7135e6b050d10
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
