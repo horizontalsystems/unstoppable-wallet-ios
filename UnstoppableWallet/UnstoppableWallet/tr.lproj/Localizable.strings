@@ -969,6 +969,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
