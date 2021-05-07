@@ -163,10 +163,10 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
+"balance.add_coin" = "Para Ekle";
+"balance.empty.add_coins" = "Kripto Para Ekle";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
+"balance.sort_by" = "Sırala";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -179,7 +179,7 @@
 
 "deposit.receive_coin" = "%@ al";
 "deposit.your_address" = "Adresiniz";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
 // Send
 
@@ -584,8 +584,8 @@
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
-"settings.base_currency.other" = "Other";
+"settings.base_currency.title" = "Para birimi";
+"settings.base_currency.other" = "Diğer";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "I Understand";
@@ -712,7 +712,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings_manage_keys.restore" = "Geri Yükle";
 "settings_manage_keys.settings" = "Adres Formatı";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
+"settings_manage_keys.delete.confirmation_remove" = "Bu işlem Cüzdanını bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
 
 // Settings -> About App
@@ -893,8 +893,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.decimals" = "Ondalıklar";
 "add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
+"add_evm_token.contract_not_exist" = "Sözleşme bulunamadı";
+"add_evm_token.contract_address" = "Sözleşme Adresi";
 
 "add_erc20_token.title" = "ERC20 Ekle";
 
