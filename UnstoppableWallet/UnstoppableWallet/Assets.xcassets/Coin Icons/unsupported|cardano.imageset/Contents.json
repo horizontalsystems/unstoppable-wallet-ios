@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ada.png",
       "scale" : "1x"
     },
     {
+      "filename" : "unsupported_cardano@2x.png",
       "idiom" : "universal",
-      "filename" : "ada@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "unsupported_cardano@3x.png",
       "idiom" : "universal",
-      "filename" : "ada@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

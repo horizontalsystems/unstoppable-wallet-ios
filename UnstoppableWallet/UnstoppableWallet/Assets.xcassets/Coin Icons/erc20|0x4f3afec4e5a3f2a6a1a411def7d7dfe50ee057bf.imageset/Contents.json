@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "dgx.png",
       "scale" : "1x"
     },
     {
+      "filename" : "erc20_0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf@2x.png",
       "idiom" : "universal",
-      "filename" : "dgx@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "erc20_0x4f3afec4e5a3f2a6a1a411def7d7dfe50ee057bf@3x.png",
       "idiom" : "universal",
-      "filename" : "dgx@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
