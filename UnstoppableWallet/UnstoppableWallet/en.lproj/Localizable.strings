@@ -974,6 +974,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
