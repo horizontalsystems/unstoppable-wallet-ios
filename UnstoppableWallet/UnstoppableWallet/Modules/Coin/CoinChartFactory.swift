@@ -79,7 +79,9 @@ class CoinChartFactory {
             let item = ChartItem(timestamp: point.timestamp)
 
             item.add(name: .rate, value: point.value)
-            item.add(name: .volume, value: point.volume ?? 0)
+            if let volume = point.volume {
+                item.add(name: .volume, value: volume)
+            }
 
             return item
         }
@@ -99,7 +101,6 @@ class CoinChartFactory {
     private func chartItem(point: ChartPoint, previousValues: [Decimal]) -> ChartItem {
         let chartItem = ChartItem(timestamp: point.timestamp)
         chartItem.add(name: .rate, value: point.value)
-        chartItem.add(name: .volume, value: 0)
 
         let values = previousValues + [point.value]
 
