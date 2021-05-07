@@ -969,6 +969,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "귀하께서는 아직 지갑이 없습니다. 새 생성 또는 기존 복원 해주십시오";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
