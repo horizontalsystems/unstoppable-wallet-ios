@@ -231,7 +231,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Enviar";
-"send.amount_error.balance" = "Saldo %@";
+"send.amount_error.balance" = "Saldo insuficiente";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
