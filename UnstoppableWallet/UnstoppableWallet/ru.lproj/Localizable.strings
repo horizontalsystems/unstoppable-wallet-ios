@@ -68,8 +68,8 @@
 "restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами.";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12 или 24 слова. Длина вашей мнемонической фразы составляет: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
-"restore.passphrase" = "Кодовая фраза";
-"restore.input.passphrase" = "Кодовая фраза";
+"restore.passphrase" = "Кодовая Фраза";
+"restore.input.passphrase" = "Кодовая Фраза";
 "restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 
@@ -106,8 +106,8 @@
 "show_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "show_key.button_show" = "Показать";
 "show_key.tab.recovery_phrase" = "Фраза для восстановления";
-"show_key.tab.private_keys" = "Приватные ключи";
-"show_key.passphrase" = "Кодовая фраза";
+"show_key.tab.private_keys" = "Приватные Ключи";
+"show_key.passphrase" = "Кодовая Фраза";
 
 // Backup Key
 
@@ -115,10 +115,10 @@
 "backup_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "backup_key.button_show" = "Показать";
 "backup_key.button_backup" = "Резервная Копия";
-"backup_key.passphrase" = "Кодовая фраза";
+"backup_key.passphrase" = "Кодовая Фраза";
 
 "backup_key.confirmation.description" = "Введите фразы для восстановления в правильном порядке, чтобы подтвердить";
-"backup_key.confirmation.passphrase" = "Кодовая фраза";
+"backup_key.confirmation.passphrase" = "Кодовая Фраза";
 "backup_key.confirmation.passphrase_description" = "Введите кодовую фразу";
 
 "backup_key.confirmation.empty_word" = "Отсутствует слово";
@@ -233,7 +233,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
-"send.amount_error.balance" = "Недостаточно средств";
+"send.amount_error.balance" = "Недостаточно Средств";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
@@ -289,9 +289,9 @@
 "swap.advanced_settings.recipient_domain" = "Домен Получателя";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
+"swap.advanced_settings.error.invalid_address" = "Неверный Адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
-"swap.advanced_settings.error.invalid_deadline" = "Недопустимый срок";
+"swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
 "swap.fee" = "Комиссия за обмен";
 "swap.transactions_speed" = "Скорость Транзакции";
@@ -549,7 +549,7 @@
 // Transaction Info
 
 "tx_info.title" = "Транзакция";
-"tx_info.title_approval" = "Подтверждение обмена";
+"tx_info.title_approval" = "Подтверждение Обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Не удалось";
@@ -590,7 +590,7 @@
 "settings.base_currency.other" = "Другое";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
 "settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение Unstoppable Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
-"settings.base_currency.disclaimer.i_understand" = "Я понимаю";
+"settings.base_currency.disclaimer.i_understand" = "Я Понимаю";
 
 // Settings -> Notifications
 
@@ -730,7 +730,7 @@
 // Settings -> Theme
 
 "settings_theme.title" = "Тема";
-"settings_theme.system" = "Система";
+"settings_theme.system" = "Системная";
 "settings_theme.dark" = "Тёмная";
 "settings_theme.light" = "Светлая";
 
@@ -829,7 +829,7 @@
 "create_wallet.create_button" = "Создать";
 "create_wallet.mnemonic" = "Мнемоническая фраза";
 "create_wallet.n_words" = "%@ слов";
-"create_wallet.passphrase" = "Кодовая фраза";
+"create_wallet.passphrase" = "Кодовая Фраза";
 "create_wallet.input.passphrase" = "Кодовая фраза";
 "create_wallet.input.confirm" = "Подтвердить";
 "create_wallet.passphrase_description" = "Кодовые фразы обеспечивают дополнительную защиту для кошельков, позволяя пользователям создавать несколько независимых мультивалютных кошельков, использующих одну мнемоническую фразу для восстановления, но имеющих разные пароли.\n\nДля восстановления этих кошельков пользователю потребуются мнемоническая фраза для восстановления, а также пароль для каждого восстанавливаемого кошелька.";
