@@ -969,6 +969,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
