@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "ren.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ren@2x.png",
+      "filename" : "erc20_0x408e41876cccdc0f92210600ef50372656052a38@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ren@3x.png",
+      "filename" : "erc20_0x408e41876cccdc0f92210600ef50372656052a38@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

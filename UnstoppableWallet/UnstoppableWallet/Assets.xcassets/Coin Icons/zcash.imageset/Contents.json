@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "zec.png",
       "scale" : "1x"
     },
     {
+      "filename" : "zcash@2x.png",
       "idiom" : "universal",
-      "filename" : "zec@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "zcash@3x.png",
       "idiom" : "universal",
-      "filename" : "zec@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "bat.png",
       "scale" : "1x"
     },
     {
+      "filename" : "erc20_0x0d8775f648430679a709e98d2b0cb6250d2887ef@2x.png",
       "idiom" : "universal",
-      "filename" : "bat@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "erc20_0x0d8775f648430679a709e98d2b0cb6250d2887ef@3x.png",
       "idiom" : "universal",
-      "filename" : "bat@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

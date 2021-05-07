@@ -5,18 +5,18 @@
       "scale" : "1x"
     },
     {
+      "filename" : "erc20_0x6b3595068778dd592e39a122f4f5a5cf09c90fe2@2x.png",
       "idiom" : "universal",
-      "filename" : "XSUSHI@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "erc20_0x6b3595068778dd592e39a122f4f5a5cf09c90fe2@3x.png",
       "idiom" : "universal",
-      "filename" : "XSUSHI@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

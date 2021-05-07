@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "eth.png",
       "scale" : "1x"
     },
     {
+      "filename" : "ethereum@2x.png",
       "idiom" : "universal",
-      "filename" : "eth@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "ethereum@3x.png",
       "idiom" : "universal",
-      "filename" : "eth@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
