@@ -21,6 +21,7 @@
 "button.approve" = "승인";
 "button.reject" = "거절";
 "button.connect" = "연결";
+"button.save" = "저장";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -38,7 +39,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
-"price" = "Price";
+"price" = "금액";
 "note" = "참고";
 
 "version" = "버전 %@";
@@ -62,14 +63,13 @@
 
 "restore.title" = "지갑 선택";
 "restore.enter_key" = "암호를 입력하세요";
-"restore.item_title" = "%@ 지갑";
-"restore.words.description" = "개인 암호를 %@지갑에 입력해 주십시오";
-"restore.birthday_height.placeholder" = "월렛 벌스데이 (선택 사항)";
-"restore.birthday_height.description" = "이를 통해 월렛 앱이 Zcash 블록체인과 훨씬 빠르게 동기화할 수 있습니다. 기억이 나지 않을 경우, 칸을 비워주세요.";
-"restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
-"restore_error.words_count" = "잘못된 단어 수입니다. %@개여야 합니다. 입력한 단어 수: %@";
+"restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다.";
+"restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 또는 24개여야 합니다. 이렇게 입력하셨습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
+"restore.passphrase" = "암호문구";
+"restore.input.passphrase" = "암호문구";
+"restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력";
+"restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 
 // Coin Settings
 
@@ -96,6 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "블록 체인";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "주소 형식";
+"blockchain_settings.description" = "귀하의 %@ 지갑의 주소 형식을 선택하십시오. 선택한 각 형식은 앱의 잔고 탭에 있는 다른 지갑을 나타냅니다.";
+
+// Show Key
+
+"show_key.title" = "키";
+"show_key.description" = "다음에 표시될 복구 문구는 휴대폰을 분실, 도난, 파손된 경우 자금을 복구할 수 있는 유일한 방법입니다.\n\n아무도 화면을 보고 있지 않은지 확인합니다.";
+"show_key.button_show" = "표시";
+"show_key.tab.recovery_phrase" = "복구 문구";
+"show_key.tab.private_keys" = "개인 암호";
+"show_key.passphrase" = "암호 문구";
+
+// Backup Key
+
+"backup_key.title" = "백업";
+"backup_key.description" = "다음에 표시될 복구 문구는 휴대폰을 분실, 도난, 파손된 경우 자금을 복구할 수 있는 유일한 방법입니다.\n\n아무도 화면을 보고 있지 않은지 확인합니다.";
+"backup_key.button_show" = "표시";
+"backup_key.button_backup" = "백업";
+"backup_key.passphrase" = "암호 문구";
+
+"backup_key.confirmation.description" = "확인할 복구 문구를 올바른 순서로 입력하십시오";
+"backup_key.confirmation.passphrase" = "암호 문구";
+"backup_key.confirmation.passphrase_description" = "암호 문구 입력";
+
+"backup_key.confirmation.empty_word" = "빈 단어";
+"backup_key.confirmation.invalid_word" = "잘못된 단어";
+"backup_key.confirmation.empty_passphrase" = "빈 암호 문구";
+"backup_key.confirmation.invalid_passphrase" = "잘못된 암호 문구";
 
 // Backup
 
@@ -112,14 +139,11 @@
 
 "backup.words.confirmation_description" = "귀하의 %@암호에서 단어를 입력해 주십시오.";
 
-"backup.birthday_height" = "생일 신장";
-
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_ethereum.wrong_parameters" = "잘못된 매개 변수";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
-"error.incubed_not_reachable" = "Incubed 서버 접근 불가";
 
 "backup.confirmation.title" = "확인 중...";
 
@@ -140,6 +164,9 @@
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
 "balance.add_coin" = "코인 추가";
+"balance.empty.add_coins" = "코인 추가";
+"balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
+"balance.sort_by" = "정렬 기준";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
@@ -152,7 +179,7 @@
 
 "deposit.receive_coin" = "수신%@";
 "deposit.your_address" = "당신의 주소";
-"receive_alert.not_backed_up_description" = "귀하께서 %@를 받기전에 %@ 지갑의 백업이 필요합니다.";
+"receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
 
 // Send
 
@@ -200,15 +227,16 @@
 "send.confirmation.to" = "에게";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
-"send.confirmation.account" = "Account";
+"send.confirmation.account" = "계정";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
 "send.confirmation.send_button" = "전송";
-"send.amount_error.balance" = "잔액 %@";
+"send.amount_error.balance" = "잔고 부족";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
+"send.stuck_warning" = "경고! 갇힐 위험";
 
 "send.lock_time" = "시간 자물쇠";
 
@@ -231,7 +259,7 @@
 "swap.advanced_settings" = "고급 설정";
 "swap.proceed_button" = "다음";
 "swap.approve.title" = "스왑 승인";
-"swap.approve.description" = "귀하를 대신하여 주어진 토큰을 교환할 수 있는 스마트 계약에 권한을 부여해야 합니다. 이 허가는 스마트 계약으로 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만, 승인거래를 하기 위해서는 소정의 수수료가 필요합니다.\n\n각 거래 전에 주문형으로 할 수 있지만, 향후 거래에서는 더 많은 금액을 미리 승인하는 것이 더 저렴합니다.";
+"swap.approve.description" = "스마트 계약에 사용자 대신 지정된 토큰을 교환할 수 있는 권한을 부여해야 합니다. 이 권한은 스마트 계약에서 사용할 수 있는 금액을 설정합니다. 잔액에는 영향을 미치지 않지만 승인 거래를 실행하려면 소액의 수수료가 필요합니다.\n\n매 거래 전에 요청 시 이루어질 수 있지만, 향후 거래를 위해 사전에 더 많은 금액을 승인하는 것이 더 저렴합니다.";
 "swap.approve.amount_error.already_approved" = "귀하는 이미 이 금액에 대한 허용량을 가지고 있습니다.";
 "swap.approving_button" = "승인 중...";
 "swap.amount_error.maximum_amount" = "잔액 %@";
@@ -324,10 +352,13 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted M.Cap";
 
 "market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted M.Cap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -374,9 +405,10 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.governance" = "Governance";
 "market_discovery.filter_title.cross_chain" = "Cross Chain";
 "market_discovery.filter_title.computing" = "Computing";
+"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
+"market_discovery.filter_title.investment_tools" = "Investment Tools";
 
 "market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
@@ -404,9 +436,10 @@
 "market_discovery.filter_description.b2b" = "B2B service providers.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
 "market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
+"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
@@ -418,12 +451,20 @@
 "market.advanced_search.dex_description" = "이 설정은 이더리움(Uniswap DEX) 과 바이낸스 스마트체인(Pancake DEX) 에서 거래되는 토큰에 적용됩니다.";
 "market.advanced_search.24h" = "24h";
 
+"market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_eth" = "Outperformed ETH";
+"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -443,6 +484,21 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+
+"market.global.subtitle" = "Chart";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hour";
@@ -454,13 +510,19 @@
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.genesis_date" = "Launch Date";
 
+"coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.tvl" = "Total Value Locked";
+"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
+"coin_page.tvl_rank" = "TVL Rank";
+"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
@@ -516,9 +578,17 @@
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "밝은 모드";
+"settings.theme" = "테마";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "분산형 앱";
+
+// Settings -> Base Currency
+
+"settings.base_currency.title" = "기준 통화";
+"settings.base_currency.other" = "기타";
+"settings.base_currency.disclaimer" = "면책";
+"settings.base_currency.disclaimer.description" = "제3자 서비스 Coingecko.com\n\nUnstoppable 지갑 앱에서 제공하는 환율 데이터는 이러한 가치가 항상 올바르고 시장 데이터와 일치함을 보장하지는 않습니다. %@ 이외의 기준 통화를 선택할 경우 불일치가 발생할 가능성이 더 높습니다.";
+"settings.base_currency.disclaimer.i_understand" = "이해합니다";
 
 // Settings -> Notifications
 
@@ -641,10 +711,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings_manage_keys.create" = "만들기";
 "settings_manage_keys.restore" = "복구";
 "settings_manage_keys.settings" = "주소 형식";
-"settings_manage_keys.delete.cant_delete" = "개인 암호가 휴대폰에서 지워질 수 있기 전에 귀하께서는 개인 암호를 백업 하셔야 합니다.";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
-"settings_manage_keys.delete.confirmation_remove" = "이 행동은 %@ 지갑을 장치에서 삭제합니다.";
-"settings_manage_keys.delete.confirmation_disable" = "비활성화될 코인: %@";
+"settings_manage_keys.delete.confirmation_remove" = "장치에서 이 지갑을 삭제합니다.";
 "settings_manage_keys.delete.confirmation_loose" = "지갑에서 개인 암호를 백업 시키지 않으셨을 경우, 귀하께서는 자금 접근에 제한이 있을 것 입니다.";
 
 // Settings -> About App
@@ -656,6 +724,13 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
 "settings.about_app.email_copied" = "이메일 주소 복사됨";
+
+// Settings -> Theme
+
+"settings_theme.title" = "테마";
+"settings_theme.system" = "시스템";
+"settings_theme.dark" = "어두운";
+"settings_theme.light" = "밝은";
 
 // Set PIN
 
@@ -750,6 +825,15 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.create_button" = "만들기";
+"create_wallet.mnemonic" = "연상 기호";
+"create_wallet.n_words" = "%@ 단어";
+"create_wallet.passphrase" = "암호 문구";
+"create_wallet.input.passphrase" = "암호 문구";
+"create_wallet.input.confirm" = "확인";
+"create_wallet.passphrase_description" = "암호 문구는 사용자가 하나의 연상 기호 복구 문구를 사용하여 여러 개의 독립적인 멀티코인 지갑을 만들 수 있도록 지갑에 보안 계층을 추가합니다.\n\n이러한 지갑을 복원하려면 사용자가 복원하기 위해 각 지갑에 대한 비밀번호와 연상 기호 복구 문구가 필요합니다.";
+"create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"create_wallet.error.forbidden_symbols" = "암호에는 라틴 문자 및 숫자만 사용하십시오";
+"create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
 
 // Select Coins
 
@@ -885,3 +969,22 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "귀하께서는 아직 지갑이 없습니다. 새 생성 또는 기존 복원 해주십시오";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
+
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ 단어";
+"manage_accounts.n_words_with_passphrase" = "암호 문구로 이루어진 %@ 단어";
+
+// Manage Account
+
+"manage_account.name" = "이름";
+"manage_account.show_recovery_phrase" = "문구 표시";
+"manage_account.backup_recovery_phrase" = "백업 문구";
+"manage_account.unlink" = "링크 해제";
+
+// Birthday Input
+
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
+"birthday_input.input_placeholder" = "%@ (선택사항)";
+"restore_setting.birthday_height" = "%@ Birthday Height";

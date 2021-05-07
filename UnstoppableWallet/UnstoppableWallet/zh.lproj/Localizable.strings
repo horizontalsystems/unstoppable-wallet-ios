@@ -21,6 +21,7 @@
 "button.approve" = "批准";
 "button.reject" = "拒绝";
 "button.connect" = "连接";
+"button.save" = "保存";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -38,7 +39,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "Price";
+"price" = "价格";
 "note" = "备注";
 
 "version" = "版本%@";
@@ -62,14 +63,13 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
-"restore.item_title" = "%@钱包";
-"restore.words.description" = "为%@钱包输入私钥，其中应包含%@个单词。这些单词必须以正确的顺序输入并用空格分隔。";
-"restore.birthday_height.placeholder" = "钱包生日高度 (自主性)";
-"restore.birthday_height.description" = "这将决定从哪里开始对交易进行扫描。留空即可从开始时进行扫描，这需要一定的时间。";
-"restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key";
-"restore_error.words_count" = "字数有误。必须为%@。您输入了：%@";
+"restore.mnemonic.description" = "输入助记词，其中应包含12或24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore_error.mnemonic_word_count" = "字数有误。必须为12或24个。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
+"restore.passphrase" = "密码";
+"restore.input.passphrase" = "密码";
+"restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
+"restore.error.empty_passphrase" = "助记词不能为空";
 
 // Coin Settings
 
@@ -96,6 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "区块链";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "地址格式";
+"blockchain_settings.description" = "选择您 %@ 钱包的地址格式。每个选中的格式代表应用的余额选项卡上不同的钱包。";
+
+// Show Key
+
+"show_key.title" = "密钥";
+"show_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"show_key.button_show" = "显示";
+"show_key.tab.recovery_phrase" = "恢复码";
+"show_key.tab.private_keys" = "私钥";
+"show_key.passphrase" = "密码";
+
+// Backup Key
+
+"backup_key.title" = "备份";
+"backup_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"backup_key.button_show" = "显示";
+"backup_key.button_backup" = "备份";
+"backup_key.passphrase" = "密码";
+
+"backup_key.confirmation.description" = "以正确顺序输入恢复码进行确认";
+"backup_key.confirmation.passphrase" = "密码";
+"backup_key.confirmation.passphrase_description" = "输入密码";
+
+"backup_key.confirmation.empty_word" = "空单词";
+"backup_key.confirmation.invalid_word" = "无效单词";
+"backup_key.confirmation.empty_passphrase" = "空密码";
+"backup_key.confirmation.invalid_passphrase" = "无效密码";
 
 // Backup
 
@@ -112,14 +139,11 @@
 
 "backup.words.confirmation_description" = "输入您%@密钥中的文字";
 
-"backup.birthday_height" = "生日高度";
-
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_ethereum.wrong_parameters" = "错误参数";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 "error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
-"error.incubed_not_reachable" = "无法联系Incubed服务器";
 
 "backup.confirmation.title" = "正在检查...";
 
@@ -140,6 +164,9 @@
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
 "balance.add_coin" = "添加代币";
+"balance.empty.add_coins" = "添加代币";
+"balance.empty.description" = "您还没有添加任何代币到此钱包中。";
+"balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -152,7 +179,7 @@
 
 "deposit.receive_coin" = "收到%@";
 "deposit.your_address" = "您的地址";
-"receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@钱包。";
+"receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
 
 // Send
 
@@ -204,11 +231,12 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
 "send.confirmation.send_button" = "发送​​";
-"send.amount_error.balance" = "余额%@";
+"send.amount_error.balance" = "余额不足";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
+"send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
 
@@ -231,7 +259,7 @@
 "swap.advanced_settings" = "高级设置";
 "swap.proceed_button" = "继续";
 "swap.approve.title" = "互兑批准";
-"swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先为我们对将来的交易批准较大的金额将使成本更低。";
+"swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
 "swap.approving_button" = "审批中...";
 "swap.amount_error.maximum_amount" = "余额 %@";
@@ -312,7 +340,7 @@
 "market.category.overview" = "Overview";
 "market.category.discovery" = "Discovery";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "总计\n市场价值";
+"market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
 "market.btc_dominance" = "BTC主导";
 "market.defi_cap" = "DeFi市场价值";
@@ -324,10 +352,13 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.news" = "新闻";
 "market.top.volume.title" = "交易量";
 "market.top.market_cap.title" = "市场价值";
+"market.top.diluted_market_cap.title" = "Diluted M.Cap";
 
 "market.market_field.mcap" = "市场价值";
+"market.diluted_market_field.mcap" = "Diluted M.Cap";
 "market.market_field.vol" = "交易量";
 
 "market.sort_by" = "排序方式";
@@ -374,9 +405,10 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.governance" = "Governance";
 "market_discovery.filter_title.cross_chain" = "Cross Chain";
 "market_discovery.filter_title.computing" = "Computing";
+"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
+"market_discovery.filter_title.investment_tools" = "Investment Tools";
 
 "market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
@@ -404,9 +436,10 @@
 "market_discovery.filter_description.b2b" = "B2B service providers.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
 "market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
+"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
@@ -418,12 +451,20 @@
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
+"market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_eth" = "Outperformed ETH";
+"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -443,6 +484,21 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+
+"market.global.subtitle" = "Chart";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hour";
@@ -454,13 +510,19 @@
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.genesis_date" = "Launch Date";
 
+"coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.tvl" = "Total Value Locked";
+"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
+"coin_page.tvl_rank" = "TVL Rank";
+"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
@@ -516,9 +578,17 @@
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
-"settings.light_mode" = "明亮模式";
+"settings.theme" = "主题";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "分布式应用程序";
+
+// Settings -> Base Currency
+
+"settings.base_currency.title" = "基本货币";
+"settings.base_currency.other" = "其他";
+"settings.base_currency.disclaimer" = "声明";
+"settings.base_currency.disclaimer.description" = "汇率数据由第三方服务Coingecko.com提供\n\nUnstoppable钱包应用不保证这是数值总是准确以及和市场数据匹配。如果您选择任何基础货币而不是%@，那么出现不一致的机会将较高。";
+"settings.base_currency.disclaimer.i_understand" = "我理解";
 
 // Settings -> Notifications
 
@@ -641,10 +711,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.create" = "创建";
 "settings_manage_keys.restore" = "恢复";
 "settings_manage_keys.settings" = "地址格式";
-"settings_manage_keys.delete.cant_delete" = "您应该在将此钱包的私钥从该手机删除之前先对其进行备份。";
 "settings_manage_keys.delete.title" = "删除钱包";
-"settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除%@钱包。";
-"settings_manage_keys.delete.confirmation_disable" = "将被禁用的代币：%@";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from device.";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
 
 // Settings -> About App
@@ -656,6 +724,13 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "电子邮件地址已复制";
+
+// Settings -> Theme
+
+"settings_theme.title" = "主题";
+"settings_theme.system" = "系统";
+"settings_theme.dark" = "深色";
+"settings_theme.light" = "浅色";
 
 // Set PIN
 
@@ -750,6 +825,15 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
+"create_wallet.mnemonic" = "助记词";
+"create_wallet.n_words" = "%@ 个单词";
+"create_wallet.passphrase" = "密码";
+"create_wallet.input.passphrase" = "密码";
+"create_wallet.input.confirm" = "确认";
+"create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
+"create_wallet.error.empty_passphrase" = "密码不能为空";
+"create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
+"create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 
 // Select Coins
 
@@ -798,7 +882,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "add_token_selector.choose_blockchain" = "选择区块链";
 "add_token_selector.add_token" = "添加代币";
-"add_token_selector.erc20_token" = "ERC20 Token";
+"add_token_selector.erc20_token" = "ERC20 代币";
 "add_token_selector.bep20_token" = "BEP20 代币";
 "add_token_selector.bep2_token" = "BEP2 代币";
 
@@ -885,3 +969,22 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
+
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ 个单词";
+"manage_accounts.n_words_with_passphrase" = "%@ 个单词的密码";
+
+// Manage Account
+
+"manage_account.name" = "名称";
+"manage_account.show_recovery_phrase" = "显示恢复码";
+"manage_account.backup_recovery_phrase" = "备份码";
+"manage_account.unlink" = "取消链接";
+
+// Birthday Input
+
+"birthday_input.title" = "生日高度";
+"birthday_input.description" = "如果您知道您Zcash钱包的生日高度，请将其添加至下方以加速同步过程。";
+"birthday_input.input_placeholder" = "%@ （可选）";
+"restore_setting.birthday_height" = "%@ 生日高度";

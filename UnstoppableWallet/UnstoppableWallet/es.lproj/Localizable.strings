@@ -21,6 +21,7 @@
 "button.approve" = "Aprobar";
 "button.reject" = "Rechazar";
 "button.connect" = "Conectar";
+"button.save" = "Guardar";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -38,7 +39,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Price";
+"price" = "Precio";
 "note" = "Nota";
 
 "version" = "Versión %@";
@@ -62,14 +63,13 @@
 
 "restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
-"restore.item_title" = "%@ Monedero";
-"restore.words.description" = "Introduzca su clave privada para el monedero %@, la cual consta de %@ palabras. Las palabras deben ser introducidas en orden correcto y separadas por espacios.";
-"restore.birthday_height.placeholder" = "Talla de cumpleaños del monedero (opcional)";
-"restore.birthday_height.description" = "Esto determina desde dónde empezar a escanear por transacciones. Déjalo en blanco para escanear desde el principio, esto puede demorar un poco.";
-"restore.placeholder.account_name" = "Account Name";
-"restore.placeholder.private_key" = "Active Private Key\n";
-"restore_error.words_count" = "Número de palabras errónes. Deberian ser %@. Usted a ingresado: %@";
+"restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
+"restore_error.mnemonic_word_count" = "La cantidad ingresada de palabras es incorrecta. Deberian ser 12 o 24. Usted a ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
+"restore.passphrase" = "Frase de contraseña";
+"restore.input.passphrase" = "Frase de contraseña";
+"restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica";
+"restore.error.empty_passphrase" = "La frase de contraseña no puede estar vacío";
 
 // Coin Settings
 
@@ -96,6 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Formato de Dirección";
+"blockchain_settings.description" = "Elija el formato de dirección para su monedero %@. Cada formato seleccionado representa un monedero diferente en la pestaña de saldo de la aplicación.";
+
+// Show Key
+
+"show_key.title" = "Clave";
+"show_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"show_key.button_show" = "Mostrar";
+"show_key.tab.recovery_phrase" = "Frase de Recuperación";
+"show_key.tab.private_keys" = "Claves privadas";
+"show_key.passphrase" = "Frase de contraseña";
+
+// Backup Key
+
+"backup_key.title" = "Copia de seguridad";
+"backup_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"backup_key.button_show" = "Mostrar";
+"backup_key.button_backup" = "Copia de seguridad";
+"backup_key.passphrase" = "Frase de contraseña";
+
+"backup_key.confirmation.description" = "Introduzca la frase de recuperación en su orden correcto para confirmar";
+"backup_key.confirmation.passphrase" = "Frase de contraseña";
+"backup_key.confirmation.passphrase_description" = "Introduzca su frase de contraseña";
+
+"backup_key.confirmation.empty_word" = "Palabra vacía";
+"backup_key.confirmation.invalid_word" = "Palabra no válida";
+"backup_key.confirmation.empty_passphrase" = "Frase de contraseña vacía";
+"backup_key.confirmation.invalid_passphrase" = "Frase de contraseña inválida";
 
 // Backup
 
@@ -112,14 +139,11 @@
 
 "backup.words.confirmation_description" = "Insertar palabras de su clave %@";
 
-"backup.birthday_height" = "Altura de Cumpleaños";
-
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_ethereum.wrong_parameters" = "Parámetros incorrectos";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
 "error.send_z_cash.transparent_address" = "Unstoppable no soporta pagos a una dirección transparente";
-"error.incubed_not_reachable" = "No puede accederse a los servidores incubados";
 
 "backup.confirmation.title" = "Comprobar";
 
@@ -140,6 +164,9 @@
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "hasta %@";
 "balance.add_coin" = "Añadir Monedas";
+"balance.empty.add_coins" = "Añadir Monedas";
+"balance.empty.description" = "No has añadido ninguna moneda a este monedero.";
+"balance.sort_by" = "Ordenar por";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
@@ -152,7 +179,7 @@
 
 "deposit.receive_coin" = "Recibir %@";
 "deposit.your_address" = "Su dirección";
-"receive_alert.not_backed_up_description" = "Necesita respaldar el monedero %@ antes de poder recibir %@.";
+"receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
 
 // Send
 
@@ -204,11 +231,12 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Enviar";
-"send.amount_error.balance" = "Saldo %@";
+"send.amount_error.balance" = "Saldo insuficiente";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
+"send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
 "send.lock_time" = "TimeLock";
 
@@ -324,10 +352,13 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted M.Cap";
 
 "market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted M.Cap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -374,9 +405,10 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.governance" = "Governance";
 "market_discovery.filter_title.cross_chain" = "Cross Chain";
 "market_discovery.filter_title.computing" = "Computing";
+"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
+"market_discovery.filter_title.investment_tools" = "Investment Tools";
 
 "market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
@@ -404,9 +436,10 @@
 "market_discovery.filter_description.b2b" = "B2B service providers.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
 "market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.governance" = "Decentralized governance protocols for DAOs.";
 "market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
+"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
+"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
@@ -418,12 +451,20 @@
 "market.advanced_search.dex_description" = "Esta opción se aplica a las fichas negociadas en Ethereum (Uniswap DEX) y Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
+"market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
+
+"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_eth" = "Outperformed ETH";
+"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -443,6 +484,21 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+
+"market.global.subtitle" = "Chart";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
+"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
+"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hour";
@@ -454,13 +510,19 @@
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.market_cap" = "Market Cap";
-"coin_page.volume_24h" = "Volume (24h)";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
 "coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.genesis_date" = "Launch Date";
 
+"coin_page.trading_volume" = "Trading Volume";
 "coin_page.markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
+
+"coin_page.tvl" = "Total Value Locked";
+"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
+"coin_page.tvl_rank" = "TVL Rank";
+"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";
@@ -516,9 +578,17 @@
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
-"settings.light_mode" = "Modo ligero";
+"settings.theme" = "Tema";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "app descentralizada";
+
+// Settings -> Base Currency
+
+"settings.base_currency.title" = "Moneda principal";
+"settings.base_currency.other" = "Otro";
+"settings.base_currency.disclaimer" = "Disclaimer";
+"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
 // Settings -> Notifications
 
@@ -642,10 +712,8 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
 "settings_manage_keys.settings" = "Formato de Dirección";
-"settings_manage_keys.delete.cant_delete" = "Necesita respaldar esta clave privada antes de que pueda eliminarla de este teléfono.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos %@ de este dispositivo.";
-"settings_manage_keys.delete.confirmation_disable" = "Monedas que serán deshabilitadas: %@";
+"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos  de este dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
 
 // Settings -> About App
@@ -657,6 +725,13 @@ poner en peligro la seguridad de mis fondos.";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
 "settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
+
+// Settings -> Theme
+
+"settings_theme.title" = "Tema";
+"settings_theme.system" = "Sistema";
+"settings_theme.dark" = "Oscuro";
+"settings_theme.light" = "Claro";
 
 // Set PIN
 
@@ -751,6 +826,15 @@ poner en peligro la seguridad de mis fondos.";
 
 "create_wallet.title" = "Nuevo Monedero";
 "create_wallet.create_button" = "Crear";
+"create_wallet.mnemonic" = "Mnemotécnica";
+"create_wallet.n_words" = "%@ palabras";
+"create_wallet.passphrase" = "Frase de contraseña";
+"create_wallet.input.passphrase" = "Frase de contraseña";
+"create_wallet.input.confirm" = "Confirmar";
+"create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
+"create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
+"create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
+"create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Select Coins
 
@@ -886,3 +970,22 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
+
+// Manage Accounts
+
+"manage_accounts.n_words" = "%@ palabras";
+"manage_accounts.n_words_with_passphrase" = "%@ palabras con frase de contraseña";
+
+// Manage Account
+
+"manage_account.name" = "Nombre";
+"manage_account.show_recovery_phrase" = "Mostrar Frase";
+"manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
+"manage_account.unlink" = "Desenlazar";
+
+// Birthday Input
+
+"birthday_input.title" = "Altura de Cumpleaños";
+"birthday_input.description" = "Si conoce una altura de cumpleaños para su monedero Zcash añádela abajo para acelerar el proceso de sincronización.";
+"birthday_input.input_placeholder" = "%@ (opcional)";
+"restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
