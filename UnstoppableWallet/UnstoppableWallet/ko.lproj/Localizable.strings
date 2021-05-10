@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.diluted_market_cap.title" = "희석화 시가 총액";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted MCap";
+"market.diluted_market_field.mcap" = "희석화 시가 총액";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
