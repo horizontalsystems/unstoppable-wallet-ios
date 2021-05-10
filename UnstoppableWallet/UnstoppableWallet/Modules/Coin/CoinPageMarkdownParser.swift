@@ -7,7 +7,7 @@ class CoinPageMarkdownParser {
             heading1: .title2,
             heading2: .title3,
             heading3: .headline2,
-            body: .body
+            body: .subhead2
     )
 
     let colors = StaticColorCollection(
