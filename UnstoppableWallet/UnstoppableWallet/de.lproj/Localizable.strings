@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
+"market.diluted_market_field.mcap" = "Diluted MCap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -633,26 +633,26 @@
 // Settings -> Terms
 
 "terms.title" = "Bedingungen";
-"terms.description" = "Das Unstoppable Wallet ist für diejenigen gedacht, die in Kryptowährungen auf private und unabhängige Weise investieren und diese sparen möchten.
+"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
-Es ist ein Non-Custodial, Peer-to-Peer Wallet, bei dem nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält Benutzer unabhängig, indem es sein Wallet nicht an eine bestimmte Wallet-App verknüpft.
+It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking user's funds to a specific wallet app.
 
-Das Unstoppable Wallet ist vollständig Open Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.
+The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
 
-Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen nicht gut waren. Sowohl aus technischer Sicht als auch aus Sicht der Nutzbarkeit sind wir der Meinung, dass diese Wallets den alternativen Produkten deutlich voraus ist.";
+We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
 "terms.item.academy" = "Ich bin durch den Academy-Bereich dieser App gegangen und machte mich mit den grundlegenden Aspekten der Aufbewahrung von Kryptowährungen vertraut.";
 "terms.item.backup" = "Ich habe den/die Private Key(s) für meine Wallets gesichert, die mir in Form von 12-24 Wörtern angezeigt wurden. Mir ist bewusst, dass diese Private Keys auf meinem Smartphone und nirgendwo anders gespeichert werden.";
-"terms.item.owner" = "Mir ist bewusst, dass nur der Eigentümer meines/meiner Private Key(s) auf mein Wallet zugreifen und Geld ausgeben kann und dass diese Keys daher niemals mit irgendjemandem geteilt werden sollten.";
-"terms.item.recover" = "Mir ist bewusst, dass ich meine Private Keys benötige, um den Zugriff auf mein Geld wiederherzustellen, falls ich mein Mobiltelefon verlieren sollte oder wenn die App nicht funktioniert. Ohne meine Private Keys wird es unmöglich sein, den Zugriff auf mein Wallet wiederherzustellen.";
-"terms.item.phone" = "Mir ist bewusst, dass das Übergeben meines Mobiltelefons an nicht vertrauenswürdige Personen oder das Verlassen der Wallet-App ohne sichere PIN-Sperre die Sicherheit meines Guthabens gefährden könnte.";
-"terms.item.root" = "Mir ist bewusst, dass Jailbreaking (Rooting) meines Mobiltelefons, Installieren von Apps von Drittanbietern aus unbekannten Quellen und die Veraltung des Betriebssystems die Sicherheit meines Geldes gefährden kann.";
-"terms.item.bugs" = "Mir ist bewusst, dass es möglicherweise ungelöste Softwarefehler in dem Code gibt, mit dem diese Wallet-App betrieben wird, was zu unerwartetem Verhalten oder zu Fehlfunktionen der App führen kann.";
-"terms.item.pin" = "Ich verstehe, dass die Deaktivierung des Passcodes zum Entsperren des Telefons in den Einstellungen von iOS die Private Keys des Wallets von meinem Gerät löscht. Ich benötige meine Private Keys, um wieder Zugang zu meinem Wallet zu erhalten.";
+"terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
+"terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
+"terms.item.phone" = " I understand there may be undiscovered software issues in the code powering this wallet app which may potentially lead to unexpected behavior or the app malfunctioning.";
+"terms.item.root" = "I understand that I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
+"terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase wallet private keys from my device. I will need my private keys to regain access to my funds.";
+"terms.item.pin" = "I understand that only I myself is responsible for safety of my funds and no other entity.";
 "terms.footer" = "Vielen Dank, dass Sie dieses Wallet nutzen!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 Hey! Schau dir Unstoppable an, es ist mein Lieblingskrypto-Wallet.";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
