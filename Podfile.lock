@@ -10,7 +10,7 @@ PODS:
   - Base58Swift (2.1.10):
     - BigInt (~> 5.0.0)
   - BigInt (5.0.0)
-  - BinanceChainKit.swift (0.3.6):
+  - BinanceChainKit.swift (0.4.0):
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
     - HsToolKit.swift (~> 1.0)
@@ -19,16 +19,16 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
     - SwiftProtobuf (~> 1.6)
     - SwiftyJSON (~> 4.3)
-  - BitcoinCashKit.swift (0.16.1):
+  - BitcoinCashKit.swift (0.17):
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.16)
+    - BitcoinCore.swift (~> 0.17)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
     - ObjectMapper (~> 4.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - BitcoinCore.swift (0.16.1):
+  - BitcoinCore.swift (0.17):
     - BigInt (~> 5.0)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
@@ -39,12 +39,12 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
     - SwiftNIO (~> 2)
     - UIExtensions.swift (~> 1.1.1)
-  - BitcoinKit.swift (0.16.1):
+  - BitcoinKit.swift (0.17):
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.16)
+    - BitcoinCore.swift (~> 0.17)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
-    - Hodler.swift (~> 0.16)
+    - Hodler.swift (~> 0.17)
     - ObjectMapper (~> 4.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -85,9 +85,9 @@ PODS:
   - CurrencyKit.swift (1.0):
     - RxSwift (~> 5.0)
     - StorageKit.swift (~> 1.0)
-  - DashKit.swift (0.16.1):
+  - DashKit.swift (0.17):
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.16)
+    - BitcoinCore.swift (~> 0.17)
     - BlsKit.swift (~> 1.0)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
@@ -98,7 +98,7 @@ PODS:
     - X11Kit.swift (~> 1.0)
   - DeepDiff (2.3.1)
   - Down (0.10.0)
-  - Erc20Kit.swift (0.13):
+  - Erc20Kit.swift (0.14.0):
     - BigInt (~> 5.0)
     - EthereumKit.swift (~> 0.13)
     - GRDB.swift (~> 4.0)
@@ -112,7 +112,7 @@ PODS:
     - EthereumAddress (~> 1.3)
   - EthereumAddress (1.3.0):
     - CryptoSwift (~> 1.0)
-  - EthereumKit.swift (0.13):
+  - EthereumKit.swift (0.14.0):
     - BigInt (~> 5.0)
     - BlueSocket (~> 1.0)
     - GRDB.swift (~> 4.0)
@@ -122,7 +122,7 @@ PODS:
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
-  - FeeRateKit.swift (0.7):
+  - FeeRateKit.swift (0.8.0):
     - HsToolKit.swift (~> 1)
     - RxSwift (~> 5.0)
   - GRDB.swift (4.14.0):
@@ -139,8 +139,8 @@ PODS:
   - HdWalletKit.swift (1.5.1):
     - OpenSslKit.swift (~> 1.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - Hodler.swift (0.16.1):
-    - BitcoinCore.swift (~> 0.16)
+  - Hodler.swift (0.17):
+    - BitcoinCore.swift (~> 0.17)
     - OpenSslKit.swift (~> 1.0)
     - Secp256k1Kit.swift (~> 1.0)
   - HsToolKit.swift (1.2.0):
@@ -157,9 +157,9 @@ PODS:
   - KeychainAccess (4.2.2)
   - LanguageKit.swift (1.0):
     - UIExtensions.swift (~> 1.1)
-  - LitecoinKit.swift (0.16.1):
+  - LitecoinKit.swift (0.17):
     - BigInt (~> 5.0)
-    - BitcoinCore.swift (~> 0.16)
+    - BitcoinCore.swift (~> 0.17)
     - GRDB.swift (~> 4.0)
     - HdWalletKit.swift (~> 1.5)
     - ObjectMapper (~> 4.0)
@@ -278,7 +278,7 @@ PODS:
     - RxCocoa (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1.1)
-  - UniswapKit.swift (0.9.3):
+  - UniswapKit.swift (0.10.0):
     - BigInt (~> 5.0)
     - EthereumKit.swift (~> 0.13)
     - OpenSslKit.swift (~> 1.0)
@@ -293,7 +293,7 @@ PODS:
     - HsToolKit.swift
     - PromiseKit
   - X11Kit.swift (1.0)
-  - XRatesKit.swift (0.8.1):
+  - XRatesKit.swift (0.9.0):
     - CoinKit.swift (~> 0.1)
     - GRDB.swift (~> 4.0)
     - HsToolKit.swift (~> 1.1)
@@ -478,16 +478,16 @@ CHECKOUT OPTIONS:
     :commit: b2bf8108f9ea114b99ff8d5769070476254d712e
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
-    :commit: b0d9ed6b3a54fce919e50fe7c0a350e7189f5a72
+    :commit: ed9e31f9dfb94ed7bb291afb1ae41b0bd9c8ed78
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 42d5b1de54a7dd6ddd28dec27ca75ebc5045107d
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 42d5b1de54a7dd6ddd28dec27ca75ebc5045107d
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -496,31 +496,31 @@ CHECKOUT OPTIONS:
     :commit: de14e482532db6ec94b45c40f223a48bd18adea7
     :git: https://github.com/horizontalsystems/coin-kit-ios
   ComponentKit.swift:
-    :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
+    :commit: 7eed7468f53d8b7e48625ca1dc46623985fcd5e9
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 2792207cfffa1a1ebaf54bbd4bf56451438bf93a
+    :commit: 2332a889b66692bc88c6b3ae7adfd71c634838ba
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: 2792207cfffa1a1ebaf54bbd4bf56451438bf93a
+    :commit: 2332a889b66692bc88c6b3ae7adfd71c634838ba
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
-    :commit: 36ef6737f47d463c4cecfcc8418ea2ed8b1db2da
+    :commit: 763394a92bdf091517376776bccecf9e7edbb49f
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: 90838c36a4923cd8fe23907892228b8b1aabf78c
@@ -532,7 +532,7 @@ CHECKOUT OPTIONS:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: d0c2c7d9dc2feb4b6fcdea1de89c8d615438df40
+    :commit: c7f21908839aeeed3d1f9ee04e10c32dfc0cd99a
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
@@ -556,13 +556,13 @@ CHECKOUT OPTIONS:
     :commit: b2bf8108f9ea114b99ff8d5769070476254d712e
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 2792207cfffa1a1ebaf54bbd4bf56451438bf93a
+    :commit: 2332a889b66692bc88c6b3ae7adfd71c634838ba
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: ac4869fade3d97976f370147d3df9c8f9f077aa8
+    :commit: e0aec8309dba3acf0bba9354b3027cb631355b59
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
@@ -571,10 +571,10 @@ SPEC CHECKSUMS:
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
-  BinanceChainKit.swift: 0b68a8677838fe60f93fe81ede933dc7a0956700
-  BitcoinCashKit.swift: c035ecdba64d9be70cef1913a043bfe0ce2d52b2
-  BitcoinCore.swift: fb3e70abc13858370f81e124c89af8a72c6e6ae5
-  BitcoinKit.swift: c08d5dbb6ceec04e195ae1188586b20e887729eb
+  BinanceChainKit.swift: 75e93f661010c6b19a46149b05b3e3a18e066e0b
+  BitcoinCashKit.swift: e86dc853230054ad753a625eecb689ff7309ceb2
+  BitcoinCore.swift: ffda971e614197ac3e9a33ec956a1f9978cd8e6b
+  BitcoinKit.swift: b8598556c1490e9caa9e3e62f9efece5a68ddfb1
   BlsKit.swift: e73fb332ed6a577b0f34a0da30aa5ec6c09bee55
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
   CGRPCZlib: befd9b92013c647f18aa9b7d9e9231d52e1ced1b
@@ -592,23 +592,23 @@ SPEC CHECKSUMS:
   CryptoSwift: 7cc902df1784de3b389a387756c7d710f197730c
   Cuckoo: 09ff1b7c6613b9c27dafea90702ca32208fe59d3
   CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
-  DashKit.swift: 31914a4bf92a907f06dc3bbd7ece7d839bae5b80
+  DashKit.swift: 839e3cbb13a0592a001f82cc04dd5abbb88aa2cb
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: 01f155f9d7e99673c667efd2218709c3b9a8bc13
-  Erc20Kit.swift: d634b67c615613bec10e5a7b1198ebf42dbd9666
+  Erc20Kit.swift: 1394bf418380cb273a51b3464072b5f04f426a07
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
-  EthereumKit.swift: 02dfc42639a0e2c762348267200efe4544c90835
-  FeeRateKit.swift: 47bdde56da02b00580c70f2301814f5ada4d5d3d
+  EthereumKit.swift: c3a0495c2602a6681ce79d21b951840a601d6ea4
+  FeeRateKit.swift: 12713618d623d057382b964d2d16d220b1db8df5
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
   gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
-  Hodler.swift: b51336461b7e179e236a07ad0039dcaa7e55d551
+  Hodler.swift: e59834cd20385e5067cd55a813667ca8fd0778b9
   HsToolKit.swift: 747ea05847a5ad8da55dab016204f9af3a925eaf
   HUD.swift: 28fe655f5946e0f12fe3d24be54a57716d983c69
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
-  LitecoinKit.swift: 410f5c39b7a094100f089629dc5bd961b6c3b6f4
+  LitecoinKit.swift: 8fd1858efc777a6c8b6dccb5efe4e02bfd0919ab
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
   Nimble: 7bed62ffabd6dbfe05f5925cbc43722533248990
@@ -643,11 +643,11 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: 2a118eb5bdd9c49bdd41daa3f7ca2033628f98be
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
-  UniswapKit.swift: a0037722fad19c4fbfe905025468d828ebd26470
+  UniswapKit.swift: e0a9a8c6df7f695305c74f800a45fec9e3b177da
   UnstoppableDomainsResolution: 63abb84858d3e91eb838a5bfa6f7e3c0e0593f24
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  XRatesKit.swift: 50dda0bb340cf42f000eb5039e342f6487165360
+  XRatesKit.swift: 2caee956cbf9011f32b90cf658e405de79ee258f
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
 PODFILE CHECKSUM: 483c15e1015d1c4879bdb6f071dae51583889845
