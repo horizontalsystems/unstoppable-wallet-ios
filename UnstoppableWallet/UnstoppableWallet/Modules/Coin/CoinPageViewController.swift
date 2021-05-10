@@ -7,12 +7,14 @@ import SnapKit
 import HUD
 import Chart
 import ComponentKit
+import Down
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
     private let chartViewModel: CoinChartViewModel
     private let favoriteViewModel: CoinFavoriteViewModel
     private let priceAlertViewModel: CoinPriceAlertViewModel
+    private let markdownParser: CoinPageMarkdownParser
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
@@ -38,11 +40,12 @@ class CoinPageViewController: ThemeViewController {
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
-    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, priceAlertViewModel: CoinPriceAlertViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, urlManager: IUrlManager) {
+    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, priceAlertViewModel: CoinPriceAlertViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.favoriteViewModel = favoriteViewModel
         self.priceAlertViewModel = priceAlertViewModel
         self.chartViewModel = chartViewModel
+        self.markdownParser = markdownParser
         self.urlManager = urlManager
 
         currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
@@ -94,6 +97,7 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
+        tableView.registerCell(forClass: CoinCategoryHeaderCell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
         tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
@@ -349,37 +353,41 @@ extension CoinPageViewController {
     }
 
     private func headerRow(title: String) -> RowProtocol {
-        Row<B4Cell>(
+        Row<CoinCategoryHeaderCell>(
                 id: "header_cell_\(title)",
                 hash: title,
                 height: .heightSingleLineCell,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
                     cell.title = title
-                    cell.selectionStyle = .none
                 }
         )
     }
 
-    private func descriptionSection(description: String) -> SectionProtocol {
-        let attributedDescription = NSMutableAttributedString(string: description)
-        attributedDescription.addAttribute(NSAttributedString.Key.font, value: UIFont.subhead2, range: NSRange(location: 0, length: description.utf16.count))
-        attributedDescription.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.themeGray, range: NSRange(location: 0, length: description.utf16.count))
-        descriptionTextCell.contentText = attributedDescription
+    private func descriptionSection(description: CoinMetaDescriptionType) -> SectionProtocol {
+        var rows = [RowProtocol]()
 
+        let markdownText: String
+        switch description {
+        case let .html(text):
+            rows.append(headerRow(title: "chart.about.header".localized))
+            markdownText = text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        case let .markdown(text):
+            markdownText = text
+        }
+
+        descriptionTextCell.contentText = try? markdownParser.attributedString(from: markdownText)
+        rows.append(
+                StaticRow(
+                        cell: descriptionTextCell,
+                        id: "about_cell",
+                        dynamicHeight: { [weak self] containerWidth in
+                            self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
+                        }
+                ))
         return Section(
                 id: "description",
                 headerState: .margin(height: .margin12),
-                rows: [
-                    headerRow(title: "chart.about.header".localized),
-                    StaticRow(
-                            cell: descriptionTextCell,
-                            id: "about_cell",
-                            dynamicHeight: { [weak self] containerWidth in
-                                self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
-                            }
-                    )
-                ]
+                rows: rows
         )
     }
 
@@ -644,12 +652,24 @@ extension CoinPageViewController {
 
     private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
         let datas = [
-            marketInfo.marketCap.map { (id: "market_cap", title: "coin_page.market_cap".localized, text: $0) },
-            marketInfo.circulatingSupply.map { (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0) },
-            marketInfo.totalSupply.map { (id: "total_supply", title: "coin_page.total_supply".localized, text: $0) },
-            marketInfo.dilutedMarketCap.map { (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0) },
-            marketInfo.genesisDate.map { (id: "genesis_date", title: "coin_page.genesis_date".localized, text: $0) }
-        ].compactMap { $0 }
+            marketInfo.marketCap.map {
+                (id: "market_cap", title: "coin_page.market_cap".localized, text: $0)
+            },
+            marketInfo.circulatingSupply.map {
+                (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0)
+            },
+            marketInfo.totalSupply.map {
+                (id: "total_supply", title: "coin_page.total_supply".localized, text: $0)
+            },
+            marketInfo.dilutedMarketCap.map {
+                (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0)
+            },
+            marketInfo.genesisDate.map {
+                (id: "genesis_date", title: "coin_page.genesis_date".localized, text: $0)
+            }
+        ].compactMap {
+            $0
+        }
 
         guard !datas.isEmpty else {
             return nil
@@ -667,9 +687,9 @@ extension CoinPageViewController {
 
 
         return Section(
-            id: "market_info_section",
-            headerState: .margin(height: .margin12),
-            rows: rows
+                id: "market_info_section",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
@@ -739,7 +759,7 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(contractInfoSection(contractInfo: contractInfo))
             }
 
-            if !viewItem.description.isEmpty {
+            if !viewItem.description.description.isEmpty {
                 sections.append(descriptionSection(description: viewItem.description))
             }
 
