@@ -969,7 +969,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "onboarding.balance.description" = "Vous n'avez pas encore de portefeuille. Veuillez créer un nouveau portefeuille ou restaurer un portefeuille existant";
 "onboarding.balance.create" = "Créer";
 "onboarding.balance.restore" = "Restaurer";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "Astuce ! La restauration d'un portefeuille existant, mais avec une nouvelle phrase d'authentification, génère un tout nouveau portefeuille. Pratique si vous souhaitez utiliser une seule phrase de réinitialisation mnémonique de 12 à 24 mots pour plusieurs portefeuilles.";
 
 // Manage Accounts
 
