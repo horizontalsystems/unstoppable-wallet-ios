@@ -751,12 +751,12 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(tvlSection)
             }
 
-            if let categories = viewItem.categories {
-                sections.append(categoriesSection(categories: categories))
-            }
-
             if let contractInfo = viewItem.contractInfo {
                 sections.append(contractInfoSection(contractInfo: contractInfo))
+            }
+
+            if let categories = viewItem.categories {
+                sections.append(categoriesSection(categories: categories))
             }
 
             if !viewItem.description.description.isEmpty {
