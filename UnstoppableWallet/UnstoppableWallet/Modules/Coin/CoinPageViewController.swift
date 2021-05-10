@@ -363,8 +363,8 @@ extension CoinPageViewController {
 
     private func descriptionSection(description: String) -> SectionProtocol {
         let attributedDescription = NSMutableAttributedString(string: description)
-        attributedDescription.addAttribute(NSAttributedString.Key.font, value: UIFont.subhead2, range: NSRange(location: 0, length: description.count))
-        attributedDescription.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.themeGray, range: NSRange(location: 0, length: description.count))
+        attributedDescription.addAttribute(NSAttributedString.Key.font, value: UIFont.subhead2, range: NSRange(location: 0, length: description.utf16.count))
+        attributedDescription.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.themeGray, range: NSRange(location: 0, length: description.utf16.count))
         descriptionTextCell.contentText = attributedDescription
 
         return Section(
