@@ -33,7 +33,7 @@ class CoinPageViewModel {
                     guideUrl: service.guideUrl,
                     links: links(info: info),
                     marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
-                    description: info.meta.description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+                    description: info.meta.description
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
         case .failed:
@@ -131,7 +131,7 @@ extension CoinPageViewModel {
         let guideUrl: URL?
         let links: [Link]
         let marketInfo: MarketInfo
-        let description: String
+        let description: CoinMetaDescriptionType
     }
 
     struct ContractInfo {

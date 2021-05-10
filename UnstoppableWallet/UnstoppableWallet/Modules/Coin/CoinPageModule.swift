@@ -43,6 +43,7 @@ struct CoinPageModule {
                 priceAlertViewModel: priceAlertViewModel,
                 chartViewModel: coinChartViewModel,
                 configuration: ChartConfiguration.fullChart,
+                markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)
         )
     }
