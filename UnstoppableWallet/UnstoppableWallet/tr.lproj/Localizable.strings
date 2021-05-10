@@ -39,7 +39,7 @@
 "offline" = "Çevrimdışı";
 "confirm" = "Onayla";
 "connect" = "Bağlan";
-"price" = "Price";
+"price" = "Fiyat";
 "note" = "Not";
 
 "version" = "Sürüm %@";
@@ -109,10 +109,10 @@
 
 // Backup Key
 
-"backup_key.title" = "Backup";
+"backup_key.title" = "Yedekle";
 "backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
+"backup_key.button_show" = "Göster";
+"backup_key.button_backup" = "Yedekle";
 "backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
