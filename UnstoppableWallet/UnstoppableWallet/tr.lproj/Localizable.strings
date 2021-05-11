@@ -39,7 +39,7 @@
 "offline" = "Çevrimdışı";
 "confirm" = "Onayla";
 "connect" = "Bağlan";
-"price" = "Fiyat";
+"price" = "Price";
 "note" = "Not";
 
 "version" = "Sürüm %@";
@@ -63,13 +63,13 @@
 
 "restore.title" = "Cüzdan Seçin";
 "restore.enter_key" = "Anahtarı girin";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
+"restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcınızı girin. Kelimelerin doğru sırada girilmesi ve boşluklarla ayrılması gerekir.";
+"restore_error.mnemonic_word_count" = "Yanlış sözcük sayısı. 12-24 olmalıdır. Sizin girdiğiniz:%@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "Passphrase cannot be empty";
+"restore.passphrase" = "Parola";
+"restore.input.passphrase" = "Parola";
+"restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız parolanızı girin";
+"restore.error.empty_passphrase" = "Parola boş olamaz";
 
 // Coin Settings
 
@@ -96,33 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adres Formatı";
-"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+"blockchain_settings.description" = "%@ Cüzdanınız için adres biçimini seçin. Seçilen her format, uygulamanın bakiye sekmesinde farklı bir cüzdanı temsil eder.";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
-"show_key.passphrase" = "Passphrase";
+"show_key.title" = "Anahtar";
+"show_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
+"show_key.button_show" = "Göster";
+"show_key.tab.recovery_phrase" = "Kurtarma cümlesi";
+"show_key.tab.private_keys" = "Özel Anahtar";
+"show_key.passphrase" = "Parola";
 
 // Backup Key
 
 "backup_key.title" = "Yedekle";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
+"backup_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
 "backup_key.button_show" = "Göster";
 "backup_key.button_backup" = "Yedekle";
-"backup_key.passphrase" = "Passphrase";
+"backup_key.passphrase" = "Parola";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.description" = "Onaylamak için kurtarma ifadelerini doğru sırayla girin";
+"backup_key.confirmation.passphrase" = "Parola";
+"backup_key.confirmation.passphrase_description" = "Parolayı girin";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "Boş kelime";
+"backup_key.confirmation.invalid_word" = "Geçersiz kelime";
+"backup_key.confirmation.empty_passphrase" = "Boş parola";
+"backup_key.confirmation.invalid_passphrase" = "Geçersiz parola";
 
 // Backup
 
@@ -165,7 +165,7 @@
 "balance.synced_through" = "%@ kadar";
 "balance.add_coin" = "Para Ekle";
 "balance.empty.add_coins" = "Kripto Para Ekle";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
 "balance.sort_by" = "Sırala";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
@@ -236,7 +236,7 @@
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Uyarı! Takılma riski";
 
 "send.lock_time" = "TimeLock";
 
@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "Gelişmiş Ayarlar";
 "swap.proceed_button" = "İleri";
 "swap.approve.title" = "Takas Onayı";
-"swap.approve.description" = "You should grant permission to a smart contract to swap given token on your behalf. This permission sets amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute approval transaction.\n\nWhile it may be done on demand before each trade, it's cheaper to approve higher amount in advance for future trades.";
+"swap.approve.description" = "Verilen jetonu sizin adınıza swap yapmak için bir akıllı sözleşmeye izin vermelisiniz. Bu izin, akıllı sözleşme tarafından kullanılabilecek tutarı belirler. Bakiyenizi etkilemez ancak onay işlemini gerçekleştirmek için küçük bir ücret gerekir.\n\nHer alım satımdan önce talep üzerine yapılabilirken, ileriki alım satımlarda bizim için önceden daha yüksek tutarı onaylamanız durumunda çok daha ucuz olur.";
 "swap.approve.amount_error.already_approved" = "Bu miktar için zaten bir ödeneğiniz var";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.amount_error.maximum_amount" = "%@ Bakiye";
@@ -578,7 +578,7 @@
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
+"settings.theme" = "Tema";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized uygulama";
 
@@ -586,9 +586,9 @@
 
 "settings.base_currency.title" = "Para birimi";
 "settings.base_currency.other" = "Diğer";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.disclaimer" = "Uyarı";
+"settings.base_currency.disclaimer.description" = "Üçüncü taraf bir hizmet olan Coingecko.com tarafından sağlanan döviz kuru verileri.\n\nDurdurulamaz cüzdan uygulaması, bu değerlerin her zaman doğru olduğunu ve piyasa verileriyle eşleştiğini garanti etmez. %@ Dışında herhangi bir temel para birimi seçerseniz tutarsızlık olasılığı daha yüksektir.";
+"settings.base_currency.disclaimer.i_understand" = "Anlıyorum";
 
 // Settings -> Notifications
 
@@ -633,21 +633,21 @@
 // Settings -> Terms
 
 "terms.title" = "Şartlar";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" = "Durdurulamaz cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve biriktirmek isteyenler için üretilmiştir.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking user's funds to a specific wallet app.
+Bu, yalnızca kullanıcının fonlar üzerinde kontrol sahibi olduğu, gözetim dışı, uçtan uca bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının cüzdanını belirli bir cüzdan uygulamasına bağlamadan kullanıcıyı bağımsız tutar.
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+Durdurulamaz cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia edildiği gibi çalıştığını doğrulayabilir.
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
+Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliştirdik. Hem mühendislik hem de kullanılabilirlik açısından bu cüzdanın alternatif ürünlerin çok önünde olduğuna inanıyoruz.";
 "terms.item.academy" = "Bu uygulamanın Akademi kısmını inceledim ve kripto para birimlerini biriktirmenin temel hususlarına aşina oldum.";
 "terms.item.backup" = "Bana 12-24 sözcük şeklinde gösterilen cüzdanlarım için özel anahtar(lar) ın yedeğini aldım. Bu özel anahtarların başka bir yerde değil akıllı telefonumda kaydedileceğini anladım.";
-"terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.phone" = " I understand there may be undiscovered software issues in the code powering this wallet app which may potentially lead to unexpected behavior or the app malfunctioning.";
-"terms.item.root" = "I understand that I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase wallet private keys from my device. I will need my private keys to regain access to my funds.";
-"terms.item.pin" = "I understand that only I myself is responsible for safety of my funds and no other entity.";
+"terms.item.owner" = "Telefonumu güvenilmeyen kişilere vermenin veya cüzdan uygulamasından güvenli PIN kilidi olmadan çıkmanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.recover" = "Telefonumun yazılımını kırmanın (rootlama), bilinmeyen kaynaklardan üçüncü taraf uygulamaları yüklemenin, işletim sistemini güncel tutmamanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.phone" = " Bu cüzdan uygulamasını çalıştıran kodda beklenmeyen durumlara veya uygulamanın hatalı çalışmasına neden olabilecek keşfedilmemiş yazılım sorunları olabileceğini anladım.";
+"terms.item.root" = "Telefonumu kaybedersem veya uygulama kullanım dışı kalırsa fonlarıma tekrar erişim sağlamak için özel anahtarlarıma ihtiyacım olacağını anladım. Özel anahtarlarım olmadan cüzdanıma erişimi kurtarmak imkansız olacaktır.";
+"terms.item.bugs" = "iOS Ayarlarında telefon kilit açma şifresini devre dışı bırakmanın, cihazımdaki cüzdan özel anahtarlarını sileceğini anlıyorum. Cüzdanıma yeniden erişmek için özel anahtarlarıma ihtiyacım olacak.";
+"terms.item.pin" = "Fonlarımın güvenliğinden yalnızca benim sorumlu olduğumu ve başka hiçbir kuruluşun sorumlu olmadığını anlıyorum.";
 "terms.footer" = "Bu cüzdanı seçtiğiniz için teşekkür ederiz!";
 
 // Settings -> Tell Friends
@@ -727,10 +727,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.title" = "Tema";
+"settings_theme.system" = "Sistem";
+"settings_theme.dark" = "Karanlık";
+"settings_theme.light" = "Açık";
 
 // Set PIN
 
@@ -826,14 +826,14 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Oluştur";
 "create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.n_words" = "%@ kelime";
+"create_wallet.passphrase" = "Parola";
+"create_wallet.input.passphrase" = "Parola";
+"create_wallet.input.confirm" = "Onayla";
+"create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
+"create_wallet.error.empty_passphrase" = "Parola boş olamaz";
+"create_wallet.error.forbidden_symbols" = "Parola için lütfen yalnızca latin harfleri ve rakamları kullanın";
+"create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
 
 // Select Coins
 
@@ -969,23 +969,23 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "İpucu! Mevcut bir cüzdanı geri yüklemek, ancak yeni bir parola ile yepyeni bir cüzdan oluşturacaktır. Birden fazla cüzdan için 12-24 kelimelik tek bir anımsatıcı kurtarma ifadesi kullanmak istiyorsanız kullanışlı.";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ kelime";
+"manage_accounts.n_words_with_passphrase" = "%@ parolalı kelime";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "İsim";
+"manage_account.show_recovery_phrase" = "İfadeyi Göster";
+"manage_account.backup_recovery_phrase" = "Yedekleme İfadesi";
+"manage_account.unlink" = "Ayır";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
+"birthday_input.description" = "Zcash cüzdanınız için bir doğum günü yüksekliği biliyorsanız, senkronizasyon işlemini hızlandırmak için aşağıya ekleyin.";
+"birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
+"restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
