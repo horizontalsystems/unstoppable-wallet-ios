@@ -20,7 +20,7 @@ class ZcashAdapter {
 
     private let uniqueId: String
     private let keys: [String]
-    private let loggingProxy = ZcashLogger(logLevel: .error)
+    private let loggingProxy = ZcashLogger(logLevel: .debug)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
@@ -66,22 +66,29 @@ class ZcashAdapter {
                 birthday = ZcashSDK.SAPLING_ACTIVATION_HEIGHT
             }
         }
-
+        
+        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
+        let unifiedViewingKeys = try DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
+        
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
                 pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
+                viewingKeys: unifiedViewingKeys,
+                walletBirthday: birthday,
                 loggerProxy: loggingProxy)
 
 
-        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
-//        try initializer.initialize(viewingKeys: try DerivationTool.default.deriveViewingKeys(seed: seedData, numberOfAccounts: 1),
-//                walletBirthday: BlockHeight(birthday))
-        try initializer.initialize(unifiedViewingKeys: DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1), walletBirthday: BlockHeight(birthday))
-        keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
+        
+        try initializer.initialize()
+        keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData,
+                                                             numberOfAccounts: 1)
+        
         synchronizer = try SDKSynchronizer(initializer: initializer)
+        
+        try synchronizer.prepare()
 
         transactionPool = ZcashTransactionPool()
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
@@ -135,12 +142,20 @@ class ZcashAdapter {
 
     @objc private func statusUpdated(_ notification: Notification) {
         var newState = balanceState
-
+        
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
-        case .syncing: newState = .syncing(progress: Int(synchronizer.progress * 100), lastBlockDate: nil)
+        case .syncing:
+            
+            var blockDate: Date? = nil
+            if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
+                blockDate = blockTime
+            }
+            newState = .syncing(progress: Int(synchronizer.progress * 100), lastBlockDate: blockDate)
+        case .unprepared:
+            newState = .notSynced(error: AppError.unknownError)
         }
 
         if newState != balanceState {
