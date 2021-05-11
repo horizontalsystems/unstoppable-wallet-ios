@@ -39,7 +39,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "价格";
+"price" = "Price";
 "note" = "备注";
 
 "version" = "版本%@";
@@ -352,16 +352,16 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
-"market.top.section.header.news" = "新闻";
-"market.top.volume.title" = "交易量";
-"market.top.market_cap.title" = "市场价值";
+"market.top.section.header.news" = "News";
+"market.top.volume.title" = "Vol";
+"market.top.market_cap.title" = "MCap";
 "market.top.diluted_market_cap.title" = "Diluted MCap";
 
-"market.market_field.mcap" = "市场价值";
+"market.market_field.mcap" = "MCap";
 "market.diluted_market_field.mcap" = "Diluted MCap";
-"market.market_field.vol" = "交易量";
+"market.market_field.vol" = "Vol";
 
-"market.sort_by" = "排序方式";
+"market.sort_by" = "Sort By";
 "market.changes" = "更改";
 
 "market.top.highest_cap" = "Highest Cap";
@@ -633,21 +633,21 @@
 // Settings -> Terms
 
 "terms.title" = "条款";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" = "Unstoppable钱包是为寻求以私密和独立的方式投资和储存加密货币的人士而创立。
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over funds. It doesn't collect any data and keeps user independent by not locking user's funds to a specific wallet app.
+这是一个非监护式对等钱包，只有用户能够对资金进行控制。它不收集任何数据并通过不把用户钱包锁定至特定的钱包应用来保证他/她的独立性。
 
-The Unstoppable wallet is fully open-source and anyone can confirm that the app works exactly as it claims to.
+Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的方式运行。
 
-We built Unstoppable for ourselves as the available solutions were not up to par. Both from engineering and usability perspective we believe this wallet to be significantly ahead of alternative products.";
+我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
 "terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
 "terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
-"terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, keeping the operating system outdated can potentially endanger the safety of my funds.";
-"terms.item.phone" = " I understand there may be undiscovered software issues in the code powering this wallet app which may potentially lead to unexpected behavior or the app malfunctioning.";
-"terms.item.root" = "I understand that I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys it will be impossible to recover access to my wallet.";
-"terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase wallet private keys from my device. I will need my private keys to regain access to my funds.";
-"terms.item.pin" = "I understand that only I myself is responsible for safety of my funds and no other entity.";
+"terms.item.owner" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
+"terms.item.recover" = "我理解对我的手机进行越狱（root)、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
+"terms.item.phone" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.item.root" = "我理解，如果我丢失了手机或者应用出现故障时，我需要私钥才能恢复对我资金的访问。没有私钥，将无法恢复对我钱包的访问。";
+"terms.item.bugs" = "我知道在iOS的设置中禁用手机解锁密码将从我的设备中擦除钱包私钥。我需要我的私钥才能重新访问我的钱包。";
+"terms.item.pin" = "我的理解是，只有我本人负责我的资金的安全，没有任何其他实体。";
 "terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
@@ -753,12 +753,12 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Rate List
 
 "rate_list.portfolio" = "投资组合";
-"rate_list.latest_news" = "最新消息";
+"rate_list.latest_news" = "Latest News";
 "top100_list.portfolio" = "前100名";
-"top100_list.sort_by" = "排序方式";
-"top100_list.sort_type.rank" = "排名";
-"top100_list.sort_type.top_winners" = "顶级赢家";
-"top100_list.sort_type.top_losers" = "顶级输家";
+"top100_list.sort_by" = "Sort By";
+"top100_list.sort_type.rank" = "Rank";
+"top100_list.sort_type.top_winners" = "Top Winners";
+"top100_list.sort_type.top_losers" = "Top Losers";
 
 //NumPad
 
@@ -795,7 +795,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "chart.start_date" = "上市日期";
 "chart.website" = "网站项目";
 "chart.error.not_available" = "无可用图表";
-"chart.selected.volume" = "量";
+"chart.selected.volume" = "Vol";
 "chart.trend_neutral" = "中性";
 "chart.trend_down" = "下降";
 "chart.trend_up" = "上升";
