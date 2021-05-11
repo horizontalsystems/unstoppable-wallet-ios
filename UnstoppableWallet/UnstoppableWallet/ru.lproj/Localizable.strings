@@ -39,7 +39,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
-"price" = "Цена";
+"price" = "Price";
 "note" = "Примечание";
 
 "version" = "Версия %@";
@@ -654,7 +654,7 @@
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Неистовствуйте!";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -776,7 +776,7 @@
 // Key Types
 
 "chart.title" = "%@ Цена";
-"chart.time_duration.today" = "Сегодня";
+"chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
