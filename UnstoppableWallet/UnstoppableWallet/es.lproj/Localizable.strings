@@ -39,7 +39,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Precio";
+"price" = "Price";
 "note" = "Nota";
 
 "version" = "Versión %@";
@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
+"market.diluted_market_field.mcap" = "Diluted MCap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -642,18 +642,18 @@ El monedero Unstoppable es completamente de código abierto y cualquiera puede v
 Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
 "terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
 "terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
-"terms.item.owner" = "Entiendo que sólo el propietario de mi(s) clave(s) privada(s) puede acceder y gastar fondos en mi monedero y, por lo tanto, estas claves no deben ser compartidas con nadie.";
-"terms.item.recover" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
-"terms.item.phone" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
-"terms.item.root" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
+"terms.item.owner" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
+"terms.item.recover" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
 poner en peligro la seguridad de mis fondos.";
-"terms.item.bugs" = "Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
-"terms.item.pin" = "Entiendo que deshabilitar el teléfono desbloqueará el código de acceso en la Configuración del iOS y esto borrará las claves privadas de mi dispositivo. Necesitaré mis claves privadas para recuperar el acceso a mi monedero.";
+"terms.item.phone" = " Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
+"terms.item.root" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
+"terms.item.bugs" = "Entiendo que deshabilitar el teléfono desbloqueará el código de acceso en la Configuración del iOS y esto borrará las claves privadas de mi dispositivo. Necesitaré mis claves privadas para recuperar el acceso a mi monedero.";
+"terms.item.pin" = "Entiendo que sólo yo mismo soy responsable de la seguridad de mis fondos y ninguna otra entidad.";
 "terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 ¡Hola! Echa un vistazo a Imparable, es mi criptocartera favorita.";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -970,6 +970,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 

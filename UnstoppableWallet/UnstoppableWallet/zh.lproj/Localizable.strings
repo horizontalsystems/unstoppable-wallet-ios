@@ -39,7 +39,7 @@
 "offline" = "离线";
 "confirm" = "确认";
 "connect" = "连接";
-"price" = "价格";
+"price" = "Price";
 "note" = "备注";
 
 "version" = "版本%@";
@@ -352,16 +352,16 @@
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_volume" = "Top By Volume";
-"market.top.section.header.news" = "新闻";
-"market.top.volume.title" = "交易量";
-"market.top.market_cap.title" = "市场价值";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.section.header.news" = "News";
+"market.top.volume.title" = "Vol";
+"market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
-"market.market_field.mcap" = "市场价值";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
-"market.market_field.vol" = "交易量";
+"market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted MCap";
+"market.market_field.vol" = "Vol";
 
-"market.sort_by" = "排序方式";
+"market.sort_by" = "Sort By";
 "market.changes" = "更改";
 
 "market.top.highest_cap" = "Highest Cap";
@@ -642,17 +642,17 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 我们为我们自己创立了Unstoppable作为符合标准的可用的解决方案。从工程和可用性角度而言，我们相信此钱包远远领先于其他产品。";
 "terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
 "terms.item.backup" = "我已对我钱包的私钥备份，该私钥以12-24字的格式展示给我。我理解这些私钥将保存在我的智能手机而不是其他地方。";
-"terms.item.owner" = "我理解只有私钥的所有人可以访问和消费我钱包上的资金，因此不得和任何人共享这些私钥。";
-"terms.item.recover" = "我理解，如果我丢失了手机或者应用出现故障时，我需要私钥才能恢复对我资金的访问。没有私钥，将无法恢复对我钱包的访问。";
-"terms.item.phone" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
-"terms.item.root" = "我理解对我的手机进行越狱（root）、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
-"terms.item.bugs" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
-"terms.item.pin" = "我知道在iOS的设置中禁用手机解锁密码将从我的设备中擦除钱包私钥。我需要我的私钥才能重新访问我的钱包。";
+"terms.item.owner" = "我理解，将我的手机交给不可信的实体或者在未设置安全PIN码锁定的情况下离开钱包应用可能会危害我的资金安全。";
+"terms.item.recover" = "我理解对我的手机进行越狱（root)、安装来源不明的第三方应用、未及时更新操作系统可能会危害我的资金安全。";
+"terms.item.phone" = "我理解，在实现此钱包应用的代码中可能存在未发现的软件问题，这可能会导致意外行为或应用故障的发生。";
+"terms.item.root" = "我理解，如果我丢失了手机或者应用出现故障时，我需要私钥才能恢复对我资金的访问。没有私钥，将无法恢复对我钱包的访问。";
+"terms.item.bugs" = "我知道在iOS的设置中禁用手机解锁密码将从我的设备中擦除钱包私钥。我需要我的私钥才能重新访问我的钱包。";
+"terms.item.pin" = "我的理解是，只有我本人负责我的资金的安全，没有任何其他实体。";
 "terms.footer" = "感谢您选择我们的钱包！";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 嘿! 看看不可阻挡, 这是我最喜欢的加密钱包。";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -753,12 +753,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Rate List
 
 "rate_list.portfolio" = "投资组合";
-"rate_list.latest_news" = "最新消息";
+"rate_list.latest_news" = "Latest News";
 "top100_list.portfolio" = "前100名";
-"top100_list.sort_by" = "排序方式";
-"top100_list.sort_type.rank" = "排名";
-"top100_list.sort_type.top_winners" = "顶级赢家";
-"top100_list.sort_type.top_losers" = "顶级输家";
+"top100_list.sort_by" = "Sort By";
+"top100_list.sort_type.rank" = "Rank";
+"top100_list.sort_type.top_winners" = "Top Winners";
+"top100_list.sort_type.top_losers" = "Top Losers";
 
 //NumPad
 
@@ -795,7 +795,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.start_date" = "上市日期";
 "chart.website" = "网站项目";
 "chart.error.not_available" = "无可用图表";
-"chart.selected.volume" = "量";
+"chart.selected.volume" = "Vol";
 "chart.trend_neutral" = "中性";
 "chart.trend_down" = "下降";
 "chart.trend_up" = "上升";
@@ -969,6 +969,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
+"onboarding.balance.password_hint" = "贴士！使用一个新密码恢复现有的钱包将生成一个全新的钱包。如果您希望对多个钱包使用单个12-24个单词的助记词恢复码，这将非常方便。";
 
 // Manage Accounts
 

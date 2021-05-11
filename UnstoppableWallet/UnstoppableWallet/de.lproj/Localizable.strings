@@ -39,7 +39,7 @@
 "offline" = "Offline";
 "confirm" = "Bestätigen";
 "connect" = "Verbinden";
-"price" = "Preis";
+"price" = "Price";
 "note" = "Hinweis";
 
 "version" = "Version %@";
@@ -63,13 +63,13 @@
 
 "restore.title" = "Wallet auswählen";
 "restore.enter_key" = "Schlüssel Eingeben";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words needs to be entered in correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. Must be 12 or 24. You entered: %@";
+"restore.mnemonic.description" = "Geben Sie Ihre Eselsbrücke ein, die aus 12 oder 24 Wörtern besteht. Die Wörter müssen in der richtigen Reihenfolge und durch Leerzeichen getrennt eingegeben werden.";
+"restore_error.mnemonic_word_count" = "Falsche Wortanzahl. Muss 12 oder 24 sein. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter your passphrase that you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "Passphrase cannot be empty";
+"restore.passphrase_description" = "Geben Sie Ihre Passphrase ein, die Sie beim Erstellen dieser Eselsbrücke verwendet haben";
+"restore.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 
 // Coin Settings
 
@@ -96,33 +96,33 @@
 "blockchain_settings.sync_mode.blockchain" = "Blockchain";
 "blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Adressformatierung";
-"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+"blockchain_settings.description" = "Wählen Sie das Adressformat für Ihr %@ Wallet. Jedes ausgewählte Format repräsentiert ein anderes Wallet auf der Registerkarte \"Kontostand\" der App.";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
+"show_key.title" = "Schlüssel";
+"show_key.description" = "Die Wiederherstellungsphrasen, die als nächstes gezeigt werden, sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, falls Ihr Mobiltelefon jemals verloren geht, gestohlen wird, kaputt geht usw.\n\nStellen Sie sicher, dass niemand Ihren Bildschirm beobachtet.";
+"show_key.button_show" = "Anzeigen";
+"show_key.tab.recovery_phrase" = "Wiederherstellungsphrase";
+"show_key.tab.private_keys" = "Private Schlüssel";
 "show_key.passphrase" = "Passphrase";
 
 // Backup Key
 
-"backup_key.title" = "Backup";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken etc.\n\nMake sure that no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
+"backup_key.title" = "Sicherung";
+"backup_key.description" = "Die Wiederherstellungsphrasen, die als nächstes gezeigt werden, sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, falls Ihr Mobiltelefon jemals verloren geht, gestohlen wird, kaputt geht usw.\n\nStellen Sie sicher, dass niemand Ihren Bildschirm beobachtet.";
+"backup_key.button_show" = "Anzeigen";
+"backup_key.button_backup" = "Sicherung";
 "backup_key.passphrase" = "Passphrase";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in correct order to confirm";
+"backup_key.confirmation.description" = "Geben Sie die Wiederherstellungsphrasen in der richtigen Reihenfolge ein, um zu bestätigen";
 "backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.passphrase_description" = "Geben Sie Ihre Passphrase ein";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "Leeres Wort";
+"backup_key.confirmation.invalid_word" = "Ungültiges Wort";
+"backup_key.confirmation.empty_passphrase" = "Leere Passphrase";
+"backup_key.confirmation.invalid_passphrase" = "Ungültige Passphrase";
 
 // Backup
 
@@ -163,10 +163,10 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisieren... %@";
 "balance.synced_through" = "bis %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
+"balance.add_coin" = "Coin hinzufügen";
+"balance.empty.add_coins" = "Coins hinzufügen";
+"balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
+"balance.sort_by" = "Sortieren nach";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
@@ -179,7 +179,7 @@
 
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.your_address" = "Deine Adresse";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
 
 // Send
 
@@ -227,7 +227,7 @@
 "send.confirmation.to" = "An";
 "send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
-"send.confirmation.account" = "Account";
+"send.confirmation.account" = "Konto";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Insgesamt";
 "send.confirmation.send_button" = "Senden";
@@ -236,7 +236,7 @@
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Warnung! Gefahr des Festklemmens";
 
 "send.lock_time" = "TimeLock";
 
@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
+"market.diluted_market_field.mcap" = "Diluted MCap";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -578,17 +578,17 @@
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
+"settings.theme" = "Design";
 "settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Basiswährung";
-"settings.base_currency.other" = "Other";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.other" = "Andere";
+"settings.base_currency.disclaimer" = "Haftungsausschluss";
+"settings.base_currency.disclaimer.description" = "Die Wechselkursdaten werden von einem Drittanbieterdienst Coingecko.com bereitgestellt\n\nDie Wallet-App von Unstoppable garantiert nicht, dass diese Werte immer korrekt sind und mit den Marktdaten übereinstimmen. Die Wahrscheinlichkeit für Inkonsistenzen ist höher, wenn Sie eine andere Basiswährung als %@ auswählen.";
+"settings.base_currency.disclaimer.i_understand" = "Ich stimme zu";
 
 // Settings -> Notifications
 
@@ -642,17 +642,17 @@ Das Unstoppable Wallet ist vollständig Open Source und jeder kann bestätigen, 
 Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen nicht gut waren. Sowohl aus technischer Sicht als auch aus Sicht der Nutzbarkeit sind wir der Meinung, dass diese Wallets den alternativen Produkten deutlich voraus ist.";
 "terms.item.academy" = "Ich bin durch den Academy-Bereich dieser App gegangen und machte mich mit den grundlegenden Aspekten der Aufbewahrung von Kryptowährungen vertraut.";
 "terms.item.backup" = "Ich habe den/die Private Key(s) für meine Wallets gesichert, die mir in Form von 12-24 Wörtern angezeigt wurden. Mir ist bewusst, dass diese Private Keys auf meinem Smartphone und nirgendwo anders gespeichert werden.";
-"terms.item.owner" = "Mir ist bewusst, dass nur der Eigentümer meines/meiner Private Key(s) auf mein Wallet zugreifen und Geld ausgeben kann und dass diese Keys daher niemals mit irgendjemandem geteilt werden sollten.";
-"terms.item.recover" = "Mir ist bewusst, dass ich meine Private Keys benötige, um den Zugriff auf mein Geld wiederherzustellen, falls ich mein Mobiltelefon verlieren sollte oder wenn die App nicht funktioniert. Ohne meine Private Keys wird es unmöglich sein, den Zugriff auf mein Wallet wiederherzustellen.";
-"terms.item.phone" = "Mir ist bewusst, dass das Übergeben meines Mobiltelefons an nicht vertrauenswürdige Personen oder das Verlassen der Wallet-App ohne sichere PIN-Sperre die Sicherheit meines Guthabens gefährden könnte.";
-"terms.item.root" = "Mir ist bewusst, dass Jailbreaking (Rooting) meines Mobiltelefons, Installieren von Apps von Drittanbietern aus unbekannten Quellen und die Veraltung des Betriebssystems die Sicherheit meines Geldes gefährden kann.";
-"terms.item.bugs" = "Mir ist bewusst, dass es möglicherweise ungelöste Softwarefehler in dem Code gibt, mit dem diese Wallet-App betrieben wird, was zu unerwartetem Verhalten oder zu Fehlfunktionen der App führen kann.";
-"terms.item.pin" = "Ich verstehe, dass die Deaktivierung des Passcodes zum Entsperren des Telefons in den Einstellungen von iOS die Private Keys des Wallets von meinem Gerät löscht. Ich benötige meine Private Keys, um wieder Zugang zu meinem Wallet zu erhalten.";
+"terms.item.owner" = "Mir ist bewusst, dass das Übergeben meines Mobiltelefons an nicht vertrauenswürdige Personen oder das Verlassen der Wallet-App ohne sichere PIN-Sperre die Sicherheit meines Guthabens gefährden könnte.";
+"terms.item.recover" = "Mir ist bewusst, dass Jailbreaking (Rooting) meines Mobiltelefons, Installieren von Apps von Drittanbietern aus unbekannten Quellen und die Veraltung des Betriebssystems die Sicherheit meines Geldes gefährden kann.";
+"terms.item.phone" = " Mir ist bewusst, dass es möglicherweise ungelöste Softwarefehler in dem Code gibt, mit dem diese Wallet-App betrieben wird, was zu unerwartetem Verhalten oder zu Fehlfunktionen der App führen kann.";
+"terms.item.root" = "Mir ist bewusst, dass ich meine Private Keys benötige, um den Zugriff auf mein Geld wiederherzustellen, falls ich mein Mobiltelefon verlieren sollte oder wenn die App nicht funktioniert. Ohne meine Private Keys wird es unmöglich sein, den Zugriff auf mein Wallet wiederherzustellen.";
+"terms.item.bugs" = "Ich verstehe, dass die Deaktivierung des Passcodes zum Entsperren des Telefons in den Einstellungen von iOS die Private Keys des Wallets von meinem Gerät löscht. Ich benötige meine Private Keys, um wieder Zugang zu meinem Wallet zu erhalten.";
+"terms.item.pin" = "Ich verstehe, dass nur ich selbst für die Sicherheit meiner Mittel und keine andere Einheit verantwortlich bin.";
 "terms.footer" = "Vielen Dank, dass Sie dieses Wallet nutzen!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 Hey! Schau dir Unstoppable an, es ist mein Lieblingskrypto-Wallet.";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -727,10 +727,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
+"settings_theme.title" = "Design";
 "settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.dark" = "Dunkel";
+"settings_theme.light" = "Hell";
 
 // Set PIN
 
@@ -825,15 +825,15 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "create_wallet.title" = "Neues Wallet";
 "create_wallet.create_button" = "Erstellen";
-"create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
+"create_wallet.mnemonic" = "Eselsbrücke";
+"create_wallet.n_words" = "%@ Wörter";
 "create_wallet.passphrase" = "Passphrase";
 "create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.input.confirm" = "Bestätigen";
+"create_wallet.passphrase_description" = "Passphrasen fügen den Wallets eine zusätzliche Sicherheitsebene hinzu, wodurch Benutzer mehrere unabhängige Multi-Coin-Wallets mit einer einzigen menmonischen Wiederherstellungsphrase erstellen können, die jedoch mit unterschiedlichen Passwörtern verknüpft sind.\n\nUm diese Wallets wiederherzustellen, benötigt der Benutzer eine menmonische Wiederherstellungsphrase sowie ein Passwort für jedes wiederherzustellende Wallet.";
+"create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
+"create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
+"create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
 
 // Select Coins
 
@@ -969,22 +969,23 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
+"onboarding.balance.password_hint" = "Tipp! Wenn Sie ein bestehendes Wallet mit einer neuen Passphrase wiederherstellen, wird ein brandneues Wallet erzeugt. Praktisch, wenn Sie eine einzelne 12-24-Wörter-Wiederherstellungsphrase für mehrere Wallets verwenden möchten.";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ Wörter";
+"manage_accounts.n_words_with_passphrase" = "%@ Wörter mit Passphrase";
 
 // Manage Account
 
 "manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.unlink" = "Unlink";
+"manage_account.show_recovery_phrase" = "Phrase anzeigen";
+"manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase";
+"manage_account.unlink" = "Verknüpfung trennen";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
+"birthday_input.title" = "Geburtstagshöhe";
+"birthday_input.description" = "Wenn Sie eine Geburtstagshöhe für Ihr Zcash Wallet kennen, fügen Sie diese unten hinzu, um den Synchronisierungsprozess zu beschleunigen.";
 "birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.birthday_height" = "%@ Geburtstagshöhe";

@@ -39,7 +39,7 @@
 "offline" = "Déconnecté";
 "confirm" = "Confirmer";
 "connect" = "Connecter";
-"price" = "Prix";
+"price" = "Price";
 "note" = "Remarque";
 
 "version" = "Version %@";
@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
-"market.market_field.mcap" = "CapM";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
+"market.market_field.mcap" = "MCap";
+"market.diluted_market_field.mcap" = "Diluted MCap";
 "market.market_field.vol" = "Volume";
 
 "market.sort_by" = "Sort By";
@@ -642,17 +642,17 @@ L'application Unstoppable Wallet est entièrement open-source et tout le monde p
 Nous avons construit Unstoppable à notre intention car les solutions disponibles n'étaient pas à la hauteur de nos attentes. Tant du point de vue de l'ingénierie que de la convivialité, nous pensons que ce portefeuille a une avance considérable sur les produits alternatifs.";
 "terms.item.academy" = "J'ai parcouru la section Académie de cette application et me suis familiarisé avec les aspects fondamentaux du stockage des cryptomonnaies.";
 "terms.item.backup" = "J'ai sauvegardé la/les clé(s) privée(s) de mes portefeuilles qui m'ont été présentées sous une formule de 12 à 24 mots. Je comprends que ces clés privées sont stockées sur mon smartphone et non ailleurs.";
-"terms.item.owner" = "Je comprends que seul le propriétaire de ma (mes) clé(s) privée(s) peut accéder à mon portefeuille et y dépenser des fonds, et que ces clés ne doivent donc jamais être partagées avec qui que ce soit.";
-"terms.item.recover" = "Je suis conscient que j'aurai besoin de mes clés privées afin de pouvoir accéder à mes fonds si je perds mon téléphone ou si l'application fonctionne mal. Sans mes clés privées, il me sera impossible de récupérer l'accès à mon portefeuille.";
-"terms.item.phone" = "Je comprends que le fait de confier mon téléphone à des entités non fiables ou de laisser l'application portefeuille sans verrouillage du code PIN peut potentiellement compromettre la sécurité de mes fonds.";
-"terms.item.root" = "Je comprends que le fait débrider (rooting) mon téléphone, d'installer des applications tierces de sources inconnues, de conserver un système d'exploitation obsolète peut potentiellement mettre en danger la sécurité de mes fonds.";
-"terms.item.bugs" = "Je suis conscient qu'il pourrait y avoir des problèmes non détectés dans le code de cette application de portefeuille, ce qui pourrait entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
-"terms.item.pin" = "Je comprends que la désactivation du code de déverrouillage du téléphone dans les paramètres iOS effacera les clés privées du portefeuille de mon appareil. J'aurai besoin de mes clés privées pour pouvoir accéder à mon portefeuille.";
+"terms.item.owner" = "Je comprends que le fait de confier mon téléphone à des entités non fiables ou de laisser l'application portefeuille sans verrouillage du code PIN peut potentiellement compromettre la sécurité de mes fonds.";
+"terms.item.recover" = "Je comprends que le fait débrider (rooting) mon téléphone, d'installer des applications tierces de sources inconnues, de conserver un système d'exploitation obsolète peut potentiellement mettre en danger la sécurité de mes fonds.";
+"terms.item.phone" = " Je suis conscient qu'il pourrait y avoir des problèmes non détectés dans le code de cette application de portefeuille, ce qui pourrait entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
+"terms.item.root" = "Je suis conscient que j'aurai besoin de mes clés privées afin de pouvoir accéder à mes fonds si je perds mon téléphone ou si l'application fonctionne mal. Sans mes clés privées, il me sera impossible de récupérer l'accès à mon portefeuille.";
+"terms.item.bugs" = "Je comprends que la désactivation du code de déverrouillage du téléphone dans les paramètres iOS effacera les clés privées du portefeuille de mon appareil. J'aurai besoin de mes clés privées pour pouvoir accéder à mon portefeuille.";
+"terms.item.pin" = "Je comprends que seul je suis responsable de la sécurité de mes fonds et aucune autre entité.";
 "terms.footer" = "Merci d'avoir choisi ce portefeuille !";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 Bonjour ! Jetez un coup d'oeil à Unstoppable, c'est mon portefeuille de cryptomonnaies préféré.";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -969,6 +969,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "onboarding.balance.description" = "Vous n'avez pas encore de portefeuille. Veuillez créer un nouveau portefeuille ou restaurer un portefeuille existant";
 "onboarding.balance.create" = "Créer";
 "onboarding.balance.restore" = "Restaurer";
+"onboarding.balance.password_hint" = "Astuce ! La restauration d'un portefeuille existant, mais avec une nouvelle phrase d'authentification, génère un tout nouveau portefeuille. Pratique si vous souhaitez utiliser une seule phrase de réinitialisation mnémonique de 12 à 24 mots pour plusieurs portefeuilles.";
 
 // Manage Accounts
 

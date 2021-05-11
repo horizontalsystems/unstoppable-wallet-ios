@@ -39,7 +39,7 @@
 "offline" = "오프라인";
 "confirm" = "확인";
 "connect" = "연결";
-"price" = "금액";
+"price" = "Price";
 "note" = "참고";
 
 "version" = "버전 %@";
@@ -355,10 +355,10 @@
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted M.Cap";
+"market.top.diluted_market_cap.title" = "희석화 시가 총액";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted M.Cap";
+"market.diluted_market_field.mcap" = "희석화 시가 총액";
 "market.market_field.vol" = "Vol";
 
 "market.sort_by" = "Sort By";
@@ -642,17 +642,17 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 귀사는 이용 가능한 해결책이 기대에 미치지 못했기 때문에 스스로 Unstoppable 을 구축했습니다. 엔지니어링과 사용 편의성 측면에서 모두 귀사는 이 지갑이 대체 제품보다 상당히 앞서 있다고 믿고 있습니다.";
 "terms.item.academy" = "나는 이 앱의 아카데미 부문을 거치면서 가상화폐 저장의 근본적인 측면에 대해 알게 되었다.";
 "terms.item.backup" = "나는 12-24 단어 형식으로 보여 준 지갑의 개인 암호를 백업했습니다. 나는 이 개인 암호가 다른 곳이 아닌 내 스마트폰에 저장되어 있다는 것을 인지합니다.";
-"terms.item.owner" = "나는 내 개인 암호의 소유자만이 내 지갑에 접근하여 자금을 쓸 수 있고 따라서 이 암호들은 절대 누구와도 공유되어서는 안 된다는 것을 이해합니다.";
-"terms.item.recover" = "나는 휴대폰을 분실하거나 앱이 오작동할 경우 자금에 대한 액세스를 복원하기 위해 개인 키가 필요하다는 것을 알고 있습니다. 내 개인 키가 없으면 내 지갑에 대한 접근을 복구하는 것은 불가능할 것입니다.";
-"terms.item.phone" = "신뢰할 수 없는 단체에게 핸드폰을 건네거나 안전한 PIN 잠금 없이 지갑 앱을 탈퇴하는 것은 잠재적으로 내 자금의 안전을 위협할 수 있다는 것을 알고 있습니다.";
-"terms.item.root" = "나는 내 전화기를 탈선하고(루팅), 출처를 알 수 없는 제3자 앱을 설치하고, 운영 체제를 구식 상태로 유지하면 잠재적으로 내 자금의 안전을 위태롭게 할 수 있다는 것을 이해합니다.";
-"terms.item.bugs" = "나는 이 지갑 앱에 전원을 공급하는 코드에서 예기치 않은 동작이나 앱 오작동으로 이어질 수 있는 미발견된 소프트웨어 문제가 있을 수 있다는 것을 알고 있습니다.";
-"terms.item.pin" = "iOS 설정에서 전화 잠금 해제 패스코드를 비활성화하면 장치에서 지갑 개인 키가 지워집니다. 지갑에 다시 접근하려면 개인 키가 필요합니다.";
+"terms.item.owner" = "신뢰할 수 없는 단체에게 핸드폰을 건네거나 안전한 PIN 잠금 없이 지갑 앱을 탈퇴하는 것은 잠재적으로 내 자금의 안전을 위협할 수 있다는 것을 알고 있습니다.";
+"terms.item.recover" = "나는 내 전화기를 탈선하고(루팅), 출처를 알 수 없는 제3자 앱을 설치하고, 운영 체제를 구식 상태로 유지하면 잠재적으로 내 자금의 안전을 위태롭게 할 수 있다는 것을 이해합니다.";
+"terms.item.phone" = " 나는 이 지갑 앱에 전원을 공급하는 코드에서 예기치 않은 동작이나 앱 오작동으로 이어질 수 있는 미발견된 소프트웨어 문제가 있을 수 있다는 것을 알고 있습니다.";
+"terms.item.root" = "나는 휴대폰을 분실하거나 앱이 오작동할 경우 자금에 대한 액세스를 복원하기 위해 개인 키가 필요하다는 것을 알고 있습니다. 내 개인 키가 없으면 내 지갑에 대한 접근을 복구하는 것은 불가능할 것입니다.";
+"terms.item.bugs" = "iOS 설정에서 전화 잠금 해제 패스코드를 비활성화하면 장치에서 지갑 개인 키가 지워집니다. 지갑에 다시 접근하려면 개인 키가 필요합니다.";
+"terms.item.pin" = "본인은 본인 만이 자금의 안전에 대한 책임이 있으며 다른 법인은 없음을 이해합니다.";
 "terms.footer" = "이 지갑을 선택해주셔서 감사합니다!";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "👋 안녕하세요! 언스타퍼블을 살펴보세요, 제가 가장 좋아하는 암호화 지갑이에요.";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Security
 
@@ -969,6 +969,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "귀하께서는 아직 지갑이 없습니다. 새 생성 또는 기존 복원 해주십시오";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
+"onboarding.balance.password_hint" = "팁! 기존 지갑을 복원하지만 새 암호를 사용하면 새로운 지갑이 생성됩니다. 여러 지갑에 대해 하나의 12-24 단어 니모닉 복구 문구를 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
 
