@@ -18,7 +18,6 @@ enum AppError: Error {
 
     enum ZcashError: Error {
         case sendToSelf
-        case transparentAddress
     }
 
     enum EthereumError: Error {
@@ -46,7 +45,6 @@ extension AppError: LocalizedError {
         case .zcash(let reason):
             switch reason {
             case .sendToSelf: return "error.send.self_transfer".localized
-            case .transparentAddress: return "error.send_z_cash.transparent_address".localized
             }
         case .ethereum(let reason):
             switch reason {
