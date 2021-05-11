@@ -478,16 +478,24 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func validate(address: String) throws {
-        guard synchronizer.initializer.isValidTransparentAddress(address) else {
-            throw AppError.addressInvalid
-        }
-
-        guard synchronizer.initializer.isValidShieldedAddress(address) else {
-            throw AppError.addressInvalid
-        }
-
+        
         guard address != receiveAddress else {
-            throw AppError.zcash(reason: .sendToSelf)
+            throw AppError.addressInvalid
+        }
+        
+        do {
+            let derivationTool = DerivationTool.default
+            
+            let validZAddress = try derivationTool.isValidShieldedAddress(address)
+            let validTAddress = try derivationTool.isValidTransparentAddress(address)
+            
+            guard validZAddress || validTAddress else {
+                throw AppError.addressInvalid
+            }
+
+        } catch {
+            //FIXME: Should this be handled another way? logged? how?
+            throw AppError.addressInvalid
         }
     }
 
