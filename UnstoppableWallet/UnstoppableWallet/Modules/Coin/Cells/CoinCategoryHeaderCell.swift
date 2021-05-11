@@ -34,7 +34,7 @@ class CoinCategoryHeaderCell: UITableViewCell {
         set { label.textColor = newValue }
     }
 
-    public var font: UIFont {
+    public var titleFont: UIFont {
         get { label.font }
         set { label.font = newValue }
     }
