@@ -405,7 +405,7 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
