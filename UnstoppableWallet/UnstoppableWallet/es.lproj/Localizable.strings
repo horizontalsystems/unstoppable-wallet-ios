@@ -405,7 +405,7 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
@@ -970,7 +970,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will a generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "¡Sugerencia! Restaurar una cartera existente pero con una nueva contraseña generará una nueva cartera. Maneja si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples carteras.";
 
 // Manage Accounts
 
