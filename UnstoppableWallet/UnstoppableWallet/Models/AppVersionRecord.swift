@@ -2,10 +2,10 @@ import GRDB
 
 class AppVersionRecord: Record {
     var version: String
-    var build: String
+    var build: String?
     var date: Date
 
-    init(version: String, build: String, date: Date) {
+    init(version: String, build: String?, date: Date) {
         self.version = version
         self.build = build
         self.date = date
