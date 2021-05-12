@@ -10,14 +10,11 @@ import ComponentKit
 
 class WalletViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
-    private let horizontalInset: CGFloat = .margin16
-    private let lineSpacing: CGFloat = .margin8
 
     private let viewModel: WalletViewModel
     private let disposeBag = DisposeBag()
 
-    private let layout = UICollectionViewFlowLayout()
-    private let collectionView: UICollectionView
+    private let tableView = UITableView(frame: .zero, style: .plain)
     private let refreshControl = UIRefreshControl()
 
     private let emptyView = UIView()
@@ -30,7 +27,6 @@ class WalletViewController: ThemeViewController {
 
     init(viewModel: WalletViewModel) {
         self.viewModel = viewModel
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         super.init()
 
@@ -51,19 +47,21 @@ class WalletViewController: ThemeViewController {
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { maker in
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        layout.sectionHeadersPinToVisibleBounds = true
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .clear
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
 
-        collectionView.register(BalanceCell.self, forCellWithReuseIdentifier: String(describing: BalanceCell.self))
-        collectionView.register(WalletHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: WalletHeaderView.self))
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.registerCell(forClass: BalanceCell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
+        tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
+        tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
 
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
@@ -114,7 +112,7 @@ class WalletViewController: ThemeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        collectionView.refreshControl = refreshControl
+        tableView.refreshControl = refreshControl
 
         viewModel.onAppear()
     }
@@ -143,14 +141,14 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(displayMode: WalletViewModel.DisplayMode) {
-        collectionView.isHidden = displayMode != .list
+        tableView.isHidden = displayMode != .list
         emptyView.isHidden = displayMode != .empty
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
         self.headerViewItem = headerViewItem
 
-        if isLoaded, let headerView = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? WalletHeaderView {
+        if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
             bind(headerView: headerView)
         }
     }
@@ -175,7 +173,7 @@ class WalletViewController: ThemeViewController {
         }) {
             DispatchQueue.main.sync {
                 viewItems = newViewItems
-                collectionView.reloadData()
+                tableView.reloadData()
             }
             return
         }
@@ -211,14 +209,15 @@ class WalletViewController: ThemeViewController {
             viewItems = newViewItems
 
             updateIndexes.forEach {
-                if let cell = collectionView.cellForItem(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
+                if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
                     bind(cell: cell, viewItem: viewItems[$0], animated: heightChange)
                 }
             }
 
             if heightChange {
                 UIView.animate(withDuration: animationDuration) {
-                    self.collectionView.performBatchUpdates(nil)
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
                 }
             }
         }
@@ -317,66 +316,54 @@ class WalletViewController: ThemeViewController {
 
 }
 
-extension WalletViewController: UICollectionViewDataSource {
+extension WalletViewController: UITableViewDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewItems.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BalanceCell.self), for: indexPath)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: WalletHeaderView.self), for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
     }
 
 }
 
-extension WalletViewController: UICollectionViewDelegate {
+extension WalletViewController: UITableViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? BalanceCell {
             bind(cell: cell, viewItem: viewItems[indexPath.item])
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? WalletHeaderView {
             bind(headerView: headerView)
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        BalanceCell.height(viewItem: viewItems[indexPath.row])
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        WalletHeaderView.height
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        .margin8
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: SectionColorHeader.self))
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.onTap(wallet: viewItems[indexPath.item].wallet)
-    }
-
-}
-
-extension WalletViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.width - horizontalInset * 2, height: BalanceCell.height(viewItem: viewItems[indexPath.item]))
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        lineSpacing
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: lineSpacing, left: horizontalInset, bottom: lineSpacing, right: horizontalInset)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(width: collectionView.width, height: WalletHeaderView.height)
     }
 
 }

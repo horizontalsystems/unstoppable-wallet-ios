@@ -3,8 +3,10 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class WalletHeaderView: UICollectionReusableView {
-    static let height: CGFloat = 84
+class WalletHeaderView: UITableViewHeaderFooterView {
+    private static let amountHeight: CGFloat = 40
+    private static let sortHeight: CGFloat = .heightSingleLineCell
+    private static let bottomMargin: CGFloat = .margin8
 
     private let amountButton = UIButton()
     private let sortButton = ThemeButton()
@@ -14,18 +16,25 @@ class WalletHeaderView: UICollectionReusableView {
     var onTapSortBy: (() -> ())?
     var onTapAddCoin: (() -> ())?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
 
-        clipsToBounds = true
-        tintColor = .clear
-        preservesSuperviewLayoutMargins = true
-        backgroundColor = .themeNavigationBarBackground
+        backgroundView = UIView()
 
-        addSubview(amountButton)
+        let wrapperView = UIView()
+
+        contentView.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(Self.amountHeight + Self.sortHeight)
+        }
+
+        wrapperView.backgroundColor = .themeNavigationBarBackground
+
+        wrapperView.addSubview(amountButton)
         amountButton.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(40)
+            maker.height.equalTo(Self.amountHeight)
         }
 
         amountButton.contentHorizontalAlignment = .leading
@@ -35,7 +44,7 @@ class WalletHeaderView: UICollectionReusableView {
 
         let separatorView = UIView()
 
-        addSubview(separatorView)
+        wrapperView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(amountButton.snp.bottom)
@@ -44,10 +53,11 @@ class WalletHeaderView: UICollectionReusableView {
 
         separatorView.backgroundColor = .themeSteel10
 
-        addSubview(sortButton)
+        wrapperView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
-            maker.leading.bottom.equalToSuperview()
+            maker.leading.equalToSuperview()
             maker.top.equalTo(amountButton.snp.bottom)
+            maker.height.equalTo(Self.sortHeight)
         }
 
         sortButton.apply(style: .secondaryTransparentIcon)
@@ -60,7 +70,7 @@ class WalletHeaderView: UICollectionReusableView {
 
         sortButton.addTarget(self, action: #selector(onTapSortByButton), for: .touchUpInside)
 
-        addSubview(addCoinButton)
+        wrapperView.addSubview(addCoinButton)
         addCoinButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalTo(sortButton)
@@ -76,11 +86,6 @@ class WalletHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: WalletViewModel.HeaderViewItem) {
-        amountButton.setTitle(viewItem.amount, for: .normal)
-        amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
-    }
-
     @objc private func onTapAmountButton() {
         onTapAmount?()
     }
@@ -91,6 +96,15 @@ class WalletHeaderView: UICollectionReusableView {
 
     @objc private func onTapAddCoinButton() {
         onTapAddCoin?()
+    }
+
+    func bind(viewItem: WalletViewModel.HeaderViewItem) {
+        amountButton.setTitle(viewItem.amount, for: .normal)
+        amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
+    }
+
+    static var height: CGFloat {
+        amountHeight + sortHeight + bottomMargin
     }
 
 }

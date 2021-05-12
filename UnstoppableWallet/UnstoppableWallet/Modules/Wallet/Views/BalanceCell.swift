@@ -3,8 +3,9 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class BalanceCell: UICollectionViewCell {
-    private static let insets = UIEdgeInsets(top: .margin2x, left: .margin2x, bottom: .margin2x, right: .margin2x)
+class BalanceCell: UITableViewCell {
+    private static let margins = UIEdgeInsets(top: 0, left: .margin16, bottom: .margin8, right: .margin16)
+    private static let insets = UIEdgeInsets(top: .margin8, left: .margin8, bottom: .margin8, right: .margin8)
 
     private let cardView = CardView(insets: BalanceCell.insets)
 
@@ -14,12 +15,15 @@ class BalanceCell: UICollectionViewCell {
     private let lockedAmountView = SecondaryBalanceDoubleRowView()
     private let buttonsView = BalanceButtonsView(receiveStyle: .primaryGreen, sendStyle: .primaryYellow, swapStyle: .primaryGray)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalToSuperview().inset(Self.margins)
         }
 
         cardView.contentView.addSubview(topView)
@@ -95,7 +99,7 @@ class BalanceCell: UICollectionViewCell {
     }
 
     static func height(viewItem: BalanceViewItem) -> CGFloat {
-        var height: CGFloat = BalanceCell.insets.height
+        var height: CGFloat = margins.height + BalanceCell.insets.height
 
         height += BalanceTopView.height
 
