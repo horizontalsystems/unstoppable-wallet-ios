@@ -542,7 +542,7 @@ class GrdbStorage {
         migrator.registerMigration("createAppVersionRecordsTable") { db in
             try db.create(table: AppVersionRecord.databaseTableName) { t in
                 t.column(AppVersionRecord.Columns.version.name, .text).notNull()
-                t.column(AppVersionRecord.Columns.build.name, .text).notNull()
+                t.column(AppVersionRecord.Columns.build.name, .text)
                 t.column(AppVersionRecord.Columns.date.name, .text).notNull()
 
                 t.primaryKey([AppVersionRecord.Columns.version.name, AppVersionRecord.Columns.build.name], onConflict: .replace)
@@ -556,14 +556,15 @@ class GrdbStorage {
                 let regex = try! NSRegularExpression(pattern: "\\(.*\\)")
                 let matches = regex.matches(in: oldVersion.version, range: NSRange(location: 0, length: oldVersion.version.count))
 
-                guard let match = matches.last, let range = Range(match.range, in: oldVersion.version) else {
-                    return
-                }
-                var build = String(oldVersion.version[range])
-                build.removeAll { character in character == "(" || character == ")" }
-
+                var build: String?
                 var version = oldVersion.version
-                version.removeSubrange(range)
+
+                if let match = matches.last, let range = Range(match.range, in: oldVersion.version) {
+                    build = String(oldVersion.version[range])
+                    build?.removeAll { character in character == "(" || character == ")" }
+
+                    version.removeSubrange(range)
+                }
                 version = version.trimmingCharacters(in: .whitespaces)
 
                 let versionRecord = AppVersionRecord(version: version, build: build, date: oldVersion.date)
