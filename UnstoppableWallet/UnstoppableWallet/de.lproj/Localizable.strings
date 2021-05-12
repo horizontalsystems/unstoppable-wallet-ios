@@ -405,7 +405,7 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
@@ -830,7 +830,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "create_wallet.passphrase" = "Passphrase";
 "create_wallet.input.passphrase" = "Passphrase";
 "create_wallet.input.confirm" = "Bestätigen";
-"create_wallet.passphrase_description" = "Passphrasen fügen den Wallets eine zusätzliche Sicherheitsebene hinzu, wodurch Benutzer mehrere unabhängige Multi-Coin-Wallets mit einer einzigen menmonischen Wiederherstellungsphrase erstellen können, die jedoch mit unterschiedlichen Passwörtern verknüpft sind.\n\nUm diese Wallets wiederherzustellen, benötigt der Benutzer eine menmonische Wiederherstellungsphrase sowie ein Passwort für jedes wiederherzustellende Wallet.";
+"create_wallet.passphrase_description" = "Passphrasen fügen den Wallets eine zusätzliche Sicherheitsebene hinzu, wodurch Benutzer mehrere unabhängige Multi-Coin-Wallets mit einer einzigen mnemonischen Wiederherstellungsphrase erstellen können, die jedoch mit unterschiedlichen Passwörtern verknüpft sind.\n\nUm diese Wallets wiederherzustellen, benötigt der Benutzer eine mnemonische Wiederherstellungsphrase sowie ein Passwort für jedes wiederherzustellende Wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 "create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
