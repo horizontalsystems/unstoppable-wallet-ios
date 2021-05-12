@@ -259,7 +259,7 @@
 "swap.advanced_settings" = "Configuration avancée";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
-"swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation./n/nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
+"swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation.\n\nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
 "swap.amount_error.maximum_amount" = "Balance %@";
@@ -405,7 +405,7 @@
 "market_discovery.filter_title.b2b" = "B2B";
 "market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cross Chain";
+"market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
@@ -830,7 +830,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.passphrase" = "Phrase d'authentification";
 "create_wallet.input.passphrase" = "Phrase d'authentification";
 "create_wallet.input.confirm" = "Confirmer";
-"create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. /n/nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
+"create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. \n\nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement des lettres et des chiffres latins pour la phrase d'authentification";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
