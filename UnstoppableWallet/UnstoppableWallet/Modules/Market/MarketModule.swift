@@ -30,7 +30,7 @@ struct MarketModule {
         switch marketDataValue {
         case .diff(let diff):
             title = nil
-            value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) }
+            value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
             if let diff = diff {
                 color = diff.isSignMinus ? .themeLucian : .themeRemus
             } else {
@@ -205,10 +205,10 @@ extension Array where Element == MarketModule.Item {
             case .lowestVolume: return item.volume < item2.volume
             case .topGainers, .topLosers:
                 guard let diff2 = item2.diff else {
-                    return false
+                    return true
                 }
                 guard let diff1 = item.diff else {
-                    return true
+                    return false
                 }
 
                 return sortingField == .topGainers ? diff1 > diff2 : diff1 < diff2
