@@ -7,67 +7,75 @@ struct BalanceViewItem {
     let wallet: Wallet
 
     let topViewItem: BalanceTopViewItem
-    let separatorVisible: Bool
-    let amountViewItem: BalanceAmountViewItem?
     let lockedAmountViewItem: BalanceLockedAmountViewItem?
     let buttonsViewItem: BalanceButtonsViewItem?
 }
 
 struct BalanceTopViewItem {
     let iconCoinType: CoinType?
-    let coinTitle: String
+    let coinCode: String
     let blockchainBadge: String?
-
-    let rateValue: (text: String, dimmed: Bool)?
-    let diff: (value: Decimal, dimmed: Bool)?
 
     let syncSpinnerProgress: Int?
     let indefiniteSearchCircle: Bool
     let failedImageViewVisible: Bool
+
+    let currencyValue: (text: String?, dimmed: Bool)?
+    let secondaryInfo: BalanceSecondaryInfoViewItem
 }
 
-enum BalanceAmountViewItem {
-    case amount(coinValue: (text: String?, dimmed: Bool), currencyValue: (text: String?, dimmed: Bool)?)
+enum BalanceSecondaryInfoViewItem {
+    case amount(viewItem: BalanceSecondaryAmountViewItem)
     case searchingTx(count: Int)
     case syncing(progress: Int?, syncedUntil: String?)
 }
 
+struct BalanceSecondaryAmountViewItem {
+    let coinValue: (text: String?, dimmed: Bool)?
+    let rateValue: (text: String?, dimmed: Bool)
+    let diff: (text: String, type: BalanceDiffType)?
+}
+
+enum BalanceDiffType {
+    case dimmed
+    case positive
+    case negative
+}
+
 struct BalanceLockedAmountViewItem {
-    let lockedCoinValue: (text: String?, dimmed: Bool)
-    let lockedCurrencyValue: (text: String?, dimmed: Bool)?
+    let coinValue: (text: String?, dimmed: Bool)
+    let currencyValue: (text: String?, dimmed: Bool)?
 }
 
 struct BalanceButtonsViewItem {
-    let receiveButtonState: ButtonState
     let sendButtonState: ButtonState
+    let receiveButtonState: ButtonState
     let swapButtonState: ButtonState
+    let chartButtonState: ButtonState
 }
 
 extension BalanceTopViewItem: Equatable {
 
     static func ==(lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
         lhs.iconCoinType == rhs.iconCoinType &&
-                lhs.coinTitle == rhs.coinTitle &&
+                lhs.coinCode == rhs.coinCode &&
                 lhs.blockchainBadge == rhs.blockchainBadge &&
-                lhs.rateValue?.text == rhs.rateValue?.text &&
-                lhs.rateValue?.dimmed == rhs.rateValue?.dimmed &&
-                lhs.diff?.value == rhs.diff?.value &&
-                lhs.diff?.dimmed == rhs.diff?.dimmed &&
                 lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
-                lhs.failedImageViewVisible == rhs.failedImageViewVisible
+                lhs.indefiniteSearchCircle == rhs.indefiniteSearchCircle &&
+                lhs.failedImageViewVisible == rhs.failedImageViewVisible &&
+                lhs.currencyValue?.text == rhs.currencyValue?.text &&
+                lhs.currencyValue?.dimmed == rhs.currencyValue?.dimmed &&
+                lhs.secondaryInfo == rhs.secondaryInfo
     }
 
 }
 
-extension BalanceAmountViewItem: Equatable {
+extension BalanceSecondaryInfoViewItem: Equatable {
 
-    static func ==(lhs: BalanceAmountViewItem, rhs: BalanceAmountViewItem) -> Bool {
+    static func ==(lhs: BalanceSecondaryInfoViewItem, rhs: BalanceSecondaryInfoViewItem) -> Bool {
         switch (lhs, rhs) {
-        case (.amount(let lhsCoinValue, let lhsCurrencyValue), .amount(let rhsCoinValue, let rhsCurrencyValue)):
-            return lhsCoinValue.text == rhsCoinValue.text &&
-                    lhsCoinValue.dimmed == rhsCoinValue.dimmed &&
-                    lhsCurrencyValue?.text == rhsCurrencyValue?.text &&
-                    lhsCurrencyValue?.dimmed == rhsCurrencyValue?.dimmed
+        case (.amount(let lhsViewItem), .amount(let rhsViewItem)):
+            return lhsViewItem == rhsViewItem
         case (.searchingTx(let lhsCount), .searchingTx(let rhsCount)):
             return lhsCount == rhsCount
         case (.syncing(let lhsProgress, let lhsSyncedUntil), .syncing(let rhsProgress, let rhsSyncedUntil)):
@@ -79,13 +87,26 @@ extension BalanceAmountViewItem: Equatable {
 
 }
 
+extension BalanceSecondaryAmountViewItem: Equatable {
+
+    static func ==(lhs: BalanceSecondaryAmountViewItem, rhs: BalanceSecondaryAmountViewItem) -> Bool {
+        lhs.coinValue?.text == rhs.coinValue?.text &&
+                lhs.coinValue?.dimmed == rhs.coinValue?.dimmed &&
+                lhs.rateValue.text == rhs.rateValue.text &&
+                lhs.rateValue.dimmed == rhs.rateValue.dimmed &&
+                lhs.diff?.text == rhs.diff?.text &&
+                lhs.diff?.type == rhs.diff?.type
+    }
+
+}
+
 extension BalanceLockedAmountViewItem: Equatable {
 
     static func ==(lhs: BalanceLockedAmountViewItem, rhs: BalanceLockedAmountViewItem) -> Bool {
-        lhs.lockedCoinValue.text == rhs.lockedCoinValue.text &&
-                lhs.lockedCoinValue.dimmed == rhs.lockedCoinValue.dimmed &&
-                lhs.lockedCurrencyValue?.text == rhs.lockedCurrencyValue?.text &&
-                lhs.lockedCurrencyValue?.dimmed == rhs.lockedCurrencyValue?.dimmed
+        lhs.coinValue.text == rhs.coinValue.text &&
+                lhs.coinValue.dimmed == rhs.coinValue.dimmed &&
+                lhs.currencyValue?.text == rhs.currencyValue?.text &&
+                lhs.currencyValue?.dimmed == rhs.currencyValue?.dimmed
     }
 
 }
@@ -108,8 +129,6 @@ extension BalanceViewItem: DiffAware {
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
         a.topViewItem == b.topViewItem &&
-                a.separatorVisible == b.separatorVisible &&
-                a.amountViewItem == b.amountViewItem &&
                 a.lockedAmountViewItem == b.lockedAmountViewItem &&
                 a.buttonsViewItem == b.buttonsViewItem
     }
