@@ -228,11 +228,11 @@ class WalletViewController: ThemeViewController {
                 viewItem: viewItem,
                 animated: animated,
                 duration: animationDuration,
+                onSend: { [weak self] in
+                    self?.openSend(wallet: viewItem.wallet)
+                },
                 onReceive: { [weak self] in
                     self?.viewModel.onTapReceive(wallet: viewItem.wallet)
-                },
-                onPay: { [weak self] in
-                    self?.openSend(wallet: viewItem.wallet)
                 },
                 onSwap: { [weak self] in
                     self?.openSwap(wallet: viewItem.wallet)

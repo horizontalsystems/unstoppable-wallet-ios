@@ -4,78 +4,92 @@ import ThemeKit
 import ComponentKit
 
 class BalanceTopView: UIView {
-    static let height: CGFloat = 50
+    static let height: CGFloat = 68
 
     private let coinIconView = BalanceCoinIconHolder()
 
     private let nameLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
 
-    private let rateLabel = UILabel()
-    private let rateDiffButton = RateDiffButton()
+    private let currencyValueLabel = UILabel()
 
-    private var onTapRateDiff: (() -> ())?
+    private let bottomLeftLabel = UILabel()
+    private let diffLabel = UILabel()
+    private let bottomRightLabel = UILabel()
 
     init() {
         super.init(frame: .zero)
 
         addSubview(coinIconView)
         coinIconView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview()
+            maker.leading.top.bottom.equalToSuperview()
         }
 
         addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(coinIconView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.equalToSuperview().offset(CGFloat.margin05x)
+            maker.leading.equalTo(coinIconView.snp.trailing)
+            maker.top.equalToSuperview().inset(14)
         }
 
         nameLabel.font = .headline2
-        nameLabel.textColor = .themeLeah
+        nameLabel.textColor = .themeOz
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         addSubview(blockchainBadgeView)
         blockchainBadgeView.snp.makeConstraints { maker in
-            maker.leading.equalTo(nameLabel.snp.trailing).offset(CGFloat.margin1x)
+            maker.leading.equalTo(nameLabel.snp.trailing).offset(CGFloat.margin8)
             maker.centerY.equalTo(nameLabel.snp.centerY)
         }
 
-        addSubview(rateLabel)
-        rateLabel.snp.makeConstraints { maker in
+        addSubview(currencyValueLabel)
+        currencyValueLabel.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(14)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+        }
+
+        currencyValueLabel.font = .headline2
+
+        addSubview(bottomLeftLabel)
+        bottomLeftLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(nameLabel.snp.leading)
-            maker.bottom.equalTo(coinIconView.snp.bottom)
+            maker.top.equalTo(nameLabel.snp.bottom).offset(3)
         }
 
-        rateLabel.font = .subhead2
-        rateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        rateLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        bottomLeftLabel.font = .subhead2
 
-        addSubview(rateDiffButton)
-        rateDiffButton.snp.makeConstraints { maker in
-            maker.leading.greaterThanOrEqualTo(blockchainBadgeView.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview().inset(CGFloat.margin1x)
-            maker.width.equalTo(80)
+        addSubview(diffLabel)
+        diffLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(bottomLeftLabel.snp.trailing).offset(CGFloat.margin8)
+            maker.centerY.equalTo(bottomLeftLabel)
         }
 
-        rateDiffButton.addTarget(self, action: #selector(_onTapRateDiff), for: .touchUpInside)
+        diffLabel.font = .subhead2
+
+        addSubview(bottomRightLabel)
+        bottomRightLabel.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalTo(bottomLeftLabel)
+        }
+
+        bottomRightLabel.font = .subhead2
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func bind(viewItem: BalanceTopViewItem, onTapRateDiff: @escaping () -> (), onTapError: (() -> ())?) {
-        self.onTapRateDiff = onTapRateDiff
-
+    func bind(viewItem: BalanceTopViewItem, onTapError: (() -> ())?) {
         let coinIcon = viewItem.iconCoinType.flatMap { UIImage.image(coinType: $0) }
         coinIconView.bind(
-                coinIcon: coinIcon, spinnerProgress: viewItem.syncSpinnerProgress, indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
-                failViewVisible: viewItem.failedImageViewVisible, onTapError: onTapError
+                coinIcon: coinIcon,
+                spinnerProgress: viewItem.syncSpinnerProgress,
+                indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
+                failViewVisible: viewItem.failedImageViewVisible,
+                onTapError: onTapError
         )
 
-        nameLabel.text = viewItem.coinTitle
+        nameLabel.text = viewItem.coinCode
 
         if let blockchainBadge = viewItem.blockchainBadge {
             blockchainBadgeView.text = blockchainBadge
@@ -85,22 +99,64 @@ class BalanceTopView: UIView {
             blockchainBadgeView.isHidden = true
         }
 
-        if let rateValue = viewItem.rateValue {
-            rateLabel.text = rateValue.text
-            rateLabel.textColor = rateValue.dimmed ? .themeGray50 : .themeGray
+        if let currencyValue = viewItem.currencyValue {
+            currencyValueLabel.text = currencyValue.text
+            currencyValueLabel.textColor = currencyValue.dimmed ? .themeYellow50 : .themeJacob
         } else {
-            rateLabel.text = " " // space required for constraints
+            currencyValueLabel.text = nil
         }
 
-        if let diff = viewItem.diff {
-            rateDiffButton.show(value: diff.value, dimmed: diff.dimmed)
-        } else {
-            rateDiffButton.showNotAvailable()
-        }
-    }
+        switch viewItem.secondaryInfo {
+        case let .amount(viewItem):
+            bottomLeftLabel.text = viewItem.rateValue.text
+            bottomLeftLabel.textColor = viewItem.rateValue.dimmed ? .themeGray50 : .themeGray
 
-    @objc private func _onTapRateDiff() {
-        onTapRateDiff?()
+            if let diff = viewItem.diff {
+                diffLabel.text = diff.text
+                switch diff.type {
+                case .dimmed: diffLabel.textColor = .themeGray50
+                case .negative: diffLabel.textColor = .themeLucian
+                case .positive: diffLabel.textColor = .themeRemus
+                }
+            } else {
+                diffLabel.text = nil
+            }
+
+            if let coinValue = viewItem.coinValue {
+                bottomRightLabel.text = coinValue.text
+                bottomRightLabel.textColor = coinValue.dimmed ? .themeGray50 : .themeLeah
+            } else {
+                bottomRightLabel.text = nil
+            }
+        case let .searchingTx(count):
+            diffLabel.text = nil
+
+            bottomLeftLabel.text = "balance.searching".localized()
+            bottomLeftLabel.textColor = .themeGray
+
+            if count > 0 {
+                bottomRightLabel.text = "balance.searching.count".localized("\(count)")
+                bottomRightLabel.textColor = .themeGray
+            } else {
+                bottomRightLabel.text = nil
+            }
+        case let .syncing(progress, syncedUntil):
+            diffLabel.text = nil
+
+            if let progress = progress {
+                bottomLeftLabel.text = "balance.syncing_percent".localized("\(progress)%")
+            } else {
+                bottomLeftLabel.text = "balance.syncing".localized
+            }
+            bottomLeftLabel.textColor = .themeGray
+
+            if let syncedUntil = syncedUntil {
+                bottomRightLabel.text = "balance.synced_through".localized(syncedUntil)
+                bottomRightLabel.textColor = .themeGray
+            } else {
+                bottomRightLabel.text = nil
+            }
+        }
     }
 
 }

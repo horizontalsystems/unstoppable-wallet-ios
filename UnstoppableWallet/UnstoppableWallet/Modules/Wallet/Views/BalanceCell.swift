@@ -5,15 +5,13 @@ import ComponentKit
 
 class BalanceCell: UITableViewCell {
     private static let margins = UIEdgeInsets(top: 0, left: .margin16, bottom: .margin8, right: .margin16)
-    private static let insets = UIEdgeInsets(top: .margin8, left: .margin8, bottom: .margin8, right: .margin8)
 
-    private let cardView = CardView(insets: BalanceCell.insets)
+    private let cardView = CardView(insets: .zero)
 
     private let topView = BalanceTopView()
-    private let separatorView = BalanceSeparatorView()
-    private let amountView = BalanceAmountView()
-    private let lockedAmountView = SecondaryBalanceDoubleRowView()
-    private let buttonsView = BalanceButtonsView(receiveStyle: .primaryGreen, sendStyle: .primaryYellow, swapStyle: .primaryGray)
+    private let separatorView = UIView()
+    private let lockedAmountView = BalanceLockedAmountView()
+    private let buttonsView = BalanceButtonsView()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,23 +32,18 @@ class BalanceCell: UITableViewCell {
 
         cardView.contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
             maker.top.equalTo(topView.snp.bottom)
-            maker.height.equalTo(BalanceSeparatorView.height)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        cardView.contentView.addSubview(amountView)
-        amountView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(separatorView.snp.bottom)
-            maker.height.equalTo(BalanceAmountView.height)
-        }
+        separatorView.backgroundColor = .themeSteel20
 
         cardView.contentView.addSubview(lockedAmountView)
         lockedAmountView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountView.snp.bottom)
-            maker.height.equalTo(SecondaryBalanceDoubleRowView.height)
+            maker.top.equalTo(topView.snp.bottom)
+            maker.height.equalTo(BalanceLockedAmountView.height)
         }
 
         cardView.contentView.addSubview(buttonsView)
@@ -59,64 +52,51 @@ class BalanceCell: UITableViewCell {
             maker.top.equalTo(lockedAmountView.snp.bottom)
             maker.height.equalTo(DoubleRowButtonView.height)
         }
-
-        buttonsView.bind(receiveTitle: "balance.deposit".localized, sendTitle: "balance.send".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onReceive: @escaping () -> (), onPay: @escaping () -> (), onSwap: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
-        topView.bind(viewItem: viewItem.topViewItem, onTapRateDiff: onChart, onTapError: onTapError)
+    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onSend: @escaping () -> (), onReceive: @escaping () -> (), onSwap: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
+        topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
+        topView.layoutIfNeeded()
 
-        separatorView.set(hidden: !viewItem.separatorVisible, animated: animated, duration: duration)
-
-        amountView.bind(viewItem: viewItem.amountViewItem, animated: animated, duration: duration)
-        amountView.layoutIfNeeded()
-        amountView.snp.updateConstraints { maker in
-            maker.height.equalTo(viewItem.amountViewItem != nil ? BalanceAmountView.height : 0)
-        }
+        separatorView.set(hidden: viewItem.buttonsViewItem == nil, animated: animated, duration: duration)
 
         if let viewItem = viewItem.lockedAmountViewItem {
-            lockedAmountView.bind(image: UIImage(named: "lock_16"), coinValue: viewItem.lockedCoinValue, currencyValue: viewItem.lockedCurrencyValue)
+            lockedAmountView.bind(viewItem: viewItem)
             lockedAmountView.layoutIfNeeded()
         }
+
         lockedAmountView.set(hidden: viewItem.lockedAmountViewItem == nil, animated: animated, duration: duration)
         lockedAmountView.snp.updateConstraints { maker in
-            maker.height.equalTo(viewItem.lockedAmountViewItem != nil ? SecondaryBalanceDoubleRowView.height : 0)
+            maker.height.equalTo(viewItem.lockedAmountViewItem != nil ? BalanceLockedAmountView.height : 0)
+        }
+
+        if animated {
+            UIView.animate(withDuration: duration) {
+                self.contentView.layoutIfNeeded()
+            }
         }
 
         if let viewItem = viewItem.buttonsViewItem {
-            buttonsView.bind(receiveButtonState: viewItem.receiveButtonState,
-                    sendButtonState: viewItem.sendButtonState,
-                    swapButtonState: viewItem.swapButtonState,
-                    receiveAction: onReceive,
-                    sendAction: onPay,
-                    swapAction: onSwap)
+            buttonsView.bind(viewItem: viewItem, sendAction: onSend, receiveAction: onReceive, swapAction: onSwap, chartAction: onChart)
         }
         buttonsView.set(hidden: viewItem.buttonsViewItem == nil, animated: animated, duration: duration)
     }
 
     static func height(viewItem: BalanceViewItem) -> CGFloat {
-        var height: CGFloat = margins.height + BalanceCell.insets.height
+        var height: CGFloat = margins.height
 
         height += BalanceTopView.height
 
-        if viewItem.separatorVisible {
-            height += BalanceSeparatorView.height
-        }
-
-        if viewItem.amountViewItem != nil {
-            height += BalanceAmountView.height
-        }
-
         if viewItem.lockedAmountViewItem != nil {
-            height += SecondaryBalanceDoubleRowView.height
+            height += BalanceLockedAmountView.height
         }
 
         if viewItem.buttonsViewItem != nil {
-            height += DoubleRowButtonView.height
+            height += BalanceButtonsView.height
         }
 
         return height

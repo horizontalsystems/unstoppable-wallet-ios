@@ -16,19 +16,14 @@ class BalanceCoinIconHolder: UIView {
 
     private var onTapError: (() -> ())?
 
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-
-        snp.makeConstraints { maker in
-            maker.size.equalTo(44)
-        }
-
-        backgroundColor = .themeJeremy
-        cornerRadius = .cornerRadius8
+    init() {
+        super.init(frame: .zero)
 
         addSubview(coinIconImageView)
         coinIconImageView.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
+            maker.size.equalTo(CGFloat.iconSize24)
         }
 
         addSubview(syncSpinner)

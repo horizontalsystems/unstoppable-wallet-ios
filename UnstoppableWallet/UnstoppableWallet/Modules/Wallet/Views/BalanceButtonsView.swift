@@ -4,37 +4,31 @@ import SnapKit
 import ThemeKit
 import ComponentKit
 
-open class BalanceButtonsView: UIView {
-    public static let height: CGFloat = 58
+class BalanceButtonsView: UIView {
+    public static let height: CGFloat = 72
+
+    private let sendButtonWrapper = UIControl()
+    private let sendButton = ThemeButton()
 
     private let receiveButton = ThemeButton()
-    private let sendButton = ThemeButton()
+
+    private let swapButtonWrapper = UIControl()
     private let swapButton = ThemeButton()
+
+    private let chartButton = ThemeButton()
 
     private var onTapReceive: (() -> ())?
     private var onTapSend: (() -> ())?
     private var onTapSwap: (() -> ())?
+    private var onTapChart: (() -> ())?
 
-    public init(receiveStyle: ThemeButtonStyle, sendStyle: ThemeButtonStyle, swapStyle: ThemeButtonStyle) {
+    init() {
         super.init(frame: .zero)
 
-        addSubview(receiveButton)
-        receiveButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.equalToSuperview().offset(CGFloat.margin2x)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        receiveButton.apply(style: receiveStyle)
-        receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
-
-        let sendButtonWrapper = UIControl()     // disable touch events through cell to tableView
         addSubview(sendButtonWrapper)
-
         sendButtonWrapper.snp.makeConstraints { maker in
-            maker.leading.equalTo(receiveButton.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.equalTo(receiveButton.snp.top)
-            maker.width.equalTo(receiveButton.snp.width)
+            maker.leading.equalToSuperview().inset(CGFloat.margin12)
+            maker.top.equalToSuperview().offset(10)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -43,86 +37,114 @@ open class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        sendButton.apply(style: sendStyle)
+        sendButton.apply(style: .primaryYellow)
+        sendButton.setTitle("balance.send".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
-        let swapButtonWrapper = UIControl()     // disable touch events through cell to tableView
-        addSubview(swapButtonWrapper)
+        addSubview(receiveButton)
 
-        swapButtonWrapper.snp.makeConstraints { maker in
-            maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin2x)
-            maker.top.equalTo(receiveButton.snp.top)
-            maker.size.equalTo(CGFloat.heightButton)
-        }
+        receiveButton.apply(style: .primaryGreen)
+        receiveButton.setImageTintColor(.black, for: .normal)
+        receiveButton.setImageTintColor(.themeGray50, for: .disabled)
+        receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
+
+        addSubview(swapButtonWrapper)
 
         swapButtonWrapper.addSubview(swapButton)
         swapButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        swapButton.apply(style: swapStyle)
+        swapButton.apply(style: .primaryGray)
         swapButton.setImageTintColor(.black, for: .normal)
         swapButton.setImageTintColor(.themeGray50, for: .disabled)
         swapButton.setImage(UIImage(named: "arrow_swap_2_24"), for: .normal)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
-    }
 
-    private func updateSwap(hidden: Bool) {
-        guard let swapWrapper = swapButton.superview,
-              let sendWrapper = sendButton.superview
-                else {
-            return
+        let chartButtonWrapper = UIControl()     // disable touch events through cell to tableView
+
+        addSubview(chartButtonWrapper)
+        chartButtonWrapper.snp.makeConstraints { maker in
+            maker.leading.equalTo(swapButtonWrapper.snp.trailing).offset(CGFloat.margin8)
+            maker.top.equalTo(sendButtonWrapper.snp.top)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.size.equalTo(CGFloat.heightButton)
         }
 
-        swapWrapper.snp.remakeConstraints { maker in
-            if hidden {
-                maker.leading.equalTo(sendWrapper.snp.trailing)
-                maker.width.equalTo(0)
+        chartButtonWrapper.addSubview(chartButton)
+        chartButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        chartButton.apply(style: .primaryGray)
+        chartButton.setImageTintColor(.black, for: .normal)
+        chartButton.setImageTintColor(.themeGray50, for: .disabled)
+        chartButton.setImage(UIImage(named: "chart_2_24"), for: .normal)
+        chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
+
+        updateButtons(swapHidden: true)
+    }
+
+    private func updateButtons(swapHidden: Bool) {
+        receiveButton.setTitle(swapHidden ? "balance.deposit".localized : nil, for: .normal)
+        receiveButton.setImage(swapHidden ? nil : UIImage(named: "arrow_medium_down_left_24"), for: .normal)
+
+        receiveButton.snp.remakeConstraints { maker in
+            maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin8)
+            maker.top.equalTo(sendButtonWrapper.snp.top)
+            if swapHidden {
+                maker.width.equalTo(sendButtonWrapper)
+                maker.height.equalTo(CGFloat.heightButton)
             } else {
-                maker.leading.equalTo(sendWrapper.snp.trailing).offset(CGFloat.margin2x)
-                maker.top.equalTo(receiveButton.snp.top)
-                maker.trailing.equalToSuperview()
-                maker.width.equalTo(CGFloat.heightButton)
+                maker.size.equalTo(CGFloat.heightButton)
             }
-            maker.top.equalTo(receiveButton.snp.top)
-            maker.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightButton)
         }
-        UIView.performWithoutAnimation {
-            layoutIfNeeded()
+
+        swapButtonWrapper.snp.remakeConstraints { maker in
+            if swapHidden {
+                maker.leading.equalTo(receiveButton.snp.trailing)
+                maker.width.equalTo(0)
+                maker.height.equalTo(CGFloat.heightButton)
+            } else {
+                maker.leading.equalTo(receiveButton.snp.trailing).offset(CGFloat.margin2x)
+                maker.size.equalTo(CGFloat.heightButton)
+            }
+            maker.top.equalTo(sendButtonWrapper.snp.top)
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    public func bind(receiveTitle: String, sendTitle: String) {
-        receiveButton.setTitle(receiveTitle, for: .normal)
-        sendButton.setTitle(sendTitle, for: .normal)
-    }
+    func bind(viewItem: BalanceButtonsViewItem, sendAction: @escaping () -> (), receiveAction: @escaping () -> (), swapAction: @escaping () -> (), chartAction: @escaping () -> ()) {
+        sendButton.isEnabled = viewItem.sendButtonState == .enabled
+        receiveButton.isEnabled = viewItem.receiveButtonState == .enabled
+        swapButton.isEnabled = viewItem.swapButtonState == .enabled
+        chartButton.isEnabled = viewItem.chartButtonState == .enabled
 
-    public func bind(receiveButtonState: ButtonState, sendButtonState: ButtonState, swapButtonState: ButtonState, receiveAction: @escaping () -> (), sendAction: @escaping () -> (), swapAction: @escaping () -> ()) {
-        receiveButton.isEnabled = receiveButtonState == .enabled
-        sendButton.isEnabled = sendButtonState == .enabled
-        swapButton.isEnabled = swapButtonState == .enabled
-        updateSwap(hidden: swapButtonState == .hidden)
+        updateButtons(swapHidden: viewItem.swapButtonState == .hidden)
 
-        onTapReceive = receiveAction
         onTapSend = sendAction
+        onTapReceive = receiveAction
         onTapSwap = swapAction
-    }
-
-    @objc private func onReceive() {
-        onTapReceive?()
+        onTapChart = chartAction
     }
 
     @objc private func onSend() {
         onTapSend?()
     }
 
+    @objc private func onReceive() {
+        onTapReceive?()
+    }
+
     @objc private func onSwap() {
         onTapSwap?()
+    }
+
+    @objc private func onChart() {
+        onTapChart?()
     }
 
 }

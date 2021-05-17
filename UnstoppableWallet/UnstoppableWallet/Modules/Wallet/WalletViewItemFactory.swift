@@ -9,20 +9,20 @@ class WalletViewItemFactory {
     init() {
     }
 
-    private func topViewItem(item: WalletService.Item) -> BalanceTopViewItem {
+    private func topViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceTopViewItem {
         let coin = item.wallet.coin
         let state = item.state
         let rateItem = item.rateItem
 
         return BalanceTopViewItem(
                 iconCoinType: iconCoinType(coin: coin, state: state),
-                coinTitle: coin.title,
+                coinCode: coin.code,
                 blockchainBadge: badge(wallet: item.wallet),
-                rateValue: rateValue(rateItem: rateItem),
-                diff: diff(rateItem: rateItem),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
-                failedImageViewVisible: failedImageViewVisible(state: state)
+                failedImageViewVisible: failedImageViewVisible(state: state),
+                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceTotal, state: item.state, rateItem: rateItem),
+                secondaryInfo: secondaryInfo(item: item, balanceHidden: balanceHidden, expanded: expanded)
         )
     }
 
@@ -37,28 +37,33 @@ class WalletViewItemFactory {
         }
     }
 
-    private func amountViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceAmountViewItem? {
-        guard !balanceHidden else {
-            return nil
-        }
-
+    private func secondaryInfo(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceSecondaryInfoViewItem {
         if let state = item.state, let balance = item.balanceTotal {
-            if case let .syncing(progress, lastBlockDate) = state, !expanded {
+            if case let .syncing(progress, lastBlockDate) = state, expanded {
                 if let lastBlockDate = lastBlockDate {
                     return .syncing(progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
                 } else {
                     return .syncing(progress: nil, syncedUntil: nil)
                 }
-            } else if case let .searchingTxs(count) = state, !expanded {
+            } else if case let .searchingTxs(count) = state, expanded {
                 return .searchingTx(count: count)
             } else {
-                return .amount(
-                        coinValue: coinValue(coin: item.wallet.coin, value: balance, state: state),
-                        currencyValue: currencyValue(value: balance, state: state, rateItem: item.rateItem)
-                )
+                return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                        coinValue: balanceHidden ? nil : coinValue(coin: item.wallet.coin, value: balance, state: state),
+                        rateValue: rateValue(rateItem: item.rateItem),
+                        diff: diff(rateItem: item.rateItem)
+                ))
             }
         } else {
-            return .syncing(progress: nil, syncedUntil: nil)
+            if expanded {
+                return .syncing(progress: nil, syncedUntil: nil)
+            } else {
+                return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                        coinValue: nil,
+                        rateValue: rateValue(rateItem: item.rateItem),
+                        diff: diff(rateItem: item.rateItem)
+                ))
+            }
         }
     }
 
@@ -68,8 +73,8 @@ class WalletViewItemFactory {
         }
 
         return BalanceLockedAmountViewItem(
-                lockedCoinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
-                lockedCurrencyValue: currencyValue(value: balanceLocked, state: state, rateItem: item.rateItem)
+                coinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
+                currencyValue: currencyValue(value: balanceLocked, state: state, rateItem: item.rateItem)
         )
     }
 
@@ -81,9 +86,10 @@ class WalletViewItemFactory {
         let sendButtonsState: ButtonState = item.state == .synced ? .enabled : .disabled
 
         return BalanceButtonsViewItem(
-                receiveButtonState: item.state != nil ? .enabled : .disabled,
                 sendButtonState: sendButtonsState,
-                swapButtonState: item.wallet.coin.type.swappable ? sendButtonsState : .hidden
+                receiveButtonState: item.state != nil ? .enabled : .disabled,
+                swapButtonState: item.wallet.coin.type.swappable ? sendButtonsState : .hidden,
+                chartButtonState: item.rateItem != nil ? .enabled : .disabled
         )
     }
 
@@ -115,24 +121,28 @@ class WalletViewItemFactory {
         return false
     }
 
-    private func rateValue(rateItem: WalletRateService.Item?) -> (text: String, dimmed: Bool)? {
+    private func rateValue(rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool) {
         guard let rateItem = rateItem else {
-            return nil
+            return (text: "n/a".localized, dimmed: true)
         }
 
-        guard let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.rate, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) else {
-            return nil
-        }
-
+        let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.rate, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         return (text: formattedValue, dimmed: rateItem.expired)
     }
 
-    private func diff(rateItem: WalletRateService.Item?) -> (value: Decimal, dimmed: Bool)? {
+    private func diff(rateItem: WalletRateService.Item?) -> (text: String, type: BalanceDiffType)? {
         guard let rateItem = rateItem else {
             return nil
         }
 
-        return (value: rateItem.diff24h, dimmed: rateItem.expired)
+        let value = rateItem.diff24h
+
+        guard let formattedValue = Self.diffFormatter.string(from: abs(value) as NSNumber) else {
+            return nil
+        }
+
+        let sign = value.isSignMinus ? "-" : "+"
+        return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value.isSignMinus ? .negative : .positive))
     }
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
@@ -142,9 +152,13 @@ class WalletViewItemFactory {
         )
     }
 
-    private func currencyValue(value: Decimal, state: AdapterState, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool)? {
-        guard let rateItem = rateItem else {
+    private func currencyValue(value: Decimal?, state: AdapterState?, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool)? {
+        guard let state = state, let value = value else {
             return nil
+        }
+
+        guard let rateItem = rateItem else {
+            return (text: "---", dimmed: true)
         }
 
         let rate = rateItem.rate
@@ -162,9 +176,7 @@ extension WalletViewItemFactory {
     func viewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceViewItem {
         BalanceViewItem(
                 wallet: item.wallet,
-                topViewItem: topViewItem(item: item),
-                separatorVisible: !balanceHidden || expanded,
-                amountViewItem: amountViewItem(item: item, balanceHidden: balanceHidden, expanded: expanded),
+                topViewItem: topViewItem(item: item, balanceHidden: balanceHidden, expanded: expanded),
                 lockedAmountViewItem: lockedAmountViewItem(item: item, balanceHidden: balanceHidden, expanded: expanded),
                 buttonsViewItem: buttonsViewItem(item: item, expanded: expanded)
         )
@@ -179,5 +191,17 @@ extension WalletViewItemFactory {
                 amountExpired: balanceHidden ? false : totalItem.expired
         )
     }
+
+}
+
+extension WalletViewItemFactory {
+
+    private static let diffFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
 
 }
