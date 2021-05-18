@@ -134,3 +134,40 @@ extension BalanceViewItem: DiffAware {
     }
 
 }
+
+
+extension BalanceViewItem: CustomStringConvertible {
+
+    var description: String {
+        "[topViewItem: \(topViewItem); lockedAmountViewItem: \(lockedAmountViewItem.map { "\($0)" } ?? nil); buttonsViewItem: \(buttonsViewItem.map { "\($0)" } ?? nil)]"
+    }
+
+}
+
+extension BalanceTopViewItem: CustomStringConvertible {
+
+    var description: String {
+        "[iconCoinType: \(iconCoinType?.id ?? "nil"); coinCode: \(coinCode); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); currencyValue: \(currencyValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
+    }
+
+}
+
+extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
+
+    var description: String {
+        switch self {
+        case .amount(let viewItem): return "[amount: \(viewItem)]"
+        case .searchingTx(let count): return "[searchingTx: \(count)]"
+        case .syncing(let progress, let syncedUntil): return "[syncing: [progress: \(progress.map { "\($0)" } ?? "nil"); syncedUntil: \(syncedUntil ?? "nil")]]"
+        }
+    }
+
+}
+
+extension BalanceSecondaryAmountViewItem: CustomStringConvertible {
+
+    var description: String {
+        "[coinValue: \(coinValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); rateValue: \("[text: \(rateValue.text ?? "nil"); dimmed: \(rateValue.dimmed)]"); diff: \(diff.map { "[text: \($0.text); type: \($0.type)]" } ?? "nil")]"
+    }
+
+}
