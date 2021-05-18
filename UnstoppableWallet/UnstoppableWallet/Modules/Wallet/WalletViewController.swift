@@ -166,9 +166,12 @@ class WalletViewController: ThemeViewController {
     private func handle(newViewItems: [BalanceViewItem]) {
         let changes = diff(old: viewItems, new: newViewItems)
 
+        guard !changes.isEmpty else {
+            return
+        }
+
         if changes.contains(where: {
             if case .insert = $0 { return true }
-            if case .delete = $0 { return true }
             return false
         }) {
             DispatchQueue.main.sync {
@@ -178,28 +181,20 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        var heightChange = false
-
-        for (index, oldViewItem) in viewItems.enumerated() {
-            let newViewItem = newViewItems[index]
-
-            let oldHeight = BalanceCell.height(viewItem: oldViewItem)
-            let newHeight = BalanceCell.height(viewItem: newViewItem)
-
-            if oldHeight != newHeight {
-                heightChange = true
-                break
-            }
-        }
-
+        var deletedIndexes = Set<Int>()
         var updateIndexes = Set<Int>()
 
         for change in changes {
             switch change {
+            case .delete(let delete):
+//                print("delete \(delete.item.wallet.coin.code) [\(delete.index)]")
+                deletedIndexes.insert(delete.index)
             case .move(let move):
+//                print("move \(move.item.wallet.coin.code) [\(move.fromIndex) -> \(move.toIndex)]")
                 updateIndexes.insert(move.fromIndex)
                 updateIndexes.insert(move.toIndex)
             case .replace(let replace):
+//                print("replace\n\(replace.oldItem)\n\(replace.newItem)\n[\(replace.index)]")
                 updateIndexes.insert(replace.index)
             default: ()
             }
@@ -210,15 +205,18 @@ class WalletViewController: ThemeViewController {
 
             updateIndexes.forEach {
                 if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
-                    bind(cell: cell, viewItem: viewItems[$0], animated: heightChange)
+                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
                 }
             }
 
-            if heightChange {
-                UIView.animate(withDuration: animationDuration) {
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
+            UIView.animate(withDuration: animationDuration) {
+                self.tableView.beginUpdates()
+
+                if !deletedIndexes.isEmpty {
+                    self.tableView.deleteRows(at: deletedIndexes.map { IndexPath(row: $0, section: 0) }, with: .fade)
                 }
+
+                self.tableView.endUpdates()
             }
         }
     }
@@ -364,6 +362,20 @@ extension WalletViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.onTap(wallet: viewItems[indexPath.item].wallet)
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let wallet = viewItems[indexPath.row].wallet
+
+        let action = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
+            self?.viewModel.onDisable(wallet: wallet)
+            completion(true)
+        }
+
+        action.image = UIImage(named: "circle_minus_24")
+        action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+
+        return UISwipeActionsConfiguration(actions: [action])
     }
 
 }

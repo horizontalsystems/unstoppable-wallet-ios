@@ -208,6 +208,14 @@ extension WalletViewModel {
         service.refresh()
     }
 
+    func onDisable(wallet: Wallet) {
+        if expandedWallet == wallet {
+            expandedWallet = nil
+        }
+
+        service.disable(wallet: wallet)
+    }
+
 }
 
 extension WalletViewModel {

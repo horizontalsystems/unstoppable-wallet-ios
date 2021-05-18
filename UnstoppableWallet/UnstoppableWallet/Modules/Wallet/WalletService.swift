@@ -255,6 +255,10 @@ extension WalletService {
         rateService.refresh()
     }
 
+    func disable(wallet: Wallet) {
+        walletManager.delete(wallets: [wallet])
+    }
+
 }
 
 extension WalletService {
