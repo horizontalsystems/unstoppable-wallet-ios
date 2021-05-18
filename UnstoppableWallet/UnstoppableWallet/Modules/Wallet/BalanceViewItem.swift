@@ -139,7 +139,7 @@ extension BalanceViewItem: DiffAware {
 extension BalanceViewItem: CustomStringConvertible {
 
     var description: String {
-        "[topViewItem: \(topViewItem); lockedAmountViewItem: \(lockedAmountViewItem.map { "\($0)" } ?? nil); buttonsViewItem: \(buttonsViewItem.map { "\($0)" } ?? nil)]"
+        "[topViewItem: \(topViewItem); lockedAmountViewItem: ; buttonsViewItem: ]"
     }
 
 }
