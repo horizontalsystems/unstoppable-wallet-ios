@@ -17,7 +17,7 @@ class UrlManager: IUrlManager {
     }
 
     func open(url: String, from controller: UIViewController?) {
-        guard let url = URL(string: urlWithScheme(url: url)) else {
+        guard let url = URL(string: urlWithScheme(url: url.trimmingCharacters(in: .whitespacesAndNewlines))) else {
             return
         }
 
