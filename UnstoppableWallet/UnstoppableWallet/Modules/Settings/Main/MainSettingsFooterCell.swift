@@ -54,7 +54,7 @@ class MainSettingsFooterCell: UITableViewCell {
             maker.centerX.equalToSuperview()
         }
 
-        logoButton.setImage(UIImage(named: "Logo Image"), for: .normal)
+        logoButton.setImage(UIImage(named: "HS Logo Image"), for: .normal)
         logoButton.addTarget(self, action: #selector(onTapLogoButton), for: .touchUpInside)
     }
 

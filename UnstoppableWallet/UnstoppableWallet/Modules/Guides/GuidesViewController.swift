@@ -25,7 +25,6 @@ class GuidesViewController: ThemeViewController {
         super.init()
 
         hidesBottomBarWhenPushed = true
-        tabBarItem = UITabBarItem(title: "guides.tab_bar_item".localized, image: UIImage(named: "Guides Tab Bar"), tag: 0)
     }
 
     required init?(coder aDecoder: NSCoder) {

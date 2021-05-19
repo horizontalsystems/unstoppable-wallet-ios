@@ -99,7 +99,6 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: CoinCategoryHeaderCell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
-        tableView.registerCell(forClass: PriceIndicatorCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)

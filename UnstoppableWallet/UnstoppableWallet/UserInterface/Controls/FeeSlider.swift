@@ -1,26 +1,19 @@
 import UIKit
 
 class FeeSlider: UISlider {
-    private let thumbWidth: CGFloat
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     var onTracking: ((Int, CGPoint) -> ())?
     var finishTracking: ((Int) -> ())?
 
     private var lastValue: Int?
 
     required init() {
-        let thumbImage = UIImage(named: "Fee Slider Thumb Image")
-        let selectedThumbImage = UIImage(named: "Fee Slider Thumb Selected Image")
-        thumbWidth = thumbImage?.size.width ?? 0
+        let thumbImage: UIImage? = .circleImage(size: 18, color: .themeGray)
+        let selectedThumbImage: UIImage? = .circleImage(size: 24, color: .themeGray)
 
         super.init(frame: CGRect.zero)
 
-        setThumbImage(thumbImage?.tinted(with: .themeGray), for: .normal)
-        setThumbImage(selectedThumbImage?.tinted(with: .themeGray), for: .highlighted)
+        setThumbImage(thumbImage, for: .normal)
+        setThumbImage(selectedThumbImage, for: .highlighted)
         minimumTrackTintColor = .clear
         maximumTrackTintColor = .clear
 
@@ -35,6 +28,10 @@ class FeeSlider: UISlider {
         slideBar.isUserInteractionEnabled = false
         slideBar.cornerRadius = .cornerRadius05x
         slideBar.clipsToBounds = true
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func correctCenter(touch: UITouch) -> CGPoint {     // touch position may be not in center of thumb, we need correct centerX

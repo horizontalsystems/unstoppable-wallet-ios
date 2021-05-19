@@ -2,13 +2,14 @@ import UIKit
 import ThemeKit
 
 class CheckboxCell: UITableViewCell {
-    private static let imageViewLeadingMargin: CGFloat = .margin6x
-    private static let imageViewSize: CGFloat = 24
+    private static let checkBoxLeadingMargin: CGFloat = .margin6x
+    private static let checkBoxSize: CGFloat = 24
     private static let textLeadingMargin: CGFloat = .margin4x
     private static let textTrailingMargin: CGFloat = .margin6x
     private static let textVerticalMargin: CGFloat = .margin4x
     private static let textFont: UIFont = .subhead2
 
+    private let checkBoxView = UIView()
     private let checkBoxImageView = UIImageView()
     private let descriptionLabel = UILabel()
 
@@ -18,16 +19,27 @@ class CheckboxCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(checkBoxImageView)
-        checkBoxImageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CheckboxCell.imageViewLeadingMargin)
-            maker.top.equalToSuperview().offset(CGFloat.margin3x)
-            maker.size.equalTo(CheckboxCell.imageViewSize)
+        contentView.addSubview(checkBoxView)
+        checkBoxView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(CheckboxCell.checkBoxLeadingMargin)
+            maker.top.equalToSuperview().offset(CGFloat.margin12)
+            maker.size.equalTo(CheckboxCell.checkBoxSize)
         }
+
+        checkBoxView.layer.cornerRadius = .cornerRadius4
+        checkBoxView.layer.borderColor = UIColor.themeGray.cgColor
+
+        checkBoxView.addSubview(checkBoxImageView)
+        checkBoxImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        checkBoxImageView.image = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
+        checkBoxImageView.tintColor = .themeWhite
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(checkBoxImageView.snp.trailing).offset(CheckboxCell.textLeadingMargin)
+            maker.leading.equalTo(checkBoxView.snp.trailing).offset(CheckboxCell.textLeadingMargin)
             maker.top.equalToSuperview().inset(CheckboxCell.textVerticalMargin)
             maker.trailing.equalToSuperview().inset(CheckboxCell.textTrailingMargin)
         }
@@ -43,7 +55,10 @@ class CheckboxCell: UITableViewCell {
 
     func bind(text: String?, checked: Bool) {
         descriptionLabel.text = text
-        checkBoxImageView.image = UIImage(named: checked ? "Checkbox Checked" : "Checkbox Unchecked")
+
+        checkBoxView.layer.borderWidth = checked ? 0 : 2
+        checkBoxView.backgroundColor = checked ? .themeRemus : .clear
+        checkBoxImageView.isHidden = !checked
     }
 
 }
@@ -51,7 +66,7 @@ class CheckboxCell: UITableViewCell {
 extension CheckboxCell {
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textWidth = containerWidth - imageViewLeadingMargin - imageViewSize - textLeadingMargin - textTrailingMargin
+        let textWidth = containerWidth - checkBoxLeadingMargin - checkBoxSize - textLeadingMargin - textTrailingMargin
         let textHeight = text.height(forContainerWidth: textWidth, font: textFont)
 
         return textHeight + 2 * textVerticalMargin
