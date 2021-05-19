@@ -4,7 +4,7 @@ import SnapKit
 class GradientPercentCircle: UIView {
     static let width: CGFloat = 44
     static let height: CGFloat = 44
-    static let gradient = UIImage(named: "gradient_layer_circle")
+    static let gradient = UIImage(named: "Market Metrics Gradient Layer")
     static let gradientWidth: CGFloat = 156
 
     private let gradientLayer = CALayer()

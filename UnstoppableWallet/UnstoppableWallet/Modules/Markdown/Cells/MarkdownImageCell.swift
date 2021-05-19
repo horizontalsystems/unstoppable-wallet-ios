@@ -19,7 +19,7 @@ class MarkdownImageCell: UITableViewCell {
             maker.edges.equalToSuperview() // constraints are remade in bind
         }
 
-        placeholderImageView.image = UIImage(named: "Markdown Image Placeholder")
+        placeholderImageView.image = UIImage(named: "image_placeholder_48")
         placeholderImageView.contentMode = .center
         placeholderImageView.backgroundColor = .themeSteel20
 

@@ -43,7 +43,7 @@ class AppStatusViewControllerNew: ThemeViewController {
         tableView.sectionDataSource = self
 
         headerCell.bind(
-                image: UIImage(named: "App Icon"),
+                image: .appIcon,
                 title: "Unstoppable",
                 subtitle: "version".localized(viewModel.version)
         )
