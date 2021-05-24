@@ -314,7 +314,7 @@ class ZcashAdapter {
 extension ZcashAdapter {
 
     public static var newBirthdayHeight: Int {
-        WalletBirthday.birthday(with: Int.max).height
+        WalletBirthday.birthday(with: BlockHeight.max).height
     }
 
     private static func dataDirectoryUrl() throws -> URL {
