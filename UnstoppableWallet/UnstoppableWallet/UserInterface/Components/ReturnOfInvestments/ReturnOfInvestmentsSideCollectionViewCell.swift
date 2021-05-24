@@ -22,7 +22,6 @@ class ReturnOfInvestmentsSideCollectionViewCell: BaseReturnOfInvestmentsCollecti
 
         label.font = viewItem.font
         label.textColor = viewItem.color
-        contentView.backgroundColor = viewItem.backgroundColor
     }
 
     var title: String? {

@@ -59,7 +59,6 @@ class WalletViewController: ThemeViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerCell(forClass: BalanceCell.self)
-        tableView.registerCell(forClass: EmptyCell.self)
         tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
         tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
 
@@ -372,7 +371,7 @@ extension WalletViewController: UITableViewDelegate {
             completion(true)
         }
 
-        action.image = UIImage(named: "circle_minus_24")
+        action.image = UIImage(named: "circle_minus_shifted_24")
         action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
 
         return UISwipeActionsConfiguration(actions: [action])

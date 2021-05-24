@@ -5,7 +5,7 @@ import ComponentKit
 
 class OnboardingBalanceViewController: ThemeViewController {
 
-    init() {
+    override init() {
         super.init()
 
         tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "filled_wallet_24"), tag: 0)

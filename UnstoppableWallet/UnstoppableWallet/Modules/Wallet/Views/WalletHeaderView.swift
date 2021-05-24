@@ -6,7 +6,7 @@ import ComponentKit
 class WalletHeaderView: UITableViewHeaderFooterView {
     private static let amountHeight: CGFloat = 40
     private static let sortHeight: CGFloat = .heightSingleLineCell
-    private static let bottomMargin: CGFloat = .margin8
+    private static let bottomMargin: CGFloat = .margin4
 
     private let amountButton = UIButton()
     private let sortButton = ThemeButton()

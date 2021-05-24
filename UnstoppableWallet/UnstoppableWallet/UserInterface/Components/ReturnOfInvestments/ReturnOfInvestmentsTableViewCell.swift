@@ -70,7 +70,7 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let verticalFirst = indexPath.section == 0 || indexPath.section == 1
+        let verticalFirst = indexPath.section == 0
         let horizontalFirst = indexPath.item == 0
         let viewItem = viewItems[indexPath.section][indexPath.item]
         switch viewItem {
