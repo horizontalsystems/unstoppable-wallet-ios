@@ -81,6 +81,8 @@ class App {
 
     let activateCoinManager: ActivateCoinManager
 
+    let deepLinkManager: IDeepLinkManager
+
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
     let binanceSmartChainKitManager: BinanceSmartChainKitManager
@@ -190,6 +192,8 @@ class App {
 
         activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)
 
+        deepLinkManager = DeepLinkManager()
+
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
@@ -203,7 +207,8 @@ class App {
                 appVersionManager: appVersionManager,
                 rateAppManager: rateAppManager,
                 remoteAlertManager: remoteAlertManager,
-                logRecordManager: logRecordManager
+                logRecordManager: logRecordManager,
+                deepLinkManager: deepLinkManager
         )
     }
 
