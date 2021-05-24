@@ -546,3 +546,8 @@ protocol IWalletConnectSessionStorage {
     func deleteSession(peerId: String)
     func deleteSessions(accountId: String)
 }
+
+protocol IDeepLinkManager {
+    func handle(url: URL) -> Bool
+    var newSchemeObservable: Observable<DeepLinkManager.DeepLink?> { get }
+}

@@ -16,6 +16,7 @@ class AppManager {
     private let rateAppManager: IRateAppManager
     private let remoteAlertManager: IRemoteAlertManager
     private let logRecordManager: ILogRecordManager
+    private let deepLinkManager: IDeepLinkManager
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -24,7 +25,8 @@ class AppManager {
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
-         remoteAlertManager: IRemoteAlertManager, logRecordManager: ILogRecordManager
+         remoteAlertManager: IRemoteAlertManager, logRecordManager: ILogRecordManager,
+         deepLinkManager: IDeepLinkManager
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -39,6 +41,7 @@ class AppManager {
         self.rateAppManager = rateAppManager
         self.remoteAlertManager = remoteAlertManager
         self.logRecordManager = logRecordManager
+        self.deepLinkManager = deepLinkManager
     }
 
 }
@@ -99,6 +102,10 @@ extension AppManager {
 
     func didReceivePushToken(tokenData: Data) {
         notificationManager.didReceivePushToken(tokenData: tokenData)
+    }
+
+    func didReceive(url: URL) -> Bool {
+        deepLinkManager.handle(url: url)
     }
 
 }

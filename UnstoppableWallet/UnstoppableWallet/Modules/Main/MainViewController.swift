@@ -37,6 +37,7 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0) }
 
         subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
+        subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
 
         if viewModel.needToShowJailbreakAlert {
             showJailbreakAlert()
@@ -108,6 +109,22 @@ class MainViewController: ThemeTabBarController {
 
         alert()
         showAlerts.removeFirst()
+    }
+
+    private func handle(deepLink: DeepLinkManager.DeepLink?) {
+        guard let deepLink = deepLink else {
+            return
+        }
+
+        var controller: UIViewController? = self
+        while let presentedController = controller?.presentedViewController {
+            controller = presentedController
+        }
+
+        switch deepLink {
+        case let .walletConnect(url):
+            WalletConnectModule.start(uri: url, sourceViewController: controller)
+        }
     }
 
 }

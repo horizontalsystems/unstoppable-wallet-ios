@@ -62,4 +62,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         App.shared.appManager.didReceivePushToken(tokenData: deviceToken)
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+        App.shared.appManager.didReceive(url: url)
+    }
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> ()) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
+            return App.shared.appManager.didReceive(url: url)
+        }
+
+        return false
+    }
+
 }

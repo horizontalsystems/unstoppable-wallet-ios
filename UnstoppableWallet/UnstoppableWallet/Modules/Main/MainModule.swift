@@ -24,8 +24,9 @@ struct MainModule {
                 localStorage: App.shared.localStorage,
                 jailbreakTestManager: JailbreakTestManager()
         )
+        let deepLinkService = DeepLinkService(deepLinkManager: App.shared.deepLinkManager)
 
-        let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService)
+        let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService, deepLinkService: deepLinkService)
         let viewController = MainViewController(viewModel: viewModel, selectedIndex: selectedTab.rawValue)
 
         App.shared.pinKitDelegate.viewController = viewController

@@ -34,13 +34,22 @@ class WalletConnectService {
         interactor?.state ?? .disconnected
     }
 
-    init(session: WalletConnectSession?, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager) {
+    init(session: WalletConnectSession?, uri: String?, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager) {
         self.manager = manager
         self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager
 
         if let session = session {
             restore(session: session)
+        }
+        if let uri = uri {
+            do {
+                try connect(uri: uri)
+
+                state = .ready
+            } catch {
+                state = .invalid(error: error)
+            }
         }
 
         reachabilityManager.reachabilityObservable
