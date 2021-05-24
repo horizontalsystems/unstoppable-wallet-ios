@@ -287,6 +287,13 @@ class ZcashAdapter {
 
             try synchronizer.rewind(.transaction(firstUnmined))
             localStorage.zcashAlwaysPendingRewind = true
+        } catch SynchronizerError.rewindErrorUnknownArchorHeight {
+            do {
+                try synchronizer.rewind(.quick)
+                localStorage.zcashAlwaysPendingRewind = true
+            } catch {
+                loggingProxy.error("attempt to fix pending transactions failed with error: \(error)", file: #file, function: #function, line: 0)
+            }
         } catch {
             loggingProxy.error("attempt to fix pending transactions failed with error: \(error)", file: #file, function: #function, line: 0)
         }
