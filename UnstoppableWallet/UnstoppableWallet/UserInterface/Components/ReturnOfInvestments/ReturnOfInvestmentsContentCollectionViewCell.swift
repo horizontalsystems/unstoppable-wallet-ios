@@ -12,7 +12,6 @@ class ReturnOfInvestmentsContentCollectionViewCell: BaseReturnOfInvestmentsColle
             maker.center.equalToSuperview()
         }
 
-        contentView.backgroundColor = .themeBlake
         label.font = .caption
     }
 

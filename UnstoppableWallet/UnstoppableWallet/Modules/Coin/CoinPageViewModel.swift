@@ -163,13 +163,6 @@ extension CoinPageViewModel {
             }
         }
 
-        var backgroundColor: UIColor? {
-            switch self {
-            case .title, .subtitle: return .themeLawrence
-            case .content, .value: return .themeBlake
-            }
-        }
-
     }
 
     struct Link {

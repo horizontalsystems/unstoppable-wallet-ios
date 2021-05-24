@@ -5,14 +5,6 @@ class ThemeSearchViewController: KeyboardAwareViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var currentFilter: String?
 
-    override public init(scrollView: UIScrollView, gradient: Bool = true) {
-        super.init(scrollView: scrollView, gradient: gradient)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
