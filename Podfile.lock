@@ -182,14 +182,14 @@ PODS:
     - StorageKit.swift (~> 1.0)
     - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
-  - PromiseKit (6.14.0):
-    - PromiseKit/CorePromise (= 6.14.0)
-    - PromiseKit/Foundation (= 6.14.0)
-    - PromiseKit/UIKit (= 6.14.0)
-  - PromiseKit/CorePromise (6.14.0)
-  - PromiseKit/Foundation (6.14.0):
+  - PromiseKit (6.15.0):
+    - PromiseKit/CorePromise (= 6.15.0)
+    - PromiseKit/Foundation (= 6.15.0)
+    - PromiseKit/UIKit (= 6.15.0)
+  - PromiseKit/CorePromise (6.15.0)
+  - PromiseKit/Foundation (6.15.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.14.0):
+  - PromiseKit/UIKit (6.15.0):
     - PromiseKit/CorePromise
   - Quick (4.0.0)
   - RxCocoa (5.1.1):
@@ -481,13 +481,13 @@ CHECKOUT OPTIONS:
     :commit: ed9e31f9dfb94ed7bb291afb1ae41b0bd9c8ed78
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -502,7 +502,7 @@ CHECKOUT OPTIONS:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: 44d1bcf989f5a3c735aa6482c546edba0621988d
@@ -520,7 +520,7 @@ CHECKOUT OPTIONS:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: effdf1a10542869cb759f261f43c8d10155abf9e
@@ -532,7 +532,7 @@ CHECKOUT OPTIONS:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: d8e7627749aebe60591423e0cafa037842b35199
+    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
@@ -615,7 +615,7 @@ SPEC CHECKSUMS:
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
   PinKit.swift: a2e489a5391f8e1be11b328ec9e488cdd6888a86
-  PromiseKit: ec5a544f2c7ddf078e50b88f30cd862dbe587489
+  PromiseKit: 5d5ea54ef16215b8aa1c1cc35dc5d18f3053dec9
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxGRDB: 41dfd8f987aad7a7bdd7c420319d3eb23ee383f3
