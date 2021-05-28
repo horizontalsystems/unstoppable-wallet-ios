@@ -9,6 +9,7 @@ protocol IMarketListFetcher {
 
 class MarketListService {
     private let currencyKit: CurrencyKit.Kit
+    private let appManager: IAppManager
     private let fetcher: IMarketListFetcher
 
     private var disposeBag = DisposeBag()
@@ -23,15 +24,15 @@ class MarketListService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: CurrencyKit.Kit, fetcher: IMarketListFetcher) {
+    init(currencyKit: CurrencyKit.Kit, appManager: IAppManager, fetcher: IMarketListFetcher) {
         self.currencyKit = currencyKit
+        self.appManager = appManager
         self.fetcher = fetcher
 
-        subscribe(disposeBag, fetcher.refetchObservable) { [weak self] in
-            self?.refetch()
-        }
-
+        subscribe(disposeBag, fetcher.refetchObservable) { [weak self] in self?.refetch() }
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in self?.refetch() }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.fetch() }
+
         fetch()
     }
 
