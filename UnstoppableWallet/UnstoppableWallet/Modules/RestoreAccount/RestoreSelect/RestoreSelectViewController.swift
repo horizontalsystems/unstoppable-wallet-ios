@@ -29,13 +29,13 @@ class RestoreSelectViewController: CoinToggleViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
 
         restoreSettingsView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
+            self?.open(controller: controller)
         }
         coinSettingsView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
+            self?.open(controller: controller)
         }
         enableCoinsView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
+            self?.open(controller: controller)
         }
 
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] enabled in
@@ -49,6 +49,11 @@ class RestoreSelectViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
             self?.setToggle(on: false, coin: coin)
         }
+    }
+
+    private func open(controller: UIViewController) {
+        navigationItem.searchController?.dismiss(animated: true)
+        present(controller, animated: true)
     }
 
     @objc func onTapRightBarButton() {
