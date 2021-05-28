@@ -23,7 +23,7 @@ class AppVersionManager {
         if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
             storage.save(appVersions: [currentVersion])
         }
-        if lastVersion.version != currentVersion.version {
+        if currentVersion > lastVersion {
             newVersionRelay.accept(currentVersion)
         }
     }

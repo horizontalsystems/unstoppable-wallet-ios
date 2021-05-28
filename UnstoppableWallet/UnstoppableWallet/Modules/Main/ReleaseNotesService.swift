@@ -11,7 +11,7 @@ class ReleaseNotesService {
 
     var releaseNotesUrlObservable: Observable<URL?> {
         appVersionManager.newVersionObservable.flatMap { appVersion -> Observable<URL?> in
-            guard let version = appVersion?.version else {
+            guard let version = appVersion?.releaseNotesVersion else {
                 return Observable.just(nil)
             }
 
