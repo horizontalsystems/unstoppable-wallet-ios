@@ -9,6 +9,7 @@ class MarketOverviewService {
     private var topMarketsDisposeBag = DisposeBag()
 
     private let currencyKit: CurrencyKit.Kit
+    private let appManager: IAppManager
     private let rateManager: IRateManager
 
     private let stateRelay = PublishRelay<State>()
@@ -20,14 +21,17 @@ class MarketOverviewService {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
+    init(currencyKit: CurrencyKit.Kit, appManager: IAppManager, rateManager: IRateManager) {
         self.currencyKit = currencyKit
+        self.appManager = appManager
         self.rateManager = rateManager
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
             self?.items = []
             self?.fetch()
         }
+
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.fetch() }
         fetch()
     }
 
