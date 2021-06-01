@@ -18,9 +18,9 @@ class WelcomeScreenViewController: UIViewController {
 
     private let slides = [
         Slide(title: nil, description: "intro.brand.description".localized, image: "Intro - Logo"),
-        Slide(title: "intro.independence.title".localized, description: "intro.independence.description".localized, image: "Intro - Independence"),
-        Slide(title: "intro.privacy.title".localized, description: "intro.privacy.description".localized, image: "Intro - Privacy"),
-        Slide(title: "intro.knowledge.title".localized, description: "intro.knowledge.description".localized, image: "Intro - Knowledge")
+        Slide(title: "intro.unchain_assets.title".localized, description: "intro.unchain_assets.description".localized, image: "Intro - Unchain Assets"),
+        Slide(title: "intro.go_borderless.title".localized, description: "intro.go_borderless.description".localized, image: "Intro - Go Borderless"),
+        Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private")
     ]
 
     init() {
