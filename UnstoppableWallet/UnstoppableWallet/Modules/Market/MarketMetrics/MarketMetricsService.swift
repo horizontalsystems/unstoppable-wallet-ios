@@ -19,6 +19,7 @@ class MarketMetricsService {
         self.currencyKit = currencyKit
 
         appManager.willEnterForegroundObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] in
                     self?.fetchMarketMetrics()
                 })
@@ -35,12 +36,13 @@ class MarketMetricsService {
         }
 
         rateManager.globalMarketInfoSingle(currencyCode: currencyKit.baseCurrency.code, period: .hour24)
-            .subscribe(onSuccess: { [weak self] info in
-                self?.globalMarketInfoRelay.accept(.completed(info))
-            }, onError: { [weak self] error in
-                self?.globalMarketInfoRelay.accept(.failed(error))
-            })
-            .disposed(by: marketMetricsDisposeBag)
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] info in
+                    self?.globalMarketInfoRelay.accept(.completed(info))
+                }, onError: { [weak self] error in
+                    self?.globalMarketInfoRelay.accept(.failed(error))
+                })
+                .disposed(by: marketMetricsDisposeBag)
     }
 
 }

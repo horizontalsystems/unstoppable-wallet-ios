@@ -34,15 +34,20 @@ class ManageWalletsViewController: CoinToggleViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
 
         restoreSettingsView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
+            self?.open(controller: controller)
         }
         coinSettingsView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
+            self?.open(controller: controller)
         }
 
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
             self?.setToggle(on: false, coin: coin)
         }
+    }
+
+    private func open(controller: UIViewController) {
+        navigationItem.searchController?.dismiss(animated: true)
+        present(controller, animated: true)
     }
 
     @objc func onTapDoneButton() {

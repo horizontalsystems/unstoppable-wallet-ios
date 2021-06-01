@@ -481,13 +481,13 @@ CHECKOUT OPTIONS:
     :commit: ed9e31f9dfb94ed7bb291afb1ae41b0bd9c8ed78
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -502,7 +502,7 @@ CHECKOUT OPTIONS:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: 44d1bcf989f5a3c735aa6482c546edba0621988d
@@ -520,10 +520,10 @@ CHECKOUT OPTIONS:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: effdf1a10542869cb759f261f43c8d10155abf9e
+    :commit: ff75e00d0812e30a64d5eb74c73262273e96dc5f
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -532,7 +532,7 @@ CHECKOUT OPTIONS:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 01b0b1011f10226f83649ec7b537ea471393883b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :commit: d0e6d4bfc3ba581f2700c0bf81b33f7e15dce008
