@@ -481,13 +481,13 @@ CHECKOUT OPTIONS:
     :commit: ed9e31f9dfb94ed7bb291afb1ae41b0bd9c8ed78
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
@@ -502,7 +502,7 @@ CHECKOUT OPTIONS:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: 44d1bcf989f5a3c735aa6482c546edba0621988d
@@ -520,7 +520,7 @@ CHECKOUT OPTIONS:
     :commit: dd560907666008fc326c1715c6437a40266cca19
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: ff75e00d0812e30a64d5eb74c73262273e96dc5f
@@ -532,7 +532,7 @@ CHECKOUT OPTIONS:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 901ed24a60a7b441943d427fae07d2401801618b
+    :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :commit: 7f7864bef293be2b39b001abd69001fe0d536b72
