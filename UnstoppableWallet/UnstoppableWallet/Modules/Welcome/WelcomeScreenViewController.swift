@@ -17,10 +17,10 @@ class WelcomeScreenViewController: UIViewController {
     private var pageIndex = 0
 
     private let slides = [
-        Slide(title: nil, description: "intro.brand.description".localized, image: "Intro - Logo"),
-        Slide(title: "intro.independence.title".localized, description: "intro.independence.description".localized, image: "Intro - Independence"),
-        Slide(title: "intro.privacy.title".localized, description: "intro.privacy.description".localized, image: "Intro - Privacy"),
-        Slide(title: "intro.knowledge.title".localized, description: "intro.knowledge.description".localized, image: "Intro - Knowledge")
+        Slide(title: nil, description: " ", image: "Intro - Logo"),
+        Slide(title: "intro.independence.title".localized, description: " ", image: "Intro - Independence"),
+        Slide(title: "intro.privacy.title".localized, description: " ", image: "Intro - Privacy"),
+        Slide(title: "intro.knowledge.title".localized, description: " ", image: "Intro - Knowledge")
     ]
 
     init() {
