@@ -981,6 +981,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "manage_account.name" = "İsim";
 "manage_account.show_recovery_phrase" = "İfadeyi Göster";
 "manage_account.backup_recovery_phrase" = "Yedekleme İfadesi";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "Ayır";
 
 // Birthday Input
@@ -989,3 +990,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "birthday_input.description" = "Zcash cüzdanınız için bir doğum günü yüksekliği biliyorsanız, senkronizasyon işlemini hızlandırmak için aşağıya ekleyin.";
 "birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
 "restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
