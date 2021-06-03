@@ -866,12 +866,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "intro.next" = "다음";
 "intro.start" = "시작";
 "intro.brand.description" = "암호를 저장 및 거래합니다. 자산을 완전히 통제합니다. 익명인 상태로 유지합니다.";
-"intro.independence.title" = "독립하십시오";
-"intro.independence.description" = "Unstoppable은 사용자들이 어디서든 언제든지 자금에 접근할 수 있도록 하기 위해 설계되었습니다.";
-"intro.privacy.title" = "개인 정보 유지";
-"intro.privacy.description" = "이 지갑을 사용하여 신분을 숨기고 귀하의 정보를 안전하게 보호할 수 있습니다.";
-"intro.knowledge.title" = "현명하게 투자";
-"intro.knowledge.description" = "Unstoppable은 비교할 수 없는 최고의 거래, 모니터링 및 분석 도구를 통합시킵니다.";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
