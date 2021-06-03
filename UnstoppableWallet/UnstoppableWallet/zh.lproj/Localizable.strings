@@ -866,12 +866,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "intro.next" = "继续";
 "intro.start" = "开始";
 "intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
-"intro.independence.title" = "保持独立";
-"intro.independence.description" = "Unstoppable的建立可确保用户能够随时随地存取资金。";
-"intro.privacy.title" = "保持私密状态";
-"intro.privacy.description" = "使用此钱包保持隐身并能够保证您信息的私密性。";
-"intro.knowledge.title" = "明智投资";
-"intro.knowledge.description" = "Unstoppable整合了无与伦比的交易、监控和分析工具。";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
