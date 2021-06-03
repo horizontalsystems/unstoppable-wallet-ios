@@ -981,6 +981,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "manage_account.name" = "이름";
 "manage_account.show_recovery_phrase" = "문구 표시";
 "manage_account.backup_recovery_phrase" = "백업 문구";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "링크 해제";
 
 // Birthday Input
@@ -989,3 +990,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
