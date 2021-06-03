@@ -47,6 +47,7 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: A9Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
@@ -54,11 +55,11 @@ class ManageAccountViewController: ThemeViewController {
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
-        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
+        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
         showRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         showRecoveryPhraseCell.title = "manage_account.show_recovery_phrase".localized
 
-        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
+        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
         backupRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         backupRecoveryPhraseCell.title = "manage_account.backup_recovery_phrase".localized
         backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
@@ -75,6 +76,7 @@ class ManageAccountViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
         subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
+        subscribe(disposeBag, viewModel.openNetworkSettingsSignal) { [weak self] in self?.openNetworkSettings(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
@@ -105,6 +107,10 @@ class ManageAccountViewController: ThemeViewController {
         }
 
         present(viewController, animated: true)
+    }
+
+    private func openNetworkSettings(account: Account) {
+        navigationController?.pushViewController(NetworkSettingsModule.viewController(account: account), animated: true)
     }
 
     private func onTapUnlink() {
@@ -162,7 +168,23 @@ extension ManageAccountViewController: SectionsDataSource {
             )
         }
 
-        var rows = [row]
+        let isLast = viewModel.additionalViewItems.isEmpty
+
+        var rows = [
+            row,
+            Row<A1Cell>(
+                    id: "network-settings",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
+                        cell.title = "manage_account.network_settings".localized
+                        cell.titleImage = UIImage(named: "blocks_20")
+                    },
+                    action: { [weak self] _ in
+                        self?.viewModel.onTapNetworkSettings()
+                    }
+            )
+        ]
 
         let viewItems = viewModel.additionalViewItems
 

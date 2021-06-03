@@ -94,12 +94,12 @@ class SendEvmTransactionService {
         switch tokenOut {
         case .evmCoin:
             switch evmKit.networkType {
-            case .ethMainNet, .kovan, .ropsten: coinType = .ethereum
+            case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: coinType = .ethereum
             case .bscMainNet: coinType = .binanceSmartChain
             }
         case .eip20Coin(let address):
             switch evmKit.networkType {
-            case .ethMainNet, .kovan, .ropsten: coinType = .erc20(address: address.hex)
+            case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: coinType = .erc20(address: address.hex)
             case .bscMainNet: coinType = .bep20(address: address.hex)
             }
         }
