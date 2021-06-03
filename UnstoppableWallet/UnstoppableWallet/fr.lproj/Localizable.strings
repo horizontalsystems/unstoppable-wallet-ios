@@ -866,12 +866,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "intro.next" = "Suivant";
 "intro.start" = "Commencer";
 "intro.brand.description" = "Stockez et échangez des crypto-monnaies. Ayez le contrôle total sur les actifs. Restez anonyme.";
-"intro.independence.title" = "Soyez indépendant";
-"intro.independence.description" = "Unstoppable est construit pour s'assurer que les utilisateurs sont en mesure d'accéder aux fonds à tout moment depuis n'importe où.";
-"intro.privacy.title" = "Gardez votre confidentialité";
-"intro.privacy.description" = "Utilisez ce portefeuille pour rester incognito et conserver la confidentialité de vos informations.";
-"intro.knowledge.title" = "Investissez judicieusement";
-"intro.knowledge.description" = "Unstoppable intègre des instruments inégalés de trading, de surveillance et d'analyse.";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
