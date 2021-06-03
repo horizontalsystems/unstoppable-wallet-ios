@@ -983,6 +983,7 @@
 "manage_account.name" = "Имя";
 "manage_account.show_recovery_phrase" = "Показать Фразу";
 "manage_account.backup_recovery_phrase" = "Резервная Фраза";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -991,3 +992,7 @@
 "birthday_input.description" = "Если вы знаете блок создания вашего Zcash кошелька, добавьте его ниже для ускорения процесса синхронизации.";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 "restore_setting.birthday_height" = "%@ Блок Создания";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
