@@ -982,6 +982,7 @@ poner en peligro la seguridad de mis fondos.";
 "manage_account.name" = "Nombre";
 "manage_account.show_recovery_phrase" = "Mostrar Frase";
 "manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "Desenlazar";
 
 // Birthday Input
@@ -990,3 +991,7 @@ poner en peligro la seguridad de mis fondos.";
 "birthday_input.description" = "Si conoce una altura de cumpleaños para su monedero Zcash añádela abajo para acelerar el proceso de sincronización.";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 "restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
