@@ -981,6 +981,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "manage_account.name" = "Name";
 "manage_account.show_recovery_phrase" = "Phrase anzeigen";
 "manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "Verknüpfung trennen";
 
 // Birthday Input
@@ -989,3 +990,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "birthday_input.description" = "Wenn Sie eine Geburtstagshöhe für Ihr Zcash Wallet kennen, fügen Sie diese unten hinzu, um den Synchronisierungsprozess zu beschleunigen.";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Geburtstagshöhe";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
