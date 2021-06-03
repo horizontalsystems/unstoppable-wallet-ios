@@ -981,6 +981,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "manage_account.name" = "名称";
 "manage_account.show_recovery_phrase" = "显示恢复码";
 "manage_account.backup_recovery_phrase" = "备份码";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "取消链接";
 
 // Birthday Input
@@ -989,3 +990,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "birthday_input.description" = "如果您知道您Zcash钱包的生日高度，请将其添加至下方以加速同步过程。";
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
