@@ -866,12 +866,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "intro.next" = "İleri";
 "intro.start" = "Başlangıç";
 "intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
-"intro.independence.title" = "Bağımsız Olun";
-"intro.independence.description" = "Unstoppable, kullanıcıların istedikleri anda istedikleri yerde paraya erişebilmelerini sağlamak için geliştirilmiştir.";
-"intro.privacy.title" = "Gizli Kalın";
-"intro.privacy.description" = "Gizli kalmak ve bilgilerinizi gizli tutmak için bu cüzdanı kullanın.";
-"intro.knowledge.title" = "Akıllıca Yatırım Yapın";
-"intro.knowledge.description" = "Unstoppable, benzersiz alım satım, izleme ve analitik araçların entegrasyonlarını sağlar.";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
