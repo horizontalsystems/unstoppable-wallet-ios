@@ -16,7 +16,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -82,6 +82,9 @@ class App {
     let activateCoinManager: ActivateCoinManager
 
     let deepLinkManager: IDeepLinkManager
+
+    let evmNetworkManager: EvmNetworkManager
+    let accountSettingManager: AccountSettingManager
 
     let appManager: AppManager
     let ethereumKitManager: EthereumKitManager
@@ -193,6 +196,9 @@ class App {
         activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)
 
         deepLinkManager = DeepLinkManager()
+
+        evmNetworkManager = EvmNetworkManager(appConfigProvider: appConfigProvider)
+        accountSettingManager = AccountSettingManager(storage: storage, evmNetworkManager: evmNetworkManager)
 
         appManager = AppManager(
                 accountManager: accountManager,

@@ -581,6 +581,16 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createAccountSettings") { db in
+            try db.create(table: AccountSettingRecord.databaseTableName) { t in
+                t.column(AccountSettingRecord.Columns.accountId.name, .text).notNull()
+                t.column(AccountSettingRecord.Columns.key.name, .text).notNull()
+                t.column(AccountSettingRecord.Columns.value.name, .text).notNull()
+
+                t.primaryKey([AccountSettingRecord.Columns.accountId.name, AccountSettingRecord.Columns.key.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -894,6 +904,28 @@ extension GrdbStorage: IRestoreSettingsStorage {
     func deleteAllRestoreSettings(accountId: String) {
         _ = try! dbPool.write { db in
             try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IAccountSettingRecordStorage {
+
+    func accountSetting(accountId: String, key: String) -> AccountSettingRecord? {
+        try! dbPool.read { db in
+            try AccountSettingRecord.filter(AccountSettingRecord.Columns.accountId == accountId && AccountSettingRecord.Columns.key == key).fetchOne(db)
+        }
+    }
+
+    func save(accountSetting: AccountSettingRecord) {
+        _ = try! dbPool.write { db in
+            try accountSetting.insert(db)
+        }
+    }
+
+    func deleteAllAccountSettings(accountId: String) {
+        _ = try! dbPool.write { db in
+            try AccountSettingRecord.filter(AccountSettingRecord.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

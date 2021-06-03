@@ -551,3 +551,9 @@ protocol IDeepLinkManager {
     func handle(url: URL) -> Bool
     var newSchemeObservable: Observable<DeepLinkManager.DeepLink?> { get }
 }
+
+protocol IAccountSettingRecordStorage {
+    func accountSetting(accountId: String, key: String) -> AccountSettingRecord?
+    func save(accountSetting: AccountSettingRecord)
+    func deleteAllAccountSettings(accountId: String)
+}
