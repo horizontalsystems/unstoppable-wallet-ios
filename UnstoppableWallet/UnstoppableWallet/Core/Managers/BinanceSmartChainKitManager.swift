@@ -1,16 +1,43 @@
 import RxSwift
+import RxRelay
 import EthereumKit
 import Erc20Kit
 import UniswapKit
 
 class BinanceSmartChainKitManager {
     private let appConfigProvider: IAppConfigProvider
+    private let accountSettingsManager: AccountSettingManager
+    private let disposeBag = DisposeBag()
+
     weak var evmKit: EthereumKit.Kit?
 
+    private let evmKitUpdatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: IAppConfigProvider, accountSettingsManager: AccountSettingManager) {
         self.appConfigProvider = appConfigProvider
+        self.accountSettingsManager = accountSettingsManager
+
+        subscribe(disposeBag, accountSettingsManager.binanceSmartChainNetworkObservable) { [weak self] account, _ in
+            self?.handleUpdatedNetwork(account: account)
+        }
+    }
+
+    private func handleUpdatedNetwork(account: Account) {
+        guard account == currentAccount else {
+            return
+        }
+
+        evmKit = nil
+        evmKitUpdatedRelay.accept(())
+    }
+
+}
+
+extension BinanceSmartChainKitManager {
+
+    var evmKitUpdatedObservable: Observable<Void> {
+        evmKitUpdatedRelay.asObservable()
     }
 
     func evmKit(account: Account) throws -> EthereumKit.Kit {
@@ -22,14 +49,12 @@ class BinanceSmartChainKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let syncSource = EthereumKit.Kit.defaultBscHttpSyncSource() else {
-            throw AdapterError.wrongParameters
-        }
+        let evmNetwork = accountSettingsManager.binanceSmartChainNetwork(account: account)
 
         let evmKit = try EthereumKit.Kit.instance(
                 seed: seed,
-                networkType: networkType,
-                syncSource: syncSource,
+                networkType: evmNetwork.networkType,
+                syncSource: evmNetwork.syncSource,
                 etherscanApiKey: appConfigProvider.bscscanKey,
                 walletId: account.id,
                 minLogLevel: .error
@@ -45,10 +70,6 @@ class BinanceSmartChainKitManager {
         currentAccount = account
 
         return evmKit
-    }
-
-    var networkType: NetworkType {
-        .bscMainNet
     }
 
     var statusInfo: [(String, Any)]? {

@@ -7,7 +7,7 @@ struct ShowKeyModule {
         guard let service = ShowKeyService(
                 account: account,
                 pinKit: App.shared.pinKit,
-                ethereumKitManager: App.shared.ethereumKitManager
+                accountSettingManager: App.shared.accountSettingManager
         ) else {
             return nil
         }
