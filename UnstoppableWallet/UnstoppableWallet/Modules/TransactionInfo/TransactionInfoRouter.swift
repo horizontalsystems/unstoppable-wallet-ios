@@ -51,7 +51,7 @@ extension TransactionInfoRouter {
         }
 
         let router = TransactionInfoRouter(sourceViewController: sourceViewController)
-        let interactor = TransactionInfoInteractor(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = TransactionInfoInteractor(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
         let presenter = TransactionInfoPresenter(transaction: transaction, wallet: wallet, interactor: interactor, router: router)
         let viewController = TransactionInfoViewController(delegate: presenter)
 

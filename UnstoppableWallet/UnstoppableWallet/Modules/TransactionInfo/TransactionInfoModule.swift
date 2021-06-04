@@ -1,6 +1,7 @@
 import Foundation
 import CurrencyKit
 import CoinKit
+import EthereumKit
 
 protocol ITransactionInfoView: AnyObject {
     func set(date: Date, primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType, lockState: TransactionLockState?)
@@ -30,6 +31,8 @@ protocol ITransactionInfoInteractor {
     func rawTransaction(hash: String) -> String?
     func feeCoin(coin: Coin) -> Coin?
     func copy(value: String)
+    func ethereumNetworkType(account: Account) -> NetworkType
+    func binanceSmartChainNetworkType(account: Account) -> NetworkType
 }
 
 protocol ITransactionInfoRouter {
