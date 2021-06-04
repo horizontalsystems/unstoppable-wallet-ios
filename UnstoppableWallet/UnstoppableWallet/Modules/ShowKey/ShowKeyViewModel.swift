@@ -36,8 +36,12 @@ extension ShowKeyViewModel {
     var privateKeys: [PrivateKey] {
         var keys = [PrivateKey]()
 
-        if let value = service.evmPrivateKey {
-            keys.append(PrivateKey(blockchain: "Ethereum / Binance Smart Chain", value: value))
+        if let value = service.ethereumPrivateKey {
+            keys.append(PrivateKey(blockchain: "Ethereum", value: value))
+        }
+
+        if let value = service.binanceSmartChainPrivateKey {
+            keys.append(PrivateKey(blockchain: "Binance Smart Chain", value: value))
         }
 
         return keys

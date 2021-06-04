@@ -65,6 +65,10 @@ extension EvmNetworkService {
             return
         }
 
+        guard currentNetwork.id != network.id else {
+            return
+        }
+
         switch blockchain {
         case .ethereum: accountSettingManager.save(ethereumNetwork: network, account: account)
         case .binanceSmartChain: accountSettingManager.save(binanceSmartChainNetwork: network, account: account)

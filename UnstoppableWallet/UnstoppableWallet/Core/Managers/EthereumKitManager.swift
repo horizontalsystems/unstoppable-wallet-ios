@@ -1,4 +1,5 @@
 import RxSwift
+import RxRelay
 import EthereumKit
 import Erc20Kit
 import UniswapKit
@@ -7,12 +8,38 @@ class EthereumKitManager {
     weak var ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager?
 
     private let appConfigProvider: IAppConfigProvider
+    private let accountSettingsManager: AccountSettingManager
+    private let disposeBag = DisposeBag()
+
     weak var evmKit: EthereumKit.Kit?
 
+    private let evmKitUpdatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: IAppConfigProvider, accountSettingsManager: AccountSettingManager) {
         self.appConfigProvider = appConfigProvider
+        self.accountSettingsManager = accountSettingsManager
+
+        subscribe(disposeBag, accountSettingsManager.ethereumNetworkObservable) { [weak self] account, _ in
+            self?.handleUpdatedNetwork(account: account)
+        }
+    }
+
+    private func handleUpdatedNetwork(account: Account) {
+        guard account == currentAccount else {
+            return
+        }
+
+        evmKit = nil
+        evmKitUpdatedRelay.accept(())
+    }
+
+}
+
+extension EthereumKitManager {
+
+    var evmKitUpdatedObservable: Observable<Void> {
+        evmKitUpdatedRelay.asObservable()
     }
 
     func evmKit(account: Account) throws -> EthereumKit.Kit {
@@ -24,16 +51,12 @@ class EthereumKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        let networkType = self.networkType
-
-        guard let syncSource = EthereumKit.Kit.infuraWebsocketSyncSource(networkType: networkType, projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret) else {
-            throw AdapterError.wrongParameters
-        }
+        let evmNetwork = accountSettingsManager.ethereumNetwork(account: account)
 
         let evmKit = try EthereumKit.Kit.instance(
                 seed: seed,
-                networkType: networkType,
-                syncSource: syncSource,
+                networkType: evmNetwork.networkType,
+                syncSource: evmNetwork.syncSource,
                 etherscanApiKey: appConfigProvider.etherscanKey,
                 walletId: account.id,
                 minLogLevel: .error
@@ -49,10 +72,6 @@ class EthereumKitManager {
         currentAccount = account
 
         return evmKit
-    }
-
-    var networkType: NetworkType {
-        appConfigProvider.testMode ? .ropsten : .ethMainNet
     }
 
     var statusInfo: [(String, Any)]? {

@@ -28,6 +28,9 @@ class AdapterManager {
                     self?.initAdapters(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
+
+        subscribe(disposeBag, ethereumKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEthereumKit() }
+        subscribe(disposeBag, binanceSmartChainKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedBinanceSmartChainKit() }
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -62,6 +65,43 @@ class AdapterManager {
         removedAdapters.forEach { adapter in
             adapter.stop()
         }
+    }
+
+    private func handleUpdatedEthereumKit() {
+        handleUpdatedKit {
+            switch $0.coin.type {
+            case .ethereum, .erc20: return true
+            default: return false
+            }
+        }
+    }
+
+    private func handleUpdatedBinanceSmartChainKit() {
+        handleUpdatedKit {
+            switch $0.coin.type {
+            case .binanceSmartChain, .bep20: return true
+            default: return false
+            }
+        }
+    }
+
+    private func handleUpdatedKit(filter: (Wallet) -> Bool) {
+        let adapters = queue.sync { self.adapters }
+
+        let wallets = adapters.keys.filter(filter)
+
+        guard !wallets.isEmpty else {
+            return
+        }
+
+        queue.sync {
+            wallets.forEach {
+                self.adapters[$0]?.stop()
+                self.adapters[$0] = nil
+            }
+        }
+
+        initAdapters(wallets: walletManager.activeWallets)
     }
 
 }
