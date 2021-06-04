@@ -10,10 +10,10 @@ protocol IAddTokenBlockchainService {
 }
 
 class AddTokenService {
+    private let account: Account
     private let blockchainService: IAddTokenBlockchainService
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
-    private let accountManager: IAccountManager
 
     private var disposeBag = DisposeBag()
 
@@ -24,11 +24,11 @@ class AddTokenService {
         }
     }
 
-    init(blockchainService: IAddTokenBlockchainService, coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager) {
+    init(account: Account, blockchainService: IAddTokenBlockchainService, coinManager: ICoinManager, walletManager: IWalletManager) {
+        self.account = account
         self.blockchainService = blockchainService
         self.coinManager = coinManager
         self.walletManager = walletManager
-        self.accountManager = accountManager
     }
 
 }
@@ -77,10 +77,6 @@ extension AddTokenService {
         }
 
         coinManager.save(coins: [coin])
-
-        guard let account = accountManager.activeAccount else {
-            return
-        }
 
         let wallet = Wallet(coin: coin, account: account)
         walletManager.save(wallets: [wallet])

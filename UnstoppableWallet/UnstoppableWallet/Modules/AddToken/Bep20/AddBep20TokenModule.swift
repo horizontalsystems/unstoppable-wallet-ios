@@ -2,13 +2,17 @@ import ThemeKit
 
 struct AddBep20TokenModule {
 
-    static func viewController() -> UIViewController {
+    static func viewController() -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount else {
+            return nil
+        }
+
         let blockchainService = AddEvmTokenBlockchainService(
-                resolver: AddBep20TokenResolver(appConfigProvider: App.shared.appConfigProvider),
+                networkType: App.shared.accountSettingManager.binanceSmartChainNetwork(account: account).networkType,
+                appConfigProvider: App.shared.appConfigProvider,
                 networkManager: App.shared.networkManager
         )
-
-        let service = AddTokenService(blockchainService: blockchainService, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
+        let service = AddTokenService(account: account, blockchainService: blockchainService, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
 
         let viewController = AddTokenViewController(

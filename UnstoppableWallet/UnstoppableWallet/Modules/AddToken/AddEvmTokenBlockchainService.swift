@@ -5,19 +5,40 @@ import HsToolKit
 import EthereumKit
 import CoinKit
 
-protocol IAddEvmTokenResolver {
-    var apiUrl: String { get }
-    var explorerKey: String { get }
-    func coinType(address: String) -> CoinType
-}
-
 class AddEvmTokenBlockchainService {
-    private let resolver: IAddEvmTokenResolver
+    private let networkType: NetworkType
+    private let appConfigProvider: IAppConfigProvider
     private let networkManager: NetworkManager
 
-    init(resolver: IAddEvmTokenResolver, networkManager: NetworkManager) {
-        self.resolver = resolver
+    init(networkType: NetworkType, appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
+        self.networkType = networkType
+        self.appConfigProvider = appConfigProvider
         self.networkManager = networkManager
+    }
+
+    private var apiUrl: String {
+        switch networkType {
+        case .ethMainNet: return "https://api.etherscan.io"
+        case .bscMainNet: return "https://api.bscscan.com"
+        case .ropsten: return "https://api-ropsten.etherscan.io"
+        case .rinkeby: return "https://api-rinkeby.etherscan.io"
+        case .kovan: return "https://api-kovan.etherscan.io"
+        case .goerli: return "https://api-goerli.etherscan.io"
+        }
+    }
+
+    var explorerKey: String {
+        switch networkType {
+        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return appConfigProvider.etherscanKey
+        case .bscMainNet: return appConfigProvider.bscscanKey
+        }
+    }
+
+    func coinType(address: String) -> CoinType {
+        switch networkType {
+        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return .erc20(address: address)
+        case .bscMainNet: return .bep20(address: address)
+        }
     }
 
 }
@@ -29,7 +50,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
     }
 
     func coinType(reference: String) -> CoinType {
-        resolver.coinType(address: reference.lowercased())
+        coinType(address: reference.lowercased())
     }
 
     func coinSingle(reference: String) -> Single<Coin> {
@@ -41,12 +62,13 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
             "contractaddress": reference,
             "page": 1,
             "offset": 1,
-            "apikey": resolver.explorerKey
+            "apikey": explorerKey
         ]
 
-        let request = networkManager.session.request(resolver.apiUrl, parameters: parameters)
+        let url = "\(apiUrl)/api"
+        let request = networkManager.session.request(url, parameters: parameters)
 
-        return networkManager.single(request: request, mapper: ApiMapper(coinType: resolver.coinType(address: reference)) )
+        return networkManager.single(request: request, mapper: ApiMapper(coinType: coinType(address: reference)) )
     }
 
 }
