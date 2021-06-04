@@ -31,9 +31,25 @@ class TransactionInfoPresenter {
         case .dash:
             explorerData = .init(title: "dash.org", url: testMode ? nil : "https://insight.dash.org/insight/tx/" + hash)
         case .ethereum, .erc20:
-            explorerData = .init(title: "etherscan.io", url: testMode ? "https://ropsten.etherscan.io/tx/" + hash : "https://etherscan.io/tx/" + hash)
+            let domain: String
+
+            switch interactor.ethereumNetworkType(account: wallet.account) {
+            case .ropsten: domain = "ropsten.etherscan.io"
+            case .rinkeby: domain = "rinkeby.etherscan.io"
+            case .kovan: domain = "kovan.etherscan.io"
+            case .goerli: domain = "goerli.etherscan.io"
+            default: domain = "etherscan.io"
+            }
+
+            explorerData = .init(title: "etherscan.io", url: "https://\(domain)/tx/" + hash)
         case .binanceSmartChain, .bep20:
-            explorerData = .init(title: "bscscan.com", url: testMode ? nil : "https://bscscan.com/tx/" + hash)
+            let domain: String
+
+            switch interactor.binanceSmartChainNetworkType(account: wallet.account) {
+            default: domain = "bscscan.com"
+            }
+
+            explorerData = .init(title: "bscscan.com", url: testMode ? nil : "https://\(domain)/tx/" + hash)
         case .bep2:
             explorerData = .init(title: "binance.org", url: testMode ? "https://testnet-explorer.binance.org/tx/" + hash : "https://explorer.binance.org/tx/" + hash)
         case .zcash:
