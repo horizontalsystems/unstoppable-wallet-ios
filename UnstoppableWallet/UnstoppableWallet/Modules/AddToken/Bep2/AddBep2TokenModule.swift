@@ -2,12 +2,17 @@ import ThemeKit
 
 struct AddBep2TokenModule {
 
-    static func viewController() -> UIViewController {
+    static func viewController() -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount else {
+            return nil
+        }
+
         let blockchainService = AddBep2TokenBlockchainService(
                 appConfigProvider: App.shared.appConfigProvider,
                 networkManager: App.shared.networkManager
         )
-        let service = AddTokenService(blockchainService: blockchainService, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager, accountManager: App.shared.accountManager)
+
+        let service = AddTokenService(account: account, blockchainService: blockchainService, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
 
         let viewController = AddTokenViewController(

@@ -14,7 +14,9 @@ class AddTokenSelectorRouter {
 extension AddTokenSelectorRouter: IAddTokenSelectorRouter {
 
     func closeAndShowAddErc20Token() {
-        let module = AddErc20TokenModule.viewController()
+        guard let module = AddErc20TokenModule.viewController() else {
+            return
+        }
 
         viewController?.dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(module, animated: true)
@@ -22,7 +24,9 @@ extension AddTokenSelectorRouter: IAddTokenSelectorRouter {
     }
 
     func closeAndShowAddBep20Token() {
-        let module = AddBep20TokenModule.viewController()
+        guard let module = AddBep20TokenModule.viewController() else {
+            return
+        }
 
         viewController?.dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(module, animated: true)
@@ -30,7 +34,9 @@ extension AddTokenSelectorRouter: IAddTokenSelectorRouter {
     }
 
     func closeAndShowAddBep2Token() {
-        let module = AddBep2TokenModule.viewController()
+        guard let module = AddBep2TokenModule.viewController() else {
+            return
+        }
 
         viewController?.dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(module, animated: true)
