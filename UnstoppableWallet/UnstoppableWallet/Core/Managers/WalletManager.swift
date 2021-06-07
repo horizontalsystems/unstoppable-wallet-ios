@@ -7,13 +7,11 @@ class WalletManager {
     private let kitCleaner: IKitCleaner
     private let disposeBag = DisposeBag()
 
-    private let subject = PublishSubject<[Wallet]>()
     private let activeWalletsRelay = PublishRelay<[Wallet]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
     private let activeWalletsQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager.active_wallets", qos: .userInitiated)
 
-    private var cachedWallets = [Wallet]()
     private var cachedActiveWallets = [Wallet]()
 
     init(accountManager: IAccountManager, storage: IWalletStorage, kitCleaner: IKitCleaner) {
@@ -22,10 +20,7 @@ class WalletManager {
         self.kitCleaner = kitCleaner
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in self?.handleUpdate(activeAccount: $0) }
-    }
-
-    private func notify() {
-        subject.onNext(cachedWallets)
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }
     }
 
     private func notifyActiveWallets() {
@@ -41,6 +36,11 @@ class WalletManager {
         }
     }
 
+    private func handleDelete(account: Account) {
+        let accountWallets = storage.wallets(account: account)
+        storage.handle(newWallets: [], deletedWallets: accountWallets)
+    }
+
 }
 
 extension WalletManager: IWalletManager {
@@ -53,22 +53,10 @@ extension WalletManager: IWalletManager {
         activeWalletsRelay.asObservable()
     }
 
-    var wallets: [Wallet] {
-        queue.sync { cachedWallets }
-    }
-
-    var walletsUpdatedObservable: Observable<[Wallet]> {
-        subject.asObservable()
-    }
-
     func preloadWallets() {
-        let wallets = storage.wallets(accounts: accountManager.accounts)
         let activeWallets = accountManager.activeAccount.map { storage.wallets(account: $0) } ?? []
 
         queue.async {
-            self.cachedWallets = wallets
-            self.notify()
-
             self.cachedActiveWallets = activeWallets
             self.notifyActiveWallets()
         }
@@ -82,10 +70,6 @@ extension WalletManager: IWalletManager {
         storage.handle(newWallets: newWallets, deletedWallets: deletedWallets)
 
         queue.async {
-            self.cachedWallets.append(contentsOf: newWallets)
-            self.cachedWallets.removeAll { deletedWallets.contains($0) }
-            self.notify()
-
             let activeAccount = self.accountManager.activeAccount
             self.cachedActiveWallets.append(contentsOf: newWallets.filter { $0.account == activeAccount })
             self.cachedActiveWallets.removeAll { deletedWallets.contains($0) }

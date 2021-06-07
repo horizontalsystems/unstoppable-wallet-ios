@@ -55,7 +55,6 @@ class App {
     let adapterManager: IAdapterManager
 
     private let testModeIndicator: TestModeIndicator
-    private let walletRemover: WalletRemover
 
     var remoteAlertManager: IRemoteAlertManager
     let priceAlertManager: IPriceAlertManager
@@ -166,7 +165,6 @@ class App {
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
-        walletRemover = WalletRemover(accountManager: accountManager, walletManager: walletManager)
 
         let priceAlertRequestStorage: IPriceAlertRequestStorage = PriceAlertRequestStorage(storage: storage)
         remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, jsonSerializer: JsonSerializer(), storage: priceAlertRequestStorage)

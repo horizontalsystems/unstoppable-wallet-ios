@@ -71,9 +71,6 @@ protocol IWalletManager: AnyObject {
     var activeWallets: [Wallet] { get }
     var activeWalletsUpdatedObservable: Observable<[Wallet]> { get }
 
-    var wallets: [Wallet] { get }
-    var walletsUpdatedObservable: Observable<[Wallet]> { get }
-
     func preloadWallets()
 
     func wallets(account: Account) -> [Wallet]
