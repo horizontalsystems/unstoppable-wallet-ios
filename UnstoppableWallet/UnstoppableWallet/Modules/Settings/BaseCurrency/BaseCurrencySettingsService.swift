@@ -16,7 +16,7 @@ class BaseCurrencySettingsService {
         self.currencyKit = currencyKit
 
         var popularCurrencies = [Currency]()
-        var cryptoCurrencies = [Currency]()
+        let cryptoCurrencies = [Currency]()
         var currencies = currencyKit.currencies
 
         for code in BaseCurrencySettingsService.popularCurrencyCodes {
