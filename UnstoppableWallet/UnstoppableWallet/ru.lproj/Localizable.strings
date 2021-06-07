@@ -2,7 +2,7 @@
 "coin.BCH" = "Bitcoin Cash";
 "coin.ETH" = "Ethereum";
 
-"button.ok" = "OK";
+"button.ok" = "Хорошо";
 "button.apply" = "Применить";
 "button.cancel" = "Отменить";
 "button.close" = "Закрыть";
@@ -39,7 +39,7 @@
 "offline" = "Не доступен";
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
-"price" = "Price";
+"price" = "Цена";
 "note" = "Примечание";
 
 "version" = "Версия %@";
