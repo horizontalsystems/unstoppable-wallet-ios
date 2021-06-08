@@ -318,7 +318,7 @@
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
 "market_discovery.filter_title.lending" = "Lending";
-"market_discovery.filter_title.privacy" = "Privacy";
+"market_discovery.filter_title.privacy" = "Конфиденциальность";
 "market_discovery.filter_title.scaling" = "Scaling";
 "market_discovery.filter_title.oracles" = "Oracles";
 "market_discovery.filter_title.prediction_markets" = "Prediction";
@@ -368,40 +368,40 @@
 "market_discovery.filter_description.b2b" = "Поставщики услуг B2B.";
 "market_discovery.filter_description.infrastructure" = "Проекты по созданию инфраструктурных решений.";
 "market_discovery.filter_description.staking_eth_2_0" = "Прибыльные протоколы для поставщиков ликвидности.";
-"market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
-"market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
-"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
-"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
+"market_discovery.filter_description.cross_chain" = "Кросс-чейн протоколы.";
+"market_discovery.filter_description.computing" = "Децентрализованные компьютерные решения по требованию.";
+"market_discovery.filter_description.fan_tokens" = "Цифровые фан-токены, обычно используемые командой или клубом.";
+"market_discovery.filter_description.investment_tools" = "Аналитика токенов и инвестиционных инструментов.";
 
-"market_watchlist.empty.caption" = "Watchlist is empty. \nYou may add coins to watchlist using star icon on a coin page.";
+"market_watchlist.empty.caption" = "У вас нет отслеживаемых токенов. \nВы можете добавить сюда токены с помощью значка со звездочкойна странице токенов.";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.search.title" = "Поиск";
+"market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Advanced Search";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.title" = "Расширенный поиск";
+"market.advanced_search.show_results" = "Показать результаты";
+"market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.24h" = "24ч";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.market_parameters" = "Параметры рынка";
+"market.advanced_search.price_parameters" = "Параметры цены";
+"market.advanced_search.choose_set" = "Выбрать набор";
+"market.advanced_search.market_cap" = "Рыночная капитализация";
+"market.advanced_search.volume" = "Объем торговли";
+"market.advanced_search.liquidity" = "Ликвидность DEX";
+"market.advanced_search.price_period" = "Ценовой период";
+"market.advanced_search.price_change" = "Изменение цены";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "Обошел BTC";
+"market.advanced_search.outperformed_eth" = "Обошел ETH";
+"market.advanced_search.outperformed_bnb" = "Обошел BNB";
+"market.advanced_search.price_close_to_ath" = "Цена близка к ATH";
+"market.advanced_search.price_close_to_atl" = "Цена близка к ATL";
 
-"market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.top" = "Топ %d";
+"market.advanced_search.reset_all" = "Сбросить";
 
-"market.advanced_search.any" = "Any";
+"market.advanced_search.any" = "Любые";
 "market.advanced_search.less_5_m" = "< 5М";
 "market.advanced_search.m_5_m_20" = "5М - 20М";
 "market.advanced_search.m_20_m_100" = "20М - 100М";
@@ -409,27 +409,27 @@
 "market.advanced_search.b_1_b_5" = "1B - 5B";
 "market.advanced_search.more_5_b" = "> 5B";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 день";
+"market.advanced_search.week" = "1 неделя";
+"market.advanced_search.week2" = "2 недели";
+"market.advanced_search.month" = "1 месяц";
+"market.advanced_search.month6" = "6 месяцев";
+"market.advanced_search.year" = "1 год";
 
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.title" = "Доминирование Bitcoin";
+"market.global.volume_24h.title" = "Объем";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
 
-"market.global.subtitle" = "Chart";
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
-"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
-"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+"market.global.subtitle" = "График";
+"market.global.btc_dominance.title" = "Доминирование Bitcoin";
+"market.global.volume_24h.title" = "Объем";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка наоборот.";
+"market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
+"market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном финансовом секторе.";
+"market.global.tvl_in_defi.description" = "Историческое изменение в совокупной стоимости всех криптовалют, управляемых децентрализованными протоколами.";
 
 // Coin Page
 
@@ -697,17 +697,17 @@
 "chart.price_indicator_range.year" = "Диапазон за 52 недели";
 
 "chart.market.header" = "Рынок";
-"chart.market.market_cap" = "Market Cap";
-"chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.market_cap" = "Рыночная капитализация";
+"chart.market.volume" = "Объем (за 24 ч)";
+"chart.market.circulation" = "В обороте";
+"chart.market.total_supply" = "Общее предложение";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Изменения (за неделю)";
+"chart.performance.month_changes" = "Изменения (за месяц)";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "Информация о приложении";
+"chart.about.read_more" = "Подробнее";
+"chart.about.read_less" = "Свернуть";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -751,12 +751,12 @@
 "intro.next" = "Далее";
 "intro.start" = "Начать";
 "intro.brand.description" = "Be Unstoppable";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "Вывести активы";
+"intro.unchain_assets.description" = "Не закрывайтесь и не позволяйте другим делать это с вами";
+"intro.go_borderless.title" = "Освободите себя!";
+"intro.go_borderless.description" = "Преодолейте условные препятствия и получите глобальный доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте конфиденциальность";
+"intro.stay_private.description" = "Не допускайте глобальную утечку ваших личных и финансовых данных";
 
 // Guides
 
@@ -865,8 +865,8 @@
 
 "manage_account.name" = "Имя";
 "manage_account.show_recovery_phrase" = "Показать Фразу";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.network_settings" = "Network Settings";
+"manage_account.backup_recovery_phrase" = "Резервная фраза";
+"manage_account.network_settings" = "Настройки сети";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -878,4 +878,4 @@
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "Настройки сети";
