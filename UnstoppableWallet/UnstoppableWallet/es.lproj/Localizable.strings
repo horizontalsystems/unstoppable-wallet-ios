@@ -350,56 +350,56 @@
 "market_discovery.filter_description.oracles" = "Conectando información del mundo real con Contratos Inteligentes.";
 "market_discovery.filter_description.prediction_markets" = "Mercados para apostar en futuros eventos.";
 "market_discovery.filter_description.yield_aggregators" = "Soluciones para ganar desde activos crypto inactivos.";
-"market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
-"market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
-"market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
-"market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
-"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
-"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
-"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
-"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
+"market_discovery.filter_description.fiat_stablecoins" = "Tokens de Crypto vinculados 1 a 1 a una moneda Fiat.";
+"market_discovery.filter_description.rebase_tokens" = "Tokens que periódicamente ajustan la oferta para lograr un precio objetivo.";
+"market_discovery.filter_description.algo_stablecoins" = "Stablecoins con vinculación algorítmica de 1 a 1 a fiat.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Tokens Crypto vinculados 1 a 1 al precio del Bitcoin.";
+"market_discovery.filter_description.stablecoin_issuers" = "Emisores descentralizados de tokens de monedas estables vinculadas a moneda fiat.";
+"market_discovery.filter_description.exchange_tokens" = "Tokens emitidos por intercambios centralizados.";
+"market_discovery.filter_description.risk_management" = "Evaluación de riesgos, seguros y coberturas.";
+"market_discovery.filter_description.wallets" = "Tokens emitidos por monederos de criptomonedas.";
+"market_discovery.filter_description.synthetics" = "Plataformas para la creación de activos sintéticos descentralizados.";
+"market_discovery.filter_description.index_funds" = "Activos que se vinculan con el precio de un conjunto de tokens.";
+"market_discovery.filter_description.nft" = "Mercados de tokens NFT.";
+"market_discovery.filter_description.fundraising" = "Plataformas de recaudación de fondos y venta de tokens.";
 "market_discovery.filter_description.gaming" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.b2b" = "B2B service providers.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
-"market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
-"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
-"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
+"market_discovery.filter_description.b2b" = "Proveedores de servicio B2B.";
+"market_discovery.filter_description.infrastructure" = "Proyectos de construcción de soluciones para infraestructura.";
+"market_discovery.filter_description.staking_eth_2_0" = "Protocolos que recompensan a los proveedores de liquidez.";
+"market_discovery.filter_description.cross_chain" = "Protocolos de Cadena Cruzada.";
+"market_discovery.filter_description.computing" = "Soluciones informáticas descentralizadas bajo demanda.";
+"market_discovery.filter_description.fan_tokens" = "Tokens de aficionados digitales, normalmente específicas de un equipo o club.";
+"market_discovery.filter_description.investment_tools" = "Instrumentos de inversión y análisis basados ​​en tokens.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.search.title" = "Búsqueda";
+"market.search.empty_text" = "No se han encontrado resultados";
 
-"market.advanced_search.title" = "Advanced Search";
-"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.title" = "Búsqueda Avanzada";
+"market.advanced_search.show_results" = "Mostrar Resultados";
 "market.advanced_search.dex_description" = "Esta opción se aplica a las fichas negociadas en Ethereum (Uniswap DEX) y Binance Smart Chain (Pancake DEX).";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.24h" = "24 horas";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.market_parameters" = "Parámetros de Mercado";
+"market.advanced_search.price_parameters" = "Parámetros de Precio";
+"market.advanced_search.choose_set" = "Elegir Conjunto";
+"market.advanced_search.market_cap" = "Capitalización del Mercado";
+"market.advanced_search.volume" = "Volumen de Comercio";
+"market.advanced_search.liquidity" = "Liquidez DEX";
+"market.advanced_search.price_period" = "Período de Precio";
+"market.advanced_search.price_change" = "Cambio de Precio";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "BTC superado";
+"market.advanced_search.outperformed_eth" = "ETH superado";
+"market.advanced_search.outperformed_bnb" = "BNB superado";
+"market.advanced_search.price_close_to_ath" = "Precio cercano a ATH";
+"market.advanced_search.price_close_to_atl" = "Precio cercano a ATL";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.reset_all" = "Reiniciar";
 
-"market.advanced_search.any" = "Any";
+"market.advanced_search.any" = "Cualquier";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.m_5_m_20" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
@@ -407,37 +407,37 @@
 "market.advanced_search.b_1_b_5" = "1B - 5B";
 "market.advanced_search.more_5_b" = "> 5B";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1 día";
+"market.advanced_search.week" = "1 Semana";
+"market.advanced_search.week2" = "2 Semanas";
+"market.advanced_search.month" = "1 Mes";
+"market.advanced_search.month6" = "6 Meses";
+"market.advanced_search.year" = "1 Año";
 
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.btc_dominance.title" = "Dominio Bitcoin";
+"market.global.volume_24h.title" = "Volumen";
+"market.global.defi_cap.title" = "Capitalización DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 
-"market.global.subtitle" = "Chart";
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
-"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
-"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+"market.global.subtitle" = "Diagrama";
+"market.global.btc_dominance.title" = "Dominio Bitcoin";
+"market.global.volume_24h.title" = "Volumen";
+"market.global.defi_cap.title" = "Capitalización DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
+"market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
+"market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
+"market.global.tvl_in_defi.description" = "El cambio histórico en el valor acumulado de toda criptomoneda administrado por protocolos descentralizados.";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hour";
-"coin_page.roi.hour24" = "1 Day";
-"coin_page.roi.day7" = "1 Week";
-"coin_page.roi.day14" = "2 Weeks";
-"coin_page.roi.day30" = "1 Month";
+"coin_page.roi.hour1" = "1 Hora";
+"coin_page.roi.hour24" = "1 Día";
+"coin_page.roi.day7" = "1 Semana";
+"coin_page.roi.day14" = "2 Semanas";
+"coin_page.roi.day30" = "1 Mes";
 "coin_page.roi.day200" = "6 Months";
-"coin_page.roi.year1" = "1 Year";
+"coin_page.roi.year1" = "1 Año";
 
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
@@ -750,12 +750,12 @@ poner en peligro la seguridad de mis fondos.";
 "intro.next" = "Siguiente";
 "intro.start" = "Comienzo";
 "intro.brand.description" = "Be Unstoppable";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "Desencadenar Activos";
+"intro.unchain_assets.description" = "No te encierres y no dejes que otros te hagan eso";
+"intro.go_borderless.title" = "Actúa sin Fronteras";
+"intro.go_borderless.description" = "Supere las barreras condicionales y acceda a los mercados a nivel mundial";
+"intro.stay_private.title" = "Manténgase en Privado";
+"intro.stay_private.description" = "No filtre sus datos privados y financieros al resto del mundo";
 
 // Guides
 
@@ -865,7 +865,7 @@ poner en peligro la seguridad de mis fondos.";
 "manage_account.name" = "Nombre";
 "manage_account.show_recovery_phrase" = "Mostrar Frase";
 "manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
-"manage_account.network_settings" = "Network Settings";
+"manage_account.network_settings" = "Configuración de Red";
 "manage_account.unlink" = "Desenlazar";
 
 // Birthday Input
@@ -877,4 +877,4 @@ poner en peligro la seguridad de mis fondos.";
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "Configuración de Red";
