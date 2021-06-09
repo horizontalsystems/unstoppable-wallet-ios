@@ -295,8 +295,8 @@
 "market.sync_error" = "Ошибка синхронизации";
 
 "market.top.section.header.see_all" = "Посмотреть все";
-"market.top.section.header.top_gainers" = "Топ гейнеров";
-"market.top.section.header.top_losers" = "Топ лузеров";
+"market.top.section.header.top_gainers" = "Топ Лучших";
+"market.top.section.header.top_losers" = "Топ Проигравших";
 "market.top.section.header.top_volume" = "Топ по объему";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объём";
