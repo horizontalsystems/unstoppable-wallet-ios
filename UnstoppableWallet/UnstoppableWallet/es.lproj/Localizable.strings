@@ -346,10 +346,10 @@
 "market_discovery.filter_description.dexes" = "Intercambio Descentralizado de Cryptomonedas.";
 "market_discovery.filter_description.lending" = "Protocolos para préstamos y para pedir prestado.";
 "market_discovery.filter_description.privacy" = "Proyectos que trabajan en soluciones de privacidad.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
+"market_discovery.filter_description.scaling" = "Soluciones para transacciones más rápidas en blockchain.";
+"market_discovery.filter_description.oracles" = "Conectando información del mundo real con Contratos Inteligentes.";
+"market_discovery.filter_description.prediction_markets" = "Mercados para apostar en futuros eventos.";
+"market_discovery.filter_description.yield_aggregators" = "Soluciones para ganar desde activos crypto inactivos.";
 "market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
 "market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust supply to achieve a target price.";
 "market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1-1 price peg to fiat.";
