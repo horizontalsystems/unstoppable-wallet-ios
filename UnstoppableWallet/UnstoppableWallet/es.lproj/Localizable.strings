@@ -32,7 +32,7 @@
 "offline" = "Desconectado";
 "confirm" = "Confirmar";
 "connect" = "Conectar";
-"price" = "Price";
+"price" = "Precio";
 "note" = "Nota";
 
 "version" = "Versión %@";
@@ -279,39 +279,39 @@
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.discovery" = "Discovery";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total Market Cap";
-"market.24h_volume" = "24h Volume";
-"market.btc_dominance" = "BTC Dominance";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.tab_bar_item" = "Mercados";
+"market.title" = "Mercados";
+"market.category.overview" = "Información General";
+"market.category.discovery" = "Descubrimiento";
+"market.category.watchlist" = "Lista de Seguimiento";
+"market.total_market_cap" = "Capitalización Total del Mercado";
+"market.24h_volume" = "Volumen de 24 horas";
+"market.btc_dominance" = "Dominio de BTC";
+"market.defi_cap" = "Capitalización de Finanzas Decentralizadas";
+"market.defi_tvl" = "TVL en DeFi";
 
-"market.sync_error" = "Sync Error";
+"market.sync_error" = "Error de Sincronización";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_volume" = "Top By Volume";
-"market.top.section.header.news" = "News";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.section.header.see_all" = "Ver Todos";
+"market.top.section.header.top_gainers" = "Máximos Ganadores";
+"market.top.section.header.top_losers" = "Máximos Perdedores";
+"market.top.section.header.top_volume" = "Mejores por Volumen";
+"market.top.section.header.news" = "Noticias";
+"market.top.volume.title" = "Volumen";
+"market.top.market_cap.title" = "Capitalización de Mercado";
+"market.top.diluted_market_cap.title" = "Capitalización de Mercado Diliuída";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
+"market.market_field.mcap" = "Capitalización de Mercado";
+"market.market_field.vol" = "Volumen";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Ordenar por";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
+"market.top.highest_cap" = "Capitalización Mayor";
+"market.top.lowest_cap" = "Capitalización Menor";
+"market.top.highest_volume" = "Mayor Volumen";
+"market.top.lowest_volume" = "Menor Volumen";
+"market.top.top_gainers" = "Máximos Ganadores";
+"market.top.top_losers" = "Máximos Perdedores";
 
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
@@ -325,27 +325,27 @@
 "market_discovery.filter_title.rebase_tokens" = "Rebase Tokens";
 "market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
-"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.risk_management" = "Risk Management";
-"market_discovery.filter_title.wallets" = "Wallets";
-"market_discovery.filter_title.synthetics" = "Synthetics";
-"market_discovery.filter_title.index_funds" = "Index Funds";
+"market_discovery.filter_title.stablecoin_issuers" = "Emisores de Stablecoin";
+"market_discovery.filter_title.exchange_tokens" = "Intercambiar Tokens";
+"market_discovery.filter_title.risk_management" = "Gestión de Riesgo";
+"market_discovery.filter_title.wallets" = "Monederos";
+"market_discovery.filter_title.synthetics" = "Sintéticos";
+"market_discovery.filter_title.index_funds" = "Indexar Fondos";
 "market_discovery.filter_title.nft" = "NFT";
-"market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming";
+"market_discovery.filter_title.fundraising" = "Recaudación de Fondos";
+"market_discovery.filter_title.gaming" = "Juego de Azar";
 "market_discovery.filter_title.b2b" = "B2B";
-"market_discovery.filter_title.infrastructure" = "Infrastructure";
-"market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cross-Chain";
+"market_discovery.filter_title.infrastructure" = "Infraestructura";
+"market_discovery.filter_title.staking_eth_2_0" = "Guardar ETH 2.0";
+"market_discovery.filter_title.cross_chain" = "Cadena Cruzada";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
 
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Projects working on privacy solutions.";
+"market_discovery.filter_description.blockchain" = "Criptomonedas Nativas en las principales Blockchains.";
+"market_discovery.filter_description.dexes" = "Intercambio Descentralizado de Cryptomonedas.";
+"market_discovery.filter_description.lending" = "Protocolos para préstamos y para pedir prestado.";
+"market_discovery.filter_description.privacy" = "Proyectos que trabajan en soluciones de privacidad.";
 "market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
 "market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
