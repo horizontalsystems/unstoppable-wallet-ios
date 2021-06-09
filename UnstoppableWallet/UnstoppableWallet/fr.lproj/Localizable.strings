@@ -1,7 +1,3 @@
-"coin.BTC" = "Bitcoin";
-"coin.BCH" = "Bitcoin Cash";
-"coin.ETH" = "Ethereum";
-
 "button.ok" = "OK";
 "button.apply" = "Appliquer";
 "button.cancel" = "Annuler";
@@ -10,11 +6,9 @@
 "button.restore" = "Restaurer";
 "button.next" = "Suivant";
 "button.share" = "Partager";
-"button.sync" = "Sync";
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
 "button.copy" = "Copier";
-"button.back" = "Retour";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
 "button.add" = "Ajouter";
@@ -27,7 +21,6 @@
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
-"alert.network_issue" = "Problèmes réseau. Réessayez";
 "alert.unknown_error" = "Erreur inconnue";
 
 "action.loading" = "chargement en cours...";
@@ -53,12 +46,6 @@
 "access_camera.message" = "Unstoppable a besoin d'accéder à votre caméra pour scanner le code QR.\n\nAllez dans Paramètres - > Unstoppable et autorisez l'accès à la caméra.";
 "access_camera.settings" = "Paramètres";
 
-// Welcome
-
-"welcome.new_wallet" = "Nouveau Porte-Monnaie";
-"welcome.restore_wallet" = "Restaurer le porte-monnaie";
-"welcome.privacy_settings" = "Paramètres de Confidentialité";
-
 // Restore
 
 "restore.title" = "Choisissez le portefeuille";
@@ -77,24 +64,12 @@
 "coin_settings.derivation.description.bip49" = "Populaire";
 "coin_settings.derivation.description.bip84" = "Plus récent";
 "coin_settings.derivation.starts_with" = "commence par %@...";
-"coin_settings.derivation.description_create" = "Ce paramètre contrôle le format de l'adresse du Bitcoin dans ce portefeuille. Nous recommandons d'utiliser BIP49 en cas de doute.";
-"coin_settings.derivation.description_restore" = "Sélectionnez le format de l'adresse du Bitcoin dans le portefeuille que vous essayez de restaurer.";
 "coin_settings.title" = "Paramètres de la Blockchain";
-"coin_settings.sync_mode.title" = "Restaurer la source";
-"coin_settings.sync_mode.fast.description" = "0 - 2 heures, recommandé";
-"coin_settings.sync_mode.slow.description" = "1-24 heures";
-"coin_settings.sync_mode.description" = "Liens vers les sources de l'API : \nbtc.horizontalsystems.xyz/apg\ndash.horizontalsystems.xyz/apg\nbch.horizontalsystems.xyz/apg \n \n";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Nouveau";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Portefeuilles plus anciens (avant août 2017)";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Portefeuilles plus récents";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.change_alert.title" = "Format de l'adresse";
-"blockchain_settings.change_alert.content" = "Après ce changement, le portefeuille devra se resynchroniser avec la blockchain %@.\n\nSi vous changez le format d'adresse pour %@ , l'historique du solde actuel et des transactions ne sera plus visible. Si vous revenez au paramètre précédent, tout sera remis en place une fois que le portefeuille se sera resynchronisé avec la blockchain. Nous vous recommandons de ne pas faire de modification si vous n'êtes pas sûr de vous.";
-"blockchain_settings.change_alert.action_button_text" = "Changer en %@";
-"blockchain_settings.sync_mode_change_alert.content" = "Si vous avez activé l'un de ces tokens, l'application Unstoppable devra se resynchroniser avec les blockchains Bitcoin, Bitcoin Cash et Dash. Votre solde ou vos transactions ne seront pas affectés.\n\nNous vous recommandons de ne pas modifier ce paramètre si vous n'êtes pas sûr de sa fonction.";
-"blockchain_settings.sync_mode.blockchain" = "Blockchain";
-"blockchain_settings.sync_mode.api" = "API";
 "blockchain_settings.title" = "Format de l'adresse";
 "blockchain_settings.description" = "Choisissez le format d'adresse de votre portefeuille %@. Chaque format sélectionné représente un portefeuille différent dans l'onglet du solde de l'application.";
 
@@ -126,29 +101,14 @@
 
 // Backup
 
-"backup.close" = "Fermer";
 "backup.backup_required" = "Sauvegarde requise";
-"backup.private_key" = "Clé privée";
-
-"backup.intro.title_backup" = "Sauvegarde";
-"backup.intro.title_show" = "Voir la clé";
-"backup.intro.subtitle" = "La clé privée qui va s'afficher est le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc. \n\nAssurez-vous que personne ne regarde votre écran.\n\nLes pièces sont contrôlées grâce à cette clé : %@.";
-"backup.intro.later" = "Plus tard";
-"backup.intro.backup_now" = "Sauvegarde";
-"backup.intro.show_key" = "Voir la clé";
-
-"backup.words.confirmation_description" = "Entrez les mots de votre clé %@";
 
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
-"error.send_ethereum.wrong_parameters" = "Paramètres erronés";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
 "error.send_z_cash.transparent_address" = "Unstoppable ne prend pas en charge les paiements à une adresse transparente";
 
 "backup.confirmation.title" = "Vérification...";
-
-"words_validator.empty_words" = "Tous les mots ne sont pas entrés";
-"words_validator.invalid_confirmation" = "Les mots ne correspondent pas";
 
 // Balance
 
@@ -197,8 +157,6 @@
 "send.tx_speed_high" = "Élevée";
 "send.tx_speed_custom" = "Personnalisé";
 "send.tx_duration" = "Durée ";
-"send.duration.instant" = "Instantané";
-"send.duration.within" = "dans la limite de %@";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Solde disponible";
@@ -262,16 +220,12 @@
 "swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation.\n\nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
-"swap.amount_error.maximum_amount" = "Balance %@";
-"swap.amount_error.no_balance" = "Impossible d'analyser le solde pour le token";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
-"swap.error.insufficient_fee_alert" = "Frais de transaction payés en %@. Vous avez besoin de %@.";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.button_error.impact_too_high" = "Impact élevé sur les prix";
 
 "swap.price" = "Prix";
 "swap.price_impact" = "Impact prix";
-"swap.max_min" = "Max / Min";
 "swap.maximum_paid" = "Montant maximum payé";
 "swap.minimum_got" = "Montant minimum reçu";
 
@@ -284,18 +238,11 @@
 "swap.advanced_settings.recipient.footer" = "Le montant sera transféré à l'adresse indiquée après l'opération de change";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Adresse du destinataire";
-"swap.advanced_settings.recipient_domain" = "Domaine du bénéficiaire";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
 "swap.advanced_settings.error.higher_slippage" = "La valeur maximale autorisée est %@%%.";
 "swap.advanced_settings.error.invalid_address" = "Addresse invalide";
 "swap.advanced_settings.error.invalid_slippage" = "Slippage invalide";
 "swap.advanced_settings.error.invalid_deadline" = "Date limite invalide";
-
-"swap.fee" = "Frais d'échange";
-"swap.transactions_speed" = "Vitesse de transaction ";
-"swap.transaction_fee" = "Frais de transaction";
-
-"swap.select_token.title" = "Choisir la pièce";
 
 // Swap Approving
 
@@ -304,12 +251,9 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Échanger";
-"swap.confirmation.pay" = "Paye %@";
-"swap.confirmation.get" = "Reçoit %@";
 "swap.confirmation.guaranteed" = "Garanti";
 "swap.confirmation.maximum" = "Maximum";
 "swap.confirmation.estimated" = "Estimé";
-
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
 
@@ -358,11 +302,9 @@
 "market.top.diluted_market_cap.title" = "Diluted MCap";
 
 "market.market_field.mcap" = "MCap";
-"market.diluted_market_field.mcap" = "Diluted MCap";
 "market.market_field.vol" = "Volume";
 
 "market.sort_by" = "Sort By";
-"market.changes" = "Changes";
 
 "market.top.highest_cap" = "Highest Cap";
 "market.top.lowest_cap" = "Lowest Cap";
@@ -371,15 +313,6 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_losers" = "Top Losers";
 
-"market.top.period_1h" = "1 hour";
-"market.top.period_24h" = "24 hours";
-"market.top.period_day_start" = "Day Start";
-"market.top.period_one_day" = "1 day";
-"market.top.period_one_week" = "1 week";
-"market.top.period_one_month" = "1 month";
-"market.top.period_one_year" = "1 year";
-
-"market_discovery.filter_title.rated" = "Rated";
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
 "market_discovery.filter_title.lending" = "Lending";
@@ -394,7 +327,6 @@
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
 "market_discovery.filter_title.stablecoin_issuers" = "Stablecoin Issuers";
 "market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.metals" = "Metals";
 "market_discovery.filter_title.risk_management" = "Risk Management";
 "market_discovery.filter_title.wallets" = "Wallets";
 "market_discovery.filter_title.synthetics" = "Synthetics";
@@ -410,7 +342,6 @@
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
 
-"market_discovery.filter_description.rated" = "Rated based on security, volume and distribution.";
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
 "market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
 "market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
@@ -425,7 +356,6 @@
 "market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
 "market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
 "market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.metals" = "Tokens pegged to metal prices.";
 "market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
 "market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
 "market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
@@ -542,7 +472,6 @@
 "transactions.receiving" = "En réception";
 "transactions.failed" = "Échec";
 "transactions.sending" = "Envoi en cours";
-"transactions.approval" = "Validation du remplacement";
 
 // Transaction Info
 
@@ -554,7 +483,6 @@
 "tx_info.from_hash" = "De";
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
-"tx_info.input" = "Entrées";
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
@@ -572,7 +500,6 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.manage_accounts" = "Gérer les portefeuilles";
-"settings.manage_coins" = "Gérer les coins";
 "settings.experimental_features" = "Fonctionnalités expérimentales";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
@@ -596,7 +523,6 @@
 "settings_notifications.toggle_title" = "Notifications Push";
 "settings_notifications.description" = "Définissez des alertes de changement de prix pour les pièces que vous souhaitez surveiller.\n\nVous serez alerté lorsque le changement de prix des dernières 24 heures dépassera le seuil sélectionné.\n\nL'alerte de tendance de prix vous avertit d'un changement de tendance pour le court terme à 1 semaine, pour le long terme à 6 mois.";
 "settings_notifications.alert_off" = "Désactivé";
-"settings.notifications.deactivate_all" = "Tout désactiver";
 "settings.notifications.disabled_text" = "Les notifications pour l'application Unstoppable Wallet sont désactivées. Vous devez activer les notifications et autoriser le rafraîchissement de l'application en arrière-plan afin de pouvoir recevoir des alertes de changement de prix.";
 "settings.notifications.settings_button" = "Activer dans Paramètres";
 "settings_notifications.trend_short" = "Court terme 7J";
@@ -657,7 +583,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Settings -> Security
 
 "settings_security.title" = "Centre de Sécurité";
-"settings_security.blockchain_settings" = "Paramètres de la Blockchain";
 "settings_security.passcode" = "Code";
 "settings_security.privacy" = "Confidentialité";
 "settings_security.change_pin" = "Modifier le code ";
@@ -702,15 +627,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Manage Keys
 
 "settings_manage_keys.title" = "Gérer les portefeuilles";
-"settings_manage_keys.item_title" = "%@ Portefeuille";
-"settings_manage_keys.add_wallet" = "Ajouter le portefeuille";
-"settings_manage_keys.description" = "Ci-dessous vous trouverez vos portefeuilles actifs où chaque portefeuille contient un ensemble différent de cryptomonnaies. \n\nVous devriez sauvegarder chaque portefeuille surligné en sauvegardant la clé privée du portefeuille en question. Cette clé est le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.";
 "settings_manage_keys.delete" = "Supprimer";
 "settings_manage_keys.backup" = "Sauvegarde";
-"settings_manage_keys.show" = "Afficher";
 "settings_manage_keys.create" = "Créer";
 "settings_manage_keys.restore" = "Restaurer";
-"settings_manage_keys.settings" = "Format de l'adresse";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "L'action va supprimer ce portefeuille de l'appareil.";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
@@ -750,30 +670,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "unlock_pin.cant_save_pin" = "Oops! Nous ne pouvons pas enregistrer votre code, veuillez nous contacter au plus vite!";
 "unlock_pin.blocked_until" = "Désactivé jusqu'à: %@";
 
-// Rate List
-
-"rate_list.portfolio" = "Portfolio";
-"rate_list.latest_news" = "Dernières nouvelles";
-"top100_list.portfolio" = "A B C";
-"top100_list.sort_by" = "Trier par";
-"top100_list.sort_type.rank" = "Rang";
-"top100_list.sort_type.top_winners" = "Les grands gagnants";
-"top100_list.sort_type.top_losers" = "Les gros perdants";
-
-//NumPad
-
-"numpad_2" = "A B C";
-"numpad_3" = "D E F";
-"numpad_4" = "G H I";
-"numpad_5" = "J K L";
-"numpad_6" = "M N O";
-"numpad_7" = "P Q R S";
-"numpad_8" = "T U V";
-"numpad_9" = "W X Y Z";
 
 // Key Types
 
-"chart.title" = "%@ Prix";
 "chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24 h";
 "chart.time_duration.week" = "7J";
@@ -791,15 +690,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.market_cap.trillion" = "%@ T";
 "chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
-"chart.max_supply" = "Offre totale";
-"chart.start_date" = "Date de lancement";
-"chart.website" = "Site web du projet";
-"chart.error.not_available" = "Graphique non disponible";
 "chart.selected.volume" = "Volume";
-"chart.trend_neutral" = "Neutre";
-"chart.trend_down" = "Tendance à la baisse";
-"chart.trend_up" = "Tendance à la hausse";
-"chart.rating_details" = "Rating Details";
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
@@ -809,9 +700,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.market.circulation" = "In Circulation";
 "chart.market.total_supply" = "Total Supply";
 
-"chart.market.show_markets" = "%@ Markets";
-
-"chart.performance.header" = "Performance";
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
@@ -838,11 +726,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Select Coins
 
 "select_coins.choose_crypto" = "Choisissez la Crypto";
-"select_coins.next_button" = "Suivant";
-
-"price_notification.up" = "plus";
-"price_notification.down" = "moins";
-"price_notification.multi_title" = "Notifications";
 
 // Lock Info
 
@@ -866,12 +749,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "intro.next" = "Suivant";
 "intro.start" = "Commencer";
 "intro.brand.description" = "Stockez et échangez des crypto-monnaies. Ayez le contrôle total sur les actifs. Restez anonyme.";
-"intro.independence.title" = "Soyez indépendant";
-"intro.independence.description" = "Unstoppable est construit pour s'assurer que les utilisateurs sont en mesure d'accéder aux fonds à tout moment depuis n'importe où.";
-"intro.privacy.title" = "Gardez votre confidentialité";
-"intro.privacy.description" = "Utilisez ce portefeuille pour rester incognito et conserver la confidentialité de vos informations.";
-"intro.knowledge.title" = "Investissez judicieusement";
-"intro.knowledge.description" = "Unstoppable intègre des instruments inégalés de trading, de surveillance et d'analyse.";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
@@ -981,6 +864,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "manage_account.name" = "Nom";
 "manage_account.show_recovery_phrase" = "Afficher la phrase";
 "manage_account.backup_recovery_phrase" = "Sauvegarder la phrase";
+"manage_account.network_settings" = "Network Settings";
 "manage_account.unlink" = "Dissocier";
 
 // Birthday Input
@@ -989,3 +873,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "birthday_input.description" = "Si vous savez quelle est la hauteur de l'anniversaire de votre portefeuille Zcash, ajoutez-la ci-dessous pour accélérer le processus de synchronisation.";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
+
+// Network Settings
+
+"network_settings.title" = "Network Settings";
