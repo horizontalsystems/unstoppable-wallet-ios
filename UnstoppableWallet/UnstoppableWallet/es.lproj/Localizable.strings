@@ -638,7 +638,7 @@ poner en peligro la seguridad de mis fondos.";
 
 // Settings -> About App
 
-"settings.about_app.title" = "Sobre la aplicacion";
+"settings.about_app.title" = "Sobre la App";
 "settings.about_app.app_name" = "Monedero Unstoppable";
 "settings.about_app.website" = "Sitio Web";
 "settings.about_app.contact" = "Contacto";
@@ -749,7 +749,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "intro.next" = "Siguiente";
 "intro.start" = "Comienzo";
-"intro.brand.description" = "Almacene y comercie criptomonedas. Tenga control total sobre los activos. Permanezca anónimo.";
+"intro.brand.description" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Unchain Assets";
 "intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
 "intro.go_borderless.title" = "Go Borderless";
