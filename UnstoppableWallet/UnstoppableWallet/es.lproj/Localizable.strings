@@ -20,8 +20,8 @@
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.wrong_amount" = "Cantidad Incorrecta";
-"alert.no_fee" = "Tarifa incorrecta";
-"alert.unknown_error" = "Error desconocido";
+"alert.no_fee" = "Tarifa Incorrecta";
+"alert.unknown_error" = "Error Desconocido";
 
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
