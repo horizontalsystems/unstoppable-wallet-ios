@@ -120,7 +120,7 @@
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
-"balance.searching.count" = "%@ tx";
+"balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
 "balance.add_coin" = "Para Ekle";
