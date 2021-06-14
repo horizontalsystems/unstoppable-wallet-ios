@@ -8,7 +8,6 @@ class CoinSelectService {
     private let dex: SwapModule.Dex
     private let coinManager: ICoinManager
     private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
     private let rateManager: IRateManager
     private let currencyKit: CurrencyKit.Kit
 
@@ -16,11 +15,10 @@ class CoinSelectService {
 
     private(set) var items = [Item]()
 
-    init(dex: SwapModule.Dex, coinManager: ICoinManager, walletManager: IWalletManager, adapterManager: IAdapterManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModule.Dex, coinManager: ICoinManager, walletManager: IWalletManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager
-        self.adapterManager = adapterManager
         self.rateManager = rateManager
         self.currencyKit = currencyKit
 
@@ -36,16 +34,12 @@ class CoinSelectService {
     }
 
     private func loadItems() {
-        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
-            guard dexSupports(coin: wallet.coin) else {
+        var balanceCoins = walletManager.activeWallets.compactMap { activeWallet -> (coin: Coin, balance: Decimal)? in
+            guard dexSupports(coin: activeWallet.wallet.coin) else {
                 return nil
             }
 
-            guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
-                return nil
-            }
-
-            return (coin: wallet.coin, balance: adapter.balance)
+            return (coin: activeWallet.wallet.coin, balance: activeWallet.balanceData.balance)
         }
 
         balanceCoins.sort { lhsTuple, rhsTuple in

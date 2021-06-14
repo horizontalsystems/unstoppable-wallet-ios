@@ -17,7 +17,7 @@ class ActivateCoinManager {
             return
         }
 
-        guard !walletManager.activeWallets.contains(where: { $0.coin == coin }) else {
+        guard !walletManager.activeWallets.contains(where: { $0.wallet.coin == coin }) else {
             // wallet already exists
             return
         }

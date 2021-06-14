@@ -185,7 +185,7 @@ extension WalletViewModel {
             return
         }
 
-        guard let state = item.state, case let .notSynced(error) = state else {
+        guard case let .notSynced(error) = item.state else {
             return
         }
 

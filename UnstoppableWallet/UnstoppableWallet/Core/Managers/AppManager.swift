@@ -5,7 +5,6 @@ import PinKit
 class AppManager {
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: IBlurManager
@@ -21,7 +20,7 @@ class AppManager {
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: IWalletManager, adapterManager: IAdapterManager, pinKit: IPinKit,
+    init(accountManager: IAccountManager, walletManager: IWalletManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
@@ -30,7 +29,6 @@ class AppManager {
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.adapterManager = adapterManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit
         self.blurManager = blurManager
@@ -93,7 +91,7 @@ extension AppManager {
         keychainKit.handleForeground()
         pinKit.willEnterForeground()
         notificationManager.removeNotifications()
-        adapterManager.refresh()
+        walletManager.refreshWallets()
     }
 
     func willTerminate() {

@@ -15,13 +15,14 @@ class WalletViewItemFactory {
         let rateItem = item.rateItem
 
         return BalanceTopViewItem(
+                isMainNet: item.isMainNet,
                 iconCoinType: iconCoinType(coin: coin, state: state),
                 coinCode: coin.code,
                 blockchainBadge: badge(wallet: item.wallet),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
-                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceTotal, state: item.state, rateItem: rateItem),
+                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceData.balanceTotal, state: item.state, rateItem: rateItem),
                 secondaryInfo: secondaryInfo(item: item, balanceHidden: balanceHidden, expanded: expanded)
         )
     }
@@ -38,43 +39,31 @@ class WalletViewItemFactory {
     }
 
     private func secondaryInfo(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceSecondaryInfoViewItem {
-        if let state = item.state, let balance = item.balanceTotal {
-            if case let .syncing(progress, lastBlockDate) = state, expanded {
-                if let lastBlockDate = lastBlockDate {
-                    return .syncing(progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
-                } else {
-                    return .syncing(progress: nil, syncedUntil: nil)
-                }
-            } else if case let .searchingTxs(count) = state, expanded {
-                return .searchingTx(count: count)
+        if case let .syncing(progress, lastBlockDate) = item.state, expanded {
+            if let lastBlockDate = lastBlockDate {
+                return .syncing(progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
             } else {
-                return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                        coinValue: balanceHidden ? nil : coinValue(coin: item.wallet.coin, value: balance, state: state),
-                        rateValue: rateValue(rateItem: item.rateItem),
-                        diff: diff(rateItem: item.rateItem)
-                ))
-            }
-        } else {
-            if expanded {
                 return .syncing(progress: nil, syncedUntil: nil)
-            } else {
-                return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                        coinValue: nil,
-                        rateValue: rateValue(rateItem: item.rateItem),
-                        diff: diff(rateItem: item.rateItem)
-                ))
             }
+        } else if case let .searchingTxs(count) = item.state, expanded {
+            return .searchingTx(count: count)
+        } else {
+            return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                    coinValue: balanceHidden ? nil : coinValue(coin: item.wallet.coin, value: item.balanceData.balanceTotal, state: item.state),
+                    rateValue: rateValue(rateItem: item.rateItem),
+                    diff: diff(rateItem: item.rateItem)
+            ))
         }
     }
 
     private func lockedAmountViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceLockedAmountViewItem? {
-        guard let state = item.state, let balanceLocked = item.balanceLocked, !balanceHidden, expanded else {
+        guard item.balanceData.balanceLocked > 0, !balanceHidden, expanded else {
             return nil
         }
 
         return BalanceLockedAmountViewItem(
-                coinValue: coinValue(coin: item.wallet.coin, value: balanceLocked, state: state),
-                currencyValue: currencyValue(value: balanceLocked, state: state, rateItem: item.rateItem)
+            coinValue: coinValue(coin: item.wallet.coin, value: item.balanceData.balanceLocked, state: item.state),
+                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, rateItem: item.rateItem)
         )
     }
 
@@ -87,38 +76,38 @@ class WalletViewItemFactory {
 
         return BalanceButtonsViewItem(
                 sendButtonState: sendButtonsState,
-                receiveButtonState: item.state != nil ? .enabled : .disabled,
+                receiveButtonState: .enabled,
                 swapButtonState: item.wallet.coin.type.swappable ? sendButtonsState : .hidden,
                 chartButtonState: item.rateItem != nil ? .enabled : .disabled
         )
     }
 
-    private func iconCoinType(coin: Coin, state: AdapterState?) -> CoinType? {
-        if let state = state, case .notSynced = state {
-            return nil
+    private func iconCoinType(coin: Coin, state: AdapterState) -> CoinType? {
+        switch state {
+        case .notSynced: return nil
+        default: return coin.type
         }
-        return coin.type
     }
 
-    private func syncSpinnerProgress(state: AdapterState?) -> Int? {
-        if let state = state, case let .syncing(progress, _) = state {
-            return max(minimumProgress, progress)
+    private func syncSpinnerProgress(state: AdapterState) -> Int? {
+        switch state {
+        case let .syncing(progress, _): return max(minimumProgress, progress)
+        default: return nil
         }
-        return nil
     }
 
-    private func indefiniteSearchCircle(state: AdapterState?) -> Bool {
-        if let state = state, case .searchingTxs(_) = state {
-            return true
+    private func indefiniteSearchCircle(state: AdapterState) -> Bool {
+        switch state {
+        case .searchingTxs: return true
+        default: return false
         }
-        return false
     }
 
-    private func failedImageViewVisible(state: AdapterState?) -> Bool {
-        if let state = state, case .notSynced = state {
-            return true
+    private func failedImageViewVisible(state: AdapterState) -> Bool {
+        switch state {
+        case .notSynced: return true
+        default: return false
         }
-        return false
     }
 
     private func rateValue(rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool) {
@@ -152,11 +141,7 @@ class WalletViewItemFactory {
         )
     }
 
-    private func currencyValue(value: Decimal?, state: AdapterState?, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool)? {
-        guard let state = state, let value = value else {
-            return nil
-        }
-
+    private func currencyValue(value: Decimal, state: AdapterState, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool) {
         guard let rateItem = rateItem else {
             return (text: "---", dimmed: true)
         }

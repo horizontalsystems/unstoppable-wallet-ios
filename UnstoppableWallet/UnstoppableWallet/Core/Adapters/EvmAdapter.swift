@@ -89,11 +89,7 @@ extension EvmAdapter: IAdapter {
     }
 
     func refresh() {
-        // refreshed via EthereumKitManager
-    }
-
-    var debugInfo: String {
-        evmKit.debugInfo
+        evmKit.refresh()
     }
 
 }
@@ -104,16 +100,16 @@ extension EvmAdapter: IBalanceAdapter {
         convertToAdapterState(evmSyncState: evmKit.syncState)
     }
 
-    var balanceStateUpdatedObservable: Observable<Void> {
-        evmKit.syncStateObservable.map { _ in () }
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        evmKit.syncStateObservable.map { [unowned self] in self.convertToAdapterState(evmSyncState: $0) }
     }
 
-    var balance: Decimal {
-        balanceDecimal(kitBalance: evmKit.accountState?.balance, decimal: EvmAdapter.decimal)
+    var balanceData: BalanceData {
+        balanceData(balance: evmKit.accountState?.balance)
     }
 
-    var balanceUpdatedObservable: Observable<Void> {
-        evmKit.accountStateObservable.map { _ in () }
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        evmKit.accountStateObservable.map { [unowned self] in self.balanceData(balance: $0.balance) }
     }
 
 }

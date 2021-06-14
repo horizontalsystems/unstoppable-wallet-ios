@@ -14,18 +14,16 @@ class WalletRateService {
 
     private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
-    private let scheduler: ImmediateSchedulerType
     private let disposeBag = DisposeBag()
     private var latestRatesDisposeBag = DisposeBag()
 
     private var coinTypes = [CoinType]()
 
-    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager, scheduler: ImmediateSchedulerType) {
+    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
-        self.scheduler = scheduler
 
-        subscribe(scheduler, disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
             self?.onUpdate(baseCurrency: baseCurrency)
         }
     }
@@ -38,7 +36,7 @@ class WalletRateService {
     private func subscribeToLatestRates() {
         latestRatesDisposeBag = DisposeBag()
 
-        subscribe(scheduler, latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
+        subscribe(latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
             self?.onUpdate(latestRates: $0)
         }
     }

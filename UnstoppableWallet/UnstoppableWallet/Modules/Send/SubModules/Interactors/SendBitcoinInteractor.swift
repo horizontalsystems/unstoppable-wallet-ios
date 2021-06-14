@@ -20,7 +20,7 @@ class SendBitcoinInteractor {
 extension SendBitcoinInteractor: ISendBitcoinInteractor {
 
     var balance: Decimal {
-        adapter.balance
+        adapter.balanceData.balance
     }
 
     var lockTimeEnabled: Bool {

@@ -79,12 +79,12 @@ struct SwapModule {
         )
         let allowanceService = SwapAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
+                walletManager: App.shared.walletManager,
                 evmKit: evmKit
         )
         let pendingAllowanceService = SwapPendingAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
+                walletManager: App.shared.walletManager,
                 allowanceService: allowanceService
         )
         let service = SwapService(
@@ -93,7 +93,7 @@ struct SwapModule {
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                adapterManager: App.shared.adapterManager
+                walletManager: App.shared.walletManager
         )
 
         let allowanceViewModel = SwapAllowanceViewModel(service: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)

@@ -18,14 +18,6 @@ class PrivacyPresenter {
         view?.set(sortMode: interactor.sortMode.title)
     }
 
-    private func updateConnection() {
-        view?.set(connectionItems: [
-            PrivacyViewItem(iconName: "ethereum", title: "Ethereum", value: interactor.ethereumConnection.address, changable: false),
-            PrivacyViewItem(iconName: "binanceSmartChain", title: "BSC", value: "bsc-ws-node.nariox.org", changable: false),
-            PrivacyViewItem(iconName: "bep2|BNB", title: "Binance", value: "dex.binance.com", changable: false)
-        ])
-    }
-
     private func updateSync() {
         view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
     }
@@ -44,8 +36,6 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
 
     func onLoad() {
         updateSortMode()
-
-        updateConnection()
 
         if !isActiveAccountCreated {
             syncItems = interactor.syncSettings.compactMap { setting, coin, changeable in
@@ -66,15 +56,6 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         router.showSortMode(currentSortMode: interactor.sortMode, delegate: self)
     }
 
-    func onSelectConnection(index: Int) {
-//        switch index {
-//        case 0:
-//            router.showEthereumRpcMode(currentMode: interactor.ethereumConnection, delegate: self)
-//        default:
-//            return
-//        }
-    }
-
     func onSelectSync(index: Int) {
         let item = syncItems[index]
 
@@ -93,17 +74,6 @@ extension PrivacyPresenter: IPrivacySortModeDelegate {
         interactor.save(sortSetting: sortMode)
 
         updateSortMode()
-        view?.updateUI()
-    }
-
-}
-
-extension PrivacyPresenter: IPrivacyEthereumRpcModeDelegate {
-
-    func onSelect(mode: EthereumRpcMode) {
-        interactor.save(connectionSetting: mode)
-
-        updateConnection()
         view?.updateUI()
     }
 

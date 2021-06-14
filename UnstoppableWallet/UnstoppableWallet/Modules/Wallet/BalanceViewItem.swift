@@ -12,6 +12,7 @@ struct BalanceViewItem {
 }
 
 struct BalanceTopViewItem {
+    let isMainNet: Bool
     let iconCoinType: CoinType?
     let coinCode: String
     let blockchainBadge: String?

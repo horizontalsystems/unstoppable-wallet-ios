@@ -21,14 +21,15 @@ class ZcashAdapter {
     private let loggingProxy = ZcashLogger(logLevel: .error)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
-    private let stateUpdatedSubject = PublishSubject<Void>()
-    private let balanceUpdatedSubject = PublishSubject<Void>()
+    private let balanceStateSubject = PublishSubject<AdapterState>()
+    private let balanceSubject = PublishSubject<BalanceData>()
     private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private var lastBlockHeight: Int? = 0
 
     private(set) var balanceState: AdapterState {
         didSet {
+            balanceStateSubject.onNext(balanceState)
             transactionState = balanceState
         }
     }
@@ -124,8 +125,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            self.balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
-            stateUpdatedSubject.onNext(())
+            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
         }
     }
 
@@ -141,7 +141,6 @@ class ZcashAdapter {
 
         if newState != balanceState {
             balanceState = newState
-            stateUpdatedSubject.onNext(())
         }
     }
 
@@ -161,7 +160,7 @@ class ZcashAdapter {
             lastBlockUpdatedSubject.onNext(())
         }
 
-        balanceUpdatedSubject.onNext(())
+        balanceSubject.onNext(_balanceData)
     }
 
     private func syncPending() {
@@ -253,6 +252,17 @@ class ZcashAdapter {
         }
     }
 
+    private var _balanceData: BalanceData {
+        let verifiedBalance = Decimal(synchronizer.initializer.getVerifiedBalance())
+        let balance = Decimal(synchronizer.initializer.getBalance())
+        let diff = balance - verifiedBalance
+
+        return BalanceData(
+                balance: verifiedBalance / Self.coinRate,
+                balanceLocked: diff / Self.coinRate
+        )
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         synchronizer.blockProcessor?.stop()
@@ -314,6 +324,10 @@ extension ZcashAdapter {
 
 extension ZcashAdapter: IAdapter {
 
+    var isMainNet: Bool {
+        true
+    }
+
     func start() {
         if saplingDataExist() {
             sync()
@@ -336,8 +350,11 @@ extension ZcashAdapter: IAdapter {
             try synchronizer.start()
         } catch {
             balanceState = .notSynced(error: error)
-            stateUpdatedSubject.onNext(())
         }
+    }
+
+    var statusInfo: [(String, Any)] {
+        []
     }
 
     var debugInfo: String {
@@ -358,7 +375,7 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     var transactionStateUpdatedObservable: Observable<Void> {
-        stateUpdatedSubject.asObservable()
+        balanceStateSubject.map { _ in () }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
@@ -383,24 +400,16 @@ extension ZcashAdapter: ITransactionsAdapter {
 
 extension ZcashAdapter: IBalanceAdapter {
 
-    var balanceStateUpdatedObservable: Observable<Void> {
-        stateUpdatedSubject.asObservable()
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        balanceStateSubject.asObservable()
     }
 
-    var balanceUpdatedObservable: Observable<Void> {
-        balanceUpdatedSubject.asObservable()
+    var balanceData: BalanceData {
+        _balanceData
     }
 
-    var balance: Decimal {
-        Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate
-    }
-
-    var balanceLocked: Decimal? {
-        let verifiedBalance = Decimal(synchronizer.initializer.getVerifiedBalance())
-        let balance = Decimal(synchronizer.initializer.getBalance())
-        let diff = balance - verifiedBalance
-
-        return !diff.isZero ? (diff / Self.coinRate) : nil
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        balanceSubject.asObservable()
     }
 
 }

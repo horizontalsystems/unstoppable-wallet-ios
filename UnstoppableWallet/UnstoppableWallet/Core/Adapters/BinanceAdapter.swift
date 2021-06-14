@@ -48,6 +48,18 @@ class BinanceAdapter {
         )
     }
 
+    private func adapterState(syncState: BinanceChainKit.SyncState) -> AdapterState {
+        switch syncState {
+        case .synced: return .synced
+        case .notSynced(let error): return .notSynced(error: error.convertedError)
+        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+        }
+    }
+
+    private func balanceInfo(balance: Decimal) -> BalanceData {
+        BalanceData(balance: balance)
+    }
+
 }
 
 extension BinanceAdapter {
@@ -64,6 +76,10 @@ extension BinanceAdapter {
 
 extension BinanceAdapter: IAdapter {
 
+    var isMainNet: Bool {
+        true
+    }
+
     func start() {
         // started via BinanceKitManager
     }
@@ -73,7 +89,11 @@ extension BinanceAdapter: IAdapter {
     }
 
     func refresh() {
-        // refreshed via BinanceKitManager
+        binanceKit.refresh()
+    }
+
+    var statusInfo: [(String, Any)] {
+        binanceKit.statusInfo
     }
 
     var debugInfo: String {
@@ -85,23 +105,19 @@ extension BinanceAdapter: IAdapter {
 extension BinanceAdapter: IBalanceAdapter {
 
     var balanceState: AdapterState {
-        switch binanceKit.syncState {
-        case .synced: return .synced
-        case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
-        }
+        adapterState(syncState: binanceKit.syncState)
     }
 
-    var balanceStateUpdatedObservable: Observable<Void> {
-        binanceKit.syncStateObservable.map { _ in () }
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        binanceKit.syncStateObservable.map { [unowned self] in self.adapterState(syncState: $0) }
     }
 
-    var balance: Decimal {
-        asset.balance
+    var balanceData: BalanceData {
+        balanceInfo(balance: asset.balance)
     }
 
-    var balanceUpdatedObservable: Observable<Void> {
-        asset.balanceObservable.map { _ in () }
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        asset.balanceObservable.map { [unowned self] in self.balanceInfo(balance: $0) }
     }
 
 }

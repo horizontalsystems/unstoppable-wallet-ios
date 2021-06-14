@@ -86,11 +86,8 @@ extension Evm20Adapter: IAdapter {
     }
 
     func refresh() {
+        evmKit.refresh()
         evm20Kit.refresh()
-    }
-
-    var debugInfo: String {
-        evmKit.debugInfo
     }
 
 }
@@ -101,16 +98,16 @@ extension Evm20Adapter: IBalanceAdapter {
         convertToAdapterState(evmSyncState: evm20Kit.syncState)
     }
 
-    var balanceStateUpdatedObservable: Observable<Void> {
-        evm20Kit.syncStateObservable.map { _ in () }
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        evm20Kit.syncStateObservable.map { [unowned self] in self.convertToAdapterState(evmSyncState: $0) }
     }
 
-    var balance: Decimal {
-        balanceDecimal(kitBalance: evm20Kit.balance, decimal: decimal)
+    var balanceData: BalanceData {
+        balanceData(balance: evm20Kit.balance)
     }
 
-    var balanceUpdatedObservable: Observable<Void> {
-        evm20Kit.balanceObservable.map { _ in () }
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        evm20Kit.balanceObservable.map { [unowned self] in self.balanceData(balance: $0) }
     }
 
 }
