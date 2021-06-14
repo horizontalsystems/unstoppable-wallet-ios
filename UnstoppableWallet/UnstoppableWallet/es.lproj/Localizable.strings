@@ -301,7 +301,7 @@
 "market.top.market_cap.title" = "Capitalización de Mercado";
 "market.top.diluted_market_cap.title" = "Capitalización de Mercado Diliuída";
 
-"market.market_field.mcap" = "Capitalización de Mercado";
+"market.market_field.mcap" = "Cap. de Mercado";
 "market.market_field.vol" = "Volumen";
 
 "market.sort_by" = "Ordenar por";
