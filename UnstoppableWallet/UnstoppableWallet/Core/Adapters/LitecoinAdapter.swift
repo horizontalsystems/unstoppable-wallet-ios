@@ -5,7 +5,7 @@ import RxSwift
 class LitecoinAdapter: BitcoinBaseAdapter {
     private let litecoinKit: Kit
 
-    init(wallet: Wallet, syncMode: SyncMode?, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
@@ -14,13 +14,9 @@ class LitecoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        guard let walletSyncMode = syncMode else {
-            throw AdapterError.wrongParameters
-        }
-
         let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
         let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
-        let syncMode = BitcoinBaseAdapter.kitMode(from: walletSyncMode)
+        let syncMode = BitcoinBaseAdapter.kitMode(from: syncMode)
         let logger = App.shared.logger.scoped(with: "LitecoinKit")
 
         litecoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)

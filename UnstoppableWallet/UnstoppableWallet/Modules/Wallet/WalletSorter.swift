@@ -3,8 +3,8 @@ import Foundation
 class WalletSorter {
 
     private let descending: (WalletService.Item, WalletService.Item) -> Bool = { item, item2 in
-        let balance = item.balance ?? 0
-        let balance2 = item2.balance ?? 0
+        let balance = item.balanceData.balance
+        let balance2 = item2.balanceData.balance
         let hasRate = item.rateItem != nil
         let hasRate2 = item2.rateItem != nil
 
@@ -20,8 +20,8 @@ class WalletSorter {
     func sort(items: [WalletService.Item], sort: SortType) -> [WalletService.Item] {
         switch sort {
         case .value:
-            let nonZeroItems = items.filter { !($0.balance ?? 0).isZero }
-            let zeroItems = items.filter{ ($0.balance ?? 0).isZero }
+            let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
+            let zeroItems = items.filter{ $0.balanceData.balance.isZero }
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:

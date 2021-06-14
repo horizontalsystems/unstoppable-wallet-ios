@@ -9,7 +9,6 @@ class PrivacyViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private var sortMode: String?
-    private var connectionItems: [PrivacyViewItem]?
     private var syncModeItems: [PrivacyViewItem]?
 
     init(delegate: IPrivacyViewDelegate) {
@@ -100,19 +99,6 @@ class PrivacyViewController: ThemeViewController {
         )
     }
 
-    private func connectionSection(items: [PrivacyViewItem]) -> SectionProtocol {
-        Section(
-                id: "connection",
-                headerState: header(hash: "connection_header", text: "settings_privacy.connection.section_header".localized),
-                footerState: footer(hash: "connection_footer", text: "settings_privacy.connection.section_footer".localized),
-                rows: items.enumerated().map { index, item in
-                    row(id: "connection_cell", item: item, isFirst: index == 0, isLast: index == items.count - 1, action: { [weak self] in
-                        self?.delegate.onSelectConnection(index: index)
-                    })
-                }
-        )
-    }
-
     private func syncSection(items: [PrivacyViewItem]) -> SectionProtocol {
         Section(
                 id: "sync",
@@ -196,10 +182,6 @@ extension PrivacyViewController: IPrivacyView {
         self.sortMode = sortMode
     }
 
-    func set(connectionItems: [PrivacyViewItem]) {
-        self.connectionItems = connectionItems
-    }
-
     func set(syncModeItems: [PrivacyViewItem]) {
         self.syncModeItems = syncModeItems
     }
@@ -215,10 +197,6 @@ extension PrivacyViewController: SectionsDataSource {
 
         if let sortMode = sortMode {
             sections.append(sortSection(sortModeTitle: sortMode))
-        }
-
-        if let connectionItems = connectionItems {
-            sections.append(connectionSection(items: connectionItems))
         }
 
         if let syncModeItems = syncModeItems {

@@ -2,10 +2,10 @@ import EthereumKit
 
 class WalletConnectManager {
     private let accountManager: IAccountManager
-    private let ethereumKitManager: EthereumKitManager
-    private let binanceSmartChainKitManager: BinanceSmartChainKitManager
+    private let ethereumKitManager: EvmKitManager
+    private let binanceSmartChainKitManager: EvmKitManager
 
-    init(accountManager: IAccountManager, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager) {
+    init(accountManager: IAccountManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager) {
         self.accountManager = accountManager
         self.ethereumKitManager = ethereumKitManager
         self.binanceSmartChainKitManager = binanceSmartChainKitManager

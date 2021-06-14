@@ -28,7 +28,6 @@ protocol ILocalStorage: AnyObject {
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
     var balanceHidden: Bool { get set }
-    var ethereumRpcMode: EthereumRpcMode? { get set }
     var pushToken: String? { get set }
     var pushNotificationsOn: Bool { get set }
     var marketCategory: Int? { get set }
@@ -63,13 +62,11 @@ protocol IAdapterManager: AnyObject {
     func refresh(wallet: Wallet)
 }
 
-protocol IAdapterFactory {
-    func adapter(wallet: Wallet) -> IAdapter?
-}
-
 protocol IWalletManager: AnyObject {
-    var activeWallets: [Wallet] { get }
-    var activeWalletsUpdatedObservable: Observable<[Wallet]> { get }
+    var activeWallets: [ActiveWallet] { get }
+    var activeWalletsUpdatedObservable: Observable<[ActiveWallet]> { get }
+    func activeWallet(wallet: Wallet) -> ActiveWallet?
+    func activeWallet(coin: Coin) -> ActiveWallet?
 
     func preloadWallets()
 
@@ -80,6 +77,8 @@ protocol IWalletManager: AnyObject {
     func delete(wallets: [Wallet])
 
     func clearWallets()
+
+    func refreshWallets()
 }
 
 protocol IPriceAlertManager {
@@ -92,23 +91,21 @@ protocol IPriceAlertManager {
 }
 
 protocol IAdapter: AnyObject {
+    var isMainNet: Bool { get }
+
     func start()
     func stop()
     func refresh()
 
+    var statusInfo: [(String, Any)] { get }
     var debugInfo: String { get }
 }
 
 protocol IBalanceAdapter {
     var balanceState: AdapterState { get }
-    var balanceStateUpdatedObservable: Observable<Void> { get }
-    var balance: Decimal { get }
-    var balanceLocked: Decimal? { get }
-    var balanceUpdatedObservable: Observable<Void> { get }
-}
-
-extension IBalanceAdapter {
-    var balanceLocked: Decimal? { nil }
+    var balanceStateUpdatedObservable: Observable<AdapterState> { get }
+    var balanceData: BalanceData { get }
+    var balanceDataUpdatedObservable: Observable<BalanceData> { get }
 }
 
 protocol IDepositAdapter {
@@ -126,7 +123,7 @@ protocol ITransactionsAdapter {
 }
 
 protocol ISendBitcoinAdapter {
-    var balance: Decimal { get }
+    var balanceData: BalanceData { get }
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
     func minimumSendAmount(address: String?) -> Decimal
@@ -145,7 +142,7 @@ protocol ISendDashAdapter {
 
 protocol ISendEthereumAdapter {
     var evmKit: EthereumKit.Kit { get }
-    var balance: Decimal { get }
+    var balanceData: BalanceData { get }
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData
 }
 
@@ -486,11 +483,6 @@ protocol IInitialSyncSettingsManager: AnyObject {
     var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] { get }
     func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting?
     func save(setting: InitialSyncSetting)
-}
-
-protocol IEthereumRpcModeSettingsManager: AnyObject {
-    var rpcMode: EthereumRpcMode { get }
-    func save(rpcMode: EthereumRpcMode)
 }
 
 protocol ITransactionDataSortModeSettingManager {

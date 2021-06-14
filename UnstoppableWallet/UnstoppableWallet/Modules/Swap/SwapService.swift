@@ -14,7 +14,7 @@ class SwapService {
     private let tradeService: SwapTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
-    private let adapterManager: IAdapterManager
+    private let walletManager: IWalletManager
 
     private let disposeBag = DisposeBag()
 
@@ -50,13 +50,13 @@ class SwapService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
 
-    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: IAdapterManager) {
+    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: SwapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, walletManager: IWalletManager) {
         self.dex = dex
         self.evmKit = evmKit
         self.tradeService = tradeService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
-        self.adapterManager = adapterManager
+        self.walletManager = walletManager
 
         subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] state in
             self?.onUpdateTrade(state: state)
@@ -160,11 +160,7 @@ class SwapService {
     }
 
     private func balance(coin: Coin) -> Decimal? {
-        guard let adapter = adapterManager.adapter(for: coin) as? IBalanceAdapter else {
-            return nil
-        }
-
-        return adapter.balance
+        walletManager.activeWallet(coin: coin)?.balanceData.balance
     }
 
 }

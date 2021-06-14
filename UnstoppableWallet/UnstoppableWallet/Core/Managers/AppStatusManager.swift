@@ -2,27 +2,23 @@ import Foundation
 import CoinKit
 
 class AppStatusManager {
-    static let statusBitcoinCoreTypes: [CoinType] = [.bitcoin, .litecoin, .bitcoinCash, .dash]
-
     private let systemInfoManager: ISystemInfoManager
     private let storage: IAppVersionStorage
     private let logRecordManager: ILogRecordManager
     private let accountManager: IAccountManager
     private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
-    private let ethereumKitManager: EthereumKitManager
-    private let binanceSmartChainKitManager: BinanceSmartChainKitManager
+    private let ethereumKitManager: EvmKitManager
+    private let binanceSmartChainKitManager: EvmKitManager
     private let binanceKitManager: BinanceKitManager
     private let restoreSettingsManager: RestoreSettingsManager
 
     init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
-         walletManager: IWalletManager, adapterManager: IAdapterManager, ethereumKitManager: EthereumKitManager, binanceSmartChainKitManager: BinanceSmartChainKitManager,
+         walletManager: IWalletManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager,
          binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.adapterManager = adapterManager
         self.ethereumKitManager = ethereumKitManager
         self.binanceSmartChainKitManager = binanceSmartChainKitManager
         self.binanceKitManager = binanceKitManager
@@ -62,22 +58,36 @@ class AppStatusManager {
     private var blockchainStatus: [(String, Any)] {
         var status = [(String, Any)]()
 
-        let bitcoinBaseWallets = walletManager.activeWallets.filter { AppStatusManager.statusBitcoinCoreTypes.contains($0.coin.type) }
+        var ethereumStatus: [(String, Any)]?
+        var binanceSmartChainStatus: [(String, Any)]?
+        var binanceStatus: [(String, Any)]?
 
-        status.append(contentsOf: bitcoinBaseWallets.compactMap {
-            guard let adapter = adapterManager.adapter(for: $0) as? BitcoinBaseAdapter else {
-                return nil
+        for activeWallet in walletManager.activeWallets {
+            switch activeWallet.wallet.coin.type {
+            case .ethereum, .erc20:
+                if ethereumStatus == nil {
+                    ethereumStatus = activeWallet.statusInfo
+                }
+            case .binanceSmartChain, .bep20:
+                if binanceSmartChainStatus == nil {
+                    binanceSmartChainStatus = activeWallet.statusInfo
+                }
+            case .bep2:
+                if binanceStatus == nil {
+                    binanceStatus = activeWallet.statusInfo
+                }
+            default:
+                status.append((activeWallet.wallet.coin.title, activeWallet.statusInfo))
             }
-            return ($0.coin.title, adapter.statusInfo)
-        })
+        }
 
-        if let ethereumStatus = ethereumKitManager.statusInfo {
+        if let ethereumStatus = ethereumStatus {
             status.append(("Ethereum", ethereumStatus))
         }
-        if let binanceSmartChainStatus = binanceSmartChainKitManager.statusInfo {
+        if let binanceSmartChainStatus = binanceSmartChainStatus {
             status.append(("Binance Smart Chain", binanceSmartChainStatus))
         }
-        if let binanceStatus = binanceKitManager.statusInfo {
+        if let binanceStatus = binanceStatus {
             status.append(("Binance", binanceStatus))
         }
 

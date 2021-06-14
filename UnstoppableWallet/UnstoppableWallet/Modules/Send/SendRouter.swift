@@ -22,7 +22,7 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(wallet: Wallet) -> UIViewController? {
-        guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
+        guard let adapter = App.shared.walletManager.activeWallet(wallet: wallet)?.adapter else {
             return nil
         }
 
@@ -30,17 +30,19 @@ extension SendRouter {
 
         var partialModule: (ISendHandler, [UIView], [ISendSubRouter])?
 
+        let coin = wallet.coin
+
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
-            partialModule = module(coin: wallet.coin, adapter: adapter)
+            partialModule = module(coin: coin, adapter: adapter)
         case let adapter as ISendDashAdapter:
-            partialModule = module(coin: wallet.coin, adapter: adapter)
+            partialModule = module(coin: coin, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
-            return SendEvmModule.viewController(coin: wallet.coin, adapter: adapter)
+            return SendEvmModule.viewController(coin: coin, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
-            partialModule = module(coin: wallet.coin, adapter: adapter)
+            partialModule = module(coin: coin, adapter: adapter)
         case let adapter as ISendZcashAdapter:
-            partialModule = module(coin: wallet.coin, adapter: adapter)
+            partialModule = module(coin: coin, adapter: adapter)
         default: ()
         }
 

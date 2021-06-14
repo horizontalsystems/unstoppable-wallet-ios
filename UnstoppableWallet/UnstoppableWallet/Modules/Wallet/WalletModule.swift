@@ -5,32 +5,21 @@ import RxSwift
 struct WalletModule {
 
     static func viewController() -> UIViewController {
-        let scheduler = SerialDispatchQueueScheduler(qos: .utility, internalSerialQueueName: "io.horizontalsystems.unstoppable.wallet_module")
-
-        let adapterService = WalletAdapterService(
-                adapterManager: App.shared.adapterManager,
-                scheduler: scheduler
-        )
-
         let rateService = WalletRateService(
                 currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager,
-                scheduler: scheduler
+                rateManager: App.shared.rateManager
         )
 
         let service = WalletService(
-                adapterService: adapterService,
                 rateService: rateService,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
                 sortTypeManager: App.shared.sortTypeManager,
                 localStorage: App.shared.localStorage,
                 rateAppManager: App.shared.rateAppManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                scheduler: scheduler
+                feeCoinProvider: App.shared.feeCoinProvider
         )
 
-        adapterService.delegate = service
         rateService.delegate = service
 
         let viewModel = WalletViewModel(

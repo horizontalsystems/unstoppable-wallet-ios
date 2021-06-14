@@ -34,6 +34,27 @@ class BaseEvmAdapter {
         }
     }
 
+    var isMainNet: Bool {
+        evmKit.networkType.isMainNet
+    }
+
+    func balanceData(balance: BigUInt?) -> BalanceData {
+        BalanceData(balance: balanceDecimal(kitBalance: balance, decimal: decimal))
+    }
+
+}
+
+// IAdapter
+extension BaseEvmAdapter {
+
+    var statusInfo: [(String, Any)] {
+        evmKit.statusInfo()
+    }
+
+    var debugInfo: String {
+        evmKit.debugInfo
+    }
+
 }
 
 // ITransactionsAdapter

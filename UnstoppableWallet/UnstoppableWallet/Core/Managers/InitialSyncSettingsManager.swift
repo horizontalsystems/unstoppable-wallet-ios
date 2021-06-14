@@ -1,4 +1,6 @@
 import CoinKit
+import RxSwift
+import RxRelay
 
 class InitialSyncSettingsManager {
     private let supportedCoinTypes = [
@@ -8,14 +10,12 @@ class InitialSyncSettingsManager {
         SupportedCoinType(coinType: .litecoin, defaultSyncMode: .fast, changeable: true),
     ]
 
-    private let walletManager: IWalletManager
-    private let adapterManager: IAdapterManager
     private let coinKit: CoinKit.Kit
     private let storage: IBlockchainSettingsStorage
 
-    init(walletManager: IWalletManager, adapterManager: IAdapterManager, coinKit: CoinKit.Kit, storage: IBlockchainSettingsStorage) {
-        self.walletManager = walletManager
-        self.adapterManager = adapterManager
+    private let settingUpdatedRelay = PublishRelay<InitialSyncSetting>()
+
+    init(coinKit: CoinKit.Kit, storage: IBlockchainSettingsStorage) {
         self.coinKit = coinKit
         self.storage = storage
     }
@@ -26,7 +26,11 @@ class InitialSyncSettingsManager {
 
 }
 
-extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
+extension InitialSyncSettingsManager {
+
+    var settingUpdatedObservable: Observable<InitialSyncSetting> {
+        settingUpdatedRelay.asObservable()
+    }
 
     var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
         let coins = coinKit.coins
@@ -46,12 +50,7 @@ extension InitialSyncSettingsManager: IInitialSyncSettingsManager {
 
     func save(setting: InitialSyncSetting) {
         storage.save(initialSyncSetting: setting)
-
-        let walletsForUpdate = walletManager.activeWallets.filter { $0.coin.type == setting.coinType && $0.account.origin == .restored }
-
-        if !walletsForUpdate.isEmpty {
-            adapterManager.refreshAdapters(wallets: walletsForUpdate)
-        }
+        settingUpdatedRelay.accept(setting)
     }
 
     func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting? {

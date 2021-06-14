@@ -10,12 +10,13 @@ class BitcoinBaseAdapter {
     private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
-    private let stateUpdatedSubject = PublishSubject<Void>()
-    private let balanceUpdatedSubject = PublishSubject<Void>()
+    private let balanceStateSubject = PublishSubject<AdapterState>()
+    private let balanceSubject = PublishSubject<BalanceData>()
     let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
     private(set) var balanceState: AdapterState {
         didSet {
+            balanceStateSubject.onNext(balanceState)
             transactionState = balanceState
         }
     }
@@ -147,9 +148,20 @@ class BitcoinBaseAdapter {
         }
     }
 
+    private func balanceData(balanceInfo: BalanceInfo) -> BalanceData {
+        BalanceData(
+                balance: Decimal(balanceInfo.spendable) / coinRate,
+                balanceLocked: Decimal(balanceInfo.unspendable) / coinRate
+        )
+    }
+
 }
 
 extension BitcoinBaseAdapter: IAdapter {
+
+    var isMainNet: Bool {
+        true
+    }
 
     var debugInfo: String {
         abstractKit.debugInfo
@@ -165,6 +177,10 @@ extension BitcoinBaseAdapter: IAdapter {
 
     func refresh() {
         abstractKit.start()
+    }
+
+    var statusInfo: [(String, Any)] {
+        abstractKit.statusInfo
     }
 
 }
@@ -188,7 +204,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     }
 
     func balanceUpdated(balance: BalanceInfo) {
-        balanceUpdatedSubject.onNext(())
+        balanceSubject.onNext(balanceData(balanceInfo: balance))
     }
 
     func lastBlockInfoUpdated(lastBlockInfo: BlockInfo) {
@@ -198,40 +214,36 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     func kitStateUpdated(state: BitcoinCore.KitState) {
         switch state {
         case .synced:
-            if case .synced = self.balanceState {
+            if case .synced = balanceState {
                 return
             }
 
-            self.balanceState = .synced
-            stateUpdatedSubject.onNext(())
+            balanceState = .synced
         case .notSynced(let error):
             let converted = error.convertedError
 
-            if case .notSynced(let appError) = self.balanceState, "\(converted)" == "\(appError)" {
+            if case .notSynced(let appError) = balanceState, "\(converted)" == "\(appError)" {
                 return
             }
 
-            self.balanceState = .notSynced(error: converted)
-            stateUpdatedSubject.onNext(())
+            balanceState = .notSynced(error: converted)
         case .syncing(let progress):
             let newProgress = Int(progress * 100)
             let newDate = abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
 
-            if case let .syncing(currentProgress, currentDate) = self.balanceState, newProgress == currentProgress {
+            if case let .syncing(currentProgress, currentDate) = balanceState, newProgress == currentProgress {
                 if let currentDate = currentDate, let newDate = newDate, currentDate.isSameDay(as: newDate) {
                     return
                 }
             }
 
-            self.balanceState = .syncing(progress: newProgress, lastBlockDate: newDate)
-            stateUpdatedSubject.onNext(())
+            balanceState = .syncing(progress: newProgress, lastBlockDate: newDate)
         case .apiSyncing(let newCount):
-            if case .searchingTxs(let count) = self.balanceState, newCount == count {
+            if case .searchingTxs(let count) = balanceState, newCount == count {
                 return
             }
 
-            self.balanceState = .searchingTxs(count: newCount)
-            stateUpdatedSubject.onNext(())
+            balanceState = .searchingTxs(count: newCount)
         }
     }
 
@@ -239,21 +251,16 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
 extension BitcoinBaseAdapter: IBalanceAdapter {
 
-    var balanceStateUpdatedObservable: Observable<Void> {
-        stateUpdatedSubject.asObservable()
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        balanceStateSubject.asObservable()
     }
 
-    var balanceUpdatedObservable: Observable<Void> {
-        balanceUpdatedSubject.asObservable()
+    var balanceData: BalanceData {
+        balanceData(balanceInfo: abstractKit.balance)
     }
 
-    var balance: Decimal {
-        Decimal(abstractKit.balance.spendable) / coinRate
-    }
-
-    var balanceLocked: Decimal? {
-        let value = Decimal(abstractKit.balance.unspendable) / coinRate
-        return value > 0 ? value : nil
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        balanceSubject.asObservable()
     }
 
 }
@@ -306,10 +313,6 @@ extension BitcoinBaseAdapter {
         }
     }
 
-    var statusInfo: [(String, Any)] {
-        abstractKit.statusInfo
-    }
-
 }
 
 extension BitcoinBaseAdapter: ITransactionsAdapter {
@@ -319,7 +322,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
     }
 
     var transactionStateUpdatedObservable: Observable<Void> {
-        stateUpdatedSubject.asObservable()
+        balanceStateSubject.map { _ in () }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {

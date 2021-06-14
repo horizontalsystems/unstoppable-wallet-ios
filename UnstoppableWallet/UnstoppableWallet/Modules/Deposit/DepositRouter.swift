@@ -21,7 +21,7 @@ extension DepositRouter: IDepositRouter {
 extension DepositRouter {
 
     static func module(wallet: Wallet) -> UIViewController? {
-        guard let depositAdapter = App.shared.adapterManager.depositAdapter(for: wallet) else {
+        guard let depositAdapter = App.shared.walletManager.activeWallet(wallet: wallet)?.depositAdapter else {
             return nil
         }
 

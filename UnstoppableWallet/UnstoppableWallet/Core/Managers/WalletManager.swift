@@ -1,39 +1,26 @@
 import RxSwift
 import RxRelay
+import CoinKit
 
 class WalletManager {
     private let accountManager: IAccountManager
+    private let adapterProviderFactory: AdapterProviderFactory
     private let storage: IWalletStorage
-    private let kitCleaner: IKitCleaner
     private let disposeBag = DisposeBag()
 
-    private let activeWalletsRelay = PublishRelay<[Wallet]>()
+    private let activeWalletsRelay = PublishRelay<[ActiveWallet]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
-    private let activeWalletsQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager.active_wallets", qos: .userInitiated)
 
-    private var cachedActiveWallets = [Wallet]()
+    private var cachedActiveWallets = [ActiveWallet]()
 
-    init(accountManager: IAccountManager, storage: IWalletStorage, kitCleaner: IKitCleaner) {
+    init(accountManager: IAccountManager, adapterProviderFactory: AdapterProviderFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
+        self.adapterProviderFactory = adapterProviderFactory
         self.storage = storage
-        self.kitCleaner = kitCleaner
 
-        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in self?.handleUpdate(activeAccount: $0) }
+        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.reloadWallets() }
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }
-    }
-
-    private func notifyActiveWallets() {
-        activeWalletsRelay.accept(cachedActiveWallets)
-    }
-
-    private func handleUpdate(activeAccount: Account?) {
-        let activeWallets = activeAccount.map { storage.wallets(account: $0) } ?? []
-
-        queue.async {
-            self.cachedActiveWallets = activeWallets
-            self.notifyActiveWallets()
-        }
     }
 
     private func handleDelete(account: Account) {
@@ -41,25 +28,56 @@ class WalletManager {
         storage.handle(newWallets: [], deletedWallets: accountWallets)
     }
 
+    private var activeAccountWallets: [Wallet] {
+        guard let activeAccount = accountManager.activeAccount else {
+            return []
+        }
+
+        return storage.wallets(account: activeAccount)
+    }
+
+    private func activeWallet(wallet: Wallet) -> ActiveWallet {
+        let adapterProvider = adapterProviderFactory.adapterProvider(wallet: wallet)
+        let activeWallet = ActiveWallet(wallet: wallet, adapterProvider: adapterProvider)
+        activeWallet.initAdapter()
+        return activeWallet
+    }
+
+    private func _reloadWallets() {
+        let newActiveWallets = activeAccountWallets.map { wallet in
+            cachedActiveWallets.first { $0.wallet == wallet } ?? activeWallet(wallet: wallet)
+        }
+
+        cachedActiveWallets = newActiveWallets
+        activeWalletsRelay.accept(cachedActiveWallets)
+    }
+
+    private func reloadWallets() {
+        queue.async { [weak self] in self?._reloadWallets() }
+    }
+
 }
 
 extension WalletManager: IWalletManager {
 
-    var activeWallets: [Wallet] {
-        activeWalletsQueue.sync { cachedActiveWallets }
+    var activeWallets: [ActiveWallet] {
+        queue.sync { cachedActiveWallets }
     }
 
-    var activeWalletsUpdatedObservable: Observable<[Wallet]> {
+    var activeWalletsUpdatedObservable: Observable<[ActiveWallet]> {
         activeWalletsRelay.asObservable()
     }
 
-    func preloadWallets() {
-        let activeWallets = accountManager.activeAccount.map { storage.wallets(account: $0) } ?? []
+    func activeWallet(wallet: Wallet) -> ActiveWallet? {
+        queue.sync { cachedActiveWallets.first { $0.wallet == wallet } }
+    }
 
-        queue.async {
-            self.cachedActiveWallets = activeWallets
-            self.notifyActiveWallets()
-        }
+    func activeWallet(coin: Coin) -> ActiveWallet? {
+        queue.sync { cachedActiveWallets.first { $0.wallet.coin == coin } }
+    }
+
+    func preloadWallets() {
+        reloadWallets()
     }
 
     func wallets(account: Account) -> [Wallet] {
@@ -68,13 +86,7 @@ extension WalletManager: IWalletManager {
 
     func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {
         storage.handle(newWallets: newWallets, deletedWallets: deletedWallets)
-
-        queue.async {
-            let activeAccount = self.accountManager.activeAccount
-            self.cachedActiveWallets.append(contentsOf: newWallets.filter { $0.account == activeAccount })
-            self.cachedActiveWallets.removeAll { deletedWallets.contains($0) }
-            self.notifyActiveWallets()
-        }
+        reloadWallets()
     }
 
     func save(wallets: [Wallet]) {
@@ -87,6 +99,36 @@ extension WalletManager: IWalletManager {
 
     func clearWallets() {
         storage.clearWallets()
+    }
+
+    func refreshWallets() {
+        queue.sync {
+            var ethereumKitUpdated = false
+            var binanceSmartChainKitUpdated = false
+            var binanceKitUpdated = false
+
+            for activeWallet in cachedActiveWallets {
+                switch activeWallet.wallet.coin.type {
+                case .ethereum, .erc20:
+                    if !ethereumKitUpdated {
+                        activeWallet.refresh()
+                        ethereumKitUpdated = true
+                    }
+                case .binanceSmartChain, .bep20:
+                    if !binanceSmartChainKitUpdated {
+                        activeWallet.refresh()
+                        binanceSmartChainKitUpdated = true
+                    }
+                case .bep2:
+                    if !binanceKitUpdated {
+                        activeWallet.refresh()
+                        binanceKitUpdated = true
+                    }
+                default:
+                    activeWallet.refresh()
+                }
+            }
+        }
     }
 
 }

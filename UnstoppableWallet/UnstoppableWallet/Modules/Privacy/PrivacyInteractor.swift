@@ -2,15 +2,13 @@ import CoinKit
 
 class PrivacyInteractor {
     private let accountManager: IAccountManager
-    private let initialSyncSettingsManager: IInitialSyncSettingsManager
+    private let initialSyncSettingsManager: InitialSyncSettingsManager
     private let transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager
-    private let ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager
 
-    init(accountManager: IAccountManager, initialSyncSettingsManager: IInitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager, ethereumRpcModeSettingsManager: IEthereumRpcModeSettingsManager) {
+    init(accountManager: IAccountManager, initialSyncSettingsManager: InitialSyncSettingsManager, transactionDataSortTypeSettingManager: ITransactionDataSortModeSettingManager) {
         self.accountManager = accountManager
         self.initialSyncSettingsManager = initialSyncSettingsManager
         self.transactionDataSortTypeSettingManager = transactionDataSortTypeSettingManager
-        self.ethereumRpcModeSettingsManager = ethereumRpcModeSettingsManager
     }
 
 }
@@ -29,16 +27,8 @@ extension PrivacyInteractor: IPrivacyInteractor {
         transactionDataSortTypeSettingManager.setting
     }
 
-    var ethereumConnection: EthereumRpcMode {
-        ethereumRpcModeSettingsManager.rpcMode
-    }
-
     func save(syncSetting: InitialSyncSetting) {
         initialSyncSettingsManager.save(setting: syncSetting)
-    }
-
-    func save(connectionSetting: EthereumRpcMode) {
-        ethereumRpcModeSettingsManager.save(rpcMode: connectionSetting)
     }
 
     func save(sortSetting: TransactionDataSortMode) {

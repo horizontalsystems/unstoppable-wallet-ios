@@ -20,6 +20,7 @@ extension AdapterState: Equatable {
         switch (lhs, rhs) {
         case (.synced, .synced): return true
         case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
+        case (.searchingTxs(let lCount), .searchingTxs(let rCount)): return lCount == rCount
         case (.notSynced, .notSynced): return true
         default: return false
         }

@@ -38,7 +38,7 @@ class ManageWalletsService {
         self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
-            self?.handleUpdated(wallets: wallets)
+            self?.handleUpdated(wallets: wallets.map { $0.wallet })
         }
         subscribe(disposeBag, coinManager.coinsAddedObservable) { [weak self] coins in
             self?.handleAdded(coins: coins)
@@ -57,7 +57,7 @@ class ManageWalletsService {
         }
 
         syncCoins()
-        sync(wallets: walletManager.activeWallets)
+        sync(wallets: walletManager.activeWallets.map { $0.wallet })
         sortCoins()
         syncState()
     }

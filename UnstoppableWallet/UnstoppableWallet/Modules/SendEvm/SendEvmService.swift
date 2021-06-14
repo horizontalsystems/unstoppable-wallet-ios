@@ -55,7 +55,7 @@ class SendEvmService {
             throw AmountError.invalidDecimal
         }
 
-        guard amount <= adapter.balance else {
+        guard amount <= adapter.balanceData.balance else {
             throw AmountError.insufficientBalance
         }
 
@@ -79,7 +79,7 @@ extension SendEvmService {
 extension SendEvmService: IAvailableBalanceService {
 
     var availableBalance: Decimal {
-        adapter.balance
+        adapter.balanceData.balance
     }
 
 }
@@ -95,7 +95,7 @@ extension SendEvmService: IAmountInputService {
     }
 
     var balance: Decimal? {
-        adapter.balance
+        adapter.balanceData.balance
     }
 
     var amountObservable: Observable<Decimal> {

@@ -7,6 +7,7 @@ class BalanceTopView: UIView {
     static let height: CGFloat = 68
 
     private let coinIconView = BalanceCoinIconHolder()
+    private let testnetImageView = UIImageView()
 
     private let nameLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
@@ -24,6 +25,15 @@ class BalanceTopView: UIView {
         coinIconView.snp.makeConstraints { maker in
             maker.leading.top.bottom.equalToSuperview()
         }
+
+        addSubview(testnetImageView)
+        testnetImageView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview()
+            maker.centerX.equalTo(coinIconView)
+        }
+
+        testnetImageView.image = UIImage(named: "testnet_16")?.withRenderingMode(.alwaysTemplate)
+        testnetImageView.tintColor = .themeRed50
 
         addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
@@ -88,6 +98,8 @@ class BalanceTopView: UIView {
                 failViewVisible: viewItem.failedImageViewVisible,
                 onTapError: onTapError
         )
+
+        testnetImageView.isHidden = viewItem.isMainNet
 
         nameLabel.text = viewItem.coinCode
 

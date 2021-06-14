@@ -6,7 +6,7 @@ import CoinKit
 
 class SwapPendingAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let adapterManager: IAdapterManager
+    private let walletManager: IWalletManager
     private let allowanceService: SwapAllowanceService
 
     private var coin: Coin?
@@ -23,9 +23,9 @@ class SwapPendingAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: IAdapterManager, allowanceService: SwapAllowanceService) {
+    init(spenderAddress: EthereumKit.Address, walletManager: IWalletManager, allowanceService: SwapAllowanceService) {
         self.spenderAddress = spenderAddress
-        self.adapterManager = adapterManager
+        self.walletManager = walletManager
         self.allowanceService = allowanceService
 
         allowanceService.stateObservable
@@ -66,7 +66,7 @@ extension SwapPendingAllowanceService {
     }
 
     func syncAllowance() {
-        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
+        guard let coin = coin, let adapter = walletManager.activeWallet(coin: coin)?.adapter as? IErc20Adapter else {
             return
         }
 
