@@ -455,12 +455,12 @@
 "coin_page.tvl.description" = "Capital depositado en la plataforma en forma de garantía de préstamo o reserva de liquidez.";
 
 "coin_page.category" = "Categoría";
-"coin_page.contract" = "%@ Contract";
-"coin_page.bep2_symbol" = "BEP2 Symbol";
+"coin_page.contract" = "Contrato de %@";
+"coin_page.bep2_symbol" = "Símbolo BEP2";
 
-"coin_page.guide" = "Guide";
-"coin_page.website" = "Website";
-"coin_page.whitepaper" = "Whitepaper";
+"coin_page.guide" = "Instructivos";
+"coin_page.website" = "Sitio Web";
+"coin_page.whitepaper" = "Documento informativo";
 
 // Transactions
 
@@ -513,7 +513,7 @@
 
 "settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Otro";
-"settings.base_currency.disclaimer" = "Disclaimer";
+"settings.base_currency.disclaimer" = "Descargo de responsabilidad";
 "settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
