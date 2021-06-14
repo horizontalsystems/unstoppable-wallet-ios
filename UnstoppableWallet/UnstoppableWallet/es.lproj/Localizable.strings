@@ -439,22 +439,22 @@
 "coin_page.roi.day200" = "6 Months";
 "coin_page.roi.year1" = "1 Año";
 
-"coin_page.market_cap" = "Market Cap";
-"coin_page.circulating_supply" = "In Circulation";
-"coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
-"coin_page.genesis_date" = "Launch Date";
+"coin_page.market_cap" = "Capitalización de Mercado";
+"coin_page.circulating_supply" = "En Circulación";
+"coin_page.total_supply" = "Suminstro Total";
+"coin_page.dilluted_market_cap" = "Capitalización de Mercado Diluida";
+"coin_page.genesis_date" = "Fecha de lanzamiento";
 
-"coin_page.trading_volume" = "Trading Volume";
-"coin_page.markets" = "%@ Markets";
-"coin_page.funds_invested" = "Funds Invested";
+"coin_page.trading_volume" = "Volumen de comercio";
+"coin_page.markets" = "%@ Mercados";
+"coin_page.funds_invested" = "Fondos invertidos";
 
-"coin_page.tvl" = "Total Value Locked";
-"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
-"coin_page.tvl_rank" = "TVL Rank";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.tvl" = "Valor total bloqueado";
+"coin_page.market_cap_tvl_ratio" = "Capitalización de Mercado / Proporción TVL";
+"coin_page.tvl_rank" = "Rango TVL";
+"coin_page.tvl.description" = "Capital depositado en la plataforma en forma de garantía de préstamo o reserva de liquidez.";
 
-"coin_page.category" = "Category";
+"coin_page.category" = "Categoría";
 "coin_page.contract" = "%@ Contract";
 "coin_page.bep2_symbol" = "BEP2 Symbol";
 
