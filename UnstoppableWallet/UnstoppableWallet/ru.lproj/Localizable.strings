@@ -378,13 +378,13 @@
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Расширенный поиск";
-"market.advanced_search.show_results" = "Показать результаты";
+"market.advanced_search.title" = "Расширенный Поиск";
+"market.advanced_search.show_results" = "Показать Результаты";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
-"market.advanced_search.market_parameters" = "Параметры рынка";
-"market.advanced_search.price_parameters" = "Параметры цены";
+"market.advanced_search.market_parameters" = "Параметры Рынка";
+"market.advanced_search.price_parameters" = "Параметры Цены";
 "market.advanced_search.choose_set" = "Выбрать Набор";
 "market.advanced_search.market_cap" = "Рыночная Капитализация";
 "market.advanced_search.volume" = "Объем Торговли";
@@ -406,15 +406,15 @@
 "market.advanced_search.m_5_m_20" = "5М - 20М";
 "market.advanced_search.m_20_m_100" = "20М - 100М";
 "market.advanced_search.m_100_b_1" = "100 млн - 1 млрд";
-"market.advanced_search.b_1_b_5" = "1B - 5B";
-"market.advanced_search.more_5_b" = "> 5B";
+"market.advanced_search.b_1_b_5" = "1млрд - 5 млрд";
+"market.advanced_search.more_5_b" = "> 5 млрд";
 
-"market.advanced_search.day" = "1 день";
-"market.advanced_search.week" = "1 неделя";
-"market.advanced_search.week2" = "2 недели";
+"market.advanced_search.day" = "1 День";
+"market.advanced_search.week" = "1 Неделя";
+"market.advanced_search.week2" = "2 Недели";
 "market.advanced_search.month" = "1 месяц";
-"market.advanced_search.month6" = "6 месяцев";
-"market.advanced_search.year" = "1 год";
+"market.advanced_search.month6" = "6 Месяцев";
+"market.advanced_search.year" = "1 Год";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
 "market.global.volume_24h.title" = "Объем";
@@ -433,23 +433,23 @@
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 час";
-"coin_page.roi.hour24" = "Один день";
-"coin_page.roi.day7" = "Одна неделя";
-"coin_page.roi.day14" = "2 недели";
-"coin_page.roi.day30" = "Один месяц";
-"coin_page.roi.day200" = "6 месяцев";
-"coin_page.roi.year1" = "Один год";
+"coin_page.roi.hour1" = "1 Час";
+"coin_page.roi.hour24" = "1 День";
+"coin_page.roi.day7" = "1 Неделя";
+"coin_page.roi.day14" = "2 Недели";
+"coin_page.roi.day30" = "1 Месяц";
+"coin_page.roi.day200" = "6 Месяцев";
+"coin_page.roi.year1" = "1 Год";
 
-"coin_page.market_cap" = "Рыночная капитализация";
+"coin_page.market_cap" = "Рын. Капитализация";
 "coin_page.circulating_supply" = "В обороте";
-"coin_page.total_supply" = "Общее предложение";
+"coin_page.total_supply" = "Макс.Выпуск";
 "coin_page.dilluted_market_cap" = "Разводненная рын.кап.";
-"coin_page.genesis_date" = "Дата запуска";
+"coin_page.genesis_date" = "Дата Запуска";
 
-"coin_page.trading_volume" = "Объем торговли";
+"coin_page.trading_volume" = "Объем Торговли";
 "coin_page.markets" = "%@ Рынки";
-"coin_page.funds_invested" = "Заинвестированные средства";
+"coin_page.funds_invested" = "Средства Инвестированы";
 
 "coin_page.tvl" = "Общая сумма заблокирована";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
