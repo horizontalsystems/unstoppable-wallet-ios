@@ -258,7 +258,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openReceive(wallet: Wallet) {
-        if let module = DepositRouter.module(wallet: wallet) {
+        if let module = DepositModule.viewController(wallet: wallet) {
             present(module, animated: true)
         }
     }

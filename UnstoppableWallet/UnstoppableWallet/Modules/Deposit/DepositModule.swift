@@ -1,38 +1,18 @@
-import CoinKit
+import UIKit
+import ThemeKit
 
-protocol IDepositView: AnyObject {
-    func set(viewItem: DepositModule.AddressViewItem)
-    func showCopied()
-}
+struct DepositModule {
 
-protocol IDepositViewDelegate {
-    func onLoad()
-    func onTapAddress()
-    func onTapShare()
-    func onTapClose()
-}
+    static func viewController(wallet: Wallet) -> UIViewController? {
+        guard let activeWallet = App.shared.walletManager.activeWallet(wallet: wallet), let depositAdapter = activeWallet.depositAdapter else {
+            return nil
+        }
 
-protocol IDepositInteractor {
-    var address: String { get }
-    func copy(address: String)
-}
+        let service = DepositService(activeWallet: activeWallet, depositAdapter: depositAdapter)
+        let viewModel = DepositViewModel(service: service)
+        let viewController = DepositViewController(viewModel: viewModel)
 
-protocol IDepositInteractorDelegate: AnyObject {
-}
-
-protocol IDepositRouter {
-    func showShare(address: String)
-    func close()
-}
-
-class DepositModule {
-
-    struct AddressViewItem {
-        let coinTitle: String
-        let coinCode: String
-        let coinType: CoinType
-        let address: String
-        let additionalInfo: String?
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }
