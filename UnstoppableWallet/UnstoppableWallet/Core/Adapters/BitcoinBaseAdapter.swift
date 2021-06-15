@@ -168,6 +168,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func start() {
+        balanceState = .syncing(progress: 0, lastBlockDate: nil)
         abstractKit.start()
     }
 
