@@ -11,7 +11,8 @@ class MacdPointView: UIView {
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview().inset(CGFloat.margin4)
         }
 
         titleLabel.font = .caption
@@ -19,8 +20,8 @@ class MacdPointView: UIView {
 
         addSubview(leftSubtitleLabel)
         leftSubtitleLabel.snp.makeConstraints { maker in
-            maker.leading.bottom.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin1x)
+            maker.leading.equalToSuperview()
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4)
         }
 
         leftSubtitleLabel.textColor = .themeStronbuy
@@ -28,8 +29,8 @@ class MacdPointView: UIView {
 
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(leftSubtitleLabel.snp.trailing).offset(CGFloat.margin1x)
-            maker.trailing.bottom.equalToSuperview()
+            maker.leading.equalTo(leftSubtitleLabel.snp.trailing).offset(CGFloat.margin4)
+            maker.trailing.equalToSuperview()
             maker.top.equalTo(leftSubtitleLabel)
         }
 

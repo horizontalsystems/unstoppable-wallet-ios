@@ -41,7 +41,7 @@ class MarketViewController: ThemeViewController {
         tabsView.snp.makeConstraints { maker in
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(40)
+            maker.height.equalTo(FilterHeaderView.height)
         }
 
         view.addSubview(pageViewController.view)
