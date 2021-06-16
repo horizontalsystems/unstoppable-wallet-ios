@@ -67,7 +67,7 @@ class ZcashAdapter {
             }
         }
         
-        let seedData = [UInt8](Mnemonic.seed(mnemonic: words))
+        let seedData = [UInt8](seed)
         let unifiedViewingKeys = try DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
         
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
@@ -142,19 +142,27 @@ class ZcashAdapter {
 
     @objc private func statusUpdated(_ notification: Notification) {
         var newState = balanceState
-        
+        var blockDate: Date? = nil
+        if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
+            blockDate = blockTime
+        }
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
-        case .syncing:
-            
-            var blockDate: Date? = nil
-            if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
-                blockDate = blockTime
-            }
-            newState = .syncing(progress: Int(synchronizer.progress * 100), lastBlockDate: blockDate)
+        case .downloading(let p):
+            newState = .syncing(progress: Int(p.progress * 100), lastBlockDate: blockDate)
+        case .enhancing(let p):
+            newState = .syncing(progress: p.progress, lastBlockDate: blockDate)
         case .unprepared:
+            newState = .notSynced(error: AppError.unknownError)
+        case .validating:
+            newState = .syncing(progress: 0, lastBlockDate: blockDate)
+        case .scanning(let scanProgress):
+            newState = .syncing(progress: Int(scanProgress.progress * 100), lastBlockDate: blockDate)
+        case .fetching:
+            newState = .syncing(progress: 0, lastBlockDate: nil)
+        case .error:
             newState = .notSynced(error: AppError.unknownError)
         }
 
@@ -174,12 +182,12 @@ class ZcashAdapter {
     }
 
     @objc private func blockHeightUpdated(_ notification: Notification) {
-        if let userInfo = notification.userInfo, let blockHeight = userInfo[CompactBlockProcessorNotificationKey.progressHeight] as? BlockHeight {
-            lastBlockHeight = blockHeight
-            lastBlockUpdatedSubject.onNext(())
-        }
-
-        balanceSubject.onNext(_balanceData)
+//        if let userInfo = notification.userInfo, let blockHeight = userInfo[CompactBlockProcessorNotificationKey.progressHeight] as? BlockHeight {
+//            lastBlockHeight = blockHeight
+//            lastBlockUpdatedSubject.onNext(())
+//        }
+//
+//        balanceUpdatedSubject.onNext(())
     }
 
     private func syncPending() {
@@ -387,14 +395,14 @@ extension ZcashAdapter: IAdapter {
 
     func refresh() {
         if saplingDataExist() {
-            sync()
+            sync(retry: true)
         }
     }
 
-    private func sync() {
+    private func sync(retry: Bool = false) {
         do {
             fixPendingTransactionsIfNeeded()
-            try synchronizer.start()
+            try synchronizer.start(retry: retry)
         } catch {
             balanceState = .notSynced(error: error)
         }
@@ -570,4 +578,14 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
         logger.log(level: level, message: message, file: file, function: function, line: line)
     }
 
+}
+
+
+extension EnhancementProgress {
+    var progress: Int {
+        guard self.totalTransactions <= 0 else {
+            return 0
+        }
+        return Int(Double(self.enhancedTransactions)/Double(self.totalTransactions)) * 100
+    }
 }
