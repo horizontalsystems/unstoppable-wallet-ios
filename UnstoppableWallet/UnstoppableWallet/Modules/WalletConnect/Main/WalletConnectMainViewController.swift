@@ -240,6 +240,8 @@ class WalletConnectMainViewController: ThemeViewController {
         switch request {
         case let request as WalletConnectSendEthereumTransactionRequest:
             viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
+        case let request as WalletConnectSignMessageRequest:
+            viewController = WalletConnectSignMessageRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
         default: ()
         }
 

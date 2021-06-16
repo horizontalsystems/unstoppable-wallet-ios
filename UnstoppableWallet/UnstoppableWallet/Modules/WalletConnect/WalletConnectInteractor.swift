@@ -5,6 +5,8 @@ protocol IWalletConnectInteractorDelegate: AnyObject {
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int?)
     func didKillSession()
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
+    func didRequestSignEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
+    func didRequestSign(id: Int, message: WCEthereumSignPayload)
 }
 
 class WalletConnectInteractor {
@@ -43,13 +45,15 @@ class WalletConnectInteractor {
             switch event {
             case .ethSendTransaction:
                 self?.delegate?.didRequestSendEthereumTransaction(id: Int(id), transaction: transaction)
+            case .ethSignTransaction:
+                self?.delegate?.didRequestSignEthereumTransaction(id: Int(id), transaction: transaction)
             default:
                 self?.rejectWithNotSupported(id: id)
             }
         }
 
-        interactor.eth.onSign = { [weak self] id, _ in
-            self?.rejectWithNotSupported(id: id)
+        interactor.eth.onSign = { [weak self] id, payload in
+            self?.delegate?.didRequestSign(id: Int(id), message: payload)
         }
 
         interactor.bnb.onSign = { [weak self] id, _ in

@@ -246,6 +246,18 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
         }
     }
 
+    func didRequestSignEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
+        print("didRequestSignEthereumTransaction")
+    }
+
+    func didRequestSign(id: Int, message: WCEthereumSignPayload) {
+        queue.async {
+            self.handleRequest(id: id) {
+                WalletConnectSignMessageRequest(id: id, message: message)
+            }
+        }
+    }
+
 }
 
 extension WalletConnectService {

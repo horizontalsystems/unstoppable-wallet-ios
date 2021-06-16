@@ -16,6 +16,7 @@
 "button.reject" = "Reject";
 "button.connect" = "Connect";
 "button.save" = "Save";
+"button.sign" = "Sign";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -812,6 +813,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Current %@ balance is below amount required to process this transaction including transaction fee.";
 "ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Request";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "New Connection";
