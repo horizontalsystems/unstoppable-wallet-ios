@@ -3,22 +3,20 @@ import EthereumKit
 class WalletConnectSignMessageRequestService {
     private let request: WalletConnectSignMessageRequest
     private let baseService: WalletConnectService
+    private let evmKit: EthereumKit.Kit
 
-    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectService) {
+    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectService, evmKit: EthereumKit.Kit) {
         self.request = request
         self.baseService = baseService
+        self.evmKit = evmKit
     }
 
-    private func sign(message: Data) throws -> Data? {
-        try baseService.evmKit?.signed(message: message)
+    private func sign(message: Data) throws -> Data {
+        try evmKit.signed(message: message)
     }
 
-    private func signTypedData(message: Data) throws -> Data? {
-        try baseService.evmKit?.signTypedData(message: message)
-    }
-
-    private var evmKit: EthereumKit.Kit? {
-        baseService.evmKit
+    private func signTypedData(message: Data) throws -> Data {
+        try evmKit.signTypedData(message: message)
     }
 
 }
@@ -26,26 +24,24 @@ class WalletConnectSignMessageRequestService {
 extension WalletConnectSignMessageRequestService {
 
     var message: String {
-        switch request.message {
+        switch request.payload {
         case let .sign(data, raw):
-            return String(decoding: data, as:UTF8.self)
+            return String(decoding: data, as: UTF8.self)
         case let .personalSign(data, raw):
-            return String(decoding: data, as:UTF8.self)
+            return String(decoding: data, as: UTF8.self)
         case let .signTypeData(_, data, raw):
             guard let object = try? JSONSerialization.jsonObject(with: data, options: []),
-            let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
-            let prettyPrintedString = String(data: data, encoding: .utf8) else {
+            let prettyData = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) else {
                 return ""
             }
 
-            return prettyPrintedString
+            return String(decoding: prettyData, as: UTF8.self)
         }
     }
 
     var domain: String? {
-        if case let .signTypeData(_, data, raw) = request.message {
-            let typeData = try? evmKit?.parseTypedData(rawJson: data)
-            var domain: String?
+        if case let .signTypeData(_, data, raw) = request.payload {
+            let typeData = try? evmKit.parseTypedData(rawJson: data)
             if case let .object(json) = typeData?.domain, let domainJson = json["name"], case let .string(domainString) = domainJson {
                 return domainString
             }
@@ -55,9 +51,9 @@ extension WalletConnectSignMessageRequestService {
     }
 
     func sign() throws {
-        let signedMessage: Data?
+        let signedMessage: Data
 
-        switch request.message {
+        switch request.payload {
         case let .sign(data, raw):
             signedMessage = try sign(message: data)
         case let .personalSign(data, raw):
@@ -66,7 +62,7 @@ extension WalletConnectSignMessageRequestService {
             signedMessage = try signTypedData(message: data)
         }
 
-        baseService.approveRequest(id: request.id, result: signedMessage ?? Data())
+        baseService.approveRequest(id: request.id, result: signedMessage)
     }
 
     func reject() {
