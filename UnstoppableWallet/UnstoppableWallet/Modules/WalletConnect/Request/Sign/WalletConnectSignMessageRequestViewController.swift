@@ -2,9 +2,12 @@ import UIKit
 import ThemeKit
 import SectionsTableView
 import ComponentKit
+import RxSwift
 
 class WalletConnectSignMessageRequestViewController: ThemeViewController {
     private let viewModel: WalletConnectSignMessageRequestViewModel
+
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
@@ -86,6 +89,9 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         messageCell.title = "wallet_connect.sign.message".localized
 
         tableView.buildSections()
+
+        subscribe(disposeBag, viewModel.errorSignal) { [weak self] in self?.show(error: $0) }
+        subscribe(disposeBag, viewModel.dismissSignal) { [weak self] in self?.dismiss() }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -95,21 +101,23 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     }
 
     @objc private func onTapSign() {
-        do {
-            try viewModel.sign()
-            dismiss(animated: true)
-        } catch {
-            HudHelper.instance.showError(title: error.localizedDescription)
-        }
+        viewModel.onSign()
     }
 
     @objc private func onTapReject() {
-        viewModel.reject()
-        dismiss(animated: true)
+        viewModel.onReject()
     }
 
     private func showMessage() {
         navigationController?.pushViewController(WalletConnectShowSigningMessageViewController(viewModel: viewModel), animated: true)
+    }
+
+    private func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+    private func dismiss() {
+        dismiss(animated: true)
     }
 
 }

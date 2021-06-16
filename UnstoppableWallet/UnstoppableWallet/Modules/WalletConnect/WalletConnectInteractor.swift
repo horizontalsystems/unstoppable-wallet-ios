@@ -6,7 +6,7 @@ protocol IWalletConnectInteractorDelegate: AnyObject {
     func didKillSession()
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
     func didRequestSignEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
-    func didRequestSign(id: Int, message: WCEthereumSignPayload)
+    func didRequestSign(id: Int, payload: WCEthereumSignPayload)
 }
 
 class WalletConnectInteractor {
@@ -53,7 +53,7 @@ class WalletConnectInteractor {
         }
 
         interactor.eth.onSign = { [weak self] id, payload in
-            self?.delegate?.didRequestSign(id: Int(id), message: payload)
+            self?.delegate?.didRequestSign(id: Int(id), payload: payload)
         }
 
         interactor.bnb.onSign = { [weak self] id, _ in

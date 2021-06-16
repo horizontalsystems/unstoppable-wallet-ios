@@ -1,6 +1,12 @@
+import RxSwift
+import RxRelay
+import RxCocoa
+
 class WalletConnectSignMessageRequestViewModel {
     private let service: WalletConnectSignMessageRequestService
 
+    private let errorRelay = PublishRelay<Error>()
+    private let dismissRelay = PublishRelay<()>()
 
     init(service: WalletConnectSignMessageRequestService) {
         self.service = service
@@ -10,6 +16,14 @@ class WalletConnectSignMessageRequestViewModel {
 
 extension WalletConnectSignMessageRequestViewModel {
 
+    var errorSignal: Signal<Error> {
+        errorRelay.asSignal()
+    }
+
+    var dismissSignal: Signal<()> {
+        dismissRelay.asSignal()
+    }
+
     var message: String {
         service.message
     }
@@ -18,12 +32,18 @@ extension WalletConnectSignMessageRequestViewModel {
         service.domain
     }
 
-    func sign() throws {
-        try service.sign()
+    func onSign() {
+        do {
+            try service.sign()
+            dismissRelay.accept(())
+        } catch {
+            errorRelay.accept(error)
+        }
     }
 
-    func reject() {
+    func onReject() {
         service.reject()
+        dismissRelay.accept(())
     }
 
 }

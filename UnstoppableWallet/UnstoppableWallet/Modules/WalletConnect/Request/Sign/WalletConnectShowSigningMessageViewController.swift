@@ -2,17 +2,18 @@ import UIKit
 import ThemeKit
 import SectionsTableView
 import ComponentKit
+import RxSwift
 
 class WalletConnectShowSigningMessageViewController: ThemeViewController {
     private let viewModel: WalletConnectSignMessageRequestViewModel
+
+    private let disposeBag = DisposeBag()
 
     private let textView = UITextView.appDebug
     private let bottomWrapper = BottomGradientHolder()
 
     private let signButton = ThemeButton()
     private let rejectButton = ThemeButton()
-
-    private var message: String?
 
     init(viewModel: WalletConnectSignMessageRequestViewModel) {
         self.viewModel = viewModel
@@ -63,6 +64,9 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
         rejectButton.apply(style: .primaryGray)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
+
+        subscribe(disposeBag, viewModel.errorSignal) { [weak self] in self?.show(error: $0) }
+        subscribe(disposeBag, viewModel.dismissSignal) { [weak self] in self?.dismiss() }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -72,16 +76,18 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
     }
 
     @objc private func onTapSign() {
-        do {
-            try viewModel.sign()
-            dismiss(animated: true)
-        } catch {
-            HudHelper.instance.showError(title: error.localizedDescription)
-        }
+        viewModel.onSign()
     }
 
     @objc private func onTapReject() {
-        viewModel.reject()
+        viewModel.onReject()
+    }
+
+    private func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
+    }
+
+    private func dismiss() {
         dismiss(animated: true)
     }
 

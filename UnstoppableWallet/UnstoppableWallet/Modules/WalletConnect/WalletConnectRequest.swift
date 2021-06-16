@@ -47,10 +47,10 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
 }
 
 class WalletConnectSignMessageRequest: WalletConnectRequest {
-    let message: WCEthereumSignPayload
+    let payload: WCEthereumSignPayload
 
-    init(id: Int, message: WCEthereumSignPayload) {
-        self.message = message
+    init(id: Int, payload: WCEthereumSignPayload) {
+        self.payload = payload
 
         super.init(id: id)
     }
