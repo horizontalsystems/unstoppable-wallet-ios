@@ -34,7 +34,8 @@ class ValueFormatter {
     }
 
     func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
-        let absoluteValue = abs(value)
+        var absoluteValue = abs(value)
+        var rounded = false
 
         let formatter = coinFormatter
         formatter.roundingMode = .halfUp
@@ -46,11 +47,20 @@ class ValueFormatter {
             formatter.maximumFractionDigits = absoluteValue > high ? 4 : 8
         }
 
+        if absoluteValue > 0 && absoluteValue < 0.00000001 {
+            absoluteValue = 0.00000001
+            rounded = true
+        }
+
         guard let formattedValue = formatter.string(from: absoluteValue as NSNumber) else {
             return nil
         }
 
         var result = symbol.map { "\(formattedValue) \($0)" } ?? formattedValue
+
+        if rounded {
+            result = "< \(result)"
+        }
 
         if value.isSignMinus {
             result = "- \(result)"

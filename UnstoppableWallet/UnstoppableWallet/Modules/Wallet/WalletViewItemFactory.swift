@@ -136,7 +136,7 @@ class WalletViewItemFactory {
 
     private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: value), fractionPolicy: .threshold(high: 0.01, low: 0)),
+                text: ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
                 dimmed: state != .synced
         )
     }
