@@ -45,3 +45,18 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
     }
 
 }
+
+class WalletConnectSignMessageRequest: WalletConnectRequest {
+    let message: WCEthereumSignPayload
+
+    init(id: Int, message: WCEthereumSignPayload) {
+        self.message = message
+
+        super.init(id: id)
+    }
+
+    override func convert(result: Any) -> String? {
+        (result as? Data)?.toHexString()
+    }
+
+}
