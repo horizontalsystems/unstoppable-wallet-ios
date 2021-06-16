@@ -70,7 +70,7 @@ class BalanceTopView: UIView {
 
         addSubview(diffLabel)
         diffLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(bottomLeftLabel.snp.trailing).offset(CGFloat.margin8)
+            maker.leading.equalTo(bottomLeftLabel.snp.trailing).offset(CGFloat.margin4)
             maker.centerY.equalTo(bottomLeftLabel)
         }
 
