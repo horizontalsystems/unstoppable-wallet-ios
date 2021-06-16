@@ -5,18 +5,19 @@ class ChartDoubleLineView: UIView {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
-    init(titleColor: UIColor = .themeOz, titleFont: UIFont = .captionSB, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .caption, marginBetween: CGFloat = 0, textAlignment: NSTextAlignment = .left) {
+    init(titleColor: UIColor = .themeOz, titleFont: UIFont = .captionSB, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .caption, textAlignment: NSTextAlignment = .left) {
         super.init(frame: .zero)
 
         addSubview(titleLabel)
         addSubview(subtitleLabel)
 
         titleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.top.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview().inset(CGFloat.margin4)
         }
         subtitleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(marginBetween)
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(titleLabel.snp.bottom).offset(6)
         }
 
         titleLabel.textColor = titleColor

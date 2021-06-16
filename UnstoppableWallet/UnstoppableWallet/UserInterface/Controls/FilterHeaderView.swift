@@ -9,13 +9,15 @@ extension FilterHeaderView {
 }
 
 class FilterHeaderView: UITableViewHeaderFooterView {
+    static var height: CGFloat = .heightSingleLineCell
+
     private var filters = [ViewItem]()
     private let collectionView: UICollectionView
 
     var onSelect: ((Int) -> ())?
 
-    public var headerHeight: CGFloat {
-        filters.isEmpty ? 0 : 40
+    var headerHeight: CGFloat {
+        filters.isEmpty ? 0 : Self.height
     }
 
     init() {
@@ -36,7 +38,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsets(top: 6, left: layoutMargins.left * 2, bottom: 6, right: layoutMargins.right * 2)
+        collectionView.contentInset = UIEdgeInsets(top: .margin8, left: .margin16, bottom: .margin8, right: .margin16)
         collectionView.allowsMultipleSelection = false
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
@@ -101,7 +103,7 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        .margin2x
+        .margin8
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

@@ -22,7 +22,7 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         selectedRateView.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.height.equalTo(40)
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
         selectedRateView.isHidden = true
 
