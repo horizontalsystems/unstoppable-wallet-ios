@@ -11,9 +11,9 @@ class SendAddressPresenter {
     private var enteredAddress: Address?
     var currentAddress: Address?
 
-    private(set) var error: Error? {
+    private(set) var recipientError: Error? {
         didSet {
-            errorRelay.accept(error)
+            errorRelay.accept(recipientError)
         }
     }
     private let errorRelay = PublishRelay<Error?>()
@@ -31,7 +31,7 @@ class SendAddressPresenter {
 
     private func onSet(address: Address?) {
         guard let address = address, !address.raw.isEmpty else {
-            error = nil
+            recipientError = nil
             currentAddress = nil
             enteredAddress = nil
             delegate?.onUpdateAddress()
@@ -63,10 +63,10 @@ extension SendAddressPresenter: ISendAddressModule {
         do {
             try delegate?.validate(address: address.raw)
             currentAddress = address
-            error = nil
+            recipientError = nil
         } catch {
             currentAddress = nil
-            self.error = error.convertedError
+            self.recipientError = error.convertedError
             throw error
         }
     }
@@ -87,7 +87,7 @@ extension SendAddressPresenter: IRecipientAddressService {
         nil
     }
 
-    var errorObservable: Observable<Error?> {
+    var recipientErrorObservable: Observable<Error?> {
         errorRelay.asObservable()
     }
 

@@ -1,30 +1,32 @@
 import Foundation
 
 class DexInfoDataSource: InfoDataSource {
-    private let dex: SwapModule.Dex
+    private let dex: SwapModuleNew.DexNew
 
-    init(dex: SwapModule.Dex) {
+    init(dex: SwapModuleNew.DexNew) {
         self.dex = dex
     }
 
     private var dexName: String {
-        switch dex {
+        switch dex.provider {
         case .uniswap: return "Uniswap"
         case .pancake: return "PancakeSwap"
+        case .oneInch: return "1Inch"
         }
     }
 
     private var blockchain: String {
-        switch dex {
-        case .uniswap: return "Ethereum"
-        case .pancake: return "Binance Smart Chain"
+        switch dex.blockchain {
+        case .ethereum: return "Ethereum"
+        case .binanceSmartChain: return "Binance Smart Chain"
         }
     }
 
     private var dexUrl: String {
-        switch dex {
+        switch dex.provider {
         case .uniswap: return "https://uniswap.org/"
         case .pancake: return "https://pancakeswap.finance/"
+        case .oneInch: return "https://app.1inch.io/"
         }
     }
 }
@@ -32,9 +34,10 @@ class DexInfoDataSource: InfoDataSource {
 extension DexInfoDataSource {
 
     var title: String {
-        switch dex {
+        switch dex.provider {
         case .uniswap: return "Uniswap v.2"
         case .pancake: return "PancakeSwap"
+        case .oneInch: return "1Inch"
         }
     }
 
