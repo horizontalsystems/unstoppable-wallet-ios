@@ -297,18 +297,18 @@
 "market.top.section.header.top_gainers" = "Meilleurs rendements";
 "market.top.section.header.top_losers" = "Pires rendements";
 "market.top.section.header.top_volume" = "Classement par volume";
-"market.top.section.header.news" = "News";
+"market.top.section.header.news" = "Infos";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.diluted_market_cap.title" = "Cap. marché diluée";
 
-"market.market_field.mcap" = "MCap";
+"market.market_field.mcap" = "Cap. Marché";
 "market.market_field.vol" = "Volume";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Classer par";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_cap" = "Cap. marché la plus forte";
+"market.top.lowest_cap" = "Cap. marché la plus basse";
 "market.top.highest_volume" = "Highest Volume";
 "market.top.lowest_volume" = "Lowest Volume";
 "market.top.top_gainers" = "Top Gainers";
