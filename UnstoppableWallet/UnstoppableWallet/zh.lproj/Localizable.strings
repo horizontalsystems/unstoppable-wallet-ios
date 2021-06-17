@@ -16,6 +16,7 @@
 "button.reject" = "拒绝";
 "button.connect" = "连接";
 "button.save" = "保存";
+"button.sign" = "Sign";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
@@ -761,31 +762,17 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "guides.tab_bar_item" = "学院";
 "guides.title" = "学院";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "选择区块链";
-"add_token_selector.add_token" = "添加代币";
-"add_token_selector.erc20_token" = "ERC20 代币";
-"add_token_selector.bep20_token" = "BEP20 代币";
-"add_token_selector.bep2_token" = "BEP2 代币";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "代币图片";
-"add_token.symbol" = "标志";
-"add_token.decimals" = "小数";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "该代币已在代币管理器列表中。";
-
-"add_evm_token.contract_not_exist" = "没找到合同";
-"add_evm_token.contract_address" = "智能合约地址";
-
-"add_erc20_token.title" = "添加ERC20";
-
-"add_bep20_token.title" = "添加BEP20";
-
-"add_bep2_token.title" = "添加BEP2";
-"add_bep2_token.token_symbol" = "代币符号";
-"add_bep2_token.token_not_exist" = "找不到代币";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ 价格：上升 %@%% %@";
 "change_24hour_down" = "%@ 价格：下跌 %@%% %@";
@@ -810,6 +797,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "新连接";
