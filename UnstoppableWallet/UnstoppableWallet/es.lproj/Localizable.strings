@@ -696,15 +696,15 @@ poner en peligro la seguridad de mis fondos.";
 "chart.price_indicator_range.year" = "52w Range";
 
 "chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.market_cap" = "Cap. de Mercado";
 "chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "En circulación";
+"chart.market.total_supply" = "Suministro total";
 
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "About";
+"chart.about.header" = "Acerca de";
 "chart.about.read_more" = "Read More";
 "chart.about.read_less" = "Read Less";
 
