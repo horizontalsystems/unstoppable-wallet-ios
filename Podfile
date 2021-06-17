@@ -30,6 +30,8 @@ def appPods
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
   pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
+  pod 'OneInchKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  # pod 'OneInchKit.swift', :path => '../ethereum-kit-ios'
 
   pod 'BinanceChainKit.swift', git: 'https://github.com/horizontalsystems/binance-chain-kit-ios'
   # pod 'BinanceChainKit.swift', path: '../binance-chain-kit-ios/'

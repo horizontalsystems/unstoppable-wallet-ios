@@ -1,0 +1,4 @@
+import CoinKit
+
+class SwapServiceNew {
+}

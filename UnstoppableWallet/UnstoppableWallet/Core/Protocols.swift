@@ -32,6 +32,9 @@ protocol ILocalStorage: AnyObject {
     var pushNotificationsOn: Bool { get set }
     var marketCategory: Int? { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
+
+    func defaultProvider(blockchain: SwapModuleNew.DexNew.Blockchain) -> SwapModuleNew.DexNew.Provider
+    func setDefaultProvider(blockchain: SwapModuleNew.DexNew.Blockchain, provider: SwapModuleNew.DexNew.Provider)
 }
 
 protocol ILogRecordManager {

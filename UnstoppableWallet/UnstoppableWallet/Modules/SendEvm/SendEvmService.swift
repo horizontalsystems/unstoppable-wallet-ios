@@ -131,11 +131,11 @@ extension SendEvmService: IRecipientAddressService {
         nil
     }
 
-    var error: Error? {
+    var recipientError: Error? {
         addressError
     }
 
-    var errorObservable: Observable<Error?> {
+    var recipientErrorObservable: Observable<Error?> {
         addressErrorRelay.asObservable()
     }
 

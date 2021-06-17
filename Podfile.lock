@@ -174,6 +174,12 @@ PODS:
     - UIExtensions.swift (~> 1.1)
   - Nimble (9.2.0)
   - ObjectMapper (4.2.0)
+  - OneInchKit.swift (0.1.0):
+    - BigInt (~> 5.0)
+    - EthereumKit.swift (~> 0.13)
+    - OpenSslKit.swift (~> 1.0)
+    - RxSwift (~> 5.0)
+    - Secp256k1Kit.swift (~> 1.0)
   - OpenSslKit.swift (1.2.2)
   - PinKit.swift (1.0):
     - ComponentKit.swift (~> 1.0)
@@ -338,6 +344,7 @@ DEPENDENCIES:
   - ModuleKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Nimble
   - ObjectMapper
+  - OneInchKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Quick
   - RxCocoa
@@ -454,6 +461,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   ModuleKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  OneInchKit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
@@ -538,6 +547,9 @@ CHECKOUT OPTIONS:
   ModuleKit.swift:
     :commit: 454452b7578dc80dfa98871ae08a4ae48621572d
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  OneInchKit.swift:
+    :commit: 892f779cafe043fb2b9f299c2bb1589d1d1feb15
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :commit: 454452b7578dc80dfa98871ae08a4ae48621572d
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -614,6 +626,7 @@ SPEC CHECKSUMS:
   ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  OneInchKit.swift: a4995aaea38d202a5f4bd08278771b013e1e0cae
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
   PinKit.swift: a2e489a5391f8e1be11b328ec9e488cdd6888a86
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
@@ -651,6 +664,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: c9a8167ef989f80e461cd8d79efeaf4a8529f917
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
-PODFILE CHECKSUM: 483c15e1015d1c4879bdb6f071dae51583889845
+PODFILE CHECKSUM: edd8b5e552169f3b910dd3d582f134ac1b4ae2ee
 
 COCOAPODS: 1.10.1

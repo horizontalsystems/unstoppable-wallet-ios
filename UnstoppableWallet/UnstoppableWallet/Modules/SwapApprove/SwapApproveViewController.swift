@@ -10,7 +10,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
     private let viewModel: SwapApproveViewModel
     private weak var delegate: ISwapApproveDelegate?
-    private let dex: SwapModule.Dex
+    private let dex: SwapModuleNew.DexNew
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -20,7 +20,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
     private var isLoaded = false
 
-    init(viewModel: SwapApproveViewModel, delegate: ISwapApproveDelegate, dex: SwapModule.Dex) {
+    init(viewModel: SwapApproveViewModel, delegate: ISwapApproveDelegate, dex: SwapModuleNew.DexNew) {
         self.viewModel = viewModel
         self.delegate = delegate
         self.dex = dex
