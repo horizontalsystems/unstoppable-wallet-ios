@@ -394,7 +394,7 @@
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";
 "market.advanced_search.outperformed_bnb" = "Outperformed BNB";
 "market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to_atl" = "Price Close to ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -869,7 +869,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
+"birthday_input.title" = "생일 신장";
 "birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
