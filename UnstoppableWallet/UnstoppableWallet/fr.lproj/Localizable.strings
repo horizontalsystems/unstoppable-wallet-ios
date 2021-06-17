@@ -16,6 +16,7 @@
 "button.reject" = "Rejeter";
 "button.connect" = "Connecter";
 "button.save" = "Sauvegarder";
+"button.sign" = "Sign";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
@@ -284,18 +285,18 @@
 "market.category.overview" = "Synthèse";
 "market.category.discovery" = "Découverte";
 "market.category.watchlist" = "Liste de suivi";
-"market.total_market_cap" = "Total Market Cap";
-"market.24h_volume" = "24h Volume";
+"market.total_market_cap" = "Capitalisation de marché totale";
+"market.24h_volume" = "Volume des dernières 24h";
 "market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
 "market.sync_error" = "Erreur de synchronisation";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_volume" = "Top By Volume";
+"market.top.section.header.see_all" = "Tout Afficher";
+"market.top.section.header.top_gainers" = "Meilleurs rendements";
+"market.top.section.header.top_losers" = "Pires rendements";
+"market.top.section.header.top_volume" = "Classement par volume";
 "market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
@@ -761,31 +762,17 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "guides.tab_bar_item" = "Académie";
 "guides.title" = "Académie";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Choisissez la Blockchain";
-"add_token_selector.add_token" = "Ajouter le token";
-"add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Nom de la pièce";
-"add_token.symbol" = "Symbole";
-"add_token.decimals" = "Decimales";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
-
-"add_evm_token.contract_not_exist" = "Contrat non trouvé";
-"add_evm_token.contract_address" = "Adresse du contrat";
-
-"add_erc20_token.title" = "Ajouter ERC20";
-
-"add_bep20_token.title" = "Ajouter BEP20";
-
-"add_bep2_token.title" = "Ajouter BEP2";
-"add_bep2_token.token_symbol" = "Symbole du token";
-"add_bep2_token.token_not_exist" = "Token non trouvé";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
@@ -810,6 +797,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
