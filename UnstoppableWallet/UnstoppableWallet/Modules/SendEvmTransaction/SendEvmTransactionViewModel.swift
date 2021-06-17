@@ -4,6 +4,7 @@ import RxCocoa
 import EthereumKit
 import BigInt
 import UniswapKit
+import Erc20Kit
 
 class SendEvmTransactionViewModel {
     private let disposeBag = DisposeBag()
@@ -50,10 +51,10 @@ class SendEvmTransactionViewModel {
     private func sync(dataState: SendEvmTransactionService.DataState) {
         let items: [SectionViewItem]
 
-        if let decoration = dataState.decoration, let decoratedItems = self.items(decoration: decoration, additionalInfo: dataState.additionalInfo) {
+        if let decoration = dataState.decoration, let decoratedItems = self.items(decoration: decoration, transactionData: dataState.transactionData, additionalInfo: dataState.additionalInfo) {
             items = decoratedItems
         } else {
-            items = fallbackItems(transactionData: dataState.transactionData)
+            items = transferItems(from: service.ownAddress, to: dataState.transactionData.to, value: dataState.transactionData.value, additionalInfo: dataState.additionalInfo)
         }
 
         sectionViewItemsRelay.accept(items)
@@ -83,16 +84,24 @@ class SendEvmTransactionViewModel {
         return error.convertedError.smartDescription
     }
 
-    private func items(decoration: TransactionDecoration, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+    private func items(decoration: ContractMethodDecoration, transactionData: TransactionData, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         switch decoration {
-        case let .transfer(from, to, value):
-            return transferItems(from: from, to: to, value: value, additionalInfo: additionalInfo)
-        case let .eip20Transfer(to, value, contractAddress):
-            return eip20TransferItems(to: to, value: value, contractAddress: contractAddress, additionalInfo: additionalInfo)
-        case let .eip20Approve(spender, value, contractAddress):
-            return eip20ApproveItems(spender: spender, value: value, contractAddress: contractAddress)
-        case let .swap(trade, tokenIn, tokenOut, to, deadline):
-            return swapItems(trade: trade, tokenIn: tokenIn, tokenOut: tokenOut, to: to, deadline: deadline, additionalInfo: additionalInfo)
+        case let method as TransferMethodDecoration:
+            return eip20TransferItems(to: method.to, value: method.value, contractAddress: transactionData.to, additionalInfo: additionalInfo)
+
+        case let method as ApproveMethodDecoration:
+            return eip20ApproveItems(spender: method.spender, value: method.value, contractAddress: transactionData.to)
+
+        case let method as SwapMethodDecoration:
+            return swapItems(trade: method.trade, tokenIn: method.tokenIn, tokenOut: method.tokenOut, to: method.to, deadline: method.deadline, additionalInfo: additionalInfo)
+
+        case let method as RecognizedMethodDecoration:
+            return recognizedMethodItems(transactionData: transactionData, method: method.method, arguments: method.arguments)
+
+        case _ as UnknownMethodDecoration:
+            return unknownMethodItems(transactionData: transactionData)
+
+        default: return nil
         }
     }
 
@@ -145,7 +154,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func swapItems(trade: TransactionDecoration.Trade, tokenIn: TransactionDecoration.Token, tokenOut: TransactionDecoration.Token, to: EthereumKit.Address, deadline: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+    private func swapItems(trade: SwapMethodDecoration.Trade, tokenIn: SwapMethodDecoration.Token, tokenOut: SwapMethodDecoration.Token, to: EthereumKit.Address, deadline: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinService(token: tokenOut) else {
             return nil
         }
@@ -155,7 +164,7 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         switch trade {
-        case let .exactIn(amountIn, amountOutMin):
+        case let .exactIn(amountIn, amountOutMin, _):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
                 .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedRawString, type: .outgoing)
@@ -166,7 +175,7 @@ class SendEvmTransactionViewModel {
                 estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedRawString }, type: .incoming),
                 .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedRawString, type: .regular)
             ]))
-        case let .exactOut(amountOut, amountInMax):
+        case let .exactOut(amountOut, amountInMax, _):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
                 estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedRawString }, type: .outgoing),
@@ -208,6 +217,31 @@ class SendEvmTransactionViewModel {
         return sections
     }
 
+    private func recognizedMethodItems(transactionData: TransactionData, method: String, arguments: [Any]) -> [SectionViewItem] {
+        let addressValue = transactionData.to.eip55
+
+        let viewItems: [ViewItem] = [
+            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
+            .address(title: "To", valueTitle: addressValue, value: addressValue),
+            .subhead(title: "Method", value: method),
+            .input(value: transactionData.input.toHexString())
+        ]
+
+        return [SectionViewItem(viewItems: viewItems)]
+    }
+
+    private func unknownMethodItems(transactionData: TransactionData) -> [SectionViewItem] {
+        let addressValue = transactionData.to.eip55
+
+        let viewItems: [ViewItem] = [
+            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
+            .address(title: "To", valueTitle: addressValue, value: addressValue),
+            .input(value: transactionData.input.toHexString())
+        ]
+
+        return [SectionViewItem(viewItems: viewItems)]
+    }
+
     private func estimatedSwapAmount(value: String?, type: ValueType) -> ViewItem {
         let title = "swap.confirmation.estimated".localized
 
@@ -218,23 +252,11 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func coinService(token: TransactionDecoration.Token) -> CoinService? {
+    private func coinService(token: SwapMethodDecoration.Token) -> CoinService? {
         switch token {
         case .evmCoin: return coinServiceFactory.baseCoinService
         case .eip20Coin(let address): return coinServiceFactory.coinService(contractAddress: address)
         }
-    }
-
-    private func fallbackItems(transactionData: TransactionData) -> [SectionViewItem] {
-        let addressValue = transactionData.to.eip55
-
-        let viewItems: [ViewItem] = [
-            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
-            .address(title: "To", valueTitle: addressValue, value: addressValue),
-            .input(value: transactionData.input.toHexString())
-        ]
-
-        return [SectionViewItem(viewItems: viewItems)]
     }
 
 }
