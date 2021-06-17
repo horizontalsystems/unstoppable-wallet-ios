@@ -280,6 +280,7 @@ PODS:
   - UIExtensions.swift (1.1.1)
   - UniswapKit.swift (0.10.0):
     - BigInt (~> 5.0)
+    - Erc20Kit.swift (~> 0.13)
     - EthereumKit.swift (~> 0.13)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -324,7 +325,7 @@ DEPENDENCIES:
   - Down
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
-  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, branch `sync_fix`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -436,7 +437,6 @@ EXTERNAL SOURCES:
   EthereumABI:
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :branch: sync_fix
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -506,13 +506,13 @@ CHECKOUT OPTIONS:
     :commit: 2c0aa96d2663550125f23dd031c9e003e6926c54
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 7ef0c642b2c943159aed6a63159956c5243561ab
+    :commit: c03c92d34942770f7acf5979b4ab6d7d1e7c7d6e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: 0f53ad4c291efa2adb14457b583215de2c2903ea
+    :commit: c03c92d34942770f7acf5979b4ab6d7d1e7c7d6e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 763394a92bdf091517376776bccecf9e7edbb49f
@@ -557,7 +557,7 @@ CHECKOUT OPTIONS:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 7ef0c642b2c943159aed6a63159956c5243561ab
+    :commit: c03c92d34942770f7acf5979b4ab6d7d1e7c7d6e
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
@@ -644,13 +644,13 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: 2a118eb5bdd9c49bdd41daa3f7ca2033628f98be
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
-  UniswapKit.swift: e0a9a8c6df7f695305c74f800a45fec9e3b177da
+  UniswapKit.swift: 66f62bf8f07375c7e11ee0786f31d81a6093eec8
   UnstoppableDomainsResolution: 1724f30c0dfa4ba672e4b74242e9fc0df240e3a6
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 2caee956cbf9011f32b90cf658e405de79ee258f
   ZcashLightClientKit: 9294ded6505b3f8dd6e77c14cf33887aeff8d352
 
-PODFILE CHECKSUM: db249fcc623e3dbc5776884465aaa6d6ba5757ae
+PODFILE CHECKSUM: 483c15e1015d1c4879bdb6f071dae51583889845
 
 COCOAPODS: 1.10.1

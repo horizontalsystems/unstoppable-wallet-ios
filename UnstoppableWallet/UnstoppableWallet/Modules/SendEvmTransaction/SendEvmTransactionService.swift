@@ -4,6 +4,7 @@ import RxCocoa
 import EthereumKit
 import BigInt
 import CoinKit
+import UniswapKit
 
 class SendEvmTransactionService {
     private let disposeBag = DisposeBag()
@@ -83,12 +84,12 @@ class SendEvmTransactionService {
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.decoration, case .swap(_, _, let tokenOut, _, _) = decoration {
-            activateSwapCoinOut(tokenOut: tokenOut)
+        if let decoration = dataState.decoration as? SwapMethodDecoration {
+            activateSwapCoinOut(tokenOut: decoration.tokenOut)
         }
     }
 
-    private func activateSwapCoinOut(tokenOut: TransactionDecoration.Token) {
+    private func activateSwapCoinOut(tokenOut: SwapMethodDecoration.Token) {
         let coinType: CoinType
 
         switch tokenOut {
@@ -161,7 +162,7 @@ extension SendEvmTransactionService {
     struct DataState {
         let transactionData: TransactionData
         let additionalInfo: SendEvmData.AdditionInfo?
-        var decoration: TransactionDecoration?
+        var decoration: ContractMethodDecoration?
     }
 
     enum SendState {
