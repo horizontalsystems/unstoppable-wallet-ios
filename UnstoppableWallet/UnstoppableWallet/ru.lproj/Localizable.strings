@@ -16,6 +16,7 @@
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
+"button.sign" = "Sign";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -763,31 +764,17 @@
 "guides.tab_bar_item" = "Академия";
 "guides.title" = "Академия";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Выбрать Блокчейн";
-"add_token_selector.add_token" = "Добавить Токен";
-"add_token_selector.erc20_token" = "Токен ERC20";
-"add_token_selector.bep20_token" = "Токен BEP20";
-"add_token_selector.bep2_token" = "Токен BEP2";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Название Токена";
-"add_token.symbol" = "Символ";
-"add_token.decimals" = "Десятичные Знаки";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
-
-"add_evm_token.contract_not_exist" = "Контракт не найден";
-"add_evm_token.contract_address" = "Адрес Контракта";
-
-"add_erc20_token.title" = "Добавить ERC20";
-
-"add_bep20_token.title" = "Добавить BEP20";
-
-"add_bep2_token.title" = "Добавить BEP2";
-"add_bep2_token.token_symbol" = "Символ Токена";
-"add_bep2_token.token_not_exist" = "Токен не найден";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
 "change_24hour_down" = "%@ цена: понизилась на %@%%%@";
@@ -812,6 +799,10 @@
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Новое Подключение";
