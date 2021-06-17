@@ -16,6 +16,7 @@
 "button.reject" = "Rechazar";
 "button.connect" = "Conectar";
 "button.save" = "Guardar";
+"button.sign" = "Sign";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
@@ -762,31 +763,17 @@ poner en peligro la seguridad de mis fondos.";
 "guides.tab_bar_item" = "Academia";
 "guides.title" = "Academia";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Elegir Blockchain";
-"add_token_selector.add_token" = "Añadir Token";
-"add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Nombre de moneda";
-"add_token.symbol" = "Símbolo";
-"add_token.decimals" = "Decimales";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
-
-"add_evm_token.contract_not_exist" = "Contrato no encontrado";
-"add_evm_token.contract_address" = "Dirección del contrato";
-
-"add_erc20_token.title" = "Añadir ERC20";
-
-"add_bep20_token.title" = "Añadir BEP20";
-
-"add_bep2_token.title" = "Añadir BEP2";
-"add_bep2_token.token_symbol" = "Símbolo del token";
-"add_bep2_token.token_not_exist" = "Token no encontrado";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -811,6 +798,10 @@ poner en peligro la seguridad de mis fondos.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
