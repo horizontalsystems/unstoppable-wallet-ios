@@ -63,10 +63,14 @@ class DepositViewController: ThemeViewController {
             maker.width.equalTo(qrCodeImageView.snp.height)
         }
 
+        qrCodeImageView.isUserInteractionEnabled = true
         qrCodeImageView.backgroundColor = .white
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
         qrCodeImageView.layer.cornerRadius = .cornerRadius8
+
+        let qrCodeRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
+        qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)
 
         let address = viewModel.address
         let size = view.width - 2 * qrCodeSideMargin
@@ -106,12 +110,24 @@ class DepositViewController: ThemeViewController {
 
         addressTitleLabel.text = addressTitle
 
+        let addressLabelWrapper = UIView()
+
+        contentWrapperView.addSubview(addressLabelWrapper)
+        addressLabelWrapper.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(addressTitleLabel.snp.bottom)
+        }
+
+        let addressRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
+        addressLabelWrapper.isUserInteractionEnabled = true
+        addressLabelWrapper.addGestureRecognizer(addressRecognizer)
+
         let addressLabel = UILabel()
 
-        contentWrapperView.addSubview(addressLabel)
+        addressLabelWrapper.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(addressTitleLabel.snp.bottom).offset(CGFloat.margin12)
+            maker.top.bottom.equalToSuperview().inset(CGFloat.margin12)
         }
 
         addressLabel.textAlignment = .center
@@ -125,7 +141,7 @@ class DepositViewController: ThemeViewController {
         contentWrapperView.addSubview(buttonsWrapper)
         buttonsWrapper.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(addressLabel.snp.bottom).offset(CGFloat.margin24)
+            maker.top.equalTo(addressLabelWrapper.snp.bottom).offset(CGFloat.margin12)
             maker.bottom.equalToSuperview()
         }
 
