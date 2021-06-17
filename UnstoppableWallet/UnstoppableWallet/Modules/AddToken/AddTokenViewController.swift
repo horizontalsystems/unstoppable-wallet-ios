@@ -16,10 +16,13 @@ class AddTokenViewController: ThemeViewController {
 
     private let inputCell = AddressInputCell()
     private let inputCautionCell = FormCautionCell()
-    private let coinNameCell = AdditionalDataCellNew()
-    private let symbolCell = AdditionalDataCellNew()
-    private let decimalsCell = AdditionalDataCellNew()
-    private let buttonCell = ButtonCell()
+    private let coinTypeCell = D7Cell()
+    private let coinNameCell = D7Cell()
+    private let coinCodeCell = D7Cell()
+    private let decimalCell = D7Cell()
+
+    private let addButtonHolder = BottomGradientHolder()
+    private let addButton = ThemeButton()
 
     init(viewModel: AddTokenViewModel, pageTitle: String, referenceTitle: String) {
         self.viewModel = viewModel
@@ -41,7 +44,7 @@ class AddTokenViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.top.trailing.equalToSuperview()
         }
 
         tableView.separatorStyle = .none
@@ -60,24 +63,45 @@ class AddTokenViewController: ThemeViewController {
 
         inputCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        coinNameCell.title = "add_token.coin_name".localized
-        symbolCell.title = "add_token.symbol".localized
-        decimalsCell.title = "add_token.decimals".localized
+        coinTypeCell.set(backgroundStyle: .lawrence, isFirst: true)
+        coinTypeCell.title = "add_token.coin_type".localized
 
-        buttonCell.bind(style: .primaryYellow, title: "button.add".localized) { [weak self] in
-            self?.viewModel.onTapButton()
+        coinNameCell.set(backgroundStyle: .lawrence)
+        coinNameCell.title = "add_token.coin_name".localized
+
+        coinCodeCell.set(backgroundStyle: .lawrence)
+        coinCodeCell.title = "add_token.coin_code".localized
+
+        decimalCell.set(backgroundStyle: .lawrence, isLast: true)
+        decimalCell.title = "add_token.decimal".localized
+
+        view.addSubview(addButtonHolder)
+        addButtonHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
+
+        addButtonHolder.addSubview(addButton)
+        addButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(CGFloat.margin24)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        addButton.apply(style: .primaryYellow)
+        addButton.setTitle("button.add".localized, for: .normal)
+        addButton.addTarget(self, action: #selector(onTapAddButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.inputCell.set(isLoading: loading)
         }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
+            self?.coinTypeCell.value = viewItem?.coinType ?? "..."
             self?.coinNameCell.value = viewItem?.coinName ?? "..."
-            self?.symbolCell.value = viewItem?.symbol ?? "..."
-            self?.decimalsCell.value = viewItem.map { "\($0.decimals)" } ?? "..."
+            self?.coinCodeCell.value = viewItem?.coinCode ?? "..."
+            self?.decimalCell.value = viewItem.map { "\($0.decimal)" } ?? "..."
         }
-        subscribe(disposeBag, viewModel.buttonVisibleDriver) { [weak self] visible in
-            self?.buttonCell.isEnabled = visible
+        subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
+            self?.addButton.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] caution in
             self?.inputCell.set(cautionType: caution?.type)
@@ -90,6 +114,10 @@ class AddTokenViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+    }
+
+    @objc private func onTapAddButton() {
+        viewModel.onTapButton()
     }
 
     @objc private func onTapCancelButton() {
@@ -136,6 +164,13 @@ extension AddTokenViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
+                                cell: coinTypeCell,
+                                id: "coin-type",
+                                dynamicHeight: { [weak self] width in
+                                    self?.coinTypeCell.cellHeight ?? 0
+                                }
+                        ),
+                        StaticRow(
                                 cell: coinNameCell,
                                 id: "coin-name",
                                 dynamicHeight: { [weak self] width in
@@ -143,23 +178,18 @@ extension AddTokenViewController: SectionsDataSource {
                                 }
                         ),
                         StaticRow(
-                                cell: symbolCell,
-                                id: "symbol",
+                                cell: coinCodeCell,
+                                id: "coin-code",
                                 dynamicHeight: { [weak self] width in
-                                    self?.symbolCell.cellHeight ?? 0
+                                    self?.coinCodeCell.cellHeight ?? 0
                                 }
                         ),
                         StaticRow(
-                                cell: decimalsCell,
-                                id: "decimals",
+                                cell: decimalCell,
+                                id: "decimal",
                                 dynamicHeight: { [weak self] width in
-                                    self?.decimalsCell.cellHeight ?? 0
+                                    self?.decimalCell.cellHeight ?? 0
                                 }
-                        ),
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "button",
-                                height: ButtonCell.height(style: .primaryYellow)
                         )
                     ]
             )

@@ -17,8 +17,12 @@ class AddBep2TokenBlockchainService {
 
 extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
-    func validate(reference: String) throws {
-        // todo
+    func isValid(reference: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: "\\w+-\\w+") else {
+            return false
+        }
+
+        return regex.firstMatch(in: reference, range: NSRange(location: 0, length: reference.count)) != nil
     }
 
     func coinType(reference: String) -> CoinType {
@@ -71,7 +75,7 @@ extension AddBep2TokenBlockchainService {
 
         var errorDescription: String? {
             switch self {
-            case .tokenDoesNotExist: return "add_bep2_token.token_not_exist".localized
+            case .tokenDoesNotExist: return "add_token.symbol_not_found".localized
             }
         }
 

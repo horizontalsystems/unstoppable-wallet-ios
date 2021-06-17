@@ -9,7 +9,7 @@ class AddTokenViewModel {
 
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let buttonVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let buttonEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let finishRelay = PublishRelay<Void>()
 
@@ -42,9 +42,9 @@ class AddTokenViewModel {
         }
 
         if case .fetched = state {
-            buttonVisibleRelay.accept(true)
+            buttonEnabledRelay.accept(true)
         } else {
-            buttonVisibleRelay.accept(false)
+            buttonEnabledRelay.accept(false)
         }
 
         if case .failed(let error) = state {
@@ -57,7 +57,12 @@ class AddTokenViewModel {
     }
 
     private func viewItem(coin: Coin) -> ViewItem {
-        ViewItem(coinName: coin.title, symbol: coin.code, decimals: coin.decimal)
+        ViewItem(
+                coinType: coin.type.blockchainType ?? "",
+                coinName: coin.title,
+                coinCode: coin.code,
+                decimal: coin.decimal
+        )
     }
 
 }
@@ -72,8 +77,8 @@ extension AddTokenViewModel {
         viewItemRelay.asDriver()
     }
 
-    var buttonVisibleDriver: Driver<Bool> {
-        buttonVisibleRelay.asDriver()
+    var buttonEnabledDriver: Driver<Bool> {
+        buttonEnabledRelay.asDriver()
     }
 
     var cautionDriver: Driver<Caution?> {
@@ -98,9 +103,10 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
+        let coinType: String
         let coinName: String
-        let symbol: String
-        let decimals: Int
+        let coinCode: String
+        let decimal: Int
     }
 
 }
