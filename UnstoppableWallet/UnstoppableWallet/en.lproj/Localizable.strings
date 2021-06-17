@@ -764,31 +764,17 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "guides.tab_bar_item" = "Academy";
 "guides.title" = "Academy";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Choose Blockchain";
-"add_token_selector.add_token" = "Add Token";
-"add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "This token is already in the coin manager list.";
-
-"add_evm_token.contract_not_exist" = "Contract not found";
-"add_evm_token.contract_address" = "Contract Address";
-
-"add_erc20_token.title" = "Add ERC20";
-
-"add_bep20_token.title" = "Add BEP20";
-
-"add_bep2_token.title" = "Add BEP2";
-"add_bep2_token.token_symbol" = "Token Symbol";
-"add_bep2_token.token_not_exist" = "Token not found";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ price: up %@%% %@";
 "change_24hour_down" = "%@ price: down %@%% %@";

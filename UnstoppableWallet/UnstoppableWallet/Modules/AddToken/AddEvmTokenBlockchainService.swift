@@ -45,8 +45,13 @@ class AddEvmTokenBlockchainService {
 
 extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
-    func validate(reference: String) throws {
-        _ = try EthereumKit.Address(hex: reference)
+    func isValid(reference: String) -> Bool {
+        do {
+            _ = try EthereumKit.Address(hex: reference)
+            return true
+        } catch {
+            return false
+        }
     }
 
     func coinType(reference: String) -> CoinType {
@@ -127,7 +132,7 @@ extension AddEvmTokenBlockchainService {
 
         var errorDescription: String? {
             switch self {
-            case .contractDoesNotExist: return "add_evm_token.contract_not_exist".localized
+            case .contractDoesNotExist: return "add_token.contract_not_found".localized
             default: return "\(self)"
             }
         }
