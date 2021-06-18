@@ -16,6 +16,7 @@
 "button.reject" = "거절";
 "button.connect" = "연결";
 "button.save" = "저장";
+"button.sign" = "Sign";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -394,7 +395,7 @@
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";
 "market.advanced_search.outperformed_bnb" = "Outperformed BNB";
 "market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to_atl" = "Price Close to ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -761,31 +762,17 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "guides.tab_bar_item" = "아카데미";
 "guides.title" = "아카데미";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "블록체인 선택";
-"add_token_selector.add_token" = "토큰 추가";
-"add_token_selector.erc20_token" = "ERC 20 토큰";
-"add_token_selector.bep20_token" = "BEP20 토큰";
-"add_token_selector.bep2_token" = "BEP2 토큰";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "코인 이름";
-"add_token.symbol" = "기호";
-"add_token.decimals" = "소수점";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
-
-"add_evm_token.contract_not_exist" = "거래 발견되지 않음";
-"add_evm_token.contract_address" = "계약 주소";
-
-"add_erc20_token.title" = "ERC20 추가";
-
-"add_bep20_token.title" = "BEP20 추가";
-
-"add_bep2_token.title" = "BEP2 추가";
-"add_bep2_token.token_symbol" = "토큰 심볼";
-"add_bep2_token.token_not_exist" = "토큰 찾을 수 없음";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ 가격: 상승 %@%% %@";
 "change_24hour_down" = "%@ 가격: 하락 %@%% %@";
@@ -810,6 +797,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 ETH 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "새로운 연결";
@@ -869,7 +860,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
+"birthday_input.title" = "생일 신장";
 "birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "%@ Birthday Height";

@@ -16,6 +16,7 @@
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
+"button.sign" = "Sign";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -286,18 +287,18 @@
 "market.category.overview" = "Обзор";
 "market.category.discovery" = "Курсы";
 "market.category.watchlist" = "Отслеживаемые";
-"market.total_market_cap" = "Полная рыночная капитализация";
-"market.24h_volume" = "Объем торгов за 24 часа";
+"market.total_market_cap" = "Полная Рыночная Капитализация";
+"market.24h_volume" = "Объем торгов за 24 ч";
 "market.btc_dominance" = "Доминирование BTC";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
-"market.sync_error" = "Ошибка синхронизации";
+"market.sync_error" = "Ошибка Синхронизации";
 
-"market.top.section.header.see_all" = "Посмотреть все";
-"market.top.section.header.top_gainers" = "Топ Лучших";
-"market.top.section.header.top_losers" = "Топ Проигравших";
-"market.top.section.header.top_volume" = "Топ по объему";
+"market.top.section.header.see_all" = "Посмотреть Всё";
+"market.top.section.header.top_gainers" = "Взлеты";
+"market.top.section.header.top_losers" = "Падения";
+"market.top.section.header.top_volume" = "Топ По Объему";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объём";
 "market.top.market_cap.title" = "Рын. кап.";
@@ -306,14 +307,14 @@
 "market.market_field.mcap" = "Рын. кап.";
 "market.market_field.vol" = "Объём";
 
-"market.sort_by" = "Сортировать по";
+"market.sort_by" = "Сортировать По";
 
-"market.top.highest_cap" = "Самая высокая кап.";
-"market.top.lowest_cap" = "Самая низкая кап.";
-"market.top.highest_volume" = "Самый высокий объем";
-"market.top.lowest_volume" = "Самый низкий объем";
-"market.top.top_gainers" = "Топ гейнеров";
-"market.top.top_losers" = "Топ лузеров";
+"market.top.highest_cap" = "Наивысшей Кап.";
+"market.top.lowest_cap" = "Наименьшей Кап.";
+"market.top.highest_volume" = "Наивысшему Обьему";
+"market.top.lowest_volume" = "Наименьшему Объему";
+"market.top.top_gainers" = "Взлеты";
+"market.top.top_losers" = "Падения";
 
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
@@ -341,8 +342,8 @@
 "market_discovery.filter_title.staking_eth_2_0" = "Staking ETH 2.0";
 "market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
-"market_discovery.filter_title.fan_tokens" = "Фан-токены";
-"market_discovery.filter_title.investment_tools" = "Инвестиционные инструменты";
+"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
+"market_discovery.filter_title.investment_tools" = "Investment Tools";
 
 "market_discovery.filter_description.blockchain" = "Нативные криптовалюты в основных блокчейнах.";
 "market_discovery.filter_description.dexes" = "Децентрализованные криптовалютные биржи.";
@@ -378,25 +379,25 @@
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Расширенный поиск";
-"market.advanced_search.show_results" = "Показать результаты";
+"market.advanced_search.title" = "Расширенный Поиск";
+"market.advanced_search.show_results" = "Показать Результаты";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
-"market.advanced_search.market_parameters" = "Параметры рынка";
-"market.advanced_search.price_parameters" = "Параметры цены";
-"market.advanced_search.choose_set" = "Выбрать набор";
-"market.advanced_search.market_cap" = "Рыночная капитализация";
-"market.advanced_search.volume" = "Объем торговли";
+"market.advanced_search.market_parameters" = "Параметры Рынка";
+"market.advanced_search.price_parameters" = "Параметры Цены";
+"market.advanced_search.choose_set" = "Выбрать Набор";
+"market.advanced_search.market_cap" = "Рыночная Капитализация";
+"market.advanced_search.volume" = "Объем Торговли";
 "market.advanced_search.liquidity" = "Ликвидность DEX";
-"market.advanced_search.price_period" = "Ценовой период";
-"market.advanced_search.price_change" = "Изменение цены";
+"market.advanced_search.price_period" = "Ценовой Период";
+"market.advanced_search.price_change" = "Изменение Цены";
 
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
 "market.advanced_search.outperformed_bnb" = "Обошел BNB";
-"market.advanced_search.price_close_to_ath" = "Цена близка к ATH";
-"market.advanced_search.price_close_to_atl" = "Цена близка к ATL";
+"market.advanced_search.price_close_to_ath" = "Цена Близка к ATH";
+"market.advanced_search.price_close_to_atl" = "Цена Близка к ATL";
 
 "market.advanced_search.top" = "Топ %d";
 "market.advanced_search.reset_all" = "Сбросить";
@@ -405,16 +406,16 @@
 "market.advanced_search.less_5_m" = "< 5М";
 "market.advanced_search.m_5_m_20" = "5М - 20М";
 "market.advanced_search.m_20_m_100" = "20М - 100М";
-"market.advanced_search.m_100_b_1" = "100M - 1B";
-"market.advanced_search.b_1_b_5" = "1B - 5B";
-"market.advanced_search.more_5_b" = "> 5B";
+"market.advanced_search.m_100_b_1" = "100 млн - 1 млрд";
+"market.advanced_search.b_1_b_5" = "1млрд - 5 млрд";
+"market.advanced_search.more_5_b" = "> 5 млрд";
 
-"market.advanced_search.day" = "1 день";
-"market.advanced_search.week" = "1 неделя";
-"market.advanced_search.week2" = "2 недели";
+"market.advanced_search.day" = "1 День";
+"market.advanced_search.week" = "1 Неделя";
+"market.advanced_search.week2" = "2 Недели";
 "market.advanced_search.month" = "1 месяц";
-"market.advanced_search.month6" = "6 месяцев";
-"market.advanced_search.year" = "1 год";
+"market.advanced_search.month6" = "6 Месяцев";
+"market.advanced_search.year" = "1 Год";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
 "market.global.volume_24h.title" = "Объем";
@@ -433,23 +434,23 @@
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 час";
-"coin_page.roi.hour24" = "Один день";
-"coin_page.roi.day7" = "Одна неделя";
-"coin_page.roi.day14" = "2 недели";
-"coin_page.roi.day30" = "Один месяц";
-"coin_page.roi.day200" = "6 месяцев";
-"coin_page.roi.year1" = "Один год";
+"coin_page.roi.hour1" = "1 Час";
+"coin_page.roi.hour24" = "1 День";
+"coin_page.roi.day7" = "1 Неделя";
+"coin_page.roi.day14" = "2 Недели";
+"coin_page.roi.day30" = "1 Месяц";
+"coin_page.roi.day200" = "6 Месяцев";
+"coin_page.roi.year1" = "1 Год";
 
-"coin_page.market_cap" = "Рыночная капитализация";
+"coin_page.market_cap" = "Рын. Капитализация";
 "coin_page.circulating_supply" = "В обороте";
-"coin_page.total_supply" = "Общее предложение";
+"coin_page.total_supply" = "Макс.Выпуск";
 "coin_page.dilluted_market_cap" = "Разводненная рын.кап.";
-"coin_page.genesis_date" = "Дата запуска";
+"coin_page.genesis_date" = "Дата Запуска";
 
-"coin_page.trading_volume" = "Объем торговли";
+"coin_page.trading_volume" = "Объем Торговли";
 "coin_page.markets" = "%@ Рынки";
-"coin_page.funds_invested" = "Заинвестированные средства";
+"coin_page.funds_invested" = "Средства Инвестированы";
 
 "coin_page.tvl" = "Общая сумма заблокирована";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
@@ -763,31 +764,17 @@
 "guides.tab_bar_item" = "Академия";
 "guides.title" = "Академия";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Выбрать Блокчейн";
-"add_token_selector.add_token" = "Добавить Токен";
-"add_token_selector.erc20_token" = "Токен ERC20";
-"add_token_selector.bep20_token" = "Токен BEP20";
-"add_token_selector.bep2_token" = "Токен BEP2";
-
 // Add Token
 
+"add_token.title" = "Добавить Токен";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Название Токена";
-"add_token.symbol" = "Символ";
-"add_token.decimals" = "Десятичные Знаки";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
-
-"add_evm_token.contract_not_exist" = "Контракт не найден";
-"add_evm_token.contract_address" = "Адрес Контракта";
-
-"add_erc20_token.title" = "Добавить ERC20";
-
-"add_bep20_token.title" = "Добавить BEP20";
-
-"add_bep2_token.title" = "Добавить BEP2";
-"add_bep2_token.token_symbol" = "Символ Токена";
-"add_bep2_token.token_not_exist" = "Токен не найден";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Контракт не найден";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
 "change_24hour_down" = "%@ цена: понизилась на %@%%%@";
@@ -812,6 +799,10 @@
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Домен";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Новое Подключение";

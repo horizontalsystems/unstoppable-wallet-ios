@@ -16,6 +16,7 @@
 "button.reject" = "Verwerfen";
 "button.connect" = "Verbinden";
 "button.save" = "Speichern";
+"button.sign" = "Sign";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -761,31 +762,17 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "guides.tab_bar_item" = "Akademie";
 "guides.title" = "Akademie";
 
-// Add Token Selector
-
-"add_token_selector.choose_blockchain" = "Blockchain auswählen";
-"add_token_selector.add_token" = "Token hinzufügen";
-"add_token_selector.erc20_token" = "ERC20 Token";
-"add_token_selector.bep20_token" = "BEP20 Token";
-"add_token_selector.bep2_token" = "BEP2 Token";
-
 // Add Token
 
+"add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Dezimalen";
+"add_token.coin_code" = "Coin Code";
+"add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
-
-"add_evm_token.contract_not_exist" = "Vertrag nicht gefunden";
-"add_evm_token.contract_address" = "Vertragsadresse";
-
-"add_erc20_token.title" = "ERC-20 hinzufügen";
-
-"add_bep20_token.title" = "BEP20 hinzufügen";
-
-"add_bep2_token.title" = "BEP2 hinzufügen";
-"add_bep2_token.token_symbol" = "Tokensymbol";
-"add_bep2_token.token_not_exist" = "Token nicht gefunden";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
+"add_token.contract_not_found" = "Contract not found";
+"add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
 "change_24hour_down" = "%@ Preis: %@%% %@ niedriger";
@@ -810,6 +797,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 "ethereum_transaction.error.reverted" = "Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Neue Verbindung";
