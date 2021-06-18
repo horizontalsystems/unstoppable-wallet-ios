@@ -296,8 +296,8 @@
 "market.sync_error" = "Ошибка Синхронизации";
 
 "market.top.section.header.see_all" = "Посмотреть Всё";
-"market.top.section.header.top_gainers" = "Топ Прибыльных";
-"market.top.section.header.top_losers" = "Топ Проигравших";
+"market.top.section.header.top_gainers" = "Взлеты";
+"market.top.section.header.top_losers" = "Падения";
 "market.top.section.header.top_volume" = "Топ По Объему";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объём";
@@ -313,8 +313,8 @@
 "market.top.lowest_cap" = "Наименьшей Кап.";
 "market.top.highest_volume" = "Наивысшему Обьему";
 "market.top.lowest_volume" = "Наименьшему Объему";
-"market.top.top_gainers" = "Топ Прибыльных";
-"market.top.top_losers" = "Топ Проигравших";
+"market.top.top_gainers" = "Взлеты";
+"market.top.top_losers" = "Падения";
 
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
@@ -766,14 +766,14 @@
 
 // Add Token
 
-"add_token.title" = "Add Token";
+"add_token.title" = "Добавить Токен";
 "add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Coin Code";
 "add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
+"add_token.contract_not_found" = "Контракт не найден";
 "add_token.symbol_not_found" = "Symbol not found";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
@@ -800,7 +800,7 @@
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
 "wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.domain" = "Домен";
 "wallet_connect.sign.message" = "Message to sign";
 "wallet_connect.sign.description" = "Please sign a message to authenticate";
 
