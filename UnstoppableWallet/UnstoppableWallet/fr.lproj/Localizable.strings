@@ -309,10 +309,10 @@
 
 "market.top.highest_cap" = "Cap. marché la plus forte";
 "market.top.lowest_cap" = "Cap. marché la plus basse";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
+"market.top.highest_volume" = "Volume le plus élevé";
+"market.top.lowest_volume" = "Volume le plus bas";
+"market.top.top_gainers" = "Les grands gagnants";
+"market.top.top_losers" = "Les gros perdants";
 
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
@@ -341,61 +341,61 @@
 "market_discovery.filter_title.cross_chain" = "Cross-Chain";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
-"market_discovery.filter_title.investment_tools" = "Investment Tools";
+"market_discovery.filter_title.investment_tools" = "Outils d'investissement";
 
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Projects working on privacy solutions.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real world data to smart contracts.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
+"market_discovery.filter_description.blockchain" = "Cryptomonnaies natives sur les principales blockchains.";
+"market_discovery.filter_description.dexes" = "Échanges décentralisés de cryptomonnaies.";
+"market_discovery.filter_description.lending" = "Protocoles pour les prêts et les emprunts.";
+"market_discovery.filter_description.privacy" = "Projets relatifs à la protection de la confidentialité.";
+"market_discovery.filter_description.scaling" = "Solutions pour accélérer les transactions sur blockchain.";
+"market_discovery.filter_description.oracles" = "Connecter les données du monde réel aux contrats intelligents.";
+"market_discovery.filter_description.prediction_markets" = "Marchés pour parier sur des événements à venir.";
+"market_discovery.filter_description.yield_aggregators" = "Solutions pour rentabiliser les actifs cryptomonnaies inutilisés.";
 "market_discovery.filter_description.fiat_stablecoins" = "Crypto tokens pegged 1–1 to fiat currency.";
 "market_discovery.filter_description.rebase_tokens" = "Tokens that periodically adjust to achieve a target price.";
 "market_discovery.filter_description.algo_stablecoins" = "Stablecoins with algorithmic 1–1 price peg to fiat.";
 "market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
-"market_discovery.filter_description.stablecoin_issuers" = "Decentralized issuers of fiat pegged stablecoin tokens.";
-"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
-"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
-"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
-"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
-"market_discovery.filter_description.b2b" = "B2B service providers.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.staking_eth_2_0" = "Protocols that reward liquidity providers.";
-"market_discovery.filter_description.cross_chain" = "Cross-chain protocols.";
-"market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
-"market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
-"market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
+"market_discovery.filter_description.stablecoin_issuers" = "Actifs à parité de prix avec un set de tokens.";
+"market_discovery.filter_description.exchange_tokens" = "Tokens émis par des échanges centralisés.";
+"market_discovery.filter_description.risk_management" = "Évaluation des risques, assurance et couverture.";
+"market_discovery.filter_description.wallets" = "Tokens émis par des portefeuilles de cryptomonnaies.";
+"market_discovery.filter_description.synthetics" = "Plateformes de création d'actifs synthétiques décentralisés.";
+"market_discovery.filter_description.index_funds" = "Actifs à parité de prix avec un set de tokens.";
+"market_discovery.filter_description.nft" = "Places de marché pour tokens NFT.";
+"market_discovery.filter_description.fundraising" = "Plateformes de collecte de fonds et de vente de tokens.";
+"market_discovery.filter_description.gaming" = "Projets de cryptomonnaie dans le secteur des jeux et de la RV.";
+"market_discovery.filter_description.b2b" = "Prestataires de services aux entreprises (B2B).";
+"market_discovery.filter_description.infrastructure" = "Projets de construction de solutions d'infrastructure.";
+"market_discovery.filter_description.staking_eth_2_0" = "Protocoles qui récompensent les fournisseurs de liquidités.";
+"market_discovery.filter_description.cross_chain" = "Protocoles inter-chaînes.";
+"market_discovery.filter_description.computing" = "Solutions informatiques décentralisées à la demande.";
+"market_discovery.filter_description.fan_tokens" = "Fan tokens numériques, généralement spécifiques à une équipe ou un club.";
+"market_discovery.filter_description.investment_tools" = "Instruments d'analyse et d'investissement alimentés par des tokens.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.search.title" = "Rechercher";
+"market.search.empty_text" = "Aucun résultat";
 
-"market.advanced_search.title" = "Advanced Search";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.title" = "Recherche avancée";
+"market.advanced_search.show_results" = "Afficher les résultats";
+"market.advanced_search.dex_description" = "Ce paramètre s'applique aux tokens échangés sur Ethereum (Uniswap DEX) et Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.market_parameters" = "Paramètres du marché";
+"market.advanced_search.price_parameters" = "Paramètres de prix";
+"market.advanced_search.choose_set" = "Choisissez le set";
+"market.advanced_search.market_cap" = "Cap. marché";
+"market.advanced_search.volume" = "Volume de trading";
+"market.advanced_search.liquidity" = "Liquidité DEX";
+"market.advanced_search.price_period" = "Période de prix";
+"market.advanced_search.price_change" = "Variation de prix";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.outperformed_btc" = "A surpassé BTC";
+"market.advanced_search.outperformed_eth" = "A surpassé ETH";
+"market.advanced_search.outperformed_bnb" = "A surpassé BNB";
+"market.advanced_search.price_close_to_ath" = "Prix proche d'ATH";
+"market.advanced_search.price_close_to_atl" = "Prix proche d'ATL";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -460,14 +460,14 @@
 "coin_page.bep2_symbol" = "BEP2 Symbol";
 
 "coin_page.guide" = "Guide";
-"coin_page.website" = "Website";
-"coin_page.whitepaper" = "Whitepaper";
+"coin_page.website" = "Site Web";
+"coin_page.whitepaper" = "Livre blanc";
 
 // Transactions
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "All";
+"transactions.filter_all" = "Tout";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
 "transactions.receiving" = "En réception";
@@ -493,7 +493,7 @@
 "tx_info.unlocked_at" = "Déverrouillé à %@";
 "tx_info.recipient_hash" = "Destinataire";
 "tx_info.raw_transaction" = "Transaction raw";
-"tx_info.memo" = "Memo";
+"tx_info.memo" = "Mémo";
 
 // Settings
 
@@ -640,7 +640,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "settings.about_app.title" = "À propos de l'application";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "Site Web";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
@@ -677,11 +677,11 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.today" = "TDY";
 "chart.time_duration.day" = "24 h";
 "chart.time_duration.week" = "7J";
-"chart.time_duration.week2" = "2W";
+"chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
+"chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
