@@ -16,7 +16,7 @@
 "button.reject" = "Rejeter";
 "button.connect" = "Connecter";
 "button.save" = "Sauvegarder";
-"button.sign" = "Sign";
+"button.sign" = "Signer";
 
 "alert.copied" = "Copié";
 "alert.no_internet" = "Aucune connexion Internet";
