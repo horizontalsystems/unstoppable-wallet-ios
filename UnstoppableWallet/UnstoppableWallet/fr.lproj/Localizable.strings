@@ -682,31 +682,31 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halyear" = "6M";
 "chart.time_duration.year" = "1J";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year2" = "2A";
 
-"chart.market_cap" = "Market Cap";
+"chart.market_cap" = "Cap. marché";
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
+"chart.market_cap.billion" = "%@ Mrd";
+"chart.market_cap.trillion" = "%@ E";
 "chart.volume" = "Volume(24h)";
 "chart.circulation" = "Offre en Circulation	";
 "chart.selected.volume" = "Volume";
-"chart.price_indicator_range.day" = "24h Range";
-"chart.price_indicator_range.year" = "52w Range";
+"chart.price_indicator_range.day" = "Plage de 24h";
+"chart.price_indicator_range.year" = "Plage de 52s";
 
-"chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.header" = "Marché";
+"chart.market.market_cap" = "Cap. marché";
 "chart.market.volume" = "Volume(24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "En circulation";
+"chart.market.total_supply" = "Offre totale";
 
-"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.week_changes" = "Changes (1S)";
 "chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "À propos";
+"chart.about.read_more" = "Plus d'infos";
+"chart.about.read_less" = "Moins d’infos";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -750,12 +750,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "intro.next" = "Suivant";
 "intro.start" = "Commencer";
 "intro.brand.description" = "Stockez et échangez des crypto-monnaies. Ayez le contrôle total sur les actifs. Restez anonyme.";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "Unchain actifs";
+"intro.unchain_assets.description" = "Ne vous enfermez pas et ne laissez pas les autres vous le faire";
+"intro.go_borderless.title" = "Sans frontières";
+"intro.go_borderless.description" = "Contournement des barrières conditionnelles et accès aux marchés à l'échelle mondiale";
+"intro.stay_private.title" = "Maintenez la confidentialité";
+"intro.stay_private.description" = "Ne divulguez pas vos données privées et financières au monde entier";
 
 // Guides
 
@@ -764,15 +764,15 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "Ajouter le token";
+"add_token.coin_type" = "Type de pièce";
 "add_token.coin_name" = "Nom de la pièce";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.coin_code" = "Code de la pièce";
+"add_token.decimal" = "Décimale";
 "add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
+"add_token.contract_not_found" = "Contrat non trouvé";
+"add_token.symbol_not_found" = "Symbole non trouvé";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
 "change_24hour_down" = "%@ prix: baisse %@%% %@";
@@ -797,10 +797,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "Signer la demande";
+"wallet_connect.sign.domain" = "Domaine";
+"wallet_connect.sign.message" = "Message à signer";
+"wallet_connect.sign.description" = "Veuillez signer un message pour vous authentifier";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
@@ -855,7 +855,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "manage_account.name" = "Nom";
 "manage_account.show_recovery_phrase" = "Afficher la phrase";
 "manage_account.backup_recovery_phrase" = "Sauvegarder la phrase";
-"manage_account.network_settings" = "Network Settings";
+"manage_account.network_settings" = "Paramètres réseau";
 "manage_account.unlink" = "Dissocier";
 
 // Birthday Input
@@ -867,4 +867,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "Paramètres réseau";
