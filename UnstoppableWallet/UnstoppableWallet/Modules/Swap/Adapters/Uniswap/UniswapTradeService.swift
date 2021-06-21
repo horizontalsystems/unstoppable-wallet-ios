@@ -70,10 +70,10 @@ class UniswapTradeService {
         }
     }
 
-    private let swapTradeOptionsRelay = PublishRelay<UniswapSettings>()
-    var swapTradeOptions = UniswapSettings() {
+    private let settingsRelay = PublishRelay<UniswapSettings>()
+    var settings = UniswapSettings() {
         didSet {
-            swapTradeOptionsRelay.accept(swapTradeOptions)
+            settingsRelay.accept(settings)
             _ = syncTradeData()
         }
     }
@@ -134,7 +134,7 @@ class UniswapTradeService {
         }
 
         do {
-            let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: swapTradeOptions.tradeOptions)
+            let tradeData = try uniswapProvider.tradeData(swapData: swapData, amount: amount, tradeType: tradeType, tradeOptions: settings.tradeOptions)
             handle(tradeData: tradeData)
             return true
         } catch {
@@ -155,10 +155,6 @@ class UniswapTradeService {
 
         let trade = Trade(tradeData: tradeData)
         state = .ready(trade: trade)
-    }
-
-    deinit {
-        print("Deinit \(self)")
     }
 
 }
@@ -189,8 +185,8 @@ extension UniswapTradeService {
         amountOutRelay.asObservable()
     }
 
-    var swapTradeOptionsObservable: Observable<UniswapSettings> {
-        swapTradeOptionsRelay.asObservable()
+    var settingsObservable: Observable<UniswapSettings> {
+        settingsRelay.asObservable()
     }
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {

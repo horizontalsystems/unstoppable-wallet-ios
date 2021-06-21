@@ -113,7 +113,7 @@ class UniswapService {
             loading = true
         case .ready(let trade):
             if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
-                allErrors.append(SwapError.forbiddenPriceImpactLevel)
+                allErrors.append(SwapModuleNew.SwapError.forbiddenPriceImpactLevel)
             }
 
             transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
@@ -127,7 +127,7 @@ class UniswapService {
                 loading = true
             case .ready(let allowance):
                 if tradeService.amountIn > allowance.value {
-                    allErrors.append(SwapError.insufficientAllowance)
+                    allErrors.append(SwapModuleNew.SwapError.insufficientAllowance)
                 }
             case .notReady(let error):
                 allErrors.append(error)
@@ -136,10 +136,10 @@ class UniswapService {
 
         if let balanceIn = balanceIn {
             if tradeService.amountIn > balanceIn {
-                allErrors.append(SwapError.insufficientBalanceIn)
+                allErrors.append(SwapModuleNew.SwapError.insufficientBalanceIn)
             }
         } else {
-            allErrors.append(SwapError.noBalanceIn)
+            allErrors.append(SwapModuleNew.SwapError.noBalanceIn)
         }
 
         if pendingAllowanceService.isPending {
@@ -159,10 +159,6 @@ class UniswapService {
 
     private func balance(coin: Coin) -> Decimal? {
         walletManager.activeWallet(coin: coin)?.balanceData.balance
-    }
-
-    deinit {
-        print("Deinit \(self)")
     }
 
 }
@@ -210,13 +206,6 @@ extension UniswapService {
             default: return false
             }
         }
-    }
-
-    enum SwapError: Error {
-        case noBalanceIn
-        case insufficientBalanceIn
-        case insufficientAllowance
-        case forbiddenPriceImpactLevel
     }
 
 }

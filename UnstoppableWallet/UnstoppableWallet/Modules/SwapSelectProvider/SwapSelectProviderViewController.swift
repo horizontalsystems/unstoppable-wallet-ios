@@ -48,6 +48,8 @@ class SwapSelectProviderViewController: ThemeViewController {
             self?.reloadTable()
         }
 
+        subscribe(disposeBag, viewModel.selectedSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
+
         tableView.buildSections()
 
         isLoaded = true

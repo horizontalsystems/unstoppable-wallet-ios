@@ -54,7 +54,7 @@ extension UniswapSettingsViewModel {
 
     public func doneDidTap() -> Bool {
         if case let .valid(tradeOptions) = service.state {
-            tradeService.swapTradeOptions = tradeOptions
+            tradeService.settings = tradeOptions
             return true
         }
         return false

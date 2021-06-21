@@ -80,7 +80,7 @@ class UniswapDataSource {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.handle(loading: $0) }
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
+        subscribe(disposeBag, viewModel.settingsViewItemDriver) { [weak self] in self?.handle(settingsViewItem: $0) }
         subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
@@ -88,10 +88,6 @@ class UniswapDataSource {
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(sendData: $0) }
     }
-
-//    @objc func onClose() {
-//        dismiss(animated: true)
-//    }
 
     private func handle(loading: Bool) {
         priceCell.set(loading: loading)
@@ -131,7 +127,7 @@ class UniswapDataSource {
         onReload?()
     }
 
-    private func handle(tradeOptionsViewItem: UniswapViewModel.TradeOptionsViewItem?) {
+    private func handle(settingsViewItem: UniswapViewModel.SettingsViewItem?) {
 //        if let slippage = tradeOptionsViewItem?.slippage {
 //            slippageCell.isVisible = true
 //            slippageCell.value = slippage

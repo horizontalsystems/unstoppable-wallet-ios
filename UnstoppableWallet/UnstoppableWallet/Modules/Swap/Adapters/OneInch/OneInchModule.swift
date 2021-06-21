@@ -71,7 +71,7 @@ extension OneInchModule: ISwapProvider {
                 coinTo: tradeService.coinOut,
                 amountFrom: tradeService.amountIn,
                 amountTo: tradeService.amountOut,
-                exactFrom: false)
+                exactFrom: true)
     }
 
 }

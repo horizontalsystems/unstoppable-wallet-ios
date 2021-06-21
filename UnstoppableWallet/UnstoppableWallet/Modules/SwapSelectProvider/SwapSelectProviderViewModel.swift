@@ -8,6 +8,7 @@ class SwapSelectProviderViewModel {
     private let disposeBag = DisposeBag()
 
     private let sectionViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let selectedRelay = PublishRelay<Void>()
 
     private var currentIndices: (sectionIndex: Int, index: Int)?
 
@@ -40,12 +41,17 @@ class SwapSelectProviderViewModel {
 
 extension SwapSelectProviderViewModel {
 
+    var selectedSignal: Signal<Void> {
+        selectedRelay.asSignal()
+    }
+
     var sectionViewItemsDriver: Driver<[ViewItem]> {
         sectionViewItemsRelay.asDriver()
     }
 
     func onSelect(index: Int) {
         service.set(provider: service.items[index].provider)
+        selectedRelay.accept(())
     }
 
 }
@@ -64,9 +70,9 @@ extension SwapModuleNew.DexNew.Provider {
 
     var icon: String {
         switch self {
-        case .oneInch: return "one-inch-logo"
-        case .uniswap: return "uniswap-logo"
-        case .pancake: return "pancake-logo"
+        case .oneInch: return "1inch_24"
+        case .uniswap: return "uniswap_24"
+        case .pancake: return "pancake_24"
         }
     }
 

@@ -55,12 +55,12 @@ class UniswapSettingsService {
     private func sync() {
         var errors = [Error]()
 
-        var tradeOptions = UniswapSettings()
+        var settings = UniswapSettings()
 
         if let recipient = recipient, !recipient.raw.isEmpty {
             do {
                 _ = try EthereumKit.Address(hex: recipient.raw)
-                tradeOptions.recipient = recipient
+                settings.recipient = recipient
             } catch {
                 errors.append(SwapSettingsModule.AddressError.invalidAddress)
             }
@@ -73,18 +73,18 @@ class UniswapSettingsService {
         } else if slippage < limitSlippageBounds.lowerBound {
             errors.append(SwapSettingsModule.SlippageError.tooLow(min: limitSlippageBounds.lowerBound))
         } else {
-            tradeOptions.allowedSlippage = slippage
+            settings.allowedSlippage = slippage
         }
 
         if !deadline.isZero {
-            tradeOptions.ttl = deadline
+            settings.ttl = deadline
         } else {
             errors.append(SwapSettingsModule.DeadlineError.zeroValue)
         }
 
         self.errors = errors
 
-        state = errors.isEmpty ? .valid(tradeOptions) : .invalid
+        state = errors.isEmpty ? .valid(settings) : .invalid
     }
 
 }
@@ -165,11 +165,11 @@ extension UniswapSettingsService: ISlippageService {
     }
 
     var initialSlippage: Decimal? {
-        guard case let .valid(tradeOptions) = state, tradeOptions.allowedSlippage != TradeOptions.defaultSlippage else {
+        guard case let .valid(settings) = state, settings.allowedSlippage != TradeOptions.defaultSlippage else {
             return nil
         }
 
-        return tradeOptions.allowedSlippage
+        return settings.allowedSlippage
     }
 
 }

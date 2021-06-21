@@ -159,6 +159,11 @@ extension AmountInputView {
         set { inputStackView.textColor = newValue }
     }
 
+    var editable: Bool {
+        get { inputStackView.editable }
+        set { inputStackView.editable = newValue }
+    }
+
 }
 
 extension AmountInputView: IHeightControlView { // required in FormValidatedView, but not used yet

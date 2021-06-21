@@ -4,16 +4,30 @@ import CoinKit
 
 protocol ISwapCoinCardService: AnyObject {
     var dex: SwapModuleNew.DexNew { get }
+    var readOnly: Bool { get }
     var isEstimated: Bool { get }
     var coin: Coin? { get }
     var balance: Decimal? { get }
 
+    var readOnlyObservable: Observable<Bool> { get }
     var isEstimatedObservable: Observable<Bool> { get }
     var coinObservable: Observable<Coin?> { get }
     var balanceObservable: Observable<Decimal?> { get }
     var errorObservable: Observable<Error?> { get }
 
     func onChange(coin: Coin)
+}
+
+extension ISwapCoinCardService {
+
+    var readOnly: Bool {
+        false
+    }
+
+    var readOnlyObservable: Observable<Bool> {
+        Observable.just(false)
+    }
+
 }
 
 struct CoinCardModule {
@@ -111,7 +125,7 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? UniswapService.SwapError })
+            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError })
         }
     }
 
@@ -168,7 +182,7 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     }
 
     var dex: SwapModuleNew.DexNew { service.dex }
-    var isEstimated: Bool { true }
+    var isEstimated: Bool { false }
     var amount: Decimal { tradeService.amountIn }
     var coin: Coin? { tradeService.coinIn }
     var balance: Decimal? { service.balanceIn }
@@ -179,7 +193,7 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? OneInchService.SwapError })
+            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError })
         }
     }
 
@@ -203,11 +217,13 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     }
 
     var dex: SwapModuleNew.DexNew { service.dex }
-    var isEstimated: Bool { false }
+    var readOnly: Bool { true }
+    var isEstimated: Bool { true }
     var amount: Decimal { tradeService.amountOut }
     var coin: Coin? { tradeService.coinOut }
     var balance: Decimal? { service.balanceOut }
 
+    var readOnlyObservable: Observable<Bool> { Observable.just(true) }
     var isEstimatedObservable: Observable<Bool> { Observable.just(false) }
     var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
     var coinObservable: Observable<Coin?> { tradeService.coinOutObservable }
@@ -217,7 +233,7 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     }
 
     func onChange(amount: Decimal) {
-        tradeService.set(amountOut: amount)
+        // can't change to-card
     }
 
     func onChange(coin: Coin) {

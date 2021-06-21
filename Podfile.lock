@@ -548,7 +548,7 @@ CHECKOUT OPTIONS:
     :commit: 454452b7578dc80dfa98871ae08a4ae48621572d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
-    :commit: 892f779cafe043fb2b9f299c2bb1589d1d1feb15
+    :commit: 277cdb5d664de1ee1f39401f73cf9793693c107b
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :commit: 454452b7578dc80dfa98871ae08a4ae48621572d
