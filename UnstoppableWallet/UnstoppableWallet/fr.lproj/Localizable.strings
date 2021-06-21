@@ -418,7 +418,7 @@
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
