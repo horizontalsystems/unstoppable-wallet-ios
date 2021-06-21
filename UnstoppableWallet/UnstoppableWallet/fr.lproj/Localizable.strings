@@ -420,44 +420,44 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
-"market.global.subtitle" = "Chart";
+"market.global.subtitle" = "Graphique";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
-"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
-"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+"market.global.defi_cap.title" = "Cap DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
+"market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
+"market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
+"market.global.tvl_in_defi.description" = "L'évolution historique de la valeur cumulée de toutes les cryptomonnaies gérées par des protocoles décentralisés.";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hour";
-"coin_page.roi.hour24" = "1 Day";
-"coin_page.roi.day7" = "1 Week";
-"coin_page.roi.day14" = "2 Weeks";
-"coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
-"coin_page.roi.year1" = "1 Year";
+"coin_page.roi.hour1" = "1 Heure";
+"coin_page.roi.hour24" = "1 Jour";
+"coin_page.roi.day7" = "1 Semaine";
+"coin_page.roi.day14" = "2 Semaines";
+"coin_page.roi.day30" = "1 Mois";
+"coin_page.roi.day200" = "6 Mois";
+"coin_page.roi.year1" = "1 An";
 
-"coin_page.market_cap" = "Market Cap";
-"coin_page.circulating_supply" = "In Circulation";
-"coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
-"coin_page.genesis_date" = "Launch Date";
+"coin_page.market_cap" = "Cap. marché";
+"coin_page.circulating_supply" = "En circulation";
+"coin_page.total_supply" = "Offre totale";
+"coin_page.dilluted_market_cap" = "Cap. marché diluée";
+"coin_page.genesis_date" = "Date de lancement";
 
-"coin_page.trading_volume" = "Trading Volume";
-"coin_page.markets" = "%@ Markets";
-"coin_page.funds_invested" = "Funds Invested";
+"coin_page.trading_volume" = "Volume de trading";
+"coin_page.markets" = "%@ Marchés";
+"coin_page.funds_invested" = "Fonds investis";
 
-"coin_page.tvl" = "Total Value Locked";
-"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
-"coin_page.tvl_rank" = "TVL Rank";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.tvl" = "Valeur totale verrouillée";
+"coin_page.market_cap_tvl_ratio" = "Ratio MCap / TVL";
+"coin_page.tvl_rank" = "Rang TVL";
+"coin_page.tvl.description" = "Capital déposé sur la plateforme sous forme de collatéral de prêt ou de pool de liquidité.";
 
-"coin_page.category" = "Category";
-"coin_page.contract" = "%@ Contract";
-"coin_page.bep2_symbol" = "BEP2 Symbol";
+"coin_page.category" = "Catégorie";
+"coin_page.contract" = "%@ Contrat";
+"coin_page.bep2_symbol" = "Symbole BEP2";
 
 "coin_page.guide" = "Guide";
 "coin_page.website" = "Site Web";
@@ -750,7 +750,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "intro.next" = "Suivant";
 "intro.start" = "Commencer";
 "intro.brand.description" = "Stockez et échangez des crypto-monnaies. Ayez le contrôle total sur les actifs. Restez anonyme.";
-"intro.unchain_assets.title" = "Unchain actifs";
+"intro.unchain_assets.title" = "Désenchaînez les actifs";
 "intro.unchain_assets.description" = "Ne vous enfermez pas et ne laissez pas les autres vous le faire";
 "intro.go_borderless.title" = "Sans frontières";
 "intro.go_borderless.description" = "Contournement des barrières conditionnelles et accès aux marchés à l'échelle mondiale";
