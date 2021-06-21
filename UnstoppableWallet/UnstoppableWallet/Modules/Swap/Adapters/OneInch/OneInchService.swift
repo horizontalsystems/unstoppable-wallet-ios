@@ -103,58 +103,54 @@ class OneInchService {
     }
 
     private func syncState() {
-//        var allErrors = [Error]()
-//        var loading = false
-//
-//        var transactionData: TransactionData?
-//
-//        switch tradeService.state {
-//        case .loading:
-//            loading = true
-//        case .ready(let trade):
-//            if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
-//                allErrors.append(SwapError.forbiddenPriceImpactLevel)
-//            }
-//
-//            transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
-//        case .notReady(let errors):
-//            allErrors.append(contentsOf: errors)
-//        }
-//
-//        if let allowanceState = allowanceService.state {
-//            switch allowanceState {
-//            case .loading:
-//                loading = true
-//            case .ready(let allowance):
-//                if tradeService.amountIn > allowance.value {
-//                    allErrors.append(SwapError.insufficientAllowance)
-//                }
-//            case .notReady(let error):
-//                allErrors.append(error)
-//            }
-//        }
-//
-//        if let balanceIn = balanceIn {
-//            if tradeService.amountIn > balanceIn {
-//                allErrors.append(SwapError.insufficientBalanceIn)
-//            }
-//        } else {
-//            allErrors.append(SwapError.noBalanceIn)
-//        }
-//
-//        if pendingAllowanceService.isPending {
-//            loading = true
-//        }
-//
-//        errors = allErrors
+        var allErrors = [Error]()
+        var loading = false
 
-//        if loading {
+        var transactionData: Int = 0
+
+        switch tradeService.state {
+        case .loading:
+            loading = true
+        case .ready:
+            transactionData = 1
+        case .notReady(let errors):
+            allErrors.append(contentsOf: errors)
+        }
+
+        if let allowanceState = allowanceService.state {
+            switch allowanceState {
+            case .loading:
+                loading = true
+            case .ready(let allowance):
+                if tradeService.amountIn > allowance.value {
+                    allErrors.append(SwapModuleNew.SwapError.insufficientAllowance)
+                }
+            case .notReady(let error):
+                allErrors.append(error)
+            }
+        }
+
+        if let balanceIn = balanceIn {
+            if tradeService.amountIn > balanceIn {
+                allErrors.append(SwapModuleNew.SwapError.insufficientBalanceIn)
+            }
+        } else {
+            allErrors.append(SwapModuleNew.SwapError.noBalanceIn)
+        }
+
+        if pendingAllowanceService.isPending {
+            loading = true
+        }
+
+        errors = allErrors
+
+        if loading {
             state = .loading
-//        } else if let transactionData = transactionData, allErrors.isEmpty {
-//            state = .ready(transactionData: transactionData)
-//        } else {
-//            state = .notReady
-//        }
+        } else if transactionData != 0, allErrors.isEmpty {
+            state = .ready(transactionData: 1)
+        } else {
+            state = .notReady
+        }
     }
 
     private func balance(coin: Coin) -> Decimal? {
@@ -195,7 +191,7 @@ extension OneInchService {
 
     enum State: Equatable {
         case loading
-        case ready(transactionData: TransactionData)
+        case ready(transactionData: Int)
         case notReady
 
         static func ==(lhs: State, rhs: State) -> Bool {
@@ -206,13 +202,6 @@ extension OneInchService {
             default: return false
             }
         }
-    }
-
-    enum SwapError: Error {
-        case noBalanceIn
-        case insufficientBalanceIn
-        case insufficientAllowance
-        case forbiddenPriceImpactLevel
     }
 
 }

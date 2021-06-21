@@ -66,7 +66,7 @@ class OneInchViewModel {
             switch error {
 //            case let error as OneInchKit.Kit.TradeError: return error != .zeroAmount
             case _ as EvmTransactionService.GasDataError: return false
-            case _ as UniswapService.SwapError: return false
+            case _ as SwapModuleNew.SwapError: return false
             default: return true
             }
         }
@@ -104,9 +104,9 @@ class OneInchViewModel {
         if case .ready = service.state {
             proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
         } else if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? UniswapService.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? UniswapService.SwapError }) {
+            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
                 proceedActionRelay.accept(.hidden)
@@ -120,11 +120,11 @@ class OneInchViewModel {
 
     private func syncApproveAction() {
         if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? UniswapService.SwapError || .forbiddenPriceImpactLevel == $0 as? UniswapService.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
                 approveActionRelay.accept(.hidden)
             } else if pendingAllowanceService.isPending == true {
                 approveActionRelay.accept(.disabled(title: "swap.approving_button".localized))
-            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? UniswapService.SwapError }) {
+            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModuleNew.SwapError }) {
                 approveActionRelay.accept(.enabled(title: "button.approve".localized))
             } else {
                 approveActionRelay.accept(.hidden)

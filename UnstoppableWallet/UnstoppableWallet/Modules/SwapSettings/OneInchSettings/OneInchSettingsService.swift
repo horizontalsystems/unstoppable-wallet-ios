@@ -4,8 +4,10 @@ import RxCocoa
 import RxSwift
 
 class OneInchSettingsService {
-    var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...1 }
+    private static let defaultSlippage: Decimal = 1
+    var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...3 }
     private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...20 }
+
 
     private(set) var errors: [Error] = [] {
         didSet {
@@ -144,15 +146,15 @@ extension OneInchSettingsService: ISlippageService {
     }
 
     var defaultSlippage: Decimal {
-        TradeOptions.defaultSlippage //todo:!@!
+        Self.defaultSlippage
     }
 
     var initialSlippage: Decimal? {
-        guard case let .valid(tradeOptions) = state, tradeOptions.allowedSlippage != TradeOptions.defaultSlippage else {
+        guard case let .valid(settings) = state, settings.allowedSlippage != TradeOptions.defaultSlippage else {
             return nil
         }
 
-        return tradeOptions.allowedSlippage
+        return settings.allowedSlippage
     }
 
 }

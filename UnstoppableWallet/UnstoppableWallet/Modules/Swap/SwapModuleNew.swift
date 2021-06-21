@@ -99,6 +99,18 @@ extension SwapModuleNew {
     }
 
 }
+
+extension SwapModuleNew {
+
+    enum SwapError: Error {
+        case noBalanceIn
+        case insufficientBalanceIn
+        case insufficientAllowance
+        case forbiddenPriceImpactLevel
+    }
+
+}
+
 extension SwapModuleNew.DexNew {
 
     enum Blockchain: String {

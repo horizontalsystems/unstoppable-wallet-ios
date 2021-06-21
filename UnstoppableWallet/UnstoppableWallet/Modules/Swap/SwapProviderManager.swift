@@ -21,10 +21,10 @@ class SwapProviderManager {
     init(localStorage: ILocalStorage, coinFrom: Coin?) {
         self.localStorage = localStorage
 
-        updateSectionsDataSource(coinFrom: coinFrom)
+        initSectionsDataSource(coinFrom: coinFrom)
     }
 
-    private func updateSectionsDataSource(coinFrom: Coin?) {
+    private func initSectionsDataSource(coinFrom: Coin?) {
         let blockchain: SwapModuleNew.DexNew.Blockchain?
         switch coinFrom?.type {
         case .ethereum, .erc20:
@@ -70,10 +70,6 @@ class SwapProviderManager {
 
 extension SwapProviderManager {
 
-    func set(coinFrom: Coin?) {
-        updateSectionsDataSource(coinFrom: coinFrom)
-    }
-
     func set(provider: SwapModuleNew.DexNew.Provider) {
         let dex: SwapModuleNew.DexNew
         if let oldDex = self.dex {
@@ -85,6 +81,8 @@ extension SwapProviderManager {
         }
 
         self.dex = dex
+        localStorage.setDefaultProvider(blockchain: dex.blockchain, provider: dex.provider)
+
         dataSourceProvider = self.provider(dex: dex)
     }
 

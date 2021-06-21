@@ -76,6 +76,11 @@ extension FormAmountInputView {
         amountInputView.viewHeight
     }
 
+    var editable: Bool {
+        get { amountInputView.editable }
+        set { amountInputView.editable = newValue }
+    }
+
 }
 
 extension FormAmountInputView: IHeightControlView {

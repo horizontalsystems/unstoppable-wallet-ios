@@ -17,6 +17,8 @@ class SwapSettingsViewController: ThemeViewController {
     private let chooseServiceCell = A2Cell()
     private var dataSource: ISwapSettingsDataSource?
 
+    private var isLoaded: Bool = false
+
     init(viewModel: SwapSettingsViewModel) {
         self.viewModel = viewModel
 
@@ -54,6 +56,12 @@ class SwapSettingsViewController: ThemeViewController {
         subscribeToViewModel()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        isLoaded = true
+    }
+
     @objc private func didTapCancel() {
         dismiss(animated: true)
     }
@@ -78,7 +86,11 @@ class SwapSettingsViewController: ThemeViewController {
         dataSource?.onClose = { [weak self] in self?.didTapCancel() }
         dataSource?.onOpen = { [weak self] viewController in self?.present(viewController, animated: true) }
 
-        tableView.reload()
+        if isLoaded {
+            tableView.reload()
+        } else {
+            tableView.buildSections()
+        }
     }
 
     private func reloadTable() {

@@ -9,6 +9,7 @@ class SwapCoinCardViewModel {
     private let fiatService: FiatService
     private let disposeBag = DisposeBag()
 
+    private var readOnlyRelay = BehaviorRelay<Bool>(value: false)
     private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
@@ -18,14 +19,20 @@ class SwapCoinCardViewModel {
         self.coinCardService = coinCardService
         self.fiatService = fiatService
 
+        subscribe(disposeBag, coinCardService.readOnlyObservable) { [weak self] in self?.sync(readOnly: $0) }
         subscribe(disposeBag, coinCardService.isEstimatedObservable) { [weak self] in self?.sync(estimated: $0) }
         subscribe(disposeBag, coinCardService.coinObservable) { [weak self] in self?.sync(coin: $0) }
         subscribe(disposeBag, coinCardService.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, coinCardService.errorObservable) { [weak self] in self?.sync(error: $0) }
 
+        sync(readOnly: coinCardService.readOnly)
         sync(estimated: coinCardService.isEstimated)
         sync(coin: coinCardService.coin)
         sync(balance: coinCardService.balance)
+    }
+
+    private func sync(readOnly: Bool) {
+        readOnlyRelay.accept(readOnly)
     }
 
     private func sync(estimated: Bool) {
@@ -64,7 +71,11 @@ extension SwapCoinCardViewModel {
         coinCardService.dex
     }
 
-    var isEstimated: Driver<Bool> {
+    var readOnlyDriver: Driver<Bool> {
+        readOnlyRelay.asDriver()
+    }
+
+    var isEstimatedDriver: Driver<Bool> {
         isEstimatedRelay.asDriver()
     }
 

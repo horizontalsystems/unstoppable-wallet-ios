@@ -10,7 +10,7 @@ struct UniswapSettingsModule {
 
         let addressParserFactory = AddressParserFactory()
 
-        let service = UniswapSettingsService(tradeOptions: tradeService.swapTradeOptions)
+        let service = UniswapSettingsService(tradeOptions: tradeService.settings)
         let viewModel = UniswapSettingsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
 
         let recipientViewModel = RecipientAddressViewModel(
