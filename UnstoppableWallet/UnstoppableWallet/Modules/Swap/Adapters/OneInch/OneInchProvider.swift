@@ -59,7 +59,7 @@ extension OneInchProvider {
         }
     }
 
-    func swapTransactionSingle(coinFrom: Coin, coinTo: Coin, amount: Decimal) throws -> Single<OneInchKit.Swap> {
+    func swapSingle(coinFrom: Coin, coinTo: Coin, amount: Decimal) -> Single<OneInchKit.Swap> {
         guard let amountUnits = units(amount: amount, coin: coinFrom) else {
             return Single.error(SwapError.insufficientAmount)
         }

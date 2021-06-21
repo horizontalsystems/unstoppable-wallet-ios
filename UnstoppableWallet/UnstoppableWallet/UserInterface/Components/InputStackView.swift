@@ -34,6 +34,11 @@ class InputStackView: UIView {
         formTextView.becomeFirstResponder()
     }
 
+    var editable: Bool {
+        get { stackView.isUserInteractionEnabled }
+        set { stackView.isUserInteractionEnabled = newValue }
+    }
+
 }
 
 extension InputStackView {

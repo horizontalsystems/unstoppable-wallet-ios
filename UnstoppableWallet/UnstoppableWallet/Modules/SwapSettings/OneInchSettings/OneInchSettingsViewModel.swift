@@ -52,7 +52,7 @@ extension OneInchSettingsViewModel {
 
     public func doneDidTap() -> Bool {
         if case let .valid(settings) = service.state {
-//            tradeService.swapTradeOptions = settings
+            tradeService.settings = settings
             return true
         }
         return false

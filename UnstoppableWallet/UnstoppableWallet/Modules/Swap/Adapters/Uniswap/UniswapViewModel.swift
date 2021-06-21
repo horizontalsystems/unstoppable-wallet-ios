@@ -19,7 +19,7 @@ class UniswapViewModel {
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
-    private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
+    private var settingsViewItemRelay = BehaviorRelay<SettingsViewItem?>(value: nil)
     private var advancedSettingsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
@@ -48,7 +48,7 @@ class UniswapViewModel {
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
         subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
-        subscribe(scheduler, disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
+        subscribe(scheduler, disposeBag, tradeService.settingsObservable) { [weak self] in self?.sync(swapSettings: $0) }
         subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
     }
 
@@ -66,7 +66,7 @@ class UniswapViewModel {
             switch error {
             case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
             case _ as EvmTransactionService.GasDataError: return false
-            case _ as UniswapService.SwapError: return false
+            case _ as SwapModuleNew.SwapError: return false
             default: return true
             }
         }
@@ -91,8 +91,8 @@ class UniswapViewModel {
         syncApproveAction()
     }
 
-    private func sync(swapTradeOptions: UniswapSettings) {
-        tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(swapTradeOptions: swapTradeOptions))
+    private func sync(swapSettings: UniswapSettings) {
+        settingsViewItemRelay.accept(settingsViewItem(settings: swapSettings))
     }
 
     private func sync(isApprovePending: Bool) {
@@ -104,9 +104,9 @@ class UniswapViewModel {
         if case .ready = service.state {
             proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
         } else if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? UniswapService.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? UniswapService.SwapError }) {
+            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
                 proceedActionRelay.accept(.hidden)
@@ -120,11 +120,11 @@ class UniswapViewModel {
 
     private func syncApproveAction() {
         if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? UniswapService.SwapError || .forbiddenPriceImpactLevel == $0 as? UniswapService.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
                 approveActionRelay.accept(.hidden)
             } else if pendingAllowanceService.isPending == true {
                 approveActionRelay.accept(.disabled(title: "swap.approving_button".localized))
-            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? UniswapService.SwapError }) {
+            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModuleNew.SwapError }) {
                 approveActionRelay.accept(.enabled(title: "button.approve".localized))
             } else {
                 approveActionRelay.accept(.hidden)
@@ -142,10 +142,10 @@ class UniswapViewModel {
         )
     }
 
-    private func tradeOptionsViewItem(swapTradeOptions: UniswapSettings) -> TradeOptionsViewItem {
-        TradeOptionsViewItem(slippage: viewItemHelper.slippage(swapTradeOptions.allowedSlippage),
-            deadline: viewItemHelper.deadline(swapTradeOptions.ttl),
-            recipient: swapTradeOptions.recipient?.title)
+    private func settingsViewItem(settings: UniswapSettings) -> SettingsViewItem {
+        SettingsViewItem(slippage: viewItemHelper.slippage(settings.allowedSlippage),
+            deadline: viewItemHelper.deadline(settings.ttl),
+            recipient: settings.recipient?.title)
     }
 
 }
@@ -164,8 +164,8 @@ extension UniswapViewModel {
         tradeViewItemRelay.asDriver()
     }
 
-    var tradeOptionsViewItemDriver: Driver<TradeOptionsViewItem?> {
-        tradeOptionsViewItemRelay.asDriver()
+    var settingsViewItemDriver: Driver<SettingsViewItem?> {
+        settingsViewItemRelay.asDriver()
     }
 
     var advancedSettingsVisibleDriver: Driver<Bool> {
@@ -224,9 +224,9 @@ extension UniswapViewModel {
         let swapInfo = SendEvmData.SwapInfo(
                 estimatedOut: tradeService.amountOut,
                 estimatedIn: tradeService.amountIn,
-                slippage: viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage),
-                deadline: viewItemHelper.deadline(tradeService.swapTradeOptions.ttl),
-                recipientDomain: tradeService.swapTradeOptions.recipient?.domain,
+                slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
+                deadline: viewItemHelper.deadline(tradeService.settings.ttl),
+                recipientDomain: tradeService.settings.recipient?.domain,
                 price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
         )
@@ -244,7 +244,7 @@ extension UniswapViewModel {
         let guaranteedAmount: SwapModule.GuaranteedAmountViewItem?
     }
 
-    struct TradeOptionsViewItem {
+    struct SettingsViewItem {
         let slippage: String?
         let deadline: String?
         let recipient: String?

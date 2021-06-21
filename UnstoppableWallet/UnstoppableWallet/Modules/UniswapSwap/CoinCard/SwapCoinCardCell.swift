@@ -119,7 +119,8 @@ class SwapCoinCardCell: UITableViewCell {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.isEstimated) { [weak self] in self?.setBadge(hidden: !$0) }
+        subscribe(disposeBag, viewModel.readOnlyDriver) { [weak self] in self?.set(readOnly: $0) }
+        subscribe(disposeBag, viewModel.isEstimatedDriver) { [weak self] in self?.setBadge(hidden: !$0) }
         subscribe(disposeBag, viewModel.tokenCodeDriver) { [weak self] in self?.set(tokenCode: $0) }
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.set(balance: $0) }
         subscribe(disposeBag, viewModel.balanceErrorDriver) { [weak self] in self?.set(balanceError: $0) }
@@ -133,6 +134,10 @@ class SwapCoinCardCell: UITableViewCell {
 }
 
 extension SwapCoinCardCell {
+
+    private func set(readOnly: Bool) {
+        formAmountInput.editable = !readOnly
+    }
 
     private func setBadge(hidden: Bool) {
         badgeView.isHidden = hidden
