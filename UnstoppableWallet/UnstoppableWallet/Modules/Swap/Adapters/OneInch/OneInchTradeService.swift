@@ -115,11 +115,6 @@ class OneInchTradeService {
         state = .ready
     }
 
-    deinit {
-        print("Deinit \(self)")
-    }
-
-
 }
 
 extension OneInchTradeService {

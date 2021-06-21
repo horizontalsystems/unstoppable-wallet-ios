@@ -71,6 +71,10 @@ class SwapProviderManager {
 extension SwapProviderManager {
 
     func set(provider: SwapModuleNew.DexNew.Provider) {
+        guard provider != dex?.provider else {
+            return
+        }
+
         let dex: SwapModuleNew.DexNew
         if let oldDex = self.dex {
             oldDex.provider = provider

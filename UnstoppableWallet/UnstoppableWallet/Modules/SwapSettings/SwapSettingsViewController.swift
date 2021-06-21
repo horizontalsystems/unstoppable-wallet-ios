@@ -14,7 +14,7 @@ class SwapSettingsViewController: ThemeViewController {
     private let viewModel: SwapSettingsViewModel
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let chooseServiceCell = A2Cell()
+    private let chooseServiceCell = B2Cell()
     private var dataSource: ISwapSettingsDataSource?
 
     private var isLoaded: Bool = false
@@ -51,6 +51,7 @@ class SwapSettingsViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         chooseServiceCell.title = "swap.service".localized
+        chooseServiceCell.valueColor = .themeLeah
         chooseServiceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
         subscribeToViewModel()
