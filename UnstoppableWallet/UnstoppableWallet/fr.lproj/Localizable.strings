@@ -215,7 +215,7 @@
 "swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Sélectionner";
-"swap.advanced_settings" = "Configuration avancée";
+"swap.advanced_settings" = "Swap Settings";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
 "swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation.\n\nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
@@ -244,6 +244,9 @@
 "swap.advanced_settings.error.invalid_address" = "Addresse invalide";
 "swap.advanced_settings.error.invalid_slippage" = "Slippage invalide";
 "swap.advanced_settings.error.invalid_deadline" = "Date limite invalide";
+
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
