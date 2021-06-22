@@ -9,14 +9,19 @@ import OneInchKit
 class SwapProviderManager {
     private let localStorage: ILocalStorage
 
-    private let dataSourceProviderUpdatedRelay = PublishRelay<()>()
+    private let dataSourceUpdatedRelay = PublishRelay<()>()
     private(set) var dataSourceProvider: ISwapProvider? {
         didSet {
-            dataSourceProviderUpdatedRelay.accept(())
+            dataSourceUpdatedRelay.accept(())
         }
     }
 
-    var dex: SwapModuleNew.DexNew?
+    private let dexUpdatedRelay = PublishRelay<()>()
+    var dex: SwapModuleNew.DexNew? {
+        didSet {
+            dexUpdatedRelay.accept(())
+        }
+    }
 
     init(localStorage: ILocalStorage, coinFrom: Coin?) {
         self.localStorage = localStorage
@@ -50,9 +55,9 @@ class SwapProviderManager {
 
         let dexProvider = localStorage.defaultProvider(blockchain: blockchain)
         let dex = SwapModuleNew.DexNew(blockchain: blockchain, provider: dexProvider)
-        self.dex = dex
 
         dataSourceProvider = provider(dex: dex, coinFrom: coinFrom)
+        self.dex = dex
     }
 
     private func provider(dex: SwapModuleNew.DexNew, coinFrom: Coin? = nil) -> ISwapProvider? {
@@ -68,7 +73,7 @@ class SwapProviderManager {
 
 }
 
-extension SwapProviderManager {
+extension SwapProviderManager: ISwapDexManager {
 
     func set(provider: SwapModuleNew.DexNew.Provider) {
         guard provider != dex?.provider else {
@@ -90,8 +95,24 @@ extension SwapProviderManager {
         dataSourceProvider = self.provider(dex: dex)
     }
 
-    var dataSourceUpdated: Observable<()> {
-        dataSourceProviderUpdatedRelay.asObservable()
+    var dexUpdated: Signal<()> {
+        dexUpdatedRelay.asSignal()
+    }
+
+}
+
+extension SwapProviderManager: ISwapDataSourceManager {
+
+    var dataSource: ISwapDataSource? {
+        dataSourceProvider?.dataSource
+    }
+
+    var settingsDataSource: ISwapSettingsDataSource? {
+        dataSourceProvider?.settingsDataSource
+    }
+
+    var dataSourceUpdated: Signal<()> {
+        dataSourceUpdatedRelay.asSignal()
     }
 
 }

@@ -11,6 +11,7 @@ class SwapSettingsViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
+    private let dataSourceManager: ISwapDataSourceManager
     private let viewModel: SwapSettingsViewModel
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -19,8 +20,9 @@ class SwapSettingsViewController: ThemeViewController {
 
     private var isLoaded: Bool = false
 
-    init(viewModel: SwapSettingsViewModel) {
+    init(viewModel: SwapSettingsViewModel, dataSourceManager: ISwapDataSourceManager) {
         self.viewModel = viewModel
+        self.dataSourceManager = dataSourceManager
 
         super.init()
     }
@@ -54,7 +56,11 @@ class SwapSettingsViewController: ThemeViewController {
         chooseServiceCell.valueColor = .themeLeah
         chooseServiceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-        subscribeToViewModel()
+        subscribe(disposeBag, viewModel.providerNameDriver) { [weak self] in self?.sync(providerName: $0) }
+        sync(providerName: viewModel.providerName)
+
+        subscribe(disposeBag, dataSourceManager.dataSourceUpdated) { [weak self] _ in self?.updateDataSource() }
+        updateDataSource()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -63,25 +69,20 @@ class SwapSettingsViewController: ThemeViewController {
         isLoaded = true
     }
 
+    private func sync(providerName: String?) {
+        chooseServiceCell.value = providerName
+    }
+
     @objc private func didTapCancel() {
         dismiss(animated: true)
     }
 
     private func didTapSelectProvider() {
-        navigationController?.pushViewController(SwapSelectProviderModule.viewController(dataSourceManager: viewModel.swapDataSourceManager), animated: true)
-    }
-
-    private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.dataSourceUpdated) { [weak self] _ in
-            self?.updateDataSource()
-        }
-        updateDataSource()
+        navigationController?.pushViewController(SwapSelectProviderModule.viewController(dexManager: viewModel.dexManager), animated: true)
     }
 
     private func updateDataSource() {
-        chooseServiceCell.value = viewModel.provider
-
-        dataSource = viewModel.dataSource
+        dataSource = dataSourceManager.settingsDataSource
 
         dataSource?.onReload = { [weak self] in self?.reloadTable() }
         dataSource?.onClose = { [weak self] in self?.didTapCancel() }
