@@ -215,7 +215,7 @@
 "swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
 "swap.token" = "Seleccionar";
-"swap.advanced_settings" = "Configuración avanzada";
+"swap.advanced_settings" = "Swap Settings";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
 "swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
@@ -244,6 +244,9 @@
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
+
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
