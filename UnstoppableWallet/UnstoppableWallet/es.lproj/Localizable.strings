@@ -212,6 +212,7 @@
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
+"swap.powered_by" = "Powered By";
 "swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
 "swap.token" = "Seleccionar";
