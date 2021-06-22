@@ -215,7 +215,7 @@
 "swap.allowance" = "Vergütung";
 "swap.you_get" = "Sie erhalten";
 "swap.token" = "Auswählen";
-"swap.advanced_settings" = "Erweiterte Einstellungen";
+"swap.advanced_settings" = "Swap Settings";
 "swap.proceed_button" = "Weiter";
 "swap.approve.title" = "Tausch genehmigen";
 "swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
@@ -244,6 +244,9 @@
 "swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
 "swap.advanced_settings.error.invalid_slippage" = "Ungültige Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Ungültige Frist";
+
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
