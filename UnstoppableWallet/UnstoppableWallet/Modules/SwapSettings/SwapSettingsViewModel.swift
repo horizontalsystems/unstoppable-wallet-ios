@@ -1,31 +1,31 @@
 import Foundation
 import RxCocoa
-import RxRelay
+import RxSwift
 
 class SwapSettingsViewModel {
-    private let service: SwapSettingsService
+    private let disposeBag = DisposeBag()
+    private(set) var dexManager: ISwapDexManager
 
-    let swapDataSourceManager: SwapProviderManager
+    private let providerNameRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: SwapSettingsService, swapDataSourceManager: SwapProviderManager) {
-        self.service = service
-        self.swapDataSourceManager = swapDataSourceManager
+    init(dexManager: ISwapDexManager) {
+        self.dexManager = dexManager
+
+        subscribe(disposeBag, dexManager.dexUpdated) { [weak self] dex in
+            self?.providerNameRelay.accept(self?.providerName)
+        }
     }
 
 }
 
 extension SwapSettingsViewModel {
 
-    var provider: String? {
-        swapDataSourceManager.dex?.provider.rawValue
+    var providerName: String? {
+        dexManager.dex?.provider.rawValue
     }
 
-    var dataSource: ISwapSettingsDataSource? {
-        swapDataSourceManager.dataSourceProvider?.swapSettingsDataSource
-    }
-
-    var dataSourceUpdated: Driver<()> {
-        swapDataSourceManager.dataSourceUpdated.asDriver(onErrorJustReturn: ())
+    var providerNameDriver: Driver<String?> {
+        providerNameRelay.asDriver()
     }
 
 }

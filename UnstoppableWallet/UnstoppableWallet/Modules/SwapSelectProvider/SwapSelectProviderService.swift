@@ -3,7 +3,7 @@ import RxRelay
 import ThemeKit
 
 class SwapSelectProviderService {
-    private let dataSourceManager: SwapProviderManager
+    private let dexManager: ISwapDexManager
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items = [Item]() {
@@ -12,14 +12,14 @@ class SwapSelectProviderService {
         }
     }
 
-    init(dataSourceManager: SwapProviderManager) {
-        self.dataSourceManager = dataSourceManager
+    init(dexManager: ISwapDexManager) {
+        self.dexManager = dexManager
 
         syncItems()
     }
 
     private func syncItems() {
-        guard let dex = dataSourceManager.dex else {
+        guard let dex = dexManager.dex else {
             items = []
             return
         }
@@ -42,7 +42,7 @@ extension SwapSelectProviderService {
     }
 
     func set(provider: SwapModuleNew.DexNew.Provider) {
-        dataSourceManager.set(provider: provider)
+        dexManager.set(provider: provider)
 
         syncItems()
     }

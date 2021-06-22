@@ -49,13 +49,15 @@ class OneInchDataSource {
         priceCell.onSwitch = { [weak self] in
             self?.viewModel.onTapSwitch()
         }
+
+        initCells()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func viewDidLoad() {
+    func initCells() {
         advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
         advancedSettingsCell.title  = "swap.advanced_settings".localized
 
