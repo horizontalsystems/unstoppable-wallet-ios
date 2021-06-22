@@ -217,7 +217,7 @@
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Получите";
 "swap.token" = "Выбрать";
-"swap.advanced_settings" = "Дополнительные Настройки";
+"swap.advanced_settings" = "Swap Settings";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение Обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
@@ -246,6 +246,9 @@
 "swap.advanced_settings.error.invalid_address" = "Неверный Адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
+
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
