@@ -20,7 +20,6 @@ extension KitCleaner: IKitCleaner {
             try? BitcoinCashAdapter.clear(except: accountIds)
             try? DashAdapter.clear(except: accountIds)
             try? EvmAdapter.clear(except: accountIds)
-            try? Evm20Adapter.clear(except: accountIds)
             try? BinanceAdapter.clear(except: accountIds)
             try? ZcashAdapter.clear(except: accountIds)
         }

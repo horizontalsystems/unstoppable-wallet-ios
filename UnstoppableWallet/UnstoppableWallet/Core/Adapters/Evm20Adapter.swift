@@ -122,15 +122,8 @@ class Evm20Adapter: BaseEvmAdapter {
 
 }
 
-extension Evm20Adapter {
-
-    static func clear(except excludedWalletIds: [String]) throws {
-        try Erc20Kit.Kit.clear(exceptFor: excludedWalletIds)
-    }
-
-}
-
 // IAdapter
+
 extension Evm20Adapter: IAdapter {
 
     func start() {
