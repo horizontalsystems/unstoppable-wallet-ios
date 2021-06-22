@@ -214,6 +214,7 @@
 "swap.you_pay" = "Платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
+"swap.powered_by" = "Powered By";
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Получите";
 "swap.token" = "Выбрать";
