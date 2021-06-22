@@ -43,7 +43,7 @@ class UniswapModule {
 
 extension UniswapModule: ISwapProvider {
 
-    var swapDataSource: ISwapDataSource {
+    var dataSource: ISwapDataSource {
         let allowanceViewModel = SwapAllowanceViewModel(errorProvider: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)
         let viewModel = UniswapViewModel(
                 service: service,
@@ -60,7 +60,7 @@ extension UniswapModule: ISwapProvider {
         )
     }
 
-    var swapSettingsDataSource: ISwapSettingsDataSource? {
+    var settingsDataSource: ISwapSettingsDataSource? {
         UniswapSettingsModule.dataSource(tradeService: tradeService)
     }
 

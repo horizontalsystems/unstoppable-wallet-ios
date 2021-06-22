@@ -15,12 +15,11 @@ protocol ISwapSettingsDataSource: AnyObject {
 
 class SwapSettingsModule {
 
-    static func viewController(swapDataSourceManager: SwapProviderManager) -> UIViewController? {
-        let service = SwapSettingsService()
-
-        let viewModel = SwapSettingsViewModel(service: service, swapDataSourceManager: swapDataSourceManager)
+    static func viewController(dataSourceManager: ISwapDataSourceManager, dexManager: ISwapDexManager) -> UIViewController? {
+        let viewModel = SwapSettingsViewModel(dexManager: dexManager)
         let viewController = SwapSettingsViewController(
-                viewModel: viewModel
+                viewModel: viewModel,
+                dataSourceManager: dataSourceManager
         )
 
         return ThemeNavigationController(rootViewController: viewController)

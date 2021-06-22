@@ -11,15 +11,16 @@ class SwapViewControllerNew: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
-    private let viewModel: SwapViewModelNew
+    private let viewModel: SwapViewModel
+    private let dataSourceManager: ISwapDataSourceManager
     private let tableView = SectionsTableView(style: .grouped)
     private var isLoaded = false
-    private var isAppeared = false
 
     private var dataSource: ISwapDataSource?
 
-    init(viewModel: SwapViewModelNew) {
+    init(viewModel: SwapViewModel, dataSourceManager: ISwapDataSourceManager) {
         self.viewModel = viewModel
+        self.dataSourceManager = dataSourceManager
 
         super.init()
 
@@ -59,14 +60,14 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.dataSourceUpdated) { [weak self] _ in
+        subscribe(disposeBag, dataSourceManager.dataSourceUpdated) { [weak self] _ in
             self?.updateDataSource()
         }
         updateDataSource()
     }
 
     private func updateDataSource() {
-        dataSource = viewModel.dataSource
+        dataSource = dataSourceManager.dataSource
 
         dataSource?.onReload = { [weak self] in self?.reloadTable() }
         dataSource?.onClose = { [weak self] in self?.onClose() }
@@ -79,8 +80,6 @@ class SwapViewControllerNew: ThemeViewController {
         }
         dataSource?.onOpenSettings = { [weak self] in self?.openSettings() }
 
-        dataSource?.viewDidLoad()
-
         if isLoaded {
             tableView.reload()
         } else {
@@ -89,7 +88,10 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     private func openSettings() {
-        guard  let viewController = SwapSettingsModule.viewController(swapDataSourceManager: viewModel.swapDataSourceManager) else {
+        guard  let viewController = SwapSettingsModule.viewController(
+                dataSourceManager: dataSourceManager,
+                dexManager: viewModel.dexManager) else {
+
             return
         }
 
@@ -101,7 +103,7 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     @objc func onInfo() {
-        guard let dex = viewModel.swapDataSourceManager.dex else {
+        guard let dex = viewModel.dexManager.dex else {
             return
         }
 

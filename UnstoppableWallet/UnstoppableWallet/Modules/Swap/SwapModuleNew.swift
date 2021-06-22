@@ -4,16 +4,30 @@ import EthereumKit
 import SectionsTableView
 import ThemeKit
 import RxSwift
+import RxCocoa
+
+protocol ISwapDexManager {
+    var dex: SwapModuleNew.DexNew? { get }
+    func set(provider: SwapModuleNew.DexNew.Provider)
+
+    var dexUpdated: Signal<()> { get }
+}
+
+protocol ISwapDataSourceManager {
+    var dataSource: ISwapDataSource? { get }
+    var settingsDataSource: ISwapSettingsDataSource? { get }
+
+    var dataSourceUpdated: Signal<()> { get }
+}
 
 protocol ISwapProvider: AnyObject {
-    var swapDataSource: ISwapDataSource { get }
-    var swapSettingsDataSource: ISwapSettingsDataSource? { get }
+    var dataSource: ISwapDataSource { get }
+    var settingsDataSource: ISwapSettingsDataSource? { get }
 
     var swapState: SwapModuleNew.DataSourceState { get }
 }
 
 protocol ISwapDataSource: AnyObject {
-    func viewDidLoad()
     func buildSections() -> [SectionProtocol]
 
     var state: SwapModuleNew.DataSourceState { get }
@@ -27,13 +41,12 @@ protocol ISwapDataSource: AnyObject {
 class SwapModuleNew {
 
     static func viewController(coinFrom: Coin? = nil) -> UIViewController? {
-        let swapDataSourceManager = SwapProviderManager(localStorage: App.shared.localStorage, coinFrom: coinFrom)
+        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, coinFrom: coinFrom)
 
-        let service = SwapServiceNew()
-
-        let viewModel = SwapViewModelNew(service: service, swapDataSourceManager: swapDataSourceManager)
+        let viewModel =  SwapViewModel(dexManager: swapDexManager)
         let viewController = SwapViewControllerNew(
-                viewModel: viewModel
+                viewModel: viewModel,
+                dataSourceManager: swapDexManager
         )
 
         return ThemeNavigationController(rootViewController: viewController)

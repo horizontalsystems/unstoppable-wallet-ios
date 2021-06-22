@@ -3,8 +3,8 @@ import ThemeKit
 
 struct SwapSelectProviderModule {
 
-    static func viewController(dataSourceManager: SwapProviderManager) -> UIViewController {
-        let service = SwapSelectProviderService(dataSourceManager: dataSourceManager)
+    static func viewController(dexManager: ISwapDexManager) -> UIViewController {
+        let service = SwapSelectProviderService(dexManager: dexManager)
 
         let viewModel = SwapSelectProviderViewModel(service: service)
 

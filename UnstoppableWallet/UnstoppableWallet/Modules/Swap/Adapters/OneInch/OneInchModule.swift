@@ -44,7 +44,7 @@ class OneInchModule {
 
 extension OneInchModule: ISwapProvider {
 
-    var swapDataSource: ISwapDataSource {
+    var dataSource: ISwapDataSource {
         let allowanceViewModel = SwapAllowanceViewModel(errorProvider: service, allowanceService: allowanceService, pendingAllowanceService: pendingAllowanceService)
         let viewModel = OneInchViewModel(
                 service: service,
@@ -61,7 +61,7 @@ extension OneInchModule: ISwapProvider {
         )
     }
 
-    var swapSettingsDataSource: ISwapSettingsDataSource? {
+    var settingsDataSource: ISwapSettingsDataSource? {
         OneInchSettingsModule.dataSource(tradeService: tradeService)
     }
 
