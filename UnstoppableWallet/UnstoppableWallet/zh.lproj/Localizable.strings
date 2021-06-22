@@ -212,6 +212,7 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
+"swap.powered_by" = "Powered By";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
