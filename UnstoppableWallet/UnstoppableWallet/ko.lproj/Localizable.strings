@@ -212,6 +212,7 @@
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
+"swap.powered_by" = "Powered By";
 "swap.allowance" = "허용량";
 "swap.you_get" = "얻기";
 "swap.token" = "선택";
