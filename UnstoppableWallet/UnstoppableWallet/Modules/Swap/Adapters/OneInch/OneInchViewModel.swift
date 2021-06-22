@@ -20,7 +20,6 @@ class OneInchViewModel {
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
     private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
-    private var advancedSettingsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var openConfirmRelay = PublishRelay<SendEvmData>()
@@ -80,11 +79,10 @@ class OneInchViewModel {
     private func sync(tradeState: OneInchTradeService.State) {
         switch tradeState {
         case .ready:
+            ()
 //            tradeViewItemRelay.accept(tradeViewItem(trade: trade))
-            advancedSettingsVisibleRelay.accept(true)
         default:
             tradeViewItemRelay.accept(nil)
-            advancedSettingsVisibleRelay.accept(false)
         }
 
         syncProceedAction()
@@ -109,12 +107,12 @@ class OneInchViewModel {
             } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
-                proceedActionRelay.accept(.hidden)
+                proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             } else {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             }
         } else {
-            proceedActionRelay.accept(.hidden)
+            proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
         }
     }
 
@@ -168,10 +166,6 @@ extension OneInchViewModel {
         tradeOptionsViewItemRelay.asDriver()
     }
 
-    var advancedSettingsVisibleDriver: Driver<Bool> {
-        advancedSettingsVisibleRelay.asDriver()
-    }
-
     var proceedActionDriver: Driver<ActionState> {
         proceedActionRelay.asDriver()
     }
@@ -189,11 +183,7 @@ extension OneInchViewModel {
     }
 
     var dexName: String {
-        switch service.dex.provider {
-        case .uniswap: return "Uniswap"
-        case .pancake: return "PancakeSwap"
-        case .oneInch: return "1Inch"
-        }
+        service.dex.provider.rawValue
     }
 
     func onTapSwitch() {

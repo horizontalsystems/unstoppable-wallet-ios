@@ -4897,6 +4897,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		58AAA04EAEE6FB6544A104F6 /* PoweredBy */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PoweredBy;
+			sourceTree = "<group>";
+		};
 		58AAA0852ABBACC1CBCD2755 /* OneInchSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -4994,6 +5001,7 @@
 				58AAA960AF24C313ECF91F9F /* SwapViewControllerNew.swift */,
 				58AAAED208A8D02F3BC8B828 /* Adapters */,
 				58AAAEB2257174A64DE5E51B /* SwapViewModel.swift */,
+				58AAA04EAEE6FB6544A104F6 /* PoweredBy */,
 			);
 			path = Swap;
 			sourceTree = "<group>";

@@ -214,6 +214,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
+"swap.powered_by" = "Powered By";
 "swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Select";

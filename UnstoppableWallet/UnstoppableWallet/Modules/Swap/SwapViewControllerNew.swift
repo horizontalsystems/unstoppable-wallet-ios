@@ -36,7 +36,7 @@ class SwapViewControllerNew: ThemeViewController {
 
         title = "swap.title".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onInfo))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_2_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onOpenSettings))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -78,7 +78,6 @@ class SwapViewControllerNew: ThemeViewController {
                 self?.present(viewController, animated: true)
             }
         }
-        dataSource?.onOpenSettings = { [weak self] in self?.openSettings() }
 
         if isLoaded {
             tableView.reload()
@@ -87,7 +86,11 @@ class SwapViewControllerNew: ThemeViewController {
         }
     }
 
-    private func openSettings() {
+    @objc func onClose() {
+        dismiss(animated: true)
+    }
+
+    @objc func onOpenSettings() {
         guard  let viewController = SwapSettingsModule.viewController(
                 dataSourceManager: dataSourceManager,
                 dexManager: viewModel.dexManager) else {
@@ -96,19 +99,6 @@ class SwapViewControllerNew: ThemeViewController {
         }
 
         present(viewController, animated: true)
-    }
-
-    @objc func onClose() {
-        dismiss(animated: true)
-    }
-
-    @objc func onInfo() {
-        guard let dex = viewModel.dexManager.dex else {
-            return
-        }
-
-        let module = InfoModule.viewController(dataSource: DexInfoDataSource(dex: dex))
-        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     private func reloadTable() {
@@ -136,14 +126,6 @@ extension SwapViewControllerNew: SectionsDataSource {
         }
 
         return sections
-    }
-
-}
-
-extension SwapViewControllerNew: IPresentDelegate {
-
-    func show(viewController: UIViewController) {
-        present(viewController, animated: true)
     }
 
 }
