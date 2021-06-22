@@ -3,17 +3,19 @@ import BinanceChainKit
 
 class BinanceKitManager {
     private let appConfigProvider: IAppConfigProvider
-    weak var binanceKit: BinanceChainKit?
 
+    private weak var _binanceKit: BinanceChainKit?
     private var currentAccount: Account?
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
 
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 
-    func binanceKit(account: Account) throws -> BinanceChainKit {
-        if let binanceKit = binanceKit, let currentAccount = currentAccount, currentAccount == account {
-            return binanceKit
+    private func _binanceKit(account: Account) throws -> BinanceChainKit {
+        if let _binanceKit = _binanceKit, let currentAccount = currentAccount, currentAccount == account {
+            return _binanceKit
         }
 
         guard let seed = account.type.mnemonicSeed else {
@@ -29,18 +31,21 @@ class BinanceKitManager {
 
         binanceKit.refresh()
 
-        self.binanceKit = binanceKit
+        _binanceKit = binanceKit
         currentAccount = account
 
         return binanceKit
     }
+}
 
-    func refresh() {
-        binanceKit?.refresh()
+extension BinanceKitManager {
+
+    var binanceKit: BinanceChainKit? {
+        queue.sync { _binanceKit }
     }
 
-    var statusInfo: [(String, Any)]? {
-        binanceKit?.statusInfo
+    func binanceKit(account: Account) throws -> BinanceChainKit {
+        try queue.sync { try _binanceKit(account: account)  }
     }
 
 }
