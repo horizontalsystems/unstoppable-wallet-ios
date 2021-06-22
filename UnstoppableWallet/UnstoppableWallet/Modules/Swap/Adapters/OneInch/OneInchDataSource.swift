@@ -20,7 +20,7 @@ class OneInchDataSource {
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let advancedSettingsCell = D1Cell()
+    private let poweredByCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -58,12 +58,12 @@ class OneInchDataSource {
     }
 
     func initCells() {
-        advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
-        advancedSettingsCell.title  = "swap.advanced_settings".localized
-
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
+        poweredByCell.title = "swap.powered_by".localized
+        poweredByCell.value = viewModel.dexName
+
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -83,7 +83,6 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
-        subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
@@ -156,11 +155,6 @@ class OneInchDataSource {
 //        }
 //
 //        reloadTable()
-    }
-
-    private func handle(advancedSettingsVisible: Bool) {
-        advancedSettingsCell.isVisible = advancedSettingsVisible
-        onReload?()
     }
 
     private func handle(proceedActionState: OneInchViewModel.ActionState) {
@@ -252,21 +246,6 @@ extension OneInchDataSource: ISwapDataSource {
         ))
 
         sections.append(Section(
-                id: "advanced_settings",
-                rows: [
-                    StaticRow(
-                            cell: advancedSettingsCell,
-                            id: "advanced-settings",
-                            height: advancedSettingsCell.cellHeight,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.onTapAdvancedSettings()
-                            }
-                    )
-                ]
-        ))
-
-        sections.append(Section(
                 id: "info",
                 headerState: .margin(height: 6),
                 footerState: .margin(height: 6),
@@ -286,6 +265,11 @@ extension OneInchDataSource: ISwapDataSource {
 //                            id: "recipient",
 //                            height: recipientCell.cellHeight
 //                    ),
+                    StaticRow(
+                            cell: poweredByCell,
+                            id: "powered_by",
+                            height: poweredByCell.cellHeight
+                    ),
                     StaticRow(
                             cell: allowanceCell,
                             id: "allowance",

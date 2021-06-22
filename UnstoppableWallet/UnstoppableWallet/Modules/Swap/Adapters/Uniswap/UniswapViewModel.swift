@@ -20,7 +20,6 @@ class UniswapViewModel {
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
     private var settingsViewItemRelay = BehaviorRelay<SettingsViewItem?>(value: nil)
-    private var advancedSettingsVisibleRelay = BehaviorRelay<Bool>(value: false)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var openConfirmRelay = PublishRelay<SendEvmData>()
@@ -81,10 +80,8 @@ class UniswapViewModel {
         switch tradeState {
         case .ready(let trade):
             tradeViewItemRelay.accept(tradeViewItem(trade: trade))
-            advancedSettingsVisibleRelay.accept(true)
         default:
             tradeViewItemRelay.accept(nil)
-            advancedSettingsVisibleRelay.accept(false)
         }
 
         syncProceedAction()
@@ -109,12 +106,12 @@ class UniswapViewModel {
             } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
-                proceedActionRelay.accept(.hidden)
+                proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             } else {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             }
         } else {
-            proceedActionRelay.accept(.hidden)
+            proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
         }
     }
 
@@ -168,10 +165,6 @@ extension UniswapViewModel {
         settingsViewItemRelay.asDriver()
     }
 
-    var advancedSettingsVisibleDriver: Driver<Bool> {
-        advancedSettingsVisibleRelay.asDriver()
-    }
-
     var proceedActionDriver: Driver<ActionState> {
         proceedActionRelay.asDriver()
     }
@@ -189,11 +182,7 @@ extension UniswapViewModel {
     }
 
     var dexName: String {
-        switch service.dex.provider {
-        case .uniswap: return "Uniswap"
-        case .pancake: return "PancakeSwap"
-        case .oneInch: return "1Inch"
-        }
+        service.dex.provider.rawValue
     }
 
     func onTapSwitch() {

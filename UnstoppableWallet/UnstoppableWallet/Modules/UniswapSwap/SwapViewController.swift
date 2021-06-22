@@ -118,7 +118,6 @@ class SwapViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.settingsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
-        subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 

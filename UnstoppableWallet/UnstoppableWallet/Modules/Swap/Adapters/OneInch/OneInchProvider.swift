@@ -18,13 +18,12 @@ class OneInchProvider {
     }
 
     private func address(coin: Coin) throws -> EthereumKit.Address {
-        if case let .erc20(address) = coin.type {
-            return try EthereumKit.Address(hex: address)
-        } else if case let .bep20(address) = coin.type {
-            return try EthereumKit.Address(hex: address)
+        switch coin.type {
+        case .ethereum, .binanceSmartChain: return try EthereumKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        case .erc20(let address): return try EthereumKit.Address(hex: address)
+        case .bep20(let address): return try EthereumKit.Address(hex: address)
+        default: throw SwapError.invalidAddress
         }
-
-        throw SwapError.invalidAddress
     }
 
 }

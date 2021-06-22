@@ -20,7 +20,7 @@ class UniswapDataSource {
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let advancedSettingsCell = D1Cell()
+    private let poweredByCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -58,12 +58,12 @@ class UniswapDataSource {
     }
 
     func initCells() {
-        advancedSettingsCell.set(backgroundStyle: .transparent, isLast: true)
-        advancedSettingsCell.title  = "swap.advanced_settings".localized
-
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
+        poweredByCell.title = "swap.powered_by".localized
+        poweredByCell.value = viewModel.dexName
+
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -83,7 +83,6 @@ class UniswapDataSource {
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.settingsViewItemDriver) { [weak self] in self?.handle(settingsViewItem: $0) }
-        subscribe(disposeBag, viewModel.advancedSettingsVisibleDriver) { [weak self] in self?.handle(advancedSettingsVisible: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
@@ -152,11 +151,6 @@ class UniswapDataSource {
 //        }
 //
 //        reloadTable()
-    }
-
-    private func handle(advancedSettingsVisible: Bool) {
-        advancedSettingsCell.isVisible = advancedSettingsVisible
-        onReload?()
     }
 
     private func handle(proceedActionState: UniswapViewModel.ActionState) {
@@ -249,21 +243,6 @@ extension UniswapDataSource: ISwapDataSource {
         ))
 
         sections.append(Section(
-                id: "advanced_settings",
-                rows: [
-                    StaticRow(
-                            cell: advancedSettingsCell,
-                            id: "advanced-settings",
-                            height: advancedSettingsCell.cellHeight,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.onTapAdvancedSettings()
-                            }
-                    )
-                ]
-        ))
-
-        sections.append(Section(
                 id: "info",
                 headerState: .margin(height: 6),
                 footerState: .margin(height: 6),
@@ -283,6 +262,11 @@ extension UniswapDataSource: ISwapDataSource {
 //                            id: "recipient",
 //                            height: recipientCell.cellHeight
 //                    ),
+                    StaticRow(
+                            cell: poweredByCell,
+                            id: "powered_by",
+                            height: poweredByCell.cellHeight
+                    ),
                     StaticRow(
                             cell: allowanceCell,
                             id: "allowance",

@@ -142,7 +142,7 @@ extension SwapModuleNew.DexNew {
     enum Provider: String {
         case uniswap = "Uniswap"
         case oneInch = "1Inch"
-        case pancake = "Pancake"
+        case pancake = "PancakeSwap"
 
         var allowedBlockchains: [Blockchain] {
             switch self {
