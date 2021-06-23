@@ -6,22 +6,17 @@ class AppStatusManager {
     private let storage: IAppVersionStorage
     private let logRecordManager: ILogRecordManager
     private let accountManager: IAccountManager
-    private let walletManager: IWalletManager
-    private let ethereumKitManager: EvmKitManager
-    private let binanceSmartChainKitManager: EvmKitManager
-    private let binanceKitManager: BinanceKitManager
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let restoreSettingsManager: RestoreSettingsManager
 
     init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
-         walletManager: IWalletManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager,
-         binanceKitManager: BinanceKitManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
+         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.ethereumKitManager = ethereumKitManager
-        self.binanceSmartChainKitManager = binanceSmartChainKitManager
-        self.binanceKitManager = binanceKitManager
+        self.adapterManager = adapterManager
         self.logRecordManager = logRecordManager
         self.restoreSettingsManager = restoreSettingsManager
     }
@@ -62,22 +57,26 @@ class AppStatusManager {
         var binanceSmartChainStatus: [(String, Any)]?
         var binanceStatus: [(String, Any)]?
 
-        for activeWallet in walletManager.activeWallets {
-            switch activeWallet.wallet.coin.type {
+        for wallet in walletManager.activeWallets {
+            guard let adapter = adapterManager.adapter(for: wallet) else {
+                continue
+            }
+
+            switch wallet.coin.type {
             case .ethereum, .erc20:
                 if ethereumStatus == nil {
-                    ethereumStatus = activeWallet.statusInfo
+                    ethereumStatus = adapter.statusInfo
                 }
             case .binanceSmartChain, .bep20:
                 if binanceSmartChainStatus == nil {
-                    binanceSmartChainStatus = activeWallet.statusInfo
+                    binanceSmartChainStatus = adapter.statusInfo
                 }
             case .bep2:
                 if binanceStatus == nil {
-                    binanceStatus = activeWallet.statusInfo
+                    binanceStatus = adapter.statusInfo
                 }
             default:
-                status.append((activeWallet.wallet.coin.title, activeWallet.statusInfo))
+                status.append((wallet.coin.title, adapter.statusInfo))
             }
         }
 

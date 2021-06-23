@@ -4,7 +4,7 @@ import CoinKit
 class PriceAlertManager {
     private let disposeBag = DisposeBag()
 
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
     private let remoteAlertManager: IRemoteAlertManager
     private let rateManager: IRateManager
     private let storage: IPriceAlertStorage
@@ -13,7 +13,7 @@ class PriceAlertManager {
 
     private let updateSubject = PublishSubject<[PriceAlert]>()
 
-    init(walletManager: IWalletManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
+    init(walletManager: WalletManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
         self.walletManager = walletManager
         self.remoteAlertManager = remoteAlertManager
         self.rateManager = rateManager

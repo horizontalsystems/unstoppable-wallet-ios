@@ -21,6 +21,10 @@ class DateHelper {
         DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm").string(from: date)
     }
 
+    func formatLog(date: Date) -> String {
+        DateFormatter.cachedFormatter(format: "HH:mm:ss.SSS").string(from: date)
+    }
+
     func formatTimeOnly(from date: Date) -> String {
         timeOnly().string(from: date)
     }

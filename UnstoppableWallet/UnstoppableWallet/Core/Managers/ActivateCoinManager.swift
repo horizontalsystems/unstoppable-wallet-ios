@@ -2,10 +2,10 @@ import CoinKit
 
 class ActivateCoinManager {
     private let coinKit: CoinKit.Kit
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
     private let accountManager: IAccountManager
 
-    init(coinKit: CoinKit.Kit, walletManager: IWalletManager, accountManager: IAccountManager) {
+    init(coinKit: CoinKit.Kit, walletManager: WalletManager, accountManager: IAccountManager) {
         self.coinKit = coinKit
         self.walletManager = walletManager
         self.accountManager = accountManager
@@ -17,7 +17,7 @@ class ActivateCoinManager {
             return
         }
 
-        guard !walletManager.activeWallets.contains(where: { $0.wallet.coin == coin }) else {
+        guard !walletManager.activeWallets.contains(where: { $0.coin == coin }) else {
             // wallet already exists
             return
         }

@@ -14,15 +14,17 @@ class TransactionsInteractor {
 
     weak var delegate: ITransactionsInteractorDelegate?
 
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: IWalletManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: WalletManager, adapterManager: AdapterManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
+        self.adapterManager = adapterManager
         self.currencyKit = currencyKit
         self.rateManager = rateManager
         self.reachabilityManager = reachabilityManager
@@ -34,16 +36,16 @@ class TransactionsInteractor {
         var walletsData = [(Wallet, LastBlockInfo?)]()
         var states = [Coin: AdapterState]()
 
-        for activeWallet in walletManager.activeWallets {
-            if let adapter = activeWallet.transactionAdapter {
-                walletsData.append((activeWallet.wallet, adapter.lastBlockInfo))
-                states[activeWallet.wallet.coin] = adapter.transactionState
+        for wallet in walletManager.activeWallets {
+            if let adapter = adapterManager.transactionsAdapter(for: wallet) {
+                walletsData.append((wallet, adapter.lastBlockInfo))
+                states[wallet.coin] = adapter.transactionState
 
                 adapter.transactionRecordsObservable
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                         .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] records in
-                            self?.delegate?.didUpdate(records: records, wallet: activeWallet.wallet)
+                            self?.delegate?.didUpdate(records: records, wallet: wallet)
                         })
                         .disposed(by: transactionRecordsDisposeBag)
 
@@ -51,7 +53,7 @@ class TransactionsInteractor {
                         .subscribeOn(serialQueueScheduler)
                         .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] in
-                            self?.delegate?.didUpdate(state: adapter.transactionState, wallet: activeWallet.wallet)
+                            self?.delegate?.didUpdate(state: adapter.transactionState, wallet: wallet)
                         })
                         .disposed(by: statesDisposeBag)
             }
@@ -74,12 +76,12 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func initialFetch() {
         onUpdateCoinsData()
 
-//        adapterManager.adaptersReadyObservable
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext: { [weak self] in
-//                    self?.onUpdateCoinsData()
-//                })
-//                .disposed(by: disposeBag)
+        adapterManager.adaptersReadyObservable
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] _ in
+                    self?.onUpdateCoinsData()
+                })
+                .disposed(by: disposeBag)
 
         currencyKit.baseCurrencyUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -101,8 +103,8 @@ extension TransactionsInteractor: ITransactionsInteractor {
     func fetchLastBlockHeights() {
         lastBlockHeightsDisposeBag = DisposeBag()
 
-        for activeWallet in walletManager.activeWallets {
-            guard let adapter = activeWallet.transactionAdapter else {
+        for wallet in walletManager.activeWallets {
+            guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
                 continue
             }
 
@@ -112,7 +114,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { [weak self] in
                         if let lastBlockInfo = adapter.lastBlockInfo {
-                            self?.delegate?.onUpdate(lastBlockInfo: lastBlockInfo, wallet: activeWallet.wallet)
+                            self?.delegate?.onUpdate(lastBlockInfo: lastBlockInfo, wallet: wallet)
                         }
                     })
                     .disposed(by: lastBlockHeightsDisposeBag)
@@ -128,10 +130,10 @@ extension TransactionsInteractor: ITransactionsInteractor {
         var singles = [Single<(Wallet, [TransactionRecord])>]()
 
         for fetchData in fetchDataList {
-            let activeWallet = walletManager.activeWallets.first(where: { $0.wallet == fetchData.wallet })
+            let wallet = walletManager.activeWallets.first(where: { $0 == fetchData.wallet })
             let single: Single<(Wallet, [TransactionRecord])>
 
-            if let activeWallet = activeWallet, let adapter = activeWallet.transactionAdapter {
+            if let wallet = wallet, let adapter = adapterManager.transactionsAdapter(for: wallet) {
                 single = adapter.transactionsSingle(from: fetchData.from, limit: fetchData.limit)
                         .map { records -> (Wallet, [TransactionRecord]) in
                             (fetchData.wallet, records)
