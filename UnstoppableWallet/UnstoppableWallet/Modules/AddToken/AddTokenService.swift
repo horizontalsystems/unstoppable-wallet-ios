@@ -13,7 +13,7 @@ class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
     private let coinManager: ICoinManager
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
 
     private var disposeBag = DisposeBag()
 
@@ -24,7 +24,7 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: ICoinManager, walletManager: IWalletManager) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: ICoinManager, walletManager: WalletManager) {
         self.account = account
         self.blockchainServices = blockchainServices
         self.coinManager = coinManager

@@ -22,7 +22,13 @@ extension TransactionsRouter {
         let dataSource = TransactionRecordDataSource(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionViewItemDataSource(), metaDataSource: TransactionsMetadataDataSource(), factory: TransactionViewItemFactory())
 
         let router = TransactionsRouter()
-        let interactor = TransactionsInteractor(walletManager: App.shared.walletManager, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager, reachabilityManager: App.shared.reachabilityManager)
+        let interactor = TransactionsInteractor(
+                walletManager: App.shared.walletManager,
+                adapterManager: App.shared.adapterManager,
+                currencyKit: App.shared.currencyKit,
+                rateManager: App.shared.rateManager,
+                reachabilityManager: App.shared.reachabilityManager
+        )
         let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), dataSource: dataSource)
         let viewController = TransactionsViewController(delegate: presenter, differ: TransactionDiffer())
 

@@ -53,37 +53,6 @@ protocol IChartTypeStorage: AnyObject {
     var chartType: ChartType? { get set }
 }
 
-protocol IAdapterManager: AnyObject {
-    var adaptersReadyObservable: Observable<Void> { get }
-    func adapter(for wallet: Wallet) -> IAdapter?
-    func adapter(for coin: Coin) -> IAdapter?
-    func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter?
-    func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter?
-    func depositAdapter(for wallet: Wallet) -> IDepositAdapter?
-    func refresh()
-    func refreshAdapters(wallets: [Wallet])
-    func refresh(wallet: Wallet)
-}
-
-protocol IWalletManager: AnyObject {
-    var activeWallets: [ActiveWallet] { get }
-    var activeWalletsUpdatedObservable: Observable<[ActiveWallet]> { get }
-    func activeWallet(wallet: Wallet) -> ActiveWallet?
-    func activeWallet(coin: Coin) -> ActiveWallet?
-
-    func preloadWallets()
-
-    func wallets(account: Account) -> [Wallet]
-    func handle(newWallets: [Wallet], deletedWallets: [Wallet])
-
-    func save(wallets: [Wallet])
-    func delete(wallets: [Wallet])
-
-    func clearWallets()
-
-    func refreshWallets()
-}
-
 protocol IPriceAlertManager {
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
@@ -93,9 +62,11 @@ protocol IPriceAlertManager {
     func updateTopics() -> Observable<[()]>
 }
 
-protocol IAdapter: AnyObject {
+protocol IBaseAdapter {
     var isMainNet: Bool { get }
+}
 
+protocol IAdapter: AnyObject {
     func start()
     func stop()
     func refresh()
@@ -104,14 +75,14 @@ protocol IAdapter: AnyObject {
     var debugInfo: String { get }
 }
 
-protocol IBalanceAdapter {
+protocol IBalanceAdapter: IBaseAdapter {
     var balanceState: AdapterState { get }
     var balanceStateUpdatedObservable: Observable<AdapterState> { get }
     var balanceData: BalanceData { get }
     var balanceDataUpdatedObservable: Observable<BalanceData> { get }
 }
 
-protocol IDepositAdapter {
+protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: String { get }
 }
 

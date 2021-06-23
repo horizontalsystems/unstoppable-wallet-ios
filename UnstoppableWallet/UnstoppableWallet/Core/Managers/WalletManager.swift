@@ -4,17 +4,17 @@ import CoinKit
 
 class WalletManager {
     private let accountManager: IAccountManager
-    private let adapterProviderFactory: AdapterProviderFactory
+    private let adapterProviderFactory: AdapterFactory
     private let storage: IWalletStorage
     private let disposeBag = DisposeBag()
 
-    private let activeWalletsRelay = PublishRelay<[ActiveWallet]>()
+    private let activeWalletsRelay = PublishRelay<[Wallet]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
 
-    private var cachedActiveWallets = [ActiveWallet]()
+    private var cachedActiveWallets = [Wallet]()
 
-    init(accountManager: IAccountManager, adapterProviderFactory: AdapterProviderFactory, storage: IWalletStorage) {
+    init(accountManager: IAccountManager, adapterProviderFactory: AdapterFactory, storage: IWalletStorage) {
         self.accountManager = accountManager
         self.adapterProviderFactory = adapterProviderFactory
         self.storage = storage
@@ -36,19 +36,8 @@ class WalletManager {
         return storage.wallets(account: activeAccount)
     }
 
-    private func activeWallet(wallet: Wallet) -> ActiveWallet {
-        let adapterProvider = adapterProviderFactory.adapterProvider(wallet: wallet)
-        let activeWallet = ActiveWallet(wallet: wallet, adapterProvider: adapterProvider)
-        activeWallet.initAdapter()
-        return activeWallet
-    }
-
     private func _reloadWallets() {
-        let newActiveWallets = activeAccountWallets.map { wallet in
-            cachedActiveWallets.first { $0.wallet == wallet } ?? activeWallet(wallet: wallet)
-        }
-
-        cachedActiveWallets = newActiveWallets
+        cachedActiveWallets = activeAccountWallets
         activeWalletsRelay.accept(cachedActiveWallets)
     }
 
@@ -58,22 +47,14 @@ class WalletManager {
 
 }
 
-extension WalletManager: IWalletManager {
+extension WalletManager {
 
-    var activeWallets: [ActiveWallet] {
+    var activeWallets: [Wallet] {
         queue.sync { cachedActiveWallets }
     }
 
-    var activeWalletsUpdatedObservable: Observable<[ActiveWallet]> {
+    var activeWalletsUpdatedObservable: Observable<[Wallet]> {
         activeWalletsRelay.asObservable()
-    }
-
-    func activeWallet(wallet: Wallet) -> ActiveWallet? {
-        queue.sync { cachedActiveWallets.first { $0.wallet == wallet } }
-    }
-
-    func activeWallet(coin: Coin) -> ActiveWallet? {
-        queue.sync { cachedActiveWallets.first { $0.wallet.coin == coin } }
     }
 
     func preloadWallets() {
@@ -99,36 +80,6 @@ extension WalletManager: IWalletManager {
 
     func clearWallets() {
         storage.clearWallets()
-    }
-
-    func refreshWallets() {
-        queue.sync {
-            var ethereumKitUpdated = false
-            var binanceSmartChainKitUpdated = false
-            var binanceKitUpdated = false
-
-            for activeWallet in cachedActiveWallets {
-                switch activeWallet.wallet.coin.type {
-                case .ethereum, .erc20:
-                    if !ethereumKitUpdated {
-                        activeWallet.refresh()
-                        ethereumKitUpdated = true
-                    }
-                case .binanceSmartChain, .bep20:
-                    if !binanceSmartChainKitUpdated {
-                        activeWallet.refresh()
-                        binanceSmartChainKitUpdated = true
-                    }
-                case .bep2:
-                    if !binanceKitUpdated {
-                        activeWallet.refresh()
-                        binanceKitUpdated = true
-                    }
-                default:
-                    activeWallet.refresh()
-                }
-            }
-        }
     }
 
 }

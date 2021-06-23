@@ -5,7 +5,7 @@ import CoinKit
 class ManageWalletsService {
     private let account: Account
     private let coinManager: ICoinManager
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
     private let restoreSettingsService: RestoreSettingsService
     private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
@@ -26,7 +26,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(coinManager: ICoinManager, walletManager: IWalletManager, accountManager: IAccountManager, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init?(coinManager: ICoinManager, walletManager: WalletManager, accountManager: IAccountManager, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -38,7 +38,7 @@ class ManageWalletsService {
         self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
-            self?.handleUpdated(wallets: wallets.map { $0.wallet })
+            self?.handleUpdated(wallets: wallets)
         }
         subscribe(disposeBag, coinManager.coinsAddedObservable) { [weak self] coins in
             self?.handleAdded(coins: coins)
@@ -57,7 +57,7 @@ class ManageWalletsService {
         }
 
         syncCoins()
-        sync(wallets: walletManager.activeWallets.map { $0.wallet })
+        sync(wallets: walletManager.activeWallets)
         sortCoins()
         syncState()
     }

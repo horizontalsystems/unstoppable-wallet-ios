@@ -1,9 +1,9 @@
 class BalanceErrorInteractor {
-    private let walletManager: IWalletManager
+    private let adapterManager: AdapterManager
     private let appConfigProvider: IAppConfigProvider
 
-    init(walletManager: IWalletManager, appConfigProvider: IAppConfigProvider) {
-        self.walletManager = walletManager
+    init(adapterManager: AdapterManager, appConfigProvider: IAppConfigProvider) {
+        self.adapterManager = adapterManager
         self.appConfigProvider = appConfigProvider
     }
 
@@ -16,7 +16,7 @@ extension BalanceErrorInteractor: IBalanceErrorInteractor {
     }
 
     func refresh(wallet: Wallet) {
-        walletManager.activeWallet(wallet: wallet)?.refresh()
+        adapterManager.refresh(wallet: wallet)
     }
 
 }

@@ -22,7 +22,7 @@ extension SendRouter: ISendRouter {
 extension SendRouter {
 
     static func module(wallet: Wallet) -> UIViewController? {
-        guard let adapter = App.shared.walletManager.activeWallet(wallet: wallet)?.adapter else {
+        guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
         }
 

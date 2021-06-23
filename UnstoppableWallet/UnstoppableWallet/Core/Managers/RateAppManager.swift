@@ -6,7 +6,8 @@ class RateAppManager {
     private let countdownTimeInterval: TimeInterval = 10
     private let repeatedRequestTimeInterval: TimeInterval = 40 * 24 * 60 * 60 // 40 days
 
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let localStorage: ILocalStorage
 
     private var isCountdownAllowed = false
@@ -16,13 +17,20 @@ class RateAppManager {
 
     private var timer: Timer?
 
-    init(walletManager: IWalletManager, localStorage: ILocalStorage) {
+    init(walletManager: WalletManager, adapterManager: AdapterManager, localStorage: ILocalStorage) {
         self.walletManager = walletManager
+        self.adapterManager = adapterManager
         self.localStorage = localStorage
     }
 
     private func onCountdownPass() {
-        let hasBalance = walletManager.activeWallets.contains { $0.balanceData.balance > 0 }
+        let hasBalance = walletManager.activeWallets.contains { wallet in
+            guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
+                return false
+            }
+
+            return adapter.balanceData.balance > 0
+        }
 
         guard hasBalance else {
             return

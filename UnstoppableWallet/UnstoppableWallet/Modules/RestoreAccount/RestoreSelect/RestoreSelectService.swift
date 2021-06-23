@@ -6,7 +6,7 @@ class RestoreSelectService {
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: IAccountManager
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
     private let coinManager: ICoinManager
     private let enableCoinsService: EnableCoinsService
     private let restoreSettingsService: RestoreSettingsService
@@ -30,7 +30,7 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: IWalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager

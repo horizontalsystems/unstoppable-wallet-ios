@@ -6,7 +6,7 @@ class CreateAccountService {
     private let accountFactory: AccountFactory
     private let wordsManager: IWordsManager
     private let accountManager: IAccountManager
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
     private let passphraseValidator: PassphraseValidator
     private let coinKit: CoinKit.Kit
 
@@ -16,7 +16,7 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: IWalletManager, passphraseValidator: PassphraseValidator, coinKit: CoinKit.Kit) {
+    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, coinKit: CoinKit.Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager

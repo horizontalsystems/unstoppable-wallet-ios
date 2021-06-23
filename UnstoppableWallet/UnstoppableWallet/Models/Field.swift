@@ -6,7 +6,9 @@ class Field<T: Equatable> {
 
     var value: T {
         didSet {
-            relay.accept(value)
+            if value != oldValue {
+                relay.accept(value)
+            }
         }
     }
 
@@ -15,7 +17,7 @@ class Field<T: Equatable> {
     }
 
     var observable: Observable<T> {
-        relay.distinctUntilChanged()
+        relay.asObservable()
     }
 
 }

@@ -7,7 +7,8 @@ import XRatesKit
 class CoinSelectService {
     private let dex: SwapModuleNew.DexNew
     private let coinManager: ICoinManager
-    private let walletManager: IWalletManager
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let rateManager: IRateManager
     private let currencyKit: CurrencyKit.Kit
 
@@ -15,10 +16,11 @@ class CoinSelectService {
 
     private(set) var items = [Item]()
 
-    init(dex: SwapModuleNew.DexNew, coinManager: ICoinManager, walletManager: IWalletManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModuleNew.DexNew, coinManager: ICoinManager, walletManager: WalletManager, adapterManager: AdapterManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager
+        self.adapterManager = adapterManager
         self.rateManager = rateManager
         self.currencyKit = currencyKit
 
@@ -34,12 +36,16 @@ class CoinSelectService {
     }
 
     private func loadItems() {
-        var balanceCoins = walletManager.activeWallets.compactMap { activeWallet -> (coin: Coin, balance: Decimal)? in
-            guard dexSupports(coin: activeWallet.wallet.coin) else {
+        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
+            guard dexSupports(coin: wallet.coin) else {
                 return nil
             }
 
-            return (coin: activeWallet.wallet.coin, balance: activeWallet.balanceData.balance)
+            guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
+                return nil
+            }
+
+            return (coin: wallet.coin, balance: adapter.balanceData.balance)
         }
 
         balanceCoins.sort { lhsTuple, rhsTuple in

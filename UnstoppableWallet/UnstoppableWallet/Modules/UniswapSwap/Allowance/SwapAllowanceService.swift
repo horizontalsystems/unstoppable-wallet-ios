@@ -6,7 +6,7 @@ import CoinKit
 
 class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let walletManager: IWalletManager
+    private let adapterManager: AdapterManager
 
     private var coin: Coin?
 
@@ -22,9 +22,9 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, walletManager: IWalletManager, evmKit: EthereumKit.Kit) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, evmKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
-        self.walletManager = walletManager
+        self.adapterManager = adapterManager
 
         evmKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -37,7 +37,7 @@ class SwapAllowanceService {
     private func sync() {
         allowanceDisposeBag = DisposeBag()
 
-        guard let coin = coin, let adapter = walletManager.activeWallet(coin: coin)?.adapter as? IErc20Adapter else {
+        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
             state = nil
             return
         }

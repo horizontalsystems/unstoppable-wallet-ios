@@ -46,7 +46,7 @@ extension TransactionInfoRouter: ITransactionInfoRouter {
 extension TransactionInfoRouter {
 
     static func module(transaction: TransactionRecord, wallet: Wallet, sourceViewController: UIViewController?) -> UIViewController? {
-        guard let adapter = App.shared.walletManager.activeWallet(wallet: wallet)?.transactionAdapter else {
+        guard let adapter = App.shared.adapterManager.transactionsAdapter(for: wallet) else {
             return nil
         }
 

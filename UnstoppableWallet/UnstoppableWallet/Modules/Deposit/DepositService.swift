@@ -1,27 +1,30 @@
 import CoinKit
 
 class DepositService {
-    private let activeWallet: ActiveWallet
+    private let wallet: Wallet
+    private let adapter: IDepositAdapter
     let address: String
 
-    init(activeWallet: ActiveWallet, depositAdapter: IDepositAdapter) {
-        self.activeWallet = activeWallet
-        address = depositAdapter.receiveAddress
+    init(wallet: Wallet, adapter: IDepositAdapter) {
+        self.wallet = wallet
+        self.adapter = adapter
+
+        address = adapter.receiveAddress
     }
 }
 
 extension DepositService {
 
     var coin: Coin {
-        activeWallet.wallet.coin
+        wallet.coin
     }
 
     var isMainNet: Bool {
-        activeWallet.isMainNet
+        adapter.isMainNet
     }
 
     var mnemonicDerivation: MnemonicDerivation? {
-        activeWallet.wallet.configuredCoin.settings.derivation
+        wallet.configuredCoin.settings.derivation
     }
 
 }
