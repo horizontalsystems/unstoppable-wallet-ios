@@ -49,6 +49,10 @@ extension RateManager: IRateManager {
         kit.latestRate(coinType: coinType, currencyCode: currencyCode)
     }
 
+    func latestRateMap(coinTypes: [CoinType], currencyCode: String) -> [CoinType: LatestRate] {
+        kit.latestRateMap(coinTypes: coinTypes, currencyCode: currencyCode)
+    }
+
     func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate> {
         kit.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
     }

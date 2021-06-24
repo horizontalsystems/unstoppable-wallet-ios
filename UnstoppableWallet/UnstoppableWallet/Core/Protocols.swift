@@ -189,6 +189,7 @@ protocol IRateManager {
     func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]>
     func searchCoins(text: String) -> [CoinData]
     func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate?
+    func latestRateMap(coinTypes: [CoinType], currencyCode: String) -> [CoinType: LatestRate]
     func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate>
     func latestRatesObservable(coinTypes: [CoinType], currencyCode: String) -> Observable<[CoinType: LatestRate]>
     func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
