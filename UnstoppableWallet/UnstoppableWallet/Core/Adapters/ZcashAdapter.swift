@@ -4,6 +4,7 @@ import ZcashLightClientKit
 import RxSwift
 import HdWalletKit
 import HsToolKit
+import CoinKit
 
 class ZcashAdapter {
     private let disposeBag = DisposeBag()
@@ -11,6 +12,7 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     var fee: Decimal { defaultFee() }
 
+    private let coin: Coin
     private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
@@ -52,6 +54,7 @@ class ZcashAdapter {
 
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
+        coin = wallet.coin
         uniqueId = wallet.account.id
         let birthday: Int
         switch wallet.account.origin {
@@ -180,25 +183,44 @@ class ZcashAdapter {
         }
 
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
-        return TransactionRecord(
-                uid: transaction.transactionHash,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                interTransactionIndex: 0,
-                type: incoming ? .incoming : .outgoing,
-                blockHeight: transaction.minedHeight,
-                confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
-                amount: Decimal(transaction.value) / Self.coinRate,
-                fee: defaultFee(height: transaction.minedHeight),
-                date: Date(timeIntervalSince1970: transaction.timestamp),
-                failed: transaction.failed,
-                from: nil,
-                to: transaction.toAddress,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: showRawTransaction,
-                memo: transaction.memo
-        )
+
+        // TODO: Should have it's own transactions with memo
+        if incoming {
+            return BitcoinIncomingTransactionRecord(
+                    coin: coin,
+                    uid: transaction.transactionHash,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.minedHeight,
+                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: defaultFee(height: transaction.minedHeight),
+                    failed: transaction.failed,
+                    lockInfo: nil,
+                    conflictingHash: nil,
+                    showRawTransaction: showRawTransaction,
+                    amount: Decimal(transaction.value) / Self.coinRate,
+                    from: nil
+            )
+        } else {
+            return BitcoinOutgoingTransactionRecord(
+                    coin: coin,
+                    uid: transaction.transactionHash,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.minedHeight,
+                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: defaultFee(height: transaction.minedHeight),
+                    failed: transaction.failed,
+                    lockInfo: nil,
+                    conflictingHash: nil,
+                    showRawTransaction: showRawTransaction,
+                    amount: Decimal(transaction.value) / Self.coinRate,
+                    to: transaction.toAddress,
+                    sentToSelf: false
+            )
+        }
     }
 
     static private var cloudSpendParamsURL: URL? {

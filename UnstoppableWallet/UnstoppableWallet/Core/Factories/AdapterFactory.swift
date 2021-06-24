@@ -10,14 +10,16 @@ class AdapterFactory {
     private let binanceKitManager: BinanceKitManager
     private let initialSyncSettingsManager: InitialSyncSettingsManager
     private let restoreSettingsManager: RestoreSettingsManager
+    private let coinManager: ICoinManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: InitialSyncSettingsManager, restoreSettingsManager: RestoreSettingsManager) {
+    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: InitialSyncSettingsManager, restoreSettingsManager: RestoreSettingsManager, coinManager: ICoinManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.binanceSmartChainKitManager = binanceSmartChainKitManager
         self.binanceKitManager = binanceKitManager
         self.initialSyncSettingsManager = initialSyncSettingsManager
         self.restoreSettingsManager = restoreSettingsManager
+        self.coinManager = coinManager
     }
 
     private func syncMode(wallet: Wallet) -> SyncMode {
@@ -43,23 +45,23 @@ extension AdapterFactory {
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings, testMode: appConfigProvider.testMode)
         case .ethereum:
             if let evmKit = try? ethereumKitManager.evmKit(account: wallet.account) {
-                return EvmAdapter(evmKit: evmKit)
+                return EvmAdapter(evmKit: evmKit, coinManager: coinManager)
             }
         case let .erc20(address):
             if let evmKit = try? ethereumKitManager.evmKit(account: wallet.account) {
-                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal)
+                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal, coinManager: coinManager)
             }
         case .binanceSmartChain:
             if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
-                return EvmAdapter(evmKit: evmKit)
+                return EvmAdapter(evmKit: evmKit, coinManager: coinManager)
             }
         case let .bep20(address):
             if let evmKit = try? binanceSmartChainKitManager.evmKit(account: wallet.account) {
-                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal)
+                return try? Evm20Adapter(evmKit: evmKit, contractAddress: address, decimal: wallet.coin.decimal, coinManager: coinManager)
             }
         case let .bep2(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
-                return BinanceAdapter(binanceKit: binanceKit, symbol: symbol)
+                return BinanceAdapter(binanceKit: binanceKit, symbol: symbol, coin: wallet.coin)
             }
         case .unsupported:
             ()

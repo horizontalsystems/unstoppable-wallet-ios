@@ -17,7 +17,7 @@ class DashAdapter: BitcoinBaseAdapter {
 
         dashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: dashKit)
+        super.init(abstractKit: dashKit, coin: wallet.coin)
 
         dashKit.delegate = self
     }

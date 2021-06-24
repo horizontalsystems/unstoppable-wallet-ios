@@ -1,33 +1,36 @@
 import Foundation
+import CoinKit
 
-struct TransactionRecord {
+class TransactionRecord {
     let uid: String
     let transactionHash: String
     let transactionIndex: Int
-    let interTransactionIndex: Int
-    let type: TransactionType
     let blockHeight: Int?
     let confirmationsThreshold: Int?
-    let amount: Decimal
     let fee: Decimal?
     let date: Date
     let failed: Bool
-    let from: String?
-    let to: String?
-    let lockInfo: TransactionLockInfo?
-    let conflictingHash: String?
-    let showRawTransaction: Bool
-    let memo: String?
+
+    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool) {
+        self.uid = uid
+        self.transactionHash = transactionHash
+        self.transactionIndex = transactionIndex
+        self.blockHeight = blockHeight
+        self.confirmationsThreshold = confirmationsThreshold
+        self.date = date
+        self.fee = fee
+        self.failed = failed
+    }
 
     func status(lastBlockHeight: Int?) -> TransactionStatus {
         if failed {
             return .failed
         } else if let blockHeight = blockHeight, let lastBlockHeight = lastBlockHeight {
-            let threshold = self.confirmationsThreshold ?? 1
+            let threshold = confirmationsThreshold ?? 1
             let confirmations = lastBlockHeight - blockHeight + 1
 
             if confirmations >= threshold {
-                return.completed
+                return .completed
             } else {
                 return .processing(progress: Double(confirmations) / Double(threshold))
             }
@@ -36,18 +39,20 @@ struct TransactionRecord {
         return .pending
     }
 
-    func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
-        guard let lockInfo = lockInfo else {
-            return nil
-        }
+    open var mainAmount: Decimal? {
+        nil
+    }
 
-        var locked = true
+    open var mainCoin: Coin? {
+        nil
+    }
 
-        if let lastBlockTimestamp = lastBlockTimestamp {
-            locked = Double(lastBlockTimestamp) < lockInfo.lockedUntil.timeIntervalSince1970
-        }
+    open func changedBy(oldBlockInfo: LastBlockInfo?, newBlockInfo: LastBlockInfo?) -> Bool {
+        status(lastBlockHeight: oldBlockInfo?.height) != status(lastBlockHeight: newBlockInfo?.height)
+    }
 
-        return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
+    open func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
+        fatalError("Must be implemented by subclass")
     }
 
 }
@@ -63,29 +68,11 @@ extension TransactionRecord: Comparable {
             return lhs.transactionIndex < rhs.transactionIndex
         }
 
-        guard lhs.interTransactionIndex == rhs.interTransactionIndex else {
-            return lhs.interTransactionIndex < rhs.interTransactionIndex
-        }
-
-        guard lhs.type == rhs.type else {
-            return lhs.type < rhs.type
-        }
-
         return lhs.uid < rhs.uid
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
         lhs.uid == rhs.uid
-    }
-
-}
-
-enum TransactionType: Int, Equatable { case incoming, outgoing, sentToSelf, approve }
-
-extension TransactionType: Comparable {
-
-    public static func <(lhs: TransactionType, rhs: TransactionType) -> Bool {
-        lhs.rawValue >= rhs.rawValue
     }
 
 }
@@ -106,19 +93,6 @@ extension TransactionStatus: Equatable {
         case (.completed, .completed): return true
         default: return false
         }
-    }
-
-}
-
-struct TransactionLockState {
-    let locked: Bool
-    let date: Date
-}
-
-extension TransactionLockState: Equatable {
-
-    public static func ==(lhs: TransactionLockState, rhs: TransactionLockState) -> Bool {
-        lhs.locked == rhs.locked && lhs.date == rhs.date
     }
 
 }

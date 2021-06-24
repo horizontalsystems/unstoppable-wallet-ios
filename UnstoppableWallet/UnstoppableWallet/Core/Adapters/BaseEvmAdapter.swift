@@ -5,13 +5,16 @@ import HsToolKit
 
 class BaseEvmAdapter {
     static let confirmationsThreshold = 12
+
     let evmKit: EthereumKit.Kit
-
     let decimal: Int
+    let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, decimal: Int) {
+    init(evmKit: EthereumKit.Kit, decimal: Int, coinManager: ICoinManager) {
         self.evmKit = evmKit
         self.decimal = decimal
+
+        transactionConverter = EvmTransactionConverter(coinManager: coinManager, evmKit: evmKit)
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {

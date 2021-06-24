@@ -32,20 +32,10 @@ class TransactionRecordDataSource {
         return true
     }
 
-    var allRecordsData: [Wallet: [TransactionRecord]] {
-        var recordsData = [Wallet: [TransactionRecord]]()
-
-        for pool in poolRepo.allPools {
-            recordsData[pool.wallet] = pool.records
-        }
-
-        return recordsData
-    }
-
     private func createViewItem(for wallet: Wallet, record: TransactionRecord) -> TransactionViewItem {
         let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
-        let rate = metaDataSource.rate(coin: wallet.coin, date: record.date)
-        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, rate: rate)
+        let rate = record.mainCoin.flatMap { metaDataSource.rate(coin: $0, date: record.date) }
+        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, mainCoinRate: rate)
     }
 
     var fetchDataList: [FetchData] {
@@ -136,10 +126,7 @@ class TransactionRecordDataSource {
         metaDataSource.clearRates()
 
         for (index, item) in itemsDataSource.items.enumerated() {
-            let rate = metaDataSource.rate(coin: item.wallet.coin, date: item.record.date)
-            itemsDataSource.items[index].currencyValue = rate.map {
-                CurrencyValue(currency: $0.currency, value: $0.value * item.record.amount)
-            }
+            itemsDataSource.items[index].mainAmountCurrencyValue = nil
         }
     }
 
@@ -158,7 +145,7 @@ class TransactionRecordDataSource {
                 continue
             }
 
-            if item.becomesUnlocked(oldTimestamp: oldLastBlockInfo?.timestamp, newTimestamp: lastBlockInfo.timestamp) || item.isPending {
+            if item.record.changedBy(oldBlockInfo: oldLastBlockInfo, newBlockInfo: lastBlockInfo) {
                 itemsDataSource.items[index] = createViewItem(for: item.wallet, record: item.record)
                 itemsChanged = true
             }
@@ -173,8 +160,8 @@ class TransactionRecordDataSource {
         var itemsChanged = false
 
         for (index, item) in itemsDataSource.items.enumerated() {
-            if item.wallet.coin == coin && item.record.date == date {
-                itemsDataSource.items[index].currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * item.record.amount)
+            if let mainCoin = item.record.mainCoin, let mainAmount = item.record.mainAmount, mainCoin == coin && item.date == date {
+                itemsDataSource.items[index].mainAmountCurrencyValue = CurrencyValue(currency: rate.currency, value: rate.value * mainAmount)
                 itemsChanged = true
             }
         }

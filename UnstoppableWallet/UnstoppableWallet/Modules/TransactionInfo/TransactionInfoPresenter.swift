@@ -82,16 +82,19 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
         let lastBlockInfo = interactor.lastBlockInfo
 
         let status = transaction.status(lastBlockHeight: lastBlockInfo?.height)
-        let lockState = transaction.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
+        let lockState: TransactionLockState? = nil // transaction.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
+        let transactionType = transaction.type(lastBlockInfo: lastBlockInfo)
 
         let rate = rateCurrencyValue?.nonZero
 
         let primaryAmountInfo: AmountInfo
         var secondaryAmountInfo: AmountInfo?
 
-        let coinValue = CoinValue(coin: coin, value: transaction.amount)
+        let amount = transaction.mainAmount ?? 0
+        let coinValue = CoinValue(coin: coin, value: amount)
+
         if let rate = rate {
-            primaryAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * transaction.amount))
+            primaryAmountInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * amount))
             secondaryAmountInfo = .coinValue(coinValue: coinValue)
         } else {
             primaryAmountInfo = .coinValue(coinValue: coinValue)
@@ -101,13 +104,17 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
                 date: transaction.date,
                 primaryAmountInfo: primaryAmountInfo,
                 secondaryAmountInfo: secondaryAmountInfo,
-                type: transaction.type,
+                type: transactionType,
                 lockState: lockState
         )
 
         var viewItems = [TransactionInfoModule.ViewItem]()
+        var incoming = false
+        if case .incoming = transactionType {
+            incoming = true
+        }
 
-        viewItems.append(.status(status: status, incoming: transaction.type == .incoming))
+        viewItems.append(.status(status: status, incoming: incoming))
 
         if let rate = rate {
             viewItems.append(.rate(currencyValue: rate, coinCode: coin.code))
@@ -122,39 +129,39 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
             ))
         }
 
-        if let from = transaction.from, showFromAddress(for: coin.type) {
-            viewItems.append(.from(value: from))
-        }
+//        if let from = transaction.from, showFromAddress(for: coin.type) {
+//            viewItems.append(.from(value: from))
+//        }
 
-        if let to = transaction.to {
-            viewItems.append(.to(value: to))
-        }
+//        if let to = transaction.to {
+//            viewItems.append(.to(value: to))
+//        }
 
-        if transaction.type == .outgoing, let recipient = transaction.lockInfo?.originalAddress {
-            viewItems.append(.recipient(value: recipient))
-        }
+//        if case .outgoing = transactionType, let recipient = transaction.lockInfo?.originalAddress {
+//            viewItems.append(.recipient(value: recipient))
+//        }
 
-        if transaction.showRawTransaction {
-            viewItems.append(.rawTransaction)
-        } else {
+//        if transaction.showRawTransaction {
+//            viewItems.append(.rawTransaction)
+//        } else {
             viewItems.append(.id(value: transaction.transactionHash))
-        }
+//        }
 
-        if let memo = transaction.memo, !memo.isEmpty {
-            viewItems.append(.memo(text: memo))
-        }
+//        if let memo = transaction.memo, !memo.isEmpty {
+//            viewItems.append(.memo(text: memo))
+//        }
 
-        if transaction.conflictingHash != nil {
-            viewItems.append(.doubleSpend)
-        }
+//        if transaction.conflictingHash != nil {
+//            viewItems.append(.doubleSpend)
+//        }
 
-        if let lockState = lockState {
-            viewItems.append(.lockInfo(lockState: lockState))
-        }
+//        if let lockState = lockState {
+//            viewItems.append(.lockInfo(lockState: lockState))
+//        }
 
-        if transaction.type == .sentToSelf {
-            viewItems.append(.sentToSelf)
-        }
+//        if transactionType == .sentToSelf {
+//            viewItems.append(.sentToSelf)
+//        }
 
         view?.set(viewItems: viewItems)
 
@@ -162,30 +169,30 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
     }
 
     func onTapFrom() {
-        guard let value = transaction.from else {
-            return
-        }
-
-        interactor.copy(value: value)
-        view?.showCopied()
+//        guard let value = transaction.from else {
+//            return
+//        }
+//
+//        interactor.copy(value: value)
+//        view?.showCopied()
     }
 
     func onTapTo() {
-        guard let value = transaction.to else {
-            return
-        }
-
-        interactor.copy(value: value)
-        view?.showCopied()
+//        guard let value = transaction.to else {
+//            return
+//        }
+//
+//        interactor.copy(value: value)
+//        view?.showCopied()
     }
 
     func onTapRecipient() {
-        guard let value = transaction.lockInfo?.originalAddress else {
-            return
-        }
-
-        interactor.copy(value: value)
-        view?.showCopied()
+//        guard let value = transaction.lockInfo?.originalAddress else {
+//            return
+//        }
+//
+//        interactor.copy(value: value)
+//        view?.showCopied()
     }
 
     func onTapTransactionId() {
@@ -218,11 +225,11 @@ extension TransactionInfoPresenter: ITransactionInfoViewDelegate {
     }
 
     func onTapDoubleSpendInfo() {
-        guard let conflictingHash = transaction.conflictingHash else {
-            return
-        }
-
-        router.showDoubleSpendInfo(txHash: transaction.transactionHash, conflictingTxHash: conflictingHash)
+//        guard let conflictingHash = transaction.conflictingHash else {
+//            return
+//        }
+//
+//        router.showDoubleSpendInfo(txHash: transaction.transactionHash, conflictingTxHash: conflictingHash)
     }
 
 }

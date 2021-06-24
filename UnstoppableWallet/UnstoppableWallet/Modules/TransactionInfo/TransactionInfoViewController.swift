@@ -375,10 +375,10 @@ extension TransactionInfoViewController: ITransactionInfoView {
         case .incoming:
             iconImage = UIImage(named: "arrow_medium_3_down_left_24")
             iconTintColor = .themeRemus
-        case .outgoing, .sentToSelf:
+        case .outgoing:
             iconImage = UIImage(named: "arrow_medium_3_up_right_24")
             iconTintColor = .themeJacob
-        case .approve:
+        case .approve, .swap, .contractCall, .contractCreation:
             iconImage = UIImage(named: "arrow_swap_approval_2_24")
             iconTintColor = .themeLeah
         }

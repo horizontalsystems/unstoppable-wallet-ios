@@ -12,18 +12,20 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
     }
 
-    func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo? = nil, rate: CurrencyValue? = nil) -> TransactionViewItem {
-        TransactionViewItem(
+    func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo? = nil, mainCoinRate: CurrencyValue? = nil) -> TransactionViewItem {
+        var currencyValue: CurrencyValue? = nil
+
+        if let coin = record.mainCoin, let amount = record.mainAmount {
+            currencyValue = mainCoinRate.map { CurrencyValue(currency: $0.currency, value: $0.value * amount) }
+        }
+
+        return TransactionViewItem(
                 wallet: wallet,
                 record: record,
-                transactionHash: record.transactionHash,
-                coinValue: CoinValue(coin: wallet.coin, value: record.amount),
-                currencyValue: rate.map { CurrencyValue(currency: $0.currency, value: $0.value * record.amount) },
-                type: record.type,
+                type: record.type(lastBlockInfo: lastBlockInfo),
                 date: record.date,
                 status: record.status(lastBlockHeight: lastBlockInfo?.height),
-                lockState: record.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp),
-                conflictingTxHash: record.conflictingHash
+                mainAmountCurrencyValue: currencyValue
         )
     }
 
