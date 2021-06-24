@@ -92,6 +92,7 @@ class WalletService {
 
     private func _sync(wallets: [Wallet]) {
         let cacheContainer = accountManager.activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
+        let rateItemMap = rateService.itemMap(coinTypes: wallets.map { $0.coin.type })
 
         let items: [Item] = wallets.map { wallet in
             let item = Item(
@@ -101,7 +102,7 @@ class WalletService {
                     state: adapterService.state(wallet: wallet)  ?? fallbackAdapterState
             )
 
-            item.rateItem = rateService.item(coinType: wallet.coin.type)
+            item.rateItem = rateItemMap[wallet.coin.type]
 
             return item
         }
@@ -232,8 +233,10 @@ extension WalletService: IWalletRateServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
+            let rateItemMap = self.rateService.itemMap(coinTypes: self.items.map { $0.wallet.coin.type })
+
             for item in self.items {
-                item.rateItem = self.rateService.item(coinType: item.wallet.coin.type)
+                item.rateItem = rateItemMap[item.wallet.coin.type]
             }
 
             self.items = self.sorter.sort(items: self.items, sort: self.sortType)

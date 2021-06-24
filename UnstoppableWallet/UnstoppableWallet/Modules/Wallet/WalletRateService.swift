@@ -17,11 +17,14 @@ class WalletRateService {
     private let disposeBag = DisposeBag()
     private var latestRatesDisposeBag = DisposeBag()
 
+    private(set) var currency: Currency
     private var coinTypes = [CoinType]()
 
     init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
+
+        currency = currencyKit.baseCurrency
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
             self?.onUpdate(baseCurrency: baseCurrency)
@@ -29,6 +32,7 @@ class WalletRateService {
     }
 
     private func onUpdate(baseCurrency: Currency) {
+        currency = baseCurrency
         subscribeToLatestRates()
         delegate?.didUpdateBaseCurrency()
     }
@@ -60,21 +64,13 @@ class WalletRateService {
 
 extension WalletRateService {
 
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
     func set(coinTypes: [CoinType]) {
         self.coinTypes = coinTypes
         subscribeToLatestRates()
     }
 
-    func item(coinType: CoinType) -> Item? {
-        guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currency.code) else {
-            return nil
-        }
-
-        return item(latestRate: latestRate)
+    func itemMap(coinTypes: [CoinType]) -> [CoinType: Item] {
+        rateManager.latestRateMap(coinTypes: coinTypes, currencyCode: currency.code).mapValues { item(latestRate: $0) }
     }
 
     func refresh() {
