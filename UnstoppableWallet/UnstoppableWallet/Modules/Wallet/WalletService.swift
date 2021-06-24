@@ -147,7 +147,7 @@ class WalletService {
     }
 
     private var fallbackIsMainNet: Bool {
-        false
+        true
     }
 
     private var fallbackBalanceData: BalanceData {

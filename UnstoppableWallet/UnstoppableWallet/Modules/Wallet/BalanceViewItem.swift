@@ -58,7 +58,8 @@ struct BalanceButtonsViewItem {
 extension BalanceTopViewItem: Equatable {
 
     static func ==(lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
-        lhs.iconCoinType == rhs.iconCoinType &&
+        lhs.isMainNet == rhs.isMainNet &&
+                lhs.iconCoinType == rhs.iconCoinType &&
                 lhs.coinCode == rhs.coinCode &&
                 lhs.blockchainBadge == rhs.blockchainBadge &&
                 lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
