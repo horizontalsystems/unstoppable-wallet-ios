@@ -520,3 +520,9 @@ protocol IAccountSettingRecordStorage {
     func save(accountSetting: AccountSettingRecord)
     func deleteAllAccountSettings(accountId: String)
 }
+
+protocol IEnabledWalletCacheStorage {
+    func enabledWalletCaches(accountId: String) -> [EnabledWalletCache]
+    func save(enabledWalletCaches: [EnabledWalletCache])
+    func deleteEnabledWalletCaches(accountId: String)
+}

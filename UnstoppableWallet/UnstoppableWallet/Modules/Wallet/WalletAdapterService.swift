@@ -52,16 +52,16 @@ class WalletAdapterService {
 
 extension WalletAdapterService {
 
-    func isMainNet(wallet: Wallet) -> Bool {
-        queue.sync { adapterMap[wallet]?.isMainNet ?? false }
+    func isMainNet(wallet: Wallet) -> Bool? {
+        queue.sync { adapterMap[wallet]?.isMainNet }
     }
 
-    func balanceData(wallet: Wallet) -> BalanceData {
-        queue.sync { adapterMap[wallet]?.balanceData ?? BalanceData(balance: 0) }
+    func balanceData(wallet: Wallet) -> BalanceData? {
+        queue.sync { adapterMap[wallet]?.balanceData }
     }
 
-    func state(wallet: Wallet) -> AdapterState {
-        queue.sync { adapterMap[wallet]?.balanceState ?? AdapterState.syncing(progress: 10, lastBlockDate: nil) }
+    func state(wallet: Wallet) -> AdapterState? {
+        queue.sync { adapterMap[wallet]?.balanceState }
     }
 
     func refresh() {
