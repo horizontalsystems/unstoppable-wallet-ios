@@ -6,6 +6,7 @@ import CurrencyKit
 class WalletService {
     private let adapterService: WalletAdapterService
     private let rateService: WalletRateService
+    private let cacheManager: EnabledWalletCacheManager
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
     private let localStorage: ILocalStorage
@@ -39,9 +40,10 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, rateService: WalletRateService, accountManager: IAccountManager, walletManager: WalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: IFeeCoinProvider) {
+    init(adapterService: WalletAdapterService, rateService: WalletRateService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: IFeeCoinProvider) {
         self.adapterService = adapterService
         self.rateService = rateService
+        self.cacheManager = cacheManager
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.localStorage = localStorage
@@ -89,12 +91,14 @@ class WalletService {
     }
 
     private func _sync(wallets: [Wallet]) {
+        let cacheContainer = accountManager.activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
+
         let items: [Item] = wallets.map { wallet in
             let item = Item(
                     wallet: wallet,
-                    isMainNet: adapterService.isMainNet(wallet: wallet),
-                    balanceData: adapterService.balanceData(wallet: wallet),
-                    state: adapterService.state(wallet: wallet)
+                    isMainNet: adapterService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+                    balanceData: adapterService.balanceData(wallet: wallet) ?? cacheContainer?.balanceData(wallet: wallet) ?? fallbackBalanceData,
+                    state: adapterService.state(wallet: wallet)  ?? fallbackAdapterState
             )
 
             item.rateItem = rateService.item(coinType: wallet.coin.type)
@@ -141,20 +145,40 @@ class WalletService {
         items.first { $0.wallet == wallet }
     }
 
+    private var fallbackIsMainNet: Bool {
+        false
+    }
+
+    private var fallbackBalanceData: BalanceData {
+        BalanceData(balance: 0)
+    }
+
+    private var fallbackAdapterState: AdapterState {
+        .syncing(progress: 50, lastBlockDate: nil)
+    }
+
 }
 
 extension WalletService: IWalletAdapterServiceDelegate {
 
     func didPrepareAdapters() {
         queue.async {
+            var balanceDataMap = [Wallet: BalanceData]()
+
             for item in self.items {
-                item.isMainNet = self.adapterService.isMainNet(wallet: item.wallet)
-                item.balanceData = self.adapterService.balanceData(wallet: item.wallet)
-                item.state = self.adapterService.state(wallet: item.wallet)
+                let balanceData = self.adapterService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
+
+                item.isMainNet = self.adapterService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
+                item.balanceData = balanceData
+                item.state = self.adapterService.state(wallet: item.wallet) ?? self.fallbackAdapterState
+
+                balanceDataMap[item.wallet] = balanceData
             }
 
             self.items = self.sorter.sort(items: self.items, sort: self.sortType)
             self.syncTotalItem()
+
+            self.cacheManager.set(balanceDataMap: balanceDataMap)
         }
     }
 
@@ -180,6 +204,8 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
             self.itemUpdatedRelay.accept(item)
             self.syncTotalItem()
+
+            self.cacheManager.set(balanceData: balanceData, wallet: wallet)
         }
     }
 

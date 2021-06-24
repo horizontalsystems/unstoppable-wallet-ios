@@ -15,6 +15,7 @@ struct WalletModule {
         let service = WalletService(
                 adapterService: adapterService,
                 rateService: rateService,
+                cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
                 sortTypeManager: App.shared.sortTypeManager,

@@ -591,6 +591,18 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createEnabledWalletCaches") { db in
+            try db.create(table: EnabledWalletCache.databaseTableName) { t in
+                t.column(EnabledWalletCache.Columns.coinId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletCache.Columns.coinId.name, EnabledWalletCache.Columns.coinSettingsId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -926,6 +938,31 @@ extension GrdbStorage: IAccountSettingRecordStorage {
     func deleteAllAccountSettings(accountId: String) {
         _ = try! dbPool.write { db in
             try AccountSettingRecord.filter(AccountSettingRecord.Columns.accountId == accountId).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IEnabledWalletCacheStorage {
+
+    func enabledWalletCaches(accountId: String) -> [EnabledWalletCache] {
+        try! dbPool.read { db in
+            try EnabledWalletCache.filter(EnabledWalletCache.Columns.accountId == accountId).fetchAll(db)
+        }
+
+    }
+
+    func save(enabledWalletCaches: [EnabledWalletCache]) {
+        _ = try! dbPool.write { db in
+            for cache in enabledWalletCaches {
+                try cache.insert(db)
+            }
+        }
+    }
+
+    func deleteEnabledWalletCaches(accountId: String) {
+        _ = try! dbPool.write { db in
+            try EnabledWalletCache.filter(EnabledWalletCache.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

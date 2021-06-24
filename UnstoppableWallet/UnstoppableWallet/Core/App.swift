@@ -16,7 +16,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -35,6 +35,8 @@ class App {
 
     let walletManager: WalletManager
     let adapterManager: AdapterManager
+
+    let enabledWalletCacheManager: EnabledWalletCacheManager
 
     let currencyKit: CurrencyKit.Kit
 
@@ -162,6 +164,8 @@ class App {
                 binanceSmartChainKitManager: binanceSmartChainKitManager,
                 initialSyncSettingsManager: initialSyncSettingsManager
         )
+
+        enabledWalletCacheManager = EnabledWalletCacheManager(storage: storage, accountManager: accountManager)
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
