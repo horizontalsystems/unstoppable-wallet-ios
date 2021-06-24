@@ -24,6 +24,8 @@ class AddTokenViewController: ThemeViewController {
     private let addButtonHolder = BottomGradientHolder()
     private let addButton = ThemeButton()
 
+    private var isLoaded = false
+
     init(viewModel: AddTokenViewModel, pageTitle: String, referenceTitle: String) {
         self.viewModel = viewModel
         self.pageTitle = pageTitle
@@ -114,6 +116,8 @@ class AddTokenViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+
+        isLoaded = true
     }
 
     @objc private func onTapAddButton() {
@@ -125,6 +129,10 @@ class AddTokenViewController: ThemeViewController {
     }
 
     private func reloadTable() {
+        guard isLoaded else {
+            return
+        }
+
         UIView.animate(withDuration: 0.2) {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()

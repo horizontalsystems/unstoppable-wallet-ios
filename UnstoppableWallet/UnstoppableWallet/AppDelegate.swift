@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = ThemeWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
-        window?.backgroundColor = .themeTyler
         window?.rootViewController = LaunchRouter.module()
 
         return true
