@@ -145,7 +145,7 @@ class App {
         initialSyncSettingsManager = InitialSyncSettingsManager(coinKit: coinKit, storage: settingsStorage)
 
         let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
-        let adapterProviderFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, restoreSettingsManager: restoreSettingsManager)
+        let adapterProviderFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, restoreSettingsManager: restoreSettingsManager, coinManager: coinManager)
 
         walletManager = WalletManager(accountManager: accountManager, adapterProviderFactory: adapterProviderFactory, storage: walletStorage)
 
@@ -155,7 +155,8 @@ class App {
                 binanceSmartChainKitManager: binanceSmartChainKitManager,
                 binanceKitManager: binanceKitManager,
                 initialSyncSettingsManager: initialSyncSettingsManager,
-                restoreSettingsManager: restoreSettingsManager
+                restoreSettingsManager: restoreSettingsManager,
+                coinManager: coinManager
         )
         adapterManager = AdapterManager(
                 adapterFactory: adapterFactory,

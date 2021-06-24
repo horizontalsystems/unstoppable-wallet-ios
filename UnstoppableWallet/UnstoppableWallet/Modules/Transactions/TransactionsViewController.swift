@@ -4,6 +4,8 @@ import ActionSheet
 import DeepDiff
 import ThemeKit
 import HUD
+import ComponentKit
+import CurrencyKit
 
 class TransactionsViewController: ThemeViewController {
     let delegate: ITransactionsViewDelegate
@@ -13,7 +15,7 @@ class TransactionsViewController: ThemeViewController {
 
     let tableView = UITableView(frame: .zero, style: .plain)
 
-    private let cellName = String(describing: TransactionCell.self)
+    private let cellName = String(describing: G14Cell.self)
 
     private let emptyLabel = UILabel()
     private let filterHeaderView = FilterHeaderView()
@@ -55,7 +57,7 @@ class TransactionsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
 
-        tableView.registerCell(forClass: TransactionCell.self)
+        tableView.registerCell(forClass: G14Cell.self)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 
@@ -80,16 +82,124 @@ class TransactionsViewController: ThemeViewController {
         delegate.viewDidLoad()
     }
 
+    private func format(currencyValue: CurrencyValue?) -> String? {
+        currencyValue.flatMap {
+            ValueFormatter.instance.format(currencyValue: $0, fractionPolicy: .threshold(high: 1000, low: 0.01))
+        }
+    }
+
+    private func format(coinValue: CoinValue?) -> String? {
+        coinValue.flatMap {
+            ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0))
+        }
+    }
+
+    private func bind(item: TransactionViewItem, cell: G14Cell) {
+        delegate.willShow(item: item)
+
+        let image: UIImage?
+        let topText: String
+        let bottomText: String?
+        var primaryValueText: String? = nil
+        var primaryValueTextColor: UIColor = .themeYellowD
+        var secondaryValueText: String? = nil
+        var secondaryValueTextColor: UIColor = .themeGreenD
+
+        switch item.type {
+        case .incoming(let from, let coinValue, _, _):
+            image = UIImage(named: "arrow_medium_main_down_left_20")
+            topText = item.status == .completed ? "transactions.received".localized : "transactions.receiving".localized
+            bottomText = from.flatMap { "transactions.from".localized($0) } ?? "---"
+
+            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
+                primaryValueText = currencyValueString
+                primaryValueTextColor = .themeGreenD
+            }
+
+            if let coinValueString = format(coinValue: coinValue) {
+                secondaryValueText = coinValueString
+                secondaryValueTextColor = .themeGray
+            }
+
+        case .outgoing(let to, let coinValue, _, _, _):
+            image = UIImage(named: "arrow_medium_main_up_right_20")
+            topText = item.status == .completed ? "transactions.sent".localized : "transactions.sending".localized
+            bottomText = to.flatMap { "transactions.to".localized($0) } ?? "---"
+
+            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
+                primaryValueText = currencyValueString
+                primaryValueTextColor = .themeYellowD
+            }
+
+            if let coinValueString = format(coinValue: coinValue) {
+                secondaryValueText = coinValueString
+                secondaryValueTextColor = .themeGray
+            }
+
+        case .approve(let spender, let coinValue):
+            image = UIImage(named: "check_2_20")
+            topText = item.status == .completed ? "transactions.approved".localized : "transactions.approving".localized
+            bottomText = "transactions.from".localized(spender)
+
+            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
+                primaryValueText = currencyValueString
+                primaryValueTextColor = .themeLeah
+            }
+
+            if let coinValueString = format(coinValue: coinValue) {
+                secondaryValueText = coinValueString
+                secondaryValueTextColor = .themeGray
+            }
+
+        case .swap(let exchangeAddress, let inCoinValue, let outCoinValue):
+            image = UIImage(named: "swap_2_20")
+            topText = item.status == .completed ? "transactions.swapped".localized : "transactions.swapping".localized
+            bottomText = exchangeAddress
+
+            if let coinValueString = format(coinValue: inCoinValue) {
+                primaryValueText = coinValueString
+                primaryValueTextColor = .themeYellowD
+            }
+
+            if let coinValueString = format(coinValue: outCoinValue) {
+                secondaryValueText = coinValueString
+                secondaryValueTextColor = .themeGreenD
+            }
+
+        case .contractCall(let contractAddress, let method):
+            image = UIImage(named: "unordered_20")
+            topText = method?.uppercased() ?? "transactions.contract_call".localized
+            bottomText = contractAddress
+
+        case .contractCreation:
+            image = UIImage(named: "unordered_20")
+            topText = "transactions.contract_call".localized
+            bottomText = "---"
+        }
+
+        cell.leftImage = image
+        cell.leftImageTintColor = .themeGray
+        cell.topText = topText
+        cell.bottomText = bottomText
+
+        cell.primaryValueText = primaryValueText
+        cell.primaryValueTextColor = primaryValueTextColor
+        cell.secondaryValueText = secondaryValueText
+        cell.secondaryValueTextColor = secondaryValueTextColor
+
+        cell.leftBadgeText = nil
+        cell.secondaryTitleText = nil
+    }
+
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
         guard let items = items, items.count > indexPath.row else {
             return
         }
 
         let item = items[indexPath.row]
-        if let cell = cell as? TransactionCell {
-            delegate.willShow(item: item)
+        if let cell = cell as? G14Cell {
             cell.set(backgroundStyle: .claude, isFirst: indexPath.row != 0, isLast: true)
-            cell.bind(item: item)
+            bind(item: item, cell: cell)
         }
 
         if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
@@ -194,7 +304,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        72
+        .heightDoubleLineCell
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

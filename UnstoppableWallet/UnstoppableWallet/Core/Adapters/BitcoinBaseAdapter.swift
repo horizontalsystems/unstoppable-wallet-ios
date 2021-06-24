@@ -2,6 +2,7 @@ import BitcoinCore
 import Hodler
 import RxSwift
 import HsToolKit
+import CoinKit
 
 class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
@@ -22,8 +23,11 @@ class BitcoinBaseAdapter {
     }
     private(set) var transactionState: AdapterState
 
-    init(abstractKit: AbstractKit) {
+    let coin: Coin
+
+    init(abstractKit: AbstractKit, coin: Coin) {
         self.abstractKit = abstractKit
+        self.coin = coin
 
         balanceState = .notSynced(error: AppError.unknownError)
         transactionState = balanceState
@@ -37,7 +41,6 @@ class BitcoinBaseAdapter {
         var allInputsMine = true
 
         var lockInfo: TransactionLockInfo?
-        var type: TransactionType
         var anyNotMineFromAddress: String?
         var anyNotMineToAddress: String?
 
@@ -90,33 +93,60 @@ class BitcoinBaseAdapter {
         }
 
         if amount > 0 {
-            type = .incoming
+            return BitcoinIncomingTransactionRecord(
+                    coin: coin,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(abs(amount)) / coinRate,
+                    from: anyNotMineFromAddress
+            )
         } else if amount < 0 {
-            type = .outgoing
+            return BitcoinOutgoingTransactionRecord(
+                    coin: coin,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(abs(amount)) / coinRate,
+                    to: anyNotMineToAddress,
+                    sentToSelf: false
+            )
         } else {
             amount = myOutputsTotalValue - myChangeOutputsTotalValue
-            type = .sentToSelf
+            return BitcoinOutgoingTransactionRecord(
+                    coin: coin,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(abs(amount)) / coinRate,
+                    to: anyNotMineToAddress,
+                    sentToSelf: true
+            )
         }
-
-        return TransactionRecord(
-                uid: transaction.uid,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                interTransactionIndex: 0,
-                type: type,
-                blockHeight: transaction.blockHeight,
-                confirmationsThreshold: Self.confirmationsThreshold,
-                amount: Decimal(abs(amount)) / coinRate,
-                fee: transaction.fee.map { Decimal($0) / coinRate },
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                failed: transaction.status == .invalid,
-                from: type == .incoming ? anyNotMineFromAddress : nil,
-                to: type == .outgoing ? anyNotMineToAddress : nil,
-                lockInfo: lockInfo,
-                conflictingHash: transaction.conflictingHash,
-                showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-                memo: nil
-        )
     }
 
     private func convertToSatoshi(value: Decimal) -> Int {

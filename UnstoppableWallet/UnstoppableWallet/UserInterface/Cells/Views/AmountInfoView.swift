@@ -68,16 +68,16 @@ class AmountInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .outgoing, lockState: TransactionLockState? = nil) {
-        let primaryColor: UIColor
-        switch type {
-        case .incoming:
-            primaryColor = .themeGreenD
-        case .outgoing, .sentToSelf:
-            primaryColor = .themeYellowD
-        case .approve:
-            primaryColor = .themeLeah
-        }
+    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .contractCreation, lockState: TransactionLockState? = nil) {
+        let primaryColor: UIColor = .themeGreenD
+//        switch type {
+//        case .incoming:
+//            primaryColor = .themeGreenD
+//        case .outgoing:
+//            primaryColor = .themeYellowD
+//        case .approve:
+//            primaryColor = .themeLeah
+//        }
 
         primaryAmountLabel.textColor = primaryColor
 
@@ -117,21 +117,21 @@ class AmountInfoView: UIView {
             }
         }
 
-        if type == .sentToSelf {
-            sentToSelfImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin4)
-                maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.centerY.equalTo(primaryAmountLabel)
-                maker.size.equalTo(20)
-            }
-        } else {
+//        if type == .sentToSelf {
+//            sentToSelfImageView.snp.remakeConstraints { maker in
+//                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin4)
+//                maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+//                maker.centerY.equalTo(primaryAmountLabel)
+//                maker.size.equalTo(20)
+//            }
+//        } else {
             sentToSelfImageView.snp.remakeConstraints { maker in
                 maker.leading.equalTo(lockImageView.snp.trailing)
                 maker.trailing.equalToSuperview().inset(CGFloat.margin16)
                 maker.centerY.equalTo(primaryAmountLabel)
                 maker.size.equalTo(0)
             }
-        }
+//        }
     }
 
 }
