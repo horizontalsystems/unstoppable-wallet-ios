@@ -474,9 +474,21 @@
 "transactions.filter_all" = "全部";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
-"transactions.receiving" = "正在接收";
 "transactions.failed" = "失败";
+
+"transactions.receiving" = "正在接收";
 "transactions.sending" = "正在发送";
+"transactions.approving" = "Approving";
+"transactions.swapping" = "Swapping";
+"transactions.contract_call" = "Contract Call";
+
+"transactions.received" = "Received";
+"transactions.sent" = "Sent";
+"transactions.approved" = "Approved";
+"transactions.swapped" = "Swapped";
+
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
 // Transaction Info
 
