@@ -474,9 +474,21 @@
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
-"transactions.receiving" = "Recibiendo";
 "transactions.failed" = "Falla";
+
+"transactions.receiving" = "Recibiendo";
 "transactions.sending" = "Enviando";
+"transactions.approving" = "Approving";
+"transactions.swapping" = "Swapping";
+"transactions.contract_call" = "Contract Call";
+
+"transactions.received" = "Received";
+"transactions.sent" = "Sent";
+"transactions.approved" = "Approved";
+"transactions.swapped" = "Swapped";
+
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
 // Transaction Info
 
