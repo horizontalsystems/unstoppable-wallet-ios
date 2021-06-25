@@ -474,9 +474,21 @@
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
-"transactions.receiving" = "Empfangen";
 "transactions.failed" = "Fehlgeschlagen";
+
+"transactions.receiving" = "Empfangen";
 "transactions.sending" = "Senden";
+"transactions.approving" = "Approving";
+"transactions.swapping" = "Swapping";
+"transactions.contract_call" = "Contract Call";
+
+"transactions.received" = "Received";
+"transactions.sent" = "Sent";
+"transactions.approved" = "Approved";
+"transactions.swapped" = "Swapped";
+
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
 // Transaction Info
 
