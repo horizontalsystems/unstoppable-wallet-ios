@@ -474,9 +474,21 @@
 "transactions.filter_all" = "모든";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
-"transactions.receiving" = "수신 중";
 "transactions.failed" = "실패";
+
+"transactions.receiving" = "수신 중";
 "transactions.sending" = "전송중";
+"transactions.approving" = "Approving";
+"transactions.swapping" = "Swapping";
+"transactions.contract_call" = "Contract Call";
+
+"transactions.received" = "Received";
+"transactions.sent" = "Sent";
+"transactions.approved" = "Approved";
+"transactions.swapped" = "Swapped";
+
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
 // Transaction Info
 
