@@ -474,9 +474,21 @@
 "transactions.filter_all" = "Tout";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
-"transactions.receiving" = "En réception";
 "transactions.failed" = "Échec";
+
+"transactions.receiving" = "En réception";
 "transactions.sending" = "Envoi en cours";
+"transactions.approving" = "Approving";
+"transactions.swapping" = "Swapping";
+"transactions.contract_call" = "Contract Call";
+
+"transactions.received" = "Received";
+"transactions.sent" = "Sent";
+"transactions.approved" = "Approved";
+"transactions.swapped" = "Swapped";
+
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
 // Transaction Info
 
