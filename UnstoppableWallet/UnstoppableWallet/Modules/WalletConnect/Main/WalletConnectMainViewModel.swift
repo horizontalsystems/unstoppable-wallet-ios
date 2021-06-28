@@ -68,18 +68,22 @@ class WalletConnectMainViewModel {
 //        signedTransactionsVisibleRelay.accept(state == .ready)
 
         peerMetaRelay.accept(service.remotePeerMeta.map { viewItem(peerMeta: $0) })
-        hintRelay.accept(hint(state: state))
+        hintRelay.accept(hint(state: state, connection: connectionState))
         statusRelay.accept(status(connectionState: connectionState))
     }
 
-    private func hint(state: WalletConnectService.State) -> String? {
+    private func hint(state: WalletConnectService.State, connection: WalletConnectInteractor.State) -> String? {
         switch state {
         case .invalid(let error):
             return error.smartDescription
         case .waitingForApproveSession:
             return "wallet_connect.connect_description".localized
         case .ready:
-            return "wallet_connect.usage_description".localized
+            if connection == .connected {
+                return "wallet_connect.usage_description".localized
+            } else {
+                return "wallet_connect.no_connection".localized
+            }
         default:
             return nil
         }
