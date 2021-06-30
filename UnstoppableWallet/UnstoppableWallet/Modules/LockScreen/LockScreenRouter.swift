@@ -19,7 +19,7 @@ extension LockScreenRouter {
         let unlockController = pinKit.unlockPinModule(delegate: presenter, biometryUnlockMode: .auto, insets: insets, cancellable: false, autoDismiss: !appStart)
 
         let viewController = LockScreenController(unlockViewController: unlockController)
-        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .fullScreen
 
         return viewController
     }
