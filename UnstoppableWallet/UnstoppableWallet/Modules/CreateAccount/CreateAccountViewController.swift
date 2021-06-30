@@ -123,7 +123,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
     }
 
     private func finish() {
-        HudHelper.instance.showSuccess()
+        HudHelper.instance.showSuccess(title: "create_wallet.success".localized)
         dismiss(animated: true)
     }
 

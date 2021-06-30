@@ -23,6 +23,7 @@
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
 "alert.unknown_error" = "Unknown Error";
+"alert.success_action" = "Done";
 
 "action.loading" = "loading...";
 "placeholder.search" = "Search";
@@ -744,6 +745,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.success" = "Created";
 
 // Select Coins
 
@@ -794,6 +796,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.contract_not_found" = "Contract not found";
 "add_token.symbol_not_found" = "Symbol not found";
+"add_token.success_add" = "Added";
 
 "change_24hour_up" = "%@ price: up %@%% %@";
 "change_24hour_down" = "%@ price: down %@%% %@";
