@@ -29,20 +29,10 @@ class ManageAccountsViewModel {
         ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,
-                subtitle: description(accountType: item.account.type),
+                subtitle: item.account.type.description,
                 selected: item.isActive,
                 alert: !item.account.backedUp
         )
-    }
-
-    private func description(accountType: AccountType) -> String {
-        switch accountType {
-        case .mnemonic(let words, let salt):
-            let count = "\(words.count)"
-            return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
-        default:
-            return ""
-        }
     }
 
 }

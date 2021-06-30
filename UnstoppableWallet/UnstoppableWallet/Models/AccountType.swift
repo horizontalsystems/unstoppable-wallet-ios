@@ -12,6 +12,16 @@ enum AccountType {
         }
     }
 
+    var description: String {
+        switch self {
+        case .mnemonic(let words, let salt):
+            let count = "\(words.count)"
+            return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
+        default:
+            return ""
+        }
+    }
+
 }
 
 extension AccountType: Hashable {

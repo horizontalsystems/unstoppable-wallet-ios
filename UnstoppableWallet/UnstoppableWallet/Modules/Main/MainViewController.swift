@@ -17,6 +17,8 @@ class MainViewController: ThemeTabBarController {
 
     private var showAlerts = [(() -> ())]()
 
+    private var lastTimeStamp: TimeInterval = 0
+
     init(viewModel: MainViewModel, selectedIndex: Int) {
         self.viewModel = viewModel
 
@@ -49,6 +51,26 @@ class MainViewController: ThemeTabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showNextAlert()
+    }
+
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        guard let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] else {
+            return
+        }
+
+        let currentTimestamp = Date().timeIntervalSince1970
+
+        if currentTimestamp - lastTimeStamp < 0.3 {
+            handleDoubleClick(index: selectedIndex)
+        } else {
+            lastTimeStamp = currentTimestamp
+        }
+    }
+
+    private func handleDoubleClick(index: Int) {
+        if let viewControllers = viewControllers, viewControllers.count > index, let navigationController = viewControllers[index] as? UINavigationController, navigationController.topViewController is WalletViewController {
+            present(SwitchAccountModule.viewController(), animated: true)
+        }
     }
 
     private func sync(balanceTabState: MainViewModel.BalanceTabState) {
