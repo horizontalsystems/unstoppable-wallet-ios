@@ -14,7 +14,7 @@ extension PinKitDelegate: IPinKitDelegate {
             controller = presentedController
         }
 
-        controller?.present(LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: false), animated: true)
+        controller?.present(LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: false), animated: false)
     }
 
 }

@@ -14,12 +14,15 @@ class WalletAdapterService {
     private let disposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
 
-    private var adapterMap = [Wallet: IBalanceAdapter]()
+    private var adapterMap: [Wallet: IBalanceAdapter]
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-adapter-service", qos: .userInitiated)
 
     init(adapterManager: AdapterManager) {
         self.adapterManager = adapterManager
+
+        adapterMap = adapterManager.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
+        subscribeToAdapters()
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] in
             self?.handleAdaptersReady(adapterMap: $0)

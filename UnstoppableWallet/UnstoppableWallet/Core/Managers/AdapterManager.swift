@@ -14,7 +14,7 @@ class AdapterManager {
     private let adaptersReadyRelay = PublishRelay<[Wallet: IAdapter]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
-    private var adapterMap = [Wallet: IAdapter]()
+    private var _adapterMap = [Wallet: IAdapter]()
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, initialSyncSettingsManager: InitialSyncSettingsManager) {
         self.adapterFactory = adapterFactory
@@ -36,7 +36,7 @@ class AdapterManager {
     }
 
     private func initAdapters(wallets: [Wallet]) {
-        var newAdapterMap = queue.sync { adapterMap }
+        var newAdapterMap = queue.sync { _adapterMap }
 
         for wallet in wallets {
             guard newAdapterMap[wallet] == nil else {
@@ -60,7 +60,7 @@ class AdapterManager {
         }
 
         queue.async {
-            self.adapterMap = newAdapterMap
+            self._adapterMap = newAdapterMap
             self.adaptersReadyRelay.accept(newAdapterMap)
         }
 
@@ -70,7 +70,7 @@ class AdapterManager {
     }
 
     private func handleUpdatedEthereumKit() {
-        let wallets = queue.sync { adapterMap.keys }
+        let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
             switch $0.coin.type {
@@ -81,7 +81,7 @@ class AdapterManager {
     }
 
     private func handleUpdatedBinanceSmartChainKit() {
-        let wallets = queue.sync { adapterMap.keys }
+        let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
             switch $0.coin.type {
@@ -92,7 +92,7 @@ class AdapterManager {
     }
 
     private func handleUpdated(setting: InitialSyncSetting) {
-        let wallets = queue.sync { adapterMap.keys }
+        let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
             setting.coinType == $0.coin.type && $0.account.origin == .restored
@@ -106,8 +106,8 @@ class AdapterManager {
 
         queue.sync {
             wallets.forEach {
-                adapterMap[$0]?.stop()
-                adapterMap[$0] = nil
+                _adapterMap[$0]?.stop()
+                _adapterMap[$0] = nil
             }
         }
 
@@ -118,12 +118,16 @@ class AdapterManager {
 
 extension AdapterManager {
 
+    var adapterMap: [Wallet: IAdapter] {
+        queue.sync { _adapterMap }
+    }
+
     var adaptersReadyObservable: Observable<[Wallet: IAdapter]> {
         adaptersReadyRelay.asObservable()
     }
 
     func adapter(for wallet: Wallet) -> IAdapter? {
-        queue.sync { adapterMap[wallet] }
+        queue.sync { _adapterMap[wallet] }
     }
 
     func adapter(for coin: Coin) -> IAdapter? {
@@ -132,20 +136,20 @@ extension AdapterManager {
                 return nil
             }
 
-            return adapterMap[wallet]
+            return _adapterMap[wallet]
         }
     }
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
-        queue.sync { adapterMap[wallet] as? IBalanceAdapter }
+        queue.sync { _adapterMap[wallet] as? IBalanceAdapter }
     }
 
     func transactionsAdapter(for wallet: Wallet) -> ITransactionsAdapter? {
-        queue.sync { adapterMap[wallet] as? ITransactionsAdapter }
+        queue.sync { _adapterMap[wallet] as? ITransactionsAdapter }
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
-        queue.sync { adapterMap[wallet] as? IDepositAdapter }
+        queue.sync { _adapterMap[wallet] as? IDepositAdapter }
     }
 
     func refresh() {
@@ -154,7 +158,7 @@ extension AdapterManager {
             var binanceSmartChainKitUpdated = false
             var binanceKitUpdated = false
 
-            for (wallet, adapter) in self.adapterMap {
+            for (wallet, adapter) in self._adapterMap {
                 switch wallet.coin.type {
                 case .ethereum, .erc20:
                     if !ethereumKitUpdated {
@@ -180,7 +184,7 @@ extension AdapterManager {
 
     func refresh(wallet: Wallet) {
         queue.async {
-            self.adapterMap[wallet]?.refresh()
+            self._adapterMap[wallet]?.refresh()
         }
     }
 
