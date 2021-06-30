@@ -50,7 +50,7 @@ class BalanceLockedAmountView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        coinValueLabel.font = .caption
+        coinValueLabel.font = .subhead2
 
         wrapperView.addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
@@ -59,7 +59,7 @@ class BalanceLockedAmountView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        currencyValueLabel.font = .caption
+        currencyValueLabel.font = .subhead2
         currencyValueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
