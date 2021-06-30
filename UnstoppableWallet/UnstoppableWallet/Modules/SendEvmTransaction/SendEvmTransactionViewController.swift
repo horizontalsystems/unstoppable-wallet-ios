@@ -89,7 +89,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     func handleSendSuccess(transactionHash: Data) {
-        HudHelper.instance.showSuccess()
+        HudHelper.instance.showSuccess("alert.success_action".localized)
 
         dismiss(animated: true)
     }

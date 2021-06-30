@@ -169,7 +169,7 @@ extension SendViewController: ISendView {
 
     func dismissWithSuccess() {
         navigationController?.dismiss(animated: true)
-        HudHelper.instance.showSuccess()
+        HudHelper.instance.showSuccess(title: "alert.success_action".localized)
     }
 
 }
