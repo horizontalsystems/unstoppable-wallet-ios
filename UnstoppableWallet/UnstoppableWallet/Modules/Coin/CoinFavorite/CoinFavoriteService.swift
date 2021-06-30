@@ -10,7 +10,9 @@ class CoinFavoriteService {
     private let favoriteRelay = PublishRelay<Bool>()
     private(set) var isFavorite: Bool = false {
         didSet {
-            favoriteRelay.accept(isFavorite)
+            if oldValue != isFavorite {
+                favoriteRelay.accept(isFavorite)
+            }
         }
     }
 

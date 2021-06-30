@@ -143,6 +143,7 @@ class CoinPageViewController: ThemeViewController {
         // barItems section
         subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
         subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
+        subscribe(disposeBag, favoriteViewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
 
         // page section
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
@@ -234,6 +235,10 @@ extension CoinPageViewController {
         favoriteButtonItem?.tintColor = color
 
         syncBarButtons()
+    }
+
+    private func showHud(title: String) {
+        HudHelper.instance.showSuccess(title: title)
     }
 
     // Page section

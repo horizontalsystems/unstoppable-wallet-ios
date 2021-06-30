@@ -95,5 +95,7 @@
 	</array>
 	<key>UniswapGraphUrl</key>
 	<string>$(uniswap_graph_url)</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>We need to discover blockchain nodes</string>
 </dict>
 </plist>
