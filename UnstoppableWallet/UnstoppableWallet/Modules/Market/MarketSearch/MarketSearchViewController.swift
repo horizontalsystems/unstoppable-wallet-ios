@@ -93,7 +93,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
     private func onSelect(viewItem: MarketSearchViewModel.ViewItem) {
         let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, coinType: viewItem.coinType))
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func sync(viewItems: [MarketSearchViewModel.ViewItem], showAdvancedSearch: Bool) {
