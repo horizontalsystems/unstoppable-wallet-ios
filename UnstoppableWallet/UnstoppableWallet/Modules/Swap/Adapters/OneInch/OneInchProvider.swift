@@ -58,7 +58,7 @@ extension OneInchProvider {
         }
     }
 
-    func swapSingle(coinFrom: Coin, coinTo: Coin, amount: Decimal) -> Single<OneInchKit.Swap> {
+    func swapSingle(coinFrom: Coin, coinTo: Coin, amount: Decimal, recipient: EthereumKit.Address?, slippage: Decimal, gasPrice: Int?) -> Single<OneInchKit.Swap> {
         guard let amountUnits = units(amount: amount, coin: coinFrom) else {
             return Single.error(SwapError.insufficientAmount)
         }
@@ -70,10 +70,10 @@ extension OneInchProvider {
             return swapKit.swapSingle(fromToken: addressFrom,
                     toToken: addressTo,
                     amount: amountUnits,
-                    slippage: 0,
+                    slippage: slippage,
                     protocols: nil,
-                    recipient: nil,
-                    gasPrice: nil,
+                    recipient: recipient,
+                    gasPrice: gasPrice,
                     burnChi: nil,
                     complexityLevel: nil,
                     connectorTokens: nil,

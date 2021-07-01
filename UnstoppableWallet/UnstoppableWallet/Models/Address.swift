@@ -1,4 +1,4 @@
-struct Address {
+struct Address: Equatable {
     let raw: String
     let domain: String?
 
@@ -9,6 +9,11 @@ struct Address {
 
     var title: String {
         domain ?? raw
+    }
+
+    static func ==(lhs: Address, rhs: Address) -> Bool {
+        lhs.raw == rhs.raw &&
+        lhs.domain == rhs.domain
     }
 
 }

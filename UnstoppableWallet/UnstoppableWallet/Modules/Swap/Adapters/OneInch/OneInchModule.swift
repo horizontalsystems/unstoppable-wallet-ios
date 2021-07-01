@@ -13,20 +13,20 @@ class OneInchModule {
         }
 
         let swapKit = OneInchKit.Kit.instance(evmKit: evmKit)
-        let oneInchRepository = OneInchProvider(swapKit: swapKit)
+        let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
         tradeService = OneInchTradeService(
-                oneInchProvider: oneInchRepository,
+                oneInchProvider: oneInchProvider,
                 state: dataSourceState,
                 evmKit: evmKit
         )
         allowanceService = SwapAllowanceService(
-                spenderAddress: oneInchRepository.routerAddress,
+                spenderAddress: oneInchProvider.routerAddress,
                 adapterManager: App.shared.adapterManager,
                 evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
-                spenderAddress: oneInchRepository.routerAddress,
+                spenderAddress: oneInchProvider.routerAddress,
                 adapterManager: App.shared.adapterManager,
                 allowanceService: allowanceService
         )

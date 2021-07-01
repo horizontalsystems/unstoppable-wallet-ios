@@ -106,13 +106,13 @@ class OneInchService {
         var allErrors = [Error]()
         var loading = false
 
-        var transactionData: Int = 0
+        var parameters: OneInchSwapParameters?
 
         switch tradeService.state {
         case .loading:
             loading = true
-        case .ready:
-            transactionData = 1
+        case .ready(let tradeParameters):
+            parameters = tradeParameters
         case .notReady(let errors):
             allErrors.append(contentsOf: errors)
         }
@@ -146,8 +146,8 @@ class OneInchService {
 
         if loading {
             state = .loading
-        } else if transactionData != 0, allErrors.isEmpty {
-            state = .ready(transactionData: 1)
+        } else if let parameters = parameters, allErrors.isEmpty {
+            state = .ready(parameters: parameters)
         } else {
             state = .notReady
         }
@@ -191,13 +191,13 @@ extension OneInchService {
 
     enum State: Equatable {
         case loading
-        case ready(transactionData: Int)
+        case ready(parameters: OneInchSwapParameters)
         case notReady
 
         static func ==(lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading): return true
-            case (.ready(let lhsTransactionData), .ready(let rhsTransactionData)): return lhsTransactionData == rhsTransactionData
+            case (.ready(let lhsParams), .ready(let rhsParams)): return lhsParams == rhsParams
             case (.notReady, .notReady): return true
             default: return false
             }

@@ -6,6 +6,21 @@ import BigInt
 import CoinKit
 import UniswapKit
 
+protocol ISendEvmTransactionService {
+    var state: SendEvmTransactionService.State { get }
+    var stateObservable: Observable<SendEvmTransactionService.State> { get }
+
+    var dataState: DataStatus<SendEvmTransactionService.DataState> { get }
+    var dataStateObservable: Observable<DataStatus<SendEvmTransactionService.DataState>> { get }
+
+    var sendState: SendEvmTransactionService.SendState { get }
+    var sendStateObservable: Observable<SendEvmTransactionService.SendState> { get }
+
+    var ownAddress: EthereumKit.Address { get }
+
+    func send()
+}
+
 class SendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
@@ -21,8 +36,8 @@ class SendEvmTransactionService {
         }
     }
 
-    private let dataStateRelay = PublishRelay<DataState>()
-    private(set) var dataState: DataState {
+    private let dataStateRelay = PublishRelay<DataStatus<DataState>>()
+    private(set) var dataState: DataStatus<DataState> {
         didSet {
             dataStateRelay.accept(dataState)
         }
@@ -41,7 +56,13 @@ class SendEvmTransactionService {
         self.transactionService = transactionService
         self.activateCoinManager = activateCoinManager
 
-        dataState = DataState(transactionData: sendData.transactionData, additionalInfo: sendData.additionalInfo, decoration: evmKit.decorate(transactionData: sendData.transactionData))
+        dataState = .completed(
+                DataState(
+                        transactionData: sendData.transactionData,
+                        additionalInfo: sendData.additionalInfo,
+                        decoration: evmKit.decorate(transactionData: sendData.transactionData)
+                )
+        )
 
         subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
 
@@ -76,15 +97,17 @@ class SendEvmTransactionService {
     private func syncDataState(transaction: EvmTransactionService.Transaction? = nil) {
         let transactionData = transaction?.data ?? sendData.transactionData
 
-        dataState = DataState(
-                transactionData: transactionData,
-                additionalInfo: sendData.additionalInfo,
-                decoration: evmKit.decorate(transactionData: transactionData)
+        dataState = .completed(
+                DataState(
+                        transactionData: transactionData,
+                        additionalInfo: sendData.additionalInfo,
+                        decoration: evmKit.decorate(transactionData: transactionData)
+                )
         )
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.decoration as? SwapMethodDecoration {
+        if let decoration = dataState.data?.decoration as? SwapMethodDecoration {
             activateSwapCoinOut(tokenOut: decoration.tokenOut)
         }
     }
@@ -110,13 +133,13 @@ class SendEvmTransactionService {
 
 }
 
-extension SendEvmTransactionService {
+extension SendEvmTransactionService: ISendEvmTransactionService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    var dataStateObservable: Observable<DataState> {
+    var dataStateObservable: Observable<DataStatus<DataState>> {
         dataStateRelay.asObservable()
     }
 
@@ -160,7 +183,7 @@ extension SendEvmTransactionService {
     }
 
     struct DataState {
-        let transactionData: TransactionData
+        let transactionData: TransactionData?
         let additionalInfo: SendEvmData.AdditionInfo?
         var decoration: ContractMethodDecoration?
     }
@@ -173,6 +196,7 @@ extension SendEvmTransactionService {
     }
 
     enum TransactionError: Error {
+        case noTransactionData
         case insufficientBalance(requiredBalance: BigUInt)
     }
 

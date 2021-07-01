@@ -22,7 +22,7 @@ class OneInchViewModel {
     private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
-    private var openConfirmRelay = PublishRelay<SendEvmData>()
+    private var openConfirmRelay = PublishRelay<OneInchSwapParameters>()
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
@@ -178,7 +178,7 @@ extension OneInchViewModel {
         openApproveRelay.asSignal()
     }
 
-    var openConfirmSignal: Signal<SendEvmData> {
+    var openConfirmSignal: Signal<OneInchSwapParameters> {
         openConfirmRelay.asSignal()
     }
 
@@ -203,7 +203,7 @@ extension OneInchViewModel {
     }
 
     func onTapProceed() {
-        guard case .ready(let transactionData) = service.state else {
+        guard case .ready(let parameters) = service.state else {
             return
         }
 
@@ -221,7 +221,7 @@ extension OneInchViewModel {
 //                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
 //        )
 
-//        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalInfo: .swap(info: swapInfo)))
+        openConfirmRelay.accept(parameters)
     }
 
 }

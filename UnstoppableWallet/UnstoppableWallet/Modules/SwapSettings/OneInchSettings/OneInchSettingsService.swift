@@ -4,7 +4,7 @@ import RxCocoa
 import RxSwift
 
 class OneInchSettingsService {
-    private static let defaultSlippage: Decimal = 1
+    static let defaultSlippage: Decimal = 1
     var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...3 }
     private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...20 }
 

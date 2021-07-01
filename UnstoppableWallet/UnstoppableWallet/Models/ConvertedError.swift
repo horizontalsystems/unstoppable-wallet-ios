@@ -5,6 +5,7 @@ import EthereumKit
 import HdWalletKit
 import Hodler
 import HsToolKit
+import OneInchKit
 
 // use convertedError to convert user relevant errors from kits to show them localized in UI
 // localize converted error via AppError
@@ -123,6 +124,16 @@ extension EthereumKit.JsonRpcResponse.ResponseError: ConvertibleError {
 
             return self
         default: return self
+        }
+    }
+
+}
+
+extension OneInchKit.Kit.SwapError: ConvertibleError {
+
+    var convertedError: Error {
+        switch self {
+        case .cannotEstimate: return AppError.oneInch(reason: .insufficientBalanceWithFee)
         }
     }
 
