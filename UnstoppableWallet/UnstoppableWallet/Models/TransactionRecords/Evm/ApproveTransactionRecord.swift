@@ -3,28 +3,22 @@ import EthereumKit
 import CoinKit
 
 class ApproveTransactionRecord: EvmTransactionRecord {
-    let amount: Decimal
     let spender: String
-    let token: Coin
+    let value: CoinValue
 
-    init(fullTransaction: FullTransaction, amount: Decimal, spender: String, token: Coin) {
-        self.amount = amount
+    init(fullTransaction: FullTransaction, baseCoin: Coin, amount: Decimal, spender: String, token: Coin) {
         self.spender = spender
-        self.token = token
+        value = CoinValue(coin: token, value: amount)
 
-        super.init(fullTransaction: fullTransaction)
+        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
-    override var mainAmount: Decimal? {
-        amount
-    }
-
-    override var mainCoin: Coin? {
-        token
+    override var mainValue: CoinValue? {
+        value
     }
 
     override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        .approve(spender: spender, coinValue: CoinValue(coin: token, value: amount))
+        .approve(spender: spender, coinValue: value)
     }
 
 }

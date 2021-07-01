@@ -42,6 +42,10 @@ extension CoinManager: ICoinManager {
         coinKit.coin(type: type)
     }
 
+    func coinOrStub(type: CoinType) -> Coin {
+        coin(type: type) ?? Coin(title: "", code: "", decimal: 18, type: type)
+    }
+
     func save(coins: [Coin]) {
         coinKit.save(coins: coins)
         coinsAddedRelay.accept(coins)

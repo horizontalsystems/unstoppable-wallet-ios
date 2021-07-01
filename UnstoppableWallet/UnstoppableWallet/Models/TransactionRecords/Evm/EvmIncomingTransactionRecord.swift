@@ -3,29 +3,22 @@ import EthereumKit
 import CoinKit
 
 class EvmIncomingTransactionRecord: EvmTransactionRecord {
-    let amount: Decimal
     let from: String
-    let token: Coin
+    let value: CoinValue
 
-    init(fullTransaction: FullTransaction, amount: Decimal, from: String, token: Coin) {
-        self.amount = amount
+    init(fullTransaction: FullTransaction, baseCoin: Coin, amount: Decimal, from: String, token: Coin) {
         self.from = from
-        self.token = token
+        value = CoinValue(coin: token, value: amount)
 
-        super.init(fullTransaction: fullTransaction)
+        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
-    override var mainCoin: Coin? {
-        token
-    }
-
-    override var mainAmount: Decimal? {
-        amount
+    override var mainValue: CoinValue? {
+        value
     }
 
     override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        let coinValue: CoinValue = CoinValue(coin: token, value: amount)
-        return .incoming(from: from, coinValue: coinValue, lockState: nil, conflictingTxHash: nil)
+        .incoming(from: from, coinValue: value, lockState: nil, conflictingTxHash: nil)
     }
 
 }

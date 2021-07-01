@@ -34,8 +34,15 @@ class TransactionRecordDataSource {
 
     private func createViewItem(for wallet: Wallet, record: TransactionRecord) -> TransactionViewItem {
         let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
-        let rate = record.mainCoin.flatMap { metaDataSource.rate(coin: $0, date: record.date) }
-        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, mainCoinRate: rate)
+        let currencyValue = record.mainValue.flatMap { (coinValue: CoinValue) -> CurrencyValue? in
+            guard let rate = metaDataSource.rate(coin: coinValue.coin, date: record.date) else {
+                return nil
+            }
+
+            return CurrencyValue(currency: rate.currency, value: rate.value * coinValue.value)
+        }
+
+        return factory.viewItem(fromRecord: record, wallet: wallet, lastBlockInfo: lastBlockInfo, mainAmountCurrencyValue: currencyValue)
     }
 
     var fetchDataList: [FetchData] {
@@ -160,8 +167,8 @@ class TransactionRecordDataSource {
         var itemsChanged = false
 
         for (index, item) in itemsDataSource.items.enumerated() {
-            if let mainCoin = item.record.mainCoin, let mainAmount = item.record.mainAmount, mainCoin == coin && item.date == date {
-                itemsDataSource.items[index].mainAmountCurrencyValue = CurrencyValue(currency: rate.currency, value: rate.value * mainAmount)
+            if let mainValue = item.record.mainValue, mainValue.coin == coin && item.date == date {
+                itemsDataSource.items[index].mainAmountCurrencyValue = CurrencyValue(currency: rate.currency, value: rate.value * mainValue.value)
                 itemsChanged = true
             }
         }

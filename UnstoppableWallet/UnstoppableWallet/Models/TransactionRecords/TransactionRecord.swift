@@ -7,18 +7,16 @@ class TransactionRecord {
     let transactionIndex: Int
     let blockHeight: Int?
     let confirmationsThreshold: Int?
-    let fee: Decimal?
     let date: Date
     let failed: Bool
 
-    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool) {
+    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool) {
         self.uid = uid
         self.transactionHash = transactionHash
         self.transactionIndex = transactionIndex
         self.blockHeight = blockHeight
         self.confirmationsThreshold = confirmationsThreshold
         self.date = date
-        self.fee = fee
         self.failed = failed
     }
 
@@ -39,11 +37,7 @@ class TransactionRecord {
         return .pending
     }
 
-    open var mainAmount: Decimal? {
-        nil
-    }
-
-    open var mainCoin: Coin? {
+    open var mainValue: CoinValue? {
         nil
     }
 

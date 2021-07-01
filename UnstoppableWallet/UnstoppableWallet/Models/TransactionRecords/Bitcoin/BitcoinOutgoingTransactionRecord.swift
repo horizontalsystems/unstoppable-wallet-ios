@@ -2,26 +2,25 @@ import Foundation
 import CoinKit
 
 class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
-    let amount: Decimal
+    let value: CoinValue
     let to: String?
     let sentToSelf: Bool
 
     init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
          amount: Decimal, to: String?, sentToSelf: Bool) {
-        self.amount = amount
+        value = CoinValue(coin: coin, value: amount)
         self.to = to
         self.sentToSelf = sentToSelf
 
         super.init(
-                coin: coin,
                 uid: uid,
                 transactionHash: transactionHash,
                 transactionIndex: transactionIndex,
                 blockHeight: blockHeight,
                 confirmationsThreshold: confirmationsThreshold,
                 date: date,
-                fee: fee,
+                fee: fee.flatMap { CoinValue(coin: coin, value: $0) },
                 failed: failed,
                 lockInfo: lockInfo,
                 conflictingHash: conflictingHash,
@@ -29,14 +28,13 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         )
     }
 
-    override var mainAmount: Decimal? {
-        amount
+    override var mainValue: CoinValue? {
+        value
     }
 
     override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        let coinValue: CoinValue = CoinValue(coin: coin, value: amount)
         let lState = lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
-        return .outgoing(to: to, coinValue: coinValue, lockState: lState, conflictingTxHash: conflictingHash, sentToSelf: sentToSelf)
+        return .outgoing(to: to, coinValue: value, lockState: lState, conflictingTxHash: conflictingHash, sentToSelf: sentToSelf)
     }
 
 }

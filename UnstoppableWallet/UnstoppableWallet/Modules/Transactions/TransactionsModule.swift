@@ -53,7 +53,7 @@ protocol ITransactionsRouter {
 
 protocol ITransactionViewItemFactory {
     func filterItems(wallets: [Wallet]) -> [FilterHeaderView.ViewItem]
-    func viewItem(fromRecord: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, mainCoinRate: CurrencyValue?) -> TransactionViewItem
+    func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo?, mainAmountCurrencyValue: CurrencyValue?) -> TransactionViewItem
     func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus
 }
 
