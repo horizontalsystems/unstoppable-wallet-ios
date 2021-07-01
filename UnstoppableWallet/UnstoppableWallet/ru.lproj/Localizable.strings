@@ -450,7 +450,7 @@
 "coin_page.circulating_supply" = "В обороте";
 "coin_page.total_supply" = "Макс.Выпуск";
 "coin_page.dilluted_market_cap" = "Разводненная рын.кап.";
-"coin_page.genesis_date" = "Дата Запуска";
+"coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Объем Торговли";
 "coin_page.markets" = "%@ Рынки";
