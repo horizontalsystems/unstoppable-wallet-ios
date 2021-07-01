@@ -2,15 +2,15 @@ import Foundation
 import CoinKit
 
 class BitcoinTransactionRecord: TransactionRecord {
-    let coin: Coin
     let lockInfo: TransactionLockInfo?
+    let fee: CoinValue?
     let conflictingHash: String?
     let showRawTransaction: Bool
 
-    init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
+    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: CoinValue?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool) {
-        self.coin = coin
         self.lockInfo = lockInfo
+        self.fee = fee
         self.conflictingHash = conflictingHash
         self.showRawTransaction = showRawTransaction
 
@@ -21,7 +21,6 @@ class BitcoinTransactionRecord: TransactionRecord {
                 blockHeight: blockHeight,
                 confirmationsThreshold: confirmationsThreshold,
                 date: date,
-                fee: fee,
                 failed: failed
         )
     }
@@ -47,10 +46,6 @@ class BitcoinTransactionRecord: TransactionRecord {
         }
 
         return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
-    }
-
-    override var mainCoin: Coin? {
-        coin
     }
 
     override func changedBy(oldBlockInfo: LastBlockInfo?, newBlockInfo: LastBlockInfo?) -> Bool {

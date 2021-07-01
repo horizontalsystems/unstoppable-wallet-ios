@@ -15,7 +15,8 @@ class TransactionInfoTransactionIdCell: BaseThemeCell {
 
         contentView.addSubview(titleView)
         titleView.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
         }
 
         titleView.bind(text: "tx_info.transaction_id".localized)
@@ -32,7 +33,7 @@ class TransactionInfoTransactionIdCell: BaseThemeCell {
         contentView.addSubview(shareButton)
         shareButton.snp.makeConstraints { maker in
             maker.leading.equalTo(idButton.snp.trailing).offset(CGFloat.margin1x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin32)
             maker.centerY.equalToSuperview()
         }
 

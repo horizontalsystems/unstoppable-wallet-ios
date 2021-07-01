@@ -41,11 +41,10 @@ class TransactionInfoPendingStatusCell: BaseThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(progress: Double, incoming: Bool, iconAction: (() -> ())?) {
-        statusLabel.text = progress == 0 ? "transactions.pending".localized : (incoming ? "transactions.receiving".localized : "transactions.sending".localized)
+    func bind(progress: Double, label: String, iconAction: (() -> ())?) {
+        statusLabel.text = label
         leftView.imageAction = iconAction
 
-        barsProgressView.set(filledColor: incoming ? .themeGreenD : .themeYellowD)
         barsProgressView.set(progress: progress)
         barsProgressView.startAnimating()
     }

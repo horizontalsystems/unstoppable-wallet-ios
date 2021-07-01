@@ -72,7 +72,7 @@ extension SwapPendingAllowanceService {
 
         for transaction in adapter.pendingTransactions {
             if let approve = transaction as? ApproveTransactionRecord {
-                pendingAllowance = approve.amount
+                pendingAllowance = approve.value.value
             }
         }
 

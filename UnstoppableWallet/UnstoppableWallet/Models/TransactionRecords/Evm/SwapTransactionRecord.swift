@@ -4,29 +4,21 @@ import CoinKit
 
 class SwapTransactionRecord: EvmTransactionRecord {
     let exchangeAddress: String
-    let tokenIn: Coin
-    let tokenOut: Coin
+    // valueIn stores amountInMax in cases when exact amountIn amount is not known
+    let valueIn: CoinValue
+    // valueOut stores amountOutMin in cases when exact amountOut amount is not known
+    let valueOut: CoinValue?
 
-    // amountIn stores amountInMax in cases when exact amountIn amount is not known
-    let amountIn: Decimal
-    // amountOut stores amountOutMin in cases when exact amountOut amount is not known
-    let amountOut: Decimal
-
-    let foreignRecipient: Bool
-
-    init(fullTransaction: FullTransaction, exchangeAddress: String, tokenIn: Coin, tokenOut: Coin, amountIn: Decimal, amountOut: Decimal, foreignRecipient: Bool) {
+    init(fullTransaction: FullTransaction, baseCoin: Coin, exchangeAddress: String, tokenIn: Coin, tokenOut: Coin, amountIn: Decimal, amountOut: Decimal?) {
         self.exchangeAddress = exchangeAddress
-        self.tokenIn = tokenIn
-        self.tokenOut = tokenOut
-        self.amountIn = amountIn
-        self.amountOut = amountOut
-        self.foreignRecipient = foreignRecipient
+        valueIn = CoinValue(coin: tokenIn, value: amountIn)
+        valueOut = amountOut.flatMap { CoinValue(coin: tokenOut, value: $0) }
 
-        super.init(fullTransaction: fullTransaction)
+        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
     override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        .swap(exchangeAddress: exchangeAddress, inCoinValue: CoinValue(coin: tokenIn, value: amountIn), outCoinValue: CoinValue(coin: tokenOut, value: amountOut))
+        .swap(exchangeAddress: exchangeAddress, valueIn: valueIn, valueOut: valueOut)
     }
 
 }

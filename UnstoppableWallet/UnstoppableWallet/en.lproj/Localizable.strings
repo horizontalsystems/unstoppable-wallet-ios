@@ -482,6 +482,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.pending" = "Pending";
 "transactions.failed" = "Failed";
 
+"transactions.receive" = "Receive";
+"transactions.send" = "Send";
+"transactions.approve" = "Approve";
+"transactions.swap" = "Swap";
+
 "transactions.receiving" = "Receiving";
 "transactions.sending" = "Sending";
 "transactions.approving" = "Approving";
@@ -496,9 +501,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
+"transactions.value.unlimited" = "unlimited";
+
 // Transaction Info
 
-"tx_info.title" = "Transaction";
+"tx_info.title" = "Transaction Info";
+"tx_info.date" = "Date";
 "tx_info.title_approval" = "Swap Approval";
 "tx_info.status.pending" = "Pending";
 "tx_info.status.completed" = "Completed";
@@ -516,6 +524,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "Raw Transaction";
 "tx_info.memo" = "Memo";
+"tx_info.view_on" = "View on %@";
+"tx_info.you_pay" = "You Pay";
+"tx_info.you_get" = "You Get";
+"tx_info.price" = "Price";
 
 // Settings
 

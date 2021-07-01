@@ -483,6 +483,7 @@ protocol ICoinManager {
     var coins: [Coin] { get }
     var groupedCoins: (featured: [Coin], regular: [Coin]) { get }
     func coin(type: CoinType) -> Coin?
+    func coinOrStub(type: CoinType) -> Coin
     func save(coins: [Coin])
 }
 

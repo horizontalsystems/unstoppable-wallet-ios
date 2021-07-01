@@ -5,7 +5,7 @@ enum TransactionType {
     case incoming(from: String?, coinValue: CoinValue, lockState: TransactionLockState?, conflictingTxHash: String?)
     case outgoing(to: String?, coinValue: CoinValue, lockState: TransactionLockState?, conflictingTxHash: String?, sentToSelf: Bool)
     case approve(spender: String, coinValue: CoinValue)
-    case swap(exchangeAddress: String, inCoinValue: CoinValue, outCoinValue: CoinValue)
+    case swap(exchangeAddress: String, valueIn: CoinValue, valueOut: CoinValue?)
     case contractCall(contractAddress: String, method: String?)
     case contractCreation
 

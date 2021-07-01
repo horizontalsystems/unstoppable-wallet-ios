@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 class TransactionsRouter {
     weak var viewController: UIViewController?
@@ -7,11 +8,11 @@ class TransactionsRouter {
 extension TransactionsRouter: ITransactionsRouter {
 
     func openTransactionInfo(viewItem: TransactionViewItem) {
-        guard let module = TransactionInfoRouter.module(transaction: viewItem.record, wallet: viewItem.wallet, sourceViewController: viewController) else {
+        guard let module = TransactionInfoModule.instance(transaction: viewItem.record, wallet: viewItem.wallet) else {
             return
         }
 
-        viewController?.present(module, animated: true)
+        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
 }

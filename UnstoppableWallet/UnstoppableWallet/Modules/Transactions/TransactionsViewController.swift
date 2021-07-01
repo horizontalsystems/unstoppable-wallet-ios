@@ -140,21 +140,30 @@ class TransactionsViewController: ThemeViewController {
             image = UIImage(named: "check_2_20")
             topText = item.status == .completed ? "transactions.approved".localized : "transactions.approving".localized
             bottomText = "transactions.from".localized(spender)
+            let isMaxValue = coinValue.isMaxValue
 
             if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
-                primaryValueText = currencyValueString
+                if isMaxValue {
+                    primaryValueText = "∞"
+                } else {
+                    primaryValueText = currencyValueString
+                }
                 primaryValueTextColor = .themeLeah
             }
 
             if let coinValueString = format(coinValue: coinValue) {
-                secondaryValueText = coinValueString
+                if isMaxValue {
+                    secondaryValueText = "transactions.value.unlimited".localized
+                } else {
+                    secondaryValueText = coinValueString
+                }
                 secondaryValueTextColor = .themeGray
             }
 
         case .swap(let exchangeAddress, let inCoinValue, let outCoinValue):
             image = UIImage(named: "swap_2_20")
             topText = item.status == .completed ? "transactions.swapped".localized : "transactions.swapping".localized
-            bottomText = exchangeAddress
+            bottomText = TransactionInfoAddressMapper.map(exchangeAddress)
 
             if let coinValueString = format(coinValue: inCoinValue) {
                 primaryValueText = coinValueString
@@ -169,7 +178,7 @@ class TransactionsViewController: ThemeViewController {
         case .contractCall(let contractAddress, let method):
             image = UIImage(named: "unordered_20")
             topText = method?.uppercased() ?? "transactions.contract_call".localized
-            bottomText = contractAddress
+            bottomText = TransactionInfoAddressMapper.map(contractAddress)
 
         case .contractCreation:
             image = UIImage(named: "unordered_20")
