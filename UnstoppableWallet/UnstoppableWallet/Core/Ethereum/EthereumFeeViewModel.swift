@@ -6,7 +6,7 @@ class EthereumFeeViewModel {
     private let customFeeRange: ClosedRange<Int> = 1...400
     private let customFeeUnit = "gwei"
 
-    private let service: EvmTransactionService
+    private let service: IEvmTransactionFeeService
     private let coinService: CoinService
 
     private let disposeBag = DisposeBag()
@@ -18,7 +18,7 @@ class EthereumFeeViewModel {
     private let feeSliderRelay = BehaviorRelay<SendFeeSliderViewItem?>(value: nil)
     private let warningOfStuckRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: EvmTransactionService, coinService: CoinService) {
+    init(service: IEvmTransactionFeeService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
 
@@ -31,7 +31,7 @@ class EthereumFeeViewModel {
     }
 
     private func sync(transactionStatus: DataStatus<EvmTransactionService.Transaction>) {
-        let estimatedFeeStatus = service.gasLimitSurchargePercent == 0 ? nil : self.estimatedFeeStatus(transactionStatus: transactionStatus)
+        let estimatedFeeStatus = service.hasEstimatedFee ? estimatedFeeStatus(transactionStatus: transactionStatus) : nil
 
         estimatedFeeStatusRelay.accept(estimatedFeeStatus)
         feeStatusRelay.accept(feeStatus(transactionStatus: transactionStatus))

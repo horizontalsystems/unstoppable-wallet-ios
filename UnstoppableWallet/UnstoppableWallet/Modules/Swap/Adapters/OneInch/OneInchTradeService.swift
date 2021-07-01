@@ -92,6 +92,7 @@ class OneInchTradeService {
         state = .loading
 //        }
 
+        let amountIn = amountIn
         guard amountIn > 0 else {
             state = .notReady(errors: [])
             return false
@@ -99,7 +100,7 @@ class OneInchTradeService {
 
         oneInchProvider.quoteSingle(coinIn: coinIn, coinOut: coinOut, amount: amountIn)
                 .subscribe(onSuccess: { [weak self] quote in
-                    self?.handle(quote: quote)
+                    self?.handle(quote: quote, coinFrom: coinIn, coinTo: coinOut, amountFrom: amountIn)
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error])
                 })
@@ -108,11 +109,21 @@ class OneInchTradeService {
         return true
     }
 
-    private func handle(quote: OneInchKit.Quote) {
+    private func handle(quote: OneInchKit.Quote, coinFrom: Coin, coinTo: Coin, amountFrom: Decimal) {
         self.quote = quote
 
         amountOut = quote.amountOut ?? 0
-        state = .ready
+
+        let parameters = OneInchSwapParameters(
+            coinFrom: coinFrom,
+            coinTo: coinTo,
+            amountFrom: amountFrom,
+            amountTo: amountOut,
+            slippage: settings.allowedSlippage,
+            recipient: settings.recipient
+        )
+
+        state = .ready(parameters: parameters)
     }
 
 }
@@ -200,7 +211,7 @@ extension OneInchTradeService {
 
     enum State {
         case loading
-        case ready
+        case ready(parameters: OneInchSwapParameters)
         case notReady(errors: [Error])
     }
 

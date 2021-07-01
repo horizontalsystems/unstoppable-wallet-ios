@@ -3,6 +3,19 @@ import BigInt
 import RxSwift
 import RxRelay
 
+protocol IEvmTransactionFeeService {
+    var hasEstimatedFee: Bool { get }
+    var transactionStatus: DataStatus<EvmTransactionService.Transaction> { get }
+    var transactionStatusObservable: Observable<DataStatus<EvmTransactionService.Transaction>> { get }
+
+    var gasPriceType: EvmTransactionService.GasPriceType { get }
+    var gasPriceTypeObservable: Observable<EvmTransactionService.GasPriceType> { get }
+
+    var warningOfStuckObservable: Observable<Bool> { get }
+
+    func set(gasPriceType: EvmTransactionService.GasPriceType)
+}
+
 class EvmTransactionService {
     private let evmKit: Kit
     private let feeRateProvider: IFeeRateProvider
@@ -10,22 +23,22 @@ class EvmTransactionService {
 
     private var transactionData: TransactionData?
 
+    private let gasPriceTypeRelay = PublishRelay<GasPriceType>()
     private(set) var gasPriceType: GasPriceType = .recommended {
         didSet {
             gasPriceTypeRelay.accept(gasPriceType)
         }
     }
-    private let gasPriceTypeRelay = PublishRelay<GasPriceType>()
 
     private var recommendedGasPrice: Int?
     private let warningOfStuckRelay = PublishRelay<Bool>()
 
+    private let transactionStatusRelay = PublishRelay<DataStatus<Transaction>>()
     private(set) var transactionStatus: DataStatus<Transaction> = .failed(GasDataError.noTransactionData) {
         didSet {
             transactionStatusRelay.accept(transactionStatus)
         }
     }
-    private let transactionStatusRelay = PublishRelay<DataStatus<Transaction>>()
 
     private var disposeBag = DisposeBag()
 
@@ -127,7 +140,11 @@ class EvmTransactionService {
 
 }
 
-extension EvmTransactionService {
+extension EvmTransactionService: IEvmTransactionFeeService {
+
+    var hasEstimatedFee: Bool {
+        gasLimitSurchargePercent != 0
+    }
 
     var gasPriceTypeObservable: Observable<GasPriceType> {
         gasPriceTypeRelay.asObservable()
@@ -148,10 +165,6 @@ extension EvmTransactionService {
 
     func set(gasPriceType: GasPriceType) {
         self.gasPriceType = gasPriceType
-        sync()
-    }
-
-    func resync() {
         sync()
     }
 

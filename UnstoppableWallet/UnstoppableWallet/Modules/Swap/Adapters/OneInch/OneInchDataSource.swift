@@ -87,7 +87,7 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
-        subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(sendData: $0) }
+        subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(parameters: $0) }
     }
 
 //    @objc func onClose() {
@@ -200,8 +200,8 @@ class OneInchDataSource {
         onOpen?(viewController, false)
     }
 
-    private func openConfirm(sendData: SendEvmData) {
-        guard let viewController = SwapConfirmationModule.viewController(sendData: sendData, dex: viewModel.service.dex) else {
+    private func openConfirm(parameters: OneInchSwapParameters) {
+        guard let viewController = SwapConfirmationModule.viewController(parameters: parameters, dex: viewModel.service.dex) else {
             return
         }
 

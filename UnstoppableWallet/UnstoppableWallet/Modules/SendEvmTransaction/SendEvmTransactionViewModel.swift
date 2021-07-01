@@ -9,7 +9,7 @@ import Erc20Kit
 class SendEvmTransactionViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SendEvmTransactionService
+    private let service: ISendEvmTransactionService
     private let coinServiceFactory: EvmCoinServiceFactory
 
     private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
@@ -21,7 +21,7 @@ class SendEvmTransactionViewModel {
     private let sendSuccessRelay = PublishRelay<Data>()
     private let sendFailedRelay = PublishRelay<String>()
 
-    init(service: SendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory) {
+    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory) {
         self.service = service
         self.coinServiceFactory = coinServiceFactory
 
@@ -48,16 +48,27 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func sync(dataState: SendEvmTransactionService.DataState) {
-        let items: [SectionViewItem]
+    private func sync(dataState: DataStatus<SendEvmTransactionService.DataState>) {
+        var items: [SectionViewItem]? = nil
 
-        if let decoration = dataState.decoration, let decoratedItems = self.items(decoration: decoration, transactionData: dataState.transactionData, additionalInfo: dataState.additionalInfo) {
-            items = decoratedItems
-        } else {
-            items = transferItems(from: service.ownAddress, to: dataState.transactionData.to, value: dataState.transactionData.value, additionalInfo: dataState.additionalInfo)
+        switch dataState {
+        case let .completed(data):
+            if let decoration = data.decoration,
+               let decoratedItems = self.items(
+                       decoration: decoration,
+                       transactionData: data.transactionData,
+                       additionalInfo: data.additionalInfo) {
+
+                items = decoratedItems
+            } else {
+                items = data.transactionData.map { transferItems(from: service.ownAddress, to: $0.to, value: $0.value, additionalInfo: data.additionalInfo) } ?? []
+            }
+        default: items = nil
         }
 
-        sectionViewItemsRelay.accept(items)
+        if let items = items {
+            sectionViewItemsRelay.accept(items)
+        }
     }
 
     private func sync(sendState: SendEvmTransactionService.SendState) {
@@ -81,10 +92,24 @@ class SendEvmTransactionViewModel {
             }
         }
 
+        if case AppError.oneInch(let reason) = error.convertedError {
+            switch reason {
+            case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
+            }
+        }
+
         return error.convertedError.smartDescription
     }
 
-    private func items(decoration: ContractMethodDecoration, transactionData: TransactionData, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+    private func items(decoration: ContractMethodDecoration, transactionData: TransactionData?, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+        if let method = decoration as? SwapMethodDecoration {
+            return swapItems(trade: method.trade, tokenIn: method.tokenIn, tokenOut: method.tokenOut, to: method.to, deadline: method.deadline, additionalInfo: additionalInfo)
+        }
+
+        guard let transactionData = transactionData else {
+            return nil
+        }
+
         switch decoration {
         case let method as TransferMethodDecoration:
             return eip20TransferItems(to: method.to, value: method.value, contractAddress: transactionData.to, additionalInfo: additionalInfo)

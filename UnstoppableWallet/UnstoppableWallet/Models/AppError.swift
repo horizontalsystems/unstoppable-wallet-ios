@@ -5,6 +5,7 @@ enum AppError: Error {
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
     case ethereum(reason: EthereumError)
+    case oneInch(reason: OneInchError)
     case wordsChecksum
     case addressInvalid
     case notSupportedByHodler
@@ -24,6 +25,11 @@ enum AppError: Error {
         case insufficientBalanceWithFee
         case executionReverted(message: String)
     }
+
+    enum OneInchError: Error {
+        case insufficientBalanceWithFee
+    }
+
 }
 
 
@@ -46,6 +52,10 @@ extension AppError: LocalizedError {
             switch reason {
             case .insufficientBalanceWithFee: return "" // localized in modules
             case .executionReverted(let message): return "ethereum_transaction.error.reverted".localized(message)
+            }
+        case .oneInch(let reason):
+            switch reason {
+            case .insufficientBalanceWithFee: return "" // localized in modules
             }
         case .wordsChecksum:
             return "restore.checksum_error".localized
