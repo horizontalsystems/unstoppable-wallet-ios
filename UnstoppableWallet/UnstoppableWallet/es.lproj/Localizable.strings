@@ -448,7 +448,7 @@
 "coin_page.circulating_supply" = "En Circulación";
 "coin_page.total_supply" = "Suminstro Total";
 "coin_page.dilluted_market_cap" = "Capitalización de Mercado Diluida";
-"coin_page.genesis_date" = "Fecha de lanzamiento";
+"coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Volumen de comercio";
 "coin_page.markets" = "%@ Mercados";
