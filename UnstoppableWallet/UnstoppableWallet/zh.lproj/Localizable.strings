@@ -23,6 +23,7 @@
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.unknown_error" = "未知错误";
+"alert.success_action" = "Done";
 
 "action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
@@ -467,6 +468,9 @@
 "coin_page.website" = "Website";
 "coin_page.whitepaper" = "Whitepaper";
 
+"coin_page.favorited" = "Added To Watchlist";
+"coin_page.unfavorited" = "Removed from Watchlist";
+
 // Transactions
 
 "transactions.title" = "交易";
@@ -739,6 +743,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
+"create_wallet.success" = "Created";
 
 // Select Coins
 
@@ -789,6 +794,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.contract_not_found" = "Contract not found";
 "add_token.symbol_not_found" = "Symbol not found";
+"add_token.success_add" = "Added";
 
 "change_24hour_up" = "%@ 价格：上升 %@%% %@";
 "change_24hour_down" = "%@ 价格：下跌 %@%% %@";
