@@ -4,6 +4,7 @@ import ThemeKit
 import SectionsTableView
 import HUD
 import RxSwift
+import ComponentKit
 
 class FaqViewController: ThemeViewController {
     private let viewModel: FaqViewModel
@@ -13,7 +14,7 @@ class FaqViewController: ThemeViewController {
     private let spinner = HUDActivityView.create(with: .large48)
 
     private let errorLabel = UILabel()
-    private var items = [FaqService.Item]()
+    private var sectionItems = [FaqService.SectionItem]()
 
     private let disposeBag = DisposeBag()
 
@@ -44,6 +45,7 @@ class FaqViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: FaqCell.self)
+        tableView.registerCell(forClass: BCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -58,9 +60,9 @@ class FaqViewController: ThemeViewController {
         errorLabel.font = .subhead2
         errorLabel.textColor = .themeGray
 
-        viewModel.itemsDriver
-                .drive(onNext: { [weak self] items in
-                    self?.items = items
+        viewModel.sectionItemsDriver
+                .drive(onNext: { [weak self] sectionItems in
+                    self?.sectionItems = sectionItems
                     self?.tableView.reload()
                 })
                 .disposed(by: disposeBag)
@@ -98,37 +100,64 @@ class FaqViewController: ThemeViewController {
 
 extension FaqViewController: SectionsDataSource {
 
-    public func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "main",
-                    headerState: .margin(height: .margin3x),
-                    footerState: .margin(height: .margin8x),
-                    rows: items.enumerated().map { index, item in
-                        let isFirst = index == 0
-                        let isLast = index == items.count - 1
+    private func headerSection(index: Int, title: String) -> SectionProtocol {
+        Section(
+                id: "header-\(index)",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin8),
+                rows: [
+                    Row<BCell>(
+                            id: "header-\(index)",
+                            height: .heightSingleLineCell,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .transparent)
+                                cell.selectionStyle = .none
+                                cell.title = title
+                            }
+                    )
+                ]
+        )
+    }
 
-                        return Row<FaqCell>(
-                                id: "faq_\(index)",
-                                dynamicHeight: { containerWidth in
-                                    FaqCell.height(containerWidth: containerWidth, text: item.text, backgroundStyle: .lawrence)
-                                },
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                    cell.title = item.text
-                                },
-                                action: { [weak self] _ in
-                                    guard let url = item.url else {
-                                        return
-                                    }
+    private func itemsSection(sectionIndex: Int, isLastSection: Bool, items: [FaqService.Item]) -> SectionProtocol {
+        Section(
+                id: "items-\(sectionIndex)",
+                footerState: .margin(height: isLastSection ? .margin32 : 0),
+                rows: items.enumerated().map { index, item in
+                    let isFirst = index == 0
+                    let isLast = index == items.count - 1
 
-                                    let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
-                                    self?.navigationController?.pushViewController(module, animated: true)
+                    return Row<FaqCell>(
+                            id: "faq-\(sectionIndex)-\(index)",
+                            dynamicHeight: { containerWidth in
+                                FaqCell.height(containerWidth: containerWidth, text: item.text, backgroundStyle: .lawrence)
+                            },
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                cell.title = item.text
+                            },
+                            action: { [weak self] _ in
+                                guard let url = item.url else {
+                                    return
                                 }
-                        )
-                    }
-            )
-        ]
+
+                                let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
+                                self?.navigationController?.pushViewController(module, animated: true)
+                            }
+                    )
+                }
+        )
+    }
+
+    func buildSections() -> [SectionProtocol] {
+        var sections = [SectionProtocol]()
+
+        for (index, sectionItem) in sectionItems.enumerated() {
+            sections.append(headerSection(index: index, title: sectionItem.title))
+            sections.append(itemsSection(sectionIndex: index, isLastSection: index == sectionItems.count - 1, items: sectionItem.items))
+        }
+
+        return sections
     }
 
 }

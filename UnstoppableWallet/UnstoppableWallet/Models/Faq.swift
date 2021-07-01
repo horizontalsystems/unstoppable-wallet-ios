@@ -16,3 +16,8 @@ struct Faq: ImmutableMappable {
     }
 
 }
+
+struct FaqSection {
+    let titles: [String: String]
+    let items: [[String: Faq]]
+}
