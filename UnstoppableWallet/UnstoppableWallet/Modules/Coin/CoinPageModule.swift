@@ -1,6 +1,7 @@
 import UIKit
 import Chart
 import LanguageKit
+import ThemeKit
 
 struct CoinPageModule {
 
@@ -37,7 +38,7 @@ struct CoinPageModule {
         let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
         let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
 
-        return CoinPageViewController(
+        let viewController = CoinPageViewController(
                 viewModel: coinPageViewModel,
                 favoriteViewModel: favoriteViewModel,
                 priceAlertViewModel: priceAlertViewModel,
@@ -46,6 +47,8 @@ struct CoinPageModule {
                 markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)
         )
+
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }
