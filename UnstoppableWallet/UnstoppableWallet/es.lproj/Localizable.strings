@@ -23,6 +23,7 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.unknown_error" = "Error Desconocido";
+"alert.success_action" = "Done";
 
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
@@ -467,6 +468,9 @@
 "coin_page.website" = "Sitio Web";
 "coin_page.whitepaper" = "Documento informativo";
 
+"coin_page.favorited" = "Added To Watchlist";
+"coin_page.unfavorited" = "Removed from Watchlist";
+
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -740,6 +744,7 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
+"create_wallet.success" = "Created";
 
 // Select Coins
 
@@ -790,6 +795,7 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.contract_not_found" = "Contract not found";
 "add_token.symbol_not_found" = "Symbol not found";
+"add_token.success_add" = "Added";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
