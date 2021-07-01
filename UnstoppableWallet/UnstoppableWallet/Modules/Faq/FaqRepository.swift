@@ -9,7 +9,7 @@ class FaqRepository {
     private let appConfigProvider: IAppConfigProvider
     private let reachabilityManager: IReachabilityManager
 
-    private let faqRelay = BehaviorRelay<DataStatus<[[String: Faq]]>>(value: .loading)
+    private let faqRelay = BehaviorRelay<DataStatus<[FaqSection]>>(value: .loading)
 
     init(networkManager: NetworkManager, appConfigProvider: IAppConfigProvider, reachabilityManager: IReachabilityManager) {
         self.networkManager = networkManager
@@ -53,7 +53,7 @@ class FaqRepository {
 
 extension FaqRepository {
 
-    var faqObservable: Observable<DataStatus<[[String: Faq]]>> {
+    var faqObservable: Observable<DataStatus<[FaqSection]>> {
         faqRelay.asObservable()
     }
 
@@ -61,16 +61,32 @@ extension FaqRepository {
 
 extension FaqRepository: IApiMapper {
 
-    public func map(statusCode: Int, data: Any?) throws -> [[String: Faq]] {
+    public func map(statusCode: Int, data: Any?) throws -> [FaqSection] {
         guard let array = data as? [[String: Any]] else {
             throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
         }
 
-        return try array.map { languageMap in
-            try languageMap.mapValues { faqJson in
-                try Faq(JSONObject: faqJson)
+        var sections = [FaqSection]()
+
+        for sectionJson in array {
+            guard let titles = sectionJson["section"] as? [String: String] else {
+                continue
             }
+
+            guard let itemsJson = sectionJson["items"] as? [[String: Any]] else {
+                continue
+            }
+
+            let items = try itemsJson.map { languageMap in
+                try languageMap.mapValues { faqJson in
+                    try Faq(JSONObject: faqJson)
+                }
+            }
+
+            sections.append(FaqSection(titles: titles, items: items))
         }
+
+        return sections
     }
 
 }

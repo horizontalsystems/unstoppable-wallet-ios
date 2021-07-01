@@ -13,18 +13,26 @@ class FaqService {
         self.languageManager = languageManager
     }
 
-    private func items(dictionaries: [[String: Faq]]) -> [Item] {
+    private func sectionItems(sections: [FaqSection]) -> [SectionItem] {
         let faqIndexUrl = appConfigProvider.faqIndexUrl
 
-        return dictionaries.compactMap { dictionary in
-            guard let faq = dictionary[languageManager.currentLanguage] ?? dictionary[LanguageManager.fallbackLanguage] else {
+        return sections.compactMap { section in
+            guard let title = section.titles[languageManager.currentLanguage] ?? section.titles[LanguageManager.fallbackLanguage] else {
                 return nil
             }
 
-            return Item(
-                    text: faq.text,
-                    url: URL(string: faq.fileUrl, relativeTo: faqIndexUrl)
-            )
+            let items = section.items.compactMap { item -> Item? in
+                guard let faq = item[languageManager.currentLanguage] ?? item[LanguageManager.fallbackLanguage] else {
+                    return nil
+                }
+
+                return Item(
+                        text: faq.text,
+                        url: URL(string: faq.fileUrl, relativeTo: faqIndexUrl)
+                )
+            }
+
+            return SectionItem(title: title, items: items)
         }
     }
 
@@ -32,10 +40,10 @@ class FaqService {
 
 extension FaqService {
 
-    var faqObservable: Observable<DataStatus<[Item]>> {
+    var faqObservable: Observable<DataStatus<[SectionItem]>> {
         repository.faqObservable.map { [weak self] dataState in
             dataState.map { [weak self] in
-                self?.items(dictionaries: $0) ?? []
+                self?.sectionItems(sections: $0) ?? []
             }
         }
     }
@@ -43,6 +51,11 @@ extension FaqService {
 }
 
 extension FaqService {
+
+    struct SectionItem {
+        let title: String
+        let items: [Item]
+    }
 
     struct Item {
         let text: String

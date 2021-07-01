@@ -7,7 +7,7 @@ class FaqViewModel {
 
     private let service: FaqService
 
-    private var itemsRelay = BehaviorRelay<[FaqService.Item]>(value: [])
+    private var sectionItemsRelay = BehaviorRelay<[FaqService.SectionItem]>(value: [])
     private var loadingRelay = BehaviorRelay<Bool>(value: true)
     private var errorRelay = BehaviorRelay<Error?>(value: nil)
 
@@ -21,7 +21,7 @@ class FaqViewModel {
                 .disposed(by: disposeBag)
     }
 
-    private func handle(dataStatus: DataStatus<[FaqService.Item]>) {
+    private func handle(dataStatus: DataStatus<[FaqService.SectionItem]>) {
         if case .loading = dataStatus {
             loadingRelay.accept(true)
         } else {
@@ -29,9 +29,9 @@ class FaqViewModel {
         }
 
         if case .completed(let items) = dataStatus {
-            itemsRelay.accept(items)
+            sectionItemsRelay.accept(items)
         } else {
-            itemsRelay.accept([])
+            sectionItemsRelay.accept([])
         }
 
         if case .failed(let error) = dataStatus {
@@ -45,8 +45,8 @@ class FaqViewModel {
 
 extension FaqViewModel {
 
-    var itemsDriver: Driver<[FaqService.Item]> {
-        itemsRelay.asDriver()
+    var sectionItemsDriver: Driver<[FaqService.SectionItem]> {
+        sectionItemsRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
