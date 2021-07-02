@@ -16,14 +16,15 @@
 "button.reject" = "Reddet";
 "button.connect" = "Bağlan";
 "button.save" = "Kaydet";
-"button.sign" = "Sign";
+"button.sign" = "kaydol";
 
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.unknown_error" = "Bilinmeyen Hata";
-"alert.success_action" = "Done";
+"alert.success_action" = "tamamlandı
+";
 
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
