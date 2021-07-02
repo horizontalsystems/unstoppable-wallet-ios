@@ -2050,6 +2050,7 @@
 		58AAA7D0F48E04323E18732A /* MarketListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8D2DC07E5AD68FABF50 /* MarketListHeaderView.swift */; };
 		58AAA7D9BFAF545748C6F504 /* SwapSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7C08214CCCE0D893C2B /* SwapSettingsModule.swift */; };
 		58AAA7E3AAD50EF4B1865AB4 /* MarketPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE8438F3A39EEBE53760 /* MarketPostCell.swift */; };
+		58AAA7E6994159CD5FFDB31E /* InputBadgeWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */; };
 		58AAA7FAA603E03B217AB881 /* RateCoinMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA02A5C8C597ABDCFB27E /* RateCoinMapper.swift */; };
 		58AAA80877B16AF0AA3C8161 /* OneInchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA487DE385E5C9A176CB /* OneInchModule.swift */; };
 		58AAA80B8172739B6B9ADDB0 /* SwapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADA78EE64F6A28647895 /* SwapSettingsViewModel.swift */; };
@@ -2218,6 +2219,7 @@
 		58AAAC7A09B53B8B1DCCE6EB /* LockScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B9EF4DD882EF4020C5 /* LockScreenModule.swift */; };
 		58AAAC7A561E4A44951A020F /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */; };
 		58AAAC7F74556AB6B3AD9D63 /* SendConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFA9479D63145A24BD9C /* SendConfirmationAmountCell.swift */; };
+		58AAAC8A5384B284C58BB295 /* InputBadgeWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */; };
 		58AAAC8B0C5DB88F9251712D /* CustomFeePriorityUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD5ADB215BAA0E243F0D /* CustomFeePriorityUnit.swift */; };
 		58AAAC9023E5CDF7A15CB0A5 /* SwapProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA31F63DD27C285403B8F /* SwapProviderManager.swift */; };
 		58AAAC939B0D62B4D1230C75 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
@@ -2275,6 +2277,7 @@
 		58AAAE3B80679F4E92C31307 /* MarketAdvancedSearchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA58F62A8720BE4A47B96 /* MarketAdvancedSearchModule.swift */; };
 		58AAAE430A2184D5A12202EA /* DebugModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD445F174344AFB6AAC /* DebugModule.swift */; };
 		58AAAE4456D5FD8002A71F29 /* SendFeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6C29584EFCDD8209363 /* SendFeePresenter.swift */; };
+		58AAAE48451AF437CE86CE4C /* InputBadgeWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */; };
 		58AAAE5341084CFA30D4832C /* CoinPageMarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA444C885BCC354F1B7B3 /* CoinPageMarkdownParser.swift */; };
 		58AAAE5B44096255591C5F0F /* MarketOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43E8D805F2CF705EDEA /* MarketOverviewService.swift */; };
 		58AAAE666BAD91283206BA1C /* SwapApproveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA43491E0E4F17D020455 /* SwapApproveViewModel.swift */; };
@@ -3267,6 +3270,7 @@
 		58AAA8529A2BB02062FD1732 /* RateListChangingCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListChangingCellView.swift; sourceTree = "<group>"; };
 		58AAA853C9E2A7C9AA6C2CF7 /* MarketTickerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketTickerDataSource.swift; sourceTree = "<group>"; };
 		58AAA85621F643BCF1C20566 /* UniswapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapModule.swift; sourceTree = "<group>"; };
+		58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBadgeWrapperView.swift; sourceTree = "<group>"; };
 		58AAA8863BBC80245F217F37 /* CoinTvlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTvlFetcher.swift; sourceTree = "<group>"; };
 		58AAA8895A76AF3EA5361D6B /* MarketMetricLargeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketMetricLargeView.swift; sourceTree = "<group>"; };
 		58AAA898435C21331DE0890C /* SendFeeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeModule.swift; sourceTree = "<group>"; };
@@ -4412,6 +4416,7 @@
 				11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */,
 				11B35E930EFEBA58B8F1FDC4 /* BrandFooterView.swift */,
 				11B35921FBDF6F9BBAA88803 /* TextFieldStackView.swift */,
+				58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6879,6 +6884,7 @@
 				2FA5DCF09F5ABED921693F82 /* TransactionInfoShareCell.swift in Sources */,
 				2FA5D759CDF56E09AFB4B0FA /* TransactionInfoTransactionIdCell.swift in Sources */,
 				2FA5D6605BF52F6B363C14E5 /* TransactionInfoTitleView.swift in Sources */,
+				58AAAC8A5384B284C58BB295 /* InputBadgeWrapperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7715,6 +7721,7 @@
 				2FA5D066A05EA576E4EE535D /* TransactionInfoShareCell.swift in Sources */,
 				2FA5DAE7E488116F7FF4DE81 /* TransactionInfoTransactionIdCell.swift in Sources */,
 				2FA5D3CBD1618131B83D9D90 /* TransactionInfoTitleView.swift in Sources */,
+				58AAAE48451AF437CE86CE4C /* InputBadgeWrapperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8563,6 +8570,7 @@
 				2FA5DE8D7C92628D05E3C36D /* TransactionInfoShareCell.swift in Sources */,
 				2FA5D3FF95A27CE4FA3D4941 /* TransactionInfoTransactionIdCell.swift in Sources */,
 				2FA5D31496BDAD5ADBD076FD /* TransactionInfoTitleView.swift in Sources */,
+				58AAA7E6994159CD5FFDB31E /* InputBadgeWrapperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

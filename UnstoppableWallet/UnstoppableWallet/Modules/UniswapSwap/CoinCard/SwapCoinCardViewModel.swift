@@ -13,20 +13,21 @@ class SwapCoinCardViewModel {
     private var isEstimatedRelay = BehaviorRelay<Bool>(value: false)
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
-    private var tokenCodeRelay = BehaviorRelay<String?>(value: nil)
+    private var tokenViewItemRelay = BehaviorRelay<TokenViewItem?>(value: nil)
 
     init(coinCardService: ISwapCoinCardService, fiatService: FiatService) {
         self.coinCardService = coinCardService
         self.fiatService = fiatService
 
         subscribe(disposeBag, coinCardService.readOnlyObservable) { [weak self] in self?.sync(readOnly: $0) }
-        subscribe(disposeBag, coinCardService.isEstimatedObservable) { [weak self] in self?.sync(estimated: $0) }
+        subscribe(disposeBag, coinCardService.isEstimatedObservable) { [weak self] _ in self?.syncEstimated() }
+        subscribe(disposeBag, coinCardService.amountObservable) { [weak self] _ in self?.syncEstimated() }
         subscribe(disposeBag, coinCardService.coinObservable) { [weak self] in self?.sync(coin: $0) }
         subscribe(disposeBag, coinCardService.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, coinCardService.errorObservable) { [weak self] in self?.sync(error: $0) }
 
         sync(readOnly: coinCardService.readOnly)
-        sync(estimated: coinCardService.isEstimated)
+        syncEstimated()
         sync(coin: coinCardService.coin)
         sync(balance: coinCardService.balance)
     }
@@ -35,13 +36,13 @@ class SwapCoinCardViewModel {
         readOnlyRelay.accept(readOnly)
     }
 
-    private func sync(estimated: Bool) {
-        fiatService.coinAmountLocked = estimated
-        isEstimatedRelay.accept(estimated)
+    private func syncEstimated() {
+        fiatService.coinAmountLocked = coinCardService.isEstimated
+        isEstimatedRelay.accept(coinCardService.isEstimated && coinCardService.amount != 0)
     }
 
     private func sync(coin: Coin?) {
-        tokenCodeRelay.accept(coin?.code)
+        tokenViewItemRelay.accept(coin.map { TokenViewItem(title: $0.title, iconCoinType: $0.type) })
     }
 
     private func sync(balance: Decimal?) {
@@ -87,12 +88,21 @@ extension SwapCoinCardViewModel {
         balanceErrorRelay.asDriver()
     }
 
-    var tokenCodeDriver: Driver<String?> {
-        tokenCodeRelay.asDriver()
+    var tokenViewItemDriver: Driver<TokenViewItem?> {
+        tokenViewItemRelay.asDriver()
     }
 
     func onSelect(coin: Coin) {
         coinCardService.onChange(coin: coin)
+    }
+
+}
+
+extension SwapCoinCardViewModel {
+
+    struct TokenViewItem {
+        let title: String
+        let iconCoinType: CoinType
     }
 
 }

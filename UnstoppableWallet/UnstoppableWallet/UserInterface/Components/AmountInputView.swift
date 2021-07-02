@@ -11,6 +11,7 @@ class AmountInputView: UIView {
     private let secondaryButton = UIButton()
 
     private let prefixView = InputPrefixWrapperView()
+    private let estimatedView = InputBadgeWrapperView()
     private let maxView = InputButtonWrapperView(style: .secondaryDefault)
 
     var maxButtonVisible = false {
@@ -57,10 +58,14 @@ class AmountInputView: UIView {
 
         prefixView.isHidden = true
 
+        estimatedView.badgeView.text = "swap.estimated".localized.uppercased()
+        estimatedVisible = false
+
         maxView.button.setTitle("send.max_button".localized, for: .normal)
         maxView.onTapButton = { [weak self] in self?.onTapMax?() }
 
         inputStackView.prependSubview(prefixView, customSpacing: 0)
+        inputStackView.appendSubview(estimatedView)
         inputStackView.appendSubview(maxView)
 
         inputStackView.placeholder = "0"
@@ -148,6 +153,11 @@ extension AmountInputView {
         get { secondaryButton.isEnabled }
         set { secondaryButton.isEnabled = newValue }
     }
+
+     var estimatedVisible: Bool {
+         get { estimatedView.isHidden }
+         set { estimatedView.isHidden = !newValue }
+     }
 
     var isValidText: ((String) -> Bool)? {
         get { inputStackView.isValidText }

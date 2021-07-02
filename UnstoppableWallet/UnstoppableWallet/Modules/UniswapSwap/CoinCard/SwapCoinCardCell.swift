@@ -14,8 +14,8 @@ class SwapCoinCardCell: UITableViewCell {
 
     private let cardView = CardView(insets: .zero)
 
+    private let tokenIconImageView = UIImageView()
     private let titleLabel = UILabel()
-    private let badgeView = BadgeView()
     private let paddingView = UIView()
     private let tokenSelectButton = UIButton()
 
@@ -40,10 +40,20 @@ class SwapCoinCardCell: UITableViewCell {
             maker.top.bottom.equalToSuperview().inset(CGFloat.margin12)
         }
 
+        cardView.addSubview(tokenIconImageView)
+        tokenIconImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(10)
+            maker.size.equalTo(CGFloat.iconSize24)
+        }
+
+        tokenIconImageView.setContentHuggingPriority(.required, for: .horizontal)
+        tokenIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
         cardView.contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin12)
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.equalTo(tokenIconImageView.snp.trailing).offset(CGFloat.margin16)
         }
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -51,20 +61,10 @@ class SwapCoinCardCell: UITableViewCell {
         titleLabel.textColor = .themeOz
         titleLabel.text = title
 
-        cardView.contentView.addSubview(badgeView)
-        badgeView.snp.makeConstraints { maker in
-            maker.centerY.equalTo(titleLabel)
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin8)
-        }
-
-        badgeView.compressionResistance = .defaultLow
-        badgeView.text = "swap.estimated".localized.uppercased()
-        badgeView.isHidden = true
-
         cardView.contentView.addSubview(paddingView)
         paddingView.snp.makeConstraints { maker in
-            maker.centerY.equalTo(badgeView)
-            maker.leading.equalTo(badgeView.snp.trailing).offset(CGFloat.margin8)
+            maker.centerY.equalTo(titleLabel)
+            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin8)
             maker.height.equalTo(10)
         }
 
@@ -120,8 +120,8 @@ class SwapCoinCardCell: UITableViewCell {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.readOnlyDriver) { [weak self] in self?.set(readOnly: $0) }
-        subscribe(disposeBag, viewModel.isEstimatedDriver) { [weak self] in self?.setBadge(hidden: !$0) }
-        subscribe(disposeBag, viewModel.tokenCodeDriver) { [weak self] in self?.set(tokenCode: $0) }
+        subscribe(disposeBag, viewModel.isEstimatedDriver) { [weak self] in self?.setBadge(visible: $0) }
+        subscribe(disposeBag, viewModel.tokenViewItemDriver) { [weak self] in self?.set(tokenViewItem: $0) }
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.set(balance: $0) }
         subscribe(disposeBag, viewModel.balanceErrorDriver) { [weak self] in self?.set(balanceError: $0) }
     }
@@ -139,13 +139,16 @@ extension SwapCoinCardCell {
         formAmountInput.editable = !readOnly
     }
 
-    private func setBadge(hidden: Bool) {
-        badgeView.isHidden = hidden
+    private func setBadge(visible: Bool) {
+        formAmountInput.estimatedVisible = visible
     }
 
-    private func set(tokenCode: String?) {
-        if let tokenCode = tokenCode {
-            tokenSelectButton.setTitle(tokenCode, for: .normal)
+    private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
+        let tokenIcon = (tokenViewItem?.iconCoinType).flatMap { UIImage.image(coinType: $0) }
+        tokenIconImageView.image = tokenIcon ?? UIImage(named: "icon_placeholder_24")
+
+        if let tokenViewItem = tokenViewItem {
+            tokenSelectButton.setTitle(tokenViewItem.title, for: .normal)
             tokenSelectButton.setTitleColor(.themeLeah, for: .normal)
         } else {
             tokenSelectButton.setTitle("swap.token".localized, for: .normal)
