@@ -480,6 +480,11 @@
 "transactions.pending" = "Pendiente";
 "transactions.failed" = "Falla";
 
+"transactions.receive" = "Receive";
+"transactions.send" = "Send";
+"transactions.approve" = "Approve";
+"transactions.swap" = "Swap";
+
 "transactions.receiving" = "Recibiendo";
 "transactions.sending" = "Enviando";
 "transactions.approving" = "Approving";
@@ -494,9 +499,12 @@
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
+"transactions.value.unlimited" = "unlimited";
+
 // Transaction Info
 
-"tx_info.title" = "Transacción";
+"tx_info.title" = "Transaction Info";
+"tx_info.date" = "Date";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.completed" = "Finalizado";
@@ -514,6 +522,10 @@
 "tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
 "tx_info.memo" = "Memo";
+"tx_info.view_on" = "View on %@";
+"tx_info.you_pay" = "You Pay";
+"tx_info.you_get" = "You Get";
+"tx_info.price" = "Price";
 
 // Settings
 
