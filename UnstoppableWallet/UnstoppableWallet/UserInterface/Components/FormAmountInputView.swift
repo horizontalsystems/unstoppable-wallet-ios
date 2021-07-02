@@ -81,6 +81,11 @@ extension FormAmountInputView {
         set { amountInputView.editable = newValue }
     }
 
+    var estimatedVisible: Bool {
+        get { amountInputView.estimatedVisible }
+        set { amountInputView.estimatedVisible = newValue }
+    }
+
 }
 
 extension FormAmountInputView: IHeightControlView {

@@ -8,12 +8,14 @@ protocol ISwapCoinCardService: AnyObject {
     var isEstimated: Bool { get }
     var coin: Coin? { get }
     var balance: Decimal? { get }
+    var amount: Decimal { get }
 
     var readOnlyObservable: Observable<Bool> { get }
     var isEstimatedObservable: Observable<Bool> { get }
     var coinObservable: Observable<Coin?> { get }
     var balanceObservable: Observable<Decimal?> { get }
     var errorObservable: Observable<Error?> { get }
+    var amountObservable: Observable<Decimal> { get }
 
     func onChange(coin: Coin)
 }
