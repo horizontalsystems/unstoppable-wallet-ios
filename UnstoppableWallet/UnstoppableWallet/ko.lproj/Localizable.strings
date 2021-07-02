@@ -480,6 +480,11 @@
 "transactions.pending" = "보류 중";
 "transactions.failed" = "실패";
 
+"transactions.receive" = "Receive";
+"transactions.send" = "Send";
+"transactions.approve" = "Approve";
+"transactions.swap" = "Swap";
+
 "transactions.receiving" = "수신 중";
 "transactions.sending" = "전송중";
 "transactions.approving" = "Approving";
@@ -494,9 +499,12 @@
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
+"transactions.value.unlimited" = "unlimited";
+
 // Transaction Info
 
-"tx_info.title" = "거래기록";
+"tx_info.title" = "Transaction Info";
+"tx_info.date" = "Date";
 "tx_info.title_approval" = "스왑 승인";
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.completed" = "완료";
@@ -514,6 +522,10 @@
 "tx_info.recipient_hash" = "수령인";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
+"tx_info.view_on" = "View on %@";
+"tx_info.you_pay" = "You Pay";
+"tx_info.you_get" = "You Get";
+"tx_info.price" = "Price";
 
 // Settings
 
