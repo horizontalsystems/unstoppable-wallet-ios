@@ -524,7 +524,7 @@
 "tx_info.raw_transaction" = "Ham işlem";
 "tx_info.memo" = "Memo";
 "tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
+"tx_info.you_pay" = "Ödeyeceğiniz Tutar";
 "tx_info.you_get" = "You Get";
 "tx_info.price" = "Price";
 
@@ -802,7 +802,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.decimal" = "Ondalık";
 "add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.contract_not_found" = "Contract not found";
