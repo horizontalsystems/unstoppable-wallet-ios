@@ -7,7 +7,7 @@ class OneInchModule {
     private let pendingAllowanceService: SwapPendingAllowanceService
     private let service: OneInchService
 
-    init?(dex: SwapModuleNew.DexNew, dataSourceState: SwapModuleNew.DataSourceState) {
+    init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
         guard let evmKit = dex.evmKit else {
             return nil
         }
@@ -65,8 +65,8 @@ extension OneInchModule: ISwapProvider {
         OneInchSettingsModule.dataSource(tradeService: tradeService)
     }
 
-    var swapState: SwapModuleNew.DataSourceState {
-        SwapModuleNew.DataSourceState(
+    var swapState: SwapModule.DataSourceState {
+        SwapModule.DataSourceState(
                 coinFrom: tradeService.coinIn,
                 coinTo: tradeService.coinOut,
                 amountFrom: tradeService.amountIn,

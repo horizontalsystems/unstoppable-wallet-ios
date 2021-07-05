@@ -65,7 +65,7 @@ class UniswapViewModel {
             switch error {
             case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
             case _ as EvmTransactionService.GasDataError: return false
-            case _ as SwapModuleNew.SwapError: return false
+            case _ as SwapModule.SwapError: return false
             default: return true
             }
         }
@@ -101,9 +101,9 @@ class UniswapViewModel {
         if case .ready = service.state {
             proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
         } else if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
+            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
@@ -117,11 +117,11 @@ class UniswapViewModel {
 
     private func syncApproveAction() {
         if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
                 approveActionRelay.accept(.hidden)
             } else if pendingAllowanceService.isPending == true {
                 approveActionRelay.accept(.disabled(title: "swap.approving_button".localized))
-            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModuleNew.SwapError }) {
+            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
                 approveActionRelay.accept(.enabled(title: "button.approve".localized))
             } else {
                 approveActionRelay.accept(.hidden)
@@ -229,8 +229,8 @@ extension UniswapViewModel {
 
     struct TradeViewItem {
         let executionPrice: String?
-        let priceImpact: SwapModule.PriceImpactViewItem?
-        let guaranteedAmount: SwapModule.GuaranteedAmountViewItem?
+        let priceImpact: UniswapModule.PriceImpactViewItem?
+        let guaranteedAmount: UniswapModule.GuaranteedAmountViewItem?
     }
 
     struct SettingsViewItem {

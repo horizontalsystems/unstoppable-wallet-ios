@@ -72,7 +72,7 @@ extension SwapAllowanceService {
         sync()
     }
 
-    func approveData(dex: SwapModuleNew.DexNew, amount: Decimal) -> ApproveData? {
+    func approveData(dex: SwapModule.Dex, amount: Decimal) -> ApproveData? {
         guard case .ready(let allowance) = state else {
             return nil
         }
@@ -109,7 +109,7 @@ extension SwapAllowanceService {
     }
 
     struct ApproveData {
-        let dex: SwapModuleNew.DexNew
+        let dex: SwapModule.Dex
         let coin: Coin
         let spenderAddress: EthereumKit.Address
         let amount: Decimal

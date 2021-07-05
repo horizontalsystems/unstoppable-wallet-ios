@@ -2,11 +2,10 @@ import ThemeKit
 import RxSwift
 import HUD
 
-class SwapPriceCell: UITableViewCell {
+class SwapSwitchCell: UITableViewCell {
     let cellHeight: CGFloat = 24
 
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let priceLabel = UILabel()
     private let switchButton = UIButton()
 
     var onSwitch: (() -> ())?
@@ -27,19 +26,9 @@ class SwapPriceCell: UITableViewCell {
         spinner.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         spinner.isHidden = false
 
-        contentView.addSubview(priceLabel)
-        priceLabel.snp.makeConstraints { maker in
-            maker.centerY.equalTo(spinner)
-            maker.leading.equalTo(spinner.snp.trailing).offset(CGFloat.margin2x)
-        }
-
-        priceLabel.font = .subhead2
-        priceLabel.textAlignment = .center
-
         contentView.addSubview(switchButton)
         switchButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(priceLabel.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.centerX.equalToSuperview()
             maker.top.bottom.equalToSuperview()
         }
 
@@ -63,16 +52,6 @@ class SwapPriceCell: UITableViewCell {
             spinner.startAnimating()
         } else {
             spinner.stopAnimating()
-        }
-    }
-
-    func set(price: String?) {
-        if let price = price {
-            priceLabel.textColor = .themeGray
-            priceLabel.text = price
-        } else {
-            priceLabel.textColor = .themeGray50
-            priceLabel.text = "price".localized
         }
     }
 

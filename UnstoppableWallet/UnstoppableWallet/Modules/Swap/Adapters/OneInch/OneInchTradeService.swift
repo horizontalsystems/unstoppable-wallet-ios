@@ -64,7 +64,7 @@ class OneInchTradeService {
         }
     }
 
-    init(oneInchProvider: OneInchProvider, state: SwapModuleNew.DataSourceState, evmKit: EthereumKit.Kit) {
+    init(oneInchProvider: OneInchProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
         self.oneInchProvider = oneInchProvider
         coinIn = state.coinFrom
         coinOut = state.coinTo

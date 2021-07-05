@@ -3,7 +3,7 @@ import RxSwift
 import CoinKit
 
 protocol ISwapCoinCardService: AnyObject {
-    var dex: SwapModuleNew.DexNew { get }
+    var dex: SwapModule.Dex { get }
     var readOnly: Bool { get }
     var isEstimated: Bool { get }
     var coin: Coin? { get }
@@ -115,7 +115,7 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
         self.tradeService = tradeService
     }
 
-    var dex: SwapModuleNew.DexNew { service.dex }
+    var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactIn }
     var amount: Decimal { tradeService.amountIn }
     var coin: Coin? { tradeService.coinIn }
@@ -127,7 +127,7 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError })
+            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
         }
     }
 
@@ -150,7 +150,7 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
         self.tradeService = tradeService
     }
 
-    var dex: SwapModuleNew.DexNew { service.dex }
+    var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactOut }
     var amount: Decimal { tradeService.amountOut }
     var coin: Coin? { tradeService.coinOut }
@@ -183,7 +183,7 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
         self.tradeService = tradeService
     }
 
-    var dex: SwapModuleNew.DexNew { service.dex }
+    var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { false }
     var amount: Decimal { tradeService.amountIn }
     var coin: Coin? { tradeService.coinIn }
@@ -195,7 +195,7 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
-            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError })
+            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
         }
     }
 
@@ -218,7 +218,7 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
         self.tradeService = tradeService
     }
 
-    var dex: SwapModuleNew.DexNew { service.dex }
+    var dex: SwapModule.Dex { service.dex }
     var readOnly: Bool { true }
     var isEstimated: Bool { true }
     var amount: Decimal { tradeService.amountOut }

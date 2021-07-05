@@ -5,7 +5,7 @@ import CurrencyKit
 import XRatesKit
 
 class CoinSelectService {
-    private let dex: SwapModuleNew.DexNew
+    private let dex: SwapModule.Dex
     private let coinManager: ICoinManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
@@ -16,7 +16,7 @@ class CoinSelectService {
 
     private(set) var items = [Item]()
 
-    init(dex: SwapModuleNew.DexNew, coinManager: ICoinManager, walletManager: WalletManager, adapterManager: AdapterManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModule.Dex, coinManager: ICoinManager, walletManager: WalletManager, adapterManager: AdapterManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager

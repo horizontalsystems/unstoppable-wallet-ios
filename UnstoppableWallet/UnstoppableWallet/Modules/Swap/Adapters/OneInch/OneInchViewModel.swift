@@ -18,8 +18,6 @@ class OneInchViewModel {
 
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
-    private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
-    private var tradeOptionsViewItemRelay = BehaviorRelay<TradeOptionsViewItem?>(value: nil)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var openConfirmRelay = PublishRelay<OneInchSwapParameters>()
@@ -40,13 +38,11 @@ class OneInchViewModel {
 
         sync(state: service.state)
         sync(errors: service.errors)
-        sync(tradeState: tradeService.state)
     }
 
     private func subscribeToService() {
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
-        subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
 //        subscribe(scheduler, disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
         subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
     }
@@ -65,7 +61,7 @@ class OneInchViewModel {
             switch error {
 //            case let error as OneInchKit.Kit.TradeError: return error != .zeroAmount
             case _ as EvmTransactionService.GasDataError: return false
-            case _ as SwapModuleNew.SwapError: return false
+            case _ as SwapModule.SwapError: return false
             default: return true
             }
         }
@@ -74,23 +70,6 @@ class OneInchViewModel {
 
         syncApproveAction()
         syncProceedAction()
-    }
-
-    private func sync(tradeState: OneInchTradeService.State) {
-        switch tradeState {
-        case .ready:
-            ()
-//            tradeViewItemRelay.accept(tradeViewItem(trade: trade))
-        default:
-            tradeViewItemRelay.accept(nil)
-        }
-
-        syncProceedAction()
-        syncApproveAction()
-    }
-
-    private func sync(swapTradeOptions: UniswapSettings) {
-        tradeOptionsViewItemRelay.accept(tradeOptionsViewItem(swapTradeOptions: swapTradeOptions))
     }
 
     private func sync(isApprovePending: Bool) {
@@ -102,9 +81,9 @@ class OneInchViewModel {
         if case .ready = service.state {
             proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
         } else if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModuleNew.SwapError }) {
+            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.isPending == true {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
@@ -118,11 +97,11 @@ class OneInchViewModel {
 
     private func syncApproveAction() {
         if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModuleNew.SwapError }) {
+            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
                 approveActionRelay.accept(.hidden)
             } else if pendingAllowanceService.isPending == true {
                 approveActionRelay.accept(.disabled(title: "swap.approving_button".localized))
-            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModuleNew.SwapError }) {
+            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
                 approveActionRelay.accept(.enabled(title: "button.approve".localized))
             } else {
                 approveActionRelay.accept(.hidden)
@@ -130,20 +109,6 @@ class OneInchViewModel {
         } else {
             approveActionRelay.accept(.hidden)
         }
-    }
-
-    private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
-        TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
-                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
-                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)
-        )
-    }
-
-    private func tradeOptionsViewItem(swapTradeOptions: UniswapSettings) -> TradeOptionsViewItem {
-        TradeOptionsViewItem(slippage: viewItemHelper.slippage(swapTradeOptions.allowedSlippage),
-            deadline: viewItemHelper.deadline(swapTradeOptions.ttl),
-            recipient: swapTradeOptions.recipient?.title)
     }
 
 }
@@ -156,14 +121,6 @@ extension OneInchViewModel {
 
     var swapErrorDriver: Driver<String?> {
         swapErrorRelay.asDriver()
-    }
-
-    var tradeViewItemDriver: Driver<TradeViewItem?> {
-        tradeViewItemRelay.asDriver()
-    }
-
-    var tradeOptionsViewItemDriver: Driver<TradeOptionsViewItem?> {
-        tradeOptionsViewItemRelay.asDriver()
     }
 
     var proceedActionDriver: Driver<ActionState> {
@@ -207,38 +164,12 @@ extension OneInchViewModel {
             return
         }
 
-//        guard case let .ready(trade) = tradeService.state else {
-//            return
-//        }
-//
-//        let swapInfo = SendEvmData.SwapInfo(
-//                estimatedOut: tradeService.amountOut,
-//                estimatedIn: tradeService.amountIn,
-//                slippage: viewItemHelper.slippage(tradeService.swapTradeOptions.allowedSlippage),
-//                deadline: viewItemHelper.deadline(tradeService.swapTradeOptions.ttl),
-//                recipientDomain: tradeService.swapTradeOptions.recipient?.domain,
-//                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
-//                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
-//        )
-
         openConfirmRelay.accept(parameters)
     }
 
 }
 
 extension OneInchViewModel {
-
-    struct TradeViewItem {
-        let executionPrice: String?
-        let priceImpact: SwapModule.PriceImpactViewItem?
-        let guaranteedAmount: SwapModule.GuaranteedAmountViewItem?
-    }
-
-    struct TradeOptionsViewItem {
-        let slippage: String?
-        let deadline: String?
-        let recipient: String?
-    }
 
     enum ActionState {
         case hidden

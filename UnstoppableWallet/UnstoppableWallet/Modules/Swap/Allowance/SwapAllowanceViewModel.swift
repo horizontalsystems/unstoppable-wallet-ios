@@ -55,7 +55,7 @@ class SwapAllowanceViewModel {
     }
 
     private func handle(errors: [Error]) {
-        let error = errors.first(where: { .insufficientAllowance == $0 as? SwapModuleNew.SwapError })
+        let error = errors.first(where: { .insufficientAllowance == $0 as? SwapModule.SwapError })
         isErrorRelay.accept(error != nil)
 
         syncVisible()

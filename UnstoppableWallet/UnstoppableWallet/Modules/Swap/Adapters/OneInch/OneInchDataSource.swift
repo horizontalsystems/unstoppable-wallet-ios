@@ -15,15 +15,11 @@ class OneInchDataSource {
     private let viewModel: OneInchViewModel
 
     private let fromCoinCardCell: SwapCoinCardCell
-    private let priceCell = SwapPriceCell()
+    private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
-//    private let slippageCell = AdditionalDataCellNew()
-//    private let deadlineCell = AdditionalDataCellNew()
-//    private let recipientCell = AdditionalDataCellNew()
     private let poweredByCell = AdditionalDataCellNew()
+    private let priceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
-    private let priceImpactCell = AdditionalDataCellNew()
-    private let guaranteedAmountCell = AdditionalDataCellNew()
 
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
@@ -46,7 +42,7 @@ class OneInchDataSource {
         toCoinCardCell.presentDelegate = self
         allowanceCell.delegate = self
 
-        priceCell.onSwitch = { [weak self] in
+        switchCell.onSwitch = { [weak self] in
             self?.viewModel.onTapSwitch()
         }
 
@@ -64,8 +60,9 @@ class OneInchDataSource {
         poweredByCell.title = "swap.powered_by".localized
         poweredByCell.value = viewModel.dexName
 
+        priceCell.title = "swap.price".localized
+        priceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
-        priceImpactCell.title = "swap.price_impact".localized
 
         approveButton.apply(style: .primaryGray)
         approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
@@ -81,8 +78,6 @@ class OneInchDataSource {
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.handle(loading: $0) }
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
-        subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
-        subscribe(disposeBag, viewModel.tradeOptionsViewItemDriver) { [weak self] in self?.handle(tradeOptionsViewItem: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
 
@@ -95,7 +90,7 @@ class OneInchDataSource {
 //    }
 
     private func handle(loading: Bool) {
-        priceCell.set(loading: loading)
+        switchCell.set(loading: loading)
     }
 
     private func handle(error: String?) {
@@ -107,54 +102,6 @@ class OneInchDataSource {
         }
 
         onReload?()
-    }
-
-    private func handle(tradeViewItem: OneInchViewModel.TradeViewItem?) {
-        priceCell.set(price: tradeViewItem?.executionPrice)
-
-        if let viewItem = tradeViewItem?.priceImpact {
-            priceImpactCell.isVisible = true
-            priceImpactCell.value = viewItem.value
-            let index = viewItem.level.rawValue % OneInchDataSource.levelColors.count
-            priceImpactCell.valueColor = OneInchDataSource.levelColors[index]
-        } else {
-            priceImpactCell.isVisible = false
-        }
-
-        if let viewItem = tradeViewItem?.guaranteedAmount {
-            guaranteedAmountCell.isVisible = true
-            guaranteedAmountCell.title = viewItem.title
-            guaranteedAmountCell.value = viewItem.value
-        } else {
-            guaranteedAmountCell.isVisible = false
-        }
-
-        onReload?()
-    }
-
-    private func handle(tradeOptionsViewItem: OneInchViewModel.TradeOptionsViewItem?) {
-//        if let slippage = tradeOptionsViewItem?.slippage {
-//            slippageCell.isVisible = true
-//            slippageCell.value = slippage
-//        } else {
-//            slippageCell.isVisible = false
-//        }
-//
-//        if let deadline = tradeOptionsViewItem?.deadline {
-//            deadlineCell.isVisible = true
-//            deadlineCell.value = deadline
-//        } else {
-//            deadlineCell.isVisible = false
-//        }
-//
-//        if let recipient = tradeOptionsViewItem?.recipient {
-//            recipientCell.isVisible = true
-//            recipientCell.value = recipient
-//        } else {
-//            recipientCell.isVisible = false
-//        }
-//
-//        reloadTable()
     }
 
     private func handle(proceedActionState: OneInchViewModel.ActionState) {
@@ -212,8 +159,8 @@ class OneInchDataSource {
 
 extension OneInchDataSource: ISwapDataSource {
 
-    var state: SwapModuleNew.DataSourceState {
-        SwapModuleNew.DataSourceState(
+    var state: SwapModule.DataSourceState {
+        SwapModule.DataSourceState(
                 coinFrom: viewModel.tradeService.coinIn,
                 coinTo: viewModel.tradeService.coinOut,
                 amountFrom: viewModel.tradeService.amountIn,
@@ -233,9 +180,9 @@ extension OneInchDataSource: ISwapDataSource {
                             height: fromCoinCardCell.cellHeight
                     ),
                     StaticRow(
-                            cell: priceCell,
+                            cell: switchCell,
                             id: "price",
-                            height: priceCell.cellHeight
+                            height: switchCell.cellHeight
                     ),
                     StaticRow(
                             cell: toCoinCardCell,
@@ -250,41 +197,21 @@ extension OneInchDataSource: ISwapDataSource {
                 headerState: .margin(height: 6),
                 footerState: .margin(height: 6),
                 rows: [
-//                    StaticRow(
-//                            cell: slippageCell,
-//                            id: "slippage",
-//                            height: slippageCell.cellHeight
-//                    ),
-//                    StaticRow(
-//                            cell: deadlineCell,
-//                            id: "deadline",
-//                            height: deadlineCell.cellHeight
-//                    ),
-//                    StaticRow(
-//                            cell: recipientCell,
-//                            id: "recipient",
-//                            height: recipientCell.cellHeight
-//                    ),
                     StaticRow(
                             cell: poweredByCell,
                             id: "powered_by",
                             height: poweredByCell.cellHeight
                     ),
                     StaticRow(
+                            cell: priceCell,
+                            id: "execution-price",
+                            height: priceCell.cellHeight
+                    ),
+                    StaticRow(
                             cell: allowanceCell,
                             id: "allowance",
                             height: allowanceCell.cellHeight
                     ),
-                    StaticRow(
-                            cell: priceImpactCell,
-                            id: "price-impact",
-                            height: priceImpactCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: guaranteedAmountCell,
-                            id: "guaranteed-amount",
-                            height: guaranteedAmountCell.cellHeight
-                    )
                 ]
         ))
 

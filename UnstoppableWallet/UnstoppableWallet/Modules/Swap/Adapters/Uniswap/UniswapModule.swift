@@ -7,7 +7,7 @@ class UniswapModule {
     private let pendingAllowanceService: SwapPendingAllowanceService
     private let service: UniswapService
 
-    init?(dex: SwapModuleNew.DexNew, dataSourceState: SwapModuleNew.DataSourceState) {
+    init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
         guard let evmKit = dex.evmKit else {
             return nil
         }
@@ -64,15 +64,40 @@ extension UniswapModule: ISwapProvider {
         UniswapSettingsModule.dataSource(tradeService: tradeService)
     }
 
-    var swapState: SwapModuleNew.DataSourceState {
+    var swapState: SwapModule.DataSourceState {
         let exactIn = tradeService.tradeType == .exactIn
 
-        return SwapModuleNew.DataSourceState(
+        return SwapModule.DataSourceState(
                 coinFrom: tradeService.coinIn,
                 coinTo: tradeService.coinOut,
                 amountFrom: tradeService.amountIn,
                 amountTo: tradeService.amountOut,
                 exactFrom: exactIn)
+    }
+
+}
+
+extension UniswapModule {
+
+    struct PriceImpactViewItem {
+        let value: String
+        let level: UniswapTradeService.PriceImpactLevel
+    }
+
+    struct GuaranteedAmountViewItem {
+        let title: String
+        let value: String
+    }
+
+}
+
+extension UniswapKit.Kit.TradeError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .tradeNotFound: return "swap.trade_error.not_found".localized
+        default: return nil
+        }
     }
 
 }

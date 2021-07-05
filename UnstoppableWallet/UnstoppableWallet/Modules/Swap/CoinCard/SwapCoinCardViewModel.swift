@@ -68,7 +68,7 @@ class SwapCoinCardViewModel {
 
 extension SwapCoinCardViewModel {
 
-    var dex: SwapModuleNew.DexNew {
+    var dex: SwapModule.Dex {
         coinCardService.dex
     }
 

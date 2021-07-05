@@ -9,7 +9,7 @@ import Foundation
 import CoinKit
 
 class OneInchService {
-    let dex: SwapModuleNew.DexNew
+    let dex: SwapModule.Dex
     private let tradeService: OneInchTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
@@ -49,7 +49,7 @@ class OneInchService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
 
-    init(dex: SwapModuleNew.DexNew, evmKit: EthereumKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService
@@ -123,7 +123,7 @@ class OneInchService {
                 loading = true
             case .ready(let allowance):
                 if tradeService.amountIn > allowance.value {
-                    allErrors.append(SwapModuleNew.SwapError.insufficientAllowance)
+                    allErrors.append(SwapModule.SwapError.insufficientAllowance)
                 }
             case .notReady(let error):
                 allErrors.append(error)
@@ -132,10 +132,10 @@ class OneInchService {
 
         if let balanceIn = balanceIn {
             if tradeService.amountIn > balanceIn {
-                allErrors.append(SwapModuleNew.SwapError.insufficientBalanceIn)
+                allErrors.append(SwapModule.SwapError.insufficientBalanceIn)
             }
         } else {
-            allErrors.append(SwapModuleNew.SwapError.noBalanceIn)
+            allErrors.append(SwapModule.SwapError.noBalanceIn)
         }
 
         if pendingAllowanceService.isPending {

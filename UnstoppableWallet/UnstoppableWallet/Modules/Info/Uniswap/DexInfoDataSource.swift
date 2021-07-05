@@ -1,9 +1,9 @@
 import Foundation
 
 class DexInfoDataSource: InfoDataSource {
-    private let dex: SwapModuleNew.DexNew
+    private let dex: SwapModule.Dex
 
-    init(dex: SwapModuleNew.DexNew) {
+    init(dex: SwapModule.Dex) {
         self.dex = dex
     }
 
