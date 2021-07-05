@@ -5,7 +5,7 @@ import OneInchKit
 
 struct SwapConfirmationModule {
 
-    static func viewController(sendData: SendEvmData, dex: SwapModuleNew.DexNew) -> UIViewController? {
+    static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
         guard let coin = dex.coin, let evmKit = dex.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
@@ -20,7 +20,7 @@ struct SwapConfirmationModule {
         return SwapConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
     }
 
-    static func viewController(parameters: OneInchSwapParameters, dex: SwapModuleNew.DexNew) -> UIViewController? {
+    static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
         guard let coin = dex.coin,
               let evmKit = dex.evmKit,
               let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {

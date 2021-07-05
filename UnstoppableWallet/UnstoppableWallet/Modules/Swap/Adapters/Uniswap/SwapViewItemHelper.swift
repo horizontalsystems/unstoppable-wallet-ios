@@ -12,25 +12,25 @@ class SwapViewItemHelper {
         return PriceCoinValue(baseCoin: coinOut, quoteCoin: CoinValue(coin: coinIn, value: value))
     }
 
-    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> SwapModule.PriceImpactViewItem? {
+    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
         guard let priceImpact = trade.tradeData.priceImpact, let impactLevel = trade.impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }
 
-        return SwapModule.PriceImpactViewItem(
+        return UniswapModule.PriceImpactViewItem(
                 value: priceImpact.description + "%",
                 level: impactLevel
         )
     }
 
-    func guaranteedAmountViewItem(tradeData: TradeData, coinIn: Coin?, coinOut: Coin?) -> SwapModule.GuaranteedAmountViewItem? {
+    func guaranteedAmountViewItem(tradeData: TradeData, coinIn: Coin?, coinOut: Coin?) -> UniswapModule.GuaranteedAmountViewItem? {
         switch tradeData.type {
         case .exactIn:
             guard let amount = tradeData.amountOutMin, let coin = coinOut else {
                 return nil
             }
 
-            return SwapModule.GuaranteedAmountViewItem(
+            return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.minimum_got".localized,
                     value: CoinValue(coin: coin, value: amount).formattedString
             )
@@ -39,7 +39,7 @@ class SwapViewItemHelper {
                 return nil
             }
 
-            return SwapModule.GuaranteedAmountViewItem(
+            return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.maximum_paid".localized,
                     value: CoinValue(coin: coin, value: amount).formattedString
             )

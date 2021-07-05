@@ -7,8 +7,8 @@ import RxSwift
 import RxCocoa
 
 protocol ISwapDexManager {
-    var dex: SwapModuleNew.DexNew? { get }
-    func set(provider: SwapModuleNew.DexNew.Provider)
+    var dex: SwapModule.Dex? { get }
+    func set(provider: SwapModule.Dex.Provider)
 
     var dexUpdated: Signal<()> { get }
 }
@@ -24,13 +24,13 @@ protocol ISwapProvider: AnyObject {
     var dataSource: ISwapDataSource { get }
     var settingsDataSource: ISwapSettingsDataSource? { get }
 
-    var swapState: SwapModuleNew.DataSourceState { get }
+    var swapState: SwapModule.DataSourceState { get }
 }
 
 protocol ISwapDataSource: AnyObject {
     func buildSections() -> [SectionProtocol]
 
-    var state: SwapModuleNew.DataSourceState { get }
+    var state: SwapModule.DataSourceState { get }
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? { get set }
     var onOpenSettings: (() -> ())? { get set }
@@ -38,7 +38,7 @@ protocol ISwapDataSource: AnyObject {
     var onReload: (() -> ())? { get set }
 }
 
-class SwapModuleNew {
+class SwapModule {
 
     static func viewController(coinFrom: Coin? = nil) -> UIViewController? {
         let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, coinFrom: coinFrom)
@@ -54,7 +54,7 @@ class SwapModuleNew {
 
 }
 
-extension SwapModuleNew {
+extension SwapModule {
 
     class DataSourceState {
         var coinFrom: Coin?
@@ -73,7 +73,7 @@ extension SwapModuleNew {
 
     }
 
-    class DexNew {
+    class Dex {
         var blockchain: Blockchain {
             didSet {
                 if !blockchain.allowedProviders.contains(provider) {
@@ -113,7 +113,7 @@ extension SwapModuleNew {
 
 }
 
-extension SwapModuleNew {
+extension SwapModule {
 
     enum SwapError: Error {
         case noBalanceIn
@@ -124,7 +124,7 @@ extension SwapModuleNew {
 
 }
 
-extension SwapModuleNew.DexNew {
+extension SwapModule.Dex {
 
     enum Blockchain: String {
         case ethereum

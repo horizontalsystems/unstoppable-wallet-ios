@@ -41,7 +41,7 @@ extension SwapSelectProviderService {
         itemsRelay.asObservable()
     }
 
-    func set(provider: SwapModuleNew.DexNew.Provider) {
+    func set(provider: SwapModule.Dex.Provider) {
         dexManager.set(provider: provider)
 
         syncItems()
@@ -52,7 +52,7 @@ extension SwapSelectProviderService {
 extension SwapSelectProviderService {
 
     struct Item {
-        let provider: SwapModuleNew.DexNew.Provider
+        let provider: SwapModule.Dex.Provider
         let selected: Bool
     }
 

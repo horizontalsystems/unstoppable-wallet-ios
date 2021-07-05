@@ -270,7 +270,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSwap(wallet: Wallet) {
-        if let module = SwapModuleNew.viewController(coinFrom: wallet.coin) {
+        if let module = SwapModule.viewController(coinFrom: wallet.coin) {
             present(module, animated: true)
         }
     }

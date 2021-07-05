@@ -78,7 +78,7 @@ class UniswapTradeService {
         }
     }
 
-    init(uniswapProvider: UniswapProvider, state: SwapModuleNew.DataSourceState, evmKit: EthereumKit.Kit) {
+    init(uniswapProvider: UniswapProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
         self.uniswapProvider = uniswapProvider
         coinIn = state.coinFrom
         coinOut = state.coinTo

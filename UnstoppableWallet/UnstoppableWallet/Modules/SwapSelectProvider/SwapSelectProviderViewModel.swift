@@ -66,7 +66,7 @@ extension SwapSelectProviderViewModel {
 
 }
 
-extension SwapModuleNew.DexNew.Provider {
+extension SwapModule.Dex.Provider {
 
     var icon: String {
         switch self {

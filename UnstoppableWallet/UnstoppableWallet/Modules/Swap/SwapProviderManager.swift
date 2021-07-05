@@ -17,7 +17,7 @@ class SwapProviderManager {
     }
 
     private let dexUpdatedRelay = PublishRelay<()>()
-    var dex: SwapModuleNew.DexNew? {
+    var dex: SwapModule.Dex? {
         didSet {
             dexUpdatedRelay.accept(())
         }
@@ -30,7 +30,7 @@ class SwapProviderManager {
     }
 
     private func initSectionsDataSource(coinFrom: Coin?) {
-        let blockchain: SwapModuleNew.DexNew.Blockchain?
+        let blockchain: SwapModule.Dex.Blockchain?
         switch coinFrom?.type {
         case .ethereum, .erc20:
             blockchain = .ethereum
@@ -54,14 +54,14 @@ class SwapProviderManager {
         }
 
         let dexProvider = localStorage.defaultProvider(blockchain: blockchain)
-        let dex = SwapModuleNew.DexNew(blockchain: blockchain, provider: dexProvider)
+        let dex = SwapModule.Dex(blockchain: blockchain, provider: dexProvider)
 
         dataSourceProvider = provider(dex: dex, coinFrom: coinFrom)
         self.dex = dex
     }
 
-    private func provider(dex: SwapModuleNew.DexNew, coinFrom: Coin? = nil) -> ISwapProvider? {
-        let state = dataSourceProvider?.swapState ?? SwapModuleNew.DataSourceState(coinFrom: coinFrom)
+    private func provider(dex: SwapModule.Dex, coinFrom: Coin? = nil) -> ISwapProvider? {
+        let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(coinFrom: coinFrom)
 
         switch dex.provider {
         case .uniswap, .pancake:
@@ -75,18 +75,18 @@ class SwapProviderManager {
 
 extension SwapProviderManager: ISwapDexManager {
 
-    func set(provider: SwapModuleNew.DexNew.Provider) {
+    func set(provider: SwapModule.Dex.Provider) {
         guard provider != dex?.provider else {
             return
         }
 
-        let dex: SwapModuleNew.DexNew
+        let dex: SwapModule.Dex
         if let oldDex = self.dex {
             oldDex.provider = provider
             dex = oldDex
         } else {
             let blockchain = provider.allowedBlockchains[0]
-            dex = SwapModuleNew.DexNew(blockchain: blockchain, provider: provider)
+            dex = SwapModule.Dex(blockchain: blockchain, provider: provider)
         }
 
         self.dex = dex

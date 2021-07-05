@@ -9,7 +9,7 @@ import Foundation
 import CoinKit
 
 class UniswapService {
-    let dex: SwapModuleNew.DexNew
+    let dex: SwapModule.Dex
     private let tradeService: UniswapTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
@@ -49,7 +49,7 @@ class UniswapService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
 
-    init(dex: SwapModuleNew.DexNew, tradeService: UniswapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, tradeService: UniswapTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService
@@ -113,7 +113,7 @@ class UniswapService {
             loading = true
         case .ready(let trade):
             if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
-                allErrors.append(SwapModuleNew.SwapError.forbiddenPriceImpactLevel)
+                allErrors.append(SwapModule.SwapError.forbiddenPriceImpactLevel)
             }
 
             transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
@@ -127,7 +127,7 @@ class UniswapService {
                 loading = true
             case .ready(let allowance):
                 if tradeService.amountIn > allowance.value {
-                    allErrors.append(SwapModuleNew.SwapError.insufficientAllowance)
+                    allErrors.append(SwapModule.SwapError.insufficientAllowance)
                 }
             case .notReady(let error):
                 allErrors.append(error)
@@ -136,10 +136,10 @@ class UniswapService {
 
         if let balanceIn = balanceIn {
             if tradeService.amountIn > balanceIn {
-                allErrors.append(SwapModuleNew.SwapError.insufficientBalanceIn)
+                allErrors.append(SwapModule.SwapError.insufficientBalanceIn)
             }
         } else {
-            allErrors.append(SwapModuleNew.SwapError.noBalanceIn)
+            allErrors.append(SwapModule.SwapError.noBalanceIn)
         }
 
         if pendingAllowanceService.isPending {

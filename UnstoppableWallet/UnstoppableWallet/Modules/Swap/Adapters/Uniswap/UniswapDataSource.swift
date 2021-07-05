@@ -15,12 +15,13 @@ class UniswapDataSource {
     private let viewModel: UniswapViewModel
 
     private let fromCoinCardCell: SwapCoinCardCell
-    private let priceCell = SwapPriceCell()
+    private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
     private let poweredByCell = AdditionalDataCellNew()
+    private let priceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -46,7 +47,7 @@ class UniswapDataSource {
         toCoinCardCell.presentDelegate = self
         allowanceCell.delegate = self
 
-        priceCell.onSwitch = { [weak self] in
+        switchCell.onSwitch = { [weak self] in
             self?.viewModel.onTapSwitch()
         }
 
@@ -64,6 +65,8 @@ class UniswapDataSource {
         poweredByCell.title = "swap.powered_by".localized
         poweredByCell.value = viewModel.dexName
 
+        priceCell.title = "swap.price".localized
+        priceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -91,7 +94,7 @@ class UniswapDataSource {
     }
 
     private func handle(loading: Bool) {
-        priceCell.set(loading: loading)
+        switchCell.set(loading: loading)
     }
 
     private func handle(error: String?) {
@@ -106,7 +109,12 @@ class UniswapDataSource {
     }
 
     private func handle(tradeViewItem: UniswapViewModel.TradeViewItem?) {
-        priceCell.set(price: tradeViewItem?.executionPrice)
+        if let viewItem = tradeViewItem?.executionPrice {
+            priceCell.isVisible = true
+            priceCell.value = viewItem
+        } else {
+            priceCell.isVisible = false
+        }
 
         if let viewItem = tradeViewItem?.priceImpact {
             priceImpactCell.isVisible = true
@@ -208,9 +216,9 @@ class UniswapDataSource {
 
 extension UniswapDataSource: ISwapDataSource {
 
-    var state: SwapModuleNew.DataSourceState {
+    var state: SwapModule.DataSourceState {
         let exactIn = viewModel.tradeService.tradeType == .exactIn
-        return SwapModuleNew.DataSourceState(
+        return SwapModule.DataSourceState(
                 coinFrom: viewModel.tradeService.coinIn,
                 coinTo: viewModel.tradeService.coinOut,
                 amountFrom: viewModel.tradeService.amountIn,
@@ -230,9 +238,9 @@ extension UniswapDataSource: ISwapDataSource {
                             height: fromCoinCardCell.cellHeight
                     ),
                     StaticRow(
-                            cell: priceCell,
+                            cell: switchCell,
                             id: "price",
-                            height: priceCell.cellHeight
+                            height: switchCell.cellHeight
                     ),
                     StaticRow(
                             cell: toCoinCardCell,
@@ -266,6 +274,11 @@ extension UniswapDataSource: ISwapDataSource {
                             cell: poweredByCell,
                             id: "powered_by",
                             height: poweredByCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: priceCell,
+                            id: "execution-price",
+                            height: priceCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,
