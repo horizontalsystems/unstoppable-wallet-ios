@@ -19,8 +19,8 @@ def appPods
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', '~> 0.12.0-alpha.3'
-  # pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.12.0-alpha.7'
+#   pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
   pod 'CoinKit.swift', git: 'https://github.com/horizontalsystems/coin-kit-ios'
   # pod 'CoinKit.swift', path: '../coin-kit-ios/'
 
@@ -125,7 +125,7 @@ post_install do |installer|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
 
       if target.name == 'ZcashLightClientKit'
-         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "MAINNET"
+         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "TESTNET"
       end
 
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
