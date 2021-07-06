@@ -100,7 +100,7 @@ PODS:
   - Down (0.11.0)
   - Erc20Kit.swift (0.14.0):
     - BigInt (~> 5.0)
-    - EthereumKit.swift (~> 0.13)
+    - EthereumKit.swift (~> 0.14)
     - GRDB.swift (~> 5.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
@@ -176,7 +176,8 @@ PODS:
   - ObjectMapper (4.2.0)
   - OneInchKit.swift (0.1.0):
     - BigInt (~> 5.0)
-    - EthereumKit.swift (~> 0.13)
+    - Erc20Kit.swift (~> 0.12)
+    - EthereumKit.swift (~> 0.12)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
@@ -286,8 +287,8 @@ PODS:
   - UIExtensions.swift (1.1.1)
   - UniswapKit.swift (0.10.0):
     - BigInt (~> 5.0)
-    - Erc20Kit.swift (~> 0.13)
-    - EthereumKit.swift (~> 0.13)
+    - Erc20Kit.swift (~> 0.14)
+    - EthereumKit.swift (~> 0.14)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
@@ -515,13 +516,13 @@ CHECKOUT OPTIONS:
     :commit: d897cb69ac05b5a2a72c250224e035c92c9a8fd5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: ff4a2c6760ff024ad85a4aa003127b1532d6369d
+    :commit: 1ad2ca19b43f3cc2459a97eded2a4a049e99cd5f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: ff4a2c6760ff024ad85a4aa003127b1532d6369d
+    :commit: 1ad2ca19b43f3cc2459a97eded2a4a049e99cd5f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 763394a92bdf091517376776bccecf9e7edbb49f
@@ -548,7 +549,7 @@ CHECKOUT OPTIONS:
     :commit: 8f1d9c0b566108844f024d09a4b214c64909e259
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
-    :commit: 3360a2f83e9e505ce547d872b901f70a765896c7
+    :commit: 1ad2ca19b43f3cc2459a97eded2a4a049e99cd5f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :commit: 885640bd1bcf33fc38f0f7955bd3f68c7200af4e
@@ -569,7 +570,7 @@ CHECKOUT OPTIONS:
     :commit: 901c8efb58e92e7665419a4e8f627d83f2293cf3
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: ff4a2c6760ff024ad85a4aa003127b1532d6369d
+    :commit: 1ad2ca19b43f3cc2459a97eded2a4a049e99cd5f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
@@ -608,7 +609,7 @@ SPEC CHECKSUMS:
   DashKit.swift: ffd3cf2fd9f80ac925b95a2d89a198bc5cdd9c9c
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
-  Erc20Kit.swift: 5b08c85c9c21249521c95d6e798bbefa1be92350
+  Erc20Kit.swift: 86619dc773ca4ac834999013f1aafe336247e0df
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
   EthereumKit.swift: 3c791f8a7883751a663e23a3c37c060d5c817d3c
@@ -626,7 +627,7 @@ SPEC CHECKSUMS:
   ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  OneInchKit.swift: a4995aaea38d202a5f4bd08278771b013e1e0cae
+  OneInchKit.swift: 3b709dd9d0c23c4f19fcee7780fb35a4f66faeeb
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
   PinKit.swift: a2e489a5391f8e1be11b328ec9e488cdd6888a86
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
@@ -657,7 +658,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   ThemeKit.swift: 2a118eb5bdd9c49bdd41daa3f7ca2033628f98be
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
-  UniswapKit.swift: 66f62bf8f07375c7e11ee0786f31d81a6093eec8
+  UniswapKit.swift: c888d0636f74ab08c9cf5bf801d6a1c04a9cf2ea
   UnstoppableDomainsResolution: 4045ac894785f1b245f14c5a1e43ce51e59aee0c
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049

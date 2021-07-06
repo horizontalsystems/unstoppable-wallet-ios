@@ -3,6 +3,7 @@ import RxRelay
 import EthereumKit
 import Erc20Kit
 import UniswapKit
+import OneInchKit
 
 protocol IEvmKitManagerDataSource {
     var explorerApiKey: String { get }
@@ -62,6 +63,7 @@ class EvmKitManager {
 
         evmKit.add(decorator: Erc20Kit.Kit.decorator(evmKit: evmKit))
         evmKit.add(decorator: UniswapKit.Kit.decorator(evmKit: evmKit))
+        evmKit.add(decorator: OneInchKit.Kit.decorator(evmKit: evmKit))
         evmKit.add(transactionSyncer: Erc20Kit.Kit.getTransactionSyncer(evmKit: evmKit))
 
         evmKit.start()
