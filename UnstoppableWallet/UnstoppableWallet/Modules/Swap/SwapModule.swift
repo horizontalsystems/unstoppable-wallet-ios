@@ -80,8 +80,9 @@ extension SwapModule {
     class Dex {
         var blockchain: Blockchain {
             didSet {
-                if !blockchain.allowedProviders.contains(provider) {
-                    provider = blockchain.allowedProviders[0]
+                let allowedProviders = blockchain.allowedProviders
+                if !allowedProviders.contains(provider) {
+                    provider = allowedProviders[0]
                 }
             }
         }
@@ -97,20 +98,6 @@ extension SwapModule {
         init(blockchain: Blockchain, provider: Provider) {
             self.blockchain = blockchain
             self.provider = provider
-        }
-
-        var evmKit: EthereumKit.Kit? {
-            switch blockchain {
-            case .ethereum: return App.shared.ethereumKitManager.evmKit
-            case .binanceSmartChain: return App.shared.binanceSmartChainKitManager.evmKit
-            }
-        }
-
-        var coin: Coin? {
-            switch blockchain {
-            case .ethereum: return App.shared.coinKit.coin(type: .ethereum)
-            case .binanceSmartChain: return App.shared.coinKit.coin(type: .binanceSmartChain)
-            }
         }
 
     }
@@ -136,9 +123,27 @@ extension SwapModule.Dex {
 
         var allowedProviders: [Provider] {
             switch self {
-            case .ethereum: return [.uniswap, .oneInch]
-            case .binanceSmartChain: return [.pancake, .oneInch]
+            case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
+            case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
             }
+        }
+
+        var evmKit: EthereumKit.Kit? {
+            switch self {
+            case .ethereum: return App.shared.ethereumKitManager.evmKit
+            case .binanceSmartChain: return App.shared.binanceSmartChainKitManager.evmKit
+            }
+        }
+
+        var coin: Coin? {
+            switch self {
+            case .ethereum: return App.shared.coinKit.coin(type: .ethereum)
+            case .binanceSmartChain: return App.shared.coinKit.coin(type: .binanceSmartChain)
+            }
+        }
+
+        var isMainNet: Bool {
+            evmKit?.networkType.isMainNet ?? true
         }
 
     }

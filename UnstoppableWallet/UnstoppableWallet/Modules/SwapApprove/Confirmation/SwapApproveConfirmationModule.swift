@@ -5,7 +5,7 @@ import EthereumKit
 struct SwapApproveConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex, delegate: ISwapApproveDelegate?) -> UIViewController? {
-        guard let coin = dex.coin, let evmKit = dex.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let coin = dex.blockchain.coin, let evmKit = dex.blockchain.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 
