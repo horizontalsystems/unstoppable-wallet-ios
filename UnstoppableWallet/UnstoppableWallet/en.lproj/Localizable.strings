@@ -454,13 +454,16 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
-"coin_page.markets" = "%@ Markets";
+"coin_page.markets" = "Markets";
+"coin_page.coin_markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";
 
 "coin_page.tvl" = "Total Value Locked";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
 "coin_page.tvl_rank" = "TVL Rank";
 "coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+
+"coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Category";
 "coin_page.contract" = "%@ Contract";

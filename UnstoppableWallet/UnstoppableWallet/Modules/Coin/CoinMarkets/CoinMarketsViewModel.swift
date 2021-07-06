@@ -20,7 +20,7 @@ class CoinMarketsViewModel {
     }
 
     var title: String {
-        "coin_page.markets".localized(coinCode)
+        "coin_page.coin_markets".localized(coinCode)
     }
 
     var viewItems: [ViewItem] {
