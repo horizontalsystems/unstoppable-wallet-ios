@@ -6,7 +6,7 @@ import CoinKit
 import CurrencyKit
 
 class CoinPageService {
-    private let roiCoinCodes = ["BTC", "ETH", "BNB"]
+    private let roiCoinCodes = ["BTC", "ETH"]
     static let timePeriods: [TimePeriod] = [.day7, .day30]
 
     private var disposeBag = DisposeBag()
