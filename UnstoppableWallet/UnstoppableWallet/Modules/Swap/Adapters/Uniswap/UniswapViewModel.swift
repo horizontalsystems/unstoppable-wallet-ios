@@ -120,29 +120,24 @@ class UniswapViewModel {
         let approveAction: ActionState
         let approveStep: SwapModule.ApproveStepState
 
-        switch pendingAllowanceService.state {
-        case .pending:
+        if case .pending = pendingAllowanceService.state {
             approveAction = .disabled(title: "swap.approving_button".localized)
             approveStep = .approving
-        case .approved:
+        } else if case .notReady = tradeService.state {
+            approveAction = .hidden
+            approveStep = .notApproved
+        } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
+            approveAction = .hidden
+            approveStep = .notApproved
+        } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
+            approveAction = .enabled(title: "button.approve".localized)
+            approveStep = .approveRequired
+        } else if case .approved = pendingAllowanceService.state {
             approveAction = .disabled(title: "button.approve".localized)
             approveStep = .approved
-        default:
-            if case .ready = tradeService.state {
-                if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
-                    approveAction = .hidden
-                    approveStep = .notApproved
-                } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
-                    approveAction = .enabled(title: "button.approve".localized)
-                    approveStep = .approveRequired
-                } else {
-                    approveAction = .hidden
-                    approveStep = .notApproved
-                }
-            } else {
-                approveAction = .hidden
-                approveStep = .notApproved
-            }
+        } else {
+            approveAction = .hidden
+            approveStep = .notApproved
         }
 
         approveActionRelay.accept(approveAction)

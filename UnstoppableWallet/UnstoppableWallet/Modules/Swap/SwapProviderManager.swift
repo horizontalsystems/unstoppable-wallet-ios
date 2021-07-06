@@ -43,10 +43,6 @@ class SwapProviderManager {
             return
         }
 
-        if dex?.blockchain == blockchain {
-            return
-        }
-
         guard let blockchain = blockchain else {
             dex = nil
             dataSourceProvider = nil

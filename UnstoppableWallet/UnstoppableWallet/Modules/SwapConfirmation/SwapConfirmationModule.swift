@@ -6,7 +6,7 @@ import OneInchKit
 struct SwapConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let coin = dex.coin, let evmKit = dex.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let coin = dex.blockchain.coin, let evmKit = dex.blockchain.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
 
@@ -21,8 +21,8 @@ struct SwapConfirmationModule {
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let coin = dex.coin,
-              let evmKit = dex.evmKit,
+        guard let coin = dex.blockchain.coin,
+              let evmKit = dex.blockchain.evmKit,
               let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
             return nil
         }
