@@ -17,7 +17,7 @@ class ZcashAdapter {
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool
-
+    private let address: UnifiedAddress
     private let uniqueId: String
     private let keys: [String]
     private let loggingProxy = ZcashLogger(logLevel: .debug)
@@ -70,6 +70,13 @@ class ZcashAdapter {
         let seedData = [UInt8](seed)
         let unifiedViewingKeys = try DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
         
+        guard let uvk = unifiedViewingKeys.first,
+              let ua = try? DerivationTool.default.deriveUnifiedAddressFromUnifiedViewingKey(uvk) else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        self.address = ua
+
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
                 pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
@@ -136,7 +143,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
+            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: Date())
         }
     }
 
@@ -145,6 +152,8 @@ class ZcashAdapter {
         var blockDate: Date? = nil
         if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
             blockDate = blockTime
+        } else {
+            blockDate = Date()
         }
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
@@ -481,7 +490,7 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        synchronizer.getShieldedAddress(accountIndex: 0) ?? "" //FIXME: address nullabilty issue
+        self.address.zAddress
     }
 
 }
