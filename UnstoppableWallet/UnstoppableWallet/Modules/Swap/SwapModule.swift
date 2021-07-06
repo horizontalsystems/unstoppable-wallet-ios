@@ -56,6 +56,10 @@ class SwapModule {
 
 extension SwapModule {
 
+    enum ApproveStepState: Int {
+        case notApproved, approveRequired, approving, approved
+    }
+
     class DataSourceState {
         var coinFrom: Coin?
         var coinTo: Coin?

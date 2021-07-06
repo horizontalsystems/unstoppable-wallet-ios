@@ -20,6 +20,7 @@ class OneInchViewModel {
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
+    private var approveStepRelay = BehaviorRelay<SwapModule.ApproveStepState>(value: .notApproved)
     private var openConfirmRelay = PublishRelay<OneInchSwapParameters>()
 
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
@@ -43,8 +44,7 @@ class OneInchViewModel {
     private func subscribeToService() {
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
-//        subscribe(scheduler, disposeBag, tradeService.swapTradeOptionsObservable) { [weak self] in self?.sync(swapTradeOptions: $0) }
-        subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] in self?.sync(isApprovePending: $0) }
+        subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.syncPendingApproveState() }
     }
 
     private func sync(state: OneInchService.State? = nil) {
@@ -72,7 +72,7 @@ class OneInchViewModel {
         syncProceedAction()
     }
 
-    private func sync(isApprovePending: Bool) {
+    private func syncPendingApproveState() {
         syncProceedAction()
         syncApproveAction()
     }
@@ -85,7 +85,7 @@ class OneInchViewModel {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
             } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
-            } else if pendingAllowanceService.isPending == true {
+            } else if pendingAllowanceService.state == .pending {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             } else {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
@@ -96,19 +96,36 @@ class OneInchViewModel {
     }
 
     private func syncApproveAction() {
-        if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
-                approveActionRelay.accept(.hidden)
-            } else if pendingAllowanceService.isPending == true {
-                approveActionRelay.accept(.disabled(title: "swap.approving_button".localized))
-            } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
-                approveActionRelay.accept(.enabled(title: "button.approve".localized))
+        let approveAction: ActionState
+        let approveStep: SwapModule.ApproveStepState
+
+        switch pendingAllowanceService.state {
+        case .pending:
+            approveAction = .disabled(title: "swap.approving_button".localized)
+            approveStep = .approving
+        case .approved:
+            approveAction = .disabled(title: "button.approve".localized)
+            approveStep = .approved
+        default:
+            if case .ready = tradeService.state {
+                if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
+                    approveAction = .hidden
+                    approveStep = .notApproved
+                } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
+                    approveAction = .enabled(title: "button.approve".localized)
+                    approveStep = .approveRequired
+                } else {
+                    approveAction = .hidden
+                    approveStep = .notApproved
+                }
             } else {
-                approveActionRelay.accept(.hidden)
+                approveAction = .hidden
+                approveStep = .notApproved
             }
-        } else {
-            approveActionRelay.accept(.hidden)
         }
+
+        approveActionRelay.accept(approveAction)
+        approveStepRelay.accept(approveStep)
     }
 
 }
@@ -129,6 +146,10 @@ extension OneInchViewModel {
 
     var approveActionDriver: Driver<ActionState> {
         approveActionRelay.asDriver()
+    }
+
+    var approveStepDriver: Driver<SwapModule.ApproveStepState> {
+        approveStepRelay.asDriver()
     }
 
     var openApproveSignal: Signal<SwapAllowanceService.ApproveData> {

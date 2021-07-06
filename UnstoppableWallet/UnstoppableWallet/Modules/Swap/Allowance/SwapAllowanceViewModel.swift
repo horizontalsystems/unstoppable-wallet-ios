@@ -35,7 +35,7 @@ class SwapAllowanceViewModel {
             return
         }
 
-        guard !pendingAllowanceService.isPending else {
+        guard pendingAllowanceService.state != .pending else {
             isVisible = true
             return
         }
