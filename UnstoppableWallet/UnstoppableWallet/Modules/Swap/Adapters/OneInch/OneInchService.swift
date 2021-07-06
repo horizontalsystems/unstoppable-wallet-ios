@@ -75,8 +75,8 @@ class OneInchService {
         subscribe(scheduler, disposeBag, allowanceService.stateObservable) { [weak self] _ in
             self?.syncState()
         }
-        subscribe(scheduler, disposeBag, pendingAllowanceService.isPendingObservable) { [weak self] isPending in
-            self?.onUpdate(isAllowancePending: isPending)
+        subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in
+            self?.onUpdateAllowanceState()
         }
     }
 
@@ -98,7 +98,7 @@ class OneInchService {
         balanceOut = coinOut.flatMap { balance(coin: $0) }
     }
 
-    private func onUpdate(isAllowancePending: Bool) {
+    private func onUpdateAllowanceState() {
         syncState()
     }
 
@@ -138,7 +138,7 @@ class OneInchService {
             allErrors.append(SwapModule.SwapError.noBalanceIn)
         }
 
-        if pendingAllowanceService.isPending {
+        if pendingAllowanceService.state == .pending {
             loading = true
         }
 

@@ -14,11 +14,11 @@ class SwapPendingAllowanceService {
 
     private let disposeBag = DisposeBag()
 
-    private let isPendingRelay = PublishRelay<Bool>()
-    private(set) var isPending: Bool = false {
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = .notAllowed {
         didSet {
-            if oldValue != isPending {
-                isPendingRelay.accept(isPending)
+            if oldValue != state {
+                stateRelay.accept(state)
             }
         }
     }
@@ -37,25 +37,30 @@ class SwapPendingAllowanceService {
     }
 
     private func sync() {
+        print("Pending allowance: \(pendingAllowance ?? -1)")
         guard let pendingAllowance = pendingAllowance else {
-            isPending = false
+            print("new state: .notAllowed")
+            state = .notAllowed
             return
         }
 
+        print("allowance state: \(allowanceService.state)")
         guard case .ready(let allowance) = allowanceService.state else {
-            isPending = false
+            print("new state: .notAllowed")
+            state = .notAllowed
             return
         }
 
-        isPending = pendingAllowance != allowance.value
+        print("new state: \(pendingAllowance != allowance.value ? State.pending : State.approved)")
+        state = pendingAllowance != allowance.value ? .pending : .approved
     }
 
 }
 
 extension SwapPendingAllowanceService {
 
-    var isPendingObservable: Observable<Bool> {
-        isPendingRelay.asObservable()
+    var stateObservable: Observable<State> {
+        stateRelay.asObservable()
     }
 
     func set(coin: Coin?) {
@@ -77,6 +82,14 @@ extension SwapPendingAllowanceService {
         }
 
         sync()
+    }
+
+}
+
+extension SwapPendingAllowanceService {
+
+    enum State: Int {
+        case notAllowed, pending, approved
     }
 
 }

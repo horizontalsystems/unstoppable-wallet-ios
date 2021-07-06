@@ -30,6 +30,7 @@ class UniswapDataSource {
     private let buttonStackCell = StackViewCell()
     private let approveButton = ThemeButton()
     private let proceedButton = ThemeButton()
+    private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
     var onOpenSettings: (() -> ())? = nil
@@ -88,6 +89,7 @@ class UniswapDataSource {
         subscribe(disposeBag, viewModel.settingsViewItemDriver) { [weak self] in self?.handle(settingsViewItem: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
+        subscribe(disposeBag, viewModel.approveStepDriver) { [weak self] in self?.handle(approveStepState: $0) }
 
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(sendData: $0) }
@@ -182,6 +184,21 @@ class UniswapDataSource {
             button.isEnabled = false
             button.setTitle(title, for: .normal)
         }
+    }
+
+    private func handle(approveStepState: SwapModule.ApproveStepState) {
+        switch approveStepState {
+        case .approveRequired, .approving:
+            approveStepCell.isVisible = true
+            approveStepCell.set(first: true)
+        case .approved:
+            approveStepCell.isVisible = true
+            approveStepCell.set(first: false)
+        case .notApproved:
+            approveStepCell.isVisible = false
+        }
+
+        onReload?()
     }
 
     @objc private func onTapApproveButton() {
@@ -312,13 +329,25 @@ extension UniswapDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "buttons",
-                headerState: .margin(height: .margin4x),
-                footerState: .margin(height: .margin8x),
+                headerState: .margin(height: .margin16),
+                footerState: .margin(height: .margin24),
                 rows: [
                     StaticRow(
                             cell: buttonStackCell,
                             id: "button",
                             height: ThemeButton.height(style: .primaryYellow)
+                    )
+                ]
+        ))
+
+        sections.append(Section(
+                id: "approve-steps",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                            cell: approveStepCell,
+                            id: "steps",
+                            height: approveStepCell.cellHeight
                     )
                 ]
         ))
