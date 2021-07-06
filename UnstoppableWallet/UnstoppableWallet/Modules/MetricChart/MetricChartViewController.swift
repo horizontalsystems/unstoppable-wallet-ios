@@ -14,6 +14,7 @@ class MetricChartViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let poweredByLabel = UILabel()
 
     /* Chart section */
     private let currentRateCell: MetricChartCurrentInfoCell
@@ -73,7 +74,6 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4)
         }
 
         title = viewModel.title
@@ -88,6 +88,18 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
         tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
+
+        view.addSubview(poweredByLabel)
+        poweredByLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(tableView.snp.bottom)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin12 + CGFloat.margin16)
+        }
+
+        poweredByLabel.textAlignment = .center
+        poweredByLabel.textColor = .themeGray
+        poweredByLabel.font = .caption
+        poweredByLabel.text = "Powered By DefiLlama API"
 
         chartIntervalAndSelectedRateCell.bind(filters: viewModel.chartTypes.map {
             .item(title: $0)
