@@ -2,6 +2,7 @@ import Foundation
 import EthereumKit
 import Erc20Kit
 import UniswapKit
+import OneInchKit
 import CoinKit
 import BigInt
 
@@ -40,6 +41,19 @@ class EvmTransactionConverter {
     }
 
     private func convertToCoin(token: SwapMethodDecoration.Token) -> Coin {
+        switch token {
+        case .evmCoin:
+            return baseCoin
+
+        case .eip20Coin(let tokenAddress):
+            switch evmKit.networkType {
+            case .bscMainNet: return coinManager.coinOrStub(type: .bep20(address: tokenAddress.hex))
+            default: return coinManager.coinOrStub(type: .erc20(address: tokenAddress.hex))
+            }
+        }
+    }
+
+    private func convertToCoin(token: OneInchMethodDecoration.Token) -> Coin {
         switch token {
         case .evmCoin:
             return baseCoin
@@ -104,6 +118,34 @@ class EvmTransactionConverter {
                     amountOut: decoration.to == evmKit.address ? convertAmount(amount: resolvedAmountOut, decimal: tokenOut.decimal, sign: .plus) : nil
             )
 
+        case let decoration as OneInchUnoswapMethodDecoration:
+            let tokenIn = convertToCoin(token: decoration.tokenIn)
+            let tokenOut = decoration.tokenOut.flatMap { convertToCoin(token: $0) }
+
+            return SwapTransactionRecord(
+                    fullTransaction: fullTransaction,
+                    baseCoin: baseCoin,
+                    exchangeAddress: to.eip55,
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
+                    amountOut: tokenOut.flatMap { convertAmount(amount: decoration.amountOut, decimal: $0.decimal, sign: .plus) }
+            )
+
+        case let decoration as OneInchSwapMethodDecoration:
+            let tokenIn = convertToCoin(token: decoration.tokenIn)
+            let tokenOut = convertToCoin(token: decoration.tokenOut)
+
+            return SwapTransactionRecord(
+                    fullTransaction: fullTransaction,
+                    baseCoin: baseCoin,
+                    exchangeAddress: to.eip55,
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
+                    amountOut: decoration.recipient == evmKit.address ? convertAmount(amount: decoration.amountOut, decimal: tokenOut.decimal, sign: .plus) : nil
+            )
+
         case let decoration as RecognizedMethodDecoration:
             return ContractCallTransactionRecord(
                     fullTransaction: fullTransaction,
@@ -136,29 +178,6 @@ class EvmTransactionConverter {
                         baseCoin: baseCoin,
                         amount: convertAmount(amount: decoration.value, decimal: token.decimal, sign: .plus),
                         from: decoration.to.eip55,
-                        token: token
-                )
-            }
-
-        case let decoration as SwapMethodDecoration:
-            if decoration.to == evmKit.address {
-                let resolvedAmountOut: BigUInt
-
-                switch decoration.trade {
-                case .exactIn(let amountIn, let amountOutMin, let amountOut):
-                    resolvedAmountOut = amountOut ?? amountOutMin
-
-                case .exactOut(let amountOut, let amountInMax, let amountIn):
-                    resolvedAmountOut = amountOut
-                }
-
-                let token = convertToCoin(token: decoration.tokenOut)
-
-                return EvmIncomingTransactionRecord(
-                        fullTransaction: fullTransaction,
-                        baseCoin: baseCoin,
-                        amount: convertAmount(amount: resolvedAmountOut, decimal: token.decimal, sign: .plus),
-                        from: fullTransaction.transaction.from.eip55,
                         token: token
                 )
             }
