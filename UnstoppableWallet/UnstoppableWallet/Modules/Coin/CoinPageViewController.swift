@@ -91,13 +91,13 @@ class CoinPageViewController: ThemeViewController {
         tableView.showsVerticalScrollIndicator = false
 
         tableView.registerCell(forClass: A1Cell.self)
+        tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: B4Cell.self)
         tableView.registerCell(forClass: D1Cell.self)
         tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerCell(forClass: CoinCategoryHeaderCell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
@@ -357,23 +357,26 @@ extension CoinPageViewController {
     }
 
     private func headerRow(title: String) -> RowProtocol {
-        Row<CoinCategoryHeaderCell>(
+        Row<BCell>(
                 id: "header_cell_\(title)",
                 hash: title,
-                height: .heightSingleLineCell,
+                height: .heightCell48,
                 bind: { cell, _ in
+                    cell.set(backgroundStyle: .transparent)
+                    cell.selectionStyle = .none
                     cell.title = title
                 }
         )
     }
 
     private func descriptionSection(description: CoinMetaDescriptionType) -> SectionProtocol {
-        var rows = [RowProtocol]()
+        var rows: [RowProtocol] = [
+            headerRow(title: "chart.about.header".localized)
+        ]
 
         let markdownText: String
         switch description {
         case let .html(text):
-            rows.append(headerRow(title: "chart.about.header".localized))
             markdownText = text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         case let .markdown(text):
             markdownText = text
@@ -388,6 +391,7 @@ extension CoinPageViewController {
                             self?.descriptionTextCell.cellHeight(containerWidth: containerWidth) ?? 0
                         }
                 ))
+
         return Section(
                 id: "description",
                 headerState: .margin(height: .margin12),
@@ -464,21 +468,40 @@ extension CoinPageViewController {
         )
     }
 
-    private func marketsSection(marketInfo: CoinPageViewModel.MarketInfo, fundCategories: [CoinFundCategory], tickers: [MarketTicker]) -> SectionProtocol? {
+    private func marketsSection(marketInfo: CoinPageViewModel.MarketInfo, tickers: [MarketTicker]) -> SectionProtocol? {
         var rows = [RowProtocol]()
 
         let hasVolume = marketInfo.volume24h != nil
-        let hasInvestors = !fundCategories.isEmpty
+        let hasMarkets = !tickers.isEmpty
 
         if let volume = marketInfo.volume24h {
-            let marketsRow = Row<D2Cell>(
+            let tradingVolumeRow = Row<D6Cell>(
                     id: "trading-volume",
                     height: .heightCell48,
+                    autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasInvestors)
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasMarkets)
                         cell.title = "coin_page.trading_volume".localized
                         cell.value = volume
                         cell.valueColor = .themeOz
+                        cell.valueImage = UIImage(named: "chart_20")
+                        cell.valueImageTintColor = .themeGray
+                    },
+                    action: { [weak self] _ in
+                        // todo
+                    }
+            )
+
+            rows.append(tradingVolumeRow)
+        }
+
+        if !tickers.isEmpty {
+            let marketsRow = Row<D1Cell>(
+                    id: "markets",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasVolume, isLast: true)
+                        cell.title = "coin_page.markets".localized
                     },
                     action: { [weak self] _ in
                         self?.openMarkets(tickers: tickers)
@@ -486,22 +509,6 @@ extension CoinPageViewController {
             )
 
             rows.append(marketsRow)
-        }
-
-        if !fundCategories.isEmpty {
-            let fundsInvestedRow = Row<D1Cell>(
-                    id: "funds-invested",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasVolume, isLast: true)
-                        cell.title = "coin_page.funds_invested".localized
-                    },
-                    action: { [weak self] _ in
-                        self?.openFundsInvested(fundCategories: fundCategories)
-                    }
-            )
-
-            rows.append(fundsInvestedRow)
         }
 
         if !rows.isEmpty {
@@ -539,13 +546,17 @@ extension CoinPageViewController {
         var rows: [RowProtocol] = [tvlRow]
 
         if let tvlRank = marketInfo.tvlRank {
-            let tvlRankRow = Row<D7Cell>(
+            let tvlRankRow = Row<D2Cell>(
                     id: "market-cap-tvl-rank",
                     height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: !hasRank)
+                        cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: !hasRatio)
                         cell.title = "coin_page.tvl_rank".localized
                         cell.value = tvlRank
+                        cell.valueColor = .themeOz
+                    },
+                    action: { [weak self] _ in
+                        // todo
                     }
             )
 
@@ -622,6 +633,44 @@ extension CoinPageViewController {
                     )
                 ]
         )
+    }
+
+    private func investorDataSections(fundCategories: [CoinFundCategory]) -> [SectionProtocol] {
+        var rows = [RowProtocol]()
+
+        if !fundCategories.isEmpty {
+            let fundsInvestedRow = Row<D2Cell>(
+                    id: "funds-invested",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                        cell.title = "coin_page.funds_invested".localized
+                        cell.value = "todo"
+                        cell.valueColor = .themeOz
+                    },
+                    action: { [weak self] _ in
+                        self?.openFundsInvested(fundCategories: fundCategories)
+                    }
+            )
+
+            rows.append(fundsInvestedRow)
+        }
+
+        if rows.isEmpty {
+            return []
+        } else {
+            return [
+                Section(
+                        id: "investor-data-header",
+                        headerState: .margin(height: .margin12),
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            headerRow(title: "coin_page.investor_data".localized)
+                        ]
+                ),
+                Section(id: "investor-data", rows: rows)
+            ]
+        }
     }
 
     private func contractInfoSection(contractInfo: CoinPageViewModel.ContractInfo) -> SectionProtocol {
@@ -747,7 +796,7 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(marketInfoSection)
             }
 
-            if let marketsSection = marketsSection(marketInfo: viewItem.marketInfo, fundCategories: viewItem.fundCategories, tickers: viewItem.tickers) {
+            if let marketsSection = marketsSection(marketInfo: viewItem.marketInfo, tickers: viewItem.tickers) {
                 sections.append(marketsSection)
             }
 
@@ -755,9 +804,7 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(tvlSection)
             }
 
-            if let contractInfo = viewItem.contractInfo {
-                sections.append(contractInfoSection(contractInfo: contractInfo))
-            }
+            sections.append(contentsOf: investorDataSections(fundCategories: viewItem.fundCategories))
 
             if let categories = viewItem.categories {
                 sections.append(categoriesSection(categories: categories))
@@ -765,6 +812,10 @@ extension CoinPageViewController: SectionsDataSource {
 
             if !viewItem.description.description.isEmpty {
                 sections.append(descriptionSection(description: viewItem.description))
+            }
+
+            if let contractInfo = viewItem.contractInfo {
+                sections.append(contractInfoSection(contractInfo: contractInfo))
             }
 
             if viewItem.guideUrl != nil || !viewItem.links.isEmpty {
