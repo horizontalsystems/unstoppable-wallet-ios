@@ -18,6 +18,7 @@ enum AppError: Error {
 
     enum ZcashError: Error {
         case sendToSelf
+        case noReceiveAddress
     }
 
     enum EthereumError: Error {
@@ -45,6 +46,7 @@ extension AppError: LocalizedError {
         case .zcash(let reason):
             switch reason {
             case .sendToSelf: return "error.send.self_transfer".localized
+            case .noReceiveAddress: return "send.error.invalid_address".localized
             }
         case .ethereum(let reason):
             switch reason {
