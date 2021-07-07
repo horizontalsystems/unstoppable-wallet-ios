@@ -191,12 +191,12 @@ class ZcashAdapter {
     }
 
     @objc private func blockHeightUpdated(_ notification: Notification) {
-//        if let userInfo = notification.userInfo, let blockHeight = userInfo[CompactBlockProcessorNotificationKey.progressHeight] as? BlockHeight {
-//            lastBlockHeight = blockHeight
-//            lastBlockUpdatedSubject.onNext(())
-//        }
-//
-//        balanceUpdatedSubject.onNext(())
+        if let userInfo = notification.userInfo,
+           let progress = userInfo[CompactBlockProcessorNotificationKey.progress] as? CompactBlockProgress,
+           let targetHeight = progress.targetHeight {
+            lastBlockHeight = targetHeight
+            lastBlockUpdatedSubject.onNext(())
+        }
     }
 
     private func syncPending() {
