@@ -71,7 +71,7 @@ extension TransactionsPresenter: ITransactionsViewDelegate {
     }
 
     func willShow(item: TransactionViewItem) {
-        if let mainValue = item.record.mainValue, item.mainAmountCurrencyValue == nil {
+        if let mainValue = item.record.mainValue, item.mainAmountCurrencyString == nil {
             interactor.fetchRate(coin: mainValue.coin, date: item.date)
         }
     }

@@ -18,7 +18,6 @@ class BinanceAdapter {
     }
 
     private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let type: TransactionType
         let fromMine = transaction.from == binanceKit.account
         let toMine = transaction.to == binanceKit.account
 

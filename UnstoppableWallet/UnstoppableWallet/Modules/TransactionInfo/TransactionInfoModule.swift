@@ -22,16 +22,16 @@ extension TransactionInfoModule {
 
     enum ViewItem {
         case actionTitle(title: String, subTitle: String?)
-        case amount(coinValue: CoinValue, currencyValue: CurrencyValue?, incoming: Bool?)
+        case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
         case status(status: TransactionStatus, completed: String, pending: String)
         case date(date: Date)
         case from(value: String)
         case to(value: String)
         case recipient(value: String)
         case id(value: String)
-        case rate(currencyValue: CurrencyValue, coinCode: String)
-        case fee(coinValue: CoinValue, currencyValue: CurrencyValue?)
-        case price(coinValue1: CoinValue, coinValue2: CoinValue)
+        case rate(value: String)
+        case fee(value: String)
+        case price(price: String)
         case doubleSpend
         case lockInfo(lockState: TransactionLockState)
         case sentToSelf

@@ -19,8 +19,4 @@ class EvmOutgoingTransactionRecord: EvmTransactionRecord {
         value
     }
 
-    override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        .outgoing(to: to, coinValue: value, lockState: nil, conflictingTxHash: nil, sentToSelf: sentToSelf)
-    }
-
 }

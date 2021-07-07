@@ -17,8 +17,4 @@ class ApproveTransactionRecord: EvmTransactionRecord {
         value
     }
 
-    override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        .approve(spender: spender, coinValue: value)
-    }
-
 }

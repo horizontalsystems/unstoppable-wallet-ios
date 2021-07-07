@@ -9,7 +9,7 @@ struct TransactionViewItem {
     let date: Date
     let status: TransactionStatus
 
-    var mainAmountCurrencyValue: CurrencyValue?
+    var mainAmountCurrencyString: String?
 }
 
 extension TransactionViewItem: DiffAware {
@@ -20,7 +20,7 @@ extension TransactionViewItem: DiffAware {
 
     public static func compareContent(_ a: TransactionViewItem, _ b: TransactionViewItem) -> Bool {
         a.date == b.date && a.status == b.status &&
-                a.mainAmountCurrencyValue == b.mainAmountCurrencyValue && a.type.compareContent(b.type)
+                a.mainAmountCurrencyString == b.mainAmountCurrencyString && a.type.compareContent(b.type)
     }
 
 }
@@ -49,6 +49,44 @@ extension CurrencyValue {
 
     var nonZero: CurrencyValue? {
         value == 0 ? nil : self
+    }
+
+}
+
+extension TransactionViewItem {
+
+    enum TransactionType {
+        case incoming(from: String?, amount: String, lockState: TransactionLockState?, conflictingTxHash: String?)
+        case outgoing(to: String?, amount: String, lockState: TransactionLockState?, conflictingTxHash: String?, sentToSelf: Bool)
+        case approve(spender: String, amount: String, isMaxAmount: Bool)
+        case swap(exchangeAddress: String, amountIn: String, amountOut: String?, foreignRecipient: Bool)
+        case contractCall(contractAddress: String, method: String?)
+        case contractCreation
+        
+        func compareContent(_ type: TransactionType) -> Bool {
+            switch (self, type) {
+                case (.incoming(_, _, let lhsLockState, let lhsConflictingTxHash), .incoming(_, _, let rhsLockState, let rhsConflictingTxHash)):
+                    return lhsLockState == rhsLockState && lhsConflictingTxHash == rhsConflictingTxHash
+                    
+                case (.outgoing(_, _, let lhsLockState, let lhsConflictingTxHash, _), .outgoing(_, _, let rhsLockState, let rhsConflictingTxHash, _)):
+                    return lhsLockState == rhsLockState && lhsConflictingTxHash == rhsConflictingTxHash
+                    
+                case (.approve, .approve):
+                    return true
+                    
+                case (.swap, .swap):
+                    return true
+                    
+                case (.contractCall, .contractCall):
+                    return true
+                    
+                case (.contractCreation, .contractCreation):
+                    return true
+                    
+                default: return false
+            }
+        }
+        
     }
 
 }

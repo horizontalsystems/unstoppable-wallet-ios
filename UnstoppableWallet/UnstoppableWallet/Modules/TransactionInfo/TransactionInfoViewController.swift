@@ -191,31 +191,19 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func rateRow(rowInfo: RowInfo, currencyValue: CurrencyValue, coinCode: String) -> RowProtocol {
-        let formattedValue = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
-
-        return valueRow(
+    private func rateRow(rowInfo: RowInfo, value: String) -> RowProtocol {
+        valueRow(
                 rowInfo: rowInfo,
                 title: "tx_info.rate".localized,
-                value: formattedValue.map { "balance.rate_per_coin".localized($0, coinCode) }
+                value: value
         )
     }
 
-    private func feeRow(rowInfo: RowInfo, coinValue: CoinValue, currencyValue: CurrencyValue?) -> RowProtocol {
-        var parts = [String]()
-
-        if let formattedCoinValue = ValueFormatter.instance.format(coinValue: coinValue) {
-            parts.append(formattedCoinValue)
-        }
-
-        if let currencyValue = currencyValue, let formattedCurrencyValue = ValueFormatter.instance.format(currencyValue: currencyValue) {
-            parts.append(formattedCurrencyValue)
-        }
-
-        return valueRow(
+    private func feeRow(rowInfo: RowInfo, value: String) -> RowProtocol {
+        valueRow(
                 rowInfo: rowInfo,
                 title: "tx_info.fee".localized,
-                value: parts.joined(separator: " | ")
+                value: value
         )
     }
 
@@ -332,16 +320,15 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func amountRow(rowInfo: RowInfo, coinValue: CoinValue, currencyValue: CurrencyValue?, incoming: Bool?) -> RowProtocol {
+    private func amountRow(rowInfo: RowInfo, coinAmount: String, currencyAmount: String?, incoming: Bool?) -> RowProtocol {
         Row<D7Cell>(
                 id: "amount_\(rowInfo.index)",
-                hash: "amount_\(coinValue.value.description)",
+                hash: "amount_\(coinAmount)",
                 height: .heightCell48,
                 bind: { cell, _ in
-                    let isMaxValue = coinValue.isMaxValue
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = isMaxValue ? "transactions.value.unlimited".localized : currencyValue?.formattedString
-                    cell.value = isMaxValue ? "∞" : coinValue.formattedString
+                    cell.title = coinAmount
+                    cell.value = currencyAmount
                     incoming.flatMap {
                         cell.valueColor = $0 ? .themeGreenD : .themeYellowD
                     }
@@ -362,33 +349,31 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func priceRow(rowInfo: RowInfo, coinValue1: CoinValue, coinValue2: CoinValue) -> RowProtocol {
+    private func priceRow(rowInfo: RowInfo, price: String) -> RowProtocol {
         Row<D7Cell>(
                 id: "price",
-                hash: "\(coinValue1.value.description)_\(coinValue2.value.description)",
+                hash: "\(price)",
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = "tx_info.price".localized
-
-                    let price = coinValue1.value.magnitude / coinValue2.value.magnitude
-                    cell.value = "\(coinValue2.coin.code) = \(price) \(coinValue1.coin.code)"
+                    cell.value = price
                 }
         )
     }
     private func row(viewItem: TransactionInfoModule.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle)
-        case let .amount(coinValue, currencyValue, incoming): return amountRow(rowInfo: rowInfo, coinValue: coinValue, currencyValue: currencyValue, incoming: incoming)
+        case let .amount(coinAmount, currencyAmount, incoming): return amountRow(rowInfo: rowInfo, coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: incoming)
         case let .status(status, completed, pending): return statusRow(rowInfo: rowInfo, status: status, completed: completed, pending: pending)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
         case let .from(value): return fromRow(rowInfo: rowInfo, value: value)
         case let .to(value): return toRow(rowInfo: rowInfo, value: value)
         case let .recipient(value): return recipientRow(rowInfo: rowInfo, value: value)
         case let .id(value): return idRow(rowInfo: rowInfo, value: value)
-        case let .rate(currencyValue, coinCode): return rateRow(rowInfo: rowInfo, currencyValue: currencyValue, coinCode: coinCode)
-        case let .fee(coinValue, currencyValue): return feeRow(rowInfo: rowInfo, coinValue: coinValue, currencyValue: currencyValue)
-        case let .price(coinValue1, coinValue2): return priceRow(rowInfo: rowInfo, coinValue1: coinValue1, coinValue2: coinValue2)
+        case let .rate(value): return rateRow(rowInfo: rowInfo, value: value)
+        case let .fee(value): return feeRow(rowInfo: rowInfo, value: value)
+        case let .price(price): return priceRow(rowInfo: rowInfo, price: price)
         case .doubleSpend: return doubleSpendRow(rowInfo: rowInfo)
         case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
         case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)

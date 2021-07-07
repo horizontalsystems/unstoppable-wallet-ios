@@ -82,18 +82,6 @@ class TransactionsViewController: ThemeViewController {
         delegate.viewDidLoad()
     }
 
-    private func format(currencyValue: CurrencyValue?) -> String? {
-        currencyValue.flatMap {
-            ValueFormatter.instance.format(currencyValue: $0, fractionPolicy: .threshold(high: 1000, low: 0.01))
-        }
-    }
-
-    private func format(coinValue: CoinValue?) -> String? {
-        coinValue.flatMap {
-            ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0))
-        }
-    }
-
     private func bind(item: TransactionViewItem, cell: G14Cell) {
         delegate.willShow(item: item)
 
@@ -101,49 +89,56 @@ class TransactionsViewController: ThemeViewController {
         let topText: String
         let bottomText: String?
         var primaryValueText: String? = nil
-        var primaryValueTextColor: UIColor = .themeYellowD
+        var primaryValueTextColor: UIColor = .themeJacob
         var secondaryValueText: String? = nil
-        var secondaryValueTextColor: UIColor = .themeGreenD
+        var secondaryValueTextColor: UIColor = .themeRemus
 
         switch item.type {
-        case .incoming(let from, let coinValue, _, _):
+        case .incoming(let from, let amount, _, _):
             image = UIImage(named: "arrow_medium_main_down_left_20")
-            topText = item.status == .completed ? "transactions.received".localized : "transactions.receiving".localized
+            switch item.status {
+                case .completed: topText = "transactions.received".localized
+                case .pending, .processing: topText = "transactions.receiving".localized
+                case .failed: topText = "transactions.failed".localized
+            }
             bottomText = from.flatMap { "transactions.from".localized($0) } ?? "---"
 
-            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
+            if let currencyValueString = item.mainAmountCurrencyString {
                 primaryValueText = currencyValueString
-                primaryValueTextColor = .themeGreenD
+                primaryValueTextColor = .themeRemus
             }
 
-            if let coinValueString = format(coinValue: coinValue) {
-                secondaryValueText = coinValueString
-                secondaryValueTextColor = .themeGray
-            }
+            secondaryValueText = amount
+            secondaryValueTextColor = .themeGray
 
-        case .outgoing(let to, let coinValue, _, _, _):
+        case .outgoing(let to, let amount, _, _, _):
             image = UIImage(named: "arrow_medium_main_up_right_20")
-            topText = item.status == .completed ? "transactions.sent".localized : "transactions.sending".localized
+            switch item.status {
+                case .completed: topText = "transactions.sent".localized
+                case .pending, .processing: topText = "transactions.sending".localized
+                case .failed: topText = "transactions.failed".localized
+            }
             bottomText = to.flatMap { "transactions.to".localized($0) } ?? "---"
 
-            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
+            if let currencyValueString = item.mainAmountCurrencyString {
                 primaryValueText = currencyValueString
-                primaryValueTextColor = .themeYellowD
+                primaryValueTextColor = .themeJacob
             }
 
-            if let coinValueString = format(coinValue: coinValue) {
-                secondaryValueText = coinValueString
-                secondaryValueTextColor = .themeGray
-            }
+            secondaryValueText = amount
+            secondaryValueTextColor = .themeGray
 
-        case .approve(let spender, let coinValue):
+        case .approve(let spender, let amount, let isMaxAmount):
             image = UIImage(named: "check_2_20")
-            topText = item.status == .completed ? "transactions.approved".localized : "transactions.approving".localized
+            switch item.status {
+                case .completed: topText = "transactions.approved".localized
+                case .pending, .processing: topText = "transactions.approving".localized
+                case .failed: topText = "transactions.failed".localized
+            }
             bottomText = "transactions.from".localized(spender)
-            let isMaxValue = coinValue.isMaxValue
 
-            if let currencyValueString = format(currencyValue: item.mainAmountCurrencyValue) {
-                if isMaxValue {
+            if let currencyValueString = item.mainAmountCurrencyString {
+                if isMaxAmount {
                     primaryValueText = "∞"
                 } else {
                     primaryValueText = currencyValueString
@@ -151,38 +146,44 @@ class TransactionsViewController: ThemeViewController {
                 primaryValueTextColor = .themeLeah
             }
 
-            if let coinValueString = format(coinValue: coinValue) {
-                if isMaxValue {
-                    secondaryValueText = "transactions.value.unlimited".localized
-                } else {
-                    secondaryValueText = coinValueString
-                }
-                secondaryValueTextColor = .themeGray
+            if isMaxAmount {
+                secondaryValueText = "transactions.value.unlimited".localized
+            } else {
+                secondaryValueText = amount
             }
+            secondaryValueTextColor = .themeGray
 
-        case .swap(let exchangeAddress, let inCoinValue, let outCoinValue):
+        case .swap(let exchangeAddress, let amountIn, let amountOut, let foreignRecipient):
             image = UIImage(named: "swap_2_20")
-            topText = item.status == .completed ? "transactions.swapped".localized : "transactions.swapping".localized
-            bottomText = TransactionInfoAddressMapper.map(exchangeAddress)
-
-            if let coinValueString = format(coinValue: inCoinValue) {
-                primaryValueText = coinValueString
-                primaryValueTextColor = .themeYellowD
+            switch item.status {
+                case .completed: topText = "transactions.swapped".localized
+                case .pending, .processing: topText = "transactions.swapping".localized
+                case .failed: topText = "transactions.failed".localized
             }
+            bottomText = exchangeAddress
 
-            if let coinValueString = format(coinValue: outCoinValue) {
-                secondaryValueText = coinValueString
-                secondaryValueTextColor = .themeGreenD
-            }
+            primaryValueText = amountIn
+            primaryValueTextColor = .themeJacob
+
+            secondaryValueText = amountOut
+            secondaryValueTextColor = foreignRecipient ? .themeGray : .themeRemus
 
         case .contractCall(let contractAddress, let method):
             image = UIImage(named: "unordered_20")
-            topText = method?.uppercased() ?? "transactions.contract_call".localized
-            bottomText = TransactionInfoAddressMapper.map(contractAddress)
+            switch item.status {
+                case .completed: topText = method?.uppercased() ?? "transactions.contract_call".localized
+                case .pending, .processing: topText = "transactions.pending".localized
+                case .failed: topText = "transactions.failed".localized
+            }
+            bottomText = contractAddress
 
         case .contractCreation:
             image = UIImage(named: "unordered_20")
-            topText = "transactions.contract_call".localized
+            switch item.status {
+                case .completed: topText = "transactions.contract_creation".localized
+                case .pending, .processing: topText = "transactions.pending".localized
+                case .failed: topText = "transactions.failed".localized
+            }
             bottomText = "---"
         }
 

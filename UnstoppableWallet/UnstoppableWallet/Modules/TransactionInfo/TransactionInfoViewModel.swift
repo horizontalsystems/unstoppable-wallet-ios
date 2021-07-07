@@ -82,23 +82,36 @@ class TransactionInfoViewModel {
     }
 
     private var coinsForRates: [Coin] {
+        var coins = [Coin]()
+
         switch transaction {
-        case let tx as EvmIncomingTransactionRecord: return [tx.value.coin]
-        case let tx as EvmOutgoingTransactionRecord: return [tx.fee.coin, tx.value.coin]
-        case let tx as SwapTransactionRecord: return [tx.fee, tx.valueIn, tx.valueOut].compactMap { $0?.coin }
-        case let tx as ApproveTransactionRecord: return [tx.fee.coin, tx.value.coin]
+        case let tx as EvmIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as EvmOutgoingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as SwapTransactionRecord:
+            coins.append(tx.valueIn.coin)
+            tx.valueOut.flatMap { coins.append($0.coin) }
+
+        case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
             let internalEth: [Coin] = tx.incomingInternalETHs.map({ $0.value.coin })
             let incomingTokens: [Coin] = tx.incomingEip20Events.map({ $0.value.coin })
             let outgoingTokens: [Coin] = tx.outgoingEip20Events.map({ $0.value.coin })
 
-            return Array(Set(internalEth + incomingTokens + outgoingTokens))
+            coins.append(contentsOf: Array(Set(internalEth + incomingTokens + outgoingTokens)))
 
-        case let tx as BitcoinIncomingTransactionRecord: return [tx.value.coin]
-        case let tx as BitcoinOutgoingTransactionRecord: return [tx.fee, tx.value].compactMap { $0?.coin }
+        case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BitcoinOutgoingTransactionRecord:
+            tx.fee.flatMap { coins.append($0.coin) }
+            coins.append(tx.value.coin)
 
-        default: return []
+        default: ()
         }
+
+        if let evmTransaction = transaction as? EvmTransactionRecord, !evmTransaction.foreignTransaction {
+            coins.append(evmTransaction.fee.coin)
+        }
+
+        return coins
     }
 
     private func updateRates(rates: [Coin: CurrencyValue]) {
