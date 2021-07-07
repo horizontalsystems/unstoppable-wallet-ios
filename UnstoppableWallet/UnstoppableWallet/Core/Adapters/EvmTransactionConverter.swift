@@ -115,7 +115,8 @@ class EvmTransactionConverter {
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
                     amountIn: convertAmount(amount: resolvedAmountIn, decimal: tokenIn.decimal, sign: .minus),
-                    amountOut: decoration.to == evmKit.address ? convertAmount(amount: resolvedAmountOut, decimal: tokenOut.decimal, sign: .plus) : nil
+                    amountOut: convertAmount(amount: resolvedAmountOut, decimal: tokenOut.decimal, sign: .plus),
+                    foreignRecipient: decoration.to != evmKit.address
             )
 
         case let decoration as OneInchUnoswapMethodDecoration:
@@ -129,7 +130,8 @@ class EvmTransactionConverter {
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
                     amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
-                    amountOut: tokenOut.flatMap { convertAmount(amount: decoration.amountOut, decimal: $0.decimal, sign: .plus) }
+                    amountOut: tokenOut.flatMap { convertAmount(amount: decoration.amountOut, decimal: $0.decimal, sign: .plus) },
+                    foreignRecipient: false
             )
 
         case let decoration as OneInchSwapMethodDecoration:
@@ -143,7 +145,8 @@ class EvmTransactionConverter {
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
                     amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
-                    amountOut: decoration.recipient == evmKit.address ? convertAmount(amount: decoration.amountOut, decimal: tokenOut.decimal, sign: .plus) : nil
+                    amountOut: convertAmount(amount: decoration.amountOut, decimal: tokenOut.decimal, sign: .plus),
+                    foreignRecipient: decoration.recipient != evmKit.address
             )
 
         case let decoration as RecognizedMethodDecoration:
@@ -154,7 +157,7 @@ class EvmTransactionConverter {
                     method: decoration.method
             )
 
-        case let decoration as UnknownMethodDecoration:
+        case is UnknownMethodDecoration:
             return ContractCallTransactionRecord(
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
@@ -178,7 +181,8 @@ class EvmTransactionConverter {
                         baseCoin: baseCoin,
                         amount: convertAmount(amount: decoration.value, decimal: token.decimal, sign: .plus),
                         from: decoration.to.eip55,
-                        token: token
+                        token: token,
+                        foreignTransaction: true
                 )
             }
 
@@ -187,7 +191,8 @@ class EvmTransactionConverter {
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
-                    method: decoration.method
+                    method: decoration.method,
+                    foreignTransaction: true
             )
 
         case is UnknownMethodDecoration:
@@ -195,7 +200,8 @@ class EvmTransactionConverter {
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
-                    method: nil
+                    method: nil,
+                    foreignTransaction: true
             )
 
         default: ()

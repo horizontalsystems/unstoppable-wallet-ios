@@ -132,8 +132,8 @@ class TransactionRecordDataSource {
     func clearRates() {
         metaDataSource.clearRates()
 
-        for (index, item) in itemsDataSource.items.enumerated() {
-            itemsDataSource.items[index].mainAmountCurrencyValue = nil
+        for (index, _) in itemsDataSource.items.enumerated() {
+            itemsDataSource.items[index].mainAmountCurrencyString = nil
         }
     }
 
@@ -168,7 +168,7 @@ class TransactionRecordDataSource {
 
         for (index, item) in itemsDataSource.items.enumerated() {
             if let mainValue = item.record.mainValue, mainValue.coin == coin && item.date == date {
-                itemsDataSource.items[index].mainAmountCurrencyValue = CurrencyValue(currency: rate.currency, value: rate.value * mainValue.value)
+                itemsDataSource.items[index].mainAmountCurrencyString = factory.currencyString(from: CurrencyValue(currency: rate.currency, value: rate.value * mainValue.value))
                 itemsChanged = true
             }
         }

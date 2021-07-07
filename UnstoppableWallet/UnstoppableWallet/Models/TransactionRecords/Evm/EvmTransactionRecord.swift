@@ -10,12 +10,14 @@ class EvmTransactionRecord: TransactionRecord {
     var incomingInternalETHs = [IncomingInternalETH]()
     var incomingEip20Events = [IncomingEip20Event]()
     var outgoingEip20Events = [OutgoingEip20Event]()
+    let foreignTransaction: Bool
     let fee: CoinValue
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin) {
+    init(fullTransaction: FullTransaction, baseCoin: Coin, foreignTransaction: Bool = false) {
         let transaction = fullTransaction.transaction
         let receipt = fullTransaction.receiptWithLogs?.receipt
         let txHash = transaction.hash.toHexString()
+        self.foreignTransaction = foreignTransaction
 
         let feeAmount: Int
         if let receipt = fullTransaction.receiptWithLogs?.receipt {

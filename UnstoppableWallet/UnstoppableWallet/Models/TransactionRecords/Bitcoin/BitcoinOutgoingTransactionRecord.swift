@@ -32,9 +32,4 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         value
     }
 
-    override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        let lState = lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
-        return .outgoing(to: to, coinValue: value, lockState: lState, conflictingTxHash: conflictingHash, sentToSelf: sentToSelf)
-    }
-
 }

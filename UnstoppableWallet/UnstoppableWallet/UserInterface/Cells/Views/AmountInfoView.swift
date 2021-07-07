@@ -68,7 +68,7 @@ class AmountInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionType = .contractCreation, lockState: TransactionLockState? = nil) {
+    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionViewItem.TransactionType = .contractCreation, lockState: TransactionLockState? = nil) {
         let primaryColor: UIColor = .themeGreenD
 //        switch type {
 //        case .incoming:

@@ -45,10 +45,6 @@ class TransactionRecord {
         status(lastBlockHeight: oldBlockInfo?.height) != status(lastBlockHeight: newBlockInfo?.height)
     }
 
-    open func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        fatalError("Must be implemented by subclass")
-    }
-
 }
 
 extension TransactionRecord: Comparable {

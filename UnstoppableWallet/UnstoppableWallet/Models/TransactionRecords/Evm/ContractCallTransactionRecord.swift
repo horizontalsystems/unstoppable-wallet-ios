@@ -6,15 +6,11 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
     let contractAddress: String
     let method: String?
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin, contractAddress: String, method: String?) {
+    init(fullTransaction: FullTransaction, baseCoin: Coin, contractAddress: String, method: String?, foreignTransaction: Bool = false) {
         self.contractAddress = contractAddress
         self.method = method
 
-        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
-    }
-
-    override func type(lastBlockInfo: LastBlockInfo?) -> TransactionType {
-        .contractCall(contractAddress: contractAddress, method: method)
+        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin, foreignTransaction: foreignTransaction)
     }
 
 }
