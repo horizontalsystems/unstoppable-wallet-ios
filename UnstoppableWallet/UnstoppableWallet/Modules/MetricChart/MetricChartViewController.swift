@@ -99,7 +99,7 @@ class MetricChartViewController: ThemeActionSheetController {
         poweredByLabel.textAlignment = .center
         poweredByLabel.textColor = .themeGray
         poweredByLabel.font = .caption
-        poweredByLabel.text = "Powered By DefiLlama API"
+        poweredByLabel.text = "Powered By \(viewModel.poweredBy)"
 
         chartIntervalAndSelectedRateCell.bind(filters: viewModel.chartTypes.map {
             .item(title: $0)

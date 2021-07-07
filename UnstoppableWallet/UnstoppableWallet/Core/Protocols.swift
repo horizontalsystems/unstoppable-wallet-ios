@@ -201,6 +201,7 @@ protocol IRateManager {
     func topDefiTvl(currencyCode: String, fetchDiffPeriod: TimePeriod, itemsCount: Int) -> Single<[DefiTvl]>
     func defiTvlPoints(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[DefiTvlPoint]>
     func defiTvl(coinType: CoinType, currencyCode: String) -> Single<DefiTvl?>
+    func coinMarketPointsSingle(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarketPoint]>
     func coinTypes(for category: String) -> [CoinType]
 }
 

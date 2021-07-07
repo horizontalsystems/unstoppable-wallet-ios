@@ -489,7 +489,7 @@ extension CoinPageViewController {
                         cell.valueImageTintColor = .themeGray
                     },
                     action: { [weak self] _ in
-                        // todo
+                        self?.openTradingVolume()
                     }
             )
 
@@ -557,7 +557,7 @@ extension CoinPageViewController {
                         cell.valueColor = .themeOz
                     },
                     action: { [weak self] _ in
-                        // todo
+                        HudHelper.instance.showAttention(title: "To be implemented...")
                     }
             )
 
@@ -594,6 +594,11 @@ extension CoinPageViewController {
 
     private func openTvl() {
         let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType)
+        present(viewController, animated: true)
+    }
+
+    private func openTradingVolume() {
+        let viewController = CoinTradingVolumeModule.viewController(coinType: viewModel.coinType, coinTitle: viewModel.coinTitle)
         present(viewController, animated: true)
     }
 

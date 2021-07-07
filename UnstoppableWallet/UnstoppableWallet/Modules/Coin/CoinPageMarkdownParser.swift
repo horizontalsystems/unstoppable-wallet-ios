@@ -6,7 +6,7 @@ class CoinPageMarkdownParser {
     let fonts = StaticFontCollection(
             heading1: .title2,
             heading2: .title3,
-            heading3: .headline2,
+            heading3: .subhead1,
             body: .subhead2
     )
 
