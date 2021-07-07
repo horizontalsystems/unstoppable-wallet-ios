@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -184,10 +185,15 @@ extension CoinPageViewModel {
 
         var title: String {
             switch type {
-            case .website: return "coin_page.website".localized
+            case .website:
+                if let url = URL(string: url), let host = url.host {
+                    return host.stripping(prefix: "www.")
+                } else {
+                    return "coin_page.website".localized
+                }
             case .whitepaper: return "coin_page.whitepaper".localized
             case .reddit: return "Reddit"
-            case .twitter: return "Twitter"
+            case .twitter: return url.stripping(prefix: "https://twitter.com/")
             case .telegram: return "Telegram"
             case .github: return "Github"
             default: return ""

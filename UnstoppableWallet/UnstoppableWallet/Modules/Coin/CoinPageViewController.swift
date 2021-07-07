@@ -448,7 +448,18 @@ extension CoinPageViewController {
     }
 
     private func open(link: CoinPageViewModel.Link) {
-        urlManager.open(url: link.url, from: self)
+        switch link.type {
+        case .twitter:
+            let account = link.url.stripping(prefix: "https://twitter.com/")
+
+            if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+                UIApplication.shared.open(appUrl)
+            } else {
+                urlManager.open(url: link.url, from: self)
+            }
+        default:
+            urlManager.open(url: link.url, from: self)
+        }
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
