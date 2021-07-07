@@ -32,7 +32,7 @@ class CoinPageViewModel {
                     contractInfo: contractInfo(info: info),
                     guideUrl: service.guideUrl,
                     links: links(info: info),
-                    marketInfo: marketInfo(marketCap: info.marketCap, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
+                    marketInfo: marketInfo(marketCap: info.marketCap, marketCapRank: info.marketCapRank, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
@@ -68,9 +68,10 @@ class CoinPageViewModel {
         }
     }
 
-    private func marketInfo(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvlInfo: DefiTvlInfo?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
+    private func marketInfo(marketCap: Decimal?, marketCapRank: Int?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvlInfo: DefiTvlInfo?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?) -> MarketInfo {
         marketViewItemFactory.viewItem(
                 marketCap: marketCap,
+                marketCapRank: marketCapRank,
                 dilutedMarketCap: dilutedMarketCap,
                 volume24h: volume24h,
                 tvl: tvlInfo?.tvl,
@@ -196,6 +197,7 @@ extension CoinPageViewModel {
 
     struct MarketInfo {
         public let marketCap: String?
+        public let marketCapRank: String?
         public let volume24h: String?
         public let tvl: String?
         public let tvlRank: String?
