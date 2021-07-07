@@ -454,13 +454,17 @@
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Объем Торговли";
-"coin_page.markets" = "%@ Рынки";
+"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
+"coin_page.markets" = "Markets";
+"coin_page.coin_markets" = "%@ Markets";
 "coin_page.funds_invested" = "Средства Инвестированы";
 
 "coin_page.tvl" = "Общая сумма заблокирована";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
 "coin_page.tvl_rank" = "Рейтинг TVL";
 "coin_page.tvl.description" = "Капитал, задепонированный на платформе в виде кредитного обеспечения или пула ликвидности.";
+
+"coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Категория";
 "coin_page.contract" = "%@ Контракт";
