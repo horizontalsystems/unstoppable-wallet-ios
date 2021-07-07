@@ -27,7 +27,7 @@ class MarketViewItemFactory {
         return "\(formattedValue) \(coinCode)"
     }
 
-    func viewItem(marketCap: Decimal?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, tvlRank: Int?, tvlRatio: Decimal?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
+    func viewItem(marketCap: Decimal?, marketCapRank: Int?, dilutedMarketCap: Decimal?, volume24h: Decimal?, tvl: Decimal?, tvlRank: Int?, tvlRatio: Decimal?, genesisDate: TimeInterval?, circulatingSupply: Decimal?, totalSupply: Decimal?, currency: Currency, coinCode: String) -> CoinPageViewModel.MarketInfo {
         let marketCapString = marketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
 
         let volumeString = volume24h.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) }
@@ -40,6 +40,7 @@ class MarketViewItemFactory {
 
         return CoinPageViewModel.MarketInfo(
                 marketCap: marketCapString,
+                marketCapRank: marketCapRank.map { "#\($0)" },
                 volume24h: volumeString,
                 tvl: tvlString,
                 tvlRank: tvlRank.map { "#\($0)" },

@@ -97,6 +97,7 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: DB7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
@@ -691,34 +692,47 @@ extension CoinPageViewController {
         )
     }
 
-    private func marketRow(id: String, title: String, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<D7Cell>(
-                id: id,
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.title = title
-                    cell.value = text
-                }
-        )
+    private func marketRow(id: String, title: String, badge: String?, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        if let badge = badge {
+            return Row<DB7Cell>(
+                    id: id,
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.title = title
+                        cell.titleBadgeText = badge
+                        cell.value = text
+                    }
+            )
+        } else {
+            return Row<D7Cell>(
+                    id: id,
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                        cell.title = title
+                        cell.value = text
+                    }
+            )
+        }
     }
 
     private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
         let datas = [
             marketInfo.marketCap.map {
-                (id: "market_cap", title: "coin_page.market_cap".localized, text: $0)
+                (id: "market_cap", title: "coin_page.market_cap".localized, badge: marketInfo.marketCapRank, text: $0)
             },
             marketInfo.circulatingSupply.map {
-                (id: "circulating_supply", title: "coin_page.circulating_supply".localized, text: $0)
+                (id: "circulating_supply", title: "coin_page.circulating_supply".localized, badge: nil, text: $0)
             },
             marketInfo.totalSupply.map {
-                (id: "total_supply", title: "coin_page.total_supply".localized, text: $0)
+                (id: "total_supply", title: "coin_page.total_supply".localized, badge: nil, text: $0)
             },
             marketInfo.dilutedMarketCap.map {
-                (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, text: $0)
+                (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, badge: nil, text: $0)
             },
             marketInfo.genesisDate.map {
-                (id: "genesis_date", title: "coin_page.genesis_date".localized, text: $0)
+                (id: "genesis_date", title: "coin_page.genesis_date".localized, badge: nil, text: $0)
             }
         ].compactMap {
             $0
@@ -732,6 +746,7 @@ extension CoinPageViewController {
             marketRow(
                     id: tuple.id,
                     title: tuple.title,
+                    badge: tuple.badge,
                     text: tuple.text,
                     isFirst: index == 0,
                     isLast: index == datas.count - 1
