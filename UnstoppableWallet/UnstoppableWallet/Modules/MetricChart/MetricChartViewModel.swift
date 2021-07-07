@@ -23,6 +23,7 @@ class MetricChartViewModel {
 
     var title: String { chartConfiguration.title }
     var description: String? { chartConfiguration.description }
+    var poweredBy: String { chartConfiguration.poweredBy }
 
     init(service: MetricChartService, chartConfiguration: IMetricChartConfiguration, factory: MetricChartFactory) {
         self.service = service

@@ -16,6 +16,7 @@ class MarketGlobalFetcher {
 extension MarketGlobalFetcher: IMetricChartConfiguration {
     var title: String { metricsType.title }
     var description: String? { metricsType.description }
+    var poweredBy: String { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
         switch metricsType {

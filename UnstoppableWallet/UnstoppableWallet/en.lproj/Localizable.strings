@@ -454,6 +454,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
+"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
 "coin_page.coin_markets" = "%@ Markets";
 "coin_page.funds_invested" = "Funds Invested";

@@ -97,6 +97,10 @@ extension RateManager: IRateManager {
         kit.defiTvl(coinType: coinType, currencyCode: currencyCode)
     }
 
+    func coinMarketPointsSingle(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarketPoint]> {
+        kit.coinMarketPointsSingle(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod)
+    }
+
     func coinTypes(for category: String) -> [CoinType] {
         kit.coinTypes(forCategoryId: category)
     }
