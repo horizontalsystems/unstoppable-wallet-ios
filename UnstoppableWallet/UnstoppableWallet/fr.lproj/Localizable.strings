@@ -452,13 +452,17 @@
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Volume de trading";
-"coin_page.markets" = "%@ Marchés";
+"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
+"coin_page.markets" = "Markets";
+"coin_page.coin_markets" = "%@ Markets";
 "coin_page.funds_invested" = "Fonds investis";
 
 "coin_page.tvl" = "Valeur totale verrouillée";
 "coin_page.market_cap_tvl_ratio" = "Ratio MCap / TVL";
 "coin_page.tvl_rank" = "Rang TVL";
 "coin_page.tvl.description" = "Capital déposé sur la plateforme sous forme de collatéral de prêt ou de pool de liquidité.";
+
+"coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Catégorie";
 "coin_page.contract" = "%@ Contrat";
