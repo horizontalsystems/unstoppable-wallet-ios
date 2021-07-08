@@ -173,7 +173,7 @@ class App {
         feeCoinProvider = FeeCoinProvider(coinKit: coinKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey, cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey, uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl)
+        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey, cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey, uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl, providerCoinsUrl: appConfigProvider.providerCoinsUrl, coinsUrl: appConfigProvider.coinsUrl)
         favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)

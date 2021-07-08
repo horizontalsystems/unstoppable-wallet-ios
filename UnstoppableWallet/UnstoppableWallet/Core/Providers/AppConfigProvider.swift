@@ -19,6 +19,14 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "UniswapGraphUrl") as? String) ?? ""
     }
 
+    var providerCoinsUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "ProviderCoinsUrl") as? String) ?? ""
+    }
+
+    var coinsUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CoinsUrl") as? String) ?? ""
+    }
+
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
     }
