@@ -95,6 +95,10 @@
 	</array>
 	<key>UniswapGraphUrl</key>
 	<string>$(uniswap_graph_url)</string>
+	<key>ProviderCoinsUrl</key>
+	<string>$(provider_coins_url)</string>
+	<key>CoinsUrl</key>
+	<string>$(coins_url)</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>We need to discover blockchain nodes</string>
 </dict>

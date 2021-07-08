@@ -240,6 +240,8 @@ protocol IAppConfigProvider {
     var guidesIndexUrl: URL { get }
     var faqIndexUrl: URL { get }
     var uniswapSubgraphUrl: String { get }
+    var providerCoinsUrl: String { get }
+    var coinsUrl: String { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }

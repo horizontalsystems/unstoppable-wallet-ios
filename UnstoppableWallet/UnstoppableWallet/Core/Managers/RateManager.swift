@@ -13,12 +13,12 @@ class RateManager {
 
     private let kit: XRatesKit
 
-    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String) {
+    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String, providerCoinsUrl: String, coinsUrl: String) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 60, topMarketsCount: 100, minLogLevel: .error)
+        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 60, topMarketsCount: 100, providerCoinsUrl: providerCoinsUrl, coinsUrl: coinsUrl, minLogLevel: .error)
     }
 
 }
