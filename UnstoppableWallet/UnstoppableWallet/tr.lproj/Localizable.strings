@@ -495,6 +495,7 @@
 "transactions.approving" = "Approving";
 "transactions.swapping" = "Swapping";
 "transactions.contract_call" = "Contract Call";
+"transactions.contract_creation" = "Contract Creation";
 
 "transactions.received" = "Received";
 "transactions.sent" = "Sent";
