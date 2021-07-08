@@ -28,6 +28,7 @@ class CoinPageViewModel {
             let viewItem = ViewItem(
                     returnOfInvestmentsViewItems: returnOfInvestmentsViewItemsFactory.viewItems(info: info, diffCoinCodes: service.diffCoinCodes, timePeriods: CoinPageService.timePeriods),
                     tickers: info.tickers,
+                    majorHoldersCoinType: majorHoldersCoinType,
                     fundCategories: info.meta.fundCategories,
                     categories: categories(info: info),
                     contractInfo: contractInfo(info: info),
@@ -86,6 +87,13 @@ class CoinPageViewModel {
         )
     }
 
+    private var majorHoldersCoinType: CoinType? {
+        switch service.coinType {
+        case .erc20: return service.coinType
+        default: return nil
+        }
+    }
+
 }
 
 extension CoinPageViewModel {
@@ -127,6 +135,7 @@ extension CoinPageViewModel {
     struct ViewItem {
         let returnOfInvestmentsViewItems: [[ReturnOfInvestmentsViewItem]]
         let tickers: [MarketTicker]
+        let majorHoldersCoinType: CoinType?
         let fundCategories: [CoinFundCategory]
         let categories: [String]?
         let contractInfo: ContractInfo?

@@ -8,6 +8,7 @@ import HUD
 import Chart
 import ComponentKit
 import Down
+import CoinKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
@@ -609,6 +610,11 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func openMajorHolders(coinType: CoinType) {
+        let viewController = CoinMajorHoldersModule.viewController(coinType: coinType)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func openFundsInvested(fundCategories: [CoinFundCategory]) {
         let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
         navigationController?.pushViewController(viewController, animated: true)
@@ -663,15 +669,34 @@ extension CoinPageViewController {
         )
     }
 
-    private func investorDataSections(fundCategories: [CoinFundCategory]) -> [SectionProtocol] {
+    private func investorDataSections(majorHoldersCoinType: CoinType?, fundCategories: [CoinFundCategory]) -> [SectionProtocol] {
         var rows = [RowProtocol]()
+
+        let hasMajorHolders = majorHoldersCoinType != nil
+        let hasFunds = !fundCategories.isEmpty
+
+        if let coinType = majorHoldersCoinType {
+            let row = Row<D1Cell>(
+                    id: "major-holders",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFunds)
+                        cell.title = "coin_page.major_holders".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.openMajorHolders(coinType: coinType)
+                    }
+            )
+
+            rows.append(row)
+        }
 
         if !fundCategories.isEmpty {
             let fundsInvestedRow = Row<D2Cell>(
                     id: "funds-invested",
                     height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasMajorHolders, isLast: true)
                         cell.title = "coin_page.funds_invested".localized
                         cell.value = "todo"
                         cell.valueColor = .themeOz
@@ -846,7 +871,7 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(tvlSection)
             }
 
-            sections.append(contentsOf: investorDataSections(fundCategories: viewItem.fundCategories))
+            sections.append(contentsOf: investorDataSections(majorHoldersCoinType: viewItem.majorHoldersCoinType, fundCategories: viewItem.fundCategories))
 
             if let categories = viewItem.categories {
                 sections.append(categoriesSection(categories: categories))

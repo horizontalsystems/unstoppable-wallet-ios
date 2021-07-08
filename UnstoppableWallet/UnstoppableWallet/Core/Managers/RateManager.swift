@@ -101,6 +101,10 @@ extension RateManager: IRateManager {
         kit.coinMarketPointsSingle(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod)
     }
 
+    func topTokenHoldersSingle(coinType: CoinType, itemsCount: Int) -> Single<[TokenHolder]> {
+        kit.topTokenHoldersSingle(coinType: coinType, itemsCount: itemsCount)
+    }
+
     func coinTypes(for category: String) -> [CoinType] {
         kit.coinTypes(forCategoryId: category)
     }
