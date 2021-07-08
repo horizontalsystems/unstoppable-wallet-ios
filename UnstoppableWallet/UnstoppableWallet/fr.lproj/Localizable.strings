@@ -347,6 +347,8 @@
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Outils d'investissement";
+"market_discovery.filter_title.data_storage" = "Data Storage";
+"market_discovery.filter_title.decentralized_identity" = "Decentralized Identity";
 
 "market_discovery.filter_description.blockchain" = "Cryptomonnaies natives sur les principales blockchains.";
 "market_discovery.filter_description.dexes" = "Échanges décentralisés de cryptomonnaies.";
@@ -376,6 +378,8 @@
 "market_discovery.filter_description.computing" = "Solutions informatiques décentralisées à la demande.";
 "market_discovery.filter_description.fan_tokens" = "Fan tokens numériques, généralement spécifiques à une équipe ou un club.";
 "market_discovery.filter_description.investment_tools" = "Instruments d'analyse et d'investissement alimentés par des tokens.";
+"market_discovery.filter_description.data_storage" = "Decentralized data-storage solutions.";
+"market_discovery.filter_description.decentralized_identity" = "Decentralized identity solutions.";
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
