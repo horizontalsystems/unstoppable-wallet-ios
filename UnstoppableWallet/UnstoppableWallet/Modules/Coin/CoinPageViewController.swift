@@ -24,7 +24,7 @@ class CoinPageViewController: ThemeViewController {
     private var alertButtonItem: UIBarButtonItem?
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let subtitleCell = ACell()
+    private let subtitleCell = A7Cell()
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
@@ -77,6 +77,8 @@ class CoinPageViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -127,8 +129,8 @@ class CoinPageViewController: ThemeViewController {
         subtitleCell.title = viewModel.subtitle
         subtitleCell.titleColor = .themeGray
         subtitleCell.titleImage = .image(coinType: viewModel.coinType)
-        subtitleCell.titleImageTintColor = .themeGray
         subtitleCell.set(titleImageSize: .iconSize24)
+        subtitleCell.valueColor = .themeGray
         subtitleCell.selectionStyle = .none
 
         tableView.buildSections()
@@ -138,6 +140,10 @@ class CoinPageViewController: ThemeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    @objc private func onTapCloseButton() {
+        dismiss(animated: true)
     }
 
     private func subscribeViewModels() {
@@ -245,6 +251,11 @@ extension CoinPageViewController {
     // Page section
 
     private func sync(state: CoinPageViewModel.State) {
+        switch state {
+        case .loaded(let viewItem): subtitleCell.value = viewItem.marketInfo.marketCapRank
+        default: subtitleCell.value = nil
+        }
+
         self.state = state
         tableView.reload()
     }
