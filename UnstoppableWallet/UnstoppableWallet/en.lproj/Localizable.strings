@@ -481,6 +481,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_page.favorited" = "Added To Watchlist";
 "coin_page.unfavorited" = "Removed from Watchlist";
 
+"coin_page.major_holders" = "Major Holders";
+"coin_page.major_holders.chart.description" = "in top 10 wallets";
+"coin_page.major_holders.top_wallets" = "Top Wallets";
+"coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
+"coin_page.major_holders.sync_error" = "Sync Error";
+
 // Transactions
 
 "transactions.title" = "Transactions";
