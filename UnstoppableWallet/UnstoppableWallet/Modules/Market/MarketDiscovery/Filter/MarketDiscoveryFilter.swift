@@ -68,8 +68,8 @@ extension MarketDiscoveryFilter {
         case .stakingEth2_0: return "circle_plus_24"
         case .crossChain: return "link_24"
         case .computing: return "dialpad_alt_24"
-        case .dataStorage: return "data_storage_24"
-        case .decentralizedIdentity: return "decentralized_identity_24"
+        case .dataStorage: return "storage_24"
+        case .decentralizedIdentity: return "identity_24"
         }
     }
 
