@@ -14,6 +14,7 @@ class CoinMajorHolderChartCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
+        selectionStyle = .none
 
         contentView.addSubview(donutChartView)
         donutChartView.snp.makeConstraints { maker in

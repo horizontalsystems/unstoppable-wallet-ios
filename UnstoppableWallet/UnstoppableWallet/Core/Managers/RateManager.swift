@@ -85,8 +85,8 @@ extension RateManager: IRateManager {
         kit.globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
     }
 
-    public func topDefiTvl(currencyCode: String, fetchDiffPeriod: TimePeriod, itemsCount: Int) -> Single<[DefiTvl]> {
-        kit.topDefiTvl(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod, itemsCount: itemsCount)
+    func topDefiTvlSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemsCount: Int, chain: String?) -> Single<[DefiTvl]> {
+        kit.topDefiTvlSingle(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod, itemsCount: itemsCount, chain: chain)
     }
 
     public func defiTvlPoints(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[DefiTvlPoint]> {
