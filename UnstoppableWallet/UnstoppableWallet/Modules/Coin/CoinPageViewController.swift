@@ -580,7 +580,7 @@ extension CoinPageViewController {
                         cell.valueColor = .themeOz
                     },
                     action: { [weak self] _ in
-                        HudHelper.instance.showAttention(title: "To be implemented...")
+                        self?.openTvlRank()
                     }
             )
 
@@ -623,6 +623,11 @@ extension CoinPageViewController {
     private func openTvl() {
         let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType)
         present(viewController, animated: true)
+    }
+
+    private func openTvlRank() {
+        let viewController = CoinTvlRankModule.viewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openTradingVolume() {
@@ -698,8 +703,6 @@ extension CoinPageViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasMajorHolders, isLast: true)
                         cell.title = "coin_page.funds_invested".localized
-                        cell.value = "todo"
-                        cell.valueColor = .themeOz
                     },
                     action: { [weak self] _ in
                         self?.openFundsInvested(fundCategories: fundCategories)
