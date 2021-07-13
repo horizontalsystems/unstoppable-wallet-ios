@@ -1743,6 +1743,9 @@
 		5002C0962294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0972294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
 		5002C0982294165700E88585 /* ThreadSafeness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002C0952294165700E88585 /* ThreadSafeness.swift */; };
+		5039F972269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */; };
+		5039F973269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */; };
+		5039F974269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */; };
 		5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		5046E672259C491100A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
 		5046E673259C491200A941E5 /* InfoSeparatorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */; };
@@ -3164,6 +3167,7 @@
 		5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Unstoppable.debug.xcconfig; sourceTree = "<group>"; };
+		5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseNotesViewController.swift; sourceTree = "<group>"; };
 		50959EE524C16AD7002D095A /* ChartNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationViewController.swift; sourceTree = "<group>"; };
 		50959EE624C16AD7002D095A /* ChartNotificationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationInteractor.swift; sourceTree = "<group>"; };
 		50959EE924C16AD7002D095A /* ChartNotificationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartNotificationModule.swift; sourceTree = "<group>"; };
@@ -4004,6 +4008,7 @@
 				11B35B6D6FCA3745DE0750BD /* MainService.swift */,
 				11B35C13937F82D36C823205 /* MainBadgeService.swift */,
 				1A5644074A3ACB1DFB63FF92 /* ReleaseNotesService.swift */,
+				5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */,
 				11B35747FAD8381F2AD48276 /* MainViewModel.swift */,
 				D3B62A8820CA40DC005A9F80 /* MainViewController.swift */,
 				1A56469A2F3EAAEDECFB4034 /* JailbreakService.swift */,
@@ -6364,6 +6369,7 @@
 				58AAACB9409D23B076794CA4 /* LastBlockInfo.swift in Sources */,
 				58AAA7FAA603E03B217AB881 /* RateCoinMapper.swift in Sources */,
 				58AAA8B3937A2D8DF75A9AE0 /* UITextView.swift in Sources */,
+				5039F974269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */,
 				11B35CA53151EDE9264F4F57 /* KeychainKitDelegate.swift in Sources */,
 				58AAAB5986803913FCF8EC23 /* PinKitDelegate.swift in Sources */,
 				3AB6777D259B5AD3002197A5 /* MarketTickerViewModel.swift in Sources */,
@@ -7212,6 +7218,7 @@
 				58AAA6A8512C145D27A80D41 /* RateCoinMapper.swift in Sources */,
 				58AAA4A4D0D7398E7184E7AB /* UITextView.swift in Sources */,
 				11B359CC4B492477E14339B2 /* KeychainKitDelegate.swift in Sources */,
+				5039F973269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */,
 				58AAA12167F3BC03D0FA55DF /* PinKitDelegate.swift in Sources */,
 				3AB6777C259B5AD2002197A5 /* MarketTickerViewModel.swift in Sources */,
 				3AB67797259B5BEE002197A5 /* TickerCollectionView.swift in Sources */,
@@ -8601,6 +8608,7 @@
 				58AAA6371183D7FB9606FEDA /* OneInchSendEvmTransactionService.swift in Sources */,
 				11B35299107843A4663542F9 /* WalletAdapterService.swift in Sources */,
 				11B359B3E2880C9FEBEC3A87 /* AdapterManager.swift in Sources */,
+				5039F972269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */,
 				11B352339E8052E6EE9CA3CF /* EnabledWalletCache.swift in Sources */,
 				11B35AE7D9E8BA8BDB06703F /* EnabledWalletCacheManager.swift in Sources */,
 				2FA5D1A368FEA07EA308A94A /* BitcoinIncomingTransactionRecord.swift in Sources */,

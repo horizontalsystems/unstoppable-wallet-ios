@@ -139,6 +139,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
 "lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+
+//Release notes
+
+"release_notes.follow_us" = "Follow Us";
+
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
