@@ -102,6 +102,7 @@ class CoinPageViewController: ThemeViewController {
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: DB7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
+        tableView.registerCell(forClass: D20Cell.self)
         tableView.registerCell(forClass: ReturnOfInvestmentsTableViewCell.self)
         tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
@@ -615,6 +616,15 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func openAudits() {
+        // todo
+    }
+
+    private func openSecurityInfo(type: CoinPageViewModel.SecurityType) {
+        let viewController = CoinPageInfoViewController(header: type.title, viewItems: viewModel.securityInfoViewItems(type: type))
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
     private func openFundsInvested(fundCategories: [CoinFundCategory]) {
         let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
         navigationController?.pushViewController(viewController, animated: true)
@@ -725,6 +735,64 @@ extension CoinPageViewController {
                         ]
                 ),
                 Section(id: "investor-data", rows: rows)
+            ]
+        }
+    }
+
+    private func securitySections(securityViewItems: [CoinPageViewModel.SecurityViewItem], hasAudits: Bool) -> [SectionProtocol] {
+        var rows = [RowProtocol]()
+
+        let hasSecurity = !securityViewItems.isEmpty
+
+        for (index, viewItem) in securityViewItems.enumerated() {
+            let row = Row<D20Cell>(
+                    id: "security-\(viewItem.type)",
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == securityViewItems.count - 1 && !hasAudits)
+                        cell.title = viewItem.type.title
+                        cell.value = viewItem.value
+                        cell.valueBackground = viewItem.valueColor
+                        cell.image = UIImage(named: "circle_information_20")
+                    },
+                    action: { [weak self] _ in
+                        self?.openSecurityInfo(type: viewItem.type)
+                    }
+            )
+
+            rows.append(row)
+        }
+
+        if hasAudits {
+            let row = Row<D1Cell>(
+                    id: "audits",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasSecurity, isLast: true)
+                        cell.title = "coin_page.audits".localized
+                    },
+                    action: { [weak self] _ in
+                        self?.openAudits()
+                    }
+            )
+
+            rows.append(row)
+        }
+
+        if rows.isEmpty {
+            return []
+        } else {
+            return [
+                Section(
+                        id: "security-parameters-header",
+                        headerState: .margin(height: .margin12),
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            headerRow(title: "coin_page.security_parameters".localized)
+                        ]
+                ),
+                Section(id: "security-parameters", rows: rows)
             ]
         }
     }
@@ -875,6 +943,8 @@ extension CoinPageViewController: SectionsDataSource {
             }
 
             sections.append(contentsOf: investorDataSections(majorHoldersCoinType: viewItem.majorHoldersCoinType, fundCategories: viewItem.fundCategories))
+
+            sections.append(contentsOf: securitySections(securityViewItems: viewItem.securities, hasAudits: false))
 
             if let categories = viewItem.categories {
                 sections.append(categoriesSection(categories: categories))

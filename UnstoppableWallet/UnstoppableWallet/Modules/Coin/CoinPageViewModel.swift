@@ -4,6 +4,7 @@ import RxRelay
 import RxCocoa
 import XRatesKit
 import CoinKit
+import UIKit
 
 class CoinPageViewModel {
     private let service: CoinPageService
@@ -35,7 +36,8 @@ class CoinPageViewModel {
                     guideUrl: service.guideUrl,
                     links: links(info: info),
                     marketInfo: marketInfo(marketCap: info.marketCap, marketCapRank: info.marketCapRank, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
-                    description: info.meta.description
+                    description: info.meta.description,
+                    securities: securityViewItems(coinSecurity: info.meta.security)
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
         case .failed:
@@ -94,6 +96,51 @@ class CoinPageViewModel {
         }
     }
 
+    private func securityViewItems(coinSecurity: CoinSecurity?) -> [SecurityViewItem] {
+        guard let coinSecurity = coinSecurity else {
+            return []
+        }
+
+        return [
+            securityViewItem(type: .privacy, coinSecurity: coinSecurity),
+            securityViewItem(type: .issuance, coinSecurity: coinSecurity),
+            securityViewItem(type: .confiscationResistance, coinSecurity: coinSecurity),
+            securityViewItem(type: .censorshipResistance, coinSecurity: coinSecurity)
+        ]
+    }
+
+    private func securityViewItem(type: SecurityType, coinSecurity: CoinSecurity) -> SecurityViewItem {
+        let value: String
+        let color: UIColor
+
+        switch type {
+        case .privacy:
+            let privacy: SecurityViewItemLevel
+            switch coinSecurity.privacy {
+            case .low: privacy = .low
+            case .medium: privacy = .medium
+            case .high: privacy = .high
+            }
+
+            value = privacy.title
+            color = privacy.color
+        case .issuance:
+            let issuance: SecurityViewItemIssuance = coinSecurity.decentralized ? .decentralized : .centralized
+            value = issuance.title
+            color = issuance.color
+        case .confiscationResistance:
+            let resistance: SecurityViewItemResistance = coinSecurity.confiscationResistance ? .yes : .no
+            value = resistance.title
+            color = resistance.color
+        case .censorshipResistance:
+            let resistance: SecurityViewItemResistance = coinSecurity.censorshipResistance ? .yes : .no
+            value = resistance.title
+            color = resistance.color
+        }
+
+        return SecurityViewItem(type: type, value: value, valueColor: color)
+    }
+
 }
 
 extension CoinPageViewModel {
@@ -122,6 +169,27 @@ extension CoinPageViewModel {
         service.coinCode
     }
 
+    func securityInfoViewItems(type: SecurityType) -> [SecurityInfoViewItem] {
+        switch type {
+        case .privacy:
+            return SecurityViewItemLevel.allCases.map { level in
+                SecurityInfoViewItem(title: level.title, titleColor: level.color, text: "coin_page.security_parameters.privacy.description.\(level.rawValue)".localized)
+            }
+        case .issuance:
+            return SecurityViewItemIssuance.allCases.map { issuance in
+                SecurityInfoViewItem(title: issuance.title, titleColor: issuance.color, text: "coin_page.security_parameters.issuance.description.\(issuance.rawValue)".localized)
+            }
+        case .confiscationResistance:
+            return SecurityViewItemResistance.allCases.map { resistance in
+                SecurityInfoViewItem(title: resistance.title, titleColor: resistance.color, text: "coin_page.security_parameters.confiscation_resistance.description.\(resistance.rawValue)".localized)
+            }
+        case .censorshipResistance:
+            return SecurityViewItemResistance.allCases.map { resistance in
+                SecurityInfoViewItem(title: resistance.title, titleColor: resistance.color, text: "coin_page.security_parameters.censorship_resistance.description.\(resistance.rawValue)".localized)
+            }
+        }
+    }
+
 }
 
 extension CoinPageViewModel {
@@ -143,6 +211,85 @@ extension CoinPageViewModel {
         let links: [Link]
         let marketInfo: MarketInfo
         let description: CoinMetaDescriptionType
+        let securities: [SecurityViewItem]
+    }
+
+    struct SecurityViewItem {
+        let type: SecurityType
+        let value: String
+        let valueColor: UIColor
+    }
+
+    struct SecurityInfoViewItem {
+        let title: String
+        let titleColor: UIColor
+        let text: String
+    }
+
+    enum SecurityViewItemLevel: String, CaseIterable {
+        case low
+        case medium
+        case high
+
+        var title: String {
+            "coin_page.security_parameters.level.\(rawValue)".localized
+        }
+
+        var color: UIColor {
+            switch self {
+            case .low: return .themeLucian
+            case .medium: return .themeIssykBlue
+            case .high: return .themeRemus
+            }
+        }
+    }
+
+    enum SecurityViewItemIssuance: String, CaseIterable {
+        case decentralized
+        case centralized
+
+        var title: String {
+            "coin_page.security_parameters.issuance.\(rawValue)".localized
+        }
+
+        var color: UIColor {
+            switch self {
+            case .decentralized: return .themeRemus
+            case .centralized: return .themeLucian
+            }
+        }
+    }
+
+    enum SecurityViewItemResistance: String, CaseIterable {
+        case yes
+        case no
+
+        var title: String {
+            "coin_page.security_parameters.resistance.\(rawValue)".localized
+        }
+
+        var color: UIColor {
+            switch self {
+            case .yes: return .themeRemus
+            case .no: return .themeLucian
+            }
+        }
+    }
+
+    enum SecurityType {
+        case privacy
+        case issuance
+        case confiscationResistance
+        case censorshipResistance
+
+        var title: String {
+            switch self {
+            case .privacy: return "coin_page.security_parameters.privacy".localized
+            case .issuance: return "coin_page.security_parameters.issuance".localized
+            case .confiscationResistance: return "coin_page.security_parameters.confiscation_resistance".localized
+            case .censorshipResistance: return "coin_page.security_parameters.censorship_resistance".localized
+            }
+        }
     }
 
     struct ContractInfo {
