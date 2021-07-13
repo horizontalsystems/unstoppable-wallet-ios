@@ -29,8 +29,10 @@ enum MarketDiscoveryFilter: String, CaseIterable {
     case stakingEth2_0 = "staking_eth_2_0"
     case crossChain = "cross_chain"
     case computing = "computing"
-    case dataStorage = "data_storage"
-    case decentralizedIdentity = "decentralized_identity"
+    case storage = "storage"
+    case identity = "identity"
+    case yieldTokens = "yield_tokens"
+
 
 }
 
@@ -68,8 +70,10 @@ extension MarketDiscoveryFilter {
         case .stakingEth2_0: return "circle_plus_24"
         case .crossChain: return "link_24"
         case .computing: return "dialpad_alt_24"
-        case .dataStorage: return "storage_24"
-        case .decentralizedIdentity: return "identity_24"
+        case .storage: return "storage_24"
+        case .identity: return "identity_24"
+        case .yieldTokens: return "yield_24"
+
         }
     }
 

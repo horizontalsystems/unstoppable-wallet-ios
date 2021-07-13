@@ -354,8 +354,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "market_discovery.filter_title.computing" = "Computing";
 "market_discovery.filter_title.fan_tokens" = "Fan Tokens";
 "market_discovery.filter_title.investment_tools" = "Investment Tools";
-"market_discovery.filter_title.data_storage" = "Data Storage";
-"market_discovery.filter_title.decentralized_identity" = "Decentralized Identity";
+"market_discovery.filter_title.storage" = "Storage";
+"market_discovery.filter_title.identity" = "Identity";
+"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
+
 
 "market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
 "market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
@@ -375,7 +377,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
 "market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
 "market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "Marketplaces for NFT tokens.";
+"market_discovery.filter_description.nft" = "NFT projects.";
 "market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
 "market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
 "market_discovery.filter_description.b2b" = "B2B service providers.";
@@ -385,8 +387,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "market_discovery.filter_description.computing" = "Decentralized on-demand computing solutions.";
 "market_discovery.filter_description.fan_tokens" = "Digital fan tokens, typically specific to a team or club.";
 "market_discovery.filter_description.investment_tools" = "Token-powered analytics and investment instruments.";
-"market_discovery.filter_description.data_storage" = "Decentralized data-storage solutions.";
-"market_discovery.filter_description.decentralized_identity" = "Decentralized identity solutions.";
+"market_discovery.filter_description.storage" = "Decentralized data-storage.";
+"market_discovery.filter_description.identity" = "Decentralized identity.";
+"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
+
 
 "market_watchlist.empty.caption" = "Watchlist is empty. \nYou may add coins to watchlist using star icon on a coin page.";
 
