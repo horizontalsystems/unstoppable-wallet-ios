@@ -42,7 +42,7 @@ class SwapCoinCardViewModel {
     }
 
     private func sync(coin: Coin?) {
-        tokenViewItemRelay.accept(coin.map { TokenViewItem(title: $0.title, iconCoinType: $0.type) })
+        tokenViewItemRelay.accept(coin.map { TokenViewItem(title: $0.code, iconCoinType: $0.type) })
     }
 
     private func sync(balance: Decimal?) {
