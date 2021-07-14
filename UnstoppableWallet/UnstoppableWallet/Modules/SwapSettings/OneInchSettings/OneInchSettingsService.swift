@@ -150,7 +150,7 @@ extension OneInchSettingsService: ISlippageService {
     }
 
     var initialSlippage: Decimal? {
-        guard case let .valid(settings) = state, settings.allowedSlippage != TradeOptions.defaultSlippage else {
+        guard case let .valid(settings) = state, settings.allowedSlippage != Self.defaultSlippage else {
             return nil
         }
 
