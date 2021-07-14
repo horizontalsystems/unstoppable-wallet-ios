@@ -103,7 +103,7 @@ class MainViewController: ThemeTabBarController {
         }
 
         showAlerts.append({
-            let module = ReleaseNotesViewController(url: url, urlManager: UrlManager(inApp: false), closeHandler: { [weak self] in
+            let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, closeHandler: { [weak self] in
                 self?.showNextAlert()
             })
             DispatchQueue.main.async {
