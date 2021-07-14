@@ -467,8 +467,12 @@
 "coin_page.trading_volume" = "Volumen de comercio";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
-"coin_page.coin_markets" = "%@ Markets";
 "coin_page.funds_invested" = "Fondos invertidos";
+
+"coin_page.coin_markets" = "%@ Markets";
+"coin_page.coin_markets.sort_by" = "Sort By";
+"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
+"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
 
 "coin_page.tvl" = "Valor total bloqueado";
 "coin_page.market_cap_tvl_ratio" = "Capitalización de Mercado / Proporción TVL";
