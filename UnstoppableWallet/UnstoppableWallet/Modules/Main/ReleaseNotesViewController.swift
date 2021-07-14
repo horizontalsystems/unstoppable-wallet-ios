@@ -14,6 +14,8 @@ class ReleaseNotesViewController: ThemeViewController {
         self.closeHandler = closeHandler
 
         super.init()
+
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +48,8 @@ class ReleaseNotesViewController: ThemeViewController {
 
         view.addSubview(markdownController.view)
         markdownController.view.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
+            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(bottomHolder.snp.top)
         }
 
