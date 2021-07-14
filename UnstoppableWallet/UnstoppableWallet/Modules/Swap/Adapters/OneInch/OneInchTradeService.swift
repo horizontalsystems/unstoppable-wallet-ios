@@ -61,6 +61,7 @@ class OneInchTradeService {
     var settings = OneInchSettings() {
         didSet {
             settingsRelay.accept(settings)
+            syncQuote()
         }
     }
 
