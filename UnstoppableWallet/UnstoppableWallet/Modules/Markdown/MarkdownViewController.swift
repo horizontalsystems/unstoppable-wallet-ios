@@ -34,9 +34,7 @@ class MarkdownViewController: ThemeViewController {
         super.viewDidLoad()
 
         view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
+        makeTableViewConstraints(tableView: tableView)
 
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
@@ -78,6 +76,12 @@ class MarkdownViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+    }
+
+    public func makeTableViewConstraints(tableView: UIView) {
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
     }
 
     private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {

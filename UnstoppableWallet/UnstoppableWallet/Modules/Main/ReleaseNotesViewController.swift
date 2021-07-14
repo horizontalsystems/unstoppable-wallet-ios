@@ -2,20 +2,19 @@ import UIKit
 import ThemeKit
 import SnapKit
 
-class ReleaseNotesViewController: ThemeViewController {
-    private let markdownController: UIViewController
+class ReleaseNotesViewController: MarkdownViewController {
     private let urlManager: IUrlManager
-
     private let closeHandler: (() -> ())?
 
-    init(url: URL, urlManager: IUrlManager, closeHandler: (() -> ())? = nil) {
-        markdownController = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url)
+    let bottomHolder = UIView()
+
+    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: IUrlManager, closeHandler: (() -> ())? = nil) {
         self.urlManager = urlManager
         self.closeHandler = closeHandler
 
-        super.init()
+        super.init(viewModel: viewModel, handleRelativeUrl: handleRelativeUrl)
 
-        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .automatic
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -23,17 +22,11 @@ class ReleaseNotesViewController: ThemeViewController {
     }
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        title = "release_notes.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
-        let bottomHolder = UIView()
-        view.addSubview(bottomHolder)
-        bottomHolder.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            maker.height.equalTo(83)
-        }
+        super.viewDidLoad()
 
         bottomHolder.backgroundColor = .themeTyler
 
@@ -45,13 +38,6 @@ class ReleaseNotesViewController: ThemeViewController {
         }
 
         separator.backgroundColor = .themeSteel10
-
-        view.addSubview(markdownController.view)
-        markdownController.view.snp.makeConstraints { maker in
-            maker.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(bottomHolder.snp.top)
-        }
 
         let twitterButton = UIButton()
         bottomHolder.addSubview(twitterButton)
@@ -96,6 +82,20 @@ class ReleaseNotesViewController: ThemeViewController {
         followUsLabel.font = .caption
         followUsLabel.textColor = .themeGray
         followUsLabel.text = "release_notes.follow_us".localized
+    }
+
+    override func makeTableViewConstraints(tableView: UIView) {
+        tableView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        view.addSubview(bottomHolder)
+        bottomHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.height.equalTo(83)
+        }
     }
 
     @objc private func onClose() {
