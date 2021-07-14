@@ -607,7 +607,7 @@ extension CoinPageViewController {
     }
 
     private func openMarkets(tickers: [MarketTicker]) {
-        let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, tickers: tickers)
+        let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, coinType: viewModel.coinType, tickers: tickers)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

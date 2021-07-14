@@ -1,38 +1,96 @@
 import Foundation
-import XRatesKit
-import CoinKit
+import RxSwift
+import RxRelay
+import RxCocoa
 
 class CoinMarketsViewModel {
-    private let coinCode: String
-    private let tickers: [MarketTicker]
+    private let service: CoinMarketsService
+    private let disposeBag = DisposeBag()
 
-    private let coinFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 8
-        formatter.currencyCode = ""
-        formatter.currencySymbol = ""
-        return formatter
-    }()
+    private let sortTypeRelay = BehaviorRelay<String>(value: "")
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
 
-    init(coinCode: String, tickers: [MarketTicker]) {
-        self.coinCode = coinCode
-        self.tickers = tickers
+    init(service: CoinMarketsService) {
+        self.service = service
+
+        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+
+        sync(sortType: service.sortType)
+        sync(items: service.items)
     }
+
+    private func sync(sortType: CoinMarketsService.SortType) {
+        sortTypeRelay.accept(title(sortType: sortType))
+    }
+
+    private func sync(items: [CoinMarketsService.Item]) {
+        viewItemsRelay.accept(items.map { viewItem(item: $0) })
+    }
+
+    private func viewItem(item: CoinMarketsService.Item) -> ViewItem {
+        ViewItem(
+                market: item.market,
+                marketImageUrl: item.marketImageUrl,
+                pair: "\(service.coinCode) / \(item.targetCoinCode)",
+                rate: ValueFormatter.instance.format(value: item.rate, decimalCount: 8, symbol: item.targetCoinCode, fractionPolicy: .threshold(high: 0.01, low: 0)),
+                volume: volume(value: item.volume, type: item.volumeType)
+        )
+    }
+
+    private func volume(value: Decimal, type: CoinMarketsService.VolumeType) -> String? {
+        switch type {
+        case .coin: return CurrencyCompactFormatter.instance.format(symbol: service.coinCode, value: value)
+        case .currency: return CurrencyCompactFormatter.instance.format(currency: service.currency, value: value)
+        }
+    }
+
+    private func value(volumeType: CoinMarketsService.VolumeType) -> String {
+        switch volumeType {
+        case .coin: return service.coinCode
+        case .currency: return service.currency.code
+        }
+    }
+
+    private func title(sortType: CoinMarketsService.SortType) -> String {
+        switch sortType {
+        case .highestVolume: return "coin_page.coin_markets.sort_by.highest_volume".localized
+        case .lowestVolume: return "coin_page.coin_markets.sort_by.lowest_volume".localized
+        }
+    }
+
+}
+
+extension CoinMarketsViewModel {
 
     var title: String {
-        "coin_page.coin_markets".localized(coinCode)
+        "coin_page.coin_markets".localized(service.coinCode)
     }
 
-    var viewItems: [ViewItem] {
-        tickers.map { ticker in
-            ViewItem(
-                    market: ticker.marketName,
-                    marketImageUrl: ticker.marketImageUrl,
-                    pair: "\(ticker.base)/\(ticker.target)",
-                    rate: ValueFormatter.instance.format(value: ticker.rate, decimalCount: 8, symbol: ticker.target, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? "",
-                    volume: CurrencyCompactFormatter.instance.format(symbol: ticker.base, value: ticker.volume) ?? ""
-            )
+    var sortTypeDriver: Driver<String> {
+        sortTypeRelay.asDriver()
+    }
+
+    var viewItemsDriver: Driver<[ViewItem]> {
+        viewItemsRelay.asDriver()
+    }
+
+    var volumeTypes: [String] {
+        CoinMarketsService.VolumeType.allCases.map { value(volumeType: $0) }
+    }
+
+    var sortTypeViewItems: [AlertViewItem] {
+        CoinMarketsService.SortType.allCases.map { sortType in
+            AlertViewItem(text: title(sortType: sortType), selected: service.sortType == sortType)
         }
+    }
+
+    func onSelectSortType(index: Int) {
+        service.set(sortType: CoinMarketsService.SortType.allCases[index])
+    }
+
+    func onSelectVolumeType(index: Int) {
+        service.set(volumeType: CoinMarketsService.VolumeType.allCases[index])
     }
 
 }
@@ -43,8 +101,8 @@ extension CoinMarketsViewModel {
         let market: String
         let marketImageUrl: String?
         let pair: String
-        let rate: String
-        let volume: String
+        let rate: String?
+        let volume: String?
     }
 
 }
