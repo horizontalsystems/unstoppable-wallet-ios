@@ -2,11 +2,18 @@ import ThemeKit
 import SnapKit
 import SectionsTableView
 import ComponentKit
+import RxSwift
+import RxCocoa
 
 class CoinMarketsViewController: ThemeViewController {
     private let viewModel: CoinMarketsViewModel
+    private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .plain)
+    private let headerView = CoinMarketsHeaderView()
+
+    private var viewItems = [CoinMarketsViewModel.ViewItem]()
+    private var isLoaded = false
 
     init(viewModel: CoinMarketsViewModel) {
         self.viewModel = viewModel
@@ -36,8 +43,48 @@ class CoinMarketsViewController: ThemeViewController {
 
         tableView.registerCell(forClass: G14Cell.self)
 
+        headerView.set(volumeTypes: viewModel.volumeTypes)
+        headerView.onTapSortType = { [weak self] in
+            self?.openSortTypeSelector()
+        }
+        headerView.onSelectVolumeType = { [weak self] index in
+            self?.viewModel.onSelectVolumeType(index: index)
+        }
+
+        subscribe(disposeBag, viewModel.sortTypeDriver) { [weak self] in self?.sync(sortType: $0) }
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+
         tableView.buildSections()
+
+        isLoaded = true
     }
+
+    private func sync(sortType: String) {
+        headerView.set(sortType: sortType)
+    }
+
+    private func sync(viewItems: [CoinMarketsViewModel.ViewItem]) {
+        self.viewItems = viewItems
+
+        if isLoaded {
+            tableView.reload()
+        }
+    }
+
+    private func openSortTypeSelector() {
+        let alertController = AlertRouter.module(
+                title: "coin_page.coin_markets.sort_by".localized,
+                viewItems: viewModel.sortTypeViewItems
+        ) { [weak self] index in
+            self?.viewModel.onSelectSortType(index: index)
+        }
+
+        present(alertController, animated: true)
+    }
+
+}
+
+extension CoinMarketsViewController: SectionsDataSource {
 
     private func row(viewItem: CoinMarketsViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
@@ -57,18 +104,12 @@ class CoinMarketsViewController: ThemeViewController {
         )
     }
 
-}
-
-extension CoinMarketsViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
-        let viewItems = viewModel.viewItems
-
-        return [
+        [
             Section(
                     id: "main",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
+                    headerState: .static(view: headerView, height: CoinMarketsHeaderView.height),
+                    footerState: .marginColor(height: .margin32, color: .clear),
                     rows: viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isLast: index == viewItems.count - 1)
                     }
