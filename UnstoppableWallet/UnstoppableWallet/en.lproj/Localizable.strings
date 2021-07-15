@@ -600,7 +600,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "settings.tab_bar_item" = "Settings";
 "settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
-"settings.experimental_features" = "Experimental Features";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
