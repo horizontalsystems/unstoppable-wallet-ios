@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
-"settings.experimental_features" = "实验性功能";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
