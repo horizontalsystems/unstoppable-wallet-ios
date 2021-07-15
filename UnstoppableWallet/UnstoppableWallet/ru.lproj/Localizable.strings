@@ -600,7 +600,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
-"settings.experimental_features" = "Экспериментальные Функции";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
