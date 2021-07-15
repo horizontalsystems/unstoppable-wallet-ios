@@ -923,13 +923,13 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pending";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. This step can take anywhere from a few minutes to a few hours depending on the transaction fee. Transactions sent with a very low fee usually get processed within a few days or can be rejected by network i.e. no transaction took place.";
-"status_info.sending_receiving.title" = "Sending / Receiving";
-"status_info.sending_receiving.content" = "Transaction has been included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until the status changes to completed.";
-"status_info.confirmed.title" = "Confirmed";
-"status_info.confirmed.content" = "Transaction is final and irreversible.";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transaction may remain from a few minutes to hours depending on the transaction fee. Transactions sent with a low fee usually get processed within a few hours or even days, and can also be rejected entirely.";
+"status_info.sending_receiving.title" = "Sending / Receiving / Swapping";
+"status_info.sending_receiving.content" = "Transaction has been already included in the blockchain but has not reached permanent finality yet. At this point, it's safe to consider transaction completed for smaller payments. For larger payments better to wait until status changes to sent / received / swapped / approved, depending on transaction type.";
+"status_info.confirmed.title" = "Sent / Received / Swapped";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Failed";
-"status_info.failed.content" = "Transaction did not get processed as intended and no token value transfer took place. On Ethereum blockchain failed transactions do consume transaction fees.";
+"status_info.failed.content" = "Transaction did not get processed as intended and no value transfer took place. Failed transactions do consume transaction fees.";
 
 // Enable Coins
 
