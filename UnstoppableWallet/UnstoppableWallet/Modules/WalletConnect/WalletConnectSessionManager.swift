@@ -5,13 +5,15 @@ import RxRelay
 class WalletConnectSessionManager {
     private let storage: IWalletConnectSessionStorage
     private let accountManager: IAccountManager
+    private let accountSettingManager: AccountSettingManager
     private let disposeBag = DisposeBag()
 
     private let sessionsRelay = PublishRelay<[WalletConnectSession]>()
 
-    init(storage: IWalletConnectSessionStorage, accountManager: IAccountManager) {
+    init(storage: IWalletConnectSessionStorage, accountManager: IAccountManager, accountSettingManager: AccountSettingManager) {
         self.storage = storage
         self.accountManager = accountManager
+        self.accountSettingManager = accountSettingManager
 
         accountManager.accountDeletedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -26,14 +28,21 @@ class WalletConnectSessionManager {
                     self?.handle(activeAccount: activeAccount)
                 })
                 .disposed(by: disposeBag)
+
+        subscribe(disposeBag, accountSettingManager.ethereumNetworkObservable) { [weak self] _, _ in self?.syncSessions() }
+        subscribe(disposeBag, accountSettingManager.binanceSmartChainNetworkObservable) { [weak self] _, _ in self?.syncSessions() }
     }
 
     private func handleDeleted(account: Account) {
         storage.deleteSessions(accountId: account.id)
-        sessionsRelay.accept(sessions)
+        syncSessions()
     }
 
     private func handle(activeAccount: Account?) {
+        syncSessions()
+    }
+
+    private func syncSessions() {
         sessionsRelay.accept(sessions)
     }
 
@@ -46,7 +55,10 @@ extension WalletConnectSessionManager {
             return []
         }
 
-        return storage.sessions(accountId: activeAccount.id)
+        let ethereumChainId = accountSettingManager.ethereumNetwork(account: activeAccount).networkType.chainId
+        let binanceSmartChainChainId = accountSettingManager.binanceSmartChainNetwork(account: activeAccount).networkType.chainId
+
+        return storage.sessions(accountId: activeAccount.id, chainIds: [ethereumChainId, binanceSmartChainChainId])
     }
 
     var sessionsObservable: Observable<[WalletConnectSession]> {
@@ -55,12 +67,12 @@ extension WalletConnectSessionManager {
 
     func save(session: WalletConnectSession) {
         storage.save(session: session)
-        sessionsRelay.accept(sessions)
+        syncSessions()
     }
 
     func deleteSession(peerId: String) {
         storage.deleteSession(peerId: peerId)
-        sessionsRelay.accept(sessions)
+        syncSessions()
     }
 
 }

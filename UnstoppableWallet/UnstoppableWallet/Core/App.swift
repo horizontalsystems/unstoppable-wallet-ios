@@ -211,7 +211,7 @@ class App {
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
-        walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager)
+        walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, accountSettingManager: accountSettingManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
 
         activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)

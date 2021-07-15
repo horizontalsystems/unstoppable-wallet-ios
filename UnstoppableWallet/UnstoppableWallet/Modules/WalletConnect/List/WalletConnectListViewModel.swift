@@ -36,7 +36,7 @@ class WalletConnectListViewModel {
 
     private func title(chain: WalletConnectListService.Chain) -> String {
         switch chain {
-        case .ethereum: return "Ethereum"
+        case .ethereum, .ropsten, .rinkeby, .kovan, .goerli: return "Ethereum"
         case .binanceSmartChain: return "Binance Smart Chain"
         }
     }
