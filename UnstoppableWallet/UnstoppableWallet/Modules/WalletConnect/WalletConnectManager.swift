@@ -16,12 +16,12 @@ class WalletConnectManager {
     }
 
     func evmKit(chainId: Int, account: Account) -> EthereumKit.Kit? {
-        if chainId == 1 {
-            return try? ethereumKitManager.evmKit(account: account)
+        if let ethereumKit = try? ethereumKitManager.evmKit(account: account), ethereumKit.networkType.chainId == chainId {
+            return ethereumKit
         }
 
-        if chainId == 56 {
-            return try? binanceSmartChainKitManager.evmKit(account: account)
+        if let binanceSmartChainKit = try? binanceSmartChainKitManager.evmKit(account: account), binanceSmartChainKit.networkType.chainId == chainId {
+            return binanceSmartChainKit
         }
 
         return nil

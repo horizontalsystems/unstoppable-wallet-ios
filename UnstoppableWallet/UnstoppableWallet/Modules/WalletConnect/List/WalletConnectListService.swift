@@ -41,6 +41,10 @@ extension WalletConnectListService {
     enum Chain: Int, CaseIterable {
         case ethereum = 1
         case binanceSmartChain = 56
+        case ropsten = 3
+        case rinkeby = 4
+        case kovan = 42
+        case goerli = 5
     }
 
     struct Item {

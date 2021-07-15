@@ -844,9 +844,9 @@ extension GrdbStorage: ILogRecordStorage {
 
 extension GrdbStorage: IWalletConnectSessionStorage {
 
-    func sessions(accountId: String) -> [WalletConnectSession] {
+    func sessions(accountId: String, chainIds: [Int]) -> [WalletConnectSession] {
         try! dbPool.read { db in
-            try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).fetchAll(db)
+            try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId && chainIds.contains(WalletConnectSession.Columns.chainId)).fetchAll(db)
         }
     }
 
