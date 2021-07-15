@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "Paramètres";
 "settings.security_center" = "Centre de Sécurité";
 "settings.manage_accounts" = "Gérer les portefeuilles";
-"settings.experimental_features" = "Fonctionnalités expérimentales";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Notifications";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
