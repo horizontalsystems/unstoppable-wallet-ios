@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
-"settings.experimental_features" = "Experimentelles Feature";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
