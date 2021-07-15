@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
-"settings.experimental_features" = "실험적 기능";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
