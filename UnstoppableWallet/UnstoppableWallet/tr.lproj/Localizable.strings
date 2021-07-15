@@ -599,7 +599,7 @@
 "settings.tab_bar_item" = "Ayarlar";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_accounts" = "Cüzdanları yönet";
-"settings.experimental_features" = "Deneysel Özellikler";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Bildirimler";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
