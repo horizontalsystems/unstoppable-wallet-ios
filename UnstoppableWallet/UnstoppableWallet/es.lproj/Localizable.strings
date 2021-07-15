@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "Ajustes";
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_accounts" = "Gestionar monederos";
-"settings.experimental_features" = "Características experimentales";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
