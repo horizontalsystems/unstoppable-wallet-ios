@@ -546,24 +546,16 @@
 "transactions.filter_all" = "Hepsi";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
+"transactions.processing" = "Processing";
+"transactions.completed" = "Completed";
 "transactions.failed" = "Başarısız";
 
 "transactions.receive" = "Receive";
 "transactions.send" = "Send";
 "transactions.approve" = "Approve";
 "transactions.swap" = "Swap";
-
-"transactions.receiving" = "Alınıyor";
-"transactions.sending" = "Gönderiliyor";
-"transactions.approving" = "Approving";
-"transactions.swapping" = "Swapping";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
-
-"transactions.received" = "Received";
-"transactions.sent" = "Sent";
-"transactions.approved" = "Approved";
-"transactions.swapped" = "Swapped";
 
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
@@ -594,6 +586,8 @@
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "Ödeyeceğiniz Tutar";
 "tx_info.you_get" = "You Get";
+"tx_info.you_paid" = "You Paid";
+"tx_info.you_got" = "You Got";
 "tx_info.price" = "Price";
 
 // Settings
