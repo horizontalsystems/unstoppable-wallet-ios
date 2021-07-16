@@ -3,7 +3,7 @@ import DeepDiff
 import CurrencyKit
 
 struct TransactionViewItem {
-    let wallet: Wallet
+    let wallet: TransactionWallet
     let record: TransactionRecord
     let type: TransactionType
     let date: Date

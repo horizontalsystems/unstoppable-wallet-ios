@@ -404,11 +404,11 @@ extension ZcashAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
     }
 
-    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]> {
         transactionPool.transactionsSingle(from: from, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }

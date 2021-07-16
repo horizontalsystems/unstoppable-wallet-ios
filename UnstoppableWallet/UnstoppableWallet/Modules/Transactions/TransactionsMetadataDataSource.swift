@@ -3,19 +3,19 @@ import CurrencyKit
 import CoinKit
 
 class TransactionsMetadataDataSource {
-    private var lastBlockInfos = SynchronizedDictionary<Wallet, LastBlockInfo>()
+    private var lastBlockInfos = SynchronizedDictionary<TransactionSource, LastBlockInfo>()
     private var rates = SynchronizedDictionary<Coin, SynchronizedDictionary<Date, CurrencyValue>>()
 
-    func lastBlockInfo(wallet: Wallet) -> LastBlockInfo? {
-        lastBlockInfos[wallet]
+    func lastBlockInfo(source: TransactionSource) -> LastBlockInfo? {
+        lastBlockInfos[source]
     }
 
     func rate(coin: Coin, date: Date) -> CurrencyValue? {
         rates[coin]?[date]
     }
 
-    func set(lastBlockInfo: LastBlockInfo, wallet: Wallet) {
-        lastBlockInfos[wallet] = lastBlockInfo
+    func set(lastBlockInfo: LastBlockInfo, source: TransactionSource) {
+        lastBlockInfos[source] = lastBlockInfo
     }
 
     func set(rate: CurrencyValue, coin: Coin, date: Date) {

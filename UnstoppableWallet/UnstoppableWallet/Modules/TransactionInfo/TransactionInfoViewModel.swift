@@ -10,26 +10,24 @@ class TransactionInfoViewModel {
     private let factory: TransactionInfoViewItemFactory
 
     private let transaction: TransactionRecord
-    private let wallet: Wallet
 
     private var rates = [Coin: CurrencyValue]()
     private var viewItemsRelay = PublishRelay<[[TransactionInfoModule.ViewItem]]>()
     private var explorerViewItem: TransactionInfoModule.ViewItem
 
-    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transaction: TransactionRecord, wallet: Wallet) {
+    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transaction: TransactionRecord, wallet: TransactionWallet) {
         self.service = service
         self.factory = factory
         self.transaction = transaction
-        self.wallet = wallet
 
         let transactionHash = transaction.transactionHash
-        let coin = wallet.coin
-        let account = wallet.account
+        let blockchain = wallet.source.blockchain
+        let account = wallet.source.account
         let testMode = service.testMode
 
         var title: String
         var url: String?
-        switch coin.type {
+        switch blockchain {
         case .bitcoin:
             title = "btc.com"
             url = testMode ? nil : "https://btc.com/" + transactionHash
@@ -42,7 +40,7 @@ class TransactionInfoViewModel {
         case .dash:
             title = "dash.org"
             url = testMode ? nil : "https://insight.dash.org/insight/tx/" + transactionHash
-        case .ethereum, .erc20:
+        case .ethereum:
             let domain: String
 
             switch service.ethereumNetworkType(account: account) {
@@ -55,7 +53,7 @@ class TransactionInfoViewModel {
 
             title = "etherscan.io"
             url = "https://\(domain)/tx/" + transactionHash
-        case .binanceSmartChain, .bep20:
+        case .binanceSmartChain:
             let domain: String
 
             switch service.binanceSmartChainNetworkType(account: account) {
@@ -70,9 +68,6 @@ class TransactionInfoViewModel {
         case .zcash:
             title = "blockchair.com"
             url = testMode ? nil : "https://blockchair.com/zcash/transaction/" + transactionHash
-        case .unsupported:
-            title = ""
-            url = nil
         }
 
         explorerViewItem = .explorer(title: "tx_info.view_on".localized(title), url: url)

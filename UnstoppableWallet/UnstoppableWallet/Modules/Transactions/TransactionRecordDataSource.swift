@@ -32,8 +32,8 @@ class TransactionRecordDataSource {
         return true
     }
 
-    private func createViewItem(for wallet: Wallet, record: TransactionRecord) -> TransactionViewItem {
-        let lastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
+    private func createViewItem(for wallet: TransactionWallet, record: TransactionRecord) -> TransactionViewItem {
+        let lastBlockInfo = metaDataSource.lastBlockInfo(source: wallet.source)
         let currencyValue = record.mainValue.flatMap { (coinValue: CoinValue) -> CurrencyValue? in
             guard let rate = metaDataSource.rate(coin: coinValue.coin, date: record.date) else {
                 return nil
@@ -51,13 +51,13 @@ class TransactionRecordDataSource {
         }
     }
 
-    func handleNext(recordsData: [Wallet: [TransactionRecord]]) {
+    func handleNext(recordsData: [TransactionWallet: [TransactionRecord]]) {
         recordsData.forEach { wallet, records in
             poolRepo.pool(byWallet: wallet)?.add(records: records)
         }
     }
 
-    func handleUpdated(records: [TransactionRecord], wallet: Wallet) -> [TransactionViewItem]? {
+    func handleUpdated(records: [TransactionRecord], wallet: TransactionWallet) -> [TransactionViewItem]? {
         guard let pool = poolRepo.pool(byWallet: wallet) else {
             return nil
         }
@@ -111,7 +111,7 @@ class TransactionRecordDataSource {
         return true
     }
 
-    func set(wallets: [Wallet]) {
+    func set(wallets: [TransactionWallet]) {
         poolRepo.allPools.forEach { pool in
             pool.resetFirstUnusedIndex()
         }
@@ -120,13 +120,13 @@ class TransactionRecordDataSource {
         itemsDataSource.clear()
     }
 
-    func handleUpdated(wallets: [Wallet]) {
+    func handleUpdated(wallets: [TransactionWallet]) {
         poolRepo.deactivateAllPools()
         set(wallets: wallets)
     }
 
-    func handleUpdated(walletsData: [(Wallet, LastBlockInfo?)]) {
-        walletsData.forEach { set(lastBlockInfo: $1, wallet: $0) }
+    func handleUpdated(lastBlockInfos: [(TransactionWallet, LastBlockInfo?)]) {
+        lastBlockInfos.forEach { set(lastBlockInfo: $1, wallet: $0) }
     }
 
     func clearRates() {
@@ -137,13 +137,13 @@ class TransactionRecordDataSource {
         }
     }
 
-    @discardableResult func set(lastBlockInfo: LastBlockInfo?, wallet: Wallet) -> Bool {
+    @discardableResult func set(lastBlockInfo: LastBlockInfo?, wallet: TransactionWallet) -> Bool {
         guard let lastBlockInfo = lastBlockInfo else {
             return false
         }
 
-        let oldLastBlockInfo = metaDataSource.lastBlockInfo(wallet: wallet)
-        metaDataSource.set(lastBlockInfo: lastBlockInfo, wallet: wallet)
+        let oldLastBlockInfo = metaDataSource.lastBlockInfo(source: wallet.source)
+        metaDataSource.set(lastBlockInfo: lastBlockInfo, source: wallet.source)
 
         var itemsChanged = false
 

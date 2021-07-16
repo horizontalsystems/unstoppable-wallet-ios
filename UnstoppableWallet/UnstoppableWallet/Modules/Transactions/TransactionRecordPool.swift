@@ -5,20 +5,20 @@ class TransactionRecordPool {
         self.state = state
     }
 
-    var wallet: Wallet {
-        return state.wallet
+    var wallet: TransactionWallet {
+        state.wallet
     }
 
     var records: [TransactionRecord] {
-        return state.records
+        state.records
     }
 
     var allShown: Bool {
-        return state.allLoaded && state.unusedRecords.isEmpty
+        state.allLoaded && state.unusedRecords.isEmpty
     }
 
     var unusedRecords: [TransactionRecord] {
-        return state.unusedRecords
+        state.unusedRecords
     }
 
     func increaseFirstUnusedIndex() {

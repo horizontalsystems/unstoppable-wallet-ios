@@ -102,7 +102,7 @@ class TransactionInfoViewItemFactory {
                 actionSectionItems(title: "tx_info.you_pay".localized, coinValue: swap.valueIn, rate: rates[swap.valueIn.coin], incoming: false)
             ]
 
-            if let valueOut = swap.valueOut {
+            if let valueOut = swap.valueOut, !swap.foreignRecipient {
                 sections.append(actionSectionItems(title: "tx_info.you_get".localized, coinValue: valueOut, rate: rates[valueOut.coin], incoming: true))
             }
             sections.append(middleSectionItems)
@@ -239,6 +239,9 @@ class TransactionInfoViewItemFactory {
             
             btcOutgoing.to.flatMap { middleSectionItems.append(.to(value: $0)) }
             middleSectionItems.append(.id(value: btcOutgoing.transactionHash))
+            if btcOutgoing.showRawTransaction {
+                middleSectionItems.append(.rawTransaction)
+            }
             btcOutgoing.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
 
             return [

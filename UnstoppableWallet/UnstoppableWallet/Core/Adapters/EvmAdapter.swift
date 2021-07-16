@@ -66,32 +66,3 @@ extension EvmAdapter: ISendEthereumAdapter {
     }
 
 }
-
-extension EvmAdapter: ITransactionsAdapter {
-
-    var transactionState: AdapterState {
-        convertToAdapterState(evmSyncState: evmKit.transactionsSyncState)
-    }
-
-    var transactionStateUpdatedObservable: Observable<Void> {
-        evmKit.transactionsSyncStateObservable.map { _ in () }
-    }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        evmKit.etherTransactionsObservable.map { [weak self] in
-            $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        evmKit.etherTransactionsSingle(fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
-                }
-    }
-
-    func rawTransaction(hash: String) -> String? {
-        nil
-    }
-
-}

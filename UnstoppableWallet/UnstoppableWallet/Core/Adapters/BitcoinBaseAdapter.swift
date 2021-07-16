@@ -360,11 +360,11 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
     }
 
-    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]> {
         abstractKit.transactions(fromUid: from?.uid, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap {
