@@ -195,10 +195,10 @@ class TransactionsViewController: ThemeViewController {
 
         switch item.status {
         case .pending:
-            spinnerProgress = 20
+            spinnerProgress = 0.2
 
         case .processing(let progress):
-            spinnerProgress = Float(progress) * 80 / 100 + 20
+            spinnerProgress = Float(progress) * 0.8 + 0.2
 
         case .failed:
             image = UIImage(named: "warning_2_20")
