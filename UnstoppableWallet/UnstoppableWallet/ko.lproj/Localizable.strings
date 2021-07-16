@@ -545,24 +545,16 @@
 "transactions.filter_all" = "모든";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
+"transactions.processing" = "Processing";
+"transactions.completed" = "Completed";
 "transactions.failed" = "실패";
 
 "transactions.receive" = "Receive";
 "transactions.send" = "Send";
 "transactions.approve" = "Approve";
 "transactions.swap" = "Swap";
-
-"transactions.receiving" = "수신 중";
-"transactions.sending" = "전송중";
-"transactions.approving" = "Approving";
-"transactions.swapping" = "Swapping";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
-
-"transactions.received" = "Received";
-"transactions.sent" = "Sent";
-"transactions.approved" = "Approved";
-"transactions.swapped" = "Swapped";
 
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
@@ -593,6 +585,8 @@
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "You Pay";
 "tx_info.you_get" = "You Get";
+"tx_info.you_paid" = "You Paid";
+"tx_info.you_got" = "You Got";
 "tx_info.price" = "Price";
 
 // Settings
