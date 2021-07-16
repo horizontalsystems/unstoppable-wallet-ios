@@ -71,11 +71,9 @@ extension TransactionsInteractor: ITransactionsInteractor {
         lastBlockHeightsDisposeBag = DisposeBag()
 
         for wallet in wallets {
-            print("fetching adapter for \(wallet.source.blockchain)")
             guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
                 continue
             }
-            print("adapter for \(wallet.source.blockchain): \(adapter)")
 
             adapter.lastBlockUpdatedObservable
                     .throttle(.seconds(3), latest: true, scheduler: ConcurrentDispatchQueueScheduler(qos: .background))

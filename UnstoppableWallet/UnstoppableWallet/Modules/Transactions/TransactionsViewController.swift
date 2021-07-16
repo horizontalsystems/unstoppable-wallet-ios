@@ -15,7 +15,7 @@ class TransactionsViewController: ThemeViewController {
 
     let tableView = UITableView(frame: .zero, style: .plain)
 
-    private let cellName = String(describing: G14Cell.self)
+    private let cellName = String(describing: H23Cell.self)
 
     private let emptyLabel = UILabel()
     private let filterHeaderView = FilterHeaderView()
@@ -57,7 +57,7 @@ class TransactionsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
 
-        tableView.registerCell(forClass: G14Cell.self)
+        tableView.registerCell(forClass: H23Cell.self)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 
@@ -82,123 +82,146 @@ class TransactionsViewController: ThemeViewController {
         delegate.viewDidLoad()
     }
 
-    private func bind(item: TransactionViewItem, cell: G14Cell) {
+    private func bind(item: TransactionViewItem, cell: H23Cell) {
         delegate.willShow(item: item)
 
-        let image: UIImage?
-        let topText: String
-        let bottomText: String?
-        var primaryValueText: String? = nil
-        var primaryValueTextColor: UIColor = .themeJacob
-        var secondaryValueText: String? = nil
-        var secondaryValueTextColor: UIColor = .themeRemus
+        var image: UIImage? = nil
+        var imageColor: UIColor
+        var spinnerProgress: Float? = nil
+        var topText: String
+        var bottomText: String = ""
+        var valueTopText: String = ""
+        var valueTopTextColor: UIColor = .themeJacob
+        var valueBottomText: String? = nil
+        var valueBottomTextColor: UIColor = .themeGray
+        var valueLeftIconImage: UIImage? = nil
+        var valueRightIconImage: UIImage? = nil
 
         switch item.type {
-        case .incoming(let from, let amount, _, _):
+        case .incoming(let from, let amount, let lockState, _):
             image = UIImage(named: "arrow_medium_main_down_left_20")
-            switch item.status {
-                case .completed: topText = "transactions.received".localized
-                case .pending, .processing: topText = "transactions.receiving".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeRemus
+            topText = "transactions.receive".localized
             bottomText = from.flatMap { "transactions.from".localized($0) } ?? "---"
 
             if let currencyValueString = item.mainAmountCurrencyString {
-                primaryValueText = currencyValueString
-                primaryValueTextColor = .themeRemus
+                valueTopText = currencyValueString
+                valueTopTextColor = .themeRemus
             }
 
-            secondaryValueText = amount
-            secondaryValueTextColor = .themeGray
+            valueBottomText = amount
 
-        case .outgoing(let to, let amount, _, _, _):
+            if let lockState = lockState {
+                if lockState.locked {
+                    valueLeftIconImage = UIImage(named: "lock_20")?.withRenderingMode(.alwaysTemplate)
+                } else {
+                    valueLeftIconImage = UIImage(named: "unlock_20")?.withRenderingMode(.alwaysTemplate)
+                }
+                cell.valueLeftIconTinColor = .themeGray
+            }
+
+        case .outgoing(let to, let amount, let lockState, _, let sentToSelf):
             image = UIImage(named: "arrow_medium_main_up_right_20")
-            switch item.status {
-                case .completed: topText = "transactions.sent".localized
-                case .pending, .processing: topText = "transactions.sending".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeJacob
+            topText = "transactions.send".localized
             bottomText = to.flatMap { "transactions.to".localized($0) } ?? "---"
 
             if let currencyValueString = item.mainAmountCurrencyString {
-                primaryValueText = currencyValueString
-                primaryValueTextColor = .themeJacob
+                valueTopText = currencyValueString
+                valueTopTextColor = .themeJacob
             }
 
-            secondaryValueText = amount
-            secondaryValueTextColor = .themeGray
+            valueBottomText = amount
+
+            if let lockState = lockState {
+                if lockState.locked {
+                    valueLeftIconImage = UIImage(named: "lock_20")?.withRenderingMode(.alwaysTemplate)
+                } else {
+                    valueLeftIconImage = UIImage(named: "unlock_20")?.withRenderingMode(.alwaysTemplate)
+                }
+                cell.valueLeftIconTinColor = .themeGray
+            }
+
+            if sentToSelf {
+                valueRightIconImage = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
+                cell.valueRightIconTinColor = .themeRemus
+            }
 
         case .approve(let spender, let amount, let isMaxAmount):
             image = UIImage(named: "check_2_20")
-            switch item.status {
-                case .completed: topText = "transactions.approved".localized
-                case .pending, .processing: topText = "transactions.approving".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeLeah
+            topText = "transactions.approve".localized
             bottomText = "transactions.from".localized(spender)
 
             if let currencyValueString = item.mainAmountCurrencyString {
                 if isMaxAmount {
-                    primaryValueText = "∞"
+                    valueTopText = "∞"
                 } else {
-                    primaryValueText = currencyValueString
+                    valueTopText = currencyValueString
                 }
-                primaryValueTextColor = .themeLeah
+                valueTopTextColor = .themeLeah
             }
 
             if isMaxAmount {
-                secondaryValueText = "transactions.value.unlimited".localized
+                valueBottomText = "transactions.value.unlimited".localized
             } else {
-                secondaryValueText = amount
+                valueBottomText = amount
             }
-            secondaryValueTextColor = .themeGray
 
         case .swap(let exchangeAddress, let amountIn, let amountOut, let foreignRecipient):
             image = UIImage(named: "swap_2_20")
-            switch item.status {
-                case .completed: topText = "transactions.swapped".localized
-                case .pending, .processing: topText = "transactions.swapping".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeLeah
+            topText = "transactions.swap".localized
             bottomText = exchangeAddress
 
-            primaryValueText = amountIn
-            primaryValueTextColor = .themeJacob
+            valueTopText = amountIn
+            valueTopTextColor = .themeJacob
 
-            secondaryValueText = amountOut
-            secondaryValueTextColor = foreignRecipient ? .themeGray : .themeRemus
+            valueBottomText = amountOut
+            valueBottomTextColor = foreignRecipient ? .themeGray : .themeRemus
 
         case .contractCall(let contractAddress, let method):
             image = UIImage(named: "unordered_20")
-            switch item.status {
-                case .completed: topText = method?.uppercased() ?? "transactions.contract_call".localized
-                case .pending, .processing: topText = "transactions.pending".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeLeah
+            topText = method?.uppercased() ?? "transactions.contract_call".localized
             bottomText = contractAddress
 
         case .contractCreation:
             image = UIImage(named: "unordered_20")
-            switch item.status {
-                case .completed: topText = "transactions.contract_creation".localized
-                case .pending, .processing: topText = "transactions.pending".localized
-                case .failed: topText = "transactions.failed".localized
-            }
+            imageColor = .themeLeah
+            topText = "transactions.contract_creation".localized
             bottomText = "---"
         }
 
-        cell.leftImage = image
-        cell.leftImageTintColor = .themeGray
+        switch item.status {
+        case .pending:
+            spinnerProgress = 20
+
+        case .processing(let progress):
+            spinnerProgress = Float(progress) * 80 / 100 + 20
+
+        case .failed:
+            image = UIImage(named: "warning_2_20")
+            imageColor = .themeLucian
+
+        default: ()
+        }
+
+        cell.leftImage = image?.withRenderingMode(.alwaysTemplate)
+        cell.leftImageTintColor = imageColor
+        cell.set(spinnerProgress: spinnerProgress)
+
         cell.topText = topText
+        cell.topTextColor = .themeOz
         cell.bottomText = bottomText
 
-        cell.primaryValueText = primaryValueText
-        cell.primaryValueTextColor = primaryValueTextColor
-        cell.secondaryValueText = secondaryValueText
-        cell.secondaryValueTextColor = secondaryValueTextColor
-
-        cell.leftBadgeText = nil
-        cell.secondaryTitleText = nil
+        cell.valueTopText = valueTopText
+        cell.valueTopTextColor = valueTopTextColor
+        cell.valueBottomText = valueBottomText
+        cell.valueBottomTextColor = valueBottomTextColor
+        
+        cell.valueLeftIconImage = valueLeftIconImage
+        cell.valueRightIconImage = valueRightIconImage
     }
 
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
@@ -207,7 +230,7 @@ class TransactionsViewController: ThemeViewController {
         }
 
         let item = items[indexPath.row]
-        if let cell = cell as? G14Cell {
+        if let cell = cell as? H23Cell {
             cell.set(backgroundStyle: .claude, isFirst: indexPath.row != 0, isLast: true)
             bind(item: item, cell: cell)
         }
