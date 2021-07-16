@@ -9,3 +9,4 @@ faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppab
 uniswap_graph_url = https:/$()/api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
 provider_coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryptocurrencies/master/provider.coins.json
 coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryptocurrencies/master/coins.json
+defiyield_api_key = 87e8671e-8267-427c-92c3-4627833445ae

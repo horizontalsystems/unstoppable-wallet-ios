@@ -616,8 +616,9 @@ extension CoinPageViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openAudits() {
-        // todo
+    private func openAudits(coinType: CoinType) {
+        let viewController = CoinAuditsModule.viewController(coinType: coinType)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openSecurityInfo(type: CoinPageViewModel.SecurityType) {
@@ -739,10 +740,11 @@ extension CoinPageViewController {
         }
     }
 
-    private func securitySections(securityViewItems: [CoinPageViewModel.SecurityViewItem], hasAudits: Bool) -> [SectionProtocol] {
+    private func securitySections(securityViewItems: [CoinPageViewModel.SecurityViewItem], auditsCoinType: CoinType?) -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
         let hasSecurity = !securityViewItems.isEmpty
+        let hasAudits = auditsCoinType != nil
 
         for (index, viewItem) in securityViewItems.enumerated() {
             let row = Row<D20Cell>(
@@ -764,7 +766,7 @@ extension CoinPageViewController {
             rows.append(row)
         }
 
-        if hasAudits {
+        if let auditsCoinType = auditsCoinType {
             let row = Row<D1Cell>(
                     id: "audits",
                     height: .heightCell48,
@@ -773,7 +775,7 @@ extension CoinPageViewController {
                         cell.title = "coin_page.audits".localized
                     },
                     action: { [weak self] _ in
-                        self?.openAudits()
+                        self?.openAudits(coinType: auditsCoinType)
                     }
             )
 
@@ -944,7 +946,7 @@ extension CoinPageViewController: SectionsDataSource {
 
             sections.append(contentsOf: investorDataSections(majorHoldersCoinType: viewItem.majorHoldersCoinType, fundCategories: viewItem.fundCategories))
 
-            sections.append(contentsOf: securitySections(securityViewItems: viewItem.securities, hasAudits: false))
+            sections.append(contentsOf: securitySections(securityViewItems: viewItem.securities, auditsCoinType: viewItem.auditsCoinType))
 
             if let categories = viewItem.categories {
                 sections.append(categoriesSection(categories: categories))

@@ -203,6 +203,7 @@ protocol IRateManager {
     func defiTvl(coinType: CoinType, currencyCode: String) -> Single<DefiTvl?>
     func coinMarketPointsSingle(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarketPoint]>
     func topTokenHoldersSingle(coinType: CoinType, itemsCount: Int) -> Single<[TokenHolder]>
+    func auditReportsSingle(coinType: CoinType) -> Single<[Auditor]>
     func coinTypes(for category: String) -> [CoinType]
 }
 
@@ -253,6 +254,7 @@ protocol IAppConfigProvider {
     var bscscanKey: String { get }
     var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
+    var defiYieldApiKey: String? { get }
     var currencyCodes: [String] { get }
     var feeRateAdjustedForCurrencyCodes: [String] { get }
 
