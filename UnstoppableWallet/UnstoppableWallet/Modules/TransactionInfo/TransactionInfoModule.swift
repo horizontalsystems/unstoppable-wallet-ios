@@ -3,7 +3,7 @@ import CurrencyKit
 
 struct TransactionInfoModule {
 
-    static func instance(transaction: TransactionRecord, wallet: Wallet) -> UIViewController? {
+    static func instance(transaction: TransactionRecord, wallet: TransactionWallet) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.transactionsAdapter(for: wallet) else {
             return nil
         }

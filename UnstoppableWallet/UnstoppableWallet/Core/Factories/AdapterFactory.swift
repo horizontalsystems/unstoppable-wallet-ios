@@ -30,6 +30,18 @@ class AdapterFactory {
 
 extension AdapterFactory {
 
+    func ethereumTransactionsAdapter(account: Account) -> ITransactionsAdapter? {
+        (try? ethereumKitManager.evmKit(account: account)).flatMap { evmKit in
+            EvmTransactionsAdapter(evmKit: evmKit, coinManager: coinManager)
+        }
+    }
+
+    func bscTransactionsAdapter(account: Account) -> ITransactionsAdapter? {
+        (try? binanceSmartChainKitManager.evmKit(account: account)).flatMap { evmKit in
+            EvmTransactionsAdapter(evmKit: evmKit, coinManager: coinManager)
+        }
+    }
+
     func adapter(wallet: Wallet) -> IAdapter? {
         switch wallet.coin.type {
         case .bitcoin:

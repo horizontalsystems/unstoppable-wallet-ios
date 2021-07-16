@@ -1,16 +1,16 @@
 class TransactionRecordPoolState {
-    let wallet: Wallet
+    let wallet: TransactionWallet
 
     var records = [TransactionRecord]()
     var firstUnusedIndex = 0
     var allLoaded = false
 
-    init(wallet: Wallet) {
+    init(wallet: TransactionWallet) {
         self.wallet = wallet
     }
 
     var unusedRecords: [TransactionRecord] {
-        return Array(records.suffix(from: firstUnusedIndex))
+        Array(records.suffix(from: firstUnusedIndex))
     }
 
     func add(records: [TransactionRecord]) {
@@ -18,11 +18,11 @@ class TransactionRecordPoolState {
     }
 
     func index(ofRecord record: TransactionRecord) -> Int? {
-        return records.firstIndex(of: record)
+        records.firstIndex(of: record)
     }
 
     func insertIndex(ofRecord record: TransactionRecord) -> Int? {
-        return records.firstIndex(where: { $0 < record })
+        records.firstIndex(where: { $0 < record })
     }
 
     func set(record: TransactionRecord, atIndex index: Int) {

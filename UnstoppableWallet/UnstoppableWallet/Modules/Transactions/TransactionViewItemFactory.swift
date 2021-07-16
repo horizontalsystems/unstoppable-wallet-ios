@@ -39,12 +39,12 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
             case let btcIncoming as BitcoinIncomingTransactionRecord:
                 let lState = btcIncoming.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
                 
-                return .incoming(from: btcIncoming.from, amount: coinString(from: btcIncoming.value), lockState: lState, conflictingTxHash: btcIncoming.conflictingHash)
+                return .incoming(from: btcIncoming.from.flatMap { nameOrAddress(address: $0) }, amount: coinString(from: btcIncoming.value), lockState: lState, conflictingTxHash: btcIncoming.conflictingHash)
                 
             case let btcOutgoing as BitcoinOutgoingTransactionRecord:
                 let lState = btcOutgoing.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp)
                 
-                return .outgoing(to: btcOutgoing.to, amount: coinString(from: btcOutgoing.value), lockState: lState, conflictingTxHash: btcOutgoing.conflictingHash, sentToSelf: btcOutgoing.sentToSelf)
+                return .outgoing(to: btcOutgoing.to.flatMap { nameOrAddress(address: $0) }, amount: coinString(from: btcOutgoing.value), lockState: lState, conflictingTxHash: btcOutgoing.conflictingHash, sentToSelf: btcOutgoing.sentToSelf)
                 
             default:
                 fatalError("Record must be associated with TransactionType")
@@ -59,7 +59,7 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         }
     }
 
-    func viewItem(fromRecord record: TransactionRecord, wallet: Wallet, lastBlockInfo: LastBlockInfo? = nil, mainAmountCurrencyValue: CurrencyValue? = nil) -> TransactionViewItem {
+    func viewItem(fromRecord record: TransactionRecord, wallet: TransactionWallet, lastBlockInfo: LastBlockInfo? = nil, mainAmountCurrencyValue: CurrencyValue? = nil) -> TransactionViewItem {
         TransactionViewItem(
                 wallet: wallet,
                 record: record,
@@ -70,11 +70,11 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
         )
     }
 
-    func viewStatus(adapterStates: [Coin: AdapterState], transactionsCount: Int) -> TransactionViewStatus {
+    func viewStatus(adapterStates: [AdapterState], transactionsCount: Int) -> TransactionViewStatus {
         let noTransactions = transactionsCount == 0
         var upToDate = true
 
-        adapterStates.values.forEach {
+        adapterStates.forEach {
             if case .syncing = $0 {
                 upToDate = false
             }

@@ -84,37 +84,3 @@ extension Evm20Adapter: IErc20Adapter {
     }
 
 }
-
-extension Evm20Adapter: ITransactionsAdapter {
-
-    var transactionState: AdapterState {
-        convertToAdapterState(evmSyncState: evm20Kit.transactionsSyncState)
-    }
-
-    var transactionStateUpdatedObservable: Observable<Void> {
-        evm20Kit.transactionsSyncStateObservable.map { _ in () }
-    }
-
-    var transactionRecordsObservable: Observable<[TransactionRecord]> {
-        evm20Kit.transactionsObservable.map { [weak self] in
-            $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        do {
-            let fromHash = from.flatMap { Data(hex: $0.transactionHash) }
-            return try evm20Kit.transactionsSingle(from: fromHash, limit: limit)
-                    .map { [weak self] transactions -> [TransactionRecord] in
-                        transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
-                    }
-        } catch {
-            return Single.error(error)
-        }
-    }
-
-    func rawTransaction(hash: String) -> String? {
-        nil
-    }
-
-}
