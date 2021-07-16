@@ -86,7 +86,15 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func statusRow(rowInfo: RowInfo, status: TransactionStatus, completed: String, pending: String) -> RowProtocol {
+    private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
+        let statusText: String
+        switch status {
+        case .pending: statusText = "transactions.pending".localized
+        case .processing: statusText = "transactions.processing".localized
+        case .completed: statusText = "transactions.completed".localized
+        case .failed: statusText = "transactions.failed".localized
+        }
+
         switch status {
         case .completed:
             return Row<D6Cell>(
@@ -96,7 +104,7 @@ class TransactionInfoViewController: ThemeViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                         cell.title = "status".localized
-                        cell.value = completed
+                        cell.value = statusText
                         cell.valueImage = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
                         cell.valueImageTintColor = .themeRemus
                         cell.selectionStyle = .none
@@ -112,7 +120,7 @@ class TransactionInfoViewController: ThemeViewController {
                         cell.title = "status".localized
                         cell.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
                         cell.titleImageTintColor = .themeJacob
-                        cell.value = "tx_info.status.failed".localized
+                        cell.value = statusText
                         cell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
                         cell.valueImageTintColor = .themeLucian
                         cell.titleImageAction = { [weak self] in
@@ -122,9 +130,9 @@ class TransactionInfoViewController: ThemeViewController {
             )
 
         case .pending:
-            return pendingStatusCell(rowInfo: rowInfo, progress: 0, label: pending)
+            return pendingStatusCell(rowInfo: rowInfo, progress: 0, label: statusText)
         case .processing(let progress):
-            return pendingStatusCell(rowInfo: rowInfo, progress: progress, label: pending)
+            return pendingStatusCell(rowInfo: rowInfo, progress: progress, label: statusText)
         }
     }
 
@@ -365,7 +373,7 @@ class TransactionInfoViewController: ThemeViewController {
         switch viewItem {
         case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle)
         case let .amount(coinAmount, currencyAmount, incoming): return amountRow(rowInfo: rowInfo, coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: incoming)
-        case let .status(status, completed, pending): return statusRow(rowInfo: rowInfo, status: status, completed: completed, pending: pending)
+        case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
         case let .from(value): return fromRow(rowInfo: rowInfo, value: value)
         case let .to(value): return toRow(rowInfo: rowInfo, value: value)

@@ -23,7 +23,7 @@ extension TransactionInfoModule {
     enum ViewItem {
         case actionTitle(title: String, subTitle: String?)
         case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
-        case status(status: TransactionStatus, completed: String, pending: String)
+        case status(status: TransactionStatus)
         case date(date: Date)
         case from(value: String)
         case to(value: String)
