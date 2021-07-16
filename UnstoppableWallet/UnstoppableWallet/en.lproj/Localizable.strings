@@ -536,6 +536,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "coin_page.info" = "Info";
 
 "coin_page.audits" = "Audits";
+"coin_page.audits.issues" = "Issues";
+"coin_page.audits.no_reports" = "No audit reports";
+"coin_page.audits.sync_error" = "Sync Error";
 
 // Transactions
 

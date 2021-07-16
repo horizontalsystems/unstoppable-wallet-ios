@@ -10,15 +10,29 @@ class RateManager {
     private let walletManager: WalletManager
     private let rateCoinMapper: IRateCoinMapper
     private let feeCoinProvider: IFeeCoinProvider
+    private let appConfigProvider: IAppConfigProvider
 
     private let kit: XRatesKit
 
-    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, coinMarketCapApiKey: String, cryptoCompareApiKey: String?, uniswapSubgraphUrl: String, providerCoinsUrl: String, coinsUrl: String) {
+    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, appConfigProvider: IAppConfigProvider) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider
+        self.appConfigProvider = appConfigProvider
 
-        kit = XRatesKit.instance(currencyCode: currencyKit.baseCurrency.code, coinMarketCapApiKey: coinMarketCapApiKey, cryptoCompareApiKey: cryptoCompareApiKey, uniswapSubgraphUrl: uniswapSubgraphUrl, indicatorPointCount: 50, marketInfoExpirationInterval: 60, topMarketsCount: 100, providerCoinsUrl: providerCoinsUrl, coinsUrl: coinsUrl, minLogLevel: .error)
+        kit = XRatesKit.instance(
+                currencyCode: currencyKit.baseCurrency.code,
+                coinMarketCapApiKey: appConfigProvider.coinMarketCapApiKey,
+                cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
+                defiYieldApiKey: appConfigProvider.defiYieldApiKey,
+                uniswapSubgraphUrl: appConfigProvider.uniswapSubgraphUrl,
+                indicatorPointCount: 50,
+                marketInfoExpirationInterval: 60,
+                topMarketsCount: 100,
+                providerCoinsUrl: appConfigProvider.providerCoinsUrl,
+                coinsUrl: appConfigProvider.coinsUrl,
+                minLogLevel: .error
+        )
     }
 
 }
@@ -103,6 +117,10 @@ extension RateManager: IRateManager {
 
     func topTokenHoldersSingle(coinType: CoinType, itemsCount: Int) -> Single<[TokenHolder]> {
         kit.topTokenHoldersSingle(coinType: coinType, itemsCount: itemsCount)
+    }
+
+    func auditReportsSingle(coinType: CoinType) -> Single<[Auditor]> {
+        kit.auditReportsSingle(coinType: coinType)
     }
 
     func coinTypes(for category: String) -> [CoinType] {

@@ -37,7 +37,8 @@ class CoinPageViewModel {
                     links: links(info: info),
                     marketInfo: marketInfo(marketCap: info.marketCap, marketCapRank: info.marketCapRank, dilutedMarketCap: info.dilutedMarketCap, volume24h: info.volume24h, tvlInfo: info.defiTvlInfo, genesisDate: info.genesisDate, circulatingSupply: info.circulatingSupply, totalSupply: info.totalSupply),
                     description: info.meta.description,
-                    securities: securityViewItems(coinSecurity: info.meta.security)
+                    securities: securityViewItems(coinSecurity: info.meta.security),
+                    auditsCoinType: auditsCoinType
             )
             stateRelay.accept(.loaded(viewItem: viewItem))
         case .failed:
@@ -92,6 +93,13 @@ class CoinPageViewModel {
     private var majorHoldersCoinType: CoinType? {
         switch service.coinType {
         case .erc20: return service.coinType
+        default: return nil
+        }
+    }
+
+    private var auditsCoinType: CoinType? {
+        switch service.coinType {
+        case .erc20, .bep20: return service.coinType
         default: return nil
         }
     }
@@ -212,6 +220,7 @@ extension CoinPageViewModel {
         let marketInfo: MarketInfo
         let description: CoinMetaDescriptionType
         let securities: [SecurityViewItem]
+        let auditsCoinType: CoinType?
     }
 
     struct SecurityViewItem {

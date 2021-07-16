@@ -69,6 +69,10 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "CryptoCompareApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    var defiYieldApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "DefiYieldApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     var pnsUrl: String {
         let development = "https://pns-dev.horizontalsystems.xyz/api/v1/"
         let production = "https://pns-ext.horizontalsystems.xyz/api/v1/"
