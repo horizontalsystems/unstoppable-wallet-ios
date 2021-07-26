@@ -161,9 +161,10 @@ extension OneInchTradeService {
         }
 
         self.coinIn = coinIn
+        amountIn = 0
+        amountOut = 0
         if coinOut == coinIn {
             coinOut = nil
-            amountOut = 0
         }
 
         quote = nil
