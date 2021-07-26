@@ -199,8 +199,10 @@ extension UniswapTradeService {
         }
 
         self.coinIn = coinIn
-        if tradeType == .exactOut {
-            amountIn = 0
+        amountIn = 0
+
+        if tradeType == .exactIn {
+            amountOut = 0
         }
 
         if coinOut == coinIn {
@@ -218,8 +220,10 @@ extension UniswapTradeService {
         }
 
         self.coinOut = coinOut
-        if tradeType == .exactIn {
-            amountOut = 0
+        amountOut = 0
+
+        if tradeType == .exactOut {
+            amountIn = 0
         }
 
         if coinIn == coinOut {
