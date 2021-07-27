@@ -918,13 +918,13 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Anstehend";
-"status_info.pending.content" = "Transaktion wurde noch nicht auf der Blockchain bestätigt. Dieser Schritt kann von wenigen Minuten bis zu einigen Stunden dauern, je nach Transaktionsgebühr. Transaktionen, die mit einer sehr niedrigen Gebühr gesendet werden, werden in der Regel innerhalb weniger Tage bearbeitet oder können vom Netzwerk abgelehnt werden, d.h. es hat keine Transaktion gegeben.";
-"status_info.sending_receiving.title" = "Senden / Empfangen";
-"status_info.sending_receiving.content" = "Die Transaktion wurde in die Blockchain integriert, hat aber noch keine dauerhafte Endgültigkeit erreicht. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Status auf abgeschlossen wechselt.";
-"status_info.confirmed.title" = "Bestätigt";
-"status_info.confirmed.content" = "Die Transaktion ist endgültig und unumkehrbar.";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
+"status_info.processing.title" = "Processing";
+"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Fehlgeschlagen";
-"status_info.failed.content" = "Die Transaktion wurde nicht als beabsichtigt verarbeitet und es wurde kein Token Value-Transfer durchgeführt.";
+"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
