@@ -72,14 +72,14 @@ extension TransactionStatusInfoViewController: SectionsDataSource {
             ),
             Section(
                     id: "sending-receiving",
-                    headerState: header(text: "status_info.sending_receiving.title".localized),
+                    headerState: header(text: "status_info.processing.title".localized),
                     rows: [
-                        row(text: "status_info.sending_receiving.content".localized)
+                        row(text: "status_info.processing.content".localized)
                     ]
             ),
             Section(
                     id: "confirmed",
-                    headerState: header(text: "status_info.confirmed.title".localized),
+                    headerState: header(text: "status_info.completed.title".localized),
                     rows: [
                         row(text: "status_info.confirmed.content".localized)
                     ]
