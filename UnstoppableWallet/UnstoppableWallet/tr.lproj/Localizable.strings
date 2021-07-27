@@ -919,13 +919,13 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "status_info.title" = "Durum";
 "status_info.pending.title" = "Devam ediyor";
-"status_info.pending.content" = "İşlem blok zincirinde henüz onaylanmadı. Bu adım, işlem ücretine bağlı olarak birkaç dakikadan birkaç saate kadar sürebilir. Çok düşük bir ücretle gönderilen işlemler genellikle birkaç gün içinde işleme alınır ya da ağ tarafından reddedilebilir, yani hiçbir işlem gerçekleşmez.";
-"status_info.sending_receiving.title" = "Gönderme / Alma";
-"status_info.sending_receiving.content" = "İşlem blok zincirine dahil edildi, ancak henüz kalıcı bir kesinliğe ulaşmadı. Bu noktada, daha küçük ödemeler için işlemin tamamlandığını düşünmek güvenlidir. Daha büyük ödemeler için, durum tamamlanana kadar beklemeniz önerilir.";
-"status_info.confirmed.title" = "Onaylandı";
-"status_info.confirmed.content" = "İşlem sonlandı ve geri alınamaz.";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
+"status_info.processing.title" = "Processing";
+"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Başarısız";
-"status_info.failed.content" = "İşlem amaçlandığı gibi işlenmedi ve token değeri aktarımı gerçekleşmedi. Ethereum blok zincirinde başarısız işlemler, işlem ücretlerini tüketir.";
+"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
