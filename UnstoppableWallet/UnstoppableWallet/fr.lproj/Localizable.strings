@@ -918,13 +918,13 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "status_info.title" = "Statut";
 "status_info.pending.title" = "En attente";
-"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Cette étape peut prendre de quelques minutes à quelques heures selon les frais de transaction. Les transactions envoyées avec des frais très bas sont généralement traitées en quelques jours ou peuvent être rejetées par le réseau, ce qui signifie que la transaction n'a pas eu lieu.";
-"status_info.sending_receiving.title" = "Envoi/Réception";
-"status_info.sending_receiving.content" = "La transaction a été incluse dans la blockchain mais n'a pas encore atteint sa finalité permanente. À ce stade, pour les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut passe à \"complété\".";
-"status_info.confirmed.title" = "Confirmé";
-"status_info.confirmed.content" = "La transaction est définitive et irréversible.";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
+"status_info.processing.title" = "Processing";
+"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Échec";
-"status_info.failed.content" = "La transaction n'a pas été traitée comme prévu et aucun transfert de token n'a eu lieu. Sur la blockchain Ethereum, les transactions qui échouent entraînent des frais de transaction.";
+"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
