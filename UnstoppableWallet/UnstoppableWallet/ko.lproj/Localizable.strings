@@ -918,13 +918,13 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "status_info.title" = "상태";
 "status_info.pending.title" = "보류 중";
-"status_info.pending.content" = "거래가 아직 블록체인에서 확인되지 않았습니다. 거래 수수료에 따라 거래 확인에 수 분에서 수 시간까지 소요될 수 있습니다. 거래 수수료가 매우 적은 경우에는 거래 확인에 수 일이 소요되거나 네트워크에 의해 거래가 거절될 수도 있습니다. 예시: 거래가 완료되지 않았습니다.";
-"status_info.sending_receiving.title" = "보내는 중 / 받는 중";
-"status_info.sending_receiving.content" = "거래는 블록체인에 포함됐지만 아직 영구적인 완성도에 도달하지 못했습니다. 이 시점에서는 소액결제에 대해 완료된 거래를 고려하는 것이 안전합니다. 더 큰 결제의 경우 상태가 완료로 변경될 때까지 기다리는 것이 좋습니다.";
-"status_info.confirmed.title" = "확인됨";
-"status_info.confirmed.content" = "거래가 완료되었으며 취소할 수 없습니다.";
+"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
+"status_info.processing.title" = "Processing";
+"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "실패";
-"status_info.failed.content" = "거래가 의도한 대로 처리되지 않았으며 전송된 토큰 값이 없습니다. 이더리움 블록체인에서는 실패한 거래에도 거래 수수료가 부과됩니다.";
+"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
