@@ -486,7 +486,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
-    :commit: a7735dc111e82cd440c09f7d4db17ddece5e52a9
+    :commit: 6336251774c34c421cd3dfdf2829dd1aa71ad52d
     :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 2c08ffc83386ec61f8c41d33b03fafc7d7d7daa8
