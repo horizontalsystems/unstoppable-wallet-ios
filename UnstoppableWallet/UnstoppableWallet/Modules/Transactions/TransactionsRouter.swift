@@ -31,7 +31,7 @@ extension TransactionsRouter {
                 reachabilityManager: App.shared.reachabilityManager
         )
         let presenter = TransactionsPresenter(interactor: interactor, router: router, factory: TransactionViewItemFactory(), dataSource: dataSource)
-        let viewController = TransactionsViewController(delegate: presenter, differ: TransactionDiffer())
+        let viewController = TransactionsViewController(delegate: presenter)
 
         interactor.delegate = presenter
         presenter.view = viewController
