@@ -1,36 +1,30 @@
 import UIKit
 import SnapKit
 import ActionSheet
-import DeepDiff
 import ThemeKit
 import HUD
 import ComponentKit
 import CurrencyKit
 
 class TransactionsViewController: ThemeViewController {
-    let delegate: ITransactionsViewDelegate
+    private let delegate: ITransactionsViewDelegate
 
-    let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view", qos: .userInitiated)
-    let differ: IDiffer
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view", qos: .userInitiated)
 
-    let tableView = UITableView(frame: .zero, style: .plain)
-
-    private let cellName = String(describing: H23Cell.self)
-
+    private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
     private let filterHeaderView = FilterHeaderView()
-
-    private var items: [TransactionViewItem]?
-
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
-    init(delegate: ITransactionsViewDelegate, differ: IDiffer) {
+    private var sections = [Section]()
+
+    init(delegate: ITransactionsViewDelegate) {
         self.delegate = delegate
-        self.differ = differ
 
         super.init()
 
         tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,10 +36,6 @@ class TransactionsViewController: ThemeViewController {
 
         title = "transactions.title".localized
 
-        filterHeaderView.onSelect = { [weak self] index in
-            self?.delegate.onFilterSelect(index: index)
-        }
-
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.snp.makeConstraints { maker in
@@ -56,10 +46,24 @@ class TransactionsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
+        tableView.contentInset = UIEdgeInsets(top: FilterHeaderView.height, left: 0, bottom: 0, right: 0)
+        tableView.scrollIndicatorInsets = tableView.contentInset
 
         tableView.registerCell(forClass: H23Cell.self)
+        tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
+
+        view.addSubview(filterHeaderView)
+        filterHeaderView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.safeAreaLayoutGuide)
+            maker.height.equalTo(FilterHeaderView.height)
+        }
+
+        filterHeaderView.onSelect = { [weak self] index in
+            self?.delegate.onFilterSelect(index: index)
+        }
 
         view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
@@ -225,46 +229,16 @@ class TransactionsViewController: ThemeViewController {
     }
 
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
-        guard let items = items, items.count > indexPath.row else {
-            return
-        }
+        let item = sections[indexPath.section].viewItems[indexPath.row]
 
-        let item = items[indexPath.row]
         if let cell = cell as? H23Cell {
-            cell.set(backgroundStyle: .claude, isFirst: indexPath.row != 0, isLast: true)
+            cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
             bind(item: item, cell: cell)
         }
 
         if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
             delegate.onBottomReached()
         }
-    }
-
-    private func reload(indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            bind(itemAt: indexPath, to: tableView.cellForRow(at: indexPath))
-        }
-    }
-
-    private func reload(with changes: ChangeWithIndexPath, animated: Bool) {
-        if !isViewLoaded || view.window == nil {
-            tableView.reloadData()
-            return
-        }
-
-        reload(indexPaths: changes.replaces)
-
-        guard !changes.inserts.isEmpty || !changes.moves.isEmpty || !changes.deletes.isEmpty else {
-            return
-        }
-
-        tableView.performBatchUpdates({ [weak self] in
-            self?.tableView.deleteRows(at: changes.deletes, with: animated ? .fade : .none)
-            self?.tableView.insertRows(at: changes.inserts, with: animated ? .fade : .none)
-            for movedIndex in changes.moves {
-                self?.tableView.moveRow(at: movedIndex.from, to: movedIndex.to)
-            }
-        })
     }
 
     private func show(status: TransactionViewStatus) {
@@ -276,6 +250,34 @@ class TransactionsViewController: ThemeViewController {
         }
 
         emptyLabel.isHidden = !status.showMessage
+    }
+
+    private func sections(viewItems: [TransactionViewItem]) -> [Section] {
+        var sections = [Section]()
+        var lastDaysAgo = -1
+
+        for viewItem in viewItems {
+            let daysAgo = daysFrom(date: viewItem.date)
+
+            if daysAgo != lastDaysAgo {
+                sections.append(Section(daysAgo: daysAgo, viewItems: [viewItem]))
+            } else {
+                sections[sections.count - 1].viewItems.append(viewItem)
+            }
+
+            lastDaysAgo = daysAgo
+        }
+
+        return sections
+    }
+
+    private func daysFrom(date: Date) -> Int {
+        let calendar = Calendar.current
+        let startOfNow = calendar.startOfDay(for: Date())
+        let startOfDate = calendar.startOfDay(for: date)
+        let components = calendar.dateComponents([.day], from: startOfDate, to: startOfNow)
+
+        return components.day ?? 0
     }
 
 }
@@ -294,11 +296,11 @@ extension TransactionsViewController: ITransactionsView {
 
     func show(transactions newViewItems: [TransactionViewItem], animated: Bool) {
         queue.async {
-            let changes = self.differ.changes(old: self.items ?? [], new: newViewItems, section: 0)
-            self.items = newViewItems
+            let newSections = self.sections(viewItems: newViewItems)
 
             DispatchQueue.main.sync { [weak self] in
-                self?.reload(with: changes, animated: animated)
+                self?.sections = newSections
+                self?.tableView.reloadData()
             }
         }
     }
@@ -317,12 +319,16 @@ extension TransactionsViewController: ITransactionsView {
 
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items?.count ?? 0
+        sections[section].viewItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
+        tableView.dequeueReusableCell(withIdentifier: String(describing: H23Cell.self), for: indexPath)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -331,9 +337,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let item = items?[indexPath.row] {
-            delegate.onTransactionClick(item: item)
-        }
+        delegate.onTransactionClick(item: sections[indexPath.section].viewItems[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -341,11 +345,39 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        filterHeaderView.headerHeight
+        .heightSingleLineCell
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        filterHeaderView
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransactionDateHeaderView.self))
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? TransactionDateHeaderView else {
+            return
+        }
+
+        view.text = dateHeaderTitle(daysAgo: sections[section].daysAgo).uppercased()
+    }
+
+    private func dateHeaderTitle(daysAgo: Int) -> String {
+        if daysAgo == 0 {
+            return "transactions.today".localized
+        } else if daysAgo == 1 {
+            return "transactions.yesterday".localized
+        } else {
+            let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 - Double(daysAgo * 60 * 60 * 24))
+            return DateHelper.instance.formatFullDateOnly(from: date)
+        }
+    }
+
+}
+
+extension TransactionsViewController {
+
+    struct Section {
+        let daysAgo: Int
+        var viewItems: [TransactionViewItem]
     }
 
 }
