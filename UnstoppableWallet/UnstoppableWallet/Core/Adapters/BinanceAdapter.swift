@@ -3,15 +3,17 @@ import BinanceChainKit
 import CoinKit
 
 class BinanceAdapter {
-    private static let confirmationsThreshold = 1
+    static let confirmationsThreshold = 1
     static let transferFee: Decimal = 0.000375
 
     private let binanceKit: BinanceChainKit
+    private let feeCoin: Coin
     private let coin: Coin
     private let asset: Asset
 
-    init(binanceKit: BinanceChainKit, symbol: String, coin: Coin) {
+    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: Coin, coin: Coin) {
         self.binanceKit = binanceKit
+        self.feeCoin = feeCoin
         self.coin = coin
 
         asset = binanceKit.register(symbol: symbol)
@@ -21,60 +23,12 @@ class BinanceAdapter {
         let fromMine = transaction.from == binanceKit.account
         let toMine = transaction.to == binanceKit.account
 
-        // TODO: Must have it's own transactions with memo
         if fromMine && !toMine {
-            return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
-                    uid: transaction.hash,
-                    transactionHash: transaction.hash,
-                    transactionIndex: 0,
-                    blockHeight: transaction.blockHeight,
-                    confirmationsThreshold: Self.confirmationsThreshold,
-                    date: transaction.date,
-                    fee: BinanceAdapter.transferFee,
-                    failed: false,
-                    lockInfo: nil,
-                    conflictingHash: nil,
-                    showRawTransaction: false,
-                    amount: transaction.amount,
-                    to: transaction.to,
-                    sentToSelf: false
-            )
+            return BinanceChainOutgoingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
         } else if !fromMine && toMine {
-            return BitcoinIncomingTransactionRecord(
-                    coin: coin,
-                    uid: transaction.hash,
-                    transactionHash: transaction.hash,
-                    transactionIndex: 0,
-                    blockHeight: transaction.blockHeight,
-                    confirmationsThreshold: Self.confirmationsThreshold,
-                    date: transaction.date,
-                    fee: BinanceAdapter.transferFee,
-                    failed: false,
-                    lockInfo: nil,
-                    conflictingHash: nil,
-                    showRawTransaction: false,
-                    amount: transaction.amount,
-                    from: transaction.from
-            )
+            return BinanceChainIncomingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin)
         } else {
-            return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
-                    uid: transaction.hash,
-                    transactionHash: transaction.hash,
-                    transactionIndex: 0,
-                    blockHeight: transaction.blockHeight,
-                    confirmationsThreshold: Self.confirmationsThreshold,
-                    date: transaction.date,
-                    fee: BinanceAdapter.transferFee,
-                    failed: false,
-                    lockInfo: nil,
-                    conflictingHash: nil,
-                    showRawTransaction: false,
-                    amount: transaction.amount,
-                    to: transaction.to,
-                    sentToSelf: true
-            )
+            return BinanceChainOutgoingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
         }
     }
 

@@ -3,13 +3,6 @@ import EthereumKit
 import CoinKit
 
 class EvmTransactionRecord: TransactionRecord {
-    typealias IncomingInternalETH = (from: String, value: CoinValue)
-    typealias IncomingEip20Event = (from: String, value: CoinValue)
-    typealias OutgoingEip20Event = (to: String, value: CoinValue)
-
-    var incomingInternalETHs = [IncomingInternalETH]()
-    var incomingEip20Events = [IncomingEip20Event]()
-    var outgoingEip20Events = [OutgoingEip20Event]()
     let foreignTransaction: Bool
     let fee: CoinValue
 

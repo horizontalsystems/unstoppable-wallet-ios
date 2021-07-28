@@ -46,6 +46,12 @@ class TransactionViewItemFactory: ITransactionViewItemFactory {
                 
                 return .outgoing(to: btcOutgoing.to.flatMap { nameOrAddress(address: $0) }, amount: coinString(from: btcOutgoing.value), lockState: lState, conflictingTxHash: btcOutgoing.conflictingHash, sentToSelf: btcOutgoing.sentToSelf)
                 
+            case let tx as BinanceChainIncomingTransactionRecord:
+                return .incoming(from: nameOrAddress(address: tx.from), amount: coinString(from: tx.value), lockState: nil, conflictingTxHash: nil)
+
+            case let tx as BinanceChainOutgoingTransactionRecord:
+                return .outgoing(to: nameOrAddress(address: tx.to), amount: coinString(from: tx.value), lockState: nil, conflictingTxHash: nil, sentToSelf: tx.sentToSelf)
+
             default:
                 fatalError("Record must be associated with TransactionType")
         }

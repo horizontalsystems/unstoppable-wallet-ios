@@ -6,13 +6,15 @@ class BitcoinTransactionRecord: TransactionRecord {
     let fee: CoinValue?
     let conflictingHash: String?
     let showRawTransaction: Bool
+    let memo: String?
 
     init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: CoinValue?, failed: Bool,
-         lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool) {
+         lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool, memo: String?) {
         self.lockInfo = lockInfo
         self.fee = fee
         self.conflictingHash = conflictingHash
         self.showRawTransaction = showRawTransaction
+        self.memo = memo
 
         super.init(
                 uid: uid,
