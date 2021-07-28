@@ -11,7 +11,7 @@ struct TransactionInfoModule {
         let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
         let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, transaction: transaction, wallet: wallet)
-        let viewController = TransactionInfoViewController(viewModel: viewModel, pageTitle: "tx_info.title".localized)
+        let viewController = TransactionInfoViewController(viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
         return viewController
     }

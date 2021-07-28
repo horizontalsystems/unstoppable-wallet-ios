@@ -7,7 +7,7 @@ class AboutViewModel {
     private let disposeBag = DisposeBag()
 
     private let termsAlertRelay: BehaviorRelay<Bool>
-    private let openLinkRelay = PublishRelay<URL>()
+    private let openLinkRelay = PublishRelay<String>()
 
     init(service: AboutService) {
         self.service = service
@@ -26,7 +26,7 @@ class AboutViewModel {
 
 extension AboutViewModel {
 
-    var openLinkSignal: Signal<URL> {
+    var openLinkSignal: Signal<String> {
         openLinkRelay.asSignal()
     }
 
@@ -47,19 +47,11 @@ extension AboutViewModel {
     }
 
     func onTapGithubLink() {
-        guard let url = URL(string: service.appGitHubLink) else {
-            return
-        }
-
-        openLinkRelay.accept(url)
+        openLinkRelay.accept(service.appGitHubLink)
     }
 
     func onTapWebPageLink() {
-        guard let url = URL(string: service.appWebPageLink) else {
-            return
-        }
-
-        openLinkRelay.accept(url)
+        openLinkRelay.accept(service.appWebPageLink)
     }
 
     func onTapRateApp() {

@@ -12,7 +12,7 @@ struct AboutModule {
 
         let viewModel = AboutViewModel(service: service)
 
-        return AboutViewController(viewModel: viewModel)
+        return AboutViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true))
     }
 
 }

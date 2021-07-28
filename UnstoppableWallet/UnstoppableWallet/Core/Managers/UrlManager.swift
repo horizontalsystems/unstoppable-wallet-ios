@@ -22,7 +22,9 @@ class UrlManager: IUrlManager {
         }
 
         if let controller = controller, inApp {
-            controller.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
+            let safariViewController = SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
+            safariViewController.modalPresentationStyle = .pageSheet
+            controller.present(safariViewController, animated: true)
         } else {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
