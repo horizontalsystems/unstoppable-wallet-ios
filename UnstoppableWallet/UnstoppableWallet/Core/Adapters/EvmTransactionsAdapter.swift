@@ -18,7 +18,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
         if let coin = coin {
             switch coin.type {
-            case .ethereum, .binanceSmartChain: coinFilter.append(["ETH"])
+                case .ethereum, .binanceSmartChain: coinFilter.append([TransactionTag.evmCoin])
             case .erc20(let address): coinFilter.append([address])
             case .bep20(let address): coinFilter.append([address])
             default: ()

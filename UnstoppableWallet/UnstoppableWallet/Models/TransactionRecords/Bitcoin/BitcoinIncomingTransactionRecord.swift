@@ -7,7 +7,7 @@ class BitcoinIncomingTransactionRecord: BitcoinTransactionRecord {
 
     init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
-         amount: Decimal, from: String?) {
+         amount: Decimal, from: String?, memo: String? = nil) {
         value = CoinValue(coin: coin, value: amount)
         self.from = from
 
@@ -22,7 +22,8 @@ class BitcoinIncomingTransactionRecord: BitcoinTransactionRecord {
                 failed: failed,
                 lockInfo: lockInfo,
                 conflictingHash: conflictingHash,
-                showRawTransaction: showRawTransaction
+                showRawTransaction: showRawTransaction,
+                memo: memo
         )
     }
 

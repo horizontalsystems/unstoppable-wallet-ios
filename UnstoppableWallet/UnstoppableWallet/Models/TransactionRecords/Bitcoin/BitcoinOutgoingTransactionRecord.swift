@@ -8,7 +8,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
 
     init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
-         amount: Decimal, to: String?, sentToSelf: Bool) {
+         amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil) {
         value = CoinValue(coin: coin, value: amount)
         self.to = to
         self.sentToSelf = sentToSelf
@@ -24,7 +24,8 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
                 failed: failed,
                 lockInfo: lockInfo,
                 conflictingHash: conflictingHash,
-                showRawTransaction: showRawTransaction
+                showRawTransaction: showRawTransaction,
+                memo: memo
         )
     }
 

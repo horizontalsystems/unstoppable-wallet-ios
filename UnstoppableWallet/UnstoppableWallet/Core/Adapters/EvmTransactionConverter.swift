@@ -66,6 +66,43 @@ class EvmTransactionConverter {
         }
     }
 
+    private func internalTransactions(from fullTransaction: FullTransaction) -> [ContractCallTransactionRecord.IncomingInternalETH] {
+        fullTransaction.internalTransactions.compactMap { internalTransaction in
+            guard internalTransaction.to == evmKit.address else {
+                return nil
+            }
+
+            let amount = convertAmount(amount: internalTransaction.value, decimal: baseCoin.decimal, sign: .plus)
+            return (from: internalTransaction.from.eip55, value: CoinValue(coin: baseCoin, value: amount))
+        }
+    }
+
+    private func incomingEip20Events(from fullTransaction: FullTransaction) -> [ContractCallTransactionRecord.IncomingEip20Event] {
+        fullTransaction.eventDecorations.compactMap { event in
+            guard let decoration = event as? TransferEventDecoration, decoration.to == evmKit.address else {
+                return nil
+            }
+
+            let token = eip20Coin(tokenAddress: decoration.contractAddress)
+            let amount = convertAmount(amount: decoration.value, decimal: token.decimal, sign: .plus)
+
+            return (from: decoration.from.eip55, value: CoinValue(coin: token, value: amount))
+        }
+    }
+
+    private func outgoingEip20Events(from fullTransaction: FullTransaction) -> [ContractCallTransactionRecord.OutgoingEip20Event] {
+        fullTransaction.eventDecorations.compactMap { event in
+            guard let decoration = event as? TransferEventDecoration, decoration.from == evmKit.address else {
+                return nil
+            }
+
+            let token = eip20Coin(tokenAddress: decoration.contractAddress)
+            let amount = convertAmount(amount: decoration.value, decimal: token.decimal, sign: .minus)
+
+            return (to: decoration.to.eip55, value: CoinValue(coin: token, value: amount))
+        }
+    }
+
     private func convertMyCall(methodDecoration: ContractMethodDecoration, fullTransaction: FullTransaction, to: EthereumKit.Address) -> EvmTransactionRecord {
         switch methodDecoration {
         case let decoration as TransferMethodDecoration:
@@ -154,7 +191,11 @@ class EvmTransactionConverter {
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
-                    method: decoration.method
+                    method: decoration.method,
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    incomingInternalETHs: internalTransactions(from: fullTransaction),
+                    incomingEip20Events: incomingEip20Events(from: fullTransaction),
+                    outgoingEip20Events: outgoingEip20Events(from: fullTransaction)
             )
 
         case is UnknownMethodDecoration:
@@ -162,7 +203,11 @@ class EvmTransactionConverter {
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
-                    method: nil
+                    method: nil,
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    incomingInternalETHs: internalTransactions(from: fullTransaction),
+                    incomingEip20Events: incomingEip20Events(from: fullTransaction),
+                    outgoingEip20Events: outgoingEip20Events(from: fullTransaction)
             )
 
         default:
@@ -192,6 +237,10 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: decoration.method,
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    incomingInternalETHs: internalTransactions(from: fullTransaction),
+                    incomingEip20Events: incomingEip20Events(from: fullTransaction),
+                    outgoingEip20Events: outgoingEip20Events(from: fullTransaction),
                     foreignTransaction: true
             )
 
@@ -201,6 +250,10 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: nil,
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    incomingInternalETHs: internalTransactions(from: fullTransaction),
+                    incomingEip20Events: incomingEip20Events(from: fullTransaction),
+                    outgoingEip20Events: outgoingEip20Events(from: fullTransaction),
                     foreignTransaction: true
             )
 
@@ -249,31 +302,6 @@ extension EvmTransactionConverter {
                 )
             } else {
                 record = EvmTransactionRecord(fullTransaction: fullTransaction, baseCoin: baseCoin)
-            }
-        }
-
-        if record is ContractCallTransactionRecord {
-            for internalTransaction in fullTransaction.internalTransactions {
-                if internalTransaction.to == evmKit.address {
-                    let amount = convertAmount(amount: internalTransaction.value, decimal: baseCoin.decimal, sign: .plus)
-                    record.incomingInternalETHs.append((from: internalTransaction.from.eip55, value: CoinValue(coin: baseCoin, value: amount)))
-                }
-            }
-
-            for event in fullTransaction.eventDecorations {
-                if let decoration = event as? TransferEventDecoration {
-                    let token = eip20Coin(tokenAddress: decoration.contractAddress)
-
-                    if decoration.from == evmKit.address {
-                        let amount = convertAmount(amount: decoration.value, decimal: token.decimal, sign: .minus)
-
-                        record.outgoingEip20Events.append((to: decoration.to.eip55, value: CoinValue(coin: token, value: amount)))
-                    } else if decoration.to == evmKit.address {
-                        let amount = convertAmount(amount: decoration.value, decimal: token.decimal, sign: .plus)
-
-                        record.incomingEip20Events.append((from: decoration.from.eip55, value: CoinValue(coin: token, value: amount)))
-                    }
-                }
             }
         }
 

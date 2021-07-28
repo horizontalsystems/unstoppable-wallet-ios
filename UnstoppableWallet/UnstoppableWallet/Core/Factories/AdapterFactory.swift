@@ -73,7 +73,7 @@ extension AdapterFactory {
             }
         case let .bep2(symbol):
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account) {
-                return BinanceAdapter(binanceKit: binanceKit, symbol: symbol, coin: wallet.coin)
+                return BinanceAdapter(binanceKit: binanceKit, symbol: symbol, feeCoin: coinManager.coinOrStub(type: .bep2(symbol: "BNB")), coin: wallet.coin)
             }
         case .unsupported:
             ()

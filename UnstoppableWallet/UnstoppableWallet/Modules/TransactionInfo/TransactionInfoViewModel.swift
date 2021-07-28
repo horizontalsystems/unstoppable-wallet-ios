@@ -88,15 +88,21 @@ class TransactionInfoViewModel {
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            let internalEth: [Coin] = tx.incomingInternalETHs.map({ $0.value.coin })
-            let incomingTokens: [Coin] = tx.incomingEip20Events.map({ $0.value.coin })
-            let outgoingTokens: [Coin] = tx.outgoingEip20Events.map({ $0.value.coin })
-
-            coins.append(contentsOf: Array(Set(internalEth + incomingTokens + outgoingTokens)))
+            if tx.value.value != 0 {
+                coins.append(tx.value.coin)
+            }
+            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
 
         case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { coins.append($0.coin) }
+            coins.append(tx.value.coin)
+
+        case let tx as BinanceChainIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BinanceChainOutgoingTransactionRecord:
+            coins.append(tx.fee.coin)
             coins.append(tx.value.coin)
 
         default: ()
@@ -106,7 +112,7 @@ class TransactionInfoViewModel {
             coins.append(evmTransaction.fee.coin)
         }
 
-        return coins
+        return Array(Set(coins))
     }
 
     private func updateRates(rates: [Coin: CurrencyValue]) {

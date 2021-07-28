@@ -200,7 +200,8 @@ class ZcashAdapter {
                     conflictingHash: nil,
                     showRawTransaction: showRawTransaction,
                     amount: Decimal(transaction.value) / Self.coinRate,
-                    from: nil
+                    from: nil,
+                    memo: transaction.memo
             )
         } else {
             return BitcoinOutgoingTransactionRecord(
@@ -218,7 +219,8 @@ class ZcashAdapter {
                     showRawTransaction: showRawTransaction,
                     amount: Decimal(transaction.value) / Self.coinRate,
                     to: transaction.toAddress,
-                    sentToSelf: false
+                    sentToSelf: false,
+                    memo: transaction.memo
             )
         }
     }
