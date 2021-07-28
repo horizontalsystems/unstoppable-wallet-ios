@@ -14,7 +14,7 @@ class MainSettingsViewModel {
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let themeModeRelay: BehaviorRelay<ThemeMode>
     private let aboutAlertRelay: BehaviorRelay<Bool>
-    private let openLinkRelay = PublishRelay<URL>()
+    private let openLinkRelay = PublishRelay<String>()
 
     init(service: MainSettingsService) {
         self.service = service
@@ -77,7 +77,7 @@ class MainSettingsViewModel {
 
 extension MainSettingsViewModel {
 
-    var openLinkSignal: Signal<URL> {
+    var openLinkSignal: Signal<String> {
         openLinkRelay.asSignal()
     }
 
@@ -122,11 +122,7 @@ extension MainSettingsViewModel {
     }
 
     func onTapCompanyLink() {
-        guard let url = URL(string: service.companyWebPageLink) else {
-            return
-        }
-
-        openLinkRelay.accept(url)
+        openLinkRelay.accept(service.companyWebPageLink)
     }
 
 }

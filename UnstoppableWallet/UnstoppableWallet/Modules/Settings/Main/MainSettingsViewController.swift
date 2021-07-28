@@ -11,6 +11,8 @@ import ComponentKit
 
 class MainSettingsViewController: ThemeViewController {
     private let viewModel: MainSettingsViewModel
+    private var urlManager: IUrlManager
+
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -24,8 +26,9 @@ class MainSettingsViewController: ThemeViewController {
     private let aboutCell = A3Cell()
     private let footerCell = MainSettingsFooterCell()
 
-    init(viewModel: MainSettingsViewModel) {
+    init(viewModel: MainSettingsViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
+        self.urlManager = urlManager
 
         super.init()
 
@@ -111,7 +114,7 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
-            self?.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
+            self?.urlManager.open(url: url, from: self)
         }
 
         tableView.buildSections()

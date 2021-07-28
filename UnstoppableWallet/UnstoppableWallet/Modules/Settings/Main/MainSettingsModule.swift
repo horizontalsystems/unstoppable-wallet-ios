@@ -16,7 +16,7 @@ struct MainSettingsModule {
 
         let viewModel = MainSettingsViewModel(service: service)
 
-        return MainSettingsViewController(viewModel: viewModel)
+        return MainSettingsViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true))
     }
 
 }

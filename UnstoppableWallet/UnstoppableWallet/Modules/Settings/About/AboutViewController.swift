@@ -9,6 +9,8 @@ import ComponentKit
 
 class AboutViewController: ThemeViewController {
     private let viewModel: AboutViewModel
+    private var urlManager: IUrlManager
+
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -16,8 +18,9 @@ class AboutViewController: ThemeViewController {
     private let headerCell = TermsHeaderCell()
     private let termsCell = A3Cell()
 
-    init(viewModel: AboutViewModel) {
+    init(viewModel: AboutViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
+        self.urlManager = urlManager
 
         super.init()
 
@@ -59,7 +62,7 @@ class AboutViewController: ThemeViewController {
             self?.termsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
         }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
-            self?.present(SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration()), animated: true)
+            self?.urlManager.open(url: url, from: self)
         }
 
         tableView.buildSections()

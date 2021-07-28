@@ -12,13 +12,16 @@ class TransactionInfoViewController: ThemeViewController {
 
     private let viewModel: TransactionInfoViewModel
     private let pageTitle: String
+    private var urlManager: IUrlManager
+
     private var viewItems = [[TransactionInfoModule.ViewItem]]()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: TransactionInfoViewModel, pageTitle: String) {
+    init(viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.pageTitle = pageTitle
+        self.urlManager = urlManager
         viewItems = viewModel.viewItems
 
         super.init()
@@ -305,12 +308,11 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.titleImage = UIImage(named: "globe_20")
                 },
                 action: { [weak self] _ in
-                    guard let urlString = url, let url = URL(string: urlString) else {
+                    guard let url = url else {
                         return
                     }
 
-                    let controller = SFSafariViewController(url: url, configuration: SFSafariViewController.Configuration())
-                    self?.present(controller, animated: true)
+                    self?.urlManager.open(url: url, from: self)
                 }
         )
     }
