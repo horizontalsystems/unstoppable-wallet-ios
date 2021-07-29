@@ -580,6 +580,7 @@
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
+"tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
 "tx_info.double_spent_note" = "Риск Двойной Траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
@@ -587,6 +588,7 @@
 "tx_info.recipient_hash" = "Получатель";
 "tx_info.raw_transaction" = "Неподтвержденная Транзакция";
 "tx_info.memo" = "Memo";
+"tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "You Pay";
 "tx_info.you_get" = "You Get";
