@@ -202,18 +202,10 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func rateRow(rowInfo: RowInfo, value: String) -> RowProtocol {
+    private func feeRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
         valueRow(
                 rowInfo: rowInfo,
-                title: "tx_info.rate".localized,
-                value: value
-        )
-    }
-
-    private func feeRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        valueRow(
-                rowInfo: rowInfo,
-                title: "tx_info.fee".localized,
+                title: title,
                 value: value
         )
     }
@@ -381,14 +373,15 @@ class TransactionInfoViewController: ThemeViewController {
         case let .to(value): return toRow(rowInfo: rowInfo, value: value)
         case let .recipient(value): return recipientRow(rowInfo: rowInfo, value: value)
         case let .id(value): return idRow(rowInfo: rowInfo, value: value)
-        case let .rate(value): return rateRow(rowInfo: rowInfo, value: value)
-        case let .fee(value): return feeRow(rowInfo: rowInfo, value: value)
+        case let .rate(value): return valueRow(rowInfo: rowInfo, title: "tx_info.rate".localized, value: value)
+        case let .fee(title, value): return feeRow(rowInfo: rowInfo, title: title, value: value)
         case let .price(price): return priceRow(rowInfo: rowInfo, price: price)
         case .doubleSpend: return doubleSpendRow(rowInfo: rowInfo)
         case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
         case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)
         case .rawTransaction: return rawTransactionRow(rowInfo: rowInfo)
-        case let .memo(text): return valueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: text, valueItalic: true)
+        case let .memo(value): return valueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: value, valueItalic: true)
+        case let .service(value): return valueRow(rowInfo: rowInfo, title: "tx_info.service".localized, value: value)
         case let .explorer(title, url): return explorerRow(rowInfo: rowInfo, title: title, url: url)
         }
     }

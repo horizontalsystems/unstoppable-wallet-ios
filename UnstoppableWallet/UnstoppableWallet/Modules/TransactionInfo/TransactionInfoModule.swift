@@ -30,13 +30,14 @@ extension TransactionInfoModule {
         case recipient(value: String)
         case id(value: String)
         case rate(value: String)
-        case fee(value: String)
+        case fee(title: String, value: String)
         case price(price: String)
         case doubleSpend
         case lockInfo(lockState: TransactionLockState)
         case sentToSelf
         case rawTransaction
         case memo(text: String)
+        case service(value: String)
         case explorer(title: String, url: String?)
     }
 
