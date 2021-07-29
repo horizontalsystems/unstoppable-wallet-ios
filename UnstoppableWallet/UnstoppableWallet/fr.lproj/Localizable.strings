@@ -578,6 +578,7 @@
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.fee" = "Frais";
+"tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "Cette transaction a été envoyée à votre propre adresse";
 "tx_info.double_spent_note" = "Risque de double dépense !";
 "tx_info.locked_until" = "Verrouillé jusqu'au %@";
@@ -585,6 +586,7 @@
 "tx_info.recipient_hash" = "Destinataire";
 "tx_info.raw_transaction" = "Transaction raw";
 "tx_info.memo" = "Mémo";
+"tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "You Pay";
 "tx_info.you_get" = "You Get";
