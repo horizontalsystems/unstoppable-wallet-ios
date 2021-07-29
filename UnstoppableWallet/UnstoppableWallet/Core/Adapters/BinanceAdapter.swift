@@ -4,7 +4,7 @@ import CoinKit
 
 class BinanceAdapter {
     static let confirmationsThreshold = 1
-    static let transferFee: Decimal = 0.000375
+    static let transferFee: Decimal = 0.000075
 
     private let binanceKit: BinanceChainKit
     private let feeCoin: Coin
