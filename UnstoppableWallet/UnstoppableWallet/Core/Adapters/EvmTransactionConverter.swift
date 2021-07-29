@@ -132,14 +132,19 @@ class EvmTransactionConverter {
             let resolvedAmountIn: BigUInt
             let resolvedAmountOut: BigUInt
 
-            switch decoration.trade {
-            case .exactIn(let amountIn, let amountOutMin, let amountOut):
-                resolvedAmountIn = amountIn
-                resolvedAmountOut = amountOut ?? amountOutMin
+            if fullTransaction.failed {
+                resolvedAmountIn = 0
+                resolvedAmountOut = 0
+            } else {
+                switch decoration.trade {
+                    case .exactIn(let amountIn, let amountOutMin, let amountOut):
+                        resolvedAmountIn = amountIn
+                        resolvedAmountOut = amountOut ?? amountOutMin
 
-            case .exactOut(let amountOut, let amountInMax, let amountIn):
-                resolvedAmountIn = amountIn ?? amountInMax
-                resolvedAmountOut = amountOut
+                    case .exactOut(let amountOut, let amountInMax, let amountIn):
+                        resolvedAmountIn = amountIn ?? amountInMax
+                        resolvedAmountOut = amountOut
+                }
             }
 
             let tokenIn = convertToCoin(token: decoration.tokenIn)
@@ -160,20 +165,53 @@ class EvmTransactionConverter {
             let tokenIn = convertToCoin(token: decoration.tokenIn)
             let tokenOut = decoration.tokenOut.flatMap { convertToCoin(token: $0) }
 
+            var resolvedAmountIn = convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus)
+            var resolvedAmountOut = tokenOut.flatMap { convertAmount(amount: decoration.amountOut ?? decoration.amountOutMin, decimal: $0.decimal, sign: .plus) }
+
+            if fullTransaction.failed {
+                resolvedAmountIn = 0
+                resolvedAmountOut = 0
+            }
+
             return SwapTransactionRecord(
                     fullTransaction: fullTransaction,
                     baseCoin: baseCoin,
                     exchangeAddress: to.eip55,
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
-                    amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
-                    amountOut: tokenOut.flatMap { convertAmount(amount: decoration.amountOut, decimal: $0.decimal, sign: .plus) },
+                    amountIn: resolvedAmountIn,
+                    amountOut: resolvedAmountOut,
                     foreignRecipient: false
             )
 
         case let decoration as OneInchSwapMethodDecoration:
             let tokenIn = convertToCoin(token: decoration.tokenIn)
-            let tokenOut = convertToCoin(token: decoration.tokenOut)
+            var tokenOut = convertToCoin(token: decoration.tokenOut)
+
+            var resolvedAmountIn = convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus)
+            var resolvedAmountOut = convertAmount(amount: decoration.amountOut ?? decoration.amountOutMin, decimal: tokenOut.decimal, sign: .plus)
+
+            if fullTransaction.failed {
+                resolvedAmountIn = 0
+                resolvedAmountOut = 0
+            } else if fullTransaction.receiptWithLogs != nil, decoration.amountOut == nil {
+                for event in incomingEip20Events(from: fullTransaction) {
+                    if event.value.value > 0 {
+                        tokenOut = event.value.coin
+                        resolvedAmountOut = event.value.value
+                    }
+                }
+
+                var internalETHs: Decimal = 0
+                for tx in internalTransactions(from: fullTransaction) {
+                    internalETHs += tx.value.value
+                }
+
+                if internalETHs > 0 {
+                    tokenOut = baseCoin
+                    resolvedAmountOut = internalETHs
+                }
+            }
 
             return SwapTransactionRecord(
                     fullTransaction: fullTransaction,
@@ -181,8 +219,8 @@ class EvmTransactionConverter {
                     exchangeAddress: to.eip55,
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
-                    amountIn: convertAmount(amount: decoration.amountIn, decimal: tokenIn.decimal, sign: .minus),
-                    amountOut: convertAmount(amount: decoration.amountOut, decimal: tokenOut.decimal, sign: .plus),
+                    amountIn: resolvedAmountIn,
+                    amountOut: resolvedAmountOut,
                     foreignRecipient: decoration.recipient != evmKit.address
             )
 
