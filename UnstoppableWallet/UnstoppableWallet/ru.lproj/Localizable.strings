@@ -469,11 +469,11 @@
 
 "coin_page.trading_volume" = "Объем Торговли";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Рынки";
 "coin_page.funds_invested" = "Средства Инвестированы";
 
-"coin_page.coin_markets" = "%@ Markets";
-"coin_page.coin_markets.sort_by" = "Sort By";
+"coin_page.coin_markets" = "%@ Рынки";
+"coin_page.coin_markets.sort_by" = "Сортировать По";
 "coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
 
@@ -563,8 +563,8 @@
 
 "transactions.value.unlimited" = "unlimited";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Сегодня";
+"transactions.yesterday" = "Вчера";
 
 // Transaction Info
 
@@ -926,9 +926,9 @@
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
+"status_info.processing.title" = "В процессе";
 "status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
-"status_info.completed.title" = "Completed";
+"status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Не удалось";
 "status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
