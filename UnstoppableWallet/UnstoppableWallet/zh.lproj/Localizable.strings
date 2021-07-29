@@ -578,6 +578,7 @@
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
+"tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "交易已发送至自有地址";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
@@ -585,6 +586,7 @@
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
 "tx_info.memo" = "Memo";
+"tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "You Pay";
 "tx_info.you_get" = "You Get";
