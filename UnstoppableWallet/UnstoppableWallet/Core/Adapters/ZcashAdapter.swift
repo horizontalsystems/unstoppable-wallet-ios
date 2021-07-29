@@ -21,7 +21,7 @@ class ZcashAdapter {
     private let uniqueId: String
     private let keys: [String]
     private let loggingProxy = ZcashLogger(logLevel: .debug)
-
+    private(set) var network: ZcashNetwork
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
@@ -40,9 +40,9 @@ class ZcashAdapter {
     private func defaultFee(height: Int? = nil) -> Decimal {
         let fee: Int64
         if let lastBlockHeight = height {
-            fee = ZcashSDK.defaultFee(for: lastBlockHeight)
+            fee = network.constants.defaultFee(for: lastBlockHeight)
         } else {
-            fee = ZcashSDK.defaultFee()
+            fee = network.constants.defaultFee()
         }
         return Decimal(fee) / Self.coinRate
     }
@@ -51,36 +51,39 @@ class ZcashAdapter {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
-
+        let network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
+        self.network = network
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
         coin = wallet.coin
         uniqueId = wallet.account.id
         let birthday: Int
         switch wallet.account.origin {
-        case .created: birthday = Self.newBirthdayHeight
+        case .created: birthday = Self.newBirthdayHeight(network: network)
         case .restored:
             if let height = restoreSettings.birthdayHeight {
-                birthday = WalletBirthday.birthday(with: max(height, ZcashSDK.SAPLING_ACTIVATION_HEIGHT)).height
+                birthday = WalletBirthday.birthday(with: max(height, network.constants.SAPLING_ACTIVATION_HEIGHT),network: network).height
             } else {
-                birthday = ZcashSDK.SAPLING_ACTIVATION_HEIGHT
+                birthday = network.constants.SAPLING_ACTIVATION_HEIGHT
             }
         }
         
         let seedData = [UInt8](seed)
-        let unifiedViewingKeys = try DerivationTool.default.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
+        let derivationTool = DerivationTool(networkType: network.networkType)
+        let unifiedViewingKeys = try derivationTool.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
         
         guard let uvk = unifiedViewingKeys.first,
-              let ua = try? DerivationTool.default.deriveUnifiedAddressFromUnifiedViewingKey(uvk) else {
+              let ua = try? derivationTool.deriveUnifiedAddressFromUnifiedViewingKey(uvk) else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
         self.address = ua
 
-        let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId),
-                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId),
-                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId),
+        let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
+                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
+                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
+                network: network,
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
                 viewingKeys: unifiedViewingKeys,
@@ -90,7 +93,7 @@ class ZcashAdapter {
 
         
         try initializer.initialize()
-        keys = try DerivationTool.default.deriveSpendingKeys(seed: seedData,
+        keys = try derivationTool.deriveSpendingKeys(seed: seedData,
                                                              numberOfAccounts: 1)
         
         synchronizer = try SDKSynchronizer(initializer: initializer)
@@ -337,8 +340,8 @@ class ZcashAdapter {
 
 extension ZcashAdapter {
 
-    public static var newBirthdayHeight: Int {
-        WalletBirthday.birthday(with: BlockHeight.max).height
+    public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
+        WalletBirthday.birthday(with: BlockHeight.max, network: network).height
     }
 
     private static func dataDirectoryUrl() throws -> URL {
@@ -353,16 +356,16 @@ extension ZcashAdapter {
         return url
     }
 
-    private static func cacheDbURL(uniqueId: String) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_CACHES_DB_NAME, isDirectory: false)
+    private static func cacheDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_CACHES_DB_NAME, isDirectory: false)
     }
 
-    private static func dataDbURL(uniqueId: String) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_DATA_DB_NAME, isDirectory: false)
+    private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_DATA_DB_NAME, isDirectory: false)
     }
 
-    private static func pendingDbURL(uniqueId: String) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(ZcashSDK.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_PENDING_DB_NAME, isDirectory: false)
+    private static func pendingDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.DEFAULT_DB_NAME_PREFIX + uniqueId + ZcashSDK.DEFAULT_PENDING_DB_NAME, isDirectory: false)
     }
 
     private static func spendParamsURL(uniqueId: String) throws -> URL {
@@ -508,7 +511,7 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
         
         do {
-            let derivationTool = DerivationTool.default
+            let derivationTool = DerivationTool(networkType: self.network.networkType)
             
             let validZAddress = try derivationTool.isValidShieldedAddress(address)
             let validTAddress = try derivationTool.isValidTransparentAddress(address)
