@@ -55,7 +55,7 @@ enum RestoreSettingType: String {
         switch self {
         case .birthdayHeight:
             switch coinType {
-            case .zcash: return "\(ZcashAdapter.newBirthdayHeight)"
+            case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: <#T##ZcashNetwork#>))"
             default: return nil
             }
         }
