@@ -561,6 +561,9 @@
 
 "transactions.value.unlimited" = "unlimited";
 
+"transactions.today" = "Today";
+"transactions.yesterday" = "Yesterday";
+
 // Transaction Info
 
 "tx_info.title" = "Transaction Info";
