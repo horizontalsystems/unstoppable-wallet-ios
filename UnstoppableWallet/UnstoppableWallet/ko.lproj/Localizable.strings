@@ -578,6 +578,7 @@
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
+"tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
 "tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
@@ -585,6 +586,7 @@
 "tx_info.recipient_hash" = "수령인";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
+"tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "You Pay";
 "tx_info.you_get" = "You Get";
