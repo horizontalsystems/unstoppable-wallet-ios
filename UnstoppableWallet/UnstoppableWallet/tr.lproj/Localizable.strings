@@ -579,6 +579,7 @@
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.fee" = "Ücret";
+"tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
 "tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
@@ -586,6 +587,7 @@
 "tx_info.recipient_hash" = "Alıcı";
 "tx_info.raw_transaction" = "Ham işlem";
 "tx_info.memo" = "Memo";
+"tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
 "tx_info.you_pay" = "Ödeyeceğiniz Tutar";
 "tx_info.you_get" = "You Get";
