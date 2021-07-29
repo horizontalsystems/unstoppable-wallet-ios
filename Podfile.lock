@@ -576,7 +576,7 @@ CHECKOUT OPTIONS:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
-    :commit: 05942734216a7c462d402426421e06749dfb79ca
+    :commit: 26df206b4b2d431826cf05fa4a8dec42b2fb655f
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
 
 SPEC CHECKSUMS:
