@@ -14,7 +14,18 @@ class TransactionInfoViewItemFactory {
             .amount(coinAmount: coinValue.formattedString, currencyAmount: currencyValue?.formattedString, incoming: incoming)
         ]
     }
-    
+
+    private func evmFeeItem(coinValue: CoinValue, rate: CurrencyValue?, status: TransactionStatus) -> TransactionInfoModule.ViewItem {
+        let value = feeString(coinValue: coinValue, rate: rate)
+        let title: String
+        switch status {
+        case .pending: title = "tx_info.fee.estimated".localized
+        case .processing, .failed, .completed: title = "tx_info.fee".localized
+        }
+
+        return .fee(title: title, value: value)
+    }
+
     private func feeString(coinValue: CoinValue, rate: CurrencyValue?) -> String {
         var parts = [String]()
         
@@ -85,7 +96,7 @@ class TransactionInfoViewItemFactory {
             let coinRate = rates[evmOutgoing.value.coin]
 
             middleSectionItems.append(.status(status: status))
-            middleSectionItems.append(.fee(value: feeString(coinValue: evmOutgoing.fee, rate: rates[evmOutgoing.fee.coin])))
+            middleSectionItems.append(evmFeeItem(coinValue: evmOutgoing.fee, rate: rates[evmOutgoing.fee.coin], status: status))
 
             if let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: evmOutgoing.value.coin.code)))
@@ -101,11 +112,12 @@ class TransactionInfoViewItemFactory {
 
         case let swap as SwapTransactionRecord:
             middleSectionItems.append(.status(status: status))
-            middleSectionItems.append(.fee(value: feeString(coinValue: swap.fee, rate: rates[swap.fee.coin])))
+            middleSectionItems.append(evmFeeItem(coinValue: swap.fee, rate: rates[swap.fee.coin], status: status))
 
             if let valueOut = swap.valueOut {
                 middleSectionItems.append(.price(price: priceString(coinValue1: swap.valueIn, coinValue2: valueOut)))
             }
+            middleSectionItems.append(.service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress)))
             middleSectionItems.append(.id(value: swap.transactionHash))
 
             var sections = [
@@ -123,7 +135,7 @@ class TransactionInfoViewItemFactory {
             let coinRate = rates[approve.value.coin]
 
             middleSectionItems.append(.status(status: status))
-            middleSectionItems.append(.fee(value: feeString(coinValue: approve.fee, rate: rates[approve.fee.coin])))
+            middleSectionItems.append(evmFeeItem(coinValue: approve.fee, rate: rates[approve.fee.coin], status: status))
 
             if let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: approve.value.coin.code)))
@@ -205,7 +217,7 @@ class TransactionInfoViewItemFactory {
             }
 
             middleSectionItems.append(.status(status: status))
-            middleSectionItems.append(.fee(value: feeString(coinValue: contractCall.fee, rate: rates[contractCall.fee.coin])))
+            middleSectionItems.append(evmFeeItem(coinValue: contractCall.fee, rate: rates[contractCall.fee.coin], status: status))
 
             middleSectionItems.append(.id(value: contractCall.transactionHash))
 
@@ -224,6 +236,9 @@ class TransactionInfoViewItemFactory {
             
             btcIncoming.from.flatMap { middleSectionItems.append(.from(value: $0)) }
             middleSectionItems.append(.id(value: btcIncoming.transactionHash))
+            if btcIncoming.conflictingHash != nil {
+                middleSectionItems.append(.doubleSpend)
+            }
             if btcIncoming.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)
             }
@@ -241,7 +256,7 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.status(status: status))
 
             if let fee = btcOutgoing.fee {
-                middleSectionItems.append(.fee(value: feeString(coinValue: fee, rate: rates[fee.coin])))
+                middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(coinValue: fee, rate: rates[fee.coin])))
             }
             
             if let rate = coinRate {
@@ -250,6 +265,9 @@ class TransactionInfoViewItemFactory {
             
             btcOutgoing.to.flatMap { middleSectionItems.append(.to(value: $0)) }
             middleSectionItems.append(.id(value: btcOutgoing.transactionHash))
+            if btcOutgoing.conflictingHash != nil {
+                middleSectionItems.append(.doubleSpend)
+            }
             if btcOutgoing.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)
             }
@@ -283,7 +301,7 @@ class TransactionInfoViewItemFactory {
             let coinRate = rates[tx.value.coin]
 
             middleSectionItems.append(.status(status: status))
-            middleSectionItems.append(.fee(value: feeString(coinValue: tx.fee, rate: rates[tx.fee.coin])))
+            middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(coinValue: tx.fee, rate: rates[tx.fee.coin])))
 
             if let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: tx.value.coin.code)))
