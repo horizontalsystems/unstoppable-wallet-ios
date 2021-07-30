@@ -83,13 +83,13 @@ class OneInchSendEvmTransactionService {
         case .failed(let error):
             dataState = .failed(error)
         case .completed(let transaction):
-                dataState = .completed(
-                        SendEvmTransactionService.DataState(
-                                transactionData: transaction.data,
-                                additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
-                                decoration: swapDecoration(parameters: transactionFeeService.parameters)
-                        )
-                )
+            dataState = .completed(
+                    SendEvmTransactionService.DataState(
+                            transactionData: transaction.transactionData,
+                            additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
+                            decoration: evmKit.decorate(transactionData: transaction.transactionData)
+                    )
+            )
         }
     }
 
@@ -103,19 +103,17 @@ class OneInchSendEvmTransactionService {
     }
 
     private func additionalInfo(parameters: OneInchSwapParameters) -> SendEvmData.AdditionInfo {
-        let swapInfo = SendEvmData.SwapInfo(
-                estimatedOut: parameters.amountTo,
-                estimatedIn: parameters.amountFrom,
+        .oneInchSwap(info:
+            SendEvmData.OneInchSwapInfo(
+                coinTo: parameters.coinTo,
+                estimatedAmountTo: parameters.amountTo,
                 slippage: formatted(slippage: parameters.slippage),
-                deadline: nil,
-                recipientDomain: parameters.recipient?.domain,
-                price: nil,
-                priceImpact: nil)
-
-        return .swap(info: swapInfo)
+                recipientDomain: parameters.recipient?.domain
+            )
+        )
     }
 
-    private func swapToken(coin: Coin) -> SwapMethodDecoration.Token? {
+    private func swapToken(coin: Coin) -> OneInchMethodDecoration.Token? {
         switch coin.type {
         case .ethereum, .binanceSmartChain: return .evmCoin
         case .erc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
@@ -129,20 +127,34 @@ class OneInchSendEvmTransactionService {
         guard
             let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.coinFrom.decimal)).description),
             let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.coinTo.decimal)).roundedString(decimal: 0)),
+            let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.coinTo.decimal)).roundedString(decimal: 0)),
             let tokenIn = swapToken(coin: parameters.coinFrom),
             let tokenOut = swapToken(coin: parameters.coinTo) else {
 
             return nil
         }
 
-        let trade = SwapMethodDecoration.Trade.exactIn(amountIn: amountIn, amountOutMin: amountOutMin)
-        return SwapMethodDecoration(
-                trade: trade,
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                to: parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) } ?? evmKit.receiveAddress,
-                deadline: 0
-        )
+        if let recipient = parameters.recipient,
+           let address = try? EthereumKit.Address(hex: recipient.raw) {
+            return OneInchSwapMethodDecoration(
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: amountIn,
+                    amountOutMin: amountOutMin,
+                    amountOut: amountOut,
+                    flags: 0,
+                    permit: Data(),
+                    data: Data(),
+                    recipient: address)
+        } else {
+            return OneInchUnoswapMethodDecoration(
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: amountIn,
+                    amountOutMin: amountOutMin,
+                    amountOut: amountOut,
+                    params: [])
+        }
     }
 
     private func handlePostSendActions() {
@@ -198,7 +210,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         sendState = .sending
 
         evmKit.sendSingle(
-                        transactionData: transaction.data,
+                        transactionData: transaction.transactionData,
                         gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit
                 )

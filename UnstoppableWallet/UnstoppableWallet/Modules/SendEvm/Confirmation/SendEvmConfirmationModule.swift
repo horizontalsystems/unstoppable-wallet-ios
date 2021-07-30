@@ -1,3 +1,4 @@
+import Foundation
 import UIKit
 import ThemeKit
 import EthereumKit
@@ -10,6 +11,7 @@ struct SendEvmData {
     enum AdditionInfo {
         case send(info: SendInfo)
         case swap(info: SwapInfo)
+        case oneInchSwap(info: OneInchSwapInfo)
 
         var sendInfo: SendInfo? {
             if case .send(let info) = self { return info } else { return nil }
@@ -17,6 +19,10 @@ struct SendEvmData {
 
         var swapInfo: SwapInfo? {
             if case .swap(let info) = self { return info } else { return nil }
+        }
+
+        var oneInchSwapInfo: OneInchSwapInfo? {
+            if case .oneInchSwap(let info) = self { return info } else { return nil }
         }
     }
 
@@ -32,6 +38,13 @@ struct SendEvmData {
         let recipientDomain: String?
         let price: String?
         let priceImpact: String?
+    }
+
+    struct OneInchSwapInfo {
+        let coinTo: Coin
+        let estimatedAmountTo: Decimal
+        let slippage: String?
+        let recipientDomain: String?
     }
 
 }

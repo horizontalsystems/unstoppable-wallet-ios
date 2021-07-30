@@ -111,7 +111,7 @@ class EvmTransactionService {
                 let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
 
                 return Transaction(
-                        data: transactionData,
+                        transactionData: transactionData,
                         gasData: GasData(estimatedGasLimit: estimatedGasLimit, gasLimit: gasLimit, gasPrice: gasPrice)
                 )
             }
@@ -187,11 +187,11 @@ extension EvmTransactionService {
     }
 
     struct Transaction {
-        let data: TransactionData
+        let transactionData: TransactionData
         let gasData: GasData
 
         var totalAmount: BigUInt {
-            data.value + gasData.fee
+            transactionData.value + gasData.fee
         }
     }
 
