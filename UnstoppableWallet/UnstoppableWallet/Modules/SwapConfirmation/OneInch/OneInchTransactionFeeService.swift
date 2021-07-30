@@ -101,7 +101,7 @@ class OneInchTransactionFeeService {
         parameters.amountTo = swap.amountOut ?? 0
         let transactionData = EthereumKit.TransactionData(to: tx.to, value: tx.value, input: tx.data)
 
-        transactionStatus = .completed(EvmTransactionService.Transaction(data: transactionData, gasData: gasData))
+        transactionStatus = .completed(EvmTransactionService.Transaction(transactionData: transactionData, gasData: gasData))
     }
 
     private func surchargedGasLimit(gasLimit: Int) -> Int {

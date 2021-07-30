@@ -95,7 +95,7 @@ class SendEvmTransactionService {
     }
 
     private func syncDataState(transaction: EvmTransactionService.Transaction? = nil) {
-        let transactionData = transaction?.data ?? sendData.transactionData
+        let transactionData = transaction?.transactionData ?? sendData.transactionData
 
         dataState = .completed(
                 DataState(
@@ -159,7 +159,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
         sendState = .sending
 
         evmKit.sendSingle(
-                        transactionData: transaction.data,
+                        transactionData: transaction.transactionData,
                         gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit
                 )
