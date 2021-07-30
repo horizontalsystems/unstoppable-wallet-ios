@@ -367,7 +367,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
             return "transactions.yesterday".localized
         } else {
             let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 - Double(daysAgo * 60 * 60 * 24))
-            return DateHelper.instance.formatFullDateOnly(from: date)
+            return DateHelper.instance.formatTransactionDate(from: date)
         }
     }
 

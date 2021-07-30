@@ -42,19 +42,17 @@ class TransactionInfoViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: B7Cell.self)
-        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: A1Cell.self)
-
-        tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: B7Cell.self)
         tableView.registerCell(forClass: D6Cell.self)
+        tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: D7MultiLineCell.self)
+        tableView.registerCell(forClass: D9Cell.self)
+        tableView.registerCell(forClass: D10Cell.self)
+        tableView.registerCell(forClass: CMultiLineCell.self)
+        tableView.registerCell(forClass: C4MultiLineCell.self)
         tableView.registerCell(forClass: C6Cell.self)
-        tableView.registerCell(forClass: TransactionInfoPendingStatusCell.self)
-        tableView.registerCell(forClass: TransactionInfoTransactionIdCell.self)
-        tableView.registerCell(forClass: TransactionInfoWarningCell.self)
-        tableView.registerCell(forClass: TransactionInfoNoteCell.self)
-        tableView.registerCell(forClass: TransactionInfoShareCell.self)
+        tableView.registerCell(forClass: C24Cell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
@@ -76,15 +74,21 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func pendingStatusCell(rowInfo: RowInfo, progress: Double, label: String) -> RowProtocol {
-        Row<TransactionInfoPendingStatusCell>(
+        Row<C24Cell>(
                 id: "status",
                 hash: "pending-\(progress)-\(label)",
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.bind(progress: progress, label: label) { [weak self] in
+                    cell.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.titleImageTintColor = .themeJacob
+                    cell.titleImageAction = { [weak self] in
                         self?.openStatusInfo()
                     }
+                    cell.title = "status".localized
+                    cell.value = label
+                    cell.valueColor = .themeLeah
+                    cell.set(progress: progress)
                 }
         )
     }
@@ -133,9 +137,9 @@ class TransactionInfoViewController: ThemeViewController {
             )
 
         case .pending:
-            return pendingStatusCell(rowInfo: rowInfo, progress: 0, label: statusText)
+            return pendingStatusCell(rowInfo: rowInfo, progress: 0.2, label: statusText)
         case .processing(let progress):
-            return pendingStatusCell(rowInfo: rowInfo, progress: progress, label: statusText)
+            return pendingStatusCell(rowInfo: rowInfo, progress: progress * 0.8 + 0.2, label: statusText)
         }
     }
 
@@ -147,7 +151,11 @@ class TransactionInfoViewController: ThemeViewController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
-                    cell.viewItem = .init(title: TransactionInfoAddressMapper.title(value: value), value: value)
+                    if let title = TransactionInfoAddressMapper.title(value: value) {
+                        cell.viewItem = .init(type: .title(text: title), value: value)
+                    } else {
+                        cell.viewItem = .init(type: .raw, value: value)
+                    }
                 }
         )
     }
@@ -165,23 +173,19 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        Row<TransactionInfoTransactionIdCell>(
+        Row<D10Cell>(
                 id: "transaction_id",
                 hash: value,
                 height: .heightCell48,
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.bind(
-                            value: value,
-                            onTapId: {
-                                self?.viewModel.onTapTransactionId()
-                                HudHelper.instance.showSuccess(title: "alert.copied".localized)
-                            },
-                            onTapShare: {
-                                let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
-                                self?.present(activityViewController, animated: true)
-                            }
-                    )
+                    cell.title = "tx_info.transaction_id".localized
+                    cell.viewItem = .init(type: .raw, value: value)
+                    cell.set(iconButtonImage: UIImage(named: "share_1_20"))
+                    cell.onTapIconButton = { [weak self] in
+                        let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
+                        self?.present(activityViewController, animated: true)
+                    }
                 }
         )
     }
@@ -190,13 +194,29 @@ class TransactionInfoViewController: ThemeViewController {
         Row<D7Cell>(
                 id: title,
                 hash: value ?? "",
+                height: .heightCell48,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                    cell.title = title
+                    cell.value = value
+                    cell.valueColor = .themeLeah
+                    cell.valueItalic = valueItalic
+                }
+        )
+    }
+
+    private func multiLineValueRow(rowInfo: RowInfo, title: String, value: String?, valueItalic: Bool = false) -> RowProtocol {
+        Row<D7MultiLineCell>(
+                id: title,
+                hash: value ?? "",
                 dynamicHeight: { width in
-                    D7Cell.height(containerWidth: width, backgroundStyle: .transparent, title: title, value: value, valueItalic: valueItalic)
+                    D7MultiLineCell.height(containerWidth: width, backgroundStyle: .lawrence, title: title, value: value, valueItalic: valueItalic)
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
                     cell.value = value
+                    cell.valueColor = .themeLeah
                     cell.valueItalic = valueItalic
                 }
         )
@@ -211,27 +231,36 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTapButton: @escaping () -> ()) -> RowProtocol {
-        Row<TransactionInfoWarningCell>(
+        Row<C4MultiLineCell>(
                 id: id,
                 hash: text,
+                autoDeselect: true,
                 dynamicHeight: { containerWidth in
-                    TransactionInfoWarningCell.height(containerWidth: containerWidth, text: text)
+                    C4MultiLineCell.height(containerWidth: containerWidth, backgroundStyle: .lawrence, title: text)
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.bind(image: image, text: text, onTapButton: onTapButton)
+                    cell.titleImage = image
+                    cell.titleImageTintColor = .themeGray
+                    cell.title = text
+                    cell.valueImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.valueImageTintColor = .themeGray
+                },
+                action: { _ in
+                    onTapButton()
                 }
         )
     }
 
-    private func doubleSpendRow(rowInfo: RowInfo) -> RowProtocol {
+    private func doubleSpendRow(rowInfo: RowInfo, txHash: String, conflictingTxHash: String) -> RowProtocol {
         warningRow(
                 rowInfo: rowInfo,
                 id: "double_spend",
                 image: UIImage(named: "double_send_20"),
                 text: "tx_info.double_spent_note".localized
         ) { [weak self] in
-//            self?.delegate.onTapDoubleSpendInfo()
+            let module = DoubleSpendInfoRouter.module(txHash: txHash, conflictingTxHash: conflictingTxHash)
+            self?.present(module, animated: true)
         }
     }
 
@@ -242,7 +271,8 @@ class TransactionInfoViewController: ThemeViewController {
 
         if lockState.locked {
             return warningRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) { [weak self] in
-//                self?.delegate.onTapLockInfo()
+                let controller = InfoModule.viewController(dataSource: TimeLockInfoDataSource())
+                self?.present(ThemeNavigationController(rootViewController: controller), animated: true)
             }
         } else {
             return noteRow(rowInfo: rowInfo, id: id, image: image, imageTintColor: .themeGray, text: "tx_info.unlocked_at".localized(formattedDate))
@@ -250,15 +280,17 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, imageTintColor: UIColor?, text: String) -> RowProtocol {
-        Row<TransactionInfoNoteCell>(
+        Row<CMultiLineCell>(
                 id: id,
                 hash: text,
                 dynamicHeight: { containerWidth in
-                    TransactionInfoNoteCell.height(containerWidth: containerWidth, text: text)
+                    CMultiLineCell.height(containerWidth: containerWidth, backgroundStyle: .lawrence, title: text)
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.bind(image: image, imageTintColor: imageTintColor, text: text)
+                    cell.titleImage = image
+                    cell.titleImageTintColor = imageTintColor
+                    cell.title = text
                 }
         )
     }
@@ -274,17 +306,13 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func rawTransactionRow(rowInfo: RowInfo) -> RowProtocol {
-        Row<TransactionInfoShareCell>(
+        Row<D9Cell>(
                 id: "raw_transaction",
                 height: .heightCell48,
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.bind(
-                            title: "tx_info.raw_transaction".localized,
-                            onTapShare: {
-//                                self?.delegate.onTapShareRawTransaction()
-                            }
-                    )
+                    cell.title = "tx_info.raw_transaction".localized
+                    cell.viewItem = .init(type: .image, value: "")
                 }
         )
     }
@@ -294,6 +322,7 @@ class TransactionInfoViewController: ThemeViewController {
                 id: "explorer_row",
                 hash: "explorer_row",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
@@ -318,6 +347,7 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
                     cell.value = value
+                    cell.valueColor = .themeGray
                 }
         )
     }
@@ -331,6 +361,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = coinAmount
                     cell.value = currencyAmount
+                    cell.valueColor = .themeLeah
+                    cell.valueItalic = false
                     incoming.flatMap {
                         cell.valueColor = $0 ? .themeGreenD : .themeYellowD
                     }
@@ -347,6 +379,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = "tx_info.date".localized
                     cell.value = DateHelper.instance.formatFullTime(from: date)
+                    cell.valueColor = .themeLeah
+                    cell.valueItalic = false
                 }
         )
     }
@@ -360,6 +394,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = "tx_info.price".localized
                     cell.value = price
+                    cell.valueColor = .themeLeah
+                    cell.valueItalic = false
                 }
         )
     }
@@ -376,11 +412,11 @@ class TransactionInfoViewController: ThemeViewController {
         case let .rate(value): return valueRow(rowInfo: rowInfo, title: "tx_info.rate".localized, value: value)
         case let .fee(title, value): return feeRow(rowInfo: rowInfo, title: title, value: value)
         case let .price(price): return priceRow(rowInfo: rowInfo, price: price)
-        case .doubleSpend: return doubleSpendRow(rowInfo: rowInfo)
+        case let .doubleSpend(txHash, conflictingTxHash): return doubleSpendRow(rowInfo: rowInfo, txHash: txHash, conflictingTxHash: conflictingTxHash)
         case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
         case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)
         case .rawTransaction: return rawTransactionRow(rowInfo: rowInfo)
-        case let .memo(value): return valueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: value, valueItalic: true)
+        case let .memo(value): return multiLineValueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: value, valueItalic: true)
         case let .service(value): return valueRow(rowInfo: rowInfo, title: "tx_info.service".localized, value: value)
         case let .explorer(title, url): return explorerRow(rowInfo: rowInfo, title: title, url: url)
         }

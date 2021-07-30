@@ -9,7 +9,7 @@ class DateHelper {
     func formatTransactionDate(from date: Date) -> String {
         let correctDate = min(date, Date())
         let isThisYear = Calendar.current.isDate(correctDate, equalTo: Date(), toGranularity: .year)
-        let format = isThisYear ? "MMM d" : "yyyy MMM d"
+        let format = isThisYear ? "MMMM d" : "yyyy MMMM d"
         return DateFormatter.cachedFormatter(format: format).string(from: date)
     }
 

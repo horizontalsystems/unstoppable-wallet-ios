@@ -11,19 +11,17 @@ class TransactionInfoService {
     private let rateManager: IRateManager
     private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: IFeeCoinProvider
-    private let pasteboardManager: IPasteboardManager
     private let appConfigProvider: IAppConfigProvider
     private let accountSettingManager: AccountSettingManager
 
     private let ratesRelay = PublishRelay<[Coin: CurrencyValue]>()
 
     init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider,
-         pasteboardManager: IPasteboardManager, appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
+         appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
         self.adapter = adapter
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider
-        self.pasteboardManager = pasteboardManager
         self.appConfigProvider = appConfigProvider
         self.accountSettingManager = accountSettingManager
     }
@@ -45,10 +43,6 @@ extension TransactionInfoService {
 
     var testMode: Bool {
         appConfigProvider.testMode
-    }
-
-    func copy(value: String) {
-        pasteboardManager.set(value: value)
     }
 
     func ethereumNetworkType(account: Account) -> NetworkType {

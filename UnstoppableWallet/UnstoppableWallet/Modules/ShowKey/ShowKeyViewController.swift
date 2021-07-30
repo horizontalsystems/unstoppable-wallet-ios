@@ -137,7 +137,7 @@ class ShowKeyViewController: ThemeViewController {
     }
 
     private func rows(privateKey: ShowKeyViewModel.PrivateKey) -> [RowProtocol] {
-        let viewItem = CopyableSecondaryButton.ViewItem(value: privateKey.value)
+        let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: privateKey.value)
 
         return [
             marginRow(
@@ -196,7 +196,7 @@ extension ShowKeyViewController: SectionsDataSource {
                             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                             cell.title = "show_key.passphrase".localized
                             cell.titleImage = UIImage(named: "key_phrase_20")
-                            cell.viewItem = .init(value: passphrase)
+                            cell.viewItem = .init(type: .raw, value: passphrase)
                         }
                 )
 

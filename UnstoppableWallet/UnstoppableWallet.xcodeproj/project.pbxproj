@@ -1560,10 +1560,8 @@
 		2FA5D053860AE8F6E88F7AE5 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5D0588EFCA934B4CAC162 /* ContractCreationTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */; };
 		2FA5D059D2249A3943D77A07 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
-		2FA5D066A05EA576E4EE535D /* TransactionInfoShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D9E265099E72DCA9730E /* TransactionInfoShareCell.swift */; };
 		2FA5D07A61BA501BD07617F2 /* AvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB06251C30FF58B5F4C2 /* AvailableBalanceCell.swift */; };
 		2FA5D095A83D18DE2E21B580 /* EvmTransactionsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
-		2FA5D096342F45ABAD5EE486 /* TransactionInfoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DAAAEB838FA0308FC9F2 /* TransactionInfoNoteCell.swift */; };
 		2FA5D0A935C8BCC818A40065 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5D0C39052BB3698B95876 /* LogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D73DA43455B86DF104FE /* LogRecord.swift */; };
 		2FA5D0ED91EF9CA9EC84F34B /* SendHodlerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D62EE034DC3CF2A3FE5D /* SendHodlerRouter.swift */; };
@@ -1576,23 +1574,17 @@
 		2FA5D1E16A9878503DD72153 /* TransactionStatusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */; };
 		2FA5D21790195F1083F7BB21 /* EvmTransactionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */; };
 		2FA5D247645B571A0BA33595 /* SendHodlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF7B14D5A200DDF5168D /* SendHodlerView.swift */; };
-		2FA5D24B63DF456099A8FC23 /* TransactionInfoWarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6002D2F12D14868D249 /* TransactionInfoWarningCell.swift */; };
 		2FA5D2A2E81E947B2CF15889 /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D2E862C07FFC30022C23 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
-		2FA5D2E997A5A24D048FE8DB /* TransactionInfoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DAAAEB838FA0308FC9F2 /* TransactionInfoNoteCell.swift */; };
 		2FA5D2FE81DA1FB5A63C2D7C /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D3089083CC312E701E05 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */; };
-		2FA5D31496BDAD5ADBD076FD /* TransactionInfoTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D18776CF7665DAF9648E /* TransactionInfoTitleView.swift */; };
 		2FA5D321784316EE976FA909 /* SendHodlerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DCB3F647B2A0DE10A0E4 /* SendHodlerModule.swift */; };
 		2FA5D3577AE809D563B14FB1 /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
 		2FA5D371A14CFEB296C58801 /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */; };
-		2FA5D3CBD1618131B83D9D90 /* TransactionInfoTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D18776CF7665DAF9648E /* TransactionInfoTitleView.swift */; };
-		2FA5D3FF95A27CE4FA3D4941 /* TransactionInfoTransactionIdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA579EA7D62ADF4924B4 /* TransactionInfoTransactionIdCell.swift */; };
 		2FA5D40E1007CBA5067A68C8 /* LogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D73DA43455B86DF104FE /* LogRecord.swift */; };
 		2FA5D411AB77B68CAEC4D498 /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5D419610C9D1B86DE8AD8 /* SendHodlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF7B14D5A200DDF5168D /* SendHodlerView.swift */; };
 		2FA5D4248B5AA0F0EDF131F4 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
-		2FA5D47A73C9A6B038D26CB2 /* TransactionInfoNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DAAAEB838FA0308FC9F2 /* TransactionInfoNoteCell.swift */; };
 		2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5D4BE55E8AB193EA61411 /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5D4C4048DC80858F9F7F4 /* TransactionStatusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */; };
@@ -1604,23 +1596,19 @@
 		2FA5D5D145BF922C9A937073 /* AvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB06251C30FF58B5F4C2 /* AvailableBalanceCell.swift */; };
 		2FA5D5D15AE4070651ADF157 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
 		2FA5D5E5AD1073BFE7A027C8 /* TransactionInfoViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */; };
-		2FA5D5EE95366FB54C22EA40 /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1A61C2AC192F194EC10 /* TransactionInfoPendingStatusCell.swift */; };
 		2FA5D5FC19C142560992B71A /* TransactionStatusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */; };
 		2FA5D5FCFC8A89956755FAA3 /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */; };
 		2FA5D658257550B444C5B2BE /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */; };
-		2FA5D6605BF52F6B363C14E5 /* TransactionInfoTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D18776CF7665DAF9648E /* TransactionInfoTitleView.swift */; };
 		2FA5D66E93810DD824638468 /* AvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB06251C30FF58B5F4C2 /* AvailableBalanceCell.swift */; };
 		2FA5D66F002C4A8CB5F0E888 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5D6910A6A3BB23CDA4A9F /* FeeRateAdjustmentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D480CB2AA3B61880F9D2 /* FeeRateAdjustmentInfo.swift */; };
 		2FA5D69CCEEE50BB63C3D317 /* ContractCreationTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */; };
-		2FA5D6AD3A92863C6E3C126C /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1A61C2AC192F194EC10 /* TransactionInfoPendingStatusCell.swift */; };
 		2FA5D6AE95126ABEA34CE867 /* LogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D73DA43455B86DF104FE /* LogRecord.swift */; };
 		2FA5D6BF7186A35B9A086231 /* ContractCreationTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */; };
 		2FA5D6CE58855A2E5DB57ED3 /* TransactionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */; };
 		2FA5D7283FA3C72FDFECF26D /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5D73715BE820783EEFF24 /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D74C17DF76E56FA0A96E /* ExperimentalFeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */; };
-		2FA5D759CDF56E09AFB4B0FA /* TransactionInfoTransactionIdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA579EA7D62ADF4924B4 /* TransactionInfoTransactionIdCell.swift */; };
 		2FA5D76023EC85D3589647DC /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1D073DF0366A0E24A4F /* CurrencyValue.swift */; };
 		2FA5D7A265F818E37C908672 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5D7A5F46AA14B704A0E91 /* BitcoinOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */; };
@@ -1648,7 +1636,6 @@
 		2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
 		2FA5DA8B816A4B089A4F01AF /* BitcoinOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */; };
 		2FA5DAB492A3C8EFB9261A8C /* SendHodlerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */; };
-		2FA5DAE7E488116F7FF4DE81 /* TransactionInfoTransactionIdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA579EA7D62ADF4924B4 /* TransactionInfoTransactionIdCell.swift */; };
 		2FA5DB038770943B8248FCAA /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
 		2FA5DB0705BE003EA8981002 /* Erc20AvailableBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF52F644EC0336AD9CD1 /* Erc20AvailableBalanceService.swift */; };
 		2FA5DB0DDC7575B952CD1A44 /* SendHodlerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */; };
@@ -1669,26 +1656,21 @@
 		2FA5DC3DD21A29F4370DFDC4 /* BitcoinTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2B93C053ABB9445C148 /* BitcoinTransactionRecord.swift */; };
 		2FA5DC95B68FC21FD48CCB13 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
 		2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
-		2FA5DCF09F5ABED921693F82 /* TransactionInfoShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D9E265099E72DCA9730E /* TransactionInfoShareCell.swift */; };
 		2FA5DD0FAED2F1366550E302 /* TransactionLockInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */; };
 		2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
-		2FA5DD1BD2CA97787793E6D5 /* TransactionInfoPendingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1A61C2AC192F194EC10 /* TransactionInfoPendingStatusCell.swift */; };
 		2FA5DD5B94905A977FEC3BE4 /* LogRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */; };
 		2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
 		2FA5DD8CA454D10CB81000F8 /* BitcoinOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */; };
 		2FA5DDA1D6BCD69D9A1E00A6 /* TransactionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */; };
 		2FA5DDA94D927468DE3033E8 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5DDDD98533BAFCF3819C8 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */; };
-		2FA5DDE0C8A39275AC6BE1FD /* TransactionInfoWarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6002D2F12D14868D249 /* TransactionInfoWarningCell.swift */; };
 		2FA5DDEE04ABB6526A0BFB5C /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5DE171376C8076F4935B1 /* BitcoinIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */; };
 		2FA5DE43E32690EDC0ABC17E /* EvmTransactionsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5DE64B207BCA9286EBD58 /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5DE68EF4783154A53CCEB /* TransactionInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2FB94B5545387375AA3 /* TransactionInfoService.swift */; };
 		2FA5DE81BBA97B8B6F30A779 /* EvmTransactionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */; };
-		2FA5DE8D7C92628D05E3C36D /* TransactionInfoShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D9E265099E72DCA9730E /* TransactionInfoShareCell.swift */; };
 		2FA5DEBB998DAFD3C8A802FD /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */; };
-		2FA5DEC2F2EFDACA2FB948AD /* TransactionInfoWarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6002D2F12D14868D249 /* TransactionInfoWarningCell.swift */; };
 		2FA5DEC4C3A9705DA2A1B6C5 /* BitcoinIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */; };
 		2FA5DEDEAF3C1D6251B47CB4 /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */; };
 		2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
@@ -3161,8 +3143,6 @@
 		2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateAdjustmentHelper.swift; sourceTree = "<group>"; };
 		2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesModule.swift; sourceTree = "<group>"; };
 		2FA5D11954688FDC8AEC549C /* TransactionLockInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionLockInfo.swift; sourceTree = "<group>"; };
-		2FA5D18776CF7665DAF9648E /* TransactionInfoTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoTitleView.swift; sourceTree = "<group>"; };
-		2FA5D1A61C2AC192F194EC10 /* TransactionInfoPendingStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoPendingStatusCell.swift; sourceTree = "<group>"; };
 		2FA5D1D073DF0366A0E24A4F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		2FA5D28E8178D1FB4706011E /* SendHodlerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerPresenter.swift; sourceTree = "<group>"; };
 		2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewItemFactory.swift; sourceTree = "<group>"; };
@@ -3171,7 +3151,6 @@
 		2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BitcoinCore+Hodler.swift"; sourceTree = "<group>"; };
 		2FA5D480CB2AA3B61880F9D2 /* FeeRateAdjustmentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateAdjustmentInfo.swift; sourceTree = "<group>"; };
 		2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoModule.swift; sourceTree = "<group>"; };
-		2FA5D6002D2F12D14868D249 /* TransactionInfoWarningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoWarningCell.swift; sourceTree = "<group>"; };
 		2FA5D62EE034DC3CF2A3FE5D /* SendHodlerRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendHodlerRouter.swift; sourceTree = "<group>"; };
 		2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewModel.swift; sourceTree = "<group>"; };
 		2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmTransactionRecord.swift; sourceTree = "<group>"; };
@@ -3180,9 +3159,6 @@
 		2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		2FA5D73DA43455B86DF104FE /* LogRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogRecord.swift; sourceTree = "<group>"; };
 		2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewController.swift; sourceTree = "<group>"; };
-		2FA5D9E265099E72DCA9730E /* TransactionInfoShareCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoShareCell.swift; sourceTree = "<group>"; };
-		2FA5DA579EA7D62ADF4924B4 /* TransactionInfoTransactionIdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoTransactionIdCell.swift; sourceTree = "<group>"; };
-		2FA5DAAAEB838FA0308FC9F2 /* TransactionInfoNoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoNoteCell.swift; sourceTree = "<group>"; };
 		2FA5DB06251C30FF58B5F4C2 /* AvailableBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableBalanceCell.swift; sourceTree = "<group>"; };
 		2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinOutgoingTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesViewController.swift; sourceTree = "<group>"; };
@@ -5002,7 +4978,6 @@
 		2FA5D3D74F4E4BFA79E729B2 /* TransactionInfo */ = {
 			isa = PBXGroup;
 			children = (
-				2FA5DFDE0946B485DDABD6B5 /* Cells */,
 				2FA5D2FB94B5545387375AA3 /* TransactionInfoService.swift */,
 				2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */,
 				2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */,
@@ -5012,27 +4987,6 @@
 				2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */,
 			);
 			path = TransactionInfo;
-			sourceTree = "<group>";
-		};
-		2FA5D4B977FB6739A6E34CF8 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				2FA5D18776CF7665DAF9648E /* TransactionInfoTitleView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		2FA5DFDE0946B485DDABD6B5 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				2FA5D4B977FB6739A6E34CF8 /* Views */,
-				2FA5D1A61C2AC192F194EC10 /* TransactionInfoPendingStatusCell.swift */,
-				2FA5D6002D2F12D14868D249 /* TransactionInfoWarningCell.swift */,
-				2FA5DAAAEB838FA0308FC9F2 /* TransactionInfoNoteCell.swift */,
-				2FA5D9E265099E72DCA9730E /* TransactionInfoShareCell.swift */,
-				2FA5DA579EA7D62ADF4924B4 /* TransactionInfoTransactionIdCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		3AAE9B3322CF48DA00FB065F /* Recovered References */ = {
@@ -7017,13 +6971,7 @@
 				2FA5DDA1D6BCD69D9A1E00A6 /* TransactionInfoViewModel.swift in Sources */,
 				2FA5DF762C77C822A1D75548 /* CurrencyValue.swift in Sources */,
 				2FA5D517705FC57BC25CE0DE /* TransactionInfoAddressMapper.swift in Sources */,
-				2FA5D6AD3A92863C6E3C126C /* TransactionInfoPendingStatusCell.swift in Sources */,
 				2FA5D1E16A9878503DD72153 /* TransactionStatusInfoViewController.swift in Sources */,
-				2FA5DEC2F2EFDACA2FB948AD /* TransactionInfoWarningCell.swift in Sources */,
-				2FA5D2E997A5A24D048FE8DB /* TransactionInfoNoteCell.swift in Sources */,
-				2FA5DCF09F5ABED921693F82 /* TransactionInfoShareCell.swift in Sources */,
-				2FA5D759CDF56E09AFB4B0FA /* TransactionInfoTransactionIdCell.swift in Sources */,
-				2FA5D6605BF52F6B363C14E5 /* TransactionInfoTitleView.swift in Sources */,
 				58AAAC8A5384B284C58BB295 /* InputBadgeWrapperView.swift in Sources */,
 				58AAA738CD46DC6EF9A390F3 /* Global.swift in Sources */,
 				58AAA99F3A131742A1C347CF /* SwapViewItemHelper.swift in Sources */,
@@ -7879,13 +7827,7 @@
 				2FA5D6CE58855A2E5DB57ED3 /* TransactionInfoViewModel.swift in Sources */,
 				2FA5D95E9351D4A5F3BFBE2A /* CurrencyValue.swift in Sources */,
 				2FA5DF23FE2EC44DF2CADCF6 /* TransactionInfoAddressMapper.swift in Sources */,
-				2FA5D5EE95366FB54C22EA40 /* TransactionInfoPendingStatusCell.swift in Sources */,
 				2FA5D5FC19C142560992B71A /* TransactionStatusInfoViewController.swift in Sources */,
-				2FA5D24B63DF456099A8FC23 /* TransactionInfoWarningCell.swift in Sources */,
-				2FA5D47A73C9A6B038D26CB2 /* TransactionInfoNoteCell.swift in Sources */,
-				2FA5D066A05EA576E4EE535D /* TransactionInfoShareCell.swift in Sources */,
-				2FA5DAE7E488116F7FF4DE81 /* TransactionInfoTransactionIdCell.swift in Sources */,
-				2FA5D3CBD1618131B83D9D90 /* TransactionInfoTitleView.swift in Sources */,
 				58AAAE48451AF437CE86CE4C /* InputBadgeWrapperView.swift in Sources */,
 				58AAA27FE69D5AF00F771C7F /* Global.swift in Sources */,
 				58AAA29273AC07FF48DA1584 /* SwapViewItemHelper.swift in Sources */,
@@ -8753,13 +8695,7 @@
 				2FA5D89EECB981FAA8B179C3 /* TransactionInfoViewModel.swift in Sources */,
 				2FA5D76023EC85D3589647DC /* CurrencyValue.swift in Sources */,
 				2FA5D9C5599F196283A6DA6A /* TransactionInfoAddressMapper.swift in Sources */,
-				2FA5DD1BD2CA97787793E6D5 /* TransactionInfoPendingStatusCell.swift in Sources */,
 				2FA5D4C4048DC80858F9F7F4 /* TransactionStatusInfoViewController.swift in Sources */,
-				2FA5DDE0C8A39275AC6BE1FD /* TransactionInfoWarningCell.swift in Sources */,
-				2FA5D096342F45ABAD5EE486 /* TransactionInfoNoteCell.swift in Sources */,
-				2FA5DE8D7C92628D05E3C36D /* TransactionInfoShareCell.swift in Sources */,
-				2FA5D3FF95A27CE4FA3D4941 /* TransactionInfoTransactionIdCell.swift in Sources */,
-				2FA5D31496BDAD5ADBD076FD /* TransactionInfoTitleView.swift in Sources */,
 				58AAA7E6994159CD5FFDB31E /* InputBadgeWrapperView.swift in Sources */,
 				58AAA88F6D5F5509E7FAB02D /* Global.swift in Sources */,
 				58AAA26C7C0813CEF0774418 /* SwapViewItemHelper.swift in Sources */,
