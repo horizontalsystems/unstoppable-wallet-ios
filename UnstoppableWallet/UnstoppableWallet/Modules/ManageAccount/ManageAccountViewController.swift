@@ -198,7 +198,7 @@ extension ManageAccountViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isLast: isLast)
                         cell.title = viewItem.title
                         cell.titleImage = viewItem.icon
-                        cell.viewItem = .init(type: .raw, value: viewItem.value)
+                        cell.viewItem = .init(type: .raw, value: { viewItem.value })
                     }
             )
 

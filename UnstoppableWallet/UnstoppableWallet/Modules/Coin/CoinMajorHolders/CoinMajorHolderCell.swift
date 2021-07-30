@@ -43,7 +43,7 @@ class CoinMajorHolderCell: BaseThemeCell {
     }
 
     func set(address: String) {
-        rightView.viewItem = .init(type: .raw, value: address)
+        rightView.viewItem = .init(type: .raw, value: { address })
     }
 
     var onTapIcon: (() -> ())? {

@@ -132,4 +132,8 @@ extension TransactionInfoViewModel {
         viewItemsRelay.asSignal()
     }
 
+    var rawTransaction: String? {
+        service.rawTransaction(hash: transaction.transactionHash)
+    }
+
 }

@@ -74,4 +74,8 @@ extension TransactionInfoService {
                 .disposed(by: disposeBag)
     }
 
+    func rawTransaction(hash: String) -> String? {
+        adapter.rawTransaction(hash: hash)
+    }
+
 }
