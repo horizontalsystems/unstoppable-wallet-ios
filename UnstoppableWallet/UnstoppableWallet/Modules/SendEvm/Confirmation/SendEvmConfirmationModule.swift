@@ -10,7 +10,7 @@ struct SendEvmData {
 
     enum AdditionInfo {
         case send(info: SendInfo)
-        case swap(info: SwapInfo)
+        case uniswap(info: SwapInfo)
         case oneInchSwap(info: OneInchSwapInfo)
 
         var sendInfo: SendInfo? {
@@ -18,7 +18,7 @@ struct SendEvmData {
         }
 
         var swapInfo: SwapInfo? {
-            if case .swap(let info) = self { return info } else { return nil }
+            if case .uniswap(let info) = self { return info } else { return nil }
         }
 
         var oneInchSwapInfo: OneInchSwapInfo? {

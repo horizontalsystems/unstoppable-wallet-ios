@@ -63,10 +63,12 @@ class SendEvmTransactionViewModel {
                        additionalInfo: data.additionalInfo) {
 
                 items = decoratedItems
-            } else {
-                items = data.transactionData.map { transferItems(from: service.ownAddress, to: $0.to, value: $0.value, additionalInfo: data.additionalInfo) } ?? []
             }
-        default: items = nil
+        default: ()
+        }
+
+        if items == nil, let data = dataState.data?.transactionData {
+            items = unknownMethodItems(transactionData: data)
         }
 
         if let items = items {
