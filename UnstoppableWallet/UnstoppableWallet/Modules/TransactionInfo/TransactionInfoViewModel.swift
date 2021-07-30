@@ -132,8 +132,4 @@ extension TransactionInfoViewModel {
         viewItemsRelay.asSignal()
     }
 
-    func onTapTransactionId() {
-        service.copy(value: transaction.transactionHash)
-    }
-
 }

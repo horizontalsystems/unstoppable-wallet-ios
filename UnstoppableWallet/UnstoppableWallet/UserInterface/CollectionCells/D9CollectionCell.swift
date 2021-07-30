@@ -21,7 +21,7 @@ class D9CollectionCell: BaseThemeCollectionCell {
         set { leftView.text = newValue }
     }
 
-    public var viewItem: CopyableSecondaryButton.ViewItem? {
+    public var viewItem: CopyableSecondaryButton.ViewItem {
         get { rightView.viewItem }
         set { rightView.viewItem = newValue }
     }

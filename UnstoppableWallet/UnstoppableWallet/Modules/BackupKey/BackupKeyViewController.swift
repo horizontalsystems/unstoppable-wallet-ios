@@ -167,7 +167,7 @@ extension BackupKeyViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                     cell.title = "backup_key.passphrase".localized
                                     cell.titleImage = UIImage(named: "key_phrase_20")
-                                    cell.viewItem = .init(value: passphrase)
+                                    cell.viewItem = .init(type: .raw, value: passphrase)
                                 }
                         )
                     ]

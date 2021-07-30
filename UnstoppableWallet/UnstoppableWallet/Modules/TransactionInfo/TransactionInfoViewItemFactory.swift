@@ -236,8 +236,8 @@ class TransactionInfoViewItemFactory {
             
             btcIncoming.from.flatMap { middleSectionItems.append(.from(value: $0)) }
             middleSectionItems.append(.id(value: btcIncoming.transactionHash))
-            if btcIncoming.conflictingHash != nil {
-                middleSectionItems.append(.doubleSpend)
+            if let conflictingHash = btcIncoming.conflictingHash {
+                middleSectionItems.append(.doubleSpend(txHash: btcIncoming.transactionHash, conflictingTxHash: conflictingHash))
             }
             if btcIncoming.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)
@@ -265,8 +265,8 @@ class TransactionInfoViewItemFactory {
             
             btcOutgoing.to.flatMap { middleSectionItems.append(.to(value: $0)) }
             middleSectionItems.append(.id(value: btcOutgoing.transactionHash))
-            if btcOutgoing.conflictingHash != nil {
-                middleSectionItems.append(.doubleSpend)
+            if let conflictingHash = btcOutgoing.conflictingHash {
+                middleSectionItems.append(.doubleSpend(txHash: btcOutgoing.transactionHash, conflictingTxHash: conflictingHash))
             }
             if btcOutgoing.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)

@@ -140,7 +140,7 @@ class SendEvmTransactionViewController: ThemeViewController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = title
-                    cell.viewItem = .init(title: valueTitle, value: value)
+                    cell.viewItem = .init(type: .title(text: valueTitle), value: value)
                 }
         )
     }

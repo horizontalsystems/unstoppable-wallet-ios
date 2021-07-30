@@ -8,7 +8,7 @@ struct TransactionInfoModule {
             return nil
         }
 
-        let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, pasteboardManager: App.shared.pasteboardManager, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
+        let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
         let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, transaction: transaction, wallet: wallet)
         let viewController = TransactionInfoViewController(viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
@@ -32,7 +32,7 @@ extension TransactionInfoModule {
         case rate(value: String)
         case fee(title: String, value: String)
         case price(price: String)
-        case doubleSpend
+        case doubleSpend(txHash: String, conflictingTxHash: String)
         case lockInfo(lockState: TransactionLockState)
         case sentToSelf
         case rawTransaction
