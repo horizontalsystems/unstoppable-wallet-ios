@@ -237,7 +237,7 @@ extension UniswapViewModel {
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
         )
 
-        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalInfo: .swap(info: swapInfo)))
+        openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalInfo: .uniswap(info: swapInfo)))
     }
 
 }
