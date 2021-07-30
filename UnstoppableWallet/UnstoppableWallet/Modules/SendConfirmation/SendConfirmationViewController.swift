@@ -133,7 +133,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isLast: self?.noMemo ?? false)
                     cell.title = viewItem.isAccount ? "send.confirmation.account".localized : "send.confirmation.address".localized
-                    cell.viewItem = .init(type: .raw, value: viewItem.receiver.raw)
+                    cell.viewItem = .init(type: .raw, value: { viewItem.receiver.raw })
                 }
         ))
     }

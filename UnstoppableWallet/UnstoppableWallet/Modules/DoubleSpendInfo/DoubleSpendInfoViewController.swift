@@ -73,7 +73,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                                 bind: { [weak self] cell, _ in
                                     cell.set(backgroundStyle: .lawrence, isFirst: true)
                                     cell.title = "double_spend_info.this_hash".localized
-                                    cell.viewItem = .init(type: .raw, value: self?.transactionHash ?? "")
+                                    cell.viewItem = .init(type: .raw, value: { [weak self] in self?.transactionHash ?? "" })
                                 }
                         ),
                         Row<D9Cell>(
@@ -82,7 +82,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
                                 bind: { [weak self] cell, _ in
                                     cell.set(backgroundStyle: .lawrence, isLast: true)
                                     cell.title = "double_spend_info.conflicting_hash".localized
-                                    cell.viewItem = .init(type: .raw, value: self?.conflictingTransactionHash ?? "")
+                                    cell.viewItem = .init(type: .raw, value: { [weak self] in self?.conflictingTransactionHash ?? "" })
                                 }
                         )
                     ]

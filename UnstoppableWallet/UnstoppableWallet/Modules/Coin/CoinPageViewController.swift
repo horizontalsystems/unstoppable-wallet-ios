@@ -810,7 +810,7 @@ extension CoinPageViewController {
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                 cell.title = contractInfo.title
-                                cell.viewItem = .init(type: .raw, value: contractInfo.value)
+                                cell.viewItem = .init(type: .raw, value: { contractInfo.value })
                             }
                     )
                 ]

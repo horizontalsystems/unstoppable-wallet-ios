@@ -152,9 +152,9 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
                     if let title = TransactionInfoAddressMapper.title(value: value) {
-                        cell.viewItem = .init(type: .title(text: title), value: value)
+                        cell.viewItem = .init(type: .title(text: title), value: { value })
                     } else {
-                        cell.viewItem = .init(type: .raw, value: value)
+                        cell.viewItem = .init(type: .raw, value: { value })
                     }
                 }
         )
@@ -180,7 +180,7 @@ class TransactionInfoViewController: ThemeViewController {
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = "tx_info.transaction_id".localized
-                    cell.viewItem = .init(type: .raw, value: value)
+                    cell.viewItem = .init(type: .raw, value: { value })
                     cell.set(iconButtonImage: UIImage(named: "share_1_20"))
                     cell.onTapIconButton = { [weak self] in
                         let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
@@ -312,7 +312,7 @@ class TransactionInfoViewController: ThemeViewController {
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = "tx_info.raw_transaction".localized
-                    cell.viewItem = .init(type: .image, value: "")
+                    cell.viewItem = .init(type: .image, value: { [weak self] in self?.viewModel.rawTransaction ?? "" })
                 }
         )
     }
@@ -338,7 +338,7 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func actionTitleRow(rowInfo: RowInfo, title: String, value: String?) -> RowProtocol {
+    private func actionTitleRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
         Row<B7Cell>(
                 id: "action_\(rowInfo.index)",
                 hash: "action_\(value)",
@@ -401,7 +401,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
     private func row(viewItem: TransactionInfoModule.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-        case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle)
+        case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle ?? "")
         case let .amount(coinAmount, currencyAmount, incoming): return amountRow(rowInfo: rowInfo, coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: incoming)
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
