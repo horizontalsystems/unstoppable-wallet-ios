@@ -361,7 +361,7 @@ DEPENDENCIES:
   - UnstoppableDomainsResolution
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`, branch `master`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.1`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.2`)
 
 SPEC REPOS:
   trunk:
@@ -485,7 +485,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.12.0-beta.1
+    :tag: 0.12.0-beta.2
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -583,7 +583,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.12.0-beta.1
+    :tag: 0.12.0-beta.2
 
 SPEC CHECKSUMS:
   ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
@@ -671,6 +671,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: c9a8167ef989f80e461cd8d79efeaf4a8529f917
   ZcashLightClientKit: 68892ce9fbaa36fd611ddf6299e2673ea7fd43bc
 
-PODFILE CHECKSUM: 2609de84cd16ce868ba6742f8bd407bb6e3f4b83
+PODFILE CHECKSUM: ecdd51ba558c6d4b716ef278c4e31a4fbe3d2113
 
 COCOAPODS: 1.10.2
