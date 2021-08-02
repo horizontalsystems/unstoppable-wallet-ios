@@ -123,11 +123,6 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
-
-      if target.name == 'ZcashLightClientKit'
-         config.build_settings['ZCASH_NETWORK_ENVIRONMENT'] = "TESTNET"
-      end
-
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
     end
   end

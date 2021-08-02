@@ -28,4 +28,8 @@ extension SendMemoPresenter: ISendMemoModule {
         return memo
     }
 
+    func set(hidden: Bool) {
+        view?.set(hidden: hidden)
+    }
+
 }

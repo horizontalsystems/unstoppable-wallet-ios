@@ -8,6 +8,8 @@ class SendMemoView: UIView {
     private let holderView = UIView()
     private let memoInputField = UITextField()
 
+    private var memoHidden: Bool = false
+
     init(delegate: ISendMemoViewDelegate) {
         self.delegate = delegate
 
@@ -54,7 +56,21 @@ class SendMemoView: UIView {
 extension SendMemoView: ISendMemoView {
 
     var memo: String? {
-        memoInputField.text
+        memoHidden ? nil : memoInputField.text
+    }
+
+    func set(hidden: Bool) {
+        memoHidden = hidden
+
+        holderView.snp.updateConstraints { maker in
+            maker.top.equalToSuperview().offset(hidden ? 0 : CGFloat.margin3x)
+        }
+
+        memoInputField.snp.updateConstraints { maker in
+            maker.height.equalTo(hidden ? 0 : inputFieldFont.lineHeight + CGFloat.margin3x * 2)
+        }
+
+        layoutIfNeeded()
     }
 
 }
