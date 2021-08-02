@@ -25,11 +25,11 @@ extension WalletConnectSignMessageRequestService {
 
     var message: String {
         switch request.payload {
-        case let .sign(data, raw):
+        case let .sign(data, _):
             return String(decoding: data, as: UTF8.self)
-        case let .personalSign(data, raw):
+        case let .personalSign(data, _):
             return String(decoding: data, as: UTF8.self)
-        case let .signTypeData(_, data, raw):
+        case let .signTypeData(_, data, _):
             guard let object = try? JSONSerialization.jsonObject(with: data, options: []),
             let prettyData = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) else {
                 return ""
@@ -40,7 +40,7 @@ extension WalletConnectSignMessageRequestService {
     }
 
     var domain: String? {
-        if case let .signTypeData(_, data, raw) = request.payload {
+        if case let .signTypeData(_, data, _) = request.payload {
             let typeData = try? evmKit.parseTypedData(rawJson: data)
             if case let .object(json) = typeData?.domain, let domainJson = json["name"], case let .string(domainString) = domainJson {
                 return domainString
@@ -54,11 +54,11 @@ extension WalletConnectSignMessageRequestService {
         let signedMessage: Data
 
         switch request.payload {
-        case let .sign(data, raw):
+        case let .sign(data, _):
             signedMessage = try sign(message: data)
-        case let .personalSign(data, raw):
+        case let .personalSign(data, _):
             signedMessage = try sign(message: data)
-        case let .signTypeData(_, data, raw):
+        case let .signTypeData(_, data, _):
             signedMessage = try signTypedData(message: data)
         }
 

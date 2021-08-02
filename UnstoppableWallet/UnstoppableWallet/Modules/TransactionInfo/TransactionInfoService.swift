@@ -56,7 +56,7 @@ extension TransactionInfoService {
     func fetchRates(coins: [Coin], timestamp: TimeInterval) {
         let baseCurrency = baseCurrency
 
-        var singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coins.map { coin in
+        let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coins.map { coin in
             rateManager
                     .historicalRate(coinType: coin.type, currencyCode: baseCurrency.code, timestamp: timestamp)
                     .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }

@@ -37,21 +37,21 @@ class SwapPendingAllowanceService {
     }
 
     private func sync() {
-        print("Pending allowance: \(pendingAllowance ?? -1)")
+//        print("Pending allowance: \(pendingAllowance ?? -1)")
         guard let pendingAllowance = pendingAllowance else {
             print("new state: .notAllowed")
             state = .notAllowed
             return
         }
 
-        print("allowance state: \(allowanceService.state)")
+//        print("allowance state: \(allowanceService.state)")
         guard case .ready(let allowance) = allowanceService.state else {
             print("new state: .notAllowed")
             state = .notAllowed
             return
         }
 
-        print("new state: \(pendingAllowance != allowance.value ? State.pending : State.approved)")
+//        print("new state: \(pendingAllowance != allowance.value ? State.pending : State.approved)")
         state = pendingAllowance != allowance.value ? .pending : .approved
     }
 
