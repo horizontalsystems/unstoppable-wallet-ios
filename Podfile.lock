@@ -516,7 +516,7 @@ CHECKOUT OPTIONS:
     :commit: d897cb69ac05b5a2a72c250224e035c92c9a8fd5
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 157b0a967b7a50b176daf6ec7334b3f32cc29190
+    :commit: 2056b6d4116e96dd4c57a1da32944779c775ef37
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
