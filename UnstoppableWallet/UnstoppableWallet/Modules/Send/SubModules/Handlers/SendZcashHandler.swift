@@ -19,6 +19,8 @@ class SendZcashHandler {
         self.addressModule = addressModule
         self.memoModule = memoModule
         self.feeModule = feeModule
+
+        self.memoModule.set(hidden: true)
     }
 
     private func syncValidation() {
@@ -35,6 +37,12 @@ class SendZcashHandler {
             try addressModule.validateAddress()
         } catch {
             addressError = error
+
+            if let error = error as? SendAddressPresenter.ValidationError,
+               case .emptyValue = error {
+
+                memoModule.set(hidden: true)
+            }
         }
 
         delegate?.onChange(isValid: amountError == nil && addressError == nil && feeModule.isValid, amountError: amountError, addressError: addressError)
@@ -105,7 +113,13 @@ extension SendZcashHandler: ISendAmountDelegate {
 extension SendZcashHandler: ISendAddressDelegate {
 
     func validate(address: String) throws {
-        try interactor.validate(address: address)
+        do {
+            let addressType = try interactor.validate(address: address)
+            memoModule.set(hidden: addressType == .transparent)
+        } catch {
+            memoModule.set(hidden: true)
+            throw error
+        }
     }
 
     func onUpdateAddress() {

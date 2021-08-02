@@ -51,9 +51,8 @@ class ZcashAdapter {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
-        let network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
-        self.network = network
-        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
+        network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
+        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
 
         coin = wallet.coin
         uniqueId = wallet.account.id
@@ -163,7 +162,7 @@ class ZcashAdapter {
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
         case .downloading(let p):
-            newState = .syncing(progress: Int(p.progress * 100), lastBlockDate: blockDate)
+            newState = .syncing(progress: Int(p.progress * 50), lastBlockDate: blockDate)
         case .enhancing(let p):
             newState = .syncing(progress: p.progress, lastBlockDate: blockDate)
         case .unprepared:
@@ -171,7 +170,7 @@ class ZcashAdapter {
         case .validating:
             newState = .syncing(progress: 0, lastBlockDate: blockDate)
         case .scanning(let scanProgress):
-            newState = .syncing(progress: Int(scanProgress.progress * 100), lastBlockDate: blockDate)
+            newState = .syncing(progress: Int(50 + scanProgress.progress * 50), lastBlockDate: blockDate)
         case .fetching:
             newState = .syncing(progress: 0, lastBlockDate: nil)
         case .error:
@@ -500,16 +499,21 @@ extension ZcashAdapter: IDepositAdapter {
 
 extension ZcashAdapter: ISendZcashAdapter {
 
+    enum AddressType {
+        case shielded
+        case transparent
+    }
+
     var availableBalance: Decimal {
         max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate - fee)
     }
 
-    func validate(address: String) throws {
+    func validate(address: String) throws -> AddressType {
         
         guard address != receiveAddress else {
             throw AppError.addressInvalid
         }
-        
+
         do {
             let derivationTool = DerivationTool(networkType: self.network.networkType)
             
@@ -520,6 +524,7 @@ extension ZcashAdapter: ISendZcashAdapter {
                 throw AppError.addressInvalid
             }
 
+            return validZAddress ? .shielded : .transparent
         } catch {
             //FIXME: Should this be handled another way? logged? how?
             throw AppError.addressInvalid
