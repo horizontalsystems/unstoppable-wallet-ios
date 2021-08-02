@@ -96,6 +96,19 @@ struct TransactionSource: Hashable {
         case binanceSmartChain
         case bep2(symbol: String)
 
+        public var title: String {
+            switch self {
+            case .bitcoin: return "Bitcoin"
+            case .litecoin: return "Litecoin"
+            case .bitcoinCash: return "Bitcoin Cash"
+            case .dash: return "Dash"
+            case .ethereum: return "Ethereum"
+            case .zcash: return "ZCash"
+            case .binanceSmartChain: return "BSC"
+            case .bep2: return "Binance Chain"
+            }
+        }
+
         func hash(into hasher: inout Hasher) {
             switch self {
             case .bitcoin: hasher.combine(0)

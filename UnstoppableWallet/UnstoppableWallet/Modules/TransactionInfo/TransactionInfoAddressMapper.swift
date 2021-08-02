@@ -12,8 +12,8 @@ class TransactionInfoAddressMapper {
         "0xcadc8cb26c8c7cb46500e61171b5f27e9bd7889d": "Pancake Bunny: Bunny Pool",
     ]
 
-    static func map(_ value: String) -> String {
-        title(value: value) ?? value
+    static func map(_ address: String) -> String {
+        title(value: address) ?? String(address.prefix(5)) + "..." + String(address.suffix(5))
     }
 
     static func title(value: String) -> String? {

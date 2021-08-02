@@ -14,6 +14,10 @@ struct CoinValue {
         return maxInDecimal == value
     }
 
+    var abs: CoinValue {
+        CoinValue(coin: coin, value: value.magnitude)
+    }
+
     var formattedString: String {
         ValueFormatter.instance.format(coinValue: self) ?? ""
     }

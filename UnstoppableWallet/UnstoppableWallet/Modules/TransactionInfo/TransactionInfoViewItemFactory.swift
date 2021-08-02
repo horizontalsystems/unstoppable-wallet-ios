@@ -11,7 +11,7 @@ class TransactionInfoViewItemFactory {
 
         return [
             .actionTitle(title: title, subTitle: coinValue.coin.title),
-            .amount(coinAmount: coinValue.formattedString, currencyAmount: currencyValue?.formattedString, incoming: incoming)
+            .amount(coinAmount: coinValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: incoming)
         ]
     }
 
@@ -115,7 +115,9 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(evmFeeItem(coinValue: swap.fee, rate: rates[swap.fee.coin], status: status))
 
             if let valueOut = swap.valueOut {
-                middleSectionItems.append(.price(price: priceString(coinValue1: swap.valueIn, coinValue2: valueOut)))
+                if case .failed = status {} else {
+                    middleSectionItems.append(.price(price: priceString(coinValue1: swap.valueIn, coinValue2: valueOut)))
+                }
             }
             middleSectionItems.append(.service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress)))
             middleSectionItems.append(.id(value: swap.transactionHash))
@@ -149,7 +151,7 @@ class TransactionInfoViewItemFactory {
             }
 
             let isMaxValue = approve.value.isMaxValue
-            let coinAmount = isMaxValue ? "transactions.value.unlimited".localized : currencyValue?.formattedString ?? ""
+            let coinAmount = isMaxValue ? "transactions.value.unlimited".localized(approve.value.coin.code) : currencyValue?.formattedString ?? ""
             let currencyAmount = isMaxValue ? "∞" : approve.value.formattedString
 
             return [
@@ -176,14 +178,14 @@ class TransactionInfoViewItemFactory {
                     let currencyValue = rates[contractCall.value.coin].flatMap {
                         CurrencyValue(currency: $0.currency, value: $0.value * transactionValue.value)
                     }
-                    youPaySection.append(.amount(coinAmount: transactionValue.formattedString, currencyAmount: currencyValue?.formattedString, incoming: false))
+                    youPaySection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
                 }
 
                 for event in contractCall.outgoingEip20Events {
                     let currencyValue = rates[event.value.coin].flatMap {
                         CurrencyValue(currency: $0.currency, value: $0.value * event.value.value)
                     }
-                    youPaySection.append(.amount(coinAmount: event.value.formattedString, currencyAmount: currencyValue?.formattedString, incoming: false))
+                    youPaySection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
                 }
 
                 sections.append(youPaySection)
@@ -203,14 +205,14 @@ class TransactionInfoViewItemFactory {
                     let currencyValue = rates[ethCoin].flatMap {
                         CurrencyValue(currency: $0.currency, value: $0.value * ethValue)
                     }
-                    youGetSection.append(.amount(coinAmount: CoinValue(coin: ethCoin, value: ethValue).formattedString, currencyAmount: currencyValue?.formattedString, incoming: true))
+                    youGetSection.append(.amount(coinAmount: CoinValue(coin: ethCoin, value: ethValue).abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
                 }
 
                 for event in contractCall.incomingEip20Events {
                     let currencyValue = rates[event.value.coin].flatMap {
                         CurrencyValue(currency: $0.currency, value: $0.value * event.value.value)
                     }
-                    youGetSection.append(.amount(coinAmount: event.value.formattedString, currencyAmount: currencyValue?.formattedString, incoming: true))
+                    youGetSection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
                 }
 
                 sections.append(youGetSection)

@@ -561,7 +561,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "unlimited %@";
 
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";

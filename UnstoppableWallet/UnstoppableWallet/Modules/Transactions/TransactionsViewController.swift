@@ -151,24 +151,22 @@ class TransactionsViewController: ThemeViewController {
                 cell.valueRightIconTinColor = .themeRemus
             }
 
-        case .approve(let spender, let amount, let isMaxAmount):
+        case .approve(let spender, let amount, let isMaxAmount, let coinCode):
             image = UIImage(named: "check_2_20")
             imageColor = .themeLeah
             topText = "transactions.approve".localized
             bottomText = "transactions.from".localized(spender)
-
-            if let currencyValueString = item.mainAmountCurrencyString {
-                if isMaxAmount {
-                    valueTopText = "∞"
-                } else {
-                    valueTopText = currencyValueString
-                }
-                valueTopTextColor = .themeLeah
-            }
+            valueTopTextColor = .themeLeah
 
             if isMaxAmount {
-                valueBottomText = "transactions.value.unlimited".localized
+                valueTopText = "∞"
+                valueBottomText = "transactions.value.unlimited".localized(coinCode)
             } else {
+                if let currencyValueString = item.mainAmountCurrencyString {
+                    valueTopText = currencyValueString
+                } else {
+                    valueTopText = ""
+                }
                 valueBottomText = amount
             }
 
@@ -184,10 +182,10 @@ class TransactionsViewController: ThemeViewController {
             valueBottomText = amountOut
             valueBottomTextColor = foreignRecipient ? .themeGray : .themeRemus
 
-        case .contractCall(let contractAddress, let method):
+        case .contractCall(let contractAddress, let blockchain, let method):
             image = UIImage(named: "unordered_20")
             imageColor = .themeLeah
-            topText = method?.uppercased() ?? "transactions.contract_call".localized
+            topText = method?.uppercased() ?? "\(blockchain) \("transactions.contract_call".localized)"
             bottomText = contractAddress
 
         case .contractCreation:
