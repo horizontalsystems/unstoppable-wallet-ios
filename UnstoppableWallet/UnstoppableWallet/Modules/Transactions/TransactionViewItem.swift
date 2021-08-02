@@ -58,9 +58,9 @@ extension TransactionViewItem {
     enum TransactionType {
         case incoming(from: String?, amount: String, lockState: TransactionLockState?, conflictingTxHash: String?)
         case outgoing(to: String?, amount: String, lockState: TransactionLockState?, conflictingTxHash: String?, sentToSelf: Bool)
-        case approve(spender: String, amount: String, isMaxAmount: Bool)
+        case approve(spender: String, amount: String, isMaxAmount: Bool, coinCode: String)
         case swap(exchangeAddress: String, amountIn: String, amountOut: String?, foreignRecipient: Bool)
-        case contractCall(contractAddress: String, method: String?)
+        case contractCall(contractAddress: String, blockchain: String, method: String?)
         case contractCreation
         
         func compareContent(_ type: TransactionType) -> Bool {
