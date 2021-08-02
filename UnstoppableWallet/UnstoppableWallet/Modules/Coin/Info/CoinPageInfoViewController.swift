@@ -78,7 +78,7 @@ extension CoinPageInfoViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        var sections: [SectionProtocol] = [
+        [
             Section(
                     id: "header",
                     headerState: .margin(height: .margin12),
@@ -96,8 +96,6 @@ extension CoinPageInfoViewController: SectionsDataSource {
                     }
             )
         ]
-
-        return sections
     }
 
 }

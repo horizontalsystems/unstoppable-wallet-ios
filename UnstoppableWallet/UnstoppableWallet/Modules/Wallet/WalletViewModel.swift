@@ -25,6 +25,8 @@ class WalletViewModel {
     private var expandedWallet: Wallet?
     private var balanceHidden: Bool
 
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
+
     init(service: WalletService, rateService: WalletRateService, factory: WalletViewItemFactory) {
         self.service = service
         self.rateService = rateService
@@ -59,17 +61,23 @@ class WalletViewModel {
     }
 
     private func syncUpdated(item: WalletService.Item) {
-        guard let index = viewItems.firstIndex(where: { $0.wallet == item.wallet }) else {
-            return
-        }
+        queue.async {
+            guard let index = self.viewItems.firstIndex(where: { $0.wallet == item.wallet }) else {
+                return
+            }
 
-        viewItems[index] = viewItem(item: item)
-        viewItemsRelay.accept(viewItems)
+            self.viewItems[index] = self.viewItem(item: item)
+            self.viewItemsRelay.accept(self.viewItems)
+        }
     }
 
     private func sync(items: [WalletService.Item]) {
-        viewItems = items.map { viewItem(item: $0) }
-        viewItemsRelay.accept(viewItems)
+        queue.async {
+            self.viewItems = items.map {
+                self.viewItem(item: $0)
+            }
+            self.viewItemsRelay.accept(self.viewItems)
+        }
 
         displayModeRelay.accept(items.isEmpty ? .empty : .list)
     }
@@ -148,20 +156,22 @@ extension WalletViewModel {
     }
 
     func onTap(wallet: Wallet) {
-        if expandedWallet == wallet {
-            expandedWallet = nil
-            syncViewItem(wallet: wallet)
-        } else {
-            let oldExpandedWallet = expandedWallet
-            expandedWallet = wallet
+        queue.async {
+            if self.expandedWallet == wallet {
+                self.expandedWallet = nil
+                self.syncViewItem(wallet: wallet)
+            } else {
+                let oldExpandedWallet = self.expandedWallet
+                self.expandedWallet = wallet
 
-            if let oldExpandedWallet = oldExpandedWallet {
-                syncViewItem(wallet: oldExpandedWallet)
+                if let oldExpandedWallet = oldExpandedWallet {
+                    self.syncViewItem(wallet: oldExpandedWallet)
+                }
+                self.syncViewItem(wallet: wallet)
             }
-            syncViewItem(wallet: wallet)
-        }
 
-        viewItemsRelay.accept(viewItems)
+            self.viewItemsRelay.accept(self.viewItems)
+        }
     }
 
     func onTapReceive(wallet: Wallet) {

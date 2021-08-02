@@ -33,7 +33,7 @@ class TransactionInfoViewItemFactory {
             parts.append(formattedCoinValue)
         }
 
-        if let currencyValue = rate.flatMap { CurrencyValue(currency: $0.currency, value: $0.value * coinValue.value) },
+        if let currencyValue = rate.flatMap({ CurrencyValue(currency: $0.currency, value: $0.value * coinValue.value) }),
            let formattedCurrencyValue = ValueFormatter.instance.format(currencyValue: currencyValue) {
             parts.append(formattedCurrencyValue)
         }

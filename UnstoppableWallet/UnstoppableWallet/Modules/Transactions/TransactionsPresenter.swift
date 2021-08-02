@@ -24,7 +24,7 @@ class TransactionsPresenter {
     }
 
     var allTransactionWallets: [TransactionWallet] {
-        var transactionWallets = wallets.map { transactionWallet(wallet: $0) }
+        let transactionWallets = wallets.map { transactionWallet(wallet: $0) }
         var mergedWallets = [TransactionWallet]()
 
         for wallet in transactionWallets {
@@ -61,9 +61,9 @@ class TransactionsPresenter {
             return TransactionWallet(coin: coin, source: TransactionSource(blockchain: .ethereum, account: wallet.account, coinSettings: coinSettings))
         case .binanceSmartChain:
             return TransactionWallet(coin: coin, source: TransactionSource(blockchain: .binanceSmartChain, account: wallet.account, coinSettings: coinSettings))
-        case .erc20(let address):
+        case .erc20:
             return TransactionWallet(coin: coin, source: TransactionSource(blockchain: .ethereum, account: wallet.account, coinSettings: coinSettings))
-        case .bep20(let address):
+        case .bep20:
             return TransactionWallet(coin: coin, source: TransactionSource(blockchain: .binanceSmartChain, account: wallet.account, coinSettings: coinSettings))
         case .unsupported:
             fatalError("Unsupported coin may not have transactions to show")
