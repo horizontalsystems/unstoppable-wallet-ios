@@ -561,7 +561,7 @@
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "unlimited %@";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
