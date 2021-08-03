@@ -33,6 +33,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         super.viewDidLoad()
 
         title = "restore.enter_key".localized
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapProceedButton))
 
