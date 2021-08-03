@@ -70,14 +70,14 @@ class AmountInfoView: UIView {
 
     func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionViewItem.TransactionType = .contractCreation, lockState: TransactionLockState? = nil) {
         let primaryColor: UIColor = .themeGreenD
-//        switch type {
-//        case .incoming:
-//            primaryColor = .themeGreenD
-//        case .outgoing:
-//            primaryColor = .themeYellowD
-//        case .approve:
-//            primaryColor = .themeLeah
-//        }
+        switch type {
+        case .incoming:
+            primaryColor = .themeGreenD
+        case .outgoing:
+            primaryColor = .themeYellowD
+        case .approve:
+            primaryColor = .themeLeah
+        }
 
         primaryAmountLabel.textColor = primaryColor
 
