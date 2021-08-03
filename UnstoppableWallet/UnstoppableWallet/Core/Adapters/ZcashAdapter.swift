@@ -20,7 +20,7 @@ class ZcashAdapter {
     private let address: UnifiedAddress
     private let uniqueId: String
     private let keys: [String]
-    private let loggingProxy = ZcashLogger(logLevel: .debug)
+    private let loggingProxy = ZcashLogger(logLevel: .error)
     private(set) var network: ZcashNetwork
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
