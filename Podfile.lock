@@ -51,7 +51,7 @@ PODS:
     - Secp256k1Kit.swift (~> 1.0)
   - BlsKit.swift (1.0.1)
   - BlueSocket (1.0.52)
-  - CGRPCZlib (1.0.0-alpha.19)
+  - CGRPCZlib (1.0.0)
   - Chart.swift (1.2):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
@@ -128,14 +128,15 @@ PODS:
   - GRDB.swift (5.8.0):
     - GRDB.swift/standard (= 5.8.0)
   - GRDB.swift/standard (5.8.0)
-  - gRPC-Swift (1.0.0-alpha.19):
-    - CGRPCZlib (= 1.0.0-alpha.19)
-    - Logging (< 2, >= 1.2.0)
-    - SwiftNIO (< 3, >= 2.19.0)
-    - SwiftNIOHTTP2 (< 2, >= 1.12.2)
-    - SwiftNIOSSL (< 3, >= 2.8.0)
-    - SwiftNIOTransportServices (< 2, >= 1.6.0)
-    - SwiftProtobuf (< 2, >= 1.9.0)
+  - gRPC-Swift (1.0.0):
+    - CGRPCZlib (= 1.0.0)
+    - Logging (< 2.0.0, >= 1.4.0)
+    - SwiftNIO (< 3.0.0, >= 2.22.0)
+    - SwiftNIOExtras (< 2.0.0, >= 1.4.0)
+    - SwiftNIOHTTP2 (< 2.0.0, >= 1.16.1)
+    - SwiftNIOSSL (< 3.0.0, >= 2.8.0)
+    - SwiftNIOTransportServices (< 2.0.0, >= 1.6.0)
+    - SwiftProtobuf (< 2.0.0, >= 1.9.0)
   - HdWalletKit.swift (1.5.1):
     - OpenSslKit.swift (~> 1.0)
     - Secp256k1Kit.swift (~> 1.0)
@@ -246,6 +247,8 @@ PODS:
     - SwiftNIOConcurrencyHelpers (= 2.28.0)
   - SwiftNIOConcurrencyHelpers (2.28.0):
     - CNIOAtomics (= 2.28.0)
+  - SwiftNIOExtras (1.8.0):
+    - SwiftNIO (< 3, >= 2.9.0)
   - SwiftNIOFoundationCompat (2.28.0):
     - SwiftNIO (= 2.28.0)
   - SwiftNIOHPACK (1.17.0):
@@ -308,7 +311,7 @@ PODS:
     - ObjectMapper (~> 4.0)
     - RxSwift (~> 5.0)
     - RxSwiftExt (~> 5)
-  - ZcashLightClientKit (0.12.0-beta.1):
+  - ZcashLightClientKit (0.12.0-beta.2):
     - gRPC-Swift (= 1.0.0)
     - SQLite.swift (~> 0.12.2)
 
@@ -405,6 +408,7 @@ SPEC REPOS:
     - SQLite.swift
     - SwiftNIO
     - SwiftNIOConcurrencyHelpers
+    - SwiftNIOExtras
     - SwiftNIOFoundationCompat
     - SwiftNIOHPACK
     - SwiftNIOHTTP1
@@ -417,7 +421,6 @@ SPEC REPOS:
     - SwiftyJSON
     - UnstoppableDomainsResolution
     - X11Kit.swift
-    - ZcashLightClientKit
 
 EXTERNAL SOURCES:
   ActionSheet.swift:
@@ -597,7 +600,7 @@ SPEC CHECKSUMS:
   BitcoinKit.swift: 1a16b53a0949bc85f360b307415b0f3bc2da6408
   BlsKit.swift: e73fb332ed6a577b0f34a0da30aa5ec6c09bee55
   BlueSocket: 1acd943acb07b55905291d608649fcfbf8cbd57d
-  CGRPCZlib: befd9b92013c647f18aa9b7d9e9231d52e1ced1b
+  CGRPCZlib: b0c9d704a12fa667f1824ffff20688f191945989
   Chart.swift: 523ce3685ad997cbb902c5b61a3dbd5e9d33c993
   CNIOAtomics: 7c3a151d54ae24b0160283ac93e3b06380ce6973
   CNIOBoringSSL: 2433ef7bb7f34e0903f576771c3004b42a8c30df
@@ -621,7 +624,7 @@ SPEC CHECKSUMS:
   EthereumKit.swift: 3c791f8a7883751a663e23a3c37c060d5c817d3c
   FeeRateKit.swift: 12713618d623d057382b964d2d16d220b1db8df5
   GRDB.swift: 9b9beec114435e1d852ad68c136cff4c71134627
-  gRPC-Swift: 75a7a8d7cd08177165ef971159afb84e5130cfc9
+  gRPC-Swift: 77154009a019e97f8c4bd8f2bb75fe9726801157
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: e59834cd20385e5067cd55a813667ca8fd0778b9
   HsToolKit.swift: 88f5c25dcf2b6fde2370f0125a8864782fbb3d90
@@ -652,6 +655,7 @@ SPEC CHECKSUMS:
   StorageKit.swift: 1a041c9f9a80c3388373e4ba105aadd09339ff7a
   SwiftNIO: 3e69d2a1be36921d5676ad0aa148fe7c537a89fd
   SwiftNIOConcurrencyHelpers: 68e0316a976c0d109373017a909b741cc82963d5
+  SwiftNIOExtras: aa561b71020cd6844f722cf4513fb176c577414d
   SwiftNIOFoundationCompat: 54f7dc46a55b2ae635d25e05e0ce1ab3b96c5a5e
   SwiftNIOHPACK: 7b780cf61fa41025042ca34a3918b651c3c9f655
   SwiftNIOHTTP1: 604d76673dfaece86a7f23075c620bdca7f30362
@@ -669,8 +673,8 @@ SPEC CHECKSUMS:
   WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: c9a8167ef989f80e461cd8d79efeaf4a8529f917
-  ZcashLightClientKit: 68892ce9fbaa36fd611ddf6299e2673ea7fd43bc
+  ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: ecdd51ba558c6d4b716ef278c4e31a4fbe3d2113
+PODFILE CHECKSUM: ea7b629535532cca82219650f7f0c627d34140b0
 
 COCOAPODS: 1.10.2
