@@ -138,6 +138,10 @@
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
 "lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
 
+//Account switcher
+
+"switch_account.title" = "Switch Wallet";
+"switch_account.subtitle" = "Select wallet for quick switch";
 //Release notes
 
 "release_notes.title" = "What's New";
