@@ -31,8 +31,8 @@ class SwitchAccountViewController: ThemeActionSheetController {
         }
 
         titleView.bind(
-                title: "Switch Wallet",
-                subtitle: "Select wallet for quick switch",
+                title: "switch_account.title".localized,
+                subtitle: "switch_account.subtitle".localized,
                 image: UIImage(named: "switch_wallet_24"),
                 tintColor: .themeGray
         )
