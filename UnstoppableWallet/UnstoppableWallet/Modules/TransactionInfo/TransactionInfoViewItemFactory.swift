@@ -28,7 +28,7 @@ class TransactionInfoViewItemFactory {
 
     private func feeString(coinValue: CoinValue, rate: CurrencyValue?) -> String {
         var parts = [String]()
-        
+
         if let formattedCoinValue = ValueFormatter.instance.format(coinValue: coinValue) {
             parts.append(formattedCoinValue)
         }
@@ -40,17 +40,17 @@ class TransactionInfoViewItemFactory {
 
         return parts.joined(separator: " | ")
     }
-    
+
     private func priceString(coinValue1: CoinValue, coinValue2: CoinValue) -> String {
         let priceDecimal = coinValue1.value.magnitude / coinValue2.value.magnitude
         let price = ValueFormatter.instance.format(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: nil) ?? ""
 
         return "\(coinValue2.coin.code) = \(price) \(coinValue1.coin.code)"
     }
-    
+
     private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {
         let formattedValue = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) ?? ""
-        
+
         return "balance.rate_per_coin".localized(formattedValue, coinCode)
     }
 
@@ -145,7 +145,7 @@ class TransactionInfoViewItemFactory {
 
             middleSectionItems.append(.to(value: approve.spender))
             middleSectionItems.append(.id(value: approve.transactionHash))
-            
+
             let currencyValue = coinRate.flatMap {
                 CurrencyValue(currency: $0.currency, value: $0.value * approve.value.value)
             }
@@ -229,13 +229,13 @@ class TransactionInfoViewItemFactory {
 
         case let btcIncoming as BitcoinIncomingTransactionRecord:
             let coinRate = rates[btcIncoming.value.coin]
-            
+
             middleSectionItems.append(.status(status: status))
-            
+
             if let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: btcIncoming.value.coin.code)))
             }
-            
+
             btcIncoming.from.flatMap { middleSectionItems.append(.from(value: $0)) }
             middleSectionItems.append(.id(value: btcIncoming.transactionHash))
             if let conflictingHash = btcIncoming.conflictingHash {
@@ -251,20 +251,20 @@ class TransactionInfoViewItemFactory {
                 actionSectionItems(title: "transactions.receive".localized, coinValue: btcIncoming.value, rate: coinRate, incoming: true),
                 middleSectionItems
             ]
-            
+
         case let btcOutgoing as BitcoinOutgoingTransactionRecord:
             let coinRate = rates[btcOutgoing.value.coin]
-            
+
             middleSectionItems.append(.status(status: status))
 
             if let fee = btcOutgoing.fee {
                 middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(coinValue: fee, rate: rates[fee.coin])))
             }
-            
+
             if let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: btcOutgoing.value.coin.code)))
             }
-            
+
             btcOutgoing.to.flatMap { middleSectionItems.append(.to(value: $0)) }
             middleSectionItems.append(.id(value: btcOutgoing.transactionHash))
             if let conflictingHash = btcOutgoing.conflictingHash {
