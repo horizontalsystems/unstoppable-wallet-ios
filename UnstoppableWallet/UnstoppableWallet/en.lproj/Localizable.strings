@@ -140,6 +140,10 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "lost_accounts.warning_title" = "iOS Keychain Error";
 "lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 
+//Account switcher
+
+"switch_account.title" = "Switch Wallet";
+"switch_account.subtitle" = "Select wallet for quick switch";
 //Release notes
 
 "release_notes.title" = "What's New";
