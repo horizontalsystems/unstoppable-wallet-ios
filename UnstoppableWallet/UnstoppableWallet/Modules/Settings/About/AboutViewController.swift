@@ -57,9 +57,10 @@ class AboutViewController: ThemeViewController {
         termsCell.set(backgroundStyle: .lawrence, isLast: true)
         termsCell.titleImage = UIImage(named: "unordered_20")
         termsCell.title = "terms.title".localized
+        termsCell.valueImageTintColor = .themeLucian
 
         subscribe(disposeBag, viewModel.termsAlertDriver) { [weak self] alert in
-            self?.termsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+            self?.termsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
         }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
             self?.urlManager.open(url: url, from: self)

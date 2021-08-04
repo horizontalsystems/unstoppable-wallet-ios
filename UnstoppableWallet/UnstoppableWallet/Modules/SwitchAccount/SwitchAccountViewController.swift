@@ -72,7 +72,8 @@ extension SwitchAccountViewController: SectionsDataSource {
                                 height: .heightDoubleLineCell,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-                                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.tinted(with: .themeJacob) : UIImage(named: "circle_radiooff_24")
+                                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "circle_radiooff_24")
+                                    cell.titleImageTintColor = viewItem.selected ? .themeJacob : nil
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
                                 },
