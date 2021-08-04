@@ -138,6 +138,10 @@
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
 
+//Account switcher
+
+"switch_account.title" = "Switch Wallet";
+"switch_account.subtitle" = "Select wallet for quick switch";
 //Release notes
 
 "release_notes.title" = "What's New";
