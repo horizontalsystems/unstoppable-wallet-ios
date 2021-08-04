@@ -52,12 +52,14 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
-        createCell.titleImage = UIImage(named: "plus_20")?.tinted(with: .themeJacob)
+        createCell.titleImage = UIImage(named: "plus_20")?.withRenderingMode(.alwaysTemplate)
+        createCell.titleImageTintColor = .themeJacob
         createCell.title = "onboarding.balance.create".localized
         createCell.titleColor = .themeJacob
 
         restoreCell.set(backgroundStyle: .lawrence, isLast: true)
-        restoreCell.titleImage = UIImage(named: "download_20")?.tinted(with: .themeJacob)
+        restoreCell.titleImage = UIImage(named: "download_20")?.withRenderingMode(.alwaysTemplate)
+        restoreCell.titleImageTintColor = .themeJacob
         restoreCell.title = "onboarding.balance.restore".localized
         restoreCell.titleColor = .themeJacob
 
@@ -120,10 +122,12 @@ extension ManageAccountsViewController: SectionsDataSource {
                 autoDeselect: true,
                 bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.tinted(with: .themeJacob) : UIImage(named: "circle_radiooff_24")
+                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "circle_radiooff_24")
+                    cell.titleImageTintColor = viewItem.selected ? .themeJacob : nil
                     cell.title = viewItem.title
                     cell.subtitle = viewItem.subtitle
-                    cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.tinted(with: .themeLucian) : nil
+                    cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+                    cell.valueImageTintColor = viewItem.alert ? .themeLucian : nil
                     cell.valueButtonImage = UIImage(named: "more_2_20")
                     cell.onTapValue = { [weak self] in
                         self?.onTapEdit(accountId: viewItem.accountId)

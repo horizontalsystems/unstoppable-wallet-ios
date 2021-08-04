@@ -155,7 +155,8 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.tinted(with: .themeJacob) : nil
+                                    cell.valueImageTintColor = .themeJacob
+                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
                                 },
                                 action: { [weak self] _ in
                                     self?.onTap(index: index)

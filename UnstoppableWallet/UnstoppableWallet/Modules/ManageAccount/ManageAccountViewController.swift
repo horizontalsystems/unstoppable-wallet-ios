@@ -62,10 +62,12 @@ class ManageAccountViewController: ThemeViewController {
         backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
         backupRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
         backupRecoveryPhraseCell.title = "manage_account.backup_recovery_phrase".localized
-        backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.tinted(with: .themeLucian)
+        backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+        backupRecoveryPhraseCell.valueImageTintColor = .themeLucian
 
         unlinkCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        unlinkCell.titleImage = UIImage(named: "trash_20")?.tinted(with: .themeLucian)
+        unlinkCell.titleImage = UIImage(named: "trash_20")?.withRenderingMode(.alwaysTemplate)
+        unlinkCell.titleImageTintColor = .themeLucian
         unlinkCell.title = "manage_account.unlink".localized
         unlinkCell.titleColor = .themeLucian
 
