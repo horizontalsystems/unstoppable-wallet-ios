@@ -52,7 +52,7 @@ class ZcashAdapter {
             throw AdapterError.unsupportedAccount
         }
         network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
-        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "lightwalletd.electriccoin.co"
+        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
         coin = wallet.coin
         uniqueId = wallet.account.id
