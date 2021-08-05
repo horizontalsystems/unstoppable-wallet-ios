@@ -31,8 +31,8 @@ class ZcashAdapter {
 
     private(set) var balanceState: AdapterState {
         didSet {
-            balanceStateSubject.onNext(balanceState)
             transactionState = balanceState
+            balanceStateSubject.onNext(balanceState)
         }
     }
     private(set) var transactionState: AdapterState
@@ -199,6 +199,8 @@ class ZcashAdapter {
             lastBlockHeight = targetHeight
             lastBlockUpdatedSubject.onNext(())
         }
+
+        balanceSubject.onNext(_balanceData)
     }
 
     private func syncPending() {
