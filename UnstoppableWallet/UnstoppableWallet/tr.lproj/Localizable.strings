@@ -894,6 +894,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut ETH bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "İşlem gerçekleştirilemiyor: %@";
 "wallet_connect.request_title" = "İstek";
 "wallet_connect.sign.request_title" = "Sign Request";
