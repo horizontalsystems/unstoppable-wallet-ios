@@ -309,8 +309,8 @@
 "market.sync_error" = "Erreur de synchronisation";
 
 "market.top.section.header.see_all" = "Tout Afficher";
-"market.top.section.header.top_gainers" = "Meilleurs rendements";
-"market.top.section.header.top_losers" = "Pires rendements";
+"market.top.section.header.top_gainers" = "Les grands gagnants";
+"market.top.section.header.top_losers" = "Les gros perdants";
 "market.top.section.header.top_volume" = "Classement par volume";
 "market.top.section.header.news" = "Infos";
 "market.top.volume.title" = "Vol";
@@ -893,6 +893,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.button_disconnect" = "Déconnecter";
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
 "wallet_connect.sign.request_title" = "Signer la demande";
