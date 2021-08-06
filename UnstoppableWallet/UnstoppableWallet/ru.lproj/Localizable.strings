@@ -16,14 +16,14 @@
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
-"button.sign" = "Sign";
+"button.sign" = "Подписать";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
 "alert.wrong_amount" = "Неверная Сумма";
 "alert.no_fee" = "Неверная Комиссия";
 "alert.unknown_error" = "Неизвестная Ошибка";
-"alert.success_action" = "Done";
+"alert.success_action" = "Готово!";
 
 "action.loading" = "загрузка...";
 "placeholder.search" = "Поиск";
@@ -495,18 +495,18 @@
 "coin_page.major_holders.chart.description" = "in top 10 wallets";
 "coin_page.major_holders.top_wallets" = "Top Wallets";
 "coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
-"coin_page.major_holders.sync_error" = "Sync Error";
+"coin_page.major_holders.sync_error" = "Ошибка Синхронизации";
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.sync_error" = "Sync Error";
+"coin_page.tvl_rank.sync_error" = "Ошибка Синхронизации";
 "coin_page.tvl_rank.filters" = "Filters";
-"coin_page.tvl_rank.filters.all" = "All";
+"coin_page.tvl_rank.filters.all" = "Все";
 "coin_page.tvl_rank.sort_by" = "Sort By";
 "coin_page.tvl_rank.sort_by.highest_tvl" = "Highest TVL";
 "coin_page.tvl_rank.sort_by.lowest_tvl" = "Lowest TVL";
 
 "coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
+"coin_page.security_parameters.privacy" = "Приватность";
 "coin_page.security_parameters.issuance" = "Issuance";
 "coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
 "coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
@@ -516,8 +516,8 @@
 "coin_page.security_parameters.level.high" = "High";
 "coin_page.security_parameters.issuance.decentralized" = "Decentralized";
 "coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
+"coin_page.security_parameters.resistance.yes" = "Да";
+"coin_page.security_parameters.resistance.no" = "Нет";
 
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
@@ -529,12 +529,12 @@
 "coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can not be censored from transacting.";
 "coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
 
-"coin_page.info" = "Info";
+"coin_page.info" = "Информация";
 
-"coin_page.audits" = "Audits";
+"coin_page.audits" = "Аудиты";
 "coin_page.audits.issues" = "Issues";
 "coin_page.audits.no_reports" = "No audit reports";
-"coin_page.audits.sync_error" = "Sync Error";
+"coin_page.audits.sync_error" = "Ошибка Синхронизации";
 
 // Transactions
 
@@ -547,25 +547,25 @@
 "transactions.completed" = "Completed";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.receive" = "Получить";
+"transactions.send" = "Отправить";
+"transactions.approve" = "Подтвердить";
+"transactions.swap" = "Своп";
 "transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.contract_creation" = "Создание контракта";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "Кому: %@";
+"transactions.from" = "От %@";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "неограниченное количество %@";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
+"tx_info.title" = "Детали транзакции";
+"tx_info.date" = "Дата";
 "tx_info.title_approval" = "Подтверждение Обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
@@ -576,7 +576,7 @@
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.fee" = "Комиссия";
-"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.fee.estimated" = "Комиссия (прим.)";
 "tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
 "tx_info.double_spent_note" = "Риск Двойной Траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
@@ -584,13 +584,13 @@
 "tx_info.recipient_hash" = "Получатель";
 "tx_info.raw_transaction" = "Неподтвержденная Транзакция";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "Служба";
+"tx_info.view_on" = "Посмотреть на %@";
+"tx_info.you_pay" = "Вы платите";
+"tx_info.you_get" = "Вы получите";
+"tx_info.you_paid" = "Вы заплатили";
+"tx_info.you_got" = "Вы получили";
+"tx_info.price" = "Цена";
 
 // Settings
 
@@ -598,7 +598,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
-"settings.experimental_features" = "Experimental";
+"settings.experimental_features" = "Экспериментальные функции";
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -820,7 +820,7 @@
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только латинские буквы и цифры для кодовой фразы";
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
-"create_wallet.success" = "Created";
+"create_wallet.success" = "Создан";
 
 // Select Coins
 
@@ -863,9 +863,9 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_type" = "Coin Type";
+"add_token.coin_type" = "Тип коина";
 "add_token.coin_name" = "Название Токена";
-"add_token.coin_code" = "Coin Code";
+"add_token.coin_code" = "Код коина";
 "add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
