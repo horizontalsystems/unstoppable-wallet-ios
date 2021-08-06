@@ -517,21 +517,21 @@
 "coin_page.security_parameters.resistance.yes" = "Si";
 "coin_page.security_parameters.resistance.no" = "No";
 
-"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
-"coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
-"coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The amount of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The amount of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can not be confiscated when kept in non-custodial wallet.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "The tokens can be confiscated or tampered with by an issuing entity.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can not be censored from transacting.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
+"coin_page.security_parameters.privacy.description.low" = "Las transacciones con este token son completamente públicas, permitiendo que servicios de terceros vinculen diferentes transacciones a la misma entidad, ver montos de transacciones pasadas y saldos de usuarios.";
+"coin_page.security_parameters.privacy.description.medium" = "Las transacciones con este token son semianónimas. Un servicio de terceros puede ver las cantidades transaccionadas y parcialmente conectar las diferentes transacciones con la misma entidad.";
+"coin_page.security_parameters.privacy.description.high" = "Las transacciones con este token son anónimas por defecto o proporcionan dichas capacidades. Ninguna entidad es capaz de vincular diferentes transacciones con el mismo individuo o ver las transacciones realizadas previamente.";
+"coin_page.security_parameters.issuance.description.decentralized" = "La cantidad de fichas en circulación controladas por un algoritmo y trabaja de manera determinista fuera de la influencia centralizada.";
+"coin_page.security_parameters.issuance.description.centralized" = "La cantidad de fichas en circulación puede ser potencialmente incrementada o disminuida por una entidad centralizada a su voluntad.";
+"coin_page.security_parameters.confiscation_resistance.description.yes" = "Las fichas no pueden ser confiscadas cuando se mantienen en un monedero no custodiado.";
+"coin_page.security_parameters.confiscation_resistance.description.no" = "Las fichas pueden ser confiscadas o manipuladas por una entidad emisora.";
+"coin_page.security_parameters.censorship_resistance.description.yes" = "El poseedor del token no puede ser censurado de hacer transacciones.";
+"coin_page.security_parameters.censorship_resistance.description.no" = "El poseedor del token puede ser censurado de hacer transacciones.";
 
-"coin_page.info" = "Info";
+"coin_page.info" = "Información";
 
-"coin_page.audits" = "Audits";
-"coin_page.audits.issues" = "Issues";
-"coin_page.audits.no_reports" = "No audit reports";
+"coin_page.audits" = "Auditorias";
+"coin_page.audits.issues" = "Problemas";
+"coin_page.audits.no_reports" = "No hay reportes de auditoría";
 "coin_page.audits.sync_error" = "Error de sincronización";
 
 // Transactions
@@ -541,29 +541,29 @@
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
+"transactions.processing" = "Procesando";
+"transactions.completed" = "Finalizado";
 "transactions.failed" = "Falla";
 
 "transactions.receive" = "Recibir";
 "transactions.send" = "Enviar";
 "transactions.approve" = "Aprobar";
 "transactions.swap" = "Permutar";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.contract_call" = "Llamada de Contrato";
+"transactions.contract_creation" = "Creación de Contrato";
 
 "transactions.to" = "A %@";
 "transactions.from" = "Desde %@";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "%@ ilimitado";
 
 "transactions.today" = "Hoy";
 "transactions.yesterday" = "Ayer";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
+"tx_info.title" = "Información de la transacción";
+"tx_info.date" = "Fecha";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.completed" = "Finalizado";
@@ -574,7 +574,7 @@
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
-"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.fee.estimated" = "Tarifa (est.)";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
 "tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
@@ -582,12 +582,12 @@
 "tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
+"tx_info.service" = "Servicio";
 "tx_info.view_on" = "Ver en %@";
 "tx_info.you_pay" = "Usted paga";
 "tx_info.you_get" = "Obtienes";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
+"tx_info.you_paid" = "Has pagado";
+"tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
 
 // Settings
@@ -610,7 +610,7 @@
 "settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Otro";
 "settings.base_currency.disclaimer" = "Descargo de responsabilidad";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Los datos del tipo de cambio proporcionados por un servicio de terceros Coingecko. om\n\nLa aplicación Unstoppable Walleta no garantiza que estos valores sean siempre correctos y coincidan con los datos del mercado. La probabilidad de una inconsistencia es mayor si usted selecciona cualquier moneda base que no sea %@.";
 "settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
 // Settings -> Notifications
@@ -770,15 +770,15 @@ poner en peligro la seguridad de mis fondos.";
 
 // Key Types
 
-"chart.time_duration.today" = "TDY";
+"chart.time_duration.today" = "Hoy";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.week2" = "2 S";
+"chart.time_duration.month" = "1 M";
+"chart.time_duration.month3" = "3 M";
+"chart.time_duration.halyear" = "6 M";
+"chart.time_duration.year" = "1 Año";
+"chart.time_duration.year2" = "2 Años";
 
 "chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
@@ -788,21 +788,21 @@ poner en peligro la seguridad de mis fondos.";
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En circulación";
 "chart.selected.volume" = "Volumen";
-"chart.price_indicator_range.day" = "24h Range";
-"chart.price_indicator_range.year" = "52w Range";
+"chart.price_indicator_range.day" = "Rango de 24h";
+"chart.price_indicator_range.year" = "Rango de 52 semanas";
 
-"chart.market.header" = "Market";
+"chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Cap. de Mercado";
-"chart.market.volume" = "Volume (24h)";
+"chart.market.volume" = "Volumen (24 h)";
 "chart.market.circulation" = "En circulación";
 "chart.market.total_supply" = "Suministro total";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Cambios (1 Semana)";
+"chart.performance.month_changes" = "Cambios (1 Mes)";
 
 "chart.about.header" = "Acerca de";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.read_more" = "Leer más";
+"chart.about.read_less" = "Leer menos";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -819,7 +819,7 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
-"create_wallet.success" = "Created";
+"create_wallet.success" = "Creado";
 
 // Select Coins
 
@@ -861,16 +861,16 @@ poner en peligro la seguridad de mis fondos.";
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "Añadir Token";
+"add_token.coin_type" = "Tipo de moneda";
 "add_token.coin_name" = "Nombre de moneda";
-"add_token.coin_code" = "Coin Code";
+"add_token.coin_code" = "Código de moneda";
 "add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
-"add_token.success_add" = "Added";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
+"add_token.contract_not_found" = "No encontramos tu Contrato";
+"add_token.symbol_not_found" = "No encontrámos tu símbolo";
+"add_token.success_add" = "Añadido";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -890,17 +890,17 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
-"wallet_connect.no_connection" = "Wallet connect is not responding";
+"wallet_connect.no_connection" = "La conexión al monedero no responde";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "Solicitud de Firma";
+"wallet_connect.sign.domain" = "Dominio";
+"wallet_connect.sign.message" = "Mensaje a firmar";
+"wallet_connect.sign.description" = "Por favor, firma un mensaje para autentificarte";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
@@ -921,11 +921,11 @@ poner en peligro la seguridad de mis fondos.";
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
-"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Las transacciones enviadas con valores de comisión recomendados o más altos, generalmente se procesan dentro de 10 minutos. Las transacciones enviadas con una tarifa baja pueden permanecer pendientes por unas pocas horas o incluso días, e incluso pueden ser rechazadas por completo.";
+"status_info.processing.title" = "Procesando";
+"status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
 "status_info.failed.title" = "Falló";
 "status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
