@@ -23,7 +23,7 @@
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
 "alert.unknown_error" = "Unbekannter Fehler";
-"alert.success_action" = "Done";
+"alert.success_action" = "Fertig";
 
 "action.loading" = "wird geladen ...";
 "placeholder.search" = "Suche";
@@ -552,13 +552,13 @@
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "An %@";
+"transactions.from" = "Von %@";
 
 "transactions.value.unlimited" = "unlimited %@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Heute";
+"transactions.yesterday" = "Gestern";
 
 // Transaction Info
 
