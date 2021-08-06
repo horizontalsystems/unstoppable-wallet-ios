@@ -185,13 +185,13 @@
 "send.hodler_locktime_off" = "Выкл.";
 "send.hodler_error.unsupported_address" = "Блокировка по времени работает только с адресами P2PKH (начиная с 1)";
 "send.fee_info.title" = "Скорость Транзакции";
-"send.fee_info.description" = "При использования блокчейнов Bitcoin и Ethereum пользователи должны платить комиссию при отправке транзакций.\n\nUnstoppable использует общественные сервисы оценки сумм комиссионных сборов, чтобы помогать пользователю определять размеры соответствующих комиссий на данный момент. Размеры комиссий возрастают при совершении большого количества транзакций и понижаются при меньшей занятости блокчейна.";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
 "send.fee_info.header_slow" = "Низкая";
-"send.fee_info.content_slow" = "Выбор значения из данного диапазона может привести к откладыванию транзакции на некоторое время или ее полному отклонению. Чем меньше размер транзакции, тем дольше займет процесс ее подтверждения.";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected. The lower the value the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "Рекомендовано";
-"send.fee_info.content_average" = "Обычно для этого диапазона комиссий характерна обработка транзакций в течение нескольких минут/часа для Bitcoin и в течение нескольких минут для Ethereum.";
+"send.fee_info.content_average" = "Typically, recommended fee value should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "Высокая";
-"send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе высокой комиссии транзакция Bitcoin будет обработана в течение 10 минут, ну а транзакция Ethereum будет обработана еще быстрее.";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
 "send.confirmation.you_send" = "Вы Отправляете";
@@ -895,7 +895,7 @@
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
 "wallet_connect.sign.request_title" = "Запрос на подпись";
@@ -944,7 +944,7 @@
 "onboarding.balance.description" = "У вас пока нет кошельков. Создайте новый или восстановите существующий";
 "onboarding.balance.create" = "Создать";
 "onboarding.balance.restore" = "Восстановить";
-"onboarding.balance.password_hint" = "Совет: восстановление существующего кошелька с другой кодовой фразой приведет к созданию нового кошелька. Это очень удобно, когда вы хотите использовать одну мнемоническую восстановительную фразу длиной от 12 до 24 слов для нескольких кошельков.";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
