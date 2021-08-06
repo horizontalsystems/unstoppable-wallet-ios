@@ -893,6 +893,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.insufficient_balance" = "交易要求%@用于发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
 "wallet_connect.sign.request_title" = "签名请求";
