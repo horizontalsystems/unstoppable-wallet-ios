@@ -895,6 +895,7 @@
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
 "wallet_connect.sign.request_title" = "Запрос на подпись";
