@@ -463,10 +463,10 @@
 
 "coin_page.trading_volume" = "Volume de trading";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Marchés";
 "coin_page.funds_invested" = "Fonds investis";
 
-"coin_page.coin_markets" = "%@ Markets";
+"coin_page.coin_markets" = "%@ Marchés";
 "coin_page.coin_markets.sort_by" = "Sort By";
 "coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
@@ -493,10 +493,10 @@
 "coin_page.major_holders.chart.description" = "in top 10 wallets";
 "coin_page.major_holders.top_wallets" = "Top Wallets";
 "coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
-"coin_page.major_holders.sync_error" = "Sync Error";
+"coin_page.major_holders.sync_error" = "Erreur de synchronisation";
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.sync_error" = "Sync Error";
+"coin_page.tvl_rank.sync_error" = "Erreur de synchronisation";
 "coin_page.tvl_rank.filters" = "Filters";
 "coin_page.tvl_rank.filters.all" = "All";
 "coin_page.tvl_rank.sort_by" = "Sort By";
