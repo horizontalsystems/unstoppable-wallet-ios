@@ -16,14 +16,14 @@
 "button.reject" = "拒绝";
 "button.connect" = "连接";
 "button.save" = "保存";
-"button.sign" = "Sign";
+"button.sign" = "签名";
 
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.unknown_error" = "未知错误";
-"alert.success_action" = "Done";
+"alert.success_action" = "完成";
 
 "action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
@@ -140,12 +140,12 @@
 
 //Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
+"switch_account.title" = "切换钱包";
+"switch_account.subtitle" = "选择钱包以快速切换";
 //Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "新增内容";
+"release_notes.follow_us" = "关注我们";
 
 // Deposit
 
@@ -223,11 +223,11 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
-"swap.powered_by" = "Powered By";
+"swap.powered_by" = "技术支持：";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
-"swap.advanced_settings" = "Swap Settings";
+"swap.advanced_settings" = "掉期设置";
 "swap.proceed_button" = "继续";
 "swap.approve.title" = "互兑批准";
 "swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
@@ -257,8 +257,8 @@
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "服务";
+"swap.service.title" = "服务";
 
 // Swap Approving
 
@@ -541,29 +541,29 @@
 "transactions.filter_all" = "全部";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
+"transactions.processing" = "正在处理";
+"transactions.completed" = "已完成";
 "transactions.failed" = "失败";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.receive" = "接收";
+"transactions.send" = "发送​​";
+"transactions.approve" = "批准";
+"transactions.swap" = "掉期交易";
+"transactions.contract_call" = "合约调用";
+"transactions.contract_creation" = "合约创建";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "接收人%@";
+"transactions.from" = "发送人%@";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "无限%@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "今天";
+"transactions.yesterday" = "昨天";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
+"tx_info.title" = "交易信息";
+"tx_info.date" = "日期";
 "tx_info.title_approval" = "互兑批准";
 "tx_info.status.pending" = "待处理";
 "tx_info.status.completed" = "已完成";
@@ -574,7 +574,7 @@
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.fee" = "费用";
-"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.fee.estimated" = "费用（预估）";
 "tx_info.to_self_note" = "交易已发送至自有地址";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
@@ -582,13 +582,13 @@
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "服务";
+"tx_info.view_on" = "于%@查看";
+"tx_info.you_pay" = "您支付";
+"tx_info.you_get" = "您获得";
+"tx_info.you_paid" = "您已支付";
+"tx_info.you_got" = "您已获得";
+"tx_info.price" = "价格";
 
 // Settings
 
@@ -596,7 +596,7 @@
 "settings.tab_bar_item" = "设置";
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
-"settings.experimental_features" = "Experimental";
+"settings.experimental_features" = "实验性功能";
 "settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
@@ -818,7 +818,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
-"create_wallet.success" = "Created";
+"create_wallet.success" = "已创建";
 
 // Select Coins
 
@@ -846,12 +846,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "intro.next" = "继续";
 "intro.start" = "开始";
 "intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "解除资产";
+"intro.unchain_assets.description" = "请勿锁定您自己，也不要让别人对您这样做";
+"intro.go_borderless.title" = "进入无国界";
+"intro.go_borderless.description" = "避开有条件障碍，进入全球市场";
+"intro.stay_private.title" = "保持私密";
+"intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
 
 // Guides
 
@@ -860,16 +860,16 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "添加代币";
+"add_token.coin_type" = "代币类型";
 "add_token.coin_name" = "代币图片";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.coin_code" = "代币代码";
+"add_token.decimal" = "十进制数";
 "add_token.already_exists" = "该代币已在代币管理器列表中。";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
-"add_token.success_add" = "Added";
+"add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
+"add_token.contract_not_found" = "找不到合约";
+"add_token.symbol_not_found" = "找不到符号";
+"add_token.success_add" = "已添加";
 
 "change_24hour_up" = "%@ 价格：上升 %@%% %@";
 "change_24hour_down" = "%@ 价格：下跌 %@%% %@";
@@ -889,16 +889,16 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
-"wallet_connect.no_connection" = "Wallet connect is not responding";
+"wallet_connect.no_connection" = "钱包连接没有响应";
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.insufficient_balance" = "交易要求%@用于发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "签名请求";
+"wallet_connect.sign.domain" = "域";
+"wallet_connect.sign.message" = "待签名消息";
+"wallet_connect.sign.description" = "请对消息签名以便进行验证";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "新连接";
@@ -919,11 +919,11 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "status_info.title" = "状态";
 "status_info.pending.title" = "待处理";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
-"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
-"status_info.completed.title" = "Completed";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.pending.content" = "交易尚未在区块链上得到确认。带有推荐或更高费用设置发送的交易通常会在10分钟内得到处理。以低费用发送的交易将在数小时甚至数天内仍将处于待处理状态，并且可能会被完全拒绝。";
+"status_info.processing.title" = "正在处理";
+"status_info.processing.content" = "交易已包括在区块链中，但尚未达到永久终结状态。此时，可以安全地考虑以较小金额完成的交易。对于大额支付，建议等待直至交易状态变为已完成。";
+"status_info.completed.title" = "已完成";
+"status_info.confirmed.content" = "交易已完成并被视为永久和不可逆。";
 "status_info.failed.title" = "失败";
 "status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
