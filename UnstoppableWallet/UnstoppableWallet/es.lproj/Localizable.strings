@@ -927,7 +927,7 @@ poner en peligro la seguridad de mis fondos.";
 "status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
 "status_info.failed.title" = "Falló";
-"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
+"status_info.failed.content" = "La transacción no se procesó y no se realizó ninguna transferencia de valor. Las transacciones con fallo en su estado todavía se escriben en la blockchain y consumen comisiones de transacción. La aplicación Unstoppable no puede mostrar la razón de la falla para tales transacciones, pero los usuarios pueden buscarla por sí mismos en un bloque público exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
@@ -943,7 +943,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "¡Sugerencia! Restaurar un monedero existente pero con una nueva contraseña generará un nuevo monedero. Esto puede ser útil si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples monederos.";
 
 // Manage Accounts
 
