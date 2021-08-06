@@ -894,6 +894,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
 "wallet_connect.sign.request_title" = "Sign Request";
