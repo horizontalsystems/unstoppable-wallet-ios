@@ -895,6 +895,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "wallet_connect.button_disconnect" = "Disconnect";
 "ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Current %@ balance is below amount required to process this transaction including transaction fee.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Request";
 "wallet_connect.sign.request_title" = "Sign Request";

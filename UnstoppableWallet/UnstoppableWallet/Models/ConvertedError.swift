@@ -122,6 +122,10 @@ extension EthereumKit.JsonRpcResponse.ResponseError: ConvertibleError {
                 return AppError.ethereum(reason: .executionReverted(message: rpcError.message))
             }
 
+            if rpcError.message.contains("max fee per gas less than block base fee") {
+                return AppError.ethereum(reason: .lowerThanBaseGasLimit)
+            }
+
             return self
         default: return self
         }
