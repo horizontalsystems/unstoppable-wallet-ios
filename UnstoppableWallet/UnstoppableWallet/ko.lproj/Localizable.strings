@@ -893,6 +893,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 ETH 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
 "wallet_connect.sign.request_title" = "Sign Request";
