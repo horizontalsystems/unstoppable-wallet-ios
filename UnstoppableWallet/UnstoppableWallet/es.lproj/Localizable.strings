@@ -23,7 +23,7 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.unknown_error" = "Error Desconocido";
-"alert.success_action" = "Done";
+"alert.success_action" = "Listo";
 
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
@@ -144,7 +144,7 @@
 "switch_account.subtitle" = "Select wallet for quick switch";
 //Release notes
 
-"release_notes.title" = "What's New";
+"release_notes.title" = "Qué novedades hay";
 "release_notes.follow_us" = "Follow Us";
 
 // Deposit
@@ -303,7 +303,7 @@
 "market.total_market_cap" = "Capitalización Total del Mercado";
 "market.24h_volume" = "Volumen de 24 horas";
 "market.btc_dominance" = "Dominio de BTC";
-"market.defi_cap" = "Capitalización de Finanzas Decentralizadas";
+"market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL en DeFi";
 
 "market.sync_error" = "Error de Sincronización";
@@ -346,8 +346,8 @@
 "market_discovery.filter_title.index_funds" = "Indexar Fondos";
 "market_discovery.filter_title.nft" = "NFT";
 "market_discovery.filter_title.fundraising" = "Recaudación de Fondos";
-"market_discovery.filter_title.gaming" = "Juego de Azar";
-"market_discovery.filter_title.infrastructure" = "Infraestructura";
+"market_discovery.filter_title.gaming" = "Gaming";
+"market_discovery.filter_title.infrastructure" = "Infrastructure";
 "market_discovery.filter_title.analytics" = "Analytics";
 "market_discovery.filter_title.storage" = "Storage";
 "market_discovery.filter_title.identity" = "Identity";
@@ -463,10 +463,10 @@
 
 "coin_page.trading_volume" = "Volumen de comercio";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Mercados";
 "coin_page.funds_invested" = "Fondos invertidos";
 
-"coin_page.coin_markets" = "%@ Markets";
+"coin_page.coin_markets" = "%@ Mercados";
 "coin_page.coin_markets.sort_by" = "Sort By";
 "coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
@@ -496,15 +496,15 @@
 "coin_page.major_holders.sync_error" = "Sync Error";
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.sync_error" = "Sync Error";
+"coin_page.tvl_rank.sync_error" = "Error de sincronización";
 "coin_page.tvl_rank.filters" = "Filters";
-"coin_page.tvl_rank.filters.all" = "All";
-"coin_page.tvl_rank.sort_by" = "Sort By";
+"coin_page.tvl_rank.filters.all" = "Todo";
+"coin_page.tvl_rank.sort_by" = "Ordenar por";
 "coin_page.tvl_rank.sort_by.highest_tvl" = "Highest TVL";
 "coin_page.tvl_rank.sort_by.lowest_tvl" = "Lowest TVL";
 
 "coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
+"coin_page.security_parameters.privacy" = "Privacidad";
 "coin_page.security_parameters.issuance" = "Issuance";
 "coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
 "coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
@@ -532,7 +532,7 @@
 "coin_page.audits" = "Audits";
 "coin_page.audits.issues" = "Issues";
 "coin_page.audits.no_reports" = "No audit reports";
-"coin_page.audits.sync_error" = "Sync Error";
+"coin_page.audits.sync_error" = "Error de sincronización";
 
 // Transactions
 
@@ -545,20 +545,20 @@
 "transactions.completed" = "Completed";
 "transactions.failed" = "Falla";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.receive" = "Recibir";
+"transactions.send" = "Enviar";
+"transactions.approve" = "Aprobar";
+"transactions.swap" = "Permutar";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "A %@";
+"transactions.from" = "Desde %@";
 
 "transactions.value.unlimited" = "unlimited %@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Hoy";
+"transactions.yesterday" = "Ayer";
 
 // Transaction Info
 
@@ -583,12 +583,12 @@
 "tx_info.raw_transaction" = "Transacción sin procesar";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
+"tx_info.view_on" = "Ver en %@";
+"tx_info.you_pay" = "Usted paga";
+"tx_info.you_get" = "Obtienes";
 "tx_info.you_paid" = "You Paid";
 "tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.price" = "Precio";
 
 // Settings
 
@@ -923,7 +923,7 @@ poner en peligro la seguridad de mis fondos.";
 "status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
 "status_info.processing.title" = "Processing";
 "status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
-"status_info.completed.title" = "Completed";
+"status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Falló";
 "status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
