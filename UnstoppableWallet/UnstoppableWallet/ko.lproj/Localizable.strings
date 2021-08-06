@@ -183,13 +183,13 @@
 "send.hodler_locktime_off" = "끄기";
 "send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 "send.fee_info.title" = "거래 속도";
-"send.fee_info.description" = "비트코인과 이더리움 블록체인 모두 사용자가 블록체인으로 거래를 전송하면서 사용료를 내야 합니다.\n\n언스타퍼블 사용자가 현재 적절한 거래 수수료를 결정하는 데 도움이 되도록 공공 요금 추정 서비스를 사용합니다. 수수료는 거래가 많을 때 더 비싸고 블록체인이 덜 바쁠 때 더 낮아집니다.";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
 "send.fee_info.header_slow" = "느리게";
-"send.fee_info.content_slow" = "이 범위에서 값을 선택하면 거래가 몇 시간 동안 보류되거나 완전히 거부될 수 있습니다. 값이 낮을수록 거래를 확인하는 데 시간이 더 오래 걸립니다.";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected. The lower the value the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "평균";
-"send.fee_info.content_average" = "일반적으로 이 수수료 범위는 비트코인의 경우 시간당 몇 분 이내, 이더리움의 경우 몇 분 이내에 거래가 처리되기에 충분해야 합니다.";
+"send.fee_info.content_average" = "Typically, recommended fee value should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "빠르게";
-"send.fee_info.content_fast" = "우선 순위가 중요한 거래의 경우 높은 수수료 설정을 사용하는 것이 좋습니다. 비트코인은 10분 이내, 이더리움은 몇 분 이내 거래가 완료되기에 고액 수수료 설정 선택만으로도 충분할 것으로 예상됩니다.";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "언스타퍼블 지갑은 네트워크 활동을 기반으로 학습된 추측을 하며, 제안된 수수료 값이 항상 예상 행동을 초래한다고 보장할 수 없습니다.";
 
 "send.confirmation.you_send" = "보냅니다";
@@ -893,7 +893,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 ETH 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
 "wallet_connect.sign.request_title" = "Sign Request";
@@ -942,7 +942,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "귀하께서는 아직 지갑이 없습니다. 새 생성 또는 기존 복원 해주십시오";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
-"onboarding.balance.password_hint" = "팁! 기존 지갑을 복원하지만 새 암호를 사용하면 새로운 지갑이 생성됩니다. 여러 지갑에 대해 하나의 12-24 단어 니모닉 복구 문구를 사용하려는 경우 편리합니다.";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
