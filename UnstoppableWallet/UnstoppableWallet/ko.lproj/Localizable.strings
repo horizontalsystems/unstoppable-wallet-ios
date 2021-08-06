@@ -549,21 +549,21 @@
 "transactions.send" = "전송";
 "transactions.approve" = "승인";
 "transactions.swap" = "스왑";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.contract_call" = "계약 콜";
+"transactions.contract_creation" = "계약 생성";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "%@에게";
+"transactions.from" = "%@부터";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "무제한 %@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "오늘";
+"transactions.yesterday" = "어제";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
+"tx_info.title" = "거래 정보";
+"tx_info.date" = "날짜";
 "tx_info.title_approval" = "스왑 승인";
 "tx_info.status.pending" = "보류 중";
 "tx_info.status.completed" = "완료";
@@ -574,7 +574,7 @@
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.fee" = "수수료";
-"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.fee.estimated" = "수수료 (추정)";
 "tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
 "tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
@@ -582,13 +582,13 @@
 "tx_info.recipient_hash" = "수령인";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "서비스";
+"tx_info.view_on" = "%@에서 보기";
+"tx_info.you_pay" = "지불할 금액";
+"tx_info.you_get" = "받는 금액";
+"tx_info.you_paid" = "지불한 금액";
+"tx_info.you_got" = "받았던 금액";
+"tx_info.price" = "가격";
 
 // Settings
 
@@ -596,7 +596,7 @@
 "settings.tab_bar_item" = "설정";
 "settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
-"settings.experimental_features" = "Experimental";
+"settings.experimental_features" = "실험";
 "settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -818,7 +818,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "암호에는 라틴 문자 및 숫자만 사용하십시오";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
-"create_wallet.success" = "Created";
+"create_wallet.success" = "생성됨";
 
 // Select Coins
 
@@ -846,12 +846,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "intro.next" = "다음";
 "intro.start" = "시작";
 "intro.brand.description" = "암호를 저장 및 거래합니다. 자산을 완전히 통제합니다. 익명인 상태로 유지합니다.";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "풀린 자산";
+"intro.unchain_assets.description" = "자신을 잠금하지 말고 다른 사람들이 귀하에게 그렇게 하도록 두지 마십시오.";
+"intro.go_borderless.title" = "무경계로";
+"intro.go_borderless.description" = "조건부 장벽을 우회하고 전 세계적으로 시장에 접근";
+"intro.stay_private.title" = "개인 정보 유지";
+"intro.stay_private.description" = "개인 및 금융 데이터를 세상에 유출하지 마십시오.";
 
 // Guides
 
@@ -860,16 +860,16 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "토큰 추가";
+"add_token.coin_type" = "코인 유형";
 "add_token.coin_name" = "코인 이름";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.coin_code" = "코인 코드";
+"add_token.decimal" = "소수점";
 "add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
-"add_token.success_add" = "Added";
+"add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
+"add_token.contract_not_found" = "계약 발견되지 않음";
+"add_token.symbol_not_found" = "기호 발견되지 않음";
+"add_token.success_add" = "추가됨";
 
 "change_24hour_up" = "%@ 가격: 상승 %@%% %@";
 "change_24hour_down" = "%@ 가격: 하락 %@%% %@";
@@ -889,17 +889,17 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
 "wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
-"wallet_connect.no_connection" = "Wallet connect is not responding";
+"wallet_connect.no_connection" = "지갑 연결이 응답하지 않습니다";
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 ETH 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "서명 요청";
+"wallet_connect.sign.domain" = "도메인";
+"wallet_connect.sign.message" = "서명할 메시지";
+"wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "새로운 연결";
@@ -920,13 +920,13 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "status_info.title" = "상태";
 "status_info.pending.title" = "보류 중";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
-"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
-"status_info.completed.title" = "Completed";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.pending.content" = "아직 블록체인에서 거래가 확인되지 않았습니다. 권장 또는 더 높은 수수료 설정으로 전송된 거래는 일반적으로 10분 이내에 처리됩니다. 낮은 수수료로 전송된 거래는 몇 시간 또는 며칠 동안 보류 상태로 남아 있을 수 있으며 완전히 거부될 수도 있습니다.";
+"status_info.processing.title" = "처리 중";
+"status_info.processing.content" = "거래는 이미 블록체인에 포함되었지만 영구적인 완결성에 도달하지 않았습니다. 이 시점에서 소액 결제를 위해 완료된 거래로 간주하는 것이 안전합니다. 더 큰 지불의 경우 거래 상태가 완료로 변경될 때까지 기다리는 것이 좋습니다.";
+"status_info.completed.title" = "완료됨";
+"status_info.confirmed.content" = "거래가 완료되고 영구적이고 되돌릴 수 없는 것으로 간주됩니다.";
 "status_info.failed.title" = "실패";
-"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
+"status_info.failed.content" = "거래가 처리되지 않았으며 가치 이전이 발생하지 않았습니다. 실패 상태의 거래는 여전히 블록체인에 기록되고 거래 수수료가 소비됩니다. Unstoppable 앱은 이러한 거래에 대한 실패 이유를 표시할 수 없지만 사용자는 etherscan.io와 같은 공개 블록 탐색기에서 직접 찾을 수 있습니다.";
 
 // Enable Coins
 
@@ -942,7 +942,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "귀하께서는 아직 지갑이 없습니다. 새 생성 또는 기존 복원 해주십시오";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "중요! 기존 지갑을 복원하지만 새로운 암호를 사용하면 완전히 새로운 지갑이 생성됩니다. 여러 지갑에 대해 단일 12-24 단어 니모닉 복구 구문을 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
 
@@ -954,7 +954,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "manage_account.name" = "이름";
 "manage_account.show_recovery_phrase" = "문구 표시";
 "manage_account.backup_recovery_phrase" = "백업 문구";
-"manage_account.network_settings" = "Network Settings";
+"manage_account.network_settings" = "네트워크 설정";
 "manage_account.unlink" = "링크 해제";
 
 // Birthday Input
@@ -962,8 +962,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "birthday_input.title" = "생일 신장";
 "birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.birthday_height" = "생일 높이 %@";
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "네트워크 설정";
