@@ -94,6 +94,7 @@ class SendEvmTransactionViewModel {
         if case AppError.ethereum(let reason) = error.convertedError {
             switch reason {
             case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
+            case .lowerThanBaseGasLimit: return "ethereum_transaction.error.lower_than_base_gas_limit".localized
             }
         }
 
