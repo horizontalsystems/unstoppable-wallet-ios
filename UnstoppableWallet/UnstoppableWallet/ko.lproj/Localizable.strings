@@ -16,14 +16,14 @@
 "button.reject" = "거절";
 "button.connect" = "연결";
 "button.save" = "저장";
-"button.sign" = "Sign";
+"button.sign" = "가입";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.unknown_error" = "알수없는 오류";
-"alert.success_action" = "Done";
+"alert.success_action" = "완료";
 
 "action.loading" = "로딩중";
 "placeholder.search" = "검색";
