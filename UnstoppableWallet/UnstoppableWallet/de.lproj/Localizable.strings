@@ -183,13 +183,13 @@
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Transaktionsgeschwindigkeit";
-"send.fee_info.description" = "Sowohl bei der Bitcoin- als auch bei der Ethereum-Blockchain müssen Benutzer Nutzungsgebühren zahlen, wenn sie Transaktionen auf der Blockchain durchführen.\n\nUnstoppable verwendet öffentliche Gebührenschätzungsdienste, um dem Benutzer zu helfen, angemessene Transaktionsgebühren für den Moment zu bestimmen. Die Gebühren sind höher, wenn viele Transaktionen stattfinden und niedriger, wenn die Blockchain weniger ausgelastet ist.";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
 "send.fee_info.header_slow" = "Langsam";
-"send.fee_info.content_slow" = "Die Auswahl eines Wertes aus diesem Bereich kann dazu führen, dass die Transaktion für mehrere Stunden aussteht oder ganz abgelehnt wird. Je niedriger der Wert, desto länger dauert es, bis die Transaktion bestätigt wird.";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected. The lower the value the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "Durchschnitt";
-"send.fee_info.content_average" = "Typischerweise sollte diese Gebührenspanne ausreichen, um eine Transaktion innerhalb von Minuten/Stunde für Bitcoin und innerhalb von Minuten für Ethereum zu verarbeiten.";
+"send.fee_info.content_average" = "Typically, recommended fee value should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "Schnell";
-"send.fee_info.content_fast" = "Für Transaktionen, bei denen die Priorität wichtig ist, empfehlen wir die Einstellung „Hohe Gebühr“. Es wird erwartet, dass die Einstellung „Hohe Gebühr“ ausreicht, um eine Transaktion innerhalb von 10 Minuten für Bitcoin und innerhalb von ein paar Minuten für Ethereum abzuschließen.";
+"send.fee_info.content_fast" = "For transactions where priority is important we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "Das Wallet von Unstoppable macht eine fundierte Vermutung basierend auf der Netzwerkaktivität und kann nicht garantieren, dass die vorgeschlagenen Gebührenwerte immer zu dem erwarteten Verhalten führen.";
 
 "send.confirmation.you_send" = "Sie Senden";
@@ -893,7 +893,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "Gas price can't be lower than base";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
 "ethereum_transaction.error.reverted" = "Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
 "wallet_connect.sign.request_title" = "Sign Request";
@@ -942,7 +942,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
-"onboarding.balance.password_hint" = "Tipp! Wenn Sie ein bestehendes Wallet mit einer neuen Passphrase wiederherstellen, wird ein brandneues Wallet erzeugt. Praktisch, wenn Sie eine einzelne 12-24-Wörter-Wiederherstellungsphrase für mehrere Wallets verwenden möchten.";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
