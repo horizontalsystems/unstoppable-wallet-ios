@@ -23,7 +23,7 @@
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.unknown_error" = "Erreur inconnue";
-"alert.success_action" = "Done";
+"alert.success_action" = "Terminé";
 
 "action.loading" = "chargement en cours...";
 "placeholder.search" = "Chercher";
@@ -140,12 +140,12 @@
 
 //Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
+"switch_account.title" = "Changer de portefeuille";
+"switch_account.subtitle" = "Sélectionnez le portefeuille pour un changement rapide";
 //Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "Nouveautés";
+"release_notes.follow_us" = "Suivez-nous";
 
 // Deposit
 
@@ -223,11 +223,11 @@
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Solde";
-"swap.powered_by" = "Powered By";
+"swap.powered_by" = "Propulsé par";
 "swap.allowance" = "Allocation";
 "swap.you_get" = "Vous recevez";
 "swap.token" = "Sélectionner";
-"swap.advanced_settings" = "Swap Settings";
+"swap.advanced_settings" = "Paramètres de swap";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
 "swap.approve.description" = "Vous devriez donner la permission à un contrat intelligent d'échanger un token donné en votre nom. Cette permission fixe le montant qui peut être utilisé par un contrat intelligent. Cela n'affecte pas votre solde mais nécessite des frais minimes pour exécuter la transaction d'approbation.\n\nBien que cela puisse être fait au cas par cas avant chaque transaction, il est plus économique d'approuver un montant plus élevé à l'avance pour les transactions futures.";
@@ -372,7 +372,7 @@
 "market_discovery.filter_description.wallets" = "Tokens émis par des portefeuilles de cryptomonnaies.";
 "market_discovery.filter_description.synthetics" = "Plateformes de création d'actifs synthétiques décentralisés.";
 "market_discovery.filter_description.index_funds" = "Actifs à parité de prix avec un set de tokens.";
-"market_discovery.filter_description.nft" = "NFT projects.";
+"market_discovery.filter_description.nft" = "Projets NFT.";
 "market_discovery.filter_description.fundraising" = "Plateformes de collecte de fonds et de vente de tokens.";
 "market_discovery.filter_description.gaming" = "Projets de cryptomonnaie dans le secteur des jeux et de la RV.";
 "market_discovery.filter_description.b2b" = "Prestataires de services aux entreprises (B2B).";
@@ -382,9 +382,9 @@
 "market_discovery.filter_description.computing" = "Solutions informatiques décentralisées à la demande.";
 "market_discovery.filter_description.fan_tokens" = "Fan tokens numériques, généralement spécifiques à une équipe ou un club.";
 "market_discovery.filter_description.investment_tools" = "Instruments d'analyse et d'investissement alimentés par des tokens.";
-"market_discovery.filter_description.storage" = "Decentralized data-storage.";
-"market_discovery.filter_description.identity" = "Decentralized identity.";
-"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
+"market_discovery.filter_description.storage" = "Stockage de données décentralisé.";
+"market_discovery.filter_description.identity" = "Identité décentralisée.";
+"market_discovery.filter_description.yield_tokens" = "Bearing tokens intéressants.";
 
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
@@ -459,24 +459,24 @@
 "coin_page.circulating_supply" = "En circulation";
 "coin_page.total_supply" = "Offre totale";
 "coin_page.dilluted_market_cap" = "Cap. marché diluée";
-"coin_page.genesis_date" = "Inception Date";
+"coin_page.genesis_date" = "Date de création";
 
 "coin_page.trading_volume" = "Volume de trading";
-"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
+"coin_page.trading_volume.description" = "La variation historique du volume d'échange quotidien agrégé pour %@";
 "coin_page.markets" = "Marchés";
 "coin_page.funds_invested" = "Fonds investis";
 
 "coin_page.coin_markets" = "%@ Marchés";
-"coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
+"coin_page.coin_markets.sort_by" = "Classer par";
+"coin_page.coin_markets.sort_by.highest_volume" = "Volume le plus élevé";
+"coin_page.coin_markets.sort_by.lowest_volume" = "Volume le plus bas";
 
 "coin_page.tvl" = "Valeur totale verrouillée";
 "coin_page.market_cap_tvl_ratio" = "Ratio MCap / TVL";
 "coin_page.tvl_rank" = "Rang TVL";
 "coin_page.tvl.description" = "Capital déposé sur la plateforme sous forme de collatéral de prêt ou de pool de liquidité.";
 
-"coin_page.investor_data" = "Investor Data";
+"coin_page.investor_data" = "Données de l'investisseur";
 
 "coin_page.category" = "Catégorie";
 "coin_page.contract" = "%@ Contrat";
@@ -486,39 +486,39 @@
 "coin_page.website" = "Site Web";
 "coin_page.whitepaper" = "Livre blanc";
 
-"coin_page.favorited" = "Added To Watchlist";
-"coin_page.unfavorited" = "Removed from Watchlist";
+"coin_page.favorited" = "Ajouter à la liste de suivi";
+"coin_page.unfavorited" = "Retirer de la liste de suivi";
 
-"coin_page.major_holders" = "Major Holders";
-"coin_page.major_holders.chart.description" = "in top 10 wallets";
-"coin_page.major_holders.top_wallets" = "Top Wallets";
-"coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
+"coin_page.major_holders" = "Porteurs majeurs";
+"coin_page.major_holders.chart.description" = "dans le top 10 des portefeuilles";
+"coin_page.major_holders.top_wallets" = "Meilleurs portefeuilles";
+"coin_page.major_holders.description" = "Le graphique ci-dessus indique le % de tous les tokens en circulation détenus dans les 10 meilleurs portefeuilles. Plus le % est faible, plus la pièce est distribuée.";
 "coin_page.major_holders.sync_error" = "Erreur de synchronisation";
 
-"coin_page.tvl_rank.multi_chain" = "Multi-Chain";
+"coin_page.tvl_rank.multi_chain" = "Multi-chaîne";
 "coin_page.tvl_rank.sync_error" = "Erreur de synchronisation";
-"coin_page.tvl_rank.filters" = "Filters";
-"coin_page.tvl_rank.filters.all" = "All";
-"coin_page.tvl_rank.sort_by" = "Sort By";
-"coin_page.tvl_rank.sort_by.highest_tvl" = "Highest TVL";
-"coin_page.tvl_rank.sort_by.lowest_tvl" = "Lowest TVL";
+"coin_page.tvl_rank.filters" = "Filtres";
+"coin_page.tvl_rank.filters.all" = "Tout";
+"coin_page.tvl_rank.sort_by" = "Classer par";
+"coin_page.tvl_rank.sort_by.highest_tvl" = "TVL le plus élevé";
+"coin_page.tvl_rank.sort_by.lowest_tvl" = "TVL le plus bas";
 
-"coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
-"coin_page.security_parameters.issuance" = "Issuance";
-"coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
-"coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
+"coin_page.security_parameters" = "Paramètres de sécurité";
+"coin_page.security_parameters.privacy" = "Confidentialité";
+"coin_page.security_parameters.issuance" = "Émission";
+"coin_page.security_parameters.confiscation_resistance" = "Résistance à la saisie";
+"coin_page.security_parameters.censorship_resistance" = "Résistance à la censure";
 
-"coin_page.security_parameters.level.low" = "Low";
-"coin_page.security_parameters.level.medium" = "Medium";
-"coin_page.security_parameters.level.high" = "High";
-"coin_page.security_parameters.issuance.decentralized" = "Decentralized";
-"coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
+"coin_page.security_parameters.level.low" = "Faible";
+"coin_page.security_parameters.level.medium" = "Moyenne";
+"coin_page.security_parameters.level.high" = "Élevée";
+"coin_page.security_parameters.issuance.decentralized" = "Décentralisé";
+"coin_page.security_parameters.issuance.centralized" = "Centralisé";
+"coin_page.security_parameters.resistance.yes" = "Oui";
+"coin_page.security_parameters.resistance.no" = "Non";
 
-"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
-"coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
+"coin_page.security_parameters.privacy.description.low" = "Les transactions effectuées avec ce token sont entièrement publiques, ce qui permet aux services tiers de relier différentes transactions à la même entité, de voir les montants négociés et les soldes des utilisateurs.";
+"coin_page.security_parameters.privacy.description.medium" = "Les transactions effectuées avec ce token sont semi-anonymes. Un service tiers est capable de voir les montants négociés et de relier partiellement différentes transactions à la même entité.";
 "coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
 "coin_page.security_parameters.issuance.description.decentralized" = "The amount of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
 "coin_page.security_parameters.issuance.description.centralized" = "The amount of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
