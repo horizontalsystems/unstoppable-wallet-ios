@@ -926,7 +926,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "status_info.completed.title" = "Abgeschlossen";
 "status_info.confirmed.content" = "Die Transaktion ist abgeschlossen und gilt als dauerhaft und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
-"status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
+"status_info.failed.content" = "Die Transaktion wurde nicht verarbeitet und es fand keine Wertübertragung statt. Transaktionen mit Fail-Status werden weiterhin in die Blockchain geschrieben und verbrauchen Transaktionsgebühren. Die Unstoppable-App kann den Grund für das Fehlschlagen solcher Transaktionen nicht anzeigen, aber Benutzer können ihn selbst auf einem öffentlichen Block-Exlorer, z. B. etherscan.io, nachschlagen.";
 
 // Enable Coins
 
@@ -954,7 +954,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "manage_account.name" = "Name";
 "manage_account.show_recovery_phrase" = "Phrase anzeigen";
 "manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase";
-"manage_account.network_settings" = "Network Settings";
+"manage_account.network_settings" = "Netzwerkeinstellungen";
 "manage_account.unlink" = "Verknüpfung trennen";
 
 // Birthday Input
@@ -966,4 +966,4 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "Netzwerkeinstellungen";
