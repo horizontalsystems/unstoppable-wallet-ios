@@ -16,7 +16,7 @@
 "button.reject" = "Verwerfen";
 "button.connect" = "Verbinden";
 "button.save" = "Speichern";
-"button.sign" = "Sign";
+"button.sign" = "Signieren";
 
 "alert.copied" = "Kopiert";
 "alert.no_internet" = "Kein Internet";
@@ -514,8 +514,8 @@
 "coin_page.security_parameters.level.high" = "High";
 "coin_page.security_parameters.issuance.decentralized" = "Decentralized";
 "coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
+"coin_page.security_parameters.resistance.yes" = "Ja";
+"coin_page.security_parameters.resistance.no" = "Nein";
 
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
@@ -541,29 +541,29 @@
 "transactions.filter_all" = "Alle";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
+"transactions.processing" = "Verarbeite";
+"transactions.completed" = "Abgeschlossen";
 "transactions.failed" = "Fehlgeschlagen";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.receive" = "Empfangen";
+"transactions.send" = "Senden";
+"transactions.approve" = "Bestätigen";
+"transactions.swap" = "Tauschen";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 
 "transactions.to" = "An %@";
 "transactions.from" = "Von %@";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "unbegrenzt %@";
 
 "transactions.today" = "Heute";
 "transactions.yesterday" = "Gestern";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
+"tx_info.title" = "Transaktionsdaten";
+"tx_info.date" = "Datum";
 "tx_info.title_approval" = "Tausch-Genehmigung";
 "tx_info.status.pending" = "Anstehend";
 "tx_info.status.completed" = "Abgeschlossen";
@@ -574,7 +574,7 @@
 "tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.fee" = "Gebühr";
-"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.fee.estimated" = "Gebühr (est.)";
 "tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
 "tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
@@ -582,13 +582,13 @@
 "tx_info.recipient_hash" = "Empfänger";
 "tx_info.raw_transaction" = "Rohdaten der Transaktion";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "Dienst";
+"tx_info.view_on" = "Auf %@ ansehen";
+"tx_info.you_pay" = "Sie bezahlen";
+"tx_info.you_get" = "Sie erhalten";
+"tx_info.you_paid" = "Du hast gezahlt";
+"tx_info.you_got" = "Du bekommst";
+"tx_info.price" = "Preis";
 
 // Settings
 
@@ -596,7 +596,7 @@
 "settings.tab_bar_item" = "Einstellungen";
 "settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
-"settings.experimental_features" = "Experimental";
+"settings.experimental_features" = "Experimentell";
 "settings.notifications" = "Benachrichtigungen";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
@@ -942,7 +942,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "onboarding.balance.description" = "Sie haben noch keine Wallets. Ein neues erstellen oder ein vorhandenes wiederherstellen";
 "onboarding.balance.create" = "Erstellen";
 "onboarding.balance.restore" = "Wiederherstellen";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "Tipp! Wenn Sie ein bestehendes Wallet mit einer neuen Passphrase wiederherstellen, wird ein brandneues Wallet erzeugt. Praktisch, wenn Sie eine einzelne 12-24-Wörter-Wiederherstellungsphrase für mehrere Wallets verwenden möchten.";
 
 // Manage Accounts
 
