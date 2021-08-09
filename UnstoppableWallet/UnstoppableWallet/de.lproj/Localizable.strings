@@ -549,8 +549,8 @@
 "transactions.send" = "Senden";
 "transactions.approve" = "Bestätigen";
 "transactions.swap" = "Tauschen";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.contract_call" = "Vertragsaufruf";
+"transactions.contract_creation" = "Vertragserstellung";
 
 "transactions.to" = "An %@";
 "transactions.from" = "Von %@";
@@ -818,7 +818,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 "create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
-"create_wallet.success" = "Created";
+"create_wallet.success" = "Erstellt";
 
 // Select Coins
 
@@ -846,12 +846,12 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "intro.next" = "Weiter";
 "intro.start" = "Start";
 "intro.brand.description" = "Krypto aufbewahren und handeln. Volle Kontrolle über die Vermögenswerte haben. Bleiben Sie anonym.";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.unchain_assets.title" = "Assets lösen";
+"intro.unchain_assets.description" = "Sperren Sie sich nicht ein und lassen Sie nicht zu, dass andere das mit Ihnen tun";
+"intro.go_borderless.title" = "Jetzt loslegen";
+"intro.go_borderless.description" = "Umgehung der bedingten Schranken und globaler Marktzugang";
+"intro.stay_private.title" = "Privat bleiben";
+"intro.stay_private.description" = "Geben Sie Ihre privaten und finanziellen Daten nicht an die Welt weiter";
 
 // Guides
 
@@ -860,16 +860,16 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "Token hinzufügen";
+"add_token.coin_type" = "Münztyp";
 "add_token.coin_name" = "Coin Name";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.coin_code" = "Münzcode";
+"add_token.decimal" = "Dezimal";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
-"add_token.success_add" = "Added";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
+"add_token.contract_not_found" = "Vertrag nicht gefunden";
+"add_token.symbol_not_found" = "Symbol nicht gefunden";
+"add_token.success_add" = "Hinzugefügt";
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
 "change_24hour_down" = "%@ Preis: %@%% %@ niedriger";
@@ -889,17 +889,17 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
 "wallet_connect.usage_description" = "Sie können den Browser aufrufen. Schließen Sie diese Seite nicht, während Sie im Browser interagieren.";
-"wallet_connect.no_connection" = "Wallet connect is not responding";
+"wallet_connect.no_connection" = "Wallet-Verbindung reagiert nicht";
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
 "ethereum_transaction.error.reverted" = "Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "Signaturanfrage";
+"wallet_connect.sign.domain" = "Domäne";
+"wallet_connect.sign.message" = "Zu unterzeichnende Nachricht";
+"wallet_connect.sign.description" = "Bitte signieren Sie eine Nachricht zur Authentifizierung";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Neue Verbindung";
@@ -920,11 +920,11 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Anstehend";
-"status_info.pending.content" = "Transaction has not been confirmed on the blockchain yet. Transactions sent with recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
-"status_info.processing.content" = "Transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider transaction completed for smaller payments. For larger payments it's recommended to wait until transacction status changes to completed.";
-"status_info.completed.title" = "Completed";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.pending.content" = "Die Transaktion wurde noch nicht in der Blockchain bestätigt. Transaktionen, die mit der empfohlenen oder höheren Gebühreneinstellung gesendet werden, werden in der Regel innerhalb von 10 Minuten bearbeitet. Transaktionen, die mit einer niedrigen Gebühr gesendet werden, können für einige Stunden oder sogar Tage ausstehend bleiben und sogar ganz abgelehnt werden.";
+"status_info.processing.title" = "In Bearbeitung";
+"status_info.processing.content" = "Die Transaktion wurde bereits in die Blockchain aufgenommen, ist aber noch nicht endgültig abgeschlossen. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Transaktionsstatus auf abgeschlossen wechselt.";
+"status_info.completed.title" = "Abgeschlossen";
+"status_info.confirmed.content" = "Die Transaktion ist abgeschlossen und gilt als dauerhaft und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
 "status_info.failed.content" = "Transaction did not get processed and no value transfer took place. Transactions with fail status are still written to the blockchain and consume transaction fees. Unstoppable app is unable to show the fail reason for such transactions but users are able to look it up themselves on a public block exlorer i.e. etherscan.io.";
 
