@@ -183,13 +183,13 @@
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Vitesse de transaction";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.description" = "Les blockchains Bitcoin et Ethereum exigent que les utilisateurs paient des frais de réseau lors de l'envoi de transactions. Les frais sont plus élevés lorsque de nombreuses transactions sont effectuées sur le réseau et inférieurs lorsque la blockchain est moins occupée.";
 "send.fee_info.header_slow" = "Lent";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected. The lower the value the longer it will take for the transaction to confirm.";
+"send.fee_info.content_slow" = "La sélection d'une valeur dans cette fourchette peut entraîner une transaction en attente pendant des heures ou un rejet total. Plus la valeur est faible, plus il faudra de temps pour que la transaction soit confirmée.";
 "send.fee_info.header_average" = "Moyen";
-"send.fee_info.content_average" = "Typically, recommended fee value should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.content_average" = "Généralement, cette fourchette de frais devrait être suffisante pour que la transaction soit traitée en quelques minutes/heure pour Bitcoin et en quelques minutes pour Ethereum.";
 "send.fee_info.header_fast" = "Rapide";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
+"send.fee_info.content_fast" = "Pour les transactions où la priorité est importante, nous vous recommandons d'utiliser la valeur élevée des frais. Cela devrait suffire pour qu'une transaction soit effectuée dans les 10 minutes pour Bitcoin et dans les 1-2 minutes pour Ethereum.";
 "send.fee_info.content_conclusion" = "Le portefeuille Unstoppable fait une évaluation éclairée sur la base de l'activité du réseau et ne peut pas garantir que les frais suggérés se traduiront toujours par le comportement attendu.";
 
 "send.confirmation.you_send" = "Vous envoyez";
@@ -893,7 +893,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.button_disconnect" = "Déconnecter";
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
 "wallet_connect.sign.request_title" = "Signer la demande";
@@ -942,7 +942,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "onboarding.balance.description" = "Vous n'avez pas encore de portefeuille. Veuillez créer un nouveau portefeuille ou restaurer un portefeuille existant";
 "onboarding.balance.create" = "Créer";
 "onboarding.balance.restore" = "Restaurer";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "Astuce ! La restauration d'un portefeuille existant, mais avec une nouvelle phrase d'authentification, génère un tout nouveau portefeuille. Pratique si vous souhaitez utiliser une seule phrase de réinitialisation mnémonique de 12 à 24 mots pour plusieurs portefeuilles.";
 
 // Manage Accounts
 
