@@ -183,13 +183,13 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "交易速度";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.description" = "比特币和 Etherum区块链都要求用户在发送交易时支付网络费用。 当网络上发生大量交易时，费用较高，而区块链不那么繁忙时，费用较低。";
 "send.fee_info.header_slow" = "慢";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in transaction being pending for hours or being rejected. The lower the value the longer it will take for the transaction to confirm.";
+"send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
 "send.fee_info.header_average" = "平均";
-"send.fee_info.content_average" = "Typically, recommended fee value should be sufficient for transaction to be processed within minutes/hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.content_average" = "通常，此费用范围应足以使比特币（Bitcoin）交易在数分钟/小时、以太币（Ethereum）在数分钟内得到处理。";
 "send.fee_info.header_fast" = "快";
-"send.fee_info.content_fast" = "For transactions where priority is important we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
+"send.fee_info.content_fast" = "对于优先级重要的交易，我们建议使用高收费值。 预计这将足以在10分钟内完成比特币交易，1-2分钟以内完成Etherefis。";
 "send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
 "send.confirmation.you_send" = "您发送";
@@ -893,7 +893,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.insufficient_balance" = "交易要求%@用于发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前ETH餘額低於處理此交易所需的金額，包括交易費用。";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
 "wallet_connect.sign.request_title" = "签名请求";
@@ -942,7 +942,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. Handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "贴士！使用一个新密码恢复现有的钱包将生成一个全新的钱包。如果您希望对多个钱包使用单个12-24个单词的助记词恢复码，这将非常方便。";
 
 // Manage Accounts
 
