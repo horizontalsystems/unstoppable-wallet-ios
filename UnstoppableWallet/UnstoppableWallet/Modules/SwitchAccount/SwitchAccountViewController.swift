@@ -5,8 +5,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ComponentKit
+import ActionSheet
 
-class SwitchAccountViewController: ThemeActionSheetController {
+class SwitchAccountViewController: ThemeViewController {
     private let viewModel: SwitchAccountViewModel
     private let disposeBag = DisposeBag()
 
@@ -84,6 +85,19 @@ extension SwitchAccountViewController: SectionsDataSource {
                     }
             )
         ]
+    }
+
+}
+
+extension SwitchAccountViewController: ActionSheetViewDelegate {
+
+    public var height: CGFloat? {
+        let availableHeight = (view.window?.bounds.height ?? 0) - BottomSheetTitleView.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 100
+        if tableView.intrinsicContentSize.height > availableHeight {
+            return availableHeight
+        } else {
+            return nil
+        }
     }
 
 }
