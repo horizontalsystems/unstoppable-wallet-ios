@@ -16,13 +16,14 @@
 "button.reject" = "Rechazar";
 "button.connect" = "Conectar";
 "button.save" = "Guardar";
-"button.sign" = "Sign";
+"button.sign" = "Firma";
 
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.unknown_error" = "Error Desconocido";
+"alert.success_action" = "Listo";
 
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
@@ -136,6 +137,16 @@
 "balance_error.sync_error" = "Error de sincronización";
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
 "lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
+
+//Account switcher
+
+"switch_account.title" = "Cambiar monedero";
+"switch_account.subtitle" = "Seleccionar Monedero para cambiar rápidamente";
+//Release notes
+
+"release_notes.title" = "Qué novedades hay";
+"release_notes.follow_us" = "Síguenos";
+
 // Deposit
 
 "deposit.receive_coin" = "Recibir %@";
@@ -172,13 +183,13 @@
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Velocidad de transacción";
-"send.fee_info.description" = "Las blockchains de Ethereum y Bitcoin requieren que los usuarios paguen tarifas de uso mientras envian transaciones en la blockchain \n\n Unstoppable utiliza tarifas de servicios publicos estimados para ayudar al usuario a determinar tarifas de transación apropiadas para el momento. Las tarifas son altas cuando hay muchas transacciones ocurriendo al mismo tiempo y menos cuando la blockchain se encuentra menos ocupada. ";
+"send.fee_info.description" = "Las blockchain de Bitcoin como las de Ethereum requieren que los usuarios paguen comisiones de red al enviar transacciones. Las comisiones son más altas cuando muchas transacciones están teniendo lugar en la red y más bajas cuando el blockchain está menos ocupado.";
 "send.fee_info.header_slow" = "Lento";
-"send.fee_info.content_slow" = "Seleccionar un valor de este rango puede resultar en que la transacción esté pendiente por horas o sea rechazada por completo. Cuanto más bajo sea el valor, más tardará en confirmar la transacción.";
+"send.fee_info.content_slow" = "Seleccionar un valor de este rango puede resultar en que la transacción quede pendiente por horas o sea rechazada por completo. Cuanto más bajo sea el valor, mas tardará en confirmar la transacción.";
 "send.fee_info.header_average" = "Promedio";
-"send.fee_info.content_average" = "Por lo general, este rango de honorarios debería ser suficiente para que la transacción sea procesada entre un minuto/hora para Bitcoin y dentro de minutos para Ethereum.";
+"send.fee_info.content_average" = "Normalmente, el valor de tarifa recomendado debería ser suficiente para que la transacción sea procesada entre un minuto/hora para Bitcoin y dentro de minutos para Ethereum.";
 "send.fee_info.header_fast" = "Rápido";
-"send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar la configuración de una mayor tarifa. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
+"send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar el valor de una tarifa mayor. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
 "send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
 
 "send.confirmation.you_send" = "Usted envía";
@@ -212,10 +223,11 @@
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
+"swap.powered_by" = "Desarrollado por";
 "swap.allowance" = "Permiso de acceso";
 "swap.you_get" = "Obtienes";
 "swap.token" = "Seleccionar";
-"swap.advanced_settings" = "Configuración avanzada";
+"swap.advanced_settings" = "Ajustes de intercambio";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
 "swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
@@ -244,6 +256,9 @@
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
+
+"swap.service" = "Servicio";
+"swap.service.title" = "Servicio";
 
 // Swap Approving
 
@@ -288,7 +303,7 @@
 "market.total_market_cap" = "Capitalización Total del Mercado";
 "market.24h_volume" = "Volumen de 24 horas";
 "market.btc_dominance" = "Dominio de BTC";
-"market.defi_cap" = "Capitalización de Finanzas Decentralizadas";
+"market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL en DeFi";
 
 "market.sync_error" = "Error de Sincronización";
@@ -322,11 +337,8 @@
 "market_discovery.filter_title.oracles" = "Oracles";
 "market_discovery.filter_title.prediction_markets" = "Prediction";
 "market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_title.fiat_stablecoins" = "Fiat Stablecoins";
-"market_discovery.filter_title.rebase_tokens" = "Rebase Tokens";
-"market_discovery.filter_title.algo_stablecoins" = "Algo Stablecoins";
+"market_discovery.filter_title.stablecoins" = "Stablecoins";
 "market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.stablecoin_issuers" = "Emisores de Stablecoin";
 "market_discovery.filter_title.exchange_tokens" = "Intercambiar Tokens";
 "market_discovery.filter_title.risk_management" = "Gestión de Riesgo";
 "market_discovery.filter_title.wallets" = "Monederos";
@@ -334,14 +346,13 @@
 "market_discovery.filter_title.index_funds" = "Indexar Fondos";
 "market_discovery.filter_title.nft" = "NFT";
 "market_discovery.filter_title.fundraising" = "Recaudación de Fondos";
-"market_discovery.filter_title.gaming" = "Juego de Azar";
-"market_discovery.filter_title.b2b" = "B2B";
-"market_discovery.filter_title.infrastructure" = "Infraestructura";
-"market_discovery.filter_title.staking_eth_2_0" = "Guardar ETH 2.0";
-"market_discovery.filter_title.cross_chain" = "Cadena Cruzada";
-"market_discovery.filter_title.computing" = "Computing";
-"market_discovery.filter_title.fan_tokens" = "Fan Tokens";
-"market_discovery.filter_title.investment_tools" = "Investment Tools";
+"market_discovery.filter_title.gaming" = "Gaming";
+"market_discovery.filter_title.infrastructure" = "Infrastructure";
+"market_discovery.filter_title.analytics" = "Analytics";
+"market_discovery.filter_title.storage" = "Storage";
+"market_discovery.filter_title.identity" = "Identity";
+"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
+
 
 "market_discovery.filter_description.blockchain" = "Criptomonedas Nativas en las principales Blockchains.";
 "market_discovery.filter_description.dexes" = "Intercambio Descentralizado de Cryptomonedas.";
@@ -361,7 +372,7 @@
 "market_discovery.filter_description.wallets" = "Tokens emitidos por monederos de criptomonedas.";
 "market_discovery.filter_description.synthetics" = "Plataformas para la creación de activos sintéticos descentralizados.";
 "market_discovery.filter_description.index_funds" = "Activos que se vinculan con el precio de un conjunto de tokens.";
-"market_discovery.filter_description.nft" = "Mercados de tokens NFT.";
+"market_discovery.filter_description.nft" = "Proyectos NFT.";
 "market_discovery.filter_description.fundraising" = "Plataformas de recaudación de fondos y venta de tokens.";
 "market_discovery.filter_description.gaming" = "Fundraising and token sale platforms.";
 "market_discovery.filter_description.b2b" = "Proveedores de servicio B2B.";
@@ -371,6 +382,10 @@
 "market_discovery.filter_description.computing" = "Soluciones informáticas descentralizadas bajo demanda.";
 "market_discovery.filter_description.fan_tokens" = "Tokens de aficionados digitales, normalmente específicas de un equipo o club.";
 "market_discovery.filter_description.investment_tools" = "Instrumentos de inversión y análisis basados ​​en tokens.";
+"market_discovery.filter_description.storage" = "Almacenamiento de información descentralizado.";
+"market_discovery.filter_description.identity" = "Identidad descentralizada.";
+"market_discovery.filter_description.yield_tokens" = "Tokens Interesantes.";
+
 
 "market_watchlist.empty.caption" = "You don’t have any favorite assets.\n You can add the favorites by clicking on star icon in the asset page";
 
@@ -444,16 +459,24 @@
 "coin_page.circulating_supply" = "En Circulación";
 "coin_page.total_supply" = "Suminstro Total";
 "coin_page.dilluted_market_cap" = "Capitalización de Mercado Diluida";
-"coin_page.genesis_date" = "Fecha de lanzamiento";
+"coin_page.genesis_date" = "Fecha de inicio";
 
 "coin_page.trading_volume" = "Volumen de comercio";
-"coin_page.markets" = "%@ Mercados";
+"coin_page.trading_volume.description" = "El cambio histórico en el volumen de operaciones diarias acumuladas por %@";
+"coin_page.markets" = "Mercados";
 "coin_page.funds_invested" = "Fondos invertidos";
+
+"coin_page.coin_markets" = "%@ Mercados";
+"coin_page.coin_markets.sort_by" = "Ordenar por";
+"coin_page.coin_markets.sort_by.highest_volume" = "Mayor Volumen";
+"coin_page.coin_markets.sort_by.lowest_volume" = "Menor Volumen";
 
 "coin_page.tvl" = "Valor total bloqueado";
 "coin_page.market_cap_tvl_ratio" = "Capitalización de Mercado / Proporción TVL";
 "coin_page.tvl_rank" = "Rango TVL";
 "coin_page.tvl.description" = "Capital depositado en la plataforma en forma de garantía de préstamo o reserva de liquidez.";
+
+"coin_page.investor_data" = "Información de Inversor";
 
 "coin_page.category" = "Categoría";
 "coin_page.contract" = "Contrato de %@";
@@ -463,6 +486,54 @@
 "coin_page.website" = "Sitio Web";
 "coin_page.whitepaper" = "Documento informativo";
 
+"coin_page.favorited" = "Añadido a tu Lista de Seguimiento";
+"coin_page.unfavorited" = "Eliminado de la Lista de Seguimiento";
+
+"coin_page.major_holders" = "Principales Accionistas";
+"coin_page.major_holders.chart.description" = "en el top 10 de Monederos";
+"coin_page.major_holders.top_wallets" = "Mejores Monederos";
+"coin_page.major_holders.description" = "El gráfico anterior muestra el % de todos los tokens en circulación retenidos por los 10 Monderos más importantes. Cuanto más bajo sea el %, más distribuída se encontrará la moneda.";
+"coin_page.major_holders.sync_error" = "Error de sincronización";
+
+"coin_page.tvl_rank.multi_chain" = "Cadena múltiple";
+"coin_page.tvl_rank.sync_error" = "Error de sincronización";
+"coin_page.tvl_rank.filters" = "Filtros";
+"coin_page.tvl_rank.filters.all" = "Todo";
+"coin_page.tvl_rank.sort_by" = "Ordenar por";
+"coin_page.tvl_rank.sort_by.highest_tvl" = "TVL más alto";
+"coin_page.tvl_rank.sort_by.lowest_tvl" = "TVL más bajo";
+
+"coin_page.security_parameters" = "Parámetros de seguridad";
+"coin_page.security_parameters.privacy" = "Privacidad";
+"coin_page.security_parameters.issuance" = "Emisión";
+"coin_page.security_parameters.confiscation_resistance" = "Resistencia a la Confiscación";
+"coin_page.security_parameters.censorship_resistance" = "Resistencia a la censura";
+
+"coin_page.security_parameters.level.low" = "Bajo";
+"coin_page.security_parameters.level.medium" = "Medio";
+"coin_page.security_parameters.level.high" = "Alto";
+"coin_page.security_parameters.issuance.decentralized" = "Descentralizado";
+"coin_page.security_parameters.issuance.centralized" = "Centralizado";
+"coin_page.security_parameters.resistance.yes" = "Si";
+"coin_page.security_parameters.resistance.no" = "No";
+
+"coin_page.security_parameters.privacy.description.low" = "Las transacciones con este token son completamente públicas, permitiendo que servicios de terceros vinculen diferentes transacciones a la misma entidad, ver montos de transacciones pasadas y saldos de usuarios.";
+"coin_page.security_parameters.privacy.description.medium" = "Las transacciones con este token son semianónimas. Un servicio de terceros puede ver las cantidades transaccionadas y parcialmente conectar las diferentes transacciones con la misma entidad.";
+"coin_page.security_parameters.privacy.description.high" = "Las transacciones con este token son anónimas por defecto o proporcionan dichas capacidades. Ninguna entidad es capaz de vincular diferentes transacciones con el mismo individuo o ver las transacciones realizadas previamente.";
+"coin_page.security_parameters.issuance.description.decentralized" = "La cantidad de fichas en circulación controladas por un algoritmo y trabaja de manera determinista fuera de la influencia centralizada.";
+"coin_page.security_parameters.issuance.description.centralized" = "La cantidad de fichas en circulación puede ser potencialmente incrementada o disminuida por una entidad centralizada a su voluntad.";
+"coin_page.security_parameters.confiscation_resistance.description.yes" = "Las fichas no pueden ser confiscadas cuando se mantienen en un monedero no custodiado.";
+"coin_page.security_parameters.confiscation_resistance.description.no" = "Las fichas pueden ser confiscadas o manipuladas por una entidad emisora.";
+"coin_page.security_parameters.censorship_resistance.description.yes" = "El poseedor del token no puede ser censurado de hacer transacciones.";
+"coin_page.security_parameters.censorship_resistance.description.no" = "El poseedor del token puede ser censurado de hacer transacciones.";
+
+"coin_page.info" = "Información";
+
+"coin_page.audits" = "Auditorias";
+"coin_page.audits.issues" = "Problemas";
+"coin_page.audits.no_reports" = "No hay reportes de auditoría";
+"coin_page.audits.sync_error" = "Error de sincronización";
+
 // Transactions
 
 "transactions.title" = "Transacciones";
@@ -470,13 +541,29 @@
 "transactions.filter_all" = "Todo";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
-"transactions.receiving" = "Recibiendo";
+"transactions.processing" = "Procesando";
+"transactions.completed" = "Finalizado";
 "transactions.failed" = "Falla";
-"transactions.sending" = "Enviando";
+
+"transactions.receive" = "Recibir";
+"transactions.send" = "Enviar";
+"transactions.approve" = "Aprobar";
+"transactions.swap" = "Permutar";
+"transactions.contract_call" = "Llamada de Contrato";
+"transactions.contract_creation" = "Creación de Contrato";
+
+"transactions.to" = "A %@";
+"transactions.from" = "Desde %@";
+
+"transactions.value.unlimited" = "%@ ilimitado";
+
+"transactions.today" = "Hoy";
+"transactions.yesterday" = "Ayer";
 
 // Transaction Info
 
-"tx_info.title" = "Transacción";
+"tx_info.title" = "Información de la transacción";
+"tx_info.date" = "Fecha";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.completed" = "Finalizado";
@@ -487,6 +574,7 @@
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.fee" = "Comisión";
+"tx_info.fee.estimated" = "Tarifa (est.)";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
 "tx_info.double_spent_note" = "¡Riesgo de doble gasto!";
 "tx_info.locked_until" = "Bloqueado hasta %@";
@@ -494,6 +582,13 @@
 "tx_info.recipient_hash" = "Destinatario";
 "tx_info.raw_transaction" = "Transacción sin procesar";
 "tx_info.memo" = "Memo";
+"tx_info.service" = "Servicio";
+"tx_info.view_on" = "Ver en %@";
+"tx_info.you_pay" = "Usted paga";
+"tx_info.you_get" = "Obtienes";
+"tx_info.you_paid" = "Has pagado";
+"tx_info.you_got" = "Tienes";
+"tx_info.price" = "Precio";
 
 // Settings
 
@@ -501,7 +596,7 @@
 "settings.tab_bar_item" = "Ajustes";
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_accounts" = "Gestionar monederos";
-"settings.experimental_features" = "Características experimentales";
+"settings.experimental_features" = "Experimental";
 "settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
@@ -515,7 +610,7 @@
 "settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Otro";
 "settings.base_currency.disclaimer" = "Descargo de responsabilidad";
-"settings.base_currency.disclaimer.description" = "The exchange rate data provided by a third party service Coingecko.com\n\nUnstoppable wallet app doesn't guarantee these values are always correct and match market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Los datos del tipo de cambio proporcionados por un servicio de terceros Coingecko. om\n\nLa aplicación Unstoppable Walleta no garantiza que estos valores sean siempre correctos y coincidan con los datos del mercado. La probabilidad de una inconsistencia es mayor si usted selecciona cualquier moneda base que no sea %@.";
 "settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
 // Settings -> Notifications
@@ -675,15 +770,15 @@ poner en peligro la seguridad de mis fondos.";
 
 // Key Types
 
-"chart.time_duration.today" = "TDY";
+"chart.time_duration.today" = "Hoy";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halyear" = "6M";
-"chart.time_duration.year" = "1Y";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.week2" = "2 S";
+"chart.time_duration.month" = "1 M";
+"chart.time_duration.month3" = "3 M";
+"chart.time_duration.halyear" = "6 M";
+"chart.time_duration.year" = "1 Año";
+"chart.time_duration.year2" = "2 Años";
 
 "chart.market_cap" = "Cap. de Mercado";
 "chart.market_cap.thousand" = "%@ k";
@@ -693,21 +788,21 @@ poner en peligro la seguridad de mis fondos.";
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En circulación";
 "chart.selected.volume" = "Volumen";
-"chart.price_indicator_range.day" = "24h Range";
-"chart.price_indicator_range.year" = "52w Range";
+"chart.price_indicator_range.day" = "Rango de 24h";
+"chart.price_indicator_range.year" = "Rango de 52 semanas";
 
-"chart.market.header" = "Market";
+"chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Cap. de Mercado";
-"chart.market.volume" = "Volume (24h)";
+"chart.market.volume" = "Volumen (24 h)";
 "chart.market.circulation" = "En circulación";
 "chart.market.total_supply" = "Suministro total";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "Cambios (1 Semana)";
+"chart.performance.month_changes" = "Cambios (1 Mes)";
 
 "chart.about.header" = "Acerca de";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.read_more" = "Leer más";
+"chart.about.read_less" = "Leer menos";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -724,6 +819,7 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
+"create_wallet.success" = "Creado";
 
 // Select Coins
 
@@ -765,15 +861,16 @@ poner en peligro la seguridad de mis fondos.";
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_type" = "Coin Type";
+"add_token.title" = "Añadir Token";
+"add_token.coin_type" = "Tipo de moneda";
 "add_token.coin_name" = "Nombre de moneda";
-"add_token.coin_code" = "Coin Code";
+"add_token.coin_code" = "Código de moneda";
 "add_token.decimal" = "Decimal";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.contract_not_found" = "Contract not found";
-"add_token.symbol_not_found" = "Symbol not found";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
+"add_token.contract_not_found" = "No encontramos tu Contrato";
+"add_token.symbol_not_found" = "No encontrámos tu símbolo";
+"add_token.success_add" = "Añadido";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
 "change_24hour_down" = "Precio %@: bajó %@%% %@";
@@ -793,15 +890,17 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
+"wallet_connect.no_connection" = "La conexión al monedero no responde";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.sign.request_title" = "Solicitud de Firma";
+"wallet_connect.sign.domain" = "Dominio";
+"wallet_connect.sign.message" = "Mensaje a firmar";
+"wallet_connect.sign.description" = "Por favor, firma un mensaje para autentificarte";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
@@ -822,13 +921,13 @@ poner en peligro la seguridad de mis fondos.";
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Este paso puede tomar desde unos minutos hasta unas pocas horas dependiendo de la tasa de transacción. Las transacciones enviadas con una tarifa muy baja normalmente se procesan dentro de unos días o pueden ser rechazadas por la red, es decir, sin ser realizadas.";
-"status_info.sending_receiving.title" = "Enviando / Recibiendo";
-"status_info.sending_receiving.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
-"status_info.confirmed.title" = "Confirmado";
-"status_info.confirmed.content" = "La transacción es definitiva e irreversible.";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Las transacciones enviadas con valores de comisión recomendados o más altos, generalmente se procesan dentro de 10 minutos. Las transacciones enviadas con una tarifa baja pueden permanecer pendientes por unas pocas horas o incluso días, e incluso pueden ser rechazadas por completo.";
+"status_info.processing.title" = "Procesando";
+"status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
+"status_info.completed.title" = "Finalizado";
+"status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
 "status_info.failed.title" = "Falló";
-"status_info.failed.content" = "La transacción no se procesó como se pretendía y no tuvo lugar ninguna transferencia de valor de token. En las transacciones fallidas de Ethereum las transacciones consumen comisiones de transacción.";
+"status_info.failed.content" = "La transacción no se procesó y no se realizó ninguna transferencia de valor. Las transacciones con fallo en su estado todavía se escriben en la blockchain y consumen comisiones de transacción. La aplicación Unstoppable no puede mostrar la razón de la falla para tales transacciones, pero los usuarios pueden buscarla por sí mismos en un bloque público exlorer i.e. etherscan.io.";
 
 // Enable Coins
 
@@ -844,7 +943,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.password_hint" = "¡Sugerencia! Restaurar una cartera existente pero con una nueva contraseña generará una nueva cartera. Maneja si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples carteras.";
+"onboarding.balance.password_hint" = "¡Sugerencia! Restaurar un monedero existente pero con una nueva contraseña generará un nuevo monedero. Esto puede ser útil si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples monederos.";
 
 // Manage Accounts
 
