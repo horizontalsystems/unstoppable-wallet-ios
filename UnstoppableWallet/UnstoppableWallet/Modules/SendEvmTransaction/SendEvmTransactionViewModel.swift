@@ -68,7 +68,7 @@ class SendEvmTransactionViewModel {
         }
 
         if items == nil, let data = dataState.data?.transactionData {
-            items = unknownMethodItems(transactionData: data)
+            items = unknownMethodItems(transactionData: data, additionalInfo: dataState.data?.additionalInfo)
         }
 
         if let items = items {
@@ -154,7 +154,7 @@ class SendEvmTransactionViewModel {
             return recognizedMethodItems(transactionData: transactionData, method: method.method, arguments: method.arguments)
 
         case _ as UnknownMethodDecoration:
-            return unknownMethodItems(transactionData: transactionData)
+            return unknownMethodItems(transactionData: transactionData, additionalInfo: additionalInfo)
 
         default: return nil
         }
@@ -330,14 +330,25 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func unknownMethodItems(transactionData: TransactionData) -> [SectionViewItem] {
+    private func unknownMethodItems(transactionData: TransactionData, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem] {
         let addressValue = transactionData.to.eip55
+        let addressTitle = additionalInfo?.sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+
+        var youPayItem: ViewItem?
+        var inputItem: ViewItem?
+
+        if transactionData.input.isEmpty {      // ETH or BNB transfer transaction
+            youPayItem = .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.coin.title)
+        } else {
+            inputItem = .input(value: transactionData.input.toHexString())
+        }
 
         let viewItems: [ViewItem] = [
+            youPayItem,
             .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
-            .address(title: "To", valueTitle: addressValue, value: addressValue),
-            .input(value: transactionData.input.toHexString())
-        ]
+            .address(title: "To", valueTitle: addressTitle, value: addressValue),
+            inputItem
+        ].compactMap { $0 }
 
         return [SectionViewItem(viewItems: viewItems)]
     }
