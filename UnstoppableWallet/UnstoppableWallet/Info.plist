@@ -41,14 +41,14 @@
 	<string>$(coins_url)</string>
 	<key>CryptoCompareApiKey</key>
 	<string>$(cryptocompare_com_api_key)</string>
-	<key>DefiYieldApiKey</key>
-	<string>$(defiyield_api_key)</string>
 	<key>DefaultWords</key>
 	<string>${default_words}</string>
 	<key>DefaultWords12</key>
 	<string>${default_words_12}</string>
 	<key>DefaultWords24</key>
 	<string>${default_words_24}</string>
+	<key>DefiYieldApiKey</key>
+	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
 	<key>FaqIndexUrl</key>
