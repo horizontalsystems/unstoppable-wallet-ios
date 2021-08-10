@@ -142,12 +142,12 @@
 
 //Account switcher
 
-"switch_account.title" = "Сменить кошелек";
+"switch_account.title" = "Сменить Кошелек";
 "switch_account.subtitle" = "Выберите кошелек для быстрого переключения";
 //Release notes
 
-"release_notes.title" = "Что нового";
-"release_notes.follow_us" = "Следите за нашими новостями";
+"release_notes.title" = "Что Нового";
+"release_notes.follow_us" = "Мы в соцсетях";
 
 // Deposit
 
@@ -229,7 +229,7 @@
 "swap.allowance" = "Разрешение";
 "swap.you_get" = "Получите";
 "swap.token" = "Выбрать";
-"swap.advanced_settings" = "Настройки свопа";
+"swap.advanced_settings" = "Настройки Обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение Обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
@@ -259,8 +259,8 @@
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
-"swap.service" = "Служба";
-"swap.service.title" = "Служба";
+"swap.service" = "Сервис";
+"swap.service.title" = "Сервис";
 
 // Swap Approving
 
@@ -359,15 +359,15 @@
 "market_discovery.filter_description.blockchain" = "Нативные криптовалюты в основных блокчейнах.";
 "market_discovery.filter_description.dexes" = "Децентрализованные криптовалютные биржи.";
 "market_discovery.filter_description.lending" = "Протоколы для кредитования и ссуд.";
-"market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
+"market_discovery.filter_description.privacy" = "Анонимные криптовалюты и решения для конфиденциальности.";
 "market_discovery.filter_description.scaling" = "Решения для ускорения транзакций в блокчейне.";
-"market_discovery.filter_description.oracles" = "Connecting real-world data to smart contracts.";
+"market_discovery.filter_description.oracles" = "Подключение данных реального мира к смарт-контрактам.";
 "market_discovery.filter_description.prediction_markets" = "Рынки для ставки на будущие события.";
 "market_discovery.filter_description.yield_aggregators" = "Решения для зарабатывания денег на мертвых криптоактивах.";
-"market_discovery.filter_description.stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
+"market_discovery.filter_description.stablecoins" = "Криптотокены, поддерживаемые в соотношении 1-1 с фиатной валютой.";
 "market_discovery.filter_description.tokenized_bitcoin" = "Криптотокены, поддерживаемые в соотношении 1-1 с ценой Bitcoin.";
 "market_discovery.filter_description.exchange_tokens" = "Токены централизованных бирж.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance, and hedging.";
+"market_discovery.filter_description.risk_management" = "Оценка рисков, страхование и хеджирование.";
 "market_discovery.filter_description.wallets" = "Токены криптовалютных кошельков.";
 "market_discovery.filter_description.synthetics" = "Платформы для создания децентрализованных синтетических активов.";
 "market_discovery.filter_description.index_funds" = "Активы, привязанные по цене к ряду токенов.";
@@ -375,7 +375,7 @@
 "market_discovery.filter_description.fundraising" = "Платформы для фандрайзинга и продажи токенов.";
 "market_discovery.filter_description.gaming" = "Криптопроекты в игровом и VR секторах.";
 "market_discovery.filter_description.infrastructure" = "Проекты по созданию инфраструктурных решений.";
-"market_discovery.filter_description.analytics" = "Token-powered analytics and investment instruments.";
+"market_discovery.filter_description.analytics" = "Аналитика токенов и инвестиционных инструментов.";
 "market_discovery.filter_description.storage" = "Децентрализованное хранилище данных.";
 "market_discovery.filter_description.identity" = "Децентрализованная идентификация.";
 "market_discovery.filter_description.yield_tokens" = "Прибыльные токены";
@@ -420,7 +420,7 @@
 "market.advanced_search.day" = "1 День";
 "market.advanced_search.week" = "1 Неделя";
 "market.advanced_search.week2" = "2 Недели";
-"market.advanced_search.month" = "1 месяц";
+"market.advanced_search.month" = "1 Месяц";
 "market.advanced_search.month6" = "6 Месяцев";
 "market.advanced_search.year" = "1 Год";
 
@@ -483,9 +483,9 @@
 "coin_page.favorited" = "Добавлено в контрольный список";
 "coin_page.unfavorited" = "Удалено из контрольного списка";
 
-"coin_page.major_holders" = "Основные владельцы";
-"coin_page.major_holders.chart.description" = "в 10 лучших кошельках";
-"coin_page.major_holders.top_wallets" = "Лучшие кошельки";
+"coin_page.major_holders" = "Основные Владельцы";
+"coin_page.major_holders.chart.description" = "в Топ-10 кошельках";
+"coin_page.major_holders.top_wallets" = "Топ Кошельки";
 "coin_page.major_holders.description" = "На графике выше показано % всех жетонов, находящихся в обороте топ-10 кошельков. Чем ниже это процентное соотношение, тем выше распределение коина.";
 "coin_page.major_holders.sync_error" = "Ошибка Синхронизации";
 
@@ -494,10 +494,10 @@
 "coin_page.tvl_rank.filters" = "Фильтры";
 "coin_page.tvl_rank.filters.all" = "Все";
 "coin_page.tvl_rank.sort_by" = "Сортировать по";
-"coin_page.tvl_rank.sort_by.highest_tvl" = "Наивысшей кап.";
-"coin_page.tvl_rank.sort_by.lowest_tvl" = "Наименьшей кап.";
+"coin_page.tvl_rank.sort_by.highest_tvl" = "Наивысшему TVL";
+"coin_page.tvl_rank.sort_by.lowest_tvl" = "Наименьшему TVL";
 
-"coin_page.security_parameters" = "Параметры безопасности";
+"coin_page.security_parameters" = "Параметры Безопасности";
 "coin_page.security_parameters.privacy" = "Приватность";
 "coin_page.security_parameters.issuance" = "Оформление";
 "coin_page.security_parameters.confiscation_resistance" = "Устойчивость к конфискации";
@@ -506,8 +506,8 @@
 "coin_page.security_parameters.level.low" = "Низкая";
 "coin_page.security_parameters.level.medium" = "Средняя";
 "coin_page.security_parameters.level.high" = "Высокая";
-"coin_page.security_parameters.issuance.decentralized" = "Децентрализованное";
-"coin_page.security_parameters.issuance.centralized" = "Централизованное";
+"coin_page.security_parameters.issuance.decentralized" = "Децентрализовано";
+"coin_page.security_parameters.issuance.centralized" = "Централизовано";
 "coin_page.security_parameters.resistance.yes" = "Да";
 "coin_page.security_parameters.resistance.no" = "Нет";
 
@@ -524,7 +524,7 @@
 "coin_page.info" = "Информация";
 
 "coin_page.audits" = "Аудиты";
-"coin_page.audits.issues" = "Проблемы";
+"coin_page.audits.issues" = "Запросы";
 "coin_page.audits.no_reports" = "Нет аудиторских отчетов";
 "coin_page.audits.sync_error" = "Ошибка Синхронизации";
 
@@ -542,14 +542,14 @@
 "transactions.receive" = "Получить";
 "transactions.send" = "Отправить";
 "transactions.approve" = "Подтвердить";
-"transactions.swap" = "Своп";
-"transactions.contract_call" = "Вызов контракта";
-"transactions.contract_creation" = "Создание контракта";
+"transactions.swap" = "Обмен";
+"transactions.contract_call" = "Вызов Контракта";
+"transactions.contract_creation" = "Создание Контракта";
 
-"transactions.to" = "Кому: %@";
+"transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
 
-"transactions.value.unlimited" = "неограниченное количество %@";
+"transactions.value.unlimited" = "неограниченно %@";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
@@ -764,9 +764,9 @@
 // Key Types
 
 "chart.time_duration.today" = "СГД";
-"chart.time_duration.day" = "24 Ч";
-"chart.time_duration.week" = "7 дней";
-"chart.time_duration.week2" = "2 недели";
+"chart.time_duration.day" = "24Ч";
+"chart.time_duration.week" = "7Д";
+"chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
@@ -793,7 +793,7 @@
 "chart.performance.week_changes" = "Изменения (за неделю)";
 "chart.performance.month_changes" = "Изменения (за месяц)";
 
-"chart.about.header" = "Информация о приложении";
+"chart.about.header" = "О Проекте";
 "chart.about.read_more" = "Подробнее";
 "chart.about.read_less" = "Свернуть";
 
