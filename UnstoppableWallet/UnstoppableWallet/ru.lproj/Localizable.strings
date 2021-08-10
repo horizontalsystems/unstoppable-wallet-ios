@@ -436,7 +436,7 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
-"market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном финансовом секторе.";
+"market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
 "market.global.tvl_in_defi.description" = "Историческое изменение в совокупной стоимости всех криптовалют, управляемых децентрализованными протоколами.";
 
 // Coin Page
@@ -453,24 +453,24 @@
 "coin_page.circulating_supply" = "В обороте";
 "coin_page.total_supply" = "Макс.Выпуск";
 "coin_page.dilluted_market_cap" = "Разводненная рын.кап.";
-"coin_page.genesis_date" = "Дата начала";
+"coin_page.genesis_date" = "Дата Старта";
 
 "coin_page.trading_volume" = "Объем Торговли";
 "coin_page.trading_volume.description" = "Историческое изменение усредненного ежедневного объема торговли для %@";
 "coin_page.markets" = "Рынки";
-"coin_page.funds_invested" = "Средства Инвестированы";
+"coin_page.funds_invested" = "Вложенные Средства";
 
 "coin_page.coin_markets" = "%@ Рынки";
 "coin_page.coin_markets.sort_by" = "Сортировать По";
-"coin_page.coin_markets.sort_by.highest_volume" = "Самый большой объем";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Самый маленький объем";
+"coin_page.coin_markets.sort_by.highest_volume" = "Наивысшему Обьему";
+"coin_page.coin_markets.sort_by.lowest_volume" = "Наименьшему Объему";
 
-"coin_page.tvl" = "Общая сумма заблокирована";
+"coin_page.tvl" = "Всего Залоченных Активов";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
 "coin_page.tvl_rank" = "Рейтинг TVL";
-"coin_page.tvl.description" = "Капитал, задепонированный на платформе в виде кредитного обеспечения или пула ликвидности.";
+"coin_page.tvl.description" = "Капитал, внесенный в платформу в виде кредитного обеспечения или пула ликвидности.";
 
-"coin_page.investor_data" = "Данные инвестора";
+"coin_page.investor_data" = "Данные Инвестора";
 
 "coin_page.category" = "Категория";
 "coin_page.contract" = "%@ Контракт";
@@ -478,10 +478,10 @@
 
 "coin_page.guide" = "Руководство";
 "coin_page.website" = "Веб-сайт";
-"coin_page.whitepaper" = "Белая бумага";
+"coin_page.whitepaper" = "Whitepaper";
 
-"coin_page.favorited" = "Добавлено в контрольный список";
-"coin_page.unfavorited" = "Удалено из контрольного списка";
+"coin_page.favorited" = "Добавлено в Список Отслеживаемых";
+"coin_page.unfavorited" = "Удалить из Списка Отслеживаемых";
 
 "coin_page.major_holders" = "Основные Владельцы";
 "coin_page.major_holders.chart.description" = "в Топ-10 кошельках";
@@ -499,7 +499,7 @@
 
 "coin_page.security_parameters" = "Параметры Безопасности";
 "coin_page.security_parameters.privacy" = "Приватность";
-"coin_page.security_parameters.issuance" = "Оформление";
+"coin_page.security_parameters.issuance" = "Выпуск";
 "coin_page.security_parameters.confiscation_resistance" = "Устойчивость к конфискации";
 "coin_page.security_parameters.censorship_resistance" = "Устойчивость к цензуре";
 
@@ -556,7 +556,7 @@
 
 // Transaction Info
 
-"tx_info.title" = "Детали транзакции";
+"tx_info.title" = "Информация о Транзакции";
 "tx_info.date" = "Дата";
 "tx_info.title_approval" = "Подтверждение Обмена";
 "tx_info.status.pending" = "В обработке";
@@ -576,12 +576,12 @@
 "tx_info.recipient_hash" = "Получатель";
 "tx_info.raw_transaction" = "Неподтвержденная Транзакция";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Служба";
+"tx_info.service" = "Сервис";
 "tx_info.view_on" = "Посмотреть на %@";
-"tx_info.you_pay" = "Вы платите";
-"tx_info.you_get" = "Вы получите";
-"tx_info.you_paid" = "Вы заплатили";
-"tx_info.you_got" = "Вы получили";
+"tx_info.you_pay" = "Вы Платите";
+"tx_info.you_get" = "Вы Получите";
+"tx_info.you_paid" = "Вы Заплатили";
+"tx_info.you_got" = "Вы Получили";
 "tx_info.price" = "Цена";
 
 // Settings
@@ -590,7 +590,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
-"settings.experimental_features" = "Экспериментальные функции";
+"settings.experimental_features" = "Экспериментальные Функции";
 "settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -770,10 +770,10 @@
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
 "chart.time_duration.halyear" = "6М";
-"chart.time_duration.year" = "1 год";
-"chart.time_duration.year2" = "2 года";
+"chart.time_duration.year" = "1Г";
+"chart.time_duration.year2" = "2Г";
 
-"chart.market_cap" = "Рыночная капитализация";
+"chart.market_cap" = "Рын. Капитализация";
 "chart.market_cap.thousand" = "%@ к";
 "chart.market_cap.million" = "%@ млн.";
 "chart.market_cap.billion" = "%@ млр.";
@@ -785,13 +785,13 @@
 "chart.price_indicator_range.year" = "Диапазон за 52 недели";
 
 "chart.market.header" = "Рынок";
-"chart.market.market_cap" = "Рыночная капитализация";
-"chart.market.volume" = "Объем (за 24 ч)";
+"chart.market.market_cap" = "Рын. Капитализация";
+"chart.market.volume" = "Объем (24ч)";
 "chart.market.circulation" = "В обороте";
-"chart.market.total_supply" = "Общее предложение";
+"chart.market.total_supply" = "Макс.выпуск";
 
-"chart.performance.week_changes" = "Изменения (за неделю)";
-"chart.performance.month_changes" = "Изменения (за месяц)";
+"chart.performance.week_changes" = "Изменения (за 1Н)";
+"chart.performance.month_changes" = "Изменения (за 1М)";
 
 "chart.about.header" = "О Проекте";
 "chart.about.read_more" = "Подробнее";
@@ -840,12 +840,12 @@
 "intro.next" = "Далее";
 "intro.start" = "Начать";
 "intro.brand.description" = "Be Unstoppable";
-"intro.unchain_assets.title" = "Вывести активы";
-"intro.unchain_assets.description" = "Не закрывайтесь и не позволяйте другим делать это с вами";
+"intro.unchain_assets.title" = "Освободите Активы";
+"intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
 "intro.go_borderless.title" = "Освободите себя!";
-"intro.go_borderless.description" = "Преодолейте условные препятствия и получите глобальный доступ к рынкам";
-"intro.stay_private.title" = "Сохраняйте конфиденциальность";
-"intro.stay_private.description" = "Не допускайте глобальную утечку ваших личных и финансовых данных";
+"intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте Конфиденциальность";
+"intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
 
@@ -855,9 +855,9 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_type" = "Тип коина";
+"add_token.coin_type" = "Тип Монеты";
 "add_token.coin_name" = "Название Токена";
-"add_token.coin_code" = "Код коина";
+"add_token.coin_code" = "Код Монеты";
 "add_token.decimal" = "Десятичный";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
@@ -883,7 +883,7 @@
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
 "wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
-"wallet_connect.no_connection" = "Не удается подключить кошелек";
+"wallet_connect.no_connection" = "Wallet Connect не отвечает";
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
@@ -947,8 +947,8 @@
 
 "manage_account.name" = "Имя";
 "manage_account.show_recovery_phrase" = "Показать Фразу";
-"manage_account.backup_recovery_phrase" = "Резервная фраза";
-"manage_account.network_settings" = "Настройки сети";
+"manage_account.backup_recovery_phrase" = "Резервная Фраза";
+"manage_account.network_settings" = "Настройки Сети";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -960,4 +960,4 @@
 
 // Network Settings
 
-"network_settings.title" = "Настройки сети";
+"network_settings.title" = "Настройки Сети";
