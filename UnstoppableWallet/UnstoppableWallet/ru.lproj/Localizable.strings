@@ -519,7 +519,7 @@
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "Токены не могут быть конфискованы, если они хранятся в некастодиальном кошельке.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "Токены могут быть конфискованы или подделаны эмитентом.";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "Владелец токена не подвергается цензуре во время транзакции.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "Владелец токена не подвергается цензуре во время транзакции.";
+"coin_page.security_parameters.censorship_resistance.description.no" = "Владелец токена может подвергаться цензуре во время транзакции.";
 
 "coin_page.info" = "Информация";
 
@@ -535,7 +535,7 @@
 "transactions.filter_all" = "Все";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
-"transactions.processing" = "В обработке";
+"transactions.processing" = "В Процессе";
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
@@ -915,7 +915,7 @@
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
 "status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Транзакции, отправленные с рекомендованной или более высокой комиссией, обычно обрабатываются в течение 10 минут. Транзакции, отправленные с низкой комиссией, могут обрабатываться в течение нескольких часов или дней и даже отклоняться.";
-"status_info.processing.title" = "В процессе";
+"status_info.processing.title" = "В Процессе";
 "status_info.processing.content" = "Транзакция уже включена в блокчейн, но пока не обработана. На данном этапе транзакции считаются завершенными для небольших платежей. Что касается завершения обработки более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
