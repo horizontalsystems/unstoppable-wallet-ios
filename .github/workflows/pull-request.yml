@@ -2,6 +2,7 @@ name: Notify to telegram
 
 on:
   pull_request:
+    branches: [ version/* ]
 
 jobs:
   notify:
