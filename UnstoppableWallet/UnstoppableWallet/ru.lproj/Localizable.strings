@@ -300,8 +300,8 @@
 "market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
 "market.category.overview" = "Обзор";
-"market.category.discovery" = "Курсы";
-"market.category.watchlist" = "Отслеживаемые";
+"market.category.discovery" = "Токены";
+"market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
 "market.24h_volume" = "Объем торгов за 24 ч";
 "market.btc_dominance" = "Доминирование BTC";
@@ -381,7 +381,7 @@
 "market_discovery.filter_description.yield_tokens" = "Прибыльные токены";
 
 
-"market_watchlist.empty.caption" = "У вас нет отслеживаемых токенов. \nВы можете добавить сюда токены с помощью значка со звездочкойна странице токенов.";
+"market_watchlist.empty.caption" = "У вас нет токенов в избранном. \nВы можете добавить сюда токены с помощью значка \"звездочка\" на странице токенов.";
 
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
@@ -480,8 +480,8 @@
 "coin_page.website" = "Веб-сайт";
 "coin_page.whitepaper" = "Whitepaper";
 
-"coin_page.favorited" = "Добавлено в Список Отслеживаемых";
-"coin_page.unfavorited" = "Удалить из Списка Отслеживаемых";
+"coin_page.favorited" = "Добавлено в Избранное";
+"coin_page.unfavorited" = "Удалить из Избранного";
 
 "coin_page.major_holders" = "Основные Владельцы";
 "coin_page.major_holders.chart.description" = "в Топ-10 кошельках";
