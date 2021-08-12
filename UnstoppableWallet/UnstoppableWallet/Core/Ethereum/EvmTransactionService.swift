@@ -19,10 +19,8 @@ protocol IEvmTransactionFeeService {
 }
 
 class EvmTransactionService {
-    let customFeeRange: ClosedRange<Int>
-
     private let evmKit: Kit
-    private let feeRateProvider: IFeeRateProvider
+    private let feeRateProvider: ICustomRangedFeeRateProvider
     let gasLimitSurchargePercent: Int
 
     private var transactionData: TransactionData?
@@ -46,19 +44,14 @@ class EvmTransactionService {
 
     private var disposeBag = DisposeBag()
 
-    init(evmKit: Kit, feeRateProvider: IFeeRateProvider, gasLimitSurchargePercent: Int = 0, customFeeRange: ClosedRange<Int> = 1...400) {
+    init(evmKit: Kit, feeRateProvider: ICustomRangedFeeRateProvider, gasLimitSurchargePercent: Int = 0, customFeeRange: ClosedRange<Int> = 1...400) {
         self.evmKit = evmKit
         self.feeRateProvider = feeRateProvider
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
-        self.customFeeRange = customFeeRange
     }
 
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
-        var recommendedSingle: Single<Int> = feeRateProvider.feeRate(priority: .recommended).map { [weak self] in
-            print("we get recommended = \($0)")
-            self?.recommendedGasPrice = max(self?.customFeeRange.lowerBound ?? 1, $0)
-            return $0
-        }
+        var recommendedSingle: Single<Int> = feeRateProvider.feeRate(priority: .recommended)
 
         switch gasPriceType {
         case .recommended:
@@ -147,6 +140,10 @@ class EvmTransactionService {
 }
 
 extension EvmTransactionService: IEvmTransactionFeeService {
+
+    var customFeeRange: ClosedRange<Int> {
+        feeRateProvider.customFeeRange
+    }
 
     var hasEstimatedFee: Bool {
         gasLimitSurchargePercent != 0
