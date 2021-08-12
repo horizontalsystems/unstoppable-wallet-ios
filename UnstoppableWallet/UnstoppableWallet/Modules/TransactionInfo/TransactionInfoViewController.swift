@@ -13,15 +13,18 @@ class TransactionInfoViewController: ThemeViewController {
     private let viewModel: TransactionInfoViewModel
     private let pageTitle: String
     private var urlManager: IUrlManager
+    private let adapter: ITransactionsAdapter
 
     private var viewItems = [[TransactionInfoModule.ViewItem]]()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: IUrlManager) {
+    init(adapter: ITransactionsAdapter, viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: IUrlManager) {
+        self.adapter = adapter
         self.viewModel = viewModel
         self.pageTitle = pageTitle
         self.urlManager = urlManager
+
         viewItems = viewModel.viewItems
 
         super.init()
@@ -61,6 +64,10 @@ class TransactionInfoViewController: ThemeViewController {
             self?.tableView.reload()
         }
 
+        subscribe(disposeBag, viewModel.actionDriver) { [weak self] action, transactionHash in
+            self?.openResend(action: action, transactionHash: transactionHash)
+        }
+
         tableView.reload()
     }
 
@@ -72,6 +79,15 @@ class TransactionInfoViewController: ThemeViewController {
         let viewController = TransactionStatusInfoViewController()
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
+
+    private func openResend(action: TransactionInfoModule.OptionAction, transactionHash: String) {
+        guard let viewController = SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: transactionHash) else {
+            return
+        }
+
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
 
     private func pendingStatusCell(rowInfo: RowInfo, progress: Double, label: String) -> RowProtocol {
         Row<C24Cell>(
@@ -141,6 +157,23 @@ class TransactionInfoViewController: ThemeViewController {
         case .processing(let progress):
             return pendingStatusCell(rowInfo: rowInfo, progress: progress * 0.8 + 0.2, label: statusText)
         }
+    }
+
+    private func optionsRow(viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
+        Row<A1Cell>(
+                id: "options",
+                hash: "options",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+                    cell.title = "Options"
+                    cell.titleImage = UIImage(named: "globe_20")
+                },
+                action: { [weak self] _ in
+                    self?.viewModel.didTapOption(action: .speedUp)
+                }
+        )
     }
 
     private func fromToRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
@@ -404,6 +437,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle ?? "")
         case let .amount(coinAmount, currencyAmount, incoming): return amountRow(rowInfo: rowInfo, coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: incoming)
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
+        case let .options(actions: viewItems): return optionsRow(viewItems: viewItems)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
         case let .from(value): return fromRow(rowInfo: rowInfo, value: value)
         case let .to(value): return toRow(rowInfo: rowInfo, value: value)

@@ -15,6 +15,17 @@ class TransactionInfoViewItemFactory {
         ]
     }
 
+    private func evmResendItem(status: TransactionStatus) -> TransactionInfoModule.ViewItem? {
+        switch status {
+        case .pending:
+            return .options(actions: [
+                TransactionInfoModule.OptionViewItem(title: "SpeedUp", active: true, action: .speedUp),
+                TransactionInfoModule.OptionViewItem(title: "Cancel", active: true, action: .cancel)
+            ])
+        default: return nil
+        }
+    }
+
     private func evmFeeItem(coinValue: CoinValue, rate: CurrencyValue?, status: TransactionStatus) -> TransactionInfoModule.ViewItem {
         let value = feeString(coinValue: coinValue, rate: rate)
         let title: String
@@ -96,6 +107,9 @@ class TransactionInfoViewItemFactory {
             let coinRate = rates[evmOutgoing.value.coin]
 
             middleSectionItems.append(.status(status: status))
+            if let resendItem = evmResendItem(status: status) {
+                middleSectionItems.append(resendItem)
+            }
             middleSectionItems.append(evmFeeItem(coinValue: evmOutgoing.fee, rate: rates[evmOutgoing.fee.coin], status: status))
 
             if let rate = coinRate {
@@ -137,6 +151,9 @@ class TransactionInfoViewItemFactory {
             let coinRate = rates[approve.value.coin]
 
             middleSectionItems.append(.status(status: status))
+            if let resendItem = evmResendItem(status: status) {
+                middleSectionItems.append(resendItem)
+            }
             middleSectionItems.append(evmFeeItem(coinValue: approve.fee, rate: rates[approve.fee.coin], status: status))
 
             if let rate = coinRate {

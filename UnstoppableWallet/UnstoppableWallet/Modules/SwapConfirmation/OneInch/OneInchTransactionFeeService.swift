@@ -28,6 +28,7 @@ class OneInchTransactionFeeService {
     private var disposeBag = DisposeBag()
 
     private static let gasLimitSurchargePercent = 25
+    let customFeeRange: ClosedRange<Int> = 1...400
 
     private let provider: OneInchProvider
     private(set) var parameters: OneInchSwapParameters

@@ -4,6 +4,8 @@ import RxSwift
 import RxRelay
 
 protocol IEvmTransactionFeeService {
+    var customFeeRange: ClosedRange<Int> { get }
+
     var hasEstimatedFee: Bool { get }
     var transactionStatus: DataStatus<EvmTransactionService.Transaction> { get }
     var transactionStatusObservable: Observable<DataStatus<EvmTransactionService.Transaction>> { get }
@@ -17,6 +19,8 @@ protocol IEvmTransactionFeeService {
 }
 
 class EvmTransactionService {
+    let customFeeRange: ClosedRange<Int>
+
     private let evmKit: Kit
     private let feeRateProvider: IFeeRateProvider
     let gasLimitSurchargePercent: Int
@@ -42,15 +46,17 @@ class EvmTransactionService {
 
     private var disposeBag = DisposeBag()
 
-    init(evmKit: Kit, feeRateProvider: IFeeRateProvider, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: Kit, feeRateProvider: IFeeRateProvider, gasLimitSurchargePercent: Int = 0, customFeeRange: ClosedRange<Int> = 1...400) {
         self.evmKit = evmKit
         self.feeRateProvider = feeRateProvider
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
+        self.customFeeRange = customFeeRange
     }
 
     private func gasPriceSingle(gasPriceType: GasPriceType) -> Single<Int> {
         var recommendedSingle: Single<Int> = feeRateProvider.feeRate(priority: .recommended).map { [weak self] in
-            self?.recommendedGasPrice = $0
+            print("we get recommended = \($0)")
+            self?.recommendedGasPrice = max(self?.customFeeRange.lowerBound ?? 1, $0)
             return $0
         }
 

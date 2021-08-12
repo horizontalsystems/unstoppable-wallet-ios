@@ -11,7 +11,7 @@ struct TransactionInfoModule {
         let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
         let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, transaction: transaction, wallet: wallet)
-        let viewController = TransactionInfoViewController(viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
+        let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
         return viewController
     }
@@ -19,11 +19,22 @@ struct TransactionInfoModule {
 }
 
 extension TransactionInfoModule {
+    enum OptionAction {
+        case speedUp
+        case cancel
+    }
+
+    struct OptionViewItem {
+        let title: String
+        let active: Bool
+        let action: OptionAction
+    }
 
     enum ViewItem {
         case actionTitle(title: String, subTitle: String?)
         case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
         case status(status: TransactionStatus)
+        case options(actions: [OptionViewItem])
         case date(date: Date)
         case from(value: String)
         case to(value: String)

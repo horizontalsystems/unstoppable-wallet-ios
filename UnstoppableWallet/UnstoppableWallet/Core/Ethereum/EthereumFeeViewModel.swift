@@ -3,7 +3,6 @@ import RxRelay
 import RxCocoa
 
 class EthereumFeeViewModel {
-    private let customFeeRange: ClosedRange<Int> = 1...400
     private let customFeeUnit = "gwei"
 
     private let service: IEvmTransactionFeeService
@@ -74,7 +73,7 @@ class EthereumFeeViewModel {
                 return
             }
 
-            feeSliderRelay.accept(SendFeeSliderViewItem(initialValue: gwei(wei: gasPrice), range: customFeeRange, unit: customFeeUnit))
+            feeSliderRelay.accept(SendFeeSliderViewItem(initialValue: gwei(wei: gasPrice), range: service.customFeeRange, unit: customFeeUnit))
         }
     }
 
@@ -151,7 +150,7 @@ extension EthereumFeeViewModel: ISendFeePriorityViewModel {
                 if case .completed(let transaction) = service.transactionStatus {
                     return transaction.gasData.gasPrice
                 } else {
-                    return wei(gwei: customFeeRange.lowerBound)
+                    return wei(gwei: service.customFeeRange.lowerBound)
                 }
             }()
 

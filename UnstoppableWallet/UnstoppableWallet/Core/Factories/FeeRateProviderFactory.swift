@@ -19,4 +19,12 @@ class FeeRateProviderFactory {
         }
     }
 
+    func forcedProvider(coinType: CoinType, multiply: Double) -> IFeeRateProvider? {
+        switch coinType {
+        case .ethereum: return EthereumFeeRateProvider(feeRateProvider: feeRateProvider, multiply: multiply)
+        case .binanceSmartChain: return BinanceSmartChainFeeRateProvider(feeRateProvider: feeRateProvider, multiply: multiply)
+        default: return nil
+        }
+    }
+
 }
