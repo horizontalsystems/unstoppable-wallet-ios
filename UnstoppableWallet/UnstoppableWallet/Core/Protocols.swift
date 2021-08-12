@@ -380,6 +380,10 @@ protocol IFeeRateProvider {
     func feeRate(priority: FeeRatePriority) -> Single<Int>
 }
 
+protocol ICustomRangedFeeRateProvider: IFeeRateProvider {
+    var customFeeRange: ClosedRange<Int> { get }
+}
+
 protocol IEncryptionManager {
     func encrypt(data: Data) throws -> Data
     func decrypt(data: Data) throws -> Data

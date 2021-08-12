@@ -19,10 +19,10 @@ class FeeRateProviderFactory {
         }
     }
 
-    func forcedProvider(coinType: CoinType, multiply: Double) -> IFeeRateProvider? {
+    func forcedProvider(coinType: CoinType, customFeeRange: ClosedRange<Int>, multiply: Double) -> ICustomRangedFeeRateProvider? {
         switch coinType {
-        case .ethereum: return EthereumFeeRateProvider(feeRateProvider: feeRateProvider, multiply: multiply)
-        case .binanceSmartChain: return BinanceSmartChainFeeRateProvider(feeRateProvider: feeRateProvider, multiply: multiply)
+        case .ethereum: return EthereumFeeRateProvider(feeRateProvider: feeRateProvider, customFeeRange: customFeeRange, multiply: multiply)
+        case .binanceSmartChain: return BinanceSmartChainFeeRateProvider(feeRateProvider: feeRateProvider, customFeeRange: customFeeRange, multiply: multiply)
         default: return nil
         }
     }

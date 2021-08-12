@@ -16,7 +16,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         case .bscMainNet: feeCoin = App.shared.coinKit.coin(type: .binanceSmartChain)
         }
 
-        guard let coin = feeCoin, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let coin = feeCoin, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 

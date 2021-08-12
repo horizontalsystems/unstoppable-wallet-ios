@@ -60,7 +60,8 @@ struct SendEvmConfirmationModule {
     }
 
     static func viewController(evmKit: EthereumKit.Kit, sendData: SendEvmData) -> UIViewController? {
-        guard let coin = coin(networkType: evmKit.networkType), let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let coin = coin(networkType: evmKit.networkType),
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
@@ -81,7 +82,11 @@ struct SendEvmConfirmationModule {
             return nil
         }
 
-        guard let coin = coin(networkType: adapter.evmKit.networkType), let feeRateProvider = App.shared.feeRateProviderFactory.forcedProvider(coinType: coin.type, multiply: Self.forceMultiplier) else {
+        let gasPrice = fullTransaction.transaction.gasPrice
+        let feeRange = gasPrice...(4 * gasPrice)
+        
+        guard let coin = coin(networkType: adapter.evmKit.networkType),
+              let feeRateProvider = App.shared.feeRateProviderFactory.forcedProvider(coinType: coin.type, customFeeRange: feeRange, multiply: Self.forceMultiplier) else {
             return nil
         }
 
@@ -98,11 +103,8 @@ struct SendEvmConfirmationModule {
         }
 
 
-        let gasPrice = fullTransaction.transaction.gasPrice / 1_000_000_000
-        print("Tx: GasPrice: \(gasPrice)")
-
         let coinServiceFactory = EvmCoinServiceFactory(baseCoin: coin, coinKit: App.shared.coinKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
-        let transactionService = EvmTransactionService(evmKit: adapter.evmKit, feeRateProvider: feeRateProvider, customFeeRange: (gasPrice...(4 * gasPrice)))
+        let transactionService = EvmTransactionService(evmKit: adapter.evmKit, feeRateProvider: feeRateProvider)
         let service = SendEvmTransactionService(sendData: sendData, evmKit: adapter.evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)

@@ -28,11 +28,10 @@ class OneInchTransactionFeeService {
     private var disposeBag = DisposeBag()
 
     private static let gasLimitSurchargePercent = 25
-    let customFeeRange: ClosedRange<Int> = 1...400
 
     private let provider: OneInchProvider
     private(set) var parameters: OneInchSwapParameters
-    private let feeRateProvider: IFeeRateProvider
+    private let feeRateProvider: ICustomRangedFeeRateProvider
 
     private let transactionStatusRelay = PublishRelay<DataStatus<EvmTransactionService.Transaction>>()
     private(set) var transactionStatus: DataStatus<EvmTransactionService.Transaction> = .failed(EvmTransactionService.GasDataError.noTransactionData) {
@@ -53,7 +52,7 @@ class OneInchTransactionFeeService {
     private var recommendedGasPrice: Int?
     private let warningOfStuckRelay = PublishRelay<Bool>()
 
-    init(provider: OneInchProvider, parameters: OneInchSwapParameters, feeRateProvider: IFeeRateProvider) {
+    init(provider: OneInchProvider, parameters: OneInchSwapParameters, feeRateProvider: ICustomRangedFeeRateProvider) {
         self.provider = provider
         self.parameters = parameters
         self.feeRateProvider = feeRateProvider
@@ -134,6 +133,10 @@ class OneInchTransactionFeeService {
 }
 
 extension OneInchTransactionFeeService: IEvmTransactionFeeService {
+
+    var customFeeRange: ClosedRange<Int> {
+        feeRateProvider.customFeeRange
+    }
 
     func set(transactionData: TransactionData?) {
 
