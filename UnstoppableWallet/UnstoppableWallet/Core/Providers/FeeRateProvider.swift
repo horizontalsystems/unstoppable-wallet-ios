@@ -115,12 +115,21 @@ class EthereumFeeRateProvider: IFeeRateProvider {
     private let upper = 400_000_000_000
 
     private let feeRateProvider: FeeRateProvider
+    private let multiply: Double?
 
-    init(feeRateProvider: FeeRateProvider) {
+    init(feeRateProvider: FeeRateProvider, multiply: Double? = nil) {
         self.feeRateProvider = feeRateProvider
+        self.multiply = multiply
     }
 
-    var recommendedFeeRate: Single<Int> { feeRateProvider.ethereumGasPrice }
+    var recommendedFeeRate: Single<Int> {
+        if let multiply = multiply {
+            return feeRateProvider.ethereumGasPrice.map { Int(ceil(Double($0) * multiply)) }
+        } else {
+            return feeRateProvider.ethereumGasPrice
+        }
+    }
+
     var feeRatePriorityList: [FeeRatePriority] {
         [.recommended, .custom(value: lower, range: lower...upper)]
     }
@@ -132,12 +141,21 @@ class BinanceSmartChainFeeRateProvider: IFeeRateProvider {
     private let upper = 400_000_000_000
 
     private let feeRateProvider: FeeRateProvider
+    private let multiply: Double?
 
-    init(feeRateProvider: FeeRateProvider) {
+    init(feeRateProvider: FeeRateProvider, multiply: Double? = nil) {
         self.feeRateProvider = feeRateProvider
+        self.multiply = multiply
     }
 
-    var recommendedFeeRate: Single<Int> { feeRateProvider.binanceSmartChainGasPrice }
+    var recommendedFeeRate: Single<Int> {
+        if let multiply = multiply {
+            return feeRateProvider.binanceSmartChainGasPrice.map { Int(ceil(Double($0) * multiply)) }
+        } else {
+            return feeRateProvider.binanceSmartChainGasPrice
+        }
+    }
+
     var feeRatePriorityList: [FeeRatePriority] {
         [.recommended, .custom(value: lower, range: lower...upper)]
     }

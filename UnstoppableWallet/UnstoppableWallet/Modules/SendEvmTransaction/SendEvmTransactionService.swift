@@ -186,7 +186,8 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
         evmKit.sendSingle(
                         transactionData: transaction.transactionData,
                         gasPrice: transaction.gasData.gasPrice,
-                        gasLimit: transaction.gasData.gasLimit
+                        gasLimit: transaction.gasData.gasLimit,
+                        nonce: transaction.transactionData.nonce
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in

@@ -13,6 +13,7 @@ class TransactionInfoViewModel {
 
     private var rates = [Coin: CurrencyValue]()
     private var viewItemsRelay = PublishRelay<[[TransactionInfoModule.ViewItem]]>()
+    private var actionRelay = PublishRelay<(TransactionInfoModule.OptionAction, String)>()
     private var explorerViewItem: TransactionInfoModule.ViewItem
 
     init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transaction: TransactionRecord, wallet: TransactionWallet) {
@@ -132,8 +133,16 @@ extension TransactionInfoViewModel {
         viewItemsRelay.asSignal()
     }
 
+    var actionDriver: Signal<(TransactionInfoModule.OptionAction, String)> {
+        actionRelay.asSignal()
+    }
+
     var rawTransaction: String? {
         service.rawTransaction(hash: transaction.transactionHash)
+    }
+
+    func didTapOption(action: TransactionInfoModule.OptionAction) {
+        actionRelay.accept((action, transaction.transactionHash))
     }
 
 }

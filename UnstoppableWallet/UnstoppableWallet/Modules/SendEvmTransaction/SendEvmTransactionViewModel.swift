@@ -145,10 +145,10 @@ class SendEvmTransactionViewModel {
 
         switch decoration {
         case let method as TransferMethodDecoration:
-            return eip20TransferItems(to: method.to, value: method.value, contractAddress: transactionData.to, additionalInfo: additionalInfo)
+            return eip20TransferItems(to: method.to, value: method.value, contractAddress: transactionData.to, nonce: transactionData.nonce, additionalInfo: additionalInfo)
 
         case let method as ApproveMethodDecoration:
-            return eip20ApproveItems(spender: method.spender, value: method.value, contractAddress: transactionData.to)
+            return eip20ApproveItems(spender: method.spender, value: method.value, contractAddress: transactionData.to, nonce: transactionData.nonce)
 
         case let method as RecognizedMethodDecoration:
             return recognizedMethodItems(transactionData: transactionData, method: method.method, arguments: method.arguments)
@@ -175,7 +175,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20TransferItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+    private func eip20TransferItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -188,11 +188,14 @@ class SendEvmTransactionViewModel {
         let addressValue = to.eip55
         let addressTitle = additionalInfo?.sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
         viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
+        if let nonce = nonce {
+            viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
+        }
 
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20ApproveItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address) -> [SectionViewItem]? {
+    private func eip20ApproveItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -200,11 +203,15 @@ class SendEvmTransactionViewModel {
         let addressValue = spender.eip55
         let addressTitle = TransactionInfoAddressMapper.map(addressValue)
 
-        let viewItems: [ViewItem] = [
+        var viewItems: [ViewItem] = [
             .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.coin.title),
             .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .regular),
             .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
+
+        if let nonce = nonce {
+            viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
+        }
 
         return [SectionViewItem(viewItems: viewItems)]
     }
@@ -347,6 +354,7 @@ class SendEvmTransactionViewModel {
             youPayItem,
             .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
             .address(title: "To", valueTitle: addressTitle, value: addressValue),
+            transactionData.nonce.map { .value(title: "send.confirmation.nonce".localized, value: $0.description, type: .regular) },
             inputItem
         ].compactMap { $0 }
 
