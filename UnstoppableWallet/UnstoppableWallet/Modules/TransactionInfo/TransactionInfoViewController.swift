@@ -52,6 +52,7 @@ class TransactionInfoViewController: ThemeViewController {
         tableView.registerCell(forClass: D7MultiLineCell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: D10Cell.self)
+        tableView.registerCell(forClass: D10SecondaryCell.self)
         tableView.registerCell(forClass: CMultiLineCell.self)
         tableView.registerCell(forClass: C4MultiLineCell.self)
         tableView.registerCell(forClass: C6Cell.self)
@@ -64,7 +65,7 @@ class TransactionInfoViewController: ThemeViewController {
             self?.tableView.reload()
         }
 
-        subscribe(disposeBag, viewModel.actionDriver) { [weak self] action, transactionHash in
+        subscribe(disposeBag, viewModel.resendActionDriver) { [weak self] action, transactionHash in
             self?.openResend(action: action, transactionHash: transactionHash)
         }
 
@@ -80,7 +81,7 @@ class TransactionInfoViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-    private func openResend(action: TransactionInfoModule.OptionAction, transactionHash: String) {
+    private func openResend(action: TransactionInfoModule.Option, transactionHash: String) {
         guard let viewController = SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: transactionHash) else {
             return
         }
@@ -160,18 +161,20 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func optionsRow(viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
-        Row<A1Cell>(
+        Row<D10SecondaryCell>(
                 id: "options",
                 hash: "options",
                 height: .heightCell48,
                 autoDeselect: true,
-                bind: { cell, _ in
+                bind: { [weak self] cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
                     cell.title = "Options"
-                    cell.titleImage = UIImage(named: "globe_20")
-                },
-                action: { [weak self] _ in
-                    self?.viewModel.didTapOption(action: .speedUp)
+                    cell.set(viewItems: viewItems.map { D10SecondaryCell.ViewItem(title: $0.title, enabled: $0.active) })
+                    cell.onTapButton = { index in
+                        if viewItems.count > index {
+                            self?.viewModel.didTapOption(action: viewItems[index].option)
+                        }
+                    }
                 }
         )
     }

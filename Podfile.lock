@@ -335,7 +335,7 @@ DEPENDENCIES:
   - Down
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
-  - EthereumKit.swift (from `../ethereum-kit-ios/`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -448,7 +448,7 @@ EXTERNAL SOURCES:
   EthereumABI:
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :path: "../ethereum-kit-ios/"
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
@@ -513,7 +513,7 @@ CHECKOUT OPTIONS:
     :commit: 2959a41846593a337824fc9d47f85260e9315d73
     :git: https://github.com/horizontalsystems/coin-kit-ios
   ComponentKit.swift:
-    :commit: 220903b9cfb9daa3fc7ec8cc3b4455cf5068a45e
+    :commit: 45cd98b1f2b70f69a2f500b2611a00d68973477e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 5d52b07ea4775924b2ded02e7a9667139747a59e
@@ -527,6 +527,9 @@ CHECKOUT OPTIONS:
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
+  EthereumKit.swift:
+    :commit: ef1787de139eea07a2a7836c297188f3e51f3880
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 763394a92bdf091517376776bccecf9e7edbb49f
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -672,6 +675,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: 7013e3b93f5749d42bb65bebb532c1c62a916e8e
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 5e103df8e65d8021944ae84e0f8bf94f13010e9f
+PODFILE CHECKSUM: ea7b629535532cca82219650f7f0c627d34140b0
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.10.1
