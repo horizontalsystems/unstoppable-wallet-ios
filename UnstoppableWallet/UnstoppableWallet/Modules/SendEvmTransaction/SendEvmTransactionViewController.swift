@@ -22,6 +22,8 @@ class SendEvmTransactionViewController: ThemeViewController {
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private var isLoaded = false
 
+    var topDescription: String?
+
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
         self.transactionViewModel = transactionViewModel
 
@@ -58,6 +60,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -190,9 +193,19 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
-        Section(
+        var headerState: ViewState<BottomDescriptionHeaderFooterView>?
+
+        if index == 0, let topDescription = topDescription?.localized {
+            headerState = .cellType(hash: "top_description", binder: { view in
+                view.bind(text: topDescription)
+            }, dynamicHeight: { [weak self] containerWidth in
+                BottomDescriptionHeaderFooterView.height(containerWidth: self?.view.width ?? 0, text: topDescription)
+            })
+        }
+
+        return Section(
                 id: "section_\(index)",
-                headerState: .margin(height: .margin12),
+                headerState: headerState ?? .margin(height: .margin12),
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1)
                 }

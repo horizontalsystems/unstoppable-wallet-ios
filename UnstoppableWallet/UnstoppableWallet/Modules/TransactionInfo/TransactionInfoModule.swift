@@ -19,15 +19,37 @@ struct TransactionInfoModule {
 }
 
 extension TransactionInfoModule {
-    enum OptionAction {
+
+    enum Option {
         case speedUp
         case cancel
+
+        var confirmTitle: String {
+            switch self {
+            case .speedUp: return "tx_info.options.speed_up"
+            case .cancel: return "tx_info.options.cancel"
+            }
+        }
+
+        var confirmButtonTitle: String {
+            switch self {
+            case .speedUp: return "send.confirmation.resend_button"
+            case .cancel: return "send.confirmation.cancel_button"
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .speedUp: return "send.confirmation.resend_description"
+            case .cancel: return "send.confirmation.cancel_description"
+            }
+        }
     }
 
     struct OptionViewItem {
         let title: String
         let active: Bool
-        let action: OptionAction
+        let option: Option
     }
 
     enum ViewItem {

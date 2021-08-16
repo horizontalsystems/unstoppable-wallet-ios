@@ -19,8 +19,8 @@ class TransactionInfoViewItemFactory {
         switch status {
         case .pending:
             return .options(actions: [
-                TransactionInfoModule.OptionViewItem(title: "SpeedUp", active: true, action: .speedUp),
-                TransactionInfoModule.OptionViewItem(title: "Cancel", active: true, action: .cancel)
+                TransactionInfoModule.OptionViewItem(title: "tx_info.options.speed_up".localized, active: true, option: .speedUp),
+                TransactionInfoModule.OptionViewItem(title: "tx_info.options.cancel".localized, active: true, option: .cancel)
             ])
         default: return nil
         }

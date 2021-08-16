@@ -75,7 +75,7 @@ struct SendEvmConfirmationModule {
         return SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
     }
 
-    static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.OptionAction, transactionHash: String) -> UIViewController? {
+    static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.Option, transactionHash: String) -> UIViewController? {
         guard let adapter = adapter as? EvmTransactionsAdapter,
               let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.stripHexPrefix())),
               let toAddress = fullTransaction.transaction.to else {
@@ -110,7 +110,12 @@ struct SendEvmConfirmationModule {
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)
 
-        return SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        let viewController = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        viewController.confirmationTitle = action.confirmTitle
+        viewController.confirmationButtonTitle = action.confirmButtonTitle
+        viewController.topDescription = action.description
+
+        return viewController
     }
 
 }
