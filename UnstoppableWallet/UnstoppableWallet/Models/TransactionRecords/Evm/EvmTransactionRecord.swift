@@ -6,7 +6,7 @@ class EvmTransactionRecord: TransactionRecord {
     let foreignTransaction: Bool
     let fee: CoinValue
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin, foreignTransaction: Bool = false) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: Coin, foreignTransaction: Bool = false) {
         let transaction = fullTransaction.transaction
         let receipt = fullTransaction.receiptWithLogs?.receipt
         let txHash = transaction.hash.toHexString()
@@ -23,6 +23,7 @@ class EvmTransactionRecord: TransactionRecord {
         fee = CoinValue(coin: baseCoin, value: feeDecimal)
 
         super.init(
+                source: source,
                 uid: txHash,
                 transactionHash: txHash,
                 transactionIndex: receipt?.transactionIndex ?? 0,

@@ -8,13 +8,16 @@ class Evm20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     let evm20Kit: Erc20Kit.Kit
     private let contractAddress: EthereumKit.Address
+    private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, contractAddress: String, decimal: Int, coinManager: ICoinManager) throws {
+    init(evmKit: EthereumKit.Kit, contractAddress: String, wallet: Wallet, coinManager: ICoinManager) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKit, contractAddress: address)
         self.contractAddress = address
 
-        super.init(evmKit: evmKit, decimal: decimal, coinManager: coinManager)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, coinManager: coinManager, evmKit: evmKit)
+
+        super.init(evmKit: evmKit, decimal: wallet.coin.decimal)
     }
 
 }

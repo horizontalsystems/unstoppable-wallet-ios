@@ -14,7 +14,7 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEip20Events: [IncomingEip20Event]
     let outgoingEip20Events: [OutgoingEip20Event]
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin,
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: Coin,
          contractAddress: String, method: String?, value: Decimal, incomingInternalETHs: [IncomingInternalETH], incomingEip20Events: [IncomingEip20Event], outgoingEip20Events: [OutgoingEip20Event],
          foreignTransaction: Bool = false) {
         self.contractAddress = contractAddress
@@ -24,7 +24,7 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
         self.incomingEip20Events = incomingEip20Events
         self.outgoingEip20Events = outgoingEip20Events
 
-        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin, foreignTransaction: foreignTransaction)
+        super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin, foreignTransaction: foreignTransaction)
     }
 
 }

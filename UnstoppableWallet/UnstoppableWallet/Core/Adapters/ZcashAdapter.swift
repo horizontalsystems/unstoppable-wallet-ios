@@ -13,6 +13,7 @@ class ZcashAdapter {
     var fee: Decimal { defaultFee() }
 
     private let coin: Coin
+    private let transactionSource: TransactionSource
     private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
@@ -55,6 +56,7 @@ class ZcashAdapter {
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
         coin = wallet.coin
+        transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
         let birthday: Int
         switch wallet.account.origin {
@@ -225,6 +227,7 @@ class ZcashAdapter {
         if incoming {
             return BitcoinIncomingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
@@ -243,6 +246,7 @@ class ZcashAdapter {
         } else {
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,

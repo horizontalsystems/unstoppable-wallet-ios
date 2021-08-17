@@ -20,12 +20,12 @@ extension TransactionsRouter: ITransactionsRouter {
 extension TransactionsRouter {
 
     static func module() -> UIViewController {
-        let dataSource = TransactionRecordDataSource(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionViewItemDataSource(), metaDataSource: TransactionsMetadataDataSource(), factory: TransactionViewItemFactory())
+        let dataSource = TransactionRecordDataSourceOld(poolRepo: TransactionRecordPoolRepo(), itemsDataSource: TransactionViewItemDataSource(), metaDataSource: TransactionsMetadataDataSource(), factory: TransactionViewItemFactory())
 
         let router = TransactionsRouter()
         let interactor = TransactionsInteractor(
                 walletManager: App.shared.walletManager,
-                adapterManager: App.shared.adapterManager,
+                adapterManager: App.shared.transactionAdapterManager,
                 currencyKit: App.shared.currencyKit,
                 rateManager: App.shared.rateManager,
                 reachabilityManager: App.shared.reachabilityManager

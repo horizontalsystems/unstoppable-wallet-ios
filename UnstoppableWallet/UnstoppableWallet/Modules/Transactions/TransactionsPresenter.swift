@@ -7,7 +7,7 @@ class TransactionsPresenter {
     private let interactor: ITransactionsInteractor
     private let router: ITransactionsRouter
     private let factory: ITransactionViewItemFactory
-    private let dataSource: TransactionRecordDataSource
+    private let dataSource: TransactionRecordDataSourceOld
     private var loading = false
 
     private var wallets = [Wallet]()
@@ -16,7 +16,7 @@ class TransactionsPresenter {
     weak var view: ITransactionsView?
 
     init(interactor: ITransactionsInteractor, router: ITransactionsRouter, factory: ITransactionViewItemFactory,
-         dataSource: TransactionRecordDataSource) {
+         dataSource: TransactionRecordDataSourceOld) {
         self.interactor = interactor
         self.router = router
         self.factory = factory

@@ -6,7 +6,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
     let to: String?
     let sentToSelf: Bool
 
-    init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
+    init(coin: Coin, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
          amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil) {
         value = CoinValue(coin: coin, value: amount)
@@ -14,6 +14,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         self.sentToSelf = sentToSelf
 
         super.init(
+                source: source,
                 uid: uid,
                 transactionHash: transactionHash,
                 transactionIndex: transactionIndex,
