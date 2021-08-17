@@ -21,7 +21,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
 
         bitcoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: bitcoinKit, coin: wallet.coin)
+        super.init(abstractKit: bitcoinKit, wallet: wallet)
 
         bitcoinKit.delegate = self
     }

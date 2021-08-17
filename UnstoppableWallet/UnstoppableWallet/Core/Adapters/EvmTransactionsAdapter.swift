@@ -9,8 +9,12 @@ import CoinKit
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
 
-    init(evmKit: EthereumKit.Kit, coinManager: ICoinManager) {
-        super.init(evmKit: evmKit, decimal: EvmAdapter.decimal, coinManager: coinManager)
+    private let transactionConverter: EvmTransactionConverter
+
+    init(evmKit: EthereumKit.Kit, source: TransactionSource, coinManager: ICoinManager) {
+        transactionConverter = EvmTransactionConverter(source: source, coinManager: coinManager, evmKit: evmKit)
+
+        super.init(evmKit: evmKit, decimal: EvmAdapter.decimal)
     }
 
     private func filters(from coin: Coin?) -> [[String]] {

@@ -10,11 +10,13 @@ class BinanceAdapter {
     private let feeCoin: Coin
     private let coin: Coin
     private let asset: Asset
+    private let transactionSource: TransactionSource
 
-    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: Coin, coin: Coin) {
+    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: Coin, wallet: Wallet) {
         self.binanceKit = binanceKit
         self.feeCoin = feeCoin
-        self.coin = coin
+        coin = wallet.coin
+        transactionSource = wallet.transactionSource
 
         asset = binanceKit.register(symbol: symbol)
     }
@@ -24,11 +26,11 @@ class BinanceAdapter {
         let toMine = transaction.to == binanceKit.account
 
         if fromMine && !toMine {
-            return BinanceChainOutgoingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
+            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
         } else if !fromMine && toMine {
-            return BinanceChainIncomingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin)
+            return BinanceChainIncomingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin)
         } else {
-            return BinanceChainOutgoingTransactionRecord(transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
+            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
         }
     }
 

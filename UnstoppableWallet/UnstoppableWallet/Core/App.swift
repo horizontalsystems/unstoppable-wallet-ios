@@ -35,6 +35,7 @@ class App {
 
     let walletManager: WalletManager
     let adapterManager: AdapterManager
+    let transactionAdapterManager: TransactionAdapterManager
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
@@ -164,6 +165,10 @@ class App {
                 ethereumKitManager: ethereumKitManager,
                 binanceSmartChainKitManager: binanceSmartChainKitManager,
                 initialSyncSettingsManager: initialSyncSettingsManager
+        )
+        transactionAdapterManager = TransactionAdapterManager(
+                adapterManager: adapterManager,
+                adapterFactory: adapterFactory
         )
 
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: storage, accountManager: accountManager)

@@ -8,13 +8,10 @@ class BaseEvmAdapter {
 
     let evmKit: EthereumKit.Kit
     let decimal: Int
-    let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, decimal: Int, coinManager: ICoinManager) {
+    init(evmKit: EthereumKit.Kit, decimal: Int) {
         self.evmKit = evmKit
         self.decimal = decimal
-
-        transactionConverter = EvmTransactionConverter(coinManager: coinManager, evmKit: evmKit)
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {

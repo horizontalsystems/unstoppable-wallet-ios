@@ -2,7 +2,7 @@ import Foundation
 import CurrencyKit
 import CoinKit
 
-class TransactionRecordDataSource {
+class TransactionRecordDataSourceOld {
     private let poolRepo: TransactionRecordPoolRepo
     private let itemsDataSource: TransactionViewItemDataSource
     private let metaDataSource: TransactionsMetadataDataSource

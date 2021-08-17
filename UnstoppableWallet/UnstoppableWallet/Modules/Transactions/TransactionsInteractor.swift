@@ -15,14 +15,14 @@ class TransactionsInteractor {
     weak var delegate: ITransactionsInteractorDelegate?
 
     private let walletManager: WalletManager
-    private let adapterManager: AdapterManager
+    private let adapterManager: TransactionAdapterManager
     private let currencyKit: CurrencyKit.Kit
     private let rateManager: IRateManager
     private let reachabilityManager: IReachabilityManager
 
     private var requestedTimestamps = [(Coin, Date)]()
 
-    init(walletManager: WalletManager, adapterManager: AdapterManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, reachabilityManager: IReachabilityManager) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.currencyKit = currencyKit
@@ -71,7 +71,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         lastBlockHeightsDisposeBag = DisposeBag()
 
         for wallet in wallets {
-            guard let adapter = adapterManager.transactionsAdapter(for: wallet) else {
+            guard let adapter = adapterManager.adapter(for: wallet.source) else {
                 continue
             }
 
@@ -100,7 +100,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
             let wallet = fetchData.wallet
             let single: Single<(TransactionWallet, [TransactionRecord])>
 
-            if let adapter = adapterManager.transactionsAdapter(for: wallet) {
+            if let adapter = adapterManager.adapter(for: wallet.source) {
                 single = adapter.transactionsSingle(from: fetchData.from, coin: fetchData.wallet.coin, limit: fetchData.limit)
                         .map { records -> (TransactionWallet, [TransactionRecord]) in
                             (fetchData.wallet, records)
@@ -158,7 +158,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
         var states = [TransactionWallet: AdapterState]()
 
         for wallet in wallets {
-            if let adapter = adapterManager.transactionsAdapter(for: wallet) {
+            if let adapter = adapterManager.adapter(for: wallet.source) {
                 lastBlockInfos.append((wallet, adapter.lastBlockInfo))
                 states[wallet] = adapter.transactionState
 

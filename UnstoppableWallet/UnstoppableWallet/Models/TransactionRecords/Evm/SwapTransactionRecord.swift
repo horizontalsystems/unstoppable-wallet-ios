@@ -8,7 +8,7 @@ class SwapTransactionRecord: EvmTransactionRecord {
     let valueOut: CoinValue?  // valueOut stores amountOutMin in cases when exact amountOut amount is not known
     let foreignRecipient: Bool
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin, exchangeAddress: String, tokenIn: Coin, tokenOut: Coin?, amountIn: Decimal, amountOut: Decimal?, foreignRecipient: Bool) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: Coin, exchangeAddress: String, tokenIn: Coin, tokenOut: Coin?, amountIn: Decimal, amountOut: Decimal?, foreignRecipient: Bool) {
         self.exchangeAddress = exchangeAddress
         valueIn = CoinValue(coin: tokenIn, value: amountIn)
         if let tokenOut = tokenOut, let amountOut = amountOut {
@@ -19,7 +19,7 @@ class SwapTransactionRecord: EvmTransactionRecord {
         
         self.foreignRecipient = foreignRecipient
 
-        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
+        super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
 }

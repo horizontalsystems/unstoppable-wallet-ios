@@ -23,11 +23,13 @@ class BitcoinBaseAdapter {
     }
     private(set) var transactionState: AdapterState
 
-    let coin: Coin
+    private let coin: Coin
+    private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, coin: Coin) {
+    init(abstractKit: AbstractKit, wallet: Wallet) {
         self.abstractKit = abstractKit
-        self.coin = coin
+        coin = wallet.coin
+        transactionSource = wallet.transactionSource
 
         balanceState = .notSynced(error: AppError.unknownError)
         transactionState = balanceState
@@ -95,6 +97,7 @@ class BitcoinBaseAdapter {
         if amount > 0 {
             return BitcoinIncomingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
@@ -112,6 +115,7 @@ class BitcoinBaseAdapter {
         } else if amount < 0 {
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
@@ -131,6 +135,7 @@ class BitcoinBaseAdapter {
             amount = myOutputsTotalValue - myChangeOutputsTotalValue
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
