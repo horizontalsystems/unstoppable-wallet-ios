@@ -3,14 +3,14 @@ import CurrencyKit
 
 struct TransactionInfoModule {
 
-    static func instance(transaction: TransactionRecord, wallet: TransactionWallet) -> UIViewController? {
-        guard let adapter = App.shared.transactionAdapterManager.adapter(for: wallet.source) else {
+    static func instance(transactionItem: TransactionsModule2.Item) -> UIViewController? {
+        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionItem.record.source) else {
             return nil
         }
 
         let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
         let factory = TransactionInfoViewItemFactory()
-        let viewModel = TransactionInfoViewModel(service: service, factory: factory, transaction: transaction, wallet: wallet)
+        let viewModel = TransactionInfoViewModel(service: service, factory: factory, transactionItem: transactionItem)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
         return viewController

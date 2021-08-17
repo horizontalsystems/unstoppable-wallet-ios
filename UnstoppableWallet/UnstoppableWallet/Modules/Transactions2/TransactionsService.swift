@@ -1,5 +1,4 @@
 import RxSwift
-import RxCocoa
 import CurrencyKit
 
 class TransactionsService {
@@ -11,12 +10,12 @@ class TransactionsService {
     private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
     private var wallets = [TransactionWallet]()
-    private var walletsRelay = BehaviorRelay<[TransactionWallet]>(value: [])
+    private var walletsSubject = BehaviorSubject<[TransactionWallet]>(value: [])
 
     private var items = [TransactionsModule2.Item]()
-    private var itemsRelay = PublishRelay<[TransactionsModule2.Item]>()
-    private var updatedItemRelay = PublishRelay<TransactionsModule2.Item>()
-    private var syncingRelay = PublishRelay<Bool>()
+    private var itemsSubject = PublishSubject<[TransactionsModule2.Item]>()
+    private var updatedItemSubject = PublishSubject<TransactionsModule2.Item>()
+    private var syncingSubject = PublishSubject<Bool>()
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
@@ -47,7 +46,7 @@ class TransactionsService {
                 .disposed(by: disposeBag)
 
         syncStateService.syncingObservable
-                .subscribe(onNext: { [weak self] syncing in self?.syncingRelay.accept(syncing) })
+                .subscribe(onNext: { [weak self] syncing in self?.syncingSubject.onNext(syncing) })
                 .disposed(by: disposeBag)
 
         rateService.ratesExpiredObservable
@@ -80,9 +79,7 @@ class TransactionsService {
                 .sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
                 .map { TransactionWallet(coin: $0.coin, source: $0.transactionSource) }
 
-        walletsRelay.accept(wallets)
-
-        print("MainService saved \(wallets.count) wallets")
+        walletsSubject.onNext(wallets)
     }
 
     private func onAdaptersReady() {
@@ -91,32 +88,27 @@ class TransactionsService {
         syncStateService.set(sources: walletsGroupedBySource.map { $0.source })
         recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource)
         recordsService.set(selectedWallet: nil)
-
-        print("MainService set \(wallets.count) wallets and \(walletsGroupedBySource.count) allWallets")
     }
 
     private func handle(records: [TransactionRecord]) {
-        print("MainService received \(records.count) records: \(records.map { $0.transactionHash })")
         items = records.map { record in
             createItem(from: record)
         }
 
-        itemsRelay.accept(items)
+        itemsSubject.onNext(items)
     }
 
     private func handleRatesExpired() {
-        print("MainService received baseCurrency update)")
         for (index, item) in items.enumerated() {
             if item.record.mainValue != nil {
                 items[index] = createItem(from: item.record)
             }
         }
 
-        itemsRelay.accept(items)
+        itemsSubject.onNext(items)
     }
 
     private func handle(updatedRecord record: TransactionRecord) {
-        print("MainService received update for \(record.transactionHash) transaction")
         for (index, item) in items.enumerated() {
             if item.record.uid == record.uid {
                 update(item: item, index: index, record: record)
@@ -125,19 +117,14 @@ class TransactionsService {
     }
 
     private func handle(source: TransactionSource, lastBlockInfo: LastBlockInfo) {
-        print("MainService received source: \(source) lastBlockInfo: \(lastBlockInfo)")
         for (index, item) in items.enumerated() {
             if item.record.source == source && item.record.changedBy(oldBlockInfo: item.lastBlockInfo, newBlockInfo: lastBlockInfo) {
-                print("Found changed item. old: \(item.lastBlockInfo) \(item.record.status(lastBlockHeight: item.lastBlockInfo?.height)); new: \(lastBlockInfo) \(item.record.status(lastBlockHeight: lastBlockInfo.height))")
-                print("\(item.record.status(lastBlockHeight: item.lastBlockInfo?.height) == item.record.status(lastBlockHeight: lastBlockInfo.height))")
-
                 update(item: item, index: index, lastBlockInfo: lastBlockInfo)
             }
         }
     }
 
     private func handle(rate: (RateKey, CurrencyValue)) {
-        print("MainService received rate: \(rate.0) \(rate.1)")
         for (index, item) in items.enumerated() {
             if let coinValue = item.record.mainValue, coinValue.coin.type == rate.0.coinType && item.record.date == rate.0.date {
                 update(item: item, index: index, currencyValue: _currencyValue(coinValue: coinValue, rate: rate.1))
@@ -152,7 +139,7 @@ class TransactionsService {
 
         let item = TransactionsModule2.Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
         items[index] = item
-        updatedItemRelay.accept(item)
+        updatedItemSubject.onNext(item)
     }
 
     private func createItem(from record: TransactionRecord) -> TransactionsModule2.Item {
@@ -172,20 +159,20 @@ class TransactionsService {
 
 extension TransactionsService {
 
-    var walletsDriver: Driver<[TransactionWallet]> {
-        walletsRelay.asDriver()
+    var walletsObservable: Observable<[TransactionWallet]> {
+        walletsSubject.asObservable()
     }
 
-    var itemsDriverSignal: Signal<[TransactionsModule2.Item]> {
-        itemsRelay.asSignal()
+    var itemsObservable: Observable<[TransactionsModule2.Item]> {
+        itemsSubject.asObservable()
     }
 
-    var updatedItemSignal: Signal<TransactionsModule2.Item> {
-        updatedItemRelay.asSignal()
+    var updatedItemObservable: Observable<TransactionsModule2.Item> {
+        updatedItemSubject.asObservable()
     }
 
-    var syncingSignal: Signal<Bool> {
-        syncingRelay.asSignal()
+    var syncingSignal: Observable<Bool> {
+        syncingSubject.asObservable()
     }
 
     func set(selectedCoinFilterIndex: Int?) {
@@ -194,7 +181,6 @@ extension TransactionsService {
             return
         }
 
-        print("set(selectedCoinFilterIndex: Int?) => wallets.count: \(wallets.count)")
         if wallets.count > index {
             recordsService.set(selectedWallet: wallets[index])
         }
@@ -205,9 +191,13 @@ extension TransactionsService {
     }
 
     func fetchRate(for uid: String) {
-        if let item = items.first(where: { $0.record.uid == uid }), item.currencyValue == nil, let coinValue = item.record.mainValue {
+        if let item = item(uid: uid), item.currencyValue == nil, let coinValue = item.record.mainValue {
             rateService.fetchRate(key: RateKey(coinType: coinValue.coin.type, date: item.record.date))
         }
+    }
+
+    func item(uid: String) -> TransactionsModule2.Item? {
+        items.first(where: { $0.record.uid == uid })
     }
 
 }

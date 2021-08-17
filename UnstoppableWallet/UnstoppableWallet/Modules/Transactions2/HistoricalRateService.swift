@@ -68,6 +68,7 @@ extension HistoricalRateService {
 }
 
 struct RateKey: Hashable {
+
     let coinType: CoinType
     let date: Date
 
@@ -79,4 +80,5 @@ struct RateKey: Hashable {
     static func ==(lhs: RateKey, rhs: RateKey) -> Bool {
         lhs.coinType == rhs.coinType && lhs.date == rhs.date
     }
+
 }

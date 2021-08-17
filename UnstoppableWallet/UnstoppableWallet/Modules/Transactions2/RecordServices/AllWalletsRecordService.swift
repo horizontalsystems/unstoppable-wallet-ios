@@ -56,11 +56,9 @@ extension AllWalletsRecordService: ITransactionRecordService {
         }
         requestedCount = count
 
-        print("AllRecordsService requesting records from \(dataSources.count) wallets")
         Single<[TransactionRecord]>
                 .zip(dataSources.map { $0.recordsSingle(count: count) })
                 .subscribe(onSuccess: { [weak self] records in
-                    print("AllRecordsService got \(records.count) records")
                     self?.emit(records: records)
                 })
                 .disposed(by: disposeBag)

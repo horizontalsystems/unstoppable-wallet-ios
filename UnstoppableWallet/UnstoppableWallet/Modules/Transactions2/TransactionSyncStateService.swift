@@ -7,10 +7,7 @@ class TransactionSyncStateService {
     private var adapters = [TransactionSource: ITransactionsAdapter]()
     private var syncing: Bool = false {
         didSet {
-            print("did set \(syncing)")
             if syncing != oldValue {
-
-                print("emitting \(syncing)")
                 syncingSubject.onNext(syncing)
             }
         }
