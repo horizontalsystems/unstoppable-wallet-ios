@@ -573,6 +573,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
 "tx_info.options.cancel" = "Cancel";
+"tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Fee";
 "tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "This transaction sent to own address";

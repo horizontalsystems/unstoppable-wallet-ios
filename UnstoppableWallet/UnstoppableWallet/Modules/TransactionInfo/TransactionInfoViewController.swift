@@ -82,11 +82,12 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openResend(action: TransactionInfoModule.Option, transactionHash: String) {
-        guard let viewController = SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: transactionHash) else {
-            return
+        do {
+            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: transactionHash)
+            present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        } catch {
+            HudHelper.instance.showError(title: error.localizedDescription)
         }
-
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
 

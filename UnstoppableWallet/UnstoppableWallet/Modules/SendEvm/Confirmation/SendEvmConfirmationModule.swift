@@ -75,11 +75,15 @@ struct SendEvmConfirmationModule {
         return SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
     }
 
-    static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.Option, transactionHash: String) -> UIViewController? {
+    static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.Option, transactionHash: String) throws -> UIViewController {
         guard let adapter = adapter as? EvmTransactionsAdapter,
               let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.stripHexPrefix())),
               let toAddress = fullTransaction.transaction.to else {
-            return nil
+            throw CreateModuleError.wrongTransaction
+        }
+
+        guard fullTransaction.receiptWithLogs == nil else {
+            throw CreateModuleError.alreadyInBlock
         }
 
         let gasPrice = fullTransaction.transaction.gasPrice
@@ -87,7 +91,7 @@ struct SendEvmConfirmationModule {
         
         guard let coin = coin(networkType: adapter.evmKit.networkType),
               let feeRateProvider = App.shared.feeRateProviderFactory.forcedProvider(coinType: coin.type, customFeeRange: feeRange, multiply: Self.forceMultiplier) else {
-            return nil
+            throw CreateModuleError.cantCreateFeeRateProvider
         }
 
         let sendData: SendEvmData
@@ -116,6 +120,24 @@ struct SendEvmConfirmationModule {
         viewController.topDescription = action.description
 
         return viewController
+    }
+
+}
+
+extension SendEvmConfirmationModule {
+
+    enum CreateModuleError: LocalizedError {
+        case wrongTransaction
+        case cantCreateFeeRateProvider
+        case alreadyInBlock
+
+        var errorDescription: String? {
+            switch self {
+            case .wrongTransaction, .cantCreateFeeRateProvider: return "alert.unknown_error".localized
+            case .alreadyInBlock: return "tx_info.transaction.already_in_block".localized
+            }
+        }
+
     }
 
 }
