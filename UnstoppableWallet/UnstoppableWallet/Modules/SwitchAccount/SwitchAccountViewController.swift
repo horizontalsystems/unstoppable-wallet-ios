@@ -26,6 +26,8 @@ class SwitchAccountViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .themeLawrence
+
         view.addSubview(titleView)
         titleView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
