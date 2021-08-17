@@ -11,8 +11,6 @@ class TransactionsViewController2: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: TransactionsViewModel
     
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view", qos: .userInitiated)
-    
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
     private let coinFiltersView = CoinFiltersView()
@@ -88,8 +86,8 @@ class TransactionsViewController2: ThemeViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
 
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in self?.show(viewItems: viewItems) }
-        subscribe(disposeBag, viewModel.updatedViewItemSignal) { [weak self] viewItem in self?.update(viewItem: viewItem) }
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] sections in self?.show(sections: sections) }
+        subscribe(disposeBag, viewModel.updatedViewItemSignal) { [weak self] (sectionIndex, rowIndex, item) in self?.update(sectionIndex: sectionIndex, rowIndex: rowIndex, item: item) }
         subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(filters: coinFilters) }
         subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] status in self?.show(status: status) }
 
@@ -97,31 +95,27 @@ class TransactionsViewController2: ThemeViewController {
     }
 
     private func itemClicked(item: TransactionsModule2.ViewItem) {
+        if let item = viewModel.transactionItem(uid: item.uid) {
+            guard let module = TransactionInfoModule.instance(transactionItem: item) else {
+                return
+            }
 
+            present(ThemeNavigationController(rootViewController: module), animated: true)
+        }
     }
 
-    private func update(viewItem: TransactionsModule2.ViewItem) {
-        print("updating cell for \(viewItem.primaryValue?.value)")
-        for (sIndex, section) in sections.enumerated() {
-            if let index = section.viewItems.firstIndex(where: { $0.uid == viewItem.uid }) {
-                print("found cell for \(viewItem.primaryValue?.value)")
+    private func update(sectionIndex: Int, rowIndex: Int, item: TransactionsModule2.ViewItem) {
+        DispatchQueue.main.async {
+            self.sections[sectionIndex].viewItems[rowIndex] = item
 
-                DispatchQueue.main.async {
-                    self.sections[sIndex].viewItems[index] = viewItem
-
-
-                    let indexPath = IndexPath(row: index, section: sIndex)
-                    if let cell = self.tableView.cellForRow(at: indexPath) as? H23Cell {
-                        self.bind(item: viewItem, cell: cell)
-                    }
-                }
-                return
+            let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+            if let cell = self.tableView.cellForRow(at: indexPath) as? H23Cell {
+                self.bind(item: item, cell: cell)
             }
         }
     }
 
     private func bind(item: TransactionsModule2.ViewItem, cell: H23Cell) {
-        print("binding cell for item \(item.primaryValue?.value)")
         viewModel.willShow(uid: item.uid)
 
         cell.leftImage = UIImage(named: item.typeImage.imageName)?.withRenderingMode(.alwaysTemplate)
@@ -166,14 +160,10 @@ class TransactionsViewController2: ThemeViewController {
         }
     }
 
-    private func show(viewItems: [TransactionsModule2.ViewItem]) {
-        queue.async {
-            let newSections = self.sections(viewItems: viewItems)
-
-            DispatchQueue.main.sync { [weak self] in
-                self?.sections = newSections
-                self?.tableView.reloadData()
-            }
+    private func show(sections: [Section]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.sections = sections
+            self?.tableView.reloadData()
         }
     }
 
@@ -192,35 +182,6 @@ class TransactionsViewController2: ThemeViewController {
         coinFiltersView.reload(filters: filters)
     }
 
-
-    private func sections(viewItems: [TransactionsModule2.ViewItem]) -> [Section] {
-        var sections = [Section]()
-        var lastDaysAgo = -1
-        
-        for viewItem in viewItems {
-            let daysAgo = daysFrom(date: viewItem.date)
-            
-            if daysAgo != lastDaysAgo {
-                sections.append(Section(daysAgo: daysAgo, viewItems: [viewItem]))
-            } else {
-                sections[sections.count - 1].viewItems.append(viewItem)
-            }
-            
-            lastDaysAgo = daysAgo
-        }
-        
-        return sections
-    }
-    
-    private func daysFrom(date: Date) -> Int {
-        let calendar = Calendar.current
-        let startOfNow = calendar.startOfDay(for: Date())
-        let startOfDate = calendar.startOfDay(for: date)
-        let components = calendar.dateComponents([.day], from: startOfDate, to: startOfNow)
-        
-        return components.day ?? 0
-    }
-    
 }
 
 extension TransactionsViewController2: UITableViewDelegate, UITableViewDataSource {
@@ -263,27 +224,16 @@ extension TransactionsViewController2: UITableViewDelegate, UITableViewDataSourc
             return
         }
         
-        view.text = dateHeaderTitle(daysAgo: sections[section].daysAgo).uppercased()
+        view.text = sections[section].title
     }
-    
-    private func dateHeaderTitle(daysAgo: Int) -> String {
-        if daysAgo == 0 {
-            return "transactions.today".localized
-        } else if daysAgo == 1 {
-            return "transactions.yesterday".localized
-        } else {
-            let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 - Double(daysAgo * 60 * 60 * 24))
-            return DateHelper.instance.formatTransactionDate(from: date)
-        }
-    }
-    
+
 }
 
 extension TransactionsViewController2 {
-    
+
     struct Section {
-        let daysAgo: Int
+        let title: String
         var viewItems: [TransactionsModule2.ViewItem]
     }
-    
+
 }

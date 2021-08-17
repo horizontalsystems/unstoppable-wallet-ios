@@ -19,33 +19,34 @@ struct Wallet {
     }
 
     var transactionSource: TransactionSource {
-        let coinSettings = configuredCoin.settings
-        let coin = coin
+        let blockchain: TransactionSource.Blockchain
 
         switch coin.type {
         case .bitcoin:
-            return TransactionSource(blockchain: .bitcoin, account: account, coinSettings: coinSettings)
+            blockchain = .bitcoin
         case .bitcoinCash:
-            return TransactionSource(blockchain: .bitcoinCash, account: account, coinSettings: coinSettings)
+            blockchain = .bitcoinCash
         case .dash:
-            return TransactionSource(blockchain: .dash, account: account, coinSettings: coinSettings)
+            blockchain = .dash
         case .litecoin:
-            return TransactionSource(blockchain: .litecoin, account: account, coinSettings: coinSettings)
+            blockchain = .litecoin
         case .zcash:
-            return TransactionSource(blockchain: .zcash, account: account, coinSettings: coinSettings)
+            blockchain = .zcash
         case .bep2(let symbol):
-            return TransactionSource(blockchain: .bep2(symbol: symbol), account: account, coinSettings: coinSettings)
+            blockchain = .bep2(symbol: symbol)
         case .ethereum:
-            return TransactionSource(blockchain: .ethereum, account: account, coinSettings: coinSettings)
+            blockchain = .ethereum
         case .binanceSmartChain:
-            return TransactionSource(blockchain: .binanceSmartChain, account: account, coinSettings: coinSettings)
+            blockchain = .binanceSmartChain
         case .erc20:
-            return TransactionSource(blockchain: .ethereum, account: account, coinSettings: coinSettings)
+            blockchain = .ethereum
         case .bep20:
-            return TransactionSource(blockchain: .binanceSmartChain, account: account, coinSettings: coinSettings)
+            blockchain = .binanceSmartChain
         case .unsupported:
             fatalError("Unsupported coin may not have transactions to show")
         }
+
+        return TransactionSource(blockchain: blockchain, account: account, coinSettings: configuredCoin.settings)
     }
 
 }

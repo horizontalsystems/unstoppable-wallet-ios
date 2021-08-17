@@ -16,14 +16,15 @@ class TransactionInfoViewModel {
     private var resendActionRelay = PublishRelay<(TransactionInfoModule.Option, String)>()
     private var explorerViewItem: TransactionInfoModule.ViewItem
 
-    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transaction: TransactionRecord, wallet: TransactionWallet) {
+    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transactionItem: TransactionsModule2.Item) {
         self.service = service
         self.factory = factory
-        self.transaction = transaction
+        transaction = transactionItem.record
 
+        let source = transaction.source
         let transactionHash = transaction.transactionHash
-        let blockchain = wallet.source.blockchain
-        let account = wallet.source.account
+        let blockchain = source.blockchain
+        let account = source.account
         let testMode = service.testMode
 
         var title: String

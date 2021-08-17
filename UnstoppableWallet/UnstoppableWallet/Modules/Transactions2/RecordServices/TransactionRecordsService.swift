@@ -64,7 +64,6 @@ extension TransactionRecordsService {
                 .subscribe(onNext: { [weak self] records in self?.recordsSubject.onNext(records) })
                 .disposed(by: recordsDisposeBag)
 
-        print("RecordsService activeService: \(activeService); reload: true")
         activeService?.load(count: TransactionsModule2.pageLimit, reload: true)
     }
 
@@ -77,8 +76,6 @@ extension TransactionRecordsService {
     }
 
     func load(count: Int) {
-        print("RecordsService activeService: \(activeService)")
-
         activeService?.load(count: count, reload: false)
     }
 

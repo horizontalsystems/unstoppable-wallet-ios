@@ -8,11 +8,11 @@ class TransactionsRouter {
 extension TransactionsRouter: ITransactionsRouter {
 
     func openTransactionInfo(viewItem: TransactionViewItem) {
-        guard let module = TransactionInfoModule.instance(transaction: viewItem.record, wallet: viewItem.wallet) else {
-            return
-        }
-
-        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+//        guard let module = TransactionInfoModule.instance(transaction: viewItem.record, wallet: viewItem.wallet) else {
+//            return
+//        }
+//
+//        viewController?.present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
 }

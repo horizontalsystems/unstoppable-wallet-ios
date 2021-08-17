@@ -46,7 +46,6 @@ extension SingleWalletRecordService: ITransactionRecordService {
         }
         set(requestedCount: count)
 
-        print("SingleRecordsService requesting \(requestedCount) records")
         dataSource
                 .recordsSingle(count: requestedCount)
                 .subscribe(onSuccess: { [weak self] records in
