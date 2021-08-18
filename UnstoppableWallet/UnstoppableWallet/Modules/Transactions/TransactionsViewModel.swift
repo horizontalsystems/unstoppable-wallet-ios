@@ -9,13 +9,13 @@ class TransactionsViewModel {
     let service: TransactionsService
     let factory: TransactionsViewItemFactory
 
-    private let allTypeFilters = TransactionsModule2.TypeFilter.allCases
-    private var sections = [TransactionsViewController2.Section]()
+    private let allTypeFilters = TransactionTypeFilter.allCases
+    private var sections = [TransactionsViewController.Section]()
 
     private var coinFiltersRelay = BehaviorRelay<[String]>(value: [])
-    private var viewItemsRelay = BehaviorRelay<[TransactionsViewController2.Section]>(value: [])
-    private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionsModule2.ViewItem)>()
-    private var viewStatusRelay = BehaviorRelay<TransactionViewStatus>(value: TransactionViewStatus(showProgress: false, showMessage: false))
+    private var viewItemsRelay = BehaviorRelay<[TransactionsViewController.Section]>(value: [])
+    private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)>()
+    private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
 
@@ -42,14 +42,14 @@ class TransactionsViewModel {
         coinFiltersRelay.accept(coinFilters)
     }
 
-    private func handle(items: [TransactionsModule2.Item]) {
+    private func handle(items: [TransactionItem]) {
         let viewItems = items.map { factory.viewItem(item: $0) }
 
         sections = sections(viewItems: viewItems)
         viewItemsRelay.accept(sections)
     }
 
-    private func handle(updatedItem: TransactionsModule2.Item) {
+    private func handle(updatedItem: TransactionItem) {
         for (sectionIndex, section) in sections.enumerated() {
             if let rowIndex = section.viewItems.firstIndex { item in item.uid == updatedItem.record.uid } {
                 let viewItem = factory.viewItem(item: updatedItem)
@@ -62,23 +62,23 @@ class TransactionsViewModel {
 
     private func handle(syncing: Bool) {
         if syncing {
-            viewStatusRelay.accept(TransactionViewStatus(showProgress: true, showMessage: false))
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, showMessage: false))
         } else if sections.isEmpty {
-            viewStatusRelay.accept(TransactionViewStatus(showProgress: false, showMessage: true))
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: true))
         } else {
-            viewStatusRelay.accept(TransactionViewStatus(showProgress: false, showMessage: false))
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
         }
     }
 
-    private func sections(viewItems: [TransactionsModule2.ViewItem]) -> [TransactionsViewController2.Section] {
-        var sections = [TransactionsViewController2.Section]()
+    private func sections(viewItems: [TransactionViewItem]) -> [TransactionsViewController.Section] {
+        var sections = [TransactionsViewController.Section]()
         var lastDaysAgo = -1
 
         for viewItem in viewItems {
             let daysAgo = daysFrom(date: viewItem.date)
 
             if daysAgo != lastDaysAgo {
-                sections.append(TransactionsViewController2.Section(title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
+                sections.append(TransactionsViewController.Section(title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
             } else {
                 sections[sections.count - 1].viewItems.append(viewItem)
             }
@@ -121,15 +121,15 @@ extension TransactionsViewModel {
         coinFiltersRelay.asDriver()
     }
 
-    var viewItemsDriver: Driver<[TransactionsViewController2.Section]> {
+    var viewItemsDriver: Driver<[TransactionsViewController.Section]> {
         viewItemsRelay.asDriver()
     }
 
-    var updatedViewItemSignal: Signal<(sectionIndex: Int, rowIndex: Int, item: TransactionsModule2.ViewItem)> {
+    var updatedViewItemSignal: Signal<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)> {
         updatedViewItemRelay.asSignal()
     }
 
-    var viewStatusDriver: Driver<TransactionViewStatus> {
+    var viewStatusDriver: Driver<TransactionsModule.ViewStatus> {
         viewStatusRelay.asDriver()
     }
 
@@ -147,10 +147,10 @@ extension TransactionsViewModel {
 
     func bottomReached() {
         let count = sections.reduce(0) { $0 + $1.viewItems.count }
-        service.load(count: count + TransactionsModule2.pageLimit)
+        service.load(count: count + TransactionsModule.pageLimit)
     }
 
-    func transactionItem(uid: String) -> TransactionsModule2.Item? {
+    func transactionItem(uid: String) -> TransactionItem? {
         service.item(uid: uid)
     }
 

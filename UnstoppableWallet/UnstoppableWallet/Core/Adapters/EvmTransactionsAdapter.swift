@@ -26,7 +26,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         }
     }
 
-    private func filters(coin: Coin?, filter: TransactionsModule2.TypeFilter) -> [[String]] {
+    private func filters(coin: Coin?, filter: TransactionTypeFilter) -> [[String]] {
         var coinFilter = [[String]]()
 
         if let coin = coin {
@@ -73,13 +73,13 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
-    func transactionsObservable(coin: Coin?, filter: TransactionsModule2.TypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         evmKit.transactionsObservable(tags: filters(coin: coin, filter: filter)).map { [weak self] in
             $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionsModule2.TypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         evmKit.transactionsSingle(tags: filters(coin: coin, filter: filter), fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }

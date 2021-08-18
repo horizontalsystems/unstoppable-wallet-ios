@@ -64,7 +64,7 @@ extension AllWalletsRecordService: ITransactionRecordService {
                 .disposed(by: disposeBag)
     }
 
-    func set(typeFilter: TransactionsModule2.TypeFilter) {
+    func set(typeFilter: TransactionTypeFilter) {
         for dataSource in dataSources {
             dataSource.set(typeFilter: typeFilter)
         }

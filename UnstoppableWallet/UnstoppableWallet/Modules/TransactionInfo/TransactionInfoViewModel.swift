@@ -16,7 +16,7 @@ class TransactionInfoViewModel {
     private var resendActionRelay = PublishRelay<(TransactionInfoModule.Option, String)>()
     private var explorerViewItem: TransactionInfoModule.ViewItem
 
-    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transactionItem: TransactionsModule2.Item) {
+    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, transactionItem: TransactionItem) {
         self.service = service
         self.factory = factory
         transaction = transactionItem.record

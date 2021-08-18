@@ -64,16 +64,16 @@ extension TransactionRecordsService {
                 .subscribe(onNext: { [weak self] records in self?.recordsSubject.onNext(records) })
                 .disposed(by: recordsDisposeBag)
 
-        activeService?.load(count: TransactionsModule2.pageLimit, reload: true)
+        activeService?.load(count: TransactionsModule.pageLimit, reload: true)
     }
 
-    func set(typeFilter: TransactionsModule2.TypeFilter) {
+    func set(typeFilter: TransactionTypeFilter) {
         for service in singleRecordServices.values {
             service.set(typeFilter: typeFilter)
         }
 
         allRecordsService?.set(typeFilter: typeFilter)
-        activeService?.load(count: TransactionsModule2.pageLimit, reload: true)
+        activeService?.load(count: TransactionsModule.pageLimit, reload: true)
     }
 
     func load(count: Int) {
