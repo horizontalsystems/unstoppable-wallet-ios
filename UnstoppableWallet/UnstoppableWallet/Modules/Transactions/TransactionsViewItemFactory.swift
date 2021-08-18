@@ -12,7 +12,7 @@ class TransactionsViewItemFactory {
         ValueFormatter.instance.format(currencyValue: currencyValue.abs, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? ""
     }
 
-    func viewItem(item: TransactionsModule2.Item) -> TransactionsModule2.ViewItem {
+    func viewItem(item: TransactionItem) -> TransactionViewItem {
         var typeImage: ColoredImage
         var progress: Float?
         var title: String
@@ -152,7 +152,7 @@ class TransactionsViewItemFactory {
             progress = nil
         }
 
-        return TransactionsModule2.ViewItem(
+        return TransactionViewItem(
                 uid: item.record.uid,
                 date: item.record.date,
                 typeImage: typeImage,

@@ -11,7 +11,7 @@ class TransactionRecordDataSource {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tx_data_source", qos: .background)
 
     private let coin: Coin?
-    private var filter: TransactionsModule2.TypeFilter = .all
+    private var filter: TransactionTypeFilter = .all
     private let adapter: ITransactionsAdapter
     private var records = [TransactionRecord]()
     private var allShown = false
@@ -95,7 +95,7 @@ extension TransactionRecordDataSource {
         }
     }
 
-    func set(typeFilter: TransactionsModule2.TypeFilter) {
+    func set(typeFilter: TransactionTypeFilter) {
         filter = typeFilter
         records = []
         allShown = false

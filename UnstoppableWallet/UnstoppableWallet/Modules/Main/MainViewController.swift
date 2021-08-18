@@ -12,7 +12,7 @@ class MainViewController: ThemeTabBarController {
     private let marketModule = ThemeNavigationController(rootViewController: MarketModule.viewController())
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
     private let onboardingModule = ThemeNavigationController(rootViewController: OnboardingBalanceViewController())
-    private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule2.instance())
+    private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.instance())
     private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
 
     private var showAlerts = [(() -> ())]()

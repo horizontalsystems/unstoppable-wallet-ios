@@ -12,9 +12,9 @@ class TransactionsService {
     private var wallets = [TransactionWallet]()
     private var walletsSubject = BehaviorSubject<[TransactionWallet]>(value: [])
 
-    private var items = [TransactionsModule2.Item]()
-    private var itemsSubject = PublishSubject<[TransactionsModule2.Item]>()
-    private var updatedItemSubject = PublishSubject<TransactionsModule2.Item>()
+    private var items = [TransactionItem]()
+    private var itemsSubject = PublishSubject<[TransactionItem]>()
+    private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
@@ -126,23 +126,23 @@ class TransactionsService {
         }
     }
 
-    private func update(item: TransactionsModule2.Item, index: Int, record: TransactionRecord? = nil, lastBlockInfo: LastBlockInfo? = nil, currencyValue: CurrencyValue? = nil) {
+    private func update(item: TransactionItem, index: Int, record: TransactionRecord? = nil, lastBlockInfo: LastBlockInfo? = nil, currencyValue: CurrencyValue? = nil) {
         let record = record ?? item.record
         let lastBlockInfo = lastBlockInfo ?? item.lastBlockInfo
         let currencyValue = currencyValue ?? item.currencyValue
 
-        let item = TransactionsModule2.Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
+        let item = TransactionItem(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
         items[index] = item
         updatedItemSubject.onNext(item)
     }
 
-    private func createItem(from record: TransactionRecord) -> TransactionsModule2.Item {
+    private func createItem(from record: TransactionRecord) -> TransactionItem {
         let lastBlockInfo = syncStateService.lastBlockInfo(source: record.source)
         let currencyValue = record.mainValue.flatMap { coinValue in
             _currencyValue(coinValue: coinValue, rate: rateService.rate(key: RateKey(coinType: coinValue.coin.type, date: record.date)))
         }
 
-        return TransactionsModule2.Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
+        return TransactionItem(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
     }
 
     private func _currencyValue(coinValue: CoinValue, rate: CurrencyValue?) -> CurrencyValue? {
@@ -157,11 +157,11 @@ extension TransactionsService {
         walletsSubject.asObservable()
     }
 
-    var itemsObservable: Observable<[TransactionsModule2.Item]> {
+    var itemsObservable: Observable<[TransactionItem]> {
         itemsSubject.asObservable()
     }
 
-    var updatedItemObservable: Observable<TransactionsModule2.Item> {
+    var updatedItemObservable: Observable<TransactionItem> {
         updatedItemSubject.asObservable()
     }
 
@@ -180,7 +180,7 @@ extension TransactionsService {
         }
     }
 
-    func set(typeFilter: TransactionsModule2.TypeFilter) {
+    func set(typeFilter: TransactionTypeFilter) {
         recordsService.set(typeFilter: typeFilter)
     }
 
@@ -194,7 +194,7 @@ extension TransactionsService {
         }
     }
 
-    func item(uid: String) -> TransactionsModule2.Item? {
+    func item(uid: String) -> TransactionItem? {
         items.first(where: { $0.record.uid == uid })
     }
 
