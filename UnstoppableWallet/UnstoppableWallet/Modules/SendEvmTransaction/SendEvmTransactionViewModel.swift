@@ -101,6 +101,7 @@ class SendEvmTransactionViewModel {
         if case AppError.oneInch(let reason) = error.convertedError {
             switch reason {
             case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
+            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized
             }
         }
 

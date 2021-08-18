@@ -263,6 +263,8 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
+"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough ETH to cover fee. Or try increassing price slippage amount and try again.";
+
 "swap.service" = "Service";
 "swap.service.title" = "Service";
 

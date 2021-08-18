@@ -137,7 +137,8 @@ extension OneInchKit.Kit.SwapError: ConvertibleError {
 
     var convertedError: Error {
         switch self {
-        case .cannotEstimate: return AppError.oneInch(reason: .insufficientBalanceWithFee)
+        case .notEnough: return AppError.oneInch(reason: .insufficientBalanceWithFee)
+        case .cannotEstimate: return AppError.oneInch(reason: .cannotEstimate)
         }
     }
 
