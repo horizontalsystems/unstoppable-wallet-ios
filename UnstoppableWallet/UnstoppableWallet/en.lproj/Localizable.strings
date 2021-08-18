@@ -560,6 +560,12 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
 
+"transactions.types.all" = "All";
+"transactions.types.incoming" = "Incoming";
+"transactions.types.outgoing" = "Outgoing";
+"transactions.types.swap" = "Swap";
+"transactions.types.approve" = "Approve";
+
 // Transaction Info
 
 "tx_info.title" = "Transaction Info";

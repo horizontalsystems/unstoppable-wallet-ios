@@ -17,7 +17,7 @@ struct TransactionsModule2 {
         return viewController
     }
 
-    enum TypeFilter: CaseIterable {
+    enum TypeFilter: String, CaseIterable {
         case all, incoming, outgoing, swap, approve
     }
 
@@ -56,5 +56,5 @@ protocol ITransactionRecordService {
     var recordsObservable: Observable<[TransactionRecord]> { get }
     var updatedRecordObservable: Observable<TransactionRecord>  { get }
     func load(count: Int, reload: Bool)
-    func set(filter: TransactionsModule2.TypeFilter)
+    func set(typeFilter: TransactionsModule2.TypeFilter)
 }

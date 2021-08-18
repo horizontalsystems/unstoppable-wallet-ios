@@ -91,8 +91,8 @@ protocol ITransactionsAdapter {
     var transactionStateUpdatedObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
-    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]>
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsObservable(coin: Coin?, filter: TransactionsModule2.TypeFilter) -> Observable<[TransactionRecord]>
+    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionsModule2.TypeFilter, limit: Int) -> Single<[TransactionRecord]>
     func rawTransaction(hash: String) -> String?
 }
 

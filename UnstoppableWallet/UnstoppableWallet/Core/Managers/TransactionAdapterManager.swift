@@ -42,7 +42,6 @@ class TransactionAdapterManager {
     }
 
     private func initAdapters(adapterMap: [Wallet: IAdapter]) {
-        print("New adapters ready: \(adapterMap.count)")
         var newAdapterMap = [TransactionSource: ITransactionsAdapter]()
 
         for (wallet, adapter) in adapterMap {
@@ -65,8 +64,6 @@ class TransactionAdapterManager {
                 newAdapterMap[source] = transactionsAdapter
             }
         }
-
-        print("New adapters converted: \(newAdapterMap.count)")
 
         queue.async {
             self._adapterMap = newAdapterMap

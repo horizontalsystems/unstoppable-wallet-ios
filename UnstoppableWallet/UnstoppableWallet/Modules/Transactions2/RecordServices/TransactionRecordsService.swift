@@ -31,14 +31,14 @@ extension TransactionRecordsService {
     func set(wallets: [TransactionWallet], walletsGroupedBySource: [TransactionWallet]) {
         for wallet in wallets {
             if let adapter = adapterManager.adapter(for: wallet.source) {
-                let dataSource = TransactionRecordDataSource(wallet: wallet, adapter: adapter)
+                let dataSource = TransactionRecordDataSource(coin: wallet.coin, adapter: adapter)
                 singleRecordServices[wallet] = SingleWalletRecordService(dataSource: dataSource)
             }
         }
 
         let dataSources: [TransactionRecordDataSource] = walletsGroupedBySource.compactMap { wallet in
             if let adapter = adapterManager.adapter(for: wallet.source) {
-                return TransactionRecordDataSource(wallet: wallet, adapter: adapter)
+                return TransactionRecordDataSource(coin: wallet.coin, adapter: adapter)
             }
 
             return nil
@@ -67,12 +67,13 @@ extension TransactionRecordsService {
         activeService?.load(count: TransactionsModule2.pageLimit, reload: true)
     }
 
-    func set(filter: TransactionsModule2.TypeFilter) {
+    func set(typeFilter: TransactionsModule2.TypeFilter) {
         for service in singleRecordServices.values {
-            service.set(filter: filter)
+            service.set(typeFilter: typeFilter)
         }
 
-        allRecordsService?.set(filter: filter)
+        allRecordsService?.set(typeFilter: typeFilter)
+        activeService?.load(count: TransactionsModule2.pageLimit, reload: true)
     }
 
     func load(count: Int) {

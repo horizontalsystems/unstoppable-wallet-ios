@@ -5,31 +5,27 @@ import CurrencyKit
 
 class HistoricalRateService {
     private var disposeBag = DisposeBag()
+    private var ratesDisposeBag = DisposeBag()
 
     private var ratesManager: IRateManager
     private var currency: Currency
     private var rates = [RateKey: CurrencyValue]()
 
     private var rateUpdatedSubject = PublishSubject<(RateKey, CurrencyValue)>()
-    private var ratesExpiredSubject = PublishSubject<Void>()
+    private var ratesChangedSubject = PublishSubject<Void>()
 
     init(ratesManager: IRateManager, currencyKit: CurrencyKit.Kit) {
         self.ratesManager = ratesManager
         currency = currencyKit.baseCurrency
 
-        currencyKit.baseCurrencyUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] currency in
-                    self?.handle(updatedCurrency: currency)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] currency in self?.handle(updatedCurrency: currency) }
     }
 
     private func handle(updatedCurrency: Currency) {
-        disposeBag = DisposeBag()
+        ratesDisposeBag = DisposeBag()
+        currency = updatedCurrency
         rates = [:]
-        ratesExpiredSubject.onNext(())
+        ratesChangedSubject.onNext(())
     }
 
     func handle(key: RateKey, rate: Decimal) {
@@ -46,8 +42,8 @@ extension HistoricalRateService {
         rateUpdatedSubject.asObservable()
     }
 
-    var ratesExpiredObservable: Observable<Void> {
-        ratesExpiredSubject.asObservable()
+    var ratesChangedObservable: Observable<Void> {
+        ratesChangedSubject.asObservable()
     }
 
     func rate(key: RateKey) -> CurrencyValue? {
@@ -62,7 +58,7 @@ extension HistoricalRateService {
 
         ratesManager.historicalRate(coinType: key.coinType, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
                 .subscribe(onSuccess: { [weak self] decimal in self?.handle(key: key, rate: decimal) })
-                .disposed(by: disposeBag)
+                .disposed(by: ratesDisposeBag)
     }
 
 }

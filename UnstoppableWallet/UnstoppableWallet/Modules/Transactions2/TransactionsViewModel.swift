@@ -9,6 +9,7 @@ class TransactionsViewModel {
     let service: TransactionsService
     let factory: TransactionsViewItemFactory
 
+    private let allTypeFilters = TransactionsModule2.TypeFilter.allCases
     private var sections = [TransactionsViewController2.Section]()
 
     private var coinFiltersRelay = BehaviorRelay<[String]>(value: [])
@@ -112,6 +113,10 @@ class TransactionsViewModel {
 
 extension TransactionsViewModel {
 
+    var typeFilters: [String] {
+        allTypeFilters.map { "transactions.types.\($0.rawValue)".localized }
+    }
+
     var coinFiltersDriver: Driver<[String]> {
         coinFiltersRelay.asDriver()
     }
@@ -134,6 +139,10 @@ extension TransactionsViewModel {
 
     func coinFilterSelected(index: Int?) {
         service.set(selectedCoinFilterIndex: index)
+    }
+
+    func typeFilterSelected(index: Int) {
+        service.set(typeFilter: allTypeFilters[index])
     }
 
     func bottomReached() {
