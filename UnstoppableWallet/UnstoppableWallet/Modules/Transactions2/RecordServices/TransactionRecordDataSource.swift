@@ -1,4 +1,5 @@
 import RxSwift
+import CoinKit
 
 class TransactionRecordDataSource {
     enum RecordsUpdate {
@@ -6,26 +7,35 @@ class TransactionRecordDataSource {
         case list(records: [TransactionRecord])
     }
 
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tx_data_source", qos: .background)
 
-    private let wallet: TransactionWallet
+    private let coin: Coin?
+    private var filter: TransactionsModule2.TypeFilter = .all
     private let adapter: ITransactionsAdapter
     private var records = [TransactionRecord]()
     private var allShown = false
 
     private var updatedRecordsSubject = PublishSubject<RecordsUpdate>()
 
-    init(wallet: TransactionWallet, adapter: ITransactionsAdapter) {
-        self.wallet = wallet
+    init(coin: Coin?, adapter: ITransactionsAdapter) {
+        self.coin = coin
         self.adapter = adapter
 
-        adapter.transactionsObservable(coin: wallet.coin)
+        subscribe()
+    }
+
+    private func subscribe() {
+        disposeBag = DisposeBag()
+
+        adapter
+                .transactionsObservable(coin: coin, filter: filter)
                 .subscribe(onNext: { [weak self] records in
                     self?.queue.async { [weak self] in
                         self?.handle(records: records)
                     }
                 })
+                .disposed(by: disposeBag)
     }
 
     private func handle(records: [TransactionRecord]) {
@@ -69,11 +79,11 @@ extension TransactionRecordDataSource {
     func recordsSingle(count: Int) -> Single<[TransactionRecord]> {
         let neededRecordsCount = count - records.count
 
-        if neededRecordsCount <= 0 {
+        if neededRecordsCount <= 0 || allShown {
             return Single.just(records(count: count))
         } else {
             return adapter
-                    .transactionsSingle(from: records.last, coin: wallet.coin, limit: neededRecordsCount)
+                    .transactionsSingle(from: records.last, coin: coin, filter: filter, limit: neededRecordsCount)
                     .map { [weak self] records in
                         if records.count < neededRecordsCount {
                             self?.allShown = true
@@ -83,6 +93,13 @@ extension TransactionRecordDataSource {
                         return self?.records(count: count) ?? []
                     }
         }
+    }
+
+    func set(typeFilter: TransactionsModule2.TypeFilter) {
+        filter = typeFilter
+        records = []
+        allShown = false
+        subscribe()
     }
 
 }

@@ -63,7 +63,7 @@ extension TransactionSyncStateService {
                         .disposed(by: disposeBag)
 
                 adapter.transactionStateUpdatedObservable
-                        .subscribe(onNext: { [weak self] in print(adapter.transactionState); self?.stateUpdated() })
+                        .subscribe(onNext: { [weak self] in self?.stateUpdated() })
                         .disposed(by: disposeBag)
             }
         }

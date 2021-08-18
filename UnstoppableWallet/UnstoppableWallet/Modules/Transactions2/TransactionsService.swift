@@ -23,15 +23,9 @@ class TransactionsService {
         rateService = HistoricalRateService(ratesManager: App.shared.rateManager, currencyKit: App.shared.currencyKit)
 
         handle(updatedWallets: walletManager.activeWallets)
-        walletManager.activeWalletsUpdatedObservable
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] wallets in self?.handle(updatedWallets: wallets) })
-                .disposed(by: disposeBag)
 
-        adapterManager.adaptersReadyObservable
-                .observeOn(scheduler)
-                .subscribe(onNext: { [weak self] wallets in self?.onAdaptersReady() })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in self?.handle(updatedWallets: wallets) }
+        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] wallets in self?.onAdaptersReady() }
 
         recordsService.recordsObservable
                 .subscribe(onNext: { [weak self] records in self?.handle(records: records) })
@@ -49,8 +43,8 @@ class TransactionsService {
                 .subscribe(onNext: { [weak self] syncing in self?.syncingSubject.onNext(syncing) })
                 .disposed(by: disposeBag)
 
-        rateService.ratesExpiredObservable
-                .subscribe(onNext: { [weak self] in self?.handleRatesExpired() })
+        rateService.ratesChangedObservable
+                .subscribe(onNext: { [weak self] in self?.handleRatesChanged() })
                 .disposed(by: disposeBag)
 
         rateService.rateUpdatedObservable
@@ -98,7 +92,7 @@ class TransactionsService {
         itemsSubject.onNext(items)
     }
 
-    private func handleRatesExpired() {
+    private func handleRatesChanged() {
         for (index, item) in items.enumerated() {
             if item.record.mainValue != nil {
                 items[index] = createItem(from: item.record)
@@ -184,6 +178,10 @@ extension TransactionsService {
         if wallets.count > index {
             recordsService.set(selectedWallet: wallets[index])
         }
+    }
+
+    func set(typeFilter: TransactionsModule2.TypeFilter) {
+        recordsService.set(typeFilter: typeFilter)
     }
 
     func load(count: Int) {

@@ -101,7 +101,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
             let single: Single<(TransactionWallet, [TransactionRecord])>
 
             if let adapter = adapterManager.adapter(for: wallet.source) {
-                single = adapter.transactionsSingle(from: fetchData.from, coin: fetchData.wallet.coin, limit: fetchData.limit)
+                single = adapter.transactionsSingle(from: fetchData.from, coin: fetchData.wallet.coin, filter: .all, limit: fetchData.limit)
                         .map { records -> (TransactionWallet, [TransactionRecord]) in
                             (fetchData.wallet, records)
                         }
@@ -162,7 +162,7 @@ extension TransactionsInteractor: ITransactionsInteractor {
                 lastBlockInfos.append((wallet, adapter.lastBlockInfo))
                 states[wallet] = adapter.transactionState
 
-                adapter.transactionsObservable(coin: wallet.coin)
+                adapter.transactionsObservable(coin: wallet.coin, filter: .all)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                         .observeOn(MainScheduler.instance)
                         .subscribe(onNext: { [weak self] records in

@@ -78,15 +78,11 @@ extension CoinFiltersView: UICollectionViewDelegateFlowLayout, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(selectedIndex)
-
         if selectedIndex == indexPath.item {
-            print("deselecting")
             onDeselect?(indexPath.item)
             selectedIndex = nil
             collectionView.deselectItem(at: indexPath, animated: true)
         } else {
-            print("selecting")
             onSelect?(indexPath.item)
             selectedIndex = indexPath.item
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)

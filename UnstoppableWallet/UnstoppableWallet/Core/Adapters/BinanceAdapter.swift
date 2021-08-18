@@ -164,7 +164,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         binanceKit.syncStateObservable.map { _ in () }
     }
 
-    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: Coin?, filter: TransactionsModule2.TypeFilter) -> Observable<[TransactionRecord]> {
         asset.transactionsObservable.map { [weak self] in
             $0.compactMap {
                 self?.transactionRecord(fromTransaction: $0)
@@ -172,7 +172,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionsModule2.TypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.transactionHash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }

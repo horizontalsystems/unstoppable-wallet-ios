@@ -13,6 +13,7 @@ class TransactionsViewController2: ThemeViewController {
     
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
+    private let typeFiltersView = CoinFiltersView()
     private let coinFiltersView = CoinFiltersView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
     
@@ -39,7 +40,8 @@ class TransactionsViewController2: ThemeViewController {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalToSuperview().offset(130)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
         tableView.dataSource = self
         tableView.delegate = self
@@ -53,21 +55,36 @@ class TransactionsViewController2: ThemeViewController {
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
-        
-        view.addSubview(coinFiltersView)
-        coinFiltersView.snp.makeConstraints { maker in
+
+        view.addSubview(typeFiltersView)
+        typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.height.equalTo(CoinFiltersView.height)
         }
-        
+
+        typeFiltersView.onSelect = { [weak self] index in
+            self?.viewModel.typeFilterSelected(index: index)
+        }
+        typeFiltersView.onDeselect = { [weak self] index in
+            self?.viewModel.typeFilterSelected(index: 0)
+        }
+        typeFiltersView.reload(filters: viewModel.typeFilters)
+
+        view.addSubview(coinFiltersView)
+        coinFiltersView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(typeFiltersView.snp.bottom)
+            maker.height.equalTo(CoinFiltersView.height)
+        }
+
         coinFiltersView.onSelect = { [weak self] index in
             self?.viewModel.coinFilterSelected(index: index)
         }
         coinFiltersView.onDeselect = { [weak self] index in
             self?.viewModel.coinFilterSelected(index: nil)
         }
-        
+
         view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
