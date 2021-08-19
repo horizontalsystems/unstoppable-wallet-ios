@@ -564,7 +564,7 @@ CHECKOUT OPTIONS:
     :commit: 5d52b07ea4775924b2ded02e7a9667139747a59e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
-    :commit: a7735dc111e82cd440c09f7d4db17ddece5e52a9
+    :commit: b4f471b66bffcd8bf892682d5e458de7e7cc810d
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
     :commit: 5d52b07ea4775924b2ded02e7a9667139747a59e

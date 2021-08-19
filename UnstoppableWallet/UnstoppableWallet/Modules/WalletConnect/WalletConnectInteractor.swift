@@ -7,6 +7,18 @@ protocol IWalletConnectInteractorDelegate: AnyObject {
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
     func didRequestSignEthereumTransaction(id: Int, transaction: WCEthereumTransaction)
     func didRequestSign(id: Int, payload: WCEthereumSignPayload)
+    func didReceive(error: Error)
+}
+
+extension IWalletConnectInteractorDelegate {
+
+    func didRequestSession(peerId: String, peerMeta: WalletConnect.WCPeerMeta, chainId: Int?) {}
+    func didKillSession() {}
+    func didRequestSendEthereumTransaction(id: Int, transaction: WalletConnect.WCEthereumTransaction) {}
+    func didRequestSignEthereumTransaction(id: Int, transaction: WalletConnect.WCEthereumTransaction) {}
+    func didRequestSign(id: Int, payload: WalletConnect.WCEthereumSignPayload) {}
+    func didReceive(error: Error) {}
+
 }
 
 class WalletConnectInteractor {
@@ -79,6 +91,7 @@ class WalletConnectInteractor {
 
     private func onError(error: Error) {
         print("Interactor Error: \(error)")
+        delegate?.didReceive(error: error)
     }
 
     private func rejectWithNotSupported(id: Int64) {
