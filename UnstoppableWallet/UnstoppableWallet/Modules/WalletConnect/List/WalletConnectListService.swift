@@ -29,7 +29,7 @@ class WalletConnectListService {
     private func onUpdateSessionKiller(state: WalletConnectSessionKiller.State) {
         switch state {
         case .killed: finishSessionKill()
-        case .failed(let error): finishSessionKill(successful: false)
+        case .failed: finishSessionKill(successful: false)
         default: ()
         }
     }

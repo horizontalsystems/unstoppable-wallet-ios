@@ -25,7 +25,9 @@ struct OneInchSwapParameters: Equatable {
 }
 
 class OneInchTransactionFeeService {
+    private static let retryInterval = 3
     private var disposeBag = DisposeBag()
+    private var retryDisposeBag = DisposeBag()
 
     private static let gasLimitSurchargePercent = 25
 
@@ -80,11 +82,25 @@ class OneInchTransactionFeeService {
         .subscribe(onSuccess: { [weak self] swap in
             self?.sync(swap: swap)
         }, onError: { [weak self] error in
-            self?.parameters.amountTo = 0
-            self?.transactionStatus = .failed(error.convertedError)
+            self?.onSwap(error: error)
         })
         .disposed(by: disposeBag)
+    }
 
+    private func onSwap(error: Error) {
+        parameters.amountTo = 0
+
+        if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate {       // retry request fee every 5 seconds if cannot estimate
+            let retryTimer = Observable.just(()).delay(.seconds(Self.retryInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+
+            subscribe(retryDisposeBag, retryTimer) { [weak self] in
+                self?.retryDisposeBag = DisposeBag()
+
+                self?.sync()
+            }
+        }
+
+        transactionStatus = .failed(error.convertedError)
     }
 
     private func sync(swap: OneInchKit.Swap) {
