@@ -17,7 +17,7 @@ class OneInchDataSource {
     private let fromCoinCardCell: SwapCoinCardCell
     private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
-    private let poweredByCell = AdditionalDataCellNew()
+    private let poweredByCell = SelectResourceCell()
     private let priceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
 
@@ -28,7 +28,7 @@ class OneInchDataSource {
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
-    var onOpenSettings: (() -> ())? = nil
+    var onOpenSelectProvider: (() -> ())? = nil
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
 
@@ -60,6 +60,8 @@ class OneInchDataSource {
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
         poweredByCell.title = "swap.powered_by".localized
         poweredByCell.value = viewModel.dexName
+        poweredByCell.icon = UIImage(named: "swap_2_20")
+        poweredByCell.iconTintColor = UIColor.themeGray
 
         priceCell.title = "swap.price".localized
         priceCell.isVisible = false
@@ -152,10 +154,6 @@ class OneInchDataSource {
         viewModel.onTapProceed()
     }
 
-    @objc func onTapAdvancedSettings() {
-        onOpenSettings?()
-    }
-
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
         guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
             return
@@ -217,8 +215,11 @@ extension OneInchDataSource: ISwapDataSource {
                     StaticRow(
                             cell: poweredByCell,
                             id: "powered_by",
-                            height: poweredByCell.cellHeight
-                    ),
+                            height: poweredByCell.cellHeight,
+                            autoDeselect: true,
+                            action: { [weak self] in
+                                self?.onOpenSelectProvider?()
+                            }),
                     StaticRow(
                             cell: priceCell,
                             id: "execution-price",
