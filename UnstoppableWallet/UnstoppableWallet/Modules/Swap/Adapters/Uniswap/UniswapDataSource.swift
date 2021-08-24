@@ -20,7 +20,7 @@ class UniswapDataSource {
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let poweredByCell = AdditionalDataCellNew()
+    private let poweredByCell = SelectResourceCell()
     private let priceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
@@ -33,7 +33,7 @@ class UniswapDataSource {
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
-    var onOpenSettings: (() -> ())? = nil
+    var onOpenSelectProvider: (() -> ())? = nil
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
 
@@ -65,6 +65,8 @@ class UniswapDataSource {
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
         poweredByCell.title = "swap.powered_by".localized
         poweredByCell.value = viewModel.dexName
+        poweredByCell.icon = UIImage(named: "swap_2_20")
+        poweredByCell.iconTintColor = UIColor.themeGray
 
         priceCell.title = "swap.price".localized
         priceCell.isVisible = false
@@ -209,10 +211,6 @@ class UniswapDataSource {
         viewModel.onTapProceed()
     }
 
-    @objc func onTapAdvancedSettings() {
-        onOpenSettings?()
-    }
-
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
         guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
             return
@@ -290,8 +288,11 @@ extension UniswapDataSource: ISwapDataSource {
                     StaticRow(
                             cell: poweredByCell,
                             id: "powered_by",
-                            height: poweredByCell.cellHeight
-                    ),
+                            height: poweredByCell.cellHeight,
+                            autoDeselect: true,
+                            action: { [weak self] in
+                                self?.onOpenSelectProvider?()
+                            }),
                     StaticRow(
                             cell: priceCell,
                             id: "execution-price",

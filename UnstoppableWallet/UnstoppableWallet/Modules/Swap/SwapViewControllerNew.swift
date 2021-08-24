@@ -78,6 +78,9 @@ class SwapViewControllerNew: ThemeViewController {
                 self?.present(viewController, animated: true)
             }
         }
+        dataSource?.onOpenSelectProvider = { [weak self] in
+            self?.onOpenSelectProvider()
+        }
 
         if isLoaded {
             tableView.reload()
@@ -99,6 +102,10 @@ class SwapViewControllerNew: ThemeViewController {
         }
 
         present(viewController, animated: true)
+    }
+
+    @objc func onOpenSelectProvider() {
+        present(SwapSelectProviderModule.viewController(dexManager: viewModel.dexManager).toAlert, animated: true)
     }
 
     private func reloadTable() {

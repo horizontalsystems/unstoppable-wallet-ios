@@ -33,7 +33,7 @@ protocol ISwapDataSource: AnyObject {
     var state: SwapModule.DataSourceState { get }
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? { get set }
-    var onOpenSettings: (() -> ())? { get set }
+    var onOpenSelectProvider: (() -> ())? { get set }
     var onClose: (() -> ())? { get set }
     var onReload: (() -> ())? { get set }
 }
