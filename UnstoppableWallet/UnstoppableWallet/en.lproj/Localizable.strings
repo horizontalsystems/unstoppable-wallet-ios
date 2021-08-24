@@ -904,7 +904,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Current %@ balance is below amount required to process this transaction including transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
 "ethereum_transaction.error.reverted" = "Transaction cannot be executed: %@";
-"wallet_connect.request_title" = "Request";
+"wallet_connect.request_title" = "Contract Call";
+"wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Sign Request";
 "wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.message" = "Message to sign";
