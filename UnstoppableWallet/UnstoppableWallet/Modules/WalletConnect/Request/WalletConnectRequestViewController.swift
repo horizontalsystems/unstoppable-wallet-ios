@@ -32,7 +32,7 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
         }
 
         approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("button.approve".localized, for: .normal)
+        approveButton.setTitle("wallet_connect.button.confirm".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)
