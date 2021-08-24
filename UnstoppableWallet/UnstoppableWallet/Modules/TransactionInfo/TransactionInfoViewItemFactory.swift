@@ -3,6 +3,11 @@ import CurrencyKit
 import EthereumKit
 
 class TransactionInfoViewItemFactory {
+    private let accountSettingManager: AccountSettingManager
+
+    init(accountSettingManager: AccountSettingManager) {
+        self.accountSettingManager = accountSettingManager
+    }
 
     private func actionSectionItems(title: String, coinValue: CoinValue, rate: CurrencyValue?, incoming: Bool?) -> [TransactionInfoModule.ViewItem] {
         let currencyValue = rate.flatMap {
@@ -79,6 +84,61 @@ class TransactionInfoViewItemFactory {
         } else {
             return "tx_info.you_get".localized
         }
+    }
+
+    func explorerViewItem(record: TransactionRecord, testMode: Bool) -> TransactionInfoModule.ViewItem {
+        let source = record.source
+        let transactionHash = record.transactionHash
+
+        let blockchain = source.blockchain
+        let account = source.account
+
+        var title: String
+        var url: String?
+        switch blockchain {
+        case .bitcoin:
+            title = "btc.com"
+            url = testMode ? nil : "https://btc.com/" + transactionHash
+        case .bitcoinCash:
+            title = "btc.com"
+            url = testMode ? nil : "https://bch.btc.com/" + transactionHash
+        case .litecoin:
+            title = "blockchair.com"
+            url = testMode ? nil : "https://blockchair.com/litecoin/transaction/" + transactionHash
+        case .dash:
+            title = "dash.org"
+            url = testMode ? nil : "https://insight.dash.org/insight/tx/" + transactionHash
+        case .ethereum:
+            let domain: String
+
+            switch accountSettingManager.ethereumNetwork(account: account).networkType {
+            case .ropsten: domain = "ropsten.etherscan.io"
+            case .rinkeby: domain = "rinkeby.etherscan.io"
+            case .kovan: domain = "kovan.etherscan.io"
+            case .goerli: domain = "goerli.etherscan.io"
+            default: domain = "etherscan.io"
+            }
+
+            title = "etherscan.io"
+            url = "https://\(domain)/tx/" + transactionHash
+        case .binanceSmartChain:
+            let domain: String
+
+            switch accountSettingManager.binanceSmartChainNetwork(account: account).networkType {
+            default: domain = "bscscan.com"
+            }
+
+            title = "bscscan.com"
+            url = testMode ? nil : "https://\(domain)/tx/" + transactionHash
+        case .bep2:
+            title = "binance.org"
+            url = testMode ? "https://testnet-explorer.binance.org/tx/" + transactionHash : "https://explorer.binance.org/tx/" + transactionHash
+        case .zcash:
+            title = "blockchair.com"
+            url = testMode ? nil : "https://blockchair.com/zcash/transaction/" + transactionHash
+        }
+
+        return .explorer(title: "tx_info.view_on".localized(title), url: url)
     }
 
     func items(transaction: TransactionRecord, rates: [Coin: CurrencyValue], lastBlockInfo: LastBlockInfo?) -> [[TransactionInfoModule.ViewItem]] {

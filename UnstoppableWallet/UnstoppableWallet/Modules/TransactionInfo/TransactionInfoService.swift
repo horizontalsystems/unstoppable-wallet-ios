@@ -7,30 +7,56 @@ import RxCocoa
 class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
+    private let transactionItemUpdatedRelay = PublishRelay<()>()
+    private(set) var transactionItem: TransactionItem {
+        didSet {
+            transactionItemUpdatedRelay.accept(())
+        }
+    }
+
     private let adapter: ITransactionsAdapter
     private let rateManager: IRateManager
     private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: IFeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
-    private let accountSettingManager: AccountSettingManager
 
     private let ratesRelay = PublishRelay<[Coin: CurrencyValue]>()
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider,
-         appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
+    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, transactionItem: TransactionItem, feeCoinProvider: IFeeCoinProvider,
+         appConfigProvider: IAppConfigProvider) {
         self.adapter = adapter
         self.rateManager = rateManager
         self.currencyKit = currencyKit
+        self.transactionItem = transactionItem
         self.feeCoinProvider = feeCoinProvider
         self.appConfigProvider = appConfigProvider
-        self.accountSettingManager = accountSettingManager
+
+        subscribe(disposeBag, adapter.transactionsObservable(coin: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
+        subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncLastBlockUpdated() }
     }
+
+    private func sync(transactionRecords: [TransactionRecord]) {
+        guard let transactionRecord = transactionRecords.first(where: { transactionRecord in transactionItem.record == transactionRecord }) else {
+            return
+        }
+
+        transactionItem = TransactionItem(record: transactionRecord, lastBlockInfo: adapter.lastBlockInfo, currencyValue: transactionItem.currencyValue)
+    }
+
+    private func syncLastBlockUpdated() {
+        transactionItem = TransactionItem(record: transactionItem.record, lastBlockInfo: adapter.lastBlockInfo, currencyValue: transactionItem.currencyValue)
+    }
+
 }
 
 extension TransactionInfoService {
 
     var ratesSignal: Signal<[Coin: CurrencyValue]> {
         ratesRelay.asSignal()
+    }
+
+    var transactionItemUpdatedObservable: Observable<()> {
+        transactionItemUpdatedRelay.asObservable()
     }
 
     var baseCurrency: Currency {
@@ -43,14 +69,6 @@ extension TransactionInfoService {
 
     var testMode: Bool {
         appConfigProvider.testMode
-    }
-
-    func ethereumNetworkType(account: Account) -> NetworkType {
-        accountSettingManager.ethereumNetwork(account: account).networkType
-    }
-
-    func binanceSmartChainNetworkType(account: Account) -> NetworkType {
-        accountSettingManager.binanceSmartChainNetwork(account: account).networkType
     }
 
     func fetchRates(coins: [Coin], timestamp: TimeInterval) {
