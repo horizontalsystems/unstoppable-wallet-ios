@@ -4,9 +4,10 @@ import SnapKit
 import ComponentKit
 
 class FilterHeaderCell: UICollectionViewCell {
-    private static let buttonStyle: ThemeButtonStyle = .secondaryTransparent
+    private static let buttonStyle: ThemeButtonStyle = .tab
 
     private let button = ThemeButton()
+    private let selectedView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,6 +19,12 @@ class FilterHeaderCell: UICollectionViewCell {
 
         button.apply(style: FilterHeaderCell.buttonStyle)
         button.isUserInteractionEnabled = false
+
+        contentView.addSubview(selectedView)
+        selectedView.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(2)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,6 +51,7 @@ class FilterHeaderCell: UICollectionViewCell {
 
     private func bind(selected: Bool) {
         button.isSelected = selected
+        selectedView.backgroundColor = selected ? .themeJacob : .clear
     }
 
     private func bind(highlighted: Bool) {
@@ -55,7 +63,7 @@ class FilterHeaderCell: UICollectionViewCell {
 extension FilterHeaderCell {
 
     static func size(for title: String) -> CGSize {
-        ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle)
+        CGSize(width: ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width, height: CGFloat.heightSingleLineCell)
     }
 
 }

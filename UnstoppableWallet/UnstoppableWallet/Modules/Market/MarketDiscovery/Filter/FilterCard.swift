@@ -19,7 +19,7 @@ class FilterCard: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.cornerRadius = .margin16
+        contentView.cornerRadius = .margin12
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
@@ -123,7 +123,7 @@ class FilterCard: UICollectionViewCell {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
         let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
 
-        return CGSize(width: selected ? 212 : unselectedWidth, height: 84)
+        return CGSize(width: selected ? 212 : unselectedWidth, height: 94)
     }
 
 }

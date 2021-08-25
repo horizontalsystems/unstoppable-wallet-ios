@@ -47,7 +47,7 @@ extension SingleSelectorView {
         allButtons = []
 
         items.enumerated().forEach { index, title in
-            let button = ThemeButton().apply(style: .tertiary)
+            let button = ThemeButton().apply(style: .secondaryDefault)
             allButtons.append(button)
 
             stackView.addArrangedSubview(button)

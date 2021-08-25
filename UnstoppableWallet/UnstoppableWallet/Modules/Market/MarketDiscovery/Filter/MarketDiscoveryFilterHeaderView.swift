@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class MarketDiscoveryFilterHeaderView: UIView {
-    public static var headerHeight: CGFloat = 108
+    public static var headerHeight: CGFloat = 118
 
     private var filters = [MarketFilterViewItem]()
 

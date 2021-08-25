@@ -43,7 +43,7 @@ class BalanceButtonsView: UIView {
 
         addSubview(receiveButton)
 
-        receiveButton.apply(style: .primaryGreen)
+        receiveButton.apply(style: .primaryGray)
         receiveButton.setImageTintColor(.black, for: .normal)
         receiveButton.setImageTintColor(.themeGray50, for: .disabled)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
