@@ -49,8 +49,8 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
         marketFieldModeView.snp.makeConstraints { maker in
             maker.leading.equalTo(fieldSelectionButton.snp.trailing).priority(.high)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalToSuperview().inset(10)
-            maker.height.equalTo(24)
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(28)
         }
 
         marketFieldModeView.onSelect = { [weak self] index in

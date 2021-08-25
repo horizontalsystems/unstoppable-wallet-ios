@@ -38,13 +38,22 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsets(top: .margin8, left: .margin16, bottom: .margin8, right: .margin16)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         collectionView.allowsMultipleSelection = false
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
 
         collectionView.registerCell(forClass: FilterHeaderCell.self)
+
+        let separator = UIView()
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOnePixel)
+        }
+
+        separator.backgroundColor = UIColor.themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {
