@@ -2409,6 +2409,9 @@
 		D08FBF2126BD359600630E40 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08FBF2026BD359600630E40 /* TransactionsViewController.swift */; };
 		D08FBF2226BD359600630E40 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08FBF2026BD359600630E40 /* TransactionsViewController.swift */; };
 		D08FBF2326BD359600630E40 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08FBF2026BD359600630E40 /* TransactionsViewController.swift */; };
+		D0F236B026D4D104006C0690 /* TransactionSyncStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC39C566A0B82E25C4B7 /* TransactionSyncStateService.swift */; };
+		D0F236B126D4D10C006C0690 /* TransactionRecordsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB08E9BC05FB349A53DE /* TransactionRecordsService.swift */; };
+		D0F236B226D4D110006C0690 /* SingleWalletRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD28B0FB8A98C5E1A422 /* SingleWalletRecordService.swift */; };
 		D0F7675226BA8E2900093AFF /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7675126BA8E2900093AFF /* TransactionsViewModel.swift */; };
 		D0F7675326BA8E2900093AFF /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7675126BA8E2900093AFF /* TransactionsViewModel.swift */; };
 		D0F7675426BA8E2900093AFF /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7675126BA8E2900093AFF /* TransactionsViewModel.swift */; };
@@ -6611,6 +6614,7 @@
 				58AAAABB2CAA7ECD416EE614 /* KeyboardAwareViewController.swift in Sources */,
 				11B350BF30D47E2799CA24A4 /* AboutViewModel.swift in Sources */,
 				11B35FE7BFBD75F7E0A7F357 /* AboutViewController.swift in Sources */,
+				D0F236B226D4D110006C0690 /* SingleWalletRecordService.swift in Sources */,
 				11B354CCA5AABCE42E6C0AC9 /* AboutService.swift in Sources */,
 				11B35E4C3B51151057D12882 /* AboutModule.swift in Sources */,
 				11B35B6C068857C49D005D1C /* TermsSeparatorCell.swift in Sources */,
@@ -8550,6 +8554,7 @@
 				58AAAC124DDA9BF9F9D272C4 /* CoinTvlModule.swift in Sources */,
 				58AAAF0FF2AB3F4ED61D8FD2 /* CoinTvlFetcher.swift in Sources */,
 				11B352840E06275F96EFFCDB /* BaseCurrencySettingsModule.swift in Sources */,
+				D0F236B126D4D10C006C0690 /* TransactionRecordsService.swift in Sources */,
 				11B353C8EE86F13C1BBD601C /* BaseCurrencySettingsService.swift in Sources */,
 				11B3538F09621AE16E30E26A /* BaseCurrencySettingsViewController.swift in Sources */,
 				11B35D8BE4090830405EE0C6 /* BaseCurrencySettingsViewModel.swift in Sources */,
@@ -8576,6 +8581,7 @@
 				11B35B507F2F843A5B3E4C7C /* EvmNetworkViewModel.swift in Sources */,
 				11B35B81B3C6EDC01D0B3C1F /* EvmNetworkService.swift in Sources */,
 				11B35EA3CBC8B198C3A71382 /* EvmNetworkModule.swift in Sources */,
+				D0F236B026D4D104006C0690 /* TransactionSyncStateService.swift in Sources */,
 				58AAAA0137FF6F9AFCF2BC61 /* SwapViewControllerNew.swift in Sources */,
 				58AAA4F889DEBF59AB2640D5 /* SwapProviderManager.swift in Sources */,
 				58AAABFA189B57BCA1A2AE13 /* SwapModule.swift in Sources */,
