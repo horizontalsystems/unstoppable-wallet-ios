@@ -40,8 +40,8 @@ class WalletConnectListViewModel {
     private func sync(sessionKillingState: WalletConnectListService.SessionKillingState) {
         switch sessionKillingState {
         case .processing: showLoadingRelay.accept(())
-        case .completed: showSuccessRelay.accept(nil)
-        case .removedOnly: showSuccessRelay.accept(nil)     // app just remove peerId from database
+        case .completed: showSuccessRelay.accept("alert.success_action".localized)
+        case .removedOnly: showSuccessRelay.accept("alert.success_action".localized)     // app just remove peerId from database
         }
     }
 
@@ -55,6 +55,8 @@ class WalletConnectListViewModel {
 }
 
 extension WalletConnectListViewModel {
+
+    var emptySessionList: Bool { service.sessionCount == 0 }
 
     var sectionViewItemsDriver: Driver<[SectionViewItem]> {
         sectionViewItemsRelay.asDriver()

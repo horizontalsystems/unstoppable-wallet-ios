@@ -45,8 +45,12 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(sectionViewItems: $0) }
-        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(userInteractionEnabled: false) }
+        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
         subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
+
+        if viewModel.emptySessionList {
+            WalletConnectModule.start(sourceViewController: self)
+        }
     }
 
     private func sync(sectionViewItems: [WalletConnectListViewModel.SectionViewItem]) {

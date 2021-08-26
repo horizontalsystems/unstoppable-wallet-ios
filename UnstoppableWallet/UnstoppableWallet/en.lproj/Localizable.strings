@@ -913,6 +913,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.disconnecting" = "Disconnecting";
+
 
 // App Status
 
