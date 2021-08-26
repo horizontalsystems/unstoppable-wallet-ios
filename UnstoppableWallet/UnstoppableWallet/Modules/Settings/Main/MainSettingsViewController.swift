@@ -266,15 +266,7 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private func openWalletConnect() {
-        let walletConnectListViewController = WalletConnectListModule.viewController()
-
-        switch viewModel.walletConnectOpenMode {
-        case .sessionList:
-            navigationController?.pushViewController(walletConnectListViewController, animated: true)
-        case .qrScanner:
-            navigationController?.pushViewController(walletConnectListViewController, animated: false)
-            WalletConnectModule.start(sourceViewController: walletConnectListViewController)
-        }
+        navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
     }
 
 }

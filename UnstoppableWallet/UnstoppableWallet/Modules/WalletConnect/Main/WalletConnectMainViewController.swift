@@ -53,13 +53,6 @@ class WalletConnectMainViewController: ThemeViewController {
 
         title = "wallet_connect.title".localized
 
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        spinner.set(hidden: true)
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
@@ -73,6 +66,13 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.registerCell(forClass: TermsHeaderCell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.set(hidden: true)
 
         view.addSubview(buttonsHolder)
         buttonsHolder.snp.makeConstraints { maker in

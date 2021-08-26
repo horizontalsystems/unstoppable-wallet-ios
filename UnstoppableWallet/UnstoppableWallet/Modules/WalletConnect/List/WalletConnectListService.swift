@@ -53,6 +53,10 @@ extension WalletConnectListService {
         items(sessions: sessionManager.sessions)
     }
 
+    var sessionCount: Int {
+        sessionManager.sessions.count
+    }
+
     var itemsObservable: Observable<[Item]> {
         sessionManager.sessionsObservable.map { [weak self] in
             self?.items(sessions: $0) ?? []
