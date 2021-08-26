@@ -117,75 +117,33 @@ class WalletConnectMainViewController: ThemeViewController {
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
-        viewModel.connectingDriver
-                .drive(onNext: { [weak self] connecting in
-                    self?.sync(connecting: connecting)
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.cancelVisibleDriver
-                .drive(onNext: { [weak self] visible in
-                    self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: visible)
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.connectButtonDriver
-                .drive(onNext: { [weak self] state in
-                    self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
-                    self?.connectButton.isEnabled = state == .enabled
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.disconnectButtonDriver
-                .drive(onNext: { [weak self] state in
-                    self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: state != .hidden)
-                    self?.disconnectButton.isEnabled = state == .enabled
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.closeVisibleDriver
-                .drive(onNext: { [weak self] visible in
-                    self?.syncCloseButton(visible: visible)
-                })
-                .disposed(by: disposeBag)
-
-//        viewModel.signedTransactionsVisibleDriver
-//                .drive(onNext: { [weak self] visible in
-//                })
-//                .disposed(by: disposeBag)
-
-        viewModel.peerMetaDriver
-                .drive(onNext: { [weak self] peerMeta in
-                    self?.peerMeta = peerMeta
-                    self?.tableView.reload()
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.hintDriver
-                .drive(onNext: { [weak self] hint in
-                    self?.hint = hint
-                    self?.tableView.reload()
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.statusDriver
-                .drive(onNext: { [weak self] status in
-                    self?.status = status
-                    self?.tableView.reload()
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.openRequestSignal
-                .emit(onNext: { [weak self] request in
-                    self?.open(request: request)
-                })
-                .disposed(by: disposeBag)
-
-        viewModel.finishSignal
-                .emit(onNext: { [weak self] in
-                    self?.sourceViewController?.dismiss(animated: true)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in self?.sync(connecting: $0) }
+        subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0) }
+        subscribe(disposeBag, viewModel.connectButtonDriver) { [weak self] state in
+            self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
+            self?.connectButton.isEnabled = state == .enabled
+        }
+        subscribe(disposeBag, viewModel.disconnectButtonDriver) { [weak self] state in
+            self?.isModalInPresentation = state != .enabled
+            self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: state != .hidden)
+            self?.disconnectButton.isEnabled = state == .enabled
+        }
+        subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in self?.syncCloseButton(visible: $0) }
+//        subscribe(disposeBag, viewModel.signedTransactionsVisibleDriver) { [weak self] in () }
+        subscribe(disposeBag, viewModel.peerMetaDriver) { [weak self] in
+            self?.peerMeta = $0
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.hintDriver) { [weak self] in
+            self?.hint = $0
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.statusDriver) { [weak self] in
+            self?.status = $0
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.sourceViewController?.dismiss(animated: true) }
     }
 
     private func sync(connecting: Bool) {
