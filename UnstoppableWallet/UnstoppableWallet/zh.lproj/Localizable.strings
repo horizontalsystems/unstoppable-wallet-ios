@@ -201,6 +201,10 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
 "send.confirmation.send_button" = "发送​​";
+"send.confirmation.resend_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.resend_button" = "Resend";
+"send.confirmation.cancel_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.cancel_button" = "Cancel Transaction";
 "send.amount_error.balance" = "余额不足";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
@@ -256,6 +260,8 @@
 "swap.advanced_settings.error.invalid_address" = "无效地址";
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
+
+"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough ETH to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
 
 "swap.service" = "服务";
 "swap.service.title" = "服务";
@@ -552,6 +558,12 @@
 "transactions.today" = "今天";
 "transactions.yesterday" = "昨天";
 
+"transactions.types.all" = "All";
+"transactions.types.incoming" = "Incoming";
+"transactions.types.outgoing" = "Outgoing";
+"transactions.types.swap" = "Swap";
+"transactions.types.approve" = "Approve";
+
 // Transaction Info
 
 "tx_info.title" = "交易信息";
@@ -565,6 +577,9 @@
 "tx_info.to_hash" = "接收人";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
+"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.cancel" = "Cancel";
+"tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
 "tx_info.to_self_note" = "交易已发送至自有地址";
@@ -888,6 +903,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
+"wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "签名请求";
 "wallet_connect.sign.domain" = "域";
 "wallet_connect.sign.message" = "待签名消息";
@@ -895,6 +911,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "新连接";
+"wallet_connect_list.disconnecting" = "Disconnecting";
+
 
 // App Status
 
