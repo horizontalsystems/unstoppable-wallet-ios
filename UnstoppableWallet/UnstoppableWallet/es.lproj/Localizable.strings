@@ -201,6 +201,10 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Enviar";
+"send.confirmation.resend_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.resend_button" = "Resend";
+"send.confirmation.cancel_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.cancel_button" = "Cancel Transaction";
 "send.amount_error.balance" = "Saldo insuficiente";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
@@ -256,6 +260,8 @@
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
+
+"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough ETH to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
 
 "swap.service" = "Servicio";
 "swap.service.title" = "Servicio";
@@ -428,10 +434,10 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.subtitle" = "Diagrama";
-"market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "Volumen";
-"market.global.defi_cap.title" = "Capitalización DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.volume_24h.title" = "Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -552,6 +558,12 @@
 "transactions.today" = "Hoy";
 "transactions.yesterday" = "Ayer";
 
+"transactions.types.all" = "All";
+"transactions.types.incoming" = "Incoming";
+"transactions.types.outgoing" = "Outgoing";
+"transactions.types.swap" = "Swap";
+"transactions.types.approve" = "Approve";
+
 // Transaction Info
 
 "tx_info.title" = "Información de la transacción";
@@ -565,6 +577,9 @@
 "tx_info.to_hash" = "Para";
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
+"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.cancel" = "Cancel";
+"tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Comisión";
 "tx_info.fee.estimated" = "Tarifa (est.)";
 "tx_info.to_self_note" = "Esta transacción fue enviada a su propia dirección";
@@ -889,6 +904,7 @@ poner en peligro la seguridad de mis fondos.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
+"wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Solicitud de Firma";
 "wallet_connect.sign.domain" = "Dominio";
 "wallet_connect.sign.message" = "Mensaje a firmar";
@@ -896,6 +912,8 @@ poner en peligro la seguridad de mis fondos.";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
+"wallet_connect_list.disconnecting" = "Disconnecting";
+
 
 // App Status
 
