@@ -522,13 +522,13 @@ CHECKOUT OPTIONS:
     :commit: 4911f4123b0c7f998b51e60274abcc4c949fb998
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: a13b2770144c4baf9c5472f846702ddfd5889c8f
+    :commit: 521fbd296ac66317d475cf0e9125d116d46f64c9
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: a13b2770144c4baf9c5472f846702ddfd5889c8f
+    :commit: 521fbd296ac66317d475cf0e9125d116d46f64c9
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 763394a92bdf091517376776bccecf9e7edbb49f
@@ -555,7 +555,7 @@ CHECKOUT OPTIONS:
     :commit: 220903b9cfb9daa3fc7ec8cc3b4455cf5068a45e
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
-    :commit: a13b2770144c4baf9c5472f846702ddfd5889c8f
+    :commit: 521fbd296ac66317d475cf0e9125d116d46f64c9
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :commit: 5d52b07ea4775924b2ded02e7a9667139747a59e
@@ -576,7 +576,7 @@ CHECKOUT OPTIONS:
     :commit: af2c3aa434312b64626ddd050c28100ea27e21bb
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: a13b2770144c4baf9c5472f846702ddfd5889c8f
+    :commit: 521fbd296ac66317d475cf0e9125d116d46f64c9
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
