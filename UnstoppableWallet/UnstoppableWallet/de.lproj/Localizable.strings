@@ -897,6 +897,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
 "wallet_connect.usage_description" = "Sie können den Browser aufrufen. Schließen Sie diese Seite nicht, während Sie im Browser interagieren.";
 "wallet_connect.no_connection" = "Wallet-Verbindung reagiert nicht";
+"wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle ETH-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
