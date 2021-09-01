@@ -90,7 +90,6 @@ class WalletConnectInteractor {
     }
 
     private func onError(error: Error) {
-        print("Interactor Error: \(error)")
         delegate?.didReceive(error: error)
     }
 

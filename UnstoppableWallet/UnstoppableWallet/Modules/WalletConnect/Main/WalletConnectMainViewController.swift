@@ -24,6 +24,10 @@ class WalletConnectMainViewController: ThemeViewController {
     private var connectButtonBottomConstraint: Constraint?
     private var connectButtonHeightConstraint: Constraint?
 
+    private let reconnectButton = ThemeButton()
+    private var reconnectButtonBottomConstraint: Constraint?
+    private var reconnectButtonHeightConstraint: Constraint?
+
     private let cancelButton = ThemeButton()
     private var cancelButtonBottomConstraint: Constraint?
     private var cancelButtonHeightConstraint: Constraint?
@@ -88,7 +92,7 @@ class WalletConnectMainViewController: ThemeViewController {
             disconnectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
         }
 
-        disconnectButton.apply(style: .primaryGray)
+        disconnectButton.apply(style: .primaryRed)
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
@@ -104,12 +108,24 @@ class WalletConnectMainViewController: ThemeViewController {
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
+        buttonsHolder.addSubview(reconnectButton)
+        reconnectButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+
+            reconnectButtonBottomConstraint = maker.bottom.equalTo(cancelButton.snp.top).offset(-CGFloat.margin4x).constraint
+            reconnectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
+        }
+
+        reconnectButton.apply(style: .primaryYellow)
+        reconnectButton.setTitle("wallet_connect.button_reconnect".localized, for: .normal)
+        reconnectButton.addTarget(self, action: #selector(onTapReconnect), for: .touchUpInside)
+
         buttonsHolder.addSubview(connectButton)
         connectButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin8x)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
 
-            connectButtonBottomConstraint = maker.bottom.equalTo(cancelButton.snp.top).offset(-CGFloat.margin4x).constraint
+            connectButtonBottomConstraint = maker.bottom.equalTo(reconnectButton.snp.top).offset(-CGFloat.margin4x).constraint
             connectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
         }
 
@@ -117,11 +133,16 @@ class WalletConnectMainViewController: ThemeViewController {
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
+        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in self?.sync(connecting: $0) }
         subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0) }
         subscribe(disposeBag, viewModel.connectButtonDriver) { [weak self] state in
             self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
             self?.connectButton.isEnabled = state == .enabled
+        }
+        subscribe(disposeBag, viewModel.reconnectButtonDriver) { [weak self] state in
+            self?.syncButtonConstraints(bottom: self?.reconnectButtonBottomConstraint, height: self?.reconnectButtonHeightConstraint, visible: state != .hidden)
+            self?.reconnectButton.isEnabled = state == .enabled
         }
         subscribe(disposeBag, viewModel.disconnectButtonDriver) { [weak self] state in
             self?.isModalInPresentation = state != .enabled
@@ -144,6 +165,10 @@ class WalletConnectMainViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.sourceViewController?.dismiss(animated: true) }
+    }
+
+    private func show(error: Error) {
+        HudHelper.instance.showError(title: error.localizedDescription)
     }
 
     private func sync(connecting: Bool) {
@@ -173,11 +198,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     @objc private func onTapDisconnect() {
-        let viewController = WalletConnectConfirmDisconnectViewController(remotePeerName: peerMeta?.name) { [weak self] in
-            self?.viewModel.disconnect()
-        }
+        viewModel.disconnect()
+    }
 
-        present(viewController.toBottomSheet, animated: true)
+    @objc private func onTapReconnect() {
+        viewModel.reconnect()
     }
 
     @objc private func onTapClose() {
