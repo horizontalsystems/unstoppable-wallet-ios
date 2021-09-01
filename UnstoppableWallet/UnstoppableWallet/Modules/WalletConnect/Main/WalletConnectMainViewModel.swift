@@ -8,9 +8,11 @@ class WalletConnectMainViewModel {
 
     private let disposeBag = DisposeBag()
 
+    private let showErrorRelay = PublishRelay<Error>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
+    private let reconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let disconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let signedTransactionsVisibleRelay = BehaviorRelay<Bool>(value: false)
@@ -24,26 +26,10 @@ class WalletConnectMainViewModel {
     init(service: WalletConnectService) {
         self.service = service
 
-        service.stateObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] state in
-                    self?.sync(state: state)
-                })
-                .disposed(by: disposeBag)
-
-        service.connectionStateObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] state in
-                    self?.sync(connectionState: state)
-                })
-                .disposed(by: disposeBag)
-
-        service.requestObservable
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] request in
-                    self?.openRequestRelay.accept(request)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, service.errorObservable) { [weak self] in self?.showErrorRelay.accept($0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.connectionStateObservable) { [weak self] in self?.sync(connectionState: $0) }
+        subscribe(disposeBag, service.requestObservable) { [weak self] in self?.openRequestRelay.accept($0) }
 
         sync()
     }
@@ -61,8 +47,11 @@ class WalletConnectMainViewModel {
 
         connectingRelay.accept(service.state == .idle)
         cancelVisibleRelay.accept(state != .ready)
-        connectButtonRelay.accept(state == .waitingForApproveSession ? (connectionState == .connected ? .enabled : .disabled) : .hidden)
-        disconnectButtonRelay.accept(state == .ready ? (connectionState == .connected ? .enabled : .disabled) : .hidden)
+        connectButtonRelay.accept(state == .waitingForApproveSession ? (connectionState == .connected ? .enabled : .hidden) : .hidden)
+        disconnectButtonRelay.accept(state == .ready ? (connectionState == .connected ? .enabled : .hidden) : .hidden)
+
+        let stateForReconnectButton = state == .waitingForApproveSession || state == .ready
+        reconnectButtonRelay.accept(stateForReconnectButton ? (connectionState == .disconnected ? .enabled : .hidden) : .hidden)
         closeVisibleRelay.accept(state == .ready)
 
 //        signedTransactionsVisibleRelay.accept(state == .ready)
@@ -73,17 +62,24 @@ class WalletConnectMainViewModel {
     }
 
     private func hint(state: WalletConnectService.State, connection: WalletConnectInteractor.State) -> String? {
+        switch connection {
+        case .disconnected:
+            if state == .waitingForApproveSession {
+                return nil
+            } else if state == .ready {
+                return "wallet_connect.no_connection".localized
+            }
+        case .connecting: return nil
+        case .connected: ()
+        }
+
         switch state {
         case .invalid(let error):
             return error.smartDescription
         case .waitingForApproveSession:
             return "wallet_connect.connect_description".localized
         case .ready:
-            if connection == .connected {
-                return "wallet_connect.usage_description".localized
-            } else {
-                return "wallet_connect.no_connection".localized
-            }
+            return "wallet_connect.usage_description".localized
         default:
             return nil
         }
@@ -117,6 +113,10 @@ class WalletConnectMainViewModel {
 
 extension WalletConnectMainViewModel {
 
+    var showErrorSignal: Signal<Error> {
+        showErrorRelay.asSignal()
+    }
+
     var connectingDriver: Driver<Bool> {
         connectingRelay.asDriver()
     }
@@ -127,6 +127,10 @@ extension WalletConnectMainViewModel {
 
     var connectButtonDriver: Driver<ButtonState> {
         connectButtonRelay.asDriver()
+    }
+
+    var reconnectButtonDriver: Driver<ButtonState> {
+        reconnectButtonRelay.asDriver()
     }
 
     var disconnectButtonDriver: Driver<ButtonState> {
@@ -167,6 +171,10 @@ extension WalletConnectMainViewModel {
         } else {
             finishRelay.accept(())
         }
+    }
+
+    func reconnect() {
+        service.reconnect()
     }
 
     func connect() {
