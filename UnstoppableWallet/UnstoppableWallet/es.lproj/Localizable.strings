@@ -898,6 +898,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
 "wallet_connect.no_connection" = "La conexión al monedero no responde";
+"wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
