@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 import DeepDiff
 import HUD
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class WalletViewController: ThemeViewController {
@@ -267,36 +267,36 @@ class WalletViewController: ThemeViewController {
         present(SortTypeRouter.module(), animated: true)
     }
 
-    private func openReceive(wallet: Wallet) {
+    private func openReceive(wallet: WalletNew) {
         if let module = DepositModule.viewController(wallet: wallet) {
             present(module, animated: true)
         }
     }
 
-    private func openSend(wallet: Wallet) {
+    private func openSend(wallet: WalletNew) {
         if let module = SendRouter.module(wallet: wallet) {
             present(module, animated: true)
         }
     }
 
-    private func openSwap(wallet: Wallet) {
-        if let module = SwapModule.viewController(coinFrom: wallet.coin) {
+    private func openSwap(wallet: WalletNew) {
+        if let module = SwapModule.viewController(platformCoinFrom: wallet.platformCoin) {
             present(module, animated: true)
         }
     }
 
     private func openCoinPage(coin: Coin) {
-        let viewController = CoinPageModule.viewController(launchMode: .coin(coin: coin))
-        present(viewController, animated: true)
+//        let viewController = CoinPageModule.viewController(launchMode: .coin(coin: coin))
+//        present(viewController, animated: true)
     }
 
-    private func openBackupRequired(wallet: Wallet) {
-        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.title)
+    private func openBackupRequired(wallet: WalletNew) {
+        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)
         let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: self).toBottomSheet
         present(module, animated: true)
     }
 
-    private func openSyncError(wallet: Wallet, error: Error) {
+    private func openSyncError(wallet: WalletNew, error: Error) {
         let viewController = BalanceErrorRouter.module(wallet: wallet, error: error, navigationController: navigationController)
         present(viewController, animated: true)
     }

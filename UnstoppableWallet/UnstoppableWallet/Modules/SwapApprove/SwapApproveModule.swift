@@ -6,21 +6,21 @@ import BigInt
 struct SwapApproveModule {
 
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let evm20Adapter = App.shared.adapterManager.adapter(for: data.coin) as? Evm20Adapter else {
+        guard let evm20Adapter = App.shared.adapterManagerNew.adapter(for: data.platformCoin) as? Evm20Adapter else {
             return nil
         }
 
         let coinService = CoinService(
-                coin: data.coin,
+                platformCoin: data.platformCoin,
                 currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager
+                rateManager: App.shared.rateManagerNew
         )
 
         let service = SwapApproveService(
                 erc20Kit: evm20Adapter.evm20Kit,
-                amount: BigUInt(data.amount.roundedString(decimal: data.coin.decimal)) ?? 0,
+                amount: BigUInt(data.amount.roundedString(decimal: data.platformCoin.decimal)) ?? 0,
                 spenderAddress: data.spenderAddress,
-                allowance: BigUInt(data.allowance.roundedString(decimal: data.coin.decimal)) ?? 0
+                allowance: BigUInt(data.allowance.roundedString(decimal: data.platformCoin.decimal)) ?? 0
         )
 
         let decimalParser = AmountDecimalParser()

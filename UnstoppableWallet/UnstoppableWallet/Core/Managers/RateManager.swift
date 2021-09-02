@@ -9,12 +9,12 @@ class RateManager {
 
     private let walletManager: WalletManager
     private let rateCoinMapper: IRateCoinMapper
-    private let feeCoinProvider: IFeeCoinProvider
+    private let feeCoinProvider: FeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
 
     private let kit: XRatesKit
 
-    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: IFeeCoinProvider, appConfigProvider: IAppConfigProvider) {
+    init(walletManager: WalletManager, currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: FeeCoinProvider, appConfigProvider: IAppConfigProvider) {
         self.walletManager = walletManager
         self.rateCoinMapper = rateCoinMapper
         self.feeCoinProvider = feeCoinProvider

@@ -1,23 +1,23 @@
-import CoinKit
+import MarketKit
 
 class ActivateCoinManager {
-    private let coinKit: CoinKit.Kit
-    private let walletManager: WalletManager
+    private let marketKit: Kit
+    private let walletManager: WalletManagerNew
     private let accountManager: IAccountManager
 
-    init(coinKit: CoinKit.Kit, walletManager: WalletManager, accountManager: IAccountManager) {
-        self.coinKit = coinKit
+    init(marketKit: Kit, walletManager: WalletManagerNew, accountManager: IAccountManager) {
+        self.marketKit = marketKit
         self.walletManager = walletManager
         self.accountManager = accountManager
     }
 
     func activate(coinType: CoinType) {
-        guard let coin = coinKit.coin(type: coinType) else {
+        guard let platformCoin = try? marketKit.platformCoin(coinType: coinType) else {
             // coin type is not supported
             return
         }
 
-        guard !walletManager.activeWallets.contains(where: { $0.coin == coin }) else {
+        guard !walletManager.activeWallets.contains(where: { $0.platformCoin == platformCoin }) else {
             // wallet already exists
             return
         }
@@ -27,7 +27,7 @@ class ActivateCoinManager {
             return
         }
 
-        let wallet = Wallet(coin: coin, account: account)
+        let wallet = WalletNew(platformCoin: platformCoin, account: account)
         walletManager.save(wallets: [wallet])
     }
 

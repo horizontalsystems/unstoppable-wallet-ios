@@ -603,6 +603,17 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createEnabledWalletsNew") { db in
+            try db.create(table: EnabledWalletNew.databaseTableName) { t in
+                t.column(EnabledWalletNew.Columns.coinUid.name, .text).notNull()
+                t.column(EnabledWalletNew.Columns.coinTypeId.name, .text).notNull()
+                t.column(EnabledWalletNew.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWalletNew.Columns.accountId.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletNew.Columns.coinUid.name, EnabledWalletNew.Columns.coinTypeId.name, EnabledWalletNew.Columns.coinSettingsId.name, EnabledWalletNew.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -645,6 +656,40 @@ extension GrdbStorage: IEnabledWalletStorage {
     func clearEnabledWallets() {
         _ = try! dbPool.write { db in
             try EnabledWallet.deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IEnabledWalletStorageNew {
+
+    var enabledWalletsNew: [EnabledWalletNew] {
+        try! dbPool.read { db in
+            try EnabledWalletNew.fetchAll(db)
+        }
+    }
+
+    func enabledWalletsNew(accountId: String) -> [EnabledWalletNew] {
+        try! dbPool.read { db in
+            try EnabledWalletNew.filter(EnabledWalletNew.Columns.accountId == accountId).fetchAll(db)
+        }
+    }
+
+    func handle(newEnabledWalletsNew: [EnabledWalletNew], deletedEnabledWalletsNew: [EnabledWalletNew]) {
+        _ = try! dbPool.write { db in
+            for enabledWallet in newEnabledWalletsNew {
+                try enabledWallet.insert(db)
+            }
+            for enabledWallet in deletedEnabledWalletsNew {
+                try EnabledWalletNew.filter(EnabledWalletNew.Columns.coinUid == enabledWallet.coinUid && EnabledWalletNew.Columns.coinTypeId == enabledWallet.coinTypeId && EnabledWallet.Columns.coinSettingsId == enabledWallet.coinSettingsId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
+            }
+        }
+
+    }
+
+    func clearEnabledWalletsNew() {
+        _ = try! dbPool.write { db in
+            try EnabledWalletNew.deleteAll(db)
         }
     }
 

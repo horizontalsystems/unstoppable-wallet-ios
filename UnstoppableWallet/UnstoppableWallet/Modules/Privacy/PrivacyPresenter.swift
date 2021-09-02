@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class PrivacyPresenter {
     weak var view: IPrivacyView?
@@ -38,8 +38,8 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         updateSortMode()
 
         if !isActiveAccountCreated {
-            syncItems = interactor.syncSettings.compactMap { setting, coin, changeable in
-                PrivacySyncItem(coin: coin, setting: setting, changeable: changeable)
+            syncItems = interactor.syncSettings.compactMap { setting, platformCoin, changeable in
+                PrivacySyncItem(platformCoin: platformCoin, setting: setting, changeable: changeable)
             }
 
             updateSync()
@@ -63,7 +63,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
             return
         }
 
-        router.showSyncMode(coin: item.coin, currentSyncMode: item.setting.syncMode, delegate: self)
+        router.showSyncMode(platformCoin: item.platformCoin, currentSyncMode: item.setting.syncMode, delegate: self)
     }
 
 }
@@ -81,10 +81,10 @@ extension PrivacyPresenter: IPrivacySortModeDelegate {
 
 extension PrivacyPresenter: IPrivacySyncModeDelegate {
 
-    func onSelect(syncMode: SyncMode, coin: Coin) {
-        let newSetting = InitialSyncSetting(coinType: coin.type, syncMode: syncMode)
+    func onSelect(syncMode: SyncMode, platformCoin: PlatformCoin) {
+        let newSetting = InitialSyncSetting(coinType: platformCoin.coinType, syncMode: syncMode)
 
-        if let index = syncItems.firstIndex(where: { $0.coin == coin }) {
+        if let index = syncItems.firstIndex(where: { $0.platformCoin == platformCoin }) {
             syncItems[index].setting = newSetting
         }
 

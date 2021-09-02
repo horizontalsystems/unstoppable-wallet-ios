@@ -1,18 +1,18 @@
-import CoinKit
+import MarketKit
 
 class FeeCoinProvider {
-    private let coinKit: CoinKit.Kit
+    private let marketKit: Kit
 
-    init(coinKit: CoinKit.Kit) {
-        self.coinKit = coinKit
+    init(marketKit: Kit) {
+        self.marketKit = marketKit
     }
 
-    private func binanceFeeCoin(symbol: String) -> Coin? {
+    private func binanceFeeCoin(symbol: String) -> PlatformCoin? {
         guard symbol != "BNB" else {
             return nil
         }
 
-        return coinKit.coin(type: .bep2(symbol: "BNB"))
+        return try? marketKit.platformCoin(coinType: .bep2(symbol: "BNB"))
     }
 
     private func binanceFeeCoinProtocol(symbol: String) -> String? {
@@ -25,14 +25,14 @@ class FeeCoinProvider {
 
 }
 
-extension FeeCoinProvider: IFeeCoinProvider {
+extension FeeCoinProvider {
 
-    func feeCoin(coin: Coin) -> Coin? {
-        switch coin.type {
+    func feeCoin(coinType: CoinType) -> PlatformCoin? {
+        switch coinType {
         case .erc20:
-            return coinKit.coin(type: .ethereum)
+            return try? marketKit.platformCoin(coinType: .ethereum)
         case .bep20:
-            return coinKit.coin(type: .binanceSmartChain)
+            return try? marketKit.platformCoin(coinType: .binanceSmartChain)
         case .bep2(let symbol):
             return binanceFeeCoin(symbol: symbol)
         default:
@@ -40,8 +40,8 @@ extension FeeCoinProvider: IFeeCoinProvider {
         }
     }
 
-    func feeCoinProtocol(coin: Coin) -> String? {
-        switch coin.type {
+    func feeCoinProtocol(coinType: CoinType) -> String? {
+        switch coinType {
         case .erc20:
             return "ERC20"
         case .bep20:

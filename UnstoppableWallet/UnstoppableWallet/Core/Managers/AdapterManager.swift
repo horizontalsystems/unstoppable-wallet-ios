@@ -92,11 +92,11 @@ class AdapterManager {
     }
 
     private func handleUpdated(setting: InitialSyncSetting) {
-        let wallets = queue.sync { _adapterMap.keys }
-
-        refreshAdapters(wallets: wallets.filter {
-            setting.coinType == $0.coin.type && $0.account.origin == .restored
-        })
+//        let wallets = queue.sync { _adapterMap.keys }
+//
+//        refreshAdapters(wallets: wallets.filter {
+//            setting.coinType == $0.coin.type && $0.account.origin == .restored
+//        })
     }
 
     private func refreshAdapters(wallets: [Wallet]) {

@@ -6,7 +6,7 @@ struct ManageAccountModule {
         guard let service = ManageAccountService(
                 accountId: accountId,
                 accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
+                walletManager: App.shared.walletManagerNew,
                 restoreSettingsManager: App.shared.restoreSettingsManager
         ) else {
             return nil

@@ -26,9 +26,9 @@ extension BalanceErrorRouter: IBalanceErrorRouter {
 
 extension BalanceErrorRouter {
 
-    static func module(wallet: Wallet, error: Error, navigationController: UINavigationController?) -> UIViewController {
+    static func module(wallet: WalletNew, error: Error, navigationController: UINavigationController?) -> UIViewController {
         let router = BalanceErrorRouter(navigationController: navigationController)
-        let interactor = BalanceErrorInteractor(adapterManager: App.shared.adapterManager, appConfigProvider: App.shared.appConfigProvider)
+        let interactor = BalanceErrorInteractor(adapterManager: App.shared.adapterManagerNew, appConfigProvider: App.shared.appConfigProvider)
         let presenter = BalanceErrorPresenter(wallet: wallet, error: error, interactor: interactor, router: router)
         let viewController = BalanceErrorViewController(delegate: presenter)
 

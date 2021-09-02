@@ -6,7 +6,7 @@ import BigInt
 import UniswapKit
 import OneInchKit
 import Erc20Kit
-import CoinKit
+import MarketKit
 
 class SendEvmTransactionViewModel {
     private let disposeBag = DisposeBag()
@@ -93,15 +93,15 @@ class SendEvmTransactionViewModel {
 
         if case AppError.ethereum(let reason) = error.convertedError {
             switch reason {
-            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
+            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
             case .lowerThanBaseGasLimit: return "ethereum_transaction.error.lower_than_base_gas_limit".localized
             }
         }
 
         if case AppError.oneInch(let reason) = error.convertedError {
             switch reason {
-            case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.coin.code)
-            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized(coinServiceFactory.baseCoinService.coin.code)
+            case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
+            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
             }
         }
 
@@ -163,7 +163,7 @@ class SendEvmTransactionViewModel {
 
     private func transferItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem] {
         var viewItems: [ViewItem] = [
-            .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.coin.title),
+            .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.platformCoin.coin.name),
             .value(title: "send.confirmation.amount".localized, value: coinServiceFactory.baseCoinService.amountData(value: value).formattedRawString, type: .outgoing)
         ]
 
@@ -182,7 +182,7 @@ class SendEvmTransactionViewModel {
         }
 
         var viewItems: [ViewItem] = [
-            .subhead(title: "send.confirmation.you_send".localized, value: coinService.coin.title),
+            .subhead(title: "send.confirmation.you_send".localized, value: coinService.platformCoin.coin.name),
             .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .outgoing)
         ]
 
@@ -205,7 +205,7 @@ class SendEvmTransactionViewModel {
         let addressTitle = TransactionInfoAddressMapper.map(addressValue)
 
         var viewItems: [ViewItem] = [
-            .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.coin.title),
+            .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.platformCoin.coin.name),
             .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .regular),
             .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
@@ -229,24 +229,24 @@ class SendEvmTransactionViewModel {
         switch trade {
         case let .exactIn(amountIn, amountOutMin, _):
             sections.append(SectionViewItem(viewItems: [
-                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
+                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
                 .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedRawString, type: .outgoing)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
-                .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
+                .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
                 estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedRawString }, type: .incoming),
                 .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedRawString, type: .regular)
             ]))
         case let .exactOut(amountOut, amountInMax, _):
             sections.append(SectionViewItem(viewItems: [
-                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
+                .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
                 estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedRawString }, type: .outgoing),
                 .value(title: "swap.confirmation.maximum".localized, value: coinServiceIn.amountData(value: amountInMax).formattedRawString, type: .regular)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
-                .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
+                .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
                 .value(title: "send.confirmation.amount".localized, value: coinServiceOut.amountData(value: amountOut).formattedRawString, type: .incoming)
             ]))
         }
@@ -284,14 +284,14 @@ class SendEvmTransactionViewModel {
         let info = additionalInfo?.oneInchSwapInfo
 
         guard let coinServiceIn = coinService(token: tokenIn),
-              let coinServiceOut = tokenOut.flatMap({ coinService(token: $0) }) ?? (info?.coinTo).flatMap({ coinService(coin: $0) }) else {
+              let coinServiceOut = tokenOut.flatMap({ coinService(token: $0) }) ?? (info?.platformCoinTo).flatMap({ coinService(platformCoin: $0) }) else {
             return nil
         }
 
         var sections = [SectionViewItem]()
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.coin.title),
+            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
             .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: fromAmount).formattedRawString, type: .outgoing)
         ]))
 
@@ -301,7 +301,7 @@ class SendEvmTransactionViewModel {
 
         let estimatedTo = estimatedAmountData.map { estimatedSwapAmount(value: $0.formattedRawString, type: .incoming) }
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_get".localized, value: coinServiceOut.coin.title),
+            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
             estimatedTo,
             .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: toAmountMin).formattedRawString, type: .regular)
         ].compactMap { $0 }))
@@ -346,7 +346,7 @@ class SendEvmTransactionViewModel {
         var inputItem: ViewItem?
 
         if transactionData.input.isEmpty {      // ETH or BNB transfer transaction
-            youPayItem = .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.coin.title)
+            youPayItem = .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.platformCoin.coin.name)
         } else {
             inputItem = .input(value: transactionData.input.toHexString())
         }
@@ -387,8 +387,8 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func coinService(coin: Coin) -> CoinService? {
-        switch coin.type {
+    private func coinService(platformCoin: PlatformCoin) -> CoinService? {
+        switch platformCoin.coinType {
         case .ethereum, .binanceSmartChain: return coinServiceFactory.baseCoinService
         case .erc20(let address): return (try? EthereumKit.Address(hex: address)).flatMap { coinServiceFactory.coinService(contractAddress: $0) }
         case .bep20(let address): return (try? EthereumKit.Address(hex: address)).flatMap { coinServiceFactory.coinService(contractAddress: $0) }

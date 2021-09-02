@@ -2,20 +2,20 @@ import Foundation
 import RxSwift
 import XRatesKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class SendPresenter {
     weak var view: ISendView?
 
-    private let coin: Coin
+    private let platformCoin: PlatformCoin
 
     private let handler: ISendHandler
     private let interactor: ISendInteractor
     private let router: ISendRouter
     private let logger: Logger
 
-    init(coin: Coin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter, logger: Logger) {
-        self.coin = coin
+    init(platformCoin: PlatformCoin, handler: ISendHandler, interactor: ISendInteractor, router: ISendRouter, logger: Logger) {
+        self.platformCoin = platformCoin
 
         self.handler = handler
         self.interactor = interactor
@@ -44,12 +44,12 @@ class SendPresenter {
 extension SendPresenter: ISendViewDelegate {
 
     func onViewDidLoad() {
-        view?.set(coin: coin)
+        view?.set(coin: platformCoin.coin)
         handler.onViewDidLoad()
 
-        interactor.subscribeToLatestRate(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
+        interactor.subscribeToLatestRate(coinType: platformCoin.coinType, currencyCode: interactor.baseCurrency.code)
 
-        let rateValue = interactor.nonExpiredRateValue(coinType: coin.type, currencyCode: interactor.baseCurrency.code)
+        let rateValue = interactor.nonExpiredRateValue(coinType: platformCoin.coinType, currencyCode: interactor.baseCurrency.code)
         handler.sync(rateValue: rateValue)
 
         var inputType: SendInputType
@@ -115,7 +115,7 @@ extension SendPresenter: ISendInteractorDelegate {
         view?.show(error: error.convertedError)
     }
 
-    func didReceive(latestRate: LatestRate) {
+    func didReceive(latestRate: RateManagerNew.LatestRate) {
         if !latestRate.expired {
             handler.sync(rateValue: latestRate.rate)
             return

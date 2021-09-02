@@ -162,7 +162,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         switch viewItem.primaryInfo {
         case .coinValue(let coinValue):
-            formattedPrimary = ValueFormatter.instance.format(coinValue: coinValue)
+            formattedPrimary = ValueFormatter.instance.format(coinValueNew: coinValue)
         case .currencyValue(let currencyValue):
             formattedPrimary = ValueFormatter.instance.format(currencyValue: currencyValue)
         }
@@ -170,7 +170,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         if let secondaryInfo = viewItem.secondaryInfo {
             switch secondaryInfo {
             case .coinValue(let coinValue):
-                formattedSecondary = ValueFormatter.instance.format(coinValue: coinValue)
+                formattedSecondary = ValueFormatter.instance.format(coinValueNew: coinValue)
             case .currencyValue(let currencyValue):
                 formattedSecondary = ValueFormatter.instance.format(currencyValue: currencyValue)
             }
@@ -195,7 +195,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         switch viewItem.primaryInfo {
         case .coinValue(let coinValue):
-            formattedPrimary = ValueFormatter.instance.format(coinValue: coinValue)
+            formattedPrimary = ValueFormatter.instance.format(coinValueNew: coinValue)
         case .currencyValue(let currencyValue):
             formattedPrimary = ValueFormatter.instance.format(currencyValue: currencyValue)
         }

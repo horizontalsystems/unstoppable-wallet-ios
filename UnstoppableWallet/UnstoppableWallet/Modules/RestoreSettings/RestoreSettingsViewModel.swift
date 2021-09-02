@@ -1,13 +1,13 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class RestoreSettingsViewModel {
     private let service: RestoreSettingsService
     private let disposeBag = DisposeBag()
 
-    private let openBirthdayAlertRelay = PublishRelay<Coin>()
+    private let openBirthdayAlertRelay = PublishRelay<PlatformCoin>()
 
     private var currentRequest: RestoreSettingsService.Request?
 
@@ -22,7 +22,7 @@ class RestoreSettingsViewModel {
 
         switch request.type {
         case .birthdayHeight:
-            openBirthdayAlertRelay.accept(request.coin)
+            openBirthdayAlertRelay.accept(request.platformCoin)
         }
     }
 
@@ -30,7 +30,7 @@ class RestoreSettingsViewModel {
 
 extension RestoreSettingsViewModel {
 
-    var openBirthdayAlertSignal: Signal<Coin> {
+    var openBirthdayAlertSignal: Signal<PlatformCoin> {
         openBirthdayAlertRelay.asSignal()
     }
 
@@ -41,7 +41,7 @@ extension RestoreSettingsViewModel {
 
         switch request.type {
         case .birthdayHeight:
-            service.enter(birthdayHeight: birthdayHeight, coin: request.coin)
+            service.enter(birthdayHeight: birthdayHeight, platformCoin: request.platformCoin)
         }
     }
 
@@ -50,7 +50,7 @@ extension RestoreSettingsViewModel {
             return
         }
 
-        service.cancel(coin: request.coin)
+        service.cancel(coin: request.platformCoin.coin)
     }
 
 }

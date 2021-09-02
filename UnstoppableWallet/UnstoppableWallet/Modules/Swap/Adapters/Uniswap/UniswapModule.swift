@@ -22,12 +22,12 @@ class UniswapModule {
         )
         allowanceService = SwapAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
+                adapterManager: App.shared.adapterManagerNew,
                 evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManager,
+                adapterManager: App.shared.adapterManagerNew,
                 allowanceService: allowanceService
         )
         service = UniswapService(
@@ -35,7 +35,7 @@ class UniswapModule {
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                adapterManager: App.shared.adapterManager
+                adapterManager: App.shared.adapterManagerNew
         )
     }
 
@@ -68,8 +68,8 @@ extension UniswapModule: ISwapProvider {
         let exactIn = tradeService.tradeType == .exactIn
 
         return SwapModule.DataSourceState(
-                coinFrom: tradeService.coinIn,
-                coinTo: tradeService.coinOut,
+                platformCoinFrom: tradeService.platformCoinIn,
+                platformCoinTo: tradeService.platformCoinOut,
                 amountFrom: tradeService.amountIn,
                 amountTo: tradeService.amountOut,
                 exactFrom: exactIn)

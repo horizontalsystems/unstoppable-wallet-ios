@@ -2,14 +2,14 @@ import Foundation
 import EthereumKit
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class SwapPendingAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let adapterManager: AdapterManager
+    private let adapterManager: AdapterManagerNew
     private let allowanceService: SwapAllowanceService
 
-    private var coin: Coin?
+    private var platformCoin: PlatformCoin?
     private var pendingAllowance: Decimal?
 
     private let disposeBag = DisposeBag()
@@ -23,7 +23,7 @@ class SwapPendingAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, allowanceService: SwapAllowanceService) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManagerNew, allowanceService: SwapAllowanceService) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
         self.allowanceService = allowanceService
@@ -63,15 +63,15 @@ extension SwapPendingAllowanceService {
         stateRelay.asObservable()
     }
 
-    func set(coin: Coin?) {
-        self.coin = coin
+    func set(platformCoin: PlatformCoin?) {
+        self.platformCoin = platformCoin
         pendingAllowance = nil
 
         syncAllowance()
     }
 
     func syncAllowance() {
-        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
+        guard let platformCoin = platformCoin, let adapter = adapterManager.adapter(for: platformCoin) as? IErc20Adapter else {
             return
         }
 

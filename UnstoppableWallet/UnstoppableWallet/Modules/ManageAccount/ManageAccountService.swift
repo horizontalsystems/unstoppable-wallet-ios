@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class ManageAccountService {
     private let accountRelay = PublishRelay<Account>()
@@ -11,7 +11,7 @@ class ManageAccountService {
     }
 
     private let accountManager: IAccountManager
-    private let walletManager: WalletManager
+    private let walletManager: WalletManagerNew
     private let restoreSettingsManager: RestoreSettingsManager
     private let disposeBag = DisposeBag()
 
@@ -26,7 +26,7 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: IAccountManager, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager) {
+    init?(accountId: String, accountManager: IAccountManager, walletManager: WalletManagerNew, restoreSettingsManager: RestoreSettingsManager) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
@@ -84,7 +84,7 @@ extension ManageAccountService {
         let accountWallets = walletManager.wallets(account: account)
 
         return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { coinType, restoreSettingType, value in
-            guard let wallet = accountWallets.first(where: { $0.coin.type == coinType }) else {
+            guard let wallet = accountWallets.first(where: { $0.coinType == coinType }) else {
                 return nil
             }
 

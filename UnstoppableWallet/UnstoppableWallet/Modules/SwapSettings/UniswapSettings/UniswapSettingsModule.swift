@@ -4,7 +4,7 @@ import ThemeKit
 struct UniswapSettingsModule {
 
     static func dataSource(tradeService: UniswapTradeService) -> ISwapSettingsDataSource? {
-        guard let ethereumCoin = App.shared.coinKit.coin(type: .ethereum) else {
+        guard let ethereumPlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum) else {
             return nil
         }
 
@@ -15,8 +15,8 @@ struct UniswapSettingsModule {
 
         let recipientViewModel = RecipientAddressViewModel(
                 service: service,
-                resolutionService: AddressResolutionService(coinCode: ethereumCoin.code),
-                addressParser: addressParserFactory.parser(coin: ethereumCoin)
+                resolutionService: AddressResolutionService(coinCode: ethereumPlatformCoin.coin.code),
+                addressParser: addressParserFactory.parser(coinType: ethereumPlatformCoin.coinType)
         )
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
         let deadlineViewModel = SwapDeadlineViewModel(service: service, decimalParser: AmountDecimalParser())

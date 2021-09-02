@@ -2,13 +2,13 @@ import Foundation
 import EthereumKit
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let adapterManager: AdapterManager
+    private let adapterManager: AdapterManagerNew
 
-    private var coin: Coin?
+    private var platformCoin: PlatformCoin?
 
     private let disposeBag = DisposeBag()
     private var allowanceDisposeBag = DisposeBag()
@@ -22,7 +22,7 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, evmKit: EthereumKit.Kit) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManagerNew, evmKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
 
@@ -37,7 +37,7 @@ class SwapAllowanceService {
     private func sync() {
         allowanceDisposeBag = DisposeBag()
 
-        guard let coin = coin, let adapter = adapterManager.adapter(for: coin) as? IErc20Adapter else {
+        guard let platformCoin = platformCoin, let adapter = adapterManager.adapter(for: platformCoin) as? IErc20Adapter else {
             state = nil
             return
         }
@@ -52,7 +52,7 @@ class SwapAllowanceService {
                 .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.state = .ready(allowance: CoinValue(coin: coin, value: allowance))
+                    self?.state = .ready(allowance: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: allowance))
                 }, onError: { [weak self] error in
                     self?.state = .notReady(error: error)
                 })
@@ -67,8 +67,8 @@ extension SwapAllowanceService {
         stateRelay.asObservable()
     }
 
-    func set(coin: Coin?) {
-        self.coin = coin
+    func set(platformCoin: PlatformCoin?) {
+        self.platformCoin = platformCoin
         sync()
     }
 
@@ -77,13 +77,13 @@ extension SwapAllowanceService {
             return nil
         }
 
-        guard let coin = coin else {
+        guard let platformCoin = platformCoin else {
             return nil
         }
 
         return ApproveData(
                 dex: dex,
-                coin: coin,
+                platformCoin: platformCoin,
                 spenderAddress: spenderAddress,
                 amount: amount,
                 allowance: allowance.value
@@ -96,7 +96,7 @@ extension SwapAllowanceService {
 
     enum State: Equatable {
         case loading
-        case ready(allowance: CoinValue)
+        case ready(allowance: CoinValueNew)
         case notReady(error: Error)
 
         static func ==(lhs: State, rhs: State) -> Bool {
@@ -110,7 +110,7 @@ extension SwapAllowanceService {
 
     struct ApproveData {
         let dex: SwapModule.Dex
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let spenderAddress: EthereumKit.Address
         let amount: Decimal
         let allowance: Decimal

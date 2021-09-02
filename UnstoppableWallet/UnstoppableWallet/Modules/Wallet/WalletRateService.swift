@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 import XRatesKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 protocol IWalletRateServiceDelegate: AnyObject {
     func didUpdateBaseCurrency()
@@ -40,9 +40,9 @@ class WalletRateService {
     private func subscribeToLatestRates() {
         latestRatesDisposeBag = DisposeBag()
 
-        subscribe(latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
-            self?.onUpdate(latestRates: $0)
-        }
+//        subscribe(latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
+//            self?.onUpdate(latestRates: $0)
+//        }
     }
 
     private func onUpdate(latestRates: [CoinType: LatestRate]) {
@@ -70,7 +70,8 @@ extension WalletRateService {
     }
 
     func itemMap(coinTypes: [CoinType]) -> [CoinType: Item] {
-        rateManager.latestRateMap(coinTypes: coinTypes, currencyCode: currency.code).mapValues { item(latestRate: $0) }
+//        rateManager.latestRateMap(coinTypes: coinTypes, currencyCode: currency.code).mapValues { item(latestRate: $0) }
+        [:]
     }
 
     func refresh() {
