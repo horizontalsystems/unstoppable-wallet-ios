@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class BalanceErrorPresenter {
     weak var view: IBalanceErrorView?
@@ -7,10 +7,10 @@ class BalanceErrorPresenter {
     private let interactor: IBalanceErrorInteractor
     private let router: IBalanceErrorRouter
 
-    private let wallet: Wallet
+    private let wallet: WalletNew
     private let error: Error
 
-    init(wallet: Wallet, error: Error, interactor: IBalanceErrorInteractor, router: IBalanceErrorRouter) {
+    init(wallet: WalletNew, error: Error, interactor: IBalanceErrorInteractor, router: IBalanceErrorRouter) {
         self.wallet = wallet
         self.error = error
 
@@ -30,8 +30,8 @@ class BalanceErrorPresenter {
 extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: wallet.coin.title)
-        view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coin.type))
+        view?.set(coinTitle: wallet.coin.name)
+        view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coinType))
     }
 
     func onTapRetry() {

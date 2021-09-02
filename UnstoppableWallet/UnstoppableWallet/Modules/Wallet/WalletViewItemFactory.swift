@@ -1,7 +1,7 @@
 import Foundation
 import XRatesKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class WalletViewItemFactory {
     private let minimumProgress = 10
@@ -17,7 +17,7 @@ class WalletViewItemFactory {
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
-                iconCoinType: iconCoinType(coin: coin, state: state),
+                iconUrlString: iconUrlString(wallet: item.wallet, state: state),
                 coinCode: coin.code,
                 blockchainBadge: badge(wallet: item.wallet),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
@@ -28,14 +28,14 @@ class WalletViewItemFactory {
         )
     }
 
-    private func badge(wallet: Wallet) -> String? {
-        switch wallet.coin.type {
+    private func badge(wallet: WalletNew) -> String? {
+        switch wallet.coinType {
         case .bitcoin, .litecoin:
-            return wallet.configuredCoin.settings.derivation?.rawValue.uppercased()
+            return wallet.coinSettings.derivation?.rawValue.uppercased()
         case .bitcoinCash:
-            return wallet.configuredCoin.settings.bitcoinCashCoinType?.rawValue.uppercased()
+            return wallet.coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
         default:
-            return wallet.coin.type.blockchainType
+            return wallet.coinType.blockchainType
         }
     }
 
@@ -46,7 +46,7 @@ class WalletViewItemFactory {
             return .searchingTx(count: count)
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                    coinValue: balanceHidden ? nil : coinValue(coin: item.wallet.coin, value: item.balanceData.balanceTotal, state: item.state),
+                    coinValue: balanceHidden ? nil : coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceTotal, state: item.state),
                     rateValue: rateValue(rateItem: item.rateItem),
                     diff: diff(rateItem: item.rateItem)
             ))
@@ -59,7 +59,7 @@ class WalletViewItemFactory {
         }
 
         return BalanceLockedAmountViewItem(
-            coinValue: coinValue(coin: item.wallet.coin, value: item.balanceData.balanceLocked, state: item.state),
+            coinValue: coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceLocked, state: item.state),
                 currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, rateItem: item.rateItem)
         )
     }
@@ -74,15 +74,15 @@ class WalletViewItemFactory {
         return BalanceButtonsViewItem(
                 sendButtonState: sendButtonsState,
                 receiveButtonState: .enabled,
-                swapButtonState: item.wallet.coin.type.swappable ? sendButtonsState : .hidden,
+                swapButtonState: item.wallet.coinType.swappable ? sendButtonsState : .hidden,
                 chartButtonState: item.rateItem != nil ? .enabled : .disabled
         )
     }
 
-    private func iconCoinType(coin: Coin, state: AdapterState) -> CoinType? {
+    private func iconUrlString(wallet: WalletNew, state: AdapterState) -> String? {
         switch state {
         case .notSynced: return nil
-        default: return coin.type
+        default: return wallet.coin.imageUrl
         }
     }
 
@@ -136,9 +136,9 @@ class WalletViewItemFactory {
         return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value.isSignMinus ? .negative : .positive))
     }
 
-    private func coinValue(coin: Coin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
+    private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.format(coinValue: CoinValue(coin: coin, value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
+                text: ValueFormatter.instance.format(coinValueNew: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
                 dimmed: state != .synced
         )
     }

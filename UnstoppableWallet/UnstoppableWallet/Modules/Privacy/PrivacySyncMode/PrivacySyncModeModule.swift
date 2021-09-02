@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 protocol IPrivacySyncModeView: AnyObject {
     func set(coinTitle: String, coinCode: String, coinType: CoinType)
@@ -16,7 +16,7 @@ protocol IPrivacySyncModeRouter {
 }
 
 protocol IPrivacySyncModeDelegate: AnyObject {
-    func onSelect(syncMode: SyncMode, coin: Coin)
+    func onSelect(syncMode: SyncMode, platformCoin: PlatformCoin)
 }
 
 class PrivacySyncModeModule {

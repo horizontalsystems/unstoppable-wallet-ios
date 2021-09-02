@@ -1,7 +1,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel
@@ -12,13 +12,13 @@ class RestoreSettingsView {
     init(viewModel: RestoreSettingsViewModel) {
         self.viewModel = viewModel
 
-        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] coin in
-            self?.showBirthdayAlert(coin: coin)
+        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] platformCoin in
+            self?.showBirthdayAlert(platformCoin: platformCoin)
         }
     }
 
-    private func showBirthdayAlert(coin: Coin) {
-        let controller = BirthdayInputViewController(coin: coin, delegate: self).toAlert
+    private func showBirthdayAlert(platformCoin: PlatformCoin) {
+        let controller = BirthdayInputViewController(platformCoin: platformCoin, delegate: self).toAlert
         onOpenController?(controller)
     }
 

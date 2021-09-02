@@ -1,38 +1,38 @@
 import RxSwift
 import BinanceChainKit
-import CoinKit
+import MarketKit
 
 class BinanceAdapter {
     static let confirmationsThreshold = 1
     static let transferFee: Decimal = 0.000075
 
     private let binanceKit: BinanceChainKit
-    private let feeCoin: Coin
-    private let coin: Coin
+    private let feePlatformCoin: PlatformCoin
+    private let platformCoin: PlatformCoin
     private let asset: Asset
     private let transactionSource: TransactionSource
 
-    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: Coin, wallet: Wallet) {
+    init(binanceKit: BinanceChainKit, symbol: String, feePlatformCoin: PlatformCoin, wallet: WalletNew) {
         self.binanceKit = binanceKit
-        self.feeCoin = feeCoin
-        coin = wallet.coin
+        self.feePlatformCoin = feePlatformCoin
+        platformCoin = wallet.platformCoin
         transactionSource = wallet.transactionSource
 
         asset = binanceKit.register(symbol: symbol)
     }
 
-    private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        let fromMine = transaction.from == binanceKit.account
-        let toMine = transaction.to == binanceKit.account
-
-        if fromMine && !toMine {
-            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
-        } else if !fromMine && toMine {
-            return BinanceChainIncomingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin)
-        } else {
-            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
-        }
-    }
+//    private func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
+//        let fromMine = transaction.from == binanceKit.account
+//        let toMine = transaction.to == binanceKit.account
+//
+//        if fromMine && !toMine {
+//            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
+//        } else if !fromMine && toMine {
+//            return BinanceChainIncomingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin)
+//        } else {
+//            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
+//        }
+//    }
 
     private func adapterState(syncState: BinanceChainKit.SyncState) -> AdapterState {
         switch syncState {

@@ -33,6 +33,10 @@ class ValueFormatter {
         format(value: coinValue.value, decimalCount: coinValue.coin.decimal, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
 
+    func format(coinValueNew: CoinValueNew, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
+        format(value: coinValueNew.value, decimalCount: coinValueNew.decimal, symbol: showCode ? coinValueNew.coin.code : nil, fractionPolicy: fractionPolicy)
+    }
+
     func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
         var absoluteValue = abs(value)
         var rounded = false

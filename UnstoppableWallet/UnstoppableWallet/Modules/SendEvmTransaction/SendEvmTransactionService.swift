@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 import EthereumKit
 import BigInt
-import CoinKit
+import MarketKit
 import UniswapKit
 import OneInchKit
 

@@ -42,7 +42,8 @@ class ManageAccountViewModel {
     private func syncAccountSettings() {
         additionalViewItems = service.accountSettingsInfo.map { coin, restoreSettingType, value in
             AdditionalViewItem(
-                    icon: .image(coinType: coin.type),
+//                    icon: .image(coinType: coin.type),
+                    icon: nil,
                     title: restoreSettingType.title(coin: coin),
                     value: value
             )

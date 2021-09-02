@@ -1,6 +1,6 @@
 import UIKit
 import EthereumKit
-import CoinKit
+import MarketKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
@@ -9,19 +9,19 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let feeCoin: Coin?
+        let feePlatformCoin: PlatformCoin?
 
         switch evmKit.networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: feeCoin = App.shared.coinKit.coin(type: .ethereum)
-        case .bscMainNet: feeCoin = App.shared.coinKit.coin(type: .binanceSmartChain)
+        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum)
+        case .bscMainNet: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
         }
 
-        guard let coin = feeCoin, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) as? ICustomRangedFeeRateProvider else {
+        guard let platformCoin = feePlatformCoin, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: baseService)
-        let coinServiceFactory = EvmCoinServiceFactory(baseCoin: coin, coinKit: App.shared.coinKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManagerNew)
         let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 10)
         let sendService = SendEvmTransactionService(sendData: SendEvmData(transactionData: service.transactionData, additionalInfo: nil), gasPrice: service.gasPrice, evmKit: evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 

@@ -234,8 +234,8 @@ extension UniswapDataSource: ISwapDataSource {
     var state: SwapModule.DataSourceState {
         let exactIn = viewModel.tradeService.tradeType == .exactIn
         return SwapModule.DataSourceState(
-                coinFrom: viewModel.tradeService.coinIn,
-                coinTo: viewModel.tradeService.coinOut,
+                platformCoinFrom: viewModel.tradeService.platformCoinIn,
+                platformCoinTo: viewModel.tradeService.platformCoinOut,
                 amountFrom: viewModel.tradeService.amountIn,
                 amountTo: viewModel.tradeService.amountOut,
                 exactFrom: exactIn)

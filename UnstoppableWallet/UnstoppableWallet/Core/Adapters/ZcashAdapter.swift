@@ -4,7 +4,7 @@ import ZcashLightClientKit
 import RxSwift
 import HdWalletKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class ZcashAdapter {
     private let disposeBag = DisposeBag()
@@ -12,7 +12,7 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     var fee: Decimal { defaultFee() }
 
-    private let coin: Coin
+    private let platformCoin: PlatformCoin
     private let transactionSource: TransactionSource
     private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
@@ -48,14 +48,14 @@ class ZcashAdapter {
         return Decimal(fee) / Self.coinRate
     }
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
+    init(wallet: WalletNew, restoreSettings: RestoreSettings, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
         network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
-        coin = wallet.coin
+        platformCoin = wallet.platformCoin
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
         let birthday: Int
@@ -185,9 +185,9 @@ class ZcashAdapter {
         if let userInfo = notification.userInfo,
            let txs = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] as? [ConfirmedTransactionEntity] {
             let newTxs = transactionPool.sync(transactions: txs)
-            transactionRecordsSubject.onNext(newTxs.map {
-                transactionRecord(fromTransaction: $0)
-            })
+//            transactionRecordsSubject.onNext(newTxs.map {
+//                transactionRecord(fromTransaction: $0)
+//            })
         }
     }
 
@@ -206,57 +206,57 @@ class ZcashAdapter {
         let newTxs = transactionPool.sync(transactions: synchronizer.pendingTransactions)
 
         if !newTxs.isEmpty {
-            transactionRecordsSubject.onNext(newTxs.map {
-                transactionRecord(fromTransaction: $0)
-            })
+//            transactionRecordsSubject.onNext(newTxs.map {
+//                transactionRecord(fromTransaction: $0)
+//            })
         }
     }
 
-    func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
-        let showRawTransaction = transaction.minedHeight == nil || transaction.failed
-
-        // TODO: Should have it's own transactions with memo
-        if transaction.sentTo(address: receiveAddress) {
-            return BitcoinIncomingTransactionRecord(
-                    coin: coin,
-                    source: transactionSource,
-                    uid: transaction.transactionHash,
-                    transactionHash: transaction.transactionHash,
-                    transactionIndex: transaction.transactionIndex,
-                    blockHeight: transaction.minedHeight,
-                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
-                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(height: transaction.minedHeight),
-                    failed: transaction.failed,
-                    lockInfo: nil,
-                    conflictingHash: nil,
-                    showRawTransaction: showRawTransaction,
-                    amount: Decimal(transaction.value) / Self.coinRate,
-                    from: nil,
-                    memo: transaction.memo
-            )
-        } else {
-            return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
-                    source: transactionSource,
-                    uid: transaction.transactionHash,
-                    transactionHash: transaction.transactionHash,
-                    transactionIndex: transaction.transactionIndex,
-                    blockHeight: transaction.minedHeight,
-                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
-                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(height: transaction.minedHeight),
-                    failed: transaction.failed,
-                    lockInfo: nil,
-                    conflictingHash: nil,
-                    showRawTransaction: showRawTransaction,
-                    amount: Decimal(transaction.value) / Self.coinRate,
-                    to: transaction.toAddress,
-                    sentToSelf: false,
-                    memo: transaction.memo
-            )
-        }
-    }
+//    func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
+//        let showRawTransaction = transaction.minedHeight == nil || transaction.failed
+//
+//        // TODO: Should have it's own transactions with memo
+//        if transaction.sentTo(address: receiveAddress) {
+//            return BitcoinIncomingTransactionRecord(
+//                    coin: coin,
+//                    source: transactionSource,
+//                    uid: transaction.transactionHash,
+//                    transactionHash: transaction.transactionHash,
+//                    transactionIndex: transaction.transactionIndex,
+//                    blockHeight: transaction.minedHeight,
+//                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
+//                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+//                    fee: defaultFee(height: transaction.minedHeight),
+//                    failed: transaction.failed,
+//                    lockInfo: nil,
+//                    conflictingHash: nil,
+//                    showRawTransaction: showRawTransaction,
+//                    amount: Decimal(transaction.value) / Self.coinRate,
+//                    from: nil,
+//                    memo: transaction.memo
+//            )
+//        } else {
+//            return BitcoinOutgoingTransactionRecord(
+//                    coin: coin,
+//                    source: transactionSource,
+//                    uid: transaction.transactionHash,
+//                    transactionHash: transaction.transactionHash,
+//                    transactionIndex: transaction.transactionIndex,
+//                    blockHeight: transaction.minedHeight,
+//                    confirmationsThreshold: ZcashSDK.DEFAULT_REWIND_DISTANCE,
+//                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+//                    fee: defaultFee(height: transaction.minedHeight),
+//                    failed: transaction.failed,
+//                    lockInfo: nil,
+//                    conflictingHash: nil,
+//                    showRawTransaction: showRawTransaction,
+//                    amount: Decimal(transaction.value) / Self.coinRate,
+//                    to: transaction.toAddress,
+//                    sentToSelf: false,
+//                    memo: transaction.memo
+//            )
+//        }
+//    }
 
     static private var cloudSpendParamsURL: URL? {
         URL(string: ZcashSDK.CLOUD_PARAM_DIR_URL + ZcashSDK.SPEND_PARAM_FILE_NAME)
@@ -440,46 +440,46 @@ extension ZcashAdapter: IAdapter {
 
 }
 
-extension ZcashAdapter: ITransactionsAdapter {
-
-    var lastBlockInfo: LastBlockInfo? {
-        lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
-    }
-
-    var transactionStateUpdatedObservable: Observable<Void> {
-        balanceStateSubject.map { _ in () }
-    }
-
-    var lastBlockUpdatedObservable: Observable<Void> {
-        lastBlockUpdatedSubject.asObservable()
-    }
-
-    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
-        transactionRecordsSubject.asObservable()
-                .map { transactions in
-                    transactions.compactMap { transaction -> TransactionRecord? in
-                        switch (transaction, filter) {
-                        case (_, .all): return transaction
-                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
-                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
-                        default: return nil
-                        }
-                    }
-                }
-                .filter { !$0.isEmpty }
-    }
-
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
-            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        }
-    }
-
-    func rawTransaction(hash: String) -> String? {
-        transactionPool.transaction(by: hash)?.raw?.hex
-    }
-
-}
+//extension ZcashAdapter: ITransactionsAdapter {
+//
+//    var lastBlockInfo: LastBlockInfo? {
+//        lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+//    }
+//
+//    var transactionStateUpdatedObservable: Observable<Void> {
+//        balanceStateSubject.map { _ in () }
+//    }
+//
+//    var lastBlockUpdatedObservable: Observable<Void> {
+//        lastBlockUpdatedSubject.asObservable()
+//    }
+//
+//    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+//        transactionRecordsSubject.asObservable()
+//                .map { transactions in
+//                    transactions.compactMap { transaction -> TransactionRecord? in
+//                        switch (transaction, filter) {
+//                        case (_, .all): return transaction
+//                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
+//                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+//                        default: return nil
+//                        }
+//                    }
+//                }
+//                .filter { !$0.isEmpty }
+//    }
+//
+//    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+//        transactionPool.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
+//            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
+//        }
+//    }
+//
+//    func rawTransaction(hash: String) -> String? {
+//        transactionPool.transaction(by: hash)?.raw?.hex
+//    }
+//
+//}
 
 extension ZcashAdapter: IBalanceAdapter {
 
@@ -573,7 +573,7 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
     private let logger: HsToolKit.Logger
 
     init(logLevel: HsToolKit.Logger.Level) {
-        self.level = logLevel
+        level = logLevel
 
         logger = Logger(minLogLevel: logLevel)
     }
@@ -609,7 +609,7 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
 
 extension EnhancementProgress {
     var progress: Int {
-        guard self.totalTransactions <= 0 else {
+        guard totalTransactions <= 0 else {
             return 0
         }
         return Int(Double(self.enhancedTransactions)/Double(self.totalTransactions)) * 100

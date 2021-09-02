@@ -7,7 +7,7 @@ class DashAdapter: BitcoinBaseAdapter {
 
     private let dashKit: Kit
 
-    init(wallet: Wallet, syncMode: SyncMode, testMode: Bool) throws {
+    init(wallet: WalletNew, syncMode: SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
@@ -27,16 +27,16 @@ class DashAdapter: BitcoinBaseAdapter {
 extension DashAdapter: DashKitDelegate {
 
     public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
-        var records = [BitcoinTransactionRecord]()
-
-        for info in inserted {
-            records.append(transactionRecord(fromTransaction: info))
-        }
-        for info in updated {
-            records.append(transactionRecord(fromTransaction: info))
-        }
-
-        transactionRecordsSubject.onNext(records)
+//        var records = [BitcoinTransactionRecord]()
+//
+//        for info in inserted {
+//            records.append(transactionRecord(fromTransaction: info))
+//        }
+//        for info in updated {
+//            records.append(transactionRecord(fromTransaction: info))
+//        }
+//
+//        transactionRecordsSubject.onNext(records)
     }
 
 }

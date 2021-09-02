@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class WalletViewModel {
     private let service: WalletService
@@ -15,15 +15,15 @@ class WalletViewModel {
     private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openSortTypeRelay = PublishRelay<()>()
-    private let openReceiveRelay = PublishRelay<Wallet>()
-    private let openBackupRequiredRelay = PublishRelay<Wallet>()
+    private let openReceiveRelay = PublishRelay<WalletNew>()
+    private let openBackupRequiredRelay = PublishRelay<WalletNew>()
     private let openCoinPageRelay = PublishRelay<Coin>()
     private let showErrorRelay = PublishRelay<String>()
-    private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
+    private let openSyncErrorRelay = PublishRelay<(WalletNew, Error)>()
     private let playHapticRelay = PublishRelay<()>()
 
     private var viewItems = [BalanceViewItem]()
-    private var expandedWallet: Wallet?
+    private var expandedWallet: WalletNew?
     private var balanceHidden: Bool
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
@@ -93,7 +93,7 @@ class WalletViewModel {
         factory.viewItem(item: item, balanceHidden: balanceHidden, expanded: item.wallet == expandedWallet)
     }
 
-    private func syncViewItem(wallet: Wallet) {
+    private func syncViewItem(wallet: WalletNew) {
         guard let item = service.item(wallet: wallet), let index = viewItems.firstIndex(where: { $0.wallet == wallet }) else {
             return
         }
@@ -129,11 +129,11 @@ extension WalletViewModel {
         openSortTypeRelay.asSignal()
     }
 
-    var openReceiveSignal: Signal<Wallet> {
+    var openReceiveSignal: Signal<WalletNew> {
         openReceiveRelay.asSignal()
     }
 
-    var openBackupRequiredSignal: Signal<Wallet> {
+    var openBackupRequiredSignal: Signal<WalletNew> {
         openBackupRequiredRelay.asSignal()
     }
 
@@ -145,7 +145,7 @@ extension WalletViewModel {
         showErrorRelay.asSignal()
     }
 
-    var openSyncErrorSignal: Signal<(Wallet, Error)> {
+    var openSyncErrorSignal: Signal<(WalletNew, Error)> {
         openSyncErrorRelay.asSignal()
     }
 
@@ -166,7 +166,7 @@ extension WalletViewModel {
         openSortTypeRelay.accept(())
     }
 
-    func onTap(wallet: Wallet) {
+    func onTap(wallet: WalletNew) {
         queue.async {
             if self.expandedWallet == wallet {
                 self.expandedWallet = nil
@@ -185,7 +185,7 @@ extension WalletViewModel {
         }
     }
 
-    func onTapReceive(wallet: Wallet) {
+    func onTapReceive(wallet: WalletNew) {
         if wallet.account.backedUp {
             openReceiveRelay.accept(wallet)
         } else {
@@ -193,7 +193,7 @@ extension WalletViewModel {
         }
     }
 
-    func onTapChart(wallet: Wallet) {
+    func onTapChart(wallet: WalletNew) {
         guard service.item(wallet: wallet)?.rateItem != nil else {
             return
         }
@@ -201,7 +201,7 @@ extension WalletViewModel {
         openCoinPageRelay.accept(wallet.coin)
     }
 
-    func onTapFailedIcon(wallet: Wallet) {
+    func onTapFailedIcon(wallet: WalletNew) {
         guard let item = service.item(wallet: wallet) else {
             return
         }
@@ -229,7 +229,7 @@ extension WalletViewModel {
         service.refresh()
     }
 
-    func onDisable(wallet: Wallet) {
+    func onDisable(wallet: WalletNew) {
         if expandedWallet == wallet {
             expandedWallet = nil
         }

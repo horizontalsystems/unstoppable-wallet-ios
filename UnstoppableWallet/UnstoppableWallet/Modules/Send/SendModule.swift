@@ -3,7 +3,7 @@ import RxSwift
 import CurrencyKit
 import XRatesKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 protocol ISendView: AnyObject {
     func set(coin: Coin)
@@ -40,7 +40,7 @@ protocol ISendInteractorDelegate: AnyObject {
     func sync()
     func didSend()
     func didFailToSend(error: Error)
-    func didReceive(latestRate: LatestRate)
+    func didReceive(latestRate: RateManagerNew.LatestRate)
 }
 
 protocol ISendHandler: AnyObject {
@@ -139,7 +139,7 @@ enum SendInputType: String {
 }
 
 enum AmountInfo {
-    case coinValue(coinValue: CoinValue)
+    case coinValue(coinValue: CoinValueNew)
     case currencyValue(currencyValue: CurrencyValue)
 
     var formattedString: String? {
@@ -170,7 +170,7 @@ enum AmountInfo {
     var decimal: Int {
         switch self {
         case .currencyValue(let currencyValue): return currencyValue.currency.decimal
-        case .coinValue(let coinValue): return coinValue.coin.decimal
+        case .coinValue(let coinValue): return coinValue.decimal
         }
     }
 

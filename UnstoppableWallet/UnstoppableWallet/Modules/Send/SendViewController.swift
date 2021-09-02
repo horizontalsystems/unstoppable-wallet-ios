@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import ThemeKit
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class SendViewController: ThemeViewController {
@@ -135,7 +135,7 @@ extension SendViewController: ISendView {
 
     func set(coin: Coin) {
         title = "send.title".localized(coin.code)
-        iconImageView.image = .image(coinType: coin.type)
+        iconImageView.setImage(withUrlString: coin.imageUrl)
     }
 
     func showCopied() {

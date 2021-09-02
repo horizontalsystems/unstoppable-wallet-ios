@@ -2,7 +2,7 @@ import UniswapKit
 import RxSwift
 import EthereumKit
 import Foundation
-import CoinKit
+import MarketKit
 
 class UniswapProvider {
     private let swapKit: UniswapKit.Kit
@@ -11,11 +11,11 @@ class UniswapProvider {
         self.swapKit = swapKit
     }
 
-    private func uniswapToken(coin: Coin) throws -> Token {
-        if case let .erc20(address) = coin.type {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: coin.decimal)
-        } else if case let .bep20(address) = coin.type {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: coin.decimal)
+    private func uniswapToken(platformCoin: PlatformCoin) throws -> Token {
+        if case let .erc20(address) = platformCoin.coinType {
+            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimal)
+        } else if case let .bep20(address) = platformCoin.coinType {
+            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimal)
         }
 
         return swapKit.etherToken
@@ -29,10 +29,10 @@ extension UniswapProvider {
         swapKit.routerAddress
     }
 
-    func swapDataSingle(coinIn: Coin, coinOut: Coin) -> Single<SwapData> {
+    func swapDataSingle(platformCoinIn: PlatformCoin, platformCoinOut: PlatformCoin) -> Single<SwapData> {
         do {
-            let tokenIn = try uniswapToken(coin: coinIn)
-            let tokenOut = try uniswapToken(coin: coinOut)
+            let tokenIn = try uniswapToken(platformCoin: platformCoinIn)
+            let tokenOut = try uniswapToken(platformCoin: platformCoinOut)
 
             return swapKit.swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
         } catch {

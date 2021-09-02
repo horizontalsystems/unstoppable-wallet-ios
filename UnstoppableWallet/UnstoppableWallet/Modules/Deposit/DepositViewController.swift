@@ -2,6 +2,8 @@ import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
+import Alamofire
+import AlamofireImage
 
 class DepositViewController: ThemeViewController {
     private let qrCodeSideMargin: CGFloat = 72
@@ -21,13 +23,16 @@ class DepositViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let iconImageView = UIImageView()
-
         title = "deposit.receive_coin".localized(viewModel.coin.code)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        iconImageView.image = .image(coinType: viewModel.coin.type)
+        AF.request(viewModel.coin.imageUrl).responseImage { [weak self] response in
+            if case .success(let image) = response.result {
+                let imageView = UIImageView()
+                imageView.image = image
+                self?.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
+            }
+        }
 
         let topWrapperView = UIView()
 

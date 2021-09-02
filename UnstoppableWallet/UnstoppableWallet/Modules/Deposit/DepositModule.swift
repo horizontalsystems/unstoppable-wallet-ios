@@ -3,8 +3,8 @@ import ThemeKit
 
 struct DepositModule {
 
-    static func viewController(wallet: Wallet) -> UIViewController? {
-        guard let depositAdapter = App.shared.adapterManager.depositAdapter(for: wallet) else {
+    static func viewController(wallet: WalletNew) -> UIViewController? {
+        guard let depositAdapter = App.shared.adapterManagerNew.depositAdapter(for: wallet) else {
             return nil
         }
 

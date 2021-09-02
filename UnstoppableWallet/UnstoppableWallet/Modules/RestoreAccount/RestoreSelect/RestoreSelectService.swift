@@ -1,216 +1,173 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class RestoreSelectService {
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: IAccountManager
-    private let walletManager: WalletManager
-    private let coinManager: ICoinManager
+    private let walletManager: WalletManagerNew
+    private let coinManager: CoinManagerNew
+    private let enableCoinService: EnableCoinService
     private let enableCoinsService: EnableCoinsService
-    private let restoreSettingsService: RestoreSettingsService
-    private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
-    private var featuredCoins = [Coin]()
-    private var coins = [Coin]()
-    private(set) var enabledCoins = Set<ConfiguredCoin>()
-    private var filter: String?
+    private(set) var enabledCoins = Set<ConfiguredPlatformCoin>()
+    private var filter: String = ""
 
-    private var restoreSettingsMap = [Coin: RestoreSettings]()
+    private var restoreSettingsMap = [PlatformCoin: RestoreSettings]()
 
-    private let stateRelay = PublishRelay<State>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
     private let canRestoreRelay = BehaviorRelay<Bool>(value: false)
 
-    private(set) var state = State.empty {
+    private let itemsRelay = PublishRelay<[Item]>()
+    var items: [Item] = [] {
         didSet {
-            stateRelay.accept(state)
+            itemsRelay.accept(items)
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: ICoinManager, enableCoinsService: EnableCoinsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManagerNew, coinManager: CoinManagerNew, enableCoinService: EnableCoinService, enableCoinsService: EnableCoinsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
+        self.enableCoinService = enableCoinService
         self.enableCoinsService = enableCoinsService
-        self.restoreSettingsService = restoreSettingsService
-        self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, enableCoinsService.enableCoinsObservable) { [weak self] coins in
-            self?.handleEnable(coins: coins)
+//            self?.handleEnable(coins: coins)
         }
-        subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
-            self?.handleApproveRestoreSettings(coin: coinWithSettings.coin, settings: coinWithSettings.settings)
+        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
+            self?.handleEnableCoin(configuredPlatformCoins: configuredPlatformsCoins, restoreSettings: restoreSettings)
         }
-        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
-            self?.handleRejectApproveRestoreSettings(coin: coin)
-        }
-        subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
-            self?.handleApproveCoinSettings(coin: coinWithSettings.coin, settingsArray: coinWithSettings.settingsArray)
-        }
-        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
-            self?.handleRejectApproveCoinSettings(coin: coin)
+        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
+            self?.handleCancelEnable(coin: coin)
         }
 
-        (featuredCoins, coins) = coinManager.groupedCoins
-
-        sortCoins()
+//        sortCoins()
         syncState()
     }
 
     private func isEnabled(coin: Coin) -> Bool {
-        enabledCoins.contains { $0.coin == coin }
+        enabledCoins.contains { $0.platformCoin.coin == coin }
     }
 
-    private func item(coin: Coin) -> Item {
-        let enabled = isEnabled(coin: coin)
-
-        return Item(
-                coin: coin,
-                hasSettings: enabled && !coin.type.coinSettingTypes.isEmpty,
-                enabled: enabled
-        )
-    }
-
-    private func filtered(coins: [Coin]) -> [Coin] {
-        guard let filter = filter else {
-            return coins
-        }
-
-        return coins.filter { coin in
-            coin.title.localizedCaseInsensitiveContains(filter) || coin.code.localizedCaseInsensitiveContains(filter)
+    private func hasSettingsOrPlatforms(marketCoin: MarketCoin) -> Bool {
+        if marketCoin.platforms.count == 1 {
+            let platform = marketCoin.platforms[0]
+            return !platform.coinType.coinSettingTypes.isEmpty
+        } else {
+            return true
         }
     }
 
-    private func sortCoins() {
-        coins.sort { lhsCoin, rhsCoin in
-            let lhsEnabled = isEnabled(coin: lhsCoin)
-            let rhsEnabled = isEnabled(coin: rhsCoin)
+    private func item(marketCoin: MarketCoin) -> Item {
+        let supportedPlatforms = marketCoin.platforms.filter { $0.coinType.isSupported }
 
-            if lhsEnabled != rhsEnabled {
-                return lhsEnabled
-            }
+        let marketCoin = MarketCoin(coin: marketCoin.coin, platforms: supportedPlatforms)
 
-            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        let itemState: ItemState
+
+        if marketCoin.platforms.isEmpty {
+            itemState = .unsupported
+        } else {
+            let enabled = isEnabled(coin: marketCoin.coin)
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(marketCoin: marketCoin))
         }
+
+        return Item(marketCoin: marketCoin, state: itemState)
     }
+
+//    private func sortCoins() {
+//        coins.sort { lhsCoin, rhsCoin in
+//            let lhsEnabled = isEnabled(coin: lhsCoin)
+//            let rhsEnabled = isEnabled(coin: rhsCoin)
+//
+//            if lhsEnabled != rhsEnabled {
+//                return lhsEnabled
+//            }
+//
+//            return lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+//        }
+//    }
 
     private func syncState() {
-        let filteredFeaturedCoins = filtered(coins: featuredCoins)
-        let filteredCoins = filtered(coins: coins)
-
-        state = State(
-                featuredItems: filteredFeaturedCoins.map { item(coin: $0) },
-                items: filteredCoins.map { item(coin: $0) }
-        )
+        do {
+            let marketCoins = try coinManager.marketCoins(filter: filter, limit: 20)
+            items = marketCoins.map { item(marketCoin: $0) }
+        } catch {
+            // todo
+        }
     }
 
     private func syncCanRestore() {
         canRestoreRelay.accept(!enabledCoins.isEmpty)
     }
 
-    private func configuredCoins(coin: Coin, settingsArray: [CoinSettings]) -> [ConfiguredCoin] {
-        if settingsArray.isEmpty {
-            return [ConfiguredCoin(coin: coin)]
-        } else {
-            return settingsArray.map { ConfiguredCoin(coin: coin, settings: $0) }
-        }
-    }
-
-    private func handleApproveRestoreSettings(coin: Coin, settings: RestoreSettings = [:]) {
-        if !settings.isEmpty {
-            restoreSettingsMap[coin] = settings
+    private func handleEnableCoin(configuredPlatformCoins: [ConfiguredPlatformCoin], restoreSettings: RestoreSettings) {
+        guard let platformCoin = configuredPlatformCoins.first?.platformCoin else {
+            return
         }
 
-        if coin.type.coinSettingTypes.isEmpty {
-            handleApproveCoinSettings(coin: coin)
-        } else {
-            coinSettingsService.approveSettings(coin: coin, settingsArray: coin.type.defaultSettingsArray)
+        if !restoreSettings.isEmpty {
+            restoreSettingsMap[platformCoin] = restoreSettings
         }
-    }
 
-    private func handleRejectApproveRestoreSettings(coin: Coin) {
-        cancelEnableCoinRelay.accept(coin)
-    }
+        let existingConfiguredPlatformCoins = enabledCoins.filter { $0.platformCoin.coin == platformCoin.coin }
 
-    private func handleApproveCoinSettings(coin: Coin, settingsArray: [CoinSettings] = []) {
-        let configuredCoins = self.configuredCoins(coin: coin, settingsArray: settingsArray)
+        let newConfiguredPlatformCoins = configuredPlatformCoins.filter { !existingConfiguredPlatformCoins.contains($0) }
+        let removedConfiguredPlatformCoins = existingConfiguredPlatformCoins.filter { !configuredPlatformCoins.contains($0) }
 
-        if isEnabled(coin: coin) {
-            applySettings(coin: coin, configuredCoins: configuredCoins)
-        } else {
-            enable(configuredCoins: configuredCoins)
-            enableCoinsService.handle(coinType: coin.type, accountType: accountType)
+        for configuredPlatformCoin in newConfiguredPlatformCoins {
+            enabledCoins.insert(configuredPlatformCoin)
         }
+
+        for configuredPlatformCoin in removedConfiguredPlatformCoins {
+            enabledCoins.remove(configuredPlatformCoin)
+        }
+
+        syncCanRestore()
+        syncState()
+//        enableCoinsService.handle(coinType: platformCoin.coinType, accountType: accountType)
     }
 
-    private func handleRejectApproveCoinSettings(coin: Coin) {
+    private func handleCancelEnable(coin: Coin) {
         if !isEnabled(coin: coin) {
             cancelEnableCoinRelay.accept(coin)
         }
     }
 
-    private func applySettings(coin: Coin, configuredCoins: [ConfiguredCoin]) {
-        let existingConfiguredCoins = enabledCoins.filter { $0.coin == coin }
-
-        let newConfiguredCoins = configuredCoins.filter { !existingConfiguredCoins.contains($0) }
-        let removedConfiguredCoins = existingConfiguredCoins.filter { !configuredCoins.contains($0) }
-
-        for configuredCoin in newConfiguredCoins {
-            enabledCoins.insert(configuredCoin)
-        }
-
-        for configuredCoin in removedConfiguredCoins {
-            enabledCoins.remove(configuredCoin)
-        }
-    }
-
-    private func enable(configuredCoins: [ConfiguredCoin], sortCoins: Bool = false) {
-        for configuredCoin in configuredCoins {
-            enabledCoins.insert(configuredCoin)
-        }
-
-        if sortCoins {
-            self.sortCoins()
-        }
-
-        syncState()
-        syncCanRestore()
-    }
-
     private func handleEnable(coins: [Coin]) {
-        let allCoins = coinManager.coins
-
-        var existingCoins = [Coin]()
-        var newCoins = [Coin]()
-
-        for coin in coins {
-            if let existingCoin = allCoins.first(where: { $0.type == coin.type }) {
-                existingCoins.append(existingCoin)
-            } else {
-                newCoins.append(coin)
-            }
-        }
-
-        if !newCoins.isEmpty {
-            self.coins.append(contentsOf: newCoins)
-            coinManager.save(coins: newCoins)
-        }
-
-        let configuredCoins = (existingCoins + newCoins).map { ConfiguredCoin(coin: $0) }
-        enable(configuredCoins: configuredCoins, sortCoins: true)
+//        let allCoins = coinManager.coins
+//
+//        var existingCoins = [Coin]()
+//        var newCoins = [Coin]()
+//
+//        for coin in coins {
+//            if let existingCoin = allCoins.first(where: { $0.type == coin.type }) {
+//                existingCoins.append(existingCoin)
+//            } else {
+//                newCoins.append(coin)
+//            }
+//        }
+//
+//        if !newCoins.isEmpty {
+//            self.coins.append(contentsOf: newCoins)
+//            coinManager.save(coins: newCoins)
+//        }
+//
+//        let configuredCoins = (existingCoins + newCoins).map { ConfiguredCoin(coin: $0) }
+//        enable(configuredCoins: configuredCoins, sortCoins: true)
     }
 
 }
 
 extension RestoreSelectService {
 
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+    var itemsObservable: Observable<[Item]> {
+        itemsRelay.asObservable()
     }
 
     var cancelEnableCoinObservable: Observable<Coin> {
@@ -221,52 +178,40 @@ extension RestoreSelectService {
         canRestoreRelay.asObservable()
     }
 
-    func set(filter: String?) {
+    func set(filter: String) {
         self.filter = filter
 
-        sortCoins()
         syncState()
     }
 
-    func enable(coin: Coin) {
-        if coin.type.restoreSettingTypes.isEmpty {
-            handleApproveRestoreSettings(coin: coin)
-        } else {
-            restoreSettingsService.approveSettings(coin: coin)
-        }
+    func enable(marketCoin: MarketCoin) {
+        enableCoinService.enable(marketCoin: marketCoin)
     }
 
     func disable(coin: Coin) {
-        enabledCoins = enabledCoins.filter { $0.coin != coin }
+        enabledCoins = enabledCoins.filter { $0.platformCoin.coin != coin }
 
         syncState()
         syncCanRestore()
     }
 
-    func configure(coin: Coin) {
-        guard !coin.type.coinSettingTypes.isEmpty else {
-            return
-        }
-
-        let configuredCoins = enabledCoins.filter { $0.coin == coin }
-        let settingsArray = configuredCoins.map { $0.settings }
-
-        coinSettingsService.approveSettings(coin: coin, settingsArray: settingsArray)
+    func configure(marketCoin: MarketCoin) {
+        enableCoinService.configure(marketCoin: marketCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin.coin == marketCoin.coin })
     }
 
     func restore() {
         let account = accountFactory.account(type: accountType, origin: .restored)
         accountManager.save(account: account)
 
-        for (coin, settings) in restoreSettingsMap {
-            restoreSettingsService.save(settings: settings, account: account, coin: coin)
+        for (platformCoin, settings) in restoreSettingsMap {
+            enableCoinService.save(restoreSettings: settings, account: account, coinType: platformCoin.coinType)
         }
 
         guard !enabledCoins.isEmpty else {
             return
         }
 
-        let wallets = enabledCoins.map { Wallet(configuredCoin: $0, account: account) }
+        let wallets = enabledCoins.map { WalletNew(configuredPlatformCoin: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
 
@@ -274,19 +219,14 @@ extension RestoreSelectService {
 
 extension RestoreSelectService {
 
-    struct State {
-        let featuredItems: [Item]
-        let items: [Item]
-
-        static var empty: State {
-            State(featuredItems: [], items: [])
-        }
+    struct Item {
+        let marketCoin: MarketCoin
+        let state: ItemState
     }
 
-    struct Item {
-        let coin: Coin
-        let hasSettings: Bool
-        let enabled: Bool
+    enum ItemState {
+        case unsupported
+        case supported(enabled: Bool, hasSettings: Bool)
     }
 
 }

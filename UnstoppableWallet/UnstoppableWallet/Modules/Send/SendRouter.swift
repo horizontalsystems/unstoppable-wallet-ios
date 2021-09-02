@@ -1,6 +1,6 @@
 import UIKit
 import ThemeKit
-import CoinKit
+import MarketKit
 
 class SendRouter {
     weak var viewController: UIViewController?
@@ -21,8 +21,8 @@ extension SendRouter: ISendRouter {
 
 extension SendRouter {
 
-    static func module(wallet: Wallet) -> UIViewController? {
-        guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
+    static func module(wallet: WalletNew) -> UIViewController? {
+        guard let adapter = App.shared.adapterManagerNew.adapter(for: wallet) else {
             return nil
         }
 
@@ -30,19 +30,19 @@ extension SendRouter {
 
         var partialModule: (ISendHandler, [UIView], [ISendSubRouter])?
 
-        let coin = wallet.coin
+        let platformCoin = wallet.platformCoin
 
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
-            partialModule = module(coin: coin, adapter: adapter)
+            partialModule = module(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendDashAdapter:
-            partialModule = module(coin: coin, adapter: adapter)
+            partialModule = module(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
-            return SendEvmModule.viewController(coin: coin, adapter: adapter)
+            return SendEvmModule.viewController(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
-            partialModule = module(coin: coin, adapter: adapter)
+            partialModule = module(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendZcashAdapter:
-            partialModule = module(coin: coin, adapter: adapter)
+            partialModule = module(platformCoin: platformCoin, adapter: adapter)
         default: ()
         }
 
@@ -50,8 +50,8 @@ extension SendRouter {
             return nil
         }
 
-        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, localStorage: App.shared.localStorage)
-        let presenter = SendPresenter(coin: wallet.coin, handler: handler, interactor: interactor, router: router, logger: App.shared.logger.scoped(with: "Send"))
+        let interactor = SendInteractor(reachabilityManager: App.shared.reachabilityManager, rateManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit, localStorage: App.shared.localStorage)
+        let presenter = SendPresenter(platformCoin: platformCoin, handler: handler, interactor: interactor, router: router, logger: App.shared.logger.scoped(with: "Send"))
         let viewController = SendViewController(delegate: presenter, views: subViews)
 
         interactor.delegate = presenter
@@ -64,25 +64,25 @@ extension SendRouter {
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    private static func module(coin: Coin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
+    private static func module(platformCoin: PlatformCoin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
         let interactor = SendBitcoinInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager, localStorage: App.shared.localStorage)
 
         var views = [UIView]()
         var routers = [ISendSubRouter]()
 
-        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
+        let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
         views.append(amountView)
 
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
         views.append(addressView)
         routers.append(addressRouter)
 
         var hodlerModule: ISendHodlerModule?
 
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
         views.append(feeView)
 
-        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(coin: coin, customPriorityUnit: .satoshi) else {
+        guard let (feePriorityView, feePriorityModule, feePriorityRouter) = SendFeePriorityRouter.module(platformCoin: platformCoin, customPriorityUnit: .satoshi) else {
             return nil
         }
         if let view = feePriorityView {
@@ -90,7 +90,7 @@ extension SendRouter {
         }
         routers.append(feePriorityRouter)
 
-        if interactor.lockTimeEnabled && coin.type == .bitcoin {
+        if interactor.lockTimeEnabled && platformCoin.coinType == .bitcoin {
             let (hodlerView, module, hodlerRouter) = SendHodlerRouter.module()
             hodlerModule = module
             views.append(hodlerView)
@@ -116,10 +116,10 @@ extension SendRouter {
         return (presenter, views, routers)
     }
 
-    private static func module(coin: Coin, adapter: ISendDashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
-        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+    private static func module(platformCoin: PlatformCoin, adapter: ISendDashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
+        let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
         let interactor = SendDashInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager)
         let presenter = SendDashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
@@ -132,11 +132,11 @@ extension SendRouter {
         return (presenter, [amountView, addressView, feeView], [addressRouter])
     }
 
-    private static func module(coin: Coin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
-        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin)
+    private static func module(platformCoin: PlatformCoin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
         let (memoView, memoModule) = SendMemoRouter.module()
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
         let interactor = SendBinanceInteractor(adapter: adapter)
         let presenter = SendBinanceHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule)
@@ -147,11 +147,11 @@ extension SendRouter {
         return (presenter, [amountView, addressView, memoView, feeView], [addressRouter])
     }
 
-    private static func module(coin: Coin, adapter: ISendZcashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
-        let (amountView, amountModule) = SendAmountRouter.module(coin: coin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(coin: coin, isResolutionEnabled: false)
+    private static func module(platformCoin: PlatformCoin, adapter: ISendZcashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
+        let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, isResolutionEnabled: false)
         let (memoView, memoModule) = SendMemoRouter.module()
-        let (feeView, feeModule) = SendFeeRouter.module(coin: coin)
+        let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
         let interactor = SendZcashInteractor(adapter: adapter)
         let presenter = SendZcashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule)

@@ -4,8 +4,10 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 import ComponentKit
+import Alamofire
+import AlamofireImage
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
@@ -13,7 +15,7 @@ class CoinToggleViewController: ThemeSearchViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private var viewState: CoinToggleViewModel.ViewState = .empty
+    private var viewItems: [CoinToggleViewModel.ViewItem] = []
     private var isLoaded = false
 
     init(viewModel: ICoinToggleViewModel) {
@@ -29,6 +31,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.registerCell(forClass: G4Cell.self)
         tableView.registerCell(forClass: G21Cell.self)
         tableView.sectionDataSource = self
 
@@ -40,76 +43,98 @@ class CoinToggleViewController: ThemeSearchViewController {
             maker.edges.equalToSuperview()
         }
 
-        subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.onUpdate(viewState: $0) }
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
 
         tableView.buildSections()
 
         isLoaded = true
     }
 
-    private func onUpdate(viewState: CoinToggleViewModel.ViewState) {
-        let animated = isAnimated(viewItemsA: self.viewState.featuredViewItems, viewItemsB: viewState.featuredViewItems) && isAnimated(viewItemsA: self.viewState.viewItems, viewItemsB: viewState.viewItems)
-        self.viewState = viewState
+    private func onUpdate(viewItems: [CoinToggleViewModel.ViewItem]) {
+        let animated = self.viewItems.count == viewItems.count
+        self.viewItems = viewItems
 
         if isLoaded {
             tableView.reload(animated: animated)
         }
     }
 
-    private func isAnimated(viewItemsA: [CoinToggleViewModel.ViewItem], viewItemsB: [CoinToggleViewModel.ViewItem]) -> Bool {
-        viewItemsA.count == viewItemsB.count
-    }
-
     private func rows(viewItems: [CoinToggleViewModel.ViewItem]) -> [RowProtocol] {
         viewItems.enumerated().map { index, viewItem in
             let isLast = index == viewItems.count - 1
 
-            return Row<G21Cell>(
-                    id: "coin_\(viewItem.coin.id)",
-                    hash: "coin_\(viewItem.enabled)_\(isLast)",
-                    height: .heightDoubleLineCell,
-                    bind: { [weak self] cell, _ in
-                        cell.set(backgroundStyle: .claude, isLast: isLast)
-                        cell.titleImage = .image(coinType: viewItem.coin.type)
-                        cell.title = viewItem.coin.title
-                        cell.subtitle = viewItem.coin.code
-                        cell.rightBadgeText = viewItem.coin.type.blockchainType
-                        cell.isOn = viewItem.enabled
-                        cell.onToggle = { [weak self] enabled in
-                            self?.onToggle(viewItem: viewItem, enabled: enabled)
+            switch viewItem.state {
+            case let .toggleVisible(enabled, hasSettings):
+                return Row<G21Cell>(
+                        id: "coin_\(viewItem.marketCoin.coin.uid)",
+                        hash: "coin_\(enabled)_\(hasSettings)_\(isLast)",
+                        height: .heightDoubleLineCell,
+                        bind: { [weak self] cell, _ in
+                            cell.set(backgroundStyle: .claude, isLast: isLast)
+                            //                        cell.titleImage = .image(coinType: viewItem.coin.type)
+                            cell.title = viewItem.marketCoin.coin.name
+                            cell.subtitle = viewItem.marketCoin.coin.code
+                            //                        cell.rightBadgeText = viewItem.coin.type.blockchainType
+                            cell.isOn = enabled
+                            cell.onToggle = { [weak self] enabled in
+                                self?.onToggle(viewItem: viewItem, enabled: enabled)
+                            }
+                            cell.rightButtonImage = hasSettings ? UIImage(named: "edit_20") : nil
+                            cell.onTapRightButton = { [weak self] in
+                                self?.viewModel.onTapSettings(marketCoin: viewItem.marketCoin)
+                            }
+
+                            AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
+                                if case .success(let image) = response.result {
+                                    cell.titleImage = image
+                                }
+                            }
                         }
-                        cell.rightButtonImage = viewItem.hasSettings ? UIImage(named: "edit_20") : nil
-                        cell.onTapRightButton = { [weak self] in
-                            self?.viewModel.onTapSettings(coin: viewItem.coin)
+                )
+            case .toggleHidden:
+                return Row<G4Cell>(
+                        id: "coin_\(viewItem.marketCoin.coin.uid)",
+                        hash: "coin_\(isLast)",
+                        height: .heightDoubleLineCell,
+                        autoDeselect: true,
+                        bind: { cell, _ in
+                            cell.set(backgroundStyle: .claude, isLast: isLast)
+
+                            cell.title = viewItem.marketCoin.coin.name
+                            cell.subtitle = viewItem.marketCoin.coin.code
+
+                            AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
+                                if case .success(let image) = response.result {
+                                    cell.titleImage = image
+                                }
+                            }
+                        },
+                        action: { [weak self] _ in
+                            print("On click \(viewItem.marketCoin.coin.name)")
                         }
-                    }
-            )
+                )
+            }
         }
     }
 
     override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter)
+        viewModel.onUpdate(filter: filter ?? "")
     }
 
     private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {
         if enabled {
-            viewModel.onEnable(coin: viewItem.coin)
+            viewModel.onEnable(marketCoin: viewItem.marketCoin)
         } else {
-            viewModel.onDisable(coin: viewItem.coin)
+            viewModel.onDisable(coin: viewItem.marketCoin.coin)
         }
     }
 
     func setToggle(on: Bool, coin: Coin) {
-        setToggle(on: on, coin: coin, viewItems: viewState.featuredViewItems, section: 0)
-        setToggle(on: on, coin: coin, viewItems: viewState.viewItems, section: 1)
-    }
-
-    private func setToggle(on: Bool, coin: Coin, viewItems: [CoinToggleViewModel.ViewItem], section: Int) {
-        guard let index = viewItems.firstIndex(where: { $0.coin == coin }) else {
+        guard let index = viewItems.firstIndex(where: { $0.marketCoin.coin == coin }) else {
             return
         }
 
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as? G21Cell else {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? G21Cell else {
             return
         }
 
@@ -123,15 +148,10 @@ extension CoinToggleViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "featured_coins",
-                    headerState: .margin(height: .margin4),
-                    footerState: .margin(height: viewState.featuredViewItems.isEmpty ? 0 : .margin32),
-                    rows: rows(viewItems: viewState.featuredViewItems)
-            ),
-            Section(
                     id: "coins",
+                    headerState: .margin(height: .margin4),
                     footerState: .margin(height: .margin32),
-                    rows: rows(viewItems: viewState.viewItems)
+                    rows: rows(viewItems: viewItems)
             )
         ]
     }

@@ -1,22 +1,21 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 import CurrencyKit
-import XRatesKit
 
 class CoinSelectService {
     private let dex: SwapModule.Dex
-    private let coinManager: ICoinManager
-    private let walletManager: WalletManager
-    private let adapterManager: AdapterManager
-    private let rateManager: IRateManager
+    private let coinManager: CoinManagerNew
+    private let walletManager: WalletManagerNew
+    private let adapterManager: AdapterManagerNew
+    private let rateManager: RateManagerNew
     private let currencyKit: CurrencyKit.Kit
 
     private let disposeBag = DisposeBag()
 
     private(set) var items = [Item]()
 
-    init(dex: SwapModule.Dex, coinManager: ICoinManager, walletManager: WalletManager, adapterManager: AdapterManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModule.Dex, coinManager: CoinManagerNew, walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager
@@ -27,8 +26,8 @@ class CoinSelectService {
         loadItems()
     }
 
-    private func dexSupports(coin: Coin) -> Bool {
-        switch coin.type {
+    private func dexSupports(platformCoin: PlatformCoin) -> Bool {
+        switch platformCoin.coinType {
         case .ethereum, .erc20: return dex.blockchain == .ethereum
         case .binanceSmartChain, .bep20: return dex.blockchain == .binanceSmartChain
         default: return false
@@ -36,8 +35,8 @@ class CoinSelectService {
     }
 
     private func loadItems() {
-        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (coin: Coin, balance: Decimal)? in
-            guard dexSupports(coin: wallet.coin) else {
+        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (platformCoin: PlatformCoin, balance: Decimal)? in
+            guard dexSupports(platformCoin: wallet.platformCoin) else {
                 return nil
             }
 
@@ -45,30 +44,32 @@ class CoinSelectService {
                 return nil
             }
 
-            return (coin: wallet.coin, balance: adapter.balanceData.balance)
+            return (platformCoin: wallet.platformCoin, balance: adapter.balanceData.balance)
         }
 
         balanceCoins.sort { lhsTuple, rhsTuple in
-            lhsTuple.coin.title.lowercased() < rhsTuple.coin.title.lowercased()
+            lhsTuple.platformCoin.coin.name.lowercased() < rhsTuple.platformCoin.coin.name.lowercased()
         }
 
-        let walletItems = balanceCoins.map { coin, balance -> Item in
-            let latestRate: LatestRate? = rateManager.latestRate(coinType: coin.type, currencyCode: currencyKit.baseCurrency.code)
+        let walletItems = balanceCoins.map { platformCoin, balance -> Item in
+            let latestRate: RateManagerNew.LatestRate? = rateManager.latestRate(coinType: platformCoin.coinType, currencyCode: currencyKit.baseCurrency.code)
             let rate: Decimal? = latestRate.flatMap { $0.expired ? nil : $0.rate }
 
-            return Item(coin: coin, balance: balance, rate: rate)
+            return Item(platformCoin: platformCoin, balance: balance, rate: rate)
         }
 
-        var remainingCoins = coinManager.coins.filter { coin in
-            dexSupports(coin: coin) && !walletItems.contains { $0.coin == coin }
+        let platformCoins: [PlatformCoin] = (try? coinManager.platformCoins()) ?? []
+
+        var remainingCoins = platformCoins.filter { platformCoin in
+            dexSupports(platformCoin: platformCoin) && !walletItems.contains { $0.platformCoin == platformCoin }
         }
 
-        remainingCoins.sort { lhsCoin, rhsCoin in
-            lhsCoin.title.lowercased() < rhsCoin.title.lowercased()
+        remainingCoins.sort { lhsPlatformCoin, rhsPlatformCoin in
+            lhsPlatformCoin.coin.name.lowercased() < rhsPlatformCoin.coin.name.lowercased()
         }
 
-        let coinItems = remainingCoins.map { coin in
-            Item(coin: coin, balance: nil, rate: nil)
+        let coinItems = remainingCoins.map { platformCoin in
+            Item(platformCoin: platformCoin, balance: nil, rate: nil)
         }
 
         items = walletItems + coinItems
@@ -87,7 +88,7 @@ extension CoinSelectService {
 extension CoinSelectService {
 
     struct Item {
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let balance: Decimal?
         let rate: Decimal?
     }

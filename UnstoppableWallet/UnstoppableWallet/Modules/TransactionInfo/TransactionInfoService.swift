@@ -17,12 +17,12 @@ class TransactionInfoService {
     private let adapter: ITransactionsAdapter
     private let rateManager: IRateManager
     private let currencyKit: CurrencyKit.Kit
-    private let feeCoinProvider: IFeeCoinProvider
+    private let feeCoinProvider: FeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
 
     private let ratesRelay = PublishRelay<[Coin: CurrencyValue]>()
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, transactionItem: TransactionItem, feeCoinProvider: IFeeCoinProvider,
+    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, transactionItem: TransactionItem, feeCoinProvider: FeeCoinProvider,
          appConfigProvider: IAppConfigProvider) {
         self.adapter = adapter
         self.rateManager = rateManager

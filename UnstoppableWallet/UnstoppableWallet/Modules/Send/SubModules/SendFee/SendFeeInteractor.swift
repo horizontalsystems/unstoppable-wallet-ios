@@ -1,18 +1,18 @@
 import Foundation
 import CurrencyKit
 import RxSwift
-import CoinKit
+import MarketKit
 
 class SendFeeInteractor {
-    private let rateManager: IRateManager
+    private let rateManager: RateManagerNew
     private let currencyKit: CurrencyKit.Kit
-    private let feeCoinProvider: IFeeCoinProvider
+    private let feeCoinProvider: FeeCoinProvider
 
     weak var delegate: ISendFeeInteractorDelegate?
 
     var disposeBag = DisposeBag()
 
-    init(rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider) {
+    init(rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit, feeCoinProvider: FeeCoinProvider) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider
@@ -26,12 +26,12 @@ extension SendFeeInteractor: ISendFeeInteractor {
         currencyKit.baseCurrency
     }
 
-    func feeCoin(coin: Coin) -> Coin? {
-        feeCoinProvider.feeCoin(coin: coin)
+    func feeCoin(platformCoin: PlatformCoin) -> PlatformCoin? {
+        feeCoinProvider.feeCoin(coinType: platformCoin.coinType)
     }
 
-    func feeCoinProtocol(coin: Coin) -> String? {
-        feeCoinProvider.feeCoinProtocol(coin: coin)
+    func feeCoinProtocol(platformCoin: PlatformCoin) -> String? {
+        feeCoinProvider.feeCoinProtocol(coinType: platformCoin.coinType)
     }
 
     func subscribeToLatestRate(coinType: CoinType?, currencyCode: String) {
@@ -51,6 +51,7 @@ extension SendFeeInteractor: ISendFeeInteractor {
         guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currencyCode), !latestRate.expired else {
             return nil
         }
+
         return latestRate.rate
     }
 

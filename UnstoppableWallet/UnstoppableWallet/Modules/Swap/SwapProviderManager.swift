@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
@@ -23,15 +23,15 @@ class SwapProviderManager {
         }
     }
 
-    init(localStorage: ILocalStorage, coinFrom: Coin?) {
+    init(localStorage: ILocalStorage, platformCoinFrom: PlatformCoin?) {
         self.localStorage = localStorage
 
-        initSectionsDataSource(coinFrom: coinFrom)
+        initSectionsDataSource(platformCoinFrom: platformCoinFrom)
     }
 
-    private func initSectionsDataSource(coinFrom: Coin?) {
+    private func initSectionsDataSource(platformCoinFrom: PlatformCoin?) {
         let blockchain: SwapModule.Dex.Blockchain?
-        switch coinFrom?.type {
+        switch platformCoinFrom?.coinType {
         case .ethereum, .erc20:
             blockchain = .ethereum
         case .binanceSmartChain, .bep20:
@@ -52,12 +52,12 @@ class SwapProviderManager {
         let dexProvider = localStorage.defaultProvider(blockchain: blockchain)
         let dex = SwapModule.Dex(blockchain: blockchain, provider: dexProvider)
 
-        dataSourceProvider = provider(dex: dex, coinFrom: coinFrom)
+        dataSourceProvider = provider(dex: dex, platformCoinFrom: platformCoinFrom)
         self.dex = dex
     }
 
-    private func provider(dex: SwapModule.Dex, coinFrom: Coin? = nil) -> ISwapProvider? {
-        let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(coinFrom: coinFrom)
+    private func provider(dex: SwapModule.Dex, platformCoinFrom: PlatformCoin? = nil) -> ISwapProvider? {
+        let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(platformCoinFrom: platformCoinFrom)
 
         switch dex.provider {
         case .uniswap, .pancake:

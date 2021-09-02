@@ -2,7 +2,7 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class SwapCoinCardViewModel {
     private let coinCardService: ISwapCoinCardService
@@ -22,13 +22,13 @@ class SwapCoinCardViewModel {
         subscribe(disposeBag, coinCardService.readOnlyObservable) { [weak self] in self?.sync(readOnly: $0) }
         subscribe(disposeBag, coinCardService.isEstimatedObservable) { [weak self] _ in self?.syncEstimated() }
         subscribe(disposeBag, coinCardService.amountObservable) { [weak self] _ in self?.syncEstimated() }
-        subscribe(disposeBag, coinCardService.coinObservable) { [weak self] in self?.sync(coin: $0) }
+        subscribe(disposeBag, coinCardService.platformCoinObservable) { [weak self] in self?.sync(platformCoin: $0) }
         subscribe(disposeBag, coinCardService.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, coinCardService.errorObservable) { [weak self] in self?.sync(error: $0) }
 
         sync(readOnly: coinCardService.readOnly)
         syncEstimated()
-        sync(coin: coinCardService.coin)
+        sync(platformCoin: coinCardService.platformCoin)
         sync(balance: coinCardService.balance)
     }
 
@@ -41,12 +41,12 @@ class SwapCoinCardViewModel {
         isEstimatedRelay.accept(coinCardService.isEstimated && coinCardService.amount != 0)
     }
 
-    private func sync(coin: Coin?) {
-        tokenViewItemRelay.accept(coin.map { TokenViewItem(title: $0.code, iconCoinType: $0.type) })
+    private func sync(platformCoin: PlatformCoin?) {
+        tokenViewItemRelay.accept(platformCoin.map { TokenViewItem(title: $0.coin.code, iconUrlString: $0.coin.imageUrl) })
     }
 
     private func sync(balance: Decimal?) {
-        guard let coin = coinCardService.coin else {
+        guard let platformCoin = coinCardService.platformCoin else {
             balanceRelay.accept(nil)
             return
         }
@@ -56,8 +56,8 @@ class SwapCoinCardViewModel {
             return
         }
 
-        let coinValue = CoinValue(coin: coin, value: balance)
-        balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
+        let coinValue = CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: balance)
+        balanceRelay.accept(ValueFormatter.instance.format(coinValueNew: coinValue))
     }
 
     private func sync(error: Error?) {
@@ -92,8 +92,8 @@ extension SwapCoinCardViewModel {
         tokenViewItemRelay.asDriver()
     }
 
-    func onSelect(coin: Coin) {
-        coinCardService.onChange(coin: coin)
+    func onSelect(platformCoin: PlatformCoin) {
+        coinCardService.onChange(platformCoin: platformCoin)
     }
 
 }
@@ -102,7 +102,7 @@ extension SwapCoinCardViewModel {
 
     struct TokenViewItem {
         let title: String
-        let iconCoinType: CoinType
+        let iconUrlString: String
     }
 
 }

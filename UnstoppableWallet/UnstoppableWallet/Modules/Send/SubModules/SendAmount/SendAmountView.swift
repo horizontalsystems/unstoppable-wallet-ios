@@ -104,8 +104,8 @@ class SendAmountView: UIView {
         delegate.viewDidLoad()
     }
 
-    private func format(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
+    private func format(coinValue: CoinValueNew) -> String? {
+        decimalFormatter.maximumFractionDigits = min(coinValue.decimal, 8)
         return decimalFormatter.string(from: coinValue.value as NSNumber)
     }
 
@@ -167,7 +167,7 @@ extension SendAmountView: ISendAmountView {
 
         switch availableAmount {
         case .coinValue(let coinValue):
-            availableAmountValueLabel.text = ValueFormatter.instance.format(coinValue: coinValue)
+            availableAmountValueLabel.text = ValueFormatter.instance.format(coinValueNew: coinValue)
         case .currencyValue(let currencyValue):
             availableAmountValueLabel.text = ValueFormatter.instance.format(currencyValue: currencyValue)
         }

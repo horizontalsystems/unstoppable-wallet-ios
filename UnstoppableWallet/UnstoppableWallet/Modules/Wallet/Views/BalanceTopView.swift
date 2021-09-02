@@ -90,9 +90,8 @@ class BalanceTopView: UIView {
     }
 
     func bind(viewItem: BalanceTopViewItem, onTapError: (() -> ())?) {
-        let coinIcon = viewItem.iconCoinType.flatMap { UIImage.image(coinType: $0) }
         coinIconView.bind(
-                coinIcon: coinIcon,
+                iconUrlString: viewItem.iconUrlString,
                 spinnerProgress: viewItem.syncSpinnerProgress,
                 indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
                 failViewVisible: viewItem.failedImageViewVisible,

@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class PrivacyInteractor {
     private let accountManager: IAccountManager
@@ -19,7 +19,7 @@ extension PrivacyInteractor: IPrivacyInteractor {
         accountManager.activeAccount
     }
 
-    var syncSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
+    var syncSettings: [(setting: InitialSyncSetting, platformCoin: PlatformCoin, changeable: Bool)] {
         initialSyncSettingsManager.allSettings
     }
 

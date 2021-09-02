@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 import RxSwift
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class SwapCoinCardCell: UITableViewCell {
@@ -144,8 +144,11 @@ extension SwapCoinCardCell {
     }
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
-        let tokenIcon = (tokenViewItem?.iconCoinType).flatMap { UIImage.image(coinType: $0) }
-        tokenIconImageView.image = tokenIcon ?? UIImage(named: "icon_placeholder_24")
+        if let urlString = tokenViewItem?.iconUrlString {
+            tokenIconImageView.setImage(withUrlString: urlString)
+        } else {
+            tokenIconImageView.image = UIImage(named: "icon_placeholder_24")
+        }
 
         if let tokenViewItem = tokenViewItem {
             tokenSelectButton.setTitle(tokenViewItem.title, for: .normal)
@@ -170,8 +173,8 @@ extension SwapCoinCardCell {
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
 
-    func didSelect(coin: Coin) {
-        viewModel.onSelect(coin: coin)
+    func didSelect(platformCoin: PlatformCoin) {
+        viewModel.onSelect(platformCoin: platformCoin)
     }
 
 }
