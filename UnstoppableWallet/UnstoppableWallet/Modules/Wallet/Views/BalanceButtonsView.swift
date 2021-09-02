@@ -44,7 +44,7 @@ class BalanceButtonsView: UIView {
         addSubview(receiveButton)
 
         receiveButton.apply(style: .primaryGray)
-        receiveButton.setImageTintColor(.black, for: .normal)
+        receiveButton.setImageTintColor(.themeClaude, for: .normal)
         receiveButton.setImageTintColor(.themeGray50, for: .disabled)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
@@ -56,7 +56,7 @@ class BalanceButtonsView: UIView {
         }
 
         swapButton.apply(style: .primaryGray)
-        swapButton.setImageTintColor(.black, for: .normal)
+        swapButton.setImageTintColor(.themeClaude, for: .normal)
         swapButton.setImageTintColor(.themeGray50, for: .disabled)
         swapButton.setImage(UIImage(named: "arrow_swap_2_24"), for: .normal)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
@@ -77,7 +77,7 @@ class BalanceButtonsView: UIView {
         }
 
         chartButton.apply(style: .primaryGray)
-        chartButton.setImageTintColor(.black, for: .normal)
+        chartButton.setImageTintColor(.themeClaude, for: .normal)
         chartButton.setImageTintColor(.themeGray50, for: .disabled)
         chartButton.setImage(UIImage(named: "chart_2_24"), for: .normal)
         chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
