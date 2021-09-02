@@ -113,8 +113,8 @@ class TransactionsViewModel {
 
 extension TransactionsViewModel {
 
-    var typeFilters: [String] {
-        allTypeFilters.map { "transactions.types.\($0.rawValue)".localized }
+    var typeFilters: [FilterHeaderView.ViewItem] {
+        factory.typeFilterItems(types: allTypeFilters)
     }
 
     var coinFiltersDriver: Driver<[String]> {

@@ -87,7 +87,7 @@ class FilterCard: UICollectionViewCell {
         descriptionLabel.text = nil
     }
 
-    func bind(item: MarketFilterViewItem) {
+    func bind(item: MarketDiscoveryFilterHeaderView.ViewItem) {
         iconImageView.image = UIImage(named: item.icon)
         titleLightLabel.text = item.title
         titleDarkLabel.text = item.title
@@ -119,7 +119,7 @@ class FilterCard: UICollectionViewCell {
         }
     }
 
-    static func size(item: MarketFilterViewItem, selected: Bool) -> CGSize {
+    static func size(item: MarketDiscoveryFilterHeaderView.ViewItem, selected: Bool) -> CGSize {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
         let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
 

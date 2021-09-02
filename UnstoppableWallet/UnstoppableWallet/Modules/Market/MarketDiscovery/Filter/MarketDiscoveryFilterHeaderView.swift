@@ -1,10 +1,18 @@
 import UIKit
 import SnapKit
 
+extension MarketDiscoveryFilterHeaderView {
+    struct ViewItem {
+        let icon: String
+        let title: String
+        let description: String
+    }
+}
+
 class MarketDiscoveryFilterHeaderView: UIView {
     public static var headerHeight: CGFloat = 118
 
-    private var filters = [MarketFilterViewItem]()
+    private var filters = [MarketDiscoveryFilterHeaderView.ViewItem]()
 
     private let collectionView: UICollectionView
 
@@ -33,7 +41,7 @@ class MarketDiscoveryFilterHeaderView: UIView {
         collectionView.registerCell(forClass: FilterCard.self)
 
         filters = MarketDiscoveryFilter.allCases.map {
-            MarketFilterViewItem(icon: $0.icon, title: $0.title, description: $0.description)
+            MarketDiscoveryFilterHeaderView.ViewItem(icon: $0.icon, title: $0.title, description: $0.description)
         }
     }
 
