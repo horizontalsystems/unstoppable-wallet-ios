@@ -1246,14 +1246,12 @@
 		1A5642F3BA1892109A596B61 /* MarkdownContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56417C27A95B429D9F2912 /* MarkdownContentProvider.swift */; };
 		1A5642F3C5C414F65A3CC59D /* TitledHighlightedDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56444EB2F32DB662981653 /* TitledHighlightedDescriptionCell.swift */; };
 		1A5642F433D0D20B8D041BBB /* TransactionDataSortModeSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F319DD6F10DDA8C617 /* TransactionDataSortModeSettingManager.swift */; };
-		1A5642F678E45070B2D20B15 /* MarketFilterViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B193038FE87E5A1799 /* MarketFilterViewItem.swift */; };
 		1A5642FAA4C4473DC4595C46 /* ThemeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641157E25B15500E1B29F /* ThemeSettingsViewModel.swift */; };
 		1A564316C066F02129C98F03 /* PriceAlertSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564FB4404656203899BED3 /* PriceAlertSectionViewModel.swift */; };
 		1A564326C51940CC30439BC6 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsService.swift */; };
 		1A5643651979E1907BE1B12C /* BlockchainSettingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C46FB773A67E29D9D32 /* BlockchainSettingRecord.swift */; };
 		1A56436892D79FAA1DE2EC21 /* BalanceErrorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B109096C8B0FE5EF8AE /* BalanceErrorRouter.swift */; };
-		1A56436D7B21FF8A3615CEEA /* MarketFilterViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B193038FE87E5A1799 /* MarketFilterViewItem.swift */; };
 		1A5643813B0713460096F6D1 /* AppVersionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446CCB15D32581396A59 /* AppVersionRecord.swift */; };
 		1A56439ABC0BB083D41F57E2 /* AppStatusInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A601F3F8DF2664007E3 /* AppStatusInteractor.swift */; };
 		1A56439C0D4491A70541C18E /* ScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A144576DB93334E1682 /* ScanQrViewController.swift */; };
@@ -1282,7 +1280,6 @@
 		1A5644C03B6013B16725D5FD /* TimeLockInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD4E0899F431B2BF7F /* TimeLockInfoDataSource.swift */; };
 		1A5644CAEC833EA0583556FD /* MarketDiscoveryFilterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E7A01B2DD08CB174C10 /* MarketDiscoveryFilterHeaderView.swift */; };
 		1A5644CF2BEC2E7C6227BDC7 /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
-		1A564500CBFC1ABD40F0AC30 /* MarketFilterViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644B193038FE87E5A1799 /* MarketFilterViewItem.swift */; };
 		1A564504E164177DD6EECFBA /* BalanceErrorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B5D68A302515565030 /* BalanceErrorInteractor.swift */; };
 		1A56450B62EC2CABE49F2ABF /* AppStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C8BA986A5635B1222FB /* AppStatusManager.swift */; };
 		1A56451041F9A9AB607C3A73 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D5E55767404ED6C88E0 /* Decimal.swift */; };
@@ -3020,7 +3017,6 @@
 		1A56447C12D91108517ED217 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		1A56448C7FE52502CC690271 /* ThemeSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeSettingsModule.swift; sourceTree = "<group>"; };
 		1A5644974136176D43DAD5EB /* BottomGradientHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomGradientHolder.swift; sourceTree = "<group>"; };
-		1A5644B193038FE87E5A1799 /* MarketFilterViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketFilterViewItem.swift; sourceTree = "<group>"; };
 		1A564504718E7D19F379A9F7 /* AdapterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterError.swift; sourceTree = "<group>"; };
 		1A56450DA6DF97C9E1FFE987 /* BitcoinBaseAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinBaseAdapter.swift; sourceTree = "<group>"; };
 		1A56451B74DB3A34DD38A236 /* DexInfoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexInfoDataSource.swift; sourceTree = "<group>"; };
@@ -4827,7 +4823,6 @@
 			isa = PBXGroup;
 			children = (
 				1A564704A6BC210A672F59BC /* MarketDiscoveryFilter.swift */,
-				1A5644B193038FE87E5A1799 /* MarketFilterViewItem.swift */,
 				1A564F2CD07DBA5B054590A2 /* FilterCard.swift */,
 				1A564E7A01B2DD08CB174C10 /* MarketDiscoveryFilterHeaderView.swift */,
 			);
@@ -6659,7 +6654,6 @@
 				2FA5D6910A6A3BB23CDA4A9F /* FeeRateAdjustmentInfo.swift in Sources */,
 				58AAA306907D58F02F4E7E56 /* MarketDiscoveryService.swift in Sources */,
 				1A5647425455A4726A779E75 /* FilterCard.swift in Sources */,
-				1A5642F678E45070B2D20B15 /* MarketFilterViewItem.swift in Sources */,
 				1A564677030A9F2FE8B67A9A /* MarketDiscoveryFilter.swift in Sources */,
 				1A564E4ABDEAB8664887CA16 /* MarketDiscoveryFilterHeaderView.swift in Sources */,
 				11B35AFD184A69136B4CA0D9 /* MarketService.swift in Sources */,
@@ -7510,7 +7504,6 @@
 				2FA5DC18798CB3892F5BF459 /* FeeRateAdjustmentInfo.swift in Sources */,
 				58AAAF6550F37A40DF445775 /* MarketDiscoveryService.swift in Sources */,
 				1A5648833265D60B9A098379 /* FilterCard.swift in Sources */,
-				1A56436D7B21FF8A3615CEEA /* MarketFilterViewItem.swift in Sources */,
 				1A56419070DA95A0D276E0AB /* MarketDiscoveryFilter.swift in Sources */,
 				1A5649CF5BAB555EA028D26E /* MarketDiscoveryFilterHeaderView.swift in Sources */,
 				11B35BC88B04B3F61667B4D0 /* MarketService.swift in Sources */,
@@ -8355,7 +8348,6 @@
 				2FA5DBA7AC69D4B98E43C100 /* FeeRateAdjustmentInfo.swift in Sources */,
 				58AAA39A293C9EBC7583ED63 /* MarketDiscoveryService.swift in Sources */,
 				1A564DEEA0E56D2F0EF76FCC /* FilterCard.swift in Sources */,
-				1A564500CBFC1ABD40F0AC30 /* MarketFilterViewItem.swift in Sources */,
 				1A564BF54F433692F3F9D610 /* MarketDiscoveryFilter.swift in Sources */,
 				1A5644CAEC833EA0583556FD /* MarketDiscoveryFilterHeaderView.swift in Sources */,
 				11B35CC3E3265780ED4195AB /* MarketService.swift in Sources */,

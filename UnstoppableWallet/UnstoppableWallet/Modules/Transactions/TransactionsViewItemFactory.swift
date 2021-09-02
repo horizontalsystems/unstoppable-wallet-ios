@@ -4,6 +4,16 @@ import CoinKit
 
 class TransactionsViewItemFactory {
 
+    func typeFilterItems(types: [TransactionTypeFilter]) -> [FilterHeaderView.ViewItem] {
+        types.map {
+            if $0 == .all {
+                return .all
+            } else {
+                return .item(title: "transactions.types.\($0.rawValue)".localized)
+            }
+        }
+    }
+
     private func coinString(from coinValue: CoinValue) -> String {
         ValueFormatter.instance.format(coinValue: coinValue.abs, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? ""
     }

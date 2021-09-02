@@ -13,7 +13,7 @@ class TransactionsViewController: ThemeViewController {
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
-    private let typeFiltersView = CoinFiltersView()
+    private let typeFiltersView = FilterHeaderView()
     private let coinFiltersView = CoinFiltersView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
@@ -48,7 +48,7 @@ class TransactionsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.contentInset = UIEdgeInsets(top: CoinFiltersView.height, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: FilterHeaderView.height, left: 0, bottom: 0, right: 0)
         tableView.scrollIndicatorInsets = tableView.contentInset
 
         tableView.registerCell(forClass: H23Cell.self)
@@ -65,9 +65,6 @@ class TransactionsViewController: ThemeViewController {
 
         typeFiltersView.onSelect = { [weak self] index in
             self?.viewModel.typeFilterSelected(index: index)
-        }
-        typeFiltersView.onDeselect = { [weak self] index in
-            self?.viewModel.typeFilterSelected(index: 0)
         }
         typeFiltersView.reload(filters: viewModel.typeFilters)
 
