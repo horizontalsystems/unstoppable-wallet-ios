@@ -5,7 +5,7 @@ import RxSwift
 struct WalletModule {
 
     static func viewController() -> UIViewController {
-        let adapterService = WalletAdapterService(adapterManager: App.shared.adapterManager)
+        let adapterService = WalletAdapterService(adapterManager: App.shared.adapterManagerNew)
 
         let rateService = WalletRateService(
                 currencyKit: App.shared.currencyKit,
@@ -17,7 +17,7 @@ struct WalletModule {
                 rateService: rateService,
                 cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
+                walletManager: App.shared.walletManagerNew,
                 sortTypeManager: App.shared.sortTypeManager,
                 localStorage: App.shared.localStorage,
                 rateAppManager: App.shared.rateAppManager,

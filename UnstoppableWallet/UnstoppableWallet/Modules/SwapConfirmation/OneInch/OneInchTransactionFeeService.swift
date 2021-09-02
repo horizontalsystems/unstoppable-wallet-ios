@@ -1,21 +1,21 @@
 import Foundation
-import CoinKit
+import MarketKit
 import RxSwift
 import RxRelay
 import EthereumKit
 import OneInchKit
 
 struct OneInchSwapParameters: Equatable {
-    let coinFrom: Coin
-    let coinTo: Coin
+    let platformCoinFrom: PlatformCoin
+    let platformCoinTo: PlatformCoin
     let amountFrom: Decimal
     var amountTo: Decimal
     let slippage: Decimal
     let recipient: Address?
 
     static func ==(lhs: OneInchSwapParameters, rhs: OneInchSwapParameters) -> Bool {
-        lhs.coinFrom == rhs.coinFrom &&
-        lhs.coinTo == rhs.coinTo &&
+        lhs.platformCoinFrom == rhs.platformCoinFrom &&
+        lhs.platformCoinTo == rhs.platformCoinTo &&
         lhs.amountFrom == rhs.amountFrom &&
         lhs.amountTo == rhs.amountTo &&
         lhs.slippage == rhs.slippage &&
@@ -70,8 +70,8 @@ class OneInchTransactionFeeService {
         let recipient: EthereumKit.Address? = parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }
 
         gasPriceSingle(gasPriceType: gasPriceType).flatMap { [unowned self] gasPrice -> Single<OneInchKit.Swap> in
-                    provider.swapSingle(coinFrom: parameters.coinFrom,
-                            coinTo: parameters.coinTo,
+                    provider.swapSingle(platformCoinFrom: parameters.platformCoinFrom,
+                            platformCoinTo: parameters.platformCoinTo,
                             amount: parameters.amountFrom,
                             recipient: recipient,
                             slippage: parameters.slippage,

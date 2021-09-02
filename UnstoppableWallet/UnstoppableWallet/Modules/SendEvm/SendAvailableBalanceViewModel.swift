@@ -21,8 +21,8 @@ class SendAvailableBalanceViewModel {
     }
 
     private func sync() {
-        let coinValue = CoinValue(coin: coinService.coin, value: service.availableBalance)
-        let value = ValueFormatter.instance.format(coinValue: coinValue)
+        let coinValue = CoinValueNew(kind: .platformCoin(platformCoin: coinService.platformCoin), value: service.availableBalance)
+        let value = ValueFormatter.instance.format(coinValueNew: coinValue)
 
         viewStateRelay.accept(.loaded(value: value))
     }

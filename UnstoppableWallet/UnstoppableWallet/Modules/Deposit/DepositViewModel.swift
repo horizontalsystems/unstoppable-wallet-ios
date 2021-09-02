@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class DepositViewModel {
     private let service: DepositService

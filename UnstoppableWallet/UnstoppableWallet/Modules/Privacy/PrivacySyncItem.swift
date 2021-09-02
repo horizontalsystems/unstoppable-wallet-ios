@@ -1,7 +1,7 @@
-import CoinKit
+import MarketKit
 
 struct PrivacySyncItem {
-    let coin: Coin
+    let platformCoin: PlatformCoin
     var setting: InitialSyncSetting
     let changeable: Bool
 }

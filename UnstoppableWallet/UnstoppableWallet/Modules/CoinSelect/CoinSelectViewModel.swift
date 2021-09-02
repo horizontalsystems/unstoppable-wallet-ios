@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class CoinSelectViewModel {
@@ -20,15 +20,15 @@ class CoinSelectViewModel {
     private func sync() {
         let viewItems = filteredItems.map { item -> ViewItem in
             let formatted = item.balance
-                    .flatMap { CoinValue(coin: item.coin, value: $0) }
-                    .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
+                    .flatMap { CoinValueNew(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
+                    .flatMap { ValueFormatter.instance.format(coinValueNew: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
             let fiatFormatted = item.rate
                     .flatMap { rate in item.balance.map { $0 * rate } }
                     .flatMap { CurrencyValue(currency: service.currency, value: $0) }
                     .flatMap { ValueFormatter.instance.format(currencyValue: $0) }
 
-            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: fiatFormatted)
+            return ViewItem(platformCoin: item.platformCoin, balance: formatted, fiatBalance: fiatFormatted)
         }
 
         viewItemsRelay.accept(viewItems)
@@ -40,7 +40,7 @@ class CoinSelectViewModel {
         }
 
         return service.items.filter { item in
-            item.coin.title.localizedCaseInsensitiveContains(filter)  || item.coin.code.localizedCaseInsensitiveContains(filter)
+            item.platformCoin.coin.name.localizedCaseInsensitiveContains(filter)  || item.platformCoin.coin.code.localizedCaseInsensitiveContains(filter)
         }
     }
 
@@ -65,7 +65,7 @@ extension CoinSelectViewModel {
 extension CoinSelectViewModel {
 
     struct ViewItem {
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let balance: String?
         let fiatBalance: String?
     }

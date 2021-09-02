@@ -1,6 +1,6 @@
 import Foundation
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class SendFeePriorityPresenter {
     weak var view: ISendFeePriorityView?
@@ -9,7 +9,7 @@ class SendFeePriorityPresenter {
     private let interactor: ISendFeePriorityInteractor
     private let router: ISendFeePriorityRouter
     private let feeRateAdjustmentHelper: FeeRateAdjustmentHelper
-    private let coin: Coin
+    private let platformCoin: PlatformCoin
 
     private var feeRateAdjustmentInfo: FeeRateAdjustmentInfo
     private var customFeeRate: Int?
@@ -21,15 +21,15 @@ class SendFeePriorityPresenter {
 
     var feeRate: Int? {
         customFeeRate ?? fetchedFeeRate.flatMap { rate in
-            feeRateAdjustmentHelper.applyRule(coinType: coin.type, feeRateAdjustmentInfo: feeRateAdjustmentInfo, feeRate: rate)
+            feeRateAdjustmentHelper.applyRule(coinType: platformCoin.coinType, feeRateAdjustmentInfo: feeRateAdjustmentInfo, feeRate: rate)
         }
     }
 
-    init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, feeRateAdjustmentHelper: FeeRateAdjustmentHelper, coin: Coin) {
+    init(interactor: ISendFeePriorityInteractor, router: ISendFeePriorityRouter, feeRateAdjustmentHelper: FeeRateAdjustmentHelper, platformCoin: PlatformCoin) {
         self.interactor = interactor
         self.router = router
         self.feeRateAdjustmentHelper = feeRateAdjustmentHelper
-        self.coin = coin
+        self.platformCoin = platformCoin
 
         feeRatePriority = interactor.defaultFeeRatePriority
         feeRateAdjustmentInfo = FeeRateAdjustmentInfo(amountInfo: .notEntered, xRate: nil, currency: interactor.baseCurrency, balance: nil)

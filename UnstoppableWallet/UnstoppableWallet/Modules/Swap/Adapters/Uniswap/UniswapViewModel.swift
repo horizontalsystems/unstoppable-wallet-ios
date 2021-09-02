@@ -146,9 +146,9 @@ class UniswapViewModel {
 
     private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
-                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)
+                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)
         )
     }
 
@@ -233,7 +233,7 @@ extension UniswapViewModel {
                 slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
                 deadline: viewItemHelper.deadline(tradeService.settings.ttl),
                 recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
         )
 

@@ -2,7 +2,7 @@ class PrivacyViewItemFactory {
 
     func syncViewItems(items: [PrivacySyncItem]) -> [PrivacyViewItem] {
         items.map { item in
-            PrivacyViewItem(iconName: item.coin.id, title: item.coin.title, value: item.setting.syncMode.title, changable: item.changeable)
+            PrivacyViewItem(iconName: item.platformCoin.coinType.id, title: item.platformCoin.coin.name, value: item.setting.syncMode.title, changeable: item.changeable)
         }
     }
 

@@ -1,31 +1,26 @@
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 protocol ICoinToggleViewModel {
-    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> { get }
+    var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> { get }
 
-    func onEnable(coin: Coin)
+    func onEnable(marketCoin: MarketCoin)
     func onDisable(coin: Coin)
-    func onTapSettings(coin: Coin)
-    func onUpdate(filter: String?)
+    func onTapSettings(marketCoin: MarketCoin)
+    func onUpdate(filter: String)
 }
 
 class CoinToggleViewModel {
 
-    struct ViewState {
-        let featuredViewItems: [ViewItem]
-        let viewItems: [ViewItem]
-
-        static var empty: ViewState {
-            ViewState(featuredViewItems: [], viewItems: [])
-        }
+    struct ViewItem {
+        let marketCoin: MarketCoin
+        let state: ViewItemState
     }
 
-    struct ViewItem {
-        let coin: Coin
-        let hasSettings: Bool
-        let enabled: Bool
+    enum ViewItemState {
+        case toggleVisible(enabled: Bool, hasSettings: Bool)
+        case toggleHidden
     }
 
 }

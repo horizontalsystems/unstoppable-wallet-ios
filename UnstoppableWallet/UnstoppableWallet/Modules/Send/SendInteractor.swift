@@ -1,18 +1,18 @@
 import RxSwift
 import CurrencyKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
-    private let rateManager: IRateManager
+    private let rateManager: RateManagerNew
     private let currencyKit: CurrencyKit.Kit
     private let localStorage: ILocalStorage
 
     private let disposeBag = DisposeBag()
 
-    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
+    init(reachabilityManager: IReachabilityManager, rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
         self.rateManager = rateManager
         self.currencyKit = currencyKit
         self.localStorage = localStorage
@@ -43,6 +43,7 @@ extension SendInteractor: ISendInteractor {
         guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currencyCode), !latestRate.expired else {
             return nil
         }
+
         return latestRate.rate
     }
 

@@ -6,14 +6,14 @@ import CurrencyKit
 import BigInt
 import EthereumKit
 import Foundation
-import CoinKit
+import MarketKit
 
 class OneInchService {
     let dex: SwapModule.Dex
     private let tradeService: OneInchTradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
-    private let adapterManager: AdapterManager
+    private let adapterManager: AdapterManagerNew
 
     private let disposeBag = DisposeBag()
 
@@ -49,7 +49,7 @@ class OneInchService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
 
-    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManagerNew) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService
@@ -60,13 +60,13 @@ class OneInchService {
             self?.onUpdateTrade(state: state)
         }
 
-        subscribe(scheduler, disposeBag, tradeService.coinInObservable) { [weak self] coin in
-            self?.onUpdate(coinIn: coin)
+        subscribe(scheduler, disposeBag, tradeService.platformCoinInObservable) { [weak self] platformCoin in
+            self?.onUpdate(platformCoinIn: platformCoin)
         }
-        onUpdate(coinIn: tradeService.coinIn)
+        onUpdate(platformCoinIn: tradeService.platformCoinIn)
 
-        subscribe(scheduler, disposeBag, tradeService.coinOutObservable) { [weak self] coin in
-            self?.onUpdate(coinOut: coin)
+        subscribe(scheduler, disposeBag, tradeService.platformCoinOutObservable) { [weak self] platformCoin in
+            self?.onUpdate(platformCoinOut: platformCoin)
         }
 
         subscribe(scheduler, disposeBag, tradeService.amountInObservable) { [weak self] amount in
@@ -84,18 +84,18 @@ class OneInchService {
         syncState()
     }
 
-    private func onUpdate(coinIn: Coin?) {
-        balanceIn = coinIn.flatMap { balance(coin: $0) }
-        allowanceService.set(coin: coinIn)
-        pendingAllowanceService.set(coin: coinIn)
+    private func onUpdate(platformCoinIn: PlatformCoin?) {
+        balanceIn = platformCoinIn.flatMap { balance(platformCoin: $0) }
+        allowanceService.set(platformCoin: platformCoinIn)
+        pendingAllowanceService.set(platformCoin: platformCoinIn)
     }
 
     private func onUpdate(amountIn: Decimal?) {
         syncState()
     }
 
-    private func onUpdate(coinOut: Coin?) {
-        balanceOut = coinOut.flatMap { balance(coin: $0) }
+    private func onUpdate(platformCoinOut: PlatformCoin?) {
+        balanceOut = platformCoinOut.flatMap { balance(platformCoin: $0) }
     }
 
     private func onUpdateAllowanceState() {
@@ -153,8 +153,8 @@ class OneInchService {
         }
     }
 
-    private func balance(coin: Coin) -> Decimal? {
-        (adapterManager.adapter(for: coin) as? IBalanceAdapter)?.balanceData.balance
+    private func balance(platformCoin: PlatformCoin) -> Decimal? {
+        (adapterManager.adapter(for: platformCoin) as? IBalanceAdapter)?.balanceData.balance
     }
 
 }

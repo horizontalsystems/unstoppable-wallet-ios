@@ -1,64 +1,60 @@
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class RestoreSelectViewModel {
     private let service: RestoreSelectService
     private let disposeBag = DisposeBag()
 
-    private let viewStateRelay = BehaviorRelay<CoinToggleViewModel.ViewState>(value: .empty)
+    private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
     private let disableCoinRelay = PublishRelay<Coin>()
     private let successRelay = PublishRelay<()>()
 
     init(service: RestoreSelectService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.syncViewState(state: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.cancelEnableCoinObservable) { [weak self] in self?.disableCoinRelay.accept($0) }
 
-        syncViewState()
+        sync(items: service.items)
     }
 
     private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModel.ViewItem {
-        CoinToggleViewModel.ViewItem(
-                coin: item.coin,
-                hasSettings: item.hasSettings,
-                enabled: item.enabled
-        )
+        let viewItemState: CoinToggleViewModel.ViewItemState
+
+        switch item.state {
+        case let .supported(enabled, hasSettings): viewItemState = .toggleVisible(enabled: enabled, hasSettings: hasSettings)
+        case .unsupported: viewItemState = .toggleHidden
+        }
+
+        return CoinToggleViewModel.ViewItem(marketCoin: item.marketCoin, state: viewItemState)
     }
 
-    private func syncViewState(state: RestoreSelectService.State? = nil) {
-        let state = state ?? service.state
-
-        let viewState = CoinToggleViewModel.ViewState(
-                featuredViewItems: state.featuredItems.map { viewItem(item: $0) },
-                viewItems: state.items.map { viewItem(item: $0) }
-        )
-
-        viewStateRelay.accept(viewState)
+    private func sync(items: [RestoreSelectService.Item]) {
+        viewItemsRelay.accept(items.map { viewItem(item: $0) })
     }
 
 }
 
 extension RestoreSelectViewModel: ICoinToggleViewModel {
 
-    var viewStateDriver: Driver<CoinToggleViewModel.ViewState> {
-        viewStateRelay.asDriver()
+    var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> {
+        viewItemsRelay.asDriver()
     }
 
-    func onEnable(coin: Coin) {
-        service.enable(coin: coin)
+    func onEnable(marketCoin: MarketCoin) {
+        service.enable(marketCoin: marketCoin)
     }
 
     func onDisable(coin: Coin) {
         service.disable(coin: coin)
     }
 
-    func onTapSettings(coin: Coin) {
-        service.configure(coin: coin)
+    func onTapSettings(marketCoin: MarketCoin) {
+        service.configure(marketCoin: marketCoin)
     }
 
-    func onUpdate(filter: String?) {
+    func onUpdate(filter: String) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.service.set(filter: filter)
         }

@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class FeeRateProviderFactory {
     private let feeRateProvider: FeeRateProvider

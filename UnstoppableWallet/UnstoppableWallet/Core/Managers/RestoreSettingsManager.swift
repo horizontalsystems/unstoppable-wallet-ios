@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 import ZcashLightClientKit
 
 class RestoreSettingsManager {

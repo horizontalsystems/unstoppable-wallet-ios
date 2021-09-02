@@ -1,11 +1,11 @@
-import CoinKit
+import MarketKit
 
 class DepositService {
-    private let wallet: Wallet
+    private let wallet: WalletNew
     private let adapter: IDepositAdapter
     let address: String
 
-    init(wallet: Wallet, adapter: IDepositAdapter) {
+    init(wallet: WalletNew, adapter: IDepositAdapter) {
         self.wallet = wallet
         self.adapter = adapter
 
@@ -24,7 +24,7 @@ extension DepositService {
     }
 
     var mnemonicDerivation: MnemonicDerivation? {
-        wallet.configuredCoin.settings.derivation
+        wallet.coinSettings.derivation
     }
 
 }

@@ -2,7 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class PrivacySyncModeViewController: ThemeActionSheetController {

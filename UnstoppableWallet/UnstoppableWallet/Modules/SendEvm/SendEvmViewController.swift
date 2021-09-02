@@ -49,12 +49,12 @@ class SendEvmViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.title".localized(viewModel.coin.code)
+        title = "send.title".localized(viewModel.platformCoin.coin.code)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
-        iconImageView.image = .image(coinType: viewModel.coin.type)
+        iconImageView.setImage(withUrlString: viewModel.platformCoin.coin.imageUrl)
         iconImageView.tintColor = .themeGray
 
         view.addSubview(tableView)
