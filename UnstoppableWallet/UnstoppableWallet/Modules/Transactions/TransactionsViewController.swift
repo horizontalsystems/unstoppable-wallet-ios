@@ -14,7 +14,7 @@ class TransactionsViewController: ThemeViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
     private let typeFiltersView = FilterHeaderView()
-    private let coinFiltersView = CoinFiltersView()
+    private let coinFiltersView = MarketDiscoveryFilterHeaderView(expandable: false)
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sections = [Section]()
@@ -37,25 +37,6 @@ class TransactionsViewController: ThemeViewController {
 
         title = "transactions.title".localized
 
-        view.addSubview(tableView)
-        tableView.backgroundColor = .clear
-        tableView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().offset(130)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.contentInset = UIEdgeInsets(top: FilterHeaderView.height, left: 0, bottom: 0, right: 0)
-        tableView.scrollIndicatorInsets = tableView.contentInset
-
-        tableView.registerCell(forClass: H23Cell.self)
-        tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
-        tableView.estimatedRowHeight = 0
-        tableView.delaysContentTouches = false
-
         view.addSubview(typeFiltersView)
         typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
@@ -72,15 +53,29 @@ class TransactionsViewController: ThemeViewController {
         coinFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(typeFiltersView.snp.bottom)
-            maker.height.equalTo(CoinFiltersView.height)
+            maker.height.equalTo(MarketDiscoveryFilterHeaderView.headerHeight)
         }
 
         coinFiltersView.onSelect = { [weak self] index in
             self?.viewModel.coinFilterSelected(index: index)
         }
-        coinFiltersView.onDeselect = { [weak self] index in
-            self?.viewModel.coinFilterSelected(index: nil)
+
+        view.addSubview(tableView)
+        tableView.backgroundColor = .clear
+        tableView.snp.makeConstraints { maker in
+            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.tableFooterView = UIView(frame: .zero)
+
+        tableView.registerCell(forClass: H23Cell.self)
+        tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
+        tableView.estimatedRowHeight = 0
+        tableView.delaysContentTouches = false
 
         view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
@@ -192,8 +187,8 @@ class TransactionsViewController: ThemeViewController {
         emptyLabel.isHidden = !status.showMessage
     }
 
-    private func show(filters: [String]) {
-        coinFiltersView.reload(filters: filters)
+    private func show(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
+        coinFiltersView.set(filters: filters)
     }
 
 }

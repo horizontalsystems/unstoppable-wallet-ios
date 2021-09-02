@@ -12,7 +12,7 @@ class TransactionsViewModel {
     private let allTypeFilters = TransactionTypeFilter.allCases
     private var sections = [TransactionsViewController.Section]()
 
-    private var coinFiltersRelay = BehaviorRelay<[String]>(value: [])
+    private var coinFiltersRelay = BehaviorRelay<[MarketDiscoveryFilterHeaderView.ViewItem]>(value: [])
     private var viewItemsRelay = BehaviorRelay<[TransactionsViewController.Section]>(value: [])
     private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)>()
     private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
@@ -38,7 +38,7 @@ class TransactionsViewModel {
     }
 
     private func handle(wallets: [TransactionWallet]) {
-        let coinFilters = wallets.map { factory.coinFilterName(wallet: $0) }
+        let coinFilters = wallets.flatMap { factory.coinFilter(wallet: $0) }
         coinFiltersRelay.accept(coinFilters)
     }
 
@@ -117,7 +117,7 @@ extension TransactionsViewModel {
         factory.typeFilterItems(types: allTypeFilters)
     }
 
-    var coinFiltersDriver: Driver<[String]> {
+    var coinFiltersDriver: Driver<[MarketDiscoveryFilterHeaderView.ViewItem]> {
         coinFiltersRelay.asDriver()
     }
 

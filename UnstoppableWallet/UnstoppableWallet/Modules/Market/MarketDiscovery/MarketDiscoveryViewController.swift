@@ -9,7 +9,7 @@ class MarketDiscoveryViewController: MarketListViewController {
     private let viewModel: MarketDiscoveryViewModel
     private let disposeBag = DisposeBag()
 
-    private let filterHeaderView = MarketDiscoveryFilterHeaderView()
+    private let filterHeaderView = MarketDiscoveryFilterHeaderView(expandable: true)
 
     init(marketViewModel: MarketViewModel, listViewModel: MarketListViewModel, viewModel: MarketDiscoveryViewModel) {
         self.marketViewModel = marketViewModel
@@ -30,6 +30,10 @@ class MarketDiscoveryViewController: MarketListViewController {
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(MarketDiscoveryFilterHeaderView.headerHeight)
         }
+
+        filterHeaderView.set(filters: MarketDiscoveryFilter.allCases.map {
+            MarketDiscoveryFilterHeaderView.ViewItem(icon: $0.icon, title: $0.title, description: $0.description)
+        })
 
         tableView.snp.remakeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()

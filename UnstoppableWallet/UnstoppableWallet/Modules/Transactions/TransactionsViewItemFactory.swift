@@ -176,9 +176,9 @@ class TransactionsViewItemFactory {
         )
     }
 
-    func coinFilterName(wallet: TransactionWallet) -> String {
+    func coinFilter(wallet: TransactionWallet) -> MarketDiscoveryFilterHeaderView.ViewItem? {
         guard let coin = wallet.coin else {
-            return ""
+            return nil
         }
 
         var name = coin.code
@@ -186,7 +186,7 @@ class TransactionsViewItemFactory {
             name += " " + derivation
         }
 
-        return name
+        return MarketDiscoveryFilterHeaderView.ViewItem(icon: coin.type.id, title: name)
     }
 
 }

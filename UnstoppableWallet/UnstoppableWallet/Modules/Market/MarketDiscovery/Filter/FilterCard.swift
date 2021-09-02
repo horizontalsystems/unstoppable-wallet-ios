@@ -10,6 +10,7 @@ class FilterCard: UICollectionViewCell {
     private let titleLightLabel = UILabel()
     private let titleDarkLabel = UILabel()
     private let descriptionLabel = UILabel()
+    private var expandable = false
 
     private var titleLightTopConstraint: Constraint?
     private var titleLightBottomConstraint: Constraint?
@@ -87,18 +88,21 @@ class FilterCard: UICollectionViewCell {
         descriptionLabel.text = nil
     }
 
-    func bind(item: MarketDiscoveryFilterHeaderView.ViewItem) {
+    func bind(item: MarketDiscoveryFilterHeaderView.ViewItem, expandable: Bool) {
         iconImageView.image = UIImage(named: item.icon)
         titleLightLabel.text = item.title
         titleDarkLabel.text = item.title
         descriptionLabel.text = item.description
+        self.expandable = expandable
     }
 
     func bind(selected: Bool) {
-        titleLightTopConstraint?.isActive = selected
-        titleLightBottomConstraint?.isActive = !selected
-        titleDarkTopConstraint?.isActive = selected
-        titleDarkBottomConstraint?.isActive = !selected
+        if expandable {
+            titleLightTopConstraint?.isActive = selected
+            titleLightBottomConstraint?.isActive = !selected
+            titleDarkTopConstraint?.isActive = selected
+            titleDarkBottomConstraint?.isActive = !selected
+        }
 
         UIView.animateKeyframes(withDuration: .themeAnimationDuration, delay: 0) {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
@@ -107,23 +111,25 @@ class FilterCard: UICollectionViewCell {
                 self.titleDarkLabel.alpha = selected ? 1 : 0
             }
 
-            UIView.addKeyframe(withRelativeStartTime: selected ? 0 : 0.5, relativeDuration: 0.5) {
-                self.iconImageView.alpha = selected ?  0 : 1
-            }
+            if self.expandable {
+                UIView.addKeyframe(withRelativeStartTime: selected ? 0 : 0.5, relativeDuration: 0.5) {
+                    self.iconImageView.alpha = selected ? 0 : 1
+                }
 
-            UIView.addKeyframe(withRelativeStartTime: selected ? 0.6 : 0, relativeDuration: 0.4) {
-                self.descriptionLabel.alpha = selected ? 1 : 0
+                UIView.addKeyframe(withRelativeStartTime: selected ? 0.6 : 0, relativeDuration: 0.4) {
+                    self.descriptionLabel.alpha = selected ? 1 : 0
+                }
             }
 
             self.contentView.backgroundColor = selected ? .themeYellowD : .themeLawrence
         }
     }
 
-    static func size(item: MarketDiscoveryFilterHeaderView.ViewItem, selected: Bool) -> CGSize {
+    static func size(item: MarketDiscoveryFilterHeaderView.ViewItem, selected: Bool, expandable: Bool) -> CGSize {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
         let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
 
-        return CGSize(width: selected ? 212 : unselectedWidth, height: 94)
+        return CGSize(width: selected && expandable ? 212 : unselectedWidth, height: 94)
     }
 
 }

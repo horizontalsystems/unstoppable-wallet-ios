@@ -5,7 +5,19 @@ extension MarketDiscoveryFilterHeaderView {
     struct ViewItem {
         let icon: String
         let title: String
-        let description: String
+        let description: String?
+
+        init(icon: String, title: String) {
+            self.icon = icon
+            self.title = title
+            description = nil
+        }
+
+        init(icon: String, title: String, description: String) {
+            self.icon = icon
+            self.title = title
+            self.description = description
+        }
     }
 }
 
@@ -15,16 +27,19 @@ class MarketDiscoveryFilterHeaderView: UIView {
     private var filters = [MarketDiscoveryFilterHeaderView.ViewItem]()
 
     private let collectionView: UICollectionView
+    private let expandable: Bool //todo remove expandability after new discovery UI implementation
 
     var onSelect: ((Int?) -> ())?
 
-    override init(frame: CGRect) {
+    init(expandable: Bool) {
+        self.expandable = expandable
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
 
         addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
@@ -39,14 +54,18 @@ class MarketDiscoveryFilterHeaderView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
 
         collectionView.registerCell(forClass: FilterCard.self)
-
-        filters = MarketDiscoveryFilter.allCases.map {
-            MarketDiscoveryFilterHeaderView.ViewItem(icon: $0.icon, title: $0.title, description: $0.description)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
+    }
+
+}
+
+extension MarketDiscoveryFilterHeaderView {
+
+    func set(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
+        self.filters = filters
     }
 
 }
@@ -63,12 +82,12 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterCard {
-            cell.bind(item: filters[indexPath.item])
+            cell.bind(item: filters[indexPath.item], expandable: expandable)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        FilterCard.size(item: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.first == indexPath)
+        FilterCard.size(item: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.first == indexPath, expandable: expandable)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
