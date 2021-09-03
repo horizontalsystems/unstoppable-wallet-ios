@@ -164,7 +164,7 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.sourceViewController?.dismiss(animated: true) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.close() }
     }
 
     private func show(error: Error) {
@@ -231,6 +231,11 @@ class WalletConnectMainViewController: ThemeViewController {
         if let viewController = viewController {
             present(ThemeNavigationController(rootViewController: viewController), animated: true)
         }
+    }
+
+    private func close() {
+        HudHelper.instance.showSuccess()
+        sourceViewController?.dismiss(animated: true)
     }
 
 }

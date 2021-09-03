@@ -64,9 +64,7 @@ class WalletConnectMainViewModel {
     private func hint(state: WalletConnectService.State, connection: WalletConnectInteractor.State) -> String? {
         switch connection {
         case .disconnected:
-            if state == .waitingForApproveSession {
-                return nil
-            } else if state == .ready {
+            if state == .waitingForApproveSession || state == .ready {
                 return "wallet_connect.no_connection".localized
             }
         case .connecting: return nil
