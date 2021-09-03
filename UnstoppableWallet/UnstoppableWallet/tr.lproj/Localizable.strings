@@ -897,7 +897,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
-"wallet_connect.no_connection" = "Cüzdan bağlantısı yanıt vermiyor";
+"wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
