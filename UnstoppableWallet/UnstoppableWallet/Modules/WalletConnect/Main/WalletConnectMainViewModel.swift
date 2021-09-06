@@ -9,6 +9,7 @@ class WalletConnectMainViewModel {
     private let disposeBag = DisposeBag()
 
     private let showErrorRelay = PublishRelay<Error>()
+    private let showSuccessRelay = PublishRelay<()>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
@@ -41,6 +42,7 @@ class WalletConnectMainViewModel {
         print("\(state) --- \(connectionState)")
 
         guard state != .killed else {
+            showSuccessRelay.accept(())
             finishRelay.accept(())
             return
         }
@@ -113,6 +115,10 @@ extension WalletConnectMainViewModel {
 
     var showErrorSignal: Signal<Error> {
         showErrorRelay.asSignal()
+    }
+
+    var showSuccessSignal: Signal<()> {
+        showSuccessRelay.asSignal()
     }
 
     var connectingDriver: Driver<Bool> {
