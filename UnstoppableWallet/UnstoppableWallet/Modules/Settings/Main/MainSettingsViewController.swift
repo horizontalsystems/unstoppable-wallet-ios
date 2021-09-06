@@ -22,7 +22,10 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = A2Cell()
     private let baseCurrencyCell = A2Cell()
     private let languageCell = A2Cell()
-    private let themeModeCell = A2Cell()
+//    private let themeModeCell = A2Cell()
+//  theme settings disabled and dropped to system defaults. When system theme is different from one selected in settings
+//  in some situations traits for the first requested color is wrong. Leading to first button colored in system theme
+//  color instead of custom selected
     private let aboutCell = A3Cell()
     private let footerCell = MainSettingsFooterCell()
 
@@ -78,9 +81,9 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.title = "settings.language".localized
         languageCell.value = viewModel.currentLanguage
 
-        themeModeCell.set(backgroundStyle: .lawrence)
-        themeModeCell.titleImage = UIImage(named: "light_20")
-        themeModeCell.title = "settings.theme".localized
+//        themeModeCell.set(backgroundStyle: .lawrence)
+//        themeModeCell.titleImage = UIImage(named: "light_20")
+//        themeModeCell.title = "settings.theme".localized
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         aboutCell.titleImage = UIImage(named: "uw_20")
@@ -109,9 +112,9 @@ class MainSettingsViewController: ThemeViewController {
             self?.aboutCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
             self?.aboutCell.valueImageTintColor = .themeLucian
         }
-        subscribe(disposeBag, viewModel.themeModeDriver) { [weak self] themeMode in
-            self?.themeModeCell.value = themeMode.description
-        }
+//        subscribe(disposeBag, viewModel.themeModeDriver) { [weak self] themeMode in
+//            self?.themeModeCell.value = themeMode.description
+//        }
 
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
             self?.urlManager.open(url: url, from: self)
@@ -190,14 +193,14 @@ class MainSettingsViewController: ThemeViewController {
                         self?.navigationController?.pushViewController(module, animated: true)
                     }
             ),
-            StaticRow(
-                    cell: themeModeCell,
-                    id: "theme-mode",
-                    height: .heightCell48,
-                    action: { [weak self] in
-                        self?.navigationController?.pushViewController(ThemeSettingsModule.viewController(), animated: true)
-                    }
-            ),
+//            StaticRow(
+//                    cell: themeModeCell,
+//                    id: "theme-mode",
+//                    height: .heightCell48,
+//                    action: { [weak self] in
+//                        self?.navigationController?.pushViewController(ThemeSettingsModule.viewController(), animated: true)
+//                    }
+//            ),
             Row<A1Cell>(
                     id: "experimental-features",
                     height: .heightCell48,
