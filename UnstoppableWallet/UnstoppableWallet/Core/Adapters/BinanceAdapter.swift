@@ -165,7 +165,15 @@ extension BinanceAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
-        asset.transactionsObservable.map { [weak self] in
+        let binanceChainFilter: TransactionFilterType?
+        switch filter {
+            case .all: binanceChainFilter = nil
+            case .incoming: binanceChainFilter = .incoming
+            case .outgoing: binanceChainFilter = .outgoing
+            default: binanceChainFilter = nil
+        }
+
+        return asset.transactionsObservable(filterType: binanceChainFilter).map { [weak self] in
             $0.compactMap {
                 self?.transactionRecord(fromTransaction: $0)
             }
@@ -173,7 +181,16 @@ extension BinanceAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.transactionHash, limit: limit)
+        let binanceChainFilter: TransactionFilterType?
+
+        switch filter {
+            case .all: binanceChainFilter = nil
+            case .incoming: binanceChainFilter = .incoming
+            case .outgoing: binanceChainFilter = .outgoing
+            default: return Single.just([])
+        }
+
+        return binanceKit.transactionsSingle(symbol: asset.symbol, filterType: binanceChainFilter, fromTransactionHash: from?.transactionHash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }
