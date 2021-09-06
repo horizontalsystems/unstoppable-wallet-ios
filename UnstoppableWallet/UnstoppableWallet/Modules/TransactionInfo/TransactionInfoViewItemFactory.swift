@@ -57,11 +57,13 @@ class TransactionInfoViewItemFactory {
         return parts.joined(separator: " | ")
     }
 
-    private func priceString(coinValue1: CoinValue, coinValue2: CoinValue) -> String {
-        let priceDecimal = coinValue1.value.magnitude / coinValue2.value.magnitude
+    private func priceString(coinValueIn: CoinValue, coinValueOut: CoinValue, coinPriceIn: CurrencyValue?) -> String {
+        let priceDecimal = coinValueIn.value.magnitude / coinValueOut.value.magnitude
         let price = ValueFormatter.instance.format(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: nil) ?? ""
+        let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs(priceDecimal * $0.value)) }
+        let rateFormatted = rate.flatMap { ($0.formattedString.map { " (\($0))"}) } ?? ""
 
-        return "\(coinValue2.coin.code) = \(price) \(coinValue1.coin.code)"
+        return "\(coinValueOut.coin.code) = \(price) \(coinValueIn.coin.code)" + rateFormatted
     }
 
     private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {
@@ -190,7 +192,7 @@ class TransactionInfoViewItemFactory {
 
             if let valueOut = swap.valueOut {
                 if case .failed = status {} else {
-                    middleSectionItems.append(.price(price: priceString(coinValue1: swap.valueIn, coinValue2: valueOut)))
+                    middleSectionItems.append(.price(price: priceString(coinValueIn: swap.valueIn, coinValueOut: valueOut, coinPriceIn: rates[swap.valueIn.coin])))
                 }
             }
             middleSectionItems.append(.service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress)))
