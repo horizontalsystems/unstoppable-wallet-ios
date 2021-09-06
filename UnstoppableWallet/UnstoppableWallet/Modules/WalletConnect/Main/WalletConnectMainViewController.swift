@@ -134,6 +134,7 @@ class WalletConnectMainViewController: ThemeViewController {
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: "alert.success_action".localized) }
         subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in self?.sync(connecting: $0) }
         subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0) }
         subscribe(disposeBag, viewModel.connectButtonDriver) { [weak self] state in
@@ -234,7 +235,6 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func close() {
-        HudHelper.instance.showSuccess()
         sourceViewController?.dismiss(animated: true)
     }
 
