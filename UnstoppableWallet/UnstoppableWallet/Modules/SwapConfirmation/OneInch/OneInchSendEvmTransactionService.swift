@@ -158,12 +158,15 @@ class OneInchSendEvmTransactionService {
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.data?.decoration as? SwapMethodDecoration {
+        if let decoration = dataState.data?.decoration as? OneInchUnoswapMethodDecoration, let tokenOut = decoration.tokenOut {
+            activateSwapCoinOut(tokenOut: tokenOut)
+        }
+        if let decoration = dataState.data?.decoration as? OneInchSwapMethodDecoration {
             activateSwapCoinOut(tokenOut: decoration.tokenOut)
         }
     }
 
-    private func activateSwapCoinOut(tokenOut: SwapMethodDecoration.Token) {
+    private func activateSwapCoinOut(tokenOut: OneInchMethodDecoration.Token) {
         let coinType: CoinType
 
         switch tokenOut {
