@@ -349,7 +349,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                         }
                     }
                 }
-                .filter { transactions in transactions.count > 0 }
+                .filter { !$0.isEmpty }
     }
 
     func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
