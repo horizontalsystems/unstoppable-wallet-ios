@@ -5,9 +5,30 @@ import RxSwift
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransaction>()
     private var pendingTransactions = Set<ZcashTransaction>()
+    private let receiveAddress: String
 
-    private var transactions: [ZcashTransaction] {
-        Array(confirmedTransactions.union(pendingTransactions)).sorted()
+    init(receiveAddress: String) {
+        self.receiveAddress = receiveAddress
+    }
+
+    private func transactions(filter: TransactionTypeFilter) -> [ZcashTransaction] {
+        var confirmedTransactions = confirmedTransactions
+        var pendingTransactions = pendingTransactions
+
+        switch filter {
+        case .all: ()
+        case .incoming:
+            confirmedTransactions = confirmedTransactions.filter { $0.sentTo(address: receiveAddress) }
+            pendingTransactions = pendingTransactions.filter { $0.sentTo(address: receiveAddress) }
+        case .outgoing:
+            confirmedTransactions = confirmedTransactions.filter { !$0.sentTo(address: receiveAddress) }
+            pendingTransactions = pendingTransactions.filter { !$0.sentTo(address: receiveAddress) }
+        default:
+            confirmedTransactions = []
+            pendingTransactions = []
+        }
+
+        return Array(confirmedTransactions.union(pendingTransactions)).sorted()
     }
 
     private func zcashTransactions(_ transactions: [SignedTransactionEntity]) -> [ZcashTransaction] {
@@ -44,15 +65,15 @@ class ZcashTransactionPool {
     }
 
     func transaction(by hash: String) -> ZcashTransaction? {
-        transactions.first { $0.transactionHash == hash }
+        transactions(filter: .all).first { $0.transactionHash == hash }
     }
 
 }
 
 extension ZcashTransactionPool {
 
-    func transactionsSingle(from: TransactionRecord?, limit: Int) -> Single<[ZcashTransaction]> {
-        let transactions = self.transactions
+    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> Single<[ZcashTransaction]> {
+        let transactions = transactions(filter: filter)
 
         guard let transaction = from else {
             return Single.just(Array(transactions.prefix(limit)))

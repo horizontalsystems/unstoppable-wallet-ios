@@ -78,7 +78,7 @@ class ZcashAdapter {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        self.address = ua
+        address = ua
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
@@ -94,14 +94,13 @@ class ZcashAdapter {
 
         
         try initializer.initialize()
-        keys = try derivationTool.deriveSpendingKeys(seed: seedData,
-                                                             numberOfAccounts: 1)
+        keys = try derivationTool.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         
         synchronizer = try SDKSynchronizer(initializer: initializer)
         
         try synchronizer.prepare()
 
-        transactionPool = ZcashTransactionPool()
+        transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         balanceState = .syncing(progress: 0, lastBlockDate: nil)
@@ -216,15 +215,10 @@ class ZcashAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
-        var incoming = true
-        if let toAddress = transaction.toAddress, toAddress != receiveAddress {
-            incoming = false
-        }
-
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
         // TODO: Should have it's own transactions with memo
-        if incoming {
+        if transaction.sentTo(address: receiveAddress) {
             return BitcoinIncomingTransactionRecord(
                     coin: coin,
                     source: transactionSource,
@@ -464,10 +458,21 @@ extension ZcashAdapter: ITransactionsAdapter {
 
     func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
+                .map { transactions in
+                    transactions.compactMap { transaction -> TransactionRecord? in
+                        switch (transaction, filter) {
+                        case (_, .all): return transaction
+                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
+                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+                        default: return nil
+                        }
+                    }
+                }
+                .filter { !$0.isEmpty }
     }
 
     func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool.transactionsSingle(from: from, limit: limit).map { [weak self] txs in
+        transactionPool.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
@@ -498,7 +503,7 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        self.address.zAddress
+        address.zAddress
     }
 
 }
