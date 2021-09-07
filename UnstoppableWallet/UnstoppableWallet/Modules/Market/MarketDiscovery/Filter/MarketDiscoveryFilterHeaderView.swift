@@ -27,6 +27,7 @@ class MarketDiscoveryFilterHeaderView: UIView {
     private var filters = [MarketDiscoveryFilterHeaderView.ViewItem]()
 
     private let collectionView: UICollectionView
+    private var loaded = false
     private let expandable: Bool //todo remove expandability after new discovery UI implementation
 
     var onSelect: ((Int?) -> ())?
@@ -54,6 +55,8 @@ class MarketDiscoveryFilterHeaderView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
 
         collectionView.registerCell(forClass: FilterCard.self)
+
+        loaded = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,6 +69,10 @@ extension MarketDiscoveryFilterHeaderView {
 
     func set(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
         self.filters = filters
+
+        if loaded {
+            collectionView.reloadData()
+        }
     }
 
 }
