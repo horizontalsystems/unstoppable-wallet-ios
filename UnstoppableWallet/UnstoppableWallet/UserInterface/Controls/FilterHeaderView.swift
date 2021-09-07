@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ComponentKit
 
 extension FilterHeaderView {
     enum ViewItem {
@@ -13,6 +14,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
     private var filters = [ViewItem]()
     private let collectionView: UICollectionView
+    private var buttonStyle: ThemeButtonStyle
 
     var onSelect: ((Int) -> ())?
 
@@ -20,11 +22,13 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         filters.isEmpty ? 0 : Self.height
     }
 
-    init() {
+    init(buttonStyle: ThemeButtonStyle) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
+        self.buttonStyle = buttonStyle
 
         super.init(reuseIdentifier: nil)
 
@@ -103,12 +107,12 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterHeaderCell {
-            cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
+            cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false, buttonStyle: buttonStyle)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        FilterHeaderCell.size(for: title(index: indexPath.item))
+        FilterHeaderCell.size(for: title(index: indexPath.item), buttonStyle: buttonStyle)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

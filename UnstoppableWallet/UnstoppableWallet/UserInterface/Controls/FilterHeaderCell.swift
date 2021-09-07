@@ -4,9 +4,8 @@ import SnapKit
 import ComponentKit
 
 class FilterHeaderCell: UICollectionViewCell {
-    private static let buttonStyle: ThemeButtonStyle = .tab
-
     private let button = ThemeButton()
+    private var buttonStyle: ThemeButtonStyle = .tab
     private let selectedView = UIView()
 
     override init(frame: CGRect) {
@@ -17,7 +16,6 @@ class FilterHeaderCell: UICollectionViewCell {
             maker.edges.equalToSuperview()
         }
 
-        button.apply(style: FilterHeaderCell.buttonStyle)
         button.isUserInteractionEnabled = false
 
         contentView.addSubview(selectedView)
@@ -33,7 +31,7 @@ class FilterHeaderCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            bind(selected: isSelected)
+            bind(selected: isSelected, buttonStyle: buttonStyle)
         }
     }
 
@@ -43,15 +41,18 @@ class FilterHeaderCell: UICollectionViewCell {
         }
     }
 
-    func bind(title: String?, selected: Bool) {
+    func bind(title: String?, selected: Bool, buttonStyle: ThemeButtonStyle) {
+        self.buttonStyle = buttonStyle
+
+        button.apply(style: buttonStyle)
         button.setTitle(title, for: .normal)
 
-        bind(selected: selected)
+        bind(selected: selected, buttonStyle: buttonStyle)
     }
 
-    private func bind(selected: Bool) {
+    private func bind(selected: Bool, buttonStyle: ThemeButtonStyle) {
         button.isSelected = selected
-        selectedView.backgroundColor = selected ? .themeJacob : .clear
+        selectedView.backgroundColor = selected && buttonStyle == .tab ? .themeJacob : .clear
     }
 
     private func bind(highlighted: Bool) {
@@ -62,8 +63,9 @@ class FilterHeaderCell: UICollectionViewCell {
 
 extension FilterHeaderCell {
 
-    static func size(for title: String) -> CGSize {
-        CGSize(width: ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width, height: CGFloat.heightSingleLineCell)
+    static func size(for title: String, buttonStyle: ThemeButtonStyle) -> CGSize {
+        let height: CGFloat = buttonStyle == .tab ? CGFloat.heightSingleLineCell : 28
+        return CGSize(width: ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width, height: height)
     }
 
 }

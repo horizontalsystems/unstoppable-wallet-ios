@@ -6,7 +6,7 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         case selectedRate
     }
 
-    private let intervalSelectView = FilterHeaderView()
+    private let intervalSelectView = FilterHeaderView(buttonStyle: .secondaryDefault)
     private let selectedRateView = ChartPointInfoView()
 
     public var onSelectInterval: ((Int) -> ())?

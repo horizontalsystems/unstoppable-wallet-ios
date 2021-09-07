@@ -13,7 +13,7 @@ class TransactionsViewController: ThemeViewController {
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
-    private let typeFiltersView = FilterHeaderView()
+    private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
     private let coinFiltersView = MarketDiscoveryFilterHeaderView(expandable: false)
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
@@ -41,7 +41,7 @@ class TransactionsViewController: ThemeViewController {
         typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(view.safeAreaLayoutGuide)
-            maker.height.equalTo(CoinFiltersView.height)
+            maker.height.equalTo(FilterHeaderView.height)
         }
 
         typeFiltersView.onSelect = { [weak self] index in
