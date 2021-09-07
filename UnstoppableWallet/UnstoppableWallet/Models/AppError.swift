@@ -59,7 +59,7 @@ extension AppError: LocalizedError {
         case .oneInch(let reason):
             switch reason {
             case .insufficientBalanceWithFee: return "" // localized in modules
-            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized // localized in modules
+            case .cannotEstimate: return "" // localized in modules
             }
         case .wordsChecksum:
             return "restore.checksum_error".localized
