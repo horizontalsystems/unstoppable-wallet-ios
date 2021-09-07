@@ -261,7 +261,7 @@
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
-"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough ETH to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
 
 "swap.service" = "Servicio";
 "swap.service.title" = "Servicio";
