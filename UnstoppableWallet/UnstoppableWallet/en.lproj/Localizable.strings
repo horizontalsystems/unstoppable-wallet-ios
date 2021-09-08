@@ -86,6 +86,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "show_key.tab.private_keys" = "Private Keys";
 "show_key.passphrase" = "Passphrase";
 
+"private_key_copying.title" = "Warning";
+"private_key_copying.subtitle" = "Risk of Private Key copy";
+"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
+"private_key_copying.copy_button" = "I will risk it";
+
 // Backup Key
 
 "backup_key.title" = "Backup";
