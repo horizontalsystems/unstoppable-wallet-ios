@@ -84,6 +84,11 @@
 "show_key.tab.private_keys" = "개인 암호";
 "show_key.passphrase" = "암호 문구";
 
+"private_key_copying.title" = "Warning";
+"private_key_copying.subtitle" = "Risk of Private Key copy";
+"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
+"private_key_copying.copy_button" = "I will risk it";
+
 // Backup Key
 
 "backup_key.title" = "백업";
