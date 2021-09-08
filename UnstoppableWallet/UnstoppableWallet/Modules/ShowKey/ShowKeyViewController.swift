@@ -132,6 +132,12 @@ class ShowKeyViewController: ThemeViewController {
         closeButtonHolder.set(hidden: false, animated: true, duration: animationDuration)
     }
 
+    private func handleTap(viewItem: CopyableSecondaryButton.ViewItem) {
+        let viewController = PrivateKeyCopyConfirmationViewController(privateKey: viewItem.value())
+
+        present(viewController.toBottomSheet, animated: true)
+    }
+
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -157,9 +163,10 @@ class ShowKeyViewController: ThemeViewController {
                     dynamicHeight: { width in
                         Cell9.height(containerWidth: width, backgroundStyle: .lawrence, viewItem: viewItem)
                     },
-                    bind: { cell, _ in
+                    bind: { [weak self] cell, _ in
                         cell.set(backgroundStyle: .lawrence, isLast: true)
                         cell.viewItem = viewItem
+                        cell.handler = { self?.handleTap(viewItem: $0) }
                     }
             )
         ]

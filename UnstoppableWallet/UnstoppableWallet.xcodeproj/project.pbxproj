@@ -1822,6 +1822,7 @@
 		58AAA188EBE3E1CC463D8D9F /* SwapAllowanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7C8532511E4BCD9C8D9 /* SwapAllowanceCell.swift */; };
 		58AAA19B6A805A637ECD2BD0 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */; };
 		58AAA19E1F34C798A9DE4F67 /* SwapSelectProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA20B1DF258E98E66A8C8 /* SwapSelectProviderViewController.swift */; };
+		58AAA19F1A40CCEE0A2FB623 /* PrivateKeyCopyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2A56DA5DF4C212EF58C /* PrivateKeyCopyConfirmationViewController.swift */; };
 		58AAA1A94753DEBDF77FE962 /* SendAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA07EAD7DFA4B9CDA00C8 /* SendAddressModule.swift */; };
 		58AAA1AAD335F236D130FCBB /* SwapConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB39CAE1453B9ED024E4 /* SwapConfirmationModule.swift */; };
 		58AAA1AB2FD9FBA7801F830D /* PaymentRequestAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7A94D25C20240FD75C6 /* PaymentRequestAddress.swift */; };
@@ -2104,6 +2105,7 @@
 		58AAA8ACD388E9742038E11D /* ItemSelectorSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1584471D0A8DD0F187B /* ItemSelectorSimpleCell.swift */; };
 		58AAA8AED1725408444E3599 /* RateCoinMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA02A5C8C597ABDCFB27E /* RateCoinMapper.swift */; };
 		58AAA8B3937A2D8DF75A9AE0 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFBDA192A490C33DBB95 /* UITextView.swift */; };
+		58AAA8B99442F97472E6318F /* PrivateKeyCopyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2A56DA5DF4C212EF58C /* PrivateKeyCopyConfirmationViewController.swift */; };
 		58AAA8BDC28E58AF54102FE9 /* OneInchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA30A64E3CC861278EB50 /* OneInchService.swift */; };
 		58AAA8CA5025CC238B7D202C /* ItemSelectorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1016E563805456AC2F7 /* ItemSelectorModule.swift */; };
 		58AAA8CECD9281330BE789B8 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83833C970A2DC467715 /* InfoViewController.swift */; };
@@ -2224,6 +2226,7 @@
 		58AAAB7D9CE47F0EC61FCAE8 /* SwapSelectProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA6F7D86B4E3CFD40C6A4 /* SwapSelectProviderViewModel.swift */; };
 		58AAAB80EBC0684C009575E3 /* CoinIdMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4C71C2C4021826B3D62 /* CoinIdMigration.swift */; };
 		58AAAB8872930E715B88F955 /* CurrencyCompactFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1FF02B72C6934CF8E00 /* CurrencyCompactFormatter.swift */; };
+		58AAAB925562E9187A2BCC85 /* PrivateKeyCopyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2A56DA5DF4C212EF58C /* PrivateKeyCopyConfirmationViewController.swift */; };
 		58AAAB92C2ABB375E76223C8 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
 		58AAAB97145C7C427DB27067 /* ChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */; };
 		58AAABA864BFEC1F10F57E4B /* CoinChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA13C7C5B258310BA61AF /* CoinChartService.swift */; };
@@ -3233,6 +3236,7 @@
 		58AAA25A23A8EBB537DD56C2 /* AddressResolutionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressResolutionProvider.swift; sourceTree = "<group>"; };
 		58AAA25F8901CD7050D75D3F /* SwapSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapSettingsViewController.swift; sourceTree = "<group>"; };
 		58AAA27BACBAFC7A19DC36B6 /* UniswapSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsModule.swift; sourceTree = "<group>"; };
+		58AAA2A56DA5DF4C212EF58C /* PrivateKeyCopyConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeyCopyConfirmationViewController.swift; sourceTree = "<group>"; };
 		58AAA2B7F82F42442ED27A67 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		58AAA2EBFAE44F5D5138E487 /* CoinPriceAlertService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPriceAlertService.swift; sourceTree = "<group>"; };
 		58AAA30A64E3CC861278EB50 /* OneInchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneInchService.swift; sourceTree = "<group>"; };
@@ -4353,6 +4357,7 @@
 				11B35E9CB53CC4A626C2F5B6 /* BackupKeyService.swift */,
 				11B359FAA3732BC839196AD5 /* BackupKeyViewModel.swift */,
 				11B3538ABCCE78F3B90D6D74 /* BackupKeyViewController.swift */,
+				58AAA2A56DA5DF4C212EF58C /* PrivateKeyCopyConfirmationViewController.swift */,
 			);
 			path = BackupKey;
 			sourceTree = "<group>";
@@ -6987,6 +6992,7 @@
 				2FA5D55A52AC26DDD1FD8B55 /* HistoricalRateService.swift in Sources */,
 				58AAA84C7F1A8BD72E316768 /* WalletConnectSessionKiller.swift in Sources */,
 				58AAAE6DD4B6C3E52DA4FD6C /* SelectResourceCell.swift in Sources */,
+				58AAA19F1A40CCEE0A2FB623 /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7839,6 +7845,7 @@
 				2FA5DB5E2D23E973286979E8 /* HistoricalRateService.swift in Sources */,
 				58AAA22CFE75A0C7F7CEEFC0 /* WalletConnectSessionKiller.swift in Sources */,
 				58AAA2E18859A9E5D14DD052 /* SelectResourceCell.swift in Sources */,
+				58AAA8B99442F97472E6318F /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8700,6 +8707,7 @@
 				2FA5D2702CFF36E1608A1C8E /* HistoricalRateService.swift in Sources */,
 				58AAA6C6F67D853B899B692E /* WalletConnectSessionKiller.swift in Sources */,
 				58AAA915C742BCE660CA2454 /* SelectResourceCell.swift in Sources */,
+				58AAAB925562E9187A2BCC85 /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
