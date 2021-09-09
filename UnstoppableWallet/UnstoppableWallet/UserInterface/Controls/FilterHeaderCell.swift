@@ -63,8 +63,12 @@ class FilterHeaderCell: UICollectionViewCell {
 
 extension FilterHeaderCell {
 
+    static func height(buttonStyle: ThemeButtonStyle) -> CGFloat {
+        buttonStyle == .tab ? CGFloat.heightSingleLineCell : 28
+    }
+
     static func size(for title: String, buttonStyle: ThemeButtonStyle) -> CGSize {
-        let height: CGFloat = buttonStyle == .tab ? CGFloat.heightSingleLineCell : 28
+        let height = height(buttonStyle: buttonStyle)
         return CGSize(width: ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width, height: height)
     }
 

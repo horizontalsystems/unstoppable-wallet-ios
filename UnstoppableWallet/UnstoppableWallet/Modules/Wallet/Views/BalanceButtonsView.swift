@@ -81,7 +81,7 @@ class BalanceButtonsView: UIView {
 
     private func updateButtons(swapHidden: Bool) {
         receiveButton.setTitle(swapHidden ? "balance.deposit".localized : nil, for: .normal)
-        receiveButton.setImage(swapHidden ? nil : UIImage(named: "arrow_medium_down_left_24"), for: .normal)
+        receiveButton.setImage(swapHidden ? nil : UIImage(named: "arrow_medium_3_down_left_24"), for: .normal)
 
         receiveButton.snp.remakeConstraints { maker in
             maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin8)
