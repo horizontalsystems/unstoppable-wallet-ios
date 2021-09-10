@@ -1,5 +1,5 @@
 import RxSwift
-import CoinKit
+import MarketKit
 
 class TransactionRecordDataSource {
     enum RecordsUpdate {
@@ -10,7 +10,7 @@ class TransactionRecordDataSource {
     private var disposeBag = DisposeBag()
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tx_data_source", qos: .background)
 
-    private let coin: Coin?
+    private let coin: PlatformCoin?
     private var filter: TransactionTypeFilter = .all
     private let adapter: ITransactionsAdapter
     private var records = [TransactionRecord]()
@@ -18,7 +18,7 @@ class TransactionRecordDataSource {
 
     private var updatedRecordsSubject = PublishSubject<RecordsUpdate>()
 
-    init(coin: Coin?, adapter: ITransactionsAdapter) {
+    init(coin: PlatformCoin?, adapter: ITransactionsAdapter) {
         self.coin = coin
         self.adapter = adapter
 

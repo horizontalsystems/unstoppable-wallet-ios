@@ -17,10 +17,10 @@ class TransactionsService {
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
+    init(walletManager: WalletManagerNew, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
-        rateService = HistoricalRateService(ratesManager: App.shared.rateManager, currencyKit: App.shared.currencyKit)
+        rateService = HistoricalRateService(ratesManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit)
 
         handle(updatedWallets: walletManager.activeWallets)
 
@@ -68,10 +68,10 @@ class TransactionsService {
         return groupedWallets
     }
 
-    private func handle(updatedWallets: [Wallet]) {
+    private func handle(updatedWallets: [WalletNew]) {
         wallets = updatedWallets
                 .sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
-                .map { TransactionWallet(coin: $0.coin, source: $0.transactionSource) }
+                .map { TransactionWallet(coin: $0.platformCoin, source: $0.transactionSource) }
 
         walletsSubject.onNext(wallets)
     }
@@ -120,8 +120,8 @@ class TransactionsService {
 
     private func handle(rate: (RateKey, CurrencyValue)) {
         for (index, item) in items.enumerated() {
-            if let coinValue = item.record.mainValue, coinValue.coin.type == rate.0.coinType && item.record.date == rate.0.date {
-                update(item: item, index: index, currencyValue: _currencyValue(coinValue: coinValue, rate: rate.1))
+            if let transactionValue = item.record.mainValue, transactionValue.coin == rate.0.coin && item.record.date == rate.0.date {
+                update(item: item, index: index, currencyValue: _currencyValue(transactionValue: transactionValue, rate: rate.1))
             }
         }
     }
@@ -138,15 +138,21 @@ class TransactionsService {
 
     private func createItem(from record: TransactionRecord) -> TransactionItem {
         let lastBlockInfo = syncStateService.lastBlockInfo(source: record.source)
-        let currencyValue = record.mainValue.flatMap { coinValue in
-            _currencyValue(coinValue: coinValue, rate: rateService.rate(key: RateKey(coinType: coinValue.coin.type, date: record.date)))
+
+        var currencyValue: CurrencyValue? = nil
+        if let transactionValue = record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
+            currencyValue = _currencyValue(transactionValue: transactionValue, rate: rateService.rate(key: RateKey(coin: platformCoin.coin, date: record.date)))
         }
 
         return TransactionItem(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
     }
 
-    private func _currencyValue(coinValue: CoinValue, rate: CurrencyValue?) -> CurrencyValue? {
-        rate.flatMap { CurrencyValue(currency: $0.currency, value: coinValue.value * $0.value) }
+    private func _currencyValue(transactionValue: TransactionValue, rate: CurrencyValue?) -> CurrencyValue? {
+        if let rate = rate, case .coinValue(_, let value) = transactionValue {
+            return CurrencyValue(currency: rate.currency, value: value * rate.value)
+        }
+
+        return nil
     }
 
 }
@@ -189,8 +195,9 @@ extension TransactionsService {
     }
 
     func fetchRate(for uid: String) {
-        if let item = item(uid: uid), item.currencyValue == nil, let coinValue = item.record.mainValue {
-            rateService.fetchRate(key: RateKey(coinType: coinValue.coin.type, date: item.record.date))
+        if let item = item(uid: uid), item.currencyValue == nil,
+           let transactionValue = item.record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
+            rateService.fetchRate(key: RateKey(coin: platformCoin.coin, date: item.record.date))
         }
     }
 

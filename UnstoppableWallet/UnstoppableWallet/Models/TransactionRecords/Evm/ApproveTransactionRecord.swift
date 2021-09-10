@@ -1,19 +1,19 @@
 import Foundation
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class ApproveTransactionRecord: EvmTransactionRecord {
     let spender: String
-    let value: CoinValue
+    let value: TransactionValue
 
-    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: Coin, amount: Decimal, spender: String, token: Coin) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, spender: String, value: TransactionValue) {
         self.spender = spender
-        value = CoinValue(coin: token, value: amount)
+        self.value = value
 
         super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
-    override var mainValue: CoinValue? {
+    override var mainValue: TransactionValue? {
         value
     }
 

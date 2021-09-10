@@ -3,6 +3,7 @@ import Erc20Kit
 import RxSwift
 import BigInt
 import HsToolKit
+import MarketKit
 
 class Evm20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
@@ -10,14 +11,14 @@ class Evm20Adapter: BaseEvmAdapter {
     private let contractAddress: EthereumKit.Address
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, contractAddress: String, wallet: Wallet, coinManager: ICoinManager) throws {
+    init(evmKit: EthereumKit.Kit, contractAddress: String, wallet: WalletNew, baseCoin: PlatformCoin, coinManager: CoinManagerNew) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKit, contractAddress: address)
         self.contractAddress = address
 
-        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, coinManager: coinManager, evmKit: evmKit)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
 
-        super.init(evmKit: evmKit, decimal: wallet.coin.decimal)
+        super.init(evmKit: evmKit, decimal: wallet.decimal)
     }
 
 }
