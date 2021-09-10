@@ -76,9 +76,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalTo(sortButton)
         }
 
-        addCoinButton.apply(style: .secondaryDefault)
-        addCoinButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        addCoinButton.setTitle("balance.add_coin".localized, for: .normal)
+        addCoinButton.apply(style: .secondaryIcon)
+        addCoinButton.apply(secondaryIconImage: UIImage(named: "manage_2_20"))
         addCoinButton.addTarget(self, action: #selector(onTapAddCoinButton), for: .touchUpInside)
     }
 
