@@ -1,17 +1,17 @@
 import Foundation
-import CoinKit
+import MarketKit
 
 class AppStatusManager {
     private let systemInfoManager: ISystemInfoManager
     private let storage: IAppVersionStorage
     private let logRecordManager: ILogRecordManager
     private let accountManager: IAccountManager
-    private let walletManager: WalletManager
-    private let adapterManager: AdapterManager
+    private let walletManager: WalletManagerNew
+    private let adapterManager: AdapterManagerNew
     private let restoreSettingsManager: RestoreSettingsManager
 
     init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
-         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
+         walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
@@ -62,7 +62,7 @@ class AppStatusManager {
                 continue
             }
 
-            switch wallet.coin.type {
+            switch wallet.coinType {
             case .ethereum, .erc20:
                 if ethereumStatus == nil {
                     ethereumStatus = adapter.statusInfo
@@ -76,7 +76,7 @@ class AppStatusManager {
                     binanceStatus = adapter.statusInfo
                 }
             default:
-                status.append((wallet.coin.title, adapter.statusInfo))
+                status.append((wallet.coin.name, adapter.statusInfo))
             }
         }
 

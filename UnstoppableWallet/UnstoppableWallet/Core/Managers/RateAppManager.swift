@@ -6,8 +6,8 @@ class RateAppManager {
     private let countdownTimeInterval: TimeInterval = 10
     private let repeatedRequestTimeInterval: TimeInterval = 40 * 24 * 60 * 60 // 40 days
 
-    private let walletManager: WalletManager
-    private let adapterManager: AdapterManager
+    private let walletManager: WalletManagerNew
+    private let adapterManager: AdapterManagerNew
     private let localStorage: ILocalStorage
 
     private var isCountdownAllowed = false
@@ -17,7 +17,7 @@ class RateAppManager {
 
     private var timer: Timer?
 
-    init(walletManager: WalletManager, adapterManager: AdapterManager, localStorage: ILocalStorage) {
+    init(walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, localStorage: ILocalStorage) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.localStorage = localStorage

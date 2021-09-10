@@ -1,5 +1,5 @@
 import RxSwift
-import CoinKit
+import MarketKit
 
 class ChartNotificationInteractor {
     weak var delegate: IChartNotificationInteractorDelegate?

@@ -57,7 +57,7 @@ protocol IChartTypeStorage: AnyObject {
 protocol IPriceAlertManager {
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: CoinKit.CoinType, title: String) -> PriceAlert?
+    func priceAlert(coinType: MarketKit.CoinType, title: String) -> PriceAlert?
     func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
     func deleteAllAlerts() -> Single<()>
     func updateTopics() -> Observable<[()]>
@@ -284,7 +284,7 @@ protocol IActiveAccountStorage: AnyObject {
 
 protocol IPriceAlertStorage {
     var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: CoinKit.CoinType) -> PriceAlert?
+    func priceAlert(coinType: MarketKit.CoinType) -> PriceAlert?
     var activePriceAlerts: [PriceAlert] { get }
     func save(priceAlerts: [PriceAlert])
     func deleteAll()

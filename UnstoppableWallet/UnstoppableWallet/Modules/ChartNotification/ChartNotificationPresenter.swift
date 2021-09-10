@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class ChartNotificationPresenter {
     weak var view: IChartNotificationView?
