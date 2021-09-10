@@ -19,7 +19,7 @@ struct WalletNew {
     }
     
     var coinSettings: CoinSettings {
-        configuredPlatformCoin.settings
+        configuredPlatformCoin.coinSettings
     }
 
     var coin: Coin {

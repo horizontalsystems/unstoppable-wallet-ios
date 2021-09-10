@@ -6,13 +6,14 @@ import RxGRDB
 import KeychainAccess
 import HsToolKit
 import CoinKit
+import MarketKit
 
 class GrdbStorage {
     private let dbPool: DatabasePool
 
     private let appConfigProvider: IAppConfigProvider
 
-    private var coinMigrationRelay = BehaviorRelay<[Coin]>(value: [])
+    private var coinMigrationRelay = BehaviorRelay<[CoinKit.Coin]>(value: [])
 
     init(appConfigProvider: IAppConfigProvider) {
         self.appConfigProvider = appConfigProvider
@@ -380,7 +381,7 @@ class GrdbStorage {
         migrator.registerMigration("extractCoinsAndChangeCoinIds") { [weak self] db in
             // extract coins
             let coinRecords = try CoinRecord_v19.fetchAll(db)
-            let coins: [Coin] = coinRecords.compactMap { record in
+            let coins: [CoinKit.Coin] = coinRecords.compactMap { record in
                 let coinId = record.migrationId
                 return Coin(title: record.title, code: record.code, decimal: record.decimal, type: CoinType(id: coinId))
             }
@@ -603,14 +604,14 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createEnabledWalletsNew") { db in
-            try db.create(table: EnabledWalletNew.databaseTableName) { t in
-                t.column(EnabledWalletNew.Columns.coinUid.name, .text).notNull()
-                t.column(EnabledWalletNew.Columns.coinTypeId.name, .text).notNull()
-                t.column(EnabledWalletNew.Columns.coinSettingsId.name, .text).notNull()
-                t.column(EnabledWalletNew.Columns.accountId.name, .text).notNull()
+        migrator.registerMigration("createCustomTokens") { db in
+            try db.create(table: CustomToken.databaseTableName) { t in
+                t.column(CustomToken.Columns.coinName.name, .text).notNull()
+                t.column(CustomToken.Columns.coinCode.name, .text).notNull()
+                t.column(CustomToken.Columns.coinTypeId.name, .text).notNull()
+                t.column(CustomToken.Columns.decimal.name, .integer).notNull()
 
-                t.primaryKey([EnabledWalletNew.Columns.coinUid.name, EnabledWalletNew.Columns.coinTypeId.name, EnabledWalletNew.Columns.coinSettingsId.name, EnabledWalletNew.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([CustomToken.Columns.coinTypeId.name], onConflict: .replace)
             }
         }
 
@@ -621,7 +622,7 @@ class GrdbStorage {
 
 extension GrdbStorage: ICoinMigration {
 
-    public var coinMigrationObservable: Observable<[Coin]> {
+    public var coinMigrationObservable: Observable<[CoinKit.Coin]> {
         coinMigrationRelay.asObservable()
     }
 
@@ -656,40 +657,6 @@ extension GrdbStorage: IEnabledWalletStorage {
     func clearEnabledWallets() {
         _ = try! dbPool.write { db in
             try EnabledWallet.deleteAll(db)
-        }
-    }
-
-}
-
-extension GrdbStorage: IEnabledWalletStorageNew {
-
-    var enabledWalletsNew: [EnabledWalletNew] {
-        try! dbPool.read { db in
-            try EnabledWalletNew.fetchAll(db)
-        }
-    }
-
-    func enabledWalletsNew(accountId: String) -> [EnabledWalletNew] {
-        try! dbPool.read { db in
-            try EnabledWalletNew.filter(EnabledWalletNew.Columns.accountId == accountId).fetchAll(db)
-        }
-    }
-
-    func handle(newEnabledWalletsNew: [EnabledWalletNew], deletedEnabledWalletsNew: [EnabledWalletNew]) {
-        _ = try! dbPool.write { db in
-            for enabledWallet in newEnabledWalletsNew {
-                try enabledWallet.insert(db)
-            }
-            for enabledWallet in deletedEnabledWalletsNew {
-                try EnabledWalletNew.filter(EnabledWalletNew.Columns.coinUid == enabledWallet.coinUid && EnabledWalletNew.Columns.coinTypeId == enabledWallet.coinTypeId && EnabledWallet.Columns.coinSettingsId == enabledWallet.coinSettingsId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
-            }
-        }
-
-    }
-
-    func clearEnabledWalletsNew() {
-        _ = try! dbPool.write { db in
-            try EnabledWalletNew.deleteAll(db)
         }
     }
 
@@ -827,7 +794,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func save(coinType: CoinType) {
+    func save(coinType: CoinKit.CoinType) {
         let favoriteCoinRecord = FavoriteCoinRecord(coinType: coinType)
 
         _ = try! dbPool.write { db in
@@ -835,7 +802,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func deleteFavoriteCoinRecord(coinType: CoinType) {
+    func deleteFavoriteCoinRecord(coinType: CoinKit.CoinType) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
                     .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
@@ -843,7 +810,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func inFavorites(coinType: CoinType) -> Bool {
+    func inFavorites(coinType: CoinKit.CoinType) -> Bool {
         try! dbPool.read { db in
             try FavoriteCoinRecord
                     .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
@@ -1008,6 +975,49 @@ extension GrdbStorage: IEnabledWalletCacheStorage {
     func deleteEnabledWalletCaches(accountId: String) {
         _ = try! dbPool.write { db in
             try EnabledWalletCache.filter(EnabledWalletCache.Columns.accountId == accountId).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: ICustomTokenStorage {
+
+    func customTokens() -> [CustomToken] {
+        try! dbPool.read { db in
+            try CustomToken.fetchAll(db)
+        }
+    }
+
+    func customTokens(filter: String) -> [CustomToken] {
+        try! dbPool.read { db in
+            try CustomToken
+                    .filter(CustomToken.Columns.coinName.like("%\(filter)%") || CustomToken.Columns.coinCode.like("%\(filter)%"))
+                    .order(CustomToken.Columns.coinName.asc)
+                    .fetchAll(db)
+        }
+    }
+
+    func customTokens(coinTypeIds: [String]) -> [CustomToken] {
+        try! dbPool.read { db in
+            try CustomToken
+                    .filter(coinTypeIds.contains(CustomToken.Columns.coinTypeId))
+                    .fetchAll(db)
+        }
+    }
+
+    func customToken(coinType: MarketKit.CoinType) -> CustomToken? {
+        try! dbPool.read { db in
+            try CustomToken
+                    .filter(CustomToken.Columns.coinTypeId == coinType.id)
+                    .fetchOne(db)
+        }
+    }
+
+    func save(customTokens: [CustomToken]) {
+        _ = try! dbPool.write { db in
+            for customToken in customTokens {
+                try customToken.insert(db)
+            }
         }
     }
 

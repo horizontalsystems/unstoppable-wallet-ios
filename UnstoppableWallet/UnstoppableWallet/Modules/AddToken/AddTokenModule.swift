@@ -14,7 +14,7 @@ struct AddTokenModule {
 
         let services = [ethereumService, binanceSmartChainService, binanceService]
 
-        let service = AddTokenService(account: account, blockchainServices: services, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
+        let service = AddTokenService(account: account, blockchainServices: services, coinManager: App.shared.coinManagerNew, walletManager: App.shared.walletManagerNew)
         let viewModel = AddTokenViewModel(service: service)
 
         let viewController = AddTokenViewController(
