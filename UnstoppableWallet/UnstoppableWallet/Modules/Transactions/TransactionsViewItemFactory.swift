@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import CurrencyKit
 import CoinKit
 
@@ -186,7 +186,7 @@ class TransactionsViewItemFactory {
             name += " " + derivation
         }
 
-        return MarketDiscoveryFilterHeaderView.ViewItem(icon: coin.type.id, title: name)
+        return MarketDiscoveryFilterHeaderView.ViewItem(icon: UIImage.image(coinType: coin.type), title: name)
     }
 
 }
