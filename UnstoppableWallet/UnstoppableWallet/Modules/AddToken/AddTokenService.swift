@@ -1,19 +1,19 @@
 import RxSwift
 import RxRelay
 import HsToolKit
-import CoinKit
+import MarketKit
 
 protocol IAddTokenBlockchainService {
     func isValid(reference: String) -> Bool
     func coinType(reference: String) -> CoinType
-    func coinSingle(reference: String) -> Single<Coin>
+    func customTokenSingle(reference: String) -> Single<CustomToken>
 }
 
 class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
-    private let coinManager: ICoinManager
-    private let walletManager: WalletManager
+    private let coinManager: CoinManagerNew
+    private let walletManager: WalletManagerNew
 
     private var disposeBag = DisposeBag()
 
@@ -24,20 +24,20 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: ICoinManager, walletManager: WalletManager) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManagerNew, walletManager: WalletManagerNew) {
         self.account = account
         self.blockchainServices = blockchainServices
         self.coinManager = coinManager
         self.walletManager = walletManager
     }
 
-    private func chainedCoinSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<Coin> {
-        let single = services[0].coinSingle(reference: reference)
+    private func chainedCustomTokenSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<CustomToken> {
+        let single = services[0].customTokenSingle(reference: reference)
 
         if services.count == 1 {
             return single
         } else {
-            let nextSingle = chainedCoinSingle(services: Array(services.dropFirst()), reference: reference)
+            let nextSingle = chainedCustomTokenSingle(services: Array(services.dropFirst()), reference: reference)
             return single.catchError { _ in nextSingle }
         }
     }
@@ -68,18 +68,18 @@ extension AddTokenService {
         for service in validServices {
             let coinType = service.coinType(reference: reference)
 
-            if let existingCoin = coinManager.coin(type: coinType) {
-                state = .alreadyExists(coin: existingCoin)
+            if let existingPlatformCoin = try? coinManager.platformCoin(coinType: coinType) {
+                state = .alreadyExists(platformCoin: existingPlatformCoin)
                 return
             }
         }
 
         state = .loading
 
-        chainedCoinSingle(services: validServices, reference: reference)
+        chainedCustomTokenSingle(services: validServices, reference: reference)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] coin in
-                    self?.state = .fetched(coin: coin)
+                .subscribe(onSuccess: { [weak self] customToken in
+                    self?.state = .fetched(customToken: customToken)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error: error)
                 })
@@ -87,13 +87,13 @@ extension AddTokenService {
     }
 
     func save() {
-        guard case .fetched(let coin) = state else {
+        guard case .fetched(let customToken) = state else {
             return
         }
 
-        coinManager.save(coins: [coin])
+        coinManager.save(customTokens: [customToken])
 
-        let wallet = Wallet(coin: coin, account: account)
+        let wallet = WalletNew(platformCoin: customToken.platformCoin, account: account)
         walletManager.save(wallets: [wallet])
     }
 
@@ -104,8 +104,8 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case alreadyExists(coin: Coin)
-        case fetched(coin: Coin)
+        case alreadyExists(platformCoin: PlatformCoin)
+        case fetched(customToken: CustomToken)
         case failed(error: Error)
     }
 

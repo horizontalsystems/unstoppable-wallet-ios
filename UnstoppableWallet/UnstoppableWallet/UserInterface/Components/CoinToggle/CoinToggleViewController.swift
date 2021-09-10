@@ -84,6 +84,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                                 self?.viewModel.onTapSettings(marketCoin: viewItem.marketCoin)
                             }
 
+                            cell.titleImage = nil
                             AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
                                 if case .success(let image) = response.result {
                                     cell.titleImage = image
@@ -103,6 +104,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.title = viewItem.marketCoin.coin.name
                             cell.subtitle = viewItem.marketCoin.coin.code
 
+                            cell.titleImage = nil
                             AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
                                 if case .success(let image) = response.result {
                                     cell.titleImage = image

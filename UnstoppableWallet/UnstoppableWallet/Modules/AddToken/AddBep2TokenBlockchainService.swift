@@ -2,7 +2,7 @@ import RxSwift
 import HsToolKit
 import Alamofire
 import ObjectMapper
-import CoinKit
+import MarketKit
 
 class AddBep2TokenBlockchainService {
     private let appConfigProvider: IAppConfigProvider
@@ -29,7 +29,7 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         .bep2(symbol: reference.uppercased())
     }
 
-    func coinSingle(reference: String) -> Single<Coin> {
+    func customTokenSingle(reference: String) -> Single<CustomToken> {
         let parameters: Parameters = [
             "limit": 10000
         ]
@@ -39,15 +39,16 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
         let tokensSingle: Single<[Token]> = networkManager.single(request: request)
 
-        return tokensSingle.flatMap { tokens -> Single<Coin> in
+        return tokensSingle.flatMap { tokens -> Single<CustomToken> in
             if let token = tokens.first(where: { $0.symbol.lowercased() == reference.lowercased() }) {
-                let coin = Coin(
-                        title: token.name,
-                        code: token.originalSymbol,
-                        decimal: 8,
-                        type: .bep2(symbol: token.symbol)
+                let customCoin = CustomToken(
+                        coinName: token.name,
+                        coinCode: token.originalSymbol,
+                        coinType: .bep2(symbol: token.symbol),
+                        decimal: 8
                 )
-                return Single.just(coin)
+
+                return Single.just(customCoin)
             } else {
                 return Single.error(ApiError.tokenDoesNotExist)
             }
