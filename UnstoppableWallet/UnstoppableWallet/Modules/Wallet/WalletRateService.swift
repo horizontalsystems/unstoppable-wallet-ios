@@ -1,6 +1,5 @@
 import RxSwift
 import RxRelay
-import XRatesKit
 import CurrencyKit
 import MarketKit
 
@@ -13,14 +12,14 @@ class WalletRateService {
     weak var delegate: IWalletRateServiceDelegate?
 
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: IRateManager
+    private let rateManager: RateManagerNew
     private let disposeBag = DisposeBag()
     private var latestRatesDisposeBag = DisposeBag()
 
     private(set) var currency: Currency
     private var coinTypes = [CoinType]()
 
-    init(currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
+    init(currencyKit: CurrencyKit.Kit, rateManager: RateManagerNew) {
         self.currencyKit = currencyKit
         self.rateManager = rateManager
 
@@ -40,17 +39,17 @@ class WalletRateService {
     private func subscribeToLatestRates() {
         latestRatesDisposeBag = DisposeBag()
 
-//        subscribe(latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
-//            self?.onUpdate(latestRates: $0)
-//        }
+        subscribe(latestRatesDisposeBag, rateManager.latestRatesObservable(coinTypes: coinTypes, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
+            self?.onUpdate(latestRates: $0)
+        }
     }
 
-    private func onUpdate(latestRates: [CoinType: LatestRate]) {
+    private func onUpdate(latestRates: [CoinType: RateManagerNew.LatestRate]) {
         let itemsMap = latestRates.mapValues { item(latestRate: $0) }
         delegate?.didUpdate(itemsMap: itemsMap)
     }
 
-    private func item(latestRate: LatestRate) -> Item {
+    private func item(latestRate: RateManagerNew.LatestRate) -> Item {
         let currency = currencyKit.baseCurrency
 
         return Item(
@@ -70,8 +69,7 @@ extension WalletRateService {
     }
 
     func itemMap(coinTypes: [CoinType]) -> [CoinType: Item] {
-//        rateManager.latestRateMap(coinTypes: coinTypes, currencyCode: currency.code).mapValues { item(latestRate: $0) }
-        [:]
+        rateManager.latestRateMap(coinTypes: coinTypes, currencyCode: currency.code).mapValues { item(latestRate: $0) }
     }
 
     func refresh() {

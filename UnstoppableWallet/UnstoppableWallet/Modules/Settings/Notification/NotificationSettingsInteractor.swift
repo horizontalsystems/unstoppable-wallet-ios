@@ -1,5 +1,5 @@
 import RxSwift
-import CoinKit
+import MarketKit
 
 class NotificationSettingsInteractor {
     weak var delegate: INotificationSettingsInteractorDelegate?
@@ -8,11 +8,11 @@ class NotificationSettingsInteractor {
 
     private let priceAlertManager: IPriceAlertManager
     private let notificationManager: INotificationManager
-    private let coinManager: ICoinManager
+    private let coinManager: CoinManagerNew
 
     private let localStorage: ILocalStorage
 
-    init(priceAlertManager: IPriceAlertManager, notificationManager: INotificationManager, appManager: IAppManager, coinManager: ICoinManager, localStorage: ILocalStorage) {
+    init(priceAlertManager: IPriceAlertManager, notificationManager: INotificationManager, appManager: IAppManager, coinManager: CoinManagerNew, localStorage: ILocalStorage) {
         self.priceAlertManager = priceAlertManager
         self.notificationManager = notificationManager
         self.coinManager = coinManager
@@ -62,10 +62,6 @@ extension NotificationSettingsInteractor: INotificationSettingsInteractor {
 
     var apnsTokenReceived: Bool {
         notificationManager.token != nil
-    }
-
-    func coin(coinType: CoinType) -> Coin? {
-        coinManager.coin(type: coinType)
     }
 
     func updateTopics() {

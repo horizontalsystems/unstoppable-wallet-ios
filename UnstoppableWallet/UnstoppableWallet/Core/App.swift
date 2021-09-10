@@ -224,23 +224,23 @@ class App {
 
         let serializer = JsonSerializer()
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteAlertManager: remoteAlertManager, rateManager: rateManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
+        priceAlertManager = PriceAlertManager(walletManager: walletManagerNew, remoteAlertManager: remoteAlertManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
 
-        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, rateManager: rateManager, storage: localStorage, serializer: serializer)
+        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, storage: localStorage, serializer: serializer)
 
         remoteAlertManager.notificationManager = notificationManager
 
         let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: storage)
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManagerNew, adapterManager: adapterManagerNew, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
-        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
+        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManagerNew)
         keychainKit.set(delegate: keychainKitDelegate)
 
         pinKitDelegate = PinKitDelegate()
         pinKit.set(delegate: pinKitDelegate)
 
-        rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
+        rateAppManager = RateAppManager(walletManager: walletManagerNew, adapterManager: adapterManagerNew, localStorage: localStorage)
 
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
@@ -254,9 +254,8 @@ class App {
 
         appManager = AppManager(
                 accountManager: accountManager,
-                walletManager: walletManager,
-                walletManagerNew: walletManagerNew,
-                adapterManager: adapterManager,
+                walletManager: walletManagerNew,
+                adapterManager: adapterManagerNew,
                 pinKit: pinKit,
                 keychainKit: keychainKit,
                 blurManager: blurManager,

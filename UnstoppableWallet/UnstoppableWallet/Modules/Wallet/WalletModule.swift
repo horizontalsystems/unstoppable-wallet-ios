@@ -9,7 +9,7 @@ struct WalletModule {
 
         let rateService = WalletRateService(
                 currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManager
+                rateManager: App.shared.rateManagerNew
         )
 
         let service = WalletService(

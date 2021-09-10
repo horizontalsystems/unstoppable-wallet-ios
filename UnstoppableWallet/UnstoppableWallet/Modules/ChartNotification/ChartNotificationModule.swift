@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 protocol IChartNotificationView: AnyObject {
     func set(spacerMode: NotificationSettingPresentMode)

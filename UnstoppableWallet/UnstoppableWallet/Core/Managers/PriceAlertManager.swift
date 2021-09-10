@@ -1,22 +1,20 @@
 import RxSwift
-import CoinKit
+import MarketKit
 
 class PriceAlertManager {
     private let disposeBag = DisposeBag()
 
-    private let walletManager: WalletManager
+    private let walletManager: WalletManagerNew
     private let remoteAlertManager: IRemoteAlertManager
-    private let rateManager: IRateManager
     private let storage: IPriceAlertStorage
     private let localStorage: ILocalStorage
     private let serializer: ISerializer
 
     private let updateSubject = PublishSubject<[PriceAlert]>()
 
-    init(walletManager: WalletManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
+    init(walletManager: WalletManagerNew, remoteAlertManager: IRemoteAlertManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
         self.walletManager = walletManager
         self.remoteAlertManager = remoteAlertManager
-        self.rateManager = rateManager
         self.storage = storage
         self.localStorage = localStorage
         self.serializer = serializer
