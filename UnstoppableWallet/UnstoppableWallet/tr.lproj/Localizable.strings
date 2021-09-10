@@ -133,7 +133,7 @@
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
-"balance.sort.24h_change" = "24 saat Fiyat(%)";
+"balance.sort.price_change" = "24 saat Fiyat(%)";
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";

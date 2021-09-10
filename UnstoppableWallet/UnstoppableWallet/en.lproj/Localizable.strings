@@ -139,7 +139,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change"  = "24h Price(%)";
+"balance.sort.price_change"  = "Price Change";
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";

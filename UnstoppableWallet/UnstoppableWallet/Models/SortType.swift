@@ -7,7 +7,7 @@ enum SortType: Int, CaseIterable {
         switch self {
         case .value: return "balance.sort.valueHighToLow".localized
         case .name: return "balance.sort.az".localized
-        case .percentGrowth: return "balance.sort.24h_change".localized
+        case .percentGrowth: return "balance.sort.price_change".localized
         }
     }
 
