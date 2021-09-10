@@ -4,21 +4,21 @@ import BigInt
 import HsToolKit
 import Erc20Kit
 import UniswapKit
-import CoinKit
+import MarketKit
 
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
 
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, source: TransactionSource, coinManager: ICoinManager) {
-        transactionConverter = EvmTransactionConverter(source: source, coinManager: coinManager, evmKit: evmKit)
+    init(evmKit: EthereumKit.Kit, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManagerNew) {
+        transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
 
         super.init(evmKit: evmKit, decimal: EvmAdapter.decimal)
     }
 
-    private func coinTagName(coin: Coin) -> String {
-        switch coin.type {
+    private func coinTagName(coin: PlatformCoin) -> String {
+        switch coin.coinType {
         case .ethereum, .binanceSmartChain: return TransactionTag.evmCoin
         case .erc20(let address): return address
         case .bep20(let address): return address
@@ -26,11 +26,11 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         }
     }
 
-    private func filters(coin: Coin?, filter: TransactionTypeFilter) -> [[String]] {
+    private func filters(coin: PlatformCoin?, filter: TransactionTypeFilter) -> [[String]] {
         var coinFilter = [[String]]()
 
         if let coin = coin {
-            switch coin.type {
+            switch coin.coinType {
             case .ethereum, .binanceSmartChain: coinFilter.append([TransactionTag.evmCoin])
             case .erc20(let address): coinFilter.append([address])
             case .bep20(let address): coinFilter.append([address])
@@ -73,13 +73,13 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
-    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         evmKit.transactionsObservable(tags: filters(coin: coin, filter: filter)).map { [weak self] in
             $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         evmKit.transactionsSingle(tags: filters(coin: coin, filter: filter), fromHash: from.flatMap { Data(hex: $0.transactionHash) }, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }

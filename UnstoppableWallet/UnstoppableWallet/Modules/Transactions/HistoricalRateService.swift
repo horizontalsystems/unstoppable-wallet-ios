@@ -1,20 +1,20 @@
 import Foundation
 import RxSwift
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class HistoricalRateService {
     private var disposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
 
-    private var ratesManager: IRateManager
+    private var ratesManager: RateManagerNew
     private var currency: Currency
     private var rates = [RateKey: CurrencyValue]()
 
     private var rateUpdatedSubject = PublishSubject<(RateKey, CurrencyValue)>()
     private var ratesChangedSubject = PublishSubject<Void>()
 
-    init(ratesManager: IRateManager, currencyKit: CurrencyKit.Kit) {
+    init(ratesManager: RateManagerNew, currencyKit: CurrencyKit.Kit) {
         self.ratesManager = ratesManager
         currency = currencyKit.baseCurrency
 
@@ -56,7 +56,7 @@ extension HistoricalRateService {
             return
         }
 
-        ratesManager.historicalRate(coinType: key.coinType, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
+        ratesManager.historicalRate(coin: key.coin, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
                 .subscribe(onSuccess: { [weak self] decimal in self?.handle(key: key, rate: decimal) })
                 .disposed(by: ratesDisposeBag)
     }
@@ -65,16 +65,16 @@ extension HistoricalRateService {
 
 struct RateKey: Hashable {
 
-    let coinType: CoinType
+    let coin: Coin
     let date: Date
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(coinType)
+        hasher.combine(coin)
         hasher.combine(date)
     }
 
     static func ==(lhs: RateKey, rhs: RateKey) -> Bool {
-        lhs.coinType == rhs.coinType && lhs.date == rhs.date
+        lhs.coin == rhs.coin && lhs.date == rhs.date
     }
 
 }

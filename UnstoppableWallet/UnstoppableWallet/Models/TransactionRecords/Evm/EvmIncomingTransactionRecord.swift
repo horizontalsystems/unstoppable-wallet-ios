@@ -1,19 +1,19 @@
 import Foundation
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class EvmIncomingTransactionRecord: EvmTransactionRecord {
     let from: String
-    let value: CoinValue
+    let value: TransactionValue
 
-    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: Coin, amount: Decimal, from: String, token: Coin, foreignTransaction: Bool = false) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, from: String, value: TransactionValue, foreignTransaction: Bool = false) {
         self.from = from
-        value = CoinValue(coin: token, value: amount)
+        self.value = value
 
         super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin, foreignTransaction: foreignTransaction)
     }
 
-    override var mainValue: CoinValue? {
+    override var mainValue: TransactionValue? {
         value
     }
 

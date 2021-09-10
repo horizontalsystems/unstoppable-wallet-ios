@@ -27,16 +27,16 @@ class DashAdapter: BitcoinBaseAdapter {
 extension DashAdapter: DashKitDelegate {
 
     public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
-//        var records = [BitcoinTransactionRecord]()
-//
-//        for info in inserted {
-//            records.append(transactionRecord(fromTransaction: info))
-//        }
-//        for info in updated {
-//            records.append(transactionRecord(fromTransaction: info))
-//        }
-//
-//        transactionRecordsSubject.onNext(records)
+        var records = [BitcoinTransactionRecord]()
+
+        for info in inserted {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+        for info in updated {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+
+        transactionRecordsSubject.onNext(records)
     }
 
 }
