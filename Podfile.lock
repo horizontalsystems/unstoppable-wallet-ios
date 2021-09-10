@@ -558,7 +558,7 @@ CHECKOUT OPTIONS:
     :commit: b4c51bc97c9bc164a245fe6b37ae135ee598bd61
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
-    :commit: bbfd3bcb9952b2c09d9561af68bbbcbb28cff533
+    :commit: e19bd43d331815d93d814d20f3997a56818822d4
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 5d52b07ea4775924b2ded02e7a9667139747a59e
