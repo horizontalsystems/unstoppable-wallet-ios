@@ -1,12 +1,7 @@
 class NotificationSettingsViewItemFactory {
-    private let rateManager: IRateManager
-
-    init(rateManager: IRateManager) {
-        self.rateManager = rateManager
-    }
 
     func viewItems(alerts: [PriceAlert], notificationsOn: Bool, onTap: @escaping (PriceAlert, NotificationSettingPresentMode) -> ()) -> [NotificationSettingSectionViewItem] {
-        return notificationsOn ?
+        notificationsOn ?
                 alerts.map { alert in
                     NotificationSettingSectionViewItem(title: alert.coinTitle, rowItems: [
                         NotificationSettingRowViewItem(title: "chart_alert.24h_description", value: alert.changeState.description, onTap: {

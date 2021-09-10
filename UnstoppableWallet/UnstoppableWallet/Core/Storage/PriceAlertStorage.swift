@@ -1,5 +1,5 @@
 import RxSwift
-import CoinKit
+import MarketKit
 
 class PriceAlertStorage {
     private let storage: IPriceAlertRecordStorage

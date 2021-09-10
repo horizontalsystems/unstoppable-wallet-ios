@@ -19,11 +19,11 @@ struct CoinPageModule {
                 service: favoriteService,
                 coinType: launchMode.coinType)
 
-        let priceAlertService = CoinPriceAlertService(
-                priceAlertManager: App.shared.priceAlertManager,
-                localStorage: App.shared.localStorage,
-                coinType: launchMode.coinType,
-                coinTitle: launchMode.coinTitle)
+//        let priceAlertService = CoinPriceAlertService(
+//                priceAlertManager: App.shared.priceAlertManager,
+//                localStorage: App.shared.localStorage,
+//                coinType: launchMode.coinType,
+//                coinTitle: launchMode.coinTitle)
 
         let coinChartService = CoinChartService(
                 rateManager: App.shared.rateManager,
@@ -35,13 +35,13 @@ struct CoinPageModule {
 
         let coinPageViewModel = CoinPageViewModel(service: coinPageService)
         let favoriteViewModel = CoinFavoriteViewModel(service: coinFavoriteService)
-        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
+//        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
         let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
 
         let viewController = CoinPageViewController(
                 viewModel: coinPageViewModel,
                 favoriteViewModel: favoriteViewModel,
-                priceAlertViewModel: priceAlertViewModel,
+//                priceAlertViewModel: priceAlertViewModel,
                 chartViewModel: coinChartViewModel,
                 configuration: ChartConfiguration.fullChart,
                 markdownParser: CoinPageMarkdownParser(),

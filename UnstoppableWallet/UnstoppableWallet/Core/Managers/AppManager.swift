@@ -4,9 +4,8 @@ import PinKit
 
 class AppManager {
     private let accountManager: IAccountManager
-    private let walletManager: WalletManager
-    private let walletManagerNew: WalletManagerNew
-    private let adapterManager: AdapterManager
+    private let walletManager: WalletManagerNew
+    private let adapterManager: AdapterManagerNew
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: IBlurManager
@@ -22,7 +21,7 @@ class AppManager {
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, walletManagerNew: WalletManagerNew, adapterManager: AdapterManager, pinKit: IPinKit,
+    init(accountManager: IAccountManager, walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
@@ -31,7 +30,6 @@ class AppManager {
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.walletManagerNew = walletManagerNew
         self.adapterManager = adapterManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit
@@ -56,7 +54,6 @@ extension AppManager {
         keychainKit.handleLaunch()
         accountManager.handleLaunch()
         walletManager.preloadWallets()
-        walletManagerNew.preloadWallets()
         pinKit.didFinishLaunching()
         notificationManager.removeNotifications()
         kitCleaner.clear()

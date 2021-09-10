@@ -6,15 +6,13 @@ class NotificationManager {
     private let priceAlertManager: IPriceAlertManager
     private let remoteAlertManager: IRemoteAlertManager
     private let storage: ILocalStorage
-    private let rateManager: IRateManager
     private let serializer: ISerializer
 
     private let disposeBag = DisposeBag()
 
-    init(priceAlertManager: IPriceAlertManager, remoteAlertManager: IRemoteAlertManager, rateManager: IRateManager, storage: ILocalStorage, serializer: ISerializer) {
+    init(priceAlertManager: IPriceAlertManager, remoteAlertManager: IRemoteAlertManager, storage: ILocalStorage, serializer: ISerializer) {
         self.priceAlertManager = priceAlertManager
         self.remoteAlertManager = remoteAlertManager
-        self.rateManager = rateManager
         self.storage = storage
         self.serializer = serializer
     }

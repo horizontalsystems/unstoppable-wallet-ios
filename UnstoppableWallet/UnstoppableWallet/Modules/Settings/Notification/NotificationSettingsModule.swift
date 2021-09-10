@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 protocol INotificationSettingsView: AnyObject {
     func set(pushNotificationsOn: Bool)
@@ -21,7 +21,6 @@ protocol INotificationSettingsInteractor: AnyObject {
     var activeAlerts: [PriceAlert] { get }
     var pushNotificationsOn: Bool { get set }
     var apnsTokenReceived: Bool { get }
-    func coin(coinType: CoinType) -> Coin?
     func updateTopics()
     func requestPermission(needUpdate: Bool)
     func deleteAllAlerts()

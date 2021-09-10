@@ -1,6 +1,6 @@
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class CoinPriceAlertService {
     private let priceAlertManager: IPriceAlertManager
@@ -45,14 +45,13 @@ extension CoinPriceAlertService {
         localStorage.pushNotificationsOn
     }
 
-    func priceAlert(coin: Coin?) -> PriceAlert? {
-        guard let coin = coin else {
+    func priceAlert(platformCoin: PlatformCoin?) -> PriceAlert? {
+        guard let platformCoin = platformCoin else {
             return nil
         }
 
-        return priceAlertManager.priceAlert(coinType: coin.type, title: coin.title)
+        return priceAlertManager.priceAlert(coinType: platformCoin.coinType, title: platformCoin.name)
     }
-
 
     var priceAlertObservable: Observable<PriceAlert?> {
         priceAlertRelay.asObservable()

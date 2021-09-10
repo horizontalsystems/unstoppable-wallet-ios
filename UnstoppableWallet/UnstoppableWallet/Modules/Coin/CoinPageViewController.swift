@@ -14,7 +14,7 @@ class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
     private let chartViewModel: CoinChartViewModel
     private let favoriteViewModel: CoinFavoriteViewModel
-    private let priceAlertViewModel: CoinPriceAlertViewModel
+//    private let priceAlertViewModel: CoinPriceAlertViewModel
     private let markdownParser: CoinPageMarkdownParser
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
@@ -41,10 +41,10 @@ class CoinPageViewController: ThemeViewController {
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
-    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, priceAlertViewModel: CoinPriceAlertViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
+    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.favoriteViewModel = favoriteViewModel
-        self.priceAlertViewModel = priceAlertViewModel
+//        self.priceAlertViewModel = priceAlertViewModel
         self.chartViewModel = chartViewModel
         self.markdownParser = markdownParser
         self.urlManager = urlManager
@@ -150,7 +150,7 @@ class CoinPageViewController: ThemeViewController {
 
     private func subscribeViewModels() {
         // barItems section
-        subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
+//        subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
         subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
         subscribe(disposeBag, favoriteViewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
 
@@ -179,15 +179,15 @@ class CoinPageViewController: ThemeViewController {
     }
 
     @objc private func onAlertTap() {
-        guard let chartNotificationViewController = ChartNotificationRouter.module(
-                coinType: priceAlertViewModel.coinType,
-                coinTitle: viewModel.coinTitle,
-                mode: .all) else {
-
-            return
-        }
-
-        present(chartNotificationViewController, animated: true)
+//        guard let chartNotificationViewController = ChartNotificationRouter.module(
+//                coinType: priceAlertViewModel.coinType,
+//                coinTitle: viewModel.coinTitle,
+//                mode: .all) else {
+//
+//            return
+//        }
+//
+//        present(chartNotificationViewController, animated: true)
     }
 
     @objc private func onFavoriteTap() {
@@ -212,27 +212,27 @@ extension CoinPageViewController {
     // BarItems section
 
     private func sync(priceAlertEnabled: Bool) {
-        guard priceAlertViewModel.alertNotificationEnabled == true else {
-            alertButtonItem = nil
-            syncBarButtons()
-
-            return
-        }
-
-        var image: UIImage?
-        var imageTintColor: UIColor?
-        if priceAlertEnabled {
-            image = UIImage(named: "bell_ring_24")?.withRenderingMode(.alwaysTemplate)
-            imageTintColor = .themeJacob
-        } else {
-            image = UIImage(named: "bell_24")?.withRenderingMode(.alwaysTemplate)
-            imageTintColor = .themeGray
-        }
-
-        alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
-        alertButtonItem?.tintColor = imageTintColor
-
-        syncBarButtons()
+//        guard priceAlertViewModel.alertNotificationEnabled == true else {
+//            alertButtonItem = nil
+//            syncBarButtons()
+//
+//            return
+//        }
+//
+//        var image: UIImage?
+//        var imageTintColor: UIColor?
+//        if priceAlertEnabled {
+//            image = UIImage(named: "bell_ring_24")?.withRenderingMode(.alwaysTemplate)
+//            imageTintColor = .themeJacob
+//        } else {
+//            image = UIImage(named: "bell_24")?.withRenderingMode(.alwaysTemplate)
+//            imageTintColor = .themeGray
+//        }
+//
+//        alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
+//        alertButtonItem?.tintColor = imageTintColor
+//
+//        syncBarButtons()
     }
 
     private func sync(favorite: Bool) {
