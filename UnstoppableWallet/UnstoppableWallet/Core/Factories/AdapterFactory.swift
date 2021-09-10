@@ -32,15 +32,17 @@ class AdapterFactory {
 extension AdapterFactory {
 
     func ethereumTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
-        (try? ethereumKitManager.evmKit(account: transactionSource.account)).flatMap { evmKit in
-            EvmTransactionsAdapter(evmKit: evmKit, source: transactionSource, coinManager: coinManager)
-        }
+        nil
+//        (try? ethereumKitManager.evmKit(account: transactionSource.account)).flatMap { evmKit in
+//            EvmTransactionsAdapter(evmKit: evmKit, source: transactionSource, coinManager: coinManager)
+//        }
     }
 
     func bscTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
-        (try? binanceSmartChainKitManager.evmKit(account: transactionSource.account)).flatMap { evmKit in
-            EvmTransactionsAdapter(evmKit: evmKit, source: transactionSource, coinManager: coinManager)
-        }
+        nil
+//        (try? binanceSmartChainKitManager.evmKit(account: transactionSource.account)).flatMap { evmKit in
+//            EvmTransactionsAdapter(evmKit: evmKit, source: transactionSource, coinManager: coinManager)
+//        }
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {

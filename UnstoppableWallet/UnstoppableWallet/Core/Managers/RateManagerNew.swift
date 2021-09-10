@@ -43,6 +43,10 @@ extension RateManagerNew {
         []
     }
 
+    func historicalRate(coin: Coin, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal> {
+        Single<Decimal>.just(2)
+    }
+
 }
 
 extension RateManagerNew {

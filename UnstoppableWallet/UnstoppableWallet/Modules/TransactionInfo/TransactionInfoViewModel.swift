@@ -1,6 +1,6 @@
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class TransactionInfoViewModel {
@@ -27,7 +27,7 @@ class TransactionInfoViewModel {
     }
 
     private var coinsForRates: [Coin] {
-        var coins = [Coin]()
+        var coins = [Coin?]()
 
         switch service.transactionItem.record {
         case let tx as EvmIncomingTransactionRecord: coins.append(tx.value.coin)
@@ -38,7 +38,7 @@ class TransactionInfoViewModel {
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            if tx.value.value != 0 {
+            if !tx.value.zeroValue {
                 coins.append(tx.value.coin)
             }
             coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
@@ -62,7 +62,7 @@ class TransactionInfoViewModel {
             coins.append(evmTransaction.fee.coin)
         }
 
-        return Array(Set(coins))
+        return Array(Set(coins.compactMap({ $0 })))
     }
 
     private func updateTransactionItem() {

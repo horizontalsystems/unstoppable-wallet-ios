@@ -195,8 +195,8 @@ class App {
                 initialSyncSettingsManager: initialSyncSettingsManager
         )
         transactionAdapterManager = TransactionAdapterManager(
-                adapterManager: adapterManager,
-                adapterFactory: adapterFactory
+                adapterManager: adapterManagerNew,
+                adapterFactory: adapterFactoryNew
         )
 
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: storage, accountManager: accountManager)

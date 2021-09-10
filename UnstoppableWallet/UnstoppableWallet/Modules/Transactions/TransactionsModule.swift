@@ -1,7 +1,7 @@
 import CurrencyKit
 import UIKit
 import RxSwift
-import CoinKit
+import MarketKit
 
 struct TransactionsModule {
 
@@ -9,7 +9,7 @@ struct TransactionsModule {
 
     static func instance() -> UIViewController {
         let service = TransactionsService(
-                walletManager: App.shared.walletManager,
+                walletManager: App.shared.walletManagerNew,
                 adapterManager: App.shared.transactionAdapterManager
         )
         let viewModel = TransactionsViewModel(service: service, factory: TransactionsViewItemFactory())
@@ -66,7 +66,7 @@ struct ColoredImage {
 }
 
 struct TransactionWallet: Hashable {
-    let coin: Coin?
+    let coin: PlatformCoin?
     let source: TransactionSource
 
     func hash(into hasher: inout Hasher) {

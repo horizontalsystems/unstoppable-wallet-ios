@@ -23,107 +23,107 @@ class BitcoinBaseAdapter {
     }
     private(set) var transactionState: AdapterState
 
-    private let platformCoin: PlatformCoin
+    private let coin: PlatformCoin
     private let transactionSource: TransactionSource
 
     init(abstractKit: AbstractKit, wallet: WalletNew) {
         self.abstractKit = abstractKit
-        platformCoin = wallet.platformCoin
+        coin = wallet.platformCoin
         transactionSource = wallet.transactionSource
 
         balanceState = .notSynced(error: AppError.unknownError)
         transactionState = balanceState
     }
 
-//    func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
-//        var lockInfo: TransactionLockInfo?
-//        var anyNotMineFromAddress: String?
-//        var anyNotMineToAddress: String?
-//
-//        for input in transaction.inputs {
-//            if anyNotMineFromAddress == nil, let address = input.address {
-//                anyNotMineFromAddress = address
-//            }
-//        }
-//
-//        for output in transaction.outputs {
-//            guard output.value > 0 else {
-//                continue
-//            }
-//
-//            if let pluginId = output.pluginId, pluginId == HodlerPlugin.id,
-//               let hodlerOutputData = output.pluginData as? HodlerOutputData,
-//               let approximateUnlockTime = hodlerOutputData.approximateUnlockTime {
-//
-//                lockInfo = TransactionLockInfo(
-//                        lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
-//                        originalAddress: hodlerOutputData.addressString
-//                )
-//            }
-//            if anyNotMineToAddress == nil, let address = output.address, !output.mine {
-//                anyNotMineToAddress = address
-//            }
-//        }
-//
-//        switch transaction.type {
-//        case .incoming:
-//            return BitcoinIncomingTransactionRecord(
-//                    coin: platformCoin,
-//                    source: transactionSource,
-//                    uid: transaction.uid,
-//                    transactionHash: transaction.transactionHash,
-//                    transactionIndex: transaction.transactionIndex,
-//                    blockHeight: transaction.blockHeight,
-//                    confirmationsThreshold: Self.confirmationsThreshold,
-//                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-//                    fee: transaction.fee.map { Decimal($0) / coinRate },
-//                    failed: transaction.status == .invalid,
-//                    lockInfo: lockInfo,
-//                    conflictingHash: transaction.conflictingHash,
-//                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-//                    amount: Decimal(transaction.amount) / coinRate,
-//                    from: anyNotMineFromAddress
-//            )
-//        case .outgoing:
-//            return BitcoinOutgoingTransactionRecord(
-//                    coin: platformCoin,
-//                    source: transactionSource,
-//                    uid: transaction.uid,
-//                    transactionHash: transaction.transactionHash,
-//                    transactionIndex: transaction.transactionIndex,
-//                    blockHeight: transaction.blockHeight,
-//                    confirmationsThreshold: Self.confirmationsThreshold,
-//                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-//                    fee: transaction.fee.map { Decimal($0) / coinRate },
-//                    failed: transaction.status == .invalid,
-//                    lockInfo: lockInfo,
-//                    conflictingHash: transaction.conflictingHash,
-//                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-//                    amount: Decimal(transaction.amount) / coinRate,
-//                    to: anyNotMineToAddress,
-//                    sentToSelf: false
-//            )
-//        case .sentToSelf:
-//            return BitcoinOutgoingTransactionRecord(
-//                    coin: platformCoin,
-//                    source: transactionSource,
-//                    uid: transaction.uid,
-//                    transactionHash: transaction.transactionHash,
-//                    transactionIndex: transaction.transactionIndex,
-//                    blockHeight: transaction.blockHeight,
-//                    confirmationsThreshold: Self.confirmationsThreshold,
-//                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-//                    fee: transaction.fee.map { Decimal($0) / coinRate },
-//                    failed: transaction.status == .invalid,
-//                    lockInfo: lockInfo,
-//                    conflictingHash: transaction.conflictingHash,
-//                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-//                    amount: Decimal(transaction.amount) / coinRate,
-//                    to: anyNotMineToAddress,
-//                    sentToSelf: true
-//            )
-//        }
-//    }
+    func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
+        var lockInfo: TransactionLockInfo?
+        var anyNotMineFromAddress: String?
+        var anyNotMineToAddress: String?
+
+        for input in transaction.inputs {
+            if anyNotMineFromAddress == nil, let address = input.address {
+                anyNotMineFromAddress = address
+            }
+        }
+
+        for output in transaction.outputs {
+            guard output.value > 0 else {
+                continue
+            }
+
+            if let pluginId = output.pluginId, pluginId == HodlerPlugin.id,
+               let hodlerOutputData = output.pluginData as? HodlerOutputData,
+               let approximateUnlockTime = hodlerOutputData.approximateUnlockTime {
+
+                lockInfo = TransactionLockInfo(
+                        lockedUntil: Date(timeIntervalSince1970: Double(approximateUnlockTime)),
+                        originalAddress: hodlerOutputData.addressString
+                )
+            }
+            if anyNotMineToAddress == nil, let address = output.address, !output.mine {
+                anyNotMineToAddress = address
+            }
+        }
+
+        switch transaction.type {
+        case .incoming:
+            return BitcoinIncomingTransactionRecord(
+                    coin: coin,
+                    source: transactionSource,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(transaction.amount) / coinRate,
+                    from: anyNotMineFromAddress
+            )
+        case .outgoing:
+            return BitcoinOutgoingTransactionRecord(
+                    coin: coin,
+                    source: transactionSource,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(transaction.amount) / coinRate,
+                    to: anyNotMineToAddress,
+                    sentToSelf: false
+            )
+        case .sentToSelf:
+            return BitcoinOutgoingTransactionRecord(
+                    coin: coin,
+                    source: transactionSource,
+                    uid: transaction.uid,
+                    transactionHash: transaction.transactionHash,
+                    transactionIndex: transaction.transactionIndex,
+                    blockHeight: transaction.blockHeight,
+                    confirmationsThreshold: Self.confirmationsThreshold,
+                    date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                    fee: transaction.fee.map { Decimal($0) / coinRate },
+                    failed: transaction.status == .invalid,
+                    lockInfo: lockInfo,
+                    conflictingHash: transaction.conflictingHash,
+                    showRawTransaction: transaction.status == .new || transaction.status == .invalid,
+                    amount: Decimal(transaction.amount) / coinRate,
+                    to: anyNotMineToAddress,
+                    sentToSelf: true
+            )
+        }
+    }
 
     private func convertToSatoshi(value: Decimal) -> Int {
         let coinValue: Decimal = value * coinRate
@@ -195,16 +195,16 @@ extension BitcoinBaseAdapter: IAdapter {
 extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
     func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
-//        var records = [BitcoinTransactionRecord]()
-//
-//        for info in inserted {
-//            records.append(transactionRecord(fromTransaction: info))
-//        }
-//        for info in updated {
-//            records.append(transactionRecord(fromTransaction: info))
-//        }
-//
-//        transactionRecordsSubject.onNext(records)
+        var records = [BitcoinTransactionRecord]()
+
+        for info in inserted {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+        for info in updated {
+            records.append(transactionRecord(fromTransaction: info))
+        }
+
+        transactionRecordsSubject.onNext(records)
     }
 
     func transactionsDeleted(hashes: [String]) {
@@ -322,58 +322,58 @@ extension BitcoinBaseAdapter {
 
 }
 
-//extension BitcoinBaseAdapter: ITransactionsAdapter {
-//
-//    var lastBlockInfo: LastBlockInfo? {
-//        abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }
-//    }
-//
-//    var transactionStateUpdatedObservable: Observable<Void> {
-//        balanceStateSubject.map { _ in () }
-//    }
-//
-//    var lastBlockUpdatedObservable: Observable<Void> {
-//        lastBlockUpdatedSubject.asObservable()
-//    }
-//
-//    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
-//        transactionRecordsSubject.asObservable()
-//                .map { transactions in
-//                    transactions.compactMap { transaction -> TransactionRecord? in
-//                        switch (transaction, filter) {
-//                        case (_, .all): return transaction
-//                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
-//                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
-//                        case (let tx as BitcoinOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
-//                        default: return nil
-//                        }
-//                    }
-//                }
-//                .filter { !$0.isEmpty }
-//    }
-//
-//    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-//        let bitcoinFilter: TransactionFilterType?
-//        switch filter {
-//        case .all: bitcoinFilter = nil
-//        case .incoming: bitcoinFilter = .incoming
-//        case .outgoing: bitcoinFilter = .outgoing
-//        default: return Single.just([])
-//        }
-//
-//        return abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
-//                .map { [weak self] transactions -> [TransactionRecord] in
-//                    transactions.compactMap {
-//                        self?.transactionRecord(fromTransaction: $0)
-//                    }
-//                }
-//    }
-//
-//    func rawTransaction(hash: String) -> String? {
-//        abstractKit.rawTransaction(transactionHash: hash)
-//    }
-//
-//}
+extension BitcoinBaseAdapter: ITransactionsAdapter {
+
+    var lastBlockInfo: LastBlockInfo? {
+        abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }
+    }
+
+    var transactionStateUpdatedObservable: Observable<Void> {
+        balanceStateSubject.map { _ in () }
+    }
+
+    var lastBlockUpdatedObservable: Observable<Void> {
+        lastBlockUpdatedSubject.asObservable()
+    }
+
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+        transactionRecordsSubject.asObservable()
+                .map { transactions in
+                    transactions.compactMap { transaction -> TransactionRecord? in
+                        switch (transaction, filter) {
+                        case (_, .all): return transaction
+                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
+                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+                        case (let tx as BitcoinOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
+                        default: return nil
+                        }
+                    }
+                }
+                .filter { !$0.isEmpty }
+    }
+
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+        let bitcoinFilter: TransactionFilterType?
+        switch filter {
+        case .all: bitcoinFilter = nil
+        case .incoming: bitcoinFilter = .incoming
+        case .outgoing: bitcoinFilter = .outgoing
+        default: return Single.just([])
+        }
+
+        return abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
+                .map { [weak self] transactions -> [TransactionRecord] in
+                    transactions.compactMap {
+                        self?.transactionRecord(fromTransaction: $0)
+                    }
+                }
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        abstractKit.rawTransaction(transactionHash: hash)
+    }
+
+}
 
 extension BitcoinBaseAdapter: IDepositAdapter {
 

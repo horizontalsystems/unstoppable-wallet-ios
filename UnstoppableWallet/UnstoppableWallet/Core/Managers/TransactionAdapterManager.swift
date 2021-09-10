@@ -5,15 +5,15 @@ import CoinKit
 class TransactionAdapterManager {
     private let disposeBag = DisposeBag()
 
-    private let adapterManager: AdapterManager
-    private let adapterFactory: AdapterFactory
+    private let adapterManager: AdapterManagerNew
+    private let adapterFactory: AdapterFactoryNew
 
     private let adaptersReadyRelay = PublishRelay<Void>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_adapter_manager", qos: .userInitiated)
     private var _adapterMap = [TransactionSource: ITransactionsAdapter]()
 
-    init(adapterManager: AdapterManager, adapterFactory: AdapterFactory) {
+    init(adapterManager: AdapterManagerNew, adapterFactory: AdapterFactoryNew) {
         self.adapterManager = adapterManager
         self.adapterFactory = adapterFactory
 
@@ -25,8 +25,8 @@ class TransactionAdapterManager {
                 .disposed(by: disposeBag)
     }
 
-    private func evmTransactionAdapter(wallet: Wallet, blockchain: TransactionSource.Blockchain) -> ITransactionsAdapter? {
-        switch wallet.coin.type {
+    private func evmTransactionAdapter(wallet: WalletNew, blockchain: TransactionSource.Blockchain) -> ITransactionsAdapter? {
+        switch wallet.coinType {
         case .ethereum, .erc20:
             if case .ethereum = blockchain {
                 return adapterFactory.ethereumTransactionsAdapter(transactionSource: wallet.transactionSource)
@@ -41,7 +41,7 @@ class TransactionAdapterManager {
         return nil
     }
 
-    private func initAdapters(adapterMap: [Wallet: IAdapter]) {
+    private func initAdapters(adapterMap: [WalletNew: IAdapter]) {
         var newAdapterMap = [TransactionSource: ITransactionsAdapter]()
 
         for (wallet, adapter) in adapterMap {

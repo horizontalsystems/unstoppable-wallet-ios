@@ -1,6 +1,6 @@
 import CurrencyKit
 import EthereumKit
-import CoinKit
+import MarketKit
 import RxSwift
 import RxCocoa
 
@@ -15,14 +15,14 @@ class TransactionInfoService {
     }
 
     private let adapter: ITransactionsAdapter
-    private let rateManager: IRateManager
+    private let rateManager: RateManagerNew
     private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: FeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
 
     private let ratesRelay = PublishRelay<[Coin: CurrencyValue]>()
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, transactionItem: TransactionItem, feeCoinProvider: FeeCoinProvider,
+    init(adapter: ITransactionsAdapter, rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit, transactionItem: TransactionItem, feeCoinProvider: FeeCoinProvider,
          appConfigProvider: IAppConfigProvider) {
         self.adapter = adapter
         self.rateManager = rateManager
@@ -76,7 +76,7 @@ extension TransactionInfoService {
 
         let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coins.map { coin in
             rateManager
-                    .historicalRate(coinType: coin.type, currencyCode: baseCurrency.code, timestamp: timestamp)
+                    .historicalRate(coin: coin, currencyCode: baseCurrency.code, timestamp: timestamp)
                     .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }
         }
 
