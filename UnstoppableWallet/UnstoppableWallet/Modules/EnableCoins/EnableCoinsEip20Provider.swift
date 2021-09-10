@@ -2,7 +2,7 @@ import RxSwift
 import ObjectMapper
 import HsToolKit
 import Alamofire
-import CoinKit
+import MarketKit
 
 class EnableCoinsEip20Provider {
     private let appConfigProvider: IAppConfigProvider
@@ -36,24 +36,16 @@ class EnableCoinsEip20Provider {
         }
     }
 
-    private func coin(transaction: Transaction) -> Coin? {
-        guard !transaction.tokenName.isEmpty, !transaction.tokenSymbol.isEmpty, let decimal = Int(transaction.tokenDecimal) else {
-            return nil
-        }
-
-        return Coin(title: transaction.tokenName, code: transaction.tokenSymbol, decimal: decimal, type: coinType(address: transaction.contractAddress))
-    }
-
-    private func coins(transactions: [Transaction]) -> [Coin] {
-        let transactionCoins = transactions.compactMap { coin(transaction: $0) }
-        return Array(Set(transactionCoins))
+    private func coinTypes(transactions: [Transaction]) -> [CoinType] {
+        let transactionCoinTypes = transactions.map { coinType(address: $0.contractAddress) }
+        return Array(Set(transactionCoinTypes))
     }
 
 }
 
 extension EnableCoinsEip20Provider {
 
-    func coinsSingle(address: String) -> Single<[Coin]> {
+    func coinTypesSingle(address: String) -> Single<[CoinType]> {
         let parameters: Parameters = [
             "module": "account",
             "action": "tokentx",
@@ -64,8 +56,8 @@ extension EnableCoinsEip20Provider {
 
         let request = networkManager.session.request(url, parameters: parameters)
 
-        return networkManager.single(request: request).map { [weak self] (response: Response) -> [Coin] in
-            self?.coins(transactions: response.result) ?? []
+        return networkManager.single(request: request).map { [weak self] (response: Response) -> [CoinType] in
+            self?.coinTypes(transactions: response.result) ?? []
         }
     }
 
@@ -90,15 +82,9 @@ extension EnableCoinsEip20Provider {
 
     struct Transaction: ImmutableMappable {
         let contractAddress: String
-        let tokenName: String
-        let tokenSymbol: String
-        let tokenDecimal: String
 
         init(map: Map) throws {
             contractAddress = try map.value("contractAddress")
-            tokenName = try map.value("tokenName")
-            tokenSymbol = try map.value("tokenSymbol")
-            tokenDecimal = try map.value("tokenDecimal")
         }
     }
 

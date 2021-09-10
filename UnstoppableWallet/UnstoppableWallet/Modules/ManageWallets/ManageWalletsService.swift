@@ -37,9 +37,6 @@ class ManageWalletsService {
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
             self?.handleUpdated(wallets: wallets)
         }
-//        subscribe(disposeBag, coinManager.coinsAddedObservable) { [weak self] coins in
-//            self?.handleAdded(coins: coins)
-//        }
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
             self?.handleEnableCoin(configuredPlatformCoins: configuredPlatformsCoins, restoreSettings: restoreSettings)
         }
@@ -47,43 +44,47 @@ class ManageWalletsService {
             self?.handleCancelEnable(coin: coin)
         }
 
-//        syncMarketCoins()
         sync(wallets: walletManager.activeWallets)
-//        sortMarketCoins()
+        syncMarketCoins()
+        sortMarketCoins()
         syncState()
     }
 
-//    private func syncMarketCoins() {
-//        do {
-//            marketCoins = try coinManager.marketCoins()
-//        } catch {
-//            // todo
-//        }
-//    }
+    private func syncMarketCoins() {
+        do {
+            if filter.trimmingCharacters(in: .whitespaces).isEmpty {
+                marketCoins = try coinManager.featuredMarketCoins(enabledCoinTypes: wallets.map { $0.coinType })
+            } else {
+                marketCoins = try coinManager.marketCoins(filter: filter, limit: 20)
+            }
+        } catch {
+            // todo
+        }
+    }
 
     private func isEnabled(coin: Coin) -> Bool {
         wallets.contains { $0.coin == coin }
     }
 
-//    private func sortMarketCoins() {
-//        marketCoins.sort { lhsMarketCoin, rhsMarketCoin in
-////            let lhsAdded = addedCoins.contains(lhsCoin)
-////            let rhsAdded = addedCoins.contains(rhsCoin)
-////
-////            if lhsAdded != rhsAdded {
-////                return lhsAdded
-////            }
-//
-//            let lhsEnabled = isEnabled(marketCoin: lhsMarketCoin)
-//            let rhsEnabled = isEnabled(marketCoin: rhsMarketCoin)
-//
-//            if lhsEnabled != rhsEnabled {
-//                return lhsEnabled
-//            }
-//
-//            return lhsMarketCoin.coin.name.lowercased() < rhsMarketCoin.coin.name.lowercased()
-//        }
-//    }
+    private func sortMarketCoins() {
+        marketCoins.sort { lhsMarketCoin, rhsMarketCoin in
+            let lhsEnabled = isEnabled(coin: lhsMarketCoin.coin)
+            let rhsEnabled = isEnabled(coin: rhsMarketCoin.coin)
+
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            let lhsMarketCapRank = lhsMarketCoin.coin.marketCapRank ?? Int.max
+            let rhsMarketCapRank = rhsMarketCoin.coin.marketCapRank ?? Int.max
+
+            if lhsMarketCapRank != rhsMarketCapRank {
+                return lhsMarketCapRank < rhsMarketCapRank
+            }
+
+            return lhsMarketCoin.coin.name.lowercased() < rhsMarketCoin.coin.name.lowercased()
+        }
+    }
 
     private func sync(wallets: [WalletNew]) {
         self.wallets = Set(wallets)
@@ -115,27 +116,19 @@ class ManageWalletsService {
         return Item(marketCoin: marketCoin, state: itemState)
     }
 
-//    private func filtered(coins: [Coin]) -> [Coin] {
-//        guard let filter = filter else {
-//            return coins
-//        }
-//
-//        return coins.filter { coin in
-//            coin.name.localizedCaseInsensitiveContains(filter) || coin.code.localizedCaseInsensitiveContains(filter)
-//        }
-//    }
-
     private func syncState() {
-        do {
-            let marketCoins = try coinManager.marketCoins(filter: filter, limit: 20)
-            items = marketCoins.map { item(marketCoin: $0) }
-        } catch {
-            // todo
-        }
+        items = marketCoins.map { item(marketCoin: $0) }
     }
 
     private func handleUpdated(wallets: [WalletNew]) {
         sync(wallets: wallets)
+
+        let coins = marketCoins.map { $0.coin }
+        if wallets.contains(where: { !coins.contains($0.coin) }) {
+            syncMarketCoins()
+            sortMarketCoins()
+        }
+
         syncState()
     }
 
@@ -167,14 +160,6 @@ class ManageWalletsService {
         }
     }
 
-//    private func handleAdded(coins: [Coin]) {
-//        addedCoins.append(contentsOf: coins)
-//
-//        syncCoins()
-//        sortCoins()
-//        syncState()
-//    }
-
 }
 
 extension ManageWalletsService {
@@ -190,7 +175,8 @@ extension ManageWalletsService {
     func set(filter: String) {
         self.filter = filter
 
-//        sortMarketCoins()
+        syncMarketCoins()
+        sortMarketCoins()
         syncState()
     }
 

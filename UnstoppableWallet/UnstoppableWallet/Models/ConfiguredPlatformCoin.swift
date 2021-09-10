@@ -2,18 +2,18 @@ import MarketKit
 
 struct ConfiguredPlatformCoin {
     let platformCoin: PlatformCoin
-    let settings: CoinSettings
+    let coinSettings: CoinSettings
 
-    init(platformCoin: PlatformCoin, settings: CoinSettings = [:]) {
+    init(platformCoin: PlatformCoin, coinSettings: CoinSettings = [:]) {
         self.platformCoin = platformCoin
-        self.settings = settings
+        self.coinSettings = coinSettings
     }
 }
 
 extension ConfiguredPlatformCoin: Hashable {
 
     public static func ==(lhs: ConfiguredPlatformCoin, rhs: ConfiguredPlatformCoin) -> Bool {
-        lhs.platformCoin == rhs.platformCoin && lhs.settings == rhs.settings
+        lhs.platformCoin == rhs.platformCoin && lhs.coinSettings == rhs.coinSettings
     }
 
     public func hash(into hasher: inout Hasher) {

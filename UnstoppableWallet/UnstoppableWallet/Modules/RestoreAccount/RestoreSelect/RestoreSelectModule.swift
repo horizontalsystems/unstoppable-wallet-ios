@@ -10,8 +10,7 @@ struct RestoreSelectModule {
                 appConfigProvider: App.shared.appConfigProvider,
                 erc20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .erc20),
                 bep20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .bep20),
-                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
-                coinManager: App.shared.coinManager
+                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider)
         )
 
         let enableCoinsViewModel = EnableCoinsViewModel(service: enableCoinsService)

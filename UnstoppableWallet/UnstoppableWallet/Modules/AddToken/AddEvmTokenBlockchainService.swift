@@ -3,7 +3,7 @@ import RxSwift
 import Alamofire
 import HsToolKit
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class AddEvmTokenBlockchainService {
     private let networkType: NetworkType
@@ -58,7 +58,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         coinType(address: reference.lowercased())
     }
 
-    func coinSingle(reference: String) -> Single<Coin> {
+    func customTokenSingle(reference: String) -> Single<CustomToken> {
         let reference = reference.lowercased()
 
         let parameters: Parameters = [
@@ -87,7 +87,7 @@ extension AddEvmTokenBlockchainService {
             self.coinType = coinType
         }
 
-        public func map(statusCode: Int, data: Any?) throws -> Coin {
+        public func map(statusCode: Int, data: Any?) throws -> CustomToken {
             guard let map = data as? [String: Any] else {
                 throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
             }
@@ -112,11 +112,11 @@ extension AddEvmTokenBlockchainService {
                 throw ApiError.invalidResponse
             }
 
-            return Coin(
-                    title: tokenName,
-                    code: tokenSymbol,
-                    decimal: tokenDecimal,
-                    type: coinType
+            return CustomToken(
+                    coinName: tokenName,
+                    coinCode: tokenSymbol,
+                    coinType: coinType,
+                    decimal: tokenDecimal
             )
         }
 

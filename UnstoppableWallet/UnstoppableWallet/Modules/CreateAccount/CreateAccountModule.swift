@@ -8,9 +8,9 @@ struct CreateAccountModule {
                 accountFactory: App.shared.accountFactory,
                 wordsManager: App.shared.wordsManager,
                 accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
+                walletManager: App.shared.walletManagerNew,
                 passphraseValidator: PassphraseValidator(),
-                coinKit: App.shared.coinKit
+                marketKit: App.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)
         let viewController = CreateAccountViewController(viewModel: viewModel)

@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class AddTokenViewModel {
     private let service: AddTokenService
@@ -33,10 +33,10 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .alreadyExists(let coin):
-            viewItemRelay.accept(viewItem(coin: coin))
-        case .fetched(let coin):
-            viewItemRelay.accept(viewItem(coin: coin))
+        case .alreadyExists(let platformCoin):
+            viewItemRelay.accept(viewItem(platformCoin: platformCoin))
+        case .fetched(let customToken):
+            viewItemRelay.accept(viewItem(customToken: customToken))
         default:
             viewItemRelay.accept(nil)
         }
@@ -56,12 +56,21 @@ class AddTokenViewModel {
         }
     }
 
-    private func viewItem(coin: Coin) -> ViewItem {
+    private func viewItem(platformCoin: PlatformCoin) -> ViewItem {
         ViewItem(
-                coinType: coin.type.blockchainType ?? "",
-                coinName: coin.title,
-                coinCode: coin.code,
-                decimal: coin.decimal
+                coinType: platformCoin.coinType.blockchainType,
+                coinName: platformCoin.name,
+                coinCode: platformCoin.code,
+                decimal: platformCoin.decimal
+        )
+    }
+
+    private func viewItem(customToken: CustomToken) -> ViewItem {
+        ViewItem(
+                coinType: customToken.coinType.blockchainType,
+                coinName: customToken.coinName,
+                coinCode: customToken.coinCode,
+                decimal: customToken.decimal
         )
     }
 
@@ -103,7 +112,7 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let coinType: String
+        let coinType: String?
         let coinName: String
         let coinCode: String
         let decimal: Int

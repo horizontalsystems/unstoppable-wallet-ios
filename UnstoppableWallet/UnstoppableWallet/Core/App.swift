@@ -18,7 +18,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IEnabledWalletStorageNew & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage
+    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -137,7 +137,7 @@ class App {
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit)
-        coinManagerNew = CoinManagerNew(marketKit: marketKit)
+        coinManagerNew = CoinManagerNew(marketKit: marketKit, storage: storage)
 
         evmNetworkManager = EvmNetworkManager(appConfigProvider: appConfigProvider)
         accountSettingManager = AccountSettingManager(storage: storage, evmNetworkManager: evmNetworkManager)

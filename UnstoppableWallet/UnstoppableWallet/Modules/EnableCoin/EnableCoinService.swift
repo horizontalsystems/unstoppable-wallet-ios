@@ -45,7 +45,7 @@ class EnableCoinService {
     }
 
     private func handleApproveCoinSettings(platformCoin: PlatformCoin, settingsArray: [CoinSettings] = []) {
-        let configuredPlatformCoins = settingsArray.map { ConfiguredPlatformCoin(platformCoin: platformCoin, settings: $0) }
+        let configuredPlatformCoins = settingsArray.map { ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: $0) }
         enableCoinRelay.accept((configuredPlatformCoins, [:]))
     }
 
@@ -95,7 +95,7 @@ extension EnableCoinService {
             let platform = marketCoin.platforms[0]
 
             if !platform.coinType.coinSettingTypes.isEmpty {
-                let settingsArray = configuredPlatformCoins.map { $0.settings }
+                let settingsArray = configuredPlatformCoins.map { $0.coinSettings }
                 coinSettingsService.approveSettings(platformCoin: PlatformCoin(coin: marketCoin.coin, platform: platform), settingsArray: settingsArray)
             }
         } else {

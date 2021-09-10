@@ -278,13 +278,6 @@ protocol IEnabledWalletStorage {
     func clearEnabledWallets()
 }
 
-protocol IEnabledWalletStorageNew {
-    var enabledWalletsNew: [EnabledWalletNew] { get }
-    func enabledWalletsNew(accountId: String) -> [EnabledWalletNew]
-    func handle(newEnabledWalletsNew: [EnabledWalletNew], deletedEnabledWalletsNew: [EnabledWalletNew])
-    func clearEnabledWalletsNew()
-}
-
 protocol IActiveAccountStorage: AnyObject {
     var activeAccountId: String? { get set }
 }
@@ -540,4 +533,12 @@ protocol IEnabledWalletCacheStorage {
     func enabledWalletCaches(accountId: String) -> [EnabledWalletCache]
     func save(enabledWalletCaches: [EnabledWalletCache])
     func deleteEnabledWalletCaches(accountId: String)
+}
+
+protocol ICustomTokenStorage {
+    func customTokens() -> [CustomToken]
+    func customTokens(filter: String) -> [CustomToken]
+    func customTokens(coinTypeIds: [String]) -> [CustomToken]
+    func customToken(coinType: MarketKit.CoinType) -> CustomToken?
+    func save(customTokens: [CustomToken])
 }
