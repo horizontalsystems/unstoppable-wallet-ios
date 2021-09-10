@@ -4,8 +4,9 @@ import SnapKit
 import ThemeKit
 import RxSwift
 import RxCocoa
-import CoinKit
 import ComponentKit
+import Alamofire
+import AlamofireImage
 
 class MarketSearchViewController: ThemeSearchViewController {
     private let viewModel: MarketSearchViewModel
@@ -29,7 +30,6 @@ class MarketSearchViewController: ThemeSearchViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,8 +92,8 @@ class MarketSearchViewController: ThemeSearchViewController {
     }
 
     private func onSelect(viewItem: MarketSearchViewModel.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, coinType: viewItem.coinType))
-        present(viewController, animated: true)
+//        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinTitle, coinType: viewItem.coinType))
+//        present(viewController, animated: true)
     }
 
     private func sync(viewItems: [MarketSearchViewModel.ViewItem], showAdvancedSearch: Bool) {
@@ -128,17 +128,22 @@ class MarketSearchViewController: ThemeSearchViewController {
             let isLast = index == viewItems.count - 1
 
             return Row<G4Cell>(
-                    id: "coin_\(viewItem.coinTitle)_\(viewItem.coinCode)",
+                    id: "coin_\(viewItem.coinName)_\(viewItem.coinCode)",
                     height: .heightDoubleLineCell,
                     autoDeselect: true,
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .transparent, isLast: isLast)
 
-                        cell.title = viewItem.coinTitle
+                        cell.title = viewItem.coinName
                         cell.subtitle = viewItem.coinCode
-                        cell.leftBadgeText = viewItem.blockchainType
-                        cell.titleImage = UIImage.image(coinType: viewItem.coinType)
-                        cell.titleImageTintColor = .themeGray
+
+                        cell.titleImage = nil
+
+                        AF.request(viewItem.coinIconUrlString).responseImage { response in
+                            if case .success(let image) = response.result {
+                                cell.titleImage = image
+                            }
+                        }
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)
