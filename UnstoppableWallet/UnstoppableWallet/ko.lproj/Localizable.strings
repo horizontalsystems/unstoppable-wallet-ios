@@ -132,7 +132,7 @@
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
-"balance.sort.24h_change" = "24시간 가격(%)";
+"balance.sort.price_change" = "24시간 가격(%)";
 "balance_error.change_source" = "출처를 변경하다";
 "balance_error.sync_error" = "동기화 오류";
 "lost_accounts.warning_title" = "iOS 키체인 오류";
