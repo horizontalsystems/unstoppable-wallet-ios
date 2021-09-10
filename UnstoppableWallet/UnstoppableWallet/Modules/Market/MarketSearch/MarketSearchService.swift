@@ -1,55 +1,47 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class MarketSearchService {
     private let disposeBag = DisposeBag()
-    private let rateManager: IRateManager
+    private let marketKit: Kit
 
-    private let itemUpdatedRelay = PublishRelay<[Item]?>()
-    private var items: [Item]? {
+    private let coinsUpdatedRelay = PublishRelay<[Coin]>()
+    private var coins: [Coin] = [] {
         didSet {
-            itemUpdatedRelay.accept(items)
+            coinsUpdatedRelay.accept(coins)
         }
     }
 
-    var filter: String? {
+    var filter: String = "" {
         didSet {
             fetch()
         }
     }
 
-    init(rateManager: IRateManager) {
-        self.rateManager = rateManager
+    init(marketKit: Kit) {
+        self.marketKit = marketKit
     }
 
     private func fetch() {
-        guard let filter = filter, filter.count >= 2 else {
-            items = nil
-            return
+        if filter.isEmpty {
+            coins = []
+        } else {
+            do {
+                coins = try marketKit.coins(filter: filter)
+            } catch {
+                coins = []
+            }
         }
 
-        items = rateManager
-                    .searchCoins(text: filter)
-                    .map { Item(coinTitle: $0.name, coinCode: $0.code, coinType: $0.coinType) }
     }
 
 }
 
 extension MarketSearchService {
 
-    var itemUpdatedObservable: Observable<[Item]?> {
-        itemUpdatedRelay.asObservable()
-    }
-
-}
-
-extension MarketSearchService {
-
-    struct Item {
-        let coinTitle: String
-        let coinCode: String
-        let coinType: CoinType
+    var coinsUpdatedObservable: Observable<[Coin]> {
+        coinsUpdatedRelay.asObservable()
     }
 
 }

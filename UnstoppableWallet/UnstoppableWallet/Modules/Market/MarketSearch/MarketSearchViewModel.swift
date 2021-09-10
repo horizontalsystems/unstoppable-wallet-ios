@@ -1,11 +1,11 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class MarketSearchViewModel {
-    private let disposeBag = DisposeBag()
     private let service: MarketSearchService
+    private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let emptyResultRelay = BehaviorRelay<Bool>(value: false)
@@ -14,20 +14,19 @@ class MarketSearchViewModel {
     init(service: MarketSearchService) {
         self.service = service
 
-        subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.coinsUpdatedObservable) { [weak self] in self?.sync(coins: $0) }
     }
 
-    private func sync(items: [MarketSearchService.Item]?) {
-        showAdvancedSearchRelay.accept(service.filter?.isEmpty ?? true)
-        emptyResultRelay.accept(items?.isEmpty ?? false)
+    private func sync(coins: [Coin]) {
+        showAdvancedSearchRelay.accept(service.filter.isEmpty)
+        emptyResultRelay.accept(coins.isEmpty && !service.filter.isEmpty)
 
-        guard let items = items else {
-            viewItemsRelay.accept([])
-            return
-        }
-
-        let viewItems = items.map { item -> ViewItem in
-            ViewItem(coinTitle: item.coinTitle, coinCode: item.coinCode, coinType: item.coinType, blockchainType: item.coinType.blockchainType)
+        let viewItems = coins.map { coin -> ViewItem in
+            ViewItem(
+                    coinIconUrlString: coin.imageUrl,
+                    coinName: coin.name,
+                    coinCode: coin.code
+            )
         }
 
         viewItemsRelay.accept(viewItems)
@@ -50,7 +49,7 @@ extension MarketSearchViewModel {
     }
 
     func apply(filter: String?) {
-        service.filter = filter?.trimmingCharacters(in: .whitespacesAndNewlines)
+        service.filter = filter?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
 
 }
@@ -58,10 +57,9 @@ extension MarketSearchViewModel {
 extension MarketSearchViewModel {
 
     struct ViewItem {
-        let coinTitle: String
+        let coinIconUrlString: String
+        let coinName: String
         let coinCode: String
-        let coinType: CoinType
-        let blockchainType: String?
     }
 
 }
