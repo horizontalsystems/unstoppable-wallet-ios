@@ -1915,6 +1915,7 @@
 		58AAA3E9F54E56B6F4B0F197 /* UniswapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA85621F643BCF1C20566 /* UniswapModule.swift */; };
 		58AAA3EA5B5E9C9FB9F7DA5B /* CoinFavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA620CC034917A463F9C /* CoinFavoriteViewModel.swift */; };
 		58AAA3ECD2A72E3392CBC55C /* CoinPriceAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA624C574C961984DBA9A /* CoinPriceAlertViewModel.swift */; };
+		58AAA3F0AFD0D0F5FCD24DEF /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE153E9683CB79DCF857 /* SelectorButton.swift */; };
 		58AAA3FE5DE72D3CEFFE4399 /* MarketPostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA657E30EBD52A5E06ACF /* MarketPostService.swift */; };
 		58AAA3FF95AB8AD32BD8853E /* SwapDeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */; };
 		58AAA4006D343D74B4642429 /* SwapSelectProviderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA52891F199ABA75607CD /* SwapSelectProviderService.swift */; };
@@ -2048,6 +2049,7 @@
 		58AAA7132D27D8C6A516F999 /* MetricChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAD2AA132E9B13726D8B /* MetricChartViewController.swift */; };
 		58AAA71839C54D05E04BC2EC /* UniswapSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD02C2210D9DA14D1E21 /* UniswapSettingsDataSource.swift */; };
 		58AAA7217BF975D4D6F45128 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BB11003A1862BDCEA6 /* CautionView.swift */; };
+		58AAA72230207B253E2153EA /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE153E9683CB79DCF857 /* SelectorButton.swift */; };
 		58AAA72BF33F0AF251128499 /* PingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */; };
 		58AAA7316611FF3A19D0C12C /* UniswapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA76748B32A4D8FCD765A /* UniswapSettingsViewModel.swift */; };
 		58AAA738CD46DC6EF9A390F3 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B7E47FF3B010851E58 /* Global.swift */; };
@@ -2297,6 +2299,7 @@
 		58AAAD99081A3D570E6ECA55 /* MetricChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CB22CEF84A71CF044F /* MetricChartService.swift */; };
 		58AAAD9D7E75A0C4CA95FFB4 /* DebugInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA16C7E337511638808E5 /* DebugInteractor.swift */; };
 		58AAADA0EA79807D87028242 /* MarketAdvancedSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA167B42169739FA61A13 /* MarketAdvancedSearchViewController.swift */; };
+		58AAADA452C727DAF6986A0F /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE153E9683CB79DCF857 /* SelectorButton.swift */; };
 		58AAADB514C81DA8F0016C91 /* SimpleSheetTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54E84B5C1B68644AE46 /* SimpleSheetTitleView.swift */; };
 		58AAADC5D50DBAEA6C8DE2C6 /* SwapAllowanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACE967F3E51A57A38835 /* SwapAllowanceViewModel.swift */; };
 		58AAADC7A68B2EBEE20C8E10 /* SendConfirmationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB2FE6078D42455148C5 /* SendConfirmationRouter.swift */; };
@@ -3395,6 +3398,7 @@
 		58AAADD445F174344AFB6AAC /* DebugModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugModule.swift; sourceTree = "<group>"; };
 		58AAADE7CE3F004B908CEDA1 /* SwapApproveService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveService.swift; sourceTree = "<group>"; };
 		58AAADF42913FA468EF2BDAE /* MarketTickerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketTickerCollectionCell.swift; sourceTree = "<group>"; };
+		58AAAE153E9683CB79DCF857 /* SelectorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorButton.swift; sourceTree = "<group>"; };
 		58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
 		58AAAE79C0AE58E9AACE8791 /* ChartIntervalAndSelectedRateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIntervalAndSelectedRateCell.swift; sourceTree = "<group>"; };
 		58AAAE8438F3A39EEBE53760 /* MarketPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketPostCell.swift; sourceTree = "<group>"; };
@@ -4515,6 +4519,7 @@
 				58AAA54E84B5C1B68644AE46 /* SimpleSheetTitleView.swift */,
 				11B35226EC45B5CFFB8E2DA3 /* BottomSheetCenteredTitleView.swift */,
 				11B35FC207C703EBF63FD56A /* DonutChartView.swift */,
+				58AAAE153E9683CB79DCF857 /* SelectorButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -6993,6 +6998,7 @@
 				58AAA84C7F1A8BD72E316768 /* WalletConnectSessionKiller.swift in Sources */,
 				58AAAE6DD4B6C3E52DA4FD6C /* SelectResourceCell.swift in Sources */,
 				58AAA19F1A40CCEE0A2FB623 /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
+				58AAADA452C727DAF6986A0F /* SelectorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7846,6 +7852,7 @@
 				58AAA22CFE75A0C7F7CEEFC0 /* WalletConnectSessionKiller.swift in Sources */,
 				58AAA2E18859A9E5D14DD052 /* SelectResourceCell.swift in Sources */,
 				58AAA8B99442F97472E6318F /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
+				58AAA3F0AFD0D0F5FCD24DEF /* SelectorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8708,6 +8715,7 @@
 				58AAA6C6F67D853B899B692E /* WalletConnectSessionKiller.swift in Sources */,
 				58AAA915C742BCE660CA2454 /* SelectResourceCell.swift in Sources */,
 				58AAAB925562E9187A2BCC85 /* PrivateKeyCopyConfirmationViewController.swift in Sources */,
+				58AAA72230207B253E2153EA /* SelectorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
