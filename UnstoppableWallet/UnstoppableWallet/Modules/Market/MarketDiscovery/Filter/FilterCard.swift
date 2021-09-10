@@ -7,6 +7,7 @@ class FilterCard: UICollectionViewCell {
     private static let sideMargin: CGFloat = .margin12
 
     private let iconImageView = UIImageView()
+    private let iconBackgroundView = UIView()
     private let titleLightLabel = UILabel()
     private let titleDarkLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -21,6 +22,14 @@ class FilterCard: UICollectionViewCell {
         super.init(frame: frame)
 
         contentView.cornerRadius = .margin12
+
+        contentView.addSubview(iconBackgroundView)
+        iconBackgroundView.snp.makeConstraints { maker in
+            maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
+            maker.size.equalTo(CGFloat.margin24)
+        }
+
+        iconBackgroundView.cornerRadius = .margin12
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
@@ -89,7 +98,7 @@ class FilterCard: UICollectionViewCell {
     }
 
     func bind(item: MarketDiscoveryFilterHeaderView.ViewItem, expandable: Bool) {
-        iconImageView.image = UIImage(named: item.icon)
+        iconImageView.image = item.icon
         titleLightLabel.text = item.title
         titleDarkLabel.text = item.title
         descriptionLabel.text = item.description
@@ -109,6 +118,7 @@ class FilterCard: UICollectionViewCell {
                 self.contentView.layoutIfNeeded()
                 self.titleLightLabel.alpha = selected ? 0 : 1
                 self.titleDarkLabel.alpha = selected ? 1 : 0
+                self.iconBackgroundView.backgroundColor = selected ? .white : .clear
             }
 
             if self.expandable {

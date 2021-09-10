@@ -32,7 +32,7 @@ class MarketDiscoveryViewController: MarketListViewController {
         }
 
         filterHeaderView.set(filters: MarketDiscoveryFilter.allCases.map {
-            MarketDiscoveryFilterHeaderView.ViewItem(icon: $0.icon, title: $0.title, description: $0.description)
+            MarketDiscoveryFilterHeaderView.ViewItem(icon: UIImage(named: $0.icon), title: $0.title, description: $0.description)
         })
 
         tableView.snp.remakeConstraints { maker in
