@@ -137,7 +137,7 @@
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
-"balance.sort.24h_change" = "24小时价格（%）";
+"balance.sort.price_change" = "Price Change";
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
 "lost_accounts.warning_title" = "iOS Keychain 错误";
