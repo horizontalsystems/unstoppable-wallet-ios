@@ -155,6 +155,24 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
+    private func rowsBeforeBottom(indexPath: IndexPath) -> Int {
+        var section = tableView.numberOfSections
+        var count = 0
+
+        while indexPath.section < section {
+            section -= 1
+            let rowsCount = tableView.numberOfRows(inSection: section)
+
+            if indexPath.section == section {
+                return count + rowsCount - (indexPath.row + 1)
+            } else {
+                count += rowsCount
+            }
+        }
+
+        return count
+    }
+
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
         let item = sections[indexPath.section].viewItems[indexPath.row]
 
@@ -163,9 +181,10 @@ class TransactionsViewController: ThemeViewController {
             bind(item: item, cell: cell)
         }
 
-        if indexPath.section == tableView.numberOfSections - 1,
-           indexPath.row >= self.tableView(tableView, numberOfRowsInSection: indexPath.section) - 1 {
-            viewModel.bottomReached()
+        if rowsBeforeBottom(indexPath: indexPath) <= 10 {
+            DispatchQueue.global(priority: .background).async { [weak self] in
+                self?.viewModel.bottomReached()
+            }
         }
     }
 
