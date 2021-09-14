@@ -36,7 +36,12 @@ class WalletService {
         }
     }
 
-    private var sortType: SortType
+    private let sortTypeRelay = PublishRelay<SortType>()
+    private(set) var sortType: SortType {
+        didSet {
+            sortTypeRelay.accept(sortType)
+        }
+    }
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
@@ -283,6 +288,10 @@ extension WalletService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
+    }
+
+    var sortTypeObservable: Observable<SortType> {
+        sortTypeRelay.asObservable()
     }
 
     var activeAccount: Account? {
