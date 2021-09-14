@@ -12,6 +12,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
+    private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openSortTypeRelay = PublishRelay<()>()
     private let openReceiveRelay = PublishRelay<Wallet>()
@@ -38,10 +39,12 @@ class WalletViewModel {
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0) }
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
         sync(items: service.items)
+        sync(sortType: service.sortType)
     }
 
     private func sync(activeAccount: Account?) {
@@ -58,6 +61,10 @@ class WalletViewModel {
     private func sync(totalItem: WalletService.TotalItem?) {
         let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: balanceHidden) }
         headerViewItemRelay.accept(headerViewItem)
+    }
+
+    private func sync(sortType: SortType) {
+        sortByRelay.accept(sortType.title)
     }
 
     private func syncUpdated(item: WalletService.Item) {
@@ -108,6 +115,10 @@ extension WalletViewModel {
 
     var headerViewItemDriver: Driver<HeaderViewItem?> {
         headerViewItemRelay.asDriver()
+    }
+
+    var sortByDriver: Driver<String?> {
+        sortByRelay.asDriver()
     }
 
     var viewItemsDriver: Driver<[BalanceViewItem]> {

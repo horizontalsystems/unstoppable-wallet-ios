@@ -21,6 +21,7 @@ class WalletViewController: ThemeViewController {
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
+    private var sortBy: String?
     private var isLoaded = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_view_controller", qos: .userInitiated)
@@ -95,6 +96,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
+        subscribe(disposeBag, viewModel.sortByDriver) { [weak self] in self?.sync(sortBy: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.openSortTypeSignal) { [weak self] in self?.openSortType() }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
@@ -146,6 +148,14 @@ class WalletViewController: ThemeViewController {
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
         self.headerViewItem = headerViewItem
+
+        if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
+            bind(headerView: headerView)
+        }
+    }
+
+    private func sync(sortBy: String?) {
+        self.sortBy = sortBy
 
         if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
             bind(headerView: headerView)
@@ -245,7 +255,7 @@ class WalletViewController: ThemeViewController {
 
     private func bind(headerView: WalletHeaderView) {
         if let viewItem = headerViewItem {
-            headerView.bind(viewItem: viewItem)
+            headerView.bind(viewItem: viewItem, sortBy: sortBy)
 
             headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
             headerView.onTapSortBy = { [weak self] in self?.viewModel.onTapSortBy() }

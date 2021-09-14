@@ -63,7 +63,6 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         sortButton.apply(style: .secondaryTransparentIcon)
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        sortButton.setTitle("balance.sort_by".localized, for: .normal)
         sortButton.setImageTintColor(.themeGray, for: .normal)
         sortButton.setImageTintColor(.themeGray50, for: .highlighted)
         sortButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
@@ -97,7 +96,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         onTapAddCoin?()
     }
 
-    func bind(viewItem: WalletViewModel.HeaderViewItem) {
+    func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
+        sortButton.setTitle(sortBy, for: .normal)
         amountButton.setTitle(viewItem.amount, for: .normal)
         amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
     }
