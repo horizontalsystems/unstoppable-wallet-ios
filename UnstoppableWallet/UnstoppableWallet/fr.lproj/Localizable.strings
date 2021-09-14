@@ -137,7 +137,7 @@
 "balance.sort.header" = "Trier par";
 "balance.sort.valueHighToLow" = "Solde";
 "balance.sort.az" = "Nom";
-"balance.sort.24h_change" = "Prix 24h (%)";
+"balance.sort.price_change" = "Price Change";
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
