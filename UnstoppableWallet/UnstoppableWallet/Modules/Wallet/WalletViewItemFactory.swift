@@ -5,6 +5,7 @@ import CoinKit
 
 class WalletViewItemFactory {
     private let minimumProgress = 10
+    private let infiniteProgress = 50
 
     init() {
     }
@@ -40,11 +41,7 @@ class WalletViewItemFactory {
 
     private func secondaryInfo(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceSecondaryInfoViewItem {
         if case let .syncing(progress, lastBlockDate) = item.state, expanded {
-            if let lastBlockDate = lastBlockDate {
-                return .syncing(progress: progress, syncedUntil: DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate))
-            } else {
-                return .syncing(progress: nil, syncedUntil: nil)
-            }
+            return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .searchingTxs(count) = item.state, expanded {
             return .searchingTx(count: count)
         } else {
@@ -91,7 +88,12 @@ class WalletViewItemFactory {
 
     private func syncSpinnerProgress(state: AdapterState) -> Int? {
         switch state {
-        case let .syncing(progress, _): return max(minimumProgress, progress)
+        case let .syncing(progress, _):
+            if let progress = progress {
+                return max(minimumProgress, progress)
+            } else {
+                return infiniteProgress
+            }
         default: return nil
         }
     }

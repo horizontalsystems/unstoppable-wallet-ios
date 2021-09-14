@@ -146,7 +146,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: Date())
+            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
         }
     }
 
@@ -155,8 +155,6 @@ class ZcashAdapter {
         var blockDate: Date? = nil
         if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
             blockDate = blockTime
-        } else {
-            blockDate = Date()
         }
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)

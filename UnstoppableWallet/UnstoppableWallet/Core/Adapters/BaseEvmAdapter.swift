@@ -30,7 +30,7 @@ class BaseEvmAdapter {
         switch evmSyncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)
-            case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+            case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
         }
     }
 
