@@ -137,7 +137,7 @@
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
-"balance.sort.24h_change" = "Precio(%) 24H";
+"balance.sort.price_change" = "Price Change";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
