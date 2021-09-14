@@ -155,7 +155,7 @@ class WalletService {
     }
 
     private var fallbackAdapterState: AdapterState {
-        .syncing(progress: 50, lastBlockDate: nil)
+        .syncing(progress: nil, lastBlockDate: nil)
     }
 
 }
