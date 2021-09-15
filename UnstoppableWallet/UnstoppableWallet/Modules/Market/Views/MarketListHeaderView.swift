@@ -8,7 +8,7 @@ class MarketListHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let fieldSelectionButton = ThemeButton()
-    private let marketFieldModeView = SingleSelectorView()
+    private let marketFieldModeView = SelectorButton()
 
     private var marketFields = [MarketModule.MarketField]()
 

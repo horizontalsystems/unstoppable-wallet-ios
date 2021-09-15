@@ -8,7 +8,7 @@ class CoinMarketsHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let sortTypeButton = ThemeButton()
-    private let volumeTypeView = SingleSelectorView()
+    private let volumeTypeView = SelectorButton()
 
     var onTapSortType: (() -> ())?
     var onSelectVolumeType: ((Int) -> ())?
@@ -47,7 +47,7 @@ class CoinMarketsHeaderView: UITableViewHeaderFooterView {
             maker.leading.equalTo(sortTypeButton.snp.trailing).priority(.high)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(24)
+            maker.height.equalTo(28)
         }
 
         volumeTypeView.onSelect = { [weak self] index in
