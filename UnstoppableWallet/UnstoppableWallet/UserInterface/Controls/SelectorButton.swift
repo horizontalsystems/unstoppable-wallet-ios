@@ -4,7 +4,7 @@ class SelectorButton: ThemeButton {
     private var items = [String]()
 
     var currentIndex: Int = 0
-    var didSetIndex: ((Int) -> ())?
+    var onSelect: ((Int) -> ())?
 
     private func imageName(count: Int, index: Int) -> String { "mode_\(count)_\(index + 1)_20" }
 
@@ -19,7 +19,7 @@ class SelectorButton: ThemeButton {
         super.init(coder: aDecoder)
     }
 
-    func apply(items: [String]) {
+    func set(items: [String]) {
         apply(style: .secondaryDefaultIcon)
 
         self.items = items
@@ -29,7 +29,7 @@ class SelectorButton: ThemeButton {
             return
         }
 
-        set(index: 0, initial: true)
+        setSelected(index: 0, initial: true)
     }
 
     @objc private func onTap() {
@@ -38,10 +38,10 @@ class SelectorButton: ThemeButton {
         }
 
         let nextIndex = (currentIndex + 1) % items.count
-        set(index: nextIndex, initial: false)
+        setSelected(index: nextIndex, initial: false)
     }
 
-    private func set(index: Int, initial: Bool) {
+    private func setSelected(index: Int, initial: Bool) {
         guard index < items.count, initial || currentIndex != index else {
             return
         }
@@ -52,12 +52,12 @@ class SelectorButton: ThemeButton {
         currentIndex = index
 
         if !initial {
-            didSetIndex?(index)
+            onSelect?(index)
         }
     }
 
-    public func set(index: Int) {
-        set(index: index, initial: true)
+    public func setSelected(index: Int) {
+        setSelected(index: index, initial: true)
     }
 
 }
