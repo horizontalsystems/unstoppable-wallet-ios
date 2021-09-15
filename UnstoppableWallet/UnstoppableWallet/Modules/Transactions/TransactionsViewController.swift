@@ -47,7 +47,6 @@ class TransactionsViewController: ThemeViewController {
         typeFiltersView.onSelect = { [weak self] index in
             self?.viewModel.typeFilterSelected(index: index)
         }
-        typeFiltersView.reload(filters: viewModel.typeFilters)
 
         view.addSubview(coinFiltersView)
         coinFiltersView.snp.makeConstraints { maker in
@@ -97,7 +96,8 @@ class TransactionsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] sections in self?.show(sections: sections) }
         subscribe(disposeBag, viewModel.updatedViewItemSignal) { [weak self] (sectionIndex, rowIndex, item) in self?.update(sectionIndex: sectionIndex, rowIndex: rowIndex, item: item) }
-        subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(filters: coinFilters) }
+        subscribe(disposeBag, viewModel.typeFiltersDriver) { [weak self] coinFilters in self?.show(typeFilters: coinFilters) }
+        subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(coinFilters: coinFilters) }
         subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] status in self?.show(status: status) }
 
         tableView.reloadData()
@@ -206,8 +206,14 @@ class TransactionsViewController: ThemeViewController {
         emptyLabel.isHidden = !status.showMessage
     }
 
-    private func show(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
-        coinFiltersView.set(filters: filters)
+    private func show(typeFilters: (filters: [FilterHeaderView.ViewItem], selected: Int)) {
+        typeFiltersView.reload(filters: typeFilters.filters)
+        typeFiltersView.select(index: typeFilters.selected)
+    }
+
+    private func show(coinFilters: (filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)) {
+        coinFiltersView.set(filters: coinFilters.filters)
+        coinFiltersView.setSelected(index: coinFilters.selected)
     }
 
 }
