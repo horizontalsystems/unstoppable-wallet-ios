@@ -212,12 +212,6 @@ class WalletViewController: ThemeViewController {
         DispatchQueue.main.sync {
             viewItems = newViewItems
 
-            updateIndexes.forEach {
-                if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
-                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
-                }
-            }
-
             UIView.animate(withDuration: animationDuration) {
                 self.tableView.beginUpdates()
 
@@ -226,6 +220,12 @@ class WalletViewController: ThemeViewController {
                 }
 
                 self.tableView.endUpdates()
+            }
+
+            updateIndexes.forEach {
+                if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
+                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
+                }
             }
         }
     }
