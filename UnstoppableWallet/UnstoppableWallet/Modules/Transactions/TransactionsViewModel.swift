@@ -9,10 +9,10 @@ class TransactionsViewModel {
     let service: TransactionsService
     let factory: TransactionsViewItemFactory
 
-    private let allTypeFilters = TransactionTypeFilter.allCases
     private var sections = [TransactionsViewController.Section]()
 
-    private var coinFiltersRelay = BehaviorRelay<[MarketDiscoveryFilterHeaderView.ViewItem]>(value: [])
+    private var typeFiltersRelay = BehaviorRelay<(filters: [FilterHeaderView.ViewItem], selected: Int)>(value: (filters: [], selected: 0))
+    private var coinFiltersRelay = BehaviorRelay<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)>(value: (filters: [], selected: nil))
     private var viewItemsRelay = BehaviorRelay<[TransactionsViewController.Section]>(value: [])
     private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)>()
     private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
@@ -23,7 +23,8 @@ class TransactionsViewModel {
         self.service = service
         self.factory = factory
 
-        subscribe(disposeBag, service.walletsObservable) { [weak self] wallets in self?.handle(wallets: wallets) }
+        subscribe(disposeBag, service.typeFiltersObservable) { [weak self] typeFilters in self?.handle(typesFilters: typeFilters) }
+        subscribe(disposeBag, service.walletFiltersObservable) { [weak self] walletFilters in self?.handle(walletFilters: walletFilters) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] items in
             self?.queue.async { [weak self] in
                 self?.handle(items: items)
@@ -37,9 +38,14 @@ class TransactionsViewModel {
         subscribe(disposeBag, service.syncingSignal) { [weak self] syncing in self?.handle(syncing: syncing) }
     }
 
-    private func handle(wallets: [TransactionWallet]) {
-        let coinFilters = wallets.flatMap { factory.coinFilter(wallet: $0) }
-        coinFiltersRelay.accept(coinFilters)
+    private func handle(typesFilters: (types: [TransactionTypeFilter], selected: Int)) {
+        let filterItems = factory.typeFilterItems(types: typesFilters.types)
+        typeFiltersRelay.accept((filters: filterItems, selected: typesFilters.selected))
+    }
+
+    private func handle(walletFilters: (wallets: [TransactionWallet], selected: Int?)) {
+        let coinFilters = walletFilters.wallets.flatMap { factory.coinFilter(wallet: $0) }
+        coinFiltersRelay.accept((filters: coinFilters, selected: walletFilters.selected))
     }
 
     private func handle(items: [TransactionItem]) {
@@ -113,11 +119,11 @@ class TransactionsViewModel {
 
 extension TransactionsViewModel {
 
-    var typeFilters: [FilterHeaderView.ViewItem] {
-        factory.typeFilterItems(types: allTypeFilters)
+    var typeFiltersDriver: Driver<(filters: [FilterHeaderView.ViewItem], selected: Int)> {
+        typeFiltersRelay.asDriver()
     }
 
-    var coinFiltersDriver: Driver<[MarketDiscoveryFilterHeaderView.ViewItem]> {
+    var coinFiltersDriver: Driver<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)> {
         coinFiltersRelay.asDriver()
     }
 
@@ -138,11 +144,11 @@ extension TransactionsViewModel {
     }
 
     func coinFilterSelected(index: Int?) {
-        service.set(selectedCoinFilterIndex: index)
+        service.set(selectedWalletIndex: index)
     }
 
     func typeFilterSelected(index: Int) {
-        service.set(typeFilter: allTypeFilters[index])
+        service.set(selectedTypeIndex: index)
     }
 
     func bottomReached() {

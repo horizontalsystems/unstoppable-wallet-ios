@@ -40,7 +40,7 @@ class TransactionRecordDataSourceGroup {
 
 }
 
-extension TransactionRecordDataSourceGroup: ITransactionRecordService {
+extension TransactionRecordDataSourceGroup {
 
     var recordsObservable: Observable<[TransactionRecord]> {
         recordsSubject.asObservable()
