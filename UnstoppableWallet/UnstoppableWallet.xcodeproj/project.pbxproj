@@ -1601,15 +1601,14 @@
 		2FA5D371A14CFEB296C58801 /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */; };
 		2FA5D37E2FC7A6926302E925 /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB79666823038C1455A9 /* TransactionsService.swift */; };
 		2FA5D3809B7BA6E0AD28344F /* TransactionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD7B706142D9572E7109 /* TransactionValue.swift */; };
-		2FA5D38EB47D156EA06E8E43 /* AllWalletsRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* AllWalletsRecordService.swift */; };
+		2FA5D38EB47D156EA06E8E43 /* TransactionRecordDataSourceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */; };
 		2FA5D3C71DD0DBD7EE6236ED /* TransactionsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D7ADF6367D172C582009 /* TransactionsViewItemFactory.swift */; };
 		2FA5D3D7F48B8084FD21D877 /* TransactionRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D922539E617C76F1E70A /* TransactionRecordDataSource.swift */; };
 		2FA5D40E1007CBA5067A68C8 /* LogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D73DA43455B86DF104FE /* LogRecord.swift */; };
-		2FA5D40E48D3856653E90B6B /* AllWalletsRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* AllWalletsRecordService.swift */; };
+		2FA5D40E48D3856653E90B6B /* TransactionRecordDataSourceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */; };
 		2FA5D411AB77B68CAEC4D498 /* FeeRateAdjustmentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0D01268B444930AC3F2 /* FeeRateAdjustmentHelper.swift */; };
 		2FA5D419610C9D1B86DE8AD8 /* SendHodlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF7B14D5A200DDF5168D /* SendHodlerView.swift */; };
 		2FA5D4248B5AA0F0EDF131F4 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
-		2FA5D445761C83AEE676A6C9 /* SingleWalletRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD28B0FB8A98C5E1A422 /* SingleWalletRecordService.swift */; };
 		2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5D4BE55E8AB193EA61411 /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5D4C4048DC80858F9F7F4 /* TransactionStatusInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */; };
@@ -1635,7 +1634,7 @@
 		2FA5D6BCACDEB0BF06310354 /* TransactionAdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFE7C4A198C235B2EAB5 /* TransactionAdapterManager.swift */; };
 		2FA5D6BF7186A35B9A086231 /* ContractCreationTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */; };
 		2FA5D6CE58855A2E5DB57ED3 /* TransactionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */; };
-		2FA5D6F4AFEBA048C8DBC5E1 /* AllWalletsRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* AllWalletsRecordService.swift */; };
+		2FA5D6F4AFEBA048C8DBC5E1 /* TransactionRecordDataSourceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */; };
 		2FA5D7283FA3C72FDFECF26D /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5D73715BE820783EEFF24 /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D74C17DF76E56FA0A96E /* ExperimentalFeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */; };
@@ -1711,7 +1710,6 @@
 		2FA5DEDEAF3C1D6251B47CB4 /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */; };
 		2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
 		2FA5DF23FE2EC44DF2CADCF6 /* TransactionInfoAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF7D4F825A4FE79B14A0 /* TransactionInfoAddressMapper.swift */; };
-		2FA5DF32E54EEF45FA75AC29 /* SingleWalletRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD28B0FB8A98C5E1A422 /* SingleWalletRecordService.swift */; };
 		2FA5DF5CF3AAC5AC79F18818 /* BitcoinTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2B93C053ABB9445C148 /* BitcoinTransactionRecord.swift */; };
 		2FA5DF673B898E99ACA87B70 /* TransactionInfoViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */; };
 		2FA5DF762C77C822A1D75548 /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D1D073DF0366A0E24A4F /* CurrencyValue.swift */; };
@@ -3192,7 +3190,7 @@
 		2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewItemFactory.swift; sourceTree = "<group>"; };
 		2FA5D2B93C053ABB9445C148 /* BitcoinTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5D2FB94B5545387375AA3 /* TransactionInfoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoService.swift; sourceTree = "<group>"; };
-		2FA5D31D04DA07DC1E7B00DD /* AllWalletsRecordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllWalletsRecordService.swift; sourceTree = "<group>"; };
+		2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecordDataSourceGroup.swift; sourceTree = "<group>"; };
 		2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BitcoinCore+Hodler.swift"; sourceTree = "<group>"; };
 		2FA5D480CB2AA3B61880F9D2 /* FeeRateAdjustmentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateAdjustmentInfo.swift; sourceTree = "<group>"; };
 		2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoModule.swift; sourceTree = "<group>"; };
@@ -3220,7 +3218,6 @@
 		2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmTransactionsAdapter.swift; sourceTree = "<group>"; };
 		2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusInfoViewController.swift; sourceTree = "<group>"; };
 		2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractCreationTransactionRecord.swift; sourceTree = "<group>"; };
-		2FA5DD28B0FB8A98C5E1A422 /* SingleWalletRecordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleWalletRecordService.swift; sourceTree = "<group>"; };
 		2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmTransactionConverter.swift; sourceTree = "<group>"; };
 		2FA5DD7B706142D9572E7109 /* TransactionValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValue.swift; sourceTree = "<group>"; };
 		2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinIncomingTransactionRecord.swift; sourceTree = "<group>"; };
@@ -5058,9 +5055,8 @@
 		2FA5D690386D5E916B132634 /* RecordServices */ = {
 			isa = PBXGroup;
 			children = (
-				2FA5D31D04DA07DC1E7B00DD /* AllWalletsRecordService.swift */,
+				2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */,
 				2FA5D922539E617C76F1E70A /* TransactionRecordDataSource.swift */,
-				2FA5DD28B0FB8A98C5E1A422 /* SingleWalletRecordService.swift */,
 				2FA5DB08E9BC05FB349A53DE /* TransactionRecordsService.swift */,
 			);
 			path = RecordServices;
@@ -7091,7 +7087,7 @@
 				2FA5D37E2FC7A6926302E925 /* TransactionsService.swift in Sources */,
 				2FA5DD0A9F9EA6DF32D895B1 /* TransactionsViewItemFactory.swift in Sources */,
 				2FA5D2E496DBCB073F0E575E /* TransactionSyncStateService.swift in Sources */,
-				2FA5D6F4AFEBA048C8DBC5E1 /* AllWalletsRecordService.swift in Sources */,
+				2FA5D6F4AFEBA048C8DBC5E1 /* TransactionRecordDataSourceGroup.swift in Sources */,
 				2FA5D502317CFA55882BD7DA /* TransactionRecordDataSource.swift in Sources */,
 				2FA5D892C32176F8A746FFCE /* TransactionRecordsService.swift in Sources */,
 				2FA5D147207CD8BF750D15F5 /* TransactionAdapterManager.swift in Sources */,
@@ -7962,9 +7958,8 @@
 				2FA5D0164832D68AAB1B3A7F /* TransactionsService.swift in Sources */,
 				2FA5D3C71DD0DBD7EE6236ED /* TransactionsViewItemFactory.swift in Sources */,
 				2FA5D4DD78B3D3E1AF22BB33 /* TransactionSyncStateService.swift in Sources */,
-				2FA5D38EB47D156EA06E8E43 /* AllWalletsRecordService.swift in Sources */,
+				2FA5D38EB47D156EA06E8E43 /* TransactionRecordDataSourceGroup.swift in Sources */,
 				2FA5D3D7F48B8084FD21D877 /* TransactionRecordDataSource.swift in Sources */,
-				2FA5DF32E54EEF45FA75AC29 /* SingleWalletRecordService.swift in Sources */,
 				2FA5D97CE3A4EA336ECED9C5 /* TransactionRecordsService.swift in Sources */,
 				2FA5D6BCACDEB0BF06310354 /* TransactionAdapterManager.swift in Sources */,
 				2FA5DB5E2D23E973286979E8 /* HistoricalRateService.swift in Sources */,
@@ -8844,9 +8839,8 @@
 				2FA5D288FCCC22A872BE11A3 /* TransactionsModule.swift in Sources */,
 				2FA5DCF3032EF2F8B99BFDFE /* TransactionsService.swift in Sources */,
 				2FA5DB666279AF9A0F3E5985 /* TransactionsViewItemFactory.swift in Sources */,
-				2FA5D40E48D3856653E90B6B /* AllWalletsRecordService.swift in Sources */,
+				2FA5D40E48D3856653E90B6B /* TransactionRecordDataSourceGroup.swift in Sources */,
 				2FA5D33B45F6A7FFA8D834AA /* TransactionRecordDataSource.swift in Sources */,
-				2FA5D445761C83AEE676A6C9 /* SingleWalletRecordService.swift in Sources */,
 				2FA5DCC4695C6D90275575A3 /* TransactionAdapterManager.swift in Sources */,
 				2FA5D2702CFF36E1608A1C8E /* HistoricalRateService.swift in Sources */,
 				58AAA6C6F67D853B899B692E /* WalletConnectSessionKiller.swift in Sources */,

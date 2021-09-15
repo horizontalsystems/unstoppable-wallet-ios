@@ -1,13 +1,13 @@
 import RxSwift
 
-class AllWalletsRecordService {
+class TransactionRecordDataSourceGroup {
     private var disposeBag = DisposeBag()
-    private let dataSources: [TransactionRecordDataSource]
 
     private var recordsSubject = PublishSubject<[TransactionRecord]>()
     private var updatedRecordSubject = PublishSubject<TransactionRecord>()
-
     private var requestedCount: Int = 0
+
+    let dataSources: [TransactionRecordDataSource]
 
     init(dataSources: [TransactionRecordDataSource]) {
         self.dataSources = dataSources
@@ -40,7 +40,7 @@ class AllWalletsRecordService {
 
 }
 
-extension AllWalletsRecordService: ITransactionRecordService {
+extension TransactionRecordDataSourceGroup: ITransactionRecordService {
 
     var recordsObservable: Observable<[TransactionRecord]> {
         recordsSubject.asObservable()
