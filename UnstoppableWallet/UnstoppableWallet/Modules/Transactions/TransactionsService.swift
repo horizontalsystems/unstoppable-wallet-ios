@@ -6,13 +6,14 @@ class TransactionsService {
     private let recordsService: TransactionRecordsService
     private let syncStateService: TransactionSyncStateService
     private let rateService: HistoricalRateService
+    private let filterHelper: TransactionFilterHelper
 
     private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
-    private var wallets = [TransactionWallet]()
-    private var walletsSubject = BehaviorSubject<[TransactionWallet]>(value: [])
-
     private var items = [TransactionItem]()
+
+    private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
+    private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
     private var itemsSubject = PublishSubject<[TransactionItem]>()
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
@@ -21,6 +22,7 @@ class TransactionsService {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
         rateService = HistoricalRateService(ratesManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit)
+        filterHelper = TransactionFilterHelper()
 
         handle(updatedWallets: walletManager.activeWallets)
 
@@ -52,7 +54,7 @@ class TransactionsService {
                 .disposed(by: disposeBag)
     }
 
-    func groupWalletsBySource(transactionWallets: [TransactionWallet]) -> [TransactionWallet] {
+    private func groupWalletsBySource(transactionWallets: [TransactionWallet]) -> [TransactionWallet] {
         var groupedWallets = [TransactionWallet]()
 
         for wallet in transactionWallets {
@@ -69,18 +71,20 @@ class TransactionsService {
     }
 
     private func handle(updatedWallets: [WalletNew]) {
-        wallets = updatedWallets
-                .sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
-                .map { TransactionWallet(coin: $0.platformCoin, source: $0.transactionSource) }
-
-        walletsSubject.onNext(wallets)
+        filterHelper.set(wallets: updatedWallets)
     }
 
     private func onAdaptersReady() {
+        let wallets = filterHelper.wallets
         let walletsGroupedBySource = groupWalletsBySource(transactionWallets: wallets)
 
         syncStateService.set(sources: walletsGroupedBySource.map { $0.source })
         recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource)
+        recordsService.set(selectedWallet: filterHelper.selectedWallet)
+        recordsService.set(typeFilter: filterHelper.selectedType)
+
+        walletFiltersSubject.onNext(filterHelper.walletFilters)
+        typeFiltersSubject.onNext(filterHelper.typeFilters)
     }
 
     private func handle(records: [TransactionRecord]) {
@@ -158,8 +162,12 @@ class TransactionsService {
 
 extension TransactionsService {
 
-    var walletsObservable: Observable<[TransactionWallet]> {
-        walletsSubject.asObservable()
+    var walletFiltersObservable: Observable<(wallets: [TransactionWallet], selected: Int?)> {
+        walletFiltersSubject.asObservable()
+    }
+
+    var typeFiltersObservable: Observable<(types: [TransactionTypeFilter], selected: Int)> {
+        typeFiltersSubject.asObservable()
     }
 
     var itemsObservable: Observable<[TransactionItem]> {
@@ -174,19 +182,14 @@ extension TransactionsService {
         syncingSubject.asObservable()
     }
 
-    func set(selectedCoinFilterIndex: Int?) {
-        guard let index = selectedCoinFilterIndex else {
-            recordsService.set(selectedWallet: nil)
-            return
-        }
-
-        if wallets.count > index {
-            recordsService.set(selectedWallet: wallets[index])
-        }
+    func set(selectedWalletIndex: Int?) {
+        filterHelper.set(selectedWalletIndex: selectedWalletIndex)
+        recordsService.set(selectedWallet: filterHelper.selectedWallet)
     }
 
-    func set(typeFilter: TransactionTypeFilter) {
-        recordsService.set(typeFilter: typeFilter)
+    func set(selectedTypeIndex: Int) {
+        filterHelper.set(selectedTypeIndex: selectedTypeIndex)
+        recordsService.set(typeFilter: filterHelper.selectedType)
     }
 
     func load(count: Int) {

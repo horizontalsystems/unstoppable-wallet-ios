@@ -98,6 +98,10 @@ extension TransactionRecordDataSource {
     }
 
     func set(typeFilter: TransactionTypeFilter) {
+        guard typeFilter != filter else {
+            return
+        }
+
         filter = typeFilter
         records = []
         allShown = false
