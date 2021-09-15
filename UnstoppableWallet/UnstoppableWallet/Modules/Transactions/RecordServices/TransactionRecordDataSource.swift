@@ -10,6 +10,7 @@ class TransactionRecordDataSource {
     private var disposeBag = DisposeBag()
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tx_data_source", qos: .background)
 
+    let wallet: TransactionWallet
     private let coin: PlatformCoin?
     private var filter: TransactionTypeFilter = .all
     private let adapter: ITransactionsAdapter
@@ -18,9 +19,10 @@ class TransactionRecordDataSource {
 
     private var updatedRecordsSubject = PublishSubject<RecordsUpdate>()
 
-    init(coin: PlatformCoin?, adapter: ITransactionsAdapter) {
-        self.coin = coin
+    init(wallet: TransactionWallet, adapter: ITransactionsAdapter) {
+        self.wallet = wallet
         self.adapter = adapter
+        coin = wallet.coin
 
         subscribe()
     }
