@@ -81,7 +81,6 @@ class TransactionsService {
 
         syncStateService.set(sources: walletsGroupedBySource.map { $0.source })
         recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource)
-        recordsService.set(selectedWallet: nil)
     }
 
     private func handle(records: [TransactionRecord]) {

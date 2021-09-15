@@ -28,6 +28,7 @@ struct TransactionsModule {
 protocol ITransactionRecordService {
     var recordsObservable: Observable<[TransactionRecord]> { get }
     var updatedRecordObservable: Observable<TransactionRecord>  { get }
+    var dataSources: [TransactionRecordDataSource] { get }
     func load(count: Int, reload: Bool)
     func set(typeFilter: TransactionTypeFilter)
 }
