@@ -118,7 +118,7 @@ class FilterCard: UICollectionViewCell {
                 self.contentView.layoutIfNeeded()
                 self.titleLightLabel.alpha = selected ? 0 : 1
                 self.titleDarkLabel.alpha = selected ? 1 : 0
-                self.iconBackgroundView.backgroundColor = selected ? .white : .clear
+                self.iconBackgroundView.backgroundColor = selected && !self.expandable ? .white : .clear
             }
 
             if self.expandable {
