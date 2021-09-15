@@ -186,7 +186,7 @@ class TransactionsViewItemFactory {
             name += " " + derivation
         }
 
-        return MarketDiscoveryFilterHeaderView.ViewItem(icon: UIImage.image(coinType: coin.coinType.id), title: name)
+        return MarketDiscoveryFilterHeaderView.ViewItem(icon: UIImage.image(coinType: coin.coinType), title: name)
     }
 
 }
