@@ -164,6 +164,16 @@ extension BinanceAdapter: ITransactionsAdapter {
         binanceKit.syncStateObservable.map { _ in () }
     }
 
+    var explorerTitle: String {
+        "binance.org"
+    }
+
+    func explorerUrl(transactionHash: String) -> String? {
+        binanceKit.networkType == .mainNet
+                ? "https://explorer.binance.org/tx/" + transactionHash
+                : "https://testnet-explorer.binance.org/tx/" + transactionHash
+    }
+
     func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
         switch filter {

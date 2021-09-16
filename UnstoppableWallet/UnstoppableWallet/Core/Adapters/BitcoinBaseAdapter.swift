@@ -8,6 +8,7 @@ class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
 
     private let abstractKit: AbstractKit
+    let testMode: Bool
     private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
@@ -26,8 +27,9 @@ class BitcoinBaseAdapter {
     private let coin: PlatformCoin
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: WalletNew) {
+    init(abstractKit: AbstractKit, wallet: WalletNew, testMode: Bool) {
         self.abstractKit = abstractKit
+        self.testMode = testMode
         coin = wallet.platformCoin
         transactionSource = wallet.transactionSource
 
@@ -159,6 +161,14 @@ class BitcoinBaseAdapter {
                 balance: Decimal(balanceInfo.spendable) / coinRate,
                 balanceLocked: Decimal(balanceInfo.unspendable) / coinRate
         )
+    }
+
+    open var explorerTitle: String {
+        fatalError("Must be overridden by subclass")
+    }
+
+    open func explorerUrl(transactionHash: String) -> String? {
+        fatalError("Must be overridden by subclass")
     }
 
 }

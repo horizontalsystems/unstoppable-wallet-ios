@@ -3,11 +3,6 @@ import CurrencyKit
 import EthereumKit
 
 class TransactionInfoViewItemFactory {
-    private let accountSettingManager: AccountSettingManager
-
-    init(accountSettingManager: AccountSettingManager) {
-        self.accountSettingManager = accountSettingManager
-    }
 
     private func actionSectionItems(title: String, transactionValue: TransactionValue, rate: CurrencyValue?, incoming: Bool?) -> [TransactionInfoModule.ViewItem] {
         var currencyValue: CurrencyValue? = nil
@@ -102,67 +97,12 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    func explorerViewItem(record: TransactionRecord, testMode: Bool) -> TransactionInfoModule.ViewItem {
-        let source = record.source
-        let transactionHash = record.transactionHash
-
-        let blockchain = source.blockchain
-        let account = source.account
-
-        var title: String
-        var url: String?
-        switch blockchain {
-        case .bitcoin:
-            title = "btc.com"
-            url = testMode ? nil : "https://btc.com/" + transactionHash
-        case .bitcoinCash:
-            title = "btc.com"
-            url = testMode ? nil : "https://bch.btc.com/" + transactionHash
-        case .litecoin:
-            title = "blockchair.com"
-            url = testMode ? nil : "https://blockchair.com/litecoin/transaction/" + transactionHash
-        case .dash:
-            title = "dash.org"
-            url = testMode ? nil : "https://insight.dash.org/insight/tx/" + transactionHash
-        case .ethereum:
-            let domain: String
-
-            switch accountSettingManager.ethereumNetwork(account: account).networkType {
-            case .ropsten: domain = "ropsten.etherscan.io"
-            case .rinkeby: domain = "rinkeby.etherscan.io"
-            case .kovan: domain = "kovan.etherscan.io"
-            case .goerli: domain = "goerli.etherscan.io"
-            default: domain = "etherscan.io"
-            }
-
-            title = "etherscan.io"
-            url = "https://\(domain)/tx/" + transactionHash
-        case .binanceSmartChain:
-            let domain: String
-
-            switch accountSettingManager.binanceSmartChainNetwork(account: account).networkType {
-            default: domain = "bscscan.com"
-            }
-
-            title = "bscscan.com"
-            url = testMode ? nil : "https://\(domain)/tx/" + transactionHash
-        case .bep2:
-            title = "binance.org"
-            url = testMode ? "https://testnet-explorer.binance.org/tx/" + transactionHash : "https://explorer.binance.org/tx/" + transactionHash
-        case .zcash:
-            title = "blockchair.com"
-            url = testMode ? nil : "https://blockchair.com/zcash/transaction/" + transactionHash
-        }
-
-        return .explorer(title: "tx_info.view_on".localized(title), url: url)
-    }
-
-    func items(transaction: TransactionRecord, rates: [Coin: CurrencyValue], lastBlockInfo: LastBlockInfo?) -> [[TransactionInfoModule.ViewItem]] {
-        let status = transaction.status(lastBlockHeight: lastBlockInfo?.height)
-        var middleSectionItems: [TransactionInfoModule.ViewItem] = [.date(date: transaction.date)]
+    func items(item: TransactionInfoItem) -> [[TransactionInfoModule.ViewItem]] {
+        let transaction = item.record
+        let status = transaction.status(lastBlockHeight: item.lastBlockInfo?.height)
 
         func _rate(_ value: TransactionValue) -> CurrencyValue? {
-            value.coin.flatMap { rates[$0] }
+            value.coin.flatMap { item.rates[$0] }
         }
 
         func _currencyValue(_ value: TransactionValue) -> CurrencyValue? {
@@ -172,6 +112,9 @@ class TransactionInfoViewItemFactory {
                 return nil
             }
         }
+
+        var sections = [[TransactionInfoModule.ViewItem]]()
+        var middleSectionItems: [TransactionInfoModule.ViewItem] = [.date(date: transaction.date)]
 
         switch transaction {
         case let evmIncoming as EvmIncomingTransactionRecord:
@@ -186,10 +129,7 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.from(value: evmIncoming.from))
             middleSectionItems.append(.id(value: evmIncoming.transactionHash))
 
-            return [
-                actionSectionItems(title: "transactions.receive".localized, transactionValue: evmIncoming.value, rate: coinRate, incoming: true),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: evmIncoming.value, rate: coinRate, incoming: true))
 
         case let evmOutgoing as EvmOutgoingTransactionRecord:
             let coinRate = _rate(evmOutgoing.value)
@@ -207,10 +147,7 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.to(value: evmOutgoing.to))
             middleSectionItems.append(.id(value: evmOutgoing.transactionHash))
 
-            return [
-                actionSectionItems(title: "transactions.send".localized, transactionValue: evmOutgoing.value, rate: coinRate, incoming: false),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: evmOutgoing.value, rate: coinRate, incoming: false))
 
         case let swap as SwapTransactionRecord:
             middleSectionItems.append(.status(status: status))
@@ -224,16 +161,11 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress)))
             middleSectionItems.append(.id(value: swap.transactionHash))
 
-            var sections = [
-                actionSectionItems(title: youPayString(status: status), transactionValue: swap.valueIn, rate: _rate(swap.valueIn), incoming: false)
-            ]
+            sections.append(actionSectionItems(title: youPayString(status: status), transactionValue: swap.valueIn, rate: _rate(swap.valueIn), incoming: false))
 
             if let valueOut = swap.valueOut, !swap.foreignRecipient {
                 sections.append(actionSectionItems(title: youGetString(status: status), transactionValue: valueOut, rate: _rate(valueOut), incoming: true))
             }
-            sections.append(middleSectionItems)
-
-            return sections
 
         case let approve as ApproveTransactionRecord:
             let coinRate = _rate(approve.value)
@@ -256,18 +188,15 @@ class TransactionInfoViewItemFactory {
             let coinAmount = isMaxValue ? "transactions.value.unlimited".localized(approve.value.coinCode) : currencyValue?.formattedString ?? ""
             let currencyAmount = isMaxValue ? "∞" : approve.value.formattedString
 
-            return [
-                [
-                    .actionTitle(title: "transactions.approve".localized, subTitle: approve.value.coinName),
-                    .amount(coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: nil)
-                ],
-                middleSectionItems
-            ]
+            sections.append([
+                .actionTitle(title: "transactions.approve".localized, subTitle: approve.value.coinName),
+                .amount(coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: nil)
+            ])
 
         case let contractCall as ContractCallTransactionRecord:
-            var sections: [[TransactionInfoModule.ViewItem]] = [
+            sections.append(
                 [.actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: TransactionInfoAddressMapper.map(contractCall.contractAddress))]
-            ]
+            )
 
             let transactionValue = contractCall.value
 
@@ -319,10 +248,6 @@ class TransactionInfoViewItemFactory {
 
             middleSectionItems.append(.id(value: contractCall.transactionHash))
 
-            sections.append(middleSectionItems)
-
-            return sections
-
         case let btcIncoming as BitcoinIncomingTransactionRecord:
             let coinRate = _rate(btcIncoming.value)
 
@@ -340,13 +265,10 @@ class TransactionInfoViewItemFactory {
             if btcIncoming.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)
             }
-            btcIncoming.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
+            btcIncoming.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
             btcIncoming.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
 
-            return [
-                actionSectionItems(title: "transactions.receive".localized, transactionValue: btcIncoming.value, rate: coinRate, incoming: true),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: btcIncoming.value, rate: coinRate, incoming: true))
 
         case let btcOutgoing as BitcoinOutgoingTransactionRecord:
             let coinRate = _rate(btcOutgoing.value)
@@ -369,13 +291,10 @@ class TransactionInfoViewItemFactory {
             if btcOutgoing.showRawTransaction {
                 middleSectionItems.append(.rawTransaction)
             }
-            btcOutgoing.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
+            btcOutgoing.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
             btcOutgoing.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
 
-            return [
-                actionSectionItems(title: "transactions.send".localized, transactionValue: btcOutgoing.value, rate: coinRate, incoming: false),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: btcOutgoing.value, rate: coinRate, incoming: false))
 
         case let tx as BinanceChainIncomingTransactionRecord:
             let coinRate = _rate(tx.value)
@@ -390,10 +309,7 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.id(value: tx.transactionHash))
             tx.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
 
-            return [
-                actionSectionItems(title: "transactions.receive".localized, transactionValue: tx.value, rate: coinRate, incoming: true),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: tx.value, rate: coinRate, incoming: true))
 
         case let tx as BinanceChainOutgoingTransactionRecord:
             let coinRate = _rate(tx.value)
@@ -409,13 +325,15 @@ class TransactionInfoViewItemFactory {
             middleSectionItems.append(.id(value: tx.transactionHash))
             tx.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
 
-            return [
-                actionSectionItems(title: "transactions.send".localized, transactionValue: tx.value, rate: coinRate, incoming: false),
-                middleSectionItems
-            ]
+            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: tx.value, rate: coinRate, incoming: false))
 
-        default: return []
+        default: ()
         }
+
+        sections.append(middleSectionItems)
+        sections.append([.explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl)])
+
+        return sections
     }
 
 }

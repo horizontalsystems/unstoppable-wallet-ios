@@ -28,7 +28,7 @@ class HistoricalRateService {
         ratesChangedSubject.onNext(())
     }
 
-    func handle(key: RateKey, rate: Decimal) {
+    private func handle(key: RateKey, rate: Decimal) {
         let rate = CurrencyValue(currency: currency, value: rate)
         rates[key] = rate
         rateUpdatedSubject.onNext((key, rate))
