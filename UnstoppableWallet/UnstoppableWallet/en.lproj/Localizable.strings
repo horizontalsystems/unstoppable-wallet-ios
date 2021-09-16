@@ -86,6 +86,11 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "show_key.tab.private_keys" = "Private Keys";
 "show_key.passphrase" = "Passphrase";
 
+"private_key_copying.title" = "Warning";
+"private_key_copying.subtitle" = "Risk of Private Key copy";
+"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
+"private_key_copying.copy_button" = "I will risk it";
+
 // Backup Key
 
 "backup_key.title" = "Backup";
@@ -134,7 +139,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change"  = "24h Price(%)";
+"balance.sort.price_change" = "Price Change";
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
@@ -203,9 +208,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.send_button" = "Send";
-"send.confirmation.resend_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend_button" = "Resend";
-"send.confirmation.cancel_description" = "This action will change your receive address format for Bitcoin in Unstoppable app. After that, the app will resync itself with Bitcoin blockchain.";
+"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.cancel_button" = "Cancel Transaction";
 "send.amount_error.balance" = "Not Enough Balance";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
@@ -263,7 +268,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
-"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough ETH to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
 
 "swap.service" = "Service";
 "swap.service.title" = "Service";
@@ -898,7 +903,8 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
-"wallet_connect.no_connection" = "Wallet connect is not responding";
+"wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
+"wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
 "ethereum_transaction.error.insufficient_balance" = "Transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Current %@ balance is below amount required to process this transaction including transaction fee.";
