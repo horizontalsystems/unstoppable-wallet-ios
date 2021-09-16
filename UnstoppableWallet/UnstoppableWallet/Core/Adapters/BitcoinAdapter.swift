@@ -21,9 +21,17 @@ class BitcoinAdapter: BitcoinBaseAdapter {
 
         bitcoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: bitcoinKit, wallet: wallet)
+        super.init(abstractKit: bitcoinKit, wallet: wallet, testMode: testMode)
 
         bitcoinKit.delegate = self
+    }
+
+    override var explorerTitle: String {
+        "btc.com"
+    }
+
+    override func explorerUrl(transactionHash: String) -> String? {
+        testMode ? nil : "https://btc.com/" + transactionHash
     }
 
 }

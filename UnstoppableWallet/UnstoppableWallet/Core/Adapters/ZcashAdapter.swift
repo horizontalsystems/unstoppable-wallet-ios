@@ -454,6 +454,14 @@ extension ZcashAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
+    var explorerTitle: String {
+        "blockchair.com"
+    }
+
+    func explorerUrl(transactionHash: String) -> String? {
+        network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
+    }
+
     func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
                 .map { transactions in

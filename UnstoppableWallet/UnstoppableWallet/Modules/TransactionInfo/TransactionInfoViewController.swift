@@ -65,10 +65,6 @@ class TransactionInfoViewController: ThemeViewController {
             self?.tableView.reload()
         }
 
-        subscribe(disposeBag, viewModel.resendActionDriver) { [weak self] action, transactionHash in
-            self?.openResend(action: action, transactionHash: transactionHash)
-        }
-
         tableView.reload()
     }
 
@@ -81,9 +77,9 @@ class TransactionInfoViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-    private func openResend(action: TransactionInfoModule.Option, transactionHash: String) {
+    private func openResend(action: TransactionInfoModule.Option) {
         do {
-            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: transactionHash)
+            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: viewModel.transactionHash)
             present(ThemeNavigationController(rootViewController: viewController), animated: true)
         } catch {
             HudHelper.instance.showError(title: error.localizedDescription)
@@ -173,7 +169,7 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(viewItems: viewItems.map { D10SecondaryCell.ViewItem(title: $0.title, enabled: $0.active) })
                     cell.onTapButton = { index in
                         if viewItems.count > index {
-                            self?.viewModel.didTapOption(action: viewItems[index].option)
+                            self?.openResend(action: viewItems[index].option)
                         }
                     }
                 }
