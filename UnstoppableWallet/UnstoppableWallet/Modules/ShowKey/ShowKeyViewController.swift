@@ -17,7 +17,7 @@ class ShowKeyViewController: ThemeViewController {
     private let showButton = ThemeButton()
 
     private let tableView = SectionsTableView(style: .plain)
-    private let filterHeaderView = FilterHeaderView(buttonStyle: .tab)
+    private let filterHeaderView = FilterHeaderView(buttonStyle: .tab, stretchCells: true)
     private let mnemonicPhraseCell = MnemonicPhraseCell()
 
     private let closeButtonHolder = BottomGradientHolder()

@@ -35,6 +35,15 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         intervalSelectView.onSelect = { [weak self] index in
             self?.onSelectInterval?(index)
         }
+
+        let separator = UIView()
+        contentView.addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separator.backgroundColor = .themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {
