@@ -42,8 +42,6 @@ class BalanceButtonsView: UIView {
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
         addSubview(receiveButton)
-
-        receiveButton.apply(style: .primaryGray)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
         addSubview(swapButtonWrapper)
@@ -53,7 +51,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        swapButton.apply(style: .primaryGray)
+        swapButton.apply(style: .primaryIconGray)
         swapButton.setImage(UIImage(named: "arrow_swap_2_24"), for: .normal)
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
 
@@ -72,7 +70,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        chartButton.apply(style: .primaryGray)
+        chartButton.apply(style: .primaryIconGray)
         chartButton.setImage(UIImage(named: "chart_2_24"), for: .normal)
         chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
 
@@ -80,8 +78,15 @@ class BalanceButtonsView: UIView {
     }
 
     private func updateButtons(swapHidden: Bool) {
-        receiveButton.setTitle(swapHidden ? "balance.deposit".localized : nil, for: .normal)
-        receiveButton.setImage(swapHidden ? nil : UIImage(named: "arrow_medium_3_down_left_24"), for: .normal)
+        if swapHidden {
+            receiveButton.apply(style: .primaryGray)
+            receiveButton.setTitle("balance.deposit".localized, for: .normal)
+            receiveButton.setImage(nil, for: .normal)
+        } else {
+            receiveButton.apply(style: .primaryIconGray)
+            receiveButton.setTitle(nil, for: .normal)
+            receiveButton.setImage(UIImage(named: "arrow_medium_3_down_left_24"), for: .normal)
+        }
 
         receiveButton.snp.remakeConstraints { maker in
             maker.leading.equalTo(sendButtonWrapper.snp.trailing).offset(CGFloat.margin8)
