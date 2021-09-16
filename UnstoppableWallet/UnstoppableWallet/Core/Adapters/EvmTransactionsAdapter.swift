@@ -73,6 +73,28 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
+    var explorerTitle: String {
+        switch evmKit.networkType {
+        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return "etherscan.io"
+        case .bscMainNet: return "bscscan.com"
+        }
+    }
+
+    func explorerUrl(transactionHash: String) -> String? {
+        let domain: String
+
+        switch evmKit.networkType {
+        case .ethMainNet: domain = "etherscan.io"
+        case .bscMainNet: domain = "bscscan.com"
+        case .ropsten: domain = "ropsten.etherscan.io"
+        case .rinkeby: domain = "rinkeby.etherscan.io"
+        case .kovan: domain = "kovan.etherscan.io"
+        case .goerli: domain = "goerli.etherscan.io"
+        }
+
+        return "https://\(domain)/tx/" + transactionHash
+    }
+
     func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         evmKit.transactionsObservable(tags: filters(coin: coin, filter: filter)).map { [weak self] in
             $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
