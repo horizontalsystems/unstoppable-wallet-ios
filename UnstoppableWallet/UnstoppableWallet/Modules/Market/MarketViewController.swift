@@ -7,7 +7,7 @@ class MarketViewController: ThemeViewController {
     private let viewModel: MarketViewModel
     private let disposeBag = DisposeBag()
 
-    private let tabsView = FilterHeaderView(buttonStyle: .tab, stretchCells: true)
+    private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: MarketOverviewViewController

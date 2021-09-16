@@ -13,10 +13,10 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     static var height: CGFloat = .heightSingleLineCell
 
     private var filters = [ViewItem]()
-    let layout = UICollectionViewFlowLayout()
+    private let layout = UICollectionViewFlowLayout()
     private let collectionView: UICollectionView
+    private var contentWidth: CGFloat = 0
     private var buttonStyle: ThemeButtonStyle
-    private var stretchCells = false
 
     var onSelect: ((Int) -> ())?
 
@@ -24,9 +24,8 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         filters.isEmpty ? 0 : Self.height
     }
 
-    init(buttonStyle: ThemeButtonStyle, stretchCells: Bool = false) {
+    init(buttonStyle: ThemeButtonStyle) {
         self.buttonStyle = buttonStyle
-        self.stretchCells = stretchCells
 
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
@@ -73,8 +72,16 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
     }
 
+    private func calculateContentWidth() {
+        contentWidth = 0
+        for i in 0..<filters.count {
+            contentWidth += FilterHeaderCell.size(for: title(index: i), buttonStyle: buttonStyle).width + layout.minimumInteritemSpacing
+        }
+    }
+
     func reload(filters: [ViewItem]) {
         self.filters = filters
+        calculateContentWidth()
         collectionView.reloadData()
 
         if filters.count > 0 {
@@ -114,8 +121,8 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let contentWidth = collectionView.contentSize.width + collectionView.contentInset.left * 2 + layout.minimumInteritemSpacing
-        if stretchCells, contentWidth < bounds.width {
+        let width = contentWidth + collectionView.contentInset.left * 2 + layout.minimumInteritemSpacing
+        if buttonStyle == .tab, width < bounds.width {
             let width = (bounds.width - collectionView.contentInset.left * 2 - CGFloat(filters.count - 1) * layout.minimumInteritemSpacing) / CGFloat(filters.count)
             return CGSize(width: width, height: FilterHeaderCell.height(buttonStyle: buttonStyle))
         }
