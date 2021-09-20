@@ -5,6 +5,7 @@ import ComponentKit
 
 class DepositViewController: ThemeViewController {
     private let qrCodeSideMargin: CGFloat = 72
+    private let smallScreenQrCodeSideMargin: CGFloat = 88
 
     private let viewModel: DepositViewModel
 
@@ -45,11 +46,12 @@ class DepositViewController: ThemeViewController {
             maker.centerY.equalToSuperview()
         }
 
+        let margin = view.width > 320 ? qrCodeSideMargin : smallScreenQrCodeSideMargin
         let qrCodeImageView = UIImageView()
 
         contentWrapperView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(qrCodeSideMargin)
+            maker.leading.trailing.equalToSuperview().inset(margin)
             maker.top.equalToSuperview()
             maker.width.equalTo(qrCodeImageView.snp.height)
         }
@@ -64,7 +66,10 @@ class DepositViewController: ThemeViewController {
         qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)
 
         let address = viewModel.address
-        let size = view.width - 2 * qrCodeSideMargin
+
+
+        let size = view.width - 2 * margin
+
         qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: address, size: size)  }
 
         if !viewModel.isMainNet {
