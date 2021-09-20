@@ -62,7 +62,7 @@ class SendFeePresenter {
         }
 
         if availableFeeBalance < fee {
-            throw ValidationError.insufficientFeeBalance(coin: basePlatformCoin.coin, coinProtocol: feeCoinProtocol, feeCoin: feePlatformCoin.coin, fee: .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: feePlatformCoin), value: fee)))
+            throw ValidationError.insufficientFeeBalance(coin: basePlatformCoin.coin, coinProtocol: feeCoinProtocol, feeCoin: feePlatformCoin.coin, fee: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: feePlatformCoin), value: fee)))
         }
     }
 
@@ -89,11 +89,11 @@ extension SendFeePresenter: ISendFeeModule {
 
     var primaryAmountInfo: AmountInfo {
         guard let rateValue = rateValue else {
-            return .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: fee))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: fee))
         }
         switch inputType {
         case .coin:
-            return .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: fee))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: fee))
         case .currency:
             return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
         }
@@ -105,7 +105,7 @@ extension SendFeePresenter: ISendFeeModule {
         }
         switch inputType.reversed {
         case .coin:
-            return .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: fee))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: fee))
         case .currency:
             return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: fee * rateValue))
         }

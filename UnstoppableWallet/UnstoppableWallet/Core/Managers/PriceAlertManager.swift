@@ -4,7 +4,7 @@ import MarketKit
 class PriceAlertManager {
     private let disposeBag = DisposeBag()
 
-    private let walletManager: WalletManagerNew
+    private let walletManager: WalletManager
     private let remoteAlertManager: IRemoteAlertManager
     private let storage: IPriceAlertStorage
     private let localStorage: ILocalStorage
@@ -12,7 +12,7 @@ class PriceAlertManager {
 
     private let updateSubject = PublishSubject<[PriceAlert]>()
 
-    init(walletManager: WalletManagerNew, remoteAlertManager: IRemoteAlertManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
+    init(walletManager: WalletManager, remoteAlertManager: IRemoteAlertManager, storage: IPriceAlertStorage, localStorage: ILocalStorage, serializer: ISerializer) {
         self.walletManager = walletManager
         self.remoteAlertManager = remoteAlertManager
         self.storage = storage

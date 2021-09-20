@@ -401,13 +401,6 @@ protocol IAppManager {
     var willEnterForegroundObservable: Observable<()> { get }
 }
 
-protocol IWalletStorage {
-    func wallets(accounts: [Account]) -> [Wallet]
-    func wallets(account: Account) -> [Wallet]
-    func handle(newWallets: [Wallet], deletedWallets: [Wallet])
-    func clearWallets()
-}
-
 protocol IDefaultWalletCreator {
     func createWallets(account: Account)
     func createWallet(account: Account, coin: CoinKit.Coin)
@@ -484,15 +477,6 @@ protocol IGuidesManager {
 
 protocol IErc20ContractInfoProvider {
     func coinSingle(address: String) -> Single<CoinKit.Coin>
-}
-
-protocol ICoinManager {
-    var coinsAddedObservable: Observable<[CoinKit.Coin]> { get }
-    var coins: [CoinKit.Coin] { get }
-    var groupedCoins: (featured: [CoinKit.Coin], regular: [CoinKit.Coin]) { get }
-    func coin(type: CoinKit.CoinType) -> CoinKit.Coin?
-    func coinOrStub(type: CoinKit.CoinType) -> CoinKit.Coin
-    func save(coins: [CoinKit.Coin])
 }
 
 protocol IFavoriteCoinRecordStorage {

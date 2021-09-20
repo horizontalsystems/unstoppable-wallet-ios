@@ -20,8 +20,8 @@ struct RestoreSelectModule {
                 accountType: accountType,
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManagerNew,
-                coinManager: App.shared.coinManagerNew,
+                walletManager: App.shared.walletManager,
+                coinManager: App.shared.coinManager,
                 enableCoinService: enableCoinService,
                 enableCoinsService: enableCoinsService
         )

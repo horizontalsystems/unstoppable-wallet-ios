@@ -113,7 +113,7 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
+        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
         parentNavigationController?.present(viewController, animated: true)
     }
 

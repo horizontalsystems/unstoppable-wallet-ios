@@ -22,12 +22,12 @@ class OneInchModule {
         )
         allowanceService = SwapAllowanceService(
                 spenderAddress: oneInchProvider.routerAddress,
-                adapterManager: App.shared.adapterManagerNew,
+                adapterManager: App.shared.adapterManager,
                 evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
                 spenderAddress: oneInchProvider.routerAddress,
-                adapterManager: App.shared.adapterManagerNew,
+                adapterManager: App.shared.adapterManager,
                 allowanceService: allowanceService
         )
         service = OneInchService(
@@ -36,7 +36,7 @@ class OneInchModule {
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                adapterManager: App.shared.adapterManagerNew
+                adapterManager: App.shared.adapterManager
         )
     }
 

@@ -6,12 +6,12 @@ class AppStatusManager {
     private let storage: IAppVersionStorage
     private let logRecordManager: ILogRecordManager
     private let accountManager: IAccountManager
-    private let walletManager: WalletManagerNew
-    private let adapterManager: AdapterManagerNew
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let restoreSettingsManager: RestoreSettingsManager
 
     init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
-         walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
+         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager

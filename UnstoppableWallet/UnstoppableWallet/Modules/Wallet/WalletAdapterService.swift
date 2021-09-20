@@ -3,22 +3,22 @@ import RxRelay
 
 protocol IWalletAdapterServiceDelegate: AnyObject {
     func didPrepareAdapters()
-    func didUpdate(balanceData: BalanceData, wallet: WalletNew)
-    func didUpdate(state: AdapterState, wallet: WalletNew)
+    func didUpdate(balanceData: BalanceData, wallet: Wallet)
+    func didUpdate(state: AdapterState, wallet: Wallet)
 }
 
 class WalletAdapterService {
     weak var delegate: IWalletAdapterServiceDelegate?
 
-    private let adapterManager: AdapterManagerNew
+    private let adapterManager: AdapterManager
     private let disposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
 
-    private var adapterMap: [WalletNew: IBalanceAdapter]
+    private var adapterMap: [Wallet: IBalanceAdapter]
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-adapter-service", qos: .userInitiated)
 
-    init(adapterManager: AdapterManagerNew) {
+    init(adapterManager: AdapterManager) {
         self.adapterManager = adapterManager
 
         adapterMap = adapterManager.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
@@ -29,7 +29,7 @@ class WalletAdapterService {
         }
     }
 
-    private func handleAdaptersReady(adapterMap: [WalletNew: IAdapter]) {
+    private func handleAdaptersReady(adapterMap: [Wallet: IAdapter]) {
         queue.async {
             self.adapterMap = adapterMap.compactMapValues { $0 as? IBalanceAdapter }
             self.subscribeToAdapters()
@@ -55,15 +55,15 @@ class WalletAdapterService {
 
 extension WalletAdapterService {
 
-    func isMainNet(wallet: WalletNew) -> Bool? {
+    func isMainNet(wallet: Wallet) -> Bool? {
         queue.sync { adapterMap[wallet]?.isMainNet }
     }
 
-    func balanceData(wallet: WalletNew) -> BalanceData? {
+    func balanceData(wallet: Wallet) -> BalanceData? {
         queue.sync { adapterMap[wallet]?.balanceData }
     }
 
-    func state(wallet: WalletNew) -> AdapterState? {
+    func state(wallet: Wallet) -> AdapterState? {
         queue.sync { adapterMap[wallet]?.balanceState }
     }
 

@@ -12,7 +12,7 @@ class BinanceAdapter {
     private let asset: Asset
     private let transactionSource: TransactionSource
 
-    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: PlatformCoin, wallet: WalletNew) {
+    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: PlatformCoin, wallet: Wallet) {
         self.binanceKit = binanceKit
         self.feeCoin = feeCoin
         coin = wallet.platformCoin

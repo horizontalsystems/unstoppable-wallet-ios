@@ -4,13 +4,13 @@ import MarketKit
 
 class ManageWalletsService {
     private let account: Account
-    private let coinManager: CoinManagerNew
-    private let walletManager: WalletManagerNew
+    private let coinManager: CoinManager
+    private let walletManager: WalletManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
     private var marketCoins = [MarketCoin]()
-    private var wallets = Set<WalletNew>()
+    private var wallets = Set<Wallet>()
     private var filter: String = ""
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -24,7 +24,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(coinManager: CoinManagerNew, walletManager: WalletManagerNew, accountManager: IAccountManager, enableCoinService: EnableCoinService) {
+    init?(coinManager: CoinManager, walletManager: WalletManager, accountManager: IAccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -86,7 +86,7 @@ class ManageWalletsService {
         }
     }
 
-    private func sync(wallets: [WalletNew]) {
+    private func sync(wallets: [Wallet]) {
         self.wallets = Set(wallets)
     }
 
@@ -120,7 +120,7 @@ class ManageWalletsService {
         items = marketCoins.map { item(marketCoin: $0) }
     }
 
-    private func handleUpdated(wallets: [WalletNew]) {
+    private func handleUpdated(wallets: [Wallet]) {
         sync(wallets: wallets)
 
         let coins = marketCoins.map { $0.coin }
@@ -147,7 +147,7 @@ class ManageWalletsService {
         let newConfiguredCoins = configuredPlatformCoins.filter { !existingConfiguredPlatformCoins.contains($0) }
         let removedWallets = existingWallets.filter { !configuredPlatformCoins.contains($0.configuredPlatformCoin) }
 
-        let newWallets = newConfiguredCoins.map { WalletNew(configuredPlatformCoin: $0, account: account) }
+        let newWallets = newConfiguredCoins.map { Wallet(configuredPlatformCoin: $0, account: account) }
 
         if !newWallets.isEmpty || !removedWallets.isEmpty {
             walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))

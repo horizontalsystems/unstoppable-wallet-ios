@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 import XRatesKit
 
 class CoinTvlRankViewModel {
@@ -59,7 +59,7 @@ class CoinTvlRankViewModel {
 
     private func viewItem(defiTvl: DefiTvl) -> ViewItem {
         ViewItem(
-                coinType: defiTvl.data.coinType,
+                coinType: defiTvl.data.coinType.coinType,
                 coinTitle: defiTvl.data.name,
                 rank: "\(defiTvl.tvlRank)",
                 chain: chainDescription(chains: defiTvl.chains),

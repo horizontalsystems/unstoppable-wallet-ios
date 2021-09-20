@@ -90,11 +90,6 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         delegate.onCopy(receiver: receiver)
     }
 
-    private func format(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
-        return decimalFormatter.string(from: coinValue.value as NSNumber)
-    }
-
     private func format(currencyValue: CurrencyValue) -> String? {
         decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
         return decimalFormatter.string(from: currencyValue.value as NSNumber)
@@ -162,7 +157,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         switch viewItem.primaryInfo {
         case .coinValue(let coinValue):
-            formattedPrimary = ValueFormatter.instance.format(coinValueNew: coinValue)
+            formattedPrimary = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             formattedPrimary = ValueFormatter.instance.format(currencyValue: currencyValue)
         }
@@ -170,7 +165,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
         if let secondaryInfo = viewItem.secondaryInfo {
             switch secondaryInfo {
             case .coinValue(let coinValue):
-                formattedSecondary = ValueFormatter.instance.format(coinValueNew: coinValue)
+                formattedSecondary = ValueFormatter.instance.format(coinValue: coinValue)
             case .currencyValue(let currencyValue):
                 formattedSecondary = ValueFormatter.instance.format(currencyValue: currencyValue)
             }
@@ -195,7 +190,7 @@ extension SendConfirmationViewController: ISendConfirmationView {
 
         switch viewItem.primaryInfo {
         case .coinValue(let coinValue):
-            formattedPrimary = ValueFormatter.instance.format(coinValueNew: coinValue)
+            formattedPrimary = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             formattedPrimary = ValueFormatter.instance.format(currencyValue: currencyValue)
         }

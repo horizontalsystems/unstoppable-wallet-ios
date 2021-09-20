@@ -607,7 +607,7 @@ extension CoinPageViewController {
     }
 
     private func openMarkets(tickers: [MarketTicker]) {
-        let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, coinType: viewModel.coinType, tickers: tickers)
+        let viewController = CoinMarketsModule.viewController(coinCode: viewModel.coinCode, coinType: viewModel.coinType.coinType, tickers: tickers)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -632,7 +632,7 @@ extension CoinPageViewController {
     }
 
     private func openTvl() {
-        let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType)
+        let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType.coinType)
         present(viewController, animated: true)
     }
 
@@ -642,7 +642,7 @@ extension CoinPageViewController {
     }
 
     private func openTradingVolume() {
-        let viewController = CoinTradingVolumeModule.viewController(coinType: viewModel.coinType, coinTitle: viewModel.coinTitle)
+        let viewController = CoinTradingVolumeModule.viewController(coinType: viewModel.coinType.coinType, coinTitle: viewModel.coinTitle)
         present(viewController, animated: true)
     }
 
@@ -944,9 +944,9 @@ extension CoinPageViewController: SectionsDataSource {
                 sections.append(tvlSection)
             }
 
-            sections.append(contentsOf: investorDataSections(majorHoldersCoinType: viewItem.majorHoldersCoinType, fundCategories: viewItem.fundCategories))
+            sections.append(contentsOf: investorDataSections(majorHoldersCoinType: viewItem.majorHoldersCoinType?.coinType, fundCategories: viewItem.fundCategories))
 
-            sections.append(contentsOf: securitySections(securityViewItems: viewItem.securities, auditsCoinType: viewItem.auditsCoinType))
+            sections.append(contentsOf: securitySections(securityViewItems: viewItem.securities, auditsCoinType: viewItem.auditsCoinType?.coinType))
 
             if let categories = viewItem.categories {
                 sections.append(categoriesSection(categories: categories))

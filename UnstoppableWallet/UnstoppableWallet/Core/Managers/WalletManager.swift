@@ -1,11 +1,10 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class WalletManager {
     private let accountManager: IAccountManager
-    private let adapterProviderFactory: AdapterFactory
-    private let storage: IWalletStorage
+    private let storage: WalletStorage
     private let disposeBag = DisposeBag()
 
     private let activeWalletsRelay = PublishRelay<[Wallet]>()
@@ -14,9 +13,8 @@ class WalletManager {
 
     private var cachedActiveWallets = [Wallet]()
 
-    init(accountManager: IAccountManager, adapterProviderFactory: AdapterFactory, storage: IWalletStorage) {
+    init(accountManager: IAccountManager, storage: WalletStorage) {
         self.accountManager = accountManager
-        self.adapterProviderFactory = adapterProviderFactory
         self.storage = storage
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.reloadWallets() }
@@ -24,8 +22,12 @@ class WalletManager {
     }
 
     private func handleDelete(account: Account) {
-        let accountWallets = storage.wallets(account: account)
-        storage.handle(newWallets: [], deletedWallets: accountWallets)
+        do {
+            let accountWallets = try storage.wallets(account: account)
+            storage.handle(newWallets: [], deletedWallets: accountWallets)
+        } catch {
+            // todo
+        }
     }
 
     private var activeAccountWallets: [Wallet] {
@@ -33,7 +35,12 @@ class WalletManager {
             return []
         }
 
-        return storage.wallets(account: activeAccount)
+        do {
+            return try storage.wallets(account: activeAccount)
+        } catch {
+            // todo
+            return []
+        }
     }
 
     private func _reloadWallets() {
@@ -62,7 +69,12 @@ extension WalletManager {
     }
 
     func wallets(account: Account) -> [Wallet] {
-        storage.wallets(account: account)
+        do {
+            return try storage.wallets(account: account)
+        } catch {
+            // todo
+            return []
+        }
     }
 
     func handle(newWallets: [Wallet], deletedWallets: [Wallet]) {

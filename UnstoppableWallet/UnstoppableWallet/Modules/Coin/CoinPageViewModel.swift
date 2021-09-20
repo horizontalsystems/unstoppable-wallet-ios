@@ -3,7 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import XRatesKit
-import CoinKit
+import MarketKit
 import UIKit
 
 class CoinPageViewModel {
@@ -92,14 +92,14 @@ class CoinPageViewModel {
 
     private var majorHoldersCoinType: CoinType? {
         switch service.coinType {
-        case .erc20: return service.coinType
+        case .erc20: return service.coinType.coinType
         default: return nil
         }
     }
 
     private var auditsCoinType: CoinType? {
         switch service.coinType {
-        case .erc20, .bep20: return service.coinType
+        case .erc20, .bep20: return service.coinType.coinType
         default: return nil
         }
     }
@@ -154,7 +154,7 @@ class CoinPageViewModel {
 extension CoinPageViewModel {
 
     var coinType: CoinType {
-        service.coinType
+        service.coinType.coinType
     }
 
     var title: String {

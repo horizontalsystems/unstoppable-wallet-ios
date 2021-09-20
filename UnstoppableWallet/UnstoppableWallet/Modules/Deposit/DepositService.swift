@@ -1,11 +1,11 @@
 import MarketKit
 
 class DepositService {
-    private let wallet: WalletNew
+    private let wallet: Wallet
     private let adapter: IDepositAdapter
     let address: String
 
-    init(wallet: WalletNew, adapter: IDepositAdapter) {
+    init(wallet: Wallet, adapter: IDepositAdapter) {
         self.wallet = wallet
         self.adapter = adapter
 

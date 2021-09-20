@@ -27,7 +27,7 @@ class BitcoinBaseAdapter {
     private let coin: PlatformCoin
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: WalletNew, testMode: Bool) {
+    init(abstractKit: AbstractKit, wallet: Wallet, testMode: Bool) {
         self.abstractKit = abstractKit
         self.testMode = testMode
         coin = wallet.platformCoin

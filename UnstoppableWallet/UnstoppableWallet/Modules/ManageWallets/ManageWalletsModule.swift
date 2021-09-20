@@ -7,8 +7,8 @@ struct ManageWalletsModule {
         let (enableCoinService, enableCoinView) = EnableCoinModule.module()
 
         guard let service = ManageWalletsService(
-                coinManager: App.shared.coinManagerNew,
-                walletManager: App.shared.walletManagerNew,
+                coinManager: App.shared.coinManager,
+                walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
                 enableCoinService: enableCoinService
         ) else {

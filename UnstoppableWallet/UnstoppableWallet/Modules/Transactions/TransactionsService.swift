@@ -18,7 +18,7 @@ class TransactionsService {
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
 
-    init(walletManager: WalletManagerNew, adapterManager: TransactionAdapterManager) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
         rateService = HistoricalRateService(ratesManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit)
@@ -70,7 +70,7 @@ class TransactionsService {
         return groupedWallets
     }
 
-    private func handle(updatedWallets: [WalletNew]) {
+    private func handle(updatedWallets: [Wallet]) {
         filterHelper.set(wallets: updatedWallets)
     }
 

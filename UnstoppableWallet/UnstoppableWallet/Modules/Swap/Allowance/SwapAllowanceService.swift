@@ -6,7 +6,7 @@ import MarketKit
 
 class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let adapterManager: AdapterManagerNew
+    private let adapterManager: AdapterManager
 
     private var platformCoin: PlatformCoin?
 
@@ -22,7 +22,7 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManagerNew, evmKit: EthereumKit.Kit) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, evmKit: EthereumKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
 
@@ -52,7 +52,7 @@ class SwapAllowanceService {
                 .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.state = .ready(allowance: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: allowance))
+                    self?.state = .ready(allowance: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: allowance))
                 }, onError: { [weak self] error in
                     self?.state = .notReady(error: error)
                 })
@@ -96,7 +96,7 @@ extension SwapAllowanceService {
 
     enum State: Equatable {
         case loading
-        case ready(allowance: CoinValueNew)
+        case ready(allowance: CoinValue)
         case notReady(error: Error)
 
         static func ==(lhs: State, rhs: State) -> Bool {

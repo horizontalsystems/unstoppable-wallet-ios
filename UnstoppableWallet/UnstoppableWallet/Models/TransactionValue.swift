@@ -37,7 +37,7 @@ enum TransactionValue {
 
     public var isMaxValue: Bool {
         switch self {
-        case .coinValue(let platformCoin, let value): return CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: value).isMaxValue
+        case .coinValue(let platformCoin, let value): return CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value).isMaxValue
         case .rawValue(_, let value): return false
         }
     }
@@ -52,7 +52,7 @@ enum TransactionValue {
     var formattedString: String {
         switch self {
         case .coinValue(let platformCoin, let value):
-            let coinValue = CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: value)
+            let coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
 
             return ValueFormatter.instance.format(transactionValue: self) ?? ""
 

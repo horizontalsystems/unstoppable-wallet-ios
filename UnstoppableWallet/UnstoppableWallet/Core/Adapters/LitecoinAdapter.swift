@@ -5,7 +5,7 @@ import RxSwift
 class LitecoinAdapter: BitcoinBaseAdapter {
     private let litecoinKit: Kit
 
-    init(wallet: WalletNew, syncMode: SyncMode, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }

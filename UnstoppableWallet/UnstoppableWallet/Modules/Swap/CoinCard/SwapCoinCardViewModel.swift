@@ -56,8 +56,8 @@ class SwapCoinCardViewModel {
             return
         }
 
-        let coinValue = CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: balance)
-        balanceRelay.accept(ValueFormatter.instance.format(coinValueNew: coinValue))
+        let coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: balance)
+        balanceRelay.accept(ValueFormatter.instance.format(coinValue: coinValue))
     }
 
     private func sync(error: Error?) {

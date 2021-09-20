@@ -127,10 +127,6 @@ protocol ISendSubRouter: AnyObject {
     var viewController: UIViewController? { set get }
 }
 
-protocol ISendConfirmationItemFactory {
-    func viewItem(sendInputType: SendInputType, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, receiver: String, showMemo: Bool, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) -> SendConfirmationViewItem?
-}
-
 enum SendInputType: String {
     case coin = "coin"
     case currency = "currency"
@@ -139,7 +135,7 @@ enum SendInputType: String {
 }
 
 enum AmountInfo {
-    case coinValue(coinValue: CoinValueNew)
+    case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
 
     var formattedString: String? {

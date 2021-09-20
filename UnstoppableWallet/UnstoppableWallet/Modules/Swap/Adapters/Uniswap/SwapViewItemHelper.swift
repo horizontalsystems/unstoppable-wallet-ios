@@ -9,7 +9,7 @@ class SwapViewItemHelper {
         }
 
         let value = price.isZero ? 0 : 1 / price
-        return PriceCoinValue(baseCoin: platformCoinOut.coin, quoteCoinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoinIn), value: value))
+        return PriceCoinValue(baseCoin: platformCoinOut.coin, quoteCoinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoinIn), value: value))
     }
 
     func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
@@ -32,7 +32,7 @@ class SwapViewItemHelper {
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.minimum_got".localized,
-                    value: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
+                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
             )
         case .exactOut:
             guard let amount = tradeData.amountInMax, let platformCoin = platformCoinIn else {
@@ -41,7 +41,7 @@ class SwapViewItemHelper {
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.maximum_paid".localized,
-                    value: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
+                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
             )
         }
     }
@@ -61,10 +61,10 @@ extension SwapViewItemHelper {
 
     struct PriceCoinValue {
         let baseCoin: Coin
-        let quoteCoinValue: CoinValueNew
+        let quoteCoinValue: CoinValue
 
         var formattedString: String {
-            ValueFormatter.instance.format(coinValueNew: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+            ValueFormatter.instance.format(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
 
     }

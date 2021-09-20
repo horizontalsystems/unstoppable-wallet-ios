@@ -9,8 +9,8 @@ class EnabledWalletCache: Record {
     let balanceLocked: Decimal
 
     init(wallet: Wallet, balanceData: BalanceData) {
-        coinId = wallet.coin.id
-        coinSettingsId = wallet.configuredCoin.settings.id
+        coinId = wallet.coinType.id
+        coinSettingsId = wallet.coinSettings.id
         accountId = wallet.account.id
         balance = balanceData.balance
         balanceLocked = balanceData.balanceLocked

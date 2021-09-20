@@ -6,7 +6,7 @@ import MarketKit
 
 class SwapPendingAllowanceService {
     private let spenderAddress: EthereumKit.Address
-    private let adapterManager: AdapterManagerNew
+    private let adapterManager: AdapterManager
     private let allowanceService: SwapAllowanceService
 
     private var platformCoin: PlatformCoin?
@@ -23,7 +23,7 @@ class SwapPendingAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManagerNew, allowanceService: SwapAllowanceService) {
+    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, allowanceService: SwapAllowanceService) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
         self.allowanceService = allowanceService

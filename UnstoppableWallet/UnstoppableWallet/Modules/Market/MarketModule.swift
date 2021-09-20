@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import XRatesKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 import ComponentKit
 
 struct MarketModule {
@@ -182,7 +182,7 @@ extension MarketModule { // Service Items
 
             coinCode = coinMarket.coinData.code
             coinName = coinMarket.coinData.name
-            coinType = coinMarket.coinData.coinType
+            coinType = coinMarket.coinData.coinType.coinType
             marketCap = coinMarket.marketInfo.marketCap
             dilutedMarketCap = coinMarket.marketInfo.dilutedMarketCap
             liquidity = coinMarket.marketInfo.liquidity

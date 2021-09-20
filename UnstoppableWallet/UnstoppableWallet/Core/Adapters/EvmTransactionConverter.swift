@@ -7,12 +7,12 @@ import MarketKit
 import BigInt
 
 class EvmTransactionConverter {
-    private let coinManager: CoinManagerNew
+    private let coinManager: CoinManager
     private let evmKit: EthereumKit.Kit
     private let source: TransactionSource
     private let baseCoin: PlatformCoin
 
-    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManagerNew, evmKit: EthereumKit.Kit) {
+    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager, evmKit: EthereumKit.Kit) {
         self.coinManager = coinManager
         self.evmKit = evmKit
         self.source = source

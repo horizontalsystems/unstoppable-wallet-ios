@@ -20,8 +20,8 @@ class CoinSelectViewModel {
     private func sync() {
         let viewItems = filteredItems.map { item -> ViewItem in
             let formatted = item.balance
-                    .flatMap { CoinValueNew(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
-                    .flatMap { ValueFormatter.instance.format(coinValueNew: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
+                    .flatMap { CoinValue(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
+                    .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
             let fiatFormatted = item.rate
                     .flatMap { rate in item.balance.map { $0 * rate } }

@@ -4,7 +4,7 @@ import XRatesKit
 import MarketKit
 
 struct BalanceViewItem {
-    let wallet: WalletNew
+    let wallet: Wallet
 
     let topViewItem: BalanceTopViewItem
     let lockedAmountViewItem: BalanceLockedAmountViewItem?
@@ -125,7 +125,7 @@ extension BalanceButtonsViewItem: Equatable {
 
 extension BalanceViewItem: DiffAware {
 
-    public var diffId: WalletNew {
+    public var diffId: Wallet {
         wallet
     }
 

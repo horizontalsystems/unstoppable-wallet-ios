@@ -83,7 +83,7 @@ class FiatService {
 
     private func sync() {
         if let platformCoin = platformCoin {
-            let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: coinAmount))
+            let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: coinAmount))
             let currencyAmountInfo: AmountInfo? = currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: currency, value: $0)) }
 
             switch switchService.amountType {

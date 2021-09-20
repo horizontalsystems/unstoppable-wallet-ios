@@ -30,7 +30,7 @@ extension NotificationSettingsRouter {
 
     static func module() -> UIViewController {
         let router = NotificationSettingsRouter()
-        let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager, coinManager: App.shared.coinManagerNew, localStorage: App.shared.localStorage)
+        let interactor = NotificationSettingsInteractor(priceAlertManager: App.shared.priceAlertManager, notificationManager: App.shared.notificationManager, appManager: App.shared.appManager, coinManager: App.shared.coinManager, localStorage: App.shared.localStorage)
         let factory = NotificationSettingsViewItemFactory()
         let presenter = NotificationSettingsPresenter(router: router, interactor: interactor, factory: factory)
         let view = NotificationSettingsViewController(delegate: presenter)
