@@ -28,7 +28,7 @@ class WalletViewItemFactory {
         )
     }
 
-    private func badge(wallet: WalletNew) -> String? {
+    private func badge(wallet: Wallet) -> String? {
         switch wallet.coinType {
         case .bitcoin, .litecoin:
             return wallet.coinSettings.derivation?.rawValue.uppercased()
@@ -79,7 +79,7 @@ class WalletViewItemFactory {
         )
     }
 
-    private func iconUrlString(wallet: WalletNew, state: AdapterState) -> String? {
+    private func iconUrlString(wallet: Wallet, state: AdapterState) -> String? {
         switch state {
         case .notSynced: return nil
         default: return wallet.coin.imageUrl
@@ -138,7 +138,7 @@ class WalletViewItemFactory {
 
     private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.format(coinValueNew: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
+                text: ValueFormatter.instance.format(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
                 dimmed: state != .synced
         )
     }

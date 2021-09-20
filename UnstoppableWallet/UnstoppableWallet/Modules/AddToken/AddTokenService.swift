@@ -12,8 +12,8 @@ protocol IAddTokenBlockchainService {
 class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
-    private let coinManager: CoinManagerNew
-    private let walletManager: WalletManagerNew
+    private let coinManager: CoinManager
+    private let walletManager: WalletManager
 
     private var disposeBag = DisposeBag()
 
@@ -24,7 +24,7 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManagerNew, walletManager: WalletManagerNew) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManager, walletManager: WalletManager) {
         self.account = account
         self.blockchainServices = blockchainServices
         self.coinManager = coinManager
@@ -93,7 +93,7 @@ extension AddTokenService {
 
         coinManager.save(customTokens: [customToken])
 
-        let wallet = WalletNew(platformCoin: customToken.platformCoin, account: account)
+        let wallet = Wallet(platformCoin: customToken.platformCoin, account: account)
         walletManager.save(wallets: [wallet])
     }
 

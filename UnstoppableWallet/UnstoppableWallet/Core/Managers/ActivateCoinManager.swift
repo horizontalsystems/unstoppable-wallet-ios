@@ -2,10 +2,10 @@ import MarketKit
 
 class ActivateCoinManager {
     private let marketKit: Kit
-    private let walletManager: WalletManagerNew
+    private let walletManager: WalletManager
     private let accountManager: IAccountManager
 
-    init(marketKit: Kit, walletManager: WalletManagerNew, accountManager: IAccountManager) {
+    init(marketKit: Kit, walletManager: WalletManager, accountManager: IAccountManager) {
         self.marketKit = marketKit
         self.walletManager = walletManager
         self.accountManager = accountManager
@@ -27,7 +27,7 @@ class ActivateCoinManager {
             return
         }
 
-        let wallet = WalletNew(platformCoin: platformCoin, account: account)
+        let wallet = Wallet(platformCoin: platformCoin, account: account)
         walletManager.save(wallets: [wallet])
     }
 

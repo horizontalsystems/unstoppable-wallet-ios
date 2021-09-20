@@ -32,7 +32,7 @@ extension TransactionFilterHelper {
         return wallets[index]
     }
 
-    func set(wallets: [WalletNew]) {
+    func set(wallets: [Wallet]) {
         let newWallets = wallets
                 .sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
                 .map { TransactionWallet(coin: $0.platformCoin, source: $0.transactionSource) }

@@ -68,7 +68,7 @@ class AmountInfoView: UIView {
         switch primaryAmountInfo {
         case .coinValue(let coinValue):
             primaryAmountTitleLabel.text = coinValue.coin.name
-            amountLabel = ValueFormatter.instance.format(coinValueNew: coinValue)
+            amountLabel = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             primaryAmountTitleLabel.text = currencyValue.currency.code
             amountLabel = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: customPrimaryFractionPolicy, trimmable: primaryFormatTrimmable)

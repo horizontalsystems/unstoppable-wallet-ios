@@ -4,8 +4,8 @@ import PinKit
 
 class AppManager {
     private let accountManager: IAccountManager
-    private let walletManager: WalletManagerNew
-    private let adapterManager: AdapterManagerNew
+    private let walletManager: WalletManager
+    private let adapterManager: AdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: IBlurManager
@@ -21,7 +21,7 @@ class AppManager {
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: WalletManagerNew, adapterManager: AdapterManagerNew, pinKit: IPinKit,
+    init(accountManager: IAccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,

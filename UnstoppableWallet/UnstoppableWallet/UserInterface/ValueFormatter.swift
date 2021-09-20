@@ -30,11 +30,7 @@ class ValueFormatter {
     }()
 
     func format(coinValue: CoinValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
-        format(value: coinValue.value, decimalCount: coinValue.coin.decimal, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
-    }
-
-    func format(coinValueNew: CoinValueNew, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
-        format(value: coinValueNew.value, decimalCount: coinValueNew.decimal, symbol: showCode ? coinValueNew.coin.code : nil, fractionPolicy: fractionPolicy)
+        format(value: coinValue.value, decimalCount: coinValue.decimal, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
 
     func format(transactionValue: TransactionValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {

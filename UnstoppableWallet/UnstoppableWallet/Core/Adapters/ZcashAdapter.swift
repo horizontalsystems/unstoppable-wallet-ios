@@ -48,7 +48,7 @@ class ZcashAdapter {
         return Decimal(fee) / Self.coinRate
     }
 
-    init(wallet: WalletNew, restoreSettings: RestoreSettings, testMode: Bool) throws {
+    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }

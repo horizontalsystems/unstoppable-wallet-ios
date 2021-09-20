@@ -267,19 +267,19 @@ class WalletViewController: ThemeViewController {
         present(SortTypeRouter.module(), animated: true)
     }
 
-    private func openReceive(wallet: WalletNew) {
+    private func openReceive(wallet: Wallet) {
         if let module = DepositModule.viewController(wallet: wallet) {
             present(module, animated: true)
         }
     }
 
-    private func openSend(wallet: WalletNew) {
+    private func openSend(wallet: Wallet) {
         if let module = SendRouter.module(wallet: wallet) {
             present(module, animated: true)
         }
     }
 
-    private func openSwap(wallet: WalletNew) {
+    private func openSwap(wallet: Wallet) {
         if let module = SwapModule.viewController(platformCoinFrom: wallet.platformCoin) {
             present(module, animated: true)
         }
@@ -290,13 +290,13 @@ class WalletViewController: ThemeViewController {
 //        present(viewController, animated: true)
     }
 
-    private func openBackupRequired(wallet: WalletNew) {
+    private func openBackupRequired(wallet: Wallet) {
         let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)
         let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: self).toBottomSheet
         present(module, animated: true)
     }
 
-    private func openSyncError(wallet: WalletNew, error: Error) {
+    private func openSyncError(wallet: Wallet, error: Error) {
         let viewController = BalanceErrorRouter.module(wallet: wallet, error: error, navigationController: navigationController)
         present(viewController, animated: true)
     }

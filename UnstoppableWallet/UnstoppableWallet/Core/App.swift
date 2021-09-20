@@ -33,13 +33,10 @@ class App {
     let accountFactory: AccountFactory
     let backupManager: IBackupManager
 
-    let coinManager: ICoinManager
-    let coinManagerNew: CoinManagerNew
+    let coinManager: CoinManager
 
     let walletManager: WalletManager
-    let walletManagerNew: WalletManagerNew
     let adapterManager: AdapterManager
-    let adapterManagerNew: AdapterManagerNew
     let transactionAdapterManager: TransactionAdapterManager
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
@@ -136,8 +133,7 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit)
-        coinManagerNew = CoinManagerNew(marketKit: marketKit, storage: storage)
+        coinManager = CoinManager(marketKit: marketKit, storage: storage)
 
         evmNetworkManager = EvmNetworkManager(appConfigProvider: appConfigProvider)
         accountSettingManager = AccountSettingManager(storage: storage, evmNetworkManager: evmNetworkManager)
@@ -155,12 +151,9 @@ class App {
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
         initialSyncSettingsManager = InitialSyncSettingsManager(marketKit: marketKit, storage: settingsStorage)
 
-        let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
-        let walletStorageNew = WalletStorageNew(coinManager: coinManagerNew, storage: storage)
-        let adapterProviderFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, restoreSettingsManager: restoreSettingsManager, coinManager: coinManager)
+        let walletStorage = WalletStorage(coinManager: coinManager, storage: storage)
 
-        walletManager = WalletManager(accountManager: accountManager, adapterProviderFactory: adapterProviderFactory, storage: walletStorage)
-        walletManagerNew = WalletManagerNew(accountManager: accountManager, storage: walletStorageNew)
+        walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
 
         let adapterFactory = AdapterFactory(
                 appConfigProvider: appConfigProvider,
@@ -171,15 +164,6 @@ class App {
                 restoreSettingsManager: restoreSettingsManager,
                 coinManager: coinManager
         )
-        let adapterFactoryNew = AdapterFactoryNew(
-                appConfigProvider: appConfigProvider,
-                ethereumKitManager: ethereumKitManager,
-                binanceSmartChainKitManager: binanceSmartChainKitManager,
-                binanceKitManager: binanceKitManager,
-                initialSyncSettingsManager: initialSyncSettingsManager,
-                restoreSettingsManager: restoreSettingsManager,
-                coinManager: coinManagerNew
-        )
         adapterManager = AdapterManager(
                 adapterFactory: adapterFactory,
                 walletManager: walletManager,
@@ -187,16 +171,9 @@ class App {
                 binanceSmartChainKitManager: binanceSmartChainKitManager,
                 initialSyncSettingsManager: initialSyncSettingsManager
         )
-        adapterManagerNew = AdapterManagerNew(
-                adapterFactory: adapterFactoryNew,
-                walletManager: walletManagerNew,
-                ethereumKitManager: ethereumKitManager,
-                binanceSmartChainKitManager: binanceSmartChainKitManager,
-                initialSyncSettingsManager: initialSyncSettingsManager
-        )
         transactionAdapterManager = TransactionAdapterManager(
-                adapterManager: adapterManagerNew,
-                adapterFactory: adapterFactoryNew
+                adapterManager: adapterManager,
+                adapterFactory: adapterFactory
         )
 
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: storage, accountManager: accountManager)
@@ -206,8 +183,8 @@ class App {
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
-        rateManagerNew = RateManagerNew(walletManager: walletManagerNew, feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
+        rateManager = RateManager(currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
+        rateManagerNew = RateManagerNew(walletManager: walletManager, feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
         favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)
@@ -224,23 +201,23 @@ class App {
 
         let serializer = JsonSerializer()
         let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManagerNew, remoteAlertManager: remoteAlertManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
+        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteAlertManager: remoteAlertManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
 
         notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, storage: localStorage, serializer: serializer)
 
         remoteAlertManager.notificationManager = notificationManager
 
         let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: storage)
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManagerNew, adapterManager: adapterManagerNew, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
+        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
-        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManagerNew)
+        keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
 
         pinKitDelegate = PinKitDelegate()
         pinKit.set(delegate: pinKitDelegate)
 
-        rateAppManager = RateAppManager(walletManager: walletManagerNew, adapterManager: adapterManagerNew, localStorage: localStorage)
+        rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
@@ -248,14 +225,14 @@ class App {
         walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, accountSettingManager: accountSettingManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
 
-        activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManagerNew, accountManager: accountManager)
+        activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 
         deepLinkManager = DeepLinkManager()
 
         appManager = AppManager(
                 accountManager: accountManager,
-                walletManager: walletManagerNew,
-                adapterManager: adapterManagerNew,
+                walletManager: walletManager,
+                adapterManager: adapterManager,
                 pinKit: pinKit,
                 keychainKit: keychainKit,
                 blurManager: blurManager,

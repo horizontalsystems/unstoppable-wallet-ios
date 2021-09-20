@@ -8,11 +8,11 @@ class NotificationSettingsInteractor {
 
     private let priceAlertManager: IPriceAlertManager
     private let notificationManager: INotificationManager
-    private let coinManager: CoinManagerNew
+    private let coinManager: CoinManager
 
     private let localStorage: ILocalStorage
 
-    init(priceAlertManager: IPriceAlertManager, notificationManager: INotificationManager, appManager: IAppManager, coinManager: CoinManagerNew, localStorage: ILocalStorage) {
+    init(priceAlertManager: IPriceAlertManager, notificationManager: INotificationManager, appManager: IAppManager, coinManager: CoinManager, localStorage: ILocalStorage) {
         self.priceAlertManager = priceAlertManager
         self.notificationManager = notificationManager
         self.coinManager = coinManager

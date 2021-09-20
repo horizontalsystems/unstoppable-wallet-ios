@@ -7,10 +7,10 @@ class BalanceErrorPresenter {
     private let interactor: IBalanceErrorInteractor
     private let router: IBalanceErrorRouter
 
-    private let wallet: WalletNew
+    private let wallet: Wallet
     private let error: Error
 
-    init(wallet: WalletNew, error: Error, interactor: IBalanceErrorInteractor, router: IBalanceErrorRouter) {
+    init(wallet: Wallet, error: Error, interactor: IBalanceErrorInteractor, router: IBalanceErrorRouter) {
         self.wallet = wallet
         self.error = error
 

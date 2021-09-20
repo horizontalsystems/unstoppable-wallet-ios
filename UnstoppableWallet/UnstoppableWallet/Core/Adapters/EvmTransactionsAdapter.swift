@@ -11,7 +11,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManagerNew) {
+    init(evmKit: EthereumKit.Kit, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager) {
         transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
 
         super.init(evmKit: evmKit, decimal: EvmAdapter.decimal)

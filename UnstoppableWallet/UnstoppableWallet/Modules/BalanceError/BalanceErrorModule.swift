@@ -15,7 +15,7 @@ protocol IBalanceErrorViewDelegate {
 
 protocol IBalanceErrorInteractor {
     var contactEmail: String { get }
-    func refresh(wallet: WalletNew)
+    func refresh(wallet: Wallet)
 }
 
 protocol IBalanceErrorInteractorDelegate: AnyObject {

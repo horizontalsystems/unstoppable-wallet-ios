@@ -9,7 +9,7 @@ struct TransactionsModule {
 
     static func instance() -> UIViewController {
         let service = TransactionsService(
-                walletManager: App.shared.walletManagerNew,
+                walletManager: App.shared.walletManager,
                 adapterManager: App.shared.transactionAdapterManager
         )
         let viewModel = TransactionsViewModel(service: service, factory: TransactionsViewItemFactory())

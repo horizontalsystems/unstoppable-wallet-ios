@@ -6,11 +6,11 @@ import MarketKit
 class RateManagerNew {
     private let disposeBag = DisposeBag()
 
-    private let walletManager: WalletManagerNew
+    private let walletManager: WalletManager
     private let feeCoinProvider: FeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
 
-    init(walletManager: WalletManagerNew, feeCoinProvider: FeeCoinProvider, appConfigProvider: IAppConfigProvider) {
+    init(walletManager: WalletManager, feeCoinProvider: FeeCoinProvider, appConfigProvider: IAppConfigProvider) {
         self.walletManager = walletManager
         self.feeCoinProvider = feeCoinProvider
         self.appConfigProvider = appConfigProvider

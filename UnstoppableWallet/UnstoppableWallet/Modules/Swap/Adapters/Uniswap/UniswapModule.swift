@@ -22,12 +22,12 @@ class UniswapModule {
         )
         allowanceService = SwapAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManagerNew,
+                adapterManager: App.shared.adapterManager,
                 evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
                 spenderAddress: uniswapRepository.routerAddress,
-                adapterManager: App.shared.adapterManagerNew,
+                adapterManager: App.shared.adapterManager,
                 allowanceService: allowanceService
         )
         service = UniswapService(
@@ -35,7 +35,7 @@ class UniswapModule {
                 tradeService: tradeService,
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
-                adapterManager: App.shared.adapterManagerNew
+                adapterManager: App.shared.adapterManager
         )
     }
 

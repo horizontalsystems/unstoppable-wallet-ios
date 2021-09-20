@@ -8,7 +8,7 @@ struct CreateAccountModule {
                 accountFactory: App.shared.accountFactory,
                 wordsManager: App.shared.wordsManager,
                 accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManagerNew,
+                walletManager: App.shared.walletManager,
                 passphraseValidator: PassphraseValidator(),
                 marketKit: App.shared.marketKit
         )

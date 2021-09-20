@@ -25,9 +25,9 @@ extension CoinService {
         }
     }
 
-    func coinValue(value: BigUInt) -> CoinValueNew {
+    func coinValue(value: BigUInt) -> CoinValue {
         let decimalValue = Decimal(bigUInt: value, decimal: platformCoin.decimal) ?? 0
-        return CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: decimalValue)
+        return CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: decimalValue)
     }
 
     // Example: Dollar, Bitcoin, Ether, etc
@@ -44,7 +44,7 @@ extension CoinService {
         let primaryInfo: AmountInfo
         var secondaryInfo: AmountInfo?
 
-        let coinValue = CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: value)
+        let coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
 
         if let rate = rate {
             primaryInfo = .coinValue(coinValue: coinValue)

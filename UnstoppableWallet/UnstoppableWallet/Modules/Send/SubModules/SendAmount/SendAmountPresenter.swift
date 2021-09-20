@@ -84,7 +84,7 @@ class SendAmountPresenter {
     private func primaryAmountInfo(amount: Decimal) -> AmountInfo {
         switch inputType {
         case .coin:
-            return .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: amount))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
         case .currency:
             if let rateValue = rateValue {
                 return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
@@ -97,7 +97,7 @@ class SendAmountPresenter {
     private func secondaryAmountInfo(amount: Decimal) -> AmountInfo? {
         switch inputType.reversed {
         case .coin:
-            return .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: amount))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
         case .currency:
             if let rateValue = rateValue {
                 return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
@@ -125,7 +125,7 @@ class SendAmountPresenter {
             if availableAmount < amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.insufficientBalance(availableAmount: .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: availableAmount)))
+                    throw ValidationError.insufficientBalance(availableAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: availableAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.insufficientBalance(availableAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableAmount * rateValue)))
@@ -140,7 +140,7 @@ class SendAmountPresenter {
             if maximumAmount < amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.maximumAmountExceeded(maximumAmount: .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: maximumAmount)))
+                    throw ValidationError.maximumAmountExceeded(maximumAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: maximumAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.maximumAmountExceeded(maximumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: maximumAmount * rateValue)))
@@ -155,7 +155,7 @@ class SendAmountPresenter {
             if minimumAmount > amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValueNew(kind: .platformCoin(platformCoin: platformCoin), value: minimumAmount)))
+                    throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: minimumAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rateValue)))

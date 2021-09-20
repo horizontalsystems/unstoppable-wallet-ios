@@ -6,8 +6,8 @@ class RestoreSelectService {
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: IAccountManager
-    private let walletManager: WalletManagerNew
-    private let coinManager: CoinManagerNew
+    private let walletManager: WalletManager
+    private let coinManager: CoinManager
     private let enableCoinService: EnableCoinService
     private let enableCoinsService: EnableCoinsService
     private let disposeBag = DisposeBag()
@@ -28,7 +28,7 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManagerNew, coinManager: CoinManagerNew, enableCoinService: EnableCoinService, enableCoinsService: EnableCoinsService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, enableCoinService: EnableCoinService, enableCoinsService: EnableCoinsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -222,7 +222,7 @@ extension RestoreSelectService {
             return
         }
 
-        let wallets = enabledCoins.map { WalletNew(configuredPlatformCoin: $0, account: account) }
+        let wallets = enabledCoins.map { Wallet(configuredPlatformCoin: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
 

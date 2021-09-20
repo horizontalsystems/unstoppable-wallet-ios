@@ -6,7 +6,7 @@ class CreateAccountService {
     private let accountFactory: AccountFactory
     private let wordsManager: IWordsManager
     private let accountManager: IAccountManager
-    private let walletManager: WalletManagerNew
+    private let walletManager: WalletManager
     private let passphraseValidator: PassphraseValidator
     private let marketKit: Kit
 
@@ -16,7 +16,7 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManagerNew, passphraseValidator: PassphraseValidator, marketKit: Kit) {
+    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager
@@ -42,7 +42,7 @@ class CreateAccountService {
     private func activateDefaultWallets(account: Account) {
         let defaultCoinTypes: [CoinType] = [.bitcoin, .ethereum, .binanceSmartChain]
 
-        var wallets = [WalletNew]()
+        var wallets = [Wallet]()
 
         for coinType in defaultCoinTypes {
             guard let platformCoin = try? marketKit.platformCoin(coinType: coinType) else {
@@ -52,11 +52,11 @@ class CreateAccountService {
             let defaultSettingsArray = coinType.defaultSettingsArray
 
             if defaultSettingsArray.isEmpty {
-                wallets.append(WalletNew(platformCoin: platformCoin, account: account))
+                wallets.append(Wallet(platformCoin: platformCoin, account: account))
             } else {
                 for coinSettings in defaultSettingsArray {
                     let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
-                    wallets.append(WalletNew(configuredPlatformCoin: configuredPlatformCoin, account: account))
+                    wallets.append(Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account))
                 }
             }
         }

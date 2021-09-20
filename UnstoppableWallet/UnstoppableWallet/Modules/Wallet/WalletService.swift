@@ -8,7 +8,7 @@ class WalletService {
     private let rateService: WalletRateService
     private let cacheManager: EnabledWalletCacheManager
     private let accountManager: IAccountManager
-    private let walletManager: WalletManagerNew
+    private let walletManager: WalletManager
     private let localStorage: ILocalStorage
     private let rateAppManager: IRateAppManager
     private let feeCoinProvider: FeeCoinProvider
@@ -45,7 +45,7 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, rateService: WalletRateService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManagerNew, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, rateService: WalletRateService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.rateService = rateService
         self.cacheManager = cacheManager
@@ -91,11 +91,11 @@ class WalletService {
         }
     }
 
-    private func sync(wallets: [WalletNew]) {
+    private func sync(wallets: [Wallet]) {
         queue.async { self._sync(wallets: wallets) }
     }
 
-    private func _sync(wallets: [WalletNew]) {
+    private func _sync(wallets: [Wallet]) {
         let cacheContainer = accountManager.activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
 //        let rateItemMap = rateService.itemMap(coinTypes: wallets.map { $0.coin.type })
 
@@ -148,7 +148,7 @@ class WalletService {
         totalItem = TotalItem(amount: total, currency: rateService.currency, expired: expired)
     }
 
-    private func _item(wallet: WalletNew) -> Item? {
+    private func _item(wallet: Wallet) -> Item? {
         items.first { $0.wallet == wallet }
     }
 
@@ -170,7 +170,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
     func didPrepareAdapters() {
         queue.async {
-            var balanceDataMap = [WalletNew: BalanceData]()
+            var balanceDataMap = [Wallet: BalanceData]()
 
             for item in self.items {
                 let balanceData = self.adapterService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
@@ -185,11 +185,11 @@ extension WalletService: IWalletAdapterServiceDelegate {
             self.items = self.sorter.sort(items: self.items, sort: self.sortType)
             self.syncTotalItem()
 
-//            self.cacheManager.set(balanceDataMap: balanceDataMap)
+            self.cacheManager.set(balanceDataMap: balanceDataMap)
         }
     }
 
-    func didUpdate(isMainNet: Bool, wallet: WalletNew) {
+    func didUpdate(isMainNet: Bool, wallet: Wallet) {
         queue.async {
             guard let item = self._item(wallet: wallet) else {
                 return
@@ -201,7 +201,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
         }
     }
 
-    func didUpdate(balanceData: BalanceData, wallet: WalletNew) {
+    func didUpdate(balanceData: BalanceData, wallet: Wallet) {
         queue.async {
             guard let item = self._item(wallet: wallet) else {
                 return
@@ -212,11 +212,11 @@ extension WalletService: IWalletAdapterServiceDelegate {
             self.itemUpdatedRelay.accept(item)
             self.syncTotalItem()
 
-//            self.cacheManager.set(balanceData: balanceData, wallet: wallet)
+            self.cacheManager.set(balanceData: balanceData, wallet: wallet)
         }
     }
 
-    func didUpdate(state: AdapterState, wallet: WalletNew) {
+    func didUpdate(state: AdapterState, wallet: Wallet) {
         queue.async {
             guard let item = self._item(wallet: wallet) else {
                 return
@@ -303,7 +303,7 @@ extension WalletService {
         localStorage.balanceHidden
     }
 
-    func item(wallet: WalletNew) -> Item? {
+    func item(wallet: Wallet) -> Item? {
         queue.sync { _item(wallet: wallet) }
     }
 
@@ -326,7 +326,7 @@ extension WalletService {
         rateService.refresh()
     }
 
-    func disable(wallet: WalletNew) {
+    func disable(wallet: Wallet) {
         walletManager.delete(wallets: [wallet])
     }
 
@@ -335,14 +335,14 @@ extension WalletService {
 extension WalletService {
 
     class Item {
-        let wallet: WalletNew
+        let wallet: Wallet
 
         var isMainNet: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var rateItem: WalletRateService.Item?
 
-        init(wallet: WalletNew, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
+        init(wallet: Wallet, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
             self.wallet = wallet
             self.isMainNet = isMainNet
             self.balanceData = balanceData

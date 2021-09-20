@@ -1,54 +1,86 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class CoinManager {
-    private let appConfigProvider: IAppConfigProvider
-    private let coinKit: CoinKit.Kit
+    private let featuredCoinTypes: [CoinType] = [.bitcoin, .ethereum, .binanceSmartChain]
 
-    private let coinsAddedRelay = PublishRelay<[Coin]>()
+    private let marketKit: Kit
+    private let storage: ICustomTokenStorage
 
-    init(appConfigProvider: IAppConfigProvider, coinKit: CoinKit.Kit) {
-        self.appConfigProvider = appConfigProvider
-        self.coinKit = coinKit
+    init(marketKit: Kit, storage: ICustomTokenStorage) {
+        self.marketKit = marketKit
+        self.storage = storage
+    }
+
+    private func adjustedCustomTokens(customTokens: [CustomToken]) throws -> [CustomToken] {
+        let existingPlatformCoins = try marketKit.platformCoins(coinTypes: customTokens.map { $0.coinType })
+        return customTokens.filter { customToken in !existingPlatformCoins.contains { $0.coinType == customToken.coinType } }
+    }
+
+    private func customMarketCoins(filter: String) throws -> [MarketCoin] {
+        let customTokens = storage.customTokens(filter: filter)
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.marketCoin }
+    }
+
+    private func customMarketCoins(coinTypes: [CoinType]) throws -> [MarketCoin] {
+        let customTokens = storage.customTokens(coinTypeIds: coinTypes.map { $0.id })
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.marketCoin }
+    }
+
+    private func customPlatformCoins() throws -> [PlatformCoin] {
+        let customTokens = storage.customTokens()
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin }
+    }
+
+    private func customPlatformCoins(coinTypeIds: [String]) throws -> [PlatformCoin] {
+        let customTokens = storage.customTokens(coinTypeIds: coinTypeIds)
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin }
+    }
+
+    private func customPlatformCoin(coinType: CoinType) -> PlatformCoin? {
+        storage.customToken(coinType: coinType).map { $0.platformCoin }
     }
 
 }
 
-extension CoinManager: ICoinManager {
+extension CoinManager {
 
-    var coinsAddedObservable: Observable<[Coin]> {
-        coinsAddedRelay.asObservable()
+    func featuredMarketCoins(enabledCoinTypes: [CoinType]) throws -> [MarketCoin] {
+        let appMarketCoins = try customMarketCoins(coinTypes: enabledCoinTypes)
+        let kitMarketCoins = try marketKit.marketCoins(coinTypes: featuredCoinTypes + enabledCoinTypes)
+
+        return appMarketCoins + kitMarketCoins
     }
 
-    var coins: [Coin] {
-        coinKit.coins
+    func marketCoins(filter: String = "", limit: Int = 20) throws -> [MarketCoin] {
+        let appMarketCoins = try customMarketCoins(filter: filter)
+        let kitMarketCoins = try marketKit.marketCoins(filter: filter, limit: limit)
+
+        return appMarketCoins + kitMarketCoins
     }
 
-    var groupedCoins: (featured: [Coin], regular: [Coin]) {
-        var featured = [Coin]()
-        var coins = coinKit.coins
-
-        for featuredCoinType in appConfigProvider.featuredCoinTypes {
-            if let index = coins.firstIndex(where: { $0.type == featuredCoinType }) {
-                featured.append(coins.remove(at: index))
-            }
-        }
-
-        return (featured: featured, regular: coins)
+    func platformCoin(coinType: CoinType) throws -> PlatformCoin? {
+        try marketKit.platformCoin(coinType: coinType) ?? customPlatformCoin(coinType: coinType)
     }
 
-    func coin(type: CoinType) -> Coin? {
-        coinKit.coin(type: type)
+    func platformCoins() throws -> [PlatformCoin] {
+        try marketKit.platformCoins() + customPlatformCoins()
     }
 
-    func coinOrStub(type: CoinType) -> Coin {
-        coin(type: type) ?? Coin(title: "", code: "", decimal: 18, type: type)
+    func platformCoins(coinTypes: [CoinType]) throws -> [PlatformCoin] {
+        try marketKit.platformCoins(coinTypes: coinTypes)
     }
 
-    func save(coins: [Coin]) {
-        coinKit.save(coins: coins)
-        coinsAddedRelay.accept(coins)
+    func platformCoins(coinTypeIds: [String]) throws -> [PlatformCoin] {
+        let kitPlatformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds)
+        let appPlatformCoins = try customPlatformCoins(coinTypeIds: coinTypeIds)
+
+        return kitPlatformCoins + appPlatformCoins
+    }
+
+    func save(customTokens: [CustomToken]) {
+        storage.save(customTokens: customTokens)
     }
 
 }
