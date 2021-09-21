@@ -22,7 +22,7 @@ class InputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        deleteView.button.apply(secondaryIconImage: UIImage(named: "trash_20"))
+        deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
         inputStackView.appendSubview(deleteView)

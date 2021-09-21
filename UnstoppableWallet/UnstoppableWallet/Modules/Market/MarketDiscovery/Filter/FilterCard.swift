@@ -7,7 +7,6 @@ class FilterCard: UICollectionViewCell {
     private static let sideMargin: CGFloat = .margin12
 
     private let iconImageView = UIImageView()
-    private let iconBackgroundView = UIView()
     private let titleLightLabel = UILabel()
     private let titleDarkLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -22,14 +21,8 @@ class FilterCard: UICollectionViewCell {
         super.init(frame: frame)
 
         contentView.cornerRadius = .margin12
-
-        contentView.addSubview(iconBackgroundView)
-        iconBackgroundView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
-            maker.size.equalTo(CGFloat.margin24)
-        }
-
-        iconBackgroundView.cornerRadius = .margin12
+        contentView.borderWidth = .heightOneDp
+        contentView.borderColor = .clear
 
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
@@ -116,9 +109,9 @@ class FilterCard: UICollectionViewCell {
         UIView.animateKeyframes(withDuration: .themeAnimationDuration, delay: 0) {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
                 self.contentView.layoutIfNeeded()
-                self.titleLightLabel.alpha = selected ? 0 : 1
-                self.titleDarkLabel.alpha = selected ? 1 : 0
-                self.iconBackgroundView.backgroundColor = selected && !self.expandable ? .white : .clear
+                self.titleLightLabel.alpha = selected && self.expandable ? 0 : 1
+                self.titleDarkLabel.alpha = selected && self.expandable ? 1 : 0
+                self.contentView.borderColor = selected && !self.expandable ? .themeJacob : .clear
             }
 
             if self.expandable {
@@ -131,7 +124,7 @@ class FilterCard: UICollectionViewCell {
                 }
             }
 
-            self.contentView.backgroundColor = selected ? .themeYellowD : .themeLawrence
+            self.contentView.backgroundColor = selected && self.expandable ? .themeYellowD : .themeLawrence
         }
     }
 

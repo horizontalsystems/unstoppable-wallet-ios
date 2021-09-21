@@ -31,15 +31,12 @@ class CoinMarketsHeaderView: UITableViewHeaderFooterView {
 
         contentView.addSubview(sortTypeButton)
         sortTypeButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.leading.equalToSuperview().offset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
+            maker.size.equalTo(28)
         }
 
-        sortTypeButton.apply(style: .secondaryTransparentIcon)
-        sortTypeButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
-        sortTypeButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        sortTypeButton.setImageTintColor(.themeGray, for: .normal)
-        sortTypeButton.setImageTintColor(.themeGray50, for: .highlighted)
+        sortTypeButton.apply(style: .secondaryIcon)
         sortTypeButton.addTarget(self, action: #selector(tapSortTypeButton), for: .touchUpInside)
 
         contentView.addSubview(volumeTypeView)
@@ -68,8 +65,9 @@ class CoinMarketsHeaderView: UITableViewHeaderFooterView {
 
 extension CoinMarketsHeaderView {
 
-    func set(sortType: String) {
-        sortTypeButton.setTitle(sortType, for: .normal)
+    func setSort(descending: Bool) {
+        let imageName = descending ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
+        sortTypeButton.setImage(UIImage(named: imageName), for: .normal)
     }
 
     func set(volumeTypes: [String]) {
