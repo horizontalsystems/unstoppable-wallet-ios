@@ -7,7 +7,7 @@ class CoinMarketsViewModel {
     private let service: CoinMarketsService
     private let disposeBag = DisposeBag()
 
-    private let sortTypeRelay = BehaviorRelay<String>(value: "")
+    private let sortDescendingRelay = BehaviorRelay<Bool>(value: true)
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
 
     init(service: CoinMarketsService) {
@@ -21,7 +21,7 @@ class CoinMarketsViewModel {
     }
 
     private func sync(sortType: CoinMarketsService.SortType) {
-        sortTypeRelay.accept(title(sortType: sortType))
+        sortDescendingRelay.accept(sortType == .highestVolume)
     }
 
     private func sync(items: [CoinMarketsService.Item]) {
@@ -67,8 +67,8 @@ extension CoinMarketsViewModel {
         "coin_page.coin_markets".localized(service.coinCode)
     }
 
-    var sortTypeDriver: Driver<String> {
-        sortTypeRelay.asDriver()
+    var sortDescendingDriver: Driver<Bool> {
+        sortDescendingRelay.asDriver()
     }
 
     var viewItemsDriver: Driver<[ViewItem]> {
@@ -79,14 +79,8 @@ extension CoinMarketsViewModel {
         CoinMarketsService.VolumeType.allCases.map { value(volumeType: $0) }
     }
 
-    var sortTypeViewItems: [AlertViewItem] {
-        CoinMarketsService.SortType.allCases.map { sortType in
-            AlertViewItem(text: title(sortType: sortType), selected: service.sortType == sortType)
-        }
-    }
-
-    func onSelectSortType(index: Int) {
-        service.set(sortType: CoinMarketsService.SortType.allCases[index])
+    func onSwitchSortType() {
+        service.set(sortType: service.sortType == .highestVolume ? .lowestVolume : .highestVolume)
     }
 
     func onSelectVolumeType(index: Int) {

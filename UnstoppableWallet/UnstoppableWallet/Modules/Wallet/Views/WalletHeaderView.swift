@@ -76,7 +76,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         }
 
         addCoinButton.apply(style: .secondaryIcon)
-        addCoinButton.apply(secondaryIconImage: UIImage(named: "manage_2_20"))
+        addCoinButton.setImage(UIImage(named: "manage_2_20"), for: .normal)
         addCoinButton.addTarget(self, action: #selector(onTapAddCoinButton), for: .touchUpInside)
     }
 

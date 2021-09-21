@@ -43,15 +43,12 @@ class CoinTvlRankHeaderView: UITableViewHeaderFooterView {
 
         contentView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
+            maker.size.equalTo(28)
         }
 
-        sortButton.apply(style: .secondaryTransparentIcon)
-        sortButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
-        sortButton.setImageTintColor(.themeGray, for: .normal)
-        sortButton.setImageTintColor(.themeGray50, for: .highlighted)
-
+        sortButton.apply(style: .secondaryIcon)
         sortButton.addTarget(self, action: #selector(tapSortField), for: .touchUpInside)
     }
 
@@ -75,8 +72,9 @@ extension CoinTvlRankHeaderView {
         filterButton.setTitle(title, for: .normal)
     }
 
-    func setSortingField(title: String) {
-        sortButton.setTitle(title, for: .normal)
+    func setSort(descending: Bool) {
+        let imageName = descending ? "arrow_medium_2_down_20" : "arrow_medium_2_up_20"
+        sortButton.setImage(UIImage(named: imageName), for: .normal)
     }
 
 }

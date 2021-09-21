@@ -45,13 +45,13 @@ class CoinMarketsViewController: ThemeViewController {
 
         headerView.set(volumeTypes: viewModel.volumeTypes)
         headerView.onTapSortType = { [weak self] in
-            self?.openSortTypeSelector()
+            self?.viewModel.onSwitchSortType()
         }
         headerView.onSelectVolumeType = { [weak self] index in
             self?.viewModel.onSelectVolumeType(index: index)
         }
 
-        subscribe(disposeBag, viewModel.sortTypeDriver) { [weak self] in self?.sync(sortType: $0) }
+        subscribe(disposeBag, viewModel.sortDescendingDriver) { [weak self] in self?.syncSort(descending: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
 
         tableView.buildSections()
@@ -59,8 +59,8 @@ class CoinMarketsViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func sync(sortType: String) {
-        headerView.set(sortType: sortType)
+    private func syncSort(descending: Bool) {
+        headerView.setSort(descending: descending)
     }
 
     private func sync(viewItems: [CoinMarketsViewModel.ViewItem]) {
@@ -71,16 +71,15 @@ class CoinMarketsViewController: ThemeViewController {
         }
     }
 
-    private func openSortTypeSelector() {
-        let alertController = AlertRouter.module(
-                title: "coin_page.coin_markets.sort_by".localized,
-                viewItems: viewModel.sortTypeViewItems
-        ) { [weak self] index in
-            self?.viewModel.onSelectSortType(index: index)
-        }
-
-        present(alertController, animated: true)
-    }
+//    private func openSortTypeSelector() {
+//        let alertController = AlertRouter.module(
+//                title: "coin_page.coin_markets.sort_by".localized,
+//                viewItems: viewModel.sortTypeViewItems
+//        ) { [weak self] index in
+//        }
+//
+//        present(alertController, animated: true)
+//    }
 
 }
 

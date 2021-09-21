@@ -31,10 +31,10 @@ class AddressInputView: UIView {
 
         spinnerView.isHidden = true
 
-        deleteView.button.apply(secondaryIconImage: UIImage(named: "trash_20"))
+        deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
-        scanView.button.apply(secondaryIconImage: UIImage(named: "qr_scan_20"))
+        scanView.button.setImage(UIImage(named: "qr_scan_20"), for: .normal)
         scanView.onTapButton = { [weak self] in self?.onTapScan() }
 
         pasteView.button.setTitle("button.paste".localized, for: .normal)

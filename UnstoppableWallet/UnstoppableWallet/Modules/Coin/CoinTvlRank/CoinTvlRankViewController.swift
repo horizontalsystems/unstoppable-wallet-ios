@@ -50,7 +50,7 @@ class CoinTvlRankViewController: ThemeViewController {
             self?.openFilterSelector()
         }
         headerView.onTapSortField = { [weak self] in
-            self?.openSortingFieldSelector()
+            self?.viewModel.onSwitchSortType()
         }
 
         view.addSubview(spinner)
@@ -66,7 +66,7 @@ class CoinTvlRankViewController: ThemeViewController {
         errorView.text = "coin_page.tvl_rank.sync_error".localized
 
         subscribe(disposeBag, viewModel.filterDriver) { [weak self] in self?.sync(filter: $0) }
-        subscribe(disposeBag, viewModel.sortTypeDriver) { [weak self] in self?.sync(sortType: $0) }
+        subscribe(disposeBag, viewModel.sortDescendingDriver) { [weak self] in self?.syncSort(descending: $0) }
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
     }
 
@@ -74,8 +74,8 @@ class CoinTvlRankViewController: ThemeViewController {
         headerView.setFilter(title: filter)
     }
 
-    private func sync(sortType: String) {
-        headerView.setSortingField(title: sortType)
+    private func syncSort(descending: Bool) {
+        headerView.setSort(descending: descending)
     }
 
     private func sync(state: CoinTvlRankViewModel.State) {
@@ -102,17 +102,6 @@ class CoinTvlRankViewController: ThemeViewController {
                 viewItems: viewModel.filterViewItems
         ) { [weak self] index in
             self?.viewModel.onSelectFilter(index: index)
-        }
-
-        present(alertController, animated: true)
-    }
-
-    private func openSortingFieldSelector() {
-        let alertController = AlertRouter.module(
-                title: "coin_page.tvl_rank.sort_by".localized,
-                viewItems: viewModel.sortTypeViewItems
-        ) { [weak self] index in
-            self?.viewModel.onSelectSortType(index: index)
         }
 
         present(alertController, animated: true)

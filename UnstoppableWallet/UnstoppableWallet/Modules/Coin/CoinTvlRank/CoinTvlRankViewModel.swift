@@ -10,7 +10,7 @@ class CoinTvlRankViewModel {
     private let disposeBag = DisposeBag()
 
     private let filterRelay = BehaviorRelay<String>(value: "")
-    private let sortTypeRelay = BehaviorRelay<String>(value: "")
+    private let sortDescendingRelay = BehaviorRelay<Bool>(value: true)
     private let stateRelay = BehaviorRelay<State>(value: .loading)
 
     init(service: CoinTvlRankService) {
@@ -32,19 +32,19 @@ class CoinTvlRankViewModel {
         }
     }
 
-    private func title(sortType: CoinTvlRankService.SortType) -> String {
-        switch sortType {
-        case .highestTvl: return "coin_page.tvl_rank.sort_by.highest_tvl".localized
-        case .lowestTvl: return "coin_page.tvl_rank.sort_by.lowest_tvl".localized
-        }
-    }
+//    private func title(sortType: CoinTvlRankService.SortType) -> String {
+//        switch sortType {
+//        case .highestTvl: return "coin_page.tvl_rank.sort_by.highest_tvl".localized
+//        case .lowestTvl: return "coin_page.tvl_rank.sort_by.lowest_tvl".localized
+//        }
+//    }
 
     private func sync(chain: CoinTvlRankService.Chain) {
         filterRelay.accept(title(chain: chain))
     }
 
     private func sync(sortType: CoinTvlRankService.SortType) {
-        sortTypeRelay.accept(title(sortType: sortType))
+        sortDescendingRelay.accept(sortType == .highestTvl)
     }
 
     private func chainDescription(chains: [String]) -> String {
@@ -88,8 +88,8 @@ extension CoinTvlRankViewModel {
         filterRelay.asDriver()
     }
 
-    var sortTypeDriver: Driver<String> {
-        sortTypeRelay.asDriver()
+    var sortDescendingDriver: Driver<Bool> {
+        sortDescendingRelay.asDriver()
     }
 
     var stateDriver: Driver<State> {
@@ -102,18 +102,12 @@ extension CoinTvlRankViewModel {
         }
     }
 
-    var sortTypeViewItems: [AlertViewItem] {
-        CoinTvlRankService.SortType.allCases.map { sortType in
-            AlertViewItem(text: title(sortType: sortType), selected: service.sortType == sortType)
-        }
-    }
-
     func onSelectFilter(index: Int) {
         service.set(chain: CoinTvlRankService.Chain.allCases[index])
     }
 
-    func onSelectSortType(index: Int) {
-        service.set(sortType: CoinTvlRankService.SortType.allCases[index])
+    func onSwitchSortType() {
+        service.set(sortType: service.sortType == .highestTvl ? .lowestTvl : .highestTvl)
     }
 
 }
