@@ -878,7 +878,7 @@
 "add_token.coin_type" = "Тип Монеты";
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Код Монеты";
-"add_token.decimal" = "Десятичный";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
 "add_token.contract_not_found" = "Контракт не найден";
