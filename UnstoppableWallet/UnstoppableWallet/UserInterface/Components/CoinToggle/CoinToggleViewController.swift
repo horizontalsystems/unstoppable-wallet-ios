@@ -51,7 +51,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewItems: [CoinToggleViewModel.ViewItem]) {
-        let animated = self.viewItems.count == viewItems.count
+        let animated = self.viewItems.map { $0.marketCoin.coin } == viewItems.map { $0.marketCoin.coin }
         self.viewItems = viewItems
 
         if isLoaded {

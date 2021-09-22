@@ -9,7 +9,7 @@ struct CoinValue {
     let value: Decimal
 
     var isMaxValue: Bool {
-        let maxInDecimal = Decimal(sign: .plus, exponent: -kind.decimal, significand: Decimal(string: max256ByteNumber.description)!)
+        let maxInDecimal = Decimal(sign: .plus, exponent: -kind.decimals, significand: Decimal(string: max256ByteNumber.description)!)
 
         return maxInDecimal == value
     }
@@ -22,8 +22,8 @@ struct CoinValue {
         kind.coin
     }
 
-    var decimal: Int {
-        kind.decimal
+    var decimals: Int {
+        kind.decimals
     }
 
     var formattedString: String {
@@ -40,12 +40,12 @@ extension CoinValue {
 
     enum Kind: Equatable {
         case platformCoin(platformCoin: PlatformCoin)
-        case coin(coin: Coin, decimal: Int)
+        case coin(coin: Coin, decimals: Int)
 
-        var decimal: Int {
+        var decimals: Int {
             switch self {
-            case .platformCoin(let platformCoin): return platformCoin.platform.decimal
-            case .coin(_, let decimal): return decimal
+            case .platformCoin(let platformCoin): return platformCoin.platform.decimals
+            case .coin(_, let decimals): return decimals
             }
         }
 
@@ -59,7 +59,7 @@ extension CoinValue {
         static func ==(lhs: Kind, rhs: Kind) -> Bool {
             switch (lhs, rhs) {
             case (.platformCoin(let lhsPlatformCoin), .platformCoin(let rhsPlatformCoin)): return lhsPlatformCoin == rhsPlatformCoin
-            case (.coin(let lhsCoin, let lhsDecimal), .coin(let rhsCoin, let rhsDecimal)): return lhsCoin == rhsCoin && lhsDecimal == rhsDecimal
+            case (.coin(let lhsCoin, let lhsDecimals), .coin(let rhsCoin, let rhsDecimals)): return lhsCoin == rhsCoin && lhsDecimals == rhsDecimals
             default: return false
             }
         }

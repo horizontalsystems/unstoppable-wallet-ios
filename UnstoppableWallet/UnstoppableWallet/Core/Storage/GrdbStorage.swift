@@ -609,7 +609,7 @@ class GrdbStorage {
                 t.column(CustomToken.Columns.coinName.name, .text).notNull()
                 t.column(CustomToken.Columns.coinCode.name, .text).notNull()
                 t.column(CustomToken.Columns.coinTypeId.name, .text).notNull()
-                t.column(CustomToken.Columns.decimal.name, .integer).notNull()
+                t.column(CustomToken.Columns.decimals.name, .integer).notNull()
 
                 t.primaryKey([CustomToken.Columns.coinTypeId.name], onConflict: .replace)
             }

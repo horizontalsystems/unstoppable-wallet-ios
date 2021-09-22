@@ -19,7 +19,7 @@ class AddTokenViewController: ThemeViewController {
     private let coinTypeCell = D7Cell()
     private let coinNameCell = D7Cell()
     private let coinCodeCell = D7Cell()
-    private let decimalCell = D7Cell()
+    private let decimalsCell = D7Cell()
 
     private let addButtonHolder = BottomGradientHolder()
     private let addButton = ThemeButton()
@@ -74,8 +74,8 @@ class AddTokenViewController: ThemeViewController {
         coinCodeCell.set(backgroundStyle: .lawrence)
         coinCodeCell.title = "add_token.coin_code".localized
 
-        decimalCell.set(backgroundStyle: .lawrence, isLast: true)
-        decimalCell.title = "add_token.decimal".localized
+        decimalsCell.set(backgroundStyle: .lawrence, isLast: true)
+        decimalsCell.title = "add_token.decimals".localized
 
         view.addSubview(addButtonHolder)
         addButtonHolder.snp.makeConstraints { maker in
@@ -100,7 +100,7 @@ class AddTokenViewController: ThemeViewController {
             self?.coinTypeCell.value = viewItem?.coinType ?? "..."
             self?.coinNameCell.value = viewItem?.coinName ?? "..."
             self?.coinCodeCell.value = viewItem?.coinCode ?? "..."
-            self?.decimalCell.value = viewItem.map { "\($0.decimal)" } ?? "..."
+            self?.decimalsCell.value = viewItem.map { "\($0.decimals)" } ?? "..."
         }
         subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
             self?.addButton.isEnabled = enabled
@@ -193,10 +193,10 @@ extension AddTokenViewController: SectionsDataSource {
                                 }
                         ),
                         StaticRow(
-                                cell: decimalCell,
+                                cell: decimalsCell,
                                 id: "decimal",
                                 dynamicHeight: { [weak self] width in
-                                    self?.decimalCell.cellHeight ?? 0
+                                    self?.decimalsCell.cellHeight ?? 0
                                 }
                         )
                     ]

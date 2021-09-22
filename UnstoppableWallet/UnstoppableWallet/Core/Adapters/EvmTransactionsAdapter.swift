@@ -14,7 +14,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     init(evmKit: EthereumKit.Kit, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager) {
         transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
 
-        super.init(evmKit: evmKit, decimal: EvmAdapter.decimal)
+        super.init(evmKit: evmKit, decimals: EvmAdapter.decimals)
     }
 
     private func coinTagName(coin: PlatformCoin) -> String {

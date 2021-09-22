@@ -15,7 +15,7 @@ protocol IAmountInputService {
 }
 
 class AmountInputViewModel {
-    private static let maxCoinDecimal = 8
+    private static let maxCoinDecimals = 8
 
     private let disposeBag = DisposeBag()
 
@@ -41,7 +41,7 @@ class AmountInputViewModel {
     private var secondaryTextTypeRelay = BehaviorRelay<InputType>(value: .currency)
     private var switchEnabledRelay: BehaviorRelay<Bool>
 
-    private var coinDecimal = AmountInputViewModel.maxCoinDecimal
+    private var coinDecimals = AmountInputViewModel.maxCoinDecimals
 
     init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
         self.service = service
@@ -69,8 +69,8 @@ class AmountInputViewModel {
     }
 
     private func sync(platformCoin: PlatformCoin?) {
-        let max = AmountInputViewModel.maxCoinDecimal
-        coinDecimal = min(max, (platformCoin?.decimal ?? max))
+        let max = AmountInputViewModel.maxCoinDecimals
+        coinDecimals = min(max, (platformCoin?.decimals ?? max))
 
         fiatService.set(platformCoin: platformCoin)
 
@@ -112,7 +112,7 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimal)
+            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimals)
             return decimalFormatter.string(from: amountInfo.value as NSNumber)
         case .amount(let amount):
             amountTypeRelay.accept(.coin)
@@ -121,7 +121,7 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimal
+            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimals
             return decimalFormatter.string(from: amount as NSNumber)
         }
     }
@@ -155,7 +155,7 @@ extension AmountInputViewModel {
         }
 
         switch switchService.amountType {
-        case .coin: return amount.decimalCount <= coinDecimal
+        case .coin: return amount.decimalCount <= coinDecimals
         case .currency: return amount.decimalCount <= fiatService.currency.decimal
         }
     }

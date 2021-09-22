@@ -26,7 +26,7 @@ extension CoinService {
     }
 
     func coinValue(value: BigUInt) -> CoinValue {
-        let decimalValue = Decimal(bigUInt: value, decimal: platformCoin.decimal) ?? 0
+        let decimalValue = Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0
         return CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: decimalValue)
     }
 
@@ -37,7 +37,7 @@ extension CoinService {
 
     // Example: Cent, Satoshi, GWei, etc
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
-        BigUInt(value.roundedString(decimal: platformCoin.decimal)) ?? 0
+        BigUInt(value.roundedString(decimal: platformCoin.decimals)) ?? 0
     }
 
     func amountData(value: Decimal) -> AmountData {
@@ -57,7 +57,7 @@ extension CoinService {
     }
 
     func amountData(value: BigUInt) -> AmountData {
-        amountData(value: Decimal(bigUInt: value, decimal: platformCoin.decimal) ?? 0)
+        amountData(value: Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0)
     }
 
 }

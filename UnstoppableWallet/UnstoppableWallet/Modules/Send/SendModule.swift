@@ -166,7 +166,7 @@ enum AmountInfo {
     var decimal: Int {
         switch self {
         case .currencyValue(let currencyValue): return currencyValue.currency.decimal
-        case .coinValue(let coinValue): return coinValue.decimal
+        case .coinValue(let coinValue): return coinValue.decimals
         }
     }
 

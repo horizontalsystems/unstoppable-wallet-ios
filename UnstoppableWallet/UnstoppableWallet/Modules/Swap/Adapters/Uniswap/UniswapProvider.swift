@@ -13,9 +13,9 @@ class UniswapProvider {
 
     private func uniswapToken(platformCoin: PlatformCoin) throws -> Token {
         if case let .erc20(address) = platformCoin.coinType {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimal)
+            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
         } else if case let .bep20(address) = platformCoin.coinType {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimal)
+            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
         }
 
         return swapKit.etherToken

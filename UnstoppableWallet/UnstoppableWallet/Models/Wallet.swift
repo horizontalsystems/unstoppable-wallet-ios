@@ -34,8 +34,8 @@ struct Wallet {
         platform.coinType
     }
 
-    var decimal: Int {
-        platform.decimal
+    var decimals: Int {
+        platform.decimals
     }
 
     var transactionSource: TransactionSource {

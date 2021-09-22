@@ -13,7 +13,7 @@ class OneInchProvider {
     }
 
     private func units(amount: Decimal, platformCoin: PlatformCoin) -> BigUInt? {
-        let amountUnitString = (amount * pow(10, platformCoin.decimal)).roundedString(decimal: 0)
+        let amountUnitString = (amount * pow(10, platformCoin.decimals)).roundedString(decimal: 0)
         return BigUInt(amountUnitString)
     }
 

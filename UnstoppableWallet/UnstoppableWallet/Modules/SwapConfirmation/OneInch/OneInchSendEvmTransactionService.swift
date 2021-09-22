@@ -125,9 +125,9 @@ class OneInchSendEvmTransactionService {
     private func swapDecoration(parameters: OneInchSwapParameters) -> ContractMethodDecoration? {
         let amountOutMinDecimal = parameters.amountTo * (1 - parameters.slippage / 100)
         guard
-            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.platformCoinFrom.decimal)).description),
-            let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.platformCoinTo.decimal)).roundedString(decimal: 0)),
-            let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.platformCoinTo.decimal)).roundedString(decimal: 0)),
+            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.platformCoinFrom.decimals)).description),
+            let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
+            let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
             let tokenIn = swapToken(platformCoin: parameters.platformCoinFrom),
             let tokenOut = swapToken(platformCoin: parameters.platformCoinTo) else {
 

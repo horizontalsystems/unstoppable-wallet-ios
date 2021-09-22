@@ -5,13 +5,13 @@ class CustomToken: Record {
     let coinName: String
     let coinCode: String
     let coinType: CoinType
-    let decimal: Int
+    let decimals: Int
 
-    init(coinName: String, coinCode: String, coinType: CoinType, decimal: Int) {
+    init(coinName: String, coinCode: String, coinType: CoinType, decimals: Int) {
         self.coinName = coinName
         self.coinCode = coinCode
         self.coinType = coinType
-        self.decimal = decimal
+        self.decimals = decimals
 
         super.init()
     }
@@ -21,7 +21,7 @@ class CustomToken: Record {
 
         return PlatformCoin(
                 coin: Coin(uid: coinUid, name: coinName, code: coinCode),
-                platform: Platform(coinType: coinType, decimal: decimal, coinUid: coinUid)
+                platform: Platform(coinType: coinType, decimals: decimals, coinUid: coinUid)
         )
     }
 
@@ -30,14 +30,14 @@ class CustomToken: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinName, coinCode, coinTypeId, decimal
+        case coinName, coinCode, coinTypeId, decimals
     }
 
     required init(row: Row) {
         coinName = row[Columns.coinName]
         coinCode = row[Columns.coinCode]
         coinType = CoinType(id: row[Columns.coinTypeId])
-        decimal = row[Columns.decimal]
+        decimals = row[Columns.decimals]
 
         super.init(row: row)
     }
@@ -46,7 +46,7 @@ class CustomToken: Record {
         container[Columns.coinName] = coinName
         container[Columns.coinCode] = coinCode
         container[Columns.coinTypeId] = coinType.id
-        container[Columns.decimal] = decimal
+        container[Columns.decimals] = decimals
     }
 
 }

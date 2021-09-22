@@ -18,7 +18,7 @@ class Evm20Adapter: BaseEvmAdapter {
 
         transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
 
-        super.init(evmKit: evmKit, decimal: wallet.decimal)
+        super.init(evmKit: evmKit, decimals: wallet.decimals)
     }
 
 }
@@ -80,7 +80,7 @@ extension Evm20Adapter: IErc20Adapter {
         evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {
-                        return Decimal(sign: .plus, exponent: -decimal, significand: significand)
+                        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
                     }
 
                     return 0

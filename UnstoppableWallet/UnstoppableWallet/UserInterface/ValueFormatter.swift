@@ -30,13 +30,13 @@ class ValueFormatter {
     }()
 
     func format(coinValue: CoinValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
-        format(value: coinValue.value, decimalCount: coinValue.decimal, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
+        format(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
 
     func format(transactionValue: TransactionValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
         switch transactionValue {
         case .coinValue(let platformCoin, let value):
-            return format(value: value, decimalCount: platformCoin.decimal, symbol: showCode ? platformCoin.coin.code : nil, fractionPolicy: fractionPolicy)
+            return format(value: value, decimalCount: platformCoin.decimals, symbol: showCode ? platformCoin.coin.code : nil, fractionPolicy: fractionPolicy)
         case .rawValue:
             return nil
         }

@@ -45,7 +45,7 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
                         coinName: token.name,
                         coinCode: token.originalSymbol,
                         coinType: .bep2(symbol: token.symbol),
-                        decimal: 8
+                        decimals: 8
                 )
 
                 return Single.just(customCoin)

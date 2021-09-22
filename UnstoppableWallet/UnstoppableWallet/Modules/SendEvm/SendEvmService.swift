@@ -51,7 +51,7 @@ class SendEvmService {
     }
 
     private func validEvmAmount(amount: Decimal) throws -> BigUInt {
-        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendPlatformCoin.decimal)) else {
+        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendPlatformCoin.decimals)) else {
             throw AmountError.invalidDecimal
         }
 
