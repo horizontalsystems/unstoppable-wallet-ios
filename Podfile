@@ -39,8 +39,8 @@ def appPods
   pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
   # pod 'HdWalletKit.swift', path: '../hd-wallet-kit-ios/'
 
-  # pod 'MarketKit.swift', git: 'https://github.com/horizontalsystems/market-kit-ios/'
-  pod 'MarketKit.swift', path: '../market-kit-ios/'
+  pod 'MarketKit.swift', git: 'https://github.com/horizontalsystems/market-kit-ios/'
+  # pod 'MarketKit.swift', path: '../market-kit-ios/'
   pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
   # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'

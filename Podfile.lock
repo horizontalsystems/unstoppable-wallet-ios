@@ -368,7 +368,7 @@ DEPENDENCIES:
   - KeychainAccess
   - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
-  - MarketKit.swift (from `../market-kit-ios/`)
+  - MarketKit.swift (from `https://github.com/horizontalsystems/market-kit-ios/`)
   - ModuleKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Nimble
   - ObjectMapper
@@ -492,7 +492,7 @@ EXTERNAL SOURCES:
   LitecoinKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :path: "../market-kit-ios/"
+    :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
@@ -581,6 +581,9 @@ CHECKOUT OPTIONS:
   LitecoinKit.swift:
     :commit: 02efc79a9fb7fb4fa7e08731e668eb6a9acb3015
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
+  MarketKit.swift:
+    :commit: c3e69ac2421436fff90a38f158be6c86208116e6
+    :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 69a0a2f246af2b335636d217edb5faccdf93b935
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -710,6 +713,6 @@ SPEC CHECKSUMS:
   XRatesKit.swift: 7013e3b93f5749d42bb65bebb532c1c62a916e8e
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 484c2be65a8d0f2f3a3e572db41595c5a8b3138d
+PODFILE CHECKSUM: c48fc0a5844a8f4ec0366f7bf603e78c9d505cdd
 
 COCOAPODS: 1.10.2
