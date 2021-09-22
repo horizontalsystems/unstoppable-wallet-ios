@@ -877,7 +877,7 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.coin_type" = "Tipo de moneda";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.coin_code" = "Código de moneda";
-"add_token.decimal" = "Decimal";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.contract_not_found" = "No encontramos tu Contrato";
