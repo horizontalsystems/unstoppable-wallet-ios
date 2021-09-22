@@ -4,7 +4,6 @@ import PinKit
 import CurrencyKit
 import HsToolKit
 import MarketKit
-import CoinKit
 
 class App {
     static let shared = App()
@@ -13,7 +12,6 @@ class App {
     let pinKit: IPinKit
 
     let marketKit: MarketKit.Kit
-    let coinKit: CoinKit.Kit
 
     let appConfigProvider: IAppConfigProvider
 
@@ -102,11 +100,8 @@ class App {
         storage = GrdbStorage(appConfigProvider: appConfigProvider)
         logRecordManager = LogRecordManager(storage: storage)
 
-        marketKit = try! MarketKit.Kit.instance()
+        marketKit = try! MarketKit.Kit.instance(hsApiBaseUrl: "http://10.0.1.32:3000", minLogLevel: .debug)
         marketKit.sync()
-
-        coinKit = try! CoinKit.Kit.instance(testNet: appConfigProvider.testMode)
-//        coinKit.coinMigrationObservable = storage.coinMigrationObservable
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
