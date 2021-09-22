@@ -7,14 +7,14 @@ struct WalletModule {
     static func viewController() -> UIViewController {
         let adapterService = WalletAdapterService(adapterManager: App.shared.adapterManager)
 
-        let rateService = WalletRateService(
+        let coinPriceService = WalletCoinPriceService(
                 currencyKit: App.shared.currencyKit,
-                rateManager: App.shared.rateManagerNew
+                marketKit: App.shared.marketKit
         )
 
         let service = WalletService(
                 adapterService: adapterService,
-                rateService: rateService,
+                coinPriceService: coinPriceService,
                 cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
@@ -25,11 +25,10 @@ struct WalletModule {
         )
 
         adapterService.delegate = service
-        rateService.delegate = service
+        coinPriceService.delegate = service
 
         let viewModel = WalletViewModel(
                 service: service,
-                rateService: rateService,
                 factory: WalletViewItemFactory()
         )
 

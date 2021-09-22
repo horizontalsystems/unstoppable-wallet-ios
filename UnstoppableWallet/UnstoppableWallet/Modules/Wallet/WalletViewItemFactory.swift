@@ -13,7 +13,7 @@ class WalletViewItemFactory {
     private func topViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceTopViewItem {
         let coin = item.wallet.coin
         let state = item.state
-        let rateItem = item.rateItem
+        let priceItem = item.priceItem
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
@@ -23,7 +23,7 @@ class WalletViewItemFactory {
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
-                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceData.balanceTotal, state: item.state, rateItem: rateItem),
+                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: priceItem),
                 secondaryInfo: secondaryInfo(item: item, balanceHidden: balanceHidden, expanded: expanded)
         )
     }
@@ -47,8 +47,8 @@ class WalletViewItemFactory {
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
                     coinValue: balanceHidden ? nil : coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceTotal, state: item.state),
-                    rateValue: rateValue(rateItem: item.rateItem),
-                    diff: diff(rateItem: item.rateItem)
+                    rateValue: rateValue(rateItem: item.priceItem),
+                    diff: diff(rateItem: item.priceItem)
             ))
         }
     }
@@ -60,7 +60,7 @@ class WalletViewItemFactory {
 
         return BalanceLockedAmountViewItem(
             coinValue: coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceLocked, state: item.state),
-                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, rateItem: item.rateItem)
+                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, priceItem: item.priceItem)
         )
     }
 
@@ -75,7 +75,7 @@ class WalletViewItemFactory {
                 sendButtonState: sendButtonsState,
                 receiveButtonState: .enabled,
                 swapButtonState: item.wallet.coinType.swappable ? sendButtonsState : .hidden,
-                chartButtonState: item.rateItem != nil ? .enabled : .disabled
+                chartButtonState: item.priceItem != nil ? .enabled : .disabled
         )
     }
 
@@ -112,28 +112,28 @@ class WalletViewItemFactory {
         }
     }
 
-    private func rateValue(rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool) {
+    private func rateValue(rateItem: WalletCoinPriceService.Item?) -> (text: String?, dimmed: Bool) {
         guard let rateItem = rateItem else {
             return (text: "n/a".localized, dimmed: true)
         }
 
-        let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.rate, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+        let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.price, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
         return (text: formattedValue, dimmed: rateItem.expired)
     }
 
-    private func diff(rateItem: WalletRateService.Item?) -> (text: String, type: BalanceDiffType)? {
+    private func diff(rateItem: WalletCoinPriceService.Item?) -> (text: String, type: BalanceDiffType)? {
         guard let rateItem = rateItem else {
             return nil
         }
 
-        let value = rateItem.diff24h
+        let value = rateItem.diff
 
         guard let formattedValue = Self.diffFormatter.string(from: abs(value) as NSNumber) else {
             return nil
         }
 
-        let sign = value.isSignMinus ? "-" : "+"
-        return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value.isSignMinus ? .negative : .positive))
+        let sign = value < 0 ? "-" : "+"
+        return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value < 0 ? .negative : .positive))
     }
 
     private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
@@ -143,16 +143,16 @@ class WalletViewItemFactory {
         )
     }
 
-    private func currencyValue(value: Decimal, state: AdapterState, rateItem: WalletRateService.Item?) -> (text: String?, dimmed: Bool) {
-        guard let rateItem = rateItem else {
+    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?) -> (text: String?, dimmed: Bool) {
+        guard let priceItem = priceItem else {
             return (text: "---", dimmed: true)
         }
 
-        let rate = rateItem.rate
+        let price = priceItem.price
 
         return (
-                text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: rate.currency, value: value * rate.value), fractionPolicy: .threshold(high: 1000, low: 0.01)),
-                dimmed: state != .synced || rateItem.expired
+                text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: price.currency, value: value * price.value), fractionPolicy: .threshold(high: 1000, low: 0.01)),
+                dimmed: state != .synced || priceItem.expired
         )
     }
 

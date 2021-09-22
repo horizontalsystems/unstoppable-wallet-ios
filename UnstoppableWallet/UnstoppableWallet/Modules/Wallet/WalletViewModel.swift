@@ -5,7 +5,6 @@ import MarketKit
 
 class WalletViewModel {
     private let service: WalletService
-    private let rateService: WalletRateService
     private let factory: WalletViewItemFactory
     private let disposeBag = DisposeBag()
 
@@ -28,9 +27,8 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, rateService: WalletRateService, factory: WalletViewItemFactory) {
+    init(service: WalletService, factory: WalletViewItemFactory) {
         self.service = service
-        self.rateService = rateService
         self.factory = factory
         balanceHidden = service.balanceHidden
 
@@ -194,7 +192,7 @@ extension WalletViewModel {
     }
 
     func onTapChart(wallet: Wallet) {
-        guard service.item(wallet: wallet)?.rateItem != nil else {
+        guard service.item(wallet: wallet)?.priceItem != nil else {
             return
         }
 
