@@ -876,7 +876,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.coin_type" = "代币类型";
 "add_token.coin_name" = "代币图片";
 "add_token.coin_code" = "代币代码";
-"add_token.decimal" = "十进制数";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "该代币已在代币管理器列表中。";
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.contract_not_found" = "找不到合约";
