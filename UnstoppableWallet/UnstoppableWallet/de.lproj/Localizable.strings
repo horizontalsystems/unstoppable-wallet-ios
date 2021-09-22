@@ -876,7 +876,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.coin_type" = "Münztyp";
 "add_token.coin_name" = "Coin Name";
 "add_token.coin_code" = "Münzcode";
-"add_token.decimal" = "Dezimal";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.contract_not_found" = "Vertrag nicht gefunden";
