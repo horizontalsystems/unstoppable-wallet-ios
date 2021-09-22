@@ -18,9 +18,9 @@ struct SwapApproveModule {
 
         let service = SwapApproveService(
                 erc20Kit: evm20Adapter.evm20Kit,
-                amount: BigUInt(data.amount.roundedString(decimal: data.platformCoin.decimal)) ?? 0,
+                amount: BigUInt(data.amount.roundedString(decimal: data.platformCoin.decimals)) ?? 0,
                 spenderAddress: data.spenderAddress,
-                allowance: BigUInt(data.allowance.roundedString(decimal: data.platformCoin.decimal)) ?? 0
+                allowance: BigUInt(data.allowance.roundedString(decimal: data.platformCoin.decimals)) ?? 0
         )
 
         let decimalParser = AmountDecimalParser()

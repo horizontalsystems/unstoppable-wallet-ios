@@ -61,7 +61,7 @@ class AddTokenViewModel {
                 coinType: platformCoin.coinType.blockchainType,
                 coinName: platformCoin.name,
                 coinCode: platformCoin.code,
-                decimal: platformCoin.decimal
+                decimals: platformCoin.decimals
         )
     }
 
@@ -70,7 +70,7 @@ class AddTokenViewModel {
                 coinType: customToken.coinType.blockchainType,
                 coinName: customToken.coinName,
                 coinCode: customToken.coinCode,
-                decimal: customToken.decimal
+                decimals: customToken.decimals
         )
     }
 
@@ -115,7 +115,7 @@ extension AddTokenViewModel {
         let coinType: String?
         let coinName: String
         let coinCode: String
-        let decimal: Int
+        let decimals: Int
     }
 
 }

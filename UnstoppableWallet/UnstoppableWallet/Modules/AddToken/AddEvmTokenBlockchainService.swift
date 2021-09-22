@@ -116,7 +116,7 @@ extension AddEvmTokenBlockchainService {
                     coinName: tokenName,
                     coinCode: tokenSymbol,
                     coinType: coinType,
-                    decimal: tokenDecimal
+                    decimals: tokenDecimal
             )
         }
 

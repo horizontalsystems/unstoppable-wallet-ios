@@ -3,7 +3,7 @@ import CurrencyKit
 import MarketKit
 
 class SendAmountPresenter {
-    private let maxCoinDecimal = 8
+    private let maxCoinDecimals = 8
 
     weak var view: ISendAmountView?
     weak var delegate: ISendAmountDelegate?
@@ -334,7 +334,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         }
 
         switch inputType {
-        case .coin: return value.decimalCount <= min(platformCoin.decimal, maxCoinDecimal)
+        case .coin: return value.decimalCount <= min(platformCoin.decimals, maxCoinDecimals)
         case .currency: return value.decimalCount <= currency.decimal
         }
     }

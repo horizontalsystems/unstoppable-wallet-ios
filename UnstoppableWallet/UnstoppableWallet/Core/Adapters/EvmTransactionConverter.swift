@@ -19,12 +19,12 @@ class EvmTransactionConverter {
         self.baseCoin = baseCoin
     }
 
-    private func convertAmount(amount: BigUInt, decimal: Int, sign: FloatingPointSign) -> Decimal {
+    private func convertAmount(amount: BigUInt, decimals: Int, sign: FloatingPointSign) -> Decimal {
         guard let significand = Decimal(string: amount.description), significand != 0 else {
             return 0
         }
 
-        return Decimal(sign: sign, exponent: -decimal, significand: significand)
+        return Decimal(sign: sign, exponent: -decimals, significand: significand)
     }
 
     private func eip20Value(tokenAddress: EthereumKit.Address, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
@@ -36,7 +36,7 @@ class EvmTransactionConverter {
         }
 
         if let platformCoin = try? coinManager.platformCoin(coinType: coinType) {
-            let value = convertAmount(amount: value, decimal: platformCoin.decimal, sign: sign)
+            let value = convertAmount(amount: value, decimals: platformCoin.decimals, sign: sign)
             return .coinValue(platformCoin: platformCoin, value: value)
         }
 
@@ -46,7 +46,7 @@ class EvmTransactionConverter {
     private func convertToTransactionValue(token: SwapMethodDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
         switch token {
         case .evmCoin:
-            let value = convertAmount(amount: value, decimal: baseCoin.decimal, sign: sign)
+            let value = convertAmount(amount: value, decimals: baseCoin.decimals, sign: sign)
             return .coinValue(platformCoin: baseCoin, value: value)
 
         case .eip20Coin(let tokenAddress):
@@ -57,7 +57,7 @@ class EvmTransactionConverter {
     private func convertToTransactionValue(token: OneInchMethodDecoration.Token, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
         switch token {
         case .evmCoin:
-            let value = convertAmount(amount: value, decimal: baseCoin.decimal, sign: sign)
+            let value = convertAmount(amount: value, decimals: baseCoin.decimals, sign: sign)
             return .coinValue(platformCoin: baseCoin, value: value)
 
         case .eip20Coin(let tokenAddress):
@@ -71,7 +71,7 @@ class EvmTransactionConverter {
                 return nil
             }
 
-            let amount = convertAmount(amount: internalTransaction.value, decimal: baseCoin.decimal, sign: .plus)
+            let amount = convertAmount(amount: internalTransaction.value, decimals: baseCoin.decimals, sign: .plus)
             return (address: internalTransaction.from.eip55, value: .coinValue(platformCoin: baseCoin, value: amount))
         }
     }
@@ -225,7 +225,7 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: decoration.method,
-                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimals: baseCoin.decimals, sign: .minus),
                     incomingInternalETHs: internalTransactions(from: fullTransaction),
                     incomingEip20Events: incomingEip20Events(from: fullTransaction),
                     outgoingEip20Events: outgoingEip20Events(from: fullTransaction)
@@ -238,7 +238,7 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: nil,
-                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimals: baseCoin.decimals, sign: .minus),
                     incomingInternalETHs: internalTransactions(from: fullTransaction),
                     incomingEip20Events: incomingEip20Events(from: fullTransaction),
                     outgoingEip20Events: outgoingEip20Events(from: fullTransaction)
@@ -270,7 +270,7 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: decoration.method,
-                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimals: baseCoin.decimals, sign: .minus),
                     incomingInternalETHs: internalTransactions(from: fullTransaction),
                     incomingEip20Events: incomingEip20Events(from: fullTransaction),
                     outgoingEip20Events: outgoingEip20Events(from: fullTransaction),
@@ -284,7 +284,7 @@ class EvmTransactionConverter {
                     baseCoin: baseCoin,
                     contractAddress: to.eip55,
                     method: nil,
-                    value: convertAmount(amount: fullTransaction.transaction.value, decimal: baseCoin.decimal, sign: .minus),
+                    value: convertAmount(amount: fullTransaction.transaction.value, decimals: baseCoin.decimals, sign: .minus),
                     incomingInternalETHs: internalTransactions(from: fullTransaction),
                     incomingEip20Events: incomingEip20Events(from: fullTransaction),
                     outgoingEip20Events: outgoingEip20Events(from: fullTransaction),
@@ -318,7 +318,7 @@ extension EvmTransactionConverter {
             }
         } else {
             if transaction.from == evmKit.address {
-                let amount = convertAmount(amount: transaction.value, decimal: baseCoin.decimal, sign: .minus)
+                let amount = convertAmount(amount: transaction.value, decimals: baseCoin.decimals, sign: .minus)
 
                 record = EvmOutgoingTransactionRecord(
                         source: source,
@@ -329,7 +329,7 @@ extension EvmTransactionConverter {
                         sentToSelf: to == transaction.from
                 )
             } else if to == evmKit.address {
-                let amount = convertAmount(amount: transaction.value, decimal: baseCoin.decimal, sign: .plus)
+                let amount = convertAmount(amount: transaction.value, decimals: baseCoin.decimals, sign: .plus)
 
                 record = EvmIncomingTransactionRecord(
                         source: source,

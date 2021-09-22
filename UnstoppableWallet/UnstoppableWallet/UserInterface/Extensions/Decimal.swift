@@ -16,12 +16,12 @@ extension Decimal {
         return maxDecimals
     }
 
-    init?(bigUInt: BigUInt, decimal: Int) {
+    init?(bigUInt: BigUInt, decimals: Int) {
         guard let significand = Decimal(string: bigUInt.description) else {
             return nil
         }
 
-        self.init(sign: .plus, exponent: -decimal, significand: significand)
+        self.init(sign: .plus, exponent: -decimals, significand: significand)
     }
 
 }

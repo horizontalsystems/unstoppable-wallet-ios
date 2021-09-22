@@ -878,7 +878,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Coin Name";
 "add_token.coin_code" = "Coin Code";
-"add_token.decimal" = "Decimal";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "This token is already in the coin manager list.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.contract_not_found" = "Contract not found";

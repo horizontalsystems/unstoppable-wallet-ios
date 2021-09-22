@@ -7,14 +7,14 @@ class BaseEvmAdapter {
     static let confirmationsThreshold = 12
 
     let evmKit: EthereumKit.Kit
-    let decimal: Int
+    let decimals: Int
 
-    init(evmKit: EthereumKit.Kit, decimal: Int) {
+    init(evmKit: EthereumKit.Kit, decimals: Int) {
         self.evmKit = evmKit
-        self.decimal = decimal
+        self.decimals = decimals
     }
 
-    func balanceDecimal(kitBalance: BigUInt?, decimal: Int) -> Decimal {
+    func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {
         guard let kitBalance = kitBalance else {
             return 0
         }
@@ -23,7 +23,7 @@ class BaseEvmAdapter {
             return 0
         }
 
-        return Decimal(sign: .plus, exponent: -decimal, significand: significand)
+        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 
     func convertToAdapterState(evmSyncState: EthereumKit.SyncState) -> AdapterState {
@@ -39,7 +39,7 @@ class BaseEvmAdapter {
     }
 
     func balanceData(balance: BigUInt?) -> BalanceData {
-        BalanceData(balance: balanceDecimal(kitBalance: balance, decimal: decimal))
+        BalanceData(balance: balanceDecimal(kitBalance: balance, decimals: decimals))
     }
 
 }
