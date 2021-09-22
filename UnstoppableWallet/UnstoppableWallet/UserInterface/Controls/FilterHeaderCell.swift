@@ -6,7 +6,6 @@ import ComponentKit
 class FilterHeaderCell: UICollectionViewCell {
     private let button = ThemeButton()
     private var buttonStyle: ThemeButtonStyle = .tab
-    private let selectedView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,12 +16,6 @@ class FilterHeaderCell: UICollectionViewCell {
         }
 
         button.isUserInteractionEnabled = false
-
-        contentView.addSubview(selectedView)
-        selectedView.snp.makeConstraints { maker in
-            maker.leading.bottom.trailing.equalToSuperview()
-            maker.height.equalTo(2)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,7 +45,6 @@ class FilterHeaderCell: UICollectionViewCell {
 
     private func bind(selected: Bool, buttonStyle: ThemeButtonStyle) {
         button.isSelected = selected
-        selectedView.backgroundColor = selected && buttonStyle == .tab ? .themeJacob : .clear
     }
 
     private func bind(highlighted: Bool) {

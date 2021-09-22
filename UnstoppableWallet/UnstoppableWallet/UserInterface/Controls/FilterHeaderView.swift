@@ -18,6 +18,9 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     private var contentWidth: CGFloat = 0
     private var buttonStyle: ThemeButtonStyle
 
+    private let selectedView = UIView()
+    private let animationDuration: TimeInterval
+
     var onSelect: ((Int) -> ())?
 
     var headerHeight: CGFloat {
@@ -31,7 +34,11 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
+        animationDuration = buttonStyle == .tab ? 0.2 : .themeAnimationDuration
+
         super.init(reuseIdentifier: nil)
+
+        clipsToBounds = true
 
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
@@ -55,10 +62,20 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         addSubview(separator)
         separator.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         separator.backgroundColor = UIColor.themeSteel10
+
+        addSubview(selectedView)
+        selectedView.snp.makeConstraints { maker in
+            maker.bottom.equalToSuperview().offset(2)
+            maker.leading.equalToSuperview()
+            maker.height.equalTo(4)
+        }
+
+        selectedView.cornerRadius = 2
+        selectedView.backgroundColor = buttonStyle == .tab ? .themeJacob : .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -116,7 +133,12 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterHeaderCell {
-            cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false, buttonStyle: buttonStyle)
+            let selected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
+            cell.bind(title: title(index: indexPath.item), selected: selected, buttonStyle: buttonStyle)
+
+            if selected {
+                layoutSelectedView(toCell: cell)
+            }
         }
     }
 
@@ -143,7 +165,22 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
+        let selectedCell = collectionView.cellForItem(at: indexPath)
+        layoutSelectedView(toCell: selectedCell)
+
+        UIView.animate(withDuration: animationDuration, animations: {
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            self.layoutSubviews()
+        })
+    }
+
+    private func layoutSelectedView(toCell cell: UICollectionViewCell?) {
+        selectedView.snp.remakeConstraints { maker in
+            maker.bottom.equalToSuperview().offset(2)
+            maker.leading.trailing.equalTo((cell?.contentView)!)
+            maker.height.equalTo(4)
+        }
     }
 
 }
