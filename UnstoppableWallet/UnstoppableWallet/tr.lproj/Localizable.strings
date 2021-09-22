@@ -877,7 +877,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.coin_type" = "Coin Tipi";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
-"add_token.decimal" = "Ondalık";
+"add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.contract_not_found" = "Sözleşme bulunamadı";
