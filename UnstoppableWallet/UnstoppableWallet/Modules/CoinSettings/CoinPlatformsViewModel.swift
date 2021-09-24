@@ -18,7 +18,7 @@ class CoinPlatformsViewModel {
     }
 
     private func handle(request: CoinPlatformsService.Request) {
-        let marketCoin = request.marketCoin
+        let marketCoin = request.fullCoin
 
         let config = BottomMultiSelectorViewController.Config(
 //                icon: .image(coinType: marketCoin.platforms),
@@ -55,9 +55,9 @@ extension CoinPlatformsViewModel {
             return
         }
 
-        let platforms = request.marketCoin.platforms
+        let platforms = request.fullCoin.platforms
 
-        service.select(platforms: indexes.map { platforms[$0] }, coin: request.marketCoin.coin)
+        service.select(platforms: indexes.map { platforms[$0] }, coin: request.fullCoin.coin)
     }
 
     func onCancelSelect() {
@@ -65,7 +65,7 @@ extension CoinPlatformsViewModel {
             return
         }
 
-        service.cancel(coin: request.marketCoin.coin)
+        service.cancel(coin: request.fullCoin.coin)
     }
 
 }

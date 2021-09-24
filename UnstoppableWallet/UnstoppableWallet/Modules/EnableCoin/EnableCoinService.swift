@@ -74,9 +74,9 @@ extension EnableCoinService {
         cancelEnableCoinRelay.asObservable()
     }
 
-    func enable(marketCoin: MarketCoin, account: Account? = nil) {
-        if marketCoin.platforms.count == 1 {
-            let platformCoin = PlatformCoin(coin: marketCoin.coin, platform: marketCoin.platforms[0])
+    func enable(fullCoin: FullCoin, account: Account? = nil) {
+        if fullCoin.platforms.count == 1 {
+            let platformCoin = PlatformCoin(coin: fullCoin.coin, platform: fullCoin.platforms[0])
 
             if !platformCoin.coinType.restoreSettingTypes.isEmpty {
                 restoreSettingsService.approveSettings(platformCoin: platformCoin, account: account)
@@ -86,21 +86,21 @@ extension EnableCoinService {
                 enableCoinRelay.accept(([ConfiguredPlatformCoin(platformCoin: platformCoin)], [:]))
             }
         } else {
-            coinPlatformsService.approvePlatforms(marketCoin: marketCoin)
+            coinPlatformsService.approvePlatforms(fullCoin: fullCoin)
         }
     }
 
-    func configure(marketCoin: MarketCoin, configuredPlatformCoins: [ConfiguredPlatformCoin]) {
-        if marketCoin.platforms.count == 1 {
-            let platform = marketCoin.platforms[0]
+    func configure(fullCoin: FullCoin, configuredPlatformCoins: [ConfiguredPlatformCoin]) {
+        if fullCoin.platforms.count == 1 {
+            let platform = fullCoin.platforms[0]
 
             if !platform.coinType.coinSettingTypes.isEmpty {
                 let settingsArray = configuredPlatformCoins.map { $0.coinSettings }
-                coinSettingsService.approveSettings(platformCoin: PlatformCoin(coin: marketCoin.coin, platform: platform), settingsArray: settingsArray)
+                coinSettingsService.approveSettings(platformCoin: PlatformCoin(coin: fullCoin.coin, platform: platform), settingsArray: settingsArray)
             }
         } else {
             let currentPlatforms = configuredPlatformCoins.map { $0.platformCoin.platform }
-            coinPlatformsService.approvePlatforms(marketCoin: marketCoin, currentPlatforms: currentPlatforms)
+            coinPlatformsService.approvePlatforms(fullCoin: fullCoin, currentPlatforms: currentPlatforms)
         }
     }
 

@@ -12,7 +12,7 @@ class RestoreSelectService {
     private let enableCoinsService: EnableCoinsService
     private let disposeBag = DisposeBag()
 
-    private var marketCoins = [MarketCoin]()
+    private var fullCoins = [FullCoin]()
     private(set) var enabledCoins = Set<ConfiguredPlatformCoin>()
     private var filter: String = ""
 
@@ -47,17 +47,17 @@ class RestoreSelectService {
             self?.handleCancelEnable(coin: coin)
         }
 
-        syncMarketCoins()
-        sortMarketCoins()
+        syncFullCoins()
+        sortFullCoins()
         syncState()
     }
 
-    private func syncMarketCoins() {
+    private func syncFullCoins() {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                marketCoins = try coinManager.featuredMarketCoins(enabledCoinTypes: enabledCoins.map { $0.platformCoin.coinType })
+                fullCoins = try coinManager.featuredFullCoins(enabledCoinTypes: enabledCoins.map { $0.platformCoin.coinType })
             } else {
-                marketCoins = try coinManager.marketCoins(filter: filter, limit: 20)
+                fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
             }
         } catch {
             // todo
@@ -68,54 +68,54 @@ class RestoreSelectService {
         enabledCoins.contains { $0.platformCoin.coin == coin }
     }
 
-    private func hasSettingsOrPlatforms(marketCoin: MarketCoin) -> Bool {
-        if marketCoin.platforms.count == 1 {
-            let platform = marketCoin.platforms[0]
+    private func hasSettingsOrPlatforms(fullCoin: FullCoin) -> Bool {
+        if fullCoin.platforms.count == 1 {
+            let platform = fullCoin.platforms[0]
             return !platform.coinType.coinSettingTypes.isEmpty
         } else {
             return true
         }
     }
 
-    private func item(marketCoin: MarketCoin) -> Item {
-        let supportedPlatforms = marketCoin.platforms.filter { $0.coinType.isSupported }
+    private func item(fullCoin: FullCoin) -> Item {
+        let supportedPlatforms = fullCoin.platforms.filter { $0.coinType.isSupported }
 
-        let marketCoin = MarketCoin(coin: marketCoin.coin, platforms: supportedPlatforms)
+        let fullCoin = FullCoin(coin: fullCoin.coin, platforms: supportedPlatforms)
 
         let itemState: ItemState
 
-        if marketCoin.platforms.isEmpty {
+        if fullCoin.platforms.isEmpty {
             itemState = .unsupported
         } else {
-            let enabled = isEnabled(coin: marketCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(marketCoin: marketCoin))
+            let enabled = isEnabled(coin: fullCoin.coin)
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(fullCoin: fullCoin))
         }
 
-        return Item(marketCoin: marketCoin, state: itemState)
+        return Item(fullCoin: fullCoin, state: itemState)
     }
 
-    private func sortMarketCoins() {
-        marketCoins.sort { lhsMarketCoin, rhsMarketCoin in
-            let lhsEnabled = isEnabled(coin: lhsMarketCoin.coin)
-            let rhsEnabled = isEnabled(coin: rhsMarketCoin.coin)
+    private func sortFullCoins() {
+        fullCoins.sort { lhsFullCoin, rhsFullCoin in
+            let lhsEnabled = isEnabled(coin: lhsFullCoin.coin)
+            let rhsEnabled = isEnabled(coin: rhsFullCoin.coin)
 
             if lhsEnabled != rhsEnabled {
                 return lhsEnabled
             }
 
-            let lhsMarketCapRank = lhsMarketCoin.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsMarketCoin.coin.marketCapRank ?? Int.max
+            let lhsMarketCapRank = lhsFullCoin.coin.marketCapRank ?? Int.max
+            let rhsMarketCapRank = rhsFullCoin.coin.marketCapRank ?? Int.max
 
             if lhsMarketCapRank != rhsMarketCapRank {
                 return lhsMarketCapRank < rhsMarketCapRank
             }
 
-            return lhsMarketCoin.coin.name.lowercased() < rhsMarketCoin.coin.name.lowercased()
+            return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
         }
     }
 
     private func syncState() {
-        items = marketCoins.map { item(marketCoin: $0) }
+        items = fullCoins.map { item(fullCoin: $0) }
     }
 
     private func syncCanRestore() {
@@ -163,8 +163,8 @@ class RestoreSelectService {
                 enabledCoins.insert(ConfiguredPlatformCoin(platformCoin: platformCoin))
             }
 
-            syncMarketCoins()
-            sortMarketCoins()
+            syncFullCoins()
+            sortFullCoins()
             syncState()
         } catch {
             // todo
@@ -190,13 +190,13 @@ extension RestoreSelectService {
     func set(filter: String) {
         self.filter = filter
 
-        syncMarketCoins()
-        sortMarketCoins()
+        syncFullCoins()
+        sortFullCoins()
         syncState()
     }
 
-    func enable(marketCoin: MarketCoin) {
-        enableCoinService.enable(marketCoin: marketCoin)
+    func enable(fullCoin: FullCoin) {
+        enableCoinService.enable(fullCoin: fullCoin)
     }
 
     func disable(coin: Coin) {
@@ -206,8 +206,8 @@ extension RestoreSelectService {
         syncCanRestore()
     }
 
-    func configure(marketCoin: MarketCoin) {
-        enableCoinService.configure(marketCoin: marketCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin.coin == marketCoin.coin })
+    func configure(fullCoin: FullCoin) {
+        enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin.coin == fullCoin.coin })
     }
 
     func restore() {
@@ -231,7 +231,7 @@ extension RestoreSelectService {
 extension RestoreSelectService {
 
     struct Item {
-        let marketCoin: MarketCoin
+        let fullCoin: FullCoin
         let state: ItemState
     }
 

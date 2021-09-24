@@ -51,7 +51,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func onUpdate(viewItems: [CoinToggleViewModel.ViewItem]) {
-        let animated = self.viewItems.map { $0.marketCoin.coin } == viewItems.map { $0.marketCoin.coin }
+        let animated = self.viewItems.map { $0.fullCoin.coin } == viewItems.map { $0.fullCoin.coin }
         self.viewItems = viewItems
 
         if isLoaded {
@@ -66,14 +66,14 @@ class CoinToggleViewController: ThemeSearchViewController {
             switch viewItem.state {
             case let .toggleVisible(enabled, hasSettings):
                 return Row<G21Cell>(
-                        id: "coin_\(viewItem.marketCoin.coin.uid)",
+                        id: "coin_\(viewItem.fullCoin.coin.uid)",
                         hash: "coin_\(enabled)_\(hasSettings)_\(isLast)",
                         height: .heightDoubleLineCell,
                         bind: { [weak self] cell, _ in
                             cell.set(backgroundStyle: .claude, isLast: isLast)
                             //                        cell.titleImage = .image(coinType: viewItem.coin.type)
-                            cell.title = viewItem.marketCoin.coin.name
-                            cell.subtitle = viewItem.marketCoin.coin.code
+                            cell.title = viewItem.fullCoin.coin.name
+                            cell.subtitle = viewItem.fullCoin.coin.code
                             //                        cell.rightBadgeText = viewItem.coin.type.blockchainType
                             cell.isOn = enabled
                             cell.onToggle = { [weak self] enabled in
@@ -81,11 +81,11 @@ class CoinToggleViewController: ThemeSearchViewController {
                             }
                             cell.rightButtonImage = hasSettings ? UIImage(named: "edit_20") : nil
                             cell.onTapRightButton = { [weak self] in
-                                self?.viewModel.onTapSettings(marketCoin: viewItem.marketCoin)
+                                self?.viewModel.onTapSettings(fullCoin: viewItem.fullCoin)
                             }
 
                             cell.titleImage = nil
-                            AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
+                            AF.request(viewItem.fullCoin.coin.imageUrl).responseImage { response in
                                 if case .success(let image) = response.result {
                                     cell.titleImage = image
                                 }
@@ -94,25 +94,25 @@ class CoinToggleViewController: ThemeSearchViewController {
                 )
             case .toggleHidden:
                 return Row<G4Cell>(
-                        id: "coin_\(viewItem.marketCoin.coin.uid)",
+                        id: "coin_\(viewItem.fullCoin.coin.uid)",
                         hash: "coin_\(isLast)",
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
                         bind: { cell, _ in
                             cell.set(backgroundStyle: .claude, isLast: isLast)
 
-                            cell.title = viewItem.marketCoin.coin.name
-                            cell.subtitle = viewItem.marketCoin.coin.code
+                            cell.title = viewItem.fullCoin.coin.name
+                            cell.subtitle = viewItem.fullCoin.coin.code
 
                             cell.titleImage = nil
-                            AF.request(viewItem.marketCoin.coin.imageUrl).responseImage { response in
+                            AF.request(viewItem.fullCoin.coin.imageUrl).responseImage { response in
                                 if case .success(let image) = response.result {
                                     cell.titleImage = image
                                 }
                             }
                         },
                         action: { [weak self] _ in
-                            print("On click \(viewItem.marketCoin.coin.name)")
+                            print("On click \(viewItem.fullCoin.coin.name)")
                         }
                 )
             }
@@ -125,14 +125,14 @@ class CoinToggleViewController: ThemeSearchViewController {
 
     private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {
         if enabled {
-            viewModel.onEnable(marketCoin: viewItem.marketCoin)
+            viewModel.onEnable(fullCoin: viewItem.fullCoin)
         } else {
-            viewModel.onDisable(coin: viewItem.marketCoin.coin)
+            viewModel.onDisable(coin: viewItem.fullCoin.coin)
         }
     }
 
     func setToggle(on: Bool, coin: Coin) {
-        guard let index = viewItems.firstIndex(where: { $0.marketCoin.coin == coin }) else {
+        guard let index = viewItems.firstIndex(where: { $0.fullCoin.coin == coin }) else {
             return
         }
 
