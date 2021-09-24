@@ -585,7 +585,7 @@ CHECKOUT OPTIONS:
     :commit: 02efc79a9fb7fb4fa7e08731e668eb6a9acb3015
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: 939f443fa170fb0afab7dfa20116464620769979
+    :commit: a01c39427e81edb7507c5d39900220179f22e757
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -718,4 +718,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c48fc0a5844a8f4ec0366f7bf603e78c9d505cdd
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2
