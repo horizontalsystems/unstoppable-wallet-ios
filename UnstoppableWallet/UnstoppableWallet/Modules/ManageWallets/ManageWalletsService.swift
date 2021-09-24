@@ -9,7 +9,7 @@ class ManageWalletsService {
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
-    private var marketCoins = [MarketCoin]()
+    private var fullCoins = [FullCoin]()
     private var wallets = Set<Wallet>()
     private var filter: String = ""
 
@@ -45,17 +45,17 @@ class ManageWalletsService {
         }
 
         sync(wallets: walletManager.activeWallets)
-        syncMarketCoins()
-        sortMarketCoins()
+        syncFullCoins()
+        sortFullCoins()
         syncState()
     }
 
-    private func syncMarketCoins() {
+    private func syncFullCoins() {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                marketCoins = try coinManager.featuredMarketCoins(enabledCoinTypes: wallets.map { $0.coinType })
+                fullCoins = try coinManager.featuredFullCoins(enabledCoinTypes: wallets.map { $0.coinType })
             } else {
-                marketCoins = try coinManager.marketCoins(filter: filter, limit: 20)
+                fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
             }
         } catch {
             // todo
@@ -66,23 +66,23 @@ class ManageWalletsService {
         wallets.contains { $0.coin == coin }
     }
 
-    private func sortMarketCoins() {
-        marketCoins.sort { lhsMarketCoin, rhsMarketCoin in
-            let lhsEnabled = isEnabled(coin: lhsMarketCoin.coin)
-            let rhsEnabled = isEnabled(coin: rhsMarketCoin.coin)
+    private func sortFullCoins() {
+        fullCoins.sort { lhsFullCoin, rhsFullCoin in
+            let lhsEnabled = isEnabled(coin: lhsFullCoin.coin)
+            let rhsEnabled = isEnabled(coin: rhsFullCoin.coin)
 
             if lhsEnabled != rhsEnabled {
                 return lhsEnabled
             }
 
-            let lhsMarketCapRank = lhsMarketCoin.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsMarketCoin.coin.marketCapRank ?? Int.max
+            let lhsMarketCapRank = lhsFullCoin.coin.marketCapRank ?? Int.max
+            let rhsMarketCapRank = rhsFullCoin.coin.marketCapRank ?? Int.max
 
             if lhsMarketCapRank != rhsMarketCapRank {
                 return lhsMarketCapRank < rhsMarketCapRank
             }
 
-            return lhsMarketCoin.coin.name.lowercased() < rhsMarketCoin.coin.name.lowercased()
+            return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
         }
     }
 
@@ -90,43 +90,43 @@ class ManageWalletsService {
         self.wallets = Set(wallets)
     }
 
-    private func hasSettingsOrPlatforms(marketCoin: MarketCoin) -> Bool {
-        if marketCoin.platforms.count == 1 {
-            let platform = marketCoin.platforms[0]
+    private func hasSettingsOrPlatforms(fullCoin: FullCoin) -> Bool {
+        if fullCoin.platforms.count == 1 {
+            let platform = fullCoin.platforms[0]
             return !platform.coinType.coinSettingTypes.isEmpty
         } else {
             return true
         }
     }
 
-    private func item(marketCoin: MarketCoin) -> Item {
-        let supportedPlatforms = marketCoin.platforms.filter { $0.coinType.isSupported }
+    private func item(fullCoin: FullCoin) -> Item {
+        let supportedPlatforms = fullCoin.platforms.filter { $0.coinType.isSupported }
 
-        let marketCoin = MarketCoin(coin: marketCoin.coin, platforms: supportedPlatforms)
+        let fullCoin = FullCoin(coin: fullCoin.coin, platforms: supportedPlatforms)
 
         let itemState: ItemState
 
-        if marketCoin.platforms.isEmpty {
+        if fullCoin.platforms.isEmpty {
             itemState = .unsupported
         } else {
-            let enabled = isEnabled(coin: marketCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(marketCoin: marketCoin))
+            let enabled = isEnabled(coin: fullCoin.coin)
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(fullCoin: fullCoin))
         }
 
-        return Item(marketCoin: marketCoin, state: itemState)
+        return Item(fullCoin: fullCoin, state: itemState)
     }
 
     private func syncState() {
-        items = marketCoins.map { item(marketCoin: $0) }
+        items = fullCoins.map { item(fullCoin: $0) }
     }
 
     private func handleUpdated(wallets: [Wallet]) {
         sync(wallets: wallets)
 
-        let coins = marketCoins.map { $0.coin }
+        let coins = fullCoins.map { $0.coin }
         if wallets.contains(where: { !coins.contains($0.coin) }) {
-            syncMarketCoins()
-            sortMarketCoins()
+            syncFullCoins()
+            sortFullCoins()
         }
 
         syncState()
@@ -175,13 +175,13 @@ extension ManageWalletsService {
     func set(filter: String) {
         self.filter = filter
 
-        syncMarketCoins()
-        sortMarketCoins()
+        syncFullCoins()
+        sortFullCoins()
         syncState()
     }
 
-    func enable(marketCoin: MarketCoin) {
-        enableCoinService.enable(marketCoin: marketCoin, account: account)
+    func enable(fullCoin: FullCoin) {
+        enableCoinService.enable(fullCoin: fullCoin, account: account)
     }
 
     func disable(coin: Coin) {
@@ -189,9 +189,9 @@ extension ManageWalletsService {
         walletManager.delete(wallets: Array(walletsToDelete))
     }
 
-    func configure(marketCoin: MarketCoin) {
-        let coinWallets = wallets.filter { $0.coin == marketCoin.coin }
-        enableCoinService.configure(marketCoin: marketCoin, configuredPlatformCoins: coinWallets.map { $0.configuredPlatformCoin })
+    func configure(fullCoin: FullCoin) {
+        let coinWallets = wallets.filter { $0.coin == fullCoin.coin }
+        enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: coinWallets.map { $0.configuredPlatformCoin })
     }
 
 }
@@ -199,7 +199,7 @@ extension ManageWalletsService {
 extension ManageWalletsService {
 
     struct Item {
-        let marketCoin: MarketCoin
+        let fullCoin: FullCoin
         let state: ItemState
     }
 

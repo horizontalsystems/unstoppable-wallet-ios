@@ -27,7 +27,7 @@ class ManageWalletsViewModel {
         case .unsupported: viewItemState = .toggleHidden
         }
 
-        return CoinToggleViewModel.ViewItem(marketCoin: item.marketCoin, state: viewItemState)
+        return CoinToggleViewModel.ViewItem(fullCoin: item.fullCoin, state: viewItemState)
     }
 
     private func sync(items: [ManageWalletsService.Item]) {
@@ -42,16 +42,16 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
         viewItemsRelay.asDriver()
     }
 
-    func onEnable(marketCoin: MarketCoin) {
-        service.enable(marketCoin: marketCoin)
+    func onEnable(fullCoin: FullCoin) {
+        service.enable(fullCoin: fullCoin)
     }
 
     func onDisable(coin: Coin) {
         service.disable(coin: coin)
     }
 
-    func onTapSettings(marketCoin: MarketCoin) {
-        service.configure(marketCoin: marketCoin)
+    func onTapSettings(fullCoin: FullCoin) {
+        service.configure(fullCoin: fullCoin)
     }
 
     func onUpdate(filter: String) {

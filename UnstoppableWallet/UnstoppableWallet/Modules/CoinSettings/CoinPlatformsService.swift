@@ -23,13 +23,13 @@ extension CoinPlatformsService {
         requestRelay.asObservable()
     }
 
-    func approvePlatforms(marketCoin: MarketCoin, currentPlatforms: [Platform] = []) {
-        guard marketCoin.platforms.count > 1 else {
-            approvePlatformsRelay.accept(CoinWithPlatforms(coin: marketCoin.coin, platforms: marketCoin.platforms))
+    func approvePlatforms(fullCoin: FullCoin, currentPlatforms: [Platform] = []) {
+        guard fullCoin.platforms.count > 1 else {
+            approvePlatformsRelay.accept(CoinWithPlatforms(coin: fullCoin.coin, platforms: fullCoin.platforms))
             return
         }
 
-        let request = Request(marketCoin: marketCoin, currentPlatforms: currentPlatforms)
+        let request = Request(fullCoin: fullCoin, currentPlatforms: currentPlatforms)
         requestRelay.accept(request)
     }
 
@@ -57,7 +57,7 @@ extension CoinPlatformsService {
     }
 
     struct Request {
-        let marketCoin: MarketCoin
+        let fullCoin: FullCoin
         let currentPlatforms: [Platform]
     }
 

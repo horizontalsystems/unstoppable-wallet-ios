@@ -18,14 +18,14 @@ class CoinManager {
         return customTokens.filter { customToken in !existingPlatformCoins.contains { $0.coinType == customToken.coinType } }
     }
 
-    private func customMarketCoins(filter: String) throws -> [MarketCoin] {
+    private func customFullCoins(filter: String) throws -> [FullCoin] {
         let customTokens = storage.customTokens(filter: filter)
-        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.marketCoin }
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.fullCoin }
     }
 
-    private func customMarketCoins(coinTypes: [CoinType]) throws -> [MarketCoin] {
+    private func customFullCoins(coinTypes: [CoinType]) throws -> [FullCoin] {
         let customTokens = storage.customTokens(coinTypeIds: coinTypes.map { $0.id })
-        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.marketCoin }
+        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.fullCoin }
     }
 
     private func customPlatformCoins() throws -> [PlatformCoin] {
@@ -46,18 +46,18 @@ class CoinManager {
 
 extension CoinManager {
 
-    func featuredMarketCoins(enabledCoinTypes: [CoinType]) throws -> [MarketCoin] {
-        let appMarketCoins = try customMarketCoins(coinTypes: enabledCoinTypes)
-        let kitMarketCoins = try marketKit.marketCoins(coinTypes: featuredCoinTypes + enabledCoinTypes)
+    func featuredFullCoins(enabledCoinTypes: [CoinType]) throws -> [FullCoin] {
+        let appFullCoins = try customFullCoins(coinTypes: enabledCoinTypes)
+        let kitFullCoins = try marketKit.fullCoins(coinTypes: featuredCoinTypes + enabledCoinTypes)
 
-        return appMarketCoins + kitMarketCoins
+        return appFullCoins + kitFullCoins
     }
 
-    func marketCoins(filter: String = "", limit: Int = 20) throws -> [MarketCoin] {
-        let appMarketCoins = try customMarketCoins(filter: filter)
-        let kitMarketCoins = try marketKit.marketCoins(filter: filter, limit: limit)
+    func fullCoins(filter: String = "", limit: Int = 20) throws -> [FullCoin] {
+        let appFullCoins = try customFullCoins(filter: filter)
+        let kitFullCoins = try marketKit.fullCoins(filter: filter, limit: limit)
 
-        return appMarketCoins + kitMarketCoins
+        return appFullCoins + kitFullCoins
     }
 
     func platformCoin(coinType: CoinType) throws -> PlatformCoin? {
