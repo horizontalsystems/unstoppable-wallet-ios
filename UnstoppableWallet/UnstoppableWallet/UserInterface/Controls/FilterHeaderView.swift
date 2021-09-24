@@ -116,6 +116,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
         if filters.count > index {
             collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: .left)
+            handleSelected(indexPath: selectedItem)
         }
     }
 
@@ -166,19 +167,25 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
 
-        let selectedCell = collectionView.cellForItem(at: indexPath)
+        handleSelected(indexPath: indexPath)
+    }
+
+    private func handleSelected(indexPath: IndexPath) {
+        guard let selectedCell = collectionView.cellForItem(at: indexPath) else {
+            return
+        }
         layoutSelectedView(toCell: selectedCell)
 
         UIView.animate(withDuration: animationDuration, animations: {
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             self.layoutSubviews()
         })
     }
 
-    private func layoutSelectedView(toCell cell: UICollectionViewCell?) {
+    private func layoutSelectedView(toCell cell: UICollectionViewCell) {
         selectedView.snp.remakeConstraints { maker in
             maker.bottom.equalToSuperview().offset(2)
-            maker.leading.trailing.equalTo((cell?.contentView)!)
+            maker.leading.trailing.equalTo(cell.contentView)
             maker.height.equalTo(4)
         }
     }
