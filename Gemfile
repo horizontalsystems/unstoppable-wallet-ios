@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '~> 3.0'
 
 group :fastlane do
   gem 'fastlane'
