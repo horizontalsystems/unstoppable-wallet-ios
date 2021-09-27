@@ -310,7 +310,7 @@
 "market.tab_bar_item" = "Markets";
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
-"market.category.discovery" = "Discovery";
+"market.category.posts" = "News";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
