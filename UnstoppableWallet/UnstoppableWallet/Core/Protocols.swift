@@ -189,6 +189,7 @@ protocol IRateManager {
 
     func globalMarketInfoSingle(currencyCode: String, period: TimePeriod) -> Single<GlobalCoinMarket>
     func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
+    func overviewTopMarketsSingle(type: RateManager.OverviewType, currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
     func coinsMarketSingle(currencyCode: String, coinTypes: [CoinKit.CoinType]) -> Single<[CoinMarket]>
     func searchCoins(text: String) -> [CoinData]
     func latestRate(coinType: CoinKit.CoinType, currencyCode: String) -> LatestRate?

@@ -126,9 +126,9 @@ PODS:
   - FeeRateKit.swift (0.8.0):
     - HsToolKit.swift (~> 1)
     - RxSwift (~> 5.0)
-  - GRDB.swift (5.11.0):
-    - GRDB.swift/standard (= 5.11.0)
-  - GRDB.swift/standard (5.11.0)
+  - GRDB.swift (5.12.0):
+    - GRDB.swift/standard (= 5.12.0)
+  - GRDB.swift/standard (5.12.0)
   - gRPC-Swift (1.0.0):
     - CGRPCZlib (= 1.0.0)
     - Logging (< 2.0.0, >= 1.4.0)
@@ -585,7 +585,7 @@ CHECKOUT OPTIONS:
     :commit: 02efc79a9fb7fb4fa7e08731e668eb6a9acb3015
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: a01c39427e81edb7507c5d39900220179f22e757
+    :commit: 6d4b256333db2cd16b5da1f8e4f51c1b4d57cf48
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -660,7 +660,7 @@ SPEC CHECKSUMS:
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
   EthereumKit.swift: 1129b9ae3b8653c1c3e2eca473310ffa6444570a
   FeeRateKit.swift: 12713618d623d057382b964d2d16d220b1db8df5
-  GRDB.swift: 9a33d9680cd3c870c82f48a6cbc73d3cfbb235eb
+  GRDB.swift: f94b00ac11ab22597771b6a47211d1c44284395a
   gRPC-Swift: 77154009a019e97f8c4bd8f2bb75fe9726801157
   HdWalletKit.swift: 30b1ab08c736422eeefe346369ced89574e2ec00
   Hodler.swift: e59834cd20385e5067cd55a813667ca8fd0778b9
