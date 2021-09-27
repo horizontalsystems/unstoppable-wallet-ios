@@ -215,9 +215,9 @@ protocol IFavoritesManager {
     var dataUpdatedObservable: Observable<()> { get }
     var all: [FavoriteCoinRecord] { get }
 
-    func add(coinType: CoinKit.CoinType)
-    func remove(coinType: CoinKit.CoinType)
-    func isFavorite(coinType: CoinKit.CoinType) -> Bool
+    func add(coinType: MarketKit.CoinType)
+    func remove(coinType: MarketKit.CoinType)
+    func isFavorite(coinType: MarketKit.CoinType) -> Bool
 }
 
 protocol IPostsManager {
@@ -264,14 +264,9 @@ protocol IAppConfigProvider {
 
     var pnsUrl: String { get }
 
-    var featuredCoinTypes: [CoinKit.CoinType] { get }
     func defaultWords(count: Int) -> String
 
     var defaultWords: String { get }
-}
-
-protocol ICoinMigration {
-    var coinMigrationObservable: Observable<[CoinKit.Coin]> { get }
 }
 
 protocol IEnabledWalletStorage {
@@ -482,9 +477,9 @@ protocol IErc20ContractInfoProvider {
 
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(coinType: CoinKit.CoinType)
-    func deleteFavoriteCoinRecord(coinType: CoinKit.CoinType)
-    func inFavorites(coinType: CoinKit.CoinType) -> Bool
+    func save(coinType: MarketKit.CoinType)
+    func deleteFavoriteCoinRecord(coinType: MarketKit.CoinType)
+    func inFavorites(coinType: MarketKit.CoinType) -> Bool
 }
 
 protocol ITermsManager {

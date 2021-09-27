@@ -1,7 +1,6 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
 
 class ThemeSettingsViewModel {
     private let service: ThemeSettingsService

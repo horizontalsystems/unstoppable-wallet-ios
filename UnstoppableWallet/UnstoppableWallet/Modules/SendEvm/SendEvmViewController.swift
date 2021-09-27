@@ -5,7 +5,6 @@ import SectionsTableView
 import RxSwift
 import RxCocoa
 import EthereumKit
-import CoinKit
 
 class SendEvmViewController: ThemeViewController {
     private let evmKit: EthereumKit.Kit

@@ -5,19 +5,12 @@ import GRDB
 import RxGRDB
 import KeychainAccess
 import HsToolKit
-import CoinKit
 import MarketKit
 
 class GrdbStorage {
     private let dbPool: DatabasePool
 
-    private let appConfigProvider: IAppConfigProvider
-
-    private var coinMigrationRelay = BehaviorRelay<[CoinKit.Coin]>(value: [])
-
-    init(appConfigProvider: IAppConfigProvider) {
-        self.appConfigProvider = appConfigProvider
-
+    init() {
         let databaseURL = try! FileManager.default
                 .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 .appendingPathComponent("bank.sqlite")
@@ -254,12 +247,16 @@ class GrdbStorage {
                     EnabledWallet_v_0_13.Columns.coinId == "BCH" ||
                     EnabledWallet_v_0_13.Columns.coinId == "DASH").fetchAll(db)
 
-            let testNet = self?.appConfigProvider.testMode ?? false
-            let coins = CoinKit.Kit.defaultCoins(testNet: testNet)
+            let coinTypeKeyMap = [
+                "BTC": "bitcoin",
+                "LTC": "litecoin",
+                "BCH": "bitcoinCash",
+                "DASH": "dash"
+            ]
+
             let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
                 guard
-                        let coin = coins.first(where: { $0.id == wallet.coinId }),
-                        let coinTypeKey = BlockchainSetting.key(for: coin.type),
+                        let coinTypeKey = coinTypeKeyMap[wallet.coinId],
                         let derivation = wallet.derivation
                         else {
                     return nil
@@ -269,8 +266,7 @@ class GrdbStorage {
             }
             let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
                 guard
-                        let coin = coins.first(where: { $0.id == wallet.coinId }),
-                        let coinTypeKey = BlockchainSetting.key(for: coin.type),
+                        let coinTypeKey = coinTypeKeyMap[wallet.coinId],
                         let syncMode = wallet.syncMode
                         else {
                     return nil
@@ -379,38 +375,14 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("extractCoinsAndChangeCoinIds") { [weak self] db in
-            // extract coins
-            let coinRecords = try CoinRecord_v19.fetchAll(db)
-            let coins: [CoinKit.Coin] = coinRecords.compactMap { record in
-                let coinId = record.migrationId
-                return Coin(title: record.title, code: record.code, decimal: record.decimal, type: CoinType(id: coinId))
-            }
-
-            self?.coinMigrationRelay.accept(coins)
-
-            // change coinIds in enabled wallets
-            let testNet = self?.appConfigProvider.testMode ?? false
-            let allCoins = CoinKit.Kit.defaultCoins(testNet: testNet) + coins
-
-            let enabledWallets = try EnabledWallet_v_0_20.fetchAll(db)
-            let changedWallets: [EnabledWallet_v_0_20] = enabledWallets.compactMap { wallet in
-                guard let newId = CoinIdMigration.new(from: wallet.coinId, coins: allCoins) else {
-                    return nil
-                }
-                return EnabledWallet_v_0_20(coinId: newId, accountId: wallet.accountId)
-            }
-
-            //delete all alerts and add title column
+            // delete all alerts and add title column
             try PriceAlertRecord.deleteAll(db)
             try db.alter(table: PriceAlertRecord.databaseTableName) { t in
                 t.add(column: PriceAlertRecord.Columns.coinTitle.name, .text)
             }
 
-            //apply changes in database
+            // apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)
-
-            try enabledWallets.forEach { try $0.delete(db) }
-            try changedWallets.forEach { try $0.insert(db) }
         }
 
         migrator.registerMigration("recreateFavoriteCoins") { db in
@@ -620,14 +592,6 @@ class GrdbStorage {
 
 }
 
-extension GrdbStorage: ICoinMigration {
-
-    public var coinMigrationObservable: Observable<[CoinKit.Coin]> {
-        coinMigrationRelay.asObservable()
-    }
-
-}
-
 extension GrdbStorage: IEnabledWalletStorage {
 
     var enabledWallets: [EnabledWallet] {
@@ -794,7 +758,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func save(coinType: CoinKit.CoinType) {
+    func save(coinType: MarketKit.CoinType) {
         let favoriteCoinRecord = FavoriteCoinRecord(coinType: coinType)
 
         _ = try! dbPool.write { db in
@@ -802,7 +766,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func deleteFavoriteCoinRecord(coinType: CoinKit.CoinType) {
+    func deleteFavoriteCoinRecord(coinType: MarketKit.CoinType) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
                     .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
@@ -810,7 +774,7 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
-    func inFavorites(coinType: CoinKit.CoinType) -> Bool {
+    func inFavorites(coinType: MarketKit.CoinType) -> Bool {
         try! dbPool.read { db in
             try FavoriteCoinRecord
                     .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)

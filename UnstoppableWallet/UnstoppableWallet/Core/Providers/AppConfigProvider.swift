@@ -1,5 +1,4 @@
 import Foundation
-import CoinKit
 
 class AppConfigProvider: IAppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
@@ -82,16 +81,6 @@ class AppConfigProvider: IAppConfigProvider {
 
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
     let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
-
-    var featuredCoinTypes: [CoinType] {
-        [
-            .bitcoin,
-            .bitcoinCash,
-            .ethereum,
-            .zcash,
-            .binanceSmartChain
-        ]
-    }
 
     var defaultWords: String {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""

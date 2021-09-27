@@ -17,7 +17,9 @@ struct CoinPageModule {
         let favoriteService = FavoriteService(favoritesManager: App.shared.favoritesManager)
         let coinFavoriteService = CoinFavoriteService(
                 service: favoriteService,
-                coinType: launchMode.coinType)
+//                coinType: launchMode.coinType
+                coinType: .ethereum // todo
+        )
 
 //        let priceAlertService = CoinPriceAlertService(
 //                priceAlertManager: App.shared.priceAlertManager,

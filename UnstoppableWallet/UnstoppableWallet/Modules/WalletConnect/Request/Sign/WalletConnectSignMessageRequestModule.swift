@@ -1,6 +1,5 @@
 import UIKit
 import EthereumKit
-import CoinKit
 
 struct WalletConnectSignMessageRequestModule {
 

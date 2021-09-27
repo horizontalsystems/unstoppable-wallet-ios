@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CoinKit
 
 class TransactionsViewModel {
     let disposeBag = DisposeBag()
