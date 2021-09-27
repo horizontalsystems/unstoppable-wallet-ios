@@ -1,15 +1,19 @@
 import Foundation
 
 struct MarketOverviewModule {
+    static let overviewSectionItemCount = 5
 
-    static func viewController(marketViewModel: MarketViewModel) -> MarketOverviewViewController {
-        let overviewService = MarketOverviewService(currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, rateManager: App.shared.rateManager)
-        let overviewViewModel = MarketOverviewViewModel(service: overviewService)
-
+    static func viewController(marketViewModel: MarketViewModel) -> MarketOverviewViewControllerNew {
         let postService = MarketPostService(postManager: App.shared.rateManager)
         let postViewModel = MarketPostViewModel(service: postService)
 
-        return MarketOverviewViewController(marketViewModel: marketViewModel, postViewModel: postViewModel, overviewViewModel: overviewViewModel, urlManager: UrlManager(inApp: true))
+        let topGainersService = MarketOverviewServiceNew(overviewType: .gainers(count: overviewSectionItemCount), currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, rateManager: App.shared.rateManager)
+        let topGainersViewModel = MarketOverviewViewModelNew(service: topGainersService)
+
+        let topLosersService = MarketOverviewServiceNew(overviewType: .losers(count: overviewSectionItemCount), currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, rateManager: App.shared.rateManager)
+        let topLosersViewModel = MarketOverviewViewModelNew(service: topLosersService)
+
+        return MarketOverviewViewControllerNew(marketViewModel: marketViewModel, topGainersViewModel: topGainersViewModel, topLosersViewModel: topLosersViewModel, urlManager: UrlManager(inApp: true))
     }
 
 }

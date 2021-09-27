@@ -125,6 +125,19 @@ extension RateManager: IRateManager {
         kit.coinTypes(forCategoryId: category)
     }
 
+    func overviewTopMarketsSingle(type: OverviewType, currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]> {
+        kit.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: fetchDiffPeriod, itemsCount: itemCount).map { items in
+            switch type {
+            case .gainers(let count):
+                let losers = items.sorted(by: { c1, c2 in c1.marketInfo.rateDiff > c2.marketInfo.rateDiff })
+                return Array(losers.prefix(count))
+            case .losers(let count):
+                let losers = items.sorted(by: { c1, c2 in c1.marketInfo.rateDiff < c2.marketInfo.rateDiff })
+                return Array(losers.prefix(count))
+            }
+        }
+    }
+
 }
 
 extension RateManager: IPostsManager {
@@ -135,6 +148,15 @@ extension RateManager: IPostsManager {
 
     var postsSingle: Single<[CryptoNewsPost]> {
         kit.cryptoPostsSingle
+    }
+
+}
+
+extension RateManager {
+
+    enum OverviewType {
+        case gainers(count: Int)
+        case losers(count: Int)
     }
 
 }

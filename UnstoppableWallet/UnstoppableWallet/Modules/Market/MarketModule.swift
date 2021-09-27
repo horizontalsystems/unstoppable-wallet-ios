@@ -6,6 +6,7 @@ import MarketKit
 import ComponentKit
 
 struct MarketModule {
+
     static func viewController() -> UIViewController {
         let service = MarketService(localStorage: App.shared.localStorage)
         let viewModel = MarketViewModel(service: service)
@@ -53,17 +54,17 @@ struct MarketModule {
         return (title: title, value: value, color: color)
     }
 
-    static func bind(cell: G14Cell, viewItem: ViewItem) {
-        let image = UIImage.image(coinType: viewItem.coinType)
+    static func bind(cell: G14Cell, viewItem: ViewItem?) {
+        let image: UIImage? = viewItem.flatMap { UIImage.image(coinType: $0.coinType) }
 
         cell.leftImage = image
         cell.leftImageTintColor = .themeGray
-        cell.topText = viewItem.coinName
-        cell.bottomText = viewItem.coinCode.uppercased()
+        cell.topText = viewItem?.coinName
+        cell.bottomText = viewItem?.coinCode.uppercased()
 
-        cell.leftBadgeText = viewItem.score?.title
+        cell.leftBadgeText = viewItem?.score?.title
 
-        switch viewItem.score {
+        switch viewItem?.score {
         case let .rating(rate):
             cell.leftBadgeBackgroundColor = color(rate: rate)
             cell.leftBadgeTextColor = .themeDarker
@@ -73,9 +74,9 @@ struct MarketModule {
         case .none: ()
         }
 
-        cell.primaryValueText = viewItem.rate
+        cell.primaryValueText = viewItem?.rate
 
-        let marketFieldData = marketFieldPreference(marketDataValue: viewItem.marketDataValue)
+        let marketFieldData = viewItem.map { marketFieldPreference(marketDataValue: $0.marketDataValue) } ?? (title: nil, value: nil, color: .themeGray)
         cell.secondaryTitleText = marketFieldData.title
         cell.secondaryValueText = marketFieldData.value
         cell.secondaryValueTextColor = marketFieldData.color
