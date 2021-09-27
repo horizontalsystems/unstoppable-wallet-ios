@@ -311,7 +311,7 @@
 "market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
 "market.category.overview" = "Обзор";
-"market.category.discovery" = "Токены";
+"market.category.posts" = "News";
 "market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
 "market.24h_volume" = "Объем торгов за 24 ч";
