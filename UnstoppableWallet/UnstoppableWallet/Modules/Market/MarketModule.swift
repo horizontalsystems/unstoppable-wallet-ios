@@ -88,13 +88,13 @@ extension MarketModule {
 
     enum Tab: Int, CaseIterable {
         case overview
-        case discovery
+        case posts
         case watchlist
 
         var title: String {
             switch self {
             case .overview: return "market.category.overview".localized
-            case .discovery: return "market.category.discovery".localized
+            case .posts: return "market.category.posts".localized
             case .watchlist: return "market.category.watchlist".localized
             }
         }

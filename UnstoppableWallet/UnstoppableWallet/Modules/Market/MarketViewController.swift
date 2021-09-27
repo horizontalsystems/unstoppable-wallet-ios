@@ -11,14 +11,14 @@ class MarketViewController: ThemeViewController {
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: MarketOverviewViewControllerNew
-    private let discoveryViewController: MarketDiscoveryViewController
+    private let postViewController: MarketPostViewController
     private let watchlistViewController: MarketWatchlistViewController
 
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
         overviewController = MarketOverviewModule.viewController(marketViewModel: viewModel)
-        discoveryViewController = MarketDiscoveryModule.viewController(marketViewModel: viewModel)
+        postViewController = MarketPostModule.viewController()
         watchlistViewController = MarketWatchlistModule.viewController()
 
         super.init()
@@ -62,7 +62,7 @@ class MarketViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_24"), style: .plain, target: self, action: #selector(onTapSearch))
 
         overviewController.parentNavigationController = navigationController
-        discoveryViewController.parentNavigationController = navigationController
+        postViewController.parentNavigationController = navigationController
         watchlistViewController.parentNavigationController = navigationController
 
         subscribe(disposeBag, viewModel.currentTabDriver) { [weak self] in self?.sync(currentTab: $0) }
@@ -88,7 +88,7 @@ class MarketViewController: ThemeViewController {
     private func viewController(tab: MarketModule.Tab) -> UIViewController {
         switch tab {
         case .overview: return overviewController
-        case .discovery: return discoveryViewController
+        case .posts: return postViewController
         case .watchlist: return watchlistViewController
         }
     }
