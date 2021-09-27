@@ -38,7 +38,8 @@ extension MarketViewModel {
 
     func handleTapSeeAll(listType: MarketModule.ListType) {
         discoveryListTypeRelay.accept(listType)
-        onSelect(tab: .discovery)
+
+        //todo: open modal view with coins by list type
     }
 
 }
