@@ -309,7 +309,7 @@
 "market.tab_bar_item" = "Mercados";
 "market.title" = "Mercados";
 "market.category.overview" = "Información General";
-"market.category.discovery" = "Descubrimiento";
+"market.category.posts" = "News";
 "market.category.watchlist" = "Lista de Seguimiento";
 "market.total_market_cap" = "Capitalización Total del Mercado";
 "market.24h_volume" = "Volumen de 24 horas";
