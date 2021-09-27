@@ -1,5 +1,5 @@
 import GRDB
-import CoinKit
+import MarketKit
 
 class FavoriteCoinRecord: Record {
     let coinType: CoinType

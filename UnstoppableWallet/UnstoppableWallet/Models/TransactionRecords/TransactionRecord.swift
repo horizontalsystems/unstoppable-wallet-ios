@@ -1,5 +1,4 @@
 import Foundation
-import CoinKit
 
 class TransactionRecord {
     let source: TransactionSource

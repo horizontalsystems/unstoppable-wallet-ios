@@ -1,6 +1,5 @@
 import RxSwift
 import RxRelay
-import CoinKit
 
 class TransactionAdapterManager {
     private let disposeBag = DisposeBag()

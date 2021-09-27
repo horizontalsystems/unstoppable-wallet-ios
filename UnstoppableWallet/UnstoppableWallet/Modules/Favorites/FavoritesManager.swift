@@ -1,6 +1,6 @@
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class FavoritesManager {
     private let storage: IFavoriteCoinRecordStorage

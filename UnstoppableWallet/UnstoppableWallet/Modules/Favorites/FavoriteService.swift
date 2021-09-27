@@ -2,8 +2,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import XRatesKit
-import CoinKit
 import CurrencyKit
+import MarketKit
 
 class FavoriteService {
     private var disposeBag = DisposeBag()

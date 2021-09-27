@@ -7,14 +7,12 @@ import CoinKit
 class RateManager {
     private let disposeBag = DisposeBag()
 
-    private let rateCoinMapper: IRateCoinMapper
     private let feeCoinProvider: FeeCoinProvider
     private let appConfigProvider: IAppConfigProvider
 
     private let kit: XRatesKit
 
-    init(currencyKit: CurrencyKit.Kit, rateCoinMapper: IRateCoinMapper, feeCoinProvider: FeeCoinProvider, appConfigProvider: IAppConfigProvider) {
-        self.rateCoinMapper = rateCoinMapper
+    init(currencyKit: CurrencyKit.Kit, feeCoinProvider: FeeCoinProvider, appConfigProvider: IAppConfigProvider) {
         self.feeCoinProvider = feeCoinProvider
         self.appConfigProvider = appConfigProvider
 

@@ -16,7 +16,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -97,7 +97,7 @@ class App {
         appConfigProvider = AppConfigProvider()
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
-        storage = GrdbStorage(appConfigProvider: appConfigProvider)
+        storage = GrdbStorage()
         logRecordManager = LogRecordManager(storage: storage)
 
         marketKit = try! MarketKit.Kit.instance(hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz", minLogLevel: .debug)
@@ -178,7 +178,7 @@ class App {
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
+        rateManager = RateManager(currencyKit: currencyKit, feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
         rateManagerNew = RateManagerNew(walletManager: walletManager, feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
         favoritesManager = FavoritesManager(storage: storage)
 
