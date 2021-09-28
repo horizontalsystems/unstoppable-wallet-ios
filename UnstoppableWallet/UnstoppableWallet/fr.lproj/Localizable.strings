@@ -62,18 +62,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Plus ancient";
-"coin_settings.derivation.description.bip49" = "Populaire";
-"coin_settings.derivation.description.bip84" = "Plus récent";
-"coin_settings.derivation.starts_with" = "commence par %@...";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "Paramètres de la Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Nouveau";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Portefeuilles plus anciens (avant août 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Portefeuilles plus récents";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.title" = "Format de l'adresse";
-"blockchain_settings.description" = "Choisissez le format d'adresse de votre portefeuille %@. Chaque format sélectionné représente un portefeuille différent dans l'onglet du solde de l'application.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -224,7 +229,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Choisir la pièce";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -640,9 +645,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Crypto Monnaie";
-"manage_coins.add_token" = "Ajouter le token";
-"manage_coins.search" = "Chercher";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
 "manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
@@ -832,9 +837,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
 "create_wallet.success" = "Établi";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Choisissez la Crypto";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -947,7 +953,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Enable Coins
 
 "enable_coins.title" = "Activer les Pièces";
-"enable_coins.description" = "Activer toutes les pièces %@ qui ont un solde";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Activer";
 "enable_coins.enabling" = "Activation...";
 "enable_coins.enabled_coins" = "%@ pièces activées";
@@ -976,7 +982,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Birthday Input
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
-"birthday_input.description" = "Si vous savez quelle est la hauteur de l'anniversaire de votre portefeuille Zcash, ajoutez-la ci-dessous pour accélérer le processus de synchronisation.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
 
