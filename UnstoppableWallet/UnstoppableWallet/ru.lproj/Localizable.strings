@@ -64,18 +64,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Старые";
-"coin_settings.derivation.description.bip49" = "Популярные";
-"coin_settings.derivation.description.bip84" = "Новые";
-"coin_settings.derivation.starts_with" = "начинается с %@...";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Новый";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Старые кошельки (до августа 2017 г.)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Новые Кошельки";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.title" = "Формат Адреса";
-"blockchain_settings.description" = "Выберите формат адреса для вашего %@ кошелька. Каждый выбранный формат представляет отдельный кошелек во вкладке приложения для отображения баланса.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -226,7 +231,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Выберите Токен";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -642,9 +647,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Выберите Токены";
-"manage_coins.add_token" = "Добавить Токен";
-"manage_coins.search" = "Поиск";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
@@ -834,9 +839,10 @@
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
 "create_wallet.success" = "Создан";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Выберите Валюту";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -949,7 +955,7 @@
 // Enable Coins
 
 "enable_coins.title" = "Активировать Монеты";
-"enable_coins.description" = "Активировать все %@ монеты с любым балансом";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Активировать";
 "enable_coins.enabling" = "Идет активация...";
 "enable_coins.enabled_coins" = "Активировано %@ монет";
@@ -978,7 +984,7 @@
 // Birthday Input
 
 "birthday_input.title" = "Блок Создания";
-"birthday_input.description" = "Если вы знаете блок создания вашего Zcash кошелька, добавьте его ниже для ускорения процесса синхронизации.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 "restore_setting.birthday_height" = "%@ Блок Создания";
 
