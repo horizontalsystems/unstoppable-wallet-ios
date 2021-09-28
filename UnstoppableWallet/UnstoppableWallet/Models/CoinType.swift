@@ -1,3 +1,4 @@
+import UIKit
 import CoinKit
 import MarketKit
 
@@ -119,6 +120,14 @@ extension MarketKit.Coin {
 
 }
 
+extension MarketKit.CoinType {
+
+    var imagePlaceholder: UIImage? {
+        blockchainType.map { UIImage(named: "Coin Icon Placeholder - \($0)") } ?? UIImage(named: "icon_placeholder_24")
+    }
+
+}
+
 extension CoinKit.CoinType {
 
     var coinType: MarketKit.CoinType {
@@ -136,6 +145,5 @@ extension CoinKit.CoinType {
         case .unsupported(let id): return .unsupported(type: id)
         }
     }
-
 
 }

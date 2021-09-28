@@ -14,8 +14,8 @@ extension UIImageView {
         }
     }
 
-    func setImage(withUrlString urlString: String) {
-        image = nil
+    func setImage(withUrlString urlString: String, placeholder: UIImage?) {
+        image = placeholder
 
         AF.request(urlString).responseImage { [weak self] response in
             if case .success(let image) = response.result {

@@ -54,7 +54,7 @@ class SendEvmViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
-        iconImageView.setImage(withUrlString: viewModel.platformCoin.coin.imageUrl)
+        iconImageView.setImage(withUrlString: viewModel.platformCoin.coin.imageUrl, placeholder: viewModel.platformCoin.coinType.imagePlaceholder)
         iconImageView.tintColor = .themeGray
 
         view.addSubview(tableView)
