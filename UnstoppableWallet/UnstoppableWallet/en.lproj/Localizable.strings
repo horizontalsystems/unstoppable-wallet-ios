@@ -64,18 +64,23 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Older";
-"coin_settings.derivation.description.bip49" = "Popular";
-"coin_settings.derivation.description.bip84" = "Newest";
-"coin_settings.derivation.starts_with" = "starts with %@...";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "New";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Older wallets (before Aug 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Newer wallets";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.title" = "Address Format";
-"blockchain_settings.description" = "Choose the address format for your %@ wallet. Each selected format represents a different wallet on app's balance tab.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -226,7 +231,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coin";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -642,9 +647,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Choose Coins";
-"manage_coins.add_token" = "Add Token";
-"manage_coins.search" = "Search";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
 "manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
@@ -834,9 +839,10 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 "create_wallet.success" = "Created";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Choose Crypto";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -949,7 +955,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Enable Coins
 
 "enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ coins that have any balance";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Enable";
 "enable_coins.enabling" = "Enabling...";
 "enable_coins.enabled_coins" = "Enabled %@ coins";
@@ -978,7 +984,7 @@ We built Unstoppable for ourselves as the available solutions were not up to par
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know a birthday height for your Zcash wallet add it below to speedup syncing process.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
 
