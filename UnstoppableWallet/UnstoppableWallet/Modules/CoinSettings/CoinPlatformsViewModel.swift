@@ -18,19 +18,16 @@ class CoinPlatformsViewModel {
     }
 
     private func handle(request: CoinPlatformsService.Request) {
-        let marketCoin = request.fullCoin
+        let fullCoin = request.fullCoin
 
         let config = BottomMultiSelectorViewController.Config(
-//                icon: .image(coinType: marketCoin.platforms),
                 icon: nil,
                 iconTint: nil,
-//                title: "platform_settings.title".localized,
-                title: "Coin Type",
-                subtitle: marketCoin.coin.name,
-//                description: "platform_settings.description".localized(marketCoin.coin.name),
-                description: "This token exists on multiple blockchains. Select types you would like to use.",
-                selectedIndexes: request.currentPlatforms.compactMap { marketCoin.platforms.firstIndex(of: $0) },
-                viewItems: marketCoin.platforms.map { platform in
+                title: "coin_platforms.title".localized,
+                subtitle: fullCoin.coin.name,
+                description: "coin_platforms.description".localized,
+                selectedIndexes: request.currentPlatforms.compactMap { fullCoin.platforms.firstIndex(of: $0) },
+                viewItems: fullCoin.platforms.map { platform in
                     BottomMultiSelectorViewController.ViewItem(
                             title: platform.coinType.platformType,
                             subtitle: platform.coinType.platformCoinType
