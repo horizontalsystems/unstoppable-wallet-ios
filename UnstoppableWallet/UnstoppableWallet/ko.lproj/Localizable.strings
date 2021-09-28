@@ -62,18 +62,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "더 오래된";
-"coin_settings.derivation.description.bip49" = "인기있는";
-"coin_settings.derivation.description.bip84" = "최신";
-"coin_settings.derivation.starts_with" = "%@부터 시작";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "신규";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "오래된 지갑 (2017년 8월 이전)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "새로운 지갑";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.title" = "주소 형식";
-"blockchain_settings.description" = "귀하의 %@ 지갑의 주소 형식을 선택하십시오. 선택한 각 형식은 앱의 잔고 탭에 있는 다른 지갑을 나타냅니다.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -224,7 +229,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "코인 선택";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -640,9 +645,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "코인 선택";
-"manage_coins.add_token" = "토큰 추가";
-"manage_coins.search" = "검색";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
 "manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
@@ -832,9 +837,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
 "create_wallet.success" = "생성됨";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "암호화를 선택해 주세요";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -947,7 +953,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Enable Coins
 
 "enable_coins.title" = "코인 활성";
-"enable_coins.description" = "잔액이 있는 모든 %@의 코인 사용";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "활성화";
 "enable_coins.enabling" = "활성화 중...";
 "enable_coins.enabled_coins" = "%@ 코인 활성화됨";
@@ -976,7 +982,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Birthday Input
 
 "birthday_input.title" = "생일 신장";
-"birthday_input.description" = "Zcash 지갑의 birthday height를 알고 있다면 아래에 추가하여 동기화 속도를 높입니다.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "생일 높이 %@";
 
