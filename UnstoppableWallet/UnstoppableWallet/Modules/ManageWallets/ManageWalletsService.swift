@@ -50,16 +50,20 @@ class ManageWalletsService {
         syncState()
     }
 
-    private func syncFullCoins() {
+    private func fetchFullCoins() -> [FullCoin] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                fullCoins = try coinManager.featuredFullCoins(enabledPlatformCoins: wallets.map { $0.platformCoin })
+                return try coinManager.featuredFullCoins(enabledPlatformCoins: wallets.map { $0.platformCoin })
             } else {
-                fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
+                return try coinManager.fullCoins(filter: filter, limit: 20)
             }
         } catch {
-            // todo
+            return []
         }
+    }
+
+    private func syncFullCoins() {
+        fullCoins = fetchFullCoins()
     }
 
     private func isEnabled(coin: Coin) -> Bool {
@@ -123,9 +127,10 @@ class ManageWalletsService {
     private func handleUpdated(wallets: [Wallet]) {
         sync(wallets: wallets)
 
-        let coins = fullCoins.map { $0.coin }
-        if wallets.contains(where: { !coins.contains($0.coin) }) {
-            syncFullCoins()
+        let newFullCoins = fetchFullCoins()
+
+        if newFullCoins.count > fullCoins.count {
+            fullCoins = newFullCoins
             sortFullCoins()
         }
 
