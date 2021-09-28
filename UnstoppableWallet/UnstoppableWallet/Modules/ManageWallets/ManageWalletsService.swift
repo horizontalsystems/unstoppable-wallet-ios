@@ -53,7 +53,7 @@ class ManageWalletsService {
     private func syncFullCoins() {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                fullCoins = try coinManager.featuredFullCoins(enabledCoinTypes: wallets.map { $0.coinType })
+                fullCoins = try coinManager.featuredFullCoins(enabledPlatformCoins: wallets.map { $0.platformCoin })
             } else {
                 fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
             }
