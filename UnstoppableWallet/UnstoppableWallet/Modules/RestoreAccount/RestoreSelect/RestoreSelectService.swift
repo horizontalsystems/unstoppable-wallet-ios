@@ -55,7 +55,7 @@ class RestoreSelectService {
     private func syncFullCoins() {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                fullCoins = try coinManager.featuredFullCoins(enabledCoinTypes: enabledCoins.map { $0.platformCoin.coinType })
+                fullCoins = try coinManager.featuredFullCoins(enabledPlatformCoins: enabledCoins.map { $0.platformCoin })
             } else {
                 fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
             }
