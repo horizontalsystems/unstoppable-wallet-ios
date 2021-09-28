@@ -6,7 +6,7 @@ import HsToolKit
 import MarketKit
 
 protocol ISendView: AnyObject {
-    func set(coin: Coin)
+    func set(coin: Coin, coinType: CoinType)
 
     func showCopied()
     func show(error: Error)

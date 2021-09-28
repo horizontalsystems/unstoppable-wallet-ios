@@ -44,7 +44,7 @@ class SendPresenter {
 extension SendPresenter: ISendViewDelegate {
 
     func onViewDidLoad() {
-        view?.set(coin: platformCoin.coin)
+        view?.set(coin: platformCoin.coin, coinType: platformCoin.coinType)
         handler.onViewDidLoad()
 
         interactor.subscribeToLatestRate(coinType: platformCoin.coinType, currencyCode: interactor.baseCurrency.code)

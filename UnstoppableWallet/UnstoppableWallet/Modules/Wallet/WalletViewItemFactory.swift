@@ -18,6 +18,7 @@ class WalletViewItemFactory {
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
                 iconUrlString: iconUrlString(wallet: item.wallet, state: state),
+                iconPlaceholder: item.wallet.coinType.imagePlaceholder,
                 coinCode: coin.code,
                 blockchainBadge: badge(wallet: item.wallet),
                 syncSpinnerProgress: syncSpinnerProgress(state: state),

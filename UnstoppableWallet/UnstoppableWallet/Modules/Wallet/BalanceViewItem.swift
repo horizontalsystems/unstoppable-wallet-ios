@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import DeepDiff
 import XRatesKit
 import MarketKit
@@ -14,6 +14,7 @@ struct BalanceViewItem {
 struct BalanceTopViewItem {
     let isMainNet: Bool
     let iconUrlString: String?
+    let iconPlaceholder: UIImage?
     let coinCode: String
     let blockchainBadge: String?
 
