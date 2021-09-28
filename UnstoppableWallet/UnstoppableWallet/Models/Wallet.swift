@@ -74,11 +74,11 @@ struct Wallet {
 extension Wallet: Hashable {
 
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
-        lhs.platformCoin == rhs.platformCoin && lhs.account == rhs.account
+        lhs.configuredPlatformCoin == rhs.configuredPlatformCoin && lhs.account == rhs.account
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(platformCoin)
+        hasher.combine(configuredPlatformCoin)
         hasher.combine(account)
     }
 
