@@ -62,18 +62,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Más antiguo";
-"coin_settings.derivation.description.bip49" = "Popular";
-"coin_settings.derivation.description.bip84" = "Más nuevo";
-"coin_settings.derivation.starts_with" = "comenzar con %@...";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "Configuración de Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Nuevo";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Monederos antiguos (antes de Agosto 2017)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Monederos más nuevos";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.title" = "Formato de Dirección";
-"blockchain_settings.description" = "Elija el formato de dirección para su monedero %@. Cada formato seleccionado representa un monedero diferente en la pestaña de saldo de la aplicación.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -224,7 +229,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Elegir moneda";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -640,9 +645,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Elegir monedas";
-"manage_coins.add_token" = "Añadir Token";
-"manage_coins.search" = "Buscar";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
@@ -833,9 +838,10 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 "create_wallet.success" = "Creado";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Elegir Cripto";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -948,7 +954,7 @@ poner en peligro la seguridad de mis fondos.";
 // Enable Coins
 
 "enable_coins.title" = "Activar monedas";
-"enable_coins.description" = "Habilitar todas las %@ monedas que tengan saldo";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Habilitar";
 "enable_coins.enabling" = "Activando...";
 "enable_coins.enabled_coins" = "%@ créditos habilitados";
@@ -977,7 +983,7 @@ poner en peligro la seguridad de mis fondos.";
 // Birthday Input
 
 "birthday_input.title" = "Altura de Cumpleaños";
-"birthday_input.description" = "Si conoce una altura de cumpleaños para su monedero Zcash añádela abajo para acelerar el proceso de sincronización.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 "restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
 
