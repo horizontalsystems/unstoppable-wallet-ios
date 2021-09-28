@@ -37,12 +37,12 @@ class CoinSettingsViewModel {
                 iconTint: nil,
                 title: "blockchain_settings.title".localized,
                 subtitle: platformCoin.coin.name,
-                description: "blockchain_settings.description".localized(platformCoin.coin.name),
+                description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
                     BottomMultiSelectorViewController.ViewItem(
                             title: derivation.title,
-                            subtitle: derivation.description(coinType: platformCoin.coinType)
+                            subtitle: derivation.description
                     )
                 }
         )
@@ -54,7 +54,7 @@ class CoinSettingsViewModel {
                 iconTint: nil,
                 title: "blockchain_settings.title".localized,
                 subtitle: platformCoin.coin.name,
-                description: "blockchain_settings.description".localized(platformCoin.coin.name),
+                description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
                     BottomMultiSelectorViewController.ViewItem(

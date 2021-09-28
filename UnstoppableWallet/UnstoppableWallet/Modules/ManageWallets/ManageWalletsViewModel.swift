@@ -8,6 +8,7 @@ class ManageWalletsViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
+    private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableCoinRelay = PublishRelay<Coin>()
 
     init(service: ManageWalletsService) {
@@ -32,6 +33,7 @@ class ManageWalletsViewModel {
 
     private func sync(items: [ManageWalletsService.Item]) {
         viewItemsRelay.accept(items.map { viewItem(item: $0) })
+        notFoundVisibleRelay.accept(items.isEmpty)
     }
 
 }
@@ -63,6 +65,10 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
 }
 
 extension ManageWalletsViewModel {
+
+    var notFoundVisibleDriver: Driver<Bool> {
+        notFoundVisibleRelay.asDriver()
+    }
 
     var disableCoinSignal: Signal<Coin> {
         disableCoinRelay.asSignal()

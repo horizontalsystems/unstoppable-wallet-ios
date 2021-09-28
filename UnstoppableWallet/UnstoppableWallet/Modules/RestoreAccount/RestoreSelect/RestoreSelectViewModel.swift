@@ -7,6 +7,7 @@ class RestoreSelectViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
+    private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableCoinRelay = PublishRelay<Coin>()
     private let successRelay = PublishRelay<()>()
 
@@ -32,6 +33,7 @@ class RestoreSelectViewModel {
 
     private func sync(items: [RestoreSelectService.Item]) {
         viewItemsRelay.accept(items.map { viewItem(item: $0) })
+        notFoundVisibleRelay.accept(items.isEmpty)
     }
 
 }
@@ -63,6 +65,10 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
 }
 
 extension RestoreSelectViewModel {
+
+    var notFoundVisibleDriver: Driver<Bool> {
+        notFoundVisibleRelay.asDriver()
+    }
 
     var disableCoinSignal: Signal<Coin> {
         disableCoinRelay.asSignal()
