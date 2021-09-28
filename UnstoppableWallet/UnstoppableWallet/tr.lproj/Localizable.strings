@@ -63,18 +63,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Eski";
-"coin_settings.derivation.description.bip49" = "Popüler";
-"coin_settings.derivation.description.bip84" = "Yeni";
-"coin_settings.derivation.starts_with" = "%@...ile başlar";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Yeni";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Eski cüzdanlar (Ağustos 2017'den önce)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Yeni cüzdanlar";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.title" = "Adres Formatı";
-"blockchain_settings.description" = "%@ Cüzdanınız için adres biçimini seçin. Seçilen her format, uygulamanın bakiye sekmesinde farklı bir cüzdanı temsil eder.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -225,7 +230,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Kripto Parayı Seç";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -641,9 +646,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Kripto Parayı Seç";
-"manage_coins.add_token" = "Token Ekle";
-"manage_coins.search" = "Ara";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
 "manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
@@ -833,9 +838,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
 "create_wallet.success" = "Oluşturuldu";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Kripto Parayi Seç";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -948,7 +954,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Enable Coins
 
 "enable_coins.title" = "Kripto Paraları Etkinleştir";
-"enable_coins.description" = "Bakiyesi olan tüm %@ kripto paraları etkinleştirin";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Etkinleştir";
 "enable_coins.enabling" = "Etkinleştiriliyor…";
 "enable_coins.enabled_coins" = "%@ Kripto Para etkinleştirildi";
@@ -977,7 +983,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Birthday Input
 
 "birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
-"birthday_input.description" = "Zcash cüzdanınız için bir doğum günü yüksekliği biliyorsanız, senkronizasyon işlemini hızlandırmak için aşağıya ekleyin.";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
 "restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
 
