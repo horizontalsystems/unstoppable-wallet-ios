@@ -62,18 +62,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "更旧";
-"coin_settings.derivation.description.bip49" = "流行";
-"coin_settings.derivation.description.bip84" = "最新";
-"coin_settings.derivation.starts_with" = "以%@开头";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Newer (recommended)";
+"coin_settings.derivation.title.bip84" = "Newest";
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "新";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "旧钱包（2017年之前）";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "较新的钱包";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.title" = "地址格式";
-"blockchain_settings.description" = "选择您 %@ 钱包的地址格式。每个选中的格式代表应用的余额选项卡上不同的钱包。";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Coin Type";
+"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.native" = "Native";
 
 // Show Key
 
@@ -224,7 +229,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "选择代币";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
@@ -640,9 +645,9 @@
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "选择代币";
-"manage_coins.add_token" = "添加代币";
-"manage_coins.search" = "搜索​​​​";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
 "manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
@@ -832,9 +837,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 "create_wallet.success" = "已创建";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "选择加密货币";
+"restore_select.title" = "Choose Coins";
+"restore_select.not_found" = "Not found";
 
 // Lock Info
 
@@ -947,7 +953,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Enable Coins
 
 "enable_coins.title" = "启用代币";
-"enable_coins.description" = "启用有余额的所有%@代币";
+"enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "启用";
 "enable_coins.enabling" = "正在启用...";
 "enable_coins.enabled_coins" = "已启用%@代币";
@@ -976,7 +982,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Birthday Input
 
 "birthday_input.title" = "生日高度";
-"birthday_input.description" = "如果您知道您Zcash钱包的生日高度，请将其添加至下方以加速同步过程。";
+"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
 
