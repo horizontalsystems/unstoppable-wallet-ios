@@ -879,14 +879,13 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Add Token
 
 "add_token.title" = "Token hinzufügen";
-"add_token.coin_type" = "Münztyp";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Coin Name";
 "add_token.coin_code" = "Münzcode";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Dieser Token befindet sich bereits in der Coin-Verwaltungsliste.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
-"add_token.contract_not_found" = "Vertrag nicht gefunden";
-"add_token.symbol_not_found" = "Symbol nicht gefunden";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Hinzugefügt";
 
 "change_24hour_up" = "%@ Preis: %@%% %@ höher";
