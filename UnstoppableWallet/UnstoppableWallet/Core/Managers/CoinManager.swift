@@ -41,6 +41,15 @@ class CoinManager {
         self.storage = storage
     }
 
+    private func customFullCoins(customTokens: [CustomToken]) -> [FullCoin] {
+        let platformCoins = customTokens.map { $0.platformCoin }
+        let dictionary = Dictionary(grouping: platformCoins, by: { $0.coin })
+
+        return dictionary.map { coin, platformCoins in
+            FullCoin(coin: coin, platforms: platformCoins.map { $0.platform })
+        }
+    }
+
     private func adjustedCustomTokens(customTokens: [CustomToken]) throws -> [CustomToken] {
         let existingPlatformCoins = try marketKit.platformCoins(coinTypes: customTokens.map { $0.coinType })
         return customTokens.filter { customToken in !existingPlatformCoins.contains { $0.coinType == customToken.coinType } }
@@ -48,12 +57,14 @@ class CoinManager {
 
     private func customFullCoins(filter: String) throws -> [FullCoin] {
         let customTokens = storage.customTokens(filter: filter)
-        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.fullCoin }
+        let adjustedCustomTokens = try adjustedCustomTokens(customTokens: customTokens)
+        return customFullCoins(customTokens: adjustedCustomTokens)
     }
 
     private func customFullCoins(coinTypes: [CoinType]) throws -> [FullCoin] {
         let customTokens = storage.customTokens(coinTypeIds: coinTypes.map { $0.id })
-        return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin.fullCoin }
+        let adjustedCustomTokens = try adjustedCustomTokens(customTokens: customTokens)
+        return customFullCoins(customTokens: adjustedCustomTokens)
     }
 
     private func customPlatformCoins() throws -> [PlatformCoin] {
