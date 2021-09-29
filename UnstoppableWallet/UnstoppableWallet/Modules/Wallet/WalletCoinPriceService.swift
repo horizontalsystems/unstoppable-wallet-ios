@@ -82,7 +82,7 @@ extension WalletCoinPriceService {
 
     struct Item {
         let price: CurrencyValue
-        let diff: Double
+        let diff: Decimal
         let expired: Bool
     }
 
