@@ -879,14 +879,13 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Add Token
 
 "add_token.title" = "토큰 추가";
-"add_token.coin_type" = "코인 유형";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "코인 이름";
 "add_token.coin_code" = "코인 코드";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
-"add_token.contract_not_found" = "계약 발견되지 않음";
-"add_token.symbol_not_found" = "기호 발견되지 않음";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "추가됨";
 
 "change_24hour_up" = "%@ 가격: 상승 %@%% %@";
