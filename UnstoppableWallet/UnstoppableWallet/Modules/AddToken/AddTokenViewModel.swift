@@ -33,10 +33,10 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .alreadyExists(let platformCoin):
-            viewItemRelay.accept(viewItem(platformCoin: platformCoin))
-        case .fetched(let customToken):
-            viewItemRelay.accept(viewItem(customToken: customToken))
+        case .alreadyExists(let platformCoins):
+            viewItemRelay.accept(viewItem(platformCoins: platformCoins))
+        case .fetched(let customTokens):
+            viewItemRelay.accept(viewItem(customTokens: customTokens))
         default:
             viewItemRelay.accept(nil)
         }
@@ -56,21 +56,21 @@ class AddTokenViewModel {
         }
     }
 
-    private func viewItem(platformCoin: PlatformCoin) -> ViewItem {
+    private func viewItem(platformCoins: [PlatformCoin]) -> ViewItem {
         ViewItem(
-                coinType: platformCoin.coinType.blockchainType,
-                coinName: platformCoin.name,
-                coinCode: platformCoin.code,
-                decimals: platformCoin.decimals
+                coinType: platformCoins.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
+                coinName: platformCoins.first?.name,
+                coinCode: platformCoins.first?.code,
+                decimals: platformCoins.first?.decimals
         )
     }
 
-    private func viewItem(customToken: CustomToken) -> ViewItem {
+    private func viewItem(customTokens: [CustomToken]) -> ViewItem {
         ViewItem(
-                coinType: customToken.coinType.blockchainType,
-                coinName: customToken.coinName,
-                coinCode: customToken.coinCode,
-                decimals: customToken.decimals
+                coinType: customTokens.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
+                coinName: customTokens.first?.coinName,
+                coinCode: customTokens.first?.coinCode,
+                decimals: customTokens.first?.decimals
         )
     }
 
@@ -112,10 +112,10 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let coinType: String?
-        let coinName: String
-        let coinCode: String
-        let decimals: Int
+        let coinType: String
+        let coinName: String?
+        let coinCode: String?
+        let decimals: Int?
     }
 
 }
