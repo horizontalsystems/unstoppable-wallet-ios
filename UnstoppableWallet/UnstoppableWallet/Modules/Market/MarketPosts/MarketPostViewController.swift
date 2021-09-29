@@ -98,7 +98,9 @@ extension MarketPostViewController: SectionsDataSource {
         case .loading:
             let row = Row<SpinnerCell>(
                     id: "post_spinner",
-                    height: .heightCell48
+                    dynamicHeight: { [weak self] _ in
+                        max(0, (self?.tableView.height ?? 0))
+                    }
             )
 
             sections.append(Section(id: "post_spinner", rows: [row]))

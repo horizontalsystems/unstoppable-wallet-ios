@@ -50,9 +50,7 @@ class MarketOverviewService {
     }
 
     private func onFetchSuccess(items: [CoinMarket]) {
-        self.items = items.enumerated().map { (index, coinMarket) in
-            MarketModule.Item(coinMarket: coinMarket, score: .rank(index + 1))
-        }
+        self.items = items.map { MarketModule.Item(coinMarket: $0) }
 
         state = .loaded
     }

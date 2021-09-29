@@ -45,34 +45,18 @@ struct MarketModule {
             title = "market.top.market_cap.title".localized
             value = marketCap
             color = .themeGray
-        case .dilutedMarketCap(let dilutedMarketCap):
-            title = "market.top.diluted_market_cap.title".localized
-            value = dilutedMarketCap
-            color = .themeGray
         }
 
         return (title: title, value: value, color: color)
     }
 
     static func bind(cell: G14Cell, viewItem: ViewItem?) {
-        let image: UIImage? = viewItem.flatMap { UIImage.image(coinType: $0.coinType) }
+        let image: UIImage? = viewItem.flatMap { _ in UIImage(named: "icon_placeholder_24") }
 
         cell.leftImage = image
         cell.leftImageTintColor = .themeGray
         cell.topText = viewItem?.coinName
         cell.bottomText = viewItem?.coinCode.uppercased()
-
-        cell.leftBadgeText = viewItem?.score?.title
-
-        switch viewItem?.score {
-        case let .rating(rate):
-            cell.leftBadgeBackgroundColor = color(rate: rate)
-            cell.leftBadgeTextColor = .themeDarker
-        case .rank:
-            cell.leftBadgeBackgroundColor = .themeJeremy
-            cell.leftBadgeTextColor = .themeGray
-        case .none: ()
-        }
 
         cell.primaryValueText = viewItem?.rate
 
@@ -103,20 +87,17 @@ extension MarketModule {
     enum ListType: String {
         case topGainers
         case topLosers
-        case topVolume
 
         var sortingField: SortingField {
             switch self {
             case .topGainers: return .topGainers
             case .topLosers: return .topLosers
-            case .topVolume: return .highestVolume
             }
         }
 
         var marketField: MarketField {
             switch self {
             case .topGainers, .topLosers: return .price
-            case .topVolume: return .volume
             }
         }
     }
@@ -143,14 +124,12 @@ extension MarketModule {
 
     enum MarketField: Int, CaseIterable {
         case marketCap
-        case dilutedMarketCap
         case volume
         case price
 
         var title: String {
             switch self {
             case .marketCap: return "market.market_field.mcap".localized
-            case .dilutedMarketCap: return "market.market_field.mcap".localized
             case .volume: return "market.market_field.vol".localized
             case .price: return "price".localized
             }
@@ -167,26 +146,31 @@ extension MarketModule { // Service Items
     }
 
     struct Item {
-        let score: Score?
+        let uid: String
         let coinCode: String
         let coinName: String
-        let coinType: CoinType
         let marketCap: Decimal
-        let dilutedMarketCap: Decimal?
-        let liquidity: Decimal?
         let price: Decimal
         let diff: Decimal?
         let volume: Decimal
 
-        init(coinMarket: CoinMarket, score: Score? = nil) {
-            self.score = score
+        init(marketInfo: MarketKit.MarketInfo) {
+            uid = marketInfo.coin.uid
+            coinCode = marketInfo.coin.code
+            coinName = marketInfo.coin.name
 
+            marketCap = marketInfo.marketCap
+            price = marketInfo.price
+            diff = marketInfo.priceChange
+            volume = marketInfo.totalVolume
+        }
+
+        init(coinMarket: CoinMarket) {
+            uid = coinMarket.coinData.coinType.id
             coinCode = coinMarket.coinData.code
             coinName = coinMarket.coinData.name
-            coinType = coinMarket.coinData.coinType.coinType
+
             marketCap = coinMarket.marketInfo.marketCap
-            dilutedMarketCap = coinMarket.marketInfo.dilutedMarketCap
-            liquidity = coinMarket.marketInfo.liquidity
             price = coinMarket.marketInfo.rate
             diff = coinMarket.marketInfo.rateDiffPeriod
             volume = coinMarket.marketInfo.volume
@@ -237,23 +221,20 @@ extension MarketModule {  // ViewModel Items
         case diff(Decimal?)
         case volume(String)
         case marketCap(String)
-        case dilutedMarketCap(String)
 
         var description: String? {
             switch self {
             case let .diff(value): return value?.description
             case let .volume(value): return value.description
             case let .marketCap(value): return value.description
-            case let .dilutedMarketCap(value): return value.description
             }
         }
     }
 
     struct ViewItem {
-        let score: ViewScore?
+        let coinId: String
         let coinName: String
         let coinCode: String
-        let coinType: CoinType
         let rate: String
         let marketDataValue: MarketDataValue
 
@@ -262,22 +243,14 @@ extension MarketModule {  // ViewModel Items
             case .price: marketDataValue = .diff(item.diff)
             case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: item.volume) ?? "-")
             case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
-            case .dilutedMarketCap: marketDataValue = .dilutedMarketCap(item.dilutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) } ?? "-")
             }
 
+            coinId = item.uid
             coinCode = item.coinCode
             coinName = item.coinName
-            coinType = item.coinType
 
             let rateValue = CurrencyValue(currency: currency, value: item.price)
             rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
-
-            switch item.score {
-            case .rank(let index): score = .rank(index.description)
-            case .rating(let rating): score = .rating(rating)
-            case .none: score = nil
-            }
-
         }
     }
 
