@@ -3,6 +3,7 @@ import XRatesKit
 import Foundation
 import RxSwift
 import RxRelay
+import MarketKit
 
 class MarketOverviewServiceNew {
     private var disposeBag = DisposeBag()
@@ -10,10 +11,11 @@ class MarketOverviewServiceNew {
 
     private let currencyKit: CurrencyKit.Kit
     private let appManager: IAppManager
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
 
-    private(set) var topMarketLimit: Int = 250
-    private let overviewType: RateManager.OverviewType
+    private(set) var topMarket: Int = 250
+    private let limit: Int
+    private let order: MarketKit.MarketInfo.Order
 
     private let topMarketRelay = PublishRelay<State>()
     private(set) var topMarketState: State = .loading {
@@ -24,11 +26,19 @@ class MarketOverviewServiceNew {
 
     private(set) var items = [MarketModule.Item]()
 
-    init(overviewType: RateManager.OverviewType, currencyKit: CurrencyKit.Kit, appManager: IAppManager, rateManager: IRateManager) {
-        self.overviewType = overviewType
+    init(overviewType: RateManager.OverviewType, currencyKit: CurrencyKit.Kit, appManager: IAppManager, marketKit: MarketKit.Kit) {
         self.currencyKit = currencyKit
         self.appManager = appManager
-        self.rateManager = rateManager
+        self.marketKit = marketKit
+
+        switch overviewType {
+        case .gainers(let count):
+            limit = count
+            order = MarketKit.MarketInfo.Order(field: .priceChange, direction: .descending)
+        case .losers(let count):
+            limit = count
+            order = MarketKit.MarketInfo.Order(field: .priceChange, direction: .ascending)
+        }
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
             self?.items = []
@@ -44,7 +54,7 @@ class MarketOverviewServiceNew {
 
         topMarketState = .loading
 
-        rateManager.overviewTopMarketsSingle(type: overviewType, currencyCode: currencyKit.baseCurrency.code, fetchDiffPeriod: .hour24, itemCount: topMarketLimit)
+        marketKit.marketInfosSingle(top: topMarket, limit: limit, order: order)
                 .subscribe(onSuccess: { [weak self] in
                     self?.onFetchSuccess(items: $0)
                 }, onError: { [weak self] error in
@@ -53,10 +63,8 @@ class MarketOverviewServiceNew {
                 .disposed(by: topMarketsDisposeBag)
     }
 
-    private func onFetchSuccess(items: [CoinMarket]) {
-        self.items = items.enumerated().map { (index, coinMarket) in
-            MarketModule.Item(coinMarket: coinMarket, score: .rank(index + 1))
-        }
+    private func onFetchSuccess(items: [MarketKit.MarketInfo]) {
+        self.items = items.map { MarketModule.Item(marketInfo: $0) }
 
         topMarketState = .loaded
     }
@@ -83,11 +91,11 @@ extension MarketOverviewServiceNew {
     }
 
     func set(topMarketLimit: Int) {
-        guard topMarketLimit != self.topMarketLimit else {
+        guard topMarketLimit != self.topMarket else {
             return
         }
 
-        self.topMarketLimit = topMarketLimit
+        self.topMarket = topMarketLimit
         fetchTopMarket()
     }
 

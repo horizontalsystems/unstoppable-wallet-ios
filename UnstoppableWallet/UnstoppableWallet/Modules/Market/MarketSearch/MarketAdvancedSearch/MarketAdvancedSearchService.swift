@@ -320,7 +320,7 @@ extension MarketAdvancedSearchService: IMarketListFetcher {
         topMarketList(currencyCode: currencyCode)
             .map { coinMarkets in
                 coinMarkets.compactMap { pair in
-                    MarketModule.Item(coinMarket: pair.item, score: .rank(pair.index + 1))
+                    MarketModule.Item(coinMarket: pair.item)
                 }
             }
     }

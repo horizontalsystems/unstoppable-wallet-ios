@@ -105,9 +105,6 @@ class MarketOverviewViewController: ThemeViewController {
                     case .topLosers:
                         cell.titleImage = UIImage(named: "circle_down_20")
                         cell.title = "market.top.section.header.top_losers".localized
-                    case .topVolume:
-                        cell.titleImage = UIImage(named: "chart_20")
-                        cell.title = "market.top.section.header.top_volume".localized
                     }
                 },
                 action: { [weak self] _ in
@@ -147,8 +144,8 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
-        parentNavigationController?.present(viewController, animated: true)
+//        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
+//        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func onSelect(viewItem: MarketPostViewModel.ViewItem) {

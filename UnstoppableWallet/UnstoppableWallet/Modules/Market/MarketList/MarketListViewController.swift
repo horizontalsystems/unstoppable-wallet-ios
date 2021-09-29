@@ -100,7 +100,7 @@ class MarketListViewController: ThemeViewController {
 
     private func row(viewItem: MarketModule.ViewItem, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
-                id: viewItem.coinType.id,
+                id: viewItem.coinId,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
@@ -113,8 +113,8 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
-        parentNavigationController?.present(viewController, animated: true)
+//        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
+//        parentNavigationController?.present(viewController, animated: true)
     }
 
     var topSections: [SectionProtocol] {

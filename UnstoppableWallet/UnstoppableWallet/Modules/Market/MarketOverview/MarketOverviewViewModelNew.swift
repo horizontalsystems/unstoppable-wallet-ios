@@ -43,7 +43,7 @@ extension MarketOverviewViewModelNew {
     }
 
     var topMarketLimit: Int {
-        service.topMarketLimit
+        service.topMarket
     }
 
     func set(topMarketLimit: Int) {

@@ -114,9 +114,6 @@ class MarketOverviewViewControllerNew: ThemeViewController {
                     case .topLosers:
                         cell.titleImage = UIImage(named: "circle_down_20")
                         cell.title = "market.top.section.header.top_losers".localized
-                    case .topVolume:
-                        cell.titleImage = UIImage(named: "chart_20")
-                        cell.title = "market.top.section.header.top_volume".localized
                     }
                 },
                 action: { [weak self] _ in
@@ -201,8 +198,8 @@ class MarketOverviewViewControllerNew: ThemeViewController {
     }
 
     private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType.coinType))
-        parentNavigationController?.present(viewController, animated: true)
+//        let viewController = CoinPageModule.viewController(launchMode: .partial(coinId: viewItem.coinId, coinCode: viewItem.coinCode, coinTitle: viewItem.coinName))
+//        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func onSelect(viewItem: MarketPostViewModel.ViewItem) {
@@ -224,7 +221,7 @@ class MarketOverviewViewControllerNew: ThemeViewController {
 
         let footerHeight: CGFloat = isLast ? CGFloat.margin32 : CGFloat.margin24
 
-        switch topGainersState {
+        switch state {
         case .loading:
             sections.append(headerSection(listType: listType))
 

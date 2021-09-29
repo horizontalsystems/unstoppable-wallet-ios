@@ -29,27 +29,12 @@ extension MarketDiscoveryService: IMarketListFetcher {
             let coinTypes = rateManager.coinTypes(for: category.rawValue)
             return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
                     .map { coinMarkets in
-                        coinMarkets.compactMap { coinMarket in
-                            let score: MarketModule.Score?
-                            switch category {
-//                            case .rated:
-//                                guard let rate = self?.categoriesProvider.rate(for: coinMarket.coin.code), !rate.isEmpty else {
-//                                    return nil
-//                                }
-//
-//                                score = .rating(rate)
-                            default:
-                                score = nil
-                            }
-                            return MarketModule.Item(coinMarket: coinMarket, score: score)
-                        }
+                        coinMarkets.compactMap { MarketModule.Item(coinMarket: $0) }
                     }
         } else {
             return rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24, itemCount: 250)
                     .map { coinMarkets in
-                        coinMarkets.enumerated().compactMap { index, coinMarket in
-                            MarketModule.Item(coinMarket: coinMarket, score: .rank(index + 1))
-                        }
+                        coinMarkets.compactMap { MarketModule.Item(coinMarket: $0) }
                     }
         }
     }
