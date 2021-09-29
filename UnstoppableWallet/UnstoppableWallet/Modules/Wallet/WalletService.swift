@@ -103,8 +103,7 @@ class WalletService {
             let item = Item(
                     wallet: wallet,
                     isMainNet: adapterService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
-//                    balanceData: adapterService.balanceData(wallet: wallet) ?? cacheContainer?.balanceData(wallet: wallet) ?? fallbackBalanceData,
-                    balanceData: adapterService.balanceData(wallet: wallet) ?? fallbackBalanceData,
+                    balanceData: adapterService.balanceData(wallet: wallet) ?? cacheContainer?.balanceData(wallet: wallet) ?? fallbackBalanceData,
                     state: adapterService.state(wallet: wallet)  ?? fallbackAdapterState
             )
 
