@@ -218,6 +218,52 @@ class MarketOverviewViewControllerNew: ThemeViewController {
         marketViewModel.handleTapSeeAll(listType: listType)
     }
 
+    private func topSection(listType: MarketModule.ListType, state: MarketOverviewViewModelNew.State, isLast: Bool) -> (success: Bool, sections: [SectionProtocol]) {
+        var sections = [SectionProtocol]()
+        var success = true
+
+        let footerHeight: CGFloat = isLast ? CGFloat.margin32 : CGFloat.margin24
+
+        switch topGainersState {
+        case .loading:
+            sections.append(headerSection(listType: listType))
+
+            sections.append(
+                    Section(
+                            id: listType.rawValue,
+                            footerState: .margin(height: footerHeight),
+                            rows: rows(listType: listType, viewItems: nil))
+            )
+
+        case .loaded(let sectionViewItems):
+            sections.append(headerSection(listType: listType))
+
+            sections.append(
+                    Section(
+                            id: listType.rawValue,
+                            footerState: .margin(height: footerHeight),
+                            rows: rows(listType: listType, viewItems: sectionViewItems))
+            )
+
+        case .error(let errorDescription):
+            success = false
+
+            let row = Row<ErrorCell>(
+                    id: "error",
+                    dynamicHeight: { [weak self] _ in
+                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
+                    },
+                    bind: { cell, _ in
+                        cell.errorText = errorDescription
+                    }
+            )
+
+            sections.append(Section(id: "error", rows: [row]))
+        }
+
+        return (success: success, sections: sections)
+    }
+
 }
 
 extension MarketOverviewViewControllerNew: SectionsDataSource {
@@ -236,74 +282,12 @@ extension MarketOverviewViewControllerNew: SectionsDataSource {
             )
         ]
 
-        switch topGainersState {
-        case .loading:
-            sections.append(headerSection(listType: .topGainers))
+        let (success, gainerSections) = topSection(listType: .topGainers, state: topGainersState, isLast: false)
+        sections.append(contentsOf: gainerSections)
 
-            sections.append(
-                    Section(
-                            id: MarketModule.ListType.topGainers.rawValue,
-                            footerState: .margin(height: .margin32),
-                            rows: rows(listType: .topGainers, viewItems: nil))
-            )
-
-        case .loaded(let sectionViewItems):
-            sections.append(headerSection(listType: .topGainers))
-
-            sections.append(
-                    Section(
-                            id: MarketModule.ListType.topGainers.rawValue,
-                            footerState: .margin(height: .margin32),
-                            rows: rows(listType: .topGainers, viewItems: sectionViewItems))
-            )
-
-        case .error(let errorDescription):
-            let row = Row<ErrorCell>(
-                    id: "error",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
-                    },
-                    bind: { cell, _ in
-                        cell.errorText = errorDescription
-                    }
-            )
-
-            sections.append(Section(id: "error", rows: [row]))
-        }
-
-        switch topLosersState {
-        case .loading:
-            sections.append(headerSection(listType: .topLosers))
-
-            sections.append(
-                    Section(
-                            id: MarketModule.ListType.topLosers.rawValue,
-                            footerState: .margin(height: .margin32),
-                            rows: rows(listType: .topLosers, viewItems: nil))
-            )
-
-        case .loaded(let sectionViewItems):
-            sections.append(headerSection(listType: .topLosers))
-
-            sections.append(
-                    Section(
-                            id: MarketModule.ListType.topLosers.rawValue,
-                            footerState: .margin(height: .margin32),
-                            rows: rows(listType: .topLosers, viewItems: sectionViewItems))
-            )
-
-        case .error(let errorDescription):
-            let row = Row<ErrorCell>(
-                    id: "error",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
-                    },
-                    bind: { cell, _ in
-                        cell.errorText = errorDescription
-                    }
-            )
-
-            sections.append(Section(id: "error", rows: [row]))
+        if success {
+            let (_ , loserSections) = topSection(listType: .topLosers, state: topLosersState, isLast: true)
+            sections.append(contentsOf: loserSections)
         }
 
         return sections

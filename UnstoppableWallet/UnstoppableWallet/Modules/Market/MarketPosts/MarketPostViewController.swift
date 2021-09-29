@@ -104,8 +104,10 @@ extension MarketPostViewController: SectionsDataSource {
             sections.append(Section(id: "post_spinner", rows: [row]))
         case .error(let errorDescription):
             let row = Row<ErrorCell>(
-                    id: "post_error",
-                    height: .heightCell48,
+                    id: "error",
+                    dynamicHeight: { [weak self] _ in
+                        max(0, (self?.tableView.height ?? 0))
+                    },
                     bind: { cell, _ in
                         cell.errorText = errorDescription
                     }
