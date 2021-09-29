@@ -879,14 +879,13 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Add Token
 
 "add_token.title" = "Ajouter le token";
-"add_token.coin_type" = "Type de pièce";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Nom de la pièce";
 "add_token.coin_code" = "Code de la pièce";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
-"add_token.contract_not_found" = "Contrat non trouvé";
-"add_token.symbol_not_found" = "Symbole non trouvé";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Ajouté";
 
 "change_24hour_up" = "%@ prix: hausse %@%% %@";
