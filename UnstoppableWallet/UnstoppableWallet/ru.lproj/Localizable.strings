@@ -881,14 +881,13 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_type" = "Тип Монеты";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Код Монеты";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
-"add_token.contract_not_found" = "Контракт не найден";
-"add_token.symbol_not_found" = "Символ не найден";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Добавлен";
 
 "change_24hour_up" = "%@ цена: повысилась на %@%%%@";
