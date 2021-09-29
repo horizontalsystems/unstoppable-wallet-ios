@@ -880,14 +880,13 @@ poner en peligro la seguridad de mis fondos.";
 // Add Token
 
 "add_token.title" = "Añadir Token";
-"add_token.coin_type" = "Tipo de moneda";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.coin_code" = "Código de moneda";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
-"add_token.contract_not_found" = "No encontramos tu Contrato";
-"add_token.symbol_not_found" = "No encontrámos tu símbolo";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Añadido";
 
 "change_24hour_up" = "Precio %@: subió %@%% %@";
