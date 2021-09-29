@@ -133,7 +133,7 @@ class WalletViewItemFactory {
             return nil
         }
 
-        let sign = value < 0 ? "-" : "+"
+        let sign = value.isSignMinus ? "-" : "+"
         return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value < 0 ? .negative : .positive))
     }
 
