@@ -880,14 +880,13 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.coin_type" = "Coin Tipi";
+"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
 "add_token.decimals" = "Decimals";
 "add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
-"add_token.contract_not_found" = "Sözleşme bulunamadı";
-"add_token.symbol_not_found" = "Sembol bulunamadı";
+"add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Eklendi";
 
 "change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
