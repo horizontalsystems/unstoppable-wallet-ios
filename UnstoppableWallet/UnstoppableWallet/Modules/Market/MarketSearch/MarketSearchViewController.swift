@@ -139,11 +139,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
                         cell.titleImage = nil
 
-                        AF.request(viewItem.coinIconUrlString).responseImage { response in
-                            if case .success(let image) = response.result {
-                                cell.titleImage = image
-                            }
-                        }
+                        cell.setTitleImage(urlString: viewItem.coinIconUrlString, placeholder: viewItem.coinIconPlaceholder)
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)

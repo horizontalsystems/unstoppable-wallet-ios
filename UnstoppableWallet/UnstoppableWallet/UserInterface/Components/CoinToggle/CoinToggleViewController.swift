@@ -84,12 +84,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                                 self?.viewModel.onTapSettings(fullCoin: viewItem.fullCoin)
                             }
 
-                            cell.titleImage = nil
-                            AF.request(viewItem.fullCoin.coin.imageUrl).responseImage { response in
-                                if case .success(let image) = response.result {
-                                    cell.titleImage = image
-                                }
-                            }
+                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: viewItem.fullCoin.imagePlaceholder)
                         }
                 )
             case .toggleHidden:
@@ -104,12 +99,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.title = viewItem.fullCoin.coin.name
                             cell.subtitle = viewItem.fullCoin.coin.code
 
-                            cell.titleImage = nil
-                            AF.request(viewItem.fullCoin.coin.imageUrl).responseImage { response in
-                                if case .success(let image) = response.result {
-                                    cell.titleImage = image
-                                }
-                            }
+                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: viewItem.fullCoin.imagePlaceholder)
                         },
                         action: { [weak self] _ in
                             print("On click \(viewItem.fullCoin.coin.name)")

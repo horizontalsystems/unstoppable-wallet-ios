@@ -91,7 +91,7 @@ extension CoinMarketsViewController: SectionsDataSource {
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    cell.setTitleImage(urlString: viewItem.marketImageUrl)
+                    cell.setTitleImage(urlString: viewItem.marketImageUrl, placeholder: nil)
                     cell.titleImageCornerRadius = .cornerRadius4
                     cell.titleImageBackgroundColor = .themeSteel10
                     cell.topText = viewItem.market

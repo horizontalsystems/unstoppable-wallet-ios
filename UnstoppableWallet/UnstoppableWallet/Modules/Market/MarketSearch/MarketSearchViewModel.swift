@@ -14,18 +14,19 @@ class MarketSearchViewModel {
     init(service: MarketSearchService) {
         self.service = service
 
-        subscribe(disposeBag, service.coinsUpdatedObservable) { [weak self] in self?.sync(coins: $0) }
+        subscribe(disposeBag, service.coinsUpdatedObservable) { [weak self] in self?.sync(fullCoins: $0) }
     }
 
-    private func sync(coins: [Coin]) {
+    private func sync(fullCoins: [FullCoin]) {
         showAdvancedSearchRelay.accept(service.filter.isEmpty)
-        emptyResultRelay.accept(coins.isEmpty && !service.filter.isEmpty)
+        emptyResultRelay.accept(fullCoins.isEmpty && !service.filter.isEmpty)
 
-        let viewItems = coins.map { coin -> ViewItem in
+        let viewItems = fullCoins.map { fullCoin -> ViewItem in
             ViewItem(
-                    coinIconUrlString: coin.imageUrl,
-                    coinName: coin.name,
-                    coinCode: coin.code
+                    coinIconUrlString: fullCoin.coin.imageUrl,
+                    coinIconPlaceholder: fullCoin.imagePlaceholder,
+                    coinName: fullCoin.coin.name,
+                    coinCode: fullCoin.coin.code
             )
         }
 
@@ -58,6 +59,7 @@ extension MarketSearchViewModel {
 
     struct ViewItem {
         let coinIconUrlString: String
+        let coinIconPlaceholder: UIImage?
         let coinName: String
         let coinCode: String
     }
