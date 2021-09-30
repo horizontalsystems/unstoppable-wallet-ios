@@ -177,16 +177,16 @@ class TransactionsViewItemFactory {
     }
 
     func coinFilter(wallet: TransactionWallet) -> MarketDiscoveryFilterHeaderView.ViewItem? {
-        guard let coin = wallet.coin else {
+        guard let platformCoin = wallet.coin else {
             return nil
         }
 
-        var name = coin.coin.code
+        var name = platformCoin.coin.code
         if let derivation = wallet.source.coinSettings[.derivation] {
             name += " " + derivation
         }
 
-        return MarketDiscoveryFilterHeaderView.ViewItem(icon: UIImage.image(coinType: coin.coinType), title: name)
+        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.imagePlaceholder, title: name)
     }
 
 }

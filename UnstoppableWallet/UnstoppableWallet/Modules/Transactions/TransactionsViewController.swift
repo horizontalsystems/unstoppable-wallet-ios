@@ -14,7 +14,7 @@ class TransactionsViewController: ThemeViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
     private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
-    private let coinFiltersView = MarketDiscoveryFilterHeaderView(expandable: false)
+    private let coinFiltersView = MarketDiscoveryFilterHeaderView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sections = [Section]()
