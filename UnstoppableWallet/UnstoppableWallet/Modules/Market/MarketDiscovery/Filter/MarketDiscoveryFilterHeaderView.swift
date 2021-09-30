@@ -3,18 +3,21 @@ import SnapKit
 
 extension MarketDiscoveryFilterHeaderView {
     struct ViewItem {
-        let icon: UIImage?
+        let iconUrl: String
+        let iconPlaceholder: UIImage?
         let title: String
         let description: String?
 
-        init(icon: UIImage?, title: String) {
-            self.icon = icon
+        init(iconUrl: String, iconPlaceholder: UIImage?, title: String) {
+            self.iconUrl = iconUrl
+            self.iconPlaceholder = iconPlaceholder
             self.title = title
             description = nil
         }
 
-        init(icon: UIImage?, title: String, description: String) {
-            self.icon = icon
+        init(iconUrl: String, iconPlaceholder: UIImage?, title: String, description: String) {
+            self.iconUrl = iconUrl
+            self.iconPlaceholder = iconPlaceholder
             self.title = title
             self.description = description
         }
@@ -28,13 +31,10 @@ class MarketDiscoveryFilterHeaderView: UIView {
 
     private let collectionView: UICollectionView
     private var loaded = false
-    private let expandable: Bool //todo remove expandability after new discovery UI implementation
 
     var onSelect: ((Int?) -> ())?
 
-    init(expandable: Bool) {
-        self.expandable = expandable
-
+    init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
@@ -89,12 +89,12 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterCard {
-            cell.bind(item: filters[indexPath.item], expandable: expandable)
+            cell.bind(item: filters[indexPath.item])
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        FilterCard.size(item: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.first == indexPath, expandable: expandable)
+        FilterCard.size(item: filters[indexPath.item])
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
