@@ -27,12 +27,14 @@ class DepositViewController: ThemeViewController {
         title = "deposit.receive_coin".localized(viewModel.coin.code)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        AF.request(viewModel.coin.imageUrl).responseImage { [weak self] response in
-            if case .success(let image) = response.result {
-                let imageView = UIImageView()
-                imageView.image = image
-                self?.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
-            }
+        let imageView = UIImageView()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
+
+        let placeholderImage = viewModel.coinType.imagePlaceholder
+        if let url = URL(string: viewModel.coin.imageUrl) {
+            imageView.af.setImage(withURL: url, placeholderImage: placeholderImage)
+        } else {
+            imageView.image = placeholderImage
         }
 
         let topWrapperView = UIView()

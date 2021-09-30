@@ -111,7 +111,7 @@ class WalletConnectListViewController: ThemeViewController {
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                 cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl)
+                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
                                 cell.title = viewItem.title
                                 cell.subtitle = viewItem.url
                             },

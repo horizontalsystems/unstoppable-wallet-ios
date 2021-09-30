@@ -16,6 +16,10 @@ extension DepositViewModel {
         service.coin
     }
 
+    var coinType: CoinType {
+        service.coinType
+    }
+
     var address: String {
         service.address
     }

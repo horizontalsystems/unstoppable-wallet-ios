@@ -92,11 +92,7 @@ extension CoinSelectViewController: SectionsDataSource {
                                     cell.valueTopText = viewItem.balance
                                     cell.valueBottomText = viewItem.fiatBalance
 
-                                    AF.request(viewItem.platformCoin.coin.imageUrl).responseImage { response in
-                                        if case .success(let image) = response.result {
-                                            cell.leftImage = image
-                                        }
-                                    }
+                                    cell.setTitleImage(urlString: viewItem.platformCoin.coin.imageUrl, placeholder: viewItem.platformCoin.platform.coinType.imagePlaceholder)
                                 },
                                 action: { [weak self] _ in
                                     self?.onSelect(platformCoin: viewItem.platformCoin)

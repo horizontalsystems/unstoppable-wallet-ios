@@ -19,6 +19,10 @@ extension DepositService {
         wallet.coin
     }
 
+    var coinType: CoinType {
+        wallet.coinType
+    }
+
     var isMainNet: Bool {
         adapter.isMainNet
     }
