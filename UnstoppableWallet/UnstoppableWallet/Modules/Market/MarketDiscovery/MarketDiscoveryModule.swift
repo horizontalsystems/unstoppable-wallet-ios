@@ -1,13 +1,14 @@
+import UIKit
+import ThemeKit
+
 struct MarketDiscoveryModule {
 
-    static func viewController(marketViewModel: MarketViewModel) -> MarketDiscoveryViewController {
-        let service = MarketDiscoveryService(rateManager: App.shared.rateManager)
-        let listService = MarketListService(currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, fetcher: service)
-
+    static func viewController() -> UIViewController {
+        let service = MarketDiscoveryService(marketKit: App.shared.marketKit)
         let viewModel = MarketDiscoveryViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: listService)
+        let viewController = MarketDiscoveryViewController(viewModel: viewModel)
 
-        return MarketDiscoveryViewController(marketViewModel: marketViewModel, listViewModel: listViewModel, viewModel: viewModel)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

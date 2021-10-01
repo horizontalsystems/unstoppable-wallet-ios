@@ -135,7 +135,7 @@ extension SendViewController: ISendView {
 
     func set(coin: Coin, coinType: CoinType) {
         title = "send.title".localized(coin.code)
-        iconImageView.setImage(withUrlString: coin.imageUrl, placeholder: coinType.imagePlaceholder)
+        iconImageView.setImage(withUrlString: coin.imageUrl, placeholder: UIImage(named: coinType.placeholderImageName))
     }
 
     func showCopied() {

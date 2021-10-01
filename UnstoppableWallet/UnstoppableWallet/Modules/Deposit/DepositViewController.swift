@@ -30,7 +30,7 @@ class DepositViewController: ThemeViewController {
         let imageView = UIImageView()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
 
-        let placeholderImage = viewModel.coinType.imagePlaceholder
+        let placeholderImage = UIImage(named: viewModel.coinType.placeholderImageName)
         if let url = URL(string: viewModel.coin.imageUrl) {
             imageView.af.setImage(withURL: url, placeholderImage: placeholderImage)
         } else {

@@ -21,7 +21,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     init(viewModel: ICoinToggleViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -84,7 +84,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                                 self?.viewModel.onTapSettings(fullCoin: viewItem.fullCoin)
                             }
 
-                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: viewItem.fullCoin.imagePlaceholder)
+                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: UIImage(named: viewItem.fullCoin.placeholderImageName))
                         }
                 )
             case .toggleHidden:
@@ -99,7 +99,7 @@ class CoinToggleViewController: ThemeSearchViewController {
                             cell.title = viewItem.fullCoin.coin.name
                             cell.subtitle = viewItem.fullCoin.coin.code
 
-                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: viewItem.fullCoin.imagePlaceholder)
+                            cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: UIImage(named: viewItem.fullCoin.placeholderImageName))
                         },
                         action: { [weak self] _ in
                             print("On click \(viewItem.fullCoin.coin.name)")

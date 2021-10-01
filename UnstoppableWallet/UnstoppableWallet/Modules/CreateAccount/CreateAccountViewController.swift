@@ -25,7 +25,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
     init(viewModel: CreateAccountViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {

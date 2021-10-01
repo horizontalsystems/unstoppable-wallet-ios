@@ -1,4 +1,3 @@
-import UIKit
 import RxSwift
 import RxCocoa
 import UniswapKit
@@ -43,7 +42,7 @@ class SwapCoinCardViewModel {
     }
 
     private func sync(platformCoin: PlatformCoin?) {
-        tokenViewItemRelay.accept(platformCoin.map { TokenViewItem(title: $0.coin.code, iconUrlString: $0.coin.imageUrl, iconPlaceholder: $0.coinType.imagePlaceholder) })
+        tokenViewItemRelay.accept(platformCoin.map { TokenViewItem(title: $0.coin.code, iconUrlString: $0.coin.imageUrl, placeholderIconName: $0.coinType.placeholderImageName) })
     }
 
     private func sync(balance: Decimal?) {
@@ -104,7 +103,7 @@ extension SwapCoinCardViewModel {
     struct TokenViewItem {
         let title: String
         let iconUrlString: String
-        let iconPlaceholder: UIImage?
+        let placeholderIconName: String
     }
 
 }

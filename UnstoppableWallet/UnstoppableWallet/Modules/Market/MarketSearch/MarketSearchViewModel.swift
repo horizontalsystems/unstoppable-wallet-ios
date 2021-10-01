@@ -24,7 +24,7 @@ class MarketSearchViewModel {
         let viewItems = fullCoins.map { fullCoin -> ViewItem in
             ViewItem(
                     coinIconUrlString: fullCoin.coin.imageUrl,
-                    coinIconPlaceholder: fullCoin.imagePlaceholder,
+                    coinIconPlaceholderName: fullCoin.placeholderImageName,
                     coinName: fullCoin.coin.name,
                     coinCode: fullCoin.coin.code
             )
@@ -59,7 +59,7 @@ extension MarketSearchViewModel {
 
     struct ViewItem {
         let coinIconUrlString: String
-        let coinIconPlaceholder: UIImage?
+        let coinIconPlaceholderName: String
         let coinName: String
         let coinCode: String
     }
