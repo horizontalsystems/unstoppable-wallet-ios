@@ -1,10 +1,9 @@
 struct MarketPostModule {
 
     static func viewController() -> MarketPostViewController {
-        let service = MarketPostService(postManager: App.shared.rateManager)
-
+        let service = MarketPostService(marketKit: App.shared.marketKit)
         let viewModel = MarketPostViewModel(service: service)
-        return MarketPostViewController(postViewModel: viewModel, urlManager: UrlManager(inApp: true))
+        return MarketPostViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true))
     }
 
 }

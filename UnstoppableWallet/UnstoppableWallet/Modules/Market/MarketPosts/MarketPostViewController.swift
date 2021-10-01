@@ -5,7 +5,7 @@ import SectionsTableView
 import ComponentKit
 
 class MarketPostViewController: ThemeViewController {
-    private let postViewModel: MarketPostViewModel
+    private let viewModel: MarketPostViewModel
     private let urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
@@ -14,10 +14,10 @@ class MarketPostViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    private var postState: MarketPostViewModel.State = .loading
+    private var state: MarketPostViewModel.State = .loading
 
-    init(postViewModel: MarketPostViewModel, urlManager: IUrlManager) {
-        self.postViewModel = postViewModel
+    init(viewModel: MarketPostViewModel, urlManager: IUrlManager) {
+        self.viewModel = viewModel
         self.urlManager = urlManager
 
         super.init()
@@ -43,13 +43,12 @@ class MarketPostViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: MarketPostCell.self)
 
-        subscribe(disposeBag, postViewModel.stateDriver) { [weak self] state in
-            self?.postState = state
+        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
+            self?.state = state
             self?.tableView.reload()
         }
     }
@@ -61,12 +60,20 @@ class MarketPostViewController: ThemeViewController {
     }
 
     @objc func onRefresh() {
-        refresh()
+        viewModel.refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
     }
+
+    private func open(url: String) {
+        urlManager.open(url: url, from: parentNavigationController)
+    }
+
+}
+
+extension MarketPostViewController: SectionsDataSource {
 
     private func row(viewItem: MarketPostViewModel.ViewItem) -> RowProtocol {
         Row<MarketPostCell>(
@@ -75,26 +82,18 @@ class MarketPostViewController: ThemeViewController {
                 autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.set(source: viewItem.source, title: viewItem.title, description: viewItem.body, date: viewItem.timestamp)
+                    cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
+                    self?.open(url: viewItem.url)
                 }
         )
     }
 
-    private func onSelect(viewItem: MarketPostViewModel.ViewItem) {
-        urlManager.open(url: viewItem.url, from: parentNavigationController)
-    }
-
-}
-
-extension MarketPostViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        switch postState {
+        switch state {
         case .loading:
             let row = Row<SpinnerCell>(
                     id: "post_spinner",
@@ -116,25 +115,20 @@ extension MarketPostViewController: SectionsDataSource {
             )
 
             sections.append(Section(id: "post_error", rows: [row]))
-        case .loaded(let postViewItems):
-            guard !postViewItems.isEmpty else {
-                return sections
-            }
+        case .loaded(let viewItems):
+            for (index, viewItem) in viewItems.enumerated() {
+                let section = Section(
+                        id: "post_\(index)",
+                        headerState: .margin(height: .margin12),
+                        footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
+                        rows: [row(viewItem: viewItem)]
+                )
 
-            sections.append(contentsOf:
-            postViewItems.enumerated().map { (index, item) in Section(
-                    id: "post_\(index)",
-                    headerState: .margin(height: index == 0 ? .margin12 : 0),
-                    footerState: .margin(height: .margin12),
-                    rows: [row(viewItem: item)]
-            )})
+                sections.append(section)
+            }
         }
 
         return sections
-    }
-
-    public func refresh() {
-        postViewModel.refresh()
     }
 
 }
