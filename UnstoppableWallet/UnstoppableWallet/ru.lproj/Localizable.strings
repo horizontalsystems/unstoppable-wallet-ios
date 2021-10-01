@@ -346,6 +346,11 @@
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
 
+"market_discovery.title" = "Discovery";
+"market_discovery.filters" = "Filters";
+"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.top_coins" = "TOP Coins";
+
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
 "market_discovery.filter_title.lending" = "Lending";
