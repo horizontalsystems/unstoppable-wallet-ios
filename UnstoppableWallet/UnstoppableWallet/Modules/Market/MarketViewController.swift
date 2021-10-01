@@ -94,7 +94,7 @@ class MarketViewController: ThemeViewController {
     }
 
     @objc private func onTapDiscovery() {
-        present(MarketDiscoveryModule.viewController(), animated: true)
+        navigationController?.pushViewController(MarketDiscoveryModule.viewController(), animated: true)
     }
 
 }

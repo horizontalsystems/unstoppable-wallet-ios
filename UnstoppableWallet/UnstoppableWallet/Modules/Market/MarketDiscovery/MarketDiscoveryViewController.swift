@@ -21,6 +21,8 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         self.viewModel = viewModel
 
         super.init(scrollViews: [collectionView, tableView])
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder: NSCoder) {
