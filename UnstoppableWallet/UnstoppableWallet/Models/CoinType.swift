@@ -2,6 +2,15 @@ import UIKit
 import CoinKit
 import MarketKit
 
+extension MarketKit.CoinCategory {
+
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/ios/\(uid)@\(scale)x.png"
+    }
+
+}
+
 extension MarketKit.CoinType {
 
     var blockchainType: String? {
@@ -109,8 +118,8 @@ extension MarketKit.CoinType {
         }
     }
 
-    var imagePlaceholder: UIImage? {
-        blockchainType.map { UIImage(named: "Coin Icon Placeholder - \($0)") } ?? UIImage(named: "icon_placeholder_24")
+    var placeholderImageName: String {
+        blockchainType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
     }
 
 }

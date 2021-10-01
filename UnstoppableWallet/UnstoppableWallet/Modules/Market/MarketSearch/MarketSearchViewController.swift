@@ -24,7 +24,7 @@ class MarketSearchViewController: ThemeSearchViewController {
     init(viewModel: MarketSearchViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -139,7 +139,7 @@ class MarketSearchViewController: ThemeSearchViewController {
 
                         cell.titleImage = nil
 
-                        cell.setTitleImage(urlString: viewItem.coinIconUrlString, placeholder: viewItem.coinIconPlaceholder)
+                        cell.setTitleImage(urlString: viewItem.coinIconUrlString, placeholder: UIImage(named: viewItem.coinIconPlaceholderName))
                     },
                     action: { [weak self] _ in
                         self?.onSelect(viewItem: viewItem)

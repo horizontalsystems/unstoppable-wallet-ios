@@ -59,7 +59,7 @@ class MarketViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_24"), style: .plain, target: self, action: #selector(onTapSearch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_discovery_24"), style: .plain, target: self, action: #selector(onTapDiscovery))
 
         overviewController.parentNavigationController = navigationController
         postViewController.parentNavigationController = navigationController
@@ -93,8 +93,8 @@ class MarketViewController: ThemeViewController {
         }
     }
 
-    @objc private func onTapSearch() {
-        present(MarketSearchModule.viewController(), animated: true)
+    @objc private func onTapDiscovery() {
+        present(MarketDiscoveryModule.viewController(), animated: true)
     }
 
 }

@@ -26,7 +26,7 @@ class BackupConfirmKeyViewController: KeyboardAwareViewController {
     init(viewModel: BackupConfirmKeyViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -1,54 +1,72 @@
-import XRatesKit
 import RxSwift
 import RxRelay
+import MarketKit
 
 class MarketDiscoveryService {
-    private let rateManager: IRateManager
+    private let marketKit: Kit
 
-    private let refetchRelay = PublishRelay<()>()
+    private var discoveryItems = [DiscoveryItem]()
 
-    private let currentCategoryRelay = PublishRelay<MarketDiscoveryFilter?>()
-    var currentCategory: MarketDiscoveryFilter? {
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = .discovery(items: []) {
         didSet {
-            currentCategoryRelay.accept(currentCategory)
-            refetchRelay.accept(())
+            stateRelay.accept(state)
         }
     }
 
-    init(rateManager: IRateManager) {
-        self.rateManager = rateManager
+    init(marketKit: Kit) {
+        self.marketKit = marketKit
+
+        syncDiscoveryItems()
+        state = .discovery(items: discoveryItems)
     }
 
-}
+    private func syncDiscoveryItems() {
+        var discoveryItems: [DiscoveryItem] = [.topCoins]
 
-extension MarketDiscoveryService: IMarketListFetcher {
-
-    func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
-        if let category = currentCategory {
-//            let coinCodes = categoriesProvider.coinCodes(for: category == .rated ? nil : category.rawValue)
-            let coinTypes = rateManager.coinTypes(for: category.rawValue)
-            return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
-                    .map { coinMarkets in
-                        coinMarkets.compactMap { MarketModule.Item(coinMarket: $0) }
-                    }
-        } else {
-            return rateManager.topMarketsSingle(currencyCode: currencyCode, fetchDiffPeriod: .hour24, itemCount: 250)
-                    .map { coinMarkets in
-                        coinMarkets.compactMap { MarketModule.Item(coinMarket: $0) }
-                    }
+        do {
+            for category in try marketKit.coinCategories() {
+                discoveryItems.append(.category(category: category))
+            }
+        } catch {
+            // do nothing
         }
-    }
 
-    var refetchObservable: Observable<()> {
-        refetchRelay.asObservable()
+        self.discoveryItems = discoveryItems
     }
 
 }
 
 extension MarketDiscoveryService {
 
-    var currentCategoryObservable: Observable<MarketDiscoveryFilter?> {
-        currentCategoryRelay.asObservable()
+    var stateObservable: Observable<State> {
+        stateRelay.asObservable()
+    }
+
+    func set(filter: String) {
+        if filter.isEmpty {
+            state = .discovery(items: discoveryItems)
+        } else {
+            do {
+                state = .searchResults(fullCoins: try marketKit.fullCoins(filter: filter))
+            } catch {
+                state = .searchResults(fullCoins: [])
+            }
+        }
+    }
+
+}
+
+extension MarketDiscoveryService {
+
+    enum State {
+        case discovery(items: [DiscoveryItem])
+        case searchResults(fullCoins: [FullCoin])
+    }
+
+    enum DiscoveryItem {
+        case topCoins
+        case category(category: CoinCategory)
     }
 
 }

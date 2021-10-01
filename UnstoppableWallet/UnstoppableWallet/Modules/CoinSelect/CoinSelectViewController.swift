@@ -20,7 +20,7 @@ class CoinSelectViewController: ThemeSearchViewController {
         self.viewModel = viewModel
         self.delegate = delegate
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,7 +92,7 @@ extension CoinSelectViewController: SectionsDataSource {
                                     cell.valueTopText = viewItem.balance
                                     cell.valueBottomText = viewItem.fiatBalance
 
-                                    cell.setTitleImage(urlString: viewItem.platformCoin.coin.imageUrl, placeholder: viewItem.platformCoin.platform.coinType.imagePlaceholder)
+                                    cell.setTitleImage(urlString: viewItem.platformCoin.coin.imageUrl, placeholder: UIImage(named: viewItem.platformCoin.platform.coinType.placeholderImageName))
                                 },
                                 action: { [weak self] _ in
                                     self?.onSelect(platformCoin: viewItem.platformCoin)
