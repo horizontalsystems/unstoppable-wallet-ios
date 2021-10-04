@@ -65,7 +65,7 @@ class FilterCard: UICollectionViewCell {
     }
 
     func bind(item: MarketDiscoveryFilterHeaderView.ViewItem) {
-        iconImageView.setImage(withUrlString: item.iconUrl, placeholder: item.iconPlaceholder)
+        iconImageView.setImage(withUrlString: item.iconUrl, placeholder: UIImage(named: item.iconPlaceholder))
         titleLightLabel.text = item.title
         descriptionLabel.text = item.description
     }

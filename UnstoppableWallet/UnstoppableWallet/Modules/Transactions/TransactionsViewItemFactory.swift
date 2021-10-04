@@ -186,7 +186,7 @@ class TransactionsViewItemFactory {
             name += " " + derivation
         }
 
-        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.imagePlaceholder, title: name)
+        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.placeholderImageName, title: name)
     }
 
 }
