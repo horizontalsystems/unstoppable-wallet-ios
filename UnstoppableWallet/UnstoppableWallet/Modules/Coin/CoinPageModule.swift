@@ -15,6 +15,7 @@ struct CoinPageModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider,
+                currentLocale: LanguageManager.shared.currentLocale.languageCode ?? "en",
                 fullCoin: fullCoin)
 
         let favoriteService = FavoriteService(favoritesManager: App.shared.favoritesManager)
