@@ -16,9 +16,15 @@ class MarketGlobalModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
+        let configuration: ChartConfiguration
+        switch type {
+        case .btcDominance: configuration = ChartConfiguration.chartWithDominance
+        default: configuration = ChartConfiguration.chartWithoutIndicators
+        }
+
         return MetricChartViewController(
                 viewModel: chartViewModel,
-                configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
+                configuration: configuration).toBottomSheet
     }
 
 }

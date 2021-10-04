@@ -244,7 +244,7 @@ class CoinChartFactory {
         let formattedValue = currencyFormatter.string(from: chartPoint.value as NSNumber)
 
         var rightSideMode: SelectedPointViewItem.RightSideMode
-        if macdSelected{
+        if macdSelected {
             let macd = macdFormat(value: chartItem.indicators[.macd])
             let macdSignal = macdFormat(value: chartItem.indicators[.macdSignal])
             let macdHistogram = macdFormat(value: chartItem.indicators[.macdHistogram])
