@@ -494,6 +494,8 @@
 
 "coin_page.category" = "Категория";
 "coin_page.contract" = "%@ Контракт";
+"coin_page.contracts" = "Contracts";
+"coin_page.links" = "Links";
 "coin_page.bep2_symbol" = "Символ BEP2";
 
 "coin_page.guide" = "Руководство";
