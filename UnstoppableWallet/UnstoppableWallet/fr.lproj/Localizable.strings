@@ -492,6 +492,8 @@
 
 "coin_page.category" = "Catégorie";
 "coin_page.contract" = "%@ Contrat";
+"coin_page.contracts" = "Contracts";
+"coin_page.links" = "Links";
 "coin_page.bep2_symbol" = "Symbole BEP2";
 
 "coin_page.guide" = "Guide";
