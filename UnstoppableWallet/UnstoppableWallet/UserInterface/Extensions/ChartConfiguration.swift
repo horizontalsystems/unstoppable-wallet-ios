@@ -18,6 +18,13 @@ extension ChartConfiguration {
         return configuration
     }
 
+    static var chartWithDominance: ChartConfiguration {
+        let configuration = chartWithoutIndicators
+        configuration.showDominance = true
+
+        return configuration
+    }
+
     static var smallChart: ChartConfiguration {
         let config = ChartConfiguration().applyColors()
 
@@ -48,6 +55,7 @@ extension ChartConfiguration {
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
         pressedGradient = [UIColor.themeOz, UIColor.themeOz]
         neutralGradient = [UIColor.themeGray50, UIColor.themeGray50]
+        gradientAlphas = [0.05, 0.3]
 
         limitLinesColor = .themeNina
         limitTextColor = .themeNina
@@ -65,6 +73,11 @@ extension ChartConfiguration {
         macdPositiveColor = UIColor.themeGreenD.withAlphaComponent(0.5)
         macdNegativeColor = UIColor.themeRedD.withAlphaComponent(0.5)
         rsiLineColor = UIColor.themeJacob.withAlphaComponent(0.5)
+
+        dominanceLineColor = UIColor.themeJacob.withAlphaComponent(0.5)
+        dominanceTextColor = .themeJacob
+        dominanceDiffPositiveColor = .themeRemus
+        dominanceDiffNegativeColor = .themeLucian
 
         macdTextColor = .themeGray
         macdTextFont = .caption

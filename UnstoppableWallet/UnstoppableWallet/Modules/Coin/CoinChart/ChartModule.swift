@@ -62,6 +62,7 @@ struct ChartIndicatorSet: OptionSet, Hashable {
     static let ema = ChartIndicatorSet(rawValue: 1 << 0)
     static let macd = ChartIndicatorSet(rawValue: 1 << 1)
     static let rsi = ChartIndicatorSet(rawValue: 1 << 2)
+    static let dominance = ChartIndicatorSet(rawValue: 1 << 3)
 
     static let all: [ChartIndicatorSet] = [.macd, .rsi, .ema]
 
@@ -118,6 +119,7 @@ struct SelectedPointViewItem {
         case none
         case volume(value: String?)
         case macd(macdInfo: MacdInfo)
+        case dominance(value: Decimal?, diff: Decimal?)
     }
 }
 
