@@ -4,12 +4,12 @@ import RxRelay
 
 class MarketWatchlistService {
     private let rateManager: RateManagerNew
-    private let favoritesManager: IFavoritesManager
+    private let favoritesManager: FavoritesManager
     private let disposeBag = DisposeBag()
 
     private let refetchRelay = PublishRelay<()>()
 
-    init(rateManager: RateManagerNew, favoritesManager: IFavoritesManager) {
+    init(rateManager: RateManagerNew, favoritesManager: FavoritesManager) {
         self.rateManager = rateManager
         self.favoritesManager = favoritesManager
 

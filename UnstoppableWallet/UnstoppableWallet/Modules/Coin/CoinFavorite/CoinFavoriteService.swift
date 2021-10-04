@@ -1,46 +1,47 @@
 import RxSwift
 import RxCocoa
-import MarketKit
 
 class CoinFavoriteService {
-    private let service: FavoriteService
-    private let coinType: CoinType
+    private let manager: FavoritesManager
+    private let coinUid: String
     private let disposeBag = DisposeBag()
 
-    private let favoriteRelay = PublishRelay<Bool>()
+    private let isFavoriteRelay = PublishRelay<Bool>()
     private(set) var isFavorite: Bool = false {
         didSet {
             if oldValue != isFavorite {
-                favoriteRelay.accept(isFavorite)
+                isFavoriteRelay.accept(isFavorite)
             }
         }
     }
 
-    init(service: FavoriteService, coinType: CoinType) {
-        self.service = service
-        self.coinType = coinType
+    init(manager: FavoritesManager, coinUid: String) {
+        self.manager = manager
+        self.coinUid = coinUid
 
-        subscribe(disposeBag, service.favoriteObservable(coinType: coinType)) { [weak self] in self?.sync(favorite: $0) }
+        subscribe(disposeBag, manager.dataUpdatedObservable) { [weak self] in self?.sync() }
+
+        sync()
     }
 
-    private func sync(favorite: Bool) {
-        isFavorite = favorite
+    private func sync() {
+        isFavorite = manager.isFavorite(coinUid: coinUid)
     }
 
 }
 
 extension CoinFavoriteService {
 
-    var favoriteObservable: Observable<Bool> {
-        favoriteRelay.asObservable()
+    var isFavoriteObservable: Observable<Bool> {
+        isFavoriteRelay.asObservable()
     }
 
     func favorite() {
-        service.add(coinType: coinType)
+        manager.add(coinUid: coinUid)
     }
 
     func unfavorite() {
-        service.remove(coinType: coinType)
+        manager.remove(coinUid: coinUid)
     }
 
 }

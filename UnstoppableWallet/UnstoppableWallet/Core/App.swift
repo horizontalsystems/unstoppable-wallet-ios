@@ -43,7 +43,7 @@ class App {
 
     let rateManager: IRateManager & IPostsManager
     let rateManagerNew: RateManagerNew
-    let favoritesManager: IFavoritesManager
+    let favoritesManager: FavoritesManager
 
     let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
