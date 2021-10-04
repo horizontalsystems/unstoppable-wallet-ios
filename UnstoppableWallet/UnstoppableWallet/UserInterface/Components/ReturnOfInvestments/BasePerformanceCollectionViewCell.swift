@@ -1,6 +1,6 @@
 import UIKit
 
-class BaseReturnOfInvestmentsCollectionViewCell: UICollectionViewCell {
+class BasePerformanceCollectionViewCell: UICollectionViewCell {
     private let topSeparator = UIView()
     private let leftSeparator = UIView()
 
