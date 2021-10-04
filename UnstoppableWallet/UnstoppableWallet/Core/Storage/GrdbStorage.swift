@@ -391,7 +391,7 @@ class GrdbStorage {
             }
 
             try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
-                t.column(FavoriteCoinRecord.Columns.coinType.name, .text).notNull()
+                t.column("coinType", .text).notNull()
             }
         }
 
@@ -587,6 +587,18 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("newStructureForFavoriteCoins") { db in
+            if try db.tableExists("favorite_coins_v20") {
+                try db.drop(table: "favorite_coins_v20")
+            }
+
+            // todo: create migration from coinType to coinUid
+
+            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
+                t.column(FavoriteCoinRecord.Columns.coinUid.name, .text).primaryKey()
+            }
+        }
+
         return migrator
     }
 
@@ -754,30 +766,28 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
 
     var favoriteCoinRecords: [FavoriteCoinRecord] {
         try! dbPool.read { db in
-            try FavoriteCoinRecord.order(FavoriteCoinRecord.Columns.coinType.asc).fetchAll(db)
+            try FavoriteCoinRecord.fetchAll(db)
         }
     }
 
-    func save(coinType: MarketKit.CoinType) {
-        let favoriteCoinRecord = FavoriteCoinRecord(coinType: coinType)
-
+    func save(favoriteCoinRecord: FavoriteCoinRecord) {
         _ = try! dbPool.write { db in
             try favoriteCoinRecord.insert(db)
         }
     }
 
-    func deleteFavoriteCoinRecord(coinType: MarketKit.CoinType) {
+    func deleteFavoriteCoinRecord(coinUid: String) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
+                    .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
                     .deleteAll(db)
         }
     }
 
-    func inFavorites(coinType: MarketKit.CoinType) -> Bool {
+    func favoriteCoinRecordExists(coinUid: String) -> Bool {
         try! dbPool.read { db in
             try FavoriteCoinRecord
-                    .filter(FavoriteCoinRecord.Columns.coinType == coinType.id)
+                    .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
                     .fetchCount(db) > 0
         }
     }

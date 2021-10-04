@@ -88,7 +88,7 @@ class MarketSearchViewController: ThemeSearchViewController {
     }
 
     func onTapAdvancedSearch() {
-        navigationController?.pushViewController(MarketAdvancedSearchModule.viewController(), animated: true)
+//        navigationController?.pushViewController(MarketAdvancedSearchModule.viewController(), animated: true)
     }
 
     private func onSelect(viewItem: MarketSearchViewModel.ViewItem) {

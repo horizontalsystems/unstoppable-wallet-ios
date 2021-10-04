@@ -12,7 +12,7 @@ class CoinFavoriteViewModel {
     init(service: CoinFavoriteService) {
         self.service = service
 
-        subscribe(disposeBag, service.favoriteObservable) { [weak self] isFavorite in
+        subscribe(disposeBag, service.isFavoriteObservable) { [weak self] isFavorite in
             self?.sync(favorite: isFavorite)
             self?.syncHud(favorite: isFavorite)
         }

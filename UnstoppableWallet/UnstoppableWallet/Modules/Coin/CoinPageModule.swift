@@ -18,12 +18,7 @@ struct CoinPageModule {
                 currentLocale: LanguageManager.shared.currentLocale.languageCode ?? "en",
                 fullCoin: fullCoin)
 
-        let favoriteService = FavoriteService(favoritesManager: App.shared.favoritesManager)
-        let coinFavoriteService = CoinFavoriteService(
-                service: favoriteService,
-//                coinType: launchMode.coinType
-                coinType: .ethereum // todo
-        )
+        let coinFavoriteService = CoinFavoriteService(manager: App.shared.favoritesManager, coinUid: fullCoin.coin.uid)
 
 //        let priceAlertService = CoinPriceAlertService(
 //                priceAlertManager: App.shared.priceAlertManager,

@@ -184,15 +184,6 @@ protocol IBlurManager {
     func didBecomeActive()
 }
 
-protocol IFavoritesManager {
-    var dataUpdatedObservable: Observable<()> { get }
-    var all: [FavoriteCoinRecord] { get }
-
-    func add(coinType: MarketKit.CoinType)
-    func remove(coinType: MarketKit.CoinType)
-    func isFavorite(coinType: MarketKit.CoinType) -> Bool
-}
-
 protocol IPostsManager {
     func posts(timestamp: TimeInterval) -> [CryptoNewsPost]?
     var postsSingle: Single<[CryptoNewsPost]> { get }
@@ -450,9 +441,9 @@ protocol IErc20ContractInfoProvider {
 
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(coinType: MarketKit.CoinType)
-    func deleteFavoriteCoinRecord(coinType: MarketKit.CoinType)
-    func inFavorites(coinType: MarketKit.CoinType) -> Bool
+    func save(favoriteCoinRecord: FavoriteCoinRecord)
+    func deleteFavoriteCoinRecord(coinUid: String)
+    func favoriteCoinRecordExists(coinUid: String) -> Bool
 }
 
 protocol ITermsManager {
