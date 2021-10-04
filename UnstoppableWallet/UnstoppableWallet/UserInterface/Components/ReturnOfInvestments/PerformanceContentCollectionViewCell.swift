@@ -1,6 +1,6 @@
 import UIKit
 
-class ReturnOfInvestmentsContentCollectionViewCell: BaseReturnOfInvestmentsCollectionViewCell {
+class PerformanceContentCollectionViewCell: BasePerformanceCollectionViewCell {
 
     private let label = RateDiffLabel()
 

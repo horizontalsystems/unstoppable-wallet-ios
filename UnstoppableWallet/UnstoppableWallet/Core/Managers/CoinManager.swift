@@ -92,6 +92,10 @@ extension CoinManager {
         return appFullCoins + kitFullCoins
     }
 
+    func fullCoin(coinUid: String) throws -> FullCoin? {
+        try marketKit.fullCoins(coinUids: [coinUid]).first
+    }
+
     func fullCoins(filter: String = "", limit: Int = 20) throws -> [FullCoin] {
         let appFullCoins = try customFullCoins(filter: filter)
         let kitFullCoins = try marketKit.fullCoins(filter: filter, limit: limit)

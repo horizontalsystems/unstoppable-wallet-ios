@@ -1,30 +1,34 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import XRatesKit
+import MarketKit
 
-class ReturnOfInvestmentsViewItemsFactory {
+class PerformanceViewItemsFactory {
 
-    func viewItems(info: CoinMarketInfo, diffCoinCodes: [String], timePeriods: [TimePeriod]) -> [[CoinPageViewModel.ReturnOfInvestmentsViewItem]] {
-        var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
-        let coinCodes = diffCoinCodes.map { $0.lowercased() }
+    func viewItems(info: MarketInfoOverview) -> [[CoinPageViewModel.PerformanceViewItem]] {
+        var viewItems = [[CoinPageViewModel.PerformanceViewItem]]()
 
-        var titleRow = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
+        var titleRow = [CoinPageViewModel.PerformanceViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
-        timePeriods.forEach { timePeriod in
-            titleRow.append(.subtitle(timePeriod.roiTitle))
+        var timePeriods = [TimePeriod]()
+        for (_, changes) in info.performance {
+            for timePeriod in changes.keys {
+                if !timePeriods.contains(timePeriod) {
+                    timePeriods.append(timePeriod)
+                    titleRow.append(.subtitle(timePeriod.roiTitle))
+                }
+            }
         }
 
         viewItems.append(titleRow)
 
-        coinCodes.forEach { coinCode in
-            var row = [CoinPageViewModel.ReturnOfInvestmentsViewItem]()
+        info.performance.forEach { (coinCode, changes) in
+            var row = [CoinPageViewModel.PerformanceViewItem]()
             row.append(.content("vs \(coinCode.uppercased())"))
 
             timePeriods.forEach { timePeriod in
-                let values = info.rateDiffs[timePeriod]
-                row.append(.value(values?[coinCode]))
+                row.append(.value(changes[timePeriod]))
             }
             viewItems.append(row)
         }

@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
+class PerformanceTableViewCell: BaseThemeCell {
     private let disposeBag = DisposeBag()
 
     private let sideMargin: CGFloat = .margin16
@@ -13,7 +13,7 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
 
     private let collectionView: UICollectionView
 
-    private var viewItems = [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]()
+    private var viewItems = [[CoinPageViewModel.PerformanceViewItem]]()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewFlowLayout()
@@ -37,22 +37,22 @@ class ReturnOfInvestmentsTableViewCell: BaseThemeCell {
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
 
-        collectionView.registerCell(forClass: ReturnOfInvestmentsSideCollectionViewCell.self)
-        collectionView.registerCell(forClass: ReturnOfInvestmentsContentCollectionViewCell.self)
+        collectionView.registerCell(forClass: PerformanceSideCollectionViewCell.self)
+        collectionView.registerCell(forClass: PerformanceContentCollectionViewCell.self)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) {
+    func bind(viewItems: [[CoinPageViewModel.PerformanceViewItem]]) {
         self.viewItems = viewItems
         collectionView.reloadData()
     }
 
 }
 
-extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewItems.count
@@ -64,8 +64,8 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch viewItems[indexPath.section][indexPath.item] {
-        case .title, .subtitle, .content: return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ReturnOfInvestmentsSideCollectionViewCell.self), for: indexPath)
-        case .value: return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ReturnOfInvestmentsContentCollectionViewCell.self), for: indexPath)
+        case .title, .subtitle, .content: return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PerformanceSideCollectionViewCell.self), for: indexPath)
+        case .value: return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PerformanceContentCollectionViewCell.self), for: indexPath)
         }
     }
 
@@ -90,24 +90,24 @@ extension ReturnOfInvestmentsTableViewCell: UICollectionViewDelegateFlowLayout, 
         0
     }
 
-    func bindSideCell(title: String, type: CoinPageViewModel.ReturnOfInvestmentsViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
-        if let cell = cell as? ReturnOfInvestmentsSideCollectionViewCell {
+    func bindSideCell(title: String, type: CoinPageViewModel.PerformanceViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
+        if let cell = cell as? PerformanceSideCollectionViewCell {
             cell.set(viewItem: type, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
             cell.title = title
         }
     }
 
     private func bindContentCell(amount: Decimal?, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
-        if let cell = cell as? ReturnOfInvestmentsContentCollectionViewCell {
+        if let cell = cell as? PerformanceContentCollectionViewCell {
             cell.set(value: amount, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
         }
     }
 
 }
 
-extension ReturnOfInvestmentsTableViewCell {
+extension PerformanceTableViewCell {
 
-    static func height(viewItems: [[CoinPageViewModel.ReturnOfInvestmentsViewItem]]) -> CGFloat {
+    static func height(viewItems: [[CoinPageViewModel.PerformanceViewItem]]) -> CGFloat {
         CGFloat(viewItems.count) * gridRowHeight
     }
 

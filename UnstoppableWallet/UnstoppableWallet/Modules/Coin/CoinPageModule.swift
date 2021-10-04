@@ -2,17 +2,20 @@ import UIKit
 import Chart
 import LanguageKit
 import ThemeKit
+import MarketKit
 
 struct CoinPageModule {
 
-    static func viewController(launchMode: ChartModule.LaunchMode) -> UIViewController {
+    static func viewController(coin: Coin) -> UIViewController? {
+        guard let fullCoin = try? App.shared.coinManager.fullCoin(coinUid: coin.uid) else {
+            return nil
+        }
+
         let coinPageService = CoinPageService(
-                rateManager: App.shared.rateManager,
+                marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider,
-                coinType: launchMode.coinType,
-                coinTitle: launchMode.coinTitle,
-                coinCode: launchMode.coinCode)
+                fullCoin: fullCoin)
 
         let favoriteService = FavoriteService(favoritesManager: App.shared.favoritesManager)
         let coinFavoriteService = CoinFavoriteService(
@@ -27,24 +30,24 @@ struct CoinPageModule {
 //                coinType: launchMode.coinType,
 //                coinTitle: launchMode.coinTitle)
 
-        let coinChartService = CoinChartService(
-                rateManager: App.shared.rateManager,
-                chartTypeStorage: App.shared.localStorage,
-                currencyKit: App.shared.currencyKit,
-                coinType: launchMode.coinType)
+//        let coinChartService = CoinChartService(
+//                rateManager: App.shared.rateManager,
+//                chartTypeStorage: App.shared.localStorage,
+//                currencyKit: App.shared.currencyKit,
+//                coinType: launchMode.coinType)
 
         let chartFactory = CoinChartFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
 
         let coinPageViewModel = CoinPageViewModel(service: coinPageService)
         let favoriteViewModel = CoinFavoriteViewModel(service: coinFavoriteService)
 //        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
-        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
+//        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
 
         let viewController = CoinPageViewController(
                 viewModel: coinPageViewModel,
                 favoriteViewModel: favoriteViewModel,
 //                priceAlertViewModel: priceAlertViewModel,
-                chartViewModel: coinChartViewModel,
+//                chartViewModel: coinChartViewModel,
                 configuration: ChartConfiguration.fullChart,
                 markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)

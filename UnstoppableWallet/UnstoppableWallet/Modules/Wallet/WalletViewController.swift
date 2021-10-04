@@ -286,8 +286,9 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openCoinPage(coin: Coin) {
-//        let viewController = CoinPageModule.viewController(launchMode: .coin(coin: coin))
-//        present(viewController, animated: true)
+        if let viewController = CoinPageModule.viewController(coin: coin) {
+            present(viewController, animated: true)
+        }
     }
 
     private func openBackupRequired(wallet: Wallet) {
