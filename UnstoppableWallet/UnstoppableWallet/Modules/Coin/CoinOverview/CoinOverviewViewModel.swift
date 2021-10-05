@@ -5,15 +5,15 @@ import RxCocoa
 import MarketKit
 import UIKit
 
-class CoinPageViewModel {
-    private let service: CoinPageService
+class CoinOverviewViewModel {
+    private let service: CoinOverviewService
     private let performanceViewItemsFactory = PerformanceViewItemsFactory()
-    private let marketViewItemFactory = MarketViewItemFactory()
+    private let marketViewItemFactory = CoinOverviewViewItemFactory()
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<State>(value: .loading)
 
-    init(service: CoinPageService) {
+    init(service: CoinOverviewService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -88,18 +88,14 @@ class CoinPageViewModel {
 
 }
 
-extension CoinPageViewModel {
+extension CoinOverviewViewModel {
 
     var coin: Coin {
         service.fullCoin.coin
     }
 
-    var title: String {
-        service.fullCoin.coin.name
-    }
-
-    var subtitle: String {
-        service.fullCoin.coin.code
+    func viewDidLoad() {
+        service.fetchChartData()
     }
 
     var stateDriver: Driver<State> {
@@ -108,7 +104,7 @@ extension CoinPageViewModel {
 
 }
 
-extension CoinPageViewModel {
+extension CoinOverviewViewModel {
 
     enum State {
         case loading

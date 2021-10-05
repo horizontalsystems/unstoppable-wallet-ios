@@ -13,7 +13,7 @@ class PerformanceTableViewCell: BaseThemeCell {
 
     private let collectionView: UICollectionView
 
-    private var viewItems = [[CoinPageViewModel.PerformanceViewItem]]()
+    private var viewItems = [[CoinOverviewViewModel.PerformanceViewItem]]()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewFlowLayout()
@@ -45,7 +45,7 @@ class PerformanceTableViewCell: BaseThemeCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItems: [[CoinPageViewModel.PerformanceViewItem]]) {
+    func bind(viewItems: [[CoinOverviewViewModel.PerformanceViewItem]]) {
         self.viewItems = viewItems
         collectionView.reloadData()
     }
@@ -90,7 +90,7 @@ extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
         0
     }
 
-    func bindSideCell(title: String, type: CoinPageViewModel.PerformanceViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
+    func bindSideCell(title: String, type: CoinOverviewViewModel.PerformanceViewItem, cell: UICollectionViewCell, horizontalFirst: Bool, verticalFirst: Bool) {
         if let cell = cell as? PerformanceSideCollectionViewCell {
             cell.set(viewItem: type, horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
             cell.title = title
@@ -107,7 +107,7 @@ extension PerformanceTableViewCell: UICollectionViewDelegateFlowLayout, UICollec
 
 extension PerformanceTableViewCell {
 
-    static func height(viewItems: [[CoinPageViewModel.PerformanceViewItem]]) -> CGFloat {
+    static func height(viewItems: [[CoinOverviewViewModel.PerformanceViewItem]]) -> CGFloat {
         CGFloat(viewItems.count) * gridRowHeight
     }
 

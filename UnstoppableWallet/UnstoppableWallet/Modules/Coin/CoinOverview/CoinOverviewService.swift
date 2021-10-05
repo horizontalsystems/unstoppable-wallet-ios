@@ -4,7 +4,7 @@ import RxCocoa
 import MarketKit
 import CurrencyKit
 
-class CoinPageService {
+class CoinOverviewService {
     private var disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
@@ -27,11 +27,9 @@ class CoinPageService {
         self.appConfigProvider = appConfigProvider
         self.currentLocale = currentLocale
         self.fullCoin = fullCoin
-
-        fetchChartData()
     }
 
-    private func fetchChartData() {
+    func fetchChartData() {
         disposeBag = DisposeBag()
         state = .loading
 
@@ -74,7 +72,7 @@ class CoinPageService {
 
 }
 
-extension CoinPageService {
+extension CoinOverviewService {
 
     var stateObservable: Observable<DataStatus<MarketInfoOverview>> {
         stateRelay.asObservable()

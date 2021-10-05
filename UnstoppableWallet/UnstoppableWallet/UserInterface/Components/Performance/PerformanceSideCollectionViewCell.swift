@@ -17,7 +17,7 @@ class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(viewItem: CoinPageViewModel.PerformanceViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
+    func set(viewItem: CoinOverviewViewModel.PerformanceViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
         super.set(horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
 
         label.font = viewItem.font
