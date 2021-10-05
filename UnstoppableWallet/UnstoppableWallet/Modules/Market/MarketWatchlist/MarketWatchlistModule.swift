@@ -3,11 +3,13 @@ import CurrencyKit
 struct MarketWatchlistModule {
 
     static func viewController() -> MarketWatchlistViewController {
-        let service = MarketWatchlistService(rateManager: App.shared.rateManagerNew, favoritesManager: App.shared.favoritesManager)
-        let listService = MarketListService(currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, fetcher: service)
-
-        let listViewModel = MarketListViewModel(service: listService)
-        return MarketWatchlistViewController(listViewModel: listViewModel)
+        let service = MarketWatchlistService(
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                favoritesManager: App.shared.favoritesManager
+        )
+        let viewModel = MarketWatchlistViewModel(service: service)
+        return MarketWatchlistViewController(viewModel: viewModel)
     }
 
 }

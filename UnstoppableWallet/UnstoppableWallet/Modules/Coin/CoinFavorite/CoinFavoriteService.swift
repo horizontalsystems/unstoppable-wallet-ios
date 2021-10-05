@@ -19,7 +19,7 @@ class CoinFavoriteService {
         self.manager = manager
         self.coinUid = coinUid
 
-        subscribe(disposeBag, manager.dataUpdatedObservable) { [weak self] in self?.sync() }
+        subscribe(disposeBag, manager.coinUidsUpdatedObservable) { [weak self] in self?.sync() }
 
         sync()
     }
