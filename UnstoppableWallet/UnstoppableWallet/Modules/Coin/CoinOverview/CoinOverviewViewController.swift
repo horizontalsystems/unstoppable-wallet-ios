@@ -1,5 +1,4 @@
 import UIKit
-import XRatesKit
 import RxSwift
 import ThemeKit
 import SectionsTableView
@@ -8,24 +7,17 @@ import HUD
 import Chart
 import ComponentKit
 import Down
-import CoinKit
 
-class CoinPageViewController: ThemeViewController {
-    private let viewModel: CoinPageViewModel
+class CoinOverviewViewController: ThemeViewController {
+    private let viewModel: CoinOverviewViewModel
 //    private let chartViewModel: CoinChartViewModel
-    private let favoriteViewModel: CoinFavoriteViewModel
-//    private let priceAlertViewModel: CoinPriceAlertViewModel
     private let markdownParser: CoinPageMarkdownParser
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
-    private var state: CoinPageViewModel.State = .loading
-
-    private var favoriteButtonItem: UIBarButtonItem?
-    private var alertButtonItem: UIBarButtonItem?
+    private var state: CoinOverviewViewModel.State = .loading
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let subtitleCell = A7Cell()
 
     /* Chart section */
 //    private let currentRateCell: CoinChartRateCell
@@ -41,10 +33,10 @@ class CoinPageViewController: ThemeViewController {
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
-    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
+    weak var parentNavigationController: UINavigationController?
+
+    init(viewModel: CoinOverviewViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
         self.viewModel = viewModel
-        self.favoriteViewModel = favoriteViewModel
-//        self.priceAlertViewModel = priceAlertViewModel
 //        self.chartViewModel = chartViewModel
         self.markdownParser = markdownParser
         self.urlManager = urlManager
@@ -78,19 +70,16 @@ class CoinPageViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        title = viewModel.title
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
 
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
 
         tableView.registerCell(forClass: A1Cell.self)
@@ -127,32 +116,17 @@ class CoinPageViewController: ThemeViewController {
             self?.reloadTable()
         }
 
-        subtitleCell.set(backgroundStyle: .transparent, isFirst: true)
-        subtitleCell.title = viewModel.subtitle
-        subtitleCell.titleColor = .themeGray
-        subtitleCell.set(titleImageSize: .iconSize24)
-        subtitleCell.valueColor = .themeGray
-        subtitleCell.selectionStyle = .none
-
         tableView.buildSections()
 
         subscribeViewModels()
+        viewModel.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    @objc private func onTapCloseButton() {
-        dismiss(animated: true)
-    }
-
     private func subscribeViewModels() {
-        // barItems section
-//        subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
-        subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
-        subscribe(disposeBag, favoriteViewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
-
         // page section
         subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
 
@@ -173,30 +147,6 @@ class CoinPageViewController: ThemeViewController {
 //        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
     }
 
-    private func syncBarButtons() {
-        navigationItem.rightBarButtonItems = [favoriteButtonItem, alertButtonItem].compactMap { $0 }
-    }
-
-    @objc private func onAlertTap() {
-//        guard let chartNotificationViewController = ChartNotificationRouter.module(
-//                coinType: priceAlertViewModel.coinType,
-//                coinTitle: viewModel.coinTitle,
-//                mode: .all) else {
-//
-//            return
-//        }
-//
-//        present(chartNotificationViewController, animated: true)
-    }
-
-    @objc private func onFavoriteTap() {
-        favoriteViewModel.favorite()
-    }
-
-    @objc private func onUnfavoriteTap() {
-        favoriteViewModel.unfavorite()
-    }
-
     private func reloadTable() {
         tableView.buildSections()
 
@@ -206,60 +156,11 @@ class CoinPageViewController: ThemeViewController {
 
 }
 
-extension CoinPageViewController {
-
-    // BarItems section
-
-    private func sync(priceAlertEnabled: Bool) {
-//        guard priceAlertViewModel.alertNotificationEnabled == true else {
-//            alertButtonItem = nil
-//            syncBarButtons()
-//
-//            return
-//        }
-//
-//        var image: UIImage?
-//        var imageTintColor: UIColor?
-//        if priceAlertEnabled {
-//            image = UIImage(named: "bell_ring_24")?.withRenderingMode(.alwaysTemplate)
-//            imageTintColor = .themeJacob
-//        } else {
-//            image = UIImage(named: "bell_24")?.withRenderingMode(.alwaysTemplate)
-//            imageTintColor = .themeGray
-//        }
-//
-//        alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
-//        alertButtonItem?.tintColor = imageTintColor
-//
-//        syncBarButtons()
-    }
-
-    private func sync(favorite: Bool) {
-        let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)
-        let color = favorite ? UIColor.themeJacob : UIColor.themeGray
-
-        let favoriteImage = UIImage(named: "rate_24")?.withRenderingMode(.alwaysTemplate)
-        favoriteButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: selector)
-        favoriteButtonItem?.tintColor = color
-
-        syncBarButtons()
-    }
-
-    private func showHud(title: String) {
-        HudHelper.instance.showSuccess(title: title)
-    }
+extension CoinOverviewViewController {
 
     // Page section
 
-    private func sync(state: CoinPageViewModel.State) {
-        switch state {
-        case .loaded(let viewItem):
-            subtitleCell.value = viewItem.marketInfo.marketCapRank
-            subtitleCell.setTitleImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.imagePlaceholderName))
-
-        default: subtitleCell.value = nil
-        }
-
+    private func sync(state: CoinOverviewViewModel.State) {
         self.state = state
         tableView.reload()
     }
@@ -339,19 +240,7 @@ extension CoinPageViewController {
 
 }
 
-extension CoinPageViewController {
-
-    private var subtitleSection: SectionProtocol {
-        Section(id: "subtitle",
-                rows: [
-                    StaticRow(
-                            cell: subtitleCell,
-                            id: "subtitle",
-                            height: .heightCell48
-                    )
-                ]
-        )
-    }
+extension CoinOverviewViewController {
 //
 //    private var chartSection: SectionProtocol {
 //        Section(
@@ -407,7 +296,7 @@ extension CoinPageViewController {
         )
     }
 
-    private func linksSection(guideUrl: URL?, links: [CoinPageViewModel.Link]) -> SectionProtocol {
+    private func linksSection(guideUrl: URL?, links: [CoinOverviewViewModel.Link]) -> SectionProtocol {
         var guideRows = [RowProtocol]()
 
         if let guideUrl = guideUrl {
@@ -454,7 +343,7 @@ extension CoinPageViewController {
         )
     }
 
-    private func open(link: CoinPageViewModel.Link) {
+    private func open(link: CoinOverviewViewModel.Link) {
         switch link.type {
         case .twitter:
             let account = link.url.stripping(prefix: "https://twitter.com/")
@@ -487,47 +376,7 @@ extension CoinPageViewController {
         )
     }
 
-    private func openMarkets(tickers: [MarketTicker]) {
-//        let viewController = CoinMarketsModule.viewController(coin: viewModel.coin)
-//        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func openMajorHolders(coinType: CoinType) {
-        let viewController = CoinMajorHoldersModule.viewController(coinType: coinType)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func openAudits(coinType: CoinType) {
-        let viewController = CoinAuditsModule.viewController(coinType: coinType)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-//    private func openSecurityInfo(type: CoinPageViewModel.SecurityType) {
-//        let viewController = CoinPageInfoViewController(header: type.title, viewItems: viewModel.securityInfoViewItems(type: type))
-//        present(ThemeNavigationController(rootViewController: viewController), animated: true)
-//    }
-
-    private func openFundsInvested(fundCategories: [CoinFundCategory]) {
-        let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func openTvl() {
-//        let viewController = CoinTvlModule.viewController(coin: viewModel.coin)
-//        present(viewController, animated: true)
-    }
-
-    private func openTvlRank() {
-        let viewController = CoinTvlRankModule.viewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
-    private func openTradingVolume() {
-//        let viewController = CoinTradingVolumeModule.viewController(coin: viewModel.coin)
-//        present(viewController, animated: true)
-    }
-
-    private func performanceSection(viewItems: [[CoinPageViewModel.PerformanceViewItem]]) -> SectionProtocol {
+    private func performanceSection(viewItems: [[CoinOverviewViewModel.PerformanceViewItem]]) -> SectionProtocol {
         Section(
                 id: "return_of_investments_section",
                 headerState: .margin(height: .margin12),
@@ -565,63 +414,8 @@ extension CoinPageViewController {
                 ]
         )
     }
-//
-//    private func investorDataSections(majorHoldersCoinType: CoinType?, fundCategories: [CoinFundCategory]) -> [SectionProtocol] {
-//        var rows = [RowProtocol]()
-//
-//        let hasMajorHolders = majorHoldersCoinType != nil
-//        let hasFunds = !fundCategories.isEmpty
-//
-//        if let coinType = majorHoldersCoinType {
-//            let row = Row<D1Cell>(
-//                    id: "major-holders",
-//                    height: .heightCell48,
-//                    bind: { cell, _ in
-//                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFunds)
-//                        cell.title = "coin_page.major_holders".localized
-//                    },
-//                    action: { [weak self] _ in
-//                        self?.openMajorHolders(coinType: coinType)
-//                    }
-//            )
-//
-//            rows.append(row)
-//        }
-//
-//        if !fundCategories.isEmpty {
-//            let fundsInvestedRow = Row<D2Cell>(
-//                    id: "funds-invested",
-//                    height: .heightCell48,
-//                    bind: { cell, _ in
-//                        cell.set(backgroundStyle: .lawrence, isFirst: !hasMajorHolders, isLast: true)
-//                        cell.title = "coin_page.funds_invested".localized
-//                    },
-//                    action: { [weak self] _ in
-//                        self?.openFundsInvested(fundCategories: fundCategories)
-//                    }
-//            )
-//
-//            rows.append(fundsInvestedRow)
-//        }
-//
-//        if rows.isEmpty {
-//            return []
-//        } else {
-//            return [
-//                Section(
-//                        id: "investor-data-header",
-//                        headerState: .margin(height: .margin12),
-//                        footerState: .margin(height: .margin12),
-//                        rows: [
-//                            headerRow(title: "coin_page.investor_data".localized)
-//                        ]
-//                ),
-//                Section(id: "investor-data", rows: rows)
-//            ]
-//        }
-//    }
 
-    private func contractInfoSection(contracts: [CoinPageViewModel.ContractInfo]) -> SectionProtocol {
+    private func contractInfoSection(contracts: [CoinOverviewViewModel.ContractInfo]) -> SectionProtocol {
         Section(
                 id: "contract-info",
                 headerState: .margin(height: .margin12),
@@ -636,7 +430,7 @@ extension CoinPageViewController {
                                         cell.viewItem = .init(type: .raw, value: { contractInfo.value })
                                     }
                             )
-                }
+                        }
         )
     }
 
@@ -665,7 +459,7 @@ extension CoinPageViewController {
         }
     }
 
-    private func marketInfoSection(marketInfo: CoinPageViewModel.MarketInfo) -> SectionProtocol? {
+    private func marketInfoSection(marketInfo: CoinOverviewViewModel.MarketInfo) -> SectionProtocol? {
         let datas = [
             marketInfo.marketCap.map {
                 (id: "market_cap", title: "coin_page.market_cap".localized, badge: marketInfo.marketCapRank, text: $0)
@@ -746,12 +540,11 @@ extension CoinPageViewController {
 
 }
 
-extension CoinPageViewController: SectionsDataSource {
+extension CoinOverviewViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(subtitleSection)
 //        sections.append(chartSection)
 
         switch state {

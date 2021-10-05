@@ -5,10 +5,10 @@ import MarketKit
 
 class PerformanceViewItemsFactory {
 
-    func viewItems(info: MarketInfoOverview) -> [[CoinPageViewModel.PerformanceViewItem]] {
-        var viewItems = [[CoinPageViewModel.PerformanceViewItem]]()
+    func viewItems(info: MarketInfoOverview) -> [[CoinOverviewViewModel.PerformanceViewItem]] {
+        var viewItems = [[CoinOverviewViewModel.PerformanceViewItem]]()
 
-        var titleRow = [CoinPageViewModel.PerformanceViewItem]()
+        var titleRow = [CoinOverviewViewModel.PerformanceViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
         var timePeriods = [TimePeriod]()
@@ -24,7 +24,7 @@ class PerformanceViewItemsFactory {
         viewItems.append(titleRow)
 
         info.performance.forEach { (coinCode, changes) in
-            var row = [CoinPageViewModel.PerformanceViewItem]()
+            var row = [CoinOverviewViewModel.PerformanceViewItem]()
             row.append(.content("vs \(coinCode.uppercased())"))
 
             timePeriods.forEach { timePeriod in
