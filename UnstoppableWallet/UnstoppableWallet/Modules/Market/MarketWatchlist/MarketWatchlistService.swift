@@ -3,15 +3,15 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 
-class MarketWatchlistService {
+class MarketWatchlistService: IMarketMultiSortHeaderService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let favoritesManager: FavoritesManager
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<MarketListServiceState>()
+    private(set) var state: MarketListServiceState = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -19,6 +19,20 @@ class MarketWatchlistService {
 
     private var coinUids = [String]()
     private var marketInfos = [MarketInfo]()
+
+    private let sortingFieldRelay = PublishRelay<MarketModule.SortingField>()
+    var sortingField: MarketModule.SortingField = .highestCap {
+        didSet {
+            sortingFieldRelay.accept(sortingField)
+        }
+    }
+
+    private let marketFieldRelay = PublishRelay<MarketModule.MarketField>()
+    var marketField: MarketModule.MarketField = .price {
+        didSet {
+            marketFieldRelay.accept(marketField)
+        }
+    }
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager) {
         self.marketKit = marketKit
@@ -59,28 +73,26 @@ class MarketWatchlistService {
 
 }
 
-extension MarketWatchlistService {
-
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
-    }
+extension MarketWatchlistService: IMarketListService {
 
     var currency: Currency {
         currencyKit.baseCurrency
     }
 
-    func refresh() {
-        syncMarketInfos()
+    var stateObservable: Observable<MarketListServiceState> {
+        stateRelay.asObservable()
     }
 
-}
+    var sortingFieldObservable: Observable<MarketModule.SortingField> {
+        sortingFieldRelay.asObservable()
+    }
 
-extension MarketWatchlistService {
+    var marketFieldObservable: Observable<MarketModule.MarketField> {
+        marketFieldRelay.asObservable()
+    }
 
-    enum State {
-        case loading
-        case loaded(marketInfos: [MarketInfo])
-        case failed(error: Error)
+    func refresh() {
+        syncMarketInfos()
     }
 
 }

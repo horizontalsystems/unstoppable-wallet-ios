@@ -1,104 +1,130 @@
-import CurrencyKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
+import MarketKit
+
+protocol IMarketListService {
+    var currency: Currency { get }
+    var state: MarketListServiceState { get }
+    var stateObservable: Observable<MarketListServiceState> { get }
+    var sortingField: MarketModule.SortingField { get }
+    var sortingFieldObservable: Observable<MarketModule.SortingField> { get }
+    var marketField: MarketModule.MarketField { get }
+    var marketFieldObservable: Observable<MarketModule.MarketField> { get }
+    func refresh()
+}
+
+enum MarketListServiceState {
+    case loading
+    case loaded(marketInfos: [MarketInfo])
+    case failed(error: Error)
+}
 
 class MarketListViewModel {
-    private let service: MarketListService
+    private let service: IMarketListService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
-    private let sortingFieldTitleRelay: BehaviorRelay<String>
-    private let marketFieldRelay = BehaviorRelay<MarketModule.MarketField>(value: .price)
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    private var sortingField: MarketModule.SortingField = .highestCap {
-        didSet {
-            sortingFieldTitleRelay.accept(sortingField.title)
-        }
-    }
-
-    init(service: MarketListService) {
+    init(service: IMarketListService) {
         self.service = service
-        sortingFieldTitleRelay = BehaviorRelay(value: sortingField.title)
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.sortingFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
+        subscribe(disposeBag, service.marketFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
 
         sync(state: service.state)
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketListServiceState) {
         switch state {
         case .loading:
-            if service.items.isEmpty {
-                stateRelay.accept(.loading)
-            }
-        case .loaded:
-            stateRelay.accept(.loaded(viewItems: viewItems))
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .loaded(let marketInfos):
+            viewItemsRelay.accept(viewItems(marketInfos: marketInfos))
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
         case .failed:
-            stateRelay.accept(.error(description: "market.sync_error".localized))
-        }
-    }
-
-    private var viewItems: [MarketModule.ViewItem] {
-        service.items.sort(by: sortingField).map {
-            MarketModule.ViewItem(item: $0, marketField: marketFieldRelay.value, currency: service.currency)
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
     private func syncViewItemsIfPossible() {
-        guard case .loaded = stateRelay.value  else {
+        guard case .loaded(let marketInfos) = service.state else {
             return
         }
 
-        stateRelay.accept(.loaded(viewItems: viewItems))
+        viewItemsRelay.accept(viewItems(marketInfos: marketInfos))
+    }
+
+    private func viewItems(marketInfos: [MarketInfo]) -> [ViewItem] {
+        sorted(marketInfos: marketInfos, sortingField: service.sortingField).map {
+            viewItem(marketInfo: $0, marketField: service.marketField, currency: service.currency)
+        }
+    }
+
+    private func viewItem(marketInfo: MarketInfo, marketField: MarketModule.MarketField, currency: Currency) -> ViewItem {
+        let priceCurrencyValue = CurrencyValue(currency: currency, value: marketInfo.price)
+        let dataValue: DataValue
+
+        switch marketField {
+        case .price: dataValue = .diff(marketInfo.priceChange)
+        case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "-")
+        case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "-")
+        }
+
+        return ViewItem(
+                uid: marketInfo.coin.uid,
+                iconUrl: marketInfo.coin.imageUrl,
+                name: marketInfo.coin.name,
+                code: marketInfo.coin.code,
+                rank: marketInfo.coin.marketCapRank.map { "\($0)" },
+                price: ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? "",
+                dataValue: dataValue
+        )
+    }
+
+    func sorted(marketInfos: [MarketInfo], sortingField: MarketModule.SortingField) -> [MarketInfo] {
+        marketInfos.sorted { lhsMarketInfo, rhsMarketInfo in
+            switch sortingField {
+            case .highestCap: return lhsMarketInfo.marketCap > rhsMarketInfo.marketCap
+            case .lowestCap: return lhsMarketInfo.marketCap < rhsMarketInfo.marketCap
+            case .highestVolume: return lhsMarketInfo.totalVolume > rhsMarketInfo.totalVolume
+            case .lowestVolume: return lhsMarketInfo.totalVolume < rhsMarketInfo.totalVolume
+            case .topGainers, .topLosers:
+                guard let rhsPriceChange = rhsMarketInfo.priceChange else {
+                    return true
+                }
+                guard let lhsPriceChange = lhsMarketInfo.priceChange else {
+                    return false
+                }
+
+                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            }
+        }
     }
 
 }
 
 extension MarketListViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemsDriver: Driver<[ViewItem]?> {
+        viewItemsRelay.asDriver()
     }
 
-    var sortingFieldTitleDriver: Driver<String> {
-        sortingFieldTitleRelay.asDriver()
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
     }
 
-    var marketFieldDriver: Driver<MarketModule.MarketField> {
-        marketFieldRelay.asDriver()
-    }
-
-    var allMarketFields: [MarketModule.MarketField] {
-        service.allMarketFields
-    }
-
-    var sortingFieldViewItems: [SortingFieldViewItem] {
-        MarketModule.SortingField.allCases.map {
-            SortingFieldViewItem(
-                    title: $0.title,
-                    selected: sortingField == $0
-            )
-        }
-    }
-
-    func setSortingField(at index: Int) {
-        sortingField = MarketModule.SortingField.allCases[index]
-
-        syncViewItemsIfPossible()
-    }
-
-    func set(marketField: MarketModule.MarketField) {
-        marketFieldRelay.accept(marketField)
-
-        syncViewItemsIfPossible()
-    }
-
-    func set(listType: MarketModule.ListType) {
-        sortingField = listType.sortingField
-        marketFieldRelay.accept(listType.marketField)
-
-        syncViewItemsIfPossible()
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
     func refresh() {
@@ -109,15 +135,20 @@ extension MarketListViewModel {
 
 extension MarketListViewModel {
 
-    struct SortingFieldViewItem {
-        let title: String
-        let selected: Bool
+    struct ViewItem {
+        let uid: String
+        let iconUrl: String
+        let name: String
+        let code: String
+        let rank: String?
+        let price: String
+        let dataValue: DataValue
     }
 
-    enum State {
-        case loading
-        case loaded(viewItems: [MarketModule.ViewItem])
-        case error(description: String)
+    enum DataValue {
+        case diff(Decimal?)
+        case volume(String)
+        case marketCap(String)
     }
 
 }
