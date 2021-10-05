@@ -66,6 +66,20 @@ struct MarketModule {
         cell.secondaryValueTextColor = marketFieldData.color
     }
 
+    static func bindNew(cell: G14Cell, viewItem: ViewItemNew) {
+        cell.setTitleImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+        cell.topText = viewItem.name
+        cell.bottomText = viewItem.code
+        cell.leftBadgeText = viewItem.rank
+
+        cell.primaryValueText = viewItem.price
+
+        let marketFieldData = marketFieldPreference(marketDataValue: viewItem.marketDataValue)
+        cell.secondaryTitleText = marketFieldData.title
+        cell.secondaryValueText = marketFieldData.value
+        cell.secondaryValueTextColor = marketFieldData.color
+    }
+
 }
 
 extension MarketModule {
@@ -203,6 +217,30 @@ extension Array where Element == MarketModule.Item {
 
 }
 
+extension Array where Element == MarketKit.MarketInfo {
+
+    func sorted(by sortingField: MarketModule.SortingField) -> [MarketKit.MarketInfo] {
+        sorted { lhsMarketInfo, rhsMarketInfo in
+            switch sortingField {
+            case .highestCap: return lhsMarketInfo.marketCap > rhsMarketInfo.marketCap
+            case .lowestCap: return lhsMarketInfo.marketCap < rhsMarketInfo.marketCap
+            case .highestVolume: return lhsMarketInfo.totalVolume > rhsMarketInfo.totalVolume
+            case .lowestVolume: return lhsMarketInfo.totalVolume < rhsMarketInfo.totalVolume
+            case .topGainers, .topLosers:
+                guard let rhsPriceChange = rhsMarketInfo.priceChange else {
+                    return true
+                }
+                guard let lhsPriceChange = lhsMarketInfo.priceChange else {
+                    return false
+                }
+
+                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            }
+        }
+    }
+
+}
+
 extension MarketModule {  // ViewModel Items
 
     enum ViewScore {
@@ -251,6 +289,34 @@ extension MarketModule {  // ViewModel Items
 
             let rateValue = CurrencyValue(currency: currency, value: item.price)
             rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
+        }
+    }
+
+    struct ViewItemNew {
+        let uid: String
+        let iconUrl: String
+        let name: String
+        let code: String
+        let rank: String?
+        let price: String
+        let marketDataValue: MarketDataValue
+
+        init(marketInfo: MarketKit.MarketInfo, marketField: MarketField, currency: Currency) {
+            uid = marketInfo.coin.uid
+            iconUrl = marketInfo.coin.imageUrl
+            name = marketInfo.coin.name
+            code = marketInfo.coin.code
+            rank = marketInfo.coin.marketCapRank.map { "\($0)" }
+
+            let priceCurrencyValue = CurrencyValue(currency: currency, value: marketInfo.price)
+            price = ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
+
+            switch marketField {
+            case .price: marketDataValue = .diff(marketInfo.priceChange)
+            case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "-")
+            case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "-")
+            }
+
         }
     }
 

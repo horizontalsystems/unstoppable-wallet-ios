@@ -14,7 +14,7 @@ class FavoritesManager {
 
 extension FavoritesManager {
 
-    var dataUpdatedObservable: Observable<()> {
+    var coinUidsUpdatedObservable: Observable<()> {
         coinUidsUpdatedRelay.asObservable()
     }
 

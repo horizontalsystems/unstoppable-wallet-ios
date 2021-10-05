@@ -286,7 +286,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openCoinPage(coin: Coin) {
-        if let viewController = CoinPageModule.viewController(coin: coin) {
+        if let viewController = CoinPageModule.viewController(coinUid: coin.uid) {
             present(viewController, animated: true)
         }
     }

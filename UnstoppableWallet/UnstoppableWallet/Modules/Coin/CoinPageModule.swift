@@ -6,8 +6,8 @@ import MarketKit
 
 struct CoinPageModule {
 
-    static func viewController(coin: Coin) -> UIViewController? {
-        guard let fullCoin = try? App.shared.coinManager.fullCoin(coinUid: coin.uid) else {
+    static func viewController(coinUid: String) -> UIViewController? {
+        guard let fullCoin = try? App.shared.coinManager.fullCoin(coinUid: coinUid) else {
             return nil
         }
 
