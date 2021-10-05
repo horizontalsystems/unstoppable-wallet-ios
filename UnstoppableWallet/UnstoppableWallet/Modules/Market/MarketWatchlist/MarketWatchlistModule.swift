@@ -1,4 +1,4 @@
-import CurrencyKit
+import UIKit
 
 struct MarketWatchlistModule {
 
@@ -8,8 +8,11 @@ struct MarketWatchlistModule {
                 currencyKit: App.shared.currencyKit,
                 favoritesManager: App.shared.favoritesManager
         )
-        let viewModel = MarketWatchlistViewModel(service: service)
-        return MarketWatchlistViewController(viewModel: viewModel)
+
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service)
+        let listViewModel = MarketListViewModel(service: service)
+
+        return MarketWatchlistViewController(listViewModel: listViewModel, headerViewModel: headerViewModel)
     }
 
 }
