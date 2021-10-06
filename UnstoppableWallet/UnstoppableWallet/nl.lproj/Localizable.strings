@@ -400,8 +400,7 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 "market_discovery.filter_description.identity" = "Decentralized identity.";
 "market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
 
-
-"market_watchlist.empty.caption" = "Watchlist is empty. \nYou may add coins to watchlist using star icon on a coin page.";
+"market_watchlist.empty.caption" = "You don’t have any favorite assets.\nYou can add the favorites by clicking star icon in the asset page";
 
 "market.search.title" = "Search";
 "market.search.empty_text" = "No results found";
