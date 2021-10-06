@@ -3,10 +3,10 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 
-class MarketWatchlistService: IMarketMultiSortHeaderService {
+class MarketCategoryService: IMarketMultiSortHeaderService {
+    let category: CoinCategory
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let favoritesManager: FavoritesManager
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
@@ -16,8 +16,6 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
             stateRelay.accept(state)
         }
     }
-
-    private var coinUids = [String]()
 
     private let sortingFieldRelay = PublishRelay<MarketModule.SortingField>()
     var sortingField: MarketModule.SortingField = .highestCap {
@@ -33,34 +31,26 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager) {
+    init?(categoryUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        guard let category = try? marketKit.coinCategory(uid: categoryUid) else {
+            return nil
+        }
+
+        self.category = category
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.favoritesManager = favoritesManager
 
-        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
-
-        syncCoinUids()
-    }
-
-    private func syncCoinUids() {
-        coinUids = favoritesManager.allCoinUids
         syncMarketInfos()
     }
 
     private func syncMarketInfos() {
         syncDisposeBag = DisposeBag()
 
-        if coinUids.isEmpty {
-            state = .loaded(marketInfos: [])
-            return
-        }
-
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(coinUids: coinUids, order: .init(field: .marketCap, direction: .descending))
+        marketKit.marketInfosSingle(coinUids: ["bitcoin", "ethereum", "tether", "uniswap"])
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.state = .loaded(marketInfos: marketInfos)
@@ -72,7 +62,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
 }
 
-extension MarketWatchlistService: IMarketListService {
+extension MarketCategoryService: IMarketListService {
 
     var currency: Currency {
         currencyKit.baseCurrency
