@@ -467,6 +467,11 @@
 "coin_page.roi.day200" = "6 Mois";
 "coin_page.roi.year1" = "1 An";
 
+"coin_page.tab.overview" = "Overview";
+"coin_page.tab.markets" = "Market";
+"coin_page.tab.details" = "Details";
+"coin_page.tab.tweets" = "Tweets";
+
 "coin_page.market_cap" = "Cap. marché";
 "coin_page.circulating_supply" = "En circulation";
 "coin_page.total_supply" = "Offre totale";
