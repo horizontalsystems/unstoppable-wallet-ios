@@ -9,17 +9,18 @@ class MarketListViewController: ThemeViewController {
     private let listViewModel: MarketListViewModel
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .plain)
+    let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
-    private var viewItems = [MarketListViewModel.ViewItem]()
+    private var viewItems: [MarketListViewModel.ViewItem]?
 
     var viewController: UIViewController? { self }
     var headerView: UITableViewHeaderFooterView? { nil }
     var emptyView: UIView? { nil }
     var topSections: [SectionProtocol] { [] }
+    var refreshEnabled: Bool { true }
 
     init(listViewModel: MarketListViewModel) {
         self.listViewModel = listViewModel
@@ -88,7 +89,9 @@ class MarketListViewController: ThemeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        tableView.refreshControl = refreshControl
+        if refreshEnabled {
+            tableView.refreshControl = refreshControl
+        }
     }
 
     func refresh() {
@@ -104,15 +107,20 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func sync(viewItems: [MarketListViewModel.ViewItem]?) {
-        if let viewItems = viewItems {
-            self.viewItems = viewItems
-            emptyView?.isHidden = !viewItems.isEmpty
+        self.viewItems = viewItems
+
+        if let viewItems = viewItems, viewItems.isEmpty {
+            emptyView?.isHidden = false
         } else {
-            self.viewItems = []
             emptyView?.isHidden = true
         }
 
-        tableView.bounces = !self.viewItems.isEmpty
+        if let viewItems = viewItems, !viewItems.isEmpty {
+            tableView.bounces = true
+        } else {
+            tableView.bounces = false
+        }
+
         tableView.reload()
     }
 
@@ -186,17 +194,19 @@ extension MarketListViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
-        if let headerView = headerView, !viewItems.isEmpty {
+        if let headerView = headerView, let viewItems = viewItems, !viewItems.isEmpty {
             headerState = .static(view: headerView, height: .heightSingleLineCell)
         } else {
             headerState = .margin(height: 0)
         }
 
-        return [
+        return topSections + [
             Section(
                     id: "coins",
                     headerState: headerState,
-                    rows: viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+                    rows: viewItems.map { viewItems in
+                        viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+                    } ?? []
             )
         ]
     }

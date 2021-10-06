@@ -121,9 +121,21 @@ extension MarketDiscoveryViewController: UICollectionViewDataSource {
 
 extension MarketDiscoveryViewController: UICollectionViewDelegate {
 
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? MarketDiscoveryCell {
             cell.set(viewItem: discoveryViewItems[indexPath.item])
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch discoveryViewItems[indexPath.item].type {
+        case .topCoins: ()
+        case .category(let uid):
+            guard let viewController = MarketCategoryModule.viewController(categoryUid: uid) else {
+                return
+            }
+
+            present(viewController, animated: true)
         }
     }
 
@@ -131,23 +143,23 @@ extension MarketDiscoveryViewController: UICollectionViewDelegate {
 
 extension MarketDiscoveryViewController: UICollectionViewDelegateFlowLayout {
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         indexPath.section == 0 ?
                 CGSize(width: collectionView.width, height: .heightSingleLineCell) :
                 CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: 128)
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         section == 0 ?
                 .zero :
                 UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin32, right: .margin16)
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         .margin12
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         .margin12
     }
 
