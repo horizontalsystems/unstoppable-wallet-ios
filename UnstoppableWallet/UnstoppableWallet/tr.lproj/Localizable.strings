@@ -468,6 +468,11 @@
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
 
+"coin_page.tab.overview" = "Overview";
+"coin_page.tab.markets" = "Market";
+"coin_page.tab.details" = "Details";
+"coin_page.tab.tweets" = "Tweets";
+
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
