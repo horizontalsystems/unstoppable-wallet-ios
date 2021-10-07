@@ -155,9 +155,9 @@ extension MarketModule { // Service Items
         let volume: Decimal
 
         init(marketInfo: MarketKit.MarketInfo) {
-            uid = marketInfo.coin.uid
-            coinCode = marketInfo.coin.code
-            coinName = marketInfo.coin.name
+            uid = marketInfo.fullCoin.coin.uid
+            coinCode = marketInfo.fullCoin.coin.code
+            coinName = marketInfo.fullCoin.coin.name
 
             marketCap = marketInfo.marketCap
             price = marketInfo.price
