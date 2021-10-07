@@ -339,6 +339,9 @@
 
 "market.sort_by" = "Сортировать По";
 
+"market.top.title" = "Top Coins";
+"market.top.description" = "Top Coins by market cap rank";
+
 "market.top.highest_cap" = "Наивысшей Кап.";
 "market.top.lowest_cap" = "Наименьшей Кап.";
 "market.top.highest_volume" = "Наивысшему Обьему";
