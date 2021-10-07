@@ -139,9 +139,9 @@ class MarketOverviewViewControllerNew: ThemeViewController {
                 ])
     }
 
-    private func row(viewItem: MarketModule.ViewItem?, isFirst: Bool, action: ((G14Cell) -> ())? = nil) -> RowProtocol {
+    private func row(viewItem: MarketModule.ViewItem, isFirst: Bool, action: ((G14Cell) -> ())? = nil) -> RowProtocol {
         Row<G14Cell>(
-                id: viewItem?.coinCode ?? "loading_cell",
+                id: viewItem.coinCode,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
@@ -152,6 +152,17 @@ class MarketOverviewViewControllerNew: ThemeViewController {
         )
     }
 
+    private func emptyRow(isFirst: Bool) -> RowProtocol {
+        Row<G14Cell>(
+                id: "loading_cell",
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst)
+                    MarketModule.bindEmpty(cell: cell)
+                }
+        )
+    }
 
     private func seeAllRow(id: String, action: (() -> ())?) -> RowProtocol {
         Row<B1Cell>(
@@ -178,7 +189,7 @@ class MarketOverviewViewControllerNew: ThemeViewController {
             }
         } else {
             rows = Array(0...(MarketOverviewModule.overviewSectionItemCount - 1)).map { index in
-                row(viewItem: nil, isFirst: index == 0)
+                emptyRow(isFirst: index == 0)
             }
         }
 

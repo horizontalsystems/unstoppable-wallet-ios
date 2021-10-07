@@ -50,17 +50,29 @@ struct MarketModule {
         return (title: title, value: value, color: color)
     }
 
-    static func bind(cell: G14Cell, viewItem: ViewItem?) {
-        let image: UIImage? = viewItem.flatMap { _ in UIImage(named: "icon_placeholder_24") }
-
-        cell.leftImage = image
+    static func bind(cell: G14Cell, viewItem: ViewItem) {
+        cell.setTitleImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: viewItem.iconPlaceholderName))
         cell.leftImageTintColor = .themeGray
-        cell.topText = viewItem?.coinName
-        cell.bottomText = viewItem?.coinCode.uppercased()
+        cell.topText = viewItem.coinName
+        cell.bottomText = viewItem.coinCode.uppercased()
 
-        cell.primaryValueText = viewItem?.rate
+        cell.primaryValueText = viewItem.rate
 
-        let marketFieldData = viewItem.map { marketFieldPreference(marketDataValue: $0.marketDataValue) } ?? (title: nil, value: nil, color: .themeGray)
+        let marketFieldData = marketFieldPreference(marketDataValue: viewItem.marketDataValue)
+        cell.secondaryTitleText = marketFieldData.title
+        cell.secondaryValueText = marketFieldData.value
+        cell.secondaryValueTextColor = marketFieldData.color
+    }
+
+    static func bindEmpty(cell: G14Cell) {
+        cell.leftImage = nil
+        cell.leftImageTintColor = .themeGray
+        cell.topText = nil
+        cell.bottomText = nil
+
+        cell.primaryValueText = nil
+
+        let marketFieldData: (title: String?, value: String?, color: UIColor) = (title: nil, value: nil, color: .themeGray)
         cell.secondaryTitleText = marketFieldData.title
         cell.secondaryValueText = marketFieldData.value
         cell.secondaryValueTextColor = marketFieldData.color
@@ -149,6 +161,8 @@ extension MarketModule { // Service Items
         let uid: String
         let coinCode: String
         let coinName: String
+        let iconUrl: String
+        let iconPlaceholderName: String
         let marketCap: Decimal
         let price: Decimal
         let diff: Decimal?
@@ -158,6 +172,8 @@ extension MarketModule { // Service Items
             uid = marketInfo.fullCoin.coin.uid
             coinCode = marketInfo.fullCoin.coin.code
             coinName = marketInfo.fullCoin.coin.name
+            iconUrl = marketInfo.fullCoin.coin.imageUrl
+            iconPlaceholderName = marketInfo.fullCoin.placeholderImageName
 
             marketCap = marketInfo.marketCap
             price = marketInfo.price
@@ -169,6 +185,8 @@ extension MarketModule { // Service Items
             uid = coinMarket.coinData.coinType.id
             coinCode = coinMarket.coinData.code
             coinName = coinMarket.coinData.name
+            iconUrl = ""
+            iconPlaceholderName = ""
 
             marketCap = coinMarket.marketInfo.marketCap
             price = coinMarket.marketInfo.rate
@@ -232,6 +250,8 @@ extension MarketModule {  // ViewModel Items
     }
 
     struct ViewItem {
+        let iconUrl: String
+        let iconPlaceholderName: String
         let coinId: String
         let coinName: String
         let coinCode: String
@@ -245,6 +265,8 @@ extension MarketModule {  // ViewModel Items
             case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
             }
 
+            iconUrl = item.iconUrl
+            iconPlaceholderName = item.iconPlaceholderName
             coinId = item.uid
             coinCode = item.coinCode
             coinName = item.coinName
