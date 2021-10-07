@@ -10,7 +10,7 @@ import Down
 
 class CoinOverviewViewController: ThemeViewController {
     private let viewModel: CoinOverviewViewModel
-//    private let chartViewModel: CoinChartViewModel
+    private let chartViewModel: CoinChartViewModel
     private let markdownParser: CoinPageMarkdownParser
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
@@ -20,7 +20,7 @@ class CoinOverviewViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     /* Chart section */
-//    private let currentRateCell: CoinChartRateCell
+    private let currentRateCell: CoinChartRateCell
 
     private let chartIntervalAndSelectedRateCell = ChartIntervalAndSelectedRateCell()
     private let intervalRow: StaticRow
@@ -35,13 +35,13 @@ class CoinOverviewViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    init(viewModel: CoinOverviewViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
+    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
         self.viewModel = viewModel
-//        self.chartViewModel = chartViewModel
+        self.chartViewModel = chartViewModel
         self.markdownParser = markdownParser
         self.urlManager = urlManager
 
-//        currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
+        currentRateCell = CoinChartRateCell(viewModel: chartViewModel)
 
         intervalRow = StaticRow(
                 cell: chartIntervalAndSelectedRateCell,
@@ -58,7 +58,7 @@ class CoinOverviewViewController: ThemeViewController {
 
         super.init()
 
-//        chartViewCell.delegate = chartViewModel
+        chartViewCell.delegate = chartViewModel
 
         hidesBottomBarWhenPushed = true
     }
@@ -100,16 +100,16 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
 
-//        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
-//            .item(title: $0)
-//        })
-//        chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
-//            self?.chartViewModel.onSelectType(at: index)
-//        }
-//
-//        indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
-//            self?.chartViewModel.onTap(indicator: indicator)
-//        }
+        chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
+            .item(title: $0)
+        })
+        chartIntervalAndSelectedRateCell.onSelectInterval = { [weak self] index in
+            self?.chartViewModel.onSelectType(at: index)
+        }
+
+        indicatorSelectorCell.onTapIndicator = { [weak self] indicator in
+            self?.chartViewModel.onTap(indicator: indicator)
+        }
 
         descriptionTextCell.set(backgroundStyle: .transparent, isFirst: true)
         descriptionTextCell.onChangeHeight = { [weak self] in
@@ -136,15 +136,15 @@ class CoinOverviewViewController: ThemeViewController {
     }
 
     private func subscribeToInterval() {
-//        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
-//        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-//        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
+        subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
+        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
     }
 
     private func subscribeToChart() {
-//        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
-//        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
-//        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
+        subscribe(disposeBag, chartViewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
+        subscribe(disposeBag, chartViewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
+        subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
     }
 
     private func reloadTable() {
@@ -241,25 +241,25 @@ extension CoinOverviewViewController {
 }
 
 extension CoinOverviewViewController {
-//
-//    private var chartSection: SectionProtocol {
-//        Section(
-//                id: "chart",
-//                rows: [
-//                    StaticRow(
-//                            cell: currentRateCell,
-//                            id: "currentRate",
-//                            height: ChartCurrentRateCell.cellHeight
-//                    ),
-//                    intervalRow,
-//                    chartRow,
-//                    StaticRow(
-//                            cell: indicatorSelectorCell,
-//                            id: "indicatorSelector",
-//                            height: .heightSingleLineCell
-//                    )
-//                ])
-//    }
+
+    private var chartSection: SectionProtocol {
+        Section(
+                id: "chart",
+                rows: [
+                    StaticRow(
+                            cell: currentRateCell,
+                            id: "currentRate",
+                            height: ChartCurrentRateCell.cellHeight
+                    ),
+                    intervalRow,
+                    chartRow,
+                    StaticRow(
+                            cell: indicatorSelectorCell,
+                            id: "indicatorSelector",
+                            height: .heightSingleLineCell
+                    )
+                ])
+    }
 
     private func headerRow(title: String) -> RowProtocol {
         Row<BCell>(
@@ -545,7 +545,7 @@ extension CoinOverviewViewController: SectionsDataSource {
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-//        sections.append(chartSection)
+        sections.append(chartSection)
 
         switch state {
         case .loading:

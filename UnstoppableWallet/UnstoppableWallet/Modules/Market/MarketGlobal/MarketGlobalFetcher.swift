@@ -1,4 +1,4 @@
-import XRatesKit
+import MarketKit
 import RxSwift
 import Foundation
 
@@ -30,22 +30,23 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
 extension MarketGlobalFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
-        rateManager
-                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
-                .map { [weak self] points in
-                    points.map { point in
-                        let value: Decimal
-
-                        switch self?.metricsType {
-                        case .defiCap: value = point.marketCapDefi
-                        case .btcDominance: value = point.dominanceBtc
-                        case .tvlInDefi: value = point.tvl
-                        case .none, .volume24h: value = point.volume24h
-                        }
-
-                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
-                    }
-                }
+        Single.just([])
+//        rateManager
+//                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
+//                .map { [weak self] points in
+//                    points.map { point in
+//                        let value: Decimal
+//
+//                        switch self?.metricsType {
+//                        case .defiCap: value = point.marketCapDefi
+//                        case .btcDominance: value = point.dominanceBtc
+//                        case .tvlInDefi: value = point.tvl
+//                        case .none, .volume24h: value = point.volume24h
+//                        }
+//
+//                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
+//                    }
+//                }
     }
 
 }

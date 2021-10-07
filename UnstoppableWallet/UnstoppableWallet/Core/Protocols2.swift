@@ -29,7 +29,3 @@ protocol IRateManager {
     func auditReportsSingle(coinType: CoinKit.CoinType) -> Single<[Auditor]>
     func coinTypes(for category: String) -> [CoinKit.CoinType]
 }
-
-protocol IChartTypeStorage: AnyObject {
-    var chartType: ChartType? { get set }
-}

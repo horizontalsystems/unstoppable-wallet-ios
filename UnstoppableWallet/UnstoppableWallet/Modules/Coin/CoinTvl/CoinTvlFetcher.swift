@@ -1,7 +1,6 @@
-import XRatesKit
+import MarketKit
 import RxSwift
 import Foundation
-import CoinKit
 
 class CoinTvlFetcher {
     private let rateManager: IRateManager
@@ -28,11 +27,12 @@ extension CoinTvlFetcher: IMetricChartConfiguration {
 extension CoinTvlFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
-        rateManager
-                .defiTvlPoints(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: timePeriod)
-                .map { points in
-                    points.map { MetricChartModule.Item(value: $0.tvl, timestamp: TimeInterval($0.timestamp)) }
-                }
+        Single.just([])
+//        rateManager
+//                .defiTvlPoints(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: timePeriod)
+//                .map { points in
+//                    points.map { MetricChartModule.Item(value: $0.tvl, timestamp: TimeInterval($0.timestamp)) }
+//                }
     }
 
 }

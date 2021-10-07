@@ -41,7 +41,7 @@ class App {
 
     let currencyKit: CurrencyKit.Kit
 
-    let rateManager: IRateManager & IPostsManager
+    let rateManager: IRateManager
     let rateManagerNew: RateManagerNew
     let favoritesManager: FavoritesManager
 

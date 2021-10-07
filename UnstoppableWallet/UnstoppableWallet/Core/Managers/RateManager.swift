@@ -138,18 +138,6 @@ extension RateManager: IRateManager {
 
 }
 
-extension RateManager: IPostsManager {
-
-    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]? {
-        kit.cryptoPosts(timestamp: timestamp)
-    }
-
-    var postsSingle: Single<[CryptoNewsPost]> {
-        kit.cryptoPostsSingle
-    }
-
-}
-
 extension RateManager {
 
     enum OverviewType {

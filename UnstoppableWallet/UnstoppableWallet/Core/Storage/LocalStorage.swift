@@ -1,6 +1,6 @@
 import Foundation
 import StorageKit
-import XRatesKit
+import MarketKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"

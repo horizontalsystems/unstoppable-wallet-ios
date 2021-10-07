@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import Chart
 import LanguageKit
-import XRatesKit
+import MarketKit
 
 protocol IMetricChartConfiguration {
     var title: String { get }

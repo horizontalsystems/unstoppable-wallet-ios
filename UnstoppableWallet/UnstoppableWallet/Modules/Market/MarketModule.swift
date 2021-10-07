@@ -176,7 +176,7 @@ extension MarketModule { // Service Items
         let marketCap: Decimal
         let price: Decimal
         let diff: Decimal?
-        let volume: Decimal
+        let volume: Decimal?
 
         init(marketInfo: MarketKit.MarketInfo) {
             uid = marketInfo.fullCoin.coin.uid
@@ -214,8 +214,8 @@ extension Array where Element == MarketModule.Item {
             switch sortingField {
             case .highestCap: return item.marketCap > item2.marketCap
             case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume > item2.volume
-            case .lowestVolume: return item.volume < item2.volume
+            case .highestVolume: return item.volume ?? 0 > item2.volume ?? 0
+            case .lowestVolume: return item.volume ?? 0 < item2.volume ?? 0
             case .topGainers, .topLosers:
                 guard let diff2 = item2.diff else {
                     return true
