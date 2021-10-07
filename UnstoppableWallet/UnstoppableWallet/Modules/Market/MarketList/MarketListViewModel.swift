@@ -8,11 +8,12 @@ protocol IMarketListService {
     var currency: Currency { get }
     var state: MarketListServiceState { get }
     var stateObservable: Observable<MarketListServiceState> { get }
-    var sortingField: MarketModule.SortingField { get }
-    var sortingFieldObservable: Observable<MarketModule.SortingField> { get }
+    func refresh()
+}
+
+protocol IMarketFieldDataSource {
     var marketField: MarketModule.MarketField { get }
     var marketFieldObservable: Observable<MarketModule.MarketField> { get }
-    func refresh()
 }
 
 enum MarketListServiceState {
@@ -23,18 +24,19 @@ enum MarketListServiceState {
 
 class MarketListViewModel {
     private let service: IMarketListService
+    private let marketFieldDataSource: IMarketFieldDataSource
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: IMarketListService) {
+    init(service: IMarketListService, marketFieldDataSource: IMarketFieldDataSource) {
         self.service = service
+        self.marketFieldDataSource = marketFieldDataSource
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.sortingFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
-        subscribe(disposeBag, service.marketFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
+        subscribe(disposeBag, marketFieldDataSource.marketFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
 
         sync(state: service.state)
     }
@@ -65,8 +67,8 @@ class MarketListViewModel {
     }
 
     private func viewItems(marketInfos: [MarketInfo]) -> [ViewItem] {
-        sorted(marketInfos: marketInfos, sortingField: service.sortingField).map {
-            viewItem(marketInfo: $0, marketField: service.marketField, currency: service.currency)
+        marketInfos.map {
+            viewItem(marketInfo: $0, marketField: marketFieldDataSource.marketField, currency: service.currency)
         }
     }
 
@@ -76,8 +78,8 @@ class MarketListViewModel {
 
         switch marketField {
         case .price: dataValue = .diff(marketInfo.priceChange)
-        case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "-")
-        case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "-")
+        case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "n/a".localized)
+        case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "n/a".localized)
         }
 
         return ViewItem(
@@ -89,26 +91,6 @@ class MarketListViewModel {
                 price: ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? "",
                 dataValue: dataValue
         )
-    }
-
-    func sorted(marketInfos: [MarketInfo], sortingField: MarketModule.SortingField) -> [MarketInfo] {
-        marketInfos.sorted { lhsMarketInfo, rhsMarketInfo in
-            switch sortingField {
-            case .highestCap: return lhsMarketInfo.marketCap > rhsMarketInfo.marketCap
-            case .lowestCap: return lhsMarketInfo.marketCap < rhsMarketInfo.marketCap
-            case .highestVolume: return lhsMarketInfo.totalVolume > rhsMarketInfo.totalVolume
-            case .lowestVolume: return lhsMarketInfo.totalVolume < rhsMarketInfo.totalVolume
-            case .topGainers, .topLosers:
-                guard let rhsPriceChange = rhsMarketInfo.priceChange else {
-                    return true
-                }
-                guard let lhsPriceChange = lhsMarketInfo.priceChange else {
-                    return false
-                }
-
-                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
-            }
-        }
     }
 
 }

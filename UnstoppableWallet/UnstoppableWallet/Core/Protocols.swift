@@ -50,10 +50,6 @@ protocol ILogRecordStorage {
     func removeFirstLogs(count: Int)
 }
 
-protocol IChartTypeStorage: AnyObject {
-    var chartType: ChartType? { get set }
-}
-
 protocol IPriceAlertManager {
     var updateObservable: Observable<[PriceAlert]> { get }
     var priceAlerts: [PriceAlert] { get }

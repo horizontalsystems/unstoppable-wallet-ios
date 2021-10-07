@@ -148,6 +148,16 @@ extension MarketModule {
         }
     }
 
+    enum MarketTop: Int, CaseIterable {
+        case top250 = 250
+        case top500 = 500
+        case top1000 = 1000
+
+        var title: String {
+            "\(self.rawValue)"
+        }
+    }
+
 }
 
 extension MarketModule { // Service Items
@@ -178,7 +188,7 @@ extension MarketModule { // Service Items
             marketCap = marketInfo.marketCap
             price = marketInfo.price
             diff = marketInfo.priceChange
-            volume = marketInfo.totalVolume
+            volume = marketInfo.totalVolume ?? 0
         }
 
         init(coinMarket: CoinMarket) {
@@ -215,6 +225,30 @@ extension Array where Element == MarketModule.Item {
                 }
 
                 return sortingField == .topGainers ? diff1 > diff2 : diff1 < diff2
+            }
+        }
+    }
+
+}
+
+extension Array where Element == MarketKit.MarketInfo {
+
+    func sorted(by sortingField: MarketModule.SortingField) -> [MarketKit.MarketInfo] {
+        sorted { lhsMarketInfo, rhsMarketInfo in
+            switch sortingField {
+            case .highestCap: return lhsMarketInfo.marketCap > rhsMarketInfo.marketCap
+            case .lowestCap: return lhsMarketInfo.marketCap < rhsMarketInfo.marketCap
+            case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
+            case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
+            case .topGainers, .topLosers:
+                guard let rhsPriceChange = rhsMarketInfo.priceChange else {
+                    return true
+                }
+                guard let lhsPriceChange = lhsMarketInfo.priceChange else {
+                    return false
+                }
+
+                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
             }
         }
     }

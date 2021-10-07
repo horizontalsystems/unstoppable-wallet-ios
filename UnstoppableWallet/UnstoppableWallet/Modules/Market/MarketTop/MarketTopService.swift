@@ -3,17 +3,28 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 
-class MarketWatchlistService: IMarketMultiSortHeaderService {
+class MarketTopService: IMarketMultiSortHeaderService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let favoritesManager: FavoritesManager
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
+
+    private var internalState: MarketListServiceState = .loading {
+        didSet {
+            syncState()
+        }
+    }
 
     private let stateRelay = PublishRelay<MarketListServiceState>()
     private(set) var state: MarketListServiceState = .loading {
         didSet {
             stateRelay.accept(state)
+        }
+    }
+
+    var marketTop: MarketModule.MarketTop = .top250 {
+        didSet {
+            syncIfPossible()
         }
     }
 
@@ -23,60 +34,53 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         }
     }
 
-    private var coinUids = [String]()
-
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.favoritesManager = favoritesManager
 
-        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
-
-        syncCoinUids()
-    }
-
-    private func syncCoinUids() {
-        coinUids = favoritesManager.allCoinUids
         syncMarketInfos()
     }
 
     private func syncMarketInfos() {
         syncDisposeBag = DisposeBag()
 
-        if coinUids.isEmpty {
-            state = .loaded(marketInfos: [])
-            return
-        }
-
         if case .failed = state {
-            state = .loading
+            internalState = .loading
         }
 
-        marketKit.marketInfosSingle(coinUids: coinUids, order: .init(field: .marketCap, direction: .descending))
+        marketKit.marketInfosSingle(top: 1000)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.sync(marketInfos: marketInfos)
+                    self?.internalState = .loaded(marketInfos: marketInfos)
                 }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
+                    self?.internalState = .failed(error: error)
                 })
                 .disposed(by: syncDisposeBag)
     }
 
-    private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+    private func syncState() {
+        switch internalState {
+        case .loading:
+            state = .loading
+        case .loaded(let marketInfos):
+            let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
+            state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+        case .failed(let error):
+            state = .failed(error: error)
+        }
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos) = state else {
+        guard case .loaded = internalState else {
             return
         }
 
-        sync(marketInfos: marketInfos)
+        syncState()
     }
 
 }
 
-extension MarketWatchlistService: IMarketListService {
+extension MarketTopService: IMarketListService {
 
     var currency: Currency {
         currencyKit.baseCurrency

@@ -11,9 +11,8 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     weak var viewController: UIViewController?
 
     private let sortButton = ThemeButton()
-    private let marketFieldSelector = SelectorButton()
 
-    init(viewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: MarketMultiSortHeaderViewModel, hasTopSelector: Bool = false) {
         self.viewModel = viewModel
 
         super.init(reuseIdentifier: nil)
@@ -47,9 +46,10 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
         syncSortButtonTitle()
         sortButton.addTarget(self, action: #selector(tapSortButton), for: .touchUpInside)
 
+        let marketFieldSelector = SelectorButton()
+
         contentView.addSubview(marketFieldSelector)
         marketFieldSelector.snp.makeConstraints { maker in
-            maker.leading.equalTo(sortButton.snp.trailing).priority(.high)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(28)
@@ -61,6 +61,22 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
             self?.viewModel.onSelectMarketField(index: index)
         }
 
+        if hasTopSelector {
+            let marketTopSelector = SelectorButton()
+
+            contentView.addSubview(marketTopSelector)
+            marketTopSelector.snp.makeConstraints { maker in
+                maker.trailing.equalTo(marketFieldSelector.snp.leading).offset(-CGFloat.margin8)
+                maker.centerY.equalToSuperview()
+                maker.height.equalTo(28)
+            }
+
+            marketTopSelector.set(items: viewModel.marketTops)
+            marketTopSelector.setSelected(index: viewModel.marketTopIndex)
+            marketTopSelector.onSelect = { [weak self] index in
+                self?.viewModel.onSelectMarketTop(index: index)
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
