@@ -339,6 +339,9 @@ Go to Settings - > Unstoppable and allow access to Camera.";
 
 "market.sort_by" = "Sort By";
 
+"market.top.title" = "Top Coins";
+"market.top.description" = "Top Coins by market cap rank";
+
 "market.top.highest_cap" = "Highest Cap";
 "market.top.lowest_cap" = "Lowest Cap";
 "market.top.highest_volume" = "Highest Volume";

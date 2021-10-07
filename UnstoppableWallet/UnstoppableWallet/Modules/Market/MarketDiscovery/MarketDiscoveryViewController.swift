@@ -129,12 +129,13 @@ extension MarketDiscoveryViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch discoveryViewItems[indexPath.item].type {
-        case .topCoins: ()
+        case .topCoins:
+            let viewController = MarketTopModule.viewController()
+            present(viewController, animated: true)
         case .category(let uid):
             guard let viewController = MarketCategoryModule.viewController(categoryUid: uid) else {
                 return
             }
-
             present(viewController, animated: true)
         }
     }

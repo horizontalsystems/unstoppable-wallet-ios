@@ -17,17 +17,9 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         }
     }
 
-    private let sortingFieldRelay = PublishRelay<MarketModule.SortingField>()
     var sortingField: MarketModule.SortingField = .highestCap {
         didSet {
-            sortingFieldRelay.accept(sortingField)
-        }
-    }
-
-    private let marketFieldRelay = PublishRelay<MarketModule.MarketField>()
-    var marketField: MarketModule.MarketField = .price {
-        didSet {
-            marketFieldRelay.accept(marketField)
+            syncIfPossible()
         }
     }
 
@@ -53,11 +45,23 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         marketKit.marketInfosSingle(coinUids: ["bitcoin", "ethereum", "tether", "uniswap"])
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.state = .loaded(marketInfos: marketInfos)
+                    self?.sync(marketInfos: marketInfos)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error: error)
                 })
                 .disposed(by: syncDisposeBag)
+    }
+
+    private func sync(marketInfos: [MarketInfo]) {
+        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+    }
+
+    private func syncIfPossible() {
+        guard case .loaded(let marketInfos) = state else {
+            return
+        }
+
+        sync(marketInfos: marketInfos)
     }
 
 }
@@ -70,14 +74,6 @@ extension MarketCategoryService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState> {
         stateRelay.asObservable()
-    }
-
-    var sortingFieldObservable: Observable<MarketModule.SortingField> {
-        sortingFieldRelay.asObservable()
-    }
-
-    var marketFieldObservable: Observable<MarketModule.MarketField> {
-        marketFieldRelay.asObservable()
     }
 
     func refresh() {

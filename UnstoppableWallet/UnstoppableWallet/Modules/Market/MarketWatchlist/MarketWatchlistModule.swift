@@ -10,7 +10,7 @@ struct MarketWatchlistModule {
         )
 
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service)
+        let listViewModel = MarketListViewModel(service: service, marketFieldDataSource: headerViewModel)
 
         return MarketWatchlistViewController(listViewModel: listViewModel, headerViewModel: headerViewModel)
     }
