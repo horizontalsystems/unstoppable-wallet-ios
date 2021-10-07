@@ -81,11 +81,11 @@ class MarketListViewModel {
         }
 
         return ViewItem(
-                uid: marketInfo.coin.uid,
-                iconUrl: marketInfo.coin.imageUrl,
-                name: marketInfo.coin.name,
-                code: marketInfo.coin.code,
-                rank: marketInfo.coin.marketCapRank.map { "\($0)" },
+                uid: marketInfo.fullCoin.coin.uid,
+                iconUrl: marketInfo.fullCoin.coin.imageUrl,
+                name: marketInfo.fullCoin.coin.name,
+                code: marketInfo.fullCoin.coin.code,
+                rank: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
                 price: ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? "",
                 dataValue: dataValue
         )
