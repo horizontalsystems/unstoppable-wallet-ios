@@ -19,12 +19,12 @@ class CoinPageViewController: ThemeViewController {
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: CoinOverviewViewController
-    private let marketsController: CoinOverviewViewController
+    private let marketsController: CoinMarketsViewController
     private let detailsController: CoinOverviewViewController
     private let tweetsController: CoinOverviewViewController
 
     init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel,
-         overviewController: CoinOverviewViewController, marketsController: CoinOverviewViewController,
+         overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController,
          detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
         self.viewModel = viewModel
         self.favoriteViewModel = favoriteViewModel

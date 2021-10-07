@@ -19,16 +19,6 @@ class CoinMarketsHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        let separatorView = UIView()
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
-
-        separatorView.backgroundColor = .themeSteel20
-
         contentView.addSubview(sortTypeButton)
         sortTypeButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin16)
