@@ -1,16 +1,15 @@
 import Foundation
-import XRatesKit
-import CoinKit
+import MarketKit
 import RxSwift
 import RxRelay
 import CurrencyKit
 
 class CoinMarketsService {
-    let coinCode: String
-    private let coinType: CoinType
-    let currency: Currency
-    private let rate: Decimal
-    private let tickers: [MarketTicker]
+    private let disposeBag = DisposeBag()
+    private let marketKit: MarketKit.Kit
+
+    private let price: Decimal
+    private var tickers = [MarketTicker]()
 
     private let sortTypeRelay = PublishRelay<SortType>()
     private(set) var sortType: SortType = .highestVolume {
@@ -33,14 +32,18 @@ class CoinMarketsService {
         }
     }
 
-    init(coinCode: String, coinType: CoinType, currencyKit: CurrencyKit.Kit, rateManager: IRateManager, tickers: [MarketTicker]) {
-        self.coinCode = coinCode
-        self.coinType = coinType
-        currency = currencyKit.baseCurrency
-        rate = rateManager.latestRate(coinType: coinType, currencyCode: currency.code)?.rate ?? 0
-        self.tickers = tickers
+    let fullCoin: FullCoin
+    let currency: Currency
 
-        syncItems()
+    var coinCode: String {
+        fullCoin.coin.code
+    }
+
+    init(fullCoin: FullCoin, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+        self.fullCoin = fullCoin
+        currency = currencyKit.baseCurrency
+        self.marketKit = marketKit
+        price = marketKit.coinPrice(coinUid: fullCoin.coin.uid, currencyCode: currency.code)?.value ?? 0
     }
 
     private func sortedTickers() -> [MarketTicker] {
@@ -53,7 +56,7 @@ class CoinMarketsService {
     private func volume(tickerVolume: Decimal) -> Decimal {
         switch volumeType {
         case .coin: return tickerVolume
-        case .currency: return tickerVolume * rate
+        case .currency: return tickerVolume * price
         }
     }
 
@@ -84,6 +87,15 @@ extension CoinMarketsService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
+    }
+
+    func fetch() {
+        marketKit.marketTickersSingle(coinUid: fullCoin.coin.uid)
+                .subscribe(onSuccess: { [weak self] tickers in
+                    self?.tickers = tickers
+                    self?.syncItems()
+                })
+                .disposed(by: disposeBag)
     }
 
     func set(sortType: SortType) {

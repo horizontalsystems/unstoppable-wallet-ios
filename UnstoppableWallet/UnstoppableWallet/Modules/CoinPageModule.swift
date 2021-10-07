@@ -23,7 +23,7 @@ struct CoinPageModule {
 //        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
 
         let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
-        let marketsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let marketsController = CoinMarketsModule.viewController(fullCoin: fullCoin)
         let detailsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
         let tweetsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
 

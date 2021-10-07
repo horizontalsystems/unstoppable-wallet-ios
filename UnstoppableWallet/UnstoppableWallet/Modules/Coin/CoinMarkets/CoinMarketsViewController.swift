@@ -15,6 +15,8 @@ class CoinMarketsViewController: ThemeViewController {
     private var viewItems = [CoinMarketsViewModel.ViewItem]()
     private var isLoaded = false
 
+    weak var parentNavigationController: UINavigationController?
+
     init(viewModel: CoinMarketsViewModel) {
         self.viewModel = viewModel
 
@@ -32,8 +34,6 @@ class CoinMarketsViewController: ThemeViewController {
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        title = viewModel.title
 
         tableView.sectionDataSource = self
 
@@ -57,6 +57,7 @@ class CoinMarketsViewController: ThemeViewController {
         tableView.buildSections()
 
         isLoaded = true
+        viewModel.viewDidLoad()
     }
 
     private func syncSort(descending: Bool) {

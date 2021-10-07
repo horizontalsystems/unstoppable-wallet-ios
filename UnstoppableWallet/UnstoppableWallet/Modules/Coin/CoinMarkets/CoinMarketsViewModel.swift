@@ -63,10 +63,6 @@ class CoinMarketsViewModel {
 
 extension CoinMarketsViewModel {
 
-    var title: String {
-        "coin_page.coin_markets".localized(service.coinCode)
-    }
-
     var sortDescendingDriver: Driver<Bool> {
         sortDescendingRelay.asDriver()
     }
@@ -77,6 +73,10 @@ extension CoinMarketsViewModel {
 
     var volumeTypes: [String] {
         CoinMarketsService.VolumeType.allCases.map { value(volumeType: $0) }
+    }
+
+    func viewDidLoad() {
+        service.fetch()
     }
 
     func onSwitchSortType() {
