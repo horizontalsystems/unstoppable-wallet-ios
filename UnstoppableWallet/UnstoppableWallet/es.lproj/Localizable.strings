@@ -337,6 +337,9 @@
 
 "market.sort_by" = "Ordenar por";
 
+"market.top.title" = "Top Coins";
+"market.top.description" = "Top Coins by market cap rank";
+
 "market.top.highest_cap" = "Capitalización Mayor";
 "market.top.lowest_cap" = "Capitalización Menor";
 "market.top.highest_volume" = "Mayor Volumen";
