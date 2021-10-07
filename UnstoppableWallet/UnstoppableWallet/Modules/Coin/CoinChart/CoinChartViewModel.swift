@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import XRatesKit
+import MarketKit
 import Chart
 import CurrencyKit
 import HUD

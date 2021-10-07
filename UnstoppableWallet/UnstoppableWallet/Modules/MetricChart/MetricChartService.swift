@@ -1,7 +1,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import XRatesKit
+import MarketKit
 import CoinKit
 import CurrencyKit
 

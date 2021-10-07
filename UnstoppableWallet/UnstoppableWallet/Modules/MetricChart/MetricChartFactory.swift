@@ -1,5 +1,5 @@
 import Foundation
-import XRatesKit
+import MarketKit
 import LanguageKit
 import CurrencyKit
 import Chart

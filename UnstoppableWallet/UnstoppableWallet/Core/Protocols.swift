@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import GRDB
-import XRatesKit
 import UniswapKit
 import EthereumKit
 import ThemeKit
@@ -178,11 +177,6 @@ protocol IBackupManager {
 protocol IBlurManager {
     func willResignActive()
     func didBecomeActive()
-}
-
-protocol IPostsManager {
-    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]?
-    var postsSingle: Single<[CryptoNewsPost]> { get }
 }
 
 protocol IRateCoinMapper {
@@ -483,4 +477,8 @@ protocol ICustomTokenStorage {
     func customTokens(coinTypeIds: [String]) -> [CustomToken]
     func customToken(coinType: MarketKit.CoinType) -> CustomToken?
     func save(customTokens: [CustomToken])
+}
+
+protocol IChartTypeStorage: AnyObject {
+    var chartType: ChartType? { get set }
 }

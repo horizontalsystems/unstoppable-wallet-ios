@@ -13,20 +13,20 @@ struct CoinOverviewModule {
                 fullCoin: fullCoin
         )
 
-//        let coinChartService = CoinChartService(
-//                rateManager: App.shared.rateManager,
-//                chartTypeStorage: App.shared.localStorage,
-//                currencyKit: App.shared.currencyKit,
-//                coinType: launchMode.coinType)
+        let coinChartService = CoinChartService(
+                marketKit: App.shared.marketKit,
+                chartTypeStorage: App.shared.localStorage,
+                currencyKit: App.shared.currencyKit,
+                coinUid: fullCoin.coin.uid)
 
         let chartFactory = CoinChartFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
 
         let coinPageOverviewViewModel = CoinOverviewViewModel(service: service)
-//        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
+        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
 
         return CoinOverviewViewController(
                 viewModel: coinPageOverviewViewModel,
-//                chartViewModel: coinChartViewModel,
+                chartViewModel: coinChartViewModel,
                 configuration: ChartConfiguration.fullChart,
                 markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)
