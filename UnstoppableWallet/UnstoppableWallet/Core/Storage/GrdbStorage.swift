@@ -390,7 +390,7 @@ class GrdbStorage {
                 try db.drop(table: "favorite_coins")
             }
 
-            try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
+            try db.create(table: "favorite_coins_v20") { t in
                 t.column("coinType", .text).notNull()
             }
         }
