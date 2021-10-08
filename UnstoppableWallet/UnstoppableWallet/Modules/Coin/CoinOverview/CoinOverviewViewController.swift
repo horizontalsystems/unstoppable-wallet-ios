@@ -120,6 +120,7 @@ class CoinOverviewViewController: ThemeViewController {
 
         subscribeViewModels()
         viewModel.viewDidLoad()
+        chartViewModel.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -48,11 +48,9 @@ class CoinChartService {
         self.chartTypeStorage = chartTypeStorage
         self.currencyKit = currencyKit
         self.coinUid = coinUid
-
-        fetchChartData()
     }
 
-    private func fetchChartData() {
+    func fetchChartData() {
         disposeBag = DisposeBag()
         state = .loading
 

@@ -112,6 +112,10 @@ extension CoinChartViewModel {
         service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
     }
 
+    func viewDidLoad() {
+        service.fetchChartData()
+    }
+
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {
