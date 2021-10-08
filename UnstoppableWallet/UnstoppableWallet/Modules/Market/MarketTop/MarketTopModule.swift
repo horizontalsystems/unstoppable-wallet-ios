@@ -3,15 +3,17 @@ import ThemeKit
 
 struct MarketTopModule {
 
-    static func viewController() -> UIViewController {
+    static func viewController(marketTop: MarketModule.MarketTop = .top250, sortingField: MarketModule.SortingField = .highestCap, marketField: MarketModule.MarketField = .price) -> UIViewController {
         let service = MarketTopService(
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+                currencyKit: App.shared.currencyKit,
+                marketTop: marketTop,
+                sortingField: sortingField
         )
 
         let viewModel = MarketTopViewModel(service: service)
-        let headerViewModel = MarketMultiSortHeaderViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, marketFieldDataSource: headerViewModel)
+        let listViewModel = MarketListViewModel(service: service, marketField: marketField)
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, listViewModel: listViewModel)
 
         let viewController = MarketTopViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
 

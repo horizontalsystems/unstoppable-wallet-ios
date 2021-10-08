@@ -9,8 +9,8 @@ struct MarketWatchlistModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let headerViewModel = MarketMultiSortHeaderViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, marketFieldDataSource: headerViewModel)
+        let listViewModel = MarketListViewModel(service: service, marketField: .price)
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, listViewModel: listViewModel)
 
         return MarketWatchlistViewController(listViewModel: listViewModel, headerViewModel: headerViewModel)
     }

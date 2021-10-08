@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import ComponentKit
 
-class MarketOverviewHeaderCell: BaseSelectableThemeCell {
+class MarketOverviewHeaderCell: BaseThemeCell {
     private let leftView = LeftAView()
     private let buttonWrapper = UIView()
     private let rightButton = SelectorButton()
@@ -43,7 +43,9 @@ class MarketOverviewHeaderCell: BaseSelectableThemeCell {
         leftView.set(imageSize: titleImageSize)
     }
 
-    var currentIndex: Int { rightButton.currentIndex }
+    var currentIndex: Int {
+        rightButton.currentIndex
+    }
 
     func set(values: [String]) {
         rightButton.set(items: values)

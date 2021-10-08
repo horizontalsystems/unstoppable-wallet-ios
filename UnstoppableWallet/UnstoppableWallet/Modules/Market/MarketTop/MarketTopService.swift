@@ -22,21 +22,23 @@ class MarketTopService: IMarketMultiSortHeaderService {
         }
     }
 
-    var marketTop: MarketModule.MarketTop = .top250 {
+    var marketTop: MarketModule.MarketTop {
         didSet {
             syncIfPossible()
         }
     }
 
-    var sortingField: MarketModule.SortingField = .highestCap {
+    var sortingField: MarketModule.SortingField {
         didSet {
             syncIfPossible()
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.marketTop = marketTop
+        self.sortingField = sortingField
 
         syncMarketInfos()
     }
