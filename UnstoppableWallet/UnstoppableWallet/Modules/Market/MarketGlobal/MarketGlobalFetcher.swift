@@ -1,4 +1,4 @@
-import MarketKit
+import XRatesKit
 import RxSwift
 import Foundation
 
@@ -20,33 +20,34 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
 
     var valueType: MetricChartModule.ValueType {
         switch metricsType {
-        case .btcDominance: return .percent
+        case .totalMarketCap: return .percent
         default: return .compactCurrencyValue
         }
     }
 
 }
 
-extension MarketGlobalFetcher: IMetricChartFetcher {
+extension MarketGlobalFetcher {
 
-    func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
-        Single.just([])
-//        rateManager
-//                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
-//                .map { [weak self] points in
-//                    points.map { point in
-//                        let value: Decimal
-//
-//                        switch self?.metricsType {
-//                        case .defiCap: value = point.marketCapDefi
-//                        case .btcDominance: value = point.dominanceBtc
-//                        case .tvlInDefi: value = point.tvl
-//                        case .none, .volume24h: value = point.volume24h
-//                        }
-//
-//                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
-//                    }
-//                }
+    func fetchSingle(currencyCode: String, timePeriod: String) -> RxSwift.Single<[MetricChartModule.Item]> {
+        let timePeriod = TimePeriod(rawValue: timePeriod)
+
+        return rateManager
+                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
+                .map { [weak self] points in
+                    points.map { point -> MetricChartModule.Item in
+                        let value: Decimal
+
+                        switch self?.metricsType {
+                        case .defiCap: value = point.marketCapDefi
+                        case .totalMarketCap: value = point.marketCap
+                        case .tvlInDefi: value = point.tvl
+                        case .none, .volume24h: value = point.volume24h
+                        }
+
+                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
+                    }
+                }
     }
 
 }

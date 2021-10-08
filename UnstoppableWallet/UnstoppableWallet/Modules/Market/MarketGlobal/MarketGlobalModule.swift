@@ -18,7 +18,7 @@ class MarketGlobalModule {
 
         let configuration: ChartConfiguration
         switch type {
-        case .btcDominance: configuration = ChartConfiguration.chartWithDominance
+        case .totalMarketCap: configuration = ChartConfiguration.chartWithDominance
         default: configuration = ChartConfiguration.chartWithoutIndicators
         }
 
@@ -32,11 +32,11 @@ class MarketGlobalModule {
 extension MarketGlobalModule {
 
     enum MetricsType {
-        case btcDominance, volume24h, defiCap, tvlInDefi
+        case totalMarketCap, volume24h, defiCap, tvlInDefi
 
         var title: String {
             switch self {
-            case .btcDominance: return "market.global.btc_dominance.title".localized
+            case .totalMarketCap: return "market.global.total_market_cap.title".localized
             case .volume24h: return "market.global.volume_24h.title".localized
             case .defiCap: return "market.global.defi_cap.title".localized
             case .tvlInDefi: return "market.global.tvl_in_defi.title".localized
@@ -45,7 +45,7 @@ extension MarketGlobalModule {
 
         var description: String {
             switch self {
-            case .btcDominance: return "market.global.btc_dominance.description".localized
+            case .totalMarketCap: return "market.global.btc_dominance.description".localized
             case .volume24h: return "market.global.volume_24h.description".localized
             case .defiCap: return "market.global.defi_cap.description".localized
             case .tvlInDefi: return "market.global.tvl_in_defi.description".localized

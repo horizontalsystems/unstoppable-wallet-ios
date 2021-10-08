@@ -5,7 +5,7 @@ import ThemeKit
 import ComponentKit
 
 class MarketMetricView: UIView {
-    static let height: CGFloat = 84
+    static let height: CGFloat = 104
 
     private let titleLabel = UILabel()
     private let valueLabel = UILabel()
@@ -35,9 +35,8 @@ class MarketMetricView: UIView {
 
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
-            maker.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
             maker.height.equalTo(configuration.mainHeight)
-            maker.width.equalTo(72)
         }
 
         chartView.isUserInteractionEnabled = false
@@ -52,7 +51,7 @@ class MarketMetricView: UIView {
 
         addSubview(valueLabel)
         valueLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.leading.equalToSuperview().inset(CGFloat.margin12)
             maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8)
         }
 
@@ -60,10 +59,13 @@ class MarketMetricView: UIView {
 
         addSubview(diffLabel)
         diffLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
-            maker.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin8)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.leading.equalTo(valueLabel.snp.trailing).offset(CGFloat.margin8)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8)
         }
 
+        diffLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        diffLabel.textAlignment = .right
         diffLabel.font = .caption
     }
 
