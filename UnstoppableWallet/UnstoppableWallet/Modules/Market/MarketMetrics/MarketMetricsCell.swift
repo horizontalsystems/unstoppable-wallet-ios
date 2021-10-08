@@ -13,9 +13,8 @@ class MarketMetricsCellNew: UITableViewCell {
     private let viewModel: MarketMetricsViewModel
     private let disposeBag = DisposeBag()
 
-    private let marketLargeView = MarketMetricLargeView()
     private let volume24hView: MarketMetricView
-    private let btcDominanceView: MarketMetricView
+    private let totalMarketCapView: MarketMetricView
     private let deFiCapView: MarketMetricView
     private let deFiTvlView: MarketMetricView
 
@@ -28,7 +27,7 @@ class MarketMetricsCellNew: UITableViewCell {
         self.viewModel = viewModel
 
         volume24hView = MarketMetricView(configuration: chartConfiguration)
-        btcDominanceView = MarketMetricView(configuration: chartConfiguration)
+        totalMarketCapView = MarketMetricView(configuration: chartConfiguration)
         deFiCapView = MarketMetricView(configuration: chartConfiguration)
         deFiTvlView = MarketMetricView(configuration: chartConfiguration)
 
@@ -37,32 +36,25 @@ class MarketMetricsCellNew: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(marketLargeView)
-        marketLargeView.snp.makeConstraints { maker in
+        contentView.addSubview(totalMarketCapView)
+        totalMarketCapView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin12)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightCell48)
-        }
-
-        contentView.addSubview(btcDominanceView)
-        btcDominanceView.snp.makeConstraints { maker in
-            maker.top.equalTo(marketLargeView.snp.bottom).offset(CGFloat.margin16)
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.height.equalTo(MarketMetricView.height)
         }
 
         contentView.addSubview(volume24hView)
         volume24hView.snp.makeConstraints { maker in
-            maker.top.equalTo(marketLargeView.snp.bottom).offset(CGFloat.margin16)
-            maker.leading.equalTo(btcDominanceView.snp.trailing).offset(CGFloat.margin8)
+            maker.top.equalToSuperview().inset(CGFloat.margin12)
+            maker.leading.equalTo(totalMarketCapView.snp.trailing).offset(CGFloat.margin8)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.width.equalTo(btcDominanceView.snp.width)
+            maker.width.equalTo(totalMarketCapView.snp.width)
             maker.height.equalTo(MarketMetricView.height)
         }
 
         contentView.addSubview(deFiCapView)
         deFiCapView.snp.makeConstraints { maker in
-            maker.top.equalTo(btcDominanceView.snp.bottom).offset(CGFloat.margin8)
+            maker.top.equalTo(totalMarketCapView.snp.bottom).offset(CGFloat.margin8)
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.height.equalTo(MarketMetricView.height)
         }
@@ -76,7 +68,7 @@ class MarketMetricsCellNew: UITableViewCell {
             maker.height.equalTo(MarketMetricView.height)
         }
 
-        btcDominanceView.onTap = { [weak self] in self?.onTap(metricType: .btcDominance) }
+        totalMarketCapView.onTap = { [weak self] in self?.onTap(metricType: .totalMarketCap) }
         volume24hView.onTap = { [weak self] in self?.onTap(metricType: .volume24h) }
         deFiCapView.onTap = { [weak self] in self?.onTap(metricType: .defiCap) }
         deFiTvlView.onTap = { [weak self] in self?.onTap(metricType: .tvlInDefi) }
@@ -84,18 +76,17 @@ class MarketMetricsCellNew: UITableViewCell {
         contentView.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.bottom.equalTo(btcDominanceView.snp.top).offset(-CGFloat.margin16)
+            maker.bottom.equalTo(totalMarketCapView.snp.top).offset(-CGFloat.margin16)
         }
 
         contentView.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.bottom.equalTo(btcDominanceView.snp.top).offset(-CGFloat.margin16)
+            maker.bottom.equalTo(totalMarketCapView.snp.top).offset(-CGFloat.margin16)
         }
 
-        marketLargeView.title = "market.total_market_cap".localized
         volume24hView.title = "market.24h_volume".localized
-        btcDominanceView.title = "market.btc_dominance".localized
+        totalMarketCapView.title = "market.total_market_cap".localized
         deFiCapView.title = "market.defi_cap".localized
         deFiTvlView.title = "market.defi_tvl".localized
 
@@ -114,18 +105,13 @@ class MarketMetricsCellNew: UITableViewCell {
 
     private func sync(marketMetrics: MarketMetricsViewModel.MarketMetrics?) {
         guard let marketMetrics = marketMetrics else {
-            marketLargeView.clear()
             volume24hView.clear()
-            btcDominanceView.clear()
+            totalMarketCapView.clear()
             deFiCapView.clear()
             deFiTvlView.clear()
 
             return
         }
-
-        marketLargeView.set(value: marketMetrics.totalMarketCap.value,
-                diff: marketMetrics.totalMarketCap.diff
-        )
 
         volume24hView.set(
                 value: marketMetrics.volume24h.value,
@@ -134,11 +120,11 @@ class MarketMetricsCellNew: UITableViewCell {
                 trend: marketMetrics.volume24h.chartTrend
         )
 
-        btcDominanceView.set(
-                value: marketMetrics.btcDominance.value,
-                diff: marketMetrics.btcDominance.diff,
-                chartData: marketMetrics.btcDominance.chartData,
-                trend: marketMetrics.btcDominance.chartTrend
+        totalMarketCapView.set(
+                value: marketMetrics.totalMarketCap.value,
+                diff: marketMetrics.totalMarketCap.diff,
+                chartData: marketMetrics.totalMarketCap.chartData,
+                trend: marketMetrics.totalMarketCap.chartTrend
         )
 
         deFiCapView.set(
