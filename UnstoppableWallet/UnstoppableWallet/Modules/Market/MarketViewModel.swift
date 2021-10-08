@@ -7,7 +7,6 @@ class MarketViewModel {
     private let disposeBag = DisposeBag()
 
     private let currentTabRelay: BehaviorRelay<MarketModule.Tab>
-    private let discoveryListTypeRelay = BehaviorRelay<MarketModule.ListType?>(value: nil)
 
     init(service: MarketService) {
         self.service = service
@@ -23,10 +22,6 @@ extension MarketViewModel {
         currentTabRelay.asDriver()
     }
 
-    var discoveryListTypeDriver: Driver<MarketModule.ListType?> {
-        discoveryListTypeRelay.asDriver()
-    }
-
     var tabs: [MarketModule.Tab] {
         MarketModule.Tab.allCases
     }
@@ -34,12 +29,6 @@ extension MarketViewModel {
     func onSelect(tab: MarketModule.Tab) {
         service.currentTab = tab
         currentTabRelay.accept(tab)
-    }
-
-    func handleTapSeeAll(listType: MarketModule.ListType) {
-        discoveryListTypeRelay.accept(listType)
-
-        //todo: open modal view with coins by list type
     }
 
 }

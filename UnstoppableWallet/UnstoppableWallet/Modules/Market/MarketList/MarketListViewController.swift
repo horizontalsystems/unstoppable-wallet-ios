@@ -14,7 +14,7 @@ class MarketListViewController: ThemeViewController {
     private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
-    private var viewItems: [MarketListViewModel.ViewItem]?
+    private var viewItems: [MarketModule.ListViewItem]?
 
     var viewController: UIViewController? { self }
     var headerView: UITableViewHeaderFooterView? { nil }
@@ -106,7 +106,7 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    private func sync(viewItems: [MarketListViewModel.ViewItem]?) {
+    private func sync(viewItems: [MarketModule.ListViewItem]?) {
         self.viewItems = viewItems
 
         if let viewItems = viewItems, viewItems.isEmpty {
@@ -124,7 +124,7 @@ class MarketListViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func onSelect(viewItem: MarketListViewModel.ViewItem) {
+    private func onSelect(viewItem: MarketModule.ListViewItem) {
         guard let module = CoinPageModule.viewController(coinUid: viewItem.uid) else {
             return
         }
@@ -136,55 +136,14 @@ class MarketListViewController: ThemeViewController {
 
 extension MarketListViewController: SectionsDataSource {
 
-    private func bind(cell: G14Cell, viewItem: MarketListViewModel.ViewItem) {
-        cell.setTitleImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: "icon_placeholder_24"))
-        cell.topText = viewItem.name
-        cell.bottomText = viewItem.code
-        cell.leftBadgeText = viewItem.rank
-
-        cell.primaryValueText = viewItem.price
-
-        let marketFieldData = marketFieldPreference(dataValue: viewItem.dataValue)
-        cell.secondaryTitleText = marketFieldData.title
-        cell.secondaryValueText = marketFieldData.value
-        cell.secondaryValueTextColor = marketFieldData.color
-    }
-
-    private func marketFieldPreference(dataValue: MarketListViewModel.DataValue) -> (title: String?, value: String?, color: UIColor) {
-        let title: String?
-        let value: String?
-        let color: UIColor
-
-        switch dataValue {
-        case .diff(let diff):
-            title = nil
-            value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
-            if let diff = diff {
-                color = diff.isSignMinus ? .themeLucian : .themeRemus
-            } else {
-                color = .themeGray50
-            }
-        case .volume(let volume):
-            title = "market.top.volume.title".localized
-            value = volume
-            color = .themeGray
-        case .marketCap(let marketCap):
-            title = "market.top.market_cap.title".localized
-            value = marketCap
-            color = .themeGray
-        }
-
-        return (title: title, value: value, color: color)
-    }
-
-    private func row(viewItem: MarketListViewModel.ViewItem, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: MarketModule.ListViewItem, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
                 id: viewItem.uid,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { [weak self] cell, _ in
+                bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    self?.bind(cell: cell, viewItem: viewItem)
+                    MarketModule.bind(cell: cell, viewItem: viewItem)
                 },
                 action: { [weak self] _ in
                     self?.onSelect(viewItem: viewItem)

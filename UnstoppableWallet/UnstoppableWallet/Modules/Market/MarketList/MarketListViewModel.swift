@@ -11,11 +11,6 @@ protocol IMarketListService {
     func refresh()
 }
 
-protocol IMarketFieldDataSource {
-    var marketField: MarketModule.MarketField { get }
-    var marketFieldObservable: Observable<MarketModule.MarketField> { get }
-}
-
 enum MarketListServiceState {
     case loading
     case loaded(marketInfos: [MarketInfo])
@@ -24,19 +19,23 @@ enum MarketListServiceState {
 
 class MarketListViewModel {
     private let service: IMarketListService
-    private let marketFieldDataSource: IMarketFieldDataSource
     private let disposeBag = DisposeBag()
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    var marketField: MarketModule.MarketField {
+        didSet {
+            syncViewItemsIfPossible()
+        }
+    }
+
+    private let viewItemsRelay = BehaviorRelay<[MarketModule.ListViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: IMarketListService, marketFieldDataSource: IMarketFieldDataSource) {
+    init(service: IMarketListService, marketField: MarketModule.MarketField) {
         self.service = service
-        self.marketFieldDataSource = marketFieldDataSource
+        self.marketField = marketField
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, marketFieldDataSource.marketFieldObservable) { [weak self] _ in self?.syncViewItemsIfPossible() }
 
         sync(state: service.state)
     }
@@ -66,38 +65,17 @@ class MarketListViewModel {
         viewItemsRelay.accept(viewItems(marketInfos: marketInfos))
     }
 
-    private func viewItems(marketInfos: [MarketInfo]) -> [ViewItem] {
+    private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
         marketInfos.map {
-            viewItem(marketInfo: $0, marketField: marketFieldDataSource.marketField, currency: service.currency)
+            MarketModule.ListViewItem(marketInfo: $0, marketField: marketField, currency: service.currency)
         }
-    }
-
-    private func viewItem(marketInfo: MarketInfo, marketField: MarketModule.MarketField, currency: Currency) -> ViewItem {
-        let priceCurrencyValue = CurrencyValue(currency: currency, value: marketInfo.price)
-        let dataValue: DataValue
-
-        switch marketField {
-        case .price: dataValue = .diff(marketInfo.priceChange)
-        case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "n/a".localized)
-        case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "n/a".localized)
-        }
-
-        return ViewItem(
-                uid: marketInfo.fullCoin.coin.uid,
-                iconUrl: marketInfo.fullCoin.coin.imageUrl,
-                name: marketInfo.fullCoin.coin.name,
-                code: marketInfo.fullCoin.coin.code,
-                rank: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
-                price: ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? "",
-                dataValue: dataValue
-        )
     }
 
 }
 
 extension MarketListViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]?> {
+    var viewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
         viewItemsRelay.asDriver()
     }
 
@@ -111,26 +89,6 @@ extension MarketListViewModel {
 
     func refresh() {
         service.refresh()
-    }
-
-}
-
-extension MarketListViewModel {
-
-    struct ViewItem {
-        let uid: String
-        let iconUrl: String
-        let name: String
-        let code: String
-        let rank: String?
-        let price: String
-        let dataValue: DataValue
-    }
-
-    enum DataValue {
-        case diff(Decimal?)
-        case volume(String)
-        case marketCap(String)
     }
 
 }

@@ -101,6 +101,14 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         }
     }
 
+    private func onSelect(viewItem: MarketDiscoveryViewModel.SearchViewItem) {
+        guard let module = CoinPageModule.viewController(coinUid: viewItem.uid) else {
+            return
+        }
+
+        present(module, animated: true)
+    }
+
 }
 
 extension MarketDiscoveryViewController: UICollectionViewDataSource {
@@ -190,7 +198,7 @@ extension MarketDiscoveryViewController: SectionsDataSource {
                                     cell.valueImage = UIImage(named: "star_20")
                                 },
                                 action: { [weak self] _ in
-                                    // todo
+                                    self?.onSelect(viewItem: viewItem)
                                 }
                         )
                     }

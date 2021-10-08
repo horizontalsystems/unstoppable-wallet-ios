@@ -15,24 +15,11 @@ extension IMarketMultiSortHeaderService {
 
 class MarketMultiSortHeaderViewModel {
     private let service: IMarketMultiSortHeaderService
+    private let listViewModel: MarketListViewModel
 
-    private let marketFieldRelay = PublishRelay<MarketModule.MarketField>()
-    var marketField: MarketModule.MarketField = .price {
-        didSet {
-            marketFieldRelay.accept(marketField)
-        }
-    }
-
-    init(service: IMarketMultiSortHeaderService) {
+    init(service: IMarketMultiSortHeaderService, listViewModel: MarketListViewModel) {
         self.service = service
-    }
-
-}
-
-extension MarketMultiSortHeaderViewModel: IMarketFieldDataSource {
-
-    var marketFieldObservable: Observable<MarketModule.MarketField> {
-        marketFieldRelay.asObservable()
+        self.listViewModel = listViewModel
     }
 
 }
@@ -60,7 +47,7 @@ extension MarketMultiSortHeaderViewModel {
     }
 
     var marketFieldIndex: Int {
-        MarketModule.MarketField.allCases.firstIndex(of: marketField) ?? 0
+        MarketModule.MarketField.allCases.firstIndex(of: listViewModel.marketField) ?? 0
     }
 
     func onSelectMarketTop(index: Int) {
@@ -72,7 +59,7 @@ extension MarketMultiSortHeaderViewModel {
     }
 
     func onSelectMarketField(index: Int) {
-        marketField = MarketModule.MarketField.allCases[index]
+        listViewModel.marketField = MarketModule.MarketField.allCases[index]
     }
 
 }

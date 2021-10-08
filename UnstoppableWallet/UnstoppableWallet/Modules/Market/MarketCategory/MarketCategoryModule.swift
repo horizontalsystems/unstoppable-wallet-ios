@@ -13,8 +13,8 @@ struct MarketCategoryModule {
         }
 
         let viewModel = MarketCategoryViewModel(service: service)
-        let headerViewModel = MarketMultiSortHeaderViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, marketFieldDataSource: headerViewModel)
+        let listViewModel = MarketListViewModel(service: service, marketField: .price)
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, listViewModel: listViewModel)
 
         let viewController = MarketCategoryViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
 

@@ -17,7 +17,7 @@ class MarketViewController: ThemeViewController {
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
-        overviewController = MarketOverviewModule.viewController(marketViewModel: viewModel)
+        overviewController = MarketOverviewModule.viewController()
         postViewController = MarketPostModule.viewController()
         watchlistViewController = MarketWatchlistModule.viewController()
 
