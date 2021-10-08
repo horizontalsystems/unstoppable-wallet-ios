@@ -12,7 +12,7 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
 
     private let sortButton = ThemeButton()
 
-    init(viewModel: MarketMultiSortHeaderViewModel, hasTopSelector: Bool = false) {
+    init(viewModel: MarketMultiSortHeaderViewModel, hasTopSelector: Bool = false, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
 
         super.init(reuseIdentifier: nil)
@@ -20,15 +20,17 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        let separatorView = UIView()
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
-        }
+        if hasTopSeparator {
+            let separatorView = UIView()
+            contentView.addSubview(separatorView)
+            separatorView.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview()
+                maker.top.equalToSuperview()
+                maker.height.equalTo(CGFloat.heightOnePixel)
+            }
 
-        separatorView.backgroundColor = .themeSteel20
+            separatorView.backgroundColor = .themeSteel20
+        }
 
         contentView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
