@@ -9,7 +9,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private var internalState: MarketListServiceState = .loading {
+    private var internalState: State = .loading {
         didSet {
             syncState()
         }
@@ -66,7 +66,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
             state = .loading
         case .loaded(let marketInfos):
             let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
-            state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+            state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
         case .failed(let error):
             state = .failed(error: error)
         }
@@ -94,6 +94,16 @@ extension MarketTopService: IMarketListService {
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketTopService {
+
+    private enum State {
+        case loading
+        case loaded(marketInfos: [MarketInfo])
+        case failed(error: Error)
     }
 
 }

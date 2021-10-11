@@ -13,7 +13,7 @@ protocol IMarketListService {
 
 enum MarketListServiceState {
     case loading
-    case loaded(marketInfos: [MarketInfo])
+    case loaded(marketInfos: [MarketInfo], softUpdate: Bool)
     case failed(error: Error)
 }
 
@@ -27,7 +27,7 @@ class MarketListViewModel {
         }
     }
 
-    private let viewItemsRelay = BehaviorRelay<[MarketModule.ListViewItem]?>(value: nil)
+    private let viewItemDataRelay = BehaviorRelay<ViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
@@ -43,26 +43,27 @@ class MarketListViewModel {
     private func sync(state: MarketListServiceState) {
         switch state {
         case .loading:
-            viewItemsRelay.accept(nil)
+            viewItemDataRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .loaded(let marketInfos):
-            viewItemsRelay.accept(viewItems(marketInfos: marketInfos))
+        case .loaded(let marketInfos, let softUpdate):
+            let data = ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: softUpdate)
+            viewItemDataRelay.accept(data)
             loadingRelay.accept(false)
             errorRelay.accept(nil)
         case .failed:
-            viewItemsRelay.accept(nil)
+            viewItemDataRelay.accept(nil)
             loadingRelay.accept(false)
             errorRelay.accept("market.sync_error".localized)
         }
     }
 
     private func syncViewItemsIfPossible() {
-        guard case .loaded(let marketInfos) = service.state else {
+        guard case .loaded(let marketInfos, _) = service.state else {
             return
         }
 
-        viewItemsRelay.accept(viewItems(marketInfos: marketInfos))
+        viewItemDataRelay.accept(ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: false))
     }
 
     private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
@@ -75,8 +76,8 @@ class MarketListViewModel {
 
 extension MarketListViewModel {
 
-    var viewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
-        viewItemsRelay.asDriver()
+    var viewItemDataDriver: Driver<ViewItemData?> {
+        viewItemDataRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
@@ -89,6 +90,15 @@ extension MarketListViewModel {
 
     func refresh() {
         service.refresh()
+    }
+
+}
+
+extension MarketListViewModel {
+
+    struct ViewItemData {
+        let viewItems: [MarketModule.ListViewItem]
+        let softUpdate: Bool
     }
 
 }

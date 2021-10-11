@@ -1,9 +1,12 @@
 import UIKit
 import SnapKit
 import ThemeKit
+import SectionsTableView
 
 class MarketWatchlistViewController: MarketListViewController {
     weak var parentNavigationController: UINavigationController?
+
+    private let viewModel: MarketWatchlistViewModel
 
     private let multiSortHeaderView: MarketMultiSortHeaderView
     private let cautionView = CautionView()
@@ -12,7 +15,8 @@ class MarketWatchlistViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var emptyView: UIView? { cautionView }
 
-    init(listViewModel: MarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: MarketWatchlistViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+        self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
         super.init(listViewModel: listViewModel)
@@ -29,6 +33,19 @@ class MarketWatchlistViewController: MarketListViewController {
 
         cautionView.image = UIImage(named: "rate_48")
         cautionView.text = "market_watchlist.empty.caption".localized
+    }
+
+    override func rowActions(index: Int) -> [RowAction] {
+        let type = RowActionType.destructive
+
+        return [
+            RowAction(
+                    pattern: .icon(image: UIImage(named: "star_24")?.withTintColor(type.iconColor), background: type.backgroundColor),
+                    action: { [weak self] _ in
+                        self?.viewModel.onUnwatch(index: index)
+                    }
+            )
+        ]
     }
 
 }

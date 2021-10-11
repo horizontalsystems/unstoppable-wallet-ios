@@ -5,6 +5,25 @@ import CurrencyKit
 import MarketKit
 import ComponentKit
 
+enum RowActionType {
+    case additive
+    case destructive
+
+    var iconColor: UIColor {
+        switch self {
+        case .additive: return .themeDark
+        case .destructive: return .themeClaude
+        }
+    }
+
+    var backgroundColor: UIColor {
+        switch self {
+        case .additive: return .themeYellowD
+        case .destructive: return .themeRedD
+        }
+    }
+}
+
 struct MarketModule {
 
     static func viewController() -> UIViewController {
