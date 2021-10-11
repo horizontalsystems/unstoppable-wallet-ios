@@ -53,11 +53,11 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos) = state else {
+        guard case .loaded(let marketInfos, _) = state else {
             return
         }
 

@@ -75,7 +75,7 @@ class MarketListViewController: ThemeViewController {
 
         errorView.onTapRetry = { [weak self] in self?.refresh() }
 
-        subscribe(disposeBag, listViewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, listViewModel.viewItemDataDriver) { [weak self] in self?.sync(viewItemData: $0) }
         subscribe(disposeBag, listViewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -109,8 +109,12 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    private func sync(viewItems: [MarketModule.ListViewItem]?) {
-        self.viewItems = viewItems
+    func rowActions(index: Int) -> [RowAction] {
+        []
+    }
+
+    private func sync(viewItemData: MarketListViewModel.ViewItemData?) {
+        viewItems = viewItemData?.viewItems
 
         if let viewItems = viewItems, viewItems.isEmpty {
             emptyView?.isHidden = false
@@ -124,7 +128,11 @@ class MarketListViewController: ThemeViewController {
             tableView.bounces = false
         }
 
-        tableView.reload()
+        if let viewItemData = viewItemData {
+            tableView.reload(animated: viewItemData.softUpdate)
+        } else {
+            tableView.reload()
+        }
     }
 
     private func onSelect(viewItem: MarketModule.ListViewItem) {
@@ -139,11 +147,15 @@ class MarketListViewController: ThemeViewController {
 
 extension MarketListViewController: SectionsDataSource {
 
-    private func row(viewItem: MarketModule.ListViewItem, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: MarketModule.ListViewItem, index: Int, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
                 id: viewItem.uid,
+                hash: "\(viewItem.dataValue)-\(viewItem.price)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
+                rowActionProvider: { [weak self] in
+                    self?.rowActions(index: index) ?? []
+                },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                     MarketModule.bind(cell: cell, viewItem: viewItem)
@@ -167,7 +179,7 @@ extension MarketListViewController: SectionsDataSource {
                     id: "coins",
                     headerState: headerState,
                     rows: viewItems.map { viewItems in
-                        viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+                        viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
                     } ?? []
             )
         ]

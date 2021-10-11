@@ -37,6 +37,18 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
     private func syncCoinUids() {
         coinUids = favoritesManager.allCoinUids
+
+        if case .loaded(let marketInfos, _) = state {
+            let newMarketInfos = marketInfos.filter { marketInfo in
+                coinUids.contains(marketInfo.fullCoin.coin.uid)
+            }
+
+            if newMarketInfos.count == coinUids.count {
+                state = .loaded(marketInfos: newMarketInfos, softUpdate: true)
+                return
+            }
+        }
+
         syncMarketInfos()
     }
 
@@ -44,7 +56,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         syncDisposeBag = DisposeBag()
 
         if coinUids.isEmpty {
-            state = .loaded(marketInfos: [])
+            state = .loaded(marketInfos: [], softUpdate: false)
             return
         }
 
@@ -63,11 +75,11 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField))
+        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos) = state else {
+        guard case .loaded(let marketInfos, _) = state else {
             return
         }
 
@@ -84,6 +96,15 @@ extension MarketWatchlistService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState> {
         stateRelay.asObservable()
+    }
+
+    func unwatch(index: Int) {
+        guard case .loaded(let marketInfos, _) = state, index < marketInfos.count else {
+            return
+        }
+
+        let marketInfo = marketInfos[index]
+        favoritesManager.remove(coinUid: marketInfo.fullCoin.coin.uid)
     }
 
     func refresh() {
