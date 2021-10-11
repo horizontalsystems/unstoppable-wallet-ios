@@ -320,7 +320,6 @@
 "market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
 "market.24h_volume" = "Объем торгов за 24 ч";
-"market.btc_dominance" = "Доминирование BTC";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
@@ -446,7 +445,7 @@
 "market.advanced_search.month6" = "6 Месяцев";
 "market.advanced_search.year" = "1 Год";
 
-"market.global.btc_dominance.title" = "Доминирование Bitcoin";
+"market.global.total_market_cap.title" = "Total Market Cap";
 "market.global.volume_24h.title" = "Объем";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
