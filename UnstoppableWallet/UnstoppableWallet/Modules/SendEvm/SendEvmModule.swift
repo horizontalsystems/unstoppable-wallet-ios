@@ -23,10 +23,16 @@ class SendEvmModule {
                 decimalParser: AmountDecimalParser()
         )
 
+        let chainCoinCode = AddressResolutionService.chainCoinCode(coinType: platformCoin.platform.coinType) ?? platformCoin.code
+        let resolutionService = AddressResolutionService(
+                coinCode: chainCoinCode,
+                chain: nil
+        )
+
         let addressParserFactory = AddressParserFactory()
         let recipientViewModel = RecipientAddressViewModel(
                 service: service,
-                resolutionService: AddressResolutionService(coinCode: platformCoin.coin.code),
+                resolutionService: resolutionService,
                 addressParser: addressParserFactory.parser(coinType: platformCoin.coinType)
         )
 

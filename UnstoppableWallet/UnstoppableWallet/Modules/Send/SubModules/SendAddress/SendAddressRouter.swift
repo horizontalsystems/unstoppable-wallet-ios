@@ -21,7 +21,10 @@ extension SendAddressRouter {
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
 
-        let resolutionService = AddressResolutionService(coinCode: platformCoin.coin.code, isResolutionEnabled: isResolutionEnabled)
+        let resolutionService = AddressResolutionService(
+                coinCode: platformCoin.coin.code,
+                chain: nil,
+                isResolutionEnabled: isResolutionEnabled)
 
         let viewModel = RecipientAddressViewModel(
                 service: presenter,
