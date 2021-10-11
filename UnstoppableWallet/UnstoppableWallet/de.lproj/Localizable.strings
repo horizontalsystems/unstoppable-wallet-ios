@@ -318,7 +318,6 @@
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
-"market.btc_dominance" = "BTC Dominance";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
@@ -444,7 +443,7 @@
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
+"market.global.total_market_cap.title" = "Total Market Cap";
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
