@@ -73,8 +73,7 @@ class SendFeePriorityCell: UITableViewCell {
         }
 
         selectableValueView.title = "send.tx_speed".localized
-        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
-        selectableValueView.titleImageTintColor = .themeJacob
+        selectableValueView.titleImage = UIImage(named: "circle_information_20")?.withTintColor(.themeJacob)
         selectableValueView.titleImageAction = { [weak self] in
             self?.openFeeInfo()
         }

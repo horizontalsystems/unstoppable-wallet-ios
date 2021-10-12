@@ -94,8 +94,7 @@ class TransactionInfoViewController: ThemeViewController {
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.titleImageTintColor = .themeJacob
+                    cell.titleImage = UIImage(named: "circle_information_20")?.withTintColor(.themeJacob)
                     cell.titleImageAction = { [weak self] in
                         self?.openStatusInfo()
                     }
@@ -139,8 +138,7 @@ class TransactionInfoViewController: ThemeViewController {
                     bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                         cell.title = "status".localized
-                        cell.titleImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
-                        cell.titleImageTintColor = .themeJacob
+                        cell.titleImage = UIImage(named: "circle_information_20")?.withTintColor(.themeJacob)
                         cell.value = statusText
                         cell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
                         cell.valueImageTintColor = .themeLucian
@@ -273,8 +271,7 @@ class TransactionInfoViewController: ThemeViewController {
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = image
-                    cell.titleImageTintColor = .themeGray
+                    cell.titleImage = image?.withTintColor(.themeGray)
                     cell.title = text
                     cell.valueImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
                     cell.valueImageTintColor = .themeGray
@@ -312,7 +309,7 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
-    private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, imageTintColor: UIColor?, text: String) -> RowProtocol {
+    private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, imageTintColor: UIColor, text: String) -> RowProtocol {
         Row<CMultiLineCell>(
                 id: id,
                 hash: text,
@@ -321,8 +318,7 @@ class TransactionInfoViewController: ThemeViewController {
                 },
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = image
-                    cell.titleImageTintColor = imageTintColor
+                    cell.titleImage = image?.withTintColor(imageTintColor)
                     cell.title = text
                 }
         )

@@ -10,8 +10,6 @@ class SelectorButton: ThemeButton {
 
     override init() {
         super.init()
-
-        tinted = false
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 

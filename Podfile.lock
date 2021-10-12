@@ -548,7 +548,7 @@ CHECKOUT OPTIONS:
     :commit: 2959a41846593a337824fc9d47f85260e9315d73
     :git: https://github.com/horizontalsystems/coin-kit-ios
   ComponentKit.swift:
-    :commit: 8e7fbe761d8d988c9f959a65b44de8b3d2f90257
+    :commit: c2b26e5668a1ceadccc0c14f35f8cafed17cb171
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -596,7 +596,7 @@ CHECKOUT OPTIONS:
     :commit: b4c51bc97c9bc164a245fe6b37ae135ee598bd61
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
-    :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
+    :commit: c2b26e5668a1ceadccc0c14f35f8cafed17cb171
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c

@@ -36,8 +36,7 @@ class BalanceCoinIconHolder: UIView {
             maker.edges.equalToSuperview()
         }
 
-        failedButton.setImageTintColor(.themeLucian, for: .normal)
-        failedButton.setImage(UIImage(named: "warning_2_24"), for: .normal)
+        failedButton.setImage(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian), for: .normal)
         failedButton.addTarget(self, action: #selector(onTapErrorButton), for: .touchUpInside)
     }
 
