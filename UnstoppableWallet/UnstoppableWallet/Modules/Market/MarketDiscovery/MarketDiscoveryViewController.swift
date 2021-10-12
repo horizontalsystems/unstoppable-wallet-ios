@@ -109,6 +109,33 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         present(module, animated: true)
     }
 
+    private func rowActions(index: Int) -> [RowAction] {
+        let type: RowActionType
+        let iconName: String
+        let action: (UITableViewCell?) -> ()
+
+        if viewModel.isFavorite(index: index) {
+            type = .destructive
+            iconName = "star_off_24"
+            action = { [weak self] _ in
+                self?.viewModel.unfavorite(index: index)
+            }
+        } else {
+            type = .additive
+            iconName = "star_24"
+            action = { [weak self] _ in
+                self?.viewModel.favorite(index: index)
+            }
+        }
+
+        return [
+            RowAction(
+                    pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
+                    action: action
+            )
+        ]
+    }
+
 }
 
 extension MarketDiscoveryViewController: UICollectionViewDataSource {
@@ -190,12 +217,12 @@ extension MarketDiscoveryViewController: SectionsDataSource {
                                 hash: "\(viewItem.favorite)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
+                                rowActionProvider: { [weak self] in self?.rowActions(index: index) ?? [] },
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                                     cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
                                     cell.title = viewItem.name
                                     cell.subtitle = viewItem.code
-                                    cell.valueImage = UIImage(named: "star_20")
                                 },
                                 action: { [weak self] _ in
                                     self?.onSelect(viewItem: viewItem)
