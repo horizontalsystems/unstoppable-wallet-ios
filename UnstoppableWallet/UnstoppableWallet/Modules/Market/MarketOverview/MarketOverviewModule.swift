@@ -1,12 +1,12 @@
 struct MarketOverviewModule {
 
-    static func viewController() -> MarketOverviewViewControllerNew {
-        let service = MarketOverviewServiceNew(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
-        let viewModel = MarketOverviewViewModelNew(service: service)
+    static func viewController() -> MarketOverviewViewController {
+        let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let viewModel = MarketOverviewViewModel(service: service)
 
         let marketMetricsCell = MarketMetricsModule.cell()
 
-        return MarketOverviewViewControllerNew(viewModel: viewModel, marketMetricsCell: marketMetricsCell)
+        return MarketOverviewViewController(viewModel: viewModel, marketMetricsCell: marketMetricsCell)
     }
 
 }

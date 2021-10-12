@@ -32,16 +32,6 @@ struct MarketModule {
         return MarketViewController(viewModel: viewModel)
     }
 
-    static func color(rate: String) -> UIColor? {
-        switch rate.lowercased() {
-        case "a": return .themeYellowD
-        case "b": return .themeIssykBlue
-        case "c": return .themeGray
-        case "d": return .themeLightGray
-        default: return nil
-        }
-    }
-
     static func bind(cell: G14Cell, viewItem: MarketModule.ListViewItem) {
         cell.setTitleImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: viewItem.iconPlaceholderName))
         cell.topText = viewItem.name
@@ -147,84 +137,13 @@ extension MarketModule {
 
 }
 
-extension MarketModule { // Service Items
-
-    enum Score {
-        case rank(Int)
-        case rating(String)
-    }
-
-    struct Item {
-        let uid: String
-        let coinCode: String
-        let coinName: String
-        let iconUrl: String
-        let iconPlaceholderName: String
-        let marketCap: Decimal
-        let price: Decimal
-        let diff: Decimal?
-        let volume: Decimal?
-
-        init(marketInfo: MarketKit.MarketInfo) {
-            uid = marketInfo.fullCoin.coin.uid
-            coinCode = marketInfo.fullCoin.coin.code
-            coinName = marketInfo.fullCoin.coin.name
-            iconUrl = marketInfo.fullCoin.coin.imageUrl
-            iconPlaceholderName = marketInfo.fullCoin.placeholderImageName
-
-            marketCap = marketInfo.marketCap
-            price = marketInfo.price
-            diff = marketInfo.priceChange
-            volume = marketInfo.totalVolume ?? 0
-        }
-
-        init(coinMarket: CoinMarket) {
-            uid = coinMarket.coinData.coinType.id
-            coinCode = coinMarket.coinData.code
-            coinName = coinMarket.coinData.name
-            iconUrl = ""
-            iconPlaceholderName = ""
-
-            marketCap = coinMarket.marketInfo.marketCap
-            price = coinMarket.marketInfo.rate
-            diff = coinMarket.marketInfo.rateDiffPeriod
-            volume = coinMarket.marketInfo.volume
-        }
-    }
-
-}
-
-extension Array where Element == MarketModule.Item {
-
-    func sort(by sortingField: MarketModule.SortingField) -> [MarketModule.Item] {
-        sorted { item, item2 in
-            switch sortingField {
-            case .highestCap: return item.marketCap > item2.marketCap
-            case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume ?? 0 > item2.volume ?? 0
-            case .lowestVolume: return item.volume ?? 0 < item2.volume ?? 0
-            case .topGainers, .topLosers:
-                guard let diff2 = item2.diff else {
-                    return true
-                }
-                guard let diff1 = item.diff else {
-                    return false
-                }
-
-                return sortingField == .topGainers ? diff1 > diff2 : diff1 < diff2
-            }
-        }
-    }
-
-}
-
 extension Array where Element == MarketKit.MarketInfo {
 
     func sorted(by sortingField: MarketModule.SortingField) -> [MarketKit.MarketInfo] {
         sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortingField {
-            case .highestCap: return lhsMarketInfo.marketCap > rhsMarketInfo.marketCap
-            case .lowestCap: return lhsMarketInfo.marketCap < rhsMarketInfo.marketCap
+            case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
+            case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
             case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
             case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
             case .topGainers, .topLosers:
@@ -243,18 +162,6 @@ extension Array where Element == MarketKit.MarketInfo {
 }
 
 extension MarketModule {  // ViewModel Items
-
-    enum ViewScore {
-        case rank(String)
-        case rating(String)
-
-        var title: String {
-            switch self {
-            case .rank(let index): return index
-            case .rating(let title): return title
-            }
-        }
-    }
 
     enum MarketDataValue {
         case diff(Decimal?)
@@ -280,41 +187,19 @@ extension MarketModule {  // ViewModel Items
             code = marketInfo.fullCoin.coin.code
             rank = marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" }
 
-            let priceCurrencyValue = CurrencyValue(currency: currency, value: marketInfo.price)
-            price = ValueFormatter.instance.format(currencyValue: priceCurrencyValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
+            price = marketInfo.price.flatMap {
+                ValueFormatter.instance.format(
+                        currencyValue: CurrencyValue(currency: currency, value: $0),
+                        fractionPolicy: .threshold(high: 1000, low: 0.000001),
+                        trimmable: false
+                )
+            } ?? "n/a".localized
 
             switch marketField {
             case .price: dataValue = .diff(marketInfo.priceChange)
             case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "n/a".localized)
             case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "n/a".localized)
             }
-        }
-    }
-
-    struct ViewItem {
-        let iconUrl: String
-        let iconPlaceholderName: String
-        let coinId: String
-        let coinName: String
-        let coinCode: String
-        let rate: String
-        let marketDataValue: MarketDataValue
-
-        init(item: Item, marketField: MarketField, currency: Currency) {
-            switch marketField {
-            case .price: marketDataValue = .diff(item.diff)
-            case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: item.volume) ?? "-")
-            case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
-            }
-
-            iconUrl = item.iconUrl
-            iconPlaceholderName = item.iconPlaceholderName
-            coinId = item.uid
-            coinCode = item.coinCode
-            coinName = item.coinName
-
-            let rateValue = CurrencyValue(currency: currency, value: item.price)
-            rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
         }
     }
 

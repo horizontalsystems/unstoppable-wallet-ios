@@ -98,15 +98,6 @@ extension MarketWatchlistService: IMarketListService {
         stateRelay.asObservable()
     }
 
-    func unwatch(index: Int) {
-        guard case .loaded(let marketInfos, _) = state, index < marketInfos.count else {
-            return
-        }
-
-        let marketInfo = marketInfos[index]
-        favoritesManager.remove(coinUid: marketInfo.fullCoin.coin.uid)
-    }
-
     func refresh() {
         syncMarketInfos()
     }

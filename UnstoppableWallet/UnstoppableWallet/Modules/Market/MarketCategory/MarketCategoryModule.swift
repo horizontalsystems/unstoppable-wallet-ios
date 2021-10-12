@@ -11,9 +11,13 @@ struct MarketCategoryModule {
         ) else {
             return nil
         }
+        let watchlistToggleService = MarketWatchlistToggleService(
+                listService: service,
+                favoritesManager: App.shared.favoritesManager
+        )
 
         let viewModel = MarketCategoryViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, marketField: .price)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: .price)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, listViewModel: listViewModel)
 
         let viewController = MarketCategoryViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)

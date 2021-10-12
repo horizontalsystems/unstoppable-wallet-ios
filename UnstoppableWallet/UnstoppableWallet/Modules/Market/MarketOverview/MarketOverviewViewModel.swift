@@ -4,15 +4,15 @@ import RxCocoa
 import CurrencyKit
 import MarketKit
 
-class MarketOverviewViewModelNew {
-    private let service: MarketOverviewServiceNew
+class MarketOverviewViewModel {
+    private let service: MarketOverviewService
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: MarketOverviewServiceNew) {
+    init(service: MarketOverviewService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -20,7 +20,7 @@ class MarketOverviewViewModelNew {
         sync(state: service.state)
     }
 
-    private func sync(state: MarketOverviewServiceNew.State) {
+    private func sync(state: MarketOverviewService.State) {
         switch state {
         case .loading:
             viewItemsRelay.accept(nil)
@@ -37,7 +37,7 @@ class MarketOverviewViewModelNew {
         }
     }
 
-    private func viewItem(item: MarketOverviewServiceNew.Item) -> ViewItem {
+    private func viewItem(item: MarketOverviewService.Item) -> ViewItem {
         ViewItem(
                 listType: item.listType,
                 imageName: imageName(listType: item.listType),
@@ -50,14 +50,14 @@ class MarketOverviewViewModelNew {
         MarketModule.ListViewItem(marketInfo: marketInfo, marketField: .price, currency: service.currency)
     }
 
-    private func imageName(listType: MarketOverviewServiceNew.ListType) -> String {
+    private func imageName(listType: MarketOverviewService.ListType) -> String {
         switch listType {
         case .topGainers: return "circle_up_20"
         case .topLosers: return "circle_down_20"
         }
     }
 
-    private func title(listType: MarketOverviewServiceNew.ListType) -> String {
+    private func title(listType: MarketOverviewService.ListType) -> String {
         switch listType {
         case .topGainers: return "market.top.section.header.top_gainers".localized
         case .topLosers: return "market.top.section.header.top_losers".localized
@@ -67,7 +67,7 @@ class MarketOverviewViewModelNew {
 
 }
 
-extension MarketOverviewViewModelNew {
+extension MarketOverviewViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]?> {
         viewItemsRelay.asDriver()
@@ -85,16 +85,16 @@ extension MarketOverviewViewModelNew {
         MarketModule.MarketTop.allCases.map { $0.title }
     }
 
-    func marketTop(listType: MarketOverviewServiceNew.ListType) -> MarketModule.MarketTop {
+    func marketTop(listType: MarketOverviewService.ListType) -> MarketModule.MarketTop {
         service.marketTop(listType: listType)
     }
 
-    func marketTopIndex(listType: MarketOverviewServiceNew.ListType) -> Int {
+    func marketTopIndex(listType: MarketOverviewService.ListType) -> Int {
         let marketTop = service.marketTop(listType: listType)
         return MarketModule.MarketTop.allCases.firstIndex(of: marketTop) ?? 0
     }
 
-    func onSelect(marketTopIndex: Int, listType: MarketOverviewServiceNew.ListType) {
+    func onSelect(marketTopIndex: Int, listType: MarketOverviewService.ListType) {
         let marketTop = MarketModule.MarketTop.allCases[marketTopIndex]
         service.set(marketTop: marketTop, listType: listType)
     }
@@ -105,10 +105,10 @@ extension MarketOverviewViewModelNew {
 
 }
 
-extension MarketOverviewViewModelNew {
+extension MarketOverviewViewModel {
 
     struct ViewItem {
-        let listType: MarketOverviewServiceNew.ListType
+        let listType: MarketOverviewService.ListType
         let imageName: String
         let title: String
         let listViewItems: [MarketModule.ListViewItem]

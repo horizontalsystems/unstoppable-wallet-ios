@@ -109,10 +109,6 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    func rowActions(index: Int) -> [RowAction] {
-        []
-    }
-
     private func sync(viewItemData: MarketListViewModel.ViewItemData?) {
         viewItems = viewItemData?.viewItems
 
@@ -141,6 +137,33 @@ class MarketListViewController: ThemeViewController {
         }
 
         viewController?.present(module, animated: true)
+    }
+
+    private func rowActions(index: Int) -> [RowAction] {
+        let type: RowActionType
+        let iconName: String
+        let action: (UITableViewCell?) -> ()
+
+        if listViewModel.isFavorite(index: index) {
+            type = .destructive
+            iconName = "star_off_24"
+            action = { [weak self] _ in
+                self?.listViewModel.unfavorite(index: index)
+            }
+        } else {
+            type = .additive
+            iconName = "star_24"
+            action = { [weak self] _ in
+                self?.listViewModel.favorite(index: index)
+            }
+        }
+
+        return [
+            RowAction(
+                    pattern: .icon(image: UIImage(named: iconName)?.withTintColor(type.iconColor), background: type.backgroundColor),
+                    action: action
+            )
+        ]
     }
 
 }
@@ -178,6 +201,7 @@ extension MarketListViewController: SectionsDataSource {
             Section(
                     id: "coins",
                     headerState: headerState,
+                    footerState: .marginColor(height: .margin32, color: .clear) ,
                     rows: viewItems.map { viewItems in
                         viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
                     } ?? []

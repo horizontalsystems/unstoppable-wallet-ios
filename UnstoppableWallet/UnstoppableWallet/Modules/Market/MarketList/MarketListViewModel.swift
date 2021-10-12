@@ -19,6 +19,7 @@ enum MarketListServiceState {
 
 class MarketListViewModel {
     private let service: IMarketListService
+    private let watchlistToggleService: MarketWatchlistToggleService
     private let disposeBag = DisposeBag()
 
     var marketField: MarketModule.MarketField {
@@ -31,8 +32,9 @@ class MarketListViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: IMarketListService, marketField: MarketModule.MarketField) {
+    init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, marketField: MarketModule.MarketField) {
         self.service = service
+        self.watchlistToggleService = watchlistToggleService
         self.marketField = marketField
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -86,6 +88,18 @@ extension MarketListViewModel {
 
     var errorDriver: Driver<String?> {
         errorRelay.asDriver()
+    }
+
+    func isFavorite(index: Int) -> Bool {
+        watchlistToggleService.isFavorite(index: index)
+    }
+
+    func favorite(index: Int) {
+        watchlistToggleService.favorite(index: index)
+    }
+
+    func unfavorite(index: Int) {
+        watchlistToggleService.unfavorite(index: index)
     }
 
     func refresh() {

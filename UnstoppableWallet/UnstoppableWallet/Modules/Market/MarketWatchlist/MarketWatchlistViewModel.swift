@@ -6,11 +6,3 @@ class MarketWatchlistViewModel {
     }
 
 }
-
-extension MarketWatchlistViewModel {
-
-    func onUnwatch(index: Int) {
-        service.unwatch(index: index)
-    }
-
-}
