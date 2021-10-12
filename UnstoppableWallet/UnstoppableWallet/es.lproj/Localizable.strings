@@ -45,20 +45,22 @@
 
 // Access Camera
 
-"access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
+"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+
+Go to Settings - > Unstoppable and allow access to the camera.";
 "access_camera.settings" = "Ajustes";
 
 // Restore
 
 "restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
-"restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
-"restore_error.mnemonic_word_count" = "La cantidad ingresada de palabras es incorrecta. Deberian ser 12 o 24. Usted a ingresado: %@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
-"restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica";
-"restore.error.empty_passphrase" = "La frase de contraseña no puede estar vacío";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
+"restore.error.empty_passphrase" = "The passphrase cannot be empty";
 
 // Coin Settings
 
@@ -83,7 +85,7 @@
 // Show Key
 
 "show_key.title" = "Clave";
-"show_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
 "show_key.button_show" = "Mostrar";
 "show_key.tab.recovery_phrase" = "Frase de Recuperación";
 "show_key.tab.private_keys" = "Claves privadas";
@@ -97,12 +99,12 @@
 // Backup Key
 
 "backup_key.title" = "Copia de seguridad";
-"backup_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
+"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
 "backup_key.button_show" = "Mostrar";
 "backup_key.button_backup" = "Copia de seguridad";
 "backup_key.passphrase" = "Frase de contraseña";
 
-"backup_key.confirmation.description" = "Introduzca la frase de recuperación en su orden correcto para confirmar";
+"backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
 "backup_key.confirmation.passphrase" = "Frase de contraseña";
 "backup_key.confirmation.passphrase_description" = "Introduzca su frase de contraseña";
 
@@ -115,7 +117,7 @@
 
 "backup.backup_required" = "Se requiere una copia de seg.";
 
-"error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
+"error.send.self_transfer" = "Sending to yourself is not supported";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
 "error.send_z_cash.transparent_address" = "Unstoppable no soporta pagos a una dirección transparente";
@@ -195,12 +197,12 @@
 "send.fee_info.title" = "Velocidad de transacción";
 "send.fee_info.description" = "Las blockchain de Bitcoin como las de Ethereum requieren que los usuarios paguen comisiones de red al enviar transacciones. Las comisiones son más altas cuando muchas transacciones están teniendo lugar en la red y más bajas cuando el blockchain está menos ocupado.";
 "send.fee_info.header_slow" = "Lento";
-"send.fee_info.content_slow" = "Seleccionar un valor de este rango puede resultar en que la transacción quede pendiente por horas o sea rechazada por completo. Cuanto más bajo sea el valor, mas tardará en confirmar la transacción.";
+"send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
 "send.fee_info.header_average" = "Promedio";
-"send.fee_info.content_average" = "Normalmente, el valor de tarifa recomendado debería ser suficiente para que la transacción sea procesada entre un minuto/hora para Bitcoin y dentro de minutos para Ethereum.";
+"send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "Rápido";
-"send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar el valor de una tarifa mayor. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
-"send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
+"send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
+"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.amount" = "Importe";
@@ -244,7 +246,7 @@
 "swap.advanced_settings" = "Ajustes de intercambio";
 "swap.proceed_button" = "Siguiente";
 "swap.approve.title" = "Aprobación de Swap";
-"swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
+"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
 "swap.approving_button" = "Aprobando...";
 "swap.trade_error.not_found" = "No se pueden permutar estos tokens";
@@ -259,9 +261,9 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Tolerancia de deslizamiento";
-"swap.advanced_settings.slippage.footer" = "Su transacción se revertirá si el precio cambia desfavorablemente por encima de este porcentaje";
+"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
 "swap.advanced_settings.deadline" = "Fecha límite de transacción";
-"swap.advanced_settings.deadline.footer" = "Su transacción se revertirá si está pendiente por más de este tiempo.";
+"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
 "swap.advanced_settings.recipient.footer" = "Después de la operación de cambio, el monto se transferirá a la dirección especificada";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
@@ -287,15 +289,15 @@
 "swap.confirmation.maximum" = "Máximo";
 "swap.confirmation.estimated" = "Estimado";
 
-"swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
+"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
-"swap.dex_info.content_allowance" = "La cantidad de alguna moneda que el servicio puede gastar en su nombre cuando al ejecutar un intercambio de token. Se requiere una asignación suficiente antes de que se pueda realizar la acción de intercambio.";
+"swap.dex_info.content_allowance" = "The amount of currency that service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
-"swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de intercambios.";
+"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
-"swap.dex_info.content_swap_fee" = "Una tarifa de servicio para la acción de intercambio en la plataforma, mostrada en la moneda que el usuario vende. Para la mayoría de las ordenes debería ser del 0.3% o del 0.6%.";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
 "swap.dex_info.header_guaranteed_amount" = "Cantidad Garantizada";
 "swap.dex_info.content_guaranteed_amount" = "La cantidad mínima que un usuario va a recibir como resultado de una acción de intercambio.";
 "swap.dex_info.header_maximum_spend" = "Gasto máximo";
@@ -305,7 +307,7 @@
 "swap.dex_info.header_transaction_fee" = "Tarifa de Transacción";
 "swap.dex_info.content_transaction_fee" = "El costo estimado del proceso de la transacción dada en la %@ blockchain. %@ Las Transacciones Relacionadas normalmente costarán más que las transacciones genéricas de de token.";
 "swap.dex_info.header_transaction_speed" = "Velocidad de la transacción";
-"swap.dex_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
+"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
 "swap.dex_info.link_button" = "%@ Sitio";
 
@@ -400,7 +402,7 @@
 "market_discovery.filter_description.identity" = "Identidad descentralizada.";
 "market_discovery.filter_description.yield_tokens" = "Tokens Interesantes.";
 
-"market_watchlist.empty.caption" = "You don’t have any favorite assets.\nYou can add the favorites by clicking star icon in the asset page";
+"market_watchlist.empty.caption" = "Watchlist is empty. You may add coins to your watchlist using the star icon on a coin page.";
 
 "market.search.title" = "Búsqueda";
 "market.search.empty_text" = "No se han encontrado resultados";
@@ -453,7 +455,7 @@
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
 "market.global.tvl_in_defi.description" = "El cambio histórico en el valor acumulado de toda criptomoneda administrado por protocolos descentralizados.";
@@ -512,7 +514,7 @@
 "coin_page.major_holders" = "Principales Accionistas";
 "coin_page.major_holders.chart.description" = "en el top 10 de Monederos";
 "coin_page.major_holders.top_wallets" = "Mejores Monederos";
-"coin_page.major_holders.description" = "El gráfico anterior muestra el % de todos los tokens en circulación retenidos por los 10 Monderos más importantes. Cuanto más bajo sea el %, más distribuída se encontrará la moneda.";
+"coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
 "coin_page.major_holders.sync_error" = "Error de sincronización";
 
 "coin_page.tvl_rank.multi_chain" = "Cadena múltiple";
@@ -537,14 +539,14 @@
 "coin_page.security_parameters.resistance.yes" = "Si";
 "coin_page.security_parameters.resistance.no" = "No";
 
-"coin_page.security_parameters.privacy.description.low" = "Las transacciones con este token son completamente públicas, permitiendo que servicios de terceros vinculen diferentes transacciones a la misma entidad, ver montos de transacciones pasadas y saldos de usuarios.";
+"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted, and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Las transacciones con este token son semianónimas. Un servicio de terceros puede ver las cantidades transaccionadas y parcialmente conectar las diferentes transacciones con la misma entidad.";
 "coin_page.security_parameters.privacy.description.high" = "Las transacciones con este token son anónimas por defecto o proporcionan dichas capacidades. Ninguna entidad es capaz de vincular diferentes transacciones con el mismo individuo o ver las transacciones realizadas previamente.";
 "coin_page.security_parameters.issuance.description.decentralized" = "La cantidad de fichas en circulación controladas por un algoritmo y trabaja de manera determinista fuera de la influencia centralizada.";
 "coin_page.security_parameters.issuance.description.centralized" = "La cantidad de fichas en circulación puede ser potencialmente incrementada o disminuida por una entidad centralizada a su voluntad.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "Las fichas no pueden ser confiscadas cuando se mantienen en un monedero no custodiado.";
+"coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can't be confiscated when kept in a non-custodial wallet.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "Las fichas pueden ser confiscadas o manipuladas por una entidad emisora.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "El poseedor del token no puede ser censurado de hacer transacciones.";
+"coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
 "coin_page.security_parameters.censorship_resistance.description.no" = "El poseedor del token puede ser censurado de hacer transacciones.";
 
 "coin_page.info" = "Información";
@@ -639,16 +641,16 @@
 "settings.base_currency.title" = "Moneda principal";
 "settings.base_currency.other" = "Otro";
 "settings.base_currency.disclaimer" = "Descargo de responsabilidad";
-"settings.base_currency.disclaimer.description" = "Los datos del tipo de cambio proporcionados por un servicio de terceros Coingecko. om\n\nLa aplicación Unstoppable Walleta no garantiza que estos valores sean siempre correctos y coincidan con los datos del mercado. La probabilidad de una inconsistencia es mayor si usted selecciona cualquier moneda base que no sea %@.";
+"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "Entiendo";
 
 // Settings -> Notifications
 
 "settings_notifications.title" = "Notificaciones";
 "settings_notifications.toggle_title" = "Notificaciones automáticas";
-"settings_notifications.description" = "Establece alertas de variación de precio para las monedas que te gustaría ver\n\nSe te alertará cuando la variación de precio de las últimas 24 horas supere el umbral seleccionado.\n\n La Alerta de Tendencia de Precio advierte de un cambio de tendencia para el corto plazo de 1 semana, y para el largo plazo de 6 meses.";
+"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
 "settings_notifications.alert_off" = "Desactivado";
-"settings.notifications.disabled_text" = "Las notificaciones para la aplicación del Monedero Unstoppable están desactivadas. Necesita activarlas para poder recibir alertas de cambio de precios.";
+"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
 "settings.notifications.settings_button" = "Activar en ajustes";
 "settings_notifications.trend_short" = "Corto plazo 7D";
 "settings_notifications.trend_long" = "Largo Plazo 6M";
@@ -663,8 +665,8 @@
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
 "manage_coins.add_coin.text.set_up" = "Necesitas configurar el monedero %@ para poder enviar o recibir %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Utiliza el botón Crear de abajo para configurar un nuevo monedero %@, o toca el botón Restaurar para importar un monedero existente.";
-"manage_coins.add_coin.text.create_only" = "En este momento Unstoppable no puede crear un nuevo monedero %@. Solo puedes restaurar uno ya existente.";
+"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or the Restore button to import an existing one.";
+"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create a new %@ wallet. You’re only able to restore an existing one.";
 "manage_coins.add_coin.text.tokens" = "Podrás utilizar este monedero a partir del: %@.";
 "manage_coins.add_coin.create" = "Crear";
 "manage_coins.add_coin.restore" = "Restaurar";
@@ -672,34 +674,33 @@
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
-"settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
+"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the Unstoppable wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the Unstoppable wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself. \n\nBeing an experimental feature, the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> Terms
 
 "terms.title" = "Términos";
-"terms.description" = "El monedero Unstoppable fue creado para aquellos que buscan invertir y almacenar criptomonedas de forma privada e independiente.
+"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
-Es un monedero peer-to-peer sin custodio, donde sólo el usuario tiene control sobre los fondos. No recopila ningún dato y mantiene al usuario independiente al no enlazar su cartera a un único monedero.
+                       It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
 
-El monedero Unstoppable es completamente de código abierto y cualquiera puede verificar que la aplicación funciona exactamente como se afirma.
+                       The Unstoppable wallet is fully open-source and anyone can confirm the app works exactly as it claims to.
 
-Desarrollamos Unstoppable para nosotros mismos ya que las soluciones disponibles no estaban a la altura. Desde una perspectiva de ingenieria y practicidad, creemos que este monedero está significativamente por delante de los productos alternativos.";
+                       We built Unstoppable for ourselves as the other available solutions were not up to par. Both from an engineering and usability perspective, we believe this wallet to be significantly ahead of alternative products.";
 "terms.item.academy" = "He pasado por la sección Academia de esta aplicación y me he familiarizado con los aspectos fundamentales del almacenamiento de criptomonedas.";
-"terms.item.backup" = "He respaldado la(s) clave(s) privada(s) para mis monederos que se me mostraron en forma de 12-24 palabras. Entiendo que estas claves privadas se almacenan en mi smartphone y no en ningún otro lugar.";
-"terms.item.owner" = "Entiendo que dar mi teléfono a entidades no fiables o dejar la aplicación de monedero sin bloqueo seguro por PIN podría, potencialmente, poner en peligro la seguridad de mis fondos.";
-"terms.item.recover" = "Entiendo que rootear mi teléfono (rooting), instalando aplicaciones de terceros de fuentes desconocidas o mantener el sistema operativo desactualizado puede, potencialmente,
-poner en peligro la seguridad de mis fondos.";
-"terms.item.phone" = " Entiendo que puede haber problemas de software sin descubrir en el código que hace funcionar esta aplicación, lo que puede llevar a un comportamiento inesperado o al mal funcionamiento de la aplicación.";
-"terms.item.root" = "Entiendo que necesitaré mis claves privadas para restaurar el acceso a mis fondos si pierdo mi teléfono o si la aplicación no funciona correctamente. Sin mis claves privadas será imposible recuperar el acceso a mi monedero.";
-"terms.item.bugs" = "Entiendo que deshabilitar el teléfono desbloqueará el código de acceso en la Configuración del iOS y esto borrará las claves privadas de mi dispositivo. Necesitaré mis claves privadas para recuperar el acceso a mi monedero.";
-"terms.item.pin" = "Entiendo que sólo yo mismo soy responsable de la seguridad de mis fondos y ninguna otra entidad.";
+"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand these private keys are stored on my smartphone and not elsewhere.";
+"terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without a safe PIN lock may potentially endanger the safety of my funds.";
+"terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, and keeping the operating system outdated, can potentially endanger the safety of my funds.";
+"terms.item.phone" = "I understand there may be undiscovered software issues in the code powering this wallet app, which may potentially lead to unexpected behavior or the app malfunctioning.";
+"terms.item.root" = "I understand I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys, it will be impossible to recover access to my wallet.";
+"terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase the wallet's private keys from my device. I will need my private keys to regain access to my funds.";
+"terms.item.pin" = "I understand that only I myself am responsible for the safety of my funds, and no other entity.";
 "terms.footer" = "¡Gracias por elegir este monedero!";
 
 // Settings -> Tell Friends
@@ -721,18 +722,18 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy.sorting.section_header" = "Transacciones de blockchain";
 "settings_privacy.sorting.section_footer" = "Haga que sus transacciones BTC, LTC, BCH sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
 "settings_privacy.connection.section_header" = "Sincronización de Blockchain";
-"settings_privacy.connection.section_footer" = "Algunos blockchains aún no brindan medios para poder usarse en aplicaciones móviles de modo peer-to-peer. Las comunicaciones con las blockchains BTC, BCH, LTC, DASH son completamente peer-to-peer.";
+"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in a peer-to-peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
 "settings_privacy.sync.section_header" = "Restaurar blockchain";
-"settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
+"settings_privacy.sync.section_footer" = "Select a data source for restoring a wallet with transactions.";
 
 "settings_privacy_info.title" = "Ajustes de privacidad";
-"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
+"settings_privacy_info.description" = "Below you will find a detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
-"settings_privacy_info.content_blockchain_transactions" = "Estos ajustes controlan el nivel de privacidad de las transacciones de usuario en Bitcoin, Bitcon Cash y Litecoin blockchains. La mayoría de las transacciones de Bitcoin generan 2 salidas. Una salida es la cantidad que se envía al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de los monderos construyen transacciones hace fácil que un tercero supervise Bitcoin blockchain para entender cuál de las salidas fue a la parte receptora y cuál fue la cantidad de cambio devuelta al remitente. La salida devuelta al remitente puede ser entonces utilizada en transacciones futuras y revelar los detalles a la parte supervisora. Unstoppable wallet implementa medidas para hacer que sea significativamente más difícil averiguar qué salida va a dónde. Hay dos opciones disponibles para los usuarios de Unstoppable: 1. Mezclar: El orden de salida de las transacciones se aleatoriza en cada transacción. A veces el cambio puede ser la primera salida, a veces puede ser la segunda. Si un usuario confía en el desarrollador de la aplicación, más que en una opción recomendada. 2. Determinista : Existe un patrón comúnmente acordado para ordenar salidas de transacciones (conocido como BIP69). En las carteras de código abierto este patrón asegura que los usuarios del monedero no necesiten confiar en cómo los desarrolladores de la aplicación implementan el patrón de las salidas. Como este patrón es nuevo, no muchas billeteras lo han implementado todavía. Como resultado, es algo posible ver en el blockchain si la transacción fue enviada desde el monedero que utiliza ese patrón o no.";
+"settings_privacy_info.content_blockchain_transactions" = "The blockchain transactions setting controls the privacy tweaks for users' transactions when sending transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent. \n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where. \n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option. \n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
-"settings_privacy_info.content_blockchain_connection" = "Esta configuración controla cómo esta aplicación interactúa con blockchains (enviar/recibir transacciones). En caso de Bitcoin, Bitcoin Cash, Litecoin y Dash es de igual a igual. La aplicación conecta muchos nodos y se comunica con ellos. Potencialmente estos nodos pueden grabar direcciónes de IP e información requerida pero como estas son elegidas de manera aleatoria, cada vez que la app se conecta a un nodo diferente.\n\nEn caso de Ethereum, no hay alternativa para que las billeteras móviles interactúen con blockchain excepto a través de proveedores terceros (i.e. Infura.io) o nodos personales de Ethereum. Los servicios de terceros pueden potencialmente registrar direcciones IP y las peticiones realizadas. Esa información puede revelar la ubicación, el saldo, las transacciones, etc. Además, la cartera tiene que confiar en que la información devuelta es correcta. Existe una alternativa conocida como Incubed que en esencia es una red de nodos especiales de Ethereum. Estos nodos también pueden registrar direcciones IP y peticiones realizadas, pero son elegidos al azar cada vez. Aunque sea ligeramente más lento que Infura, la forma en que trabaja Incubed garantiza que la información devuelta sea correcta (no falsa).\n\nCuando se trata de otras blockchains como EOSIO y Binance Chain, en este punto sólo proporcionan medios centralizados de conexión, sin alternativas viables. Potencialmente, pueden grabar direcciones IP y peticiones realizadas.";
+"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum and Binance Smart Chain, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal Ethereum nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "Esta configuración sólo es relevante cuando se restablece un monedero existente. Es un proceso de obtener el historial de transacciones de una moneda determinada para que la aplicación de monedero pueda mostrar transacciones pasadas y calcular el saldo del usuario. Esto tiene que ocurrir sólo una vez, cuando el usuario restaura la cartera previamente creada. En este punto hay dos formas potenciales para un monedero móvil como Unstoppable para hacer esto:\n\n1. Desde un Servidor API : Hay un servidor predefinido de terceros que aloja toda la cadena de bloques y tiene todos los datos procesados y listos para proporcionarlo de una manera rápida. Este método es rápido, pero potencialmente puede llevar un seguimiento de las direcciones IP y los datos solicitados. Esta opción se recomienda debido a su velocidad de obtención de datos (5-10 minutos). Los riesgos son mínimos. Si el usuario restablecido desde su propio servidor no se arriesga en absoluto a la privacidad.\n\n2. de Blockchain : En este caso, la aplicación intenta restaurar directamente desde una red p2p de los nodos blockchain. La aplicación hace ping a muchos de esos nodos y solicita datos de ellos. Potencialmente estos nodos pueden hacer un seguimiento de la dirección de IPy requerimientos hechos por el usuario sin embargo durante la restauración de la aplicación se puede cambiar entre nodos. Hay cerca de 10.000 nodos de Bitcoin en la red en cualquier momento dado. Esta opción es lenta y puede tomar fácilmente 2-3 horas, la aplicación necesita estar abierta mientras la restauración está ocurriendo...";
+"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 
 "settings_privacy.alert_sync.title" = "Restaurar Fuente";
 "settings_privacy.alert_sync.description" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
@@ -758,8 +759,8 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.create" = "Crear";
 "settings_manage_keys.restore" = "Restaurar";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
-"settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos  de este dispositivo.";
-"settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
 
 // Settings -> About App
 
@@ -844,7 +845,7 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.passphrase" = "Frase de contraseña";
 "create_wallet.input.passphrase" = "Frase de contraseña";
 "create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
@@ -858,12 +859,12 @@ poner en peligro la seguridad de mis fondos.";
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
 
 // Double Spend Info
 
 "double_spend_info.title" = "Doble gasto";
-"double_spend_info.header" = "¡Riesgo de doble gasto! Hay otra transacción en blockchain que intenta gastar entradas usadas en esta transacción. Solo una transacción será aceptada por la red.";
+"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
 "double_spend_info.this_hash" = "Esta Tx";
 "double_spend_info.conflicting_hash" = "Tx en conlicto";
 
@@ -917,15 +918,15 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
-"wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
+"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Desconectar";
-"ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de ETH es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
+"ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
-"ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
+"ethereum_transaction.error.reverted" = "The transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Pedido";
 "wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Solicitud de Firma";
@@ -954,13 +955,13 @@ poner en peligro la seguridad de mis fondos.";
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Las transacciones enviadas con valores de comisión recomendados o más altos, generalmente se procesan dentro de 10 minutos. Las transacciones enviadas con una tarifa baja pueden permanecer pendientes por unas pocas horas o incluso días, e incluso pueden ser rechazadas por completo.";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
 "status_info.processing.title" = "Procesando";
-"status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
+"status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
 "status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
 "status_info.failed.title" = "Falló";
-"status_info.failed.content" = "La transacción no se procesó y no se realizó ninguna transferencia de valor. Las transacciones con fallo en su estado todavía se escriben en la blockchain y consumen comisiones de transacción. La aplicación Unstoppable no puede mostrar la razón de la falla para tales transacciones, pero los usuarios pueden buscarla por sí mismos en un bloque público exlorer i.e. etherscan.io.";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Transactions with a fail status are still written to the blockchain and consume transaction fees. The Unstoppable app is unable to show the fail reason for such transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Enable Coins
 
@@ -976,7 +977,7 @@ poner en peligro la seguridad de mis fondos.";
 "onboarding.balance.description" = "Aún no tienes ningún monedero. Crea nuevos o restaura existentes";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.password_hint" = "¡Sugerencia! Restaurar un monedero existente pero con una nueva contraseña generará un nuevo monedero. Esto puede ser útil si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples monederos.";
+"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
