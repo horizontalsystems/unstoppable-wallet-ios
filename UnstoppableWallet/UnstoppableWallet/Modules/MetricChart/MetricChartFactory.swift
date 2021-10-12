@@ -23,10 +23,10 @@ class MetricChartFactory {
             let item = ChartItem(timestamp: point.timestamp)
 
             item.add(name: .rate, value: point.value)
+            point.indicators?.forEach { key, value in
+                item.add(name: key, value: value)
+            }
 
-//            provide dominance data for graphic if needed
-//            item.add(name: .dominance, value: Decimal(Int.random(in: 0...10000)) / 100)
-//            item.add(name: .dominanceDiff, value: -13.2)//Decimal(Int.random(in: -10000...10000)) / 100)
             return item
         }
 
@@ -105,10 +105,11 @@ extension MetricChartFactory {
 
         let formattedValue = format(value: value, currency: currency, valueType: valueType, exactlyValue: true)
 
-        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: .none)
-
-        // provide dominance data for selected state if needed
-        // .dominance(value: chartItem.indicators[.dominance], diff: chartItem.indicators[.dominanceDiff]))
+        var rightSideMode: SelectedPointViewItem.RightSideMode = .none
+        if let dominance = chartItem.indicators[.dominance] {
+            rightSideMode = .dominance(value: dominance)
+        }
+        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
     }
 
 }

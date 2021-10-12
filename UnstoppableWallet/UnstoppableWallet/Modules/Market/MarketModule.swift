@@ -112,15 +112,15 @@ extension MarketModule {
     }
 
     enum MarketField: Int, CaseIterable {
+        case price
         case marketCap
         case volume
-        case price
 
         var title: String {
             switch self {
+            case .price: return "price".localized
             case .marketCap: return "market.market_field.mcap".localized
             case .volume: return "market.market_field.vol".localized
-            case .price: return "price".localized
             }
         }
     }

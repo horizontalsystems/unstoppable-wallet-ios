@@ -53,7 +53,7 @@ class ChartPointInfoView: UIView {
             rightView.isHidden = true
             macdView.isHidden = false
             macdView.bind(histogram: macdInfo.histogram, signal: macdInfo.signal, macd: macdInfo.macd, histogramDown: macdInfo.histogramDown)
-        case .dominance(let value, _):
+        case .dominance(let value):
             rightView.titleColor = .themeGray
             rightView.subtitleColor = .themeJacob
 

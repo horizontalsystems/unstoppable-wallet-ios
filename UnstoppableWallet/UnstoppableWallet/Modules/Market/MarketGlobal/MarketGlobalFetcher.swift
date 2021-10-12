@@ -1,6 +1,7 @@
 import XRatesKit
 import RxSwift
 import Foundation
+import Chart
 
 class MarketGlobalFetcher {
     private let rateManager: IRateManager
@@ -19,10 +20,7 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
     var poweredBy: String { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
-        switch metricsType {
-        case .totalMarketCap: return .percent
-        default: return .compactCurrencyValue
-        }
+        .compactCurrencyValue
     }
 
 }
@@ -35,18 +33,24 @@ extension MarketGlobalFetcher {
         return rateManager
                 .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
                 .map { [weak self] points in
-                    points.map { point -> MetricChartModule.Item in
+                    let result = points.map { point -> MetricChartModule.Item in
                         let value: Decimal
+                        var additional = [ChartIndicatorName: Decimal]()
 
                         switch self?.metricsType {
                         case .defiCap: value = point.marketCapDefi
-                        case .totalMarketCap: value = point.marketCap
+                        case .totalMarketCap:
+                            value = point.marketCap
+                            additional[.dominance] = point.dominanceBtc
                         case .tvlInDefi: value = point.tvl
                         case .none, .volume24h: value = point.volume24h
                         }
 
-                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
+                        return MetricChartModule.Item(value: value, indicators: additional, timestamp: point.timestamp)
                     }
+
+
+                    return result
                 }
     }
 
