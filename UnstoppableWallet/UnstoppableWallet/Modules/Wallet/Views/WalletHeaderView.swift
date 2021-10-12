@@ -63,9 +63,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         sortButton.apply(style: .secondaryTransparentIcon)
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        sortButton.setImageTintColor(.themeGray, for: .normal)
-        sortButton.setImageTintColor(.themeGray50, for: .highlighted)
-        sortButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
+        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
+        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
 
         sortButton.addTarget(self, action: #selector(onTapSortByButton), for: .touchUpInside)
 

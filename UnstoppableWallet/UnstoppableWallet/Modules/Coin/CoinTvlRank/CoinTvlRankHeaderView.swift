@@ -35,9 +35,8 @@ class CoinTvlRankHeaderView: UITableViewHeaderFooterView {
         }
 
         filterButton.apply(style: .secondaryTransparentIcon)
-        filterButton.setImage(UIImage(named: "arrow_small_down_20"), for: .normal)
-        filterButton.setImageTintColor(.themeGray, for: .normal)
-        filterButton.setImageTintColor(.themeGray50, for: .highlighted)
+        filterButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
+        filterButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
 
         filterButton.addTarget(self, action: #selector(tapFilterField), for: .touchUpInside)
 
