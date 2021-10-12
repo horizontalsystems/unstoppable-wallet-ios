@@ -70,14 +70,14 @@ class MetricChartService {
         if let chartFetcher = chartFetcherProtocol {
             single = chartFetcher.fetchSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
         }
-            single?
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] items in
-                    self?.state = .completed(items)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        single?
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] items in
+                self?.state = .completed(items)
+            }, onError: { [weak self] error in
+                self?.state = .failed(error)
+            })
+            .disposed(by: disposeBag)
     }
 
 }

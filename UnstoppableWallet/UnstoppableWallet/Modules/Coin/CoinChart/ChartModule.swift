@@ -119,7 +119,7 @@ struct SelectedPointViewItem {
         case none
         case volume(value: String?)
         case macd(macdInfo: MacdInfo)
-        case dominance(value: Decimal?, diff: Decimal?)
+        case dominance(value: Decimal?)
     }
 }
 
