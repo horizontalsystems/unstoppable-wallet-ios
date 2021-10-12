@@ -3,10 +3,10 @@ import ThemeKit
 import Chart
 import LanguageKit
 
-struct MarketTotalMarketCapModule {
+struct MarketGlobalMetricModule {
 
     static func viewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
-        let service = MarketTotalMarketCapService(
+        let service = MarketGlobalMetricService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit
         )
@@ -16,8 +16,8 @@ struct MarketTotalMarketCapModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let viewModel = MarketTotalMarketCapViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: .marketCap)
+        let viewModel = MarketGlobalMetricViewModel(service: service)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: type.marketField)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, listViewModel: listViewModel)
 
         let chartFetcher = MarketGlobalFetcher(rateManager: App.shared.rateManager, metricsType: type)
@@ -35,7 +35,7 @@ struct MarketTotalMarketCapModule {
         default: configuration = ChartConfiguration.chartWithoutIndicators
         }
 
-        let viewController = MarketTotalMarketCapViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: configuration)
+        let viewController = MarketGlobalMetricViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: configuration)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

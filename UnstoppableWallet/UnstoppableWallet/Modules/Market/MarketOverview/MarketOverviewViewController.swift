@@ -115,8 +115,8 @@ class MarketOverviewViewController: ThemeViewController {
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
         switch metricType {
-        case .totalMarketCap:
-            let viewController = MarketTotalMarketCapModule.viewController(type: metricType)
+        case .totalMarketCap, .volume24h:
+            let viewController = MarketGlobalMetricModule.viewController(type: metricType)
             parentNavigationController?.present(viewController, animated: true)
         default:
             let viewController = MarketGlobalModule.viewController(type: metricType)
