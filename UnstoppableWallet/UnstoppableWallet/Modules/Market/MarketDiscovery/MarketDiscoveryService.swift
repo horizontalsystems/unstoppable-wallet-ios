@@ -4,6 +4,7 @@ import MarketKit
 
 class MarketDiscoveryService {
     private let marketKit: Kit
+    private let favoritesManager: FavoritesManager
 
     private var discoveryItems = [DiscoveryItem]()
 
@@ -14,8 +15,9 @@ class MarketDiscoveryService {
         }
     }
 
-    init(marketKit: Kit) {
+    init(marketKit: Kit, favoritesManager: FavoritesManager) {
         self.marketKit = marketKit
+        self.favoritesManager = favoritesManager
 
         syncDiscoveryItems()
         state = .discovery(items: discoveryItems)
@@ -33,6 +35,14 @@ class MarketDiscoveryService {
         }
 
         self.discoveryItems = discoveryItems
+    }
+
+    private func coinUid(index: Int) -> String? {
+        guard case .searchResults(let fullCoins) = state, index < fullCoins.count else {
+            return nil
+        }
+
+        return fullCoins[index].coin.uid
     }
 
 }
@@ -53,6 +63,30 @@ extension MarketDiscoveryService {
                 state = .searchResults(fullCoins: [])
             }
         }
+    }
+
+    func isFavorite(index: Int) -> Bool {
+        guard let coinUid = coinUid(index: index) else {
+            return false
+        }
+
+        return favoritesManager.isFavorite(coinUid: coinUid)
+    }
+
+    func favorite(index: Int) {
+        guard let coinUid = coinUid(index: index) else {
+            return
+        }
+
+        favoritesManager.add(coinUid: coinUid)
+    }
+
+    func unfavorite(index: Int) {
+        guard let coinUid = coinUid(index: index) else {
+            return
+        }
+
+        favoritesManager.remove(coinUid: coinUid)
     }
 
 }

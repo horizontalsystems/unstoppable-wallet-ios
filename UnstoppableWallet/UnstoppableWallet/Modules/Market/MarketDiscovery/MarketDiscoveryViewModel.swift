@@ -74,6 +74,18 @@ extension MarketDiscoveryViewModel {
         service.set(filter: filter)
     }
 
+    func isFavorite(index: Int) -> Bool {
+        service.isFavorite(index: index)
+    }
+
+    func favorite(index: Int) {
+        service.favorite(index: index)
+    }
+
+    func unfavorite(index: Int) {
+        service.unfavorite(index: index)
+    }
+
 }
 
 extension MarketDiscoveryViewModel {
