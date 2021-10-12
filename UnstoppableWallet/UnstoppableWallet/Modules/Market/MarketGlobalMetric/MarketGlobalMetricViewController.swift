@@ -6,8 +6,8 @@ import Chart
 import ComponentKit
 import RxSwift
 
-class MarketTotalMarketCapViewController: MarketListViewController {
-    private let viewModel: MarketTotalMarketCapViewModel
+class MarketGlobalMetricViewController: MarketListViewController {
+    private let viewModel: MarketGlobalMetricViewModel
     private let chartViewModel: MetricChartViewModel
     private let disposeBag = DisposeBag()
     private let singleSortHeaderView: MarketSingleSortHeaderView
@@ -25,7 +25,7 @@ class MarketTotalMarketCapViewController: MarketListViewController {
     private let chartViewCell: ChartViewCell
     private let chartRow: StaticRow
 
-    init(viewModel: MarketTotalMarketCapViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketSingleSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
+    init(viewModel: MarketGlobalMetricViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketSingleSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
         singleSortHeaderView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
@@ -56,7 +56,7 @@ class MarketTotalMarketCapViewController: MarketListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Total Market Cap".localized
+        title = chartViewModel.title.localized
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
@@ -113,7 +113,7 @@ class MarketTotalMarketCapViewController: MarketListViewController {
 
 }
 
-extension MarketTotalMarketCapViewController {
+extension MarketGlobalMetricViewController {
 
     private func syncChart(viewItem: MetricChartViewModel.ViewItem?) {
         guard let viewItem = viewItem else {

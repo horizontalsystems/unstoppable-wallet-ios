@@ -52,6 +52,15 @@ extension MarketGlobalModule {
             }
         }
 
+        var marketField: MarketModule.MarketField {
+            switch self {
+            case .totalMarketCap: return .marketCap
+            case .volume24h: return .volume
+            case .defiCap: return .marketCap
+            case .tvlInDefi: return .price
+            }
+        }
+
     }
 
 }

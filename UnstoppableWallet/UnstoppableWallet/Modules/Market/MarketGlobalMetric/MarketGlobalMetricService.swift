@@ -3,7 +3,7 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 
-class MarketTotalMarketCapService: IMarketSingleSortHeaderService {
+class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
@@ -63,7 +63,7 @@ class MarketTotalMarketCapService: IMarketSingleSortHeaderService {
 
 }
 
-extension MarketTotalMarketCapService: IMarketListService {
+extension MarketGlobalMetricService: IMarketListService {
 
     var currency: Currency {
         currencyKit.baseCurrency
