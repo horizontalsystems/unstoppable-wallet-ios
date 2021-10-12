@@ -35,17 +35,4 @@ class MarketWatchlistViewController: MarketListViewController {
         cautionView.text = "market_watchlist.empty.caption".localized
     }
 
-    override func rowActions(index: Int) -> [RowAction] {
-        let type = RowActionType.destructive
-
-        return [
-            RowAction(
-                    pattern: .icon(image: UIImage(named: "star_24")?.withTintColor(type.iconColor), background: type.backgroundColor),
-                    action: { [weak self] _ in
-                        self?.viewModel.onUnwatch(index: index)
-                    }
-            )
-        ]
-    }
-
 }

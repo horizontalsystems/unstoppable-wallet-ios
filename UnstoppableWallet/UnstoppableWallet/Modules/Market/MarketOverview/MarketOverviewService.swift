@@ -1,16 +1,22 @@
-import CurrencyKit
-import XRatesKit
-import Foundation
 import RxSwift
 import RxRelay
+import CurrencyKit
+import MarketKit
 
 class MarketOverviewService {
-    private var disposeBag = DisposeBag()
-    private var topMarketsDisposeBag = DisposeBag()
+    private let listCount = 5
 
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let appManager: IAppManager
-    private let rateManager: IRateManager
+    private var disposeBag = DisposeBag()
+    private var syncDisposeBag = DisposeBag()
+
+    private var internalState: InternalState = .loading {
+        didSet {
+            syncState()
+        }
+    }
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
@@ -19,45 +25,58 @@ class MarketOverviewService {
         }
     }
 
-    private(set) var items = [MarketModule.Item]()
+    private var marketTopMap: [ListType: MarketModule.MarketTop] = [.topGainers: .top250, .topLosers: .top250]
 
-    init(currencyKit: CurrencyKit.Kit, appManager: IAppManager, rateManager: IRateManager) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.appManager = appManager
-        self.rateManager = rateManager
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] baseCurrency in
-            self?.items = []
-            self?.fetch()
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncMarketInfos() }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
+
+        syncMarketInfos()
+    }
+
+    private func syncMarketInfos() {
+        syncDisposeBag = DisposeBag()
+
+        if case .failed = state {
+            internalState = .loading
         }
 
-        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.fetch() }
-        fetch()
-    }
-
-    private func fetch() {
-        topMarketsDisposeBag = DisposeBag()
-
-        state = .loading
-
-        rateManager.topMarketsSingle(currencyCode: currencyKit.baseCurrency.code, fetchDiffPeriod: .hour24, itemCount: 250)
-                .subscribe(onSuccess: { [weak self] in
-                    self?.onFetchSuccess(items: $0)
+        marketKit.marketInfosSingle(top: 1000, order: .init(field: .marketCap, direction: .descending))
+                .subscribe(onSuccess: { [weak self] marketInfos in
+                    self?.internalState = .loaded(marketInfos: marketInfos)
                 }, onError: { [weak self] error in
-                    self?.onFetchFailed(error: error)
+                    self?.internalState = .failed(error: error)
                 })
-                .disposed(by: topMarketsDisposeBag)
+                .disposed(by: syncDisposeBag)
     }
 
-    private func onFetchSuccess(items: [CoinMarket]) {
-        self.items = items.map { MarketModule.Item(coinMarket: $0) }
+    private func syncState() {
+        switch internalState {
+        case .loading:
+            state = .loading
+        case .loaded(let marketInfos):
+            let items = ListType.allCases.map { listType -> Item in
+                let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
+                let marketInfos = Array(source.sorted(by: listType.sortingField).prefix(listCount))
+                return Item(listType: listType, marketInfos: marketInfos)
+            }
 
-        state = .loaded
+            state = .loaded(items: items)
+        case .failed(let error):
+            state = .failed(error: error)
+        }
     }
 
-    private func onFetchFailed(error: Error) {
-        items = []
-        state = .failed(error: error)
+    private func syncIfPossible() {
+        guard case .loaded = internalState else {
+            return
+        }
+
+        syncState()
     }
 
 }
@@ -72,18 +91,56 @@ extension MarketOverviewService {
         stateRelay.asObservable()
     }
 
+    func marketTop(listType: ListType) -> MarketModule.MarketTop {
+        marketTopMap[listType] ?? .top250
+    }
+
+    func set(marketTop: MarketModule.MarketTop, listType: ListType) {
+        marketTopMap[listType] = marketTop
+        syncIfPossible()
+    }
+
     func refresh() {
-        fetch()
+        syncMarketInfos()
     }
 
 }
 
 extension MarketOverviewService {
 
-    enum State {
-        case loaded
+    enum InternalState {
         case loading
+        case loaded(marketInfos: [MarketInfo])
         case failed(error: Error)
+    }
+
+    enum State {
+        case loading
+        case loaded(items: [Item])
+        case failed(error: Error)
+    }
+
+    struct Item {
+        let listType: ListType
+        let marketInfos: [MarketInfo]
+    }
+
+    enum ListType: String, CaseIterable {
+        case topGainers
+        case topLosers
+
+        var sortingField: MarketModule.SortingField {
+            switch self {
+            case .topGainers: return .topGainers
+            case .topLosers: return .topLosers
+            }
+        }
+
+        var marketField: MarketModule.MarketField {
+            switch self {
+            case .topGainers, .topLosers: return .price
+            }
+        }
     }
 
 }

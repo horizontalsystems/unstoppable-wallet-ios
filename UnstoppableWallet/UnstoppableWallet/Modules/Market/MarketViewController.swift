@@ -10,7 +10,7 @@ class MarketViewController: ThemeViewController {
     private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-    private let overviewController: MarketOverviewViewControllerNew
+    private let overviewController: MarketOverviewViewController
     private let postViewController: MarketPostViewController
     private let watchlistViewController: MarketWatchlistViewController
 
