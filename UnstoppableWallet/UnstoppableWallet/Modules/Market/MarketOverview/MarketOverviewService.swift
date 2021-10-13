@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import CurrencyKit
@@ -32,22 +33,25 @@ class MarketOverviewService {
         self.currencyKit = currencyKit
         self.appManager = appManager
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncMarketInfos() }
-        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncInternalState() }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncInternalState() }
 
-        syncMarketInfos()
+        syncInternalState()
     }
 
-    private func syncMarketInfos() {
+    private func syncInternalState() {
         syncDisposeBag = DisposeBag()
 
         if case .failed = state {
             internalState = .loading
         }
 
-        marketKit.marketInfosSingle(top: 1000, order: .init(field: .marketCap, direction: .descending))
-                .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.internalState = .loaded(marketInfos: marketInfos)
+        Single.zip(
+                        marketKit.marketInfosSingle(top: 1000, order: .init(field: .marketCap, direction: .descending)),
+                        marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .hour24)
+                )
+                .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
+                    self?.internalState = .loaded(marketInfos: marketInfos, globalMarketPoints: globalMarketPoints)
                 }, onError: { [weak self] error in
                     self?.internalState = .failed(error: error)
                 })
@@ -58,17 +62,57 @@ class MarketOverviewService {
         switch internalState {
         case .loading:
             state = .loading
-        case .loaded(let marketInfos):
-            let items = ListType.allCases.map { listType -> Item in
-                let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
-                let marketInfos = Array(source.sorted(by: listType.sortingField).prefix(listCount))
-                return Item(listType: listType, marketInfos: marketInfos)
-            }
-
-            state = .loaded(items: items)
+        case .loaded(let marketInfos, let globalMarketPoints):
+            state = .loaded(listItems: listItems(marketInfos: marketInfos), globalMarketData: globalMarketData(globalMarketPoints: globalMarketPoints))
         case .failed(let error):
             state = .failed(error: error)
         }
+    }
+
+    private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
+        ListType.allCases.map { listType -> ListItem in
+            let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
+            let marketInfos = Array(source.sorted(by: listType.sortingField).prefix(listCount))
+            return ListItem(listType: listType, marketInfos: marketInfos)
+        }
+    }
+
+    private func globalMarketData(globalMarketPoints: [GlobalMarketPoint]) -> GlobalMarketData {
+        let marketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.marketCap) }
+        let volume24hPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.volume24h) }
+        let defiMarketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.marketCapDefi) }
+        let tvlPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.tvl) }
+
+        return GlobalMarketData(
+                marketCap: globalMarketItem(pointItems: marketCapPointItems),
+                volume24h: globalMarketItem(pointItems: volume24hPointItems),
+                defiMarketCap: globalMarketItem(pointItems: defiMarketCapPointItems),
+                defiTvl: globalMarketItem(pointItems: tvlPointItems)
+        )
+    }
+
+    private func globalMarketItem(pointItems: [GlobalMarketPointItem]) -> GlobalMarketItem {
+        GlobalMarketItem(
+                amount: amount(pointItems: pointItems),
+                diff: diff(pointItems: pointItems),
+                pointItems: pointItems
+        )
+    }
+
+    private func amount(pointItems: [GlobalMarketPointItem]) -> CurrencyValue? {
+        guard let lastAmount = pointItems.last?.amount else {
+            return nil
+        }
+
+        return CurrencyValue(currency: currency, value: lastAmount)
+    }
+
+    private func diff(pointItems: [GlobalMarketPointItem]) -> Decimal? {
+        guard let firstAmount = pointItems.first?.amount, let lastAmount = pointItems.last?.amount, firstAmount != 0 else {
+            return nil
+        }
+
+        return (lastAmount - firstAmount) * 100 / firstAmount
     }
 
     private func syncIfPossible() {
@@ -101,7 +145,7 @@ extension MarketOverviewService {
     }
 
     func refresh() {
-        syncMarketInfos()
+        syncInternalState()
     }
 
 }
@@ -110,17 +154,17 @@ extension MarketOverviewService {
 
     enum InternalState {
         case loading
-        case loaded(marketInfos: [MarketInfo])
+        case loaded(marketInfos: [MarketInfo], globalMarketPoints: [GlobalMarketPoint])
         case failed(error: Error)
     }
 
     enum State {
         case loading
-        case loaded(items: [Item])
+        case loaded(listItems: [ListItem], globalMarketData: GlobalMarketData)
         case failed(error: Error)
     }
 
-    struct Item {
+    struct ListItem {
         let listType: ListType
         let marketInfos: [MarketInfo]
     }
@@ -141,6 +185,24 @@ extension MarketOverviewService {
             case .topGainers, .topLosers: return .price
             }
         }
+    }
+
+    struct GlobalMarketData {
+        let marketCap: GlobalMarketItem
+        let volume24h: GlobalMarketItem
+        let defiMarketCap: GlobalMarketItem
+        let defiTvl: GlobalMarketItem
+    }
+
+    struct GlobalMarketItem {
+        let amount: CurrencyValue?
+        let diff: Decimal?
+        let pointItems: [GlobalMarketPointItem]
+    }
+
+    struct GlobalMarketPointItem {
+        let timestamp: TimeInterval
+        let amount: Decimal
     }
 
 }

@@ -4,6 +4,7 @@ import ThemeKit
 import SectionsTableView
 import ComponentKit
 import HUD
+import Chart
 
 class MarketOverviewViewController: ThemeViewController {
     private let viewModel: MarketOverviewViewModel
@@ -14,15 +15,18 @@ class MarketOverviewViewController: ThemeViewController {
     private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
-    private let marketMetricsCell: MarketMetricsCellNew
+    private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
-    weak var parentNavigationController: UINavigationController?
+    weak var parentNavigationController: UINavigationController? {
+        didSet {
+            marketMetricsCell.viewController = parentNavigationController
+        }
+    }
 
-    private var viewItems: [MarketOverviewViewModel.ViewItem]?
+    private var topViewItems: [MarketOverviewViewModel.TopViewItem]?
 
-    init(viewModel: MarketOverviewViewModel, marketMetricsCell: MarketMetricsCellNew) {
+    init(viewModel: MarketOverviewViewModel) {
         self.viewModel = viewModel
-        self.marketMetricsCell = marketMetricsCell
 
         super.init()
     }
@@ -53,22 +57,19 @@ class MarketOverviewViewController: ThemeViewController {
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview().offset(MarketMetricsCellNew.cellHeight / 2)
+            maker.center.equalToSuperview()
         }
 
         spinner.startAnimating()
 
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.top.equalToSuperview().inset(MarketMetricsCellNew.cellHeight)
+            maker.edges.equalToSuperview()
         }
 
         errorView.onTapRetry = { [weak self] in self?.refresh() }
 
-        subscribe(disposeBag, marketMetricsCell.onTapMetricsSignal) { [weak self] in self?.onTap(metricType: $0) }
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -89,7 +90,6 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     private func refresh() {
-        marketMetricsCell.refresh()
         viewModel.refresh()
     }
 
@@ -101,27 +101,20 @@ class MarketOverviewViewController: ThemeViewController {
         }
     }
 
-    private func sync(viewItems: [MarketOverviewViewModel.ViewItem]?) {
-        self.viewItems = viewItems
+    private func sync(viewItem: MarketOverviewViewModel.ViewItem?) {
+        topViewItems = viewItem?.topViewItems
 
-        if viewItems != nil {
+        if let globalMarketViewItem = viewItem?.globalMarketViewItem {
+            marketMetricsCell.set(viewItem: globalMarketViewItem)
+        }
+
+        if viewItem != nil {
             tableView.bounces = true
         } else {
             tableView.bounces = false
         }
 
         tableView.reload()
-    }
-
-    private func onTap(metricType: MarketGlobalModule.MetricsType) {
-        switch metricType {
-        case .totalMarketCap, .volume24h:
-            let viewController = MarketGlobalMetricModule.viewController(type: metricType)
-            parentNavigationController?.present(viewController, animated: true)
-        default:
-            let viewController = MarketGlobalModule.viewController(type: metricType)
-            parentNavigationController?.present(viewController, animated: true)
-        }
     }
 
     private func onSelect(listViewItem: MarketModule.ListViewItem) {
@@ -181,20 +174,22 @@ extension MarketOverviewViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        var sections: [SectionProtocol] = [
-            Section(
+        var sections = [SectionProtocol]()
+
+        if let viewItems = topViewItems {
+            let metricsSection = Section(
                     id: "market_metrics",
                     rows: [
                         StaticRow(
                                 cell: marketMetricsCell,
                                 id: "metrics",
-                                height: MarketMetricsCellNew.cellHeight
+                                height: MarketOverviewMetricsCell.cellHeight
                         )
                     ]
             )
-        ]
 
-        if let viewItems = viewItems {
+            sections.append(metricsSection)
+
             let marketTops = viewModel.marketTops
 
             for viewItem in viewItems {
