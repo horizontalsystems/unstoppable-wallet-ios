@@ -100,7 +100,7 @@ class App {
         storage = GrdbStorage()
         logRecordManager = LogRecordManager(storage: storage)
 
-        marketKit = try! MarketKit.Kit.instance(hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz")
+        marketKit = try! MarketKit.Kit.instance(hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz", hsOldApiBaseUrl: "https://markets.horizontalsystems.xyz")
         marketKit.sync()
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)

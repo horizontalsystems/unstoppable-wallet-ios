@@ -3,12 +3,13 @@ import RxRelay
 import RxCocoa
 import CurrencyKit
 import MarketKit
+import Chart
 
 class MarketOverviewViewModel {
     private let service: MarketOverviewService
     private let disposeBag = DisposeBag()
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
@@ -23,22 +24,74 @@ class MarketOverviewViewModel {
     private func sync(state: MarketOverviewService.State) {
         switch state {
         case .loading:
-            viewItemsRelay.accept(nil)
+            viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .loaded(let items):
-            viewItemsRelay.accept(items.map { viewItem(item: $0) })
+        case .loaded(let listItems, let globalMarketData):
+            viewItemRelay.accept(viewItem(listItems: listItems, globalMarketData: globalMarketData))
             loadingRelay.accept(false)
             errorRelay.accept(nil)
         case .failed:
-            viewItemsRelay.accept(nil)
+            viewItemRelay.accept(nil)
             loadingRelay.accept(false)
             errorRelay.accept("market.sync_error".localized)
         }
     }
 
-    private func viewItem(item: MarketOverviewService.Item) -> ViewItem {
+    private func viewItem(listItems: [MarketOverviewService.ListItem], globalMarketData: MarketOverviewService.GlobalMarketData) -> ViewItem {
         ViewItem(
+                globalMarketViewItem: globalMarketViewItem(globalMarketData: globalMarketData),
+                topViewItems: listItems.map { topViewItem(item: $0) }
+        )
+    }
+
+    private func globalMarketViewItem(globalMarketData: MarketOverviewService.GlobalMarketData) -> GlobalMarketViewItem {
+        GlobalMarketViewItem(
+                totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
+                volume24h: chartViewItem(item: globalMarketData.volume24h),
+                defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
+                defiTvl: chartViewItem(item: globalMarketData.defiTvl)
+        )
+    }
+
+    private func chartViewItem(item: MarketOverviewService.GlobalMarketItem) -> ChartViewItem {
+        let value = item.amount.flatMap { CurrencyCompactFormatter.instance.format(currency: $0.currency, value: $0.value) }
+
+        var chartData: ChartData?
+        var trend: MovementTrend = .neutral
+
+        let pointItems = item.pointItems
+
+        if let firstPointItem = pointItems.first, let lastPointItem = pointItems.last {
+            let chartItems: [ChartItem] = pointItems.map {
+                let item = ChartItem(timestamp: $0.timestamp)
+                item.add(name: .rate, value: $0.amount)
+                return item
+            }
+
+            if firstPointItem.amount > lastPointItem.amount {
+                trend = .down
+            } else if firstPointItem.amount < lastPointItem.amount {
+                trend = .up
+            }
+
+            chartData = ChartData(
+                    items: chartItems,
+                    startTimestamp: firstPointItem.timestamp,
+                    endTimestamp: lastPointItem.timestamp
+            )
+        }
+
+        return ChartViewItem(
+                value: value,
+                diff: item.diff,
+                chartData: chartData,
+                chartTrend: trend
+        )
+    }
+
+    private func topViewItem(item: MarketOverviewService.ListItem) -> TopViewItem {
+        TopViewItem(
                 listType: item.listType,
                 imageName: imageName(listType: item.listType),
                 title: title(listType: item.listType),
@@ -69,8 +122,8 @@ class MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    var viewItemsDriver: Driver<[ViewItem]?> {
-        viewItemsRelay.asDriver()
+    var viewItemDriver: Driver<ViewItem?> {
+        viewItemRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
@@ -108,6 +161,25 @@ extension MarketOverviewViewModel {
 extension MarketOverviewViewModel {
 
     struct ViewItem {
+        let globalMarketViewItem: GlobalMarketViewItem
+        let topViewItems: [TopViewItem]
+    }
+
+    struct GlobalMarketViewItem {
+        let totalMarketCap: ChartViewItem
+        let volume24h: ChartViewItem
+        let defiCap: ChartViewItem
+        let defiTvl: ChartViewItem
+    }
+
+    struct ChartViewItem {
+        let value: String?
+        let diff: Decimal?
+        let chartData: ChartData?
+        let chartTrend: MovementTrend
+    }
+
+    struct TopViewItem {
         let listType: MarketOverviewService.ListType
         let imageName: String
         let title: String
