@@ -64,7 +64,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(coinUids: coinUids, order: .init(field: .marketCap, direction: .descending))
+        marketKit.marketInfosSingle(coinUids: coinUids)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.sync(marketInfos: marketInfos)
