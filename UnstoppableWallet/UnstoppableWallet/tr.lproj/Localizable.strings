@@ -410,6 +410,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
@@ -445,6 +446,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.month" = "1 Month";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
+
+"market.advanced_search_results.title" = "Results";
 
 "market.global.total_market_cap.title" = "Total Market Cap";
 "market.global.volume_24h.title" = "Volume";
