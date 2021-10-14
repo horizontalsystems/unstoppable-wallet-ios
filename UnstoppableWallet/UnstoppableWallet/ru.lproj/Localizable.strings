@@ -35,6 +35,7 @@
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
 "price" = "Цена";
+"value" = "Value";
 "note" = "Примечание";
 
 "version" = "Версия %@";
@@ -335,6 +336,16 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "market.market_field.mcap" = "Рын. кап.";
 "market.market_field.vol" = "Объём";
+
+"market.tvl.market_field.day_diff" = "24H";
+"market.tvl.market_field.week_diff" = "7D";
+
+"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.ethereum" = "Ethereum";
+"market.tvl.platform_field.binance" = "Binance";
+"market.tvl.platform_field.solana" = "Solana";
+"market.tvl.platform_field.avalanche" = "Avalanche";
+"market.tvl.platform_field.polygon" = "Polygon";
 
 "market.sort_by" = "Сортировать По";
 
