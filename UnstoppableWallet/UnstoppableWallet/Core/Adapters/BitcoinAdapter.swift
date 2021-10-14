@@ -27,11 +27,11 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     }
 
     override var explorerTitle: String {
-        "btc.com"
+        "blockchair.com"
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        testMode ? nil : "https://btc.com/" + transactionHash
+        testMode ? nil : "https://blockchair.com/bitcoin/transaction/" + transactionHash
     }
 
 }
