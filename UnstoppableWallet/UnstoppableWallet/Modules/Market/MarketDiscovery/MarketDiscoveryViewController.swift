@@ -66,7 +66,8 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     }
 
     @objc private func onTapFilters() {
-        // todo
+        let viewController = MarketAdvancedSearchModule.viewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func sync(discoveryViewItems: [MarketDiscoveryViewModel.DiscoveryViewItem]?) {
