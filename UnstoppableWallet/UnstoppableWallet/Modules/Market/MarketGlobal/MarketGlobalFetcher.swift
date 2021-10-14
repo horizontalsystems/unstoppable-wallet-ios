@@ -1,14 +1,14 @@
-import XRatesKit
 import RxSwift
 import Foundation
+import MarketKit
 import Chart
 
 class MarketGlobalFetcher {
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
     private let metricsType: MarketGlobalModule.MetricsType
 
-    init(rateManager: IRateManager, metricsType: MarketGlobalModule.MetricsType) {
-        self.rateManager = rateManager
+    init(marketKit: MarketKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
+        self.marketKit = marketKit
         self.metricsType = metricsType
     }
 
@@ -25,13 +25,11 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
 
 }
 
-extension MarketGlobalFetcher {
+extension MarketGlobalFetcher: IMetricChartFetcher {
 
-    func fetchSingle(currencyCode: String, timePeriod: String) -> RxSwift.Single<[MetricChartModule.Item]> {
-        let timePeriod = TimePeriod(rawValue: timePeriod)
-
-        return rateManager
-                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
+    func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+        marketKit
+                .globalMarketPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
                 .map { [weak self] points in
                     let result = points.map { point -> MetricChartModule.Item in
                         let value: Decimal

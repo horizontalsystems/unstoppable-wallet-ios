@@ -74,14 +74,8 @@ class MarketOverviewMetricsCell: UITableViewCell {
     }
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
-        switch metricType {
-        case .totalMarketCap, .volume24h:
-            let module = MarketGlobalMetricModule.viewController(type: metricType)
-            viewController?.present(module, animated: true)
-        default:
-            let module = MarketGlobalModule.viewController(type: metricType)
-            viewController?.present(module, animated: true)
-        }
+        let viewController = MarketGlobalMetricModule.viewController(type: metricType)
+        self.viewController?.present(viewController, animated: true)
     }
 
 }

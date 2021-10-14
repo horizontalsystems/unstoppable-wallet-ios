@@ -7,7 +7,7 @@ import XRatesKit
 class MarketGlobalModule {
 
     static func viewController(type: MetricsType) -> UIViewController {
-        let chartFetcher = MarketGlobalFetcher(rateManager: App.shared.rateManager, metricsType: type)
+        let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: type)
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher
