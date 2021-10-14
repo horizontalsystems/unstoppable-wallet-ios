@@ -409,6 +409,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "market.advanced_search.title" = "Advanced Search";
 "market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "이 설정은 이더리움(Uniswap DEX) 과 바이낸스 스마트체인(Pancake DEX) 에서 거래되는 토큰에 적용됩니다.";
 "market.advanced_search.24h" = "24h";
 
@@ -444,6 +445,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.month" = "1 Month";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
+
+"market.advanced_search_results.title" = "Results";
 
 "market.global.total_market_cap.title" = "Total Market Cap";
 "market.global.volume_24h.title" = "Volume";
