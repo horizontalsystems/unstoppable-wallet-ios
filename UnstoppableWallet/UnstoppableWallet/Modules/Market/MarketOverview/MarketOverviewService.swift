@@ -47,7 +47,7 @@ class MarketOverviewService {
         }
 
         Single.zip(
-                        marketKit.marketInfosSingle(top: 1000, order: .init(field: .marketCap, direction: .descending)),
+                        marketKit.marketInfosSingle(top: 1000),
                         marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .hour24)
                 )
                 .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
