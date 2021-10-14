@@ -7,7 +7,9 @@ class MarketPostViewModel {
     private let service: MarketPostService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     init(service: MarketPostService) {
         self.service = service
@@ -20,11 +22,17 @@ class MarketPostViewModel {
     private func sync(state: MarketPostService.State) {
         switch state {
         case .loading:
-            stateRelay.accept(.loading)
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
         case .loaded(let posts):
-            stateRelay.accept(.loaded(viewItems: posts.map { viewItem(post: $0) }))
+            viewItemsRelay.accept(posts.map { viewItem(post: $0) })
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
         case .failed:
-            stateRelay.accept(.error(description: "market.sync_error".localized))
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
@@ -61,8 +69,16 @@ class MarketPostViewModel {
 
 extension MarketPostViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemsDriver: Driver<[ViewItem]?> {
+        viewItemsRelay.asDriver()
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
     func refresh() {
@@ -79,12 +95,6 @@ extension MarketPostViewModel {
         let body: String
         let timeAgo: String
         let url: String
-    }
-
-    enum State {
-        case loading
-        case loaded(viewItems: [ViewItem])
-        case error(description: String)
     }
 
 }
