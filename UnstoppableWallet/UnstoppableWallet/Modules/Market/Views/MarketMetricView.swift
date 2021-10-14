@@ -14,6 +14,8 @@ class MarketMetricView: UIView {
     private let button = ThemeButton()
 
     var onTap: (() -> ())?
+    
+    var alreadyHasData: Bool = false
 
     init(configuration: ChartConfiguration) {
         super.init(frame: .zero)
@@ -118,8 +120,10 @@ extension MarketMetricView {
 
         chartView.setCurve(colorType: colorType)
         if let chartData = chartData {
-            chartView.set(chartData: chartData)
+            chartView.set(chartData: chartData, animated: alreadyHasData)
+            alreadyHasData = true
         } else {
+            alreadyHasData = false
             // clear
         }
     }
@@ -127,6 +131,8 @@ extension MarketMetricView {
     func clear() {
         valueLabel.text = nil
         diffLabel.clear()
+
+        alreadyHasData = false
     }
 
 }
