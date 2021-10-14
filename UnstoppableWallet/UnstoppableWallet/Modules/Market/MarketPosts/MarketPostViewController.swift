@@ -3,6 +3,7 @@ import RxSwift
 import ThemeKit
 import SectionsTableView
 import ComponentKit
+import HUD
 
 class MarketPostViewController: ThemeViewController {
     private let viewModel: MarketPostViewModel
@@ -10,11 +11,13 @@ class MarketPostViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController?
 
-    private var state: MarketPostViewModel.State = .loading
+    private var viewItems: [MarketPostViewModel.ViewItem]?
 
     init(viewModel: MarketPostViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
@@ -43,13 +46,33 @@ class MarketPostViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: SpinnerCell.self)
-        tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: MarketPostCell.self)
 
-        subscribe(disposeBag, viewModel.stateDriver) { [weak self] state in
-            self?.state = state
-            self?.tableView.reload()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.onTapRetry = { [weak self] in self?.refresh() }
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
+            } else {
+                self?.errorView.isHidden = true
+            }
         }
     }
 
@@ -59,12 +82,28 @@ class MarketPostViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
     }
 
-    @objc func onRefresh() {
+    private func refresh() {
         viewModel.refresh()
+    }
+
+    @objc private func onRefresh() {
+        refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+
+    private func sync(viewItems: [MarketPostViewModel.ViewItem]?) {
+        self.viewItems = viewItems
+
+        if viewItems != nil {
+            tableView.bounces = true
+        } else {
+            tableView.bounces = false
+        }
+
+        tableView.reload()
     }
 
     private func open(url: String) {
@@ -93,29 +132,7 @@ extension MarketPostViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        switch state {
-        case .loading:
-            let row = Row<SpinnerCell>(
-                    id: "post_spinner",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0))
-                    }
-            )
-
-            sections.append(Section(id: "post_spinner", rows: [row]))
-        case .error(let errorDescription):
-            let row = Row<ErrorCell>(
-                    id: "error",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0))
-                    },
-                    bind: { cell, _ in
-                        cell.errorText = errorDescription
-                    }
-            )
-
-            sections.append(Section(id: "post_error", rows: [row]))
-        case .loaded(let viewItems):
+        if let viewItems = viewItems {
             for (index, viewItem) in viewItems.enumerated() {
                 let section = Section(
                         id: "post_\(index)",
