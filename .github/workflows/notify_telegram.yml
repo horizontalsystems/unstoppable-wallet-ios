@@ -1,4 +1,4 @@
-name: Notify to telegram
+name: Notify PR to Telegram
 
 on:
   pull_request:
@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: Send telegram message
         uses: appleboy/telegram-action@master
         with:

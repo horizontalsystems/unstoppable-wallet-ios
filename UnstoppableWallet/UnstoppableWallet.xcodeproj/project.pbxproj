@@ -9163,12 +9163,13 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				MARKETING_VERSION = 0.23;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
 				PRODUCT_NAME = "Unstoppable DT";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet.dev.testnet";
 				ShowBuildNumber = true;
 				TestMode = true;
 			};
@@ -9186,7 +9187,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
 				PRODUCT_NAME = "Unstoppable DT";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev.testnet AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc io.horizontalsystems.bank-wallet.dev.testnet";
 				ShowBuildNumber = true;
 				TestMode = true;
 			};
@@ -9246,7 +9247,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet.dev";
 				ShowBuildNumber = true;
 			};
 			name = Debug;
@@ -9257,12 +9258,13 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				MARKETING_VERSION = 0.23;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet.dev AdHoc";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc io.horizontalsystems.bank-wallet.dev";
 				ShowBuildNumber = true;
 			};
 			name = Release;
@@ -9273,12 +9275,13 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				MARKETING_VERSION = 0.23;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet Dev";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet";
 				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Debug;
@@ -9289,12 +9292,13 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				MARKETING_VERSION = 0.23;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
-				PROVISIONING_PROFILE_SPECIFIER = "io.horizontalsystems.bank-wallet AppStore";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.horizontalsystems.bank-wallet";
 				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Release;
