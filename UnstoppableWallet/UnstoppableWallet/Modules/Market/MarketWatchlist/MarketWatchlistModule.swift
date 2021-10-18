@@ -13,9 +13,10 @@ struct MarketWatchlistModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
+        let decorator = MarketListMarketFieldDecorator(service: service, marketField: .price)
         let viewModel = MarketWatchlistViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: .price)
-        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, listViewModel: listViewModel)
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
 
         return MarketWatchlistViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
     }

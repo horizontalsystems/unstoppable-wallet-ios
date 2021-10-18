@@ -75,7 +75,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
     }
 
     private func syncIfPossible() {
@@ -90,16 +90,30 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
 extension MarketWatchlistService: IMarketListService {
 
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
     var stateObservable: Observable<MarketListServiceState> {
         stateRelay.asObservable()
     }
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketWatchlistService: IMarketListDecoratorService {
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    var priceChangeType: MarketModule.PriceChangeType {
+        .day
+    }
+
+    func resyncIfPossible() {
+        if case .loaded(let marketInfos, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        }
     }
 
 }

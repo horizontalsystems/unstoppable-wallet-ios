@@ -15,11 +15,11 @@ extension IMarketMultiSortHeaderService {
 
 class MarketMultiSortHeaderViewModel {
     private let service: IMarketMultiSortHeaderService
-    private let listViewModel: MarketListViewModel
+    private let decorator: MarketListMarketFieldDecorator
 
-    init(service: IMarketMultiSortHeaderService, listViewModel: MarketListViewModel) {
+    init(service: IMarketMultiSortHeaderService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
-        self.listViewModel = listViewModel
+        self.decorator = decorator
     }
 
 }
@@ -47,7 +47,7 @@ extension MarketMultiSortHeaderViewModel {
     }
 
     var marketFieldIndex: Int {
-        MarketModule.MarketField.allCases.firstIndex(of: listViewModel.marketField) ?? 0
+        MarketModule.MarketField.allCases.firstIndex(of: decorator.marketField) ?? 0
     }
 
     func onSelectMarketTop(index: Int) {
@@ -59,7 +59,7 @@ extension MarketMultiSortHeaderViewModel {
     }
 
     func onSelectMarketField(index: Int) {
-        listViewModel.marketField = MarketModule.MarketField.allCases[index]
+        decorator.marketField = MarketModule.MarketField.allCases[index]
     }
 
 }

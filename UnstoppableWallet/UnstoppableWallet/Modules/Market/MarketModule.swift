@@ -135,11 +135,46 @@ extension MarketModule {
         }
     }
 
+    enum PriceChangeType: CaseIterable {
+        case day
+        case week
+        case week2
+        case month
+        case month6
+        case year
+
+        var title: String {
+            switch self {
+            case .day: return "market.advanced_search.day".localized
+            case .week: return "market.advanced_search.week".localized
+            case .week2: return "market.advanced_search.week2".localized
+            case .month: return "market.advanced_search.month".localized
+            case .month6: return "market.advanced_search.month6".localized
+            case .year: return "market.advanced_search.year".localized
+            }
+        }
+    }
+
+}
+
+extension MarketKit.MarketInfo {
+
+    func priceChangeValue(type: MarketModule.PriceChangeType) -> Decimal? {
+        switch type {
+        case .day: return priceChange24h
+        case .week: return priceChange7d
+        case .week2: return priceChange14d
+        case .month: return priceChange30d
+        case .month6: return priceChange200d
+        case .year: return priceChange1y
+        }
+    }
+
 }
 
 extension Array where Element == MarketKit.MarketInfo {
 
-    func sorted(by sortingField: MarketModule.SortingField) -> [MarketKit.MarketInfo] {
+    func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [MarketKit.MarketInfo] {
         sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortingField {
             case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
@@ -147,10 +182,10 @@ extension Array where Element == MarketKit.MarketInfo {
             case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
             case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
             case .topGainers, .topLosers:
-                guard let rhsPriceChange = rhsMarketInfo.priceChange else {
+                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return true
                 }
-                guard let lhsPriceChange = lhsMarketInfo.priceChange else {
+                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return false
                 }
 
@@ -178,29 +213,6 @@ extension MarketModule {  // ViewModel Items
         let rank: String?
         let price: String
         let dataValue: MarketDataValue
-
-        init(marketInfo: MarketKit.MarketInfo, marketField: MarketField, currency: Currency) {
-            uid = marketInfo.fullCoin.coin.uid
-            iconUrl = marketInfo.fullCoin.coin.imageUrl
-            iconPlaceholderName = marketInfo.fullCoin.placeholderImageName
-            name = marketInfo.fullCoin.coin.name
-            code = marketInfo.fullCoin.coin.code
-            rank = marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" }
-
-            price = marketInfo.price.flatMap {
-                ValueFormatter.instance.format(
-                        currencyValue: CurrencyValue(currency: currency, value: $0),
-                        fractionPolicy: .threshold(high: 1000, low: 0.000001),
-                        trimmable: false
-                )
-            } ?? "n/a".localized
-
-            switch marketField {
-            case .price: dataValue = .diff(marketInfo.priceChange)
-            case .volume: dataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.totalVolume) ?? "n/a".localized)
-            case .marketCap: dataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: marketInfo.marketCap) ?? "n/a".localized)
-            }
-        }
     }
 
 }
