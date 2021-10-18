@@ -72,7 +72,7 @@ class MarketOverviewService {
     private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
         ListType.allCases.map { listType -> ListItem in
             let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
-            let marketInfos = Array(source.sorted(sortingField: listType.sortingField).prefix(listCount))
+            let marketInfos = Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
             return ListItem(listType: listType, marketInfos: marketInfos)
         }
     }
