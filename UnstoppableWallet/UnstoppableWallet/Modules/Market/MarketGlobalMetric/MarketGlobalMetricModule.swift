@@ -23,9 +23,10 @@ struct MarketGlobalMetricModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
+        let decorator = MarketListMarketFieldDecorator(service: service, marketField: type.marketField)
         let viewModel = MarketGlobalMetricViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: type.marketField)
-        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, listViewModel: listViewModel)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
+        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
         let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: type)
         let chartService = MetricChartService(
@@ -58,9 +59,10 @@ struct MarketGlobalMetricModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
+        let decorator = MarketListMarketFieldDecorator(service: service, marketField: MarketGlobalModule.MetricsType.defiCap.marketField)
         let viewModel = MarketGlobalMetricViewModel(service: service)
-        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, marketField: MarketGlobalModule.MetricsType.defiCap.marketField)
-        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, listViewModel: listViewModel)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
+        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
         let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: .defiCap)
         let chartService = MetricChartService(

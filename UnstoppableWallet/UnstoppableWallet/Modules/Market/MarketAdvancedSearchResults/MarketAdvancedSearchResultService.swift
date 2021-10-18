@@ -6,6 +6,7 @@ import CurrencyKit
 class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     private let marketInfos: [MarketInfo]
     private let currencyKit: CurrencyKit.Kit
+    let priceChangeType: MarketModule.PriceChangeType
 
     private let stateRelay = PublishRelay<MarketListServiceState>()
     private(set) var state: MarketListServiceState = .loading {
@@ -20,30 +21,41 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(marketInfos: [MarketInfo], currencyKit: CurrencyKit.Kit) {
+    init(marketInfos: [MarketInfo], currencyKit: CurrencyKit.Kit, priceChangeType: MarketModule.PriceChangeType) {
         self.marketInfos = marketInfos
         self.currencyKit = currencyKit
+        self.priceChangeType = priceChangeType
 
         syncState()
     }
 
     private func syncState() {
-        state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
     }
 
 }
 
 extension MarketAdvancedSearchResultService: IMarketListService {
 
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
     var stateObservable: Observable<MarketListServiceState> {
         stateRelay.asObservable()
     }
 
     func refresh() {
+    }
+
+}
+
+extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    func resyncIfPossible() {
+        if case .loaded(let marketInfos, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        }
     }
 
 }

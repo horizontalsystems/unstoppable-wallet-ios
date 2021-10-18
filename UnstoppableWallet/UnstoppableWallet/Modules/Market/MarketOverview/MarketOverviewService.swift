@@ -72,7 +72,7 @@ class MarketOverviewService {
     private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
         ListType.allCases.map { listType -> ListItem in
             let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
-            let marketInfos = Array(source.sorted(by: listType.sortingField).prefix(listCount))
+            let marketInfos = Array(source.sorted(sortingField: listType.sortingField).prefix(listCount))
             return ListItem(listType: listType, marketInfos: marketInfos)
         }
     }
@@ -127,10 +127,6 @@ class MarketOverviewService {
 
 extension MarketOverviewService {
 
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
@@ -146,6 +142,24 @@ extension MarketOverviewService {
 
     func refresh() {
         syncInternalState()
+    }
+
+}
+
+extension MarketOverviewService: IMarketListDecoratorService {
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    var priceChangeType: MarketModule.PriceChangeType {
+        .day
+    }
+
+    func resyncIfPossible() {
+        if case .loaded(let listItems, let globalMarketData) = state {
+            stateRelay.accept(.loaded(listItems: listItems, globalMarketData: globalMarketData))
+        }
     }
 
 }

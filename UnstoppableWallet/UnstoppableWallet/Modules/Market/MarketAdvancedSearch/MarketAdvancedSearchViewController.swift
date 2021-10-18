@@ -120,7 +120,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.coinListViewItemDriver) { [weak self] in self?.syncCoinList(viewItem: $0) }
         subscribe(disposeBag, viewModel.marketCapViewItemDriver) { [weak self] in self?.syncMarketCap(viewItem: $0) }
         subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in self?.syncVolume(viewItem: $0) }
-        subscribe(disposeBag, viewModel.periodViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
+        subscribe(disposeBag, viewModel.priceChangeTypeViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
         subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
 
         subscribe(disposeBag, viewModel.outperformedBtcDriver) { [weak self] in self?.syncOutperformedBtc(isOn: $0) }
@@ -196,8 +196,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
                 tintColor: .themeJacob
         )
 
-        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.periodViewItems), action: { [weak self] index in
-            self?.viewModel.setPeriod(at: index)
+        showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeTypeViewItems), action: { [weak self] index in
+            self?.viewModel.setPriceChangeType(at: index)
         })
     }
 
@@ -239,7 +239,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     }
 
     @objc private func onTapShowResult() {
-        let viewController = MarketAdvancedSearchResultModule.viewController(marketInfos: viewModel.marketInfos)
+        let viewController = MarketAdvancedSearchResultModule.viewController(marketInfos: viewModel.marketInfos, priceChangeType: viewModel.priceChangeType)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

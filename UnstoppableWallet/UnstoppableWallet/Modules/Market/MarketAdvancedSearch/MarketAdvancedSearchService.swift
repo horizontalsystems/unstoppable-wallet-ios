@@ -72,14 +72,14 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var periodRelay = PublishRelay<PricePeriodFilter>()
-    var period: PricePeriodFilter = .day {
+    private var priceChangeTypeRelay = PublishRelay<MarketModule.PriceChangeType>()
+    var priceChangeType: MarketModule.PriceChangeType = .day {
         didSet {
-            guard period != oldValue else {
+            guard priceChangeType != oldValue else {
                 return
             }
 
-            periodRelay.accept(period)
+            priceChangeTypeRelay.accept(priceChangeType)
             syncState()
         }
     }
@@ -156,7 +156,7 @@ class MarketAdvancedSearchService {
 
         internalState = .loading
 
-        marketKit.marketInfosSingle(top: coinListCount.rawValue)
+        marketKit.advancedMarketInfosSingle(top: coinListCount.rawValue)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.internalState = .loaded(marketInfos: marketInfos)
@@ -196,11 +196,11 @@ class MarketAdvancedSearchService {
     private func outperformed(value: Decimal?, coinUid: String) -> Bool {
         guard let marketInfo = marketInfo(coinUid: coinUid),
               let value = value,
-              let priceChange = marketInfo.priceChange else {
+              let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType) else {
             return false
         }
 
-        return value > priceChange
+        return value > priceChangeValue
     }
 
     private func closedToAllTime(value: Decimal?) -> Bool {
@@ -213,14 +213,16 @@ class MarketAdvancedSearchService {
 
     private func filtered(marketInfos: [MarketInfo]) -> [MarketInfo] {
         marketInfos.filter { marketInfo in
-            inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
+            let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType)
+
+            return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                     inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
-                    inBounds(value: marketInfo.priceChange, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
-                    (!outperformedBtc || outperformed(value: marketInfo.priceChange, coinUid: "bitcoin")) &&
-                    (!outperformedEth || outperformed(value: marketInfo.priceChange, coinUid: "ethereum")) &&
-                    (!outperformedBnb || outperformed(value: marketInfo.priceChange, coinUid: "binance-coin"))
-//                    (!priceCloseToAth || closedToAllTime(value: marketInfo.athChangePercentage)) &&
-//                    (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlChangePercentage))
+                    inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
+                    (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
+                    (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
+                    (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binance-coin")) &&
+                    (!priceCloseToAth || closedToAllTime(value: marketInfo.ath)) &&
+                    (!priceCloseToAtl || closedToAllTime(value: marketInfo.atl))
         }
     }
 
@@ -248,8 +250,8 @@ extension MarketAdvancedSearchService {
         priceChangeRelay.asObservable()
     }
 
-    var periodObservable: Observable<PricePeriodFilter> {
-        periodRelay.asObservable()
+    var priceChangeTypeObservable: Observable<MarketModule.PriceChangeType> {
+        priceChangeTypeRelay.asObservable()
     }
 
     var outperformedBtcObservable: Observable<Bool> {
@@ -276,7 +278,7 @@ extension MarketAdvancedSearchService {
         coinListCount = .top250
         volume = .none
         marketCap = .none
-        period = .day
+        priceChangeType = .day
         priceChange = .none
 
         outperformedBtc = false
@@ -376,26 +378,6 @@ extension MarketAdvancedSearchService {
             }
         }
 
-    }
-
-    enum PricePeriodFilter: CaseIterable {
-        case day
-        case week
-        case week2
-        case month
-        case month6
-        case year
-
-//        var fetchDiffPeriod: TimePeriod {
-//            switch self {
-//            case .day: return .hour24
-//            case .week: return .day7
-//            case .week2: return .day14
-//            case .month: return .day30
-//            case .month6: return .day200
-//            case .year: return .year1
-//            }
-//        }
     }
 
 }

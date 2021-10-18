@@ -7,14 +7,16 @@ import Chart
 
 class MarketOverviewViewModel {
     private let service: MarketOverviewService
+    private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: MarketOverviewService) {
+    init(service: MarketOverviewService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
+        self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
@@ -95,12 +97,8 @@ class MarketOverviewViewModel {
                 listType: item.listType,
                 imageName: imageName(listType: item.listType),
                 title: title(listType: item.listType),
-                listViewItems: item.marketInfos.map { listViewItem(marketInfo: $0) }
+                listViewItems: item.marketInfos.map { decorator.listViewItem(marketInfo: $0) }
         )
-    }
-
-    private func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem {
-        MarketModule.ListViewItem(marketInfo: marketInfo, marketField: .price, currency: service.currency)
     }
 
     private func imageName(listType: MarketOverviewService.ListType) -> String {

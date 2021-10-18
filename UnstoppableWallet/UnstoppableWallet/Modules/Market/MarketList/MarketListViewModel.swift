@@ -5,10 +5,19 @@ import CurrencyKit
 import MarketKit
 
 protocol IMarketListService {
-    var currency: Currency { get }
     var state: MarketListServiceState { get }
     var stateObservable: Observable<MarketListServiceState> { get }
     func refresh()
+}
+
+protocol IMarketListDecoratorService {
+    var currency: Currency { get }
+    var priceChangeType: MarketModule.PriceChangeType { get }
+    func resyncIfPossible()
+}
+
+protocol IMarketListDecorator {
+    func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem
 }
 
 enum MarketListServiceState {
@@ -20,22 +29,17 @@ enum MarketListServiceState {
 class MarketListViewModel {
     private let service: IMarketListService
     private let watchlistToggleService: MarketWatchlistToggleService
+    private let decorator: IMarketListDecorator
     private let disposeBag = DisposeBag()
-
-    var marketField: MarketModule.MarketField {
-        didSet {
-            syncViewItemsIfPossible()
-        }
-    }
 
     private let viewItemDataRelay = BehaviorRelay<ViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, marketField: MarketModule.MarketField) {
+    init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, decorator: IMarketListDecorator) {
         self.service = service
         self.watchlistToggleService = watchlistToggleService
-        self.marketField = marketField
+        self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
@@ -70,7 +74,7 @@ class MarketListViewModel {
 
     private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
         marketInfos.map {
-            MarketModule.ListViewItem(marketInfo: $0, marketField: marketField, currency: service.currency)
+            decorator.listViewItem(marketInfo: $0)
         }
     }
 

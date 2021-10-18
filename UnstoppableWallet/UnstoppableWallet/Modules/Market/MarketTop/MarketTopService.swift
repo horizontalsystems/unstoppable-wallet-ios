@@ -66,7 +66,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
             state = .loading
         case .loaded(let marketInfos):
             let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
-            state = .loaded(marketInfos: marketInfos.sorted(by: sortingField), softUpdate: false)
+            state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
         case .failed(let error):
             state = .failed(error: error)
         }
@@ -84,16 +84,30 @@ class MarketTopService: IMarketMultiSortHeaderService {
 
 extension MarketTopService: IMarketListService {
 
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
     var stateObservable: Observable<MarketListServiceState> {
         stateRelay.asObservable()
     }
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketTopService: IMarketListDecoratorService {
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    var priceChangeType: MarketModule.PriceChangeType {
+        .day
+    }
+
+    func resyncIfPossible() {
+        if case .loaded(let marketInfos, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        }
     }
 
 }
