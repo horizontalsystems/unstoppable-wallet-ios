@@ -221,8 +221,8 @@ class MarketAdvancedSearchService {
                     (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                     (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
                     (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binance-coin")) &&
-                    (!priceCloseToAth || closedToAllTime(value: marketInfo.ath)) &&
-                    (!priceCloseToAtl || closedToAllTime(value: marketInfo.atl))
+                    (!priceCloseToAth || closedToAllTime(value: marketInfo.athPercentage)) &&
+                    (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlPercentage))
         }
     }
 
