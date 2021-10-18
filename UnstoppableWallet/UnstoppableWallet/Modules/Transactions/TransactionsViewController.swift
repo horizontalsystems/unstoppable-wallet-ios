@@ -37,6 +37,22 @@ class TransactionsViewController: ThemeViewController {
 
         title = "transactions.title".localized
 
+        view.addSubview(tableView)
+        tableView.backgroundColor = .clear
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.tableFooterView = UIView(frame: .zero)
+
+        tableView.registerCell(forClass: H23Cell.self)
+        tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
+        tableView.estimatedRowHeight = 0
+        tableView.delaysContentTouches = false
+
         view.addSubview(typeFiltersView)
         typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
@@ -58,23 +74,6 @@ class TransactionsViewController: ThemeViewController {
         coinFiltersView.onSelect = { [weak self] index in
             self?.viewModel.coinFilterSelected(index: index)
         }
-
-        view.addSubview(tableView)
-        tableView.backgroundColor = .clear
-        tableView.snp.makeConstraints { maker in
-            maker.top.equalTo(coinFiltersView.snp.bottom)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.tableFooterView = UIView(frame: .zero)
-
-        tableView.registerCell(forClass: H23Cell.self)
-        tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
-        tableView.estimatedRowHeight = 0
-        tableView.delaysContentTouches = false
 
         view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { maker in
@@ -100,6 +99,10 @@ class TransactionsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(coinFilters: coinFilters) }
         subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] status in self?.show(status: status) }
 
+        tableView.snp.makeConstraints { maker in
+            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
         tableView.reloadData()
     }
 
