@@ -35,7 +35,7 @@ jobs:
         with:
           lane: dev
         env:
-          BUILD_NUMBER: ${{ env.GITHUB_RUN_NUMBER }}
+          BUILD_NUMBER: ${{ github.run_number }}
           APP_STORE_CONNECT_TEAM_ID: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
           DEVELOPER_APP_ID: ${{ secrets.DEVELOPER_APP_ID }}
           DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
