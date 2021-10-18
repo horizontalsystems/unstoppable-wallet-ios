@@ -30,17 +30,12 @@ jobs:
       - name: Add iOS targets to Rust
         run: rustup target add aarch64-apple-ios x86_64-apple-ios
 
-      - name: Set old AppCenter build number to ENV
-        env:
-          APPCENTER_NUMBER: 1200
-        run: echo "BUILD_NUMBER_NEW=$(($APPCENTER_NUMBER+$GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
-
       - name: Run Fastlane (prepare pods, build, upload to AppCenter)
         uses: maierj/fastlane-action@v2.0.1
         with:
           lane: dev
         env:
-          BUILD_NUMBER: ${{ env.BUILD_NUMBER_NEW }}
+          BUILD_NUMBER: ${{ env.GITHUB_RUN_NUMBER }}
           APP_STORE_CONNECT_TEAM_ID: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
           DEVELOPER_APP_ID: ${{ secrets.DEVELOPER_APP_ID }}
           DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
