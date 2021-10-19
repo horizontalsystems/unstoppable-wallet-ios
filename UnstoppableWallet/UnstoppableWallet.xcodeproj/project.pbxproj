@@ -4062,11 +4062,6 @@
 				58AAA6FB53544C764A1D264E /* ItemSelector */,
 				58AAA119CAEF1B4621D71DF8 /* Favorites */,
 				58AAAC89F3E7CD9F799B89D7 /* Coin */,
-				58AAA6CBFBB0EA959466977D /* CoinPageViewModel.swift */,
-				58AAA353DAC061C2123948FC /* CoinPageViewController.swift */,
-				58AAA331E9A43EB0C7F186B1 /* CoinPageModule.swift */,
-				58AAA55A4A6A97C25F84034F /* CoinChartFactory.swift */,
-				58AAA444C885BCC354F1B7B3 /* CoinPageMarkdownParser.swift */,
 				11B3581D97669C8038485FAE /* CreateAccount */,
 				11B35FEAD9772F1E11F3D767 /* RestoreAccount */,
 				11B356E7705CB0B09907CAE5 /* ManageAccounts */,
@@ -5712,6 +5707,11 @@
 				11B35A4D209DB1BD00863F04 /* CoinTvlRank */,
 				11B3598095191471627860DB /* Info */,
 				11B350D0C95CBAF2B4327C4F /* Audits */,
+				58AAA6CBFBB0EA959466977D /* CoinPageViewModel.swift */,
+				58AAA353DAC061C2123948FC /* CoinPageViewController.swift */,
+				58AAA331E9A43EB0C7F186B1 /* CoinPageModule.swift */,
+				58AAA55A4A6A97C25F84034F /* CoinChartFactory.swift */,
+				58AAA444C885BCC354F1B7B3 /* CoinPageMarkdownParser.swift */,
 			);
 			path = Coin;
 			sourceTree = "<group>";
