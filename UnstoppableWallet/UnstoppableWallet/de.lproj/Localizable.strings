@@ -41,8 +41,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Wallet entsperren";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable muss Zugriff auf Ihre Kamera haben, um den QR-Code zu scannen.\n\nGehen Sie auf „Einstellungen“, dann auf „Unstoppable“ und erlauben Sie dort den Zugriff auf die Kamera.";

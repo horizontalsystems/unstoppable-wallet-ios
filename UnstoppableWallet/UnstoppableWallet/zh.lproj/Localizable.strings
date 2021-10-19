@@ -41,8 +41,6 @@
 
 "n/a" = "不可用";
 
-"biometric_usage_reason" = "解锁钱包";
-
 // Access Camera
 
 "access_camera.message" = "钱包需要接入照相机扫描二维码\n\n请在”设置”-“Unstoppable”中打开";

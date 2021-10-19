@@ -41,8 +41,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Desbloquear monedero";
-
 // Access Camera
 
 "access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";

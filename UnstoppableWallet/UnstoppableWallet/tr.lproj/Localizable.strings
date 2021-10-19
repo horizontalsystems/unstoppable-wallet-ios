@@ -42,8 +42,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Cüzdan kilidini aç";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable Cüzdan, QR Kodu okuyabilmek için Kameranıza ihtiyaç duyuyor.\n\nAyarlar - > Unstoppable'a gidip kamera erişimine izin verin.";

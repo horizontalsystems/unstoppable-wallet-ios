@@ -41,8 +41,6 @@
 
 "n/a" = "해당 없음 ";
 
-"biometric_usage_reason" = "지갑 잠금 해제";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> Unstoppable으로 가서 카메라 접근을 허용해 주세요.";
