@@ -42,8 +42,6 @@
 
 "n/a" = "S. O.";
 
-"biometric_usage_reason" = "Déverrouiller le porte-monnaie";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
