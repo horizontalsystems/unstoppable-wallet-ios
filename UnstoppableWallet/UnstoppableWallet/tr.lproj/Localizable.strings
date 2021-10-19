@@ -43,8 +43,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Cüzdan kilidini aç";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
