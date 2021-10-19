@@ -114,14 +114,19 @@ class TransactionInfoViewItemFactory {
         }
 
         var sections = [[TransactionInfoModule.ViewItem]]()
-        var middleSectionItems: [TransactionInfoModule.ViewItem] = [.date(date: transaction.date)]
+        var middleSectionItems: [TransactionInfoModule.ViewItem] = [
+            .date(date: transaction.date),
+            .status(status: status)
+        ]
+
+        if let evmTransaction = transaction as? EvmTransactionRecord, !evmTransaction.foreignTransaction,
+           let resendItem = evmResendItem(status: status) {
+            middleSectionItems.append(resendItem)
+        }
 
         switch transaction {
         case let evmIncoming as EvmIncomingTransactionRecord:
             let coinRate = _rate(evmIncoming.value)
-
-            middleSectionItems.append(.status(status: status))
-
             if let coin = evmIncoming.value.coin, let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -132,14 +137,9 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: evmIncoming.value, rate: coinRate, incoming: true))
 
         case let evmOutgoing as EvmOutgoingTransactionRecord:
-            let coinRate = _rate(evmOutgoing.value)
-
-            middleSectionItems.append(.status(status: status))
-            if let resendItem = evmResendItem(status: status) {
-                middleSectionItems.append(resendItem)
-            }
             middleSectionItems.append(evmFeeItem(transactionValue: evmOutgoing.fee, rate: _rate(evmOutgoing.value), status: status))
 
+            let coinRate = _rate(evmOutgoing.value)
             if let coin = evmOutgoing.value.coin, let rate = coinRate {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -150,7 +150,6 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: evmOutgoing.value, rate: coinRate, incoming: false))
 
         case let swap as SwapTransactionRecord:
-            middleSectionItems.append(.status(status: status))
             middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
 
             if let valueOut = swap.valueOut {
@@ -168,14 +167,9 @@ class TransactionInfoViewItemFactory {
             }
 
         case let approve as ApproveTransactionRecord:
-            let coinRate = _rate(approve.value)
-
-            middleSectionItems.append(.status(status: status))
-            if let resendItem = evmResendItem(status: status) {
-                middleSectionItems.append(resendItem)
-            }
             middleSectionItems.append(evmFeeItem(transactionValue: approve.fee, rate: _rate(approve.fee), status: status))
 
+            let coinRate = _rate(approve.value)
             if let rate = coinRate, let coin = approve.value.coin {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -243,16 +237,11 @@ class TransactionInfoViewItemFactory {
                 sections.append(youGetSection)
             }
 
-            middleSectionItems.append(.status(status: status))
             middleSectionItems.append(evmFeeItem(transactionValue: contractCall.fee, rate: _rate(contractCall.fee), status: status))
-
             middleSectionItems.append(.id(value: contractCall.transactionHash))
 
         case let btcIncoming as BitcoinIncomingTransactionRecord:
             let coinRate = _rate(btcIncoming.value)
-
-            middleSectionItems.append(.status(status: status))
-
             if let rate = coinRate, let coin = btcIncoming.value.coin {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -271,14 +260,11 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: btcIncoming.value, rate: coinRate, incoming: true))
 
         case let btcOutgoing as BitcoinOutgoingTransactionRecord:
-            let coinRate = _rate(btcOutgoing.value)
-
-            middleSectionItems.append(.status(status: status))
-
             if let fee = btcOutgoing.fee {
                 middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(transactionValue: fee, rate: _rate(fee))))
             }
 
+            let coinRate = _rate(btcOutgoing.value)
             if let rate = coinRate, let coin = btcOutgoing.value.coin {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -298,9 +284,6 @@ class TransactionInfoViewItemFactory {
 
         case let tx as BinanceChainIncomingTransactionRecord:
             let coinRate = _rate(tx.value)
-
-            middleSectionItems.append(.status(status: status))
-
             if let rate = coinRate, let coin = tx.value.coin {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
@@ -312,11 +295,9 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: tx.value, rate: coinRate, incoming: true))
 
         case let tx as BinanceChainOutgoingTransactionRecord:
-            let coinRate = _rate(tx.value)
-
-            middleSectionItems.append(.status(status: status))
             middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(transactionValue: tx.fee, rate: _rate(tx.fee))))
 
+            let coinRate = _rate(tx.value)
             if let rate = coinRate, let coin = tx.value.coin {
                 middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
             }
