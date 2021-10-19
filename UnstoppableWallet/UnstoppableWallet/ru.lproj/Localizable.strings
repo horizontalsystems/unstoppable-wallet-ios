@@ -41,8 +41,6 @@
 
 "n/a" = "Нет данных";
 
-"biometric_usage_reason" = "Разблокировать Кошелек";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
