@@ -7,13 +7,13 @@ import ComponentKit
 import RxSwift
 
 class MarketGlobalMetricViewController: MarketListViewController {
-    private let viewModel: MarketGlobalMetricViewModel
     private let chartViewModel: MetricChartViewModel
     private let disposeBag = DisposeBag()
-    private let singleSortHeaderView: MarketSingleSortHeaderView
+    private let sortHeaderView: UITableViewHeaderFooterView
+
+    override var headerView: UITableViewHeaderFooterView? { sortHeaderView }
 
     override var viewController: UIViewController? { self }
-    override var headerView: UITableViewHeaderFooterView? { singleSortHeaderView }
     override var refreshEnabled: Bool { false }
 
     /* Chart section */
@@ -25,10 +25,9 @@ class MarketGlobalMetricViewController: MarketListViewController {
     private let chartViewCell: ChartViewCell
     private let chartRow: StaticRow
 
-    init(viewModel: MarketGlobalMetricViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketSingleSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
-        self.viewModel = viewModel
+    init(listViewModel: MarketListViewModel, headerView: UITableViewHeaderFooterView, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
         self.chartViewModel = chartViewModel
-        singleSortHeaderView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
+        sortHeaderView = headerView
 
         currentRateCell = MetricChartCurrentInfoCell(viewModel: chartViewModel)
         intervalRow = StaticRow(

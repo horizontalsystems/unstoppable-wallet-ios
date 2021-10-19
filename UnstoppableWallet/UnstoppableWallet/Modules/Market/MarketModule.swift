@@ -155,6 +155,40 @@ extension MarketModule {
         }
     }
 
+    enum MarketTvlField: Int, CaseIterable {
+        case value
+        case dayDiff
+        case weekDiff
+
+        var title: String {
+            switch self {
+            case .value: return "value".localized
+            case .dayDiff: return "market.tvl.market_field.day_diff".localized
+            case .weekDiff: return "market.tvl.market_field.week_diff".localized
+            }
+        }
+    }
+
+    enum MarketPlatformField: Int, CaseIterable {
+        case all
+        case ethereum
+        case binance
+        case solana
+        case avalanche
+        case polygon
+
+        var title: String {
+            switch self {
+            case .all: return "market.tvl.platform_field.all".localized
+            case .ethereum: return "market.tvl.platform_field.ethereum".localized
+            case .binance: return "market.tvl.platform_field.binance".localized
+            case .solana: return "market.tvl.platform_field.solana".localized
+            case .avalanche: return "market.tvl.platform_field.avalanche".localized
+            case .polygon: return "market.tvl.platform_field.polygon".localized
+            }
+        }
+    }
+
 }
 
 extension MarketKit.MarketInfo {
