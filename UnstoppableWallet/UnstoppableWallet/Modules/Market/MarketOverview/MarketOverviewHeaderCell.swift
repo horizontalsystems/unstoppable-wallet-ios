@@ -20,8 +20,9 @@ class MarketOverviewHeaderCell: BaseThemeCell {
 
         buttonWrapper.addSubview(rightButton)
         rightButton.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview().inset(CGFloat.margin8)
             maker.leading.trailing.equalToSuperview()
+            maker.centerY.equalToSuperview()
+            maker.height.equalTo(28)
         }
     }
 
