@@ -224,6 +224,14 @@ class App {
 
         deepLinkManager = DeepLinkManager()
 
+        let restoreCustomTokenWorker = RestoreCustomTokenWorker(
+                coinManager: coinManager,
+                walletManager: walletManager,
+                storage: storage,
+                localStorage: StorageKit.LocalStorage.default,
+                networkManager: networkManager
+        )
+
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
@@ -238,7 +246,8 @@ class App {
                 rateAppManager: rateAppManager,
                 remoteAlertManager: remoteAlertManager,
                 logRecordManager: logRecordManager,
-                deepLinkManager: deepLinkManager
+                deepLinkManager: deepLinkManager,
+                restoreCustomTokenWorker: restoreCustomTokenWorker
         )
     }
 
