@@ -17,6 +17,7 @@ class AppManager {
     private let remoteAlertManager: IRemoteAlertManager
     private let logRecordManager: ILogRecordManager
     private let deepLinkManager: IDeepLinkManager
+    private let restoreCustomTokenWorker: RestoreCustomTokenWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -26,7 +27,7 @@ class AppManager {
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
          remoteAlertManager: IRemoteAlertManager, logRecordManager: ILogRecordManager,
-         deepLinkManager: IDeepLinkManager
+         deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -42,6 +43,7 @@ class AppManager {
         self.remoteAlertManager = remoteAlertManager
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
+        self.restoreCustomTokenWorker = restoreCustomTokenWorker
     }
 
 }
@@ -63,6 +65,8 @@ extension AppManager {
         rateAppManager.onLaunch()
 
         remoteAlertManager.checkScheduledRequests()
+
+        try? restoreCustomTokenWorker.run()
     }
 
     func willResignActive() {
