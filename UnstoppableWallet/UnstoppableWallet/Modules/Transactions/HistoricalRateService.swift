@@ -56,8 +56,7 @@ extension HistoricalRateService {
             return
         }
 
-        Single<Decimal>.just(2)
-//        marketKit.historicalRate(coin: key.coin, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
+        marketKit.coinHistoricalPriceValueSingle(coinUid: key.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
                 .subscribe(onSuccess: { [weak self] decimal in self?.handle(key: key, rate: decimal) })
                 .disposed(by: ratesDisposeBag)
     }
