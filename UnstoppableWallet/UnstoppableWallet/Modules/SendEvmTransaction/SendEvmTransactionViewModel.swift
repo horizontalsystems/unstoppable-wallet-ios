@@ -102,6 +102,8 @@ class SendEvmTransactionViewModel {
             switch reason {
             case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
             case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
+            case .insufficientLiquidity: return
+                "swap.one_inch.error.insufficient_liquidity".localized()
             }
         }
 

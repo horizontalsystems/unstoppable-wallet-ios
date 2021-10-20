@@ -103,7 +103,7 @@ class OneInchTradeService {
                 .subscribe(onSuccess: { [weak self] quote in
                     self?.handle(quote: quote, platformCoinFrom: platformCoinIn, platformCoinTo: platformCoinOut, amountFrom: amountIn)
                 }, onError: { [weak self] error in
-                    self?.state = .notReady(errors: [error])
+                    self?.state = .notReady(errors: [error.convertedError])
                 })
                 .disposed(by: quoteDisposeBag)
 

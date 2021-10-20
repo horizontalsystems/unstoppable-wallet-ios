@@ -143,3 +143,13 @@ extension OneInchKit.Kit.SwapError: ConvertibleError {
     }
 
 }
+
+extension OneInchKit.Kit.QuoteError: ConvertibleError {
+
+    var convertedError: Error {
+        switch self {
+            case .insufficientLiquidity: return AppError.oneInch(reason: .insufficientLiquidity)
+        }
+    }
+
+}
