@@ -17,6 +17,22 @@ class MarketListMarketFieldDecorator {
 
 }
 
+extension MarketListMarketFieldDecorator: IMarketSingleSortHeaderDecorator {
+
+    var allFields: [String] {
+        MarketModule.MarketField.allCases.map { $0.title }
+    }
+
+    var currentFieldIndex: Int {
+        MarketModule.MarketField.allCases.firstIndex(of: marketField) ?? 0
+    }
+
+    func setCurrentField(index: Int) {
+        marketField = MarketModule.MarketField.allCases[index]
+    }
+
+}
+
 extension MarketListMarketFieldDecorator: IMarketListDecorator {
 
     func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem {

@@ -90,7 +90,6 @@ class CoinPageViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
 
         overviewController.parentNavigationController = navigationController
-        marketsController.parentNavigationController = navigationController
         detailsController.parentNavigationController = navigationController
         tweetsController.parentNavigationController = navigationController
 
