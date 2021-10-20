@@ -70,9 +70,8 @@ class TransactionInfoService {
         let baseCurrency = currencyKit.baseCurrency
 
         let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coinsForRates.map { coin in
-//            marketKit
-//                    .historicalRate(coin: coin, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
-            Single<Decimal>.just(2) // todo
+            marketKit
+                    .coinHistoricalPriceValueSingle(coinUid: coin.uid, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
                     .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }
         }
 
