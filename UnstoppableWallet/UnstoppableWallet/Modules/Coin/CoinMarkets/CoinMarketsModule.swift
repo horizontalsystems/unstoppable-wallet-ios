@@ -1,17 +1,19 @@
 import UIKit
-import ThemeKit
 import MarketKit
 
 struct CoinMarketsModule {
 
-    static func viewController(fullCoin: FullCoin) -> CoinMarketsViewController {
+    static func viewController(coin: Coin) -> CoinMarketsViewController {
         let service = CoinMarketsService(
-                fullCoin: fullCoin,
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+                coin: coin,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit
         )
+
         let viewModel = CoinMarketsViewModel(service: service)
-        return CoinMarketsViewController(viewModel: viewModel)
+        let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: viewModel)
+
+        return CoinMarketsViewController(viewModel: viewModel, headerViewModel: headerViewModel)
     }
 
 }

@@ -6,13 +6,19 @@ protocol IMarketSingleSortHeaderService: AnyObject {
     var sortDirectionAscending: Bool { get set }
 }
 
+protocol IMarketSingleSortHeaderDecorator: AnyObject {
+    var allFields: [String] { get }
+    var currentFieldIndex: Int { get }
+    func setCurrentField(index: Int)
+}
+
 class MarketSingleSortHeaderViewModel {
     private let service: IMarketSingleSortHeaderService
-    private let decorator: MarketListMarketFieldDecorator
+    private let decorator: IMarketSingleSortHeaderDecorator
 
     private let sortDirectionRelay: BehaviorRelay<Bool>
 
-    init(service: IMarketSingleSortHeaderService, decorator: MarketListMarketFieldDecorator) {
+    init(service: IMarketSingleSortHeaderService, decorator: IMarketSingleSortHeaderDecorator) {
         self.service = service
         self.decorator = decorator
 
@@ -23,16 +29,16 @@ class MarketSingleSortHeaderViewModel {
 
 extension MarketSingleSortHeaderViewModel {
 
-    var marketFields: [String] {
-        MarketModule.MarketField.allCases.map { $0.title }
+    var allFields: [String] {
+        decorator.allFields
     }
 
     var sortDirectionAscending: Bool {
         service.sortDirectionAscending
     }
 
-    var marketFieldIndex: Int {
-        MarketModule.MarketField.allCases.firstIndex(of: decorator.marketField) ?? 0
+    var currentFieldIndex: Int {
+        decorator.currentFieldIndex
     }
 
     var sortDirectionDriver: Driver<Bool> {
@@ -44,8 +50,8 @@ extension MarketSingleSortHeaderViewModel {
         sortDirectionRelay.accept(service.sortDirectionAscending)
     }
 
-    func onSelectMarketField(index: Int) {
-        decorator.marketField = MarketModule.MarketField.allCases[index]
+    func onSelectField(index: Int) {
+        decorator.setCurrentField(index: index)
     }
 
 }

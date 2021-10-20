@@ -45,19 +45,19 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
 
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
 
-        let marketFieldSelector = SelectorButton()
+        let fieldSelector = SelectorButton()
 
-        contentView.addSubview(marketFieldSelector)
-        marketFieldSelector.snp.makeConstraints { maker in
+        contentView.addSubview(fieldSelector)
+        fieldSelector.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(28)
         }
 
-        marketFieldSelector.set(items: viewModel.marketFields)
-        marketFieldSelector.setSelected(index: viewModel.marketFieldIndex)
-        marketFieldSelector.onSelect = { [weak self] index in
-            self?.viewModel.onSelectMarketField(index: index)
+        fieldSelector.set(items: viewModel.allFields)
+        fieldSelector.setSelected(index: viewModel.currentFieldIndex)
+        fieldSelector.onSelect = { [weak self] index in
+            self?.viewModel.onSelectField(index: index)
         }
 
         subscribe(disposeBag, viewModel.sortDirectionDriver) { [weak self] in self?.syncSortButton(ascending: $0) }
