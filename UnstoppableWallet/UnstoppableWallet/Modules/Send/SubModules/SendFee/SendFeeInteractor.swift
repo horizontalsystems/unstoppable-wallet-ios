@@ -4,7 +4,7 @@ import RxSwift
 import MarketKit
 
 class SendFeeInteractor {
-    private let rateManager: RateManagerNew
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let feeCoinProvider: FeeCoinProvider
 
@@ -12,8 +12,8 @@ class SendFeeInteractor {
 
     var disposeBag = DisposeBag()
 
-    init(rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit, feeCoinProvider: FeeCoinProvider) {
-        self.rateManager = rateManager
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, feeCoinProvider: FeeCoinProvider) {
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.feeCoinProvider = feeCoinProvider
     }
@@ -34,25 +34,25 @@ extension SendFeeInteractor: ISendFeeInteractor {
         feeCoinProvider.feeCoinProtocol(coinType: platformCoin.coinType)
     }
 
-    func subscribeToLatestRate(coinType: CoinType?, currencyCode: String) {
-        guard let coinType = coinType else {
+    func subscribeToCoinPrice(coinUid: String?, currencyCode: String) {
+        guard let coinUid = coinUid else {
             return
         }
 
-        rateManager.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
+        marketKit.coinPriceObservable(coinUid: coinUid, currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] latestRate in
-                    self?.delegate?.didReceive(latestRate: latestRate)
+                .subscribe(onNext: { [weak self] coinPrice in
+                    self?.delegate?.didReceive(coinPrice: coinPrice)
                 })
                 .disposed(by: disposeBag)
     }
 
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal? {
-        guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currencyCode), !latestRate.expired else {
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal? {
+        guard let coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currencyCode), !coinPrice.expired else {
             return nil
         }
 
-        return latestRate.rate
+        return coinPrice.value
     }
 
 }

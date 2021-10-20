@@ -8,19 +8,19 @@ class CoinSelectService {
     private let coinManager: CoinManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let rateManager: RateManagerNew
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     private let disposeBag = DisposeBag()
 
     private(set) var items = [Item]()
 
-    init(dex: SwapModule.Dex, coinManager: CoinManager, walletManager: WalletManager, adapterManager: AdapterManager, rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModule.Dex, coinManager: CoinManager, walletManager: WalletManager, adapterManager: AdapterManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
         self.coinManager = coinManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.rateManager = rateManager
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
 
         loadItems()
@@ -52,8 +52,8 @@ class CoinSelectService {
         }
 
         let walletItems = balanceCoins.map { platformCoin, balance -> Item in
-            let latestRate: RateManagerNew.LatestRate? = rateManager.latestRate(coinType: platformCoin.coinType, currencyCode: currencyKit.baseCurrency.code)
-            let rate: Decimal? = latestRate.flatMap { $0.expired ? nil : $0.rate }
+            let coinPrice: CoinPrice? = marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currencyKit.baseCurrency.code)
+            let rate: Decimal? = coinPrice.flatMap { $0.expired ? nil : $0.value }
 
             return Item(platformCoin: platformCoin, balance: balance, rate: rate)
         }

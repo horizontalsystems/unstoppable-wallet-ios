@@ -7,11 +7,11 @@ class SendEvmModule {
     static func viewController(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter) -> UIViewController {
         let service = SendEvmService(platformCoin: platformCoin, adapter: adapter)
         let switchService = AmountTypeSwitchService()
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManagerNew)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
-        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManagerNew)
+        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         let viewModel = SendEvmViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService)

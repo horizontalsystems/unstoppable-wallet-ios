@@ -17,12 +17,12 @@ protocol ISendFeeInteractor {
     var baseCurrency: Currency { get }
     func feeCoin(platformCoin: PlatformCoin) -> PlatformCoin?
     func feeCoinProtocol(platformCoin: PlatformCoin) -> String?
-    func subscribeToLatestRate(coinType: CoinType?, currencyCode: String)
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
+    func subscribeToCoinPrice(coinUid: String?, currencyCode: String)
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal?
 }
 
 protocol ISendFeeInteractorDelegate: AnyObject {
-    func didReceive(latestRate: RateManagerNew.LatestRate)
+    func didReceive(coinPrice: CoinPrice)
 }
 
 protocol ISendFeeModule: AnyObject {

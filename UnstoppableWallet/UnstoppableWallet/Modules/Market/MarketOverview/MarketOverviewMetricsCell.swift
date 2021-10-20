@@ -6,7 +6,7 @@ import Chart
 import ComponentKit
 
 class MarketOverviewMetricsCell: UITableViewCell {
-    static let cellHeight: CGFloat = 252
+    static let cellHeight: CGFloat = 240
 
     weak var viewController: UIViewController?
 

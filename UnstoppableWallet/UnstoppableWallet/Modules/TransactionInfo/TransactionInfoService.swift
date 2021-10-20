@@ -7,7 +7,7 @@ class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
     private let adapter: ITransactionsAdapter
-    private let rateManager: RateManagerNew
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     private var rates = [Coin: CurrencyValue]()
@@ -15,10 +15,10 @@ class TransactionInfoService {
 
     private let transactionInfoItemSubject = PublishSubject<TransactionInfoItem>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, rateManager: RateManagerNew, currencyKit: CurrencyKit.Kit) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
-        self.rateManager = rateManager
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
 
         subscribe(disposeBag, adapter.transactionsObservable(coin: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
@@ -70,8 +70,9 @@ class TransactionInfoService {
         let baseCurrency = currencyKit.baseCurrency
 
         let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coinsForRates.map { coin in
-            rateManager
-                    .historicalRate(coin: coin, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
+//            marketKit
+//                    .historicalRate(coin: coin, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
+            Single<Decimal>.just(2) // todo
                     .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }
         }
 

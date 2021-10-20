@@ -65,7 +65,7 @@ struct SendEvmConfirmationModule {
             return nil
         }
 
-        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManagerNew)
+        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider)
         let service = SendEvmTransactionService(sendData: sendData, evmKit: evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
@@ -107,7 +107,7 @@ struct SendEvmConfirmationModule {
         }
 
 
-        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManagerNew)
+        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let transactionService = EvmTransactionService(evmKit: adapter.evmKit, feeRateProvider: feeRateProvider)
         let service = SendEvmTransactionService(sendData: sendData, evmKit: adapter.evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 

@@ -6,11 +6,11 @@ import MarketKit
 
 class FiatService {
     private var disposeBag = DisposeBag()
-    private var latestRateDisposeBag = DisposeBag()
+    private var coinPriceDisposeBag = DisposeBag()
 
     private let switchService: AmountTypeSwitchService
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: RateManagerNew
+    private let marketKit: MarketKit.Kit
 
     private var platformCoin: PlatformCoin?
     private var rate: Decimal? {
@@ -46,19 +46,19 @@ class FiatService {
 
     var coinAmountLocked = false
 
-    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, rateManager: RateManagerNew) {
+    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
         self.switchService = switchService
         self.currencyKit = currencyKit
-        self.rateManager = rateManager
+        self.marketKit = marketKit
 
         subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
 
         sync()
     }
 
-    private func sync(latestRate: RateManagerNew.LatestRate?) {
-        if let latestRate = latestRate, !latestRate.expired {
-            rate = latestRate.rate
+    private func sync(coinPrice: CoinPrice?) {
+        if let coinPrice = coinPrice, !coinPrice.expired {
+            rate = coinPrice.value
 
             if coinAmountLocked {
                 syncCurrencyAmount()
@@ -141,17 +141,17 @@ extension FiatService {
     func set(platformCoin: PlatformCoin?) {
         self.platformCoin = platformCoin
 
-        latestRateDisposeBag = DisposeBag()
+        coinPriceDisposeBag = DisposeBag()
 
         if let platformCoin = platformCoin {
-            sync(latestRate: rateManager.latestRate(coinType: platformCoin.coinType, currencyCode: currency.code))
+            sync(coinPrice: marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currency.code))
 
-            rateManager.latestRateObservable(coinType: platformCoin.coinType, currencyCode: currency.code)
+            marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] latestRate in
-                        self?.sync(latestRate: latestRate)
+                    .subscribe(onNext: { [weak self] coinPrice in
+                        self?.sync(coinPrice: coinPrice)
                     })
-                    .disposed(by: latestRateDisposeBag)
+                    .disposed(by: coinPriceDisposeBag)
         } else {
             rate = nil
             currencyAmount = nil

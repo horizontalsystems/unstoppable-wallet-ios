@@ -7,17 +7,15 @@ class EvmCoinServiceFactory {
     private let basePlatformCoin: PlatformCoin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: RateManagerNew
 
     let baseCoinService: CoinService
 
-    init(basePlatformCoin: PlatformCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, rateManager: RateManagerNew) {
+    init(basePlatformCoin: PlatformCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.basePlatformCoin = basePlatformCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.rateManager = rateManager
 
-        baseCoinService = CoinService(platformCoin: basePlatformCoin, currencyKit: currencyKit, rateManager: rateManager)
+        baseCoinService = CoinService(platformCoin: basePlatformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
     func coinService(contractAddress: EthereumKit.Address) -> CoinService? {
@@ -25,7 +23,7 @@ class EvmCoinServiceFactory {
             return nil
         }
 
-        return CoinService(platformCoin: platformCoin, currencyKit: currencyKit, rateManager: rateManager)
+        return CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
     private func platformCoin(contractAddress: EthereumKit.Address) -> PlatformCoin? {
