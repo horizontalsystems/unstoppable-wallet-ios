@@ -7,15 +7,15 @@ class HistoricalRateService {
     private var disposeBag = DisposeBag()
     private var ratesDisposeBag = DisposeBag()
 
-    private var ratesManager: RateManagerNew
+    private var marketKit: MarketKit.Kit
     private var currency: Currency
     private var rates = [RateKey: CurrencyValue]()
 
     private var rateUpdatedSubject = PublishSubject<(RateKey, CurrencyValue)>()
     private var ratesChangedSubject = PublishSubject<Void>()
 
-    init(ratesManager: RateManagerNew, currencyKit: CurrencyKit.Kit) {
-        self.ratesManager = ratesManager
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.marketKit = marketKit
         currency = currencyKit.baseCurrency
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] currency in self?.handle(updatedCurrency: currency) }
@@ -56,7 +56,8 @@ extension HistoricalRateService {
             return
         }
 
-        ratesManager.historicalRate(coin: key.coin, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
+        Single<Decimal>.just(2)
+//        marketKit.historicalRate(coin: key.coin, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
                 .subscribe(onSuccess: { [weak self] decimal in self?.handle(key: key, rate: decimal) })
                 .disposed(by: ratesDisposeBag)
     }

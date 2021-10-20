@@ -21,7 +21,7 @@ class TransactionsService {
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
-        rateService = HistoricalRateService(ratesManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit)
+        rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         filterHelper = TransactionFilterHelper()
 
         handle(updatedWallets: walletManager.activeWallets)

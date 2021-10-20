@@ -9,7 +9,7 @@ struct TransactionInfoModule {
             return nil
         }
 
-        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, rateManager: App.shared.rateManagerNew, currencyKit: App.shared.currencyKit)
+        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))

@@ -31,16 +31,16 @@ protocol ISendInteractor {
     var baseCurrency: Currency { get }
     var defaultInputType: SendInputType { get }
 
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal?
     func send(single: Single<Void>, logger: Logger)
-    func subscribeToLatestRate(coinType: CoinType, currencyCode: String)
+    func subscribeToCoinPrice(coinUid: String, currencyCode: String)
 }
 
 protocol ISendInteractorDelegate: AnyObject {
     func sync()
     func didSend()
     func didFailToSend(error: Error)
-    func didReceive(latestRate: RateManagerNew.LatestRate)
+    func didReceive(coinPrice: CoinPrice)
 }
 
 protocol ISendHandler: AnyObject {

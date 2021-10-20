@@ -144,17 +144,17 @@ extension SendFeePresenter: ISendFeeViewDelegate {
         syncFeeLabels()
         syncError()
 
-        interactor.subscribeToLatestRate(coinType: feePlatformCoin?.coinType, currencyCode: interactor.baseCurrency.code)
-        rateValue = interactor.nonExpiredRateValue(coinType: platformCoin.coinType, currencyCode: interactor.baseCurrency.code)
+        interactor.subscribeToCoinPrice(coinUid: feePlatformCoin?.coin.uid, currencyCode: interactor.baseCurrency.code)
+        rateValue = interactor.nonExpiredRateValue(coinUid: platformCoin.coin.uid, currencyCode: interactor.baseCurrency.code)
     }
 
 }
 
 extension SendFeePresenter: ISendFeeInteractorDelegate {
 
-    func didReceive(latestRate: RateManagerNew.LatestRate) {
-        if !latestRate.expired {
-            rateValue = latestRate.rate
+    func didReceive(coinPrice: CoinPrice) {
+        if !coinPrice.expired {
+            rateValue = coinPrice.value
         } else {
             rateValue = nil
         }

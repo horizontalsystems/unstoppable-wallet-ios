@@ -5,12 +5,12 @@ import MarketKit
 class CoinService {
     let platformCoin: PlatformCoin
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: RateManagerNew
+    private let marketKit: MarketKit.Kit
 
-    init(platformCoin: PlatformCoin, currencyKit: CurrencyKit.Kit, rateManager: RateManagerNew) {
+    init(platformCoin: PlatformCoin, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
         self.platformCoin = platformCoin
         self.currencyKit = currencyKit
-        self.rateManager = rateManager
+        self.marketKit = marketKit
     }
 
 }
@@ -20,8 +20,8 @@ extension CoinService {
     var rate: CurrencyValue? {
         let baseCurrency = currencyKit.baseCurrency
 
-        return rateManager.latestRate(coinType: platformCoin.coinType, currencyCode: baseCurrency.code).map { latestRate in
-            CurrencyValue(currency: baseCurrency, value: latestRate.rate)
+        return marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
+            CurrencyValue(currency: baseCurrency, value: coinPrice.value)
         }
     }
 
