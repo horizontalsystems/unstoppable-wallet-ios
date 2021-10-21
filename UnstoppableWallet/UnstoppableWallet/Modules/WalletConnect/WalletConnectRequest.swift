@@ -1,5 +1,5 @@
 import EthereumKit
-import WalletConnect
+import WalletConnectV1
 import BigInt
 
 class WalletConnectRequest {

@@ -390,7 +390,7 @@ DEPENDENCIES:
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 2.0.1)
-  - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`, branch `master`)
+  - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
   - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.2`)
 
@@ -516,7 +516,6 @@ EXTERNAL SOURCES:
   UniswapKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
-    :branch: master
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
     :git: https://github.com/horizontalsystems/xrates-kit-ios/
@@ -616,7 +615,7 @@ CHECKOUT OPTIONS:
     :commit: 46c243f999b59a8718e865bd8ad3849892b0f2d2
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
-    :commit: 2c46d6414b0c558919149e0e775d12349cdb2d3e
+    :commit: 1336f67877608e271107cd96bb852f76fd51eddf
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   XRatesKit.swift:
     :commit: 11d5b49b04c19635c2084956b683e731ed33fc6a
@@ -712,11 +711,11 @@ SPEC CHECKSUMS:
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: e19fabc17fa422cdbc81a3bb0a3a97c6b7f88d42
   UnstoppableDomainsResolution: 856ba43f08b31f3f34157c7257092bd0c6e31cf8
-  WalletConnect: 1942d6ae2698cadc0b117f4f4c99bae9d821ab4d
+  WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   XRatesKit.swift: 7013e3b93f5749d42bb65bebb532c1c62a916e8e
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 50c4c727910cece86a4e120a31f324e4578572f5
+PODFILE CHECKSUM: 1d54c61a953c057b72e2d8494fde2cb5627cdb7d
 
 COCOAPODS: 1.11.2
