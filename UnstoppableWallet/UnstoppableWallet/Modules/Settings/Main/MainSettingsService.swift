@@ -3,7 +3,7 @@ import LanguageKit
 import ThemeKit
 import CurrencyKit
 import PinKit
-import WalletConnect
+import WalletConnectV1
 import ThemeKit
 
 class MainSettingsService {

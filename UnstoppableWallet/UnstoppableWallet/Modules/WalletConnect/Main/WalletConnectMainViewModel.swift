@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import WalletConnect
+import WalletConnectV1
 
 class WalletConnectMainViewModel {
     private let service: WalletConnectService

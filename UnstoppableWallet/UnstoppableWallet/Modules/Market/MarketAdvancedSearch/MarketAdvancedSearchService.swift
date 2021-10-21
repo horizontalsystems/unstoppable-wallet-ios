@@ -220,7 +220,7 @@ class MarketAdvancedSearchService {
                     inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
                     (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                     (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
-                    (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binance-coin")) &&
+                    (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
                     (!priceCloseToAth || closedToAllTime(value: marketInfo.athPercentage)) &&
                     (!priceCloseToAtl || closedToAllTime(value: marketInfo.atlPercentage))
         }
