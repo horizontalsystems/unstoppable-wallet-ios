@@ -10,17 +10,8 @@ struct CoinPageModule {
             return nil
         }
 
-        let coinFavoriteService = CoinFavoriteService(manager: App.shared.favoritesManager, coinUid: fullCoin.coin.uid)
-
-//        let priceAlertService = CoinPriceAlertService(
-//                priceAlertManager: App.shared.priceAlertManager,
-//                localStorage: App.shared.localStorage,
-//                coinType: launchMode.coinType,
-//                coinTitle: launchMode.coinTitle)
-
-        let coinPageViewModel = CoinPageViewModel(fullCoin: fullCoin)
-        let favoriteViewModel = CoinFavoriteViewModel(service: coinFavoriteService)
-//        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
+        let service = CoinPageService(fullCoin: fullCoin, favoritesManager: App.shared.favoritesManager)
+        let viewModel = CoinPageViewModel(service: service)
 
         let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
@@ -28,9 +19,7 @@ struct CoinPageModule {
         let tweetsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
-                viewModel: coinPageViewModel,
-                favoriteViewModel: favoriteViewModel,
-//                priceAlertViewModel: priceAlertViewModel,
+                viewModel: viewModel,
                 overviewController: overviewController,
                 marketsController: marketsController,
                 detailsController: detailsController,

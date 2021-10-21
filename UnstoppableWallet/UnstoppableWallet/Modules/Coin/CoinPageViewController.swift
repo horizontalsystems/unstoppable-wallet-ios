@@ -7,12 +7,7 @@ import ComponentKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
-    private let favoriteViewModel: CoinFavoriteViewModel
-//    private let priceAlertViewModel: CoinPriceAlertViewModel
     private let disposeBag = DisposeBag()
-
-    private var favoriteButtonItem: UIBarButtonItem?
-    private var alertButtonItem: UIBarButtonItem?
 
     private let subtitleCell = A7Cell()
     private let tabsView = FilterHeaderView(buttonStyle: .tab)
@@ -23,12 +18,8 @@ class CoinPageViewController: ThemeViewController {
     private let detailsController: CoinOverviewViewController
     private let tweetsController: CoinOverviewViewController
 
-    init(viewModel: CoinPageViewModel, favoriteViewModel: CoinFavoriteViewModel,
-         overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController,
-         detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
+    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
         self.viewModel = viewModel
-        self.favoriteViewModel = favoriteViewModel
-//        self.priceAlertViewModel = priceAlertViewModel
         self.overviewController = overviewController
         self.marketsController = marketsController
         self.detailsController = detailsController
@@ -45,6 +36,9 @@ class CoinPageViewController: ThemeViewController {
         super.viewDidLoad()
 
         view.addSubview(UIView()) // prevent Large Title from Collapsing
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "rate_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onTapFavorite))
 
         let viewItem = viewModel.viewItem
         title = viewItem.title
@@ -79,7 +73,7 @@ class CoinPageViewController: ThemeViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
-        tabsView.reload(filters: viewModel.tabs.map {
+        tabsView.reload(filters: CoinPageModule.Tab.allCases.map {
             FilterHeaderView.ViewItem.item(title: $0.title)
         })
 
@@ -87,13 +81,13 @@ class CoinPageViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
-
         overviewController.parentNavigationController = navigationController
         detailsController.parentNavigationController = navigationController
         tweetsController.parentNavigationController = navigationController
 
-        subscribeViewModels()
+        subscribe(disposeBag, viewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
+        subscribe(disposeBag, viewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
+
         onSelectTab(index: 0)
     }
 
@@ -101,11 +95,8 @@ class CoinPageViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func subscribeViewModels() {
-        // barItems section
-//        subscribe(disposeBag, priceAlertViewModel.priceAlertActiveDriver) { [weak self] in self?.sync(priceAlertEnabled: $0) }
-        subscribe(disposeBag, favoriteViewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
-        subscribe(disposeBag, favoriteViewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
+    @objc private func onTapFavorite() {
+        viewModel.toggleFavorite()
     }
 
     private func onSelectTab(index: Int) {
@@ -130,69 +121,8 @@ class CoinPageViewController: ThemeViewController {
         }
     }
 
-    private func syncBarButtons() {
-        navigationItem.rightBarButtonItems = [favoriteButtonItem, alertButtonItem].compactMap { $0 }
-    }
-
-    @objc private func onAlertTap() {
-//        guard let chartNotificationViewController = ChartNotificationRouter.module(
-//                coinType: priceAlertViewModel.coinType,
-//                coinTitle: viewModel.coinTitle,
-//                mode: .all) else {
-//
-//            return
-//        }
-//
-//        present(chartNotificationViewController, animated: true)
-    }
-
-    @objc private func onFavoriteTap() {
-        favoriteViewModel.favorite()
-    }
-
-    @objc private func onUnfavoriteTap() {
-        favoriteViewModel.unfavorite()
-    }
-
-}
-
-extension CoinPageViewController {
-
-    // BarItems section
-
-    private func sync(priceAlertEnabled: Bool) {
-//        guard priceAlertViewModel.alertNotificationEnabled == true else {
-//            alertButtonItem = nil
-//            syncBarButtons()
-//
-//            return
-//        }
-//
-//        var image: UIImage?
-//        var imageTintColor: UIColor?
-//        if priceAlertEnabled {
-//            image = UIImage(named: "bell_ring_24")?.withRenderingMode(.alwaysTemplate)
-//            imageTintColor = .themeJacob
-//        } else {
-//            image = UIImage(named: "bell_24")?.withRenderingMode(.alwaysTemplate)
-//            imageTintColor = .themeGray
-//        }
-//
-//        alertButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(onAlertTap))
-//        alertButtonItem?.tintColor = imageTintColor
-//
-        syncBarButtons()
-    }
-
     private func sync(favorite: Bool) {
-        let selector = favorite ? #selector(onUnfavoriteTap) : #selector(onFavoriteTap)
-        let color = favorite ? UIColor.themeJacob : UIColor.themeGray
-
-        let favoriteImage = UIImage(named: "rate_24")?.withRenderingMode(.alwaysTemplate)
-        favoriteButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: selector)
-        favoriteButtonItem?.tintColor = color
-
-        syncBarButtons()
+        navigationItem.rightBarButtonItem?.tintColor = favorite ? UIColor.themeJacob : UIColor.themeGray
     }
 
     private func showHud(title: String) {

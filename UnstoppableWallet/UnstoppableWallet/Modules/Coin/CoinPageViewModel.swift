@@ -1,10 +1,23 @@
 import Foundation
+import RxSwift
+import RxRelay
+import RxCocoa
 import MarketKit
 
 class CoinPageViewModel {
+    private let service: CoinPageService
+    private let disposeBag = DisposeBag()
     let viewItem: ViewItem
 
-    init(fullCoin: FullCoin) {
+    private let favoriteRelay: BehaviorRelay<Bool>
+    private let favoriteHudRelay = PublishRelay<String>()
+
+    init(service: CoinPageService) {
+        self.service = service
+
+        favoriteRelay = BehaviorRelay(value: service.favorite)
+
+        let fullCoin = service.fullCoin
         viewItem = ViewItem(
                 title: fullCoin.coin.code,
                 subtitle: fullCoin.coin.name,
@@ -12,14 +25,27 @@ class CoinPageViewModel {
                 imageUrl: fullCoin.coin.imageUrl,
                 imagePlaceholderName: fullCoin.placeholderImageName
         )
+
+        subscribe(disposeBag, service.favoriteObservable) { [weak self] favorite in
+            self?.favoriteRelay.accept(favorite)
+            self?.favoriteHudRelay.accept(favorite ? "coin_page.favorited".localized : "coin_page.unfavorited".localized)
+        }
     }
 
 }
 
 extension CoinPageViewModel {
 
-    var tabs: [CoinPageModule.Tab] {
-        CoinPageModule.Tab.allCases
+    var favoriteDriver: Driver<Bool> {
+        favoriteRelay.asDriver()
+    }
+
+    var favoriteHudSignal: Signal<String> {
+        favoriteHudRelay.asSignal()
+    }
+
+    func toggleFavorite() {
+        service.toggleFavorite()
     }
 
 }
