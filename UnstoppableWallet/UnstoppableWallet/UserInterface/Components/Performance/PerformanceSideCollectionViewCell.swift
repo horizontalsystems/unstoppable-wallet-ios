@@ -17,11 +17,29 @@ class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func font(viewItem: CoinOverviewViewModel.PerformanceViewItem) -> UIFont? {
+        switch viewItem {
+        case .title: return .subhead1
+        case .subtitle: return .caption
+        case .content: return .caption
+        case .value: return nil
+        }
+    }
+
+    private func color(viewItem: CoinOverviewViewModel.PerformanceViewItem) -> UIColor? {
+        switch viewItem {
+        case .title: return .themeOz
+        case .subtitle: return .themeBran
+        case .content: return .themeGray
+        case .value: return nil
+        }
+    }
+
     func set(viewItem: CoinOverviewViewModel.PerformanceViewItem, horizontalFirst: Bool, verticalFirst: Bool) {
         super.set(horizontalFirst: horizontalFirst, verticalFirst: verticalFirst)
 
-        label.font = viewItem.font
-        label.textColor = viewItem.color
+        label.font = font(viewItem: viewItem)
+        label.textColor = color(viewItem: viewItem)
     }
 
     var title: String? {

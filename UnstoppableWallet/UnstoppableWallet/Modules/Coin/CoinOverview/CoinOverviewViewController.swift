@@ -84,17 +84,10 @@ class CoinOverviewViewController: ThemeViewController {
 
         tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: BCell.self)
-        tableView.registerCell(forClass: B4Cell.self)
-        tableView.registerCell(forClass: D1Cell.self)
-        tableView.registerCell(forClass: D2Cell.self)
-        tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: DB7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerCell(forClass: D20Cell.self)
         tableView.registerCell(forClass: PerformanceTableViewCell.self)
-        tableView.registerCell(forClass: ChartMarketPerformanceCell.self)
-        tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
@@ -119,7 +112,7 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.buildSections()
 
         subscribeViewModels()
-        viewModel.viewDidLoad()
+        viewModel.onLoad()
         chartViewModel.viewDidLoad()
     }
 
@@ -297,7 +290,7 @@ extension CoinOverviewViewController {
         )
     }
 
-    private func linksSection(guideUrl: URL?, links: [CoinOverviewViewModel.Link]) -> SectionProtocol {
+    private func linksSection(guideUrl: URL?, links: [CoinOverviewViewModel.LinkViewItem]) -> SectionProtocol {
         var guideRows = [RowProtocol]()
 
         if let guideUrl = guideUrl {
@@ -313,7 +306,7 @@ extension CoinOverviewViewController {
                     },
                     action: { [weak self] _ in
                         let module = MarkdownModule.viewController(url: guideUrl)
-                        self?.navigationController?.pushViewController(module, animated: true)
+                        self?.parentNavigationController?.pushViewController(module, animated: true)
                     }
             )
 
@@ -328,35 +321,33 @@ extension CoinOverviewViewController {
                     let isLast = index == links.count - 1
 
                     return Row<A1Cell>(
-                            id: link.type.rawValue,
+                            id: link.title,
                             height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.titleImage = link.icon
+                                cell.titleImage = UIImage(named: link.iconName)
                                 cell.title = link.title
                             },
                             action: { [weak self] _ in
-                                self?.open(link: link)
+                                self?.openLink(url: link.url)
                             }
                     )
                 }
         )
     }
 
-    private func open(link: CoinOverviewViewModel.Link) {
-        switch link.type {
-        case .twitter:
-            let account = link.url.stripping(prefix: "https://twitter.com/")
+    private func openLink(url: String) {
+        if url.hasPrefix("https://twitter.com/") {
+            let account = url.stripping(prefix: "https://twitter.com/")
 
             if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
                 UIApplication.shared.open(appUrl)
-            } else {
-                urlManager.open(url: link.url, from: self)
+                return
             }
-        default:
-            urlManager.open(url: link.url, from: self)
         }
+
+        urlManager.open(url: url, from: parentNavigationController)
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
@@ -416,7 +407,7 @@ extension CoinOverviewViewController {
         )
     }
 
-    private func contractInfoSection(contracts: [CoinOverviewViewModel.ContractInfo]) -> SectionProtocol {
+    private func contractInfoSection(contracts: [CoinOverviewViewModel.ContractViewItem]) -> SectionProtocol {
         Section(
                 id: "contract-info",
                 headerState: .margin(height: .margin12),
@@ -460,27 +451,27 @@ extension CoinOverviewViewController {
         }
     }
 
-    private func marketInfoSection(marketInfo: CoinOverviewViewModel.MarketInfo) -> SectionProtocol? {
+    private func marketInfoSection(viewItem: CoinOverviewViewModel.ViewItem) -> SectionProtocol? {
         let datas = [
-            marketInfo.marketCap.map {
-                (id: "market_cap", title: "coin_page.market_cap".localized, badge: marketInfo.marketCapRank, text: $0)
+            viewItem.marketCap.map {
+                (id: "market_cap", title: "coin_page.market_cap".localized, badge: viewItem.marketCapRank, text: $0)
             },
-            marketInfo.totalSupply.map {
+            viewItem.totalSupply.map {
                 (id: "total_supply", title: "coin_page.total_supply".localized, badge: nil, text: $0)
             },
-            marketInfo.circulatingSupply.map {
+            viewItem.circulatingSupply.map {
                 (id: "circulating_supply", title: "coin_page.circulating_supply".localized, badge: nil, text: $0)
             },
-            marketInfo.volume24h.map {
+            viewItem.volume24h.map {
                 (id: "volume24", title: "coin_page.trading_volume".localized, badge: nil, text: $0)
             },
-            marketInfo.dilutedMarketCap.map {
+            viewItem.dilutedMarketCap.map {
                 (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, badge: nil, text: $0)
             },
-            marketInfo.tvl.map {
+            viewItem.tvl.map {
                 (id: "tvl", title: "coin_page.tvl".localized, badge: nil, text: $0)
             },
-            marketInfo.genesisDate.map {
+            viewItem.genesisDate.map {
                 (id: "genesis_date", title: "coin_page.genesis_date".localized, badge: nil, text: $0)
             }
         ].compactMap {
@@ -553,7 +544,7 @@ extension CoinOverviewViewController: SectionsDataSource {
             sections.append(spinnerSection)
 
         case .loaded(let viewItem):
-            if let marketInfoSection = marketInfoSection(marketInfo: viewItem.marketInfo) {
+            if let marketInfoSection = marketInfoSection(viewItem: viewItem) {
                 sections.append(marketInfoSection)
             }
 
@@ -563,7 +554,7 @@ extension CoinOverviewViewController: SectionsDataSource {
                 sections.append(categoriesSection(categories: categories))
             }
 
-            if let contracts = viewItem.contractInfo {
+            if let contracts = viewItem.contracts {
                 sections.append(contractInfoSection(contracts: contracts))
             }
 
