@@ -3,47 +3,37 @@ import RxSwift
 import RxCocoa
 import MarketKit
 import CurrencyKit
+import LanguageKit
 
 class CoinOverviewService {
     private var disposeBag = DisposeBag()
 
+    let fullCoin: FullCoin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let languageManager: LanguageManager
     private let appConfigProvider: IAppConfigProvider
-    private let currentLocale: String
 
-    let fullCoin: FullCoin
-
-    private let stateRelay = PublishRelay<DataStatus<MarketInfoOverview>>()
-    private(set) var state: DataStatus<MarketInfoOverview> = .loading {
+    private let stateRelay = PublishRelay<DataStatus<Item>>()
+    private(set) var state: DataStatus<Item> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider, currentLocale: String, fullCoin: FullCoin) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: IAppConfigProvider) {
+        self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.languageManager = languageManager
         self.appConfigProvider = appConfigProvider
-        self.currentLocale = currentLocale
-        self.fullCoin = fullCoin
     }
 
-    func fetchChartData() {
-        disposeBag = DisposeBag()
-        state = .loading
-
-        marketKit.marketInfoOverviewSingle(coinUid: fullCoin.coin.uid, currencyCode: currencyKit.baseCurrency.code, languageCode: currentLocale)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onSuccess: { [weak self] info in
-                    self?.state = .completed(info)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+    private func sync(info: MarketInfoOverview) {
+        state = .completed(Item(info: info, guideUrl: guideUrl))
     }
 
-    var guideUrl: URL? {
+    private var guideUrl: URL? {
         guard let guideFileUrl = guideFileUrl else {
             return nil
         }
@@ -74,12 +64,36 @@ class CoinOverviewService {
 
 extension CoinOverviewService {
 
-    var stateObservable: Observable<DataStatus<MarketInfoOverview>> {
+    var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
 
     var currency: Currency {
         currencyKit.baseCurrency
+    }
+
+    func sync() {
+        disposeBag = DisposeBag()
+
+        state = .loading
+
+        marketKit.marketInfoOverviewSingle(coinUid: fullCoin.coin.uid, currencyCode: currencyKit.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onSuccess: { [weak self] info in
+                    self?.sync(info: info)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
+                })
+                .disposed(by: disposeBag)
+    }
+
+}
+
+extension CoinOverviewService {
+
+    struct Item {
+        let info: MarketInfoOverview
+        let guideUrl: URL?
     }
 
 }
