@@ -513,10 +513,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Category";
-"coin_page.contract" = "%@ Contract";
 "coin_page.contracts" = "Contracts";
 "coin_page.links" = "Links";
-"coin_page.bep2_symbol" = "BEP2 Symbol";
 
 "coin_page.guide" = "Guide";
 "coin_page.website" = "Website";
