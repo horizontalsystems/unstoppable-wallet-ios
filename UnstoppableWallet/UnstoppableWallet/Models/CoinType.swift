@@ -29,7 +29,6 @@ extension MarketKit.CoinType {
         case .ethereum, .erc20: return "Ethereum"
         case .binanceSmartChain, .bep20: return "Binance Smart Chain"
         case .bep2: return "Binance"
-        case .sol20: return "Solana"
         default: return ""
         }
     }
@@ -40,7 +39,6 @@ extension MarketKit.CoinType {
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
         case .bep2: return "BEP2"
-        case .sol20: return "SOL20"
         default: return ""
         }
     }
@@ -98,23 +96,6 @@ extension MarketKit.CoinType {
         switch self {
         case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .erc20, .bep20, .bep2: return true
         default: return false
-        }
-    }
-
-    var coinType: CoinKit.CoinType {
-        switch self {
-        case .bitcoin: return .bitcoin
-        case .litecoin: return .litecoin
-        case .bitcoinCash: return .bitcoinCash
-        case .dash: return .dash
-        case .ethereum: return .ethereum
-        case .zcash: return .zcash
-        case .binanceSmartChain: return .binanceSmartChain
-        case .erc20(let address): return .erc20(address: address)
-        case .bep2(let symbol): return .bep2(symbol: symbol)
-        case .bep20(let address): return .bep20(address: address)
-        case .sol20(let address): return .unsupported(id: address)
-        case .unsupported(let id): return .unsupported(id: id)
         }
     }
 
