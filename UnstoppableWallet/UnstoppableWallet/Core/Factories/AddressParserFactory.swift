@@ -14,7 +14,7 @@ class AddressParserFactory {
         case .bep20: return AddressParser(validScheme: nil, removeScheme: true)
         case .bep2: return AddressParser(validScheme: "binance", removeScheme: true)
         case .zcash: return AddressParser(validScheme: "zcash", removeScheme: true)
-        case .sol20, .unsupported: return AddressParser(validScheme: nil, removeScheme: false)
+        default: return AddressParser(validScheme: nil, removeScheme: false)
         }
     }
 

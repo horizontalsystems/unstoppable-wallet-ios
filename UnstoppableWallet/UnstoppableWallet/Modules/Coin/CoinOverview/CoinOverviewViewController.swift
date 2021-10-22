@@ -407,19 +407,28 @@ extension CoinOverviewViewController {
         )
     }
 
-    private func contractInfoSection(contracts: [CoinOverviewViewModel.ContractViewItem]) -> SectionProtocol {
+    private func contractsSection(contracts: [CoinOverviewViewModel.ContractViewItem]) -> SectionProtocol {
         Section(
                 id: "contract-info",
                 headerState: .margin(height: .margin12),
                 rows: [headerRow(title: "coin_page.contracts".localized)] +
-                        contracts.enumerated().map { (index, contractInfo) in
+                        contracts.enumerated().map { index, contractViewItem in
                             Row<D9Cell>(
                                     id: "contract-info",
                                     height: .heightCell48,
                                     bind: { cell, _ in
                                         cell.set(backgroundStyle: .lawrence, isFirst: index <= 0, isLast: index >= contracts.count - 1)
-                                        cell.title = contractInfo.title
-                                        cell.viewItem = .init(type: .raw, value: { contractInfo.value })
+                                        cell.title = contractViewItem.reference
+                                        cell.viewItem = .init(type: .raw, value: { "stub" })
+
+//                                        cell.onTapCopy = {
+//                                            UIPasteboard.general.setValue(contractViewItem.reference, forPasteboardType: "public.plain-text")
+//                                            HudHelper.instance.showSuccess(title: "alert.copied".localized)
+//                                        }
+//
+//                                        cell.onTapExplorer = { [weak self] in
+//                                            self?.urlManager.open(url: contractViewItem.explorerUrl, from: self?.parentNavigationController)
+//                                        }
                                     }
                             )
                         }
@@ -555,7 +564,7 @@ extension CoinOverviewViewController: SectionsDataSource {
             }
 
             if let contracts = viewItem.contracts {
-                sections.append(contractInfoSection(contracts: contracts))
+                sections.append(contractsSection(contracts: contracts))
             }
 
             if !viewItem.description.isEmpty {

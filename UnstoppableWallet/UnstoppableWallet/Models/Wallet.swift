@@ -62,7 +62,7 @@ struct Wallet {
             blockchain = .ethereum
         case .bep20:
             blockchain = .binanceSmartChain
-        case .sol20, .unsupported:
+        default:
             fatalError("Unsupported coin may not have transactions to show")
         }
 
