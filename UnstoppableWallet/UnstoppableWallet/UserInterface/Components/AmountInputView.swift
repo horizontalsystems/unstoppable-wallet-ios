@@ -13,8 +13,14 @@ class AmountInputView: UIView {
     private let prefixView = InputPrefixWrapperView()
     private let estimatedView = InputBadgeWrapperView()
     private let maxView = InputButtonWrapperView(style: .secondaryDefault)
+    private let clearView = InputButtonWrapperView(style: .secondaryIcon)
 
     var maxButtonVisible = false {
+        didSet {
+            syncButtonStates()
+        }
+    }
+    var clearHidden = false {
         didSet {
             syncButtonStates()
         }
@@ -64,9 +70,16 @@ class AmountInputView: UIView {
         maxView.button.setTitle("send.max_button".localized, for: .normal)
         maxView.onTapButton = { [weak self] in self?.onTapMax?() }
 
+        clearView.button.setImage(UIImage(named: "trash_20"), for: .normal)
+        clearView.onTapButton = { [weak self] in
+            self?.inputStackView.text = nil
+            self?.handleChange(text: nil)
+        }
+
         inputStackView.prependSubview(prefixView, customSpacing: 0)
         inputStackView.appendSubview(estimatedView)
         inputStackView.appendSubview(maxView)
+        inputStackView.appendSubview(clearView)
 
         inputStackView.placeholder = "0"
         inputStackView.keyboardType = .decimalPad
@@ -98,8 +111,10 @@ class AmountInputView: UIView {
     private func syncButtonStates() {
         if let text = inputStackView.text, !text.isEmpty {
             maxView.isHidden = true
+            clearView.isHidden = clearHidden
         } else {
             maxView.isHidden = !maxButtonVisible
+            clearView.isHidden = true
         }
     }
 
