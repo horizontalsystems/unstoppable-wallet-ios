@@ -20,6 +20,7 @@ class WalletViewModel {
     private let showErrorRelay = PublishRelay<String>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<()>()
+    private let scrollToTopRelay = PublishRelay<()>()
 
     private var viewItems = [BalanceViewItem]()
     private var expandedWallet: Wallet?
@@ -37,12 +38,12 @@ class WalletViewModel {
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0) }
+        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
         sync(items: service.items)
-        sync(sortType: service.sortType)
+        sync(sortType: service.sortType, scrollToTop: false)
     }
 
     private func sync(activeAccount: Account?) {
@@ -61,8 +62,12 @@ class WalletViewModel {
         headerViewItemRelay.accept(headerViewItem)
     }
 
-    private func sync(sortType: SortType) {
+    private func sync(sortType: SortType, scrollToTop: Bool) {
         sortByRelay.accept(sortType.title)
+
+        if scrollToTop {
+            scrollToTopRelay.accept(())
+        }
     }
 
     private func syncUpdated(item: WalletService.Item) {
@@ -153,6 +158,10 @@ extension WalletViewModel {
 
     var playHapticSignal: Signal<()> {
         playHapticRelay.asSignal()
+    }
+
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
     func onTapTotalAmount() {

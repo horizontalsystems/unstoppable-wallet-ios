@@ -41,6 +41,10 @@ class WalletViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
 
@@ -106,6 +110,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
+        subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
         isLoaded = true
     }
@@ -320,6 +325,10 @@ class WalletViewController: ThemeViewController {
 
     private func playHaptic() {
         HapticGenerator.instance.notification(.feedback(.soft))
+    }
+
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
 }
