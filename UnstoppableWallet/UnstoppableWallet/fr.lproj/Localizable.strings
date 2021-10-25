@@ -521,6 +521,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.favorited" = "Ajouter à la liste de suivi";
 "coin_page.unfavorited" = "Retirer de la liste de suivi";
+"coin_page.added_to_wallet" = "Added to wallet";
+"coin_page.already_added_to_wallet" = "Already added to wallet";
 
 "coin_page.major_holders" = "Porteurs majeurs";
 "coin_page.major_holders.chart.description" = "dans le top 10 des portefeuilles";
