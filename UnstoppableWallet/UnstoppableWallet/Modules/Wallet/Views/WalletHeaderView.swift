@@ -5,12 +5,10 @@ import ComponentKit
 
 class WalletHeaderView: UITableViewHeaderFooterView {
     private static let amountHeight: CGFloat = 40
-    private static let sortHeight: CGFloat = .heightSingleLineCell
     private static let bottomMargin: CGFloat = .margin4
 
     private let amountButton = UIButton()
-    private let sortButton = ThemeButton()
-    private let addCoinButton = ThemeButton()
+    private let sortAddCoinView = TextDropDownAndSettingsView()
 
     var onTapAmount: (() -> ())?
     var onTapSortBy: (() -> ())?
@@ -26,7 +24,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(Self.amountHeight + Self.sortHeight)
+            maker.height.equalTo(Self.amountHeight + TextDropDownAndSettingsView.height)
         }
 
         wrapperView.backgroundColor = .themeNavigationBarBackground
@@ -53,30 +51,15 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
         separatorView.backgroundColor = .themeSteel10
 
-        wrapperView.addSubview(sortButton)
-        sortButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
+        wrapperView.addSubview(sortAddCoinView)
+        sortAddCoinView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(amountButton.snp.bottom)
-            maker.height.equalTo(Self.sortHeight)
+            maker.height.equalTo(TextDropDownAndSettingsView.height)
         }
 
-        sortButton.apply(style: .secondaryTransparentIcon)
-        sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
-        sortButton.addTarget(self, action: #selector(onTapSortByButton), for: .touchUpInside)
-
-        wrapperView.addSubview(addCoinButton)
-        addCoinButton.snp.makeConstraints { maker in
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.centerY.equalTo(sortButton)
-        }
-
-        addCoinButton.apply(style: .secondaryIcon)
-        addCoinButton.setImage(UIImage(named: "manage_2_20"), for: .normal)
-        addCoinButton.addTarget(self, action: #selector(onTapAddCoinButton), for: .touchUpInside)
+        sortAddCoinView.onTapDropDown = { [weak self] in self?.onTapSortBy?() }
+        sortAddCoinView.onTapSettings = { [weak self] in self?.onTapAddCoin?() }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -87,22 +70,15 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         onTapAmount?()
     }
 
-    @objc private func onTapSortByButton() {
-        onTapSortBy?()
-    }
-
-    @objc private func onTapAddCoinButton() {
-        onTapAddCoin?()
-    }
-
     func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
-        sortButton.setTitle(sortBy, for: .normal)
         amountButton.setTitle(viewItem.amount, for: .normal)
         amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
+
+        sortAddCoinView.bind(dropdownTitle: sortBy)
     }
 
     static var height: CGFloat {
-        amountHeight + sortHeight + bottomMargin
+        amountHeight + TextDropDownAndSettingsView.height + bottomMargin
     }
 
 }

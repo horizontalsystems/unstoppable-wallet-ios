@@ -14,13 +14,14 @@ class UniswapDataSource {
 
     private let viewModel: UniswapViewModel
 
+    private let settingsHeaderView = TextDropDownAndSettingsView()
+
     private let fromCoinCardCell: SwapCoinCardCell
     private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let poweredByCell = SelectResourceCell()
     private let priceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
@@ -52,6 +53,9 @@ class UniswapDataSource {
             self?.viewModel.onTapSwitch()
         }
 
+        settingsHeaderView.bind(dropdownTitle: viewModel.dexName, settingsHidden: true)
+        settingsHeaderView.onTapDropDown = { [weak self] in self?.onOpenSelectProvider?() }
+
         initCells()
     }
 
@@ -63,10 +67,6 @@ class UniswapDataSource {
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
-        poweredByCell.title = "swap.powered_by".localized
-        poweredByCell.value = viewModel.dexName
-        poweredByCell.icon = UIImage(named: "swap_2_20")
-        poweredByCell.iconTintColor = UIColor.themeGray
 
         priceCell.title = "swap.price".localized
         priceCell.isVisible = false
@@ -246,6 +246,7 @@ extension UniswapDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "main",
+                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
                 rows: [
                     StaticRow(
                             cell: fromCoinCardCell,
@@ -285,14 +286,6 @@ extension UniswapDataSource: ISwapDataSource {
 //                            id: "recipient",
 //                            height: recipientCell.cellHeight
 //                    ),
-                    StaticRow(
-                            cell: poweredByCell,
-                            id: "powered_by",
-                            height: poweredByCell.cellHeight,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.onOpenSelectProvider?()
-                            }),
                     StaticRow(
                             cell: priceCell,
                             id: "execution-price",
