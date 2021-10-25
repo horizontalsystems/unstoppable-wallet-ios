@@ -7,6 +7,7 @@ import ComponentKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
+    private let enableCoinView: EnableCoinView
     private let disposeBag = DisposeBag()
 
     private let subtitleCell = A7Cell()
@@ -18,8 +19,12 @@ class CoinPageViewController: ThemeViewController {
     private let detailsController: CoinOverviewViewController
     private let tweetsController: CoinOverviewViewController
 
-    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
+    private var addWalletState: CoinPageViewModel.AddWalletState = .hidden
+    private var favorite = false
+
+    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
         self.viewModel = viewModel
+        self.enableCoinView = enableCoinView
         self.overviewController = overviewController
         self.marketsController = marketsController
         self.detailsController = detailsController
@@ -38,7 +43,6 @@ class CoinPageViewController: ThemeViewController {
         view.addSubview(UIView()) // prevent Large Title from Collapsing
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "rate_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onTapFavorite))
 
         let viewItem = viewModel.viewItem
         title = viewItem.title
@@ -81,12 +85,28 @@ class CoinPageViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
+        enableCoinView.onOpenController = { [weak self] controller in
+            self?.present(controller, animated: true)
+        }
+
         overviewController.parentNavigationController = navigationController
         detailsController.parentNavigationController = navigationController
         tweetsController.parentNavigationController = navigationController
 
-        subscribe(disposeBag, viewModel.favoriteDriver) { [weak self] in self?.sync(favorite: $0) }
-        subscribe(disposeBag, viewModel.favoriteHudSignal) { [weak self] in self?.showHud(title: $0) }
+        subscribe(disposeBag, viewModel.favoriteDriver) { [weak self] in
+            self?.favorite = $0
+            self?.syncButtons()
+        }
+        subscribe(disposeBag, viewModel.addWalletStateDriver) { [weak self] in
+            self?.addWalletState = $0
+            self?.syncButtons()
+        }
+        subscribe(disposeBag, viewModel.successHudSignal) { [weak self] in
+            HudHelper.instance.showSuccess(title: $0)
+        }
+        subscribe(disposeBag, viewModel.attentionHudSignal) { [weak self] in
+            HudHelper.instance.showAttention(title: $0)
+        }
 
         onSelectTab(index: 0)
     }
@@ -96,7 +116,11 @@ class CoinPageViewController: ThemeViewController {
     }
 
     @objc private func onTapFavorite() {
-        viewModel.toggleFavorite()
+        viewModel.onTapFavorite()
+    }
+
+    @objc private func onTapAddWallet() {
+        viewModel.onTapAddWallet()
     }
 
     private func onSelectTab(index: Int) {
@@ -121,12 +145,30 @@ class CoinPageViewController: ThemeViewController {
         }
     }
 
-    private func sync(favorite: Bool) {
-        navigationItem.rightBarButtonItem?.tintColor = favorite ? UIColor.themeJacob : UIColor.themeGray
-    }
+    private func syncButtons() {
+        var items = [UIBarButtonItem]()
 
-    private func showHud(title: String) {
-        HudHelper.instance.showSuccess(title: title)
+        let favoriteItem = UIBarButtonItem(
+                image: favorite ? UIImage(named: "filled_star_24") : UIImage(named: "star_24"),
+                style: .plain,
+                target: self,
+                action: #selector(onTapFavorite)
+        )
+        favoriteItem.tintColor = favorite ? .themeJacob : .themeGray
+        items.append(favoriteItem)
+
+        if case .visible(let added) = addWalletState {
+            let addWalletItem = UIBarButtonItem(
+                    image: added ? UIImage(named: "in_wallet_24")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add_to_wallet_2_24"),
+                    style: .plain,
+                    target: self,
+                    action: #selector(onTapAddWallet)
+            )
+            addWalletItem.tintColor = added ? nil : .themeGray
+            items.append(addWalletItem)
+        }
+
+        navigationItem.rightBarButtonItems = items
     }
 
 }

@@ -86,7 +86,7 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: DB7Cell.self)
-        tableView.registerCell(forClass: D9Cell.self)
+        tableView.registerCell(forClass: C85CellNew.self)
         tableView.registerCell(forClass: PerformanceTableViewCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
@@ -413,22 +413,26 @@ extension CoinOverviewViewController {
                 headerState: .margin(height: .margin12),
                 rows: [headerRow(title: "coin_page.contracts".localized)] +
                         contracts.enumerated().map { index, contractViewItem in
-                            Row<D9Cell>(
+                            Row<C85CellNew>(
                                     id: "contract-info",
                                     height: .heightCell48,
                                     bind: { cell, _ in
                                         cell.set(backgroundStyle: .lawrence, isFirst: index <= 0, isLast: index >= contracts.count - 1)
-                                        cell.title = contractViewItem.reference
-                                        cell.viewItem = .init(type: .raw, value: { "stub" })
 
-//                                        cell.onTapCopy = {
-//                                            UIPasteboard.general.setValue(contractViewItem.reference, forPasteboardType: "public.plain-text")
-//                                            HudHelper.instance.showSuccess(title: "alert.copied".localized)
-//                                        }
-//
-//                                        cell.onTapExplorer = { [weak self] in
-//                                            self?.urlManager.open(url: contractViewItem.explorerUrl, from: self?.parentNavigationController)
-//                                        }
+                                        cell.titleStyle = .subhead2Grey
+                                        cell.title = contractViewItem.reference
+                                        cell.titleImage = UIImage(named: contractViewItem.iconName)
+                                        cell.firstImage = UIImage(named: "copy_20")
+                                        cell.secondImage = UIImage(named: "globe_20")
+
+                                        cell.leftAction = {
+                                            UIPasteboard.general.setValue(contractViewItem.reference, forPasteboardType: "public.plain-text")
+                                            HudHelper.instance.showSuccess(title: "alert.copied".localized)
+                                        }
+
+                                        cell.rightAction = { [weak self] in
+                                            self?.urlManager.open(url: contractViewItem.explorerUrl, from: self?.parentNavigationController)
+                                        }
                                     }
                             )
                         }
