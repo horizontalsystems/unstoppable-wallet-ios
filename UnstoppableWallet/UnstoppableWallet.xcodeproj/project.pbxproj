@@ -1294,7 +1294,6 @@
 		1A56412EB68ADD0B0FEA5152 /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E38A79F3308EC1B437A /* AddressParser.swift */; };
 		1A56414475C7884D300BCAA1 /* ThemeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641157E25B15500E1B29F /* ThemeSettingsViewModel.swift */; };
 		1A56415A4BB89B9156C6442D /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D5E55767404ED6C88E0 /* Decimal.swift */; };
-		1A56415DA3B362B007595127 /* PrivacyViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */; };
 		1A564168590F031AA453E1D1 /* BalanceErrorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AB0B646F7A92DD188F2 /* BalanceErrorModule.swift */; };
 		1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647ACB8A65C250F62E07D /* AdapterState.swift */; };
 		1A56417A070E71EA71117C68 /* PriceAlertRequestRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56472CE6CCA8886C86151C /* PriceAlertRequestRecord.swift */; };
@@ -1449,7 +1448,6 @@
 		1A5648D7D29951DC4762B392 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B7C35C5B235D2BBAC2C /* AppVersion.swift */; };
 		1A5648D982E4C2C5F6C3BCCA /* BalanceErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564702FB246F315983743E /* BalanceErrorPresenter.swift */; };
 		1A5648F960BA99CA9DC5478B /* AppStatusPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */; };
-		1A56491257F7A7FCC5805A4D /* PrivacyViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */; };
 		1A564915991CDE70557FC3C9 /* PrivacySyncItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458F031D6E76252DF283 /* PrivacySyncItem.swift */; };
 		1A5649169A405D3288324442 /* BalanceErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */; };
 		1A56491DC545ED4F8A6E6D40 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D5E55767404ED6C88E0 /* Decimal.swift */; };
@@ -1515,7 +1513,6 @@
 		1A564BF7C40AE72B8FF3E522 /* BalanceErrorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B109096C8B0FE5EF8AE /* BalanceErrorRouter.swift */; };
 		1A564C10B9782D53375736C8 /* ReleaseNotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644074A3ACB1DFB63FF92 /* ReleaseNotesService.swift */; };
 		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
-		1A564C174A9B04E1D77CE50B /* PrivacyViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */; };
 		1A564C1C6A9FDC2D6F3BBAF8 /* PrivacyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564EB4A7A10C5299DA6A7D /* PrivacyInteractor.swift */; };
 		1A564C1ED93BC9A50A72FE66 /* FeeRatePriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643953F416DA3DA5DFBC3 /* FeeRatePriority.swift */; };
 		1A564C48633E24BF800A4B95 /* PriceAlertRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56462F0D6DFBC020710449 /* PriceAlertRequest.swift */; };
@@ -3180,7 +3177,6 @@
 		1A564B1C051AF2C87C670563 /* FilterHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHeaderView.swift; sourceTree = "<group>"; };
 		1A564B24B847D08C09CF9A00 /* FullCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullCoin.swift; sourceTree = "<group>"; };
 		1A564B295DF9E48FF142E311 /* PrivacyModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyModule.swift; sourceTree = "<group>"; };
-		1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyViewItemFactory.swift; sourceTree = "<group>"; };
 		1A564B73ABBEFC58A13D501E /* PerformanceSideCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceSideCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A564B7C35C5B235D2BBAC2C /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		1A564B95A259270EE1268B50 /* ThemeSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeSettingsViewController.swift; sourceTree = "<group>"; };
@@ -5016,7 +5012,6 @@
 				1A564565F8D170461624126B /* PrivacyViewController.swift */,
 				1A5643D8493DC54B908C48BE /* PrivacyViewItem.swift */,
 				1A56458F031D6E76252DF283 /* PrivacySyncItem.swift */,
-				1A564B6EF935F2A1E7EBEEF8 /* PrivacyViewItemFactory.swift */,
 				11B3577264CA6F5C25DC4B80 /* PrivacySortMode */,
 				11B3580DCEA45E0CBB3E0D2A /* PrivacySyncMode */,
 			);
@@ -6576,7 +6571,6 @@
 				1A56488FAFECA1247BC4E9B8 /* HighlightedDescriptionView.swift in Sources */,
 				1A5642A47D307D1209952C37 /* PrivacyViewItem.swift in Sources */,
 				1A564915991CDE70557FC3C9 /* PrivacySyncItem.swift in Sources */,
-				1A56415DA3B362B007595127 /* PrivacyViewItemFactory.swift in Sources */,
 				1A5648202A8A90263ED276F3 /* TransactionDataSortMode.swift in Sources */,
 				1A56409314B0AB43A48DD78E /* TransactionDataSortModeSettingManager.swift in Sources */,
 				3AB682A425BADC20002197A5 /* MarketDiscoveryViewModel.swift in Sources */,
@@ -7188,8 +7182,8 @@
 				58AAAA96CB0B33B709D2836D /* MarketGlobalTvlMetricService.swift in Sources */,
 				11B3504C2BF1E98E6F39997B /* RestoreCustomTokenWorker.swift in Sources */,
 				11B35DAF25B629C09522EA7D /* CoinPageService.swift in Sources */,
-                1A564EA3DE50E38AFF843490 /* TextDropDownAndSettingsView.swift in Sources */,
-	);
+				1A564EA3DE50E38AFF843490 /* TextDropDownAndSettingsView.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D3373DBB20C658660082BC4A /* Sources */ = {
@@ -7455,7 +7449,6 @@
 				1A56498C73C42F16A2D96A8D /* HighlightedDescriptionView.swift in Sources */,
 				1A564E1CC0345BFC555FC270 /* PrivacyViewItem.swift in Sources */,
 				1A5641B178D30CB63AB1D964 /* PrivacySyncItem.swift in Sources */,
-				1A56491257F7A7FCC5805A4D /* PrivacyViewItemFactory.swift in Sources */,
 				1A564FFA4566A5019E744E8E /* TransactionDataSortMode.swift in Sources */,
 				1A5642F433D0D20B8D041BBB /* TransactionDataSortModeSettingManager.swift in Sources */,
 				3AB682A325BADC20002197A5 /* MarketDiscoveryViewModel.swift in Sources */,
@@ -8068,8 +8061,8 @@
 				58AAAA37D110606CE48C189B /* MarketGlobalTvlMetricService.swift in Sources */,
 				11B35F80C45D96EBA57E5FD6 /* RestoreCustomTokenWorker.swift in Sources */,
 				11B358E508ECA92493A9A3FD /* CoinPageService.swift in Sources */,
-                1A564687432F557B28AFCEB8 /* TextDropDownAndSettingsView.swift in Sources */,
-                	);
+				1A564687432F557B28AFCEB8 /* TextDropDownAndSettingsView.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D38405D221831B3D007D50AD /* Sources */ = {
@@ -8324,7 +8317,6 @@
 				1A564AB50152BF82514BAC3C /* HighlightedDescriptionView.swift in Sources */,
 				1A564D6D45F01524AD685246 /* PrivacyViewItem.swift in Sources */,
 				1A564B09F35CB094BBC50AE1 /* PrivacySyncItem.swift in Sources */,
-				1A564C174A9B04E1D77CE50B /* PrivacyViewItemFactory.swift in Sources */,
 				1A5641C097AAD5FC9D35F9EE /* TransactionDataSortMode.swift in Sources */,
 				1A564ECD8CE958963E077C48 /* TransactionDataSortModeSettingManager.swift in Sources */,
 				11B35AD62D25CB60BC17683E /* BottomSelectorViewController.swift in Sources */,

@@ -472,7 +472,7 @@ protocol IEnabledWalletCacheStorage {
 }
 
 protocol ICustomTokenStorage {
-    func customTokens() -> [CustomToken]
+    func customTokens(platformType: PlatformType, filter: String) -> [CustomToken]
     func customTokens(filter: String) -> [CustomToken]
     func customTokens(coinTypeIds: [String]) -> [CustomToken]
     func customToken(coinType: MarketKit.CoinType) -> CustomToken?

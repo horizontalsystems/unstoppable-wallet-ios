@@ -67,8 +67,8 @@ class CoinManager {
         return customFullCoins(customTokens: adjustedCustomTokens)
     }
 
-    private func customPlatformCoins() throws -> [PlatformCoin] {
-        let customTokens = storage.customTokens()
+    private func customPlatformCoins(platformType: PlatformType, filter: String) throws -> [PlatformCoin] {
+        let customTokens = storage.customTokens(platformType: platformType, filter: filter)
         return try adjustedCustomTokens(customTokens: customTokens).map { $0.platformCoin }
     }
 
@@ -107,8 +107,8 @@ extension CoinManager {
         try marketKit.platformCoin(coinType: coinType) ?? customPlatformCoin(coinType: coinType)
     }
 
-    func platformCoins() throws -> [PlatformCoin] {
-        try marketKit.platformCoins() + customPlatformCoins()
+    func platformCoins(platformType: PlatformType, filter: String, limit: Int = 20) throws -> [PlatformCoin] {
+        try marketKit.platformCoins(platformType: platformType, filter: filter, limit: limit) + customPlatformCoins(platformType: platformType, filter: filter)
     }
 
     func platformCoins(coinTypes: [CoinType]) throws -> [PlatformCoin] {
