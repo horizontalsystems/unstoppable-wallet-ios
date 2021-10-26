@@ -956,9 +956,12 @@ extension GrdbStorage: IEnabledWalletCacheStorage {
 
 extension GrdbStorage: ICustomTokenStorage {
 
-    func customTokens() -> [CustomToken] {
+    func customTokens(platformType: PlatformType, filter: String) -> [CustomToken] {
         try! dbPool.read { db in
-            try CustomToken.fetchAll(db)
+            try CustomToken
+                    .filter(CustomToken.Columns.coinName.like("%\(filter)%") || CustomToken.Columns.coinCode.like("%\(filter)%"))
+                    .filter(platformType.coinTypeIdPrefixes.map { CustomToken.Columns.coinTypeId.like("\($0)%") }.joined(operator: .or))
+                    .fetchAll(db)
         }
     }
 

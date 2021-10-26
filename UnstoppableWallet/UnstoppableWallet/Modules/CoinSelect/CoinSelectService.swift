@@ -10,10 +10,16 @@ class CoinSelectService {
     private let adapterManager: AdapterManager
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-
     private let disposeBag = DisposeBag()
 
-    private(set) var items = [Item]()
+    private let itemsRelay = PublishRelay<[Item]>()
+    private(set) var items: [Item] = [] {
+        didSet {
+            itemsRelay.accept(items)
+        }
+    }
+
+    private var filter: String = ""
 
     init(dex: SwapModule.Dex, coinManager: CoinManager, walletManager: WalletManager, adapterManager: AdapterManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
@@ -23,7 +29,7 @@ class CoinSelectService {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
 
-        loadItems()
+        syncItems()
     }
 
     private func dexSupports(platformCoin: PlatformCoin) -> Bool {
@@ -34,10 +40,23 @@ class CoinSelectService {
         }
     }
 
-    private func loadItems() {
-        var balanceCoins = walletManager.activeWallets.compactMap { wallet -> (platformCoin: PlatformCoin, balance: Decimal)? in
+    private func platformType() -> PlatformType {
+        switch dex.blockchain {
+        case .ethereum: return .ethereum
+        case .binanceSmartChain: return .binanceSmartChain
+        }
+    }
+
+    private func walletItems() -> [Item] {
+        let balanceCoins = walletManager.activeWallets.compactMap { wallet -> (platformCoin: PlatformCoin, balance: Decimal)? in
             guard dexSupports(platformCoin: wallet.platformCoin) else {
                 return nil
+            }
+
+            if !filter.isEmpty {
+                guard wallet.coin.name.localizedCaseInsensitiveContains(filter) || wallet.coin.code.localizedCaseInsensitiveContains(filter) else {
+                    return nil
+                }
             }
 
             guard let adapter = adapterManager.balanceAdapter(for: wallet) else {
@@ -47,40 +66,70 @@ class CoinSelectService {
             return (platformCoin: wallet.platformCoin, balance: adapter.balanceData.balance)
         }
 
-        balanceCoins.sort { lhsTuple, rhsTuple in
-            lhsTuple.platformCoin.coin.name.lowercased() < rhsTuple.platformCoin.coin.name.lowercased()
-        }
-
-        let walletItems = balanceCoins.map { platformCoin, balance -> Item in
+        return balanceCoins.map { platformCoin, balance -> Item in
             let coinPrice: CoinPrice? = marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currencyKit.baseCurrency.code)
             let rate: Decimal? = coinPrice.flatMap { $0.expired ? nil : $0.value }
 
             return Item(platformCoin: platformCoin, balance: balance, rate: rate)
         }
+    }
 
-        let platformCoins: [PlatformCoin] = (try? coinManager.platformCoins()) ?? []
+    private func coinItems() -> [Item] {
+        do {
+            let platformCoins = try coinManager.platformCoins(platformType: platformType(), filter: filter)
 
-        var remainingCoins = platformCoins.filter { platformCoin in
-            dexSupports(platformCoin: platformCoin) && !walletItems.contains { $0.platformCoin == platformCoin }
+            return platformCoins.map { platformCoin in
+                Item(platformCoin: platformCoin, balance: nil, rate: nil)
+            }
+        } catch {
+            return []
+        }
+    }
+
+    private func syncItems() {
+        let walletItems = walletItems()
+
+        let coinItems = coinItems().filter { coinItem in
+            !walletItems.contains { $0.platformCoin == coinItem.platformCoin }
         }
 
-        remainingCoins.sort { lhsPlatformCoin, rhsPlatformCoin in
-            lhsPlatformCoin.coin.name.lowercased() < rhsPlatformCoin.coin.name.lowercased()
-        }
+        let allItems = walletItems + coinItems
 
-        let coinItems = remainingCoins.map { platformCoin in
-            Item(platformCoin: platformCoin, balance: nil, rate: nil)
-        }
+        items = allItems.sorted { lhsItem, rhsItem in
+            let lhsHasBalance = lhsItem.balance != nil
+            let rhsHasBalance = rhsItem.balance != nil
 
-        items = walletItems + coinItems
+            if lhsHasBalance != rhsHasBalance {
+                return lhsHasBalance
+            }
+
+            let lhsMarketCapRank = lhsItem.platformCoin.coin.marketCapRank ?? Int.max
+            let rhsMarketCapRank = rhsItem.platformCoin.coin.marketCapRank ?? Int.max
+
+            if lhsMarketCapRank != rhsMarketCapRank {
+                return lhsMarketCapRank < rhsMarketCapRank
+            }
+
+            return lhsItem.platformCoin.coin.name.lowercased() < rhsItem.platformCoin.coin.name.lowercased()
+        }
     }
 
 }
 
 extension CoinSelectService {
 
+    var itemsObservable: Observable<[Item]> {
+        itemsRelay.asObservable()
+    }
+
     var currency: Currency {
         currencyKit.baseCurrency
+    }
+
+    func set(filter: String) {
+        self.filter = filter
+
+        syncItems()
     }
 
 }

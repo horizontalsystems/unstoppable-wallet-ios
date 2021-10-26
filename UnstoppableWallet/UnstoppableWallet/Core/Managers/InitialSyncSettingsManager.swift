@@ -32,19 +32,13 @@ extension InitialSyncSettingsManager {
         settingUpdatedRelay.asObservable()
     }
 
-    var allSettings: [(setting: InitialSyncSetting, platformCoin: PlatformCoin, changeable: Bool)] {
-        let platformCoins = (try? marketKit.platformCoins()) ?? [] // todo: request only required coins instead of all coins
-
-        return supportedCoinTypes.compactMap { supportedCoinType in
-            guard let coinTypePlatformCoin = (platformCoins.first { $0.coinType == supportedCoinType.coinType }) else {
-                return nil
-            }
-
+    var allSettings: [(setting: InitialSyncSetting, changeable: Bool)] {
+        supportedCoinTypes.compactMap { supportedCoinType in
             guard let setting = setting(coinType: supportedCoinType.coinType, accountOrigin: .restored) else {
                 return nil
             }
 
-            return (setting: setting, platformCoin: coinTypePlatformCoin, changeable: supportedCoinType.changeable)
+            return (setting: setting, changeable: supportedCoinType.changeable)
         }
     }
 

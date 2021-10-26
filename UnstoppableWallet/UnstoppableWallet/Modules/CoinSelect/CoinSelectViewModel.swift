@@ -9,16 +9,17 @@ class CoinSelectViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private var filter: String?
 
     init(service: CoinSelectService) {
         self.service = service
 
-        sync()
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+
+        sync(items: service.items)
     }
 
-    private func sync() {
-        let viewItems = filteredItems.map { item -> ViewItem in
+    private func sync(items: [CoinSelectService.Item]) {
+        let viewItems = items.map { item -> ViewItem in
             let formatted = item.balance
                     .flatMap { CoinValue(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
@@ -34,16 +35,6 @@ class CoinSelectViewModel {
         viewItemsRelay.accept(viewItems)
     }
 
-    private var filteredItems: [CoinSelectService.Item] {
-        guard let filter = filter else {
-            return service.items
-        }
-
-        return service.items.filter { item in
-            item.platformCoin.coin.name.localizedCaseInsensitiveContains(filter)  || item.platformCoin.coin.code.localizedCaseInsensitiveContains(filter)
-        }
-    }
-
 }
 
 extension CoinSelectViewModel {
@@ -53,10 +44,8 @@ extension CoinSelectViewModel {
     }
 
     func apply(filter: String?) {
-        self.filter = filter
-
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.sync()
+            self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")
         }
     }
 

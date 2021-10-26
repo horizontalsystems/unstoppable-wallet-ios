@@ -15,9 +15,9 @@ extension PrivacySyncModeRouter: IPrivacySyncModeRouter {
 
 extension PrivacySyncModeRouter {
 
-    static func module(platformCoin: PlatformCoin, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) -> UIViewController {
+    static func module(coinTitle: String, coinIconName: String, coinType: CoinType, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) -> UIViewController {
         let router = PrivacySyncModeRouter()
-        let presenter = PrivacySyncModePresenter(platformCoin: platformCoin, currentSyncMode: currentSyncMode, router: router)
+        let presenter = PrivacySyncModePresenter(coinTitle: coinTitle, coinIconName: coinIconName, coinType: coinType, currentSyncMode: currentSyncMode, router: router)
         let viewController = PrivacySyncModeViewController(delegate: presenter)
 
         presenter.view = viewController
