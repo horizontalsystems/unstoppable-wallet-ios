@@ -13,6 +13,7 @@ class CoinOverviewService {
     private let currencyKit: CurrencyKit.Kit
     private let languageManager: LanguageManager
     private let appConfigProvider: IAppConfigProvider
+    private let twitterUsernameService: TwitterUsernameService
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
@@ -21,15 +22,20 @@ class CoinOverviewService {
         }
     }
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: IAppConfigProvider) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: IAppConfigProvider, twitterUsernameService: TwitterUsernameService) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.languageManager = languageManager
         self.appConfigProvider = appConfigProvider
+        self.twitterUsernameService = twitterUsernameService
     }
 
     private func sync(info: MarketInfoOverview) {
+        if let username = info.links[.twitter] {
+            twitterUsernameService.set(username: username)
+        }
+
         state = .completed(Item(info: info, guideUrl: guideUrl))
     }
 

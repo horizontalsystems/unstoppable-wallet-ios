@@ -4,13 +4,14 @@ import Chart
 
 struct CoinOverviewModule {
 
-    static func viewController(fullCoin: FullCoin) -> CoinOverviewViewController {
+    static func viewController(fullCoin: FullCoin, twitterUsernameService: TwitterUsernameService) -> CoinOverviewViewController {
         let service = CoinOverviewService(
                 fullCoin: fullCoin,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 languageManager: LanguageManager.shared,
-                appConfigProvider: App.shared.appConfigProvider
+                appConfigProvider: App.shared.appConfigProvider,
+                twitterUsernameService: twitterUsernameService
         )
 
         let chartService = CoinChartService(
