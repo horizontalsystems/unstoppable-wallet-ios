@@ -21,10 +21,11 @@ struct CoinPageModule {
 
         let viewModel = CoinPageViewModel(service: service)
 
-        let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let twitterUsernameService = TwitterUsernameService()
+        let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin, twitterUsernameService: twitterUsernameService)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
-        let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin)
-        let tweetsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin, twitterUsernameService: twitterUsernameService)
+        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin, twitterUsernameService: twitterUsernameService)
 
         let viewController = CoinPageViewController(
                 viewModel: viewModel,

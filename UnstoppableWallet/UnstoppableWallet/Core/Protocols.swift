@@ -213,6 +213,7 @@ protocol IAppConfigProvider {
     var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
     var defiYieldApiKey: String? { get }
+    var twitterBearerToken: String? { get }
     var currencyCodes: [String] { get }
     var feeRateAdjustedForCurrencyCodes: [String] { get }
 

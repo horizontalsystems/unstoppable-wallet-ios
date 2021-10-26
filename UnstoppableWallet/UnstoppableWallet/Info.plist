@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>TwitterBearerToken</key>
+	<string>${twitter_bearer_token}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
 	<key>BtcCoreRpcUrl</key>

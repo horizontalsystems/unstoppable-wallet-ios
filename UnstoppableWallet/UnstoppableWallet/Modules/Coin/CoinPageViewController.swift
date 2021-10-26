@@ -17,12 +17,12 @@ class CoinPageViewController: ThemeViewController {
     private let overviewController: CoinOverviewViewController
     private let marketsController: CoinMarketsViewController
     private let detailsController: CoinDetailsViewController
-    private let tweetsController: CoinOverviewViewController
+    private let tweetsController: CoinTweetsViewController
 
     private var addWalletState: CoinPageViewModel.AddWalletState = .hidden
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinOverviewViewController) {
+    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinTweetsViewController) {
         self.viewModel = viewModel
         self.enableCoinView = enableCoinView
         self.overviewController = overviewController

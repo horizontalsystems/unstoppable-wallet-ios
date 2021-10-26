@@ -11,6 +11,7 @@ provider_coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryp
 coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryptocurrencies/master/coins.json
 cryptocompare_com_api_key =
 defiyield_api_key = 87e8671e-8267-427c-92c3-4627833445ae
+twitter_bearer_token =
 
 default_words =
 default_words_12 =
