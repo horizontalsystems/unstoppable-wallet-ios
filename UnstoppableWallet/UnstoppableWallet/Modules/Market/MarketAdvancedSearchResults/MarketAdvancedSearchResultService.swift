@@ -17,7 +17,7 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
 
     var sortingField: MarketModule.SortingField = .highestCap {
         didSet {
-            syncState()
+            syncState(reorder: true)
         }
     }
 
@@ -29,8 +29,8 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
         syncState()
     }
 
-    private func syncState() {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
+    private func syncState(reorder: Bool = false) {
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
 }
@@ -53,8 +53,8 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
     }
 
     func resyncIfPossible() {
-        if case .loaded(let marketInfos, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        if case .loaded(let marketInfos, _, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
     }
 

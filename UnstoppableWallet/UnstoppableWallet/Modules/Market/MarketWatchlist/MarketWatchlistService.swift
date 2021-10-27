@@ -38,13 +38,13 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     private func syncCoinUids() {
         coinUids = favoritesManager.allCoinUids
 
-        if case .loaded(let marketInfos, _) = state {
+        if case .loaded(let marketInfos, _, _) = state {
             let newMarketInfos = marketInfos.filter { marketInfo in
                 coinUids.contains(marketInfo.fullCoin.coin.uid)
             }
 
             if newMarketInfos.count == coinUids.count {
-                state = .loaded(marketInfos: newMarketInfos, softUpdate: true)
+                state = .loaded(marketInfos: newMarketInfos, softUpdate: true, reorder: false)
                 return
             }
         }
@@ -56,7 +56,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         syncDisposeBag = DisposeBag()
 
         if coinUids.isEmpty {
-            state = .loaded(marketInfos: [], softUpdate: false)
+            state = .loaded(marketInfos: [], softUpdate: false, reorder: false)
             return
         }
 
@@ -74,16 +74,16 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
                 .disposed(by: syncDisposeBag)
     }
 
-    private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
+    private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos, _) = state else {
+        guard case .loaded(let marketInfos, _, _) = state else {
             return
         }
 
-        sync(marketInfos: marketInfos)
+        sync(marketInfos: marketInfos, reorder: true)
     }
 
 }
@@ -111,8 +111,8 @@ extension MarketWatchlistService: IMarketListDecoratorService {
     }
 
     func resyncIfPossible() {
-        if case .loaded(let marketInfos, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        if case .loaded(let marketInfos, _, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
     }
 

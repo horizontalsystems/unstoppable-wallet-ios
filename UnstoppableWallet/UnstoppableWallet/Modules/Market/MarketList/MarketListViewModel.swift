@@ -22,7 +22,7 @@ protocol IMarketListDecorator {
 
 enum MarketListServiceState {
     case loading
-    case loaded(marketInfos: [MarketInfo], softUpdate: Bool)
+    case loaded(marketInfos: [MarketInfo], softUpdate: Bool, reorder: Bool)
     case failed(error: Error)
 }
 
@@ -35,6 +35,7 @@ class MarketListViewModel {
     private let viewItemDataRelay = BehaviorRelay<ViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let scrollToTopRelay = PublishRelay<()>()
 
     init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, decorator: IMarketListDecorator) {
         self.service = service
@@ -52,24 +53,20 @@ class MarketListViewModel {
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .loaded(let marketInfos, let softUpdate):
+        case .loaded(let marketInfos, let softUpdate, let reorder):
             let data = ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: softUpdate)
             viewItemDataRelay.accept(data)
             loadingRelay.accept(false)
             errorRelay.accept(nil)
+
+            if reorder {
+                scrollToTopRelay.accept(())
+            }
         case .failed:
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(false)
             errorRelay.accept("market.sync_error".localized)
         }
-    }
-
-    private func syncViewItemsIfPossible() {
-        guard case .loaded(let marketInfos, _) = service.state else {
-            return
-        }
-
-        viewItemDataRelay.accept(ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: false))
     }
 
     private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
@@ -92,6 +89,10 @@ extension MarketListViewModel {
 
     var errorDriver: Driver<String?> {
         errorRelay.asDriver()
+    }
+
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
     func isFavorite(index: Int) -> Bool {
@@ -117,6 +118,13 @@ extension MarketListViewModel {
     struct ViewItemData {
         let viewItems: [MarketModule.ListViewItem]
         let softUpdate: Bool
+        let scrollToTop: Bool
+
+        init(viewItems: [MarketModule.ListViewItem], softUpdate: Bool = false, scrollToTop: Bool = false) {
+            self.viewItems = viewItems
+            self.softUpdate = softUpdate
+            self.scrollToTop = scrollToTop
+        }
     }
 
 }

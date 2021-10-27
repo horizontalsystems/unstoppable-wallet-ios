@@ -60,13 +60,13 @@ class MarketTopService: IMarketMultiSortHeaderService {
                 .disposed(by: syncDisposeBag)
     }
 
-    private func syncState() {
+    private func syncState(reorder: Bool = false) {
         switch internalState {
         case .loading:
             state = .loading
         case .loaded(let marketInfos):
             let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
-            state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
+            state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
         case .failed(let error):
             state = .failed(error: error)
         }
@@ -77,7 +77,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
             return
         }
 
-        syncState()
+        syncState(reorder: true)
     }
 
 }
@@ -105,8 +105,8 @@ extension MarketTopService: IMarketListDecoratorService {
     }
 
     func resyncIfPossible() {
-        if case .loaded(let marketInfos, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        if case .loaded(let marketInfos, _, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
     }
 
