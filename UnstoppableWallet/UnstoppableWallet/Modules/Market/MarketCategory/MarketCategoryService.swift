@@ -52,16 +52,16 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
                 .disposed(by: syncDisposeBag)
     }
 
-    private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false)
+    private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let marketInfos, _) = state else {
+        guard case .loaded(let marketInfos, _, _) = state else {
             return
         }
 
-        sync(marketInfos: marketInfos)
+        sync(marketInfos: marketInfos, reorder: true)
     }
 
 }
@@ -89,8 +89,8 @@ extension MarketCategoryService: IMarketListDecoratorService {
     }
 
     func resyncIfPossible() {
-        if case .loaded(let marketInfos, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false))
+        if case .loaded(let marketInfos, _, _) = state {
+            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
     }
 

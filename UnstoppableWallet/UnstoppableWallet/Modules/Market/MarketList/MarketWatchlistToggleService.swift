@@ -8,7 +8,7 @@ class MarketWatchlistToggleService {
     }
 
     private func coinUid(index: Int) -> String? {
-        guard case .loaded(let marketInfos, _) = listService.state, index < marketInfos.count else {
+        guard case .loaded(let marketInfos, _, _) = listService.state, index < marketInfos.count else {
             return nil
         }
 

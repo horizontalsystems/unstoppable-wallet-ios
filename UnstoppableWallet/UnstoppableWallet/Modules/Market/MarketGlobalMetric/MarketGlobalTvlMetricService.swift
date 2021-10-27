@@ -17,7 +17,7 @@ class MarketGlobalTvlMetricService {
     }
     var sortDirectionAscending: Bool = false {
         didSet {
-            syncIfPossible()
+            syncIfPossible(reorder: true)
         }
     }
 
@@ -61,16 +61,16 @@ class MarketGlobalTvlMetricService {
         sortDirectionAscending ? .lowestCap : .highestCap
     }
 
-    private func sync(marketInfos: [MarketInfo]) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeValue), softUpdate: false)
+    private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeValue), softUpdate: false, reorder: reorder)
     }
 
-    private func syncIfPossible() {
-        guard case .loaded(let marketInfos, _) = state else {
+    private func syncIfPossible(reorder: Bool = false) {
+        guard case .loaded(let marketInfos, _, _) = state else {
             return
         }
 
-        sync(marketInfos: marketInfos)
+        sync(marketInfos: marketInfos, reorder: reorder)
     }
 
 }

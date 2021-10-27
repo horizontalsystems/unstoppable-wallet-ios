@@ -87,6 +87,7 @@ class MarketListViewController: ThemeViewController {
                 self?.errorView.isHidden = true
             }
         }
+        subscribe(disposeBag, listViewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -164,6 +165,10 @@ class MarketListViewController: ThemeViewController {
                     action: action
             )
         ]
+    }
+
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0, at: .bottom, animated: true)
     }
 
 }
