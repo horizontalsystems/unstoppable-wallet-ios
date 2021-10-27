@@ -17,7 +17,7 @@ struct Wallet {
     var platformCoin: PlatformCoin {
         configuredPlatformCoin.platformCoin
     }
-    
+
     var coinSettings: CoinSettings {
         configuredPlatformCoin.coinSettings
     }
@@ -80,6 +80,21 @@ extension Wallet: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(configuredPlatformCoin)
         hasher.combine(account)
+    }
+
+}
+
+extension Wallet {
+
+    public var badge: String? {
+        switch coinType {
+        case .bitcoin, .litecoin:
+            return coinSettings.derivation?.rawValue.uppercased()
+        case .bitcoinCash:
+            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
+        default:
+            return coinType.blockchainType
+        }
     }
 
 }

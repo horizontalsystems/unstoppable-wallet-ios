@@ -62,7 +62,7 @@ class TransactionsService {
             case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash, .bep2: groupedWallets.append(wallet)
             case .ethereum, .binanceSmartChain:
                 if !groupedWallets.contains(where: { wallet.source == $0.source }) {
-                    groupedWallets.append(TransactionWallet(coin: nil, source: wallet.source))
+                    groupedWallets.append(TransactionWallet(coin: nil, source: wallet.source, badge: wallet.badge))
                 }
             }
         }

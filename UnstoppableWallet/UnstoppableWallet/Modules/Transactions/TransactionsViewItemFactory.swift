@@ -181,12 +181,7 @@ class TransactionsViewItemFactory {
             return nil
         }
 
-        var name = platformCoin.coin.code
-        if let derivation = wallet.source.coinSettings[.derivation] {
-            name += " " + derivation
-        }
-
-        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.placeholderImageName, title: name)
+        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.placeholderImageName, title: platformCoin.coin.code, blockchainBadge: wallet.badge)
     }
 
 }
