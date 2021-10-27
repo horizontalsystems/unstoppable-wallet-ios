@@ -23,7 +23,7 @@ struct CoinPageModule {
 
         let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
-        let detailsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin)
         let tweetsController = CoinOverviewModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
