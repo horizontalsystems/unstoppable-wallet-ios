@@ -1,14 +1,15 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
 
 class FilterCard: UICollectionViewCell {
     private static let titleFont: UIFont = .subhead1
     private static let sideMargin: CGFloat = .margin12
 
     private let iconImageView = UIImageView()
-    private let titleLightLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let blockchainBadgeView = BadgeView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,26 +23,22 @@ class FilterCard: UICollectionViewCell {
             maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
         }
 
-        contentView.addSubview(titleLightLabel)
-        titleLightLabel.snp.makeConstraints { maker in
+        contentView.addSubview(blockchainBadgeView)
+        blockchainBadgeView.snp.makeConstraints { maker in
+            maker.leading.equalTo(iconImageView.snp.trailing).offset(14)
+            maker.top.equalToSuperview().inset(FilterCard.sideMargin)
+        }
+
+        blockchainBadgeView.isHidden = true
+
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(FilterCard.sideMargin)
             maker.bottom.equalToSuperview().inset(FilterCard.sideMargin)
         }
 
-        titleLightLabel.font = FilterCard.titleFont
-        titleLightLabel.textColor = .themeOz
-
-        contentView.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().inset(FilterCard.sideMargin)
-            maker.width.equalTo(188)
-            maker.bottom.equalToSuperview().inset(FilterCard.sideMargin)
-        }
-
-        descriptionLabel.font = .caption
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.alpha = 0
-        descriptionLabel.textColor = .themeDark
+        titleLabel.font = FilterCard.titleFont
+        titleLabel.textColor = .themeOz
 
         contentView.backgroundColor = .themeLawrence
     }
@@ -60,14 +57,18 @@ class FilterCard: UICollectionViewCell {
         super.prepareForReuse()
 
         iconImageView.image = nil
-        titleLightLabel.text = nil
-        descriptionLabel.text = nil
+        titleLabel.text = nil
+        blockchainBadgeView.text = nil
+        blockchainBadgeView.isHidden = true
     }
 
     func bind(item: MarketDiscoveryFilterHeaderView.ViewItem) {
         iconImageView.setImage(withUrlString: item.iconUrl, placeholder: UIImage(named: item.iconPlaceholder))
-        titleLightLabel.text = item.title
-        descriptionLabel.text = item.description
+        titleLabel.text = item.title
+        if let badgeText = item.blockchainBadge {
+            blockchainBadgeView.text = badgeText
+            blockchainBadgeView.isHidden = false
+        }
     }
 
     func bind(selected: Bool) {

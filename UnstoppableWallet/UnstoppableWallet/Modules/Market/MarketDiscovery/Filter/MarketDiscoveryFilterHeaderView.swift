@@ -6,21 +6,7 @@ extension MarketDiscoveryFilterHeaderView {
         let iconUrl: String
         let iconPlaceholder: String
         let title: String
-        let description: String?
-
-        init(iconUrl: String, iconPlaceholder: String, title: String) {
-            self.iconUrl = iconUrl
-            self.iconPlaceholder = iconPlaceholder
-            self.title = title
-            description = nil
-        }
-
-        init(iconUrl: String, iconPlaceholder: String, title: String, description: String) {
-            self.iconUrl = iconUrl
-            self.iconPlaceholder = iconPlaceholder
-            self.title = title
-            self.description = description
-        }
+        let blockchainBadge: String?
     }
 }
 

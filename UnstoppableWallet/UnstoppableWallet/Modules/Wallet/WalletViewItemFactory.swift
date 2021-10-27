@@ -19,7 +19,7 @@ class WalletViewItemFactory {
                 iconUrlString: iconUrlString(wallet: item.wallet, state: state),
                 placeholderIconName: item.wallet.coinType.placeholderImageName,
                 coinCode: coin.code,
-                blockchainBadge: badge(wallet: item.wallet),
+                blockchainBadge: item.wallet.badge,
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
@@ -28,16 +28,6 @@ class WalletViewItemFactory {
         )
     }
 
-    private func badge(wallet: Wallet) -> String? {
-        switch wallet.coinType {
-        case .bitcoin, .litecoin:
-            return wallet.coinSettings.derivation?.rawValue.uppercased()
-        case .bitcoinCash:
-            return wallet.coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
-        default:
-            return wallet.coinType.blockchainType
-        }
-    }
 
     private func secondaryInfo(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceSecondaryInfoViewItem {
         if case let .syncing(progress, lastBlockDate) = item.state, expanded {

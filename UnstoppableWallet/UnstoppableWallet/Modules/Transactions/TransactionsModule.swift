@@ -61,14 +61,16 @@ struct ColoredImage {
 struct TransactionWallet: Hashable {
     let coin: PlatformCoin?
     let source: TransactionSource
+    let badge: String?
 
     func hash(into hasher: inout Hasher) {
         coin?.hash(into: &hasher)
         source.hash(into: &hasher)
+        badge.hash(into: &hasher)
     }
 
     static func ==(lhs: TransactionWallet, rhs: TransactionWallet) -> Bool {
-        lhs.coin == rhs.coin && lhs.source == rhs.source
+        lhs.coin == rhs.coin && lhs.source == rhs.source && lhs.badge == rhs.badge
     }
 }
 
