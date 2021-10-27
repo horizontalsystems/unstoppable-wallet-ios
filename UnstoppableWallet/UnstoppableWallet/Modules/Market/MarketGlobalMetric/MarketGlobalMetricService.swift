@@ -20,10 +20,12 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
             syncIfPossible()
         }
     }
+    var sortType: MarketGlobalModule.MetricsType
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, sortType: MarketGlobalModule.MetricsType) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.sortType = sortType
 
         syncMarketInfos()
     }
@@ -46,7 +48,10 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     }
 
     private var sortingField: MarketModule.SortingField {
-        sortDirectionAscending ? .lowestCap : .highestCap
+        switch sortType {
+        case .volume24h: return sortDirectionAscending ? .lowestVolume : .highestVolume
+        default: return sortDirectionAscending ? .lowestCap : .highestCap
+        }
     }
 
     private func sync(marketInfos: [MarketInfo]) {

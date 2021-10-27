@@ -16,7 +16,8 @@ struct MarketGlobalMetricModule {
     private static func globalMetricViewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
         let service = MarketGlobalMetricService(
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+                currencyKit: App.shared.currencyKit,
+                sortType: type
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
@@ -52,7 +53,8 @@ struct MarketGlobalMetricModule {
     private static func defiCapViewController() -> UIViewController {
         let service = MarketGlobalMetricService(
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+                currencyKit: App.shared.currencyKit,
+                sortType: .defiCap
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
