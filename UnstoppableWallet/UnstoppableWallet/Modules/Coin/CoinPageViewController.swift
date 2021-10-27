@@ -16,13 +16,13 @@ class CoinPageViewController: ThemeViewController {
 
     private let overviewController: CoinOverviewViewController
     private let marketsController: CoinMarketsViewController
-    private let detailsController: CoinOverviewViewController
+    private let detailsController: CoinDetailsViewController
     private let tweetsController: CoinOverviewViewController
 
     private var addWalletState: CoinPageViewModel.AddWalletState = .hidden
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinOverviewViewController, tweetsController: CoinOverviewViewController) {
+    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinOverviewViewController) {
         self.viewModel = viewModel
         self.enableCoinView = enableCoinView
         self.overviewController = overviewController
@@ -101,10 +101,10 @@ class CoinPageViewController: ThemeViewController {
             self?.addWalletState = $0
             self?.syncButtons()
         }
-        subscribe(disposeBag, viewModel.successHudSignal) { [weak self] in
+        subscribe(disposeBag, viewModel.successHudSignal) {
             HudHelper.instance.showSuccess(title: $0)
         }
-        subscribe(disposeBag, viewModel.attentionHudSignal) { [weak self] in
+        subscribe(disposeBag, viewModel.attentionHudSignal) {
             HudHelper.instance.showAttention(title: $0)
         }
 
