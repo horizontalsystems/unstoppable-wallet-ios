@@ -168,7 +168,7 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func scrollToTop() {
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0, at: .bottom, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
 }
