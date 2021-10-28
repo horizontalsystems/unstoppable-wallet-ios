@@ -46,16 +46,16 @@ class CoinMarketsService: IMarketSingleSortHeaderService {
                 .disposed(by: disposeBag)
     }
 
-    private func sync(tickers: [MarketTicker]) {
-        state = .loaded(tickers: sorted(tickers: tickers))
+    private func sync(tickers: [MarketTicker], reorder: Bool = false) {
+        state = .loaded(tickers: sorted(tickers: tickers), reorder: reorder)
     }
 
     private func syncIfPossible() {
-        guard case .loaded(let tickers) = state else {
+        guard case .loaded(let tickers, _) = state else {
             return
         }
 
-        sync(tickers: tickers)
+        sync(tickers: tickers, reorder: true)
     }
 
     private func sorted(tickers: [MarketTicker]) -> [MarketTicker] {
@@ -92,7 +92,7 @@ extension CoinMarketsService {
 
     enum State {
         case loading
-        case loaded(tickers: [MarketTicker])
+        case loaded(tickers: [MarketTicker], reorder: Bool)
         case failed(error: Error)
     }
 

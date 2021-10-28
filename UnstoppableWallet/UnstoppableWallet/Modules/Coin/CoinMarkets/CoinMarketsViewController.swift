@@ -71,6 +71,7 @@ class CoinMarketsViewController: ThemeViewController {
                 self?.errorView.isHidden = true
             }
         }
+        subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
         viewModel.onLoad()
     }
@@ -85,6 +86,10 @@ class CoinMarketsViewController: ThemeViewController {
         }
 
         tableView.reload()
+    }
+
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
 }
