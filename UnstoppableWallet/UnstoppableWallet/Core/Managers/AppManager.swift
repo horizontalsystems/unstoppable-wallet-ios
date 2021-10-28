@@ -9,12 +9,10 @@ class AppManager {
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: IBlurManager
-    private let notificationManager: INotificationManager
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
     private let rateAppManager: IRateAppManager
-    private let remoteAlertManager: IRemoteAlertManager
     private let logRecordManager: ILogRecordManager
     private let deepLinkManager: IDeepLinkManager
     private let restoreCustomTokenWorker: RestoreCustomTokenWorker
@@ -23,10 +21,10 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
-         keychainKit: IKeychainKit, blurManager: IBlurManager, notificationManager: INotificationManager,
+         keychainKit: IKeychainKit, blurManager: IBlurManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
-         remoteAlertManager: IRemoteAlertManager, logRecordManager: ILogRecordManager,
+         logRecordManager: ILogRecordManager,
          deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker
     ) {
         self.accountManager = accountManager
@@ -35,12 +33,10 @@ class AppManager {
         self.pinKit = pinKit
         self.keychainKit = keychainKit
         self.blurManager = blurManager
-        self.notificationManager = notificationManager
         self.kitCleaner = kitCleaner
         self.debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
-        self.remoteAlertManager = remoteAlertManager
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
         self.restoreCustomTokenWorker = restoreCustomTokenWorker
@@ -57,14 +53,10 @@ extension AppManager {
         accountManager.handleLaunch()
         walletManager.preloadWallets()
         pinKit.didFinishLaunching()
-        notificationManager.removeNotifications()
         kitCleaner.clear()
-        notificationManager.handleLaunch()
 
         appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
-
-        remoteAlertManager.checkScheduledRequests()
 
         try? restoreCustomTokenWorker.run()
     }
@@ -96,16 +88,11 @@ extension AppManager {
 
         keychainKit.handleForeground()
         pinKit.willEnterForeground()
-        notificationManager.removeNotifications()
         adapterManager.refresh()
     }
 
     func willTerminate() {
         debugBackgroundLogger?.logTerminate()
-    }
-
-    func didReceivePushToken(tokenData: Data) {
-        notificationManager.didReceivePushToken(tokenData: tokenData)
     }
 
     func didReceive(url: URL) -> Bool {

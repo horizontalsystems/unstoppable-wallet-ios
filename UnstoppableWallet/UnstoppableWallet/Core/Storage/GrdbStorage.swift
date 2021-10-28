@@ -89,29 +89,6 @@ class GrdbStorage {
             try db.drop(table: "enabled_coins")
         }
 
-        migrator.registerMigration("reCreatePriceAlertRecordsTable") { db in
-            if try db.tableExists(PriceAlertRecord.databaseTableName) {
-                try db.drop(table: PriceAlertRecord.databaseTableName)
-            }
-
-            try db.create(table: PriceAlertRecord.databaseTableName) { t in
-                t.column(PriceAlertRecord.Columns.coinId.name, .text).notNull()
-                t.column(PriceAlertRecord.Columns.changeState.name, .integer).notNull()
-                t.column(PriceAlertRecord.Columns.trendState.name, .text).notNull()
-
-                t.primaryKey([PriceAlertRecord.Columns.coinId.name], onConflict: .replace)
-            }
-        }
-
-        migrator.registerMigration("createPriceAlertRequestRecordsTable") { db in
-            try db.create(table: PriceAlertRequestRecord.databaseTableName) { t in
-                t.column(PriceAlertRequestRecord.Columns.topic.name, .text).notNull()
-                t.column(PriceAlertRequestRecord.Columns.method.name, .integer).notNull()
-
-                t.primaryKey([PriceAlertRequestRecord.Columns.topic.name, PriceAlertRequestRecord.Columns.method.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("renameCoinCodeToCoinIdInEnabledWallets") { db in
             let tempTableName = "enabled_wallets_temp"
 
@@ -375,12 +352,6 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("extractCoinsAndChangeCoinIds") { [weak self] db in
-            // delete all alerts and add title column
-            try PriceAlertRecord.deleteAll(db)
-            try db.alter(table: PriceAlertRecord.databaseTableName) { t in
-                t.add(column: PriceAlertRecord.Columns.coinTitle.name, .text)
-            }
-
             // apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)
         }
@@ -661,62 +632,6 @@ extension GrdbStorage: IAccountRecordStorage {
     func deleteAllAccountRecords() {
         _ = try! dbPool.write { db in
             try AccountRecord.deleteAll(db)
-        }
-    }
-
-}
-
-extension GrdbStorage: IPriceAlertRecordStorage {
-
-    var priceAlertRecords: [PriceAlertRecord] {
-        try! dbPool.read { db in
-            try PriceAlertRecord.fetchAll(db)
-        }
-    }
-
-    func priceAlertRecord(forCoinId coinId: String) -> PriceAlertRecord? {
-        try! dbPool.read { db in
-            try PriceAlertRecord.filter(PriceAlertRecord.Columns.coinId == coinId).fetchOne(db)
-        }
-    }
-
-    func save(priceAlertRecords: [PriceAlertRecord]) {
-        _ = try! dbPool.write { db in
-            for record in priceAlertRecords {
-                try record.insert(db)
-            }
-        }
-    }
-
-    func deleteAllPriceAlertRecords() {
-        _ = try! dbPool.write { db in
-            try PriceAlertRecord.deleteAll(db)
-        }
-    }
-
-}
-
-extension GrdbStorage: IPriceAlertRequestRecordStorage {
-
-    var priceAlertRequestRecords: [PriceAlertRequestRecord] {
-        try! dbPool.read { db in
-            try PriceAlertRequestRecord.fetchAll(db)
-        }
-    }
-
-    func save(priceAlertRequestRecords: [PriceAlertRequestRecord]) {
-        _ = try! dbPool.write { db in
-            for record in priceAlertRequestRecords {
-                try record.insert(db)
-            }
-        }
-    }
-
-    func delete(priceAlertRequestRecords: [PriceAlertRequestRecord]) {
-        _ = try! dbPool.write { db in
-            for priceAlertRequestRecord in priceAlertRequestRecords {
-                try priceAlertRequestRecord.delete(db)
-            }
         }
     }
 

@@ -16,7 +16,7 @@ class App {
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -59,9 +59,6 @@ class App {
 
     private let testModeIndicator: TestModeIndicator
 
-    var remoteAlertManager: IRemoteAlertManager
-    let priceAlertManager: IPriceAlertManager
-    let notificationManager: INotificationManager
     let logRecordManager: ILogRecordManager & ILogStorage
 
     var debugLogger: IDebugLogger?
@@ -194,17 +191,6 @@ class App {
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
-        let priceAlertRequestStorage: IPriceAlertRequestStorage = PriceAlertRequestStorage(storage: storage)
-        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, jsonSerializer: JsonSerializer(), storage: priceAlertRequestStorage)
-
-        let serializer = JsonSerializer()
-        let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteAlertManager: remoteAlertManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
-
-        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, storage: localStorage, serializer: serializer)
-
-        remoteAlertManager.notificationManager = notificationManager
-
         let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: storage)
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
@@ -242,12 +228,10 @@ class App {
                 pinKit: pinKit,
                 keychainKit: keychainKit,
                 blurManager: blurManager,
-                notificationManager: notificationManager,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
                 appVersionManager: appVersionManager,
                 rateAppManager: rateAppManager,
-                remoteAlertManager: remoteAlertManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 restoreCustomTokenWorker: restoreCustomTokenWorker
