@@ -2,7 +2,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MarketKit
-import CoinKit
 import CurrencyKit
 
 class MetricChartService {

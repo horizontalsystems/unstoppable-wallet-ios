@@ -69,7 +69,7 @@ class MainSettingsViewController: ThemeViewController {
         walletConnectCell.titleImage = UIImage(named: "wallet_connect_20")
         walletConnectCell.title = "wallet_connect.title".localized
 
-        baseCurrencyCell.set(backgroundStyle: .lawrence)
+        baseCurrencyCell.set(backgroundStyle: .lawrence, isFirst: true)
         baseCurrencyCell.titleImage = UIImage(named: "usd_20")
         baseCurrencyCell.title = "settings.base_currency".localized
 
@@ -161,18 +161,6 @@ class MainSettingsViewController: ThemeViewController {
 
     private var appearanceRows: [RowProtocol] {
         [
-            Row<A1Cell>(
-                    id: "notifications",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.titleImage = UIImage(named: "bell_ring_20")
-                        cell.title = "settings.notifications".localized
-                    },
-                    action: { [weak self] _ in
-                        self?.navigationController?.pushViewController(NotificationSettingsRouter.module(), animated: true)
-                    }
-            ),
             StaticRow(
                     cell: baseCurrencyCell,
                     id: "base-currency",

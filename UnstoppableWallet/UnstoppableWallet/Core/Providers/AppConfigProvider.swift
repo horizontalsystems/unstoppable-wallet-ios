@@ -34,10 +34,6 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
-    var sandbox: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "Sandbox") as? String == "true"
-    }
-
     func defaultWords(count: Int) -> String {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String ?? ""
     }
@@ -74,13 +70,6 @@ class AppConfigProvider: IAppConfigProvider {
 
     var twitterBearerToken: String? {
         (Bundle.main.object(forInfoDictionaryKey: "TwitterBearerToken") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    var pnsUrl: String {
-        let development = "https://pns-dev.horizontalsystems.xyz/api/v1/"
-        let production = "https://pns-ext.horizontalsystems.xyz/api/v1/"
-
-        return sandbox ? development : production
     }
 
     let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]

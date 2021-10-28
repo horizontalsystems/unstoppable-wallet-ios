@@ -28,8 +28,6 @@ protocol ILocalStorage: AnyObject {
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
     var balanceHidden: Bool { get set }
-    var pushToken: String? { get set }
-    var pushNotificationsOn: Bool { get set }
     var marketCategory: Int? { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
 
@@ -47,15 +45,6 @@ protocol ILogRecordStorage {
     func save(logRecord: LogRecord)
     func logsCount() -> Int
     func removeFirstLogs(count: Int)
-}
-
-protocol IPriceAlertManager {
-    var updateObservable: Observable<[PriceAlert]> { get }
-    var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: MarketKit.CoinType, title: String) -> PriceAlert?
-    func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
-    func deleteAllAlerts() -> Single<()>
-    func updateTopics() -> Observable<[()]>
 }
 
 protocol IBaseAdapter {
@@ -205,7 +194,6 @@ protocol IAppConfigProvider {
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
-    var sandbox: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
@@ -216,8 +204,6 @@ protocol IAppConfigProvider {
     var twitterBearerToken: String? { get }
     var currencyCodes: [String] { get }
     var feeRateAdjustedForCurrencyCodes: [String] { get }
-
-    var pnsUrl: String { get }
 
     func defaultWords(count: Int) -> String
 
@@ -233,33 +219,6 @@ protocol IEnabledWalletStorage {
 
 protocol IActiveAccountStorage: AnyObject {
     var activeAccountId: String? { get set }
-}
-
-protocol IPriceAlertStorage {
-    var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: MarketKit.CoinType) -> PriceAlert?
-    var activePriceAlerts: [PriceAlert] { get }
-    func save(priceAlerts: [PriceAlert])
-    func deleteAll()
-}
-
-protocol IPriceAlertRecordStorage {
-    var priceAlertRecords: [PriceAlertRecord] { get }
-    func priceAlertRecord(forCoinId coinCode: String) -> PriceAlertRecord?
-    func save(priceAlertRecords: [PriceAlertRecord])
-    func deleteAllPriceAlertRecords()
-}
-
-protocol IPriceAlertRequestStorage {
-    var requests: [PriceAlertRequest] { get }
-    func save(requests: [PriceAlertRequest])
-    func delete(requests: [PriceAlertRequest])
-}
-
-protocol IPriceAlertRequestRecordStorage {
-    var priceAlertRequestRecords: [PriceAlertRequestRecord] { get }
-    func save(priceAlertRequestRecords: [PriceAlertRequestRecord])
-    func delete(priceAlertRequestRecords: [PriceAlertRequestRecord])
 }
 
 protocol IAppVersionStorage {
@@ -357,14 +316,6 @@ protocol IDefaultWalletCreator {
     func createWallet(account: Account, coin: CoinKit.Coin)
 }
 
-protocol INotificationManager: AnyObject {
-    var token: String? { get }
-    func handleLaunch()
-    func requestPermission(onComplete: @escaping (Bool) -> ())
-    func removeNotifications()
-    func didReceivePushToken(tokenData: Data)
-}
-
 protocol IDebugLogger {
     var logs: [String] { get }
 
@@ -393,17 +344,6 @@ protocol IRateAppManager {
     func onBecomeActive()
     func onResignActive()
     func forceShow()
-}
-
-protocol IRemoteAlertManager {
-    var notificationManager: INotificationManager? { get set }
-
-    func handle(requests: [PriceAlertRequest]) -> Observable<[()]>
-    func schedule(requests: [PriceAlertRequest])
-
-    func unsubscribeAll() -> Single<()>
-
-    func checkScheduledRequests()
 }
 
 protocol IInitialSyncSettingsManager: AnyObject {
