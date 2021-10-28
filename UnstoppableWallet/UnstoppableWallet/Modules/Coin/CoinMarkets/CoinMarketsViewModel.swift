@@ -11,6 +11,7 @@ class CoinMarketsViewModel {
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let scrollToTopRelay = PublishRelay<()>()
 
     private var volumeType: VolumeType = .coin {
         didSet {
@@ -32,10 +33,14 @@ class CoinMarketsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .loaded(let tickers):
+        case .loaded(let tickers, let reorder):
             viewItemsRelay.accept(viewItems(tickers: tickers))
             loadingRelay.accept(false)
             errorRelay.accept(nil)
+
+            if reorder {
+                scrollToTopRelay.accept(())
+            }
         case .failed:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
@@ -44,7 +49,7 @@ class CoinMarketsViewModel {
     }
 
     private func syncViewItemsIfPossible() {
-        guard case .loaded(let tickers) = service.state else {
+        guard case .loaded(let tickers, _) = service.state else {
             return
         }
 
@@ -95,6 +100,10 @@ extension CoinMarketsViewModel: IMarketSingleSortHeaderDecorator {
 
     var currentFieldIndex: Int {
         VolumeType.allCases.firstIndex(of: volumeType) ?? 0
+    }
+
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
     func setCurrentField(index: Int) {
