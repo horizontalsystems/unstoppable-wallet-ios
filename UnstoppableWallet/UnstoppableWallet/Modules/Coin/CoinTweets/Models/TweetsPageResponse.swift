@@ -46,7 +46,6 @@ class TweetsPageResponse: ImmutableMappable {
                         user: referencedTweetAuthor,
                         text: rawReferencedTweet.text,
                         date: rawReferencedTweet.date,
-                        entities: rawReferencedTweet.convertedEntities(),
                         attachments: [],
                         referencedTweet: nil
                 )
@@ -64,7 +63,6 @@ class TweetsPageResponse: ImmutableMappable {
                     user: user,
                     text: rawTweet.text,
                     date: rawTweet.date,
-                    entities: rawTweet.convertedEntities(),
                     attachments: attachments,
                     referencedTweet: referencedTweet
             )
@@ -80,7 +78,6 @@ extension TweetsPageResponse {
         let date: Date
         let authorId: String
         let text: String
-        let entities: RawEntities
         let mediaKeys: [String]
         let pollIds: [String]
         let referencedTweets: [ReferencedTweet]
@@ -90,26 +87,9 @@ extension TweetsPageResponse {
             date = try map.value("created_at", using: TweetsPageResponse.utcDateTransform)
             authorId = try map.value("author_id")
             text = try map.value("text")
-            entities = (try? map.value("entities")) ?? RawEntities(urls: [], mentions: [], hashTags: [])
             mediaKeys = (try? map.value("attachments.media_keys")) ?? []
             pollIds = (try? map.value("attachments.poll_ids")) ?? []
             referencedTweets = (try? map.value("referenced_tweets")) ?? []
-        }
-
-        func convertedEntities() -> [Tweet.Entity] {
-            var convertedEntities = [Tweet.Entity]()
-
-            for url in entities.urls {
-                convertedEntities.append(Tweet.Entity(type: .url(url: url.url, displayUrl: url.displayUrl), start: url.start, end: url.end))
-            }
-            for mention in entities.mentions {
-                convertedEntities.append(Tweet.Entity(type: .mention(username: mention.username), start: mention.start, end: mention.end))
-            }
-            for hashtag in entities.hashTags {
-                convertedEntities.append(Tweet.Entity(type: .hashtag(tag: hashtag.tag), start: hashtag.start, end: hashtag.end))
-            }
-
-            return convertedEntities
         }
     }
 

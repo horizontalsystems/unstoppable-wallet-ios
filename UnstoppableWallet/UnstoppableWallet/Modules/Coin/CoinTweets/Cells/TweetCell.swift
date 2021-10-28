@@ -84,7 +84,7 @@ class TweetCell: BaseSelectableThemeCell {
         }
 
         referencedTweetView.cornerRadius = .cornerRadius4
-        referencedTweetView.backgroundColor = .themeElena
+        referencedTweetView.backgroundColor = .themeSteel20
 
         wrapperView.addSubview(dateLabel)
 
@@ -109,15 +109,11 @@ class TweetCell: BaseSelectableThemeCell {
             .foregroundColor: UIColor.themeLeah,
             .font: Self.bodyFont
         ])
-
-        for entity in viewItem.entities {
-            let index = viewItem.text.index(viewItem.text.startIndex, offsetBy: entity.start)
-            let substring = String(viewItem.text[..<index])
-            let start = substring.utf16.count
-
+        
+        for entity in TwitterText.entities(in: viewItem.text) {
             switch entity.type {
-            case .url(let url, _): attributedString.addAttribute(.link, value: url, range: NSRange(location: start, length: entity.end - entity.start))
-            case .mention, .hashtag: attributedString.addAttribute(.foregroundColor, value: UIColor.themeJacob, range: NSRange(location: start, length: entity.end - entity.start))
+                case .url, .hashtag, .screenName, .listname: attributedString.addAttribute(.foregroundColor, value: UIColor.themeIssykBlue, range: entity.range)
+            default: ()
             }
         }
 
