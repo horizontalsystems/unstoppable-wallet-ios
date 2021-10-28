@@ -504,11 +504,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.coin_markets.sort_by.highest_volume" = "Наивысшему Обьему";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Наименьшему Объему";
 
+"coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Всего Залоченных Активов";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
 "coin_page.tvl_rank" = "Рейтинг TVL";
 "coin_page.tvl.description" = "Капитал, внесенный в платформу в виде кредитного обеспечения или пула ликвидности.";
 
+"coin_page.token_distribution" = "Token Distribution";
 "coin_page.investor_data" = "Данные Инвестора";
 
 "coin_page.category" = "Категория";
