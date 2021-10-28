@@ -504,13 +504,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.coin_markets.sort_by.highest_volume" = "Mayor Volumen";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Menor Volumen";
 
+"coin_page.token_liquidity" = "Token Liquidity";
+"coin_page.token_distribution" = "Token Distribution";
+
 "coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Valor total bloqueado";
 "coin_page.market_cap_tvl_ratio" = "Capitalización de Mercado / Proporción TVL";
 "coin_page.tvl_rank" = "Rango TVL";
 "coin_page.tvl.description" = "Capital depositado en la plataforma en forma de garantía de préstamo o reserva de liquidez.";
 
-"coin_page.token_distribution" = "Token Distribution";
 "coin_page.investor_data" = "Información de Inversor";
 
 "coin_page.category" = "Categoría";
@@ -530,7 +532,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.major_holders.chart.description" = "en el top 10 de Monederos";
 "coin_page.major_holders.top_wallets" = "Mejores Monederos";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
-"coin_page.major_holders.sync_error" = "Error de sincronización";
 
 "coin_page.tvl_rank.multi_chain" = "Cadena múltiple";
 "coin_page.tvl_rank.sync_error" = "Error de sincronización";
@@ -569,7 +570,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.audits" = "Auditorias";
 "coin_page.audits.issues" = "Problemas";
 "coin_page.audits.no_reports" = "No hay reportes de auditoría";
-"coin_page.audits.sync_error" = "Error de sincronización";
 
 // Transactions
 
