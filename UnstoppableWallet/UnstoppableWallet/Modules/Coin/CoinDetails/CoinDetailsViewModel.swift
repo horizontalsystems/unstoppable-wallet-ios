@@ -48,12 +48,12 @@ class CoinDetailsViewModel {
 
     private func viewItem(info: MarketInfoDetails) -> ViewItem {
         ViewItem(
-                majorHoldersCoinType: service.majorHoldersCoinType,
+                majorHoldersErc20Address: service.majorHoldersErc20Address,
                 tvl: info.tvl.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
                 tvlRank: info.tvlRank.map { "#\($0)" },
                 tvlRatio: info.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
                 securityViewItems: securityViewItems(info: info),
-                auditsCoinType: service.auditsCoinType
+                auditAddresses: service.auditAddresses
         )
     }
 
@@ -139,12 +139,12 @@ extension CoinDetailsViewModel {
 extension CoinDetailsViewModel {
 
     struct ViewItem {
-        let majorHoldersCoinType: CoinType?
+        let majorHoldersErc20Address: String?
         let tvl: String?
         let tvlRank: String?
         let tvlRatio: String?
         let securityViewItems: [SecurityViewItem]
-        let auditsCoinType: CoinType?
+        let auditAddresses: [String]
     }
 
     struct SecurityViewItem {

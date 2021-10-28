@@ -97,14 +97,14 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func openMajorHolders(coinType: CoinType) {
-//        let viewController = CoinMajorHoldersModule.viewController(coinType: coinType)
-//        navigationController?.pushViewController(viewController, animated: true)
+    private func openMajorHolders(address: String) {
+        let viewController = CoinMajorHoldersModule.viewController(address: address)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openAudits(coinType: CoinType) {
-//        let viewController = CoinAuditsModule.viewController(coinType: coinType)
-//        navigationController?.pushViewController(viewController, animated: true)
+    private func openAudits(addresses: [String]) {
+        let viewController = CoinAuditsModule.viewController(addresses: addresses)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openSecurityInfo(type: CoinDetailsViewModel.SecurityType) {
@@ -136,17 +136,68 @@ class CoinDetailsViewController: ThemeViewController {
 
 extension CoinDetailsViewController: SectionsDataSource {
 
-    private func headerRow(title: String) -> RowProtocol {
+    private func headerRow(title: String, topSeparator: Bool = true) -> RowProtocol {
         Row<BCell>(
                 id: "header_cell_\(title)",
                 hash: title,
                 height: .heightCell48,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
+                    cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
                     cell.selectionStyle = .none
                     cell.title = title
                 }
         )
+    }
+
+    private func liquiditySections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "liquidity-header",
+                    footerState: .margin(height: .margin12),
+                    rows: [
+                        headerRow(title: "coin_page.token_liquidity".localized, topSeparator: false),
+                    ]
+            ),
+            Section(
+                    id: "liquidity",
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                    ]
+            )
+        ]
+    }
+
+    private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+        guard let address = viewItem.majorHoldersErc20Address else {
+            return nil
+        }
+
+        return [
+            Section(
+                    id: "distribution-header",
+                    footerState: .margin(height: .margin12),
+                    rows: [
+                        headerRow(title: "coin_page.token_distribution".localized)
+                    ]
+            ),
+            Section(
+                    id: "distribution",
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        Row<D1Cell>(
+                                id: "major-holders",
+                                height: .heightCell48,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                    cell.title = "coin_page.major_holders".localized
+                                },
+                                action: { [weak self] _ in
+                                    self?.openMajorHolders(address: address)
+                                }
+                        )
+                    ]
+            )
+        ]
     }
 
     private func tvlSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
@@ -174,7 +225,6 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(
                     id: "tvl-header",
-                    headerState: .margin(height: .margin24),
                     footerState: .margin(height: .margin12),
                     rows: [
                         headerRow(title: "coin_page.token_tvl".localized),
@@ -182,6 +232,7 @@ extension CoinDetailsViewController: SectionsDataSource {
             ),
             Section(
                     id: "tvl",
+                    footerState: .margin(height: .margin12),
                     rows: [
                         tvlRow
                     ]
@@ -225,55 +276,23 @@ extension CoinDetailsViewController: SectionsDataSource {
             rows.append(tvlRatioRow)
         }
 
-        if !rows.isEmpty {
-            sections.append(Section(
-                    id: "tvl-info",
-                    headerState: .margin(height: .margin12),
-                    rows: rows
-            ))
-        }
+        sections.append(Section(
+                id: "tvl-info",
+                footerState: .margin(height: rows.isEmpty ? .margin12 : .margin24),
+                rows: rows
+        ))
 
         return sections
     }
 
-    private func distributionSections(majorHoldersCoinType: CoinType?) -> [SectionProtocol]? {
-        guard let coinType = majorHoldersCoinType else {
-            return nil
-        }
+    private func securitySections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+        let securityViewItems = viewItem.securityViewItems
+        let auditAddresses = viewItem.auditAddresses
 
-        return [
-            Section(
-                    id: "distribution-header",
-                    headerState: .margin(height: .margin24),
-                    footerState: .margin(height: .margin12),
-                    rows: [
-                        headerRow(title: "coin_page.token_distribution".localized)
-                    ]
-            ),
-            Section(
-                    id: "distribution",
-                    rows: [
-                        Row<D1Cell>(
-                                id: "major-holders",
-                                height: .heightCell48,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.title = "coin_page.major_holders".localized
-                                },
-                                action: { [weak self] _ in
-                                    self?.openMajorHolders(coinType: coinType)
-                                }
-                        )
-                    ]
-            )
-        ]
-    }
-
-    private func securitySections(securityViewItems: [CoinDetailsViewModel.SecurityViewItem], auditsCoinType: CoinType?) -> [SectionProtocol]? {
         var rows = [RowProtocol]()
 
         let hasSecurity = !securityViewItems.isEmpty
-        let hasAudits = auditsCoinType != nil
+        let hasAudits = !auditAddresses.isEmpty
 
         for (index, viewItem) in securityViewItems.enumerated() {
             let row = Row<D20Cell>(
@@ -295,7 +314,7 @@ extension CoinDetailsViewController: SectionsDataSource {
             rows.append(row)
         }
 
-        if let auditsCoinType = auditsCoinType {
+        if !auditAddresses.isEmpty {
             let row = Row<D1Cell>(
                     id: "audits",
                     height: .heightCell48,
@@ -304,7 +323,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.title = "coin_page.audits".localized
                     },
                     action: { [weak self] _ in
-                        self?.openAudits(coinType: auditsCoinType)
+                        self?.openAudits(addresses: auditAddresses)
                     }
             )
 
@@ -317,13 +336,16 @@ extension CoinDetailsViewController: SectionsDataSource {
             return [
                 Section(
                         id: "security-parameters-header",
-                        headerState: .margin(height: .margin24),
                         footerState: .margin(height: .margin12),
                         rows: [
                             headerRow(title: "coin_page.security_parameters".localized)
                         ]
                 ),
-                Section(id: "security-parameters", rows: rows)
+                Section(
+                        id: "security-parameters",
+                        footerState: .margin(height: .margin24),
+                        rows: rows
+                )
             ]
         }
     }
@@ -332,7 +354,9 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let distributionSections = distributionSections(majorHoldersCoinType: viewItem.majorHoldersCoinType) {
+            sections.append(contentsOf: liquiditySections())
+
+            if let distributionSections = distributionSections(viewItem: viewItem) {
                 sections.append(contentsOf: distributionSections)
             }
 
@@ -340,7 +364,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                 sections.append(contentsOf: tvlSections)
             }
 
-            if let securitySections = securitySections(securityViewItems: viewItem.securityViewItems, auditsCoinType: viewItem.auditsCoinType) {
+            if let securitySections = securitySections(viewItem: viewItem) {
                 sections.append(contentsOf: securitySections)
             }
         }

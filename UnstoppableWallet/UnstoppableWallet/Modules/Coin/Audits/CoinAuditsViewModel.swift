@@ -1,13 +1,15 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import XRatesKit
+import MarketKit
 
 class CoinAuditsViewModel {
     private let service: CoinAuditsService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     init(service: CoinAuditsService) {
         self.service = service
@@ -15,6 +17,23 @@ class CoinAuditsViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
         sync(state: service.state)
+    }
+
+    private func sync(state: DataStatus<[Auditor]>) {
+        switch state {
+        case .loading:
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .completed(let auditors):
+            viewItemsRelay.accept(auditors.map { viewItem(auditor: $0) })
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
+        case .failed:
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
+        }
     }
 
     private func auditViewItem(report: AuditReport) -> AuditViewItem {
@@ -33,34 +52,29 @@ class CoinAuditsViewModel {
         )
     }
 
-    private func sync(state: CoinAuditsService.State) {
-        switch state {
-        case .loading:
-            stateRelay.accept(.loading)
-        case .failed:
-            stateRelay.accept(.failed)
-        case .loaded(let auditors):
-            stateRelay.accept(.loaded(viewItems: auditors.map { viewItem(auditor: $0) }))
-        }
+}
+
+extension CoinAuditsViewModel {
+
+    var viewItemsDriver: Driver<[ViewItem]?> {
+        viewItemsRelay.asDriver()
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
+    }
+
+    func refresh() {
+        service.refresh()
     }
 
 }
 
 extension CoinAuditsViewModel {
-
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
-    }
-
-}
-
-extension CoinAuditsViewModel {
-
-    enum State {
-        case loading
-        case failed
-        case loaded(viewItems: [ViewItem])
-    }
 
     struct ViewItem {
         let name: String

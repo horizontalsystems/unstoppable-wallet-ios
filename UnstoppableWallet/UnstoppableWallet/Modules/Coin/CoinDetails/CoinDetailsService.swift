@@ -35,22 +35,25 @@ extension CoinDetailsService {
         currencyKit.baseCurrency
     }
 
-    var auditsCoinType: CoinType? {
-        fullCoin.platforms.map { $0.coinType }.first { coinType in
-            switch coinType {
-            case .erc20, .bep20: return true
-            default: return false
+    var auditAddresses: [String] {
+        fullCoin.platforms.compactMap { platform in
+            switch platform.coinType {
+            case .erc20(let address): return address
+            case .bep20(let address): return address
+            default: return nil
             }
         }
     }
 
-    var majorHoldersCoinType: CoinType? {
-        fullCoin.platforms.map { $0.coinType }.first { coinType in
-            switch coinType {
-            case .erc20: return true
-            default: return false
+    var majorHoldersErc20Address: String? {
+        for platform in fullCoin.platforms {
+            switch platform.coinType {
+            case .erc20(let address): return address
+            default: ()
             }
         }
+
+        return nil
     }
 
     func sync() {

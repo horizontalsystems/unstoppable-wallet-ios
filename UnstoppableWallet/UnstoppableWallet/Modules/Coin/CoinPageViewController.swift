@@ -73,8 +73,7 @@ class CoinPageViewController: ThemeViewController {
         view.addSubview(pageViewController.view)
         pageViewController.view.snp.makeConstraints { maker in
             maker.top.equalTo(tabsView.snp.bottom)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
         tabsView.reload(filters: CoinPageModule.Tab.allCases.map {
