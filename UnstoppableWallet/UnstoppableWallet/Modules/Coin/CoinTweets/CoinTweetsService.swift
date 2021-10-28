@@ -1,19 +1,19 @@
 import RxSwift
+import RxRelay
 import MarketKit
 
 class CoinTweetsService {
     private let disposeBag = DisposeBag()
     private let twitterProvider: TweetsProvider
     private let marketKit: MarketKit.Kit
+    private let coinUid: String
 
-    private var coinUid: String
     private var user: TwitterUser? = nil
+    private let stateRelay = PublishRelay<DataStatus<[Tweet]>>()
 
-    private let stateSubject = PublishSubject<DataStatus<[Tweet]>>()
-    
-    var state: DataStatus<[Tweet]> = .loading {
+    private(set) var state: DataStatus<[Tweet]> = .loading {
         didSet {
-            stateSubject.onNext(state)
+            stateRelay.accept(state)
         }
     }
     
@@ -32,7 +32,7 @@ class CoinTweetsService {
 extension CoinTweetsService {
 
     var stateObservable: Observable<DataStatus<[Tweet]>> {
-        stateSubject.asObservable()
+        stateRelay.asObservable()
     }
 
     func fetch() {
