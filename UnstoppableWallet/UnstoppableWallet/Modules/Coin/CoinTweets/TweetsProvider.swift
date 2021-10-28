@@ -36,7 +36,7 @@ class TweetsProvider {
             "max_results": 50,
             "expansions": "attachments.poll_ids,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id",
             "media.fields": "media_key,preview_image_url,type,url",
-            "tweet.fields": "id,author_id,created_at,attachments,entities",
+            "tweet.fields": "id,author_id,created_at,attachments",
             "user.fields": "profile_image_url"
         ]
 

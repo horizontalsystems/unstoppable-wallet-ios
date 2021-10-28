@@ -43,7 +43,6 @@ class CoinTweetsViewModel {
                 subTitle: "@\(tweet.user.username)",
                 titleImageUrl: tweet.user.profileImageUrl,
                 text: tweet.text,
-                entities: tweet.entities,
                 attachments: tweet.attachments,
                 date: DateHelper.instance.formatFullTime(from: tweet.date),
                 userUrl: "https://twitter.com/\(tweet.user.username)",
@@ -92,7 +91,6 @@ extension CoinTweetsViewModel {
         let subTitle: String
         let titleImageUrl: String
         let text: String
-        let entities: [Tweet.Entity]
         let attachments: [Tweet.Attachment]
         let date: String
         let userUrl: String
