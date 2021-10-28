@@ -1,12 +1,14 @@
 import RxSwift
+import MarketKit
 
 class CoinTweetsService {
     private let disposeBag = DisposeBag()
-    private let provider: TweetsProvider
-    private var username: String? = nil
+    private let twitterProvider: TweetsProvider
+    private let marketKit: MarketKit.Kit
 
+    private var coinUid: String
     private var user: TwitterUser? = nil
-    private var tweets = [Tweet]()
+
     private let stateSubject = PublishSubject<DataStatus<[Tweet]>>()
     
     var state: DataStatus<[Tweet]> = .loading {
@@ -15,15 +17,13 @@ class CoinTweetsService {
         }
     }
     
-    init(provider: TweetsProvider, usernameService: TwitterUsernameService) {
-        self.provider = provider
-
-        subscribe(disposeBag, usernameService.usernameObservable) { [weak self] username in self?.username = username }
+    init(coinUid: String, twitterProvider: TweetsProvider, marketKit: MarketKit.Kit) {
+        self.coinUid = coinUid
+        self.twitterProvider = twitterProvider
+        self.marketKit = marketKit
     }
 
     private func handle(tweets: [Tweet]) {
-        self.tweets = tweets.sorted(by: { tweet, tweet2 in tweet.date > tweet2.date })
-
         state = .completed(tweets)
     }
 
@@ -36,17 +36,21 @@ extension CoinTweetsService {
     }
 
     func fetch() {
-        guard let username = username else {
-            state = .failed(CoinTweetsModule.LoadError.tweeterUserNotFound)
-            return
-        }
-
         let single: Single<TwitterUser?>
 
         if let user = user {
             single = Single.just(user)
         } else {
-            single = provider.userRequestSingle(username: username)
+            // TODO: Here there must be another endpoint to get twitter username
+            single = marketKit
+                    .marketInfoOverviewSingle(coinUid: coinUid, currencyCode: "USD", languageCode: "en")
+                    .flatMap { [weak self] info in
+                        guard let service = self, let username = info.links[.twitter] else {
+                            return Single.just(nil)
+                        }
+
+                        return service.twitterProvider.userRequestSingle(username: username)
+                    }
         }
 
         single
@@ -57,7 +61,7 @@ extension CoinTweetsService {
 
                     service.user = user
 
-                    return service.provider.tweetsSingle(user: user)
+                    return service.twitterProvider.tweetsSingle(user: user)
                 }
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
