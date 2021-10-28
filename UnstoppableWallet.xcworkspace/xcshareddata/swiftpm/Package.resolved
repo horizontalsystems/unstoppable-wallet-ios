@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "UnicodeURL",
+        "repositoryURL": "https://github.com/nysander/UnicodeURL.git",
+        "state": {
+          "branch": "main",
+          "revision": "fe15c8b585c2e6d22dfe81da899183e6aa376a93",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
