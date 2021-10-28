@@ -99,7 +99,12 @@ class App {
         storage = GrdbStorage()
         logRecordManager = LogRecordManager(storage: storage)
 
-        marketKit = try! MarketKit.Kit.instance(hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz", hsOldApiBaseUrl: "https://markets.horizontalsystems.xyz")
+        marketKit = try! MarketKit.Kit.instance(
+                hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz",
+                hsOldApiBaseUrl: "https://markets.horizontalsystems.xyz",
+                cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
+                defiYieldApiKey: appConfigProvider.defiYieldApiKey
+        )
         marketKit.sync()
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)

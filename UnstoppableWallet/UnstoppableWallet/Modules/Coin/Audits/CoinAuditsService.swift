@@ -1,31 +1,38 @@
 import Foundation
 import RxSwift
 import RxRelay
-import CoinKit
-import XRatesKit
+import MarketKit
 
 class CoinAuditsService {
-    private let coinType: CoinType
-    private let rateManager: IRateManager
-    private let disposeBag = DisposeBag()
+    private let addresses: [String]
+    private let marketKit: Kit
+    private var disposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<DataStatus<[Auditor]>>()
+    private(set) var state: DataStatus<[Auditor]> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(coinType: CoinType, rateManager: IRateManager) {
-        self.coinType = coinType
-        self.rateManager = rateManager
+    init(addresses: [String], marketKit: Kit) {
+        self.addresses = addresses
+        self.marketKit = marketKit
 
-        rateManager.auditReportsSingle(coinType: coinType)
+        sync()
+    }
+
+    private func sync() {
+        disposeBag = DisposeBag()
+
+        state = .loading
+
+        marketKit.auditReportsSingle(addresses: addresses)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] auditors in
-                    self?.state = .loaded(auditors: auditors)
-                }, onError: { [weak self] _ in
-                    self?.state = .failed
+                    self?.state = .completed(auditors)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
@@ -34,18 +41,12 @@ class CoinAuditsService {
 
 extension CoinAuditsService {
 
-    var stateObservable: Observable<State> {
+    var stateObservable: Observable<DataStatus<[Auditor]>> {
         stateRelay.asObservable()
     }
 
-}
-
-extension CoinAuditsService {
-
-    enum State {
-        case loading
-        case failed
-        case loaded(auditors: [Auditor])
+    func refresh() {
+        sync()
     }
 
 }

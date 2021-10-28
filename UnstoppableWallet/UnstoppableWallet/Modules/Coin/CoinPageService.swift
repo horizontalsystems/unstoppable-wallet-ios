@@ -71,7 +71,7 @@ class CoinPageService {
     }
 
     private func handleEnableCoin(configuredPlatformCoins: [ConfiguredPlatformCoin], restoreSettings: RestoreSettings) {
-        guard let account = accountManager.activeAccount, let coin = configuredPlatformCoins.first?.platformCoin.coin else {
+        guard let account = accountManager.activeAccount else {
             return
         }
 
