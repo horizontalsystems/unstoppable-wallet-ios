@@ -2,15 +2,16 @@ import MarketKit
 
 struct CoinTweetsModule {
 
-    static func viewController(fullCoin: FullCoin, twitterUsernameService: TwitterUsernameService) -> CoinTweetsViewController {
+    static func viewController(fullCoin: FullCoin) -> CoinTweetsViewController {
         let tweetsProvider = TweetsProvider(
                 networkManager: App.shared.networkManager,
                 bearerToken: App.shared.appConfigProvider.twitterBearerToken
         )
 
         let service = CoinTweetsService(
-                provider: tweetsProvider,
-                usernameService: twitterUsernameService
+                coinUid: fullCoin.coin.uid,
+                twitterProvider: tweetsProvider,
+                marketKit: App.shared.marketKit
         )
 
         let viewModel = CoinTweetsViewModel(service: service)
