@@ -11,7 +11,7 @@ class MarketViewModel {
     init(service: MarketService) {
         self.service = service
 
-        currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.currentTab ?? .overview)
+        currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.initialTab)
     }
 
 }
@@ -27,7 +27,7 @@ extension MarketViewModel {
     }
 
     func onSelect(tab: MarketModule.Tab) {
-        service.currentTab = tab
+        service.set(tab: tab)
         currentTabRelay.accept(tab)
     }
 

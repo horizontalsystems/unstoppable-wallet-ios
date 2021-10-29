@@ -27,7 +27,6 @@ protocol ILocalStorage: AnyObject {
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
     var balanceHidden: Bool { get set }
-    var marketCategory: Int? { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
 
     func defaultProvider(blockchain: SwapModule.Dex.Blockchain) -> SwapModule.Dex.Provider

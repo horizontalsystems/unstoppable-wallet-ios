@@ -784,6 +784,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings_theme.dark" = "Dark";
 "settings_theme.light" = "Light";
 
+// Settings -> Launch Screen
+
+"settings.launch_screen.title" = "Launch Screen";
+
+"launch_screen.auto" = "Auto";
+"launch_screen.balance" = "Balance";
+"launch_screen.market_overview" = "Market Overview";
+"launch_screen.watchlist" = "Watchlist";
+
 // Set PIN
 
 "set_pin.title" = "Passcode";
