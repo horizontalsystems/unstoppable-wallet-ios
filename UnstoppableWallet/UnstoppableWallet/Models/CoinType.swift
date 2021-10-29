@@ -1,5 +1,4 @@
 import UIKit
-import CoinKit
 import MarketKit
 
 extension MarketKit.CoinCategory {
@@ -110,26 +109,6 @@ extension MarketKit.Coin {
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
         return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/ios/\(uid)@\(scale)x.png"
-    }
-
-}
-
-extension CoinKit.CoinType {
-
-    var coinType: MarketKit.CoinType {
-        switch self {
-        case .bitcoin: return .bitcoin
-        case .litecoin: return .litecoin
-        case .bitcoinCash: return .bitcoinCash
-        case .dash: return .dash
-        case .ethereum: return .ethereum
-        case .zcash: return .zcash
-        case .binanceSmartChain: return .binanceSmartChain
-        case .erc20(let address): return .erc20(address: address)
-        case .bep2(let symbol): return .bep2(symbol: symbol)
-        case .bep20(let address): return .bep20(address: address)
-        case .unsupported(let id): return .unsupported(type: id)
-        }
     }
 
 }

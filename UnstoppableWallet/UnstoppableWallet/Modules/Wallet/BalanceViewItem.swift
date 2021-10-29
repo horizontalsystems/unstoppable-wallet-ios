@@ -1,6 +1,5 @@
 import Foundation
 import DeepDiff
-import XRatesKit
 import MarketKit
 
 struct BalanceViewItem {

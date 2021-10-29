@@ -6,7 +6,6 @@ import EthereumKit
 import ThemeKit
 import Alamofire
 import HsToolKit
-import CoinKit
 import MarketKit
 import BigInt
 
@@ -168,12 +167,6 @@ protocol IBlurManager {
     func didBecomeActive()
 }
 
-protocol IRateCoinMapper {
-    func convert(coin: CoinKit.Coin) -> CoinKit.Coin?
-    func convert(coinCode: String) -> String?
-    func unconvert(coinCode: String) -> [String]
-}
-
 protocol ISystemInfoManager {
     var appVersion: AppVersion { get }
     var passcodeSet: Bool { get }
@@ -311,11 +304,6 @@ protocol IAppManager {
     var willEnterForegroundObservable: Observable<()> { get }
 }
 
-protocol IDefaultWalletCreator {
-    func createWallets(account: Account)
-    func createWallet(account: Account, coin: CoinKit.Coin)
-}
-
 protocol IDebugLogger {
     var logs: [String] { get }
 
@@ -346,12 +334,6 @@ protocol IRateAppManager {
     func forceShow()
 }
 
-protocol IInitialSyncSettingsManager: AnyObject {
-    var allSettings: [(setting: InitialSyncSetting, coin: CoinKit.Coin, changeable: Bool)] { get }
-    func setting(coinType: CoinKit.CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting?
-    func save(setting: InitialSyncSetting)
-}
-
 protocol ITransactionDataSortModeSettingManager {
     var setting: TransactionDataSortMode { get }
     func save(setting: TransactionDataSortMode)
@@ -364,10 +346,6 @@ protocol ISortTypeManager: AnyObject {
 
 protocol IGuidesManager {
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]>
-}
-
-protocol IErc20ContractInfoProvider {
-    func coinSingle(address: String) -> Single<CoinKit.Coin>
 }
 
 protocol IFavoriteCoinRecordStorage {

@@ -1,6 +1,5 @@
 import Foundation
 import CurrencyKit
-import XRatesKit
 import MarketKit
 
 class SendFeePresenter {

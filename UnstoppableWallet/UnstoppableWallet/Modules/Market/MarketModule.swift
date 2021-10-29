@@ -1,6 +1,5 @@
 import UIKit
 import ThemeKit
-import XRatesKit
 import CurrencyKit
 import MarketKit
 import ComponentKit
