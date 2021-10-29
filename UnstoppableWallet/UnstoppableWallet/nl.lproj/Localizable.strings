@@ -571,6 +571,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.audits.issues" = "Issues";
 "coin_page.audits.no_reports" = "No audit reports";
 
+"coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_page.tweets.reference_type.quoted" = "Quoted @%@";
+"coin_page.tweets.reference_type.replied" = "Replied to @%@";
+
 // Transactions
 
 "transactions.title" = "Transactions";
@@ -779,6 +783,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings_theme.system" = "System";
 "settings_theme.dark" = "Dark";
 "settings_theme.light" = "Light";
+
+// Settings -> Launch Screen
+
+"settings.launch_screen.title" = "Launch Screen";
+
+"launch_screen.auto" = "Auto";
+"launch_screen.balance" = "Balance";
+"launch_screen.market_overview" = "Market Overview";
+"launch_screen.watchlist" = "Watchlist";
 
 // Set PIN
 
