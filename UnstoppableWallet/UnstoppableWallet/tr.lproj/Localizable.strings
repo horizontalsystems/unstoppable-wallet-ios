@@ -644,7 +644,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.experimental_features" = "Deneysel";
-"settings.notifications" = "Bildirimler";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
@@ -659,19 +658,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "Uyarı";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "Anlıyorum";
-
-// Settings -> Notifications
-
-"settings_notifications.title" = "Bildirimler";
-"settings_notifications.toggle_title" = "Anlık Bildirimler";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "Kapat";
-"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Ayarlardan aç";
-"settings_notifications.trend_short" = "Kısa Vade 7G";
-"settings_notifications.trend_long" = "Uzun Vade 6A";
-"settings_notifications.reset_all_title" = "Tümünü Sıfırla";
-"settings_notifications.trend_settings_title" = "Fiyat Trendi";
 
 // Settings -> Manage Wallet
 
@@ -917,17 +903,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Eklendi";
-
-"change_24hour_up" = "%@ fiyat: yukarı %@%% %@";
-"change_24hour_down" = "%@ fiyat: aşağı %@%% %@";
-"trend_shortterm_up" = "%@ kısa vade trend: yukarı %@";
-"trend_shortterm_down" = "%@ kısa vade trend: aşağı %@";
-"trend_longterm_up" = "%@ uzun vade trend: yukarı %@";
-"trend_longterm_down" = "%@ uzun vade trend: aşağı %@";
-
-"chart_alert.title" = "Bildirim";
-"chart_alert.24h_description" = "Fiyat Değişimi 24s";
-"chart_alert.trend_description" = "Trend Değişimi";
 
 // Wallet Connect
 
