@@ -180,9 +180,6 @@ protocol IAppConfigProvider {
     var reportEmail: String { get }
     var guidesIndexUrl: URL { get }
     var faqIndexUrl: URL { get }
-    var uniswapSubgraphUrl: String { get }
-    var providerCoinsUrl: String { get }
-    var coinsUrl: String { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
@@ -190,14 +187,9 @@ protocol IAppConfigProvider {
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
     var bscscanKey: String { get }
-    var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
     var defiYieldApiKey: String? { get }
     var twitterBearerToken: String? { get }
-    var currencyCodes: [String] { get }
-    var feeRateAdjustedForCurrencyCodes: [String] { get }
-
-    func defaultWords(count: Int) -> String
 
     var defaultWords: String { get }
 }
