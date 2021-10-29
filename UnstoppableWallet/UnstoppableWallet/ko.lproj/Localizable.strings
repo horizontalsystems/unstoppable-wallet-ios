@@ -643,7 +643,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
 "settings.experimental_features" = "실험";
-"settings.notifications" = "알림";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.faq" = "FAQ";
@@ -658,19 +657,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "면책";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "이해합니다";
-
-// Settings -> Notifications
-
-"settings_notifications.title" = "알림";
-"settings_notifications.toggle_title" = "알림 설정";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "끄기";
-"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "설정에서 켜십시오";
-"settings_notifications.trend_short" = "단기 7D";
-"settings_notifications.trend_long" = "장기 6M";
-"settings_notifications.reset_all_title" = "전체 초기화";
-"settings_notifications.trend_settings_title" = "가격 동향";
 
 // Settings -> Manage Wallet
 
@@ -916,17 +902,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "추가됨";
-
-"change_24hour_up" = "%@ 가격: 상승 %@%% %@";
-"change_24hour_down" = "%@ 가격: 하락 %@%% %@";
-"trend_shortterm_up" = "%@ 단기 동향: 상승 %@";
-"trend_shortterm_down" = "%@ 단기 동향: 하락 %@";
-"trend_longterm_up" = "%@ 장기 동향: 상승 %@";
-"trend_longterm_down" = "%@ 장기 동향: 하락 %@";
-
-"chart_alert.title" = "알림";
-"chart_alert.24h_description" = "가격 변동 24시간";
-"chart_alert.trend_description" = "동향 변화";
 
 // Wallet Connect
 
