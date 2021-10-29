@@ -643,7 +643,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
 "settings.experimental_features" = "实验性功能";
-"settings.notifications" = "通知";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
@@ -658,19 +657,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "声明";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "我理解";
-
-// Settings -> Notifications
-
-"settings_notifications.title" = "通知";
-"settings_notifications.toggle_title" = "推送通知";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "关";
-"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "在设置中开启";
-"settings_notifications.trend_short" = "短期7天";
-"settings_notifications.trend_long" = "长期6个月";
-"settings_notifications.reset_all_title" = "重置全部";
-"settings_notifications.trend_settings_title" = "价格趋势";
 
 // Settings -> Manage Wallet
 
@@ -916,17 +902,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "已添加";
-
-"change_24hour_up" = "%@ 价格：上升 %@%% %@";
-"change_24hour_down" = "%@ 价格：下跌 %@%% %@";
-"trend_shortterm_up" = "%@ 短期趋势：上升 %@";
-"trend_shortterm_down" = "%@ 短期趋势：下跌 %@";
-"trend_longterm_up" = "%@ 长期趋势：上升 %@";
-"trend_longterm_down" = "%@ 长期趋势：下跌 %@";
-
-"chart_alert.title" = "通知";
-"chart_alert.24h_description" = "24小时价格变动";
-"chart_alert.trend_description" = "趋势变化";
 
 // Wallet Connect
 
