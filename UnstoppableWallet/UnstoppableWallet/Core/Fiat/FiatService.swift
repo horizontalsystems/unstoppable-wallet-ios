@@ -1,7 +1,6 @@
 import CurrencyKit
 import RxSwift
 import RxRelay
-import XRatesKit
 import MarketKit
 
 class FiatService {

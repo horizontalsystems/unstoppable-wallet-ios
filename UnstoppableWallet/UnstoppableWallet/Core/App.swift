@@ -41,7 +41,6 @@ class App {
 
     let currencyKit: CurrencyKit.Kit
 
-    let rateManager: IRateManager
     let favoritesManager: FavoritesManager
 
     let feeCoinProvider: FeeCoinProvider
@@ -179,7 +178,6 @@ class App {
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(currencyKit: currencyKit, feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
         favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)

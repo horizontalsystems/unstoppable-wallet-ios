@@ -21,8 +21,6 @@ def appPods
 
   pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.12.0-beta.2'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
-  pod 'CoinKit.swift', git: 'https://github.com/horizontalsystems/coin-kit-ios'
-  # pod 'CoinKit.swift', path: '../coin-kit-ios/'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
@@ -41,8 +39,6 @@ def appPods
 
   pod 'MarketKit.swift', git: 'https://github.com/horizontalsystems/market-kit-ios/'
   # pod 'MarketKit.swift', path: '../market-kit-ios/'
-  pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
-  # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
   # pod 'FeeRateKit.swift', path: '../blockchain-fee-rate-kit-ios/'
 

@@ -1,5 +1,4 @@
 import UIKit
-import XRatesKit
 import RxSwift
 import ThemeKit
 import SectionsTableView

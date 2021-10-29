@@ -1,6 +1,5 @@
 import UIKit
 import CurrencyKit
-import XRatesKit
 import MarketKit
 
 protocol ISendFeeView: AnyObject {

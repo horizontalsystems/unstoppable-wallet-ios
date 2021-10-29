@@ -1,6 +1,5 @@
 import Foundation
 import RxSwift
-import XRatesKit
 import HsToolKit
 import MarketKit
 

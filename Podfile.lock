@@ -65,11 +65,6 @@ PODS:
   - CNIOLinux (2.32.3)
   - CNIOSHA1 (2.32.3)
   - CNIOWindows (2.32.3)
-  - CoinKit.swift (0.1.0):
-    - GRDB.swift (~> 5.0)
-    - ObjectMapper (~> 4.0)
-    - RxSwift (~> 5.0)
-    - RxSwiftExt (~> 5)
   - ComponentKit.swift (1.0):
     - AlamofireImage (~> 4.1)
     - HUD.swift (~> 1.2)
@@ -219,14 +214,6 @@ PODS:
   - RxRelay (5.1.3):
     - RxSwift (~> 5)
   - RxSwift (5.1.3)
-  - RxSwiftExt (5.2.0):
-    - RxSwiftExt/Core (= 5.2.0)
-    - RxSwiftExt/RxCocoa (= 5.2.0)
-  - RxSwiftExt/Core (5.2.0):
-    - RxSwift (~> 5.0)
-  - RxSwiftExt/RxCocoa (5.2.0):
-    - RxCocoa (~> 5.0)
-    - RxSwiftExt/Core
   - ScanQrKit.swift (1.0):
     - ComponentKit.swift (~> 1.0)
     - LanguageKit.swift (~> 1.0)
@@ -331,13 +318,6 @@ PODS:
     - HsToolKit.swift
     - PromiseKit
   - X11Kit.swift (1.0)
-  - XRatesKit.swift (0.10.0):
-    - CoinKit.swift (~> 0.1)
-    - GRDB.swift (~> 5.0)
-    - HsToolKit.swift (~> 1.1)
-    - ObjectMapper (~> 4.0)
-    - RxSwift (~> 5.0)
-    - RxSwiftExt (~> 5)
   - ZcashLightClientKit (0.12.0-beta.2):
     - gRPC-Swift (= 1.0.0)
     - SQLite.swift (~> 0.12.2)
@@ -353,7 +333,6 @@ DEPENDENCIES:
   - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
-  - CoinKit.swift (from `https://github.com/horizontalsystems/coin-kit-ios`)
   - ComponentKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
@@ -391,7 +370,6 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 2.0.1)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
-  - XRatesKit.swift (from `https://github.com/horizontalsystems/xrates-kit-ios/`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.2`)
 
 SPEC REPOS:
@@ -430,7 +408,6 @@ SPEC REPOS:
     - RxGRDB
     - RxRelay
     - RxSwift
-    - RxSwiftExt
     - Secp256k1Kit.swift
     - SkeletonView
     - SnapKit
@@ -467,8 +444,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
-  CoinKit.swift:
-    :git: https://github.com/horizontalsystems/coin-kit-ios
   ComponentKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
@@ -517,8 +492,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
-  XRatesKit.swift:
-    :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
     :tag: 0.12.0-beta.2
@@ -542,9 +515,6 @@ CHECKOUT OPTIONS:
   Chart.swift:
     :commit: 0640aacbec907779acd9b4724dbb7965b4067d47
     :git: https://github.com/horizontalsystems/gui-kit/
-  CoinKit.swift:
-    :commit: 2959a41846593a337824fc9d47f85260e9315d73
-    :git: https://github.com/horizontalsystems/coin-kit-ios
   ComponentKit.swift:
     :commit: df2964b1ab1ff540c5cd40dfee8c5fb7cc89a35e
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -617,9 +587,6 @@ CHECKOUT OPTIONS:
   WalletConnect:
     :commit: 1336f67877608e271107cd96bb852f76fd51eddf
     :git: https://github.com/horizontalsystems/wallet-connect-swift
-  XRatesKit.swift:
-    :commit: 11d5b49b04c19635c2084956b683e731ed33fc6a
-    :git: https://github.com/horizontalsystems/xrates-kit-ios/
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
     :tag: 0.12.0-beta.2
@@ -647,7 +614,6 @@ SPEC CHECKSUMS:
   CNIOLinux: 5921dfefbc4bbe017380b34c510855622147ea41
   CNIOSHA1: cdf6523d56bbb78be9b11ae4e6340fbc591b492d
   CNIOWindows: f5aa9dfb401b440a7b4c9cd911e53e981a787193
-  CoinKit.swift: 721781ae475f790572380f074f934014ca5ef0d7
   ComponentKit.swift: 190a7c49a0747c020f5316f6b7f35358cfe159e8
   CryptoSwift: 0bc800a7e6a24c4fc9ebeab97d44b0d5f73a78bd
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
@@ -683,7 +649,6 @@ SPEC CHECKSUMS:
   RxGRDB: 39ead922d410a96c5a5883b1695cba48fe7818e2
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
-  RxSwiftExt: 4ca80336f43c28f11a2825cdd2fc61dd6c044697
   ScanQrKit.swift: c6f0c2c8593fe6e9d85e8b094ea33ab07fe6b68c
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
@@ -713,9 +678,8 @@ SPEC CHECKSUMS:
   UnstoppableDomainsResolution: 856ba43f08b31f3f34157c7257092bd0c6e31cf8
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  XRatesKit.swift: 7013e3b93f5749d42bb65bebb532c1c62a916e8e
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 1d54c61a953c057b72e2d8494fde2cb5627cdb7d
+PODFILE CHECKSUM: 22e7afc801463c1d12857f2fd986cc1840544099
 
 COCOAPODS: 1.11.2

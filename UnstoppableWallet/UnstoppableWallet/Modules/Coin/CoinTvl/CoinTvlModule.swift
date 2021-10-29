@@ -1,11 +1,10 @@
-import UIKit
-import RxSwift
-import Chart
-import LanguageKit
-import XRatesKit
-
-class CoinTvlModule {
-
+//import UIKit
+//import RxSwift
+//import Chart
+//import LanguageKit
+//
+//class CoinTvlModule {
+//
 //    static func viewController(coinType: CoinType) -> UIViewController {
 //        let chartFetcher = CoinTvlFetcher(rateManager: App.shared.rateManager, coinType: coinType)
 //        let chartService = MetricChartService(
@@ -20,5 +19,5 @@ class CoinTvlModule {
 //                viewModel: chartViewModel,
 //                configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
 //    }
-
-}
+//
+//}

@@ -3,7 +3,6 @@ import MarketKit
 import LanguageKit
 import CurrencyKit
 import Chart
-import CoinKit
 
 class MetricChartFactory {
     static private let noChangesLimitPercent: Decimal = 0.2
