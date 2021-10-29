@@ -35,7 +35,7 @@ end
 
 def update_xcconfig(name, new_value)
   update_xcconfig_value(
-    path: '../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
+    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
     name: name,
     value: new_value
   )
