@@ -643,7 +643,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.security_center" = "Centro de seguridad";
 "settings.manage_accounts" = "Gestionar monederos";
 "settings.experimental_features" = "Experimental";
-"settings.notifications" = "Notificaciones";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
@@ -658,19 +657,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "Descargo de responsabilidad";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "Entiendo";
-
-// Settings -> Notifications
-
-"settings_notifications.title" = "Notificaciones";
-"settings_notifications.toggle_title" = "Notificaciones automáticas";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "Desactivado";
-"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Activar en ajustes";
-"settings_notifications.trend_short" = "Corto plazo 7D";
-"settings_notifications.trend_long" = "Largo Plazo 6M";
-"settings_notifications.reset_all_title" = "Restablecer todo";
-"settings_notifications.trend_settings_title" = "Tendencia de precios";
 
 // Settings -> Manage Wallet
 
@@ -916,17 +902,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Añadido";
-
-"change_24hour_up" = "Precio %@: subió %@%% %@";
-"change_24hour_down" = "Precio %@: bajó %@%% %@";
-"trend_shortterm_up" = "Tendencia a corto plazo de %@: subiò %@";
-"trend_shortterm_down" = "Tendencia a corto plazo de %@: bajó %@";
-"trend_longterm_up" = "Tendencia a largo plazo de %@: subiò %@";
-"trend_longterm_down" = "Tendencia a largo plazo de %@: bajó %@";
-
-"chart_alert.title" = "Notificación";
-"chart_alert.24h_description" = "Variación de Precio 24h";
-"chart_alert.trend_description" = "Variación de tendencia";
 
 // Wallet Connect
 
