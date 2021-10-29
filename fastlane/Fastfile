@@ -11,6 +11,12 @@ APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 APP_CENTER_API_TOKEN = ENV["APP_CENTER_API_TOKEN"]
 
+XCCONFIG_DEV_INFURA_PROJECT_ID = ENV["XCCONFIG_DEV_INFURA_PROJECT_ID"]
+XCCONFIG_DEV_INFURA_PROJECT_SECRET = ENV["XCCONFIG_DEV_INFURA_PROJECT_SECRET"]
+XCCONFIG_DEV_ETHERSCAN_API_KEY = ENV["XCCONFIG_DEV_ETHERSCAN_API_KEY"]
+XCCONFIG_DEV_BSCSCAN_API_KEY = ENV["XCCONFIG_DEV_BSCSCAN_API_KEY"]
+XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY = ENV["XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY"]
+XCCONFIG_DEV_DEFIYIELD_API_KEY = ENV["XCCONFIG_DEV_DEFIYIELD_API_KEY"]
 XCCONFIG_DEV_TWITTER_BEARER_TOKEN = ENV["XCCONFIG_DEV_TWITTER_BEARER_TOKEN"]
 
 def delete_temp_keychain(name)
@@ -45,6 +51,12 @@ def prepare_environment
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig")
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig")
 
+  update_xcconfig('infura_project_id', XCCONFIG_DEV_INFURA_PROJECT_ID)
+  update_xcconfig('infura_project_secret', XCCONFIG_DEV_INFURA_PROJECT_SECRET)
+  update_xcconfig('etherscan_api_key', XCCONFIG_DEV_ETHERSCAN_API_KEY)
+  update_xcconfig('bscscan_api_key', XCCONFIG_DEV_BSCSCAN_API_KEY)
+  update_xcconfig('cryptocompare_com_api_key', XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY)
+  update_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
   update_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
 
   increment_build_number(
