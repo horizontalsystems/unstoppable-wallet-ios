@@ -51,3 +51,5 @@ jobs:
           APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
           APPLE_KEY_CONTENT: ${{ secrets.APPLE_KEY_CONTENT }}
           APP_CENTER_API_TOKEN: ${{ secrets.APP_CENTER_API_TOKEN }}
+
+          XCCONFIG_DEV_TWITTER_BEARER_TOKEN: ${{ secrets.XCCONFIG_DEV_TWITTER_BEARER_TOKEN }}
