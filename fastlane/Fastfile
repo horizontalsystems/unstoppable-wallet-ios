@@ -11,6 +11,8 @@ APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 APP_CENTER_API_TOKEN = ENV["APP_CENTER_API_TOKEN"]
 
+XCCONFIG_DEV_TWITTER_BEARER_TOKEN = ENV["XCCONFIG_DEV_TWITTER_BEARER_TOKEN"]
+
 def delete_temp_keychain(name)
   delete_keychain(
     name: name
@@ -31,9 +33,19 @@ def ensure_temp_keychain(name, password)
   create_temp_keychain(name, password)
 end
 
+def update_xcconfig(name, new_value)
+  update_xcconfig_value(
+    path: '../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
+    name: name,
+    value: new_value
+  )
+end
+
 def prepare_environment
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig")
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig")
+
+  update_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
 
   increment_build_number(
     build_number: ENV['BUILD_NUMBER'],
