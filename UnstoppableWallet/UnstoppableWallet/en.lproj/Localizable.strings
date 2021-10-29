@@ -571,6 +571,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.audits.issues" = "Issues";
 "coin_page.audits.no_reports" = "No audit reports";
 
+"coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_page.tweets.reference_type.quoted" = "Quoted @%@";
+"coin_page.tweets.reference_type.replied" = "Replied to @%@";
+
 // Transactions
 
 "transactions.title" = "Transactions";

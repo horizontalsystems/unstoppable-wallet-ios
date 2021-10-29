@@ -2,23 +2,34 @@ import UIKit
 import ComponentKit
 
 class TweetCell: BaseSelectableThemeCell {
-    private let headerView = UIView()
+    private static let bodyFont: UIFont = .subhead2
+
+    private let stackView = UIStackView()
+
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     private let titleImage = UIImageView()
 
     private let textView = MarkdownTextView()
-
-    private let referencedTweetView = UIView()
-    private let referencedTweetTitleView = UILabel()
-    private let referencedTweetBodyView = UILabel()
+    private let attachmentView = TweetAttachmentView()
+    private let referencedTweetView = ReferencedTweetView()
 
     private let dateLabel = UILabel()
 
-    private static let bodyFont: UIFont = .subhead2
-
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        wrapperView.addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(CGFloat.margin16)
+        }
+
+        stackView.distribution = .equalSpacing
+        stackView.axis = .vertical
+        stackView.spacing = .margin12
+
+        let headerView = UIView()
+        stackView.addArrangedSubview(headerView)
 
         headerView.addSubview(titleImage)
         titleImage.snp.makeConstraints { maker in
@@ -33,6 +44,7 @@ class TweetCell: BaseSelectableThemeCell {
         titleLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview()
             maker.leading.equalTo(titleImage.snp.trailing).offset(CGFloat.margin8)
+            maker.trailing.equalToSuperview()
         }
 
         titleLabel.font = .body
@@ -40,7 +52,7 @@ class TweetCell: BaseSelectableThemeCell {
 
         headerView.addSubview(subTitleLabel)
         subTitleLabel.snp.makeConstraints { maker in
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin2)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(3)
             maker.leading.equalTo(titleLabel.snp.leading)
             maker.bottom.equalToSuperview()
         }
@@ -48,46 +60,11 @@ class TweetCell: BaseSelectableThemeCell {
         subTitleLabel.font = .caption
         subTitleLabel.textColor = .themeGray
 
-        wrapperView.addSubview(headerView)
-        headerView.snp.makeConstraints { maker in
-            maker.leading.trailing.top.equalToSuperview().inset(CGFloat.margin16)
-        }
+        stackView.addArrangedSubview(textView)
+        stackView.addArrangedSubview(attachmentView)
+        stackView.addArrangedSubview(referencedTweetView)
 
-        wrapperView.addSubview(textView)
-        textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(headerView.snp.bottom).offset(CGFloat.margin12)
-        }
-
-        referencedTweetView.addSubview(referencedTweetTitleView)
-        referencedTweetTitleView.snp.makeConstraints { maker in
-            maker.top.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-        }
-
-        referencedTweetTitleView.font = .caption
-        referencedTweetTitleView.textColor = .themeGray
-
-        referencedTweetView.addSubview(referencedTweetBodyView)
-        referencedTweetBodyView.snp.makeConstraints { maker in
-            maker.top.equalTo(referencedTweetTitleView.snp.bottom).offset(CGFloat.margin12)
-            maker.bottom.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-        }
-
-        referencedTweetBodyView.numberOfLines = 0
-        referencedTweetBodyView.font = Self.bodyFont
-        referencedTweetBodyView.textColor = .themeLeah
-
-        wrapperView.addSubview(referencedTweetView)
-        referencedTweetView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(textView.snp.bottom).offset(CGFloat.margin12)
-        }
-
-        referencedTweetView.cornerRadius = .cornerRadius4
-        referencedTweetView.backgroundColor = .themeSteel20
-
-        wrapperView.addSubview(dateLabel)
-
+        stackView.addArrangedSubview(dateLabel)
         dateLabel.font = .micro
         dateLabel.textColor = .themeGray50
     }
@@ -119,21 +96,18 @@ class TweetCell: BaseSelectableThemeCell {
 
         textView.attributedText = attributedString
 
-        if let referencedTweet = viewItem.referencedTweet {
-            referencedTweetView.isHidden = false
-            referencedTweetTitleView.text = referencedTweet.title
-            referencedTweetBodyView.text = referencedTweet.text
+        if let attachment = viewItem.attachment {
+            attachmentView.bind(attachment: attachment)
+            attachmentView.isHidden = false
+        } else {
+            attachmentView.isHidden = true
+        }
 
-            dateLabel.snp.remakeConstraints { maker in
-                maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(referencedTweetView.snp.bottom).offset(CGFloat.margin12)
-            }
+        if let referencedTweet = viewItem.referencedTweet {
+            referencedTweetView.bind(tweet: referencedTweet)
+            referencedTweetView.isHidden = false
         } else {
             referencedTweetView.isHidden = true
-            dateLabel.snp.remakeConstraints { maker in
-                maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(textView.snp.bottom).offset(CGFloat.margin12)
-            }
         }
 
         dateLabel.text = viewItem.date
@@ -142,15 +116,17 @@ class TweetCell: BaseSelectableThemeCell {
     static func height(viewItem: CoinTweetsViewModel.ViewItem, containerWidth: CGFloat) -> CGFloat {
         let textWidth: CGFloat = containerWidth - .margin16 * 4
         let textHeight = viewItem.text.height(forContainerWidth: textWidth, font: bodyFont)
-        let mainHeight: CGFloat = .margin16 + 37 + .margin12 + textHeight + .margin12 + 12 + .margin16 + .margin12
+        var height: CGFloat = .margin16 + 37 + .margin12 + textHeight + .margin12 + 12 + .margin16
 
-        if let referencedTweet = viewItem.referencedTweet {
-            let rTextHeight = referencedTweet.text.height(forContainerWidth: textWidth - .margin16 * 2, font: bodyFont)
-
-            return mainHeight + .margin16 + 12 + 12 + rTextHeight + .margin16
+        if let attachment = viewItem.attachment {
+            height += .margin12 + TweetAttachmentView.height(attachment: attachment, containerWidth: textWidth)
         }
 
-        return mainHeight
+        if let referencedTweet = viewItem.referencedTweet {
+            height += .margin12 + ReferencedTweetView.height(tweet: referencedTweet, containerWidth: textWidth)
+        }
+
+        return height
     }
 
 }

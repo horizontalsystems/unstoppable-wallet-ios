@@ -53,7 +53,7 @@ class TweetsPageResponse: ImmutableMappable {
                 switch tweetReference.type {
                 case "quoted": referencedTweet = (referenceType: .quoted, tweet: tweet)
                 case "retweeted": referencedTweet = (referenceType: .retweeted, tweet: tweet)
-                case "replied_to": referencedTweet = (referenceType: .repliedTo, tweet: tweet)
+                case "replied_to": referencedTweet = (referenceType: .replied, tweet: tweet)
                 default: ()
                 }
             }
@@ -168,7 +168,7 @@ extension TweetsPageResponse {
         let options: [PollOption]
 
         init(map: Map) throws {
-            id = try map.value("media_id")
+            id = try map.value("id")
             options = try map.value("options")
         }
     }
