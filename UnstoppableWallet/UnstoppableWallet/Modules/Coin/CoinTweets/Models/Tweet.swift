@@ -24,8 +24,8 @@ class Tweet {
         case poll(options: [(position: Int, label: String, votes: Int)])
     }
 
-    enum ReferenceType {
-        case quoted, retweeted, repliedTo
+    enum ReferenceType: String {
+        case quoted, retweeted, replied
     }
 
 }

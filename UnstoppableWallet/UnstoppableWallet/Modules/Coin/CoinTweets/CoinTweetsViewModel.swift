@@ -43,13 +43,13 @@ class CoinTweetsViewModel {
                 subTitle: "@\(tweet.user.username)",
                 titleImageUrl: tweet.user.profileImageUrl,
                 text: tweet.text,
-                attachments: tweet.attachments,
+                attachment: tweet.attachments.first,
                 date: DateHelper.instance.formatFullTime(from: tweet.date),
                 userUrl: "https://twitter.com/\(tweet.user.username)",
                 url: "https://twitter.com/\(tweet.user.username)/status/\(tweet.id)",
                 referencedTweet: tweet.referencedTweet.map { referencedTweet in
                     ReferencedTweet(
-                            title: "@\(referencedTweet.tweet.user.username)",
+                            title: "coin_page.tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
                             text: referencedTweet.tweet.text,
                             url: "https://twitter.com/\(referencedTweet.tweet.user.username)/status/\(referencedTweet.tweet.id)"
                     )
@@ -91,7 +91,7 @@ extension CoinTweetsViewModel {
         let subTitle: String
         let titleImageUrl: String
         let text: String
-        let attachments: [Tweet.Attachment]
+        let attachment: Tweet.Attachment?
         let date: String
         let userUrl: String
         let url: String
