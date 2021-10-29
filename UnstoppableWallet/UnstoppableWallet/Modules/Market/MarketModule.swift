@@ -3,6 +3,7 @@ import ThemeKit
 import CurrencyKit
 import MarketKit
 import ComponentKit
+import StorageKit
 
 enum RowActionType {
     case additive
@@ -26,7 +27,7 @@ enum RowActionType {
 struct MarketModule {
 
     static func viewController() -> UIViewController {
-        let service = MarketService(localStorage: App.shared.localStorage)
+        let service = MarketService(storage: StorageKit.LocalStorage.default, launchScreenManager: App.shared.launchScreenManager)
         let viewModel = MarketViewModel(service: service)
         return MarketViewController(viewModel: viewModel)
     }

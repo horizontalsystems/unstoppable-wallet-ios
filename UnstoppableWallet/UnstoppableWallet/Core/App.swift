@@ -85,6 +85,7 @@ class App {
     let activateCoinManager: ActivateCoinManager
 
     let deepLinkManager: IDeepLinkManager
+    let launchScreenManager: LaunchScreenManager
 
     let appManager: AppManager
 
@@ -210,6 +211,7 @@ class App {
         activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 
         deepLinkManager = DeepLinkManager()
+        launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(
                 coinManager: coinManager,

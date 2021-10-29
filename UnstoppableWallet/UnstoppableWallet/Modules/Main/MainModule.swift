@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import StorageKit
 
 struct MainModule {
 
@@ -7,10 +8,13 @@ struct MainModule {
         case market, balance, transactions, settings
     }
 
-    static func instance(selectedTab: Tab = .market) -> UIViewController {
+    static func instance(presetTab: Tab? = nil) -> UIViewController {
         let service = MainService(
                 localStorage: App.shared.localStorage,
-                accountManager: App.shared.accountManager
+                storage: StorageKit.LocalStorage.default,
+                launchScreenManager: App.shared.launchScreenManager,
+                accountManager: App.shared.accountManager,
+                presetTab: presetTab
         )
         let badgeService = MainBadgeService(
                 backupManager: App.shared.backupManager,
@@ -27,7 +31,7 @@ struct MainModule {
         let deepLinkService = DeepLinkService(deepLinkManager: App.shared.deepLinkManager)
 
         let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService, deepLinkService: deepLinkService)
-        let viewController = MainViewController(viewModel: viewModel, selectedIndex: selectedTab.rawValue)
+        let viewController = MainViewController(viewModel: viewModel)
 
         App.shared.pinKitDelegate.viewController = viewController
 

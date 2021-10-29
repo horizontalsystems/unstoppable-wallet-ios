@@ -19,12 +19,12 @@ class MainViewController: ThemeTabBarController {
 
     private var lastTimeStamp: TimeInterval = 0
 
-    init(viewModel: MainViewModel, selectedIndex: Int) {
+    init(viewModel: MainViewModel) {
         self.viewModel = viewModel
 
         super.init()
 
-        self.selectedIndex = selectedIndex
+        selectedIndex = viewModel.initialTab.rawValue
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,16 +54,18 @@ class MainViewController: ThemeTabBarController {
     }
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] else {
-            return
+        if let items = tabBar.items, let index = items.firstIndex(of: item), index != selectedIndex, let tab = MainModule.Tab(rawValue: index) {
+            viewModel.onSwitch(tab: tab)
         }
 
-        let currentTimestamp = Date().timeIntervalSince1970
+        if let items = tabBar.items, items.count > selectedIndex, item == items[selectedIndex] {
+            let currentTimestamp = Date().timeIntervalSince1970
 
-        if currentTimestamp - lastTimeStamp < 0.3 {
-            handleDoubleClick(index: selectedIndex)
-        } else {
-            lastTimeStamp = currentTimestamp
+            if currentTimestamp - lastTimeStamp < 0.3 {
+                handleDoubleClick(index: selectedIndex)
+            } else {
+                lastTimeStamp = currentTimestamp
+            }
         }
     }
 

@@ -1,21 +1,37 @@
-class MarketService {
-    private let localStorage: ILocalStorage
+import StorageKit
 
-    init(localStorage: ILocalStorage) {
-        self.localStorage = localStorage
+class MarketService {
+    private let keyTabIndex = "market-tab-index"
+
+    private let storage: StorageKit.ILocalStorage
+    private let launchScreenManager: LaunchScreenManager
+
+    init(storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager) {
+        self.storage = storage
+        self.launchScreenManager = launchScreenManager
     }
 
 }
 
 extension MarketService {
 
-    var currentTab: MarketModule.Tab? {
-        get {
-            localStorage.marketCategory.flatMap { MarketModule.Tab(rawValue: $0) }
+    var initialTab: MarketModule.Tab {
+        switch launchScreenManager.launchScreen {
+        case .auto:
+            if let storedIndex: Int = storage.value(for: keyTabIndex), let storedTab = MarketModule.Tab(rawValue: storedIndex) {
+                return storedTab
+            }
+
+            return .overview
+        case .balance, .marketOverview:
+            return .overview
+        case .watchlist:
+            return .watchlist
         }
-        set {
-            localStorage.marketCategory = newValue?.rawValue
-        }
+    }
+
+    func set(tab: MarketModule.Tab) {
+        storage.set(value: tab.rawValue, for: keyTabIndex)
     }
 
 }
