@@ -1,5 +1,6 @@
 import UIKit
 import CurrencyKit
+import MarketKit
 
 struct TransactionInfoModule {
 
@@ -8,8 +9,8 @@ struct TransactionInfoModule {
             return nil
         }
 
-        let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, transactionItem: transactionItem, feeCoinProvider: App.shared.feeCoinProvider, appConfigProvider: App.shared.appConfigProvider)
-        let factory = TransactionInfoViewItemFactory(accountSettingManager: App.shared.accountSettingManager)
+        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
@@ -74,4 +75,12 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
     }
 
+}
+
+struct TransactionInfoItem {
+    let record: TransactionRecord
+    var lastBlockInfo: LastBlockInfo?
+    var rates: [Coin: CurrencyValue]
+    let explorerTitle: String
+    let explorerUrl: String?
 }

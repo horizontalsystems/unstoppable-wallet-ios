@@ -1,13 +1,24 @@
-import CurrencyKit
+import UIKit
 
 struct MarketWatchlistModule {
 
     static func viewController() -> MarketWatchlistViewController {
-        let service = MarketWatchlistService(rateManager: App.shared.rateManager, favoritesManager: App.shared.favoritesManager)
-        let listService = MarketListService(currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, fetcher: service)
+        let service = MarketWatchlistService(
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                favoritesManager: App.shared.favoritesManager
+        )
+        let watchlistToggleService = MarketWatchlistToggleService(
+                listService: service,
+                favoritesManager: App.shared.favoritesManager
+        )
 
-        let listViewModel = MarketListViewModel(service: listService)
-        return MarketWatchlistViewController(listViewModel: listViewModel)
+        let decorator = MarketListMarketFieldDecorator(service: service, marketField: .price)
+        let viewModel = MarketWatchlistViewModel(service: service)
+        let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
+        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
+
+        return MarketWatchlistViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
     }
 
 }

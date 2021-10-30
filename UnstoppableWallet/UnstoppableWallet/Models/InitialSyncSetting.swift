@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 struct InitialSyncSetting {
     let coinType: CoinType

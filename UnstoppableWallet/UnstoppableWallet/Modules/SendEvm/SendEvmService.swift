@@ -1,12 +1,12 @@
 import Foundation
-import CoinKit
+import MarketKit
 import RxSwift
 import RxRelay
 import EthereumKit
 import BigInt
 
 class SendEvmService {
-    let sendCoin: Coin
+    let sendPlatformCoin: PlatformCoin
     private let adapter: ISendEthereumAdapter
 
     private let stateRelay = PublishRelay<State>()
@@ -33,8 +33,8 @@ class SendEvmService {
         }
     }
 
-    init(coin: Coin, adapter: ISendEthereumAdapter) {
-        sendCoin = coin
+    init(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter) {
+        sendPlatformCoin = platformCoin
         self.adapter = adapter
     }
 
@@ -51,7 +51,7 @@ class SendEvmService {
     }
 
     private func validEvmAmount(amount: Decimal) throws -> BigUInt {
-        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendCoin.decimal)) else {
+        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendPlatformCoin.decimals)) else {
             throw AmountError.invalidDecimal
         }
 
@@ -90,8 +90,8 @@ extension SendEvmService: IAmountInputService {
         0
     }
 
-    var coin: Coin? {
-        sendCoin
+    var platformCoin: PlatformCoin? {
+        sendPlatformCoin
     }
 
     var balance: Decimal? {
@@ -102,7 +102,7 @@ extension SendEvmService: IAmountInputService {
         .empty()
     }
 
-    var coinObservable: Observable<Coin?> {
+    var platformCoinObservable: Observable<PlatformCoin?> {
         .empty()
     }
 

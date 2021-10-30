@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class CoinSelectViewModel {
@@ -9,18 +9,19 @@ class CoinSelectViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private var filter: String?
 
     init(service: CoinSelectService) {
         self.service = service
 
-        sync()
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+
+        sync(items: service.items)
     }
 
-    private func sync() {
-        let viewItems = filteredItems.map { item -> ViewItem in
+    private func sync(items: [CoinSelectService.Item]) {
+        let viewItems = items.map { item -> ViewItem in
             let formatted = item.balance
-                    .flatMap { CoinValue(coin: item.coin, value: $0) }
+                    .flatMap { CoinValue(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
                     .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
 
             let fiatFormatted = item.rate
@@ -28,20 +29,10 @@ class CoinSelectViewModel {
                     .flatMap { CurrencyValue(currency: service.currency, value: $0) }
                     .flatMap { ValueFormatter.instance.format(currencyValue: $0) }
 
-            return ViewItem(coin: item.coin, balance: formatted, fiatBalance: fiatFormatted)
+            return ViewItem(platformCoin: item.platformCoin, balance: formatted, fiatBalance: fiatFormatted)
         }
 
         viewItemsRelay.accept(viewItems)
-    }
-
-    private var filteredItems: [CoinSelectService.Item] {
-        guard let filter = filter else {
-            return service.items
-        }
-
-        return service.items.filter { item in
-            item.coin.title.localizedCaseInsensitiveContains(filter)  || item.coin.code.localizedCaseInsensitiveContains(filter)
-        }
     }
 
 }
@@ -53,10 +44,8 @@ extension CoinSelectViewModel {
     }
 
     func apply(filter: String?) {
-        self.filter = filter
-
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.sync()
+            self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")
         }
     }
 
@@ -65,7 +54,7 @@ extension CoinSelectViewModel {
 extension CoinSelectViewModel {
 
     struct ViewItem {
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let balance: String?
         let fiatBalance: String?
     }

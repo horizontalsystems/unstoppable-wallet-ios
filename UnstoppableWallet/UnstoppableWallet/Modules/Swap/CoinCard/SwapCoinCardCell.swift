@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 import RxSwift
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class SwapCoinCardCell: UITableViewCell {
@@ -120,7 +120,7 @@ class SwapCoinCardCell: UITableViewCell {
 
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.readOnlyDriver) { [weak self] in self?.set(readOnly: $0) }
-        subscribe(disposeBag, viewModel.isEstimatedDriver) { [weak self] in self?.setBadge(visible: $0) }
+        subscribe(disposeBag, viewModel.isEstimatedDriver) { [weak self] in self?.set(estimated: $0) }
         subscribe(disposeBag, viewModel.tokenViewItemDriver) { [weak self] in self?.set(tokenViewItem: $0) }
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.set(balance: $0) }
         subscribe(disposeBag, viewModel.balanceErrorDriver) { [weak self] in self?.set(balanceError: $0) }
@@ -139,13 +139,17 @@ extension SwapCoinCardCell {
         formAmountInput.editable = !readOnly
     }
 
-    private func setBadge(visible: Bool) {
-        formAmountInput.estimatedVisible = visible
+    private func set(estimated: Bool) {
+        formAmountInput.estimatedVisible = estimated
+        formAmountInput.clearHidden = estimated
     }
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
-        let tokenIcon = (tokenViewItem?.iconCoinType).flatMap { UIImage.image(coinType: $0) }
-        tokenIconImageView.image = tokenIcon ?? UIImage(named: "icon_placeholder_24")
+        if let urlString = tokenViewItem?.iconUrlString {
+            tokenIconImageView.setImage(withUrlString: urlString, placeholder: tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) })
+        } else {
+            tokenIconImageView.image = tokenViewItem.flatMap { UIImage(named: $0.placeholderIconName) }
+        }
 
         if let tokenViewItem = tokenViewItem {
             tokenSelectButton.setTitle(tokenViewItem.title, for: .normal)
@@ -170,8 +174,8 @@ extension SwapCoinCardCell {
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
 
-    func didSelect(coin: Coin) {
-        viewModel.onSelect(coin: coin)
+    func didSelect(platformCoin: PlatformCoin) {
+        viewModel.onSelect(platformCoin: platformCoin)
     }
 
 }

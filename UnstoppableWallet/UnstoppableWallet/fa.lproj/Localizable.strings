@@ -27,8 +27,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "باز كردن كيف پول";
-
 // Access Camera
 
 "access_camera.message" = "بانك ضرورت دسترسي به دوربين دارد بخاطر اسكن كردن QR كد.\nبرويد به تنظيمات -> اجازه دهيد تا بانك دسترسي به دوربين داشته باشد.";
@@ -110,7 +108,7 @@
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.price_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "دریافت %@";

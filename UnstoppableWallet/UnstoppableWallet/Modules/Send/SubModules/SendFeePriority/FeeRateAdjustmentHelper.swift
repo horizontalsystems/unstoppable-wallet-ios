@@ -1,11 +1,12 @@
 import Foundation
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class FeeRateAdjustmentHelper {
     typealias Rule = (amountRange: Range<Decimal>, coefficient: Double)
 
-    private let allowedCurrencyCodes: [String]
+    private let allowedCurrencyCodes = ["USD", "EUR"]
+
     private let fallbackCoefficient = 1.1
     private let rules: [CoinType: [Rule]] = [
         .bitcoin: [
@@ -23,10 +24,6 @@ class FeeRateAdjustmentHelper {
             (amountRange: 0..<200, coefficient: 1.05)
         ]
     ]
-
-    init(currencyCodes: [String]) {
-        allowedCurrencyCodes = currencyCodes
-    }
 
     private func feeRateCoefficient(rules: [Rule], feeRateAdjustmentInfo: FeeRateAdjustmentInfo, feeRate: Int) -> Double {
         guard allowedCurrencyCodes.contains(feeRateAdjustmentInfo.currency.code) else {

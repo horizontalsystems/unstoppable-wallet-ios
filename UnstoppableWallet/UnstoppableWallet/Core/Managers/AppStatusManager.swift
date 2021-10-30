@@ -1,5 +1,5 @@
 import Foundation
-import CoinKit
+import MarketKit
 
 class AppStatusManager {
     private let systemInfoManager: ISystemInfoManager
@@ -62,7 +62,7 @@ class AppStatusManager {
                 continue
             }
 
-            switch wallet.coin.type {
+            switch wallet.coinType {
             case .ethereum, .erc20:
                 if ethereumStatus == nil {
                     ethereumStatus = adapter.statusInfo
@@ -76,7 +76,7 @@ class AppStatusManager {
                     binanceStatus = adapter.statusInfo
                 }
             default:
-                status.append((wallet.coin.title, adapter.statusInfo))
+                status.append((wallet.coin.name, adapter.statusInfo))
             }
         }
 

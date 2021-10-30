@@ -1,5 +1,4 @@
 import UIKit
-import CoinKit
 import EthereumKit
 import SectionsTableView
 import ThemeKit

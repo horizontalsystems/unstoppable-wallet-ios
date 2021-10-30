@@ -1,52 +1,6 @@
 import Foundation
-import XRatesKit
 import CurrencyKit
 import Chart
-import CoinKit
-
-struct ChartModule {
-
-    enum LaunchMode {
-        case partial(coinCode: String, coinTitle: String, coinType: CoinType)
-        case coin(coin: Coin)
-
-        var coinCode: String {
-            switch self {
-            case let .partial(coinCode, _, _):
-                return coinCode
-            case let .coin(coin):
-                return coin.code
-            }
-        }
-
-        var coinType: CoinType {
-            switch self {
-            case let .partial(_, _, coinType):
-                return coinType
-            case let .coin(coin):
-                return coin.type
-            }
-        }
-
-        var coinTitle: String {
-            switch self {
-            case let .partial(_, coinTitle, _):
-                return coinTitle
-            case let .coin(coin):
-                return coin.title
-            }
-        }
-
-        var coin: Coin? {
-            if case let .coin(coin) = self {
-                return coin
-            }
-
-            return  nil
-        }
-    }
-
-}
 
 enum MovementTrend {
     case neutral
@@ -62,6 +16,7 @@ struct ChartIndicatorSet: OptionSet, Hashable {
     static let ema = ChartIndicatorSet(rawValue: 1 << 0)
     static let macd = ChartIndicatorSet(rawValue: 1 << 1)
     static let rsi = ChartIndicatorSet(rawValue: 1 << 2)
+    static let dominance = ChartIndicatorSet(rawValue: 1 << 3)
 
     static let all: [ChartIndicatorSet] = [.macd, .rsi, .ema]
 
@@ -79,35 +34,6 @@ struct ChartIndicatorSet: OptionSet, Hashable {
 
 }
 
-struct ChartDataViewItem {
-    let chartData: ChartData
-
-    let chartTrend: MovementTrend
-    let chartDiff: Decimal?
-
-    let trends: [ChartIndicatorSet: MovementTrend]
-
-    let minValue: String?
-    let maxValue: String?
-
-    let timeline: [ChartTimelineItem]
-}
-
-struct MarketInfoViewItem {
-
-    struct Value {
-        let value: String?
-        let accent: Bool
-    }
-
-    let marketCap: Value
-    let volume: Value
-    let supply: String
-    let maxSupply: Value
-    let startDate: Value
-    let website: Value
-}
-
 struct SelectedPointViewItem {
     let date: String
     let value: String?
@@ -118,6 +44,7 @@ struct SelectedPointViewItem {
         case none
         case volume(value: String?)
         case macd(macdInfo: MacdInfo)
+        case dominance(value: Decimal?)
     }
 }
 
@@ -126,23 +53,6 @@ struct MacdInfo {
     let signal: String?
     let histogram: String?
     let histogramDown: Bool?
-}
-
-struct ChartViewItem {
-    let currentRate: String?
-
-    let chartDataStatus: DataStatus<ChartDataViewItem>
-    let marketInfoStatus: DataStatus<MarketInfoViewItem>
-
-    let selectedIndicator: ChartIndicatorSet
-
-    let priceAlertMode: ChartPriceAlertMode
-}
-
-enum ChartPriceAlertMode {
-    case on
-    case off
-    case hidden
 }
 
 struct PriceIndicatorViewItem: CustomStringConvertible {

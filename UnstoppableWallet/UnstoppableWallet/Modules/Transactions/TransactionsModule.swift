@@ -1,7 +1,7 @@
 import CurrencyKit
 import UIKit
 import RxSwift
-import CoinKit
+import MarketKit
 
 struct TransactionsModule {
 
@@ -23,13 +23,6 @@ struct TransactionsModule {
         let showMessage: Bool
     }
 
-}
-
-protocol ITransactionRecordService {
-    var recordsObservable: Observable<[TransactionRecord]> { get }
-    var updatedRecordObservable: Observable<TransactionRecord>  { get }
-    func load(count: Int, reload: Bool)
-    func set(typeFilter: TransactionTypeFilter)
 }
 
 enum TransactionTypeFilter: String, CaseIterable {
@@ -66,16 +59,18 @@ struct ColoredImage {
 }
 
 struct TransactionWallet: Hashable {
-    let coin: Coin?
+    let coin: PlatformCoin?
     let source: TransactionSource
+    let badge: String?
 
     func hash(into hasher: inout Hasher) {
         coin?.hash(into: &hasher)
         source.hash(into: &hasher)
+        badge.hash(into: &hasher)
     }
 
     static func ==(lhs: TransactionWallet, rhs: TransactionWallet) -> Bool {
-        lhs.coin == rhs.coin && lhs.source == rhs.source
+        lhs.coin == rhs.coin && lhs.source == rhs.source && lhs.badge == rhs.badge
     }
 }
 

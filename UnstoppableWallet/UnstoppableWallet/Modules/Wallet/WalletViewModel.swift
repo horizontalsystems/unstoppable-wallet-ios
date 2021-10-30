@@ -1,17 +1,17 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class WalletViewModel {
     private let service: WalletService
-    private let rateService: WalletRateService
     private let factory: WalletViewItemFactory
     private let disposeBag = DisposeBag()
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
+    private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openSortTypeRelay = PublishRelay<()>()
     private let openReceiveRelay = PublishRelay<Wallet>()
@@ -20,6 +20,7 @@ class WalletViewModel {
     private let showErrorRelay = PublishRelay<String>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<()>()
+    private let scrollToTopRelay = PublishRelay<()>()
 
     private var viewItems = [BalanceViewItem]()
     private var expandedWallet: Wallet?
@@ -27,9 +28,8 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, rateService: WalletRateService, factory: WalletViewItemFactory) {
+    init(service: WalletService, factory: WalletViewItemFactory) {
         self.service = service
-        self.rateService = rateService
         self.factory = factory
         balanceHidden = service.balanceHidden
 
@@ -38,10 +38,12 @@ class WalletViewModel {
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
         sync(items: service.items)
+        sync(sortType: service.sortType, scrollToTop: false)
     }
 
     private func sync(activeAccount: Account?) {
@@ -58,6 +60,14 @@ class WalletViewModel {
     private func sync(totalItem: WalletService.TotalItem?) {
         let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: balanceHidden) }
         headerViewItemRelay.accept(headerViewItem)
+    }
+
+    private func sync(sortType: SortType, scrollToTop: Bool) {
+        sortByRelay.accept(sortType.title)
+
+        if scrollToTop {
+            scrollToTopRelay.accept(())
+        }
     }
 
     private func syncUpdated(item: WalletService.Item) {
@@ -110,6 +120,10 @@ extension WalletViewModel {
         headerViewItemRelay.asDriver()
     }
 
+    var sortByDriver: Driver<String?> {
+        sortByRelay.asDriver()
+    }
+
     var viewItemsDriver: Driver<[BalanceViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -144,6 +158,10 @@ extension WalletViewModel {
 
     var playHapticSignal: Signal<()> {
         playHapticRelay.asSignal()
+    }
+
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
     func onTapTotalAmount() {
@@ -183,7 +201,7 @@ extension WalletViewModel {
     }
 
     func onTapChart(wallet: Wallet) {
-        guard service.item(wallet: wallet)?.rateItem != nil else {
+        guard service.item(wallet: wallet)?.priceItem != nil else {
             return
         }
 

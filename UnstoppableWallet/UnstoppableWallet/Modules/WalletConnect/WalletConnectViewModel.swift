@@ -1,4 +1,4 @@
-import WalletConnect
+import WalletConnectV1
 import RxSwift
 import RxCocoa
 

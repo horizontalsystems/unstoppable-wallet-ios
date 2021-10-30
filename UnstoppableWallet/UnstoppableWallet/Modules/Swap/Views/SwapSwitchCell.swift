@@ -1,3 +1,5 @@
+import UIKit
+import ComponentKit
 import ThemeKit
 import RxSwift
 import HUD
@@ -6,7 +8,7 @@ class SwapSwitchCell: UITableViewCell {
     let cellHeight: CGFloat = 24
 
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let switchButton = UIButton()
+    private let switchButton = ThemeButton()
 
     var onSwitch: (() -> ())?
 
@@ -32,7 +34,7 @@ class SwapSwitchCell: UITableViewCell {
             maker.top.bottom.equalToSuperview()
         }
 
-        switchButton.setImage(UIImage(named: "arrow_medium_2_swap_24")?.tinted(with: .themeGray), for: .normal)
+        switchButton.setImage(UIImage(named: "arrow_medium_2_swap_24")?.withTintColor(.themeGray), for: .normal)
         switchButton.addTarget(self, action: #selector(onTapSwitch), for: .touchUpInside)
         switchButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         switchButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)

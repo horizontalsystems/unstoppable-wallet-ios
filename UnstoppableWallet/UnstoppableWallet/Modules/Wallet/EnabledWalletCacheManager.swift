@@ -46,7 +46,7 @@ extension EnabledWalletCacheManager {
         }
 
         func balanceData(wallet: Wallet) -> BalanceData? {
-            caches.first { $0.coinId == wallet.coin.id && $0.coinSettingsId == wallet.configuredCoin.settings.id }?.balanceData
+            caches.first { $0.coinId == wallet.coinType.id && $0.coinSettingsId == wallet.coinSettings.id }?.balanceData
         }
     }
 

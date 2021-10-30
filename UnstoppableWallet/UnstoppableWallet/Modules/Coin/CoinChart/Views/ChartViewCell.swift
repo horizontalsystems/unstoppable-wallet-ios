@@ -70,25 +70,6 @@ class ChartViewCell: UITableViewCell {
         loadingView.stopAnimating()
     }
 
-    public func bind(data: ChartDataViewItem, viewItem: ChartViewItem) {
-        switch data.chartTrend {
-        case .neutral:
-            chartView.setCurve(colorType: .neutral)
-        case .up:
-            chartView.setCurve(colorType: .up)
-        case .down:
-            chartView.setCurve(colorType: .down)
-        }
-
-        chartView.set(chartData: data.chartData)
-
-        chartView.set(timeline: data.timeline, start: data.chartData.startWindow, end: data.chartData.endWindow)
-
-        chartView.set(highLimitText: data.maxValue, lowLimitText: data.minValue)
-
-        chartView.setVolumes(hidden: viewItem.selectedIndicator.hideVolumes)
-    }
-
     func set(data: ChartData, trend: MovementTrend, min: String?, max: String?, timeline: [ChartTimelineItem]) {
         switch trend {
         case .neutral:
@@ -115,6 +96,7 @@ class ChartViewCell: UITableViewCell {
         case .rsi: chartView.setRsi(hidden: hidden)
         case .macd: chartView.setMacd(hidden: hidden)
         case .ema: chartView.setEma(hidden: hidden)
+        case .dominance: chartView.setDominance(hidden: false)
         default: ()
         }
     }

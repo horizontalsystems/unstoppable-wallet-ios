@@ -6,11 +6,11 @@ import ComponentKit
 
 class CoinPageInfoViewController: ThemeViewController {
     private let header: String
-    private let viewItems: [CoinPageViewModel.SecurityInfoViewItem]
+    private let viewItems: [CoinDetailsViewModel.SecurityInfoViewItem]
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(header: String, viewItems: [CoinPageViewModel.SecurityInfoViewItem]) {
+    init(header: String, viewItems: [CoinDetailsViewModel.SecurityInfoViewItem]) {
         self.header = header
         self.viewItems = viewItems
 
@@ -65,7 +65,7 @@ extension CoinPageInfoViewController: SectionsDataSource {
         )
     }
 
-    private func row(viewItem: CoinPageViewModel.SecurityInfoViewItem) -> RowProtocol {
+    private func row(viewItem: CoinDetailsViewModel.SecurityInfoViewItem) -> RowProtocol {
         Row<CoinPageInfoCell>(
                 id: viewItem.title,
                 dynamicHeight: { width in

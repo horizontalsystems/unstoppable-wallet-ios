@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class DepositService {
     private let wallet: Wallet
@@ -19,12 +19,16 @@ extension DepositService {
         wallet.coin
     }
 
+    var coinType: CoinType {
+        wallet.coinType
+    }
+
     var isMainNet: Bool {
         adapter.isMainNet
     }
 
     var mnemonicDerivation: MnemonicDerivation? {
-        wallet.configuredCoin.settings.derivation
+        wallet.coinSettings.derivation
     }
 
 }

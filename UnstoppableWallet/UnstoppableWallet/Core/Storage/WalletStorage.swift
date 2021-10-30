@@ -1,57 +1,40 @@
 import RxSwift
+import MarketKit
 
 class WalletStorage {
-    private let coinManager: ICoinManager
+    private let coinManager: CoinManager
     private let storage: IEnabledWalletStorage
 
-    init(coinManager: ICoinManager, storage: IEnabledWalletStorage) {
+    init(coinManager: CoinManager, storage: IEnabledWalletStorage) {
         self.coinManager = coinManager
         self.storage = storage
     }
 
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
-                coinId: wallet.coin.id,
-                coinSettingsId: wallet.configuredCoin.settings.id,
+                coinId: wallet.platform.coinType.id,
+                coinSettingsId: wallet.coinSettings.id,
                 accountId: wallet.account.id
         )
     }
 
 }
 
-extension WalletStorage: IWalletStorage {
+extension WalletStorage {
 
-    func wallets(accounts: [Account]) -> [Wallet] {
-        let coins = coinManager.coins
+    func wallets(account: Account) throws -> [Wallet] {
+        let enabledWallets = storage.enabledWallets(accountId: account.id)
+        let coinTypeIds = enabledWallets.map { $0.coinId }
+        let platformCoins = try coinManager.platformCoins(coinTypeIds: coinTypeIds)
 
-        return storage.enabledWallets.compactMap { enabledWallet in
-            guard let coin = coins.first(where: { $0.id == enabledWallet.coinId }) else {
+        return enabledWallets.compactMap { enabledWallet in
+            guard let platformCoin = platformCoins.first(where: { $0.coinType.id == enabledWallet.coinId }) else {
                 return nil
             }
 
-            guard let account = accounts.first(where: { $0.id == enabledWallet.accountId }) else {
-                return nil
-            }
-
-            let settings = CoinSettings(id: enabledWallet.coinSettingsId)
-            let configuredCoin = ConfiguredCoin(coin: coin, settings: settings)
-
-            return Wallet(configuredCoin: configuredCoin, account: account)
-        }
-    }
-
-    func wallets(account: Account) -> [Wallet] {
-        let coins = coinManager.coins
-
-        return storage.enabledWallets(accountId: account.id).compactMap { enabledWallet in
-            guard let coin = coins.first(where: { $0.id == enabledWallet.coinId }) else {
-                return nil
-            }
-
-            let settings = CoinSettings(id: enabledWallet.coinSettingsId)
-            let configuredCoin = ConfiguredCoin(coin: coin, settings: settings)
-
-            return Wallet(configuredCoin: configuredCoin, account: account)
+            let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
+            let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
+            return Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account)
         }
     }
 

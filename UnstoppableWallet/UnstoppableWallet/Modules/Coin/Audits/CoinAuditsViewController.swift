@@ -13,10 +13,11 @@ class CoinAuditsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let emptyLabel = UILabel()
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = ErrorView()
+    private let errorView = MarketListErrorView()
 
-    private var viewItems = [CoinAuditsViewModel.ViewItem]()
+    private var viewItems: [CoinAuditsViewModel.ViewItem]?
 
     init(viewModel: CoinAuditsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
@@ -48,42 +49,58 @@ class CoinAuditsViewController: ThemeViewController {
         tableView.registerCell(forClass: F2Cell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
+        view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.centerY.equalToSuperview()
+        }
+
+        emptyLabel.numberOfLines = 0
+        emptyLabel.textAlignment = .center
+        emptyLabel.font = .subhead2
+        emptyLabel.textColor = .themeGray
+        emptyLabel.text = "coin_page.audits.no_reports".localized
+
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
 
+        spinner.startAnimating()
+
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin16)
+            maker.edges.equalToSuperview()
         }
 
-        subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
-    }
+        errorView.onTapRetry = { [weak self] in self?.viewModel.refresh() }
 
-    private func sync(state: CoinAuditsViewModel.State) {
-        tableView.isHidden = true
-        spinner.isHidden = true
-        errorView.isHidden = true
-
-        switch state {
-        case .loading:
-            spinner.isHidden = false
-            spinner.startAnimating()
-        case .failed:
-            errorView.text = "coin_page.audits.sync_error".localized
-            errorView.isHidden = false
-        case .loaded(let viewItems):
-            if viewItems.isEmpty {
-                errorView.text = "coin_page.audits.no_reports".localized
-                errorView.isHidden = false
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
             } else {
-                self.viewItems = viewItems
-
-                tableView.reload()
-                tableView.isHidden = false
+                self?.errorView.isHidden = true
             }
         }
+    }
+
+    private func sync(viewItems: [CoinAuditsViewModel.ViewItem]?) {
+        self.viewItems = viewItems
+
+        if let viewItems = viewItems {
+            tableView.bounces = true
+            emptyLabel.isHidden = !viewItems.isEmpty
+        } else {
+            tableView.bounces = false
+            emptyLabel.isHidden = true
+        }
+
+        tableView.reload()
     }
 
     private func open(url: String) {
@@ -142,6 +159,10 @@ extension CoinAuditsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
+        guard let viewItems = viewItems, !viewItems.isEmpty else {
+            return []
+        }
+
         var sections = [SectionProtocol]()
 
         for (index, viewItem) in viewItems.enumerated() {

@@ -1,12 +1,15 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import MarketKit
 
 class CoinMajorHoldersViewModel {
     private let service: CoinMajorHoldersService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let stateViewItemRelay = BehaviorRelay<StateViewItem?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     init(service: CoinMajorHoldersService) {
         self.service = service
@@ -16,43 +19,60 @@ class CoinMajorHoldersViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: CoinMajorHoldersService.State) {
+    private func sync(state: DataStatus<[TokenHolder]>) {
         switch state {
-        case .loading: stateRelay.accept(.loading)
-        case .failed: stateRelay.accept(.failed)
-        case .loaded(let items):
-            let viewItems = items.enumerated().map { index, item in
-                ViewItem(order: "\(index + 1)", percent: "\(item.share)%", address: item.address)
-            }
-
-            let totalPercentDecimal = items.map { $0.share }.reduce(0, +)
-            let totalPercent = NSDecimalNumber(decimal: totalPercentDecimal).doubleValue
-
-            let chartPercents: [Double] = [totalPercent, 100.0 - totalPercent]
-            let percent = "\(Int(round(totalPercent)))%"
-
-            let stateViewItem = StateViewItem(chartPercents: chartPercents, percent: percent, viewItems: viewItems)
-            stateRelay.accept(.loaded(stateViewItem: stateViewItem))
+        case .loading:
+            stateViewItemRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .completed(let holders):
+            stateViewItemRelay.accept(stateViewItem(holders: holders))
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
+        case .failed:
+            stateViewItemRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
-}
+    private func stateViewItem(holders: [TokenHolder]) -> StateViewItem {
+        let viewItems = holders.enumerated().map { index, item in
+            ViewItem(order: "\(index + 1)", percent: "\(item.share)%", address: item.address)
+        }
 
-extension CoinMajorHoldersViewModel {
+        let totalPercentDecimal = holders.map { $0.share }.reduce(0, +)
+        let totalPercent = NSDecimalNumber(decimal: totalPercentDecimal).doubleValue
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+        let chartPercents: [Double] = [totalPercent, 100.0 - totalPercent]
+        let percent = "\(Int(round(totalPercent)))%"
+
+        return StateViewItem(chartPercents: chartPercents, percent: percent, viewItems: viewItems)
     }
 
 }
 
 extension CoinMajorHoldersViewModel {
 
-    enum State {
-        case loading
-        case failed
-        case loaded(stateViewItem: StateViewItem)
+    var stateViewItemDriver: Driver<StateViewItem?> {
+        stateViewItemRelay.asDriver()
     }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
+    }
+
+    func refresh() {
+        service.refresh()
+    }
+
+}
+
+extension CoinMajorHoldersViewModel {
 
     struct ViewItem {
         let order: String

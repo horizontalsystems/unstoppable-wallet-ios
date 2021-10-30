@@ -1,7 +1,6 @@
 import UIKit
 import CurrencyKit
-import XRatesKit
-import CoinKit
+import MarketKit
 
 protocol ISendFeeView: AnyObject {
     func set(loading: Bool)
@@ -15,14 +14,14 @@ protocol ISendFeeViewDelegate {
 
 protocol ISendFeeInteractor {
     var baseCurrency: Currency { get }
-    func feeCoin(coin: Coin) -> Coin?
-    func feeCoinProtocol(coin: Coin) -> String?
-    func subscribeToLatestRate(coinType: CoinType?, currencyCode: String)
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
+    func feeCoin(platformCoin: PlatformCoin) -> PlatformCoin?
+    func feeCoinProtocol(platformCoin: PlatformCoin) -> String?
+    func subscribeToCoinPrice(coinUid: String?, currencyCode: String)
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal?
 }
 
 protocol ISendFeeInteractorDelegate: AnyObject {
-    func didReceive(latestRate: LatestRate)
+    func didReceive(coinPrice: CoinPrice)
 }
 
 protocol ISendFeeModule: AnyObject {

@@ -1,5 +1,4 @@
 import Foundation
-import CoinKit
 
 class TransactionRecord {
     let source: TransactionSource
@@ -39,7 +38,7 @@ class TransactionRecord {
         return .pending
     }
 
-    open var mainValue: CoinValue? {
+    open var mainValue: TransactionValue? {
         nil
     }
 

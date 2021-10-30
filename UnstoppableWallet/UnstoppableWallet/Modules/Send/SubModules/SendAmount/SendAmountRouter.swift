@@ -1,12 +1,12 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class SendAmountRouter {
 
-    static func module(coin: Coin) -> (UIView, ISendAmountModule) {
+    static func module(platformCoin: PlatformCoin) -> (UIView, ISendAmountModule) {
         let decimalParser = AmountDecimalParser()
-        let interactor = SendAmountInteractor(localStorage: App.shared.localStorage, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit)
-        let presenter = SendAmountPresenter(coin: coin, interactor: interactor, decimalParser: decimalParser)
+        let interactor = SendAmountInteractor(localStorage: App.shared.localStorage, currencyKit: App.shared.currencyKit)
+        let presenter = SendAmountPresenter(platformCoin: platformCoin, interactor: interactor, decimalParser: decimalParser)
         let sendView = SendAmountView(delegate: presenter)
 
         presenter.view = sendView

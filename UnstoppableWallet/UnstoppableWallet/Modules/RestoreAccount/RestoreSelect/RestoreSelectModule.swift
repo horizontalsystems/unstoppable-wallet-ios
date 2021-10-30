@@ -4,20 +4,13 @@ import RxSwift
 struct RestoreSelectModule {
 
     static func viewController(accountType: AccountType) -> UIViewController {
-        let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
-        let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
-        let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
-
-        let coinSettingsService = CoinSettingsService()
-        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
-        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
+        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
 
         let enableCoinsService = EnableCoinsService(
                 appConfigProvider: App.shared.appConfigProvider,
                 erc20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .erc20),
                 bep20Provider: EnableCoinsEip20Provider(appConfigProvider: App.shared.appConfigProvider, networkManager: App.shared.networkManager, mode: .bep20),
-                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider),
-                coinManager: App.shared.coinManager
+                bep2Provider: EnableCoinsBep2Provider(appConfigProvider: App.shared.appConfigProvider)
         )
 
         let enableCoinsViewModel = EnableCoinsViewModel(service: enableCoinsService)
@@ -29,17 +22,15 @@ struct RestoreSelectModule {
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
                 coinManager: App.shared.coinManager,
-                enableCoinsService: enableCoinsService,
-                restoreSettingsService: restoreSettingsService,
-                coinSettingsService: coinSettingsService
+                enableCoinService: enableCoinService,
+                enableCoinsService: enableCoinsService
         )
 
         let viewModel = RestoreSelectViewModel(service: service)
 
         return RestoreSelectViewController(
                 viewModel: viewModel,
-                restoreSettingsView: restoreSettingsView,
-                coinSettingsView: coinSettingsView,
+                enableCoinView: enableCoinView,
                 enableCoinsView: enableCoinsView
         )
     }

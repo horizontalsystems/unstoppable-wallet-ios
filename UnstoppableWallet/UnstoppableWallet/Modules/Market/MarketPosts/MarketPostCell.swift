@@ -2,12 +2,14 @@ import UIKit
 import ComponentKit
 
 class MarketPostCell: BaseSelectableThemeCell {
-    static let height: CGFloat = 158
+    static let height: CGFloat = 140
+
+    private let titleFont: UIFont = .headline2
 
     private let sourceLabel = UILabel()
     private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
-    private let dateLabel = UILabel()
+    private let bodyLabel = UILabel()
+    private let timeAgoLabel = UILabel()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,39 +30,49 @@ class MarketPostCell: BaseSelectableThemeCell {
             maker.top.equalTo(sourceLabel.snp.bottom).offset(CGFloat.margin8)
         }
 
-        titleLabel.numberOfLines = 2
-        titleLabel.font = .subhead1
+        titleLabel.numberOfLines = 3
+        titleLabel.font = titleFont
         titleLabel.textColor = .themeLeah
 
-        wrapperView.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { maker in
+        wrapperView.addSubview(bodyLabel)
+        bodyLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin8)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin6)
         }
 
-        descriptionLabel.numberOfLines = 3
-        descriptionLabel.font = .caption
-        descriptionLabel.textColor = .themeGray
+        bodyLabel.font = .subhead2
+        bodyLabel.textColor = .themeGray
 
-        wrapperView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(descriptionLabel.snp.bottom).offset(CGFloat.margin8)
+        wrapperView.addSubview(timeAgoLabel)
+        timeAgoLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        dateLabel.font = .micro
-        dateLabel.textColor = .themeGray
+        timeAgoLabel.font = .micro
+        timeAgoLabel.textColor = .themeGray50
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func set(source: String, title: String, description: String, date: String) {
-        sourceLabel.text = source
-        titleLabel.text = title
-        descriptionLabel.text = description
-        dateLabel.text = date
+    func bind(viewItem: MarketPostViewModel.ViewItem) {
+        sourceLabel.text = viewItem.source
+        titleLabel.text = viewItem.title
+        bodyLabel.text = viewItem.body
+        timeAgoLabel.text = viewItem.timeAgo
+
+        let textWidth = UIScreen.main.bounds.width - CGFloat.margin16 * 4
+
+        let titleTextHeight = viewItem.title.height(forContainerWidth: textWidth, font: titleFont)
+        let titleNumberOfLines = Int(titleTextHeight / titleFont.lineHeight)
+
+        if titleNumberOfLines >= 3 {
+            bodyLabel.isHidden = true
+        } else {
+            bodyLabel.isHidden = false
+            bodyLabel.numberOfLines = 3 - titleNumberOfLines
+        }
     }
 
 }

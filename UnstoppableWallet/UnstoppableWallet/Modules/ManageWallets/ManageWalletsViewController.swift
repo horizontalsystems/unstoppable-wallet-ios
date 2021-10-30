@@ -7,13 +7,13 @@ import RxCocoa
 
 class ManageWalletsViewController: CoinToggleViewController {
     private let viewModel: ManageWalletsViewModel
-    private let restoreSettingsView: RestoreSettingsView
-    private let coinSettingsView: CoinSettingsView
+    private let enableCoinView: EnableCoinView
 
-    init(viewModel: ManageWalletsViewModel, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
+    private let notFoundLabel = UILabel()
+
+    init(viewModel: ManageWalletsViewModel, enableCoinView: EnableCoinView) {
         self.viewModel = viewModel
-        self.restoreSettingsView = restoreSettingsView
-        self.coinSettingsView = coinSettingsView
+        self.enableCoinView = enableCoinView
 
         super.init(viewModel: viewModel)
 
@@ -27,22 +27,30 @@ class ManageWalletsViewController: CoinToggleViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "manage_coins.title".localized
+        title = "manage_wallets.title".localized
         navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "manage_coins.add_token".localized, style: .plain, target: self, action: #selector(onTapAddTokenButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onTapAddTokenButton))
 
-        restoreSettingsView.onOpenController = { [weak self] controller in
+        view.addSubview(notFoundLabel)
+        notFoundLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin48)
+        }
+
+        notFoundLabel.numberOfLines = 0
+        notFoundLabel.textAlignment = .center
+        notFoundLabel.text = "manage_wallets.not_found".localized
+        notFoundLabel.font = .subhead2
+        notFoundLabel.textColor = .themeGray
+
+        enableCoinView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)
         }
-        coinSettingsView.onOpenController = { [weak self] controller in
-            self?.open(controller: controller)
-        }
 
-        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] coin in
-            self?.setToggle(on: false, coin: coin)
-        }
+        subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
+        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, coin: $0) }
     }
 
     private func open(controller: UIViewController) {
@@ -50,16 +58,20 @@ class ManageWalletsViewController: CoinToggleViewController {
         present(controller, animated: true)
     }
 
-    @objc func onTapDoneButton() {
+    @objc private func onTapDoneButton() {
         dismiss(animated: true)
     }
 
-    @objc func onTapAddTokenButton() {
+    @objc private func onTapAddTokenButton() {
         guard let module = AddTokenModule.viewController() else {
             return
         }
 
         present(module, animated: true)
+    }
+
+    private func setNotFound(visible: Bool) {
+        notFoundLabel.isHidden = !visible
     }
 
 }

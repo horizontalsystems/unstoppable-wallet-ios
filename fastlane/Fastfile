@@ -1,48 +1,121 @@
-lane :dev_t do |options|
-  prepare_environment
+default_platform(:ios)
 
-  cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev.testnet", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  gym(scheme: "Unstoppable Dev T", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
+DEVELOPER_APP_ID = ENV["DEVELOPER_APP_ID"]
+DEVELOPER_APP_IDENTIFIER = ENV["DEVELOPER_APP_IDENTIFIER"]
+PROVISIONING_PROFILE_SPECIFIER = ENV["PROVISIONING_PROFILE_SPECIFIER"]
+TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
+TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
+APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
+APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
+APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
+GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
+APP_CENTER_API_TOKEN = ENV["APP_CENTER_API_TOKEN"]
 
-  upload_to_app_center(options[:app_center_api_token], "Unstoppable-T")
+XCCONFIG_DEV_INFURA_PROJECT_ID = ENV["XCCONFIG_DEV_INFURA_PROJECT_ID"]
+XCCONFIG_DEV_INFURA_PROJECT_SECRET = ENV["XCCONFIG_DEV_INFURA_PROJECT_SECRET"]
+XCCONFIG_DEV_ETHERSCAN_API_KEY = ENV["XCCONFIG_DEV_ETHERSCAN_API_KEY"]
+XCCONFIG_DEV_BSCSCAN_API_KEY = ENV["XCCONFIG_DEV_BSCSCAN_API_KEY"]
+XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY = ENV["XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY"]
+XCCONFIG_DEV_DEFIYIELD_API_KEY = ENV["XCCONFIG_DEV_DEFIYIELD_API_KEY"]
+XCCONFIG_DEV_TWITTER_BEARER_TOKEN = ENV["XCCONFIG_DEV_TWITTER_BEARER_TOKEN"]
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
 
-lane :dev do |options|
-  prepare_environment
+def create_temp_keychain(name, password)
+  create_keychain(
+    name: name,
+    password: password,
+    unlock: false,
+    timeout: 0
+  )
+end
 
-  cert(username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  sigh(app_identifier: "io.horizontalsystems.bank-wallet.dev", force: true, adhoc: true, username: ENV['ITUNES_CONNECT_USERNAME'], team_id: options[:dp_team_id])
-  gym(scheme: "Unstoppable Dev", export_method: "ad-hoc", silent: true, clean: true, export_options: { compileBitcode: false })
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
 
-  upload_to_app_center(options[:app_center_api_token], "Unstoppable")
+def update_xcconfig(name, new_value)
+  update_xcconfig_value(
+    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
+    name: name,
+    value: new_value
+  )
 end
 
 def prepare_environment
-  sh("rm -rf ~/Library/Developer/Xcode/Archives/**")
-  sh("rm -rf ~/Library/MobileDevice/Provisioning\\ Profiles/**")
-
-  reset_git_repo(force: true)
-  clear_derived_data
-
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig")
   sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig")
 
+  update_xcconfig('infura_project_id', XCCONFIG_DEV_INFURA_PROJECT_ID)
+  update_xcconfig('infura_project_secret', XCCONFIG_DEV_INFURA_PROJECT_SECRET)
+  update_xcconfig('etherscan_api_key', XCCONFIG_DEV_ETHERSCAN_API_KEY)
+  update_xcconfig('bscscan_api_key', XCCONFIG_DEV_BSCSCAN_API_KEY)
+  update_xcconfig('cryptocompare_com_api_key', XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY)
+  update_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
+  update_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
+
   increment_build_number(
-      build_number: ENV['BUILD_NUMBER'],
-      xcodeproj: "./UnstoppableWallet/UnstoppableWallet.xcodeproj"
+    build_number: ENV['BUILD_NUMBER'],
+    xcodeproj: "./UnstoppableWallet/UnstoppableWallet.xcodeproj"
   )
 
-  cocoapods(repo_update: true)
+  cocoapods
 end
 
-def upload_to_app_center(api_token, app_name)
-  appcenter_upload(
-    api_token: api_token,
-    owner_name: "Horizontal-Systems",
-    owner_type: "organization",
-    app_name: app_name,
-    notify_testers: true,
-    release_notes: last_git_commit[:message]
-  )
+platform :ios do
+  lane :dev do
+    keychain_name = TEMP_KEYCHAIN_USER
+    keychain_password = TEMP_KEYCHAIN_PASSWORD
+    ensure_temp_keychain(keychain_name, keychain_password)
+
+    api_key = app_store_connect_api_key(
+      key_id: APPLE_KEY_ID,
+      issuer_id: APPLE_ISSUER_ID,
+      key_content: APPLE_KEY_CONTENT,
+      duration: 1200,
+      in_house: false
+    )
+
+    prepare_environment
+
+    match(
+      type: 'adhoc',
+      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+      readonly: true,
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      api_key: api_key
+    )
+
+    xcversion(version: "13.0")
+
+    gym(
+      scheme: "Unstoppable Dev",
+      export_method: "ad-hoc",
+      clean: true,
+      export_options: {
+        compileBitcode: false,
+        provisioningProfiles: {
+            DEVELOPER_APP_ID => PROVISIONING_PROFILE_SPECIFIER
+        }
+      }
+    )
+
+    appcenter_upload(
+      api_token: APP_CENTER_API_TOKEN,
+      owner_name: "Horizontal-Systems",
+      owner_type: "organization",
+      app_name: "Unstoppable",
+      notify_testers: true,
+      release_notes: last_git_commit[:message]
+    )
+
+    delete_temp_keychain(keychain_name)
+  end
 end

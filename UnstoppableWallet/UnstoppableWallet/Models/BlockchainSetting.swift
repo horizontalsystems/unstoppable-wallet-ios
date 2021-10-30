@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 struct BlockchainSetting {
     var coinType: CoinType?
@@ -21,16 +21,6 @@ struct BlockchainSetting {
         }
         if let syncMode = syncMode {
             self.syncMode = SyncMode(rawValue: syncMode)
-        }
-    }
-
-    static func key(for coinType: CoinType) -> String? {
-        switch coinType {
-        case .bitcoin: return "bitcoin"
-        case .litecoin: return "litecoin"
-        case .bitcoinCash: return "bitcoinCash"
-        case .dash: return "dash"
-        default: return nil
         }
     }
 

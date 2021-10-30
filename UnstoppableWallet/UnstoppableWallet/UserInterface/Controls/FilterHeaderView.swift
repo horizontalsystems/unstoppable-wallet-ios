@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import ComponentKit
 
 extension FilterHeaderView {
     enum ViewItem {
@@ -12,7 +13,13 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     static var height: CGFloat = .heightSingleLineCell
 
     private var filters = [ViewItem]()
+    private let layout = UICollectionViewFlowLayout()
     private let collectionView: UICollectionView
+    private var contentWidth: CGFloat = 0
+    private var buttonStyle: ThemeButtonStyle
+
+    private let selectedView = UIView()
+    private let animationDuration: TimeInterval
 
     var onSelect: ((Int) -> ())?
 
@@ -20,13 +27,18 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         filters.isEmpty ? 0 : Self.height
     }
 
-    init() {
-        let layout = UICollectionViewFlowLayout()
+    init(buttonStyle: ThemeButtonStyle) {
+        self.buttonStyle = buttonStyle
+
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
+        animationDuration = buttonStyle == .tab ? 0.2 : .themeAnimationDuration
+
         super.init(reuseIdentifier: nil)
+
+        clipsToBounds = true
 
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
@@ -50,10 +62,20 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         addSubview(separator)
         separator.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         separator.backgroundColor = UIColor.themeSteel10
+
+        addSubview(selectedView)
+        selectedView.snp.makeConstraints { maker in
+            maker.bottom.equalToSuperview().offset(2)
+            maker.leading.equalToSuperview()
+            maker.height.equalTo(4)
+        }
+
+        selectedView.cornerRadius = 2
+        selectedView.backgroundColor = buttonStyle == .tab ? .themeJacob : .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -67,8 +89,16 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
     }
 
+    private func calculateContentWidth() {
+        contentWidth = 0
+        for i in 0..<filters.count {
+            contentWidth += FilterHeaderCell.size(for: title(index: i), buttonStyle: buttonStyle).width + layout.minimumInteritemSpacing
+        }
+    }
+
     func reload(filters: [ViewItem]) {
         self.filters = filters
+        calculateContentWidth()
         collectionView.reloadData()
 
         if filters.count > 0 {
@@ -86,6 +116,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
         if filters.count > index {
             collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: .left)
+            handleSelected(indexPath: selectedItem)
         }
     }
 
@@ -103,12 +134,23 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterHeaderCell {
-            cell.bind(title: title(index: indexPath.item), selected: collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false)
+            let selected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
+            cell.bind(title: title(index: indexPath.item), selected: selected, buttonStyle: buttonStyle)
+
+            if selected {
+                layoutSelectedView(toCell: cell)
+            }
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        FilterHeaderCell.size(for: title(index: indexPath.item))
+        let width = contentWidth + collectionView.contentInset.left * 2 + layout.minimumInteritemSpacing
+        if buttonStyle == .tab, width < bounds.width {
+            let width = (bounds.width - collectionView.contentInset.left * 2 - CGFloat(filters.count - 1) * layout.minimumInteritemSpacing) / CGFloat(filters.count)
+            return CGSize(width: width, height: FilterHeaderCell.height(buttonStyle: buttonStyle))
+        }
+
+        return FilterHeaderCell.size(for: title(index: indexPath.item), buttonStyle: buttonStyle)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -124,7 +166,28 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelect?(indexPath.item)
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
+        handleSelected(indexPath: indexPath)
+    }
+
+    private func handleSelected(indexPath: IndexPath) {
+        guard let selectedCell = collectionView.cellForItem(at: indexPath) else {
+            return
+        }
+        layoutSelectedView(toCell: selectedCell)
+
+        UIView.animate(withDuration: animationDuration, animations: {
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            self.layoutSubviews()
+        })
+    }
+
+    private func layoutSelectedView(toCell cell: UICollectionViewCell) {
+        selectedView.snp.remakeConstraints { maker in
+            maker.bottom.equalToSuperview().offset(2)
+            maker.leading.trailing.equalTo(cell.contentView)
+            maker.height.equalTo(4)
+        }
     }
 
 }

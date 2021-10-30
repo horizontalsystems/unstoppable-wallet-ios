@@ -2,18 +2,19 @@ import BitcoinCore
 import Hodler
 import RxSwift
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
 
     private let abstractKit: AbstractKit
+    let testMode: Bool
     private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
-    let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
 
     private(set) var balanceState: AdapterState {
         didSet {
@@ -23,38 +24,25 @@ class BitcoinBaseAdapter {
     }
     private(set) var transactionState: AdapterState
 
-    private let coin: Coin
+    private let coin: PlatformCoin
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: Wallet) {
+    init(abstractKit: AbstractKit, wallet: Wallet, testMode: Bool) {
         self.abstractKit = abstractKit
-        coin = wallet.coin
+        self.testMode = testMode
+        coin = wallet.platformCoin
         transactionSource = wallet.transactionSource
 
         balanceState = .notSynced(error: AppError.unknownError)
         transactionState = balanceState
     }
 
-    func transactionRecord(fromTransaction transaction: TransactionInfo) -> TransactionRecord {
-        var myInputsTotalValue: Int = 0
-        var myOutputsTotalValue: Int = 0
-        var myChangeOutputsTotalValue: Int = 0
-        var outputsTotalValue: Int = 0
-        var allInputsMine = true
-
+    func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
         var lockInfo: TransactionLockInfo?
         var anyNotMineFromAddress: String?
         var anyNotMineToAddress: String?
 
         for input in transaction.inputs {
-            if input.mine {
-                if let value = input.value {
-                    myInputsTotalValue += value
-                }
-            } else {
-                allInputsMine = false
-            }
-
             if anyNotMineFromAddress == nil, let address = input.address {
                 anyNotMineFromAddress = address
             }
@@ -63,15 +51,6 @@ class BitcoinBaseAdapter {
         for output in transaction.outputs {
             guard output.value > 0 else {
                 continue
-            }
-
-            outputsTotalValue += output.value
-
-            if output.mine {
-                myOutputsTotalValue += output.value
-                if output.changeOutput {
-                    myChangeOutputsTotalValue += output.value
-                }
             }
 
             if let pluginId = output.pluginId, pluginId == HodlerPlugin.id,
@@ -88,13 +67,8 @@ class BitcoinBaseAdapter {
             }
         }
 
-        var amount = myOutputsTotalValue - myInputsTotalValue
-
-        if allInputsMine, let fee = transaction.fee {
-            amount += fee
-        }
-
-        if amount > 0 {
+        switch transaction.type {
+        case .incoming:
             return BitcoinIncomingTransactionRecord(
                     coin: coin,
                     source: transactionSource,
@@ -109,10 +83,10 @@ class BitcoinBaseAdapter {
                     lockInfo: lockInfo,
                     conflictingHash: transaction.conflictingHash,
                     showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-                    amount: Decimal(abs(amount)) / coinRate,
+                    amount: Decimal(transaction.amount) / coinRate,
                     from: anyNotMineFromAddress
             )
-        } else if amount < 0 {
+        case .outgoing:
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
                     source: transactionSource,
@@ -127,12 +101,11 @@ class BitcoinBaseAdapter {
                     lockInfo: lockInfo,
                     conflictingHash: transaction.conflictingHash,
                     showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-                    amount: Decimal(abs(amount)) / coinRate,
+                    amount: Decimal(transaction.amount) / coinRate,
                     to: anyNotMineToAddress,
                     sentToSelf: false
             )
-        } else {
-            amount = myOutputsTotalValue - myChangeOutputsTotalValue
+        case .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
                     source: transactionSource,
@@ -147,7 +120,7 @@ class BitcoinBaseAdapter {
                     lockInfo: lockInfo,
                     conflictingHash: transaction.conflictingHash,
                     showRawTransaction: transaction.status == .new || transaction.status == .invalid,
-                    amount: Decimal(abs(amount)) / coinRate,
+                    amount: Decimal(transaction.amount) / coinRate,
                     to: anyNotMineToAddress,
                     sentToSelf: true
             )
@@ -190,6 +163,14 @@ class BitcoinBaseAdapter {
         )
     }
 
+    open var explorerTitle: String {
+        fatalError("Must be overridden by subclass")
+    }
+
+    open func explorerUrl(transactionHash: String) -> String? {
+        fatalError("Must be overridden by subclass")
+    }
+
 }
 
 extension BitcoinBaseAdapter: IAdapter {
@@ -224,7 +205,7 @@ extension BitcoinBaseAdapter: IAdapter {
 extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
     func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
-        var records = [TransactionRecord]()
+        var records = [BitcoinTransactionRecord]()
 
         for info in inserted {
             records.append(transactionRecord(fromTransaction: info))
@@ -365,12 +346,32 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
-    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
+                .map { transactions in
+                    transactions.compactMap { transaction -> TransactionRecord? in
+                        switch (transaction, filter) {
+                        case (_, .all): return transaction
+                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
+                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+                        case (let tx as BitcoinOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
+                        default: return nil
+                        }
+                    }
+                }
+                .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        abstractKit.transactions(fromUid: from?.uid, limit: limit)
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+        let bitcoinFilter: TransactionFilterType?
+        switch filter {
+        case .all: bitcoinFilter = nil
+        case .incoming: bitcoinFilter = .incoming
+        case .outgoing: bitcoinFilter = .outgoing
+        default: return Single.just([])
+        }
+
+        return abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap {
                         self?.transactionRecord(fromTransaction: $0)

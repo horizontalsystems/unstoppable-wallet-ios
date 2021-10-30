@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import XRatesKit
+import MarketKit
 import Chart
 import CurrencyKit
 import HUD
@@ -110,6 +110,10 @@ extension CoinChartViewModel {
 
     func onTap(indicator: ChartIndicatorSet) {
         service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
+    }
+
+    func viewDidLoad() {
+        service.fetchChartData()
     }
 
 }

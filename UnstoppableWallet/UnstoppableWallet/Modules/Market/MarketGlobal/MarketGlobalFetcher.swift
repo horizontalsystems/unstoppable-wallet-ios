@@ -1,13 +1,14 @@
-import XRatesKit
 import RxSwift
 import Foundation
+import MarketKit
+import Chart
 
 class MarketGlobalFetcher {
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
     private let metricsType: MarketGlobalModule.MetricsType
 
-    init(rateManager: IRateManager, metricsType: MarketGlobalModule.MetricsType) {
-        self.rateManager = rateManager
+    init(marketKit: MarketKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
+        self.marketKit = marketKit
         self.metricsType = metricsType
     }
 
@@ -19,10 +20,7 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
     var poweredBy: String { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
-        switch metricsType {
-        case .btcDominance: return .percent
-        default: return .compactCurrencyValue
-        }
+        .compactCurrencyValue
     }
 
 }
@@ -30,21 +28,27 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
 extension MarketGlobalFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
-        rateManager
-                .globalMarketInfoPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
+        marketKit
+                .globalMarketPointsSingle(currencyCode: currencyCode, timePeriod: timePeriod)
                 .map { [weak self] points in
-                    points.map { point in
+                    let result = points.map { point -> MetricChartModule.Item in
                         let value: Decimal
+                        var additional = [ChartIndicatorName: Decimal]()
 
                         switch self?.metricsType {
                         case .defiCap: value = point.marketCapDefi
-                        case .btcDominance: value = point.dominanceBtc
+                        case .totalMarketCap:
+                            value = point.marketCap
+                            additional[.dominance] = point.dominanceBtc
                         case .tvlInDefi: value = point.tvl
                         case .none, .volume24h: value = point.volume24h
                         }
 
-                        return MetricChartModule.Item(value: value, timestamp: point.timestamp)
+                        return MetricChartModule.Item(value: value, indicators: additional, timestamp: point.timestamp)
                     }
+
+
+                    return result
                 }
     }
 

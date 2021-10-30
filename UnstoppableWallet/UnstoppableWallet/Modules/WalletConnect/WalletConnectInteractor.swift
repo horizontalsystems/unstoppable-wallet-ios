@@ -1,4 +1,4 @@
-import WalletConnect
+import WalletConnectV1
 
 protocol IWalletConnectInteractorDelegate: AnyObject {
     func didUpdate(state: WalletConnectInteractor.State)
@@ -12,11 +12,11 @@ protocol IWalletConnectInteractorDelegate: AnyObject {
 
 extension IWalletConnectInteractorDelegate {
 
-    func didRequestSession(peerId: String, peerMeta: WalletConnect.WCPeerMeta, chainId: Int?) {}
+    func didRequestSession(peerId: String, peerMeta: WalletConnectV1.WCPeerMeta, chainId: Int?) {}
     func didKillSession() {}
-    func didRequestSendEthereumTransaction(id: Int, transaction: WalletConnect.WCEthereumTransaction) {}
-    func didRequestSignEthereumTransaction(id: Int, transaction: WalletConnect.WCEthereumTransaction) {}
-    func didRequestSign(id: Int, payload: WalletConnect.WCEthereumSignPayload) {}
+    func didRequestSendEthereumTransaction(id: Int, transaction: WalletConnectV1.WCEthereumTransaction) {}
+    func didRequestSignEthereumTransaction(id: Int, transaction: WalletConnectV1.WCEthereumTransaction) {}
+    func didRequestSign(id: Int, payload: WalletConnectV1.WCEthereumSignPayload) {}
     func didReceive(error: Error) {}
 
 }
@@ -90,7 +90,6 @@ class WalletConnectInteractor {
     }
 
     private func onError(error: Error) {
-        print("Interactor Error: \(error)")
         delegate?.didReceive(error: error)
     }
 

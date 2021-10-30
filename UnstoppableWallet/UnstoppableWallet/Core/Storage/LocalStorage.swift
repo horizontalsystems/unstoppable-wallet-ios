@@ -1,6 +1,6 @@
 import Foundation
 import StorageKit
-import XRatesKit
+import MarketKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
@@ -17,9 +17,6 @@ class LocalStorage {
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
     private let keyBalanceHidden = "balance_hidden"
-    private let keyPushToken = "push_token"
-    private let keyPushNotificationsOn = "push_notifications_on"
-    private let keyDefaultMarketCategory = "default_market_category"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
     private let keyDefaultProvider = "swap_provider"
 
@@ -107,21 +104,6 @@ extension LocalStorage: ILocalStorage {
     var balanceHidden: Bool {
         get { storage.value(for: keyBalanceHidden) ?? false }
         set { storage.set(value: newValue, for: keyBalanceHidden) }
-    }
-
-    var pushToken: String? {
-        get { storage.value(for: keyPushToken) }
-        set { storage.set(value: newValue, for: keyPushToken) }
-    }
-
-    var pushNotificationsOn: Bool {
-        get { storage.value(for: keyPushNotificationsOn) ?? false }
-        set { storage.set(value: newValue, for: keyPushNotificationsOn) }
-    }
-
-    var marketCategory: Int? {
-        get { storage.value(for: keyDefaultMarketCategory) }
-        set { storage.set(value: newValue, for: keyDefaultMarketCategory) }
     }
 
     var zcashAlwaysPendingRewind: Bool {

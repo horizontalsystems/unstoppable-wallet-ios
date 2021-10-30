@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
-import CoinKit
+import MarketKit
 import ComponentKit
 
 protocol IBirthdayInputDelegate: AnyObject {
@@ -10,15 +10,15 @@ protocol IBirthdayInputDelegate: AnyObject {
 }
 
 class BirthdayInputViewController: ThemeActionSheetController {
-    private let coin: Coin
+    private let platformCoin: PlatformCoin
     private weak var delegate: IBirthdayInputDelegate?
 
     private let heightInputView = InputView()
 
     private var didTapDone = false
 
-    init(coin: Coin, delegate: IBirthdayInputDelegate) {
-        self.coin = coin
+    init(platformCoin: PlatformCoin, delegate: IBirthdayInputDelegate) {
+        self.platformCoin = platformCoin
         self.delegate = delegate
 
         super.init()
@@ -40,8 +40,8 @@ class BirthdayInputViewController: ThemeActionSheetController {
 
         titleView.bind(
                 title: "birthday_input.title".localized,
-                subtitle: coin.title,
-                image: .image(coinType: coin.type)
+                subtitle: platformCoin.coin.name,
+                image: .image(coinType: platformCoin.platform.coinType)
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)

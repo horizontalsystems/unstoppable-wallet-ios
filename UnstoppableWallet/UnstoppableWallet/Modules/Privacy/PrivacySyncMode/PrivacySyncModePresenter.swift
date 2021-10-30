@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 
 class PrivacySyncModePresenter {
     weak var view: IPrivacySyncModeView?
@@ -6,12 +6,16 @@ class PrivacySyncModePresenter {
 
     private let router: IPrivacySyncModeRouter
 
-    private let coin: Coin
+    private let coinTitle: String
+    private let coinIconName: String
+    private let coinType: CoinType
     private var currentSyncMode: SyncMode
     private let syncModes: [SyncMode] = [.fast, .slow]
 
-    init(coin: Coin, currentSyncMode: SyncMode, router: IPrivacySyncModeRouter) {
-        self.coin = coin
+    init(coinTitle: String, coinIconName: String, coinType: CoinType, currentSyncMode: SyncMode, router: IPrivacySyncModeRouter) {
+        self.coinTitle = coinTitle
+        self.coinIconName = coinIconName
+        self.coinType = coinType
         self.currentSyncMode = currentSyncMode
         self.router = router
     }
@@ -32,7 +36,7 @@ class PrivacySyncModePresenter {
 extension PrivacySyncModePresenter: IPrivacySyncModeViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: coin.title, coinCode: coin.code, coinType: coin.type)
+        view?.set(coinTitle: coinTitle, coinIconName: coinIconName)
         syncViewItems()
     }
 
@@ -42,7 +46,7 @@ extension PrivacySyncModePresenter: IPrivacySyncModeViewDelegate {
     }
 
     func onTapDone() {
-        delegate?.onSelect(syncMode: currentSyncMode, coin: coin)
+        delegate?.onSelect(syncMode: currentSyncMode, coinType: coinType)
         router.close()
     }
 

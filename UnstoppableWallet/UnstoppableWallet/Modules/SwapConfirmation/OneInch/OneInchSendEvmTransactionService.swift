@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 import EthereumKit
 import BigInt
-import CoinKit
+import MarketKit
 import OneInchKit
 import UniswapKit
 
@@ -105,7 +105,7 @@ class OneInchSendEvmTransactionService {
     private func additionalInfo(parameters: OneInchSwapParameters) -> SendEvmData.AdditionInfo {
         .oneInchSwap(info:
             SendEvmData.OneInchSwapInfo(
-                coinTo: parameters.coinTo,
+                platformCoinTo: parameters.platformCoinTo,
                 estimatedAmountTo: parameters.amountTo,
                 slippage: formatted(slippage: parameters.slippage),
                 recipientDomain: parameters.recipient?.domain
@@ -113,8 +113,8 @@ class OneInchSendEvmTransactionService {
         )
     }
 
-    private func swapToken(coin: Coin) -> OneInchMethodDecoration.Token? {
-        switch coin.type {
+    private func swapToken(platformCoin: PlatformCoin) -> OneInchMethodDecoration.Token? {
+        switch platformCoin.coinType {
         case .ethereum, .binanceSmartChain: return .evmCoin
         case .erc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
         case .bep20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
@@ -125,11 +125,11 @@ class OneInchSendEvmTransactionService {
     private func swapDecoration(parameters: OneInchSwapParameters) -> ContractMethodDecoration? {
         let amountOutMinDecimal = parameters.amountTo * (1 - parameters.slippage / 100)
         guard
-            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.coinFrom.decimal)).description),
-            let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.coinTo.decimal)).roundedString(decimal: 0)),
-            let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.coinTo.decimal)).roundedString(decimal: 0)),
-            let tokenIn = swapToken(coin: parameters.coinFrom),
-            let tokenOut = swapToken(coin: parameters.coinTo) else {
+            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.platformCoinFrom.decimals)).description),
+            let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
+            let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
+            let tokenIn = swapToken(platformCoin: parameters.platformCoinFrom),
+            let tokenOut = swapToken(platformCoin: parameters.platformCoinTo) else {
 
             return nil
         }
@@ -158,12 +158,15 @@ class OneInchSendEvmTransactionService {
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.data?.decoration as? SwapMethodDecoration {
+        if let decoration = dataState.data?.decoration as? OneInchUnoswapMethodDecoration, let tokenOut = decoration.tokenOut {
+            activateSwapCoinOut(tokenOut: tokenOut)
+        }
+        if let decoration = dataState.data?.decoration as? OneInchSwapMethodDecoration {
             activateSwapCoinOut(tokenOut: decoration.tokenOut)
         }
     }
 
-    private func activateSwapCoinOut(tokenOut: SwapMethodDecoration.Token) {
+    private func activateSwapCoinOut(tokenOut: OneInchMethodDecoration.Token) {
         let coinType: CoinType
 
         switch tokenOut {

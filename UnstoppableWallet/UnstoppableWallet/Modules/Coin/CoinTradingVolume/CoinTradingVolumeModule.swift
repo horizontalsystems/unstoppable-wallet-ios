@@ -2,13 +2,12 @@ import UIKit
 import RxSwift
 import Chart
 import LanguageKit
-import XRatesKit
-import CoinKit
+import MarketKit
 
 class CoinTradingVolumeModule {
 
     static func viewController(coinType: CoinType, coinTitle: String) -> UIViewController {
-        let chartFetcher = CoinTradingVolumeFetcher(rateManager: App.shared.rateManager, coinType: coinType, coinTitle: coinTitle)
+        let chartFetcher = CoinTradingVolumeFetcher(coinType: coinType, coinTitle: coinTitle)
         let chartService = MetricChartService(currencyKit: App.shared.currencyKit, chartFetcher: chartFetcher)
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)

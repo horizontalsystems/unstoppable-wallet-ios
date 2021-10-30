@@ -1,11 +1,10 @@
-import CoinKit
+import MarketKit
 
 class PrivacyPresenter {
     weak var view: IPrivacyView?
 
     private let interactor: IPrivacyInteractor
     private let router: IPrivacyRouter
-    private let factory = PrivacyViewItemFactory()
 
     private var syncItems = [PrivacySyncItem]()
 
@@ -19,7 +18,10 @@ class PrivacyPresenter {
     }
 
     private func updateSync() {
-        view?.set(syncModeItems: factory.syncViewItems(items: syncItems))
+        let viewItems = syncItems.map { item in
+            PrivacyViewItem(iconName: iconName(coinType: item.setting.coinType), title: title(coinType: item.setting.coinType), value: item.setting.syncMode.title, changeable: item.changeable)
+        }
+        view?.set(syncModeItems: viewItems)
     }
 
     private var isActiveAccountCreated: Bool {
@@ -30,6 +32,26 @@ class PrivacyPresenter {
         return account.origin == .created
     }
 
+    private func title(coinType: CoinType) -> String {
+        switch coinType {
+        case .bitcoin: return "Bitcoin"
+        case .bitcoinCash: return "Bitcoin Cash"
+        case .litecoin: return "Litecoin"
+        case .dash: return "Dash"
+        default: return ""
+        }
+    }
+
+    private func iconName(coinType: CoinType) -> String {
+        switch coinType {
+        case .bitcoin: return "bitcoin_24"
+        case .bitcoinCash: return "bitcoin_cash_24"
+        case .litecoin: return "litecoin_24"
+        case .dash: return "dash_24"
+        default: return ""
+        }
+    }
+
 }
 
 extension PrivacyPresenter: IPrivacyViewDelegate {
@@ -38,8 +60,8 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
         updateSortMode()
 
         if !isActiveAccountCreated {
-            syncItems = interactor.syncSettings.compactMap { setting, coin, changeable in
-                PrivacySyncItem(coin: coin, setting: setting, changeable: changeable)
+            syncItems = interactor.syncSettings.compactMap { setting, changeable in
+                PrivacySyncItem(setting: setting, changeable: changeable)
             }
 
             updateSync()
@@ -63,7 +85,7 @@ extension PrivacyPresenter: IPrivacyViewDelegate {
             return
         }
 
-        router.showSyncMode(coin: item.coin, currentSyncMode: item.setting.syncMode, delegate: self)
+        router.showSyncMode(coinTitle: title(coinType: item.setting.coinType), coinIconName: iconName(coinType: item.setting.coinType), coinType: item.setting.coinType, currentSyncMode: item.setting.syncMode, delegate: self)
     }
 
 }
@@ -81,10 +103,10 @@ extension PrivacyPresenter: IPrivacySortModeDelegate {
 
 extension PrivacyPresenter: IPrivacySyncModeDelegate {
 
-    func onSelect(syncMode: SyncMode, coin: Coin) {
-        let newSetting = InitialSyncSetting(coinType: coin.type, syncMode: syncMode)
+    func onSelect(syncMode: SyncMode, coinType: CoinType) {
+        let newSetting = InitialSyncSetting(coinType: coinType, syncMode: syncMode)
 
-        if let index = syncItems.firstIndex(where: { $0.coin == coin }) {
+        if let index = syncItems.firstIndex(where: { $0.setting.coinType == coinType }) {
             syncItems[index].setting = newSetting
         }
 

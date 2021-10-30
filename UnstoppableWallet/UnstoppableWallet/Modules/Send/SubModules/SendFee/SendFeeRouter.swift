@@ -1,11 +1,11 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class SendFeeRouter {
 
-    static func module(coin: Coin) -> (UIView, ISendFeeModule) {
-        let interactor = SendFeeInteractor(rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider)
-        let presenter = SendFeePresenter(coin: coin, interactor: interactor)
+    static func module(platformCoin: PlatformCoin) -> (UIView, ISendFeeModule) {
+        let interactor = SendFeeInteractor(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider)
+        let presenter = SendFeePresenter(platformCoin: platformCoin, interactor: interactor)
         let view = SendFeeView(delegate: presenter)
 
         interactor.delegate = presenter

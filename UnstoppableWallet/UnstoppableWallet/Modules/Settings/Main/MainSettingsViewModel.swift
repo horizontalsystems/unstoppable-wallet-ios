@@ -1,4 +1,4 @@
-import WalletConnect
+import WalletConnectV1
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -11,6 +11,7 @@ class MainSettingsViewModel {
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
     private let walletConnectSessionCountRelay: BehaviorRelay<String?>
+    private let launchScreenRelay: BehaviorRelay<String>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let themeModeRelay: BehaviorRelay<ThemeMode>
     private let aboutAlertRelay: BehaviorRelay<Bool>
@@ -22,6 +23,7 @@ class MainSettingsViewModel {
         manageWalletsAlertRelay = BehaviorRelay(value: !service.allBackedUp)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
         walletConnectSessionCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount))
+        launchScreenRelay = BehaviorRelay(value: service.launchScreen.title)
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         themeModeRelay = BehaviorRelay(value: service.themeMode)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
@@ -46,6 +48,8 @@ class MainSettingsViewModel {
                     self?.walletConnectSessionCountRelay.accept(Self.convert(walletConnectSessionCount: count))
                 })
                 .disposed(by: disposeBag)
+
+        subscribe(disposeBag, service.launchScreenObservable) { [weak self] in self?.launchScreenRelay.accept($0.title) }
 
         service.baseCurrencyObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -91,6 +95,10 @@ extension MainSettingsViewModel {
 
     var walletConnectSessionCountDriver: Driver<String?> {
         walletConnectSessionCountRelay.asDriver()
+    }
+
+    var launchScreenDriver: Driver<String> {
+        launchScreenRelay.asDriver()
     }
 
     var baseCurrencyDriver: Driver<String> {

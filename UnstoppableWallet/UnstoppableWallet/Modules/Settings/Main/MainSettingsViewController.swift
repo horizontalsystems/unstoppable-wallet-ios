@@ -20,6 +20,7 @@ class MainSettingsViewController: ThemeViewController {
     private let manageAccountsCell = A3Cell()
     private let securityCenterCell = A3Cell()
     private let walletConnectCell = A2Cell()
+    private let launchScreenCell = A2Cell()
     private let baseCurrencyCell = A2Cell()
     private let languageCell = A2Cell()
     private let themeModeCell = A2Cell()
@@ -69,6 +70,10 @@ class MainSettingsViewController: ThemeViewController {
         walletConnectCell.titleImage = UIImage(named: "wallet_connect_20")
         walletConnectCell.title = "wallet_connect.title".localized
 
+        launchScreenCell.set(backgroundStyle: .lawrence, isFirst: true)
+        launchScreenCell.titleImage = UIImage(named: "screen_20")
+        launchScreenCell.title = "settings.launch_screen.title".localized
+
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         baseCurrencyCell.titleImage = UIImage(named: "usd_20")
         baseCurrencyCell.title = "settings.base_currency".localized
@@ -101,6 +106,9 @@ class MainSettingsViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.walletConnectSessionCountDriver) { [weak self] count in
             self?.walletConnectCell.value = count
+        }
+        subscribe(disposeBag, viewModel.launchScreenDriver) { [weak self] launchScreen in
+            self?.launchScreenCell.value = launchScreen
         }
         subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
             self?.baseCurrencyCell.value = baseCurrency
@@ -161,16 +169,12 @@ class MainSettingsViewController: ThemeViewController {
 
     private var appearanceRows: [RowProtocol] {
         [
-            Row<A1Cell>(
-                    id: "notifications",
+            StaticRow(
+                    cell: launchScreenCell,
+                    id: "launch-screen",
                     height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.titleImage = UIImage(named: "bell_ring_20")
-                        cell.title = "settings.notifications".localized
-                    },
-                    action: { [weak self] _ in
-                        self?.navigationController?.pushViewController(NotificationSettingsRouter.module(), animated: true)
+                    action: { [weak self] in
+                        self?.navigationController?.pushViewController(LaunchScreenModule.viewController(), animated: true)
                     }
             ),
             StaticRow(
@@ -186,7 +190,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "language",
                     height: .heightCell48,
                     action: { [weak self] in
-                        let module = LanguageSettingsRouter.module { MainModule.instance(selectedTab: .settings) }
+                        let module = LanguageSettingsRouter.module { MainModule.instance(presetTab: .settings) }
                         self?.navigationController?.pushViewController(module, animated: true)
                     }
             ),

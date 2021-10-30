@@ -5,7 +5,6 @@ import SectionsTableView
 import RxSwift
 import RxCocoa
 import EthereumKit
-import CoinKit
 
 class SendEvmViewController: ThemeViewController {
     private let evmKit: EthereumKit.Kit
@@ -49,12 +48,12 @@ class SendEvmViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.title".localized(viewModel.coin.code)
+        title = "send.title".localized(viewModel.platformCoin.coin.code)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
-        iconImageView.image = .image(coinType: viewModel.coin.type)
+        iconImageView.setImage(withUrlString: viewModel.platformCoin.coin.imageUrl, placeholder: UIImage(named: viewModel.platformCoin.coinType.placeholderImageName))
         iconImageView.tintColor = .themeGray
 
         view.addSubview(tableView)

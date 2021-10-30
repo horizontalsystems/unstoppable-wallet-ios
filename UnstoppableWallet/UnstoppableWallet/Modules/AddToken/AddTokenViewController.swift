@@ -7,8 +7,6 @@ import ComponentKit
 
 class AddTokenViewController: ThemeViewController {
     private let viewModel: AddTokenViewModel
-    private let pageTitle: String
-    private let referenceTitle: String
 
     private let disposeBag = DisposeBag()
 
@@ -19,17 +17,15 @@ class AddTokenViewController: ThemeViewController {
     private let coinTypeCell = D7Cell()
     private let coinNameCell = D7Cell()
     private let coinCodeCell = D7Cell()
-    private let decimalCell = D7Cell()
+    private let decimalsCell = D7Cell()
 
     private let addButtonHolder = BottomGradientHolder()
     private let addButton = ThemeButton()
 
     private var isLoaded = false
 
-    init(viewModel: AddTokenViewModel, pageTitle: String, referenceTitle: String) {
+    init(viewModel: AddTokenViewModel) {
         self.viewModel = viewModel
-        self.pageTitle = pageTitle
-        self.referenceTitle = referenceTitle
 
         super.init()
     }
@@ -41,7 +37,7 @@ class AddTokenViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = pageTitle
+        title = "add_token.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
 
         view.addSubview(tableView)
@@ -54,7 +50,7 @@ class AddTokenViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         inputCell.isEditable = false
-        inputCell.inputPlaceholder = referenceTitle
+        inputCell.inputPlaceholder = "ERC20 / BEP20 / BEP2"
         inputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         inputCell.onChangeText = { [weak self] in self?.viewModel.onEnter(reference: $0) }
         inputCell.onFetchText = { [weak self] in
@@ -66,7 +62,7 @@ class AddTokenViewController: ThemeViewController {
         inputCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         coinTypeCell.set(backgroundStyle: .lawrence, isFirst: true)
-        coinTypeCell.title = "add_token.coin_type".localized
+        coinTypeCell.title = "add_token.coin_types".localized
 
         coinNameCell.set(backgroundStyle: .lawrence)
         coinNameCell.title = "add_token.coin_name".localized
@@ -74,8 +70,8 @@ class AddTokenViewController: ThemeViewController {
         coinCodeCell.set(backgroundStyle: .lawrence)
         coinCodeCell.title = "add_token.coin_code".localized
 
-        decimalCell.set(backgroundStyle: .lawrence, isLast: true)
-        decimalCell.title = "add_token.decimal".localized
+        decimalsCell.set(backgroundStyle: .lawrence, isLast: true)
+        decimalsCell.title = "add_token.decimals".localized
 
         view.addSubview(addButtonHolder)
         addButtonHolder.snp.makeConstraints { maker in
@@ -100,7 +96,7 @@ class AddTokenViewController: ThemeViewController {
             self?.coinTypeCell.value = viewItem?.coinType ?? "..."
             self?.coinNameCell.value = viewItem?.coinName ?? "..."
             self?.coinCodeCell.value = viewItem?.coinCode ?? "..."
-            self?.decimalCell.value = viewItem.map { "\($0.decimal)" } ?? "..."
+            self?.decimalsCell.value = viewItem?.decimals.map { "\($0)" } ?? "..."
         }
         subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
             self?.addButton.isEnabled = enabled
@@ -193,10 +189,10 @@ extension AddTokenViewController: SectionsDataSource {
                                 }
                         ),
                         StaticRow(
-                                cell: decimalCell,
+                                cell: decimalsCell,
                                 id: "decimal",
                                 dynamicHeight: { [weak self] width in
-                                    self?.decimalCell.cellHeight ?? 0
+                                    self?.decimalsCell.cellHeight ?? 0
                                 }
                         )
                     ]

@@ -1,21 +1,21 @@
 import RxSwift
 import BinanceChainKit
-import CoinKit
+import MarketKit
 
 class BinanceAdapter {
     static let confirmationsThreshold = 1
     static let transferFee: Decimal = 0.000075
 
     private let binanceKit: BinanceChainKit
-    private let feeCoin: Coin
-    private let coin: Coin
+    private let feeCoin: PlatformCoin
+    private let coin: PlatformCoin
     private let asset: Asset
     private let transactionSource: TransactionSource
 
-    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: Coin, wallet: Wallet) {
+    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: PlatformCoin, wallet: Wallet) {
         self.binanceKit = binanceKit
         self.feeCoin = feeCoin
-        coin = wallet.coin
+        coin = wallet.platformCoin
         transactionSource = wallet.transactionSource
 
         asset = binanceKit.register(symbol: symbol)
@@ -38,7 +38,7 @@ class BinanceAdapter {
         switch syncState {
         case .synced: return .synced
         case .notSynced(let error): return .notSynced(error: error.convertedError)
-        case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+        case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
         }
     }
 
@@ -148,7 +148,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         switch binanceKit.syncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)
-            case .syncing: return .syncing(progress: 50, lastBlockDate: nil)
+            case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
         }
     }
 
@@ -164,16 +164,43 @@ extension BinanceAdapter: ITransactionsAdapter {
         binanceKit.syncStateObservable.map { _ in () }
     }
 
-    func transactionsObservable(coin: Coin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
-        asset.transactionsObservable.map { [weak self] in
+    var explorerTitle: String {
+        "binance.org"
+    }
+
+    func explorerUrl(transactionHash: String) -> String? {
+        binanceKit.networkType == .mainNet
+                ? "https://explorer.binance.org/tx/" + transactionHash
+                : "https://testnet-explorer.binance.org/tx/" + transactionHash
+    }
+
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+        let binanceChainFilter: TransactionFilterType?
+        switch filter {
+            case .all: binanceChainFilter = nil
+            case .incoming: binanceChainFilter = .incoming
+            case .outgoing: binanceChainFilter = .outgoing
+            default: binanceChainFilter = nil
+        }
+
+        return asset.transactionsObservable(filterType: binanceChainFilter).map { [weak self] in
             $0.compactMap {
                 self?.transactionRecord(fromTransaction: $0)
             }
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
-        binanceKit.transactionsSingle(symbol: asset.symbol, fromTransactionHash: from?.transactionHash, limit: limit)
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+        let binanceChainFilter: TransactionFilterType?
+
+        switch filter {
+            case .all: binanceChainFilter = nil
+            case .incoming: binanceChainFilter = .incoming
+            case .outgoing: binanceChainFilter = .outgoing
+            default: return Single.just([])
+        }
+
+        return binanceKit.transactionsSingle(symbol: asset.symbol, filterType: binanceChainFilter, fromTransactionHash: from?.transactionHash, limit: limit)
                 .map { [weak self] transactions -> [TransactionRecord] in
                     transactions.compactMap { self?.transactionRecord(fromTransaction: $0) }
                 }

@@ -1,14 +1,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import XRatesKit
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class MetricChartService {
     private var disposeBag = DisposeBag()
 
-    private let chartFetcher: IMetricChartFetcher
+    private var chartFetcher: IMetricChartFetcher
     private let currencyKit: CurrencyKit.Kit
 
     private let chartTypeRelay = PublishRelay<ChartType>()
@@ -41,14 +40,14 @@ class MetricChartService {
         state = .loading
 
         chartFetcher
-                .fetchSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] items in
-                    self?.state = .completed(items)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] items in
+                self?.state = .completed(items)
+            }, onError: { [weak self] error in
+                self?.state = .failed(error)
+            })
+            .disposed(by: disposeBag)
     }
 
 }

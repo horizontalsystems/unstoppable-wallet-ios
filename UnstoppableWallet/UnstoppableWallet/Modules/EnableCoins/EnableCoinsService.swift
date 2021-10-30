@@ -2,17 +2,16 @@ import RxSwift
 import RxRelay
 import EthereumKit
 import BinanceChainKit
-import CoinKit
+import MarketKit
 
 class EnableCoinsService {
     private let appConfigProvider: IAppConfigProvider
     private let erc20Provider: EnableCoinsEip20Provider
     private let bep20Provider: EnableCoinsEip20Provider
     private let bep2Provider: EnableCoinsBep2Provider
-    private let coinManager: ICoinManager
     private let disposeBag = DisposeBag()
 
-    private let enableCoinsRelay = PublishRelay<[Coin]>()
+    private let enableCoinTypesRelay = PublishRelay<[CoinType]>()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .idle {
@@ -21,12 +20,11 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider, coinManager: ICoinManager) {
+    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider) {
         self.appConfigProvider = appConfigProvider
         self.erc20Provider = erc20Provider
         self.bep20Provider = bep20Provider
         self.bep2Provider = bep2Provider
-        self.coinManager = coinManager
     }
 
     private func resolveTokenType(coinType: CoinType, accountType: AccountType) -> TokenType? {
@@ -56,11 +54,11 @@ class EnableCoinsService {
 
             state = .loading
 
-            erc20Provider.coinsSingle(address: address.hex)
+            erc20Provider.coinTypesSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] coins in
-                        self?.state = .success(coins: coins)
-                        self?.enableCoinsRelay.accept(coins)
+                    .subscribe(onSuccess: { [weak self] coinTypes in
+                        self?.state = .success(coinTypes: coinTypes)
+                        self?.enableCoinTypesRelay.accept(coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -76,11 +74,11 @@ class EnableCoinsService {
 
             state = .loading
 
-            bep20Provider.coinsSingle(address: address.hex)
+            bep20Provider.coinTypesSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] coins in
-                        self?.state = .success(coins: coins)
-                        self?.enableCoinsRelay.accept(coins)
+                    .subscribe(onSuccess: { [weak self] coinTypes in
+                        self?.state = .success(coinTypes: coinTypes)
+                        self?.enableCoinTypesRelay.accept(coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -110,36 +108,34 @@ class EnableCoinsService {
     }
 
     private func handleFetchBep2(tokenSymbols: [String]) {
-        let allCoins = coinManager.coins
-
-        let coins = tokenSymbols.compactMap { tokenSymbol -> Coin? in
+        let coinTypes = tokenSymbols.compactMap { tokenSymbol -> CoinType? in
             if tokenSymbol == "BNB" {
                 return nil
             }
 
-            return allCoins.first { coin in
-                coin.type == .bep2(symbol: tokenSymbol)
-            }
+            return .bep2(symbol: tokenSymbol)
         }
 
-        state = .success(coins: coins)
-        enableCoinsRelay.accept(coins)
+        state = .success(coinTypes: coinTypes)
+        enableCoinTypesRelay.accept(coinTypes)
     }
 
 }
 
 extension EnableCoinsService {
 
-    var enableCoinsObservable: Observable<[Coin]> {
-        enableCoinsRelay.asObservable()
+    var enableCoinTypesObservable: Observable<[CoinType]> {
+        enableCoinTypesRelay.asObservable()
     }
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    func handle(coinType: CoinType, accountType: AccountType) {
-        guard let tokenType = resolveTokenType(coinType: coinType, accountType: accountType) else {
+    func handle(coinTypes: [CoinType], accountType: AccountType) {
+        let tokenTypes = coinTypes.compactMap { resolveTokenType(coinType: $0, accountType: accountType) }
+
+        guard let tokenType = tokenTypes.first else {
             return
         }
 
@@ -169,7 +165,7 @@ extension EnableCoinsService {
         case idle
         case waitingForApprove(tokenType: TokenType)
         case loading
-        case success(coins: [Coin])
+        case success(coinTypes: [CoinType])
         case failure(error: Error)
     }
 

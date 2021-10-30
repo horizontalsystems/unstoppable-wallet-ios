@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class RestoreSettingsService {
     private let manager: RestoreSettingsManager
@@ -30,23 +30,25 @@ extension RestoreSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(coin: Coin, account: Account? = nil) {
+    func approveSettings(platformCoin: PlatformCoin, account: Account? = nil) {
+        let coinType = platformCoin.coinType
+
         if let account = account, case .created = account.origin {
             var settings = RestoreSettings()
 
-            for type in coin.type.restoreSettingTypes {
-                settings[type] = type.createdAccountValue(coinType: coin.type)
+            for type in coinType.restoreSettingTypes {
+                settings[type] = type.createdAccountValue(coinType: coinType)
             }
 
-            approveSettingsRelay.accept(CoinWithSettings(coin: coin, settings: settings))
+            approveSettingsRelay.accept(CoinWithSettings(platformCoin: platformCoin, settings: settings))
             return
         }
 
-        let existingSettings = account.map { manager.settings(account: $0, coinType: coin.type) } ?? [:]
+        let existingSettings = account.map { manager.settings(account: $0, coinType: coinType) } ?? [:]
 
-        if coin.type.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
+        if coinType.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
             let request = Request(
-                    coin: coin,
+                    platformCoin: platformCoin,
                     type: .birthdayHeight
             )
 
@@ -54,18 +56,18 @@ extension RestoreSettingsService {
             return
         }
 
-        approveSettingsRelay.accept(CoinWithSettings(coin: coin, settings: [:]))
+        approveSettingsRelay.accept(CoinWithSettings(platformCoin: platformCoin, settings: [:]))
     }
 
-    func save(settings: RestoreSettings, account: Account, coin: Coin) {
-        manager.save(settings: settings, account: account, coinType: coin.type)
+    func save(settings: RestoreSettings, account: Account, coinType: CoinType) {
+        manager.save(settings: settings, account: account, coinType: coinType)
     }
 
-    func enter(birthdayHeight: Int, coin: Coin) {
+    func enter(birthdayHeight: Int, platformCoin: PlatformCoin) {
         var settings = RestoreSettings()
         settings[.birthdayHeight] = String(birthdayHeight)
 
-        let coinWithSettings = CoinWithSettings(coin: coin, settings: settings)
+        let coinWithSettings = CoinWithSettings(platformCoin: platformCoin, settings: settings)
         approveSettingsRelay.accept(coinWithSettings)
     }
 
@@ -78,12 +80,12 @@ extension RestoreSettingsService {
 extension RestoreSettingsService {
 
     struct CoinWithSettings {
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let settings: RestoreSettings
     }
 
     struct Request {
-        let coin: Coin
+        let platformCoin: PlatformCoin
         let type: RequestType
     }
 

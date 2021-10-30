@@ -6,7 +6,7 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         case selectedRate
     }
 
-    private let intervalSelectView = FilterHeaderView()
+    private let intervalSelectView = FilterHeaderView(buttonStyle: .secondaryTransparent)
     private let selectedRateView = ChartPointInfoView()
 
     public var onSelectInterval: ((Int) -> ())?
@@ -35,6 +35,15 @@ class ChartIntervalAndSelectedRateCell: UITableViewCell {
         intervalSelectView.onSelect = { [weak self] index in
             self?.onSelectInterval?(index)
         }
+
+        let separator = UIView()
+        contentView.addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separator.backgroundColor = .themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {

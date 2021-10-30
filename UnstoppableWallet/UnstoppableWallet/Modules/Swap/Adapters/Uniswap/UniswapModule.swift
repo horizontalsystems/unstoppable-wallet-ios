@@ -68,8 +68,8 @@ extension UniswapModule: ISwapProvider {
         let exactIn = tradeService.tradeType == .exactIn
 
         return SwapModule.DataSourceState(
-                coinFrom: tradeService.coinIn,
-                coinTo: tradeService.coinOut,
+                platformCoinFrom: tradeService.platformCoinIn,
+                platformCoinTo: tradeService.platformCoinOut,
                 amountFrom: tradeService.amountIn,
                 amountTo: tradeService.amountOut,
                 exactFrom: exactIn)

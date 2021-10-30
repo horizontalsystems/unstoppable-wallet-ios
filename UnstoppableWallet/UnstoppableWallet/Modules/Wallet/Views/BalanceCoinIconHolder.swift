@@ -36,8 +36,7 @@ class BalanceCoinIconHolder: UIView {
             maker.edges.equalToSuperview()
         }
 
-        failedButton.setImageTintColor(.themeLucian, for: .normal)
-        failedButton.setImage(UIImage(named: "warning_2_24"), for: .normal)
+        failedButton.setImage(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian), for: .normal)
         failedButton.addTarget(self, action: #selector(onTapErrorButton), for: .touchUpInside)
     }
 
@@ -49,11 +48,15 @@ class BalanceCoinIconHolder: UIView {
         onTapError?()
     }
 
-    func bind(coinIcon: UIImage?, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> ())?) {
+    func bind(iconUrlString: String?, placeholderIconName: String, spinnerProgress: Int?, indefiniteSearchCircle: Bool, failViewVisible: Bool, onTapError: (() -> ())?) {
         self.onTapError = onTapError
 
-        coinIconImageView.image = coinIcon
-        coinIconImageView.isHidden = coinIcon == nil
+        coinIconImageView.isHidden = iconUrlString == nil
+        if let iconUrlString = iconUrlString {
+            coinIconImageView.setImage(withUrlString: iconUrlString, placeholder: UIImage(named: placeholderIconName))
+        } else {
+            coinIconImageView.image = nil
+        }
 
         if let spinnerProgress = spinnerProgress {
             syncSpinner.set(progress: Float(spinnerProgress) / 100)

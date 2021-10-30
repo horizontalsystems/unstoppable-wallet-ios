@@ -42,8 +42,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Unlock wallet";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
@@ -146,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
@@ -275,6 +274,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+
 
 "swap.service" = "Service";
 "swap.service.title" = "Service";
@@ -505,6 +505,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
 
+"coin_page.token_liquidity" = "Token Liquidity";
+"coin_page.token_distribution" = "Token Distribution";
+
+"coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Total Value Locked";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
 "coin_page.tvl_rank" = "TVL Rank";
@@ -513,10 +517,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Category";
-"coin_page.contract" = "%@ Contract";
+
 "coin_page.contracts" = "Contracts";
 "coin_page.links" = "Links";
-"coin_page.bep2_symbol" = "BEP2 Symbol";
 
 "coin_page.guide" = "Guide";
 "coin_page.website" = "Website";
@@ -524,12 +527,14 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.favorited" = "Added To Watchlist";
 "coin_page.unfavorited" = "Removed from Watchlist";
+"coin_page.added_to_wallet" = "Added to wallet";
+"coin_page.already_added_to_wallet" = "Already added to wallet";
 
 "coin_page.major_holders" = "Major Holders";
 "coin_page.major_holders.chart.description" = "in top 10 wallets";
 "coin_page.major_holders.top_wallets" = "Top Wallets";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
-"coin_page.major_holders.sync_error" = "Sync Error";
+
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
 "coin_page.tvl_rank.sync_error" = "Sync Error";
@@ -568,7 +573,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.audits" = "Audits";
 "coin_page.audits.issues" = "Issues";
 "coin_page.audits.no_reports" = "No audit reports";
-"coin_page.audits.sync_error" = "Sync Error";
+
+"coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_page.tweets.reference_type.quoted" = "Quoted @%@";
+"coin_page.tweets.reference_type.replied" = "Replied to @%@";
 
 // Transactions
 
@@ -642,7 +650,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.experimental_features" = "Experimental";
-"settings.notifications" = "Notifications";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
@@ -658,18 +665,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "I Understand";
 
-// Settings -> Notifications
-
-"settings_notifications.title" = "Notifications";
-"settings_notifications.toggle_title" = "Push Notifications";
-"settings_notifications.description" = "Set price change alerts for the coins you would like to watch. You will be alerted when the change in price for the last 24 hours exceeds the selected threshold. \n\nPrice Trend Alert warns of a trend change for the short 1 week, for the long 6 month.";
-"settings_notifications.alert_off" = "Off";
-"settings.notifications.disabled_text" = "The notifications for the Unstoppable Wallet app are disabled. You need to turn on Notifications and allow 'background app refresh' in order to be able to receive price change alerts.";
-"settings.notifications.settings_button" = "Turn on in Settings";
-"settings_notifications.trend_short" = "Short Term 7D";
-"settings_notifications.trend_long" = "Long Term 6M";
-"settings_notifications.reset_all_title" = "Reset All";
-"settings_notifications.trend_settings_title" = "Price Trend";
 
 // Settings -> Manage Wallet
 
@@ -700,7 +695,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Settings -> Terms
 
 "terms.title" = "Terms";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.description" =  "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
                        It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
 
@@ -792,6 +787,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings_theme.system" = "System";
 "settings_theme.dark" = "Dark";
 "settings_theme.light" = "Light";
+
+// Settings -> Launch Screen
+
+"settings.launch_screen.title" = "Launch Screen";
+
+"launch_screen.auto" = "Auto";
+"launch_screen.balance" = "Balance";
+"launch_screen.market_overview" = "Market Overview";
+"launch_screen.watchlist" = "Watchlist";
 
 // Set PIN
 
@@ -915,17 +919,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Added";
-
-"change_24hour_up" = "%@ price: up %@%% %@";
-"change_24hour_down" = "%@ price: down %@%% %@";
-"trend_shortterm_up" = "%@ short term trend: up %@";
-"trend_shortterm_down" = "%@ short term trend: down %@";
-"trend_longterm_up" = "%@ long term trend: up %@";
-"trend_longterm_down" = "%@ long term trend: down %@";
-
-"chart_alert.title" = "Notification";
-"chart_alert.24h_description" = "Price Change 24h";
-"chart_alert.trend_description" = "Trend Change";
 
 // Wallet Connect
 

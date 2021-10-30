@@ -1,12 +1,10 @@
-infura_project_id = 2a1306f1d12f4c109a4d4fb9be46b02e              // Required for Ethereum
-infura_project_secret = fc479a9290b64a84a15fa6544a130218          // Required for Ethereum
-etherscan_api_key = GKNHXT22ED7PRVCKZATFZQD1YI7FK9AAYE            // Required for Ethereum
-bscscan_api_key = 5ZGSHWYHZVA8XZHB8PF6UUTRNNB4KT43ZZ              // Required for Binance Smart Chain
-btc_core_rpc_url = https:/$()/btc.horizontalsystems.xyz/rpc       // Required for BTC
-coinmarketcap_com_api_key = 51a3a136-adc9-4e38-8fc2-8c175c810e74  // Optional for XRatesKit.swift
+infura_project_id =
+infura_project_secret =
+etherscan_api_key =
+bscscan_api_key =
+cryptocompare_com_api_key =
+defiyield_api_key =
+twitter_bearer_token =
+
 guides_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.1/index.json
 faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/v1.0/src/faq_ios.json
-uniswap_graph_url = https:/$()/api.thegraph.com/subgraphs/name/uniswap/uniswap-v2
-provider_coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryptocurrencies/master/provider.coins.json
-coins_url = https:/$()/raw.githubusercontent.com/horizontalsystems/cryptocurrencies/master/coins.json
-defiyield_api_key = 87e8671e-8267-427c-92c3-4627833445ae

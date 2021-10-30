@@ -1,33 +1,57 @@
 import UIKit
 import ThemeKit
-import XRatesKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 import ComponentKit
+import StorageKit
+
+enum RowActionType {
+    case additive
+    case destructive
+
+    var iconColor: UIColor {
+        switch self {
+        case .additive: return .themeDark
+        case .destructive: return .themeClaude
+        }
+    }
+
+    var backgroundColor: UIColor {
+        switch self {
+        case .additive: return .themeYellowD
+        case .destructive: return .themeRedD
+        }
+    }
+}
 
 struct MarketModule {
+
     static func viewController() -> UIViewController {
-        let service = MarketService(localStorage: App.shared.localStorage)
+        let service = MarketService(storage: StorageKit.LocalStorage.default, launchScreenManager: App.shared.launchScreenManager)
         let viewModel = MarketViewModel(service: service)
         return MarketViewController(viewModel: viewModel)
     }
 
-    static func color(rate: String) -> UIColor? {
-        switch rate.lowercased() {
-        case "a": return .themeYellowD
-        case "b": return .themeIssykBlue
-        case "c": return .themeGray
-        case "d": return .themeLightGray
-        default: return nil
-        }
+    static func bind(cell: G14Cell, viewItem: MarketModule.ListViewItem) {
+        cell.setTitleImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: viewItem.iconPlaceholderName))
+        cell.topText = viewItem.name
+        cell.bottomText = viewItem.code
+        cell.leftBadgeText = viewItem.rank
+
+        cell.primaryValueText = viewItem.price
+
+        let marketFieldData = marketFieldPreference(dataValue: viewItem.dataValue)
+        cell.secondaryTitleText = marketFieldData.title
+        cell.secondaryValueText = marketFieldData.value
+        cell.secondaryValueTextColor = marketFieldData.color
     }
 
-    static func marketFieldPreference(marketDataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
+    private static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
         let title: String?
         let value: String?
         let color: UIColor
 
-        switch marketDataValue {
+        switch dataValue {
         case .diff(let diff):
             title = nil
             value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
@@ -44,41 +68,9 @@ struct MarketModule {
             title = "market.top.market_cap.title".localized
             value = marketCap
             color = .themeGray
-        case .dilutedMarketCap(let dilutedMarketCap):
-            title = "market.top.diluted_market_cap.title".localized
-            value = dilutedMarketCap
-            color = .themeGray
         }
 
         return (title: title, value: value, color: color)
-    }
-
-    static func bind(cell: G14Cell, viewItem: ViewItem) {
-        let image = UIImage.image(coinType: viewItem.coinType)
-
-        cell.leftImage = image
-        cell.leftImageTintColor = .themeGray
-        cell.topText = viewItem.coinName
-        cell.bottomText = viewItem.coinCode.uppercased()
-
-        cell.leftBadgeText = viewItem.score?.title
-
-        switch viewItem.score {
-        case let .rating(rate):
-            cell.leftBadgeBackgroundColor = color(rate: rate)
-            cell.leftBadgeTextColor = .themeDarker
-        case .rank:
-            cell.leftBadgeBackgroundColor = .themeJeremy
-            cell.leftBadgeTextColor = .themeGray
-        case .none: ()
-        }
-
-        cell.primaryValueText = viewItem.rate
-
-        let marketFieldData = marketFieldPreference(marketDataValue: viewItem.marketDataValue)
-        cell.secondaryTitleText = marketFieldData.title
-        cell.secondaryValueText = marketFieldData.value
-        cell.secondaryValueTextColor = marketFieldData.color
     }
 
 }
@@ -87,35 +79,14 @@ extension MarketModule {
 
     enum Tab: Int, CaseIterable {
         case overview
-        case discovery
+        case posts
         case watchlist
 
         var title: String {
             switch self {
             case .overview: return "market.category.overview".localized
-            case .discovery: return "market.category.discovery".localized
+            case .posts: return "market.category.posts".localized
             case .watchlist: return "market.category.watchlist".localized
-            }
-        }
-    }
-
-    enum ListType: String {
-        case topGainers
-        case topLosers
-        case topVolume
-
-        var sortingField: SortingField {
-            switch self {
-            case .topGainers: return .topGainers
-            case .topLosers: return .topLosers
-            case .topVolume: return .highestVolume
-            }
-        }
-
-        var marketField: MarketField {
-            switch self {
-            case .topGainers, .topLosers: return .price
-            case .topVolume: return .volume
             }
         }
     }
@@ -141,77 +112,118 @@ extension MarketModule {
     }
 
     enum MarketField: Int, CaseIterable {
-        case marketCap
-        case dilutedMarketCap
-        case volume
         case price
+        case marketCap
+        case volume
 
         var title: String {
             switch self {
-            case .marketCap: return "market.market_field.mcap".localized
-            case .dilutedMarketCap: return "market.market_field.mcap".localized
-            case .volume: return "market.market_field.vol".localized
             case .price: return "price".localized
+            case .marketCap: return "market.market_field.mcap".localized
+            case .volume: return "market.market_field.vol".localized
+            }
+        }
+    }
+
+    enum MarketTop: Int, CaseIterable {
+        case top250 = 250
+        case top500 = 500
+        case top1000 = 1000
+
+        var title: String {
+            "\(self.rawValue)"
+        }
+    }
+
+    enum PriceChangeType: CaseIterable {
+        case day
+        case week
+        case week2
+        case month
+        case month6
+        case year
+
+        var title: String {
+            switch self {
+            case .day: return "market.advanced_search.day".localized
+            case .week: return "market.advanced_search.week".localized
+            case .week2: return "market.advanced_search.week2".localized
+            case .month: return "market.advanced_search.month".localized
+            case .month6: return "market.advanced_search.month6".localized
+            case .year: return "market.advanced_search.year".localized
+            }
+        }
+    }
+
+    enum MarketTvlField: Int, CaseIterable {
+        case value
+        case dayDiff
+        case weekDiff
+
+        var title: String {
+            switch self {
+            case .value: return "value".localized
+            case .dayDiff: return "market.tvl.market_field.day_diff".localized
+            case .weekDiff: return "market.tvl.market_field.week_diff".localized
+            }
+        }
+    }
+
+    enum MarketPlatformField: Int, CaseIterable {
+        case all
+        case ethereum
+        case binance
+        case solana
+        case avalanche
+        case polygon
+
+        var title: String {
+            switch self {
+            case .all: return "market.tvl.platform_field.all".localized
+            case .ethereum: return "market.tvl.platform_field.ethereum".localized
+            case .binance: return "market.tvl.platform_field.binance".localized
+            case .solana: return "market.tvl.platform_field.solana".localized
+            case .avalanche: return "market.tvl.platform_field.avalanche".localized
+            case .polygon: return "market.tvl.platform_field.polygon".localized
             }
         }
     }
 
 }
 
-extension MarketModule { // Service Items
+extension MarketKit.MarketInfo {
 
-    enum Score {
-        case rank(Int)
-        case rating(String)
-    }
-
-    struct Item {
-        let score: Score?
-        let coinCode: String
-        let coinName: String
-        let coinType: CoinType
-        let marketCap: Decimal
-        let dilutedMarketCap: Decimal?
-        let liquidity: Decimal?
-        let price: Decimal
-        let diff: Decimal?
-        let volume: Decimal
-
-        init(coinMarket: CoinMarket, score: Score? = nil) {
-            self.score = score
-
-            coinCode = coinMarket.coinData.code
-            coinName = coinMarket.coinData.name
-            coinType = coinMarket.coinData.coinType
-            marketCap = coinMarket.marketInfo.marketCap
-            dilutedMarketCap = coinMarket.marketInfo.dilutedMarketCap
-            liquidity = coinMarket.marketInfo.liquidity
-            price = coinMarket.marketInfo.rate
-            diff = coinMarket.marketInfo.rateDiffPeriod
-            volume = coinMarket.marketInfo.volume
+    func priceChangeValue(type: MarketModule.PriceChangeType) -> Decimal? {
+        switch type {
+        case .day: return priceChange24h
+        case .week: return priceChange7d
+        case .week2: return priceChange14d
+        case .month: return priceChange30d
+        case .month6: return priceChange200d
+        case .year: return priceChange1y
         }
     }
 
 }
 
-extension Array where Element == MarketModule.Item {
+extension Array where Element == MarketKit.MarketInfo {
 
-    func sort(by sortingField: MarketModule.SortingField) -> [MarketModule.Item] {
-        sorted { item, item2 in
+    func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [MarketKit.MarketInfo] {
+        sorted { lhsMarketInfo, rhsMarketInfo in
             switch sortingField {
-            case .highestCap: return item.marketCap > item2.marketCap
-            case .lowestCap: return item.marketCap < item2.marketCap
-            case .highestVolume: return item.volume > item2.volume
-            case .lowestVolume: return item.volume < item2.volume
+            case .highestCap: return lhsMarketInfo.marketCap ?? 0 > rhsMarketInfo.marketCap ?? 0
+            case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
+            case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
+            case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
             case .topGainers, .topLosers:
-                guard let diff2 = item2.diff else {
+                guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return true
                 }
-                guard let diff1 = item.diff else {
+                guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return false
                 }
 
-                return sortingField == .topGainers ? diff1 > diff2 : diff1 < diff2
+                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
             }
         }
     }
@@ -220,64 +232,21 @@ extension Array where Element == MarketModule.Item {
 
 extension MarketModule {  // ViewModel Items
 
-    enum ViewScore {
-        case rank(String)
-        case rating(String)
-
-        var title: String {
-            switch self {
-            case .rank(let index): return index
-            case .rating(let title): return title
-            }
-        }
-    }
-
     enum MarketDataValue {
         case diff(Decimal?)
         case volume(String)
         case marketCap(String)
-        case dilutedMarketCap(String)
-
-        var description: String? {
-            switch self {
-            case let .diff(value): return value?.description
-            case let .volume(value): return value.description
-            case let .marketCap(value): return value.description
-            case let .dilutedMarketCap(value): return value.description
-            }
-        }
     }
 
-    struct ViewItem {
-        let score: ViewScore?
-        let coinName: String
-        let coinCode: String
-        let coinType: CoinType
-        let rate: String
-        let marketDataValue: MarketDataValue
-
-        init(item: Item, marketField: MarketField, currency: Currency) {
-            switch marketField {
-            case .price: marketDataValue = .diff(item.diff)
-            case .volume: marketDataValue = .volume(CurrencyCompactFormatter.instance.format(currency: currency, value: item.volume) ?? "-")
-            case .marketCap: marketDataValue = .marketCap(CurrencyCompactFormatter.instance.format(currency: currency, value: item.marketCap) ?? "-")
-            case .dilutedMarketCap: marketDataValue = .dilutedMarketCap(item.dilutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) } ?? "-")
-            }
-
-            coinCode = item.coinCode
-            coinName = item.coinName
-            coinType = item.coinType
-
-            let rateValue = CurrencyValue(currency: currency, value: item.price)
-            rate = ValueFormatter.instance.format(currencyValue: rateValue, fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) ?? ""
-
-            switch item.score {
-            case .rank(let index): score = .rank(index.description)
-            case .rating(let rating): score = .rating(rating)
-            case .none: score = nil
-            }
-
-        }
+    struct ListViewItem {
+        let uid: String
+        let iconUrl: String
+        let iconPlaceholderName: String
+        let name: String
+        let code: String
+        let rank: String?
+        let price: String
+        let dataValue: MarketDataValue
     }
 
 }

@@ -1,19 +1,19 @@
 import RxSwift
 import CurrencyKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class SendInteractor {
     weak var delegate: ISendInteractorDelegate?
 
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let localStorage: ILocalStorage
 
     private let disposeBag = DisposeBag()
 
-    init(reachabilityManager: IReachabilityManager, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
-        self.rateManager = rateManager
+    init(reachabilityManager: IReachabilityManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.localStorage = localStorage
 
@@ -39,11 +39,12 @@ extension SendInteractor: ISendInteractor {
         localStorage.sendInputType ?? .coin
     }
 
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal? {
-        guard let latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currencyCode), !latestRate.expired else {
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal? {
+        guard let coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currencyCode), !coinPrice.expired else {
             return nil
         }
-        return latestRate.rate
+
+        return coinPrice.value
     }
 
     func send(single: Single<Void>, logger: Logger) {
@@ -59,11 +60,11 @@ extension SendInteractor: ISendInteractor {
                 .disposed(by: disposeBag)
     }
 
-    func subscribeToLatestRate(coinType: CoinType, currencyCode: String) {
-        rateManager.latestRateObservable(coinType: coinType, currencyCode: currencyCode)
+    func subscribeToCoinPrice(coinUid: String, currencyCode: String) {
+        marketKit.coinPriceObservable(coinUid: coinUid, currencyCode: currencyCode)
                 .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { [weak self] latestRate in
-                    self?.delegate?.didReceive(latestRate: latestRate)
+                .subscribe(onNext: { [weak self] coinPrice in
+                    self?.delegate?.didReceive(coinPrice: coinPrice)
                 })
                 .disposed(by: disposeBag)
     }

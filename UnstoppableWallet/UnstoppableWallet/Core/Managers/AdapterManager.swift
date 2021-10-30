@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class AdapterManager {
     private let disposeBag = DisposeBag()
@@ -73,7 +73,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            switch $0.coin.type {
+            switch $0.coinType {
             case .ethereum, .erc20: return true
             default: return false
             }
@@ -84,7 +84,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            switch $0.coin.type {
+            switch $0.coinType {
             case .binanceSmartChain, .bep20: return true
             default: return false
             }
@@ -95,7 +95,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            setting.coinType == $0.coin.type && $0.account.origin == .restored
+            setting.coinType == $0.coinType && $0.account.origin == .restored
         })
     }
 
@@ -130,9 +130,9 @@ extension AdapterManager {
         queue.sync { _adapterMap[wallet] }
     }
 
-    func adapter(for coin: Coin) -> IAdapter? {
+    func adapter(for platformCoin: PlatformCoin) -> IAdapter? {
         queue.sync {
-            guard let wallet = walletManager.activeWallets.first(where: { $0.coin == coin } ) else {
+            guard let wallet = walletManager.activeWallets.first(where: { $0.platformCoin == platformCoin } ) else {
                 return nil
             }
 
@@ -155,7 +155,7 @@ extension AdapterManager {
             var binanceKitUpdated = false
 
             for (wallet, adapter) in self._adapterMap {
-                switch wallet.coin.type {
+                switch wallet.coinType {
                 case .ethereum, .erc20:
                     if !ethereumKitUpdated {
                         adapter.refresh()

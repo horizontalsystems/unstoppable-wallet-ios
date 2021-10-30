@@ -1,11 +1,21 @@
-import Foundation
+import UIKit
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class TransactionsViewItemFactory {
 
-    private func coinString(from coinValue: CoinValue) -> String {
-        ValueFormatter.instance.format(coinValue: coinValue.abs, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? ""
+    func typeFilterItems(types: [TransactionTypeFilter]) -> [FilterHeaderView.ViewItem] {
+        types.map {
+            if $0 == .all {
+                return .all
+            } else {
+                return .item(title: "transactions.types.\($0.rawValue)".localized)
+            }
+        }
+    }
+
+    private func coinString(from transactionValue: TransactionValue) -> String {
+        ValueFormatter.instance.format(transactionValue: transactionValue.abs, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? ""
     }
 
     private func currencyString(from currencyValue: CurrencyValue) -> String {
@@ -61,7 +71,7 @@ class TransactionsViewItemFactory {
 
             if approve.value.isMaxValue {
                 primaryValue = ColoredValue(value: "∞", color: .themeJacob)
-                secondaryValue = ColoredValue(value: "transactions.value.unlimited".localized(approve.value.coin.code), color: .themeGray)
+                secondaryValue = ColoredValue(value: "transactions.value.unlimited".localized(approve.value.coinCode), color: .themeGray)
             } else {
                 if let currencyValue = item.currencyValue {
                     primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
@@ -71,7 +81,7 @@ class TransactionsViewItemFactory {
 
         case let contractCall as ContractCallTransactionRecord:
             typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
-            title = contractCall.method?.uppercased() ?? "\(contractCall.source.blockchain.title) \("transactions.contract_call".localized)"
+            title = contractCall.method ?? "\(contractCall.source.blockchain.title) \("transactions.contract_call".localized)"
             subTitle = TransactionInfoAddressMapper.map(contractCall.contractAddress)
 
         case is ContractCreationTransactionRecord:
@@ -166,17 +176,12 @@ class TransactionsViewItemFactory {
         )
     }
 
-    func coinFilterName(wallet: TransactionWallet) -> String {
-        guard let coin = wallet.coin else {
-            return ""
+    func coinFilter(wallet: TransactionWallet) -> MarketDiscoveryFilterHeaderView.ViewItem? {
+        guard let platformCoin = wallet.coin else {
+            return nil
         }
 
-        var name = coin.code
-        if let derivation = wallet.source.coinSettings[.derivation] {
-            name += " " + derivation
-        }
-
-        return name
+        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.placeholderImageName, title: platformCoin.coin.code, blockchainBadge: wallet.badge)
     }
 
 }

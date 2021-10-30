@@ -1,9 +1,9 @@
 import UIKit
 import ThemeKit
-import CoinKit
+import MarketKit
 
 protocol ICoinSelectDelegate: AnyObject {
-    func didSelect(coin: Coin)
+    func didSelect(platformCoin: PlatformCoin)
 }
 
 struct CoinSelectModule {
@@ -14,7 +14,7 @@ struct CoinSelectModule {
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.adapterManager,
-                rateManager: App.shared.rateManager,
+                marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit
         )
         let viewModel = CoinSelectViewModel(service: service)

@@ -3,7 +3,7 @@ import StorageKit
 import PinKit
 import CurrencyKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class App {
     static let shared = App()
@@ -11,12 +11,12 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
-    let coinKit: CoinKit.Kit
+    let marketKit: MarketKit.Kit
 
     let appConfigProvider: IAppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: ICoinMigration & IEnabledWalletStorage & IAccountRecordStorage & IPriceAlertRecordStorage & IBlockchainSettingsRecordStorage & IPriceAlertRequestRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -31,7 +31,7 @@ class App {
     let accountFactory: AccountFactory
     let backupManager: IBackupManager
 
-    let coinManager: ICoinManager
+    let coinManager: CoinManager
 
     let walletManager: WalletManager
     let adapterManager: AdapterManager
@@ -41,10 +41,9 @@ class App {
 
     let currencyKit: CurrencyKit.Kit
 
-    let rateManager: IRateManager & IPostsManager
-    let favoritesManager: IFavoritesManager
+    let favoritesManager: FavoritesManager
 
-    let feeCoinProvider: IFeeCoinProvider
+    let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
 
     let sortTypeManager: ISortTypeManager
@@ -59,9 +58,6 @@ class App {
 
     private let testModeIndicator: TestModeIndicator
 
-    var remoteAlertManager: IRemoteAlertManager
-    let priceAlertManager: IPriceAlertManager
-    let notificationManager: INotificationManager
     let logRecordManager: ILogRecordManager & ILogStorage
 
     var debugLogger: IDebugLogger?
@@ -89,6 +85,7 @@ class App {
     let activateCoinManager: ActivateCoinManager
 
     let deepLinkManager: IDeepLinkManager
+    let launchScreenManager: LaunchScreenManager
 
     let appManager: AppManager
 
@@ -96,11 +93,16 @@ class App {
         appConfigProvider = AppConfigProvider()
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
-        storage = GrdbStorage(appConfigProvider: appConfigProvider)
+        storage = GrdbStorage()
         logRecordManager = LogRecordManager(storage: storage)
 
-        coinKit = try! CoinKit.Kit.instance(testNet: appConfigProvider.testMode)
-        coinKit.coinMigrationObservable = storage.coinMigrationObservable
+        marketKit = try! MarketKit.Kit.instance(
+                hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz",
+                hsOldApiBaseUrl: "https://markets.horizontalsystems.xyz",
+                cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
+                defiYieldApiKey: appConfigProvider.defiYieldApiKey
+        )
+        marketKit.sync()
 
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
@@ -127,7 +129,7 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
-        coinManager = CoinManager(appConfigProvider: appConfigProvider, coinKit: coinKit)
+        coinManager = CoinManager(marketKit: marketKit, storage: storage)
 
         evmNetworkManager = EvmNetworkManager(appConfigProvider: appConfigProvider)
         accountSettingManager = AccountSettingManager(storage: storage, evmNetworkManager: evmNetworkManager)
@@ -143,12 +145,11 @@ class App {
         restoreSettingsManager = RestoreSettingsManager(storage: storage)
 
         let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
-        initialSyncSettingsManager = InitialSyncSettingsManager(coinKit: coinKit, storage: settingsStorage)
+        initialSyncSettingsManager = InitialSyncSettingsManager(marketKit: marketKit, storage: settingsStorage)
 
-        let walletStorage: IWalletStorage = WalletStorage(coinManager: coinManager, storage: storage)
-        let adapterProviderFactory = AdapterFactory(appConfigProvider: appConfigProvider, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, binanceKitManager: binanceKitManager, initialSyncSettingsManager: initialSyncSettingsManager, restoreSettingsManager: restoreSettingsManager, coinManager: coinManager)
+        let walletStorage = WalletStorage(coinManager: coinManager, storage: storage)
 
-        walletManager = WalletManager(accountManager: accountManager, adapterProviderFactory: adapterProviderFactory, storage: walletStorage)
+        walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
 
         let adapterFactory = AdapterFactory(
                 appConfigProvider: appConfigProvider,
@@ -175,10 +176,9 @@ class App {
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
-        feeCoinProvider = FeeCoinProvider(coinKit: coinKit)
+        feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
-        rateManager = RateManager(walletManager: walletManager, currencyKit: currencyKit, rateCoinMapper: RateCoinMapper(), feeCoinProvider: feeCoinProvider, appConfigProvider: appConfigProvider)
         favoritesManager = FavoritesManager(storage: storage)
 
         sortTypeManager = SortTypeManager(localStorage: localStorage)
@@ -189,17 +189,6 @@ class App {
         let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
-
-        let priceAlertRequestStorage: IPriceAlertRequestStorage = PriceAlertRequestStorage(storage: storage)
-        remoteAlertManager = RemoteAlertManager(networkManager: networkManager, reachabilityManager: reachabilityManager, appConfigProvider: appConfigProvider, jsonSerializer: JsonSerializer(), storage: priceAlertRequestStorage)
-
-        let serializer = JsonSerializer()
-        let priceAlertStorage: IPriceAlertStorage = PriceAlertStorage(storage: storage)
-        priceAlertManager = PriceAlertManager(walletManager: walletManager, remoteAlertManager: remoteAlertManager, rateManager: rateManager, storage: priceAlertStorage, localStorage: localStorage, serializer: serializer)
-
-        notificationManager = NotificationManager(priceAlertManager: priceAlertManager, remoteAlertManager: remoteAlertManager, rateManager: rateManager, storage: localStorage, serializer: serializer)
-
-        remoteAlertManager.notificationManager = notificationManager
 
         let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: storage)
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
@@ -219,9 +208,18 @@ class App {
         walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, accountSettingManager: accountSettingManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
 
-        activateCoinManager = ActivateCoinManager(coinKit: coinKit, walletManager: walletManager, accountManager: accountManager)
+        activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 
         deepLinkManager = DeepLinkManager()
+        launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
+
+        let restoreCustomTokenWorker = RestoreCustomTokenWorker(
+                coinManager: coinManager,
+                walletManager: walletManager,
+                storage: storage,
+                localStorage: StorageKit.LocalStorage.default,
+                networkManager: networkManager
+        )
 
         appManager = AppManager(
                 accountManager: accountManager,
@@ -230,14 +228,13 @@ class App {
                 pinKit: pinKit,
                 keychainKit: keychainKit,
                 blurManager: blurManager,
-                notificationManager: notificationManager,
                 kitCleaner: kitCleaner,
                 debugLogger: debugLogger,
                 appVersionManager: appVersionManager,
                 rateAppManager: rateAppManager,
-                remoteAlertManager: remoteAlertManager,
                 logRecordManager: logRecordManager,
-                deepLinkManager: deepLinkManager
+                deepLinkManager: deepLinkManager,
+                restoreCustomTokenWorker: restoreCustomTokenWorker
         )
     }
 

@@ -144,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Solde";
 "balance.sort.az" = "Nom";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";

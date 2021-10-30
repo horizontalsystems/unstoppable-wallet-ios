@@ -145,6 +145,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";

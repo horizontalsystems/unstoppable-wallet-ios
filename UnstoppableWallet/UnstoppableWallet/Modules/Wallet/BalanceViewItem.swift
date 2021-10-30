@@ -1,7 +1,6 @@
 import Foundation
 import DeepDiff
-import XRatesKit
-import CoinKit
+import MarketKit
 
 struct BalanceViewItem {
     let wallet: Wallet
@@ -13,7 +12,8 @@ struct BalanceViewItem {
 
 struct BalanceTopViewItem {
     let isMainNet: Bool
-    let iconCoinType: CoinType?
+    let iconUrlString: String?
+    let placeholderIconName: String
     let coinCode: String
     let blockchainBadge: String?
 
@@ -59,7 +59,7 @@ extension BalanceTopViewItem: Equatable {
 
     static func ==(lhs: BalanceTopViewItem, rhs: BalanceTopViewItem) -> Bool {
         lhs.isMainNet == rhs.isMainNet &&
-                lhs.iconCoinType == rhs.iconCoinType &&
+                lhs.iconUrlString == rhs.iconUrlString &&
                 lhs.coinCode == rhs.coinCode &&
                 lhs.blockchainBadge == rhs.blockchainBadge &&
                 lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
@@ -149,7 +149,7 @@ extension BalanceViewItem: CustomStringConvertible {
 extension BalanceTopViewItem: CustomStringConvertible {
 
     var description: String {
-        "[iconCoinType: \(iconCoinType?.id ?? "nil"); coinCode: \(coinCode); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); currencyValue: \(currencyValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
+        "[iconUrlString: \(iconUrlString ?? "nil"); coinCode: \(coinCode); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); currencyValue: \(currencyValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
     }
 
 }

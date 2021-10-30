@@ -1,18 +1,18 @@
 import RxSwift
 import RxRelay
 import HsToolKit
-import CoinKit
+import MarketKit
 
 protocol IAddTokenBlockchainService {
     func isValid(reference: String) -> Bool
     func coinType(reference: String) -> CoinType
-    func coinSingle(reference: String) -> Single<Coin>
+    func customTokenSingle(reference: String) -> Single<CustomToken>
 }
 
 class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
-    private let coinManager: ICoinManager
+    private let coinManager: CoinManager
     private let walletManager: WalletManager
 
     private var disposeBag = DisposeBag()
@@ -24,22 +24,42 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: ICoinManager, walletManager: WalletManager) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManager, walletManager: WalletManager) {
         self.account = account
         self.blockchainServices = blockchainServices
         self.coinManager = coinManager
         self.walletManager = walletManager
     }
 
-    private func chainedCoinSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<Coin> {
-        let single = services[0].coinSingle(reference: reference)
-
-        if services.count == 1 {
-            return single
-        } else {
-            let nextSingle = chainedCoinSingle(services: Array(services.dropFirst()), reference: reference)
-            return single.catchError { _ in nextSingle }
+    private func joinedCustomTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[CustomToken]> {
+        let singles: [Single<CustomToken?>] = services.map { service in
+            service.customTokenSingle(reference: reference)
+                    .map { customToken -> CustomToken? in customToken}
+                    .catchErrorJustReturn(nil)
         }
+
+        return Single.zip(singles) { customTokens in
+            customTokens.compactMap { $0 }
+        }
+    }
+
+    private func adjusted(customTokens: [CustomToken]) -> [CustomToken] {
+        var customTokens = customTokens
+        let firstToken = customTokens.removeFirst()
+
+        var result: [CustomToken] = [firstToken]
+
+        for token in customTokens {
+            let adjustedCustomToken = CustomToken(
+                    coinName: firstToken.coinName,
+                    coinCode: firstToken.coinCode,
+                    coinType: token.coinType,
+                    decimals: firstToken.decimals
+            )
+            result.append(adjustedCustomToken)
+        }
+
+        return result
     }
 
 }
@@ -61,40 +81,50 @@ extension AddTokenService {
         let validServices = blockchainServices.filter { $0.isValid(reference: reference) }
 
         guard !validServices.isEmpty else {
-            state = .failed(error: ValidationError.invalidReference)
+            state = .failed(error: TokenError.invalidReference)
             return
         }
+
+        var existingPlatformCoins = [PlatformCoin]()
 
         for service in validServices {
             let coinType = service.coinType(reference: reference)
 
-            if let existingCoin = coinManager.coin(type: coinType) {
-                state = .alreadyExists(coin: existingCoin)
-                return
+            if let existingPlatformCoin = try? coinManager.platformCoin(coinType: coinType) {
+                existingPlatformCoins.append(existingPlatformCoin)
             }
+        }
+
+        if !existingPlatformCoins.isEmpty {
+            state = .alreadyExists(platformCoins: existingPlatformCoins)
+            return
         }
 
         state = .loading
 
-        chainedCoinSingle(services: validServices, reference: reference)
+        joinedCustomTokensSingle(services: validServices, reference: reference)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] coin in
-                    self?.state = .fetched(coin: coin)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
+                .subscribe(onSuccess: { [weak self] customTokens in
+                    if customTokens.isEmpty {
+                        self?.state = .failed(error: TokenError.notFound)
+                    } else {
+                        self?.state = .fetched(customTokens: customTokens)
+                    }
                 })
                 .disposed(by: disposeBag)
     }
 
     func save() {
-        guard case .fetched(let coin) = state else {
+        guard case .fetched(let customTokens) = state else {
             return
         }
 
-        coinManager.save(coins: [coin])
+        let adjustedCustomTokens = adjusted(customTokens: customTokens)
 
-        let wallet = Wallet(coin: coin, account: account)
-        walletManager.save(wallets: [wallet])
+        coinManager.save(customTokens: adjustedCustomTokens)
+
+        let wallets = adjustedCustomTokens.map { Wallet(platformCoin: $0.platformCoin, account: account) }
+        walletManager.save(wallets: wallets)
     }
 
 }
@@ -104,17 +134,19 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case alreadyExists(coin: Coin)
-        case fetched(coin: Coin)
+        case alreadyExists(platformCoins: [PlatformCoin])
+        case fetched(customTokens: [CustomToken])
         case failed(error: Error)
     }
 
-    enum ValidationError: LocalizedError {
+    enum TokenError: LocalizedError {
         case invalidReference
+        case notFound
 
         var errorDescription: String? {
             switch self {
             case .invalidReference: return "add_token.invalid_contract_address_or_bep2_symbol".localized
+            case .notFound: return "add_token.token_not_found".localized
             }
         }
     }

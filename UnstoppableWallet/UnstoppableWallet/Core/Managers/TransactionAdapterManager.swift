@@ -1,6 +1,5 @@
 import RxSwift
 import RxRelay
-import CoinKit
 
 class TransactionAdapterManager {
     private let disposeBag = DisposeBag()
@@ -26,7 +25,7 @@ class TransactionAdapterManager {
     }
 
     private func evmTransactionAdapter(wallet: Wallet, blockchain: TransactionSource.Blockchain) -> ITransactionsAdapter? {
-        switch wallet.coin.type {
+        switch wallet.coinType {
         case .ethereum, .erc20:
             if case .ethereum = blockchain {
                 return adapterFactory.ethereumTransactionsAdapter(transactionSource: wallet.transactionSource)

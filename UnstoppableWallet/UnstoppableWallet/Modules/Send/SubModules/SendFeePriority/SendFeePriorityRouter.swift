@@ -1,6 +1,6 @@
 import UIKit
 import ThemeKit
-import CoinKit
+import MarketKit
 
 class SendFeePriorityRouter {
     weak var viewController: UIViewController?
@@ -8,17 +8,17 @@ class SendFeePriorityRouter {
 
 extension SendFeePriorityRouter {
 
-    static func module(coin: Coin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView?, ISendFeePriorityModule, ISendSubRouter)? {
-        let feeCoin = App.shared.feeCoinProvider.feeCoin(coin: coin) ?? coin
+    static func module(platformCoin: PlatformCoin, customPriorityUnit: CustomPriorityUnit? = nil) -> (UIView?, ISendFeePriorityModule, ISendSubRouter)? {
+        let feeCoin = App.shared.feeCoinProvider.feeCoin(coinType: platformCoin.coinType) ?? platformCoin
 
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.type) else {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: feeCoin.coinType) else {
             return nil
         }
 
         let router = SendFeePriorityRouter()
-        let feeRateAdjustmentHelper = FeeRateAdjustmentHelper(currencyCodes: App.shared.appConfigProvider.feeRateAdjustedForCurrencyCodes)
+        let feeRateAdjustmentHelper = FeeRateAdjustmentHelper()
         let interactor = SendFeePriorityInteractor(provider: feeRateProvider, currencyKit: App.shared.currencyKit)
-        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, feeRateAdjustmentHelper: feeRateAdjustmentHelper, coin: coin)
+        let presenter = SendFeePriorityPresenter(interactor: interactor, router: router, feeRateAdjustmentHelper: feeRateAdjustmentHelper, platformCoin: platformCoin)
         interactor.delegate = presenter
 
         var view: SendFeePriorityView? = nil

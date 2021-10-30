@@ -1,104 +1,110 @@
-import CurrencyKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
+import MarketKit
+
+protocol IMarketListService {
+    var state: MarketListServiceState { get }
+    var stateObservable: Observable<MarketListServiceState> { get }
+    func refresh()
+}
+
+protocol IMarketListDecoratorService {
+    var currency: Currency { get }
+    var priceChangeType: MarketModule.PriceChangeType { get }
+    func resyncIfPossible()
+}
+
+protocol IMarketListDecorator {
+    func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem
+}
+
+enum MarketListServiceState {
+    case loading
+    case loaded(marketInfos: [MarketInfo], softUpdate: Bool, reorder: Bool)
+    case failed(error: Error)
+}
 
 class MarketListViewModel {
-    private let service: MarketListService
+    private let service: IMarketListService
+    private let watchlistToggleService: MarketWatchlistToggleService
+    private let decorator: IMarketListDecorator
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
-    private let sortingFieldTitleRelay: BehaviorRelay<String>
-    private let marketFieldRelay = BehaviorRelay<MarketModule.MarketField>(value: .price)
+    private let viewItemDataRelay = BehaviorRelay<ViewItemData?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let scrollToTopRelay = PublishRelay<()>()
 
-    private var sortingField: MarketModule.SortingField = .highestCap {
-        didSet {
-            sortingFieldTitleRelay.accept(sortingField.title)
-        }
-    }
-
-    init(service: MarketListService) {
+    init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, decorator: IMarketListDecorator) {
         self.service = service
-        sortingFieldTitleRelay = BehaviorRelay(value: sortingField.title)
+        self.watchlistToggleService = watchlistToggleService
+        self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
         sync(state: service.state)
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketListServiceState) {
         switch state {
         case .loading:
-            if service.items.isEmpty {
-                stateRelay.accept(.loading)
+            viewItemDataRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .loaded(let marketInfos, let softUpdate, let reorder):
+            let data = ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: softUpdate)
+            viewItemDataRelay.accept(data)
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
+
+            if reorder {
+                scrollToTopRelay.accept(())
             }
-        case .loaded:
-            stateRelay.accept(.loaded(viewItems: viewItems))
         case .failed:
-            stateRelay.accept(.error(description: "market.sync_error".localized))
+            viewItemDataRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
-    private var viewItems: [MarketModule.ViewItem] {
-        service.items.sort(by: sortingField).map {
-            MarketModule.ViewItem(item: $0, marketField: marketFieldRelay.value, currency: service.currency)
+    private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
+        marketInfos.map {
+            decorator.listViewItem(marketInfo: $0)
         }
-    }
-
-    private func syncViewItemsIfPossible() {
-        guard case .loaded = stateRelay.value  else {
-            return
-        }
-
-        stateRelay.accept(.loaded(viewItems: viewItems))
     }
 
 }
 
 extension MarketListViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemDataDriver: Driver<ViewItemData?> {
+        viewItemDataRelay.asDriver()
     }
 
-    var sortingFieldTitleDriver: Driver<String> {
-        sortingFieldTitleRelay.asDriver()
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
     }
 
-    var marketFieldDriver: Driver<MarketModule.MarketField> {
-        marketFieldRelay.asDriver()
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
-    var allMarketFields: [MarketModule.MarketField] {
-        service.allMarketFields
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
-    var sortingFieldViewItems: [SortingFieldViewItem] {
-        MarketModule.SortingField.allCases.map {
-            SortingFieldViewItem(
-                    title: $0.title,
-                    selected: sortingField == $0
-            )
-        }
+    func isFavorite(index: Int) -> Bool {
+        watchlistToggleService.isFavorite(index: index)
     }
 
-    func setSortingField(at index: Int) {
-        sortingField = MarketModule.SortingField.allCases[index]
-
-        syncViewItemsIfPossible()
+    func favorite(index: Int) {
+        watchlistToggleService.favorite(index: index)
     }
 
-    func set(marketField: MarketModule.MarketField) {
-        marketFieldRelay.accept(marketField)
-
-        syncViewItemsIfPossible()
-    }
-
-    func set(listType: MarketModule.ListType) {
-        sortingField = listType.sortingField
-        marketFieldRelay.accept(listType.marketField)
-
-        syncViewItemsIfPossible()
+    func unfavorite(index: Int) {
+        watchlistToggleService.unfavorite(index: index)
     }
 
     func refresh() {
@@ -109,15 +115,16 @@ extension MarketListViewModel {
 
 extension MarketListViewModel {
 
-    struct SortingFieldViewItem {
-        let title: String
-        let selected: Bool
-    }
+    struct ViewItemData {
+        let viewItems: [MarketModule.ListViewItem]
+        let softUpdate: Bool
+        let scrollToTop: Bool
 
-    enum State {
-        case loading
-        case loaded(viewItems: [MarketModule.ViewItem])
-        case error(description: String)
+        init(viewItems: [MarketModule.ListViewItem], softUpdate: Bool = false, scrollToTop: Bool = false) {
+            self.viewItems = viewItems
+            self.softUpdate = softUpdate
+            self.scrollToTop = scrollToTop
+        }
     }
 
 }

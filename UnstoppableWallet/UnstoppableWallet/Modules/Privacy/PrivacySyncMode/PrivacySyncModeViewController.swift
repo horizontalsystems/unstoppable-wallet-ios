@@ -2,7 +2,7 @@ import UIKit
 import ActionSheet
 import ThemeKit
 import SectionsTableView
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class PrivacySyncModeViewController: ThemeActionSheetController {
@@ -107,11 +107,11 @@ extension PrivacySyncModeViewController: SectionsDataSource {
 
 extension PrivacySyncModeViewController: IPrivacySyncModeView {
 
-    func set(coinTitle: String, coinCode: String, coinType: CoinType) {
+    func set(coinTitle: String, coinIconName: String) {
         titleView.bind(
                 title: "settings_privacy.alert_sync.title".localized,
                 subtitle: coinTitle,
-                image: UIImage.image(coinType: coinType)
+                image: UIImage(named: coinIconName)
         )
 
         descriptionView.text = "settings_privacy.alert_sync.description".localized(coinTitle)

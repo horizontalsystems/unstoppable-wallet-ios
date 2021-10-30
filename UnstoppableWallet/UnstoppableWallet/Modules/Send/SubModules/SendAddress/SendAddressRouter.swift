@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class SendAddressRouter: ISendSubRouter {
     weak var viewController: UIViewController?
@@ -15,18 +15,21 @@ extension SendAddressRouter: ISendAddressRouter {
 
 extension SendAddressRouter {
 
-    static func module(coin: Coin, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
+    static func module(platformCoin: PlatformCoin, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
         let addressParserFactory = AddressParserFactory()
 
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
 
-        let resolutionService = AddressResolutionService(coinCode: coin.code, isResolutionEnabled: isResolutionEnabled)
+        let resolutionService = AddressResolutionService(
+                coinCode: platformCoin.coin.code,
+                chain: nil,
+                isResolutionEnabled: isResolutionEnabled)
 
         let viewModel = RecipientAddressViewModel(
                 service: presenter,
                 resolutionService: resolutionService,
-                addressParser: addressParserFactory.parser(coin: coin)
+                addressParser: addressParserFactory.parser(coinType: platformCoin.coinType)
         )
         let view = SendAddressView(viewModel: viewModel, isResolutionEnabled: isResolutionEnabled, delegate: presenter)
 

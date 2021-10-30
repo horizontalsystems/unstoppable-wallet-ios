@@ -1,17 +1,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import XRatesKit
-import CoinKit
+import MarketKit
 import CurrencyKit
 
 class CoinChartService {
     private var disposeBag = DisposeBag()
 
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
     private let chartTypeStorage: IChartTypeStorage
     private let currencyKit: CurrencyKit.Kit
-    private let coinType: CoinType
+    private let coinUid: String
 
     private let chartTypeRelay = PublishRelay<ChartType>()
     var chartType: ChartType {
@@ -35,7 +34,7 @@ class CoinChartService {
         }
     }
 
-    private var latestRate: LatestRate?
+    private var coinPrice: CoinPrice?
     private var chartInfo: ChartInfo?
 
     var selectedIndicator = ChartIndicatorSet() {
@@ -44,35 +43,33 @@ class CoinChartService {
         }
     }
 
-    init(rateManager: IRateManager, chartTypeStorage: IChartTypeStorage, currencyKit: CurrencyKit.Kit, coinType: CoinType) {
-        self.rateManager = rateManager
+    init(marketKit: MarketKit.Kit, chartTypeStorage: IChartTypeStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
+        self.marketKit = marketKit
         self.chartTypeStorage = chartTypeStorage
         self.currencyKit = currencyKit
-        self.coinType = coinType
-
-        fetchChartData()
+        self.coinUid = coinUid
     }
 
-    private func fetchChartData() {
+    func fetchChartData() {
         disposeBag = DisposeBag()
         state = .loading
 
-        latestRate = rateManager.latestRate(coinType: coinType, currencyCode: currency.code)
-        chartInfo = rateManager.chartInfo(coinType: coinType, currencyCode: currency.code, chartType: chartType)
+        coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
+        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, chartType: chartType)
 
-        rateManager
-                .latestRateObservable(coinType: coinType, currencyCode: currency.code)
+        marketKit
+                .coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] latestRate in
-                    self?.latestRate = latestRate
+                .subscribe(onNext: { [weak self] coinPrice in
+                    self?.coinPrice = coinPrice
                     self?.syncState()
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
 
-        rateManager
-                .chartInfoObservable(coinType: coinType, currencyCode: currency.code, chartType: chartType)
+        marketKit
+                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, chartType: chartType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] chartInfo in
                     self?.chartInfo = chartInfo
@@ -86,14 +83,15 @@ class CoinChartService {
     }
 
     private func syncState() {
-        guard let chartInfo = chartInfo, let latestRate = latestRate else {
+        guard let chartInfo = chartInfo, let coinPrice = coinPrice else {
             return
         }
 
         let item = Item(
-                rate: latestRate.rate,
-                rateDiff24h: latestRate.rateDiff24h,
-                timestamp: latestRate.timestamp,
+                coinUid: coinUid,
+                rate: coinPrice.value,
+                rateDiff24h: coinPrice.diff,
+                timestamp: coinPrice.timestamp,
                 chartInfo: chartInfo
         )
 
@@ -121,6 +119,7 @@ extension CoinChartService {
 extension CoinChartService {
 
     struct Item {
+        let coinUid: String
         let rate: Decimal?
         let rateDiff24h: Decimal?
         let timestamp: TimeInterval?

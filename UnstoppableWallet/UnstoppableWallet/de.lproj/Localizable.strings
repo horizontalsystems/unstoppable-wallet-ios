@@ -144,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";

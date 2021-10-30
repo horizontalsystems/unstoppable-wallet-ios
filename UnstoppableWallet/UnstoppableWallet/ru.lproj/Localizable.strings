@@ -144,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";

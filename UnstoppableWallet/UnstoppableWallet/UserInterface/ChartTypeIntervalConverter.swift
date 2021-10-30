@@ -1,4 +1,4 @@
-import XRatesKit
+import MarketKit
 
 class ChartTypeIntervalConverter {
     private static let day = 24

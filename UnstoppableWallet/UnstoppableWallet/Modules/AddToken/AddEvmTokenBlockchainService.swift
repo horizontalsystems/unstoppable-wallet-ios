@@ -1,43 +1,26 @@
 import Foundation
 import RxSwift
 import Alamofire
-import HsToolKit
 import EthereumKit
-import CoinKit
+import ObjectMapper
+import HsToolKit
+import MarketKit
 
 class AddEvmTokenBlockchainService {
-    private let networkType: NetworkType
-    private let appConfigProvider: IAppConfigProvider
+    private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
+
+    private let blockchain: Blockchain
     private let networkManager: NetworkManager
 
-    init(networkType: NetworkType, appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
-        self.networkType = networkType
-        self.appConfigProvider = appConfigProvider
+    init(blockchain: Blockchain, networkManager: NetworkManager) {
+        self.blockchain = blockchain
         self.networkManager = networkManager
     }
 
-    private var apiUrl: String {
-        switch networkType {
-        case .ethMainNet: return "https://api.etherscan.io"
-        case .bscMainNet: return "https://api.bscscan.com"
-        case .ropsten: return "https://api-ropsten.etherscan.io"
-        case .rinkeby: return "https://api-rinkeby.etherscan.io"
-        case .kovan: return "https://api-kovan.etherscan.io"
-        case .goerli: return "https://api-goerli.etherscan.io"
-        }
-    }
-
-    var explorerKey: String {
-        switch networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return appConfigProvider.etherscanKey
-        case .bscMainNet: return appConfigProvider.bscscanKey
-        }
-    }
-
     func coinType(address: String) -> CoinType {
-        switch networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return .erc20(address: address)
-        case .bscMainNet: return .bep20(address: address)
+        switch blockchain {
+        case .ethereum: return .erc20(address: address)
+        case .binanceSmartChain: return .bep20(address: address)
         }
     }
 
@@ -58,85 +41,53 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         coinType(address: reference.lowercased())
     }
 
-    func coinSingle(reference: String) -> Single<Coin> {
+    func customTokenSingle(reference: String) -> Single<CustomToken> {
         let reference = reference.lowercased()
 
         let parameters: Parameters = [
-            "module": "account",
-            "action": "tokentx",
-            "contractaddress": reference,
-            "page": 1,
-            "offset": 1,
-            "apikey": explorerKey
+            "address": reference
         ]
 
-        let url = "\(apiUrl)/api"
+        let url = "\(apiUrl)/v1/token_info/\(blockchain.apiPath)"
         let request = networkManager.session.request(url, parameters: parameters)
+        let coinType = self.coinType(address: reference)
 
-        return networkManager.single(request: request, mapper: ApiMapper(coinType: coinType(address: reference)) )
-    }
-
-}
-
-extension AddEvmTokenBlockchainService {
-
-    class ApiMapper: IApiMapper {
-        private let coinType: CoinType
-
-        init(coinType: CoinType) {
-            self.coinType = coinType
-        }
-
-        public func map(statusCode: Int, data: Any?) throws -> Coin {
-            guard let map = data as? [String: Any] else {
-                throw NetworkManager.RequestError.invalidResponse(statusCode: statusCode, data: data)
-            }
-
-            guard let status = map["status"] as? String, status == "1" else {
-                throw ApiError.contractDoesNotExist
-            }
-
-            guard let results = map["result"] as? [[String: Any]], let result = results.first else {
-                throw ApiError.invalidResponse
-            }
-
-            guard let tokenName = result["tokenName"] as? String else {
-                throw ApiError.invalidResponse
-            }
-
-            guard let tokenSymbol = result["tokenSymbol"] as? String else {
-                throw ApiError.invalidResponse
-            }
-
-            guard let tokenDecimalString = result["tokenDecimal"] as? String, let tokenDecimal = Int(tokenDecimalString) else {
-                throw ApiError.invalidResponse
-            }
-
-            return Coin(
-                    title: tokenName,
-                    code: tokenSymbol,
-                    decimal: tokenDecimal,
-                    type: coinType
+        return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
+            CustomToken(
+                    coinName: tokenInfo.name,
+                    coinCode: tokenInfo.symbol,
+                    coinType: coinType,
+                    decimals: tokenInfo.decimals
             )
         }
-
     }
 
 }
 
 extension AddEvmTokenBlockchainService {
 
-    enum ApiError: LocalizedError {
-        case contractDoesNotExist
-        case invalidResponse
+    struct TokenInfo: ImmutableMappable {
+        let name: String
+        let symbol: String
+        let decimals: Int
 
-        var errorDescription: String? {
+        init(map: Map) throws {
+            name = try map.value("name")
+            symbol = try map.value("symbol")
+            decimals = try map.value("decimals")
+        }
+    }
+
+    enum Blockchain {
+        case ethereum
+        case binanceSmartChain
+
+        var apiPath: String {
             switch self {
-            case .contractDoesNotExist: return "add_token.contract_not_found".localized
-            default: return "\(self)"
+            case .ethereum: return "erc20"
+            case .binanceSmartChain: return "bep20"
             }
         }
-
     }
 
 }

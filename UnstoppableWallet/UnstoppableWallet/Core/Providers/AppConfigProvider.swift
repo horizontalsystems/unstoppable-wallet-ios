@@ -1,11 +1,11 @@
 import Foundation
-import CoinKit
 
 class AppConfigProvider: IAppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
     let reportEmail = "support.unstoppable@protonmail.com"
+    let btcCoreRpcUrl = "https://btc.horizontalsystems.xyz/rpc"
 
     var guidesIndexUrl: URL {
         URL(string: (Bundle.main.object(forInfoDictionaryKey: "GuidesIndexUrl") as! String))!
@@ -13,18 +13,6 @@ class AppConfigProvider: IAppConfigProvider {
 
     var faqIndexUrl: URL {
         URL(string: (Bundle.main.object(forInfoDictionaryKey: "FaqIndexUrl") as! String))!
-    }
-
-    var uniswapSubgraphUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "UniswapGraphUrl") as? String) ?? ""
-    }
-
-    var providerCoinsUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "ProviderCoinsUrl") as? String) ?? ""
-    }
-
-    var coinsUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "CoinsUrl") as? String) ?? ""
     }
 
     var testMode: Bool {
@@ -35,22 +23,10 @@ class AppConfigProvider: IAppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }
 
-    var sandbox: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "Sandbox") as? String == "true"
-    }
-
-    func defaultWords(count: Int) -> String {
-        Bundle.main.object(forInfoDictionaryKey: "DefaultWords\(count)") as? String ?? ""
-    }
-
     var infuraCredentials: (id: String, secret: String?) {
         let id = (Bundle.main.object(forInfoDictionaryKey: "InfuraProjectId") as? String) ?? ""
         let secret = Bundle.main.object(forInfoDictionaryKey: "InfuraProjectSecret") as? String
         return (id: id, secret: secret)
-    }
-
-    var btcCoreRpcUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "BtcCoreRpcUrl") as? String) ?? ""
     }
 
     var etherscanKey: String {
@@ -61,10 +37,6 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "BscscanApiKey") as? String) ?? ""
     }
 
-    var coinMarketCapApiKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "CoinMarketCapKey") as? String) ?? ""
-    }
-
     var cryptoCompareApiKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "CryptoCompareApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
@@ -73,24 +45,8 @@ class AppConfigProvider: IAppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "DefiYieldApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
-    var pnsUrl: String {
-        let development = "https://pns-dev.horizontalsystems.xyz/api/v1/"
-        let production = "https://pns-ext.horizontalsystems.xyz/api/v1/"
-
-        return sandbox ? development : production
-    }
-
-    let currencyCodes: [String] = ["USD", "EUR", "GBP", "JPY"]
-    let feeRateAdjustedForCurrencyCodes: [String] = ["USD", "EUR"]
-
-    var featuredCoinTypes: [CoinType] {
-        [
-            .bitcoin,
-            .bitcoinCash,
-            .ethereum,
-            .zcash,
-            .binanceSmartChain
-        ]
+    var twitterBearerToken: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "TwitterBearerToken") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     var defaultWords: String {

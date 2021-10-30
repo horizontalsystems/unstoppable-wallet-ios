@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class DepositViewModel {
     private let service: DepositService
@@ -14,6 +14,10 @@ extension DepositViewModel {
 
     var coin: Coin {
         service.coin
+    }
+
+    var coinType: CoinType {
+        service.coinType
     }
 
     var address: String {

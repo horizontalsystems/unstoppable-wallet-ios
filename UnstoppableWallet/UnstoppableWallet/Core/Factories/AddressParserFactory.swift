@@ -1,9 +1,9 @@
-import CoinKit
+import MarketKit
 
 class AddressParserFactory {
 
-    func parser(coin: Coin) -> IAddressParser {
-        switch coin.type {
+    func parser(coinType: CoinType) -> IAddressParser {
+        switch coinType {
         case .bitcoin: return AddressParser(validScheme: "bitcoin", removeScheme: true)
         case .litecoin: return AddressParser(validScheme: "litecoin", removeScheme: true)
         case .bitcoinCash: return AddressParser(validScheme: "bitcoincash", removeScheme: false)
@@ -14,7 +14,7 @@ class AddressParserFactory {
         case .bep20: return AddressParser(validScheme: nil, removeScheme: true)
         case .bep2: return AddressParser(validScheme: "binance", removeScheme: true)
         case .zcash: return AddressParser(validScheme: "zcash", removeScheme: true)
-        case .unsupported: return AddressParser(validScheme: nil, removeScheme: false)
+        default: return AddressParser(validScheme: nil, removeScheme: false)
         }
     }
 

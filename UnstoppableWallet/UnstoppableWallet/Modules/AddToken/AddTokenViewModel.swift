@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class AddTokenViewModel {
     private let service: AddTokenService
@@ -33,10 +33,10 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .alreadyExists(let coin):
-            viewItemRelay.accept(viewItem(coin: coin))
-        case .fetched(let coin):
-            viewItemRelay.accept(viewItem(coin: coin))
+        case .alreadyExists(let platformCoins):
+            viewItemRelay.accept(viewItem(platformCoins: platformCoins))
+        case .fetched(let customTokens):
+            viewItemRelay.accept(viewItem(customTokens: customTokens))
         default:
             viewItemRelay.accept(nil)
         }
@@ -56,12 +56,21 @@ class AddTokenViewModel {
         }
     }
 
-    private func viewItem(coin: Coin) -> ViewItem {
+    private func viewItem(platformCoins: [PlatformCoin]) -> ViewItem {
         ViewItem(
-                coinType: coin.type.blockchainType ?? "",
-                coinName: coin.title,
-                coinCode: coin.code,
-                decimal: coin.decimal
+                coinType: platformCoins.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
+                coinName: platformCoins.first?.name,
+                coinCode: platformCoins.first?.code,
+                decimals: platformCoins.first?.decimals
+        )
+    }
+
+    private func viewItem(customTokens: [CustomToken]) -> ViewItem {
+        ViewItem(
+                coinType: customTokens.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
+                coinName: customTokens.first?.coinName,
+                coinCode: customTokens.first?.coinCode,
+                decimals: customTokens.first?.decimals
         )
     }
 
@@ -104,9 +113,9 @@ extension AddTokenViewModel {
 
     struct ViewItem {
         let coinType: String
-        let coinName: String
-        let coinCode: String
-        let decimal: Int
+        let coinName: String?
+        let coinCode: String?
+        let decimals: Int?
     }
 
 }

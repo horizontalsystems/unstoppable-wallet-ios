@@ -1,13 +1,13 @@
 import ThemeKit
 
 class KeyboardAwareViewController: ThemeViewController {
-    private let scrollView: UIScrollView
+    private let scrollViews: [UIScrollView]
 
     private var translucentContentOffset: CGFloat = 0
     private var keyboardFrame: CGRect?
 
-    init(scrollView: UIScrollView) {
-        self.scrollView = scrollView
+    init(scrollViews: [UIScrollView]) {
+        self.scrollViews = scrollViews
 
         super.init()
     }
@@ -19,9 +19,11 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        scrollView.alwaysBounceVertical = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.keyboardDismissMode = .interactive
+        for scrollView in scrollViews {
+            scrollView.alwaysBounceVertical = true
+            scrollView.showsVerticalScrollIndicator = false
+            scrollView.keyboardDismissMode = .interactive
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +36,7 @@ class KeyboardAwareViewController: ThemeViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        translucentContentOffset = scrollView.contentOffset.y
+        translucentContentOffset = scrollViews[0].contentOffset.y
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -52,15 +54,19 @@ class KeyboardAwareViewController: ThemeViewController {
 
         self.keyboardFrame = keyboardFrame
 
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
-        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
+        for scrollView in scrollViews {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
+            scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
     }
 
     @objc private func keyboardWillHide(notification: NSNotification) {
         keyboardFrame = nil
 
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
+        for scrollView in scrollViews {
+            scrollView.contentInset = .zero
+            scrollView.scrollIndicatorInsets = .zero
+        }
     }
 
     func syncContentOffsetIfRequired(textView: UITextView) {
@@ -75,13 +81,13 @@ class KeyboardAwareViewController: ThemeViewController {
             let caretVisiblePosition = caretPositionFrame.origin.y - .margin2x + translucentContentOffset
 
             if caretVisiblePosition < 0 {
-                shift = caretVisiblePosition + scrollView.contentOffset.y
+                shift = caretVisiblePosition + scrollViews[0].contentOffset.y
             } else {
-                shift = max(0, caretPositionFrame.origin.y + caretPositionFrame.height + .margin2x - keyboardFrame.origin.y) + scrollView.contentOffset.y
+                shift = max(0, caretPositionFrame.origin.y + caretPositionFrame.height + .margin2x - keyboardFrame.origin.y) + scrollViews[0].contentOffset.y
             }
         }
 
-        scrollView.setContentOffset(CGPoint(x: 0, y: shift), animated: true)
+        scrollViews[0].setContentOffset(CGPoint(x: 0, y: shift), animated: true)
     }
 
 }

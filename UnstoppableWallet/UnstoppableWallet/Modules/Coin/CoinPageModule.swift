@@ -1,54 +1,61 @@
 import UIKit
-import Chart
 import LanguageKit
 import ThemeKit
+import MarketKit
 
 struct CoinPageModule {
 
-    static func viewController(launchMode: ChartModule.LaunchMode) -> UIViewController {
-        let coinPageService = CoinPageService(
-                rateManager: App.shared.rateManager,
-                currencyKit: App.shared.currencyKit,
-                appConfigProvider: App.shared.appConfigProvider,
-                coinType: launchMode.coinType,
-                coinTitle: launchMode.coinTitle,
-                coinCode: launchMode.coinCode)
+    static func viewController(coinUid: String) -> UIViewController? {
+        guard let fullCoin = try? App.shared.coinManager.fullCoin(coinUid: coinUid) else {
+            return nil
+        }
 
-        let favoriteService = FavoriteService(favoritesManager: App.shared.favoritesManager)
-        let coinFavoriteService = CoinFavoriteService(
-                service: favoriteService,
-                coinType: launchMode.coinType)
+        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
+        let service = CoinPageService(
+                fullCoin: fullCoin,
+                favoritesManager: App.shared.favoritesManager,
+                accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager,
+                enableCoinService: enableCoinService
+        )
 
-        let priceAlertService = CoinPriceAlertService(
-                priceAlertManager: App.shared.priceAlertManager,
-                localStorage: App.shared.localStorage,
-                coinType: launchMode.coinType,
-                coinTitle: launchMode.coinTitle)
+        let viewModel = CoinPageViewModel(service: service)
 
-        let coinChartService = CoinChartService(
-                rateManager: App.shared.rateManager,
-                chartTypeStorage: App.shared.localStorage,
-                currencyKit: App.shared.currencyKit,
-                coinType: launchMode.coinType)
-
-        let chartFactory = CoinChartFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
-
-        let coinPageViewModel = CoinPageViewModel(service: coinPageService)
-        let favoriteViewModel = CoinFavoriteViewModel(service: coinFavoriteService)
-        let priceAlertViewModel = CoinPriceAlertViewModel(service: priceAlertService)
-        let coinChartViewModel = CoinChartViewModel(service: coinChartService, factory: chartFactory)
+        let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
+        let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin)
+        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
-                viewModel: coinPageViewModel,
-                favoriteViewModel: favoriteViewModel,
-                priceAlertViewModel: priceAlertViewModel,
-                chartViewModel: coinChartViewModel,
-                configuration: ChartConfiguration.fullChart,
-                markdownParser: CoinPageMarkdownParser(),
-                urlManager: UrlManager(inApp: true)
+                viewModel: viewModel,
+                enableCoinView: enableCoinView,
+                overviewController: overviewController,
+                marketsController: marketsController,
+                detailsController: detailsController,
+                tweetsController: tweetsController
         )
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+}
+
+extension CoinPageModule {
+
+    enum Tab: Int, CaseIterable {
+        case overview
+        case markets
+        case details
+        case tweets
+
+        var title: String {
+            switch self {
+            case .overview: return "coin_page.tab.overview".localized
+            case .markets: return "coin_page.tab.markets".localized
+            case .details: return "coin_page.tab.details".localized
+            case .tweets: return "coin_page.tab.tweets".localized
+            }
+        }
     }
 
 }

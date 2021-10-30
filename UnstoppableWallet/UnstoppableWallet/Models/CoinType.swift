@@ -1,6 +1,16 @@
-import CoinKit
+import UIKit
+import MarketKit
 
-extension CoinType {
+extension MarketKit.CoinCategory {
+
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/ios/\(uid)@\(scale)x.png"
+    }
+
+}
+
+extension MarketKit.CoinType {
 
     var blockchainType: String? {
         switch self {
@@ -11,6 +21,25 @@ extension CoinType {
         }
 
         return nil
+    }
+
+    var platformType: String {
+        switch self {
+        case .ethereum, .erc20: return "Ethereum"
+        case .binanceSmartChain, .bep20: return "Binance Smart Chain"
+        case .bep2: return "Binance"
+        default: return ""
+        }
+    }
+
+    var platformCoinType: String {
+        switch self {
+        case .ethereum, .binanceSmartChain: return "coin_platforms.native".localized
+        case .erc20: return "ERC20"
+        case .bep20: return "BEP20"
+        case .bep2: return "BEP2"
+        default: return ""
+        }
     }
 
     var swappable: Bool {
@@ -60,6 +89,26 @@ extension CoinType {
         case .zcash: return [.birthdayHeight]
         default: return []
         }
+    }
+
+    var isSupported: Bool {
+        switch self {
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .erc20, .bep20, .bep2: return true
+        default: return false
+        }
+    }
+
+    var placeholderImageName: String {
+        blockchainType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+    }
+
+}
+
+extension MarketKit.Coin {
+
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/ios/\(uid)@\(scale)x.png"
     }
 
 }

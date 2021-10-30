@@ -102,16 +102,17 @@ class WalletConnectListViewController: ThemeViewController {
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == sectionViewItem.viewItems.count - 1
+                    let rowAction = deleteRowAction(viewItem: viewItem)
 
                     return Row<G1Cell>(
                             id: viewItem.session.peerId,
                             height: .heightDoubleLineCell,
                             autoDeselect: true,
-                            rowActions: [deleteRowAction(viewItem: viewItem)],
+                            rowActionProvider: { [rowAction] },
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                 cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl)
+                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
                                 cell.title = viewItem.title
                                 cell.subtitle = viewItem.url
                             },

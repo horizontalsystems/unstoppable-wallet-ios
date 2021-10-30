@@ -59,12 +59,20 @@ extension MainViewModel {
         transactionsTabEnabledRelay.asDriver()
     }
 
+    var initialTab: MainModule.Tab {
+        service.initialTab
+    }
+
     func onLoad() {
         service.setMainShownOnce()
     }
 
     func onSuccessJailbreakAlert() {
         jailbreakService.setAlertShown()
+    }
+
+    func onSwitch(tab: MainModule.Tab) {
+        service.set(tab: tab)
     }
 
 }
