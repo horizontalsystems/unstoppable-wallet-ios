@@ -273,7 +273,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
 "swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+
 
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
@@ -516,6 +516,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Данные Инвестора";
 
 "coin_page.category" = "Категория";
+
 "coin_page.contracts" = "Contracts";
 "coin_page.links" = "Links";
 
@@ -532,6 +533,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.major_holders.chart.description" = "в Топ-10 кошельках";
 "coin_page.major_holders.top_wallets" = "Топ Кошельки";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
+
 
 "coin_page.tvl_rank.multi_chain" = "Мультичейн";
 "coin_page.tvl_rank.sync_error" = "Ошибка Синхронизации";
@@ -661,6 +663,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "Я Понимаю";
+
 
 // Settings -> Manage Wallet
 
