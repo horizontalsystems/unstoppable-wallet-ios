@@ -144,6 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
 "balance.sort.price_change" = "Price Change";
+
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
@@ -272,7 +273,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+
 
 "swap.service" = "Service";
 "swap.service.title" = "Service";
@@ -515,6 +516,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Investor Data";
 
 "coin_page.category" = "Category";
+
 "coin_page.contracts" = "Contracts";
 "coin_page.links" = "Links";
 
@@ -531,6 +533,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.major_holders.chart.description" = "in top 10 wallets";
 "coin_page.major_holders.top_wallets" = "Top Wallets";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
+
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
 "coin_page.tvl_rank.sync_error" = "Sync Error";
@@ -660,6 +663,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.i_understand" = "I Understand";
+
 
 // Settings -> Manage Wallet
 
