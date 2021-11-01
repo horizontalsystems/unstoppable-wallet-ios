@@ -14,6 +14,8 @@ class LaunchScreenViewController: ThemeViewController {
         self.viewModel = viewModel
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {

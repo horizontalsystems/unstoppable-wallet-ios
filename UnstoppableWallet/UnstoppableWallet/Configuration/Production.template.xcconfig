@@ -5,6 +5,3 @@ bscscan_api_key =
 cryptocompare_com_api_key =
 defiyield_api_key =
 twitter_bearer_token =
-
-guides_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.1/index.json
-faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/v1.0/src/faq_ios.json
