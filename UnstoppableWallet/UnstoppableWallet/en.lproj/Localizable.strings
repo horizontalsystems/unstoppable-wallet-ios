@@ -255,6 +255,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.button_error.impact_too_high" = "High price impact";
 
 "swap.price" = "Price";
+"swap.buy_price" = "Buy Price";
+"swap.sell_price" = "Sell Price";
 "swap.price_impact" = "Price Impact";
 "swap.maximum_paid" = "Maximum Amount";
 "swap.minimum_got" = "Guaranteed Amount";

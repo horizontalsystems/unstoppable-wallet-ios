@@ -19,7 +19,7 @@ class OneInchDataSource {
     private let fromCoinCardCell: SwapCoinCardCell
     private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
-    private let priceCell = AdditionalDataCellNew()
+    private let buyPriceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
 
     private let errorCell = SendEthereumErrorCell()
@@ -63,8 +63,8 @@ class OneInchDataSource {
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
 
-        priceCell.title = "swap.price".localized
-        priceCell.isVisible = false
+        buyPriceCell.title = "swap.buy_price".localized
+        buyPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
 
         approveButton.apply(style: .primaryGray)
@@ -214,9 +214,9 @@ extension OneInchDataSource: ISwapDataSource {
                 footerState: .margin(height: 6),
                 rows: [
                     StaticRow(
-                            cell: priceCell,
+                            cell: buyPriceCell,
                             id: "execution-price",
-                            height: priceCell.cellHeight
+                            height: buyPriceCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,
