@@ -28,10 +28,10 @@ extension ChartConfiguration {
     static var smallChart: ChartConfiguration {
         let config = ChartConfiguration().applyColors()
 
-        config.mainHeight = 32
+        config.mainHeight = .margin32 + .margin2
         config.indicatorHeight = 0
         config.timelineHeight = 0
-        config.curvePadding = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        config.curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
 
         config.showBorders = false
         config.showIndicators = false
