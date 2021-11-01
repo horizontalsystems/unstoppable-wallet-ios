@@ -56,4 +56,8 @@ extension MarketTvlSortHeaderViewModel {
         service.marketTvlField = MarketModule.MarketTvlField.allCases[index]
     }
 
+    func onSelectPriceChangeField(index: Int) {
+        service.setPriceChange(index: index)
+    }
+
 }

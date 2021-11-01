@@ -1961,6 +1961,7 @@
 		58AAA5176489560D1385EF9D /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */; };
 		58AAA51DC10EA821440F4752 /* IndicatorSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5EA0897B56C7863ED31 /* IndicatorSelectorCell.swift */; };
 		58AAA51ED9498935E3DD512D /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB126AA1B83DD40C426F /* CALayer.swift */; };
+		58AAA5212C07958835F26B2B /* MarketGlobalTvlMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4905CA9704EBFD31FDD /* MarketGlobalTvlMetricViewController.swift */; };
 		58AAA52F2D68C5C4397C4D10 /* UniswapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18F732998DCAA76E47C /* UniswapSettings.swift */; };
 		58AAA53720F68793DDD421EE /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */; };
 		58AAA539E1E8F4EA861A3F80 /* SwapCoinCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFB203A455CB53996F97 /* SwapCoinCardCell.swift */; };
@@ -2032,6 +2033,7 @@
 		58AAA71839C54D05E04BC2EC /* UniswapSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD02C2210D9DA14D1E21 /* UniswapSettingsDataSource.swift */; };
 		58AAA7217BF975D4D6F45128 /* CautionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BB11003A1862BDCEA6 /* CautionView.swift */; };
 		58AAA72230207B253E2153EA /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE153E9683CB79DCF857 /* SelectorButton.swift */; };
+		58AAA725BA91E57853E29781 /* MarketGlobalTvlMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4905CA9704EBFD31FDD /* MarketGlobalTvlMetricViewController.swift */; };
 		58AAA72BF33F0AF251128499 /* PingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3CCBFC02D7F6438DE3E /* PingManager.swift */; };
 		58AAA7316611FF3A19D0C12C /* UniswapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA76748B32A4D8FCD765A /* UniswapSettingsViewModel.swift */; };
 		58AAA738CD46DC6EF9A390F3 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B7E47FF3B010851E58 /* Global.swift */; };
@@ -3300,6 +3302,7 @@
 		58AAA43491E0E4F17D020455 /* SwapApproveViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveViewModel.swift; sourceTree = "<group>"; };
 		58AAA444C885BCC354F1B7B3 /* CoinPageMarkdownParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPageMarkdownParser.swift; sourceTree = "<group>"; };
 		58AAA48AE934E928E9CC0099 /* SendFeeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeRouter.swift; sourceTree = "<group>"; };
+		58AAA4905CA9704EBFD31FDD /* MarketGlobalTvlMetricViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketGlobalTvlMetricViewController.swift; sourceTree = "<group>"; };
 		58AAA4A027BD92BD062748CC /* LockScreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockScreenController.swift; sourceTree = "<group>"; };
 		58AAA4A4F31EAB9164B33299 /* MarketTvlSortHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketTvlSortHeaderView.swift; sourceTree = "<group>"; };
 		58AAA50A504CFA74CA19A415 /* MarketMetricView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketMetricView.swift; sourceTree = "<group>"; };
@@ -5596,6 +5599,7 @@
 				58AAA775FE9B46DA2910F508 /* MarketGlobalMetricModule.swift */,
 				58AAA02D981360FF0CC50A19 /* MarketGlobalMetricViewController.swift */,
 				58AAAE00E3580AE5D02DDC7A /* MarketGlobalTvlMetricService.swift */,
+				58AAA4905CA9704EBFD31FDD /* MarketGlobalTvlMetricViewController.swift */,
 			);
 			path = MarketGlobalMetric;
 			sourceTree = "<group>";
@@ -7146,6 +7150,7 @@
 				11B35C93F846660BDC2BACBE /* LaunchScreenService.swift in Sources */,
 				11B35452DCB76037FB7CBA6E /* LaunchScreenViewModel.swift in Sources */,
 				11B355A93F2A36504A4CD43C /* LaunchScreen.swift in Sources */,
+				58AAA725BA91E57853E29781 /* MarketGlobalTvlMetricViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8010,6 +8015,7 @@
 				11B351CFB65D4F6484D7B226 /* LaunchScreenService.swift in Sources */,
 				11B35EDDDC14E735570A5796 /* LaunchScreenViewModel.swift in Sources */,
 				11B35A82532EC55909EFBAD8 /* LaunchScreen.swift in Sources */,
+				58AAA5212C07958835F26B2B /* MarketGlobalTvlMetricViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
