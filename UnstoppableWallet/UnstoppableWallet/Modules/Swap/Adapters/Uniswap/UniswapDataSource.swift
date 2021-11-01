@@ -22,7 +22,8 @@ class UniswapDataSource {
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let priceCell = AdditionalDataCellNew()
+    private let buyPriceCell = AdditionalDataCellNew()
+    private let sellPriceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -68,8 +69,10 @@ class UniswapDataSource {
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
 
-        priceCell.title = "swap.price".localized
-        priceCell.isVisible = false
+        buyPriceCell.title = "swap.buy_price".localized
+        buyPriceCell.isVisible = false
+        sellPriceCell.title = "swap.sell_price".localized
+        sellPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -114,10 +117,16 @@ class UniswapDataSource {
 
     private func handle(tradeViewItem: UniswapViewModel.TradeViewItem?) {
         if let viewItem = tradeViewItem?.executionPrice {
-            priceCell.isVisible = true
-            priceCell.value = viewItem
+            buyPriceCell.isVisible = true
+            buyPriceCell.value = viewItem
         } else {
-            priceCell.isVisible = false
+            buyPriceCell.isVisible = false
+        }
+        if let viewItem = tradeViewItem?.executionPriceInverted {
+            sellPriceCell.isVisible = true
+            sellPriceCell.value = viewItem
+        } else {
+            sellPriceCell.isVisible = false
         }
 
         if let viewItem = tradeViewItem?.priceImpact {
@@ -287,9 +296,14 @@ extension UniswapDataSource: ISwapDataSource {
 //                            height: recipientCell.cellHeight
 //                    ),
                     StaticRow(
-                            cell: priceCell,
+                            cell: buyPriceCell,
                             id: "execution-price",
-                            height: priceCell.cellHeight
+                            height: buyPriceCell.cellHeight
+                    ),
+                    StaticRow(
+                            cell: sellPriceCell,
+                            id: "execution-price",
+                            height: sellPriceCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,

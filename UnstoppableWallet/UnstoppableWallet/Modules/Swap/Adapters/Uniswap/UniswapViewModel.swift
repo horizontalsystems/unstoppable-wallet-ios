@@ -147,6 +147,7 @@ class UniswapViewModel {
     private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
                 executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
+                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, platformCoinIn: tradeService.platformCoinOut, platformCoinOut: tradeService.platformCoinIn)?.formattedString,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
                 guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)
         )
@@ -246,6 +247,7 @@ extension UniswapViewModel {
 
     struct TradeViewItem {
         let executionPrice: String?
+        let executionPriceInverted: String?
         let priceImpact: UniswapModule.PriceImpactViewItem?
         let guaranteedAmount: UniswapModule.GuaranteedAmountViewItem?
     }
