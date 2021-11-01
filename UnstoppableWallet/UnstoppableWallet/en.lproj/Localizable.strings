@@ -17,6 +17,7 @@
 "button.connect" = "Connect";
 "button.save" = "Save";
 "button.sign" = "Sign";
+"button.more" = "Show More";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";

@@ -47,6 +47,7 @@ class CoinTweetsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: TweetCell.self)
+        tableView.registerCell(forClass: ButtonCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -108,8 +109,28 @@ class CoinTweetsViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func open(url: String) {
-        urlManager.open(url: url, from: parentNavigationController)
+    private func open(username: String, tweetId: String) {
+        if let appUrl = URL(string: "twitter://status?id=\(tweetId)"), UIApplication.shared.canOpenURL(appUrl) {
+            UIApplication.shared.open(appUrl)
+            return
+        }
+
+        let webUrl = "https://twitter.com/\(username)/status/\(tweetId)"
+        urlManager.open(url: webUrl, from: parentNavigationController)
+    }
+
+    @objc private func onTapMore() {
+        guard let username = viewModel.username else {
+            return
+        }
+
+        if let appUrl = URL(string: "twitter://user?screen_name=\(username)"), UIApplication.shared.canOpenURL(appUrl) {
+            UIApplication.shared.open(appUrl)
+            return
+        }
+
+        let webUrl = "https://twitter.com/\(username)"
+        urlManager.open(url: webUrl, from: parentNavigationController)
     }
 
 }
@@ -126,9 +147,27 @@ extension CoinTweetsViewController: SectionsDataSource {
                     cell.bind(viewItem: viewItem)
                 },
                 action: { [weak self] _ in
-                    self?.open(url: viewItem.url)
+                    self?.open(username: viewItem.username, tweetId: viewItem.id)
                 }
         )
+    }
+
+    private func buttonSection() -> SectionProtocol {
+        Section(
+            id: "button_section",
+            headerState: .margin(height: .margin16),
+            footerState: .margin(height: 0),
+            rows: [
+            Row<ButtonCell>(
+                    id: "more_row",
+                    height: ButtonCell.height(style: .secondaryDefault),
+                    bind: { [weak self] cell, _ in
+                        cell.bind(style: .secondaryDefault, title: "button.more".localized, compact: true) { [weak self] in
+                            self?.onTapMore()
+                        }
+                    }
+            )
+        ])
     }
 
     func buildSections() -> [SectionProtocol] {
@@ -139,12 +178,14 @@ extension CoinTweetsViewController: SectionsDataSource {
                 let section = Section(
                         id: "tweet_\(index)",
                         headerState: .margin(height: .margin12),
-                        footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
+                        footerState: .margin(height: 0),
                         rows: [row(viewItem: viewItem)]
                 )
 
                 sections.append(section)
             }
+            
+            sections.append(buttonSection())
         }
 
         return sections
