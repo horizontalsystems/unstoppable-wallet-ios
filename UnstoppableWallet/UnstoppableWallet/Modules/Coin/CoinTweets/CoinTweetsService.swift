@@ -40,6 +40,8 @@ extension CoinTweetsService {
     }
 
     func fetch() {
+        state = .loading
+
         let single: Single<TwitterUser?>
 
         if let user = user {
