@@ -21,7 +21,7 @@ class TweetCell: BaseSelectableThemeCell {
 
         wrapperView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.top.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
         stackView.distribution = .equalSpacing
@@ -30,6 +30,9 @@ class TweetCell: BaseSelectableThemeCell {
 
         let headerView = UIView()
         stackView.addArrangedSubview(headerView)
+        headerView.snp.makeConstraints { maker in
+            maker.height.equalTo(37)
+        }
 
         headerView.addSubview(titleImage)
         titleImage.snp.makeConstraints { maker in
@@ -61,12 +64,17 @@ class TweetCell: BaseSelectableThemeCell {
         subTitleLabel.textColor = .themeGray
 
         stackView.addArrangedSubview(textView)
+        textView.isUserInteractionEnabled = false
+
         stackView.addArrangedSubview(attachmentView)
         stackView.addArrangedSubview(referencedTweetView)
 
         stackView.addArrangedSubview(dateLabel)
+        dateLabel.snp.makeConstraints { maker in
+            maker.height.equalTo(12)
+        }
         dateLabel.font = .micro
-        dateLabel.textColor = .themeGray50
+        dateLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -116,7 +124,7 @@ class TweetCell: BaseSelectableThemeCell {
     static func height(viewItem: CoinTweetsViewModel.ViewItem, containerWidth: CGFloat) -> CGFloat {
         let textWidth: CGFloat = containerWidth - .margin16 * 4
         let textHeight = viewItem.text.height(forContainerWidth: textWidth, font: bodyFont)
-        var height: CGFloat = .margin16 + 37 + .margin12 + textHeight + .margin12 + 12 + .margin16
+        var height: CGFloat = .margin16 + 37 + .margin12 + textHeight
 
         if let attachment = viewItem.attachment {
             height += .margin12 + TweetAttachmentView.height(attachment: attachment, containerWidth: textWidth)
@@ -126,7 +134,7 @@ class TweetCell: BaseSelectableThemeCell {
             height += .margin12 + ReferencedTweetView.height(tweet: referencedTweet, containerWidth: textWidth)
         }
 
-        return height
+        return height + .margin12 + 12 + .margin16
     }
 
 }
