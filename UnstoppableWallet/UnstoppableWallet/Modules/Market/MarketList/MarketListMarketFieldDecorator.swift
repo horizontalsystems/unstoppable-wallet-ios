@@ -6,13 +6,13 @@ class MarketListMarketFieldDecorator {
 
     var marketField: MarketModule.MarketField {
         didSet {
-            service.resyncIfPossible()
+            service.onUpdate(marketField: marketField)
         }
     }
 
-    init(service: IMarketListDecoratorService, marketField: MarketModule.MarketField) {
+    init(service: IMarketListDecoratorService) {
         self.service = service
-        self.marketField = marketField
+        marketField = service.initialMarketField
     }
 
 }

@@ -8,14 +8,15 @@ struct MarketTopModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 marketTop: marketTop,
-                sortingField: sortingField
+                sortingField: sortingField,
+                marketField: marketField
         )
         let watchlistToggleService = MarketWatchlistToggleService(
                 listService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service, marketField: marketField)
+        let decorator = MarketListMarketFieldDecorator(service: service)
         let viewModel = MarketTopViewModel(service: service)
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)

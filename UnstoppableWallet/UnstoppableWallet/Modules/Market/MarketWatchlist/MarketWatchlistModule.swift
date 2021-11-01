@@ -1,4 +1,5 @@
 import UIKit
+import StorageKit
 
 struct MarketWatchlistModule {
 
@@ -6,14 +7,15 @@ struct MarketWatchlistModule {
         let service = MarketWatchlistService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                favoritesManager: App.shared.favoritesManager
+                favoritesManager: App.shared.favoritesManager,
+                storage: StorageKit.LocalStorage.default
         )
         let watchlistToggleService = MarketWatchlistToggleService(
                 listService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service, marketField: .price)
+        let decorator = MarketListMarketFieldDecorator(service: service)
         let viewModel = MarketWatchlistViewModel(service: service)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)

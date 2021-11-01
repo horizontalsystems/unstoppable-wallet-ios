@@ -48,11 +48,15 @@ extension MarketAdvancedSearchResultService: IMarketListService {
 
 extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
 
+    var initialMarketField: MarketModule.MarketField {
+        .price
+    }
+
     var currency: Currency {
         currencyKit.baseCurrency
     }
 
-    func resyncIfPossible() {
+    func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }

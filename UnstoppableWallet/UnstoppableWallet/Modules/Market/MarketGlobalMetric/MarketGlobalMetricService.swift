@@ -20,12 +20,15 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
             syncIfPossible()
         }
     }
-    var sortType: MarketGlobalModule.MetricsType
+    var metricsType: MarketGlobalModule.MetricsType
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, sortType: MarketGlobalModule.MetricsType) {
+    let initialMarketField: MarketModule.MarketField
+
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.sortType = sortType
+        self.metricsType = metricsType
+        initialMarketField = metricsType.marketField
 
         syncMarketInfos()
     }
@@ -48,7 +51,7 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     }
 
     private var sortingField: MarketModule.SortingField {
-        switch sortType {
+        switch metricsType {
         case .volume24h: return sortDirectionAscending ? .lowestVolume : .highestVolume
         default: return sortDirectionAscending ? .lowestCap : .highestCap
         }
@@ -90,7 +93,7 @@ extension MarketGlobalMetricService: IMarketListDecoratorService {
         .day
     }
 
-    func resyncIfPossible() {
+    func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }

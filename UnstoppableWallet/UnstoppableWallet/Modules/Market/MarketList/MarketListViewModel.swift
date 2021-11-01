@@ -11,9 +11,10 @@ protocol IMarketListService {
 }
 
 protocol IMarketListDecoratorService {
+    var initialMarketField: MarketModule.MarketField { get }
     var currency: Currency { get }
     var priceChangeType: MarketModule.PriceChangeType { get }
-    func resyncIfPossible()
+    func onUpdate(marketField: MarketModule.MarketField)
 }
 
 protocol IMarketListDecorator {
