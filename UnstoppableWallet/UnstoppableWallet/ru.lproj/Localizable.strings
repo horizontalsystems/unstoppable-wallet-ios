@@ -17,6 +17,7 @@
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
 "button.sign" = "Подписать";
+"button.more" = "Show More";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -253,6 +254,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.button_error.impact_too_high" = "Высокое отклонение цены";
 
 "swap.price" = "Цена";
+"swap.buy_price" = "Buy Price";
+"swap.sell_price" = "Sell Price";
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.maximum_paid" = "Максимальная Выплата";
 "swap.minimum_got" = "Минимальная Выплата";
@@ -336,8 +339,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.market_field.mcap" = "Рын. кап.";
 "market.market_field.vol" = "Объём";
 
-"market.tvl.market_field.day_diff" = "24H";
-"market.tvl.market_field.week_diff" = "7D";
+"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.diff" = "Percent";
 
 "market.tvl.platform_field.all" = "All";
 "market.tvl.platform_field.ethereum" = "Ethereum";
