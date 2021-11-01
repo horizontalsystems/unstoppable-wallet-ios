@@ -2,6 +2,8 @@ import UIKit
 import ThemeKit
 
 class TweetPollView: UIView {
+    private static let pollOptionHeight: CGFloat = 28
+
     private let stackView = UIStackView()
 
     init() {
@@ -38,7 +40,7 @@ class TweetPollView: UIView {
             stackView.addArrangedSubview(wrapperView)
             wrapperView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(28)
+                maker.height.equalTo(Self.pollOptionHeight)
             }
 
             wrapperView.backgroundColor = .themeSteel10
@@ -48,7 +50,7 @@ class TweetPollView: UIView {
             wrapperView.addSubview(votesView)
             votesView.snp.makeConstraints { maker in
                 maker.leading.top.bottom.equalToSuperview()
-                maker.height.equalTo(28)
+                maker.height.equalTo(Self.pollOptionHeight)
                 maker.width.equalTo(width)
             }
 
@@ -69,14 +71,14 @@ class TweetPollView: UIView {
             label.text = option.label
             label.font = .captionSB
             label.textColor = .themeLeah
-            
+
             let percentageLabel = UILabel()
             wrapperView.addSubview(percentageLabel)
             percentageLabel.snp.makeConstraints { maker in
                 maker.trailing.equalToSuperview().inset(CGFloat.margin12)
                 maker.centerY.equalToSuperview()
             }
-            
+
             percentageLabel.text = "\(percentage)%"
             percentageLabel.font = .captionSB
             percentageLabel.textColor = .themeLeah
@@ -84,7 +86,7 @@ class TweetPollView: UIView {
     }
 
     static func height(options: [(position: Int, label: String, votes: Int)], containerWidth: CGFloat) -> CGFloat {
-        CGFloat((28 + 8) * options.count - 8)
+        (Self.pollOptionHeight + .margin8) * CGFloat(options.count) - .margin8
     }
 
 }
