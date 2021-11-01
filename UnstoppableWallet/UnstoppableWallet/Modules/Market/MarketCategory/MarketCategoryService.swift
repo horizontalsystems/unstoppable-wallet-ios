@@ -80,6 +80,10 @@ extension MarketCategoryService: IMarketListService {
 
 extension MarketCategoryService: IMarketListDecoratorService {
 
+    var initialMarketField: MarketModule.MarketField {
+        .price
+    }
+
     var currency: Currency {
         currencyKit.baseCurrency
     }
@@ -88,7 +92,7 @@ extension MarketCategoryService: IMarketListDecoratorService {
         .day
     }
 
-    func resyncIfPossible() {
+    func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }

@@ -2,11 +2,16 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import StorageKit
 
 class MarketWatchlistService: IMarketMultiSortHeaderService {
+    private let keySortingField = "market-watchlist-sorting-field"
+    private let keyMarketField = "market-watchlist-market-field"
+
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let favoritesManager: FavoritesManager
+    private let storage: StorageKit.ILocalStorage
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
@@ -17,18 +22,26 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         }
     }
 
-    var sortingField: MarketModule.SortingField = .highestCap {
+    var sortingField: MarketModule.SortingField {
         didSet {
             syncIfPossible()
+            storage.set(value: sortingField.rawValue, for: keySortingField)
         }
     }
 
     private var coinUids = [String]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager, storage: StorageKit.ILocalStorage) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.favoritesManager = favoritesManager
+        self.storage = storage
+
+        if let rawValue: Int = storage.value(for: keySortingField), let sortingField = MarketModule.SortingField(rawValue: rawValue) {
+            self.sortingField = sortingField
+        } else {
+            sortingField = .highestCap
+        }
 
         subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
 
@@ -102,6 +115,14 @@ extension MarketWatchlistService: IMarketListService {
 
 extension MarketWatchlistService: IMarketListDecoratorService {
 
+    var initialMarketField: MarketModule.MarketField {
+        if let rawValue: Int = storage.value(for: keyMarketField), let marketField = MarketModule.MarketField(rawValue: rawValue) {
+            return marketField
+        }
+
+        return .price
+    }
+
     var currency: Currency {
         currencyKit.baseCurrency
     }
@@ -110,10 +131,12 @@ extension MarketWatchlistService: IMarketListDecoratorService {
         .day
     }
 
-    func resyncIfPossible() {
+    func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
+
+        storage.set(value: marketField.rawValue, for: keyMarketField)
     }
 
 }

@@ -6,7 +6,7 @@ struct MarketAdvancedSearchResultModule {
         let service = MarketAdvancedSearchResultService(marketInfos: marketInfos, currencyKit: App.shared.currencyKit, priceChangeType: priceChangeType)
         let watchlistToggleService = MarketWatchlistToggleService(listService: service, favoritesManager: App.shared.favoritesManager)
 
-        let decorator = MarketListMarketFieldDecorator(service: service, marketField: .price)
+        let decorator = MarketListMarketFieldDecorator(service: service)
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
 

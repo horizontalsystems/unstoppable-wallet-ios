@@ -34,11 +34,14 @@ class MarketTopService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField) {
+    let initialMarketField: MarketModule.MarketField
+
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, marketTop: MarketModule.MarketTop, sortingField: MarketModule.SortingField, marketField: MarketModule.MarketField) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.marketTop = marketTop
         self.sortingField = sortingField
+        initialMarketField = marketField
 
         syncMarketInfos()
     }
@@ -104,7 +107,7 @@ extension MarketTopService: IMarketListDecoratorService {
         .day
     }
 
-    func resyncIfPossible() {
+    func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
         }
