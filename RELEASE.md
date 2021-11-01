@@ -36,7 +36,7 @@ $ pod update PodNameHere
 
 ### 3. Transfer Code to Production Branch
 
-Merge `version` branch into `master` branch
+Merge `version` branch into `master` branch. After this `Github Actions` will build release version and upload it to `TestFlight`.
 
 ### 4. Prepare New Development Branch
 
@@ -48,13 +48,7 @@ $ git branch version/0.1
 
 * Increase app version in project
 
-### 5. Upload Build to App Store
-
-* Apply release credentials to `Production.xcconfig`
-* Check validity of URLs set for `guides_index_url` and `faq_index_url` parameters in `Production.xcconfig`
-* Build and upload to `ITunesConnect`
-
-### 6. Prepare Release in GitHub Repository
+### 5. Prepare Release in GitHub Repository
 
 * Create tag for current version
 * Create `Release` and add changelog

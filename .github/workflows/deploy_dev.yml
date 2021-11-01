@@ -1,8 +1,8 @@
 name: Deploy Dev to AppCenter
 
 on:
-#  push:
-#    branches: [ version/* ]
+  push:
+    branches: [ version/* ]
   workflow_dispatch:
 
 jobs:
