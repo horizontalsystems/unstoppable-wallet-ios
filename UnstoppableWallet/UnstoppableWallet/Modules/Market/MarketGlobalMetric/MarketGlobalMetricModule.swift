@@ -105,8 +105,7 @@ struct MarketGlobalMetricModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        let headerView = MarketTvlSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
-        let viewController = MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
+        let viewController = MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

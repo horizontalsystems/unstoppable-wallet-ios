@@ -1,3 +1,4 @@
+import Foundation
 import UIKit
 import ThemeKit
 import CurrencyKit
@@ -52,6 +53,17 @@ struct MarketModule {
         let color: UIColor
 
         switch dataValue {
+        case .valueDiff(let currencyValue, let diff):
+            title = nil
+
+            if let currencyValue = currencyValue, let diff = diff {
+                let valueDiff = diff * currencyValue.value / (100 + diff)
+                value = CurrencyCompactFormatter.instance.format(currency: currencyValue.currency, value: valueDiff, alwaysSigned: true) ?? "----"
+                color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
+            } else {
+                value = "----"
+                color = .themeGray50
+            }
         case .diff(let diff):
             title = nil
             value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
@@ -156,15 +168,13 @@ extension MarketModule {
     }
 
     enum MarketTvlField: Int, CaseIterable {
+        case diff
         case value
-        case dayDiff
-        case weekDiff
 
         var title: String {
             switch self {
-            case .value: return "value".localized
-            case .dayDiff: return "market.tvl.market_field.day_diff".localized
-            case .weekDiff: return "market.tvl.market_field.week_diff".localized
+            case .value: return "market.tvl.market_field.value".localized
+            case .diff: return "market.tvl.market_field.diff".localized
             }
         }
     }
@@ -233,6 +243,7 @@ extension Array where Element == MarketKit.MarketInfo {
 extension MarketModule {  // ViewModel Items
 
     enum MarketDataValue {
+        case valueDiff(CurrencyValue?, Decimal?)
         case diff(Decimal?)
         case volume(String)
         case marketCap(String)

@@ -22,18 +22,16 @@ extension MarketListTvlDecorator: IMarketListDecorator {
     func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem {
         let currency = service.currency
 
-        let price: Decimal?
-        let diff = marketInfo.priceChangeValue(type: service.priceChangeValue)
+        let diff: MarketModule.MarketDataValue
+        let price = marketInfo.price.map { CurrencyValue(currency: currency, value: $0) }
 
         switch service.marketTvlField {
-        case .value: price = marketInfo.price
-        case .dayDiff, .weekDiff: price = priceDiff(price: marketInfo.price, diff: diff)
+        case .diff: diff = .diff(marketInfo.priceChangeValue(type: service.marketTvlPriceChangeField))
+        case .value: diff = .valueDiff(price, marketInfo.priceChangeValue(type: service.marketTvlPriceChangeField))
         }
 
-        let alwaysSigned = service.marketTvlField != .value
-
-        let priceString = price.flatMap {
-            CurrencyCompactFormatter.instance.format(currency: currency, value: $0, alwaysSigned: alwaysSigned)
+        let priceString = marketInfo.price.flatMap {
+            CurrencyCompactFormatter.instance.format(currency: currency, value: $0, alwaysSigned: false)
         } ?? "n/a".localized
 
         return MarketModule.ListViewItem(
@@ -44,7 +42,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
                 code: marketInfo.fullCoin.coin.code,
                 rank: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
                 price: priceString,
-                dataValue: .diff(marketInfo.priceChangeValue(type: service.priceChangeValue))
+                dataValue: diff
         )
     }
 

@@ -27,7 +27,13 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    var marketTvlField: MarketModule.MarketTvlField = .value {
+    var marketTvlField: MarketModule.MarketTvlField = .diff {
+        didSet {
+            syncIfPossible()
+        }
+    }
+
+    private(set) var marketTvlPriceChangeField: MarketModule.PriceChangeType = .day {
         didSet {
             syncIfPossible()
         }
@@ -62,7 +68,7 @@ class MarketGlobalTvlMetricService {
     }
 
     private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeValue), softUpdate: false, reorder: reorder)
+        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: marketTvlPriceChangeField), softUpdate: false, reorder: reorder)
     }
 
     private func syncIfPossible(reorder: Bool = false) {
@@ -81,10 +87,12 @@ extension MarketGlobalTvlMetricService: IMarketListService {
         currencyKit.baseCurrency
     }
 
-    var priceChangeValue: MarketModule.PriceChangeType {
-        switch marketTvlField {
-        case .value, .dayDiff: return .day
-        case .weekDiff: return .week
+    func setPriceChange(index: Int) {
+        let tvlChartCompatibleFields: [MarketModule.PriceChangeType] = [.day, .week, .month]
+        if index < tvlChartCompatibleFields.count {
+            marketTvlPriceChangeField = tvlChartCompatibleFields[index]
+        } else {
+            marketTvlPriceChangeField = tvlChartCompatibleFields[0]
         }
     }
 
