@@ -124,6 +124,26 @@ class CoinOverviewViewItemFactory {
         }
     }
 
+    private func linkUrl(type: LinkType, url: String) -> String {
+        switch type {
+        case .website, .whitepaper, .reddit, .github: return url
+        case .twitter:
+            if url.hasPrefix("https://") {
+                return url
+            } else {
+                return "https://twitter.com/\(url)"
+            }
+        case .telegram:
+            if url.hasPrefix("https://") {
+                return url
+            } else {
+                return "https://t.me/\(url)"
+            }
+
+        default: return ""
+        }
+    }
+
     private func links(info: MarketInfoOverview) -> [CoinOverviewViewModel.LinkViewItem] {
         let linkMap = info.links
         let linkTypes: [LinkType] = [.website, .whitepaper, .reddit, .twitter, .telegram, .github]
@@ -136,7 +156,7 @@ class CoinOverviewViewItemFactory {
             return CoinOverviewViewModel.LinkViewItem(
                     title: linkTitle(type: linkType, url: url),
                     iconName: linkIconName(type: linkType),
-                    url: url
+                    url: linkUrl(type: linkType, url: url)
             )
         }
     }

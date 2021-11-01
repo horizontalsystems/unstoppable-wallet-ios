@@ -41,17 +41,15 @@ class CoinTweetsViewModel {
                 id: tweet.id,
                 title: tweet.user.name,
                 subTitle: "@\(tweet.user.username)",
+                username: tweet.user.username,
                 titleImageUrl: tweet.user.profileImageUrl,
                 text: tweet.text,
                 attachment: tweet.attachments.first,
                 date: DateHelper.instance.formatFullTime(from: tweet.date),
-                userUrl: "https://twitter.com/\(tweet.user.username)",
-                url: "https://twitter.com/\(tweet.user.username)/status/\(tweet.id)",
                 referencedTweet: tweet.referencedTweet.map { referencedTweet in
                     ReferencedTweet(
                             title: "coin_page.tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
-                            text: referencedTweet.tweet.text,
-                            url: "https://twitter.com/\(referencedTweet.tweet.user.username)/status/\(referencedTweet.tweet.id)"
+                            text: referencedTweet.tweet.text
                     )
                 }
         )
@@ -73,6 +71,10 @@ extension CoinTweetsViewModel {
         errorRelay.asDriver()
     }
 
+    var username: String? {
+        service.username
+    }
+
     func refresh() {
         service.fetch()
     }
@@ -89,19 +91,17 @@ extension CoinTweetsViewModel {
         let id: String
         let title: String
         let subTitle: String
+        let username: String
         let titleImageUrl: String
         let text: String
         let attachment: Tweet.Attachment?
         let date: String
-        let userUrl: String
-        let url: String
         let referencedTweet: ReferencedTweet?
     }
 
     struct ReferencedTweet {
         let title: String
         let text: String
-        let url: String
     }
 
 }

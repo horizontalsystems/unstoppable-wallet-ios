@@ -35,6 +35,10 @@ extension CoinTweetsService {
         stateRelay.asObservable()
     }
 
+    var username: String? {
+        user?.username
+    }
+
     func fetch() {
         let single: Single<TwitterUser?>
 
