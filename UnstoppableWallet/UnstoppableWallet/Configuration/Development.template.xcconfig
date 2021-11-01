@@ -6,7 +6,4 @@ cryptocompare_com_api_key =
 defiyield_api_key =
 twitter_bearer_token =
 
-guides_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/develop/index.json
-faq_index_url = https:/$()/raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json
-
 default_words =
