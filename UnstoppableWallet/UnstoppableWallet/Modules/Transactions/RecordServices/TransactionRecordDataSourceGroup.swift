@@ -34,7 +34,7 @@ class TransactionRecordDataSourceGroup {
     private func handle(recordsUpdate update: TransactionRecordDataSource.RecordsUpdate) {
         switch update {
         case .single(let record): updatedRecordSubject.onNext(record)
-        case .list(let records): emit(records: dataSources.map { $0.records(count: requestedCount) })
+        case .list: emit(records: dataSources.map { $0.records(count: requestedCount) })
         }
     }
 
