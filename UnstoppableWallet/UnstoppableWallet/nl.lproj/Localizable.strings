@@ -17,6 +17,7 @@
 "button.connect" = "Connect";
 "button.save" = "Save";
 "button.sign" = "Sign";
+"button.more" = "Show More";
 
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
@@ -253,6 +254,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.button_error.impact_too_high" = "High price impact";
 
 "swap.price" = "Price";
+"swap.buy_price" = "Buy Price";
+"swap.sell_price" = "Sell Price";
 "swap.price_impact" = "Price Impact";
 "swap.maximum_paid" = "Maximum Amount";
 "swap.minimum_got" = "Guaranteed Amount";
@@ -336,8 +339,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
 
-"market.tvl.market_field.day_diff" = "24H";
-"market.tvl.market_field.week_diff" = "7D";
+"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.diff" = "Percent";
 
 "market.tvl.platform_field.all" = "All";
 "market.tvl.platform_field.ethereum" = "Ethereum";
