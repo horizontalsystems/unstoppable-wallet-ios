@@ -154,20 +154,20 @@ extension CoinTweetsViewController: SectionsDataSource {
 
     private func buttonSection() -> SectionProtocol {
         Section(
-            id: "button_section",
-            headerState: .margin(height: .margin16),
-            footerState: .margin(height: 0),
-            rows: [
-            Row<ButtonCell>(
-                    id: "more_row",
-                    height: ButtonCell.height(style: .secondaryDefault),
-                    bind: { [weak self] cell, _ in
-                        cell.bind(style: .secondaryDefault, title: "button.more".localized, compact: true) { [weak self] in
-                            self?.onTapMore()
-                        }
-                    }
-            )
-        ])
+                id: "button_section",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    Row<ButtonCell>(
+                            id: "more_row",
+                            height: ButtonCell.height(style: .secondaryDefault),
+                            bind: { [weak self] cell, _ in
+                                cell.bind(style: .secondaryDefault, title: "button.more".localized, compact: true) { [weak self] in
+                                    self?.onTapMore()
+                                }
+                            }
+                    )
+                ]
+        )
     }
 
     func buildSections() -> [SectionProtocol] {
@@ -178,13 +178,12 @@ extension CoinTweetsViewController: SectionsDataSource {
                 let section = Section(
                         id: "tweet_\(index)",
                         headerState: .margin(height: .margin12),
-                        footerState: .margin(height: 0),
                         rows: [row(viewItem: viewItem)]
                 )
 
                 sections.append(section)
             }
-            
+
             sections.append(buttonSection())
         }
 
