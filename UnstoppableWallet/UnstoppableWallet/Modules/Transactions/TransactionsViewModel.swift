@@ -43,7 +43,7 @@ class TransactionsViewModel {
     }
 
     private func handle(walletFilters: (wallets: [TransactionWallet], selected: Int?)) {
-        let coinFilters = walletFilters.wallets.flatMap { factory.coinFilter(wallet: $0) }
+        let coinFilters = walletFilters.wallets.compactMap { factory.coinFilter(wallet: $0) }
         coinFiltersRelay.accept((filters: coinFilters, selected: walletFilters.selected))
     }
 
@@ -56,7 +56,7 @@ class TransactionsViewModel {
 
     private func handle(updatedItem: TransactionItem) {
         for (sectionIndex, section) in sections.enumerated() {
-            if let rowIndex = section.viewItems.firstIndex { item in item.uid == updatedItem.record.uid } {
+            if let rowIndex = section.viewItems.firstIndex(where: { item in item.uid == updatedItem.record.uid }) {
                 let viewItem = factory.viewItem(item: updatedItem)
 
                 sections[sectionIndex].viewItems[rowIndex] = viewItem

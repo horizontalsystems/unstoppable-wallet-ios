@@ -185,7 +185,7 @@ class TransactionsViewController: ThemeViewController {
         }
 
         if rowsBeforeBottom(indexPath: indexPath) <= 10 {
-            DispatchQueue.global(priority: .background).async { [weak self] in
+            DispatchQueue.global(qos: .background).async { [weak self] in
                 self?.viewModel.bottomReached()
             }
         }

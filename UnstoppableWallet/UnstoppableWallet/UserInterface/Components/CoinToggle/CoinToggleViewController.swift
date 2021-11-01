@@ -101,7 +101,7 @@ class CoinToggleViewController: ThemeSearchViewController {
 
                             cell.setTitleImage(urlString: viewItem.fullCoin.coin.imageUrl, placeholder: UIImage(named: viewItem.fullCoin.placeholderImageName))
                         },
-                        action: { [weak self] _ in
+                        action: { _ in
                             print("On click \(viewItem.fullCoin.coin.name)")
                         }
                 )

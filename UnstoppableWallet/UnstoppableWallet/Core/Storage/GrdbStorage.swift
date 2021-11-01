@@ -218,7 +218,7 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("fillBlockchainSettingsFromEnabledWallets") { [weak self] db in
+        migrator.registerMigration("fillBlockchainSettingsFromEnabledWallets") { db in
             let wallets = try EnabledWallet_v_0_13.filter(EnabledWallet_v_0_13.Columns.coinId == "BTC" ||
                     EnabledWallet_v_0_13.Columns.coinId == "LTC" ||
                     EnabledWallet_v_0_13.Columns.coinId == "BCH" ||
@@ -351,7 +351,7 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("extractCoinsAndChangeCoinIds") { [weak self] db in
+        migrator.registerMigration("extractCoinsAndChangeCoinIds") { db in
             // apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)
         }

@@ -45,7 +45,7 @@ class TransactionRecordDataSource {
         var hasNewRecords = false
 
         for record in records {
-            if let index = self.records.index(of: record) {
+            if let index = self.records.firstIndex(of: record) {
                 self.records[index] = record
                 updatedRecords.append(record)
             } else {

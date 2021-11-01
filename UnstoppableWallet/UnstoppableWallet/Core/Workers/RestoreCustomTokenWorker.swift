@@ -75,7 +75,7 @@ extension RestoreCustomTokenWorker {
         let platformCoins = try coinManager.platformCoins(coinTypeIds: coinTypeIds)
 
         let existingCoinTypeIds = platformCoins.map { $0.coinType.id }
-        var missingCoinTypeIds = coinTypeIds.filter { !existingCoinTypeIds.contains($0) }
+        let missingCoinTypeIds = coinTypeIds.filter { !existingCoinTypeIds.contains($0) }
 
         guard !missingCoinTypeIds.isEmpty else {
             return
