@@ -2,7 +2,10 @@ import UIKit
 import ComponentKit
 
 class ReferencedTweetView: UIView {
+    private static let titleFont: UIFont = .caption
     private static let bodyFont: UIFont = .subhead2
+    private static let sideMargin: CGFloat = .margin16
+    private static let insideMargin: CGFloat = .margin12
 
     private let titleView = UILabel()
     private let bodyView = UILabel()
@@ -15,7 +18,7 @@ class ReferencedTweetView: UIView {
 
         addSubview(titleView)
         titleView.snp.makeConstraints { maker in
-            maker.top.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.leading.trailing.equalToSuperview().inset(Self.sideMargin)
         }
 
         titleView.font = .caption
@@ -23,8 +26,8 @@ class ReferencedTweetView: UIView {
 
         addSubview(bodyView)
         bodyView.snp.makeConstraints { maker in
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
-            maker.bottom.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(titleView.snp.bottom).offset(Self.insideMargin)
+            maker.bottom.leading.trailing.equalToSuperview().inset(Self.sideMargin)
         }
 
         bodyView.numberOfLines = 0
@@ -44,7 +47,7 @@ class ReferencedTweetView: UIView {
     static func height(tweet: CoinTweetsViewModel.ReferencedTweet, containerWidth: CGFloat) -> CGFloat {
         let textHeight = tweet.text.height(forContainerWidth: containerWidth - .margin16 * 2, font: Self.bodyFont)
 
-        return .margin16 + 12 + .margin12 + textHeight + .margin16
+        return ceil(Self.sideMargin + Self.titleFont.lineHeight + Self.insideMargin + textHeight + Self.sideMargin)
     }
 
 }
