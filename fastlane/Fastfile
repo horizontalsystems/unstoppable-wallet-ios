@@ -59,9 +59,17 @@ def app_store_api_key
   )
 end
 
-def update_xcconfig(name, new_value)
+def update_dev_xcconfig(name, new_value)
   update_xcconfig_value(
     path: './UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
+    name: name,
+    value: new_value
+  )
+end
+
+def update_prod_xcconfig(name, new_value)
+  update_xcconfig_value(
+    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig',
     name: name,
     value: new_value
   )
@@ -80,23 +88,23 @@ def prepare_environment
 end
 
 def apply_dev_xcconfig
-  update_xcconfig('infura_project_id', XCCONFIG_DEV_INFURA_PROJECT_ID)
-  update_xcconfig('infura_project_secret', XCCONFIG_DEV_INFURA_PROJECT_SECRET)
-  update_xcconfig('etherscan_api_key', XCCONFIG_DEV_ETHERSCAN_API_KEY)
-  update_xcconfig('bscscan_api_key', XCCONFIG_DEV_BSCSCAN_API_KEY)
-  update_xcconfig('cryptocompare_com_api_key', XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY)
-  update_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
-  update_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
+  update_dev_xcconfig('infura_project_id', XCCONFIG_DEV_INFURA_PROJECT_ID)
+  update_dev_xcconfig('infura_project_secret', XCCONFIG_DEV_INFURA_PROJECT_SECRET)
+  update_dev_xcconfig('etherscan_api_key', XCCONFIG_DEV_ETHERSCAN_API_KEY)
+  update_dev_xcconfig('bscscan_api_key', XCCONFIG_DEV_BSCSCAN_API_KEY)
+  update_dev_xcconfig('cryptocompare_com_api_key', XCCONFIG_DEV_CRYPTOCOMPARE_API_KEY)
+  update_dev_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
+  update_dev_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
 end
 
 def apply_prod_xcconfig
-  update_xcconfig('infura_project_id', XCCONFIG_PROD_INFURA_PROJECT_ID)
-  update_xcconfig('infura_project_secret', XCCONFIG_PROD_INFURA_PROJECT_SECRET)
-  update_xcconfig('etherscan_api_key', XCCONFIG_PROD_ETHERSCAN_API_KEY)
-  update_xcconfig('bscscan_api_key', XCCONFIG_PROD_BSCSCAN_API_KEY)
-  update_xcconfig('cryptocompare_com_api_key', XCCONFIG_PROD_CRYPTOCOMPARE_API_KEY)
-  update_xcconfig('defiyield_api_key', XCCONFIG_PROD_DEFIYIELD_API_KEY)
-  update_xcconfig('twitter_bearer_token', XCCONFIG_PROD_TWITTER_BEARER_TOKEN)
+  update_prod_xcconfig('infura_project_id', XCCONFIG_PROD_INFURA_PROJECT_ID)
+  update_prod_xcconfig('infura_project_secret', XCCONFIG_PROD_INFURA_PROJECT_SECRET)
+  update_prod_xcconfig('etherscan_api_key', XCCONFIG_PROD_ETHERSCAN_API_KEY)
+  update_prod_xcconfig('bscscan_api_key', XCCONFIG_PROD_BSCSCAN_API_KEY)
+  update_prod_xcconfig('cryptocompare_com_api_key', XCCONFIG_PROD_CRYPTOCOMPARE_API_KEY)
+  update_prod_xcconfig('defiyield_api_key', XCCONFIG_PROD_DEFIYIELD_API_KEY)
+  update_prod_xcconfig('twitter_bearer_token', XCCONFIG_PROD_TWITTER_BEARER_TOKEN)
 end
 
 platform :ios do
