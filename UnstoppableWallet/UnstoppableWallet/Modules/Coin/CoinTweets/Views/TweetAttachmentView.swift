@@ -2,6 +2,7 @@ import UIKit
 import ComponentKit
 
 class TweetAttachmentView: UIView {
+    private static let imageAttachmentHeight: CGFloat = 180
 
     private let imageView = UIImageView()
     private let imageTransparencyView = UIView()
@@ -14,12 +15,7 @@ class TweetAttachmentView: UIView {
         backgroundColor = .clear
 
         addSubview(imageView)
-        imageView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-            maker.width.equalToSuperview()
-            maker.height.equalTo(180)
-        }
-        
+
         imageView.cornerRadius = 4
         imageView.contentMode = .scaleAspectFill
 
@@ -40,9 +36,6 @@ class TweetAttachmentView: UIView {
         videoPlayImageView.image = UIImage(named: "play_48")?.withTintColor(.white)
 
         addSubview(pollView)
-        pollView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
     }
 
     required init?(coder: NSCoder) {
@@ -63,6 +56,12 @@ class TweetAttachmentView: UIView {
             imageView.af.setImage(withURL: url)
         }
 
+        pollView.snp.removeConstraints()
+        imageView.snp.remakeConstraints { maker in
+            maker.edges.equalToSuperview()
+            maker.height.equalTo(Self.imageAttachmentHeight)
+        }
+
         imageView.isHidden = false
         videoPlayImageView.isHidden = true
         imageTransparencyView.isHidden = true
@@ -75,6 +74,13 @@ class TweetAttachmentView: UIView {
             imageView.af.setImage(withURL: url)
         }
 
+        pollView.snp.removeConstraints()
+        imageView.snp.remakeConstraints { maker in
+            maker.edges.equalToSuperview()
+            maker.width.equalToSuperview()
+            maker.height.equalTo(Self.imageAttachmentHeight)
+        }
+
         imageView.isHidden = false
         videoPlayImageView.isHidden = false
         imageTransparencyView.isHidden = false
@@ -82,14 +88,20 @@ class TweetAttachmentView: UIView {
     }
 
     private func bindPoll(options: [(position: Int, label: String, votes: Int)]) {
-        pollView.bind(options: options)
+        imageView.snp.removeConstraints()
+        pollView.snp.remakeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
         imageView.isHidden = true
         pollView.isHidden = false
+
+        pollView.bind(options: options)
     }
 
     static func height(attachment: Tweet.Attachment, containerWidth: CGFloat) -> CGFloat {
         switch attachment {
-        case .photo, .video: return 180
+        case .photo, .video: return Self.imageAttachmentHeight
         case .poll(let options): return TweetPollView.height(options: options, containerWidth: containerWidth)
         }
     }

@@ -3,6 +3,8 @@ import ComponentKit
 
 class TweetCell: BaseSelectableThemeCell {
     private static let bodyFont: UIFont = .subhead2
+    private static let dateFont: UIFont = .micro
+    private static let headerHeight: CGFloat = 37
 
     private let stackView = UIStackView()
 
@@ -31,7 +33,7 @@ class TweetCell: BaseSelectableThemeCell {
         let headerView = UIView()
         stackView.addArrangedSubview(headerView)
         headerView.snp.makeConstraints { maker in
-            maker.height.equalTo(37)
+            maker.height.equalTo(Self.headerHeight)
         }
 
         headerView.addSubview(titleImage)
@@ -71,9 +73,9 @@ class TweetCell: BaseSelectableThemeCell {
 
         stackView.addArrangedSubview(dateLabel)
         dateLabel.snp.makeConstraints { maker in
-            maker.height.equalTo(12)
+            maker.height.equalTo(Self.dateFont.lineHeight)
         }
-        dateLabel.font = .micro
+        dateLabel.font = Self.dateFont
         dateLabel.textColor = .themeGray
     }
 
@@ -124,7 +126,7 @@ class TweetCell: BaseSelectableThemeCell {
     static func height(viewItem: CoinTweetsViewModel.ViewItem, containerWidth: CGFloat) -> CGFloat {
         let textWidth: CGFloat = containerWidth - .margin16 * 4
         let textHeight = viewItem.text.height(forContainerWidth: textWidth, font: bodyFont)
-        var height: CGFloat = .margin16 + 37 + .margin12 + textHeight
+        var height: CGFloat = .margin16 + Self.headerHeight + .margin12 + textHeight
 
         if let attachment = viewItem.attachment {
             height += .margin12 + TweetAttachmentView.height(attachment: attachment, containerWidth: textWidth)
@@ -134,7 +136,7 @@ class TweetCell: BaseSelectableThemeCell {
             height += .margin12 + ReferencedTweetView.height(tweet: referencedTweet, containerWidth: textWidth)
         }
 
-        return height + .margin12 + 12 + .margin16
+        return height + .margin12 + Self.dateFont.lineHeight + .margin16
     }
 
 }
