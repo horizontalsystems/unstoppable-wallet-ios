@@ -54,7 +54,10 @@ extension MainService {
         switch launchScreenManager.launchScreen {
         case .auto:
             if let storedIndex: Int = storage.value(for: keyTabIndex), let storedTab = MainModule.Tab(rawValue: storedIndex) {
-                return storedTab
+                switch storedTab {
+                case .settings: return .balance
+                default: return storedTab
+                }
             }
 
             return .market
