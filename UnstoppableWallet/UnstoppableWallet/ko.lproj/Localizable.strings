@@ -17,6 +17,7 @@
 "button.connect" = "연결";
 "button.save" = "저장";
 "button.sign" = "가입";
+"button.more" = "Show More";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -253,6 +254,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.button_error.impact_too_high" = "높은 가격 영향";
 
 "swap.price" = "금액";
+"swap.buy_price" = "Buy Price";
+"swap.sell_price" = "Sell Price";
 "swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
@@ -336,8 +339,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
 
-"market.tvl.market_field.day_diff" = "24H";
-"market.tvl.market_field.week_diff" = "7D";
+"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.diff" = "Percent";
 
 "market.tvl.platform_field.all" = "All";
 "market.tvl.platform_field.ethereum" = "Ethereum";
