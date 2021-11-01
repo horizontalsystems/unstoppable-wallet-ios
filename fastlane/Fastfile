@@ -121,8 +121,6 @@ platform :ios do
       api_key: api_key
     )
 
-    xcversion(version: "13.0")
-
     gym(
       scheme: "Unstoppable Dev",
       export_method: "ad-hoc",
@@ -166,8 +164,6 @@ platform :ios do
       keychain_password: keychain_password,
       api_key: api_key
     )
-
-    xcversion(version: "13.0")
 
     gym(
       scheme: "Unstoppable",
