@@ -9,6 +9,7 @@ class CoinTweetsViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let infoRelay = BehaviorRelay<String?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     init(service: CoinTweetsService) {
@@ -24,15 +25,24 @@ class CoinTweetsViewModel {
         case .loading:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
+            infoRelay.accept(nil)
             errorRelay.accept(nil)
         case .completed(let tweets):
             viewItemsRelay.accept(tweets.map { viewItem(tweet: $0) })
             loadingRelay.accept(false)
+            infoRelay.accept(tweets.isEmpty ? "coin_page.tweets.no_tweets_yet".localized : nil)
             errorRelay.accept(nil)
-        case .failed:
+        case .failed(let error):
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+
+            if case CoinTweetsService.LoadError.tweeterUserNotFound = error {
+                infoRelay.accept("coin_page.tweets.not_available".localized)
+                errorRelay.accept(nil)
+            } else {
+                infoRelay.accept(nil)
+                errorRelay.accept("market.sync_error".localized)
+            }
         }
     }
 
@@ -65,6 +75,10 @@ extension CoinTweetsViewModel {
 
     var loadingDriver: Driver<Bool> {
         loadingRelay.asDriver()
+    }
+
+    var infoDriver: Driver<String?> {
+        infoRelay.asDriver()
     }
 
     var errorDriver: Driver<String?> {

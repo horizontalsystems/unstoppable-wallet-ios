@@ -40,7 +40,9 @@ extension CoinTweetsService {
     }
 
     func fetch() {
-        state = .loading
+        if case .failed = state {
+            state = .loading
+        }
 
         let single: Single<TwitterUser?>
 
@@ -51,7 +53,7 @@ extension CoinTweetsService {
             single = marketKit
                     .marketInfoOverviewSingle(coinUid: coinUid, currencyCode: "USD", languageCode: "en")
                     .flatMap { [weak self] info in
-                        guard let service = self, let username = info.links[.twitter] else {
+                        guard let service = self, let username = info.links[.twitter], !username.isEmpty else {
                             return Single.just(nil)
                         }
 
@@ -62,14 +64,14 @@ extension CoinTweetsService {
         single
                 .flatMap { [weak self] (user: TwitterUser?) -> Single<TweetsProvider.TweetsPage> in
                     guard let user = user, let service = self else {
-                        return Single.error(CoinTweetsModule.LoadError.tweeterUserNotFound)
+                        return Single.error(LoadError.tweeterUserNotFound)
                     }
 
                     service.user = user
 
                     return service.twitterProvider.tweetsSingle(user: user)
                 }
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(
                         onSuccess: { [weak self] tweetsPage in
                             self?.handle(tweets: tweetsPage.tweets)
@@ -79,6 +81,14 @@ extension CoinTweetsService {
                         }
                 )
                 .disposed(by: disposeBag)
+    }
+
+}
+
+extension CoinTweetsService {
+
+    enum LoadError: Error {
+        case tweeterUserNotFound
     }
 
 }
