@@ -8,6 +8,7 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
     private let viewModel: SwapSelectProviderViewModel
     private let disposeBag = DisposeBag()
 
+    private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private var isLoaded = false
 
@@ -28,11 +29,16 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "swap.service.title".localized
+        view.addSubview(titleView)
+        titleView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+        titleView.bind(title: "swap.switch_provider.title".localized, subtitle: "swap.switch_provider.subtitle".localized, image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalTo(titleView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
         tableView.backgroundColor = .clear

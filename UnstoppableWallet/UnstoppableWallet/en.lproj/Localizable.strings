@@ -253,6 +253,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.button_error.impact_too_high" = "High price impact";
+"swap.switch_provider.title" = "Swap Provider";
+"swap.switch_provider.subtitle" = "Switcher";
 
 "swap.price" = "Price";
 "swap.buy_price" = "Buy Price";
