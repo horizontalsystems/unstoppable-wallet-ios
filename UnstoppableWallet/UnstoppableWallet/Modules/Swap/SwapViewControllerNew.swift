@@ -36,8 +36,6 @@ class SwapViewControllerNew: ThemeViewController {
 
         title = "swap.title".localized
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_2_24")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(onOpenSettings))
-        navigationItem.leftBarButtonItem?.tintColor = .themeJacob
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -80,6 +78,9 @@ class SwapViewControllerNew: ThemeViewController {
         }
         dataSource?.onOpenSelectProvider = { [weak self] in
             self?.onOpenSelectProvider()
+        }
+        dataSource?.onOpenSettings = { [weak self] in
+            self?.onOpenSettings()
         }
 
         if isLoaded {

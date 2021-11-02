@@ -36,6 +36,7 @@ class UniswapDataSource {
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
     var onOpenSelectProvider: (() -> ())? = nil
+    var onOpenSettings: (() -> ())? = nil
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
 
@@ -54,8 +55,9 @@ class UniswapDataSource {
             self?.viewModel.onTapSwitch()
         }
 
-        settingsHeaderView.bind(dropdownTitle: viewModel.dexName, settingsHidden: true)
+        settingsHeaderView.bind(dropdownTitle: viewModel.dexName)
         settingsHeaderView.onTapDropDown = { [weak self] in self?.onOpenSelectProvider?() }
+        settingsHeaderView.onTapSettings = { [weak self] in self?.onOpenSettings?() }
 
         initCells()
     }
