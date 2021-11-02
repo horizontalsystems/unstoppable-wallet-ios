@@ -102,7 +102,6 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
         subscribe(disposeBag, viewModel.sortByDriver) { [weak self] in self?.sync(sortBy: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.openSortTypeSignal) { [weak self] in self?.openSortType() }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
         subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
@@ -263,13 +262,20 @@ class WalletViewController: ThemeViewController {
             headerView.bind(viewItem: viewItem, sortBy: sortBy)
 
             headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
-            headerView.onTapSortBy = { [weak self] in self?.viewModel.onTapSortBy() }
+            headerView.onTapSortBy = { [weak self] in self?.openSortType() }
             headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
         }
     }
 
     private func openSortType() {
-        present(SortTypeRouter.module(), animated: true)
+        let alertController = AlertRouter.module(
+                title: "balance.sort.header".localized,
+                viewItems: viewModel.sortTypeViewItems
+        ) { [weak self] index in
+            self?.viewModel.onSelectSortType(index: index)
+        }
+
+        present(alertController, animated: true)
     }
 
     private func openReceive(wallet: Wallet) {

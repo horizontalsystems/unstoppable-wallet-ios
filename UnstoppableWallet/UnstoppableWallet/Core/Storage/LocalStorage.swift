@@ -4,7 +4,6 @@ import MarketKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
-    private let keySortType = "balance_sort_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let keySendInputType = "send_input_type_key"
@@ -16,7 +15,6 @@ class LocalStorage {
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
-    private let keyBalanceHidden = "balance_hidden"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
     private let keyDefaultProvider = "swap_provider"
 
@@ -38,18 +36,6 @@ extension LocalStorage: ILocalStorage {
     var agreementAccepted: Bool {
         get { storage.value(for: agreementAcceptedKey) ?? false }
         set { storage.set(value: newValue, for: agreementAcceptedKey) }
-    }
-
-    var sortType: SortType? {
-        get {
-            guard let sortRawValue: Int = storage.value(for: keySortType) else {
-                return nil
-            }
-            return SortType(rawValue: sortRawValue)
-        }
-        set {
-            storage.set(value: newValue?.rawValue, for: keySortType)
-        }
     }
 
     var sendInputType: SendInputType? {
@@ -99,11 +85,6 @@ extension LocalStorage: ILocalStorage {
     var rateAppLastRequestDate: Date? {
         get { storage.value(for: keyRateAppLastRequestDate) }
         set { storage.set(value: newValue, for: keyRateAppLastRequestDate) }
-    }
-
-    var balanceHidden: Bool {
-        get { storage.value(for: keyBalanceHidden) ?? false }
-        set { storage.set(value: newValue, for: keyBalanceHidden) }
     }
 
     var zcashAlwaysPendingRewind: Bool {

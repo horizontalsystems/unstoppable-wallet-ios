@@ -17,7 +17,6 @@ protocol IRandomManager {
 
 protocol ILocalStorage: AnyObject {
     var agreementAccepted: Bool { get set }
-    var sortType: SortType? { get set }
     var debugLog: String? { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
@@ -26,7 +25,6 @@ protocol ILocalStorage: AnyObject {
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
-    var balanceHidden: Bool { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
 
     func defaultProvider(blockchain: SwapModule.Dex.Blockchain) -> SwapModule.Dex.Provider
@@ -328,11 +326,6 @@ protocol IRateAppManager {
 protocol ITransactionDataSortModeSettingManager {
     var setting: TransactionDataSortMode { get }
     func save(setting: TransactionDataSortMode)
-}
-
-protocol ISortTypeManager: AnyObject {
-    var sortType: SortType { get set }
-    var sortTypeObservable: Observable<SortType> { get }
 }
 
 protocol IGuidesManager {

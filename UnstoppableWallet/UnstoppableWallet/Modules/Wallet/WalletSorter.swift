@@ -17,9 +17,9 @@ class WalletSorter {
         return hasPrice
     }
 
-    func sort(items: [WalletService.Item], sort: SortType) -> [WalletService.Item] {
-        switch sort {
-        case .value:
+    func sort(items: [WalletService.Item], sortType: WalletModule.SortType) -> [WalletService.Item] {
+        switch sortType {
+        case .balance:
             let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
             let zeroItems = items.filter{ $0.balanceData.balance.isZero }
 
