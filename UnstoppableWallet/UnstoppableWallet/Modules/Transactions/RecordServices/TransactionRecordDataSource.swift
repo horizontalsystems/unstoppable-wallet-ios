@@ -41,6 +41,7 @@ class TransactionRecordDataSource {
     }
 
     private func handle(records: [TransactionRecord]) {
+        allShown = false
         var updatedRecords = [TransactionRecord]()
         var hasNewRecords = false
 
@@ -66,6 +67,14 @@ class TransactionRecordDataSource {
         }
     }
 
+    private func handle(loadedRecords: [TransactionRecord], neededRecordsCount: Int) {
+        if loadedRecords.count < neededRecordsCount {
+            allShown = true
+        }
+
+        records.append(contentsOf: loadedRecords)
+    }
+
 }
 
 extension TransactionRecordDataSource {
@@ -87,11 +96,7 @@ extension TransactionRecordDataSource {
             return adapter
                     .transactionsSingle(from: records.last, coin: coin, filter: filter, limit: neededRecordsCount)
                     .map { [weak self] records in
-                        if records.count < neededRecordsCount {
-                            self?.allShown = true
-                        }
-
-                        self?.records.append(contentsOf: records)
+                        self?.handle(loadedRecords: records, neededRecordsCount: neededRecordsCount)
                         return self?.records(count: count) ?? []
                     }
         }
