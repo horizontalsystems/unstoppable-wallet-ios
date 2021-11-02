@@ -252,6 +252,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.button_error.impact_too_high" = "Impact élevé sur les prix";
+"swap.switch_provider.title" = "Swap Provider";
+"swap.switch_provider.subtitle" = "Switcher";
 
 "swap.price" = "Prix";
 "swap.buy_price" = "Buy Price";
