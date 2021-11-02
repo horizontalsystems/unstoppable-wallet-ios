@@ -46,8 +46,6 @@ class App {
     let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
 
-    let sortTypeManager: ISortTypeManager
-
     let evmNetworkManager: EvmNetworkManager
     let accountSettingManager: AccountSettingManager
 
@@ -180,8 +178,6 @@ class App {
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         favoritesManager = FavoritesManager(storage: storage)
-
-        sortTypeManager = SortTypeManager(localStorage: localStorage)
 
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 

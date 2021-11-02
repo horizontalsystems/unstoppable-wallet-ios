@@ -2,14 +2,18 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import StorageKit
 
 class WalletService {
+    private let keyBalanceHidden = "wallet-balance-hidden"
+    private let keySortType = "wallet-sort-type"
+
     private let adapterService: WalletAdapterService
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
-    private let localStorage: ILocalStorage
+    private let localStorage: StorageKit.ILocalStorage
     private let rateAppManager: IRateAppManager
     private let feeCoinProvider: FeeCoinProvider
     private let sorter = WalletSorter()
@@ -17,7 +21,6 @@ class WalletService {
     private var walletDisposeBag = DisposeBag()
 
     private let activeAccountRelay = PublishRelay<Account?>()
-    private let balanceHiddenRelay = PublishRelay<Bool>()
     private let accountsLostRelay = PublishRelay<()>()
 
     private let totalItemRelay = PublishRelay<TotalItem?>()
@@ -36,16 +39,26 @@ class WalletService {
         }
     }
 
-    private let sortTypeRelay = PublishRelay<SortType>()
-    private(set) var sortType: SortType {
+    private let sortTypeRelay = PublishRelay<WalletModule.SortType>()
+    var sortType: WalletModule.SortType {
         didSet {
             sortTypeRelay.accept(sortType)
+            handleUpdateSortType()
+            localStorage.set(value: sortType.rawValue, for: keySortType)
+        }
+    }
+
+    private let balanceHiddenRelay = PublishRelay<Bool>()
+    var balanceHidden: Bool {
+        didSet {
+            balanceHiddenRelay.accept(balanceHidden)
+            localStorage.set(value: balanceHidden, for: keyBalanceHidden)
         }
     }
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, sortTypeManager: ISortTypeManager, localStorage: ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
@@ -55,7 +68,23 @@ class WalletService {
         self.rateAppManager = rateAppManager
         self.feeCoinProvider = feeCoinProvider
 
-        sortType = sortTypeManager.sortType
+        if let rawValue: String = localStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
+            self.sortType = sortType
+        } else if let rawValue: Int = localStorage.value(for: "balance_sort_key"), rawValue < WalletModule.SortType.allCases.count {
+            // todo: temp solution for restoring from version 0.22
+            sortType = WalletModule.SortType.allCases[rawValue]
+        } else {
+            sortType = .balance
+        }
+
+        if let balanceHidden: Bool = localStorage.value(for: keyBalanceHidden) {
+            self.balanceHidden = balanceHidden
+        } else if let balanceHidden: Bool = localStorage.value(for: "balance_hidden") {
+            // todo: temp solution for restoring from version 0.22
+            self.balanceHidden = balanceHidden
+        } else {
+            balanceHidden = false
+        }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
             self?.activeAccountRelay.accept($0)
@@ -71,9 +100,6 @@ class WalletService {
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in
             self?.sync(wallets: $0)
         }
-        subscribe(disposeBag, sortTypeManager.sortTypeObservable) { [weak self] in
-            self?.handleUpdate(sortType: $0)
-        }
 
         _sync(wallets: walletManager.activeWallets)
     }
@@ -84,10 +110,9 @@ class WalletService {
         }
     }
 
-    private func handleUpdate(sortType: SortType) {
+    private func handleUpdateSortType() {
         queue.async {
-            self.sortType = sortType
-            self.items = self.sorter.sort(items: self.items, sort: self.sortType)
+            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
         }
     }
 
@@ -112,7 +137,7 @@ class WalletService {
             return item
         }
 
-        self.items = sorter.sort(items: items, sort: sortType)
+        self.items = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
         let coinUids = Set(wallets.map { $0.coin.uid })
@@ -181,7 +206,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
                 balanceDataMap[item.wallet] = balanceData
             }
 
-            self.items = self.sorter.sort(items: self.items, sort: self.sortType)
+            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
             self.syncTotalItem()
 
             self.cacheManager.set(balanceDataMap: balanceDataMap)
@@ -244,7 +269,7 @@ extension WalletService: IWalletRateServiceDelegate {
                 item.priceItem = priceItemMap[item.wallet.coin.uid]
             }
 
-            self.items = self.sorter.sort(items: self.items, sort: self.sortType)
+            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
             self.syncTotalItem()
         }
     }
@@ -290,7 +315,7 @@ extension WalletService {
         itemsRelay.asObservable()
     }
 
-    var sortTypeObservable: Observable<SortType> {
+    var sortTypeObservable: Observable<WalletModule.SortType> {
         sortTypeRelay.asObservable()
     }
 
@@ -298,18 +323,8 @@ extension WalletService {
         accountManager.activeAccount
     }
 
-    var balanceHidden: Bool {
-        localStorage.balanceHidden
-    }
-
     func item(wallet: Wallet) -> Item? {
         queue.sync { _item(wallet: wallet) }
-    }
-
-    func toggleBalanceHidden() {
-        let newBalanceHidden = !balanceHidden
-        localStorage.balanceHidden = newBalanceHidden
-        balanceHiddenRelay.accept(newBalanceHidden)
     }
 
     func notifyAppear() {

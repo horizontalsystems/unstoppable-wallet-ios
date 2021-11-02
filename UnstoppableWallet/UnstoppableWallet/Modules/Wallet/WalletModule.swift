@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import RxSwift
+import StorageKit
 
 struct WalletModule {
 
@@ -18,8 +19,7 @@ struct WalletModule {
                 cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
-                sortTypeManager: App.shared.sortTypeManager,
-                localStorage: App.shared.localStorage,
+                localStorage: StorageKit.LocalStorage.default,
                 rateAppManager: App.shared.rateAppManager,
                 feeCoinProvider: App.shared.feeCoinProvider
         )
@@ -33,6 +33,25 @@ struct WalletModule {
         )
 
         return WalletViewController(viewModel: viewModel)
+    }
+
+}
+
+extension WalletModule {
+
+    enum SortType: String, CaseIterable {
+        case balance
+        case name
+        case percentGrowth
+
+        var title: String {
+            switch self {
+            case .balance: return "balance.sort.valueHighToLow".localized
+            case .name: return "balance.sort.az".localized
+            case .percentGrowth: return "balance.sort.price_change".localized
+            }
+        }
+
     }
 
 }
