@@ -33,8 +33,7 @@ class CoinSettingsViewModel {
 
     private func derivationConfig(platformCoin: PlatformCoin, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
-                icon: .image(coinType: platformCoin.coinType),
-                iconTint: nil,
+                icon: .remote(iconUrl: platformCoin.coin.imageUrl, placeholder: platformCoin.fullCoin.placeholderImageName),
                 title: "blockchain_settings.title".localized,
                 subtitle: platformCoin.coin.name,
                 description: "blockchain_settings.description".localized,
@@ -50,8 +49,7 @@ class CoinSettingsViewModel {
 
     private func bitcoinCashCoinTypeConfig(platformCoin: PlatformCoin, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
-                icon: .image(coinType: platformCoin.coinType),
-                iconTint: nil,
+                icon: .remote(iconUrl: platformCoin.coin.imageUrl, placeholder: platformCoin.fullCoin.placeholderImageName),
                 title: "blockchain_settings.title".localized,
                 subtitle: platformCoin.coin.name,
                 description: "blockchain_settings.description".localized,
