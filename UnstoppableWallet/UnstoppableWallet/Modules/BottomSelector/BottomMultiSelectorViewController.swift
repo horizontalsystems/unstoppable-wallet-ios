@@ -41,12 +41,14 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: config.title,
-                subtitle: config.subtitle,
-                image: config.icon,
-                tintColor: config.iconTint
-        )
+        titleView.bind(title: config.title, subtitle: config.subtitle)
+        switch config.icon {
+        case .local(let icon, let tintColor):
+            titleView.bind(image: icon, tintColor: tintColor)
+        case .remote(let iconUrl, let iconPlaceholder):
+            titleView.bind(imageUrl: iconUrl, placeholder: UIImage(named: iconPlaceholder))
+        }
+
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -167,13 +169,17 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
 extension BottomMultiSelectorViewController {
 
     struct Config {
-        let icon: UIImage?
-        let iconTint: UIColor?
+        let icon: IconStyle
         let title: String
         let subtitle: String
         let description: String?
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
+
+        enum IconStyle {
+            case local(icon: UIImage?, iconTint: UIColor?)
+            case remote(iconUrl: String, placeholder: String)
+        }
     }
 
     struct ViewItem {

@@ -75,12 +75,31 @@ class BottomSheetTitleView: UIView {
     }
 
     func bind(title: String?, subtitle: String?, image: UIImage?, tintColor: UIColor? = nil) {
+        bind(title: title, subtitle: subtitle)
+        bind(image: image, tintColor: tintColor)
+    }
+
+    func bind(title: String?, subtitle: String?) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
+    }
+
+    func bind(image: UIImage?, tintColor: UIColor? = nil) {
         iconImageView.image = tintColor == nil ? image : image?.withRenderingMode(.alwaysTemplate)
 
         if let tintColor = tintColor {
             iconImageView.tintColor = tintColor
+        }
+    }
+
+    func bind(imageUrl: String?, placeholder: UIImage?) {
+        iconImageView.tintColor = nil
+
+        iconImageView.af.cancelImageRequest()
+        iconImageView.image = placeholder
+
+        if let urlString = imageUrl, let url = URL(string: urlString) {
+            iconImageView.af.setImage(withURL: url, placeholderImage: placeholder)
         }
     }
 

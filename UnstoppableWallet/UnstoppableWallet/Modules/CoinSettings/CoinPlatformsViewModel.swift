@@ -20,8 +20,7 @@ class CoinPlatformsViewModel {
         let fullCoin = request.fullCoin
 
         let config = BottomMultiSelectorViewController.Config(
-                icon: nil,
-                iconTint: nil,
+                icon: .remote(iconUrl: fullCoin.coin.imageUrl, placeholder: fullCoin.placeholderImageName),
                 title: "coin_platforms.title".localized,
                 subtitle: fullCoin.coin.name,
                 description: "coin_platforms.description".localized,
