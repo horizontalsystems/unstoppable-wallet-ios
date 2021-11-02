@@ -10,24 +10,19 @@ class TransactionsService {
 
     private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
-    private var items = [TransactionItem]()
-
     private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
     private var itemsSubject = PublishSubject<[TransactionItem]>()
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
 
+    var items = [TransactionItem]()
+
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
         rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         filterHelper = TransactionFilterHelper()
-
-        handle(updatedWallets: walletManager.activeWallets)
-
-        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in self?.handle(updatedWallets: wallets) }
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] wallets in self?.onAdaptersReady() }
 
         recordsService.recordsObservable
                 .subscribe(onNext: { [weak self] records in self?.handle(records: records) })
@@ -52,6 +47,9 @@ class TransactionsService {
         rateService.rateUpdatedObservable
                 .subscribe(onNext: { [weak self] rate in self?.handle(rate: rate) })
                 .disposed(by: disposeBag)
+
+        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] wallets in self?.handle(updatedWallets: walletManager.activeWallets) }
+        handle(updatedWallets: walletManager.activeWallets)
     }
 
     private func groupWalletsBySource(transactionWallets: [TransactionWallet]) -> [TransactionWallet] {
@@ -72,9 +70,7 @@ class TransactionsService {
 
     private func handle(updatedWallets: [Wallet]) {
         filterHelper.set(wallets: updatedWallets)
-    }
 
-    private func onAdaptersReady() {
         let wallets = filterHelper.wallets
         let walletsGroupedBySource = groupWalletsBySource(transactionWallets: wallets)
 
@@ -161,6 +157,18 @@ class TransactionsService {
 }
 
 extension TransactionsService {
+
+    var typeFilters: (types: [TransactionTypeFilter], selected: Int) {
+        filterHelper.typeFilters
+    }
+
+    var walletFilters: (wallets: [TransactionWallet], selected: Int?) {
+        filterHelper.walletFilters
+    }
+
+    var syncing: Bool {
+        syncStateService.syncing
+    }
 
     var walletFiltersObservable: Observable<(wallets: [TransactionWallet], selected: Int?)> {
         walletFiltersSubject.asObservable()

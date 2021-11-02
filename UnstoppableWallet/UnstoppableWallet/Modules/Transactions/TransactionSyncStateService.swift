@@ -5,7 +5,7 @@ class TransactionSyncStateService {
 
     private var adapterManager: TransactionAdapterManager
     private var adapters = [TransactionSource: ITransactionsAdapter]()
-    private var syncing: Bool = false {
+    private(set) var syncing: Bool = false {
         didSet {
             if syncing != oldValue {
                 syncingSubject.onNext(syncing)
