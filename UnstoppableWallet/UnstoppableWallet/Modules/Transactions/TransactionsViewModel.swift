@@ -35,6 +35,11 @@ class TransactionsViewModel {
             }
         }
         subscribe(disposeBag, service.syncingSignal) { [weak self] syncing in self?.handle(syncing: syncing) }
+
+        handle(typesFilters: service.typeFilters)
+        handle(walletFilters: service.walletFilters)
+        handle(items: service.items)
+        handle(syncing: service.syncing)
     }
 
     private func handle(typesFilters: (types: [TransactionTypeFilter], selected: Int)) {
