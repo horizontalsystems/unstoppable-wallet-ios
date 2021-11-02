@@ -12,6 +12,7 @@ class CoinTweetsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
+    private let infoLabel = UILabel()
     private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
@@ -37,6 +38,39 @@ class CoinTweetsViewController: ThemeViewController {
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
+        let wrapperView = UIView()
+
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        wrapperView.addSubview(infoLabel)
+        infoLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.centerY.equalToSuperview()
+        }
+
+        infoLabel.textAlignment = .center
+        infoLabel.numberOfLines = 0
+        infoLabel.font = .subhead2
+        infoLabel.textColor = .themeGray
+
+        wrapperView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.onTapRetry = { [weak self] in self?.refresh() }
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -49,23 +83,17 @@ class CoinTweetsViewController: ThemeViewController {
         tableView.registerCell(forClass: TweetCell.self)
         tableView.registerCell(forClass: ButtonCell.self)
 
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        spinner.startAnimating()
-
-        view.addSubview(errorView)
-        errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        errorView.onTapRetry = { [weak self] in self?.refresh() }
-
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.infoDriver) { [weak self] info in
+            if let info = info {
+                self?.infoLabel.text = info
+                self?.infoLabel.isHidden = false
+            } else {
+                self?.infoLabel.isHidden = true
+            }
         }
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
             if let error = error {
@@ -101,9 +129,9 @@ class CoinTweetsViewController: ThemeViewController {
         self.viewItems = viewItems
 
         if viewItems != nil {
-            tableView.bounces = true
+            tableView.isHidden = false
         } else {
-            tableView.bounces = false
+            tableView.isHidden = true
         }
 
         tableView.reload()

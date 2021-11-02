@@ -23,11 +23,3 @@ struct CoinTweetsModule {
     }
 
 }
-
-extension CoinTweetsModule {
-
-    enum LoadError: Error {
-        case tweeterUserNotFound
-    }
-
-}
