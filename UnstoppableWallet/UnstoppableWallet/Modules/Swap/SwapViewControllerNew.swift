@@ -105,7 +105,7 @@ class SwapViewControllerNew: ThemeViewController {
     }
 
     @objc func onOpenSelectProvider() {
-        present(SwapSelectProviderModule.viewController(dexManager: viewModel.dexManager).toAlert, animated: true)
+        present(SwapSelectProviderModule.viewController(dexManager: viewModel.dexManager).toBottomSheet, animated: true)
     }
 
     private func reloadTable() {
