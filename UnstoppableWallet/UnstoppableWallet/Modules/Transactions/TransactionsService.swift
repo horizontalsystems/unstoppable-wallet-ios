@@ -16,7 +16,7 @@ class TransactionsService {
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncingSubject = PublishSubject<Bool>()
 
-    var items = [TransactionItem]()
+    private(set) var items = [TransactionItem]()
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
