@@ -156,7 +156,7 @@ class MarketAdvancedSearchService {
 
         internalState = .loading
 
-        marketKit.advancedMarketInfosSingle(top: coinListCount.rawValue)
+        marketKit.advancedMarketInfosSingle(top: coinListCount.rawValue, currencyCode: currencyKit.baseCurrency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.internalState = .loaded(marketInfos: marketInfos)

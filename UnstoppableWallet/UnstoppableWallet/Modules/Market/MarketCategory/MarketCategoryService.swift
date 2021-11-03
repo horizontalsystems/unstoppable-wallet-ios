@@ -42,7 +42,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(categoryUid: category.uid)
+        marketKit.marketInfosSingle(categoryUid: category.uid, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.sync(marketInfos: marketInfos)

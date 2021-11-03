@@ -9,7 +9,6 @@ class MarketOverviewService {
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let appManager: IAppManager
     private var disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
@@ -31,7 +30,6 @@ class MarketOverviewService {
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.appManager = appManager
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncInternalState() }
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncInternalState() }
@@ -47,7 +45,7 @@ class MarketOverviewService {
         }
 
         Single.zip(
-                        marketKit.marketInfosSingle(top: 1000),
+                        marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code),
                         marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .hour24)
                 )
                 .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
