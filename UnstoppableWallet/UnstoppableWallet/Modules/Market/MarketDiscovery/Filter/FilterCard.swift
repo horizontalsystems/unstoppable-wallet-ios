@@ -6,6 +6,7 @@ import ComponentKit
 class FilterCard: UICollectionViewCell {
     private static let titleFont: UIFont = .subhead1
     private static let sideMargin: CGFloat = .margin12
+    private static let iconAndBadgeMargin: CGFloat = 14
 
     private let iconImageView = UIImageView()
     private let titleLabel = UILabel()
@@ -25,7 +26,7 @@ class FilterCard: UICollectionViewCell {
 
         contentView.addSubview(blockchainBadgeView)
         blockchainBadgeView.snp.makeConstraints { maker in
-            maker.leading.equalTo(iconImageView.snp.trailing).offset(14)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin12)
             maker.top.equalToSuperview().inset(FilterCard.sideMargin)
         }
 
@@ -53,21 +54,15 @@ class FilterCard: UICollectionViewCell {
         }
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        iconImageView.image = nil
-        titleLabel.text = nil
-        blockchainBadgeView.text = nil
-        blockchainBadgeView.isHidden = true
-    }
-
     func bind(item: MarketDiscoveryFilterHeaderView.ViewItem) {
         iconImageView.setImage(withUrlString: item.iconUrl, placeholder: UIImage(named: item.iconPlaceholder))
         titleLabel.text = item.title
         if let badgeText = item.blockchainBadge {
             blockchainBadgeView.text = badgeText
             blockchainBadgeView.isHidden = false
+        } else {
+            blockchainBadgeView.text = nil
+            blockchainBadgeView.isHidden = true
         }
     }
 
@@ -79,9 +74,14 @@ class FilterCard: UICollectionViewCell {
 
     static func size(item: MarketDiscoveryFilterHeaderView.ViewItem) -> CGSize {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
-        let unselectedWidth = max(100, titleWidth + 2 * FilterCard.sideMargin)
+        var badgeWidth: CGFloat = 0
+        if let badgeText = item.blockchainBadge {
+            badgeWidth = BadgeView.width(for: badgeText)
+            badgeWidth += iconAndBadgeMargin
+        }
+        let width = max(100, titleWidth + 2 * FilterCard.sideMargin + badgeWidth)
 
-        return CGSize(width: unselectedWidth, height: 94)
+        return CGSize(width: width, height: 94)
     }
 
 }

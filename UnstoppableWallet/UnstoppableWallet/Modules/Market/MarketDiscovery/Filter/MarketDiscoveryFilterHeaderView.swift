@@ -42,6 +42,15 @@ class MarketDiscoveryFilterHeaderView: UIView {
 
         collectionView.registerCell(forClass: FilterCard.self)
 
+        let separator = UIView()
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separator.backgroundColor = .themeSteel10
+
         loaded = true
     }
 
