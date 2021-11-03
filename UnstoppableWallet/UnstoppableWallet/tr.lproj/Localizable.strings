@@ -423,7 +423,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.search.title" = "Search";
 "market.search.empty_text" = "No results found";
 
-"market.advanced_search.title" = "Advanced Search";
+"market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
