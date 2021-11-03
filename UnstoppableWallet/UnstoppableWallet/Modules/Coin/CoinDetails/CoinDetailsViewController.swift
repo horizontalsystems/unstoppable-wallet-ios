@@ -112,10 +112,13 @@ class CoinDetailsViewController: ThemeViewController {
         parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-//    private func openFundsInvested(fundCategories: [CoinFundCategory]) {
-//        let viewController = CoinInvestorsModule.viewController(fundCategories: fundCategories)
-//        navigationController?.pushViewController(viewController, animated: true)
-//    }
+    private func openTreasuries() {
+    }
+
+    private func openFundsInvested() {
+        let viewController = CoinInvestorsModule.viewController(coinUid: viewModel.coinUid)
+        parentNavigationController?.pushViewController(viewController, animated: true)
+    }
 
     private func openTvl() {
 //        let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType.coinType)
@@ -285,6 +288,71 @@ extension CoinDetailsViewController: SectionsDataSource {
         return sections
     }
 
+    private func investorDataSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+        let treasuries = viewItem.treasuries
+        let fundsInvested = viewItem.fundsInvested
+
+        var rows = [RowProtocol]()
+
+        let hasTreasuries = treasuries != nil
+        let hasFundsInvested = fundsInvested != nil
+
+        if let treasuries = treasuries {
+            let row = Row<D2Cell>(
+                    id: "treasuries",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested)
+                        cell.title = "coin_page.treasuries".localized
+                        cell.value = treasuries
+                        cell.valueColor = .themeOz
+                    },
+                    action: { [weak self] _ in
+                        self?.openTreasuries()
+                    }
+            )
+
+            rows.append(row)
+        }
+
+        if let fundsInvested = fundsInvested {
+            let row = Row<D2Cell>(
+                    id: "funds-invested",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: true)
+                        cell.title = "coin_page.funds_invested".localized
+                        cell.value = fundsInvested
+                        cell.valueColor = .themeOz
+                    },
+                    action: { [weak self] _ in
+                        self?.openFundsInvested()
+                    }
+            )
+
+            rows.append(row)
+        }
+
+        if rows.isEmpty {
+            return nil
+        } else {
+            return [
+                Section(
+                        id: "investor-data-header",
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            headerRow(title: "coin_page.investor_data".localized)
+                        ]
+                ),
+                Section(
+                        id: "investor-data",
+                        footerState: .margin(height: .margin24),
+                        rows: rows
+                )
+            ]
+        }
+    }
+
     private func securitySections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
         let securityViewItems = viewItem.securityViewItems
         let auditAddresses = viewItem.auditAddresses
@@ -362,6 +430,10 @@ extension CoinDetailsViewController: SectionsDataSource {
 
             if let tvlSections = tvlSections(viewItem: viewItem) {
                 sections.append(contentsOf: tvlSections)
+            }
+
+            if let investorDataSections = investorDataSections(viewItem: viewItem) {
+                sections.append(contentsOf: investorDataSections)
             }
 
             if let securitySections = securitySections(viewItem: viewItem) {

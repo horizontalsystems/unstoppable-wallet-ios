@@ -35,6 +35,10 @@ extension CoinDetailsService {
         currencyKit.baseCurrency
     }
 
+    var coinUid: String {
+        fullCoin.coin.uid
+    }
+
     var auditAddresses: [String] {
         fullCoin.platforms.compactMap { platform in
             switch platform.coinType {
