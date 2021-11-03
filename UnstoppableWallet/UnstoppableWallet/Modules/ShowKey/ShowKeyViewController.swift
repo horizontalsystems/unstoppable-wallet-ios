@@ -47,6 +47,9 @@ class ShowKeyViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         tableView.isHidden = true
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none

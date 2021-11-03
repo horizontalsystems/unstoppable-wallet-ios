@@ -31,7 +31,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
     private var coinUids = [String]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager, storage: StorageKit.ILocalStorage) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager, appManager: IAppManager, storage: StorageKit.ILocalStorage) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.favoritesManager = favoritesManager
@@ -44,6 +44,8 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         }
 
         subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncMarketInfos() }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
 
         syncCoinUids()
     }
@@ -77,7 +79,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(coinUids: coinUids)
+        marketKit.marketInfosSingle(coinUids: coinUids, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.sync(marketInfos: marketInfos)

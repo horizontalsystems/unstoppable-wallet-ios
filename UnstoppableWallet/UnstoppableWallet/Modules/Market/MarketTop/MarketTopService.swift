@@ -53,7 +53,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
             internalState = .loading
         }
 
-        marketKit.marketInfosSingle(top: 1000)
+        marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.internalState = .loaded(marketInfos: marketInfos)

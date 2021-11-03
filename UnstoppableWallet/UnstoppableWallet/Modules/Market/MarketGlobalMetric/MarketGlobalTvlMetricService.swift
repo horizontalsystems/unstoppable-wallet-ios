@@ -53,7 +53,7 @@ class MarketGlobalTvlMetricService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top250.rawValue)
+        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top250.rawValue, currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.sync(marketInfos: marketInfos)
