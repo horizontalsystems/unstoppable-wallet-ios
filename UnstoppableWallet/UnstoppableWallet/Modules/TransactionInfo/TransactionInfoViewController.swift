@@ -59,6 +59,7 @@ class TransactionInfoViewController: ThemeViewController {
         tableView.registerCell(forClass: C24Cell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
             self?.viewItems = viewItems
