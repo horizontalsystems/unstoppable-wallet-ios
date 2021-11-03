@@ -503,7 +503,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
-"coin_page.funds_invested" = "Funds Invested";
 
 "coin_page.coin_markets" = "%@ Markets";
 "coin_page.coin_markets.sort_by" = "Sort By";
@@ -520,6 +519,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.investor_data" = "Investor Data";
+"coin_page.treasuries" = "Treasuries";
+"coin_page.funds_invested" = "Funds Invested";
+"coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.category" = "Category";
 

@@ -52,6 +52,8 @@ class CoinDetailsViewModel {
                 tvl: info.tvl.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
                 tvlRank: info.tvlRank.map { "#\($0)" },
                 tvlRatio: info.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
+                treasuries: info.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
+                fundsInvested: info.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
                 securityViewItems: securityViewItems(info: info),
                 auditAddresses: service.auditAddresses
         )
@@ -105,6 +107,10 @@ extension CoinDetailsViewModel {
         errorRelay.asDriver()
     }
 
+    var coinUid: String {
+        service.coinUid
+    }
+
     func onLoad() {
         service.sync()
     }
@@ -143,6 +149,8 @@ extension CoinDetailsViewModel {
         let tvl: String?
         let tvlRank: String?
         let tvlRatio: String?
+        let treasuries: String?
+        let fundsInvested: String?
         let securityViewItems: [SecurityViewItem]
         let auditAddresses: [String]
     }
