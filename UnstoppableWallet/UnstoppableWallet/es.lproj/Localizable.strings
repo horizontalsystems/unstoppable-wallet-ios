@@ -422,7 +422,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.search.title" = "Búsqueda";
 "market.search.empty_text" = "No se han encontrado resultados";
 
-"market.advanced_search.title" = "Búsqueda Avanzada";
+"market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Mostrar Resultados";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "Esta opción se aplica a las fichas negociadas en Ethereum (Uniswap DEX) y Binance Smart Chain (Pancake DEX).";
