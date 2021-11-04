@@ -14,6 +14,8 @@ class HistoricalRateService {
     private var rateUpdatedSubject = PublishSubject<(RateKey, CurrencyValue)>()
     private var ratesChangedSubject = PublishSubject<Void>()
 
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions-historical-rate-service-queue", qos: .userInitiated)
+
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.marketKit = marketKit
         currency = currencyKit.baseCurrency
@@ -24,13 +26,13 @@ class HistoricalRateService {
     private func handle(updatedCurrency: Currency) {
         ratesDisposeBag = DisposeBag()
         currency = updatedCurrency
-        rates = [:]
+        queue.async { self.rates = [:] }
         ratesChangedSubject.onNext(())
     }
 
     private func handle(key: RateKey, rate: Decimal) {
         let rate = CurrencyValue(currency: currency, value: rate)
-        rates[key] = rate
+        queue.async { self.rates[key] = rate }
         rateUpdatedSubject.onNext((key, rate))
     }
 
@@ -47,7 +49,7 @@ extension HistoricalRateService {
     }
 
     func rate(key: RateKey) -> CurrencyValue? {
-        rates[key]
+        queue.sync { rates[key] }
     }
 
     func fetchRate(key: RateKey) {
