@@ -502,7 +502,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Объем Торговли";
 "coin_page.trading_volume.description" = "Историческое изменение усредненного ежедневного объема торговли для %@";
 "coin_page.markets" = "Рынки";
-"coin_page.funds_invested" = "Вложенные Средства";
 
 "coin_page.coin_markets" = "%@ Рынки";
 "coin_page.coin_markets.sort_by" = "Сортировать По";
@@ -519,6 +518,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tvl.description" = "Капитал, внесенный в платформу в виде кредитного обеспечения или пула ликвидности.";
 
 "coin_page.investor_data" = "Данные Инвестора";
+"coin_page.treasuries" = "Treasuries";
+"coin_page.funds_invested" = "Вложенные Средства";
+"coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.category" = "Категория";
 
