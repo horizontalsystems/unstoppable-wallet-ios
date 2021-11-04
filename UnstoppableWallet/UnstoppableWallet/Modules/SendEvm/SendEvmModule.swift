@@ -15,7 +15,7 @@ class SendEvmModule {
         let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         let viewModel = SendEvmViewModel(service: service)
-        let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService)
+        let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
 
         let amountViewModel = AmountInputViewModel(
                 service: service,
