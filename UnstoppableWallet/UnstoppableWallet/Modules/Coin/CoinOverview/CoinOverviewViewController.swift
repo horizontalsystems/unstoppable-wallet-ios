@@ -49,7 +49,7 @@ class CoinOverviewViewController: ThemeViewController {
                 height: .heightSingleLineCell
         )
 
-        chartViewCell = ChartViewCell(configuration: configuration)
+        chartViewCell = ChartViewCell(configuration: configuration, isLast: false)
         chartRow = StaticRow(
                 cell: chartViewCell,
                 id: "chartView",

@@ -3,7 +3,6 @@ import ThemeKit
 import ComponentKit
 
 class IndicatorSelectorCell: UITableViewCell {
-    private let topSeparatorView = UIView()
     private let bottomSeparatorView = UIView()
     private var indicatorViews = [ChartIndicatorSet : UIButton]()
 
@@ -54,14 +53,6 @@ class IndicatorSelectorCell: UITableViewCell {
         rsiIndicatorView.setTitle("RSI", for: .normal)
         rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)
         indicatorViews[.rsi] = rsiIndicatorView
-
-        contentView.addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        topSeparatorView.backgroundColor = .themeSteel10
 
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in

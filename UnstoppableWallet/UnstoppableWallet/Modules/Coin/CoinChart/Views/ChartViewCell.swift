@@ -45,7 +45,7 @@ class ChartViewCell: UITableViewCell {
         bottomSeparator.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOnePixel)
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         bottomSeparator.backgroundColor = .themeSteel10

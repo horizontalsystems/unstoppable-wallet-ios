@@ -11,7 +11,8 @@ class ChartPointInfoView: UIView {
 
         addSubview(leftView)
         leftView.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
         }
 
         leftView.titleColor = .themeOz
@@ -19,14 +20,25 @@ class ChartPointInfoView: UIView {
 
         addSubview(rightView)
         rightView.snp.makeConstraints { maker in
-            maker.top.trailing.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.width.equalTo(leftView)
         }
 
         addSubview(macdView)
         macdView.snp.makeConstraints { maker in
             maker.top.trailing.bottom.equalToSuperview()
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
+
+        let separator = UIView()
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separator.backgroundColor = UIColor.themeSteel10
     }
 
     required init?(coder aDecoder: NSCoder) {
