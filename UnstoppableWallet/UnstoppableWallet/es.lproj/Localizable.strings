@@ -502,7 +502,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Volumen de comercio";
 "coin_page.trading_volume.description" = "El cambio histórico en el volumen de operaciones diarias acumuladas por %@";
 "coin_page.markets" = "Mercados";
-"coin_page.funds_invested" = "Fondos invertidos";
 
 "coin_page.coin_markets" = "%@ Mercados";
 "coin_page.coin_markets.sort_by" = "Ordenar por";
@@ -519,6 +518,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tvl.description" = "Capital depositado en la plataforma en forma de garantía de préstamo o reserva de liquidez.";
 
 "coin_page.investor_data" = "Información de Inversor";
+"coin_page.treasuries" = "Treasuries";
+"coin_page.funds_invested" = "Fondos invertidos";
+"coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.category" = "Categoría";
 
