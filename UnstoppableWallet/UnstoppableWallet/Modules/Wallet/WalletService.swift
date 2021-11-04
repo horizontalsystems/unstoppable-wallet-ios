@@ -249,7 +249,11 @@ extension WalletService: IWalletAdapterServiceDelegate {
             let oldState = item.state
             item.state = state
 
-            self.itemUpdatedRelay.accept(item)
+            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
+                self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            } else {
+                self.itemUpdatedRelay.accept(item)
+            }
 
             if oldState.isSynced != state.isSynced {
                 self.syncTotalItem()
