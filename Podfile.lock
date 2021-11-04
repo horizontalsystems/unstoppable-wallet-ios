@@ -516,7 +516,7 @@ CHECKOUT OPTIONS:
     :commit: d1e781a709d7b1dc1b81038a0f20d16b76ce935e
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 8bb26df74cdde341b030f9e12beb9ba1a2b40839
+    :commit: 54b063b7c9e14366ce0c279bfa75999678e2c723
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -555,7 +555,7 @@ CHECKOUT OPTIONS:
     :commit: 02efc79a9fb7fb4fa7e08731e668eb6a9acb3015
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: 77fc658c9f725dd2965226042c6e93190b9538b3
+    :commit: ed1ddd3596d100f5081af26263ef51c9c3755577
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c

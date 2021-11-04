@@ -124,8 +124,8 @@ extension CoinDetailsViewModel {
         errorRelay.asDriver()
     }
 
-    var coinUid: String {
-        service.coinUid
+    var coin: Coin {
+        service.coin
     }
 
     func onLoad() {

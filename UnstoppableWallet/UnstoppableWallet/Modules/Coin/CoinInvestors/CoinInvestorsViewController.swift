@@ -102,6 +102,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .transparent)
                                 cell.title = title
+                                cell.titleTextColor = .themeJacob
                                 cell.value = value
                                 cell.selectionStyle = .none
                             }

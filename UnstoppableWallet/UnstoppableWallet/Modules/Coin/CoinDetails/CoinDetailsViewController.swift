@@ -115,15 +115,17 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openTreasuries() {
+        let viewController = CoinTreasuriesModule.viewController(coin: viewModel.coin)
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openFundsInvested() {
-        let viewController = CoinInvestorsModule.viewController(coinUid: viewModel.coinUid)
+        let viewController = CoinInvestorsModule.viewController(coinUid: viewModel.coin.uid)
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openTvl() {
-        let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coinUid)
+        let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coin.uid)
         parentNavigationController?.present(viewController, animated: true)
     }
 

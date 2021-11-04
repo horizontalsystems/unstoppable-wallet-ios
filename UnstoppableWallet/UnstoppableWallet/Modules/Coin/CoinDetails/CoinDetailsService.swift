@@ -48,8 +48,8 @@ extension CoinDetailsService {
         currencyKit.baseCurrency
     }
 
-    var coinUid: String {
-        fullCoin.coin.uid
+    var coin: Coin {
+        fullCoin.coin
     }
 
     var auditAddresses: [String] {
