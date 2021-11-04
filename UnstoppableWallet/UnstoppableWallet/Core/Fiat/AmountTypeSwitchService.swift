@@ -3,7 +3,7 @@ import RxRelay
 import StorageKit
 
 class AmountTypeSwitchService {
-    private let amountTypeKey = "amount_type"
+    private let amountTypeKey = "amount-type-switch-service-amount-type"
     private let localStorage: StorageKit.ILocalStorage
 
     private var toggleAvailableObservables = [Observable<Bool>]()
