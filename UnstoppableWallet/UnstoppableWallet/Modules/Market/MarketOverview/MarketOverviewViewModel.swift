@@ -67,7 +67,7 @@ class MarketOverviewViewModel {
         if let firstPointItem = pointItems.first, let lastPointItem = pointItems.last {
             let chartItems: [ChartItem] = pointItems.map {
                 let item = ChartItem(timestamp: $0.timestamp)
-                item.add(name: .rate, value: $0.amount)
+                item.added(name: .rate, value: $0.amount)
                 return item
             }
 

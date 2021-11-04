@@ -11,7 +11,7 @@ class MetricChartService {
     private let currencyKit: CurrencyKit.Kit
 
     private let chartTypeRelay = PublishRelay<ChartType>()
-    var chartType: ChartType = .day {
+    var chartType: ChartType {
         didSet {
             guard chartType != oldValue else {
                 return
@@ -28,9 +28,10 @@ class MetricChartService {
         }
     }
 
-    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher) {
+    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher, chartType: ChartType) {
         self.currencyKit = currencyKit
         self.chartFetcher = chartFetcher
+        self.chartType = chartType
 
         fetchChartData()
     }
@@ -54,7 +55,7 @@ class MetricChartService {
 
 extension MetricChartService {
 
-    var chartTypes: [ChartType] { [.day, .week, .month] }
+    var chartTypes: [ChartType] { chartFetcher.chartTypes }
 
     var chartTypeObservable: Observable<ChartType> {
         chartTypeRelay.asObservable()

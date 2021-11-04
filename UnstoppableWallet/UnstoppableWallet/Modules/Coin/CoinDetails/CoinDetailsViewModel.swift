@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import MarketKit
+import Chart
 
 class CoinDetailsViewModel {
     private let service: CoinDetailsService
@@ -29,14 +30,14 @@ class CoinDetailsViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<MarketInfoDetails>) {
+    private func sync(state: DataStatus<CoinDetailsService.Item>) {
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .completed(let info):
-            viewItemRelay.accept(viewItem(info: info))
+        case .completed(let item):
+            viewItemRelay.accept(viewItem(item: item))
             loadingRelay.accept(false)
             errorRelay.accept(nil)
         case .failed:
@@ -46,15 +47,31 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func viewItem(info: MarketInfoDetails) -> ViewItem {
+    private func chart(values: [ChartPoint]?) -> ChartViewItem? {
+        guard let values = values, let first = values.first, let last = values.last else {
+            return nil
+        }
+
+        var chartItems = values.map {
+            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
+        }
+
+        let diff = (last.value / first.value - 1) * 100
+        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
+        let value = CurrencyCompactFormatter.instance.format(currency: service.currency, value: last.value)
+
+        return ChartViewItem(badge: nil, value: value, diff: diff, chartData: chartData, chartTrend: diff.isSignMinus ? .down : .up)
+    }
+
+    private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
                 majorHoldersErc20Address: service.majorHoldersErc20Address,
-                tvl: info.tvl.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
-                tvlRank: info.tvlRank.map { "#\($0)" },
-                tvlRatio: info.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
-                treasuries: info.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
-                fundsInvested: info.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
-                securityViewItems: securityViewItems(info: info),
+                tvlChart: chart(values: item.tvls),
+                tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
+                tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
+                treasuries: item.marketInfoDetails.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
+                fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
+                securityViewItems: securityViewItems(info: item.marketInfoDetails),
                 auditAddresses: service.auditAddresses
         )
     }
@@ -146,7 +163,7 @@ extension CoinDetailsViewModel {
 
     struct ViewItem {
         let majorHoldersErc20Address: String?
-        let tvl: String?
+        let tvlChart: ChartViewItem?
         let tvlRank: String?
         let tvlRatio: String?
         let treasuries: String?
@@ -237,6 +254,14 @@ extension CoinDetailsViewModel {
             case .censorshipResistance: return "coin_page.security_parameters.censorship_resistance".localized
             }
         }
+    }
+
+    struct ChartViewItem {
+        let badge: String?
+        let value: String?
+        let diff: Decimal?
+        let chartData: ChartData?
+        let chartTrend: MovementTrend
     }
 
 }
