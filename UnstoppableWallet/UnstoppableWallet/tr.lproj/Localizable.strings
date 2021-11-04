@@ -512,6 +512,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.token_liquidity" = "Token Liquidity";
 "coin_page.token_distribution" = "Token Distribution";
 
+"coin_page.chart_tvl" = "Token TVL";
 "coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Total Value Locked";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
