@@ -38,7 +38,8 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(titleView.snp.bottom)
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
         tableView.backgroundColor = .clear
@@ -78,6 +79,7 @@ extension SwapSelectProviderViewController: SectionsDataSource {
                 id: "theme",
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
+                    let isLast = index == viewItems.count - 1
 
                     return Row<A4Cell>(
                             id: viewItem.title,
@@ -85,7 +87,7 @@ extension SwapSelectProviderViewController: SectionsDataSource {
                             height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell, _ in
-                                cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: false)
+                                cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                 cell.title = viewItem.title
                                 cell.titleImage = UIImage(named: viewItem.icon)
                                 cell.titleImageTintColor = .themeGray
