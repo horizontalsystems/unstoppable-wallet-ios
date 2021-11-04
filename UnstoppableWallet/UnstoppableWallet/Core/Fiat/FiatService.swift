@@ -6,15 +6,16 @@ import MarketKit
 class FiatService {
     private var disposeBag = DisposeBag()
     private var coinPriceDisposeBag = DisposeBag()
+    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
 
     private let switchService: AmountTypeSwitchService
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
 
     private var platformCoin: PlatformCoin?
-    private var rate: Decimal? {
+    private var price: Decimal? {
         didSet {
-            toggleAvailableRelay.accept(rate != nil)
+            toggleAvailableRelay.accept(price != nil)
         }
     }
 
@@ -57,20 +58,16 @@ class FiatService {
 
     private func sync(coinPrice: CoinPrice?) {
         if let coinPrice = coinPrice, !coinPrice.expired {
-            rate = coinPrice.value
+            price = coinPrice.value
 
             if coinAmountLocked {
                 syncCurrencyAmount()
             } else {
-                switch switchService.amountType {
-                case .coin:
-                    syncCurrencyAmount()
-                case .currency:
-                    syncCoinAmount()
-                }
+                syncCurrencyAmount()
+                syncCoinAmount()
             }
         } else {
-            rate = nil
+            price = nil
         }
 
         sync()
@@ -81,27 +78,29 @@ class FiatService {
     }
 
     private func sync() {
-        if let platformCoin = platformCoin {
-            let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: coinAmount))
-            let currencyAmountInfo: AmountInfo? = currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: currency, value: $0)) }
+        queue.async {
+            if let platformCoin = self.platformCoin {
+                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: self.coinAmount))
+                let currencyAmountInfo: AmountInfo? = self.currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: self.currency, value: $0)) }
 
-            switch switchService.amountType {
-            case .coin:
-                primaryInfo = .amountInfo(amountInfo: coinAmountInfo)
-                secondaryAmountInfo = currencyAmountInfo
-            case .currency:
-                primaryInfo = .amountInfo(amountInfo: currencyAmountInfo)
-                secondaryAmountInfo = coinAmountInfo
+                switch self.switchService.amountType {
+                case .coin:
+                    self.primaryInfo = .amountInfo(amountInfo: coinAmountInfo)
+                    self.secondaryAmountInfo = currencyAmountInfo
+                case .currency:
+                    self.primaryInfo = .amountInfo(amountInfo: currencyAmountInfo)
+                    self.secondaryAmountInfo = coinAmountInfo
+                }
+            } else {
+                self.primaryInfo = .amount(amount: self.coinAmount)
+                self.secondaryAmountInfo = .currencyValue(currencyValue: .init(currency: self.currency, value: 0))
             }
-        } else {
-            primaryInfo = .amount(amount: coinAmount)
-            secondaryAmountInfo = .currencyValue(currencyValue: .init(currency: currency, value: 0))
         }
     }
 
     private func syncCoinAmount() {
-        if let currencyAmount = currencyAmount, let rate = rate {
-            coinAmount = rate == 0 ? 0 : currencyAmount / rate
+        if let currencyAmount = currencyAmount, let price = price {
+            coinAmount = price == 0 ? 0 : currencyAmount / price
         } else {
             coinAmount = 0
         }
@@ -110,8 +109,8 @@ class FiatService {
     }
 
     private func syncCurrencyAmount() {
-        if let rate = rate {
-            currencyAmount = coinAmount * rate
+        if let price = price {
+            currencyAmount = coinAmount * price
         } else {
             currencyAmount = nil
         }
@@ -152,7 +151,7 @@ extension FiatService {
                     })
                     .disposed(by: coinPriceDisposeBag)
         } else {
-            rate = nil
+            price = nil
             currencyAmount = nil
             sync()
         }

@@ -1,12 +1,13 @@
 import UIKit
 import ThemeKit
 import MarketKit
+import StorageKit
 
 class SendEvmModule {
 
     static func viewController(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter) -> UIViewController {
         let service = SendEvmService(platformCoin: platformCoin, adapter: adapter)
-        let switchService = AmountTypeSwitchService()
+        let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)

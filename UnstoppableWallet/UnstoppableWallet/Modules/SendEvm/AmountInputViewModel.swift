@@ -60,8 +60,6 @@ class AmountInputViewModel {
 
         sync(amount: service.amount)
         sync(platformCoin: service.platformCoin)
-        sync(primaryInfo: fiatService.primaryInfo)
-        syncSecondary(amountInfo: fiatService.secondaryAmountInfo)
     }
 
     private func sync(amount: Decimal) {

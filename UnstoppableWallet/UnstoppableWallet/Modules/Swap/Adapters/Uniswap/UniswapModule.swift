@@ -1,5 +1,6 @@
 import UniswapKit
 import EthereumKit
+import StorageKit
 
 class UniswapModule {
     private let tradeService: UniswapTradeService
@@ -48,7 +49,7 @@ extension UniswapModule: ISwapProvider {
         let viewModel = UniswapViewModel(
                 service: service,
                 tradeService: tradeService,
-                switchService: AmountTypeSwitchService(),
+                switchService: AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default),
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
                 viewItemHelper: SwapViewItemHelper()

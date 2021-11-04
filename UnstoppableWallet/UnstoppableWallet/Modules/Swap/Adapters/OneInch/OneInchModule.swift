@@ -1,5 +1,6 @@
 import OneInchKit
 import EthereumKit
+import StorageKit
 
 class OneInchModule {
     private let tradeService: OneInchTradeService
@@ -49,7 +50,7 @@ extension OneInchModule: ISwapProvider {
         let viewModel = OneInchViewModel(
                 service: service,
                 tradeService: tradeService,
-                switchService: AmountTypeSwitchService(),
+                switchService: AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default),
                 allowanceService: allowanceService,
                 pendingAllowanceService: pendingAllowanceService,
                 viewItemHelper: SwapViewItemHelper()
