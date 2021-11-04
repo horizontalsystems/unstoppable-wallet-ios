@@ -7,6 +7,7 @@ class FilterCard: UICollectionViewCell {
     private static let titleFont: UIFont = .subhead1
     private static let sideMargin: CGFloat = .margin12
     private static let iconAndBadgeMargin: CGFloat = 14
+    private static let iconWidth: CGFloat = 24
 
     private let iconImageView = UIImageView()
     private let titleLabel = UILabel()
@@ -79,7 +80,8 @@ class FilterCard: UICollectionViewCell {
             badgeWidth = BadgeView.width(for: badgeText)
             badgeWidth += iconAndBadgeMargin
         }
-        let width = max(100, titleWidth + 2 * FilterCard.sideMargin + badgeWidth)
+        let greaterWidth = max(titleWidth + 2 * FilterCard.sideMargin, iconWidth + badgeWidth + 2 * FilterCard.sideMargin)
+        let width = max(100, greaterWidth)
 
         return CGSize(width: width, height: 94)
     }
