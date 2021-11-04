@@ -6,7 +6,7 @@ class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
-    private let keySendInputType = "send_input_type_key"
+    private let keySendInputType = "amount_type"
     private let keyChartType = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
     private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
