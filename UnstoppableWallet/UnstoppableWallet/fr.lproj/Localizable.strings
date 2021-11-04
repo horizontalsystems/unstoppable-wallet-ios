@@ -502,7 +502,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Volume de trading";
 "coin_page.trading_volume.description" = "La variation historique du volume d'échange quotidien agrégé pour %@";
 "coin_page.markets" = "Marchés";
-"coin_page.funds_invested" = "Fonds investis";
 
 "coin_page.coin_markets" = "%@ Marchés";
 "coin_page.coin_markets.sort_by" = "Classer par";
@@ -519,6 +518,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tvl.description" = "Capital déposé sur la plateforme sous forme de collatéral de prêt ou de pool de liquidité.";
 
 "coin_page.investor_data" = "Données de l'investisseur";
+"coin_page.treasuries" = "Treasuries";
+"coin_page.funds_invested" = "Fonds investis";
+"coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.category" = "Catégorie";
 
