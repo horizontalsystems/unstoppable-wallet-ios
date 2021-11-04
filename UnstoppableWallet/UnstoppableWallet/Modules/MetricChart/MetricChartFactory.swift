@@ -21,9 +21,9 @@ class MetricChartFactory {
         let items = points.map { (point: MetricChartModule.Item) -> ChartItem in
             let item = ChartItem(timestamp: point.timestamp)
 
-            item.add(name: .rate, value: point.value)
+            item.added(name: .rate, value: point.value)
             point.indicators?.forEach { key, value in
-                item.add(name: key, value: value)
+                item.added(name: key, value: value)
             }
 
             return item

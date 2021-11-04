@@ -12,7 +12,16 @@ protocol IMetricChartConfiguration {
 }
 
 protocol IMetricChartFetcher {
+    var chartTypes: [ChartType] { get }
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> Single<[MetricChartModule.Item]>
+}
+
+extension IMetricChartFetcher {
+
+    var chartTypes: [ChartType] {
+        [.day, .week, .month]
+    }
+
 }
 
 class MetricChartModule {

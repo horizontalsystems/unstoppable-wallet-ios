@@ -12,6 +12,7 @@ class CoinDetailsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = MarketListErrorView()
 
@@ -50,6 +51,7 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D20Cell.self)
+        tableView.registerCell(forClass: CoinDetailsMetricCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -121,8 +123,8 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openTvl() {
-//        let viewController = CoinTvlModule.viewController(coinType: viewModel.coinType.coinType)
-//        present(viewController, animated: true)
+        let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coinUid)
+        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func openTvlRank() {
@@ -204,24 +206,20 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func tvlSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
-        guard let tvl = viewItem.tvl else {
+        guard let tvlChart = viewItem.tvlChart else {
             return nil
         }
 
-        let tvlRow = Row<D6Cell>(
+        let tvlRow = Row<CoinDetailsMetricCell>(
                 id: "tvl_chart",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.title = "coin_page.tvl".localized
-                    cell.value = tvl
-                    cell.valueColor = .themeOz
-                    cell.valueImage = UIImage(named: "chart_20")
-                    cell.valueImageTintColor = .themeGray
-                },
-                action: { [weak self] _ in
-                    self?.openTvl()
+                height: CoinDetailsMetricCell.cellHeight,
+                bind: { [weak self] cell, _ in
+                    cell.title = "coin_page.chart_tvl".localized
+                    cell.set(configuration: .smallChart)
+                    cell.set(viewItem: tvlChart)
+                    cell.onTap = {
+                        self?.openTvl()
+                    }
                 }
         )
 

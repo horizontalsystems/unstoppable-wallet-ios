@@ -26,6 +26,10 @@ extension CoinTradingVolumeFetcher: IMetricChartConfiguration {
 
 extension CoinTradingVolumeFetcher: IMetricChartFetcher {
 
+    var chartTypes: [ChartType] {
+        [.month, .halfYear, .year]
+    }
+
     func fetchSingle(currencyCode: String, timePeriod: MarketKit.TimePeriod) -> Single<[MetricChartModule.Item]> {
         Single.just([])
     }

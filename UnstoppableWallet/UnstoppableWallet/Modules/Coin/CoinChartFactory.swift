@@ -77,9 +77,9 @@ class CoinChartFactory {
         let items = points.map { (point: ChartPoint) -> ChartItem in
             let item = ChartItem(timestamp: point.timestamp)
 
-            item.add(name: .rate, value: point.value)
-            if let volume = point.volume {
-                item.add(name: .volume, value: volume)
+            item.added(name: .rate, value: point.value)
+            if let volume = point.extra[ChartPoint.volume] {
+                item.added(name: .volume, value: volume)
             }
 
             return item
@@ -99,7 +99,7 @@ class CoinChartFactory {
 
     private func chartItem(point: ChartPoint, previousValues: [Decimal]) -> ChartItem {
         let chartItem = ChartItem(timestamp: point.timestamp)
-        chartItem.add(name: .rate, value: point.value)
+        chartItem.added(name: .rate, value: point.value)
 
         let values = previousValues + [point.value]
 
@@ -148,13 +148,13 @@ class CoinChartFactory {
            timestamp > lastPointTimestamp {
             // add current rate in data
             endTimestamp = max(timestamp, endTimestamp)
-            points.append(ChartPoint(coinUid: item.coinUid, currencyCode: currency.code, chartType: chartType, timestamp: timestamp, value: rate, volume: nil))
+            points.append(ChartPoint(timestamp: timestamp, value: rate))
 
             // create extended point for 24h ago
             if chartType == .day, let rateDiff24 = item.rateDiff24h {
                 let firstTimestamp = timestamp - 24 * 60 * 60
                 let price24h = 100 * rate / (100 + rateDiff24)
-                extendedPoint = ChartPoint(coinUid: item.coinUid, currencyCode: currency.code, chartType: chartType, timestamp: firstTimestamp, value: price24h, volume: nil)
+                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
             }
 
             addCurrentRate = true
