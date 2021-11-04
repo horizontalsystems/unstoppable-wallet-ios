@@ -520,7 +520,14 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.investor_data" = "Investor Data";
+
 "coin_page.treasuries" = "Treasuries";
+"coin_page.treasuries.filters" = "Filters";
+"coin_page.treasuries.filter.all" = "All";
+"coin_page.treasuries.filter.public" = "Public";
+"coin_page.treasuries.filter.private" = "Private";
+"coin_page.treasuries.filter.etf" = "ETF";
+
 "coin_page.funds_invested" = "Funds Invested";
 "coin_page.funds_invested.lead" = "Lead";
 
