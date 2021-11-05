@@ -36,7 +36,7 @@ class CoinDetailsService {
                 .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, chartType: .monthByDay)
                 .map {
                     $0.points
-                    .flatMap { point in
+                    .compactMap { point in
                         point.extra[ChartPoint.volume].map { ChartPoint(timestamp: point.timestamp, value: $0) }
                     }
                 }

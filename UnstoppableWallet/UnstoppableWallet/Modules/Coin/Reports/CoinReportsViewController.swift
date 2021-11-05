@@ -5,21 +5,18 @@ import SectionsTableView
 import ComponentKit
 import HUD
 
-class MarketPostViewController: ThemeViewController {
-    private let viewModel: MarketPostViewModel
+class CoinReportsViewController: ThemeViewController {
+    private let viewModel: CoinReportsViewModel
     private let urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = MarketListErrorView()
-    private let refreshControl = UIRefreshControl()
 
-    weak var parentNavigationController: UINavigationController?
+    private var viewItems: [CoinReportsViewModel.ViewItem]?
 
-    private var viewItems: [MarketPostViewModel.ViewItem]?
-
-    init(viewModel: MarketPostViewModel, urlManager: IUrlManager) {
+    init(viewModel: CoinReportsViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 
@@ -33,9 +30,7 @@ class MarketPostViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshControl.tintColor = .themeLeah
-        refreshControl.alpha = 0.6
-        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        title = "coin_page.reports".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -60,7 +55,7 @@ class MarketPostViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.onTapRetry = { [weak self] in self?.refresh() }
+        errorView.onTapRetry = { [weak self] in self?.viewModel.refresh() }
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -76,25 +71,7 @@ class MarketPostViewController: ThemeViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        tableView.refreshControl = refreshControl
-    }
-
-    private func refresh() {
-        viewModel.refresh()
-    }
-
-    @objc private func onRefresh() {
-        refresh()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.refreshControl.endRefreshing()
-        }
-    }
-
-    private func sync(viewItems: [MarketPostViewModel.ViewItem]?) {
+    private func sync(viewItems: [CoinReportsViewModel.ViewItem]?) {
         self.viewItems = viewItems
 
         if viewItems != nil {
@@ -106,15 +83,11 @@ class MarketPostViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func open(url: String) {
-        urlManager.open(url: url, from: parentNavigationController)
-    }
-
 }
 
-extension MarketPostViewController: SectionsDataSource {
+extension CoinReportsViewController: SectionsDataSource {
 
-    private func row(viewItem: MarketPostViewModel.ViewItem) -> RowProtocol {
+    private func row(viewItem: CoinReportsViewModel.ViewItem) -> RowProtocol {
         Row<PostCell>(
                 id: viewItem.title,
                 height: PostCell.height,
@@ -122,14 +95,14 @@ extension MarketPostViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                     cell.bind(
-                            header: viewItem.source,
+                            header: viewItem.author,
                             title: viewItem.title,
                             body: viewItem.body,
-                            time: viewItem.timeAgo
+                            time: viewItem.date
                     )
                 },
                 action: { [weak self] _ in
-                    self?.open(url: viewItem.url)
+                    self?.urlManager.open(url: viewItem.url, from: self)
                 }
         )
     }
@@ -140,10 +113,12 @@ extension MarketPostViewController: SectionsDataSource {
         if let viewItems = viewItems {
             for (index, viewItem) in viewItems.enumerated() {
                 let section = Section(
-                        id: "post_\(index)",
+                        id: "report\(index)",
                         headerState: .margin(height: .margin12),
                         footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
-                        rows: [row(viewItem: viewItem)]
+                        rows: [
+                            row(viewItem: viewItem)
+                        ]
                 )
 
                 sections.append(section)

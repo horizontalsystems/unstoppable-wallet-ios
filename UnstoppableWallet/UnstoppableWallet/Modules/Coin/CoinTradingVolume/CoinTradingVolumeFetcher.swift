@@ -44,7 +44,7 @@ extension CoinTradingVolumeFetcher: IMetricChartFetcher {
         return marketKit
             .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, chartType: chartType)
             .map { info in
-                info.points.flatMap { point in
+                info.points.compactMap { point in
                     point.extra[ChartPoint.volume].map { MetricChartModule.Item(value: $0, timestamp: point.timestamp) }
                 }
             }
