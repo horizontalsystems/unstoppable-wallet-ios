@@ -112,10 +112,6 @@ class UniswapService {
         case .loading:
             loading = true
         case .ready(let trade):
-            if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
-                allErrors.append(SwapModule.SwapError.forbiddenPriceImpactLevel)
-            }
-
             transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
         case .notReady(let errors):
             allErrors.append(contentsOf: errors)

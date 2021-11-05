@@ -83,8 +83,6 @@ class OneInchViewModel {
         } else if case .ready = tradeService.state {
             if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
-                proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.state == .pending {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             } else {

@@ -111,7 +111,6 @@ extension SwapModule {
         case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
-        case forbiddenPriceImpactLevel
     }
 
 }
