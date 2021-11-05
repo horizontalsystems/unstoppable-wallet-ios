@@ -3,7 +3,7 @@ import RxRelay
 import MarketKit
 
 class CoinMajorHoldersService {
-    private let address: String
+    private let coinUid: String
     private let marketKit: Kit
     private var disposeBag = DisposeBag()
 
@@ -14,8 +14,8 @@ class CoinMajorHoldersService {
         }
     }
 
-    init(address: String, marketKit: Kit) {
-        self.address = address
+    init(coinUid: String, marketKit: Kit) {
+        self.coinUid = coinUid
         self.marketKit = marketKit
 
         sync()
@@ -26,7 +26,7 @@ class CoinMajorHoldersService {
 
         state = .loading
 
-        marketKit.topErc20HoldersSingle(address: address, limit: 10)
+        marketKit.topHoldersSingle(coinUid: coinUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] holders in
                     self?.state = .completed(holders)
