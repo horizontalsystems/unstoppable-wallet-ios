@@ -58,7 +58,7 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: IRateAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: IRateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
@@ -99,6 +99,9 @@ class WalletService {
         }
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in
             self?.sync(wallets: $0)
+        }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
+            self?.coinPriceService.refresh()
         }
 
         _sync(wallets: walletManager.activeWallets)
