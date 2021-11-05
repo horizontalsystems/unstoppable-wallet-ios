@@ -124,6 +124,11 @@ class CoinDetailsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func openReports() {
+        let viewController = CoinReportsModule.viewController(coinUid: viewModel.coin.uid)
+        parentNavigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func openTvl() {
         let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coin.uid)
         parentNavigationController?.present(viewController, animated: true)
@@ -309,18 +314,20 @@ extension CoinDetailsViewController: SectionsDataSource {
     private func investorDataSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
         let treasuries = viewItem.treasuries
         let fundsInvested = viewItem.fundsInvested
+        let reportsCount = viewItem.reportsCount
 
         var rows = [RowProtocol]()
 
         let hasTreasuries = treasuries != nil
         let hasFundsInvested = fundsInvested != nil
+        let hasReports = reportsCount != nil
 
         if let treasuries = treasuries {
             let row = Row<D2Cell>(
                     id: "treasuries",
                     height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested)
+                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested && !hasReports)
                         cell.title = "coin_page.treasuries".localized
                         cell.value = treasuries
                         cell.valueColor = .themeOz
@@ -338,13 +345,31 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "funds-invested",
                     height: .heightCell48,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: true)
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: !hasReports)
                         cell.title = "coin_page.funds_invested".localized
                         cell.value = fundsInvested
                         cell.valueColor = .themeOz
                     },
                     action: { [weak self] _ in
                         self?.openFundsInvested()
+                    }
+            )
+
+            rows.append(row)
+        }
+
+        if let reportsCount = reportsCount {
+            let row = Row<D2Cell>(
+                    id: "reports",
+                    height: .heightCell48,
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries && !hasFundsInvested, isLast: true)
+                        cell.title = "coin_page.reports".localized
+                        cell.value = reportsCount
+                        cell.valueColor = .themeOz
+                    },
+                    action: { [weak self] _ in
+                        self?.openReports()
                     }
             )
 

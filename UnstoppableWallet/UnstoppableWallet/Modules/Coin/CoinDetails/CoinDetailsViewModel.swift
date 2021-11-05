@@ -52,7 +52,7 @@ class CoinDetailsViewModel {
             return nil
         }
 
-        var chartItems = values.map {
+        let chartItems = values.map {
             ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
         }
 
@@ -72,6 +72,7 @@ class CoinDetailsViewModel {
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
                 treasuries: item.marketInfoDetails.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
                 fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
+                reportsCount: "1",
                 securityViewItems: securityViewItems(info: item.marketInfoDetails),
                 auditAddresses: service.auditAddresses
         )
@@ -170,6 +171,7 @@ extension CoinDetailsViewModel {
         let tvlRatio: String?
         let treasuries: String?
         let fundsInvested: String?
+        let reportsCount: String?
         let securityViewItems: [SecurityViewItem]
         let auditAddresses: [String]
     }
