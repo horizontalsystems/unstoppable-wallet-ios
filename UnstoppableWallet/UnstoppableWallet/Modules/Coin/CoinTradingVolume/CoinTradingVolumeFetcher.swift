@@ -3,11 +3,13 @@ import RxSwift
 import Foundation
 
 class CoinTradingVolumeFetcher {
-    private let coinType: CoinType
+    private let marketKit: MarketKit.Kit
+    private let coinUid: String
     private let coinTitle: String
 
-    init(coinType: CoinType, coinTitle: String) {
-        self.coinType = coinType
+    init(marketKit: MarketKit.Kit, coinUid: String, coinTitle: String) {
+        self.marketKit = marketKit
+        self.coinUid = coinUid
         self.coinTitle = coinTitle
     }
 
@@ -27,21 +29,25 @@ extension CoinTradingVolumeFetcher: IMetricChartConfiguration {
 extension CoinTradingVolumeFetcher: IMetricChartFetcher {
 
     var chartTypes: [ChartType] {
-        [.month, .halfYear, .year]
+        [.monthByDay, .halfYear, .year]
     }
 
     func fetchSingle(currencyCode: String, timePeriod: MarketKit.TimePeriod) -> Single<[MetricChartModule.Item]> {
-        Single.just([])
-    }
+        let chartType: ChartType
+        switch timePeriod {
+        case .day30:  chartType = .monthByDay
+        case .day200: chartType = .halfYear
+        case .year1: chartType = .year
+        default: chartType = .monthByDay
+        }
 
-//    func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> Single<[MetricChartModule.Item]> {
-//        rateManager
-//                .coinMarketPointsSingle(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: timePeriod)
-//                .map { points in
-//                    points.map {
-//                        MetricChartModule.Item(value: $0.volume24h, timestamp: TimeInterval($0.timestamp))
-//                    }
-//                }
-//    }
+        return marketKit
+            .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, chartType: chartType)
+            .map { info in
+                info.points.flatMap { point in
+                    point.extra[ChartPoint.volume].map { MetricChartModule.Item(value: $0, timestamp: point.timestamp) }
+                }
+            }
+    }
 
 }

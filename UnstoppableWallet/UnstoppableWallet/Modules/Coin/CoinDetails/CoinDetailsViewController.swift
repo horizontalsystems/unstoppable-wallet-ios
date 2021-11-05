@@ -134,10 +134,10 @@ class CoinDetailsViewController: ThemeViewController {
 //        navigationController?.pushViewController(viewController, animated: true)
     }
 
-//    private func openTradingVolume() {
-//        let viewController = CoinTradingVolumeModule.viewController(coinType: viewModel.coinType.coinType, coinTitle: viewModel.coinTitle)
-//        present(viewController, animated: true)
-//    }
+    private func openTradingVolume() {
+        let viewController = CoinTradingVolumeModule.viewController(coinUid: viewModel.coin.uid, coinTitle: viewModel.coin.name)
+        present(viewController, animated: true)
+    }
 
 }
 
@@ -156,8 +156,25 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func liquiditySections() -> [SectionProtocol] {
-        [
+    private func liquiditySections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+        guard let volumeChart = viewItem.volumeChart else {
+            return nil
+        }
+
+        let volumeRow = Row<CoinDetailsMetricCell>(
+                id: "volume_chart",
+                height: CoinDetailsMetricCell.cellHeight,
+                bind: { [weak self] cell, _ in
+                    cell.title = "coin_page.chart_volumes".localized
+                    cell.set(configuration: .smallChart)
+                    cell.set(viewItem: volumeChart)
+                    cell.onTap = {
+                        self?.openTradingVolume()
+                    }
+                }
+        )
+
+        return [
             Section(
                     id: "liquidity-header",
                     footerState: .margin(height: .margin12),
@@ -169,6 +186,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "liquidity",
                     footerState: .margin(height: .margin24),
                     rows: [
+                        volumeRow
                     ]
             )
         ]
@@ -422,7 +440,9 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            sections.append(contentsOf: liquiditySections())
+            if let liquiditySections = liquiditySections(viewItem: viewItem) {
+                sections.append(contentsOf: liquiditySections)
+            }
 
             if let distributionSections = distributionSections(viewItem: viewItem) {
                 sections.append(contentsOf: distributionSections)
