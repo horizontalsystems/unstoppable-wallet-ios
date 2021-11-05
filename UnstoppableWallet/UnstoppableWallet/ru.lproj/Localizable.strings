@@ -531,6 +531,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.funds_invested" = "Вложенные Средства";
 "coin_page.funds_invested.lead" = "Lead";
 
+"coin_page.reports" = "Reports";
+
 "coin_page.category" = "Категория";
 
 "coin_page.contracts" = "Contracts";
