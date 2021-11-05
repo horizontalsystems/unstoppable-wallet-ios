@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(values: [ChartPoint]?) -> ChartViewItem? {
+    private func chart(values: [ChartPoint]?, badge: String? = nil) -> ChartViewItem? {
         guard let values = values, let first = values.first, let last = values.last else {
             return nil
         }
@@ -60,12 +60,13 @@ class CoinDetailsViewModel {
         let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
         let value = CurrencyCompactFormatter.instance.format(currency: service.currency, value: last.value)
 
-        return ChartViewItem(badge: nil, value: value, diff: diff, chartData: chartData, chartTrend: diff.isSignMinus ? .down : .up)
+        return ChartViewItem(badge: badge, value: value, diff: diff, chartData: chartData, chartTrend: diff.isSignMinus ? .down : .up)
     }
 
     private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
                 hasMajorHolders: service.hasMajorHolders,
+                volumeChart: chart(values: item.totalVolumes, badge: service.coin.marketCapRank.map { "#\($0)" }),
                 tvlChart: chart(values: item.tvls),
                 tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
@@ -163,6 +164,7 @@ extension CoinDetailsViewModel {
 
     struct ViewItem {
         let hasMajorHolders: Bool
+        let volumeChart: ChartViewItem?
         let tvlChart: ChartViewItem?
         let tvlRank: String?
         let tvlRatio: String?

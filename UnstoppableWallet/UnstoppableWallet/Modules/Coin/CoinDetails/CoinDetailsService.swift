@@ -25,15 +25,28 @@ class CoinDetailsService {
     }
 
     private func fetchCharts(details: MarketInfoDetails) -> Single<Item> {
-        guard details.tvl != nil else {
-            return Single.just(Item(marketInfoDetails: details, tvls: nil, totalVolumeChart: nil))
+        let tvlSingle: Single<[ChartPoint]>
+        if details.tvl != nil {
+            tvlSingle = marketKit.marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .day30)
+        } else {
+            tvlSingle = Single.just([])
         }
 
-        return marketKit
-                .marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .day30)
-                .map { tvls -> Item in
-                    Item(marketInfoDetails: details, tvls: tvls, totalVolumeChart: nil)
+        let volumeSingle = marketKit
+                .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, chartType: .monthByDay)
+                .map {
+                    $0.points
+                    .flatMap { point in
+                        point.extra[ChartPoint.volume].map { ChartPoint(timestamp: point.timestamp, value: $0) }
+                    }
                 }
+
+        return Single.zip(
+                tvlSingle.catchErrorJustReturn([]),
+                volumeSingle.catchErrorJustReturn([])
+            ).map { tvls, totalVolumes -> Item in
+                Item(marketInfoDetails: details, tvls: tvls, totalVolumes: totalVolumes)
+        }
     }
 
 }
@@ -103,12 +116,12 @@ extension CoinDetailsService {
     struct Item {
         let marketInfoDetails: MarketInfoDetails
         let tvls: [ChartPoint]?
-        let totalVolumeChart: ChartItem?
+        let totalVolumes: [ChartPoint]?
 
-        init(marketInfoDetails: MarketInfoDetails, tvls: [ChartPoint]? = nil, totalVolumeChart: ChartItem? = nil) {
+        init(marketInfoDetails: MarketInfoDetails, tvls: [ChartPoint]? = nil, totalVolumes: [ChartPoint]? = nil) {
             self.marketInfoDetails = marketInfoDetails
             self.tvls = tvls
-            self.totalVolumeChart = totalVolumeChart
+            self.totalVolumes = totalVolumes
         }
 
     }
