@@ -62,15 +62,15 @@ extension CoinDetailsService {
         }
     }
 
-    var majorHoldersErc20Address: String? {
+    var hasMajorHolders: Bool {
         for platform in fullCoin.platforms {
             switch platform.coinType {
-            case .erc20(let address): return address
+            case .erc20: return true
             default: ()
             }
         }
 
-        return nil
+        return false
     }
 
     func sync() {

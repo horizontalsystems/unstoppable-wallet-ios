@@ -99,8 +99,8 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func openMajorHolders(address: String) {
-        let viewController = CoinMajorHoldersModule.viewController(address: address)
+    private func openMajorHolders() {
+        let viewController = CoinMajorHoldersModule.viewController(coinUid: viewModel.coin.uid)
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -175,7 +175,7 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
-        guard let address = viewItem.majorHoldersErc20Address else {
+        guard viewItem.hasMajorHolders else {
             return nil
         }
 
@@ -199,7 +199,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                                     cell.title = "coin_page.major_holders".localized
                                 },
                                 action: { [weak self] _ in
-                                    self?.openMajorHolders(address: address)
+                                    self?.openMajorHolders()
                                 }
                         )
                     ]

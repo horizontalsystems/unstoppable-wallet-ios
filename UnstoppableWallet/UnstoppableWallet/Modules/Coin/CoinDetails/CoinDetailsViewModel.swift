@@ -65,7 +65,7 @@ class CoinDetailsViewModel {
 
     private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
-                majorHoldersErc20Address: service.majorHoldersErc20Address,
+                hasMajorHolders: service.hasMajorHolders,
                 tvlChart: chart(values: item.tvls),
                 tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
@@ -162,7 +162,7 @@ extension CoinDetailsViewModel {
 extension CoinDetailsViewModel {
 
     struct ViewItem {
-        let majorHoldersErc20Address: String?
+        let hasMajorHolders: Bool
         let tvlChart: ChartViewItem?
         let tvlRank: String?
         let tvlRatio: String?
