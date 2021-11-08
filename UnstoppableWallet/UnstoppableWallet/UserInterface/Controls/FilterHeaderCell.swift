@@ -59,9 +59,8 @@ extension FilterHeaderCell {
         buttonStyle == .tab ? CGFloat.heightSingleLineCell : 28
     }
 
-    static func size(for title: String, buttonStyle: ThemeButtonStyle) -> CGSize {
-        let height = height(buttonStyle: buttonStyle)
-        return CGSize(width: ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width, height: height)
+    static func width(for title: String, buttonStyle: ThemeButtonStyle) -> CGFloat {
+        ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width
     }
 
 }
