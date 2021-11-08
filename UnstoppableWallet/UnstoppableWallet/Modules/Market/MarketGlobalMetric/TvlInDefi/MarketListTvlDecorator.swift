@@ -2,6 +2,8 @@ import CurrencyKit
 import MarketKit
 
 class MarketListTvlDecorator {
+    typealias Item = MarketInfo
+
     private let service: MarketGlobalTvlMetricService
 
     init(service: MarketGlobalTvlMetricService) {
@@ -15,6 +17,7 @@ class MarketListTvlDecorator {
 
         return diff * price / (100 + diff)
     }
+
 }
 
 extension MarketListTvlDecorator: IMarketListDecorator {
