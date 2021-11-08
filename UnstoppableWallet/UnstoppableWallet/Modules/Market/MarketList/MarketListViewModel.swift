@@ -5,9 +5,15 @@ import CurrencyKit
 import MarketKit
 
 protocol IMarketListService {
-    var state: MarketListServiceState { get }
-    var stateObservable: Observable<MarketListServiceState> { get }
+    associatedtype Item
+
+    var state: MarketListServiceState<Item> { get }
+    var stateObservable: Observable<MarketListServiceState<Item>> { get }
     func refresh()
+}
+
+protocol IMarketListCoinUidService {
+    func coinUid(index: Int) -> String?
 }
 
 protocol IMarketListDecoratorService {
@@ -18,27 +24,29 @@ protocol IMarketListDecoratorService {
 }
 
 protocol IMarketListDecorator {
-    func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem
+    associatedtype Item
+
+    func listViewItem(item: Item) -> MarketModule.ListViewItem
 }
 
-enum MarketListServiceState {
+enum MarketListServiceState<T> {
     case loading
-    case loaded(marketInfos: [MarketInfo], softUpdate: Bool, reorder: Bool)
+    case loaded(items: [T], softUpdate: Bool, reorder: Bool)
     case failed(error: Error)
 }
 
-class MarketListViewModel {
-    private let service: IMarketListService
+class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDecorator> {
+    private let service: Service
     private let watchlistToggleService: MarketWatchlistToggleService
-    private let decorator: IMarketListDecorator
+    private let decorator: Decorator
     private let disposeBag = DisposeBag()
 
-    private let viewItemDataRelay = BehaviorRelay<ViewItemData?>(value: nil)
+    private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
     private let scrollToTopRelay = PublishRelay<()>()
 
-    init(service: IMarketListService, watchlistToggleService: MarketWatchlistToggleService, decorator: IMarketListDecorator) {
+    init(service: Service, watchlistToggleService: MarketWatchlistToggleService, decorator: Decorator) {
         self.service = service
         self.watchlistToggleService = watchlistToggleService
         self.decorator = decorator
@@ -48,14 +56,14 @@ class MarketListViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: MarketListServiceState) {
+    private func sync(state: MarketListServiceState<Service.Item>) {
         switch state {
         case .loading:
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .loaded(let marketInfos, let softUpdate, let reorder):
-            let data = ViewItemData(viewItems: viewItems(marketInfos: marketInfos), softUpdate: softUpdate)
+        case .loaded(let items, let softUpdate, let reorder):
+            let data = MarketModule.ListViewItemData(viewItems: viewItems(items: items), softUpdate: softUpdate)
             viewItemDataRelay.accept(data)
             loadingRelay.accept(false)
             errorRelay.accept(nil)
@@ -70,17 +78,21 @@ class MarketListViewModel {
         }
     }
 
-    private func viewItems(marketInfos: [MarketInfo]) -> [MarketModule.ListViewItem] {
-        marketInfos.map {
-            decorator.listViewItem(marketInfo: $0)
+    private func viewItems(items: [Service.Item]) -> [MarketModule.ListViewItem] {
+        items.compactMap { item in
+            guard let item = item as? Decorator.Item else {
+                return nil
+            }
+
+            return decorator.listViewItem(item: item)
         }
     }
 
 }
 
-extension MarketListViewModel {
+extension MarketListViewModel: IMarketListViewModel {
 
-    var viewItemDataDriver: Driver<ViewItemData?> {
+    var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> {
         viewItemDataRelay.asDriver()
     }
 
@@ -110,22 +122,6 @@ extension MarketListViewModel {
 
     func refresh() {
         service.refresh()
-    }
-
-}
-
-extension MarketListViewModel {
-
-    struct ViewItemData {
-        let viewItems: [MarketModule.ListViewItem]
-        let softUpdate: Bool
-        let scrollToTop: Bool
-
-        init(viewItems: [MarketModule.ListViewItem], softUpdate: Bool = false, scrollToTop: Bool = false) {
-            self.viewItems = viewItems
-            self.softUpdate = softUpdate
-            self.scrollToTop = scrollToTop
-        }
     }
 
 }

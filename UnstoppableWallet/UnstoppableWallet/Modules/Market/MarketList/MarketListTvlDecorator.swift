@@ -19,7 +19,7 @@ class MarketListTvlDecorator {
 
 extension MarketListTvlDecorator: IMarketListDecorator {
 
-    func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem {
+    func listViewItem(item marketInfo: MarketInfo) -> MarketModule.ListViewItem {
         let currency = service.currency
 
         let diff: MarketModule.MarketDataValue

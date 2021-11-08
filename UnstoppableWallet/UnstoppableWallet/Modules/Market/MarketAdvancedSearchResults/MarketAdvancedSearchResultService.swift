@@ -4,12 +4,14 @@ import MarketKit
 import CurrencyKit
 
 class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
+    typealias Item = MarketInfo
+
     private let marketInfos: [MarketInfo]
     private let currencyKit: CurrencyKit.Kit
     let priceChangeType: MarketModule.PriceChangeType
 
-    private let stateRelay = PublishRelay<MarketListServiceState>()
-    private(set) var state: MarketListServiceState = .loading {
+    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
+    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -30,18 +32,30 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     }
 
     private func syncState(reorder: Bool = false) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
+        state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
 }
 
 extension MarketAdvancedSearchResultService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState> {
+    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
     }
 
     func refresh() {
+    }
+
+}
+
+extension MarketAdvancedSearchResultService: IMarketListCoinUidService {
+
+    func coinUid(index: Int) -> String? {
+        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+            return nil
+        }
+
+        return marketInfos[index].fullCoin.coin.uid
     }
 
 }
@@ -58,7 +72,7 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
 
     func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
+            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }
     }
 

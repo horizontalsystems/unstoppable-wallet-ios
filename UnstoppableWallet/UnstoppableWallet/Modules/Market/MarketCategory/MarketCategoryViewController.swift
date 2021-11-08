@@ -11,7 +11,7 @@ class MarketCategoryViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var refreshEnabled: Bool { false }
 
-    init(viewModel: MarketCategoryViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: MarketCategoryViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 

@@ -97,7 +97,7 @@ class MarketOverviewViewModel {
                 listType: item.listType,
                 imageName: imageName(listType: item.listType),
                 title: title(listType: item.listType),
-                listViewItems: item.marketInfos.map { decorator.listViewItem(marketInfo: $0) }
+                listViewItems: item.marketInfos.map { decorator.listViewItem(item: $0) }
         )
     }
 

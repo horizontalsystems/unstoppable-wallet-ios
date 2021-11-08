@@ -1,18 +1,10 @@
 class MarketWatchlistToggleService {
-    private let listService: IMarketListService
+    private let coinUidService: IMarketListCoinUidService
     private let favoritesManager: FavoritesManager
 
-    init(listService: IMarketListService, favoritesManager: FavoritesManager) {
-        self.listService = listService
+    init(coinUidService: IMarketListCoinUidService, favoritesManager: FavoritesManager) {
+        self.coinUidService = coinUidService
         self.favoritesManager = favoritesManager
-    }
-
-    private func coinUid(index: Int) -> String? {
-        guard case .loaded(let marketInfos, _, _) = listService.state, index < marketInfos.count else {
-            return nil
-        }
-
-        return marketInfos[index].fullCoin.coin.uid
     }
 
 }
@@ -20,7 +12,7 @@ class MarketWatchlistToggleService {
 extension MarketWatchlistToggleService {
 
     func isFavorite(index: Int) -> Bool {
-        guard let coinUid = coinUid(index: index) else {
+        guard let coinUid = coinUidService.coinUid(index: index) else {
             return false
         }
 
@@ -28,7 +20,7 @@ extension MarketWatchlistToggleService {
     }
 
     func favorite(index: Int) {
-        guard let coinUid = coinUid(index: index) else {
+        guard let coinUid = coinUidService.coinUid(index: index) else {
             return
         }
 
@@ -36,7 +28,7 @@ extension MarketWatchlistToggleService {
     }
 
     func unfavorite(index: Int) {
-        guard let coinUid = coinUid(index: index) else {
+        guard let coinUid = coinUidService.coinUid(index: index) else {
             return
         }
 

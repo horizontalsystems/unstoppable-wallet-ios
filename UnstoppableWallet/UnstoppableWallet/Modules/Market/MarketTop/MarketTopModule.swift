@@ -12,7 +12,7 @@ struct MarketTopModule {
                 marketField: marketField
         )
         let watchlistToggleService = MarketWatchlistToggleService(
-                listService: service,
+                coinUidService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 

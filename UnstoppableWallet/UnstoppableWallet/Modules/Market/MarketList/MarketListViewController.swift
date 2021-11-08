@@ -1,12 +1,24 @@
 import UIKit
 import RxSwift
+import RxCocoa
 import ThemeKit
 import SectionsTableView
 import ComponentKit
 import HUD
 
+protocol IMarketListViewModel {
+    var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> { get }
+    var loadingDriver: Driver<Bool> { get }
+    var errorDriver: Driver<String?> { get }
+    var scrollToTopSignal: Signal<()> { get }
+    func isFavorite(index: Int) -> Bool
+    func favorite(index: Int)
+    func unfavorite(index: Int)
+    func refresh()
+}
+
 class MarketListViewController: ThemeViewController {
-    private let listViewModel: MarketListViewModel
+    private let listViewModel: IMarketListViewModel
     private let disposeBag = DisposeBag()
 
     let tableView = SectionsTableView(style: .plain)
@@ -22,7 +34,7 @@ class MarketListViewController: ThemeViewController {
     var topSections: [SectionProtocol] { [] }
     var refreshEnabled: Bool { true }
 
-    init(listViewModel: MarketListViewModel) {
+    init(listViewModel: IMarketListViewModel) {
         self.listViewModel = listViewModel
 
         super.init()
@@ -110,7 +122,7 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    private func sync(viewItemData: MarketListViewModel.ViewItemData?) {
+    private func sync(viewItemData: MarketModule.ListViewItemData?) {
         viewItems = viewItemData?.viewItems
 
         if let viewItems = viewItems, viewItems.isEmpty {

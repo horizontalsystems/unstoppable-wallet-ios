@@ -27,7 +27,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
     private let chartViewCell: ChartViewCell
     private let chartRow: StaticRow
 
-    init(listViewModel: MarketListViewModel, headerViewModel: MarketTvlSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
+    init(listViewModel: IMarketListViewModel, headerViewModel: MarketTvlSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
         self.chartViewModel = chartViewModel
         self.headerViewModel = headerViewModel
 

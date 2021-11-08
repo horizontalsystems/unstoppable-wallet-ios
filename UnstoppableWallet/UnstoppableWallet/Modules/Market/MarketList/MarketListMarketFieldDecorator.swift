@@ -2,6 +2,8 @@ import CurrencyKit
 import MarketKit
 
 class MarketListMarketFieldDecorator {
+    typealias Item = MarketInfo
+
     private let service: IMarketListDecoratorService
 
     var marketField: MarketModule.MarketField {
@@ -35,7 +37,7 @@ extension MarketListMarketFieldDecorator: IMarketSingleSortHeaderDecorator {
 
 extension MarketListMarketFieldDecorator: IMarketListDecorator {
 
-    func listViewItem(marketInfo: MarketInfo) -> MarketModule.ListViewItem {
+    func listViewItem(item marketInfo: MarketInfo) -> MarketModule.ListViewItem {
         let currency = service.currency
 
         let price = marketInfo.price.flatMap {

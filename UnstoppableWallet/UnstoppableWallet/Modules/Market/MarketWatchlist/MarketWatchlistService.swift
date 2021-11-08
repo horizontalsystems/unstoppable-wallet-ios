@@ -5,6 +5,8 @@ import CurrencyKit
 import StorageKit
 
 class MarketWatchlistService: IMarketMultiSortHeaderService {
+    typealias Item = MarketInfo
+
     private let keySortingField = "market-watchlist-sorting-field"
     private let keyMarketField = "market-watchlist-market-field"
 
@@ -15,8 +17,8 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<MarketListServiceState>()
-    private(set) var state: MarketListServiceState = .loading {
+    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
+    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -59,7 +61,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
             }
 
             if newMarketInfos.count == coinUids.count {
-                state = .loaded(marketInfos: newMarketInfos, softUpdate: true, reorder: false)
+                state = .loaded(items: newMarketInfos, softUpdate: true, reorder: false)
                 return
             }
         }
@@ -71,7 +73,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
         syncDisposeBag = DisposeBag()
 
         if coinUids.isEmpty {
-            state = .loaded(marketInfos: [], softUpdate: false, reorder: false)
+            state = .loaded(items: [], softUpdate: false, reorder: false)
             return
         }
 
@@ -90,7 +92,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
+        state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
     private func syncIfPossible() {
@@ -105,12 +107,24 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
 
 extension MarketWatchlistService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState> {
+    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
     }
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketWatchlistService: IMarketListCoinUidService {
+
+    func coinUid(index: Int) -> String? {
+        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+            return nil
+        }
+
+        return marketInfos[index].fullCoin.coin.uid
     }
 
 }
@@ -135,7 +149,7 @@ extension MarketWatchlistService: IMarketListDecoratorService {
 
     func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
+            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }
 
         storage.set(value: marketField.rawValue, for: keyMarketField)
