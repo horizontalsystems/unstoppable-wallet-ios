@@ -11,7 +11,7 @@ protocol IMarketListViewModel {
     var loadingDriver: Driver<Bool> { get }
     var errorDriver: Driver<String?> { get }
     var scrollToTopSignal: Signal<()> { get }
-    func isFavorite(index: Int) -> Bool
+    func isFavorite(index: Int) -> Bool?
     func favorite(index: Int)
     func unfavorite(index: Int)
     func refresh()
@@ -145,7 +145,8 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func onSelect(viewItem: MarketModule.ListViewItem) {
-        guard let module = CoinPageModule.viewController(coinUid: viewItem.uid) else {
+        guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
+            HudHelper.instance.showAttention(title: "market.coin_not_supported_yet".localized)
             return
         }
 
@@ -153,11 +154,15 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func rowActions(index: Int) -> [RowAction] {
+        guard let isFavorite = listViewModel.isFavorite(index: index) else {
+            return []
+        }
+
         let type: RowActionType
         let iconName: String
         let action: (UITableViewCell?) -> ()
 
-        if listViewModel.isFavorite(index: index) {
+        if isFavorite {
             type = .destructive
             iconName = "star_off_24"
             action = { [weak self] _ in
@@ -189,7 +194,7 @@ extension MarketListViewController: SectionsDataSource {
 
     private func row(viewItem: MarketModule.ListViewItem, index: Int, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
-                id: viewItem.uid,
+                id: "\(viewItem.uid ?? "")-\(viewItem.name)",
                 hash: "\(viewItem.dataValue)-\(viewItem.price)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,

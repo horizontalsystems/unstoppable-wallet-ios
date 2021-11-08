@@ -11,9 +11,9 @@ class MarketWatchlistToggleService {
 
 extension MarketWatchlistToggleService {
 
-    func isFavorite(index: Int) -> Bool {
+    func isFavorite(index: Int) -> Bool? {
         guard let coinUid = coinUidService.coinUid(index: index) else {
-            return false
+            return nil
         }
 
         return favoritesManager.isFavorite(coinUid: coinUid)

@@ -17,7 +17,7 @@ class CurrencyCompactFormatter {
 
         var index = 1
         var power: Decimal = 1000
-        while value >= power {
+        while abs(value) >= power {
             power = pow(ten, (index + 1) * 3)
             index += 1
             if index > postfixes.count {

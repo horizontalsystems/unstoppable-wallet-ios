@@ -108,7 +108,7 @@ extension MarketListViewModel: IMarketListViewModel {
         scrollToTopRelay.asSignal()
     }
 
-    func isFavorite(index: Int) -> Bool {
+    func isFavorite(index: Int) -> Bool? {
         watchlistToggleService.isFavorite(index: index)
     }
 

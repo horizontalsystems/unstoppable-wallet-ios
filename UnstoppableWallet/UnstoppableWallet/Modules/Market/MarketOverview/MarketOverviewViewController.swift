@@ -118,7 +118,7 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     private func onSelect(listViewItem: MarketModule.ListViewItem) {
-        guard let module = CoinPageModule.viewController(coinUid: listViewItem.uid) else {
+        guard let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
             return
         }
 
@@ -140,7 +140,7 @@ extension MarketOverviewViewController: SectionsDataSource {
 
     private func row(listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
         Row<G14Cell>(
-                id: listViewItem.uid,
+                id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell, _ in
