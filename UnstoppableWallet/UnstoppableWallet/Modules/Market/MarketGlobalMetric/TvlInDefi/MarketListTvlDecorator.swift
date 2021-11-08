@@ -2,7 +2,7 @@ import CurrencyKit
 import MarketKit
 
 class MarketListTvlDecorator {
-    typealias Item = MarketInfo
+    typealias Item = DefiCoin
 
     private let service: MarketGlobalTvlMetricService
 
@@ -10,41 +10,53 @@ class MarketListTvlDecorator {
         self.service = service
     }
 
-    private func priceDiff(price: Decimal?, diff: Decimal?) -> Decimal? {
-        guard let price = price, let diff = diff else {
-            return nil
-        }
-
-        return diff * price / (100 + diff)
-    }
-
 }
 
 extension MarketListTvlDecorator: IMarketListDecorator {
 
-    func listViewItem(item marketInfo: MarketInfo) -> MarketModule.ListViewItem {
+    func listViewItem(item defiCoin: DefiCoin) -> MarketModule.ListViewItem {
         let currency = service.currency
 
-        let diff: MarketModule.MarketDataValue
-        let price = marketInfo.price.map { CurrencyValue(currency: currency, value: $0) }
-
-        switch service.marketTvlField {
-        case .diff: diff = .diff(marketInfo.priceChangeValue(type: service.marketTvlPriceChangeField))
-        case .value: diff = .valueDiff(price, marketInfo.priceChangeValue(type: service.marketTvlPriceChangeField))
+        var tvlChange: Decimal?
+        switch service.marketTvlPriceChangeField {
+        case .day: tvlChange = defiCoin.tvlChange1d
+        case .week: tvlChange = defiCoin.tvlChange7d
+        case .month: tvlChange = defiCoin.tvlChange30d
+        default: ()
         }
 
-        let priceString = marketInfo.price.flatMap {
-            CurrencyCompactFormatter.instance.format(currency: currency, value: $0, alwaysSigned: false)
-        } ?? "n/a".localized
+        let diff: MarketModule.MarketDataValue
+        switch service.marketTvlField {
+        case .diff: diff = .diff(tvlChange)
+        case .value: diff = .valueDiff(CurrencyValue(currency: currency, value: defiCoin.tvl), tvlChange)
+        }
+
+        var uid: String?
+        let iconUrl: String
+        let iconPlaceholderName: String
+        let name: String
+
+        switch defiCoin.type {
+        case .fullCoin(let fullCoin):
+            uid = fullCoin.coin.uid
+            iconUrl = fullCoin.coin.imageUrl
+            iconPlaceholderName = fullCoin.placeholderImageName
+            name = fullCoin.coin.name
+        case .defiCoin(let defiName, let logo):
+            iconUrl = logo
+            iconPlaceholderName = "icon_placeholder_24"
+            name = defiName
+        }
+
 
         return MarketModule.ListViewItem(
-                uid: marketInfo.fullCoin.coin.uid,
-                iconUrl: marketInfo.fullCoin.coin.imageUrl,
-                iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
-                name: marketInfo.fullCoin.coin.name,
-                code: marketInfo.fullCoin.coin.code,
-                rank: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
-                price: priceString,
+                uid: uid,
+                iconUrl: iconUrl,
+                iconPlaceholderName: iconPlaceholderName,
+                name: name,
+                code: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
+                rank: "\(defiCoin.tvlRank)",
+                price: CurrencyCompactFormatter.instance.format(currency: currency, value: defiCoin.tvl, alwaysSigned: false) ?? "n/a".localized,
                 dataValue: diff
         )
     }

@@ -57,7 +57,7 @@ struct MarketModule {
             title = nil
 
             if let currencyValue = currencyValue, let diff = diff {
-                let valueDiff = diff * currencyValue.value / (100 + diff)
+                let valueDiff = diff * currencyValue.value / 100
                 value = CurrencyCompactFormatter.instance.format(currency: currencyValue.currency, value: valueDiff, alwaysSigned: true) ?? "----"
                 color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
             } else {
@@ -182,19 +182,32 @@ extension MarketModule {
     enum MarketPlatformField: Int, CaseIterable {
         case all
         case ethereum
-        case binance
         case solana
+        case binance
         case avalanche
+        case terra
+        case fantom
+        case arbitrum
         case polygon
+
+        var chain: String {
+            switch self {
+            case .all: return ""
+            case .ethereum: return "Ethereum"
+            case .solana: return "Solana"
+            case .binance: return "Binance"
+            case .avalanche: return "Avalanche"
+            case .terra: return "Terra"
+            case .fantom: return "Fantom"
+            case .arbitrum: return "Arbitrum"
+            case .polygon: return "Polygon"
+            }
+        }
 
         var title: String {
             switch self {
             case .all: return "market.tvl.platform_field.all".localized
-            case .ethereum: return "market.tvl.platform_field.ethereum".localized
-            case .binance: return "market.tvl.platform_field.binance".localized
-            case .solana: return "market.tvl.platform_field.solana".localized
-            case .avalanche: return "market.tvl.platform_field.avalanche".localized
-            case .polygon: return "market.tvl.platform_field.polygon".localized
+            default: return chain
             }
         }
     }
@@ -250,7 +263,7 @@ extension MarketModule {  // ViewModel Items
     }
 
     struct ListViewItem {
-        let uid: String
+        let uid: String?
         let iconUrl: String
         let iconPlaceholderName: String
         let name: String

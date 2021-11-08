@@ -11,8 +11,10 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
     private let viewModel: MarketTvlSortHeaderViewModel
     private let disposeBag = DisposeBag()
+
     weak var viewController: UIViewController?
 
+    private let dropdownButton = ThemeButton()
     private let sortButton = ThemeButton()
 
     init(viewModel: MarketTvlSortHeaderViewModel, hasTopSeparator: Bool = true) {
@@ -34,6 +36,20 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
             separatorView.backgroundColor = .themeSteel20
         }
+
+        contentView.addSubview(dropdownButton)
+        dropdownButton.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
+        }
+
+        dropdownButton.apply(style: .secondaryTransparentIcon)
+        dropdownButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
+        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
+
+        dropdownButton.addTarget(self, action: #selector(onTapDropdownButton), for: .touchUpInside)
 
         let marketTvlFieldSelector = SelectorButton()
 
@@ -61,6 +77,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
 
+        subscribe(disposeBag, viewModel.platformFieldDriver) { [weak self] in self?.syncDropdownButton(title: $0) }
         subscribe(disposeBag, viewModel.sortDirectionDriver) { [weak self] in self?.syncSortButton(ascending: $0) }
     }
 
@@ -68,8 +85,23 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc private func onTapDropdownButton() {
+        let alertController = AlertRouter.module(
+                title: "coin_page.tvl_rank.filter_by_chain".localized,
+                viewItems: viewModel.platformFieldViewItems
+        ) { [weak self] index in
+            self?.viewModel.onSelectMarketPlatformField(index: index)
+        }
+
+        viewController?.present(alertController, animated: true)
+    }
+
     @objc private func onTapSortButton() {
         viewModel.onToggleSortDirection()
+    }
+
+    private func syncDropdownButton(title: String) {
+        dropdownButton.setTitle(title, for: .normal)
     }
 
     private func syncSortButton(ascending: Bool) {

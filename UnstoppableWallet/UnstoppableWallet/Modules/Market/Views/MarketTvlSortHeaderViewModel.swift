@@ -6,21 +6,25 @@ class MarketTvlSortHeaderViewModel {
     private let service: MarketGlobalTvlMetricService
     private let decorator: MarketListTvlDecorator
 
-    private let sortDirectionRelay: BehaviorRelay<Bool>
+    private let platformFieldRelay: BehaviorRelay<String>
+    private let sortDirectionAscendingRelay: BehaviorRelay<Bool>
 
     init(service: MarketGlobalTvlMetricService, decorator: MarketListTvlDecorator) {
         self.service = service
         self.decorator = decorator
 
-        sortDirectionRelay = BehaviorRelay(value: service.sortDirectionAscending)
+        platformFieldRelay = BehaviorRelay(value: service.marketPlatformField.title)
+        sortDirectionAscendingRelay = BehaviorRelay(value: service.sortDirectionAscending)
     }
 
 }
 
 extension MarketTvlSortHeaderViewModel {
 
-    var platformFields: [String] {
-        MarketModule.MarketPlatformField.allCases.map { $0.title }
+    var platformFieldViewItems: [AlertViewItem] {
+        MarketModule.MarketPlatformField.allCases.map { platformField in
+            AlertViewItem(text: platformField.title, selected: service.marketPlatformField == platformField)
+        }
     }
 
     var marketTvlFields: [String] {
@@ -39,17 +43,22 @@ extension MarketTvlSortHeaderViewModel {
         MarketModule.MarketTvlField.allCases.firstIndex(of: service.marketTvlField) ?? 0
     }
 
+    var platformFieldDriver: Driver<String> {
+        platformFieldRelay.asDriver()
+    }
+
     var sortDirectionDriver: Driver<Bool> {
-        sortDirectionRelay.asDriver()
+        sortDirectionAscendingRelay.asDriver()
     }
 
     func onToggleSortDirection() {
         service.sortDirectionAscending = !service.sortDirectionAscending
-        sortDirectionRelay.accept(service.sortDirectionAscending)
+        sortDirectionAscendingRelay.accept(service.sortDirectionAscending)
     }
 
     func onSelectMarketPlatformField(index: Int) {
         service.marketPlatformField = MarketModule.MarketPlatformField.allCases[index]
+        platformFieldRelay.accept(service.marketPlatformField.title)
     }
 
     func onSelectMarketTvlField(index: Int) {

@@ -49,6 +49,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
 
         super.init(listViewModel: listViewModel)
 
+        sortHeaderView.viewController = self
         chartViewCell.delegate = chartViewModel
     }
 
