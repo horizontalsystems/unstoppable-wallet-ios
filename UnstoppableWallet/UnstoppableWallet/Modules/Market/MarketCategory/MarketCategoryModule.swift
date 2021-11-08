@@ -12,7 +12,7 @@ struct MarketCategoryModule {
             return nil
         }
         let watchlistToggleService = MarketWatchlistToggleService(
-                listService: service,
+                coinUidService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 

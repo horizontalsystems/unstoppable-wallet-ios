@@ -25,7 +25,7 @@ struct MarketGlobalMetricModule {
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                listService: service,
+                coinUidService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 
@@ -61,7 +61,7 @@ struct MarketGlobalMetricModule {
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                listService: service,
+                coinUidService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 
@@ -90,7 +90,7 @@ struct MarketGlobalMetricModule {
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
-                listService: service,
+                coinUidService: service,
                 favoritesManager: App.shared.favoritesManager
         )
 

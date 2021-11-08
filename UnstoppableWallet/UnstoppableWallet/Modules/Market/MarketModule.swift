@@ -260,4 +260,16 @@ extension MarketModule {  // ViewModel Items
         let dataValue: MarketDataValue
     }
 
+    struct ListViewItemData {
+        let viewItems: [ListViewItem]
+        let softUpdate: Bool
+        let scrollToTop: Bool
+
+        init(viewItems: [ListViewItem], softUpdate: Bool = false, scrollToTop: Bool = false) {
+            self.viewItems = viewItems
+            self.softUpdate = softUpdate
+            self.scrollToTop = scrollToTop
+        }
+    }
+
 }

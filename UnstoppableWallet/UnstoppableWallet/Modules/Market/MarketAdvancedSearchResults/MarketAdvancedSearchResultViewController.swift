@@ -10,7 +10,7 @@ class MarketAdvancedSearchResultViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var refreshEnabled: Bool { false }
 
-    init(listViewModel: MarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
         super.init(listViewModel: listViewModel)

@@ -15,7 +15,7 @@ class MarketWatchlistViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var emptyView: UIView? { cautionView }
 
-    init(viewModel: MarketWatchlistViewModel, listViewModel: MarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: MarketWatchlistViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 

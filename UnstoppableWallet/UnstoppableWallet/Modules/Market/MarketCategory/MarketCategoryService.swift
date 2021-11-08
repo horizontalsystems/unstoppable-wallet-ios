@@ -4,14 +4,16 @@ import MarketKit
 import CurrencyKit
 
 class MarketCategoryService: IMarketMultiSortHeaderService {
+    typealias Item = MarketInfo
+
     let category: CoinCategory
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<MarketListServiceState>()
-    private(set) var state: MarketListServiceState = .loading {
+    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
+    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -53,7 +55,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
     }
 
     private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
-        state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
+        state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
     }
 
     private func syncIfPossible() {
@@ -68,12 +70,24 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
 
 extension MarketCategoryService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState> {
+    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
     }
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketCategoryService: IMarketListCoinUidService {
+
+    func coinUid(index: Int) -> String? {
+        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+            return nil
+        }
+
+        return marketInfos[index].fullCoin.coin.uid
     }
 
 }
@@ -94,7 +108,7 @@ extension MarketCategoryService: IMarketListDecoratorService {
 
     func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
+            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }
     }
 

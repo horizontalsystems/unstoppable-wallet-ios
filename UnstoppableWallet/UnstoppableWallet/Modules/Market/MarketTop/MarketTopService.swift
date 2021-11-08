@@ -4,6 +4,8 @@ import MarketKit
 import CurrencyKit
 
 class MarketTopService: IMarketMultiSortHeaderService {
+    typealias Item = MarketInfo
+
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
@@ -15,8 +17,8 @@ class MarketTopService: IMarketMultiSortHeaderService {
         }
     }
 
-    private let stateRelay = PublishRelay<MarketListServiceState>()
-    private(set) var state: MarketListServiceState = .loading {
+    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
+    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -69,7 +71,7 @@ class MarketTopService: IMarketMultiSortHeaderService {
             state = .loading
         case .loaded(let marketInfos):
             let marketInfos: [MarketInfo] = Array(marketInfos.prefix(marketTop.rawValue))
-            state = .loaded(marketInfos: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
+            state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
         case .failed(let error):
             state = .failed(error: error)
         }
@@ -87,12 +89,24 @@ class MarketTopService: IMarketMultiSortHeaderService {
 
 extension MarketTopService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState> {
+    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
     }
 
     func refresh() {
         syncMarketInfos()
+    }
+
+}
+
+extension MarketTopService: IMarketListCoinUidService {
+
+    func coinUid(index: Int) -> String? {
+        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+            return nil
+        }
+
+        return marketInfos[index].fullCoin.coin.uid
     }
 
 }
@@ -109,7 +123,7 @@ extension MarketTopService: IMarketListDecoratorService {
 
     func onUpdate(marketField: MarketModule.MarketField) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(marketInfos: marketInfos, softUpdate: false, reorder: false))
+            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }
     }
 
