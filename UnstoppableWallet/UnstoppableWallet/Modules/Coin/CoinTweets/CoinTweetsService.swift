@@ -49,11 +49,10 @@ extension CoinTweetsService {
         if let user = user {
             single = Single.just(user)
         } else {
-            // TODO: Here there must be another endpoint to get twitter username
             single = marketKit
-                    .marketInfoOverviewSingle(coinUid: coinUid, currencyCode: "USD", languageCode: "en")
-                    .flatMap { [weak self] info in
-                        guard let service = self, let username = info.links[.twitter], !username.isEmpty else {
+                    .twitterUsername(coinUid: coinUid)
+                    .flatMap { [weak self] username in
+                        guard let service = self, let username = username else {
                             return Single.just(nil)
                         }
 
