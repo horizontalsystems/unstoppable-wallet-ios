@@ -329,6 +329,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.defi_tvl" = "TVL в DeFi";
 
 "market.sync_error" = "Ошибка Синхронизации";
+"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
 "market.top.section.header.see_all" = "Посмотреть Всё";
 "market.top.section.header.top_gainers" = "Взлеты";
@@ -345,11 +346,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.tvl.market_field.diff" = "Percent";
 
 "market.tvl.platform_field.all" = "All";
-"market.tvl.platform_field.ethereum" = "Ethereum";
-"market.tvl.platform_field.binance" = "Binance";
-"market.tvl.platform_field.solana" = "Solana";
-"market.tvl.platform_field.avalanche" = "Avalanche";
-"market.tvl.platform_field.polygon" = "Polygon";
 
 "market.sort_by" = "Сортировать По";
 
@@ -554,12 +550,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 
 "coin_page.tvl_rank.multi_chain" = "Мультичейн";
-"coin_page.tvl_rank.sync_error" = "Ошибка Синхронизации";
-"coin_page.tvl_rank.filters" = "Фильтры";
-"coin_page.tvl_rank.filters.all" = "Все";
-"coin_page.tvl_rank.sort_by" = "Сортировать по";
-"coin_page.tvl_rank.sort_by.highest_tvl" = "Наивысшему TVL";
-"coin_page.tvl_rank.sort_by.lowest_tvl" = "Наименьшему TVL";
+"coin_page.tvl_rank.filter_by_chain" = "Filter by chain";
 
 "coin_page.security_parameters" = "Параметры Безопасности";
 "coin_page.security_parameters.privacy" = "Приватность";
