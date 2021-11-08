@@ -330,6 +330,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.defi_tvl" = "TVL in DeFi";
 
 "market.sync_error" = "Sync Error";
+"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
 "market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
@@ -346,11 +347,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.tvl.market_field.diff" = "Percent";
 
 "market.tvl.platform_field.all" = "All";
-"market.tvl.platform_field.ethereum" = "Ethereum";
-"market.tvl.platform_field.binance" = "Binance";
-"market.tvl.platform_field.solana" = "Solana";
-"market.tvl.platform_field.avalanche" = "Avalanche";
-"market.tvl.platform_field.polygon" = "Polygon";
 
 "market.sort_by" = "Sort By";
 
@@ -555,12 +551,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.sync_error" = "Sync Error";
-"coin_page.tvl_rank.filters" = "Filters";
-"coin_page.tvl_rank.filters.all" = "All";
-"coin_page.tvl_rank.sort_by" = "Sort By";
-"coin_page.tvl_rank.sort_by.highest_tvl" = "Highest TVL";
-"coin_page.tvl_rank.sort_by.lowest_tvl" = "Lowest TVL";
+"coin_page.tvl_rank.filter_by_chain" = "Filter by chain";
 
 "coin_page.security_parameters" = "Security Parameters";
 "coin_page.security_parameters.privacy" = "Privacy";
