@@ -135,13 +135,13 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openTvlRank() {
-//        let viewController = CoinTvlRankModule.viewController()
-//        navigationController?.pushViewController(viewController, animated: true)
+        let viewController = MarketGlobalMetricModule.tvlInDefiViewController()
+        parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openTradingVolume() {
         let viewController = CoinTradingVolumeModule.viewController(coinUid: viewModel.coin.uid, coinTitle: viewModel.coin.name)
-        present(viewController, animated: true)
+        parentNavigationController?.present(viewController, animated: true)
     }
 
 }

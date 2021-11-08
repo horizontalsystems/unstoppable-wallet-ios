@@ -6,11 +6,15 @@ import LanguageKit
 struct MarketGlobalMetricModule {
 
     static func viewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
+        let viewController: UIViewController
+
         switch type {
-        case .volume24h, .totalMarketCap: return globalMetricViewController(type: type)
-        case .defiCap: return defiCapViewController()
-        case .tvlInDefi: return tvlInDefiViewController()
+        case .volume24h, .totalMarketCap: viewController = globalMetricViewController(type: type)
+        case .defiCap: viewController = defiCapViewController()
+        case .tvlInDefi: viewController = tvlInDefiViewController()
         }
+
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
     private static func globalMetricViewController(type: MarketGlobalModule.MetricsType) -> UIViewController {
@@ -46,9 +50,7 @@ struct MarketGlobalMetricModule {
         }
 
         let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
-        let viewController = MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: configuration)
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: configuration)
     }
 
     private static func defiCapViewController() -> UIViewController {
@@ -78,12 +80,10 @@ struct MarketGlobalMetricModule {
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
-        let viewController = MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
     }
 
-    private static func tvlInDefiViewController() -> UIViewController {
+    static func tvlInDefiViewController() -> UIViewController {
         let service = MarketGlobalTvlMetricService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit
@@ -108,9 +108,7 @@ struct MarketGlobalMetricModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        let viewController = MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
     }
 
 }
