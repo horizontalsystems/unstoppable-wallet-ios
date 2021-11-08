@@ -54,10 +54,9 @@ struct MarketGlobalMetricModule {
     }
 
     private static func defiCapViewController() -> UIViewController {
-        let service = MarketGlobalMetricService(
+        let service = MarketGlobalDefiMetricService(
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
-                metricsType: .defiCap
+                currencyKit: App.shared.currencyKit
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(
@@ -65,7 +64,7 @@ struct MarketGlobalMetricModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let decorator = MarketListMarketFieldDecorator(service: service)
+        let decorator = MarketListDefiDecorator(service: service)
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
