@@ -7,7 +7,6 @@ import MarketKit
 class CoinPageViewModel {
     private let service: CoinPageService
     private let disposeBag = DisposeBag()
-    let viewItem: ViewItem
 
     private let addWalletStateRelay = BehaviorRelay<AddWalletState>(value: .hidden)
     private let favoriteRelay: BehaviorRelay<Bool>
@@ -18,15 +17,6 @@ class CoinPageViewModel {
         self.service = service
 
         favoriteRelay = BehaviorRelay(value: service.favorite)
-
-        let fullCoin = service.fullCoin
-        viewItem = ViewItem(
-                title: fullCoin.coin.code,
-                subtitle: fullCoin.coin.name,
-                marketCapRank: fullCoin.coin.marketCapRank.map { "#\($0)" },
-                imageUrl: fullCoin.coin.imageUrl,
-                imagePlaceholderName: fullCoin.placeholderImageName
-        )
 
         subscribe(disposeBag, service.favoriteObservable) { [weak self] favorite in
             self?.favoriteRelay.accept(favorite)
@@ -71,6 +61,10 @@ extension CoinPageViewModel {
         attentionHudRelay.asSignal()
     }
 
+    var title: String {
+        service.fullCoin.coin.code
+    }
+
     func onTapFavorite() {
         service.toggleFavorite()
     }
@@ -95,14 +89,6 @@ extension CoinPageViewModel {
     enum AddWalletState {
         case hidden
         case visible(added: Bool)
-    }
-
-    struct ViewItem {
-        let title: String
-        let subtitle: String
-        let marketCapRank: String?
-        let imageUrl: String
-        let imagePlaceholderName: String
     }
 
 }

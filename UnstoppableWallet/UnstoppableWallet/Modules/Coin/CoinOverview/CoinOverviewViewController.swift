@@ -18,6 +18,7 @@ class CoinOverviewViewController: ThemeViewController {
     private var state: CoinOverviewViewModel.State = .loading
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let coinInfoCell = A7Cell()
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
@@ -92,6 +93,17 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
+
+        coinInfoCell.set(backgroundStyle: .transparent, isFirst: true)
+        coinInfoCell.titleColor = .themeGray
+        coinInfoCell.set(titleImageSize: .iconSize24)
+        coinInfoCell.valueColor = .themeGray
+        coinInfoCell.selectionStyle = .none
+
+        let coinViewItem = viewModel.coinViewItem
+        coinInfoCell.title = coinViewItem.name
+        coinInfoCell.value = coinViewItem.marketCapRank
+        coinInfoCell.setTitleImage(urlString: coinViewItem.imageUrl, placeholder: UIImage(named: coinViewItem.imagePlaceholderName))
 
         chartIntervalAndSelectedRateCell.bind(filters: chartViewModel.chartTypes.map {
             .item(title: $0)
@@ -235,6 +247,19 @@ extension CoinOverviewViewController {
 }
 
 extension CoinOverviewViewController {
+
+    private var coinInfoSection: SectionProtocol {
+        Section(
+                id: "coin-info",
+                rows: [
+                    StaticRow(
+                            cell: coinInfoCell,
+                            id: "coin-info",
+                            height: .heightCell48
+                    )
+                ]
+        )
+    }
 
     private var chartSection: SectionProtocol {
         Section(
@@ -550,6 +575,7 @@ extension CoinOverviewViewController: SectionsDataSource {
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
+        sections.append(coinInfoSection)
         sections.append(chartSection)
 
         switch state {

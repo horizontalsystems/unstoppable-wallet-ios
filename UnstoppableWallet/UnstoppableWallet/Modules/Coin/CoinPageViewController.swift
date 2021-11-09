@@ -10,7 +10,6 @@ class CoinPageViewController: ThemeViewController {
     private let enableCoinView: EnableCoinView
     private let disposeBag = DisposeBag()
 
-    private let subtitleCell = A7Cell()
     private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
@@ -44,28 +43,11 @@ class CoinPageViewController: ThemeViewController {
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapCloseButton))
 
-        let viewItem = viewModel.viewItem
-        title = viewItem.title
-
-        view.addSubview(subtitleCell.contentView)
-        subtitleCell.contentView.snp.makeConstraints { maker in
-            maker.top.equalTo(view.safeAreaLayoutGuide)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightCell48)
-        }
-        subtitleCell.set(backgroundStyle: .transparent, isFirst: true)
-        subtitleCell.titleColor = .themeGray
-        subtitleCell.set(titleImageSize: .iconSize24)
-        subtitleCell.valueColor = .themeGray
-        subtitleCell.selectionStyle = .none
-
-        subtitleCell.title = viewItem.subtitle
-        subtitleCell.value = viewItem.marketCapRank
-        subtitleCell.setTitleImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.imagePlaceholderName))
+        title = viewModel.title
 
         view.addSubview(tabsView)
         tabsView.snp.makeConstraints { maker in
-            maker.top.equalTo(subtitleCell.contentView.snp.bottom)
+            maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(FilterHeaderView.height)
         }
