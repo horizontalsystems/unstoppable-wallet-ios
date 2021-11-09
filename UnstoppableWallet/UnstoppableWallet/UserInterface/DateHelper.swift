@@ -39,6 +39,11 @@ class DateHelper {
         return formatter.string(from: date)
     }
 
+    func formatMonthYear(from date: Date) -> String {
+        let formatter = DateFormatter.cachedFormatter(format: "MMMM, yyyy")
+        return formatter.string(from: date)
+    }
+
     func formatDayOfWeek(from date: Date) -> String {
         let formatter = DateFormatter.cachedFormatter(format: "E")
         return formatter.string(from: date)
