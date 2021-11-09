@@ -8,6 +8,7 @@ class MarketTvlSortHeaderViewModel {
 
     private let platformFieldRelay: BehaviorRelay<String>
     private let sortDirectionAscendingRelay: BehaviorRelay<Bool>
+    private let marketTvlFieldRelay: BehaviorRelay<MarketModule.MarketTvlField>
 
     init(service: MarketGlobalTvlMetricService, decorator: MarketListTvlDecorator) {
         self.service = service
@@ -15,6 +16,7 @@ class MarketTvlSortHeaderViewModel {
 
         platformFieldRelay = BehaviorRelay(value: service.marketPlatformField.title)
         sortDirectionAscendingRelay = BehaviorRelay(value: service.sortDirectionAscending)
+        marketTvlFieldRelay = BehaviorRelay(value: service.marketTvlField)
     }
 
 }
@@ -27,8 +29,8 @@ extension MarketTvlSortHeaderViewModel {
         }
     }
 
-    var marketTvlFields: [String] {
-        MarketModule.MarketTvlField.allCases.map { $0.title }
+    var marketTvlFields: [MarketModule.MarketTvlField] {
+        MarketModule.MarketTvlField.allCases
     }
 
     var sortDirectionAscending: Bool {
@@ -51,18 +53,26 @@ extension MarketTvlSortHeaderViewModel {
         sortDirectionAscendingRelay.asDriver()
     }
 
+    var marketTvlFieldDriver: Driver<MarketModule.MarketTvlField> {
+        marketTvlFieldRelay.asDriver()
+    }
+
     func onToggleSortDirection() {
         service.sortDirectionAscending = !service.sortDirectionAscending
         sortDirectionAscendingRelay.accept(service.sortDirectionAscending)
     }
 
+    func onToggleMarketTvlField() {
+        switch service.marketTvlField {
+        case .value: service.marketTvlField = .diff
+        case .diff: service.marketTvlField = .value
+        }
+        marketTvlFieldRelay.accept(service.marketTvlField)
+    }
+
     func onSelectMarketPlatformField(index: Int) {
         service.marketPlatformField = MarketModule.MarketPlatformField.allCases[index]
         platformFieldRelay.accept(service.marketPlatformField.title)
-    }
-
-    func onSelectMarketTvlField(index: Int) {
-        service.marketTvlField = MarketModule.MarketTvlField.allCases[index]
     }
 
     func onSelectPriceChangeField(index: Int) {
