@@ -27,7 +27,7 @@ class ChartPointInfoView: UIView {
 
         addSubview(macdView)
         macdView.snp.makeConstraints { maker in
-            maker.top.trailing.bottom.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 

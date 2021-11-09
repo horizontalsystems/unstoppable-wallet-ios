@@ -92,52 +92,64 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
     }
 
+    private func equalize(count: Int, lessWidth: CGFloat, greaterWidth: CGFloat, freeSpace: CGFloat) -> (newWidth: CGFloat, freeSpace: CGFloat) {
+        let count = CGFloat(count)
+        let needToBeSame = (greaterWidth - lessWidth) * count
+        let freeSpaceAfterEqual = freeSpace - needToBeSame
+        if freeSpaceAfterEqual >= 0 {
+            return (newWidth: greaterWidth, freeSpace: freeSpaceAfterEqual)
+        } else {
+            return (newWidth: lessWidth + freeSpace / count, freeSpace: 0)
+        }
+    }
+
     private func calculateItemWidths() {
         guard needCalculateItemWidths else {
             return
         }
         needCalculateItemWidths = false
 
-        itemWidths = []
+        let interitemSpacing = CGFloat(filters.count - 1) * layout.minimumInteritemSpacing
+        let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right - interitemSpacing
 
-        var contentWidth: CGFloat = 0
-        for i in 0..<filters.count {
-            let itemWidth = FilterHeaderCell.width(for: title(index: i), buttonStyle: buttonStyle)
-            contentWidth += itemWidth
-            if i > 0 {
-                contentWidth += layout.minimumInteritemSpacing
-            }
+        var items = Array(0..<filters.count)
+                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(for: title(index: $0), buttonStyle: buttonStyle)) }
 
-            itemWidths.append(itemWidth)
+        let initialItemWidth = items.reduce(0) { $0 + $1.width }
+        if initialItemWidth >= width {     // elements cant fit into screen
+            itemWidths = items.map { $0.width }
+            return
         }
-        contentWidth += collectionView.contentInset.left + collectionView.contentInset.right
 
+        items.sort { $0.width < $1.width }
 
-        if buttonStyle == .tab, contentWidth < bounds.width {
-            let availableWidth: CGFloat = bounds.width - collectionView.contentInset.left - collectionView.contentInset.right - CGFloat(filters.count - 1) * layout.minimumInteritemSpacing
-            var foundIndexesNeedMoreSpace: [Int] = []
-            var widthForItemsNeedMoreSpace: CGFloat = 0
+        var freeSpace = width - initialItemWidth
+        var sameMinimalWidthItemCount = 1
 
-            var deltaWidth: CGFloat = availableWidth
-            for i in 0..<filters.count {
-                var itemWidth = deltaWidth / CGFloat(filters.count - i)
-                if itemWidths[i] > itemWidth {
-                    foundIndexesNeedMoreSpace.append(i)
-                    itemWidth = itemWidths[i]
-                    widthForItemsNeedMoreSpace += itemWidth
-                }
+        while freeSpace != 0 && sameMinimalWidthItemCount < items.count {
+            let (newLessWidth, newFreeSpace) = equalize(
+                    count: sameMinimalWidthItemCount,
+                    lessWidth: items[0].width,
+                    greaterWidth: items[sameMinimalWidthItemCount].width,
+                    freeSpace: freeSpace
+            )
 
-                deltaWidth -= itemWidth
+            for i in 0..<sameMinimalWidthItemCount {
+                items[i].width = newLessWidth
             }
+            freeSpace = newFreeSpace
 
-            deltaWidth = availableWidth - widthForItemsNeedMoreSpace
-            let itemWidth = deltaWidth / CGFloat(filters.count - foundIndexesNeedMoreSpace.count)
-            for i in 0..<filters.count {
-                if !foundIndexesNeedMoreSpace.contains(i) {
-                    itemWidths[i] = itemWidth
-                }
+            sameMinimalWidthItemCount += 1
+        }
+
+        if freeSpace > 0 {
+            let delta = freeSpace / CGFloat(items.count)
+            for i in 0..<items.count {
+                items[i].width = items[i].width + delta
             }
         }
+
+        itemWidths = items.sorted { $0.index < $1.index }.map { $0.width }
     }
 
     func reload(filters: [ViewItem]) {
@@ -227,6 +239,21 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
             maker.leading.trailing.equalTo(cell.contentView)
             maker.height.equalTo(4)
         }
+    }
+
+}
+
+extension FilterHeaderView {
+
+    private class IndexedWidth {
+        let index: Int
+        var width: CGFloat
+
+        init(index: Int, width: CGFloat) {
+            self.index = index
+            self.width = width
+        }
+
     }
 
 }
