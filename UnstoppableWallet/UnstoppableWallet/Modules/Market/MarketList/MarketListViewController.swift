@@ -31,8 +31,8 @@ class MarketListViewController: ThemeViewController {
     var viewController: UIViewController? { self }
     var headerView: UITableViewHeaderFooterView? { nil }
     var emptyView: UIView? { nil }
-    var topSections: [SectionProtocol] { [] }
     var refreshEnabled: Bool { true }
+    func topSections(loaded: Bool) -> [SectionProtocol] { [] }
 
     init(listViewModel: IMarketListViewModel) {
         self.listViewModel = listViewModel
@@ -219,7 +219,7 @@ extension MarketListViewController: SectionsDataSource {
             headerState = .margin(height: 0)
         }
 
-        return topSections + [
+        return topSections(loaded: viewItems != nil) + [
             Section(
                     id: "coins",
                     headerState: headerState,

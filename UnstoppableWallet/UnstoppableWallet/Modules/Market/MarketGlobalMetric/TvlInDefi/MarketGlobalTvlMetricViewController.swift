@@ -100,21 +100,24 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
         dismiss(animated: true)
     }
 
-    override var topSections: [SectionProtocol] {
-        let section = Section(
-                id: "chart",
-                rows: [
-                    StaticRow(
-                            cell: currentRateCell,
-                            id: "currentRate",
-                            height: ChartCurrentRateCell.cellHeight
-                    ),
-                    intervalRow,
-                    chartRow,
-                ])
+    override func topSections(loaded: Bool) -> [SectionProtocol] {
+        guard loaded else {
+            return []
+        }
 
         return [
-            section
+            Section(
+                    id: "chart",
+                    rows: [
+                        StaticRow(
+                                cell: currentRateCell,
+                                id: "currentRate",
+                                height: ChartCurrentRateCell.cellHeight
+                        ),
+                        intervalRow,
+                        chartRow,
+                    ]
+            )
         ]
     }
 

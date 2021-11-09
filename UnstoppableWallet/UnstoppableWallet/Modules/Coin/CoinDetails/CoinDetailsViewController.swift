@@ -33,6 +33,28 @@ class CoinDetailsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let wrapperView = UIView()
+
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        wrapperView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.onTapRetry = { [weak self] in self?.viewModel.onTapRetry() }
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -52,20 +74,6 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D20Cell.self)
         tableView.registerCell(forClass: CoinDetailsMetricCell.self)
-
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        spinner.startAnimating()
-
-        view.addSubview(errorView)
-        errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        errorView.onTapRetry = { [weak self] in self?.viewModel.onTapRetry() }
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -91,9 +99,9 @@ class CoinDetailsViewController: ThemeViewController {
         self.viewItem = viewItem
 
         if viewItem != nil {
-            tableView.bounces = true
+            tableView.isHidden = false
         } else {
-            tableView.bounces = false
+            tableView.isHidden = true
         }
 
         tableView.reload()

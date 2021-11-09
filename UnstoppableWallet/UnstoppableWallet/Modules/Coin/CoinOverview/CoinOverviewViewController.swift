@@ -15,10 +15,12 @@ class CoinOverviewViewController: ThemeViewController {
     private var urlManager: IUrlManager
     private let disposeBag = DisposeBag()
 
-    private var state: CoinOverviewViewModel.State = .loading
+    private var viewItem: CoinOverviewViewModel.ViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
     private let coinInfoCell = A7Cell()
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = MarketListErrorView()
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
@@ -71,29 +73,6 @@ class CoinOverviewViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-
-        tableView.sectionDataSource = self
-
-        tableView.showsVerticalScrollIndicator = false
-
-        tableView.registerCell(forClass: A1Cell.self)
-        tableView.registerCell(forClass: BCell.self)
-        tableView.registerCell(forClass: D7Cell.self)
-        tableView.registerCell(forClass: DB7Cell.self)
-        tableView.registerCell(forClass: C85CellNew.self)
-        tableView.registerCell(forClass: PerformanceTableViewCell.self)
-        tableView.registerCell(forClass: BrandFooterCell.self)
-        tableView.registerCell(forClass: SpinnerCell.self)
-        tableView.registerCell(forClass: ErrorCell.self)
-        tableView.registerCell(forClass: TextCell.self)
-
         coinInfoCell.set(backgroundStyle: .transparent, isFirst: true)
         coinInfoCell.titleColor = .themeGray
         coinInfoCell.set(titleImageSize: .iconSize24)
@@ -121,9 +100,64 @@ class CoinOverviewViewController: ThemeViewController {
             self?.reloadTable()
         }
 
-        tableView.buildSections()
+        let wrapperView = UIView()
+
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        wrapperView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.onTapRetry = { [weak self] in self?.viewModel.onTapRetry() }
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.sectionDataSource = self
+
+        tableView.showsVerticalScrollIndicator = false
+
+        tableView.registerCell(forClass: A1Cell.self)
+        tableView.registerCell(forClass: BCell.self)
+        tableView.registerCell(forClass: D7Cell.self)
+        tableView.registerCell(forClass: DB7Cell.self)
+        tableView.registerCell(forClass: C85CellNew.self)
+        tableView.registerCell(forClass: PerformanceTableViewCell.self)
+        tableView.registerCell(forClass: BrandFooterCell.self)
+        tableView.registerCell(forClass: TextCell.self)
+
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
+            } else {
+                self?.errorView.isHidden = true
+            }
+        }
 
         subscribeViewModels()
+
         viewModel.onLoad()
         chartViewModel.viewDidLoad()
     }
@@ -133,9 +167,6 @@ class CoinOverviewViewController: ThemeViewController {
     }
 
     private func subscribeViewModels() {
-        // page section
-        subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
-
         // chart section
         intervalRow.onReady = { [weak self] in self?.subscribeToInterval() }
         chartRow.onReady = { [weak self] in self?.subscribeToChart() }
@@ -153,6 +184,18 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, chartViewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
     }
 
+    private func sync(viewItem: CoinOverviewViewModel.ViewItem?) {
+        self.viewItem = viewItem
+
+        if viewItem != nil {
+            tableView.isHidden = false
+        } else {
+            tableView.isHidden = true
+        }
+
+        tableView.reload()
+    }
+
     private func reloadTable() {
         tableView.buildSections()
 
@@ -163,13 +206,6 @@ class CoinOverviewViewController: ThemeViewController {
 }
 
 extension CoinOverviewViewController {
-
-    // Page section
-
-    private func sync(state: CoinOverviewViewModel.State) {
-        self.state = state
-        tableView.reload()
-    }
 
     // Chart section
 
@@ -539,35 +575,6 @@ extension CoinOverviewViewController {
         )
     }
 
-    private var spinnerSection: SectionProtocol {
-        Section(
-                id: "spinner",
-                rows: [
-                    Row<SpinnerCell>(
-                            id: "spinner",
-                            height: 100
-                    )
-                ]
-        )
-    }
-
-    private func errorSection(text: String) -> SectionProtocol {
-        Section(
-                id: "error",
-                rows: [
-                    Row<ErrorCell>(
-                            id: "error",
-                            dynamicHeight: { _ in
-                                100 // todo: calculate height in ErrorCell
-                            },
-                            bind: { cell, _ in
-                                cell.errorText = text
-                            }
-                    )
-                ]
-        )
-    }
-
 }
 
 extension CoinOverviewViewController: SectionsDataSource {
@@ -575,14 +582,10 @@ extension CoinOverviewViewController: SectionsDataSource {
     public func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        sections.append(coinInfoSection)
-        sections.append(chartSection)
+        if let viewItem = viewItem {
+            sections.append(coinInfoSection)
+            sections.append(chartSection)
 
-        switch state {
-        case .loading:
-            sections.append(spinnerSection)
-
-        case .loaded(let viewItem):
             if let marketInfoSection = marketInfoSection(viewItem: viewItem) {
                 sections.append(marketInfoSection)
             }
@@ -606,9 +609,6 @@ extension CoinOverviewViewController: SectionsDataSource {
             }
 
             sections.append(poweredBySection(text: "Powered by CoinGecko API"))
-
-        case .failed(let error):
-            sections.append(errorSection(text: error))
         }
 
         return sections
