@@ -41,7 +41,7 @@ class CoinReportsViewModel {
                 author: report.author,
                 title: report.title,
                 body: report.body,
-                date: DateHelper.instance.formatFullDateOnly(from: report.date),
+                date: DateHelper.instance.formatMonthYear(from: report.date),
                 url: report.url
         )
     }
