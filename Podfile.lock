@@ -555,7 +555,7 @@ CHECKOUT OPTIONS:
     :commit: 02efc79a9fb7fb4fa7e08731e668eb6a9acb3015
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: f7b9b2612d9bd4f61881870777d03eaefedc1bb9
+    :commit: c9aa6f5900a81f02f5f1ad502653b9b8e349357d
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -636,7 +636,7 @@ SPEC CHECKSUMS:
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 5870288ed6c942694f71d9691dd4867909be5ab8
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
-  MarketKit.swift: ac243d060c28dd65db49d667029e223e7f73679d
+  MarketKit.swift: f7c3f204005c0ed3beb3dd6ec2a631a31028a4a8
   ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
