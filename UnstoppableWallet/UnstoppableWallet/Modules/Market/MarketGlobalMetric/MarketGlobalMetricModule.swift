@@ -97,7 +97,7 @@ struct MarketGlobalMetricModule {
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketTvlSortHeaderViewModel(service: service, decorator: decorator)
 
-        let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: .tvlInDefi)
+        let chartFetcher = MarketGlobalTvlFetcher(marketKit: App.shared.marketKit, marketGlobalTvlPlatformService: service)
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,

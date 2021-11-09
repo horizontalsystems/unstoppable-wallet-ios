@@ -6,6 +6,7 @@ import CurrencyKit
 
 class MetricChartService {
     private var disposeBag = DisposeBag()
+    private var fetcherDisposeBag = DisposeBag()
 
     private var chartFetcher: IMetricChartFetcher
     private let currencyKit: CurrencyKit.Kit
@@ -34,6 +35,7 @@ class MetricChartService {
         self.chartType = chartType
 
         fetchChartData()
+        subscribe(fetcherDisposeBag, chartFetcher.needUpdateObservable) { [weak self] in self?.fetchChartData() }
     }
 
     private func fetchChartData() {
