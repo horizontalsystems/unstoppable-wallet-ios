@@ -37,7 +37,7 @@ class MarketCategoryViewController: MarketListViewController {
         dismiss(animated: true)
     }
 
-    override var topSections: [SectionProtocol] {
+    override func topSections(loaded: Bool) -> [SectionProtocol] {
         [
             Section(
                     id: "header",

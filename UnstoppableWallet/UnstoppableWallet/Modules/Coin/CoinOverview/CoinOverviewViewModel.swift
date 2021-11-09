@@ -10,7 +10,9 @@ class CoinOverviewViewModel {
     private let viewItemFactory = CoinOverviewViewItemFactory()
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     init(service: CoinOverviewService) {
         self.service = service
@@ -23,11 +25,17 @@ class CoinOverviewViewModel {
     private func sync(state: DataStatus<CoinOverviewService.Item>) {
         switch state {
         case .loading:
-            stateRelay.accept(.loading)
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
         case .completed(let item):
-            stateRelay.accept(.loaded(viewItem: viewItemFactory.viewItem(item: item, currency: service.currency, fullCoin: service.fullCoin)))
+            viewItemRelay.accept(viewItemFactory.viewItem(item: item, currency: service.currency, fullCoin: service.fullCoin))
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
         case .failed:
-            stateRelay.accept(.failed(error: "market.sync_error".localized))
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
@@ -35,8 +43,16 @@ class CoinOverviewViewModel {
 
 extension CoinOverviewViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemDriver: Driver<ViewItem?> {
+        viewItemRelay.asDriver()
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
     var coinViewItem: CoinViewItem {
@@ -54,15 +70,13 @@ extension CoinOverviewViewModel {
         service.sync()
     }
 
+    func onTapRetry() {
+        service.sync()
+    }
+
 }
 
 extension CoinOverviewViewModel {
-
-    enum State {
-        case loading
-        case loaded(viewItem: ViewItem)
-        case failed(error: String)
-    }
 
     struct CoinViewItem {
         let name: String

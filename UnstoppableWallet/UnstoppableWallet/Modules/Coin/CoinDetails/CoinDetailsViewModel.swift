@@ -72,7 +72,7 @@ class CoinDetailsViewModel {
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
                 treasuries: item.marketInfoDetails.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
                 fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
-                reportsCount: "1",
+                reportsCount: item.marketInfoDetails.reportsCount == 0 ? nil : "\(item.marketInfoDetails.reportsCount)",
                 securityViewItems: securityViewItems(info: item.marketInfoDetails),
                 auditAddresses: service.auditAddresses
         )
