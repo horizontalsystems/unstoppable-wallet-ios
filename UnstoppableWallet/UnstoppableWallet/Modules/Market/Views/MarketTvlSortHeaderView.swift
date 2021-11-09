@@ -16,6 +16,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
     private let dropdownButton = ThemeButton()
     private let sortButton = ThemeButton()
+    private let marketTvlFieldButton = ThemeButton()
 
     init(viewModel: MarketTvlSortHeaderViewModel, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
@@ -51,24 +52,20 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
         dropdownButton.addTarget(self, action: #selector(onTapDropdownButton), for: .touchUpInside)
 
-        let marketTvlFieldSelector = SelectorButton()
+        marketTvlFieldButton.apply(style: .secondaryIcon)
+        marketTvlFieldButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        contentView.addSubview(marketTvlFieldSelector)
-        marketTvlFieldSelector.snp.makeConstraints { maker in
+        marketTvlFieldButton.addTarget(self, action: #selector(onTapMarketTvlFieldButton), for: .touchUpInside)
+
+        contentView.addSubview(marketTvlFieldButton)
+        marketTvlFieldButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(28)
-        }
-
-        marketTvlFieldSelector.set(items: viewModel.marketTvlFields)
-        marketTvlFieldSelector.setSelected(index: viewModel.marketTvlFieldIndex)
-        marketTvlFieldSelector.onSelect = { [weak self] index in
-            self?.viewModel.onSelectMarketTvlField(index: index)
         }
 
         contentView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
-            maker.trailing.equalTo(marketTvlFieldSelector.snp.leading).offset(-CGFloat.margin8)
+            maker.trailing.equalTo(marketTvlFieldButton.snp.leading).offset(-CGFloat.margin16)
             maker.centerY.equalToSuperview()
         }
 
@@ -79,6 +76,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
         subscribe(disposeBag, viewModel.platformFieldDriver) { [weak self] in self?.syncDropdownButton(title: $0) }
         subscribe(disposeBag, viewModel.sortDirectionDriver) { [weak self] in self?.syncSortButton(ascending: $0) }
+        subscribe(disposeBag, viewModel.marketTvlFieldDriver) { [weak self] in self?.syncMarketTvlFieldButton(marketTvlField: $0) }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -98,6 +96,21 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
     @objc private func onTapSortButton() {
         viewModel.onToggleSortDirection()
+    }
+
+    private func syncMarketTvlFieldButton(marketTvlField: MarketModule.MarketTvlField) {
+        let imageName: String
+        switch marketTvlField {
+        case .value: imageName = "usd_20"
+        case .diff: imageName = "percent_20"
+        }
+
+        marketTvlFieldButton.setImage(UIImage(named: imageName)?.withTintColor(.themeGray), for: .normal)
+        marketTvlFieldButton.setImage(UIImage(named: imageName)?.withTintColor(.themeGray50), for: .highlighted)
+    }
+
+    @objc private func onTapMarketTvlFieldButton() {
+        viewModel.onToggleMarketTvlField()
     }
 
     private func syncDropdownButton(title: String) {
