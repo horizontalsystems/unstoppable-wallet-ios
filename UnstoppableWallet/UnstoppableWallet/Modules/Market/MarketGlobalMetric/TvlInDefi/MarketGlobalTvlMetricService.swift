@@ -29,8 +29,10 @@ class MarketGlobalTvlMetricService {
         }
     }
 
+    private let marketPlatformRelay = PublishRelay<MarketModule.MarketPlatformField>()
     var marketPlatformField: MarketModule.MarketPlatformField = .all {
         didSet {
+            marketPlatformRelay.accept(marketPlatformField)
             syncIfPossible(reorder: true)
         }
     }
@@ -123,6 +125,14 @@ extension MarketGlobalTvlMetricService {
         } else {
             marketTvlPriceChangeField = tvlChartCompatibleFields[0]
         }
+    }
+
+}
+
+extension MarketGlobalTvlMetricService {
+
+    var marketPlatformObservable: Observable<MarketModule.MarketPlatformField> {
+        marketPlatformRelay.asObservable()
     }
 
 }
