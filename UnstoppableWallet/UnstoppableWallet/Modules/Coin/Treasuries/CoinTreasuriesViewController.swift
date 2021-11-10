@@ -10,7 +10,7 @@ class CoinTreasuriesViewController: ThemeViewController {
     private let viewModel: CoinTreasuriesViewModel
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = MarketListErrorView()
 
