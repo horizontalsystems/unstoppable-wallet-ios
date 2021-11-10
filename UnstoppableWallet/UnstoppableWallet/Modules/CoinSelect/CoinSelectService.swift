@@ -96,6 +96,10 @@ class CoinSelectService {
         let allItems = walletItems + coinItems
 
         items = allItems.sorted { lhsItem, rhsItem in
+            if let lhsBalance = lhsItem.balance, let rhsBalance = rhsItem.balance, lhsBalance != rhsBalance {
+                return lhsBalance > rhsBalance
+            }
+
             let lhsHasBalance = lhsItem.balance != nil
             let rhsHasBalance = rhsItem.balance != nil
 
