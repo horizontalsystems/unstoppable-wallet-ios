@@ -69,25 +69,27 @@ class CoinOverviewViewItemFactory {
         return categories.isEmpty ? nil : categories.map { $0.name }
     }
 
-    private func contractViewItems(fullCoin: FullCoin) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let contracts: [CoinOverviewViewModel.ContractViewItem] = fullCoin.platforms.compactMap { platform in
-            switch platform.coinType {
+    private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
+        let coinTypes = info.coinTypes.sorted { $0.order < $1.order }
+
+        let contracts: [CoinOverviewViewModel.ContractViewItem] = coinTypes.compactMap { coinType in
+            switch coinType {
             case .erc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "ethereum_24", reference: address, explorerUrl: "https://etherscan.io/token/\(address)")
             case .bep20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_smart_chain_24", reference: address, explorerUrl: "https://bscscan.com/token/\(address)")
             case .bep2(let symbol): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_chain_24", reference: symbol, explorerUrl: "https://explorer.binance.org/asset/\(symbol)")
-            case .arbitrumOne(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .harmonyShard0(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .huobiToken(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .moonriver(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .okexChain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .polygonPos(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .solana(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .sora(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .tomochain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
-            case .xdai(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "", reference: address, explorerUrl: "")
+            case .arbitrumOne(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_24", reference: address, explorerUrl: "https://arbiscan.io/token/\(address)")
+            case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "avalanche_24", reference: address, explorerUrl: "https://avascan.info/blockchain/c/token/\(address)")
+            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_24", reference: address, explorerUrl: "https://ftmscan.com/token/\(address)")
+            case .harmonyShard0(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "harmony_24", reference: address, explorerUrl: "https://explorer.harmony.one/address/\(address)")
+            case .huobiToken(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "heco_24", reference: address, explorerUrl: "https://hecoinfo.com/token/\(address)")
+            case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "iotex_24", reference: address, explorerUrl: "https://iotexscan.io/token/\(address)")
+            case .moonriver(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "moonriver_24", reference: address, explorerUrl: "https://blockscout.moonriver.moonbeam.network/address/\(address)")
+            case .okexChain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "okex_24", reference: address, explorerUrl: "https://www.oklink.com/oec/address/\(address)")
+            case .polygonPos(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "polygon_24", reference: address, explorerUrl: "https://polygonscan.com/token/\(address)")
+            case .solana(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "solana_24", reference: address, explorerUrl: "https://explorer.solana.com/address/\(address)")
+            case .sora(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "sora_24", reference: address, explorerUrl: "https://sorascan.com/sora-mainnet/asset/\(address)")
+            case .tomochain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "tomochain_24", reference: address, explorerUrl: "https://scan.tomochain.com/tokens/\(address)")
+            case .xdai(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "xdai_24", reference: address, explorerUrl: "https://blockscout.com/xdai/mainnet/address/\(address)")
             default: return nil
             }
         }
@@ -181,7 +183,7 @@ extension CoinOverviewViewItemFactory {
 
                 performance: performanceViewItems(info: info),
                 categories: categories(info: info),
-                contracts: contractViewItems(fullCoin: fullCoin),
+                contracts: contractViewItems(info: info),
                 description: info.description,
                 guideUrl: item.guideUrl,
                 links: links(info: info)
