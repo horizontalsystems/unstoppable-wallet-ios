@@ -72,7 +72,6 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
-        tableView.registerCell(forClass: D20Cell.self)
         tableView.registerCell(forClass: CoinDetailsMetricCell.self)
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
@@ -414,7 +413,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasAudits = !auditAddresses.isEmpty
 
         for (index, viewItem) in securityViewItems.enumerated() {
-            let row = Row<D20Cell>(
+            let row = Row<D6Cell>(
                     id: "security-\(viewItem.type)",
                     height: .heightCell48,
                     autoDeselect: true,
@@ -422,8 +421,8 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == securityViewItems.count - 1 && !hasAudits)
                         cell.title = viewItem.type.title
                         cell.value = viewItem.value
-                        cell.valueBackground = viewItem.valueGrade.color
-                        cell.image = UIImage(named: "circle_information_20")
+                        cell.valueColor = viewItem.valueGrade.color
+                        cell.valueImage = UIImage(named: "circle_information_20")
                     },
                     action: { [weak self] _ in
                         self?.openSecurityInfo(type: viewItem.type)
