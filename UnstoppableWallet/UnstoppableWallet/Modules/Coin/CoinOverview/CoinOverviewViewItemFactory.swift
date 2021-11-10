@@ -40,23 +40,25 @@ class CoinOverviewViewItemFactory {
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
         var timePeriods = [TimePeriod]()
-        for (_, changes) in info.performance {
-            for timePeriod in changes.keys {
+        for row in info.performance {
+            for (timePeriod, _) in row.changes {
                 if !timePeriods.contains(timePeriod) {
                     timePeriods.append(timePeriod)
-                    titleRow.append(.subtitle(roiTitle(timePeriod: timePeriod)))
                 }
             }
         }
 
+        timePeriods.sort()
+        timePeriods.forEach { titleRow.append(.subtitle(roiTitle(timePeriod: $0))) }
+
         viewItems.append(titleRow)
 
-        info.performance.forEach { (coinCode, changes) in
+        info.performance.forEach { performanceRow in
             var row = [CoinOverviewViewModel.PerformanceViewItem]()
-            row.append(.content("vs \(coinCode.uppercased())"))
+            row.append(.content("vs \(performanceRow.base.rawValue.uppercased())"))
 
             timePeriods.forEach { timePeriod in
-                row.append(.value(changes[timePeriod]))
+                row.append(.value(performanceRow.changes[timePeriod]))
             }
             viewItems.append(row)
         }
