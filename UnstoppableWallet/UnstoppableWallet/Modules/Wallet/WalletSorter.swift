@@ -21,7 +21,7 @@ class WalletSorter {
         switch sortType {
         case .balance:
             let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
-            let zeroItems = items.filter{ $0.balanceData.balance.isZero }
+            let zeroItems = items.filter { $0.balanceData.balance.isZero }
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:

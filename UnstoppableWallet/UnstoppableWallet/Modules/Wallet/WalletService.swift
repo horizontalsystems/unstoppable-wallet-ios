@@ -236,7 +236,12 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
             item.balanceData = balanceData
 
-            self.itemUpdatedRelay.accept(item)
+            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
+                self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            } else {
+                self.itemUpdatedRelay.accept(item)
+            }
+
             self.syncTotalItem()
 
             self.cacheManager.set(balanceData: balanceData, wallet: wallet)
