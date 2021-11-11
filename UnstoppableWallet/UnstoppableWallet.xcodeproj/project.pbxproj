@@ -2424,9 +2424,9 @@
 		D35B518A21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
 		D35B518B21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
 		D35B518C21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
-		D36DE0AB272FD612000BC916 /* SwapViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewControllerNew.swift */; };
-		D36DE0AC272FD612000BC916 /* SwapViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewControllerNew.swift */; };
-		D36DE0AD272FD612000BC916 /* SwapViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewControllerNew.swift */; };
+		D36DE0AB272FD612000BC916 /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewController.swift */; };
+		D36DE0AC272FD612000BC916 /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewController.swift */; };
+		D36DE0AD272FD612000BC916 /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AA272FD612000BC916 /* SwapViewController.swift */; };
 		D36DE0B0272FD689000BC916 /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AE272FD689000BC916 /* SwapModule.swift */; };
 		D36DE0B1272FD689000BC916 /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AE272FD689000BC916 /* SwapModule.swift */; };
 		D36DE0B2272FD689000BC916 /* SwapModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36DE0AE272FD689000BC916 /* SwapModule.swift */; };
@@ -3500,7 +3500,7 @@
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D35B518821942E7A00504FBA /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
-		D36DE0AA272FD612000BC916 /* SwapViewControllerNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewControllerNew.swift; sourceTree = "<group>"; };
+		D36DE0AA272FD612000BC916 /* SwapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewController.swift; sourceTree = "<group>"; };
 		D36DE0AE272FD689000BC916 /* SwapModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapModule.swift; sourceTree = "<group>"; };
 		D36DE0AF272FD689000BC916 /* SwapProviderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapProviderManager.swift; sourceTree = "<group>"; };
 		D36DE0B6272FD863000BC916 /* SwapViewItemHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewItemHelper.swift; sourceTree = "<group>"; };
@@ -5279,7 +5279,7 @@
 				58AAA02349A93FEA8F692462 /* CoinCard */,
 				D36DE0AE272FD689000BC916 /* SwapModule.swift */,
 				58AAAEB2257174A64DE5E51B /* SwapViewModel.swift */,
-				D36DE0AA272FD612000BC916 /* SwapViewControllerNew.swift */,
+				D36DE0AA272FD612000BC916 /* SwapViewController.swift */,
 				D36DE0AF272FD689000BC916 /* SwapProviderManager.swift */,
 				58AAA7A159BA985AD4DB5515 /* Views */,
 			);
@@ -7177,7 +7177,7 @@
 				11B352DFA2E2B566A75D1FA5 /* MarketAdvancedSearchResultService.swift in Sources */,
 				11B35B130E6E50EBBB3CFE22 /* MarketAdvancedSearchViewController.swift in Sources */,
 				11B357AEAA938388DF266841 /* MarketAdvancedSearchViewModel.swift in Sources */,
-				D36DE0AD272FD612000BC916 /* SwapViewControllerNew.swift in Sources */,
+				D36DE0AD272FD612000BC916 /* SwapViewController.swift in Sources */,
 				11B35E4EA232D1A202A3B9B8 /* MarketAdvancedSearchService.swift in Sources */,
 				11B352014AB8A556A8A785F4 /* MarketAdvancedSearchModule.swift in Sources */,
 				11B358026ACD3DBDECB82462 /* MarketListMarketFieldDecorator.swift in Sources */,
@@ -8049,7 +8049,7 @@
 				11B35E255AF804AEE43FF46A /* MarketAdvancedSearchResultService.swift in Sources */,
 				11B35D3E3B10A4E92FD01172 /* MarketAdvancedSearchViewController.swift in Sources */,
 				11B35F173689829256427A34 /* MarketAdvancedSearchViewModel.swift in Sources */,
-				D36DE0AC272FD612000BC916 /* SwapViewControllerNew.swift in Sources */,
+				D36DE0AC272FD612000BC916 /* SwapViewController.swift in Sources */,
 				11B3505A12674A5FF36D3CC8 /* MarketAdvancedSearchService.swift in Sources */,
 				11B359B11871F76B25426D58 /* MarketAdvancedSearchModule.swift in Sources */,
 				11B350F36947CF278CDB436B /* MarketListMarketFieldDecorator.swift in Sources */,
@@ -8220,7 +8220,7 @@
 				D003297A26CD2E89002EC21D /* TransactionDateHeaderView.swift in Sources */,
 				11B352239A24A134A0A26C5F /* SendFeePriorityRouter.swift in Sources */,
 				11B351A789BF89D32CC207C0 /* SendFeePriorityPresenter.swift in Sources */,
-				D36DE0AB272FD612000BC916 /* SwapViewControllerNew.swift in Sources */,
+				D36DE0AB272FD612000BC916 /* SwapViewController.swift in Sources */,
 				11B353F2CA7828E73196415C /* SendFeePriorityInteractor.swift in Sources */,
 				11B35AB9EA64C5D3825DD44E /* AddressParserFactory.swift in Sources */,
 				11B3519B8645E4788A70E0A4 /* FeeRateProviderFactory.swift in Sources */,

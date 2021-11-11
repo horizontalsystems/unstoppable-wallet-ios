@@ -7,7 +7,7 @@ import RxCocoa
 import SectionsTableView
 import ComponentKit
 
-class SwapViewControllerNew: ThemeViewController {
+class SwapViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
@@ -127,7 +127,7 @@ class SwapViewControllerNew: ThemeViewController {
 
 }
 
-extension SwapViewControllerNew: SectionsDataSource {
+extension SwapViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
