@@ -58,7 +58,7 @@ class CoinTreasuriesViewModel {
 
     private func viewItem(treasury: CoinTreasury) -> ViewItem {
         ViewItem(
-                logoUrl: treasury.logo,
+                logoUrl: treasury.fundLogoUrl,
                 fund: treasury.fund,
                 country: treasury.country,
                 amount: CurrencyCompactFormatter.instance.format(symbol: service.coinCode, value: treasury.amount) ?? "---",

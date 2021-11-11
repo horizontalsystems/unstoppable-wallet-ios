@@ -1,15 +1,6 @@
 import UIKit
 import MarketKit
 
-extension MarketKit.CoinCategory {
-
-    var imageUrl: String {
-        let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/ios/\(uid)@\(scale)x.png"
-    }
-
-}
-
 extension MarketKit.CoinType {
 
     var blockchainType: String? {
@@ -131,6 +122,33 @@ extension MarketKit.Coin {
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
         return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/ios/\(uid)@\(scale)x.png"
+    }
+
+}
+
+extension MarketKit.CoinCategory {
+
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/ios/\(uid)@\(scale)x.png"
+    }
+
+}
+
+extension MarketKit.CoinInvestment.Fund {
+
+    var logoUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/ios/\(uid)@\(scale)x.png"
+    }
+
+}
+
+extension MarketKit.CoinTreasury {
+
+    var fundLogoUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/ios/\(fundUid)@\(scale)x.png"
     }
 
 }

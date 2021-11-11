@@ -119,7 +119,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.title = fundViewItem.name
-                    cell.titleImage = UIImage(named: "icon_placeholder_24")
+                    cell.setTitleImage(urlString: fundViewItem.logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
                     cell.value = fundViewItem.isLead ? "coin_page.funds_invested.lead".localized : nil
                     cell.valueColor = .themeRemus
                 },

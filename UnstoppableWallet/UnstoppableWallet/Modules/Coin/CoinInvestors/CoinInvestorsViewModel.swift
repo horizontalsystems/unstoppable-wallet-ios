@@ -47,6 +47,7 @@ class CoinInvestorsViewModel {
     private func fundViewItem(fund: CoinInvestment.Fund) -> FundViewItem {
         FundViewItem(
                 name: fund.name,
+                logoUrl: fund.logoUrl,
                 isLead: fund.isLead,
                 url: fund.website
         )
@@ -84,6 +85,7 @@ extension CoinInvestorsViewModel {
 
     struct FundViewItem {
         let name: String
+        let logoUrl: String
         let isLead: Bool
         let url: String
     }
