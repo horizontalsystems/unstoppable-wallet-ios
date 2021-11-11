@@ -1,12 +1,13 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 
-class CheckboxCell: UITableViewCell {
-    private static let checkBoxLeadingMargin: CGFloat = .margin6x
+class CheckboxCell: BaseThemeCell {
+    private static let checkBoxLeadingMargin: CGFloat = .margin32
     private static let checkBoxSize: CGFloat = 24
-    private static let textLeadingMargin: CGFloat = .margin4x
-    private static let textTrailingMargin: CGFloat = .margin6x
-    private static let textVerticalMargin: CGFloat = .margin4x
+    private static let textLeadingMargin: CGFloat = .margin16
+    private static let textTrailingMargin: CGFloat = .margin32
+    private static let textVerticalMargin: CGFloat = .margin16
     private static let textFont: UIFont = .subhead2
 
     private let checkBoxView = UIView()
@@ -21,21 +22,22 @@ class CheckboxCell: UITableViewCell {
 
         contentView.addSubview(checkBoxView)
         checkBoxView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CheckboxCell.checkBoxLeadingMargin)
-            maker.top.equalToSuperview().offset(CGFloat.margin12)
+            maker.leading.equalToSuperview().inset(CheckboxCell.checkBoxLeadingMargin)
+            maker.centerY.equalToSuperview()
             maker.size.equalTo(CheckboxCell.checkBoxSize)
         }
 
         checkBoxView.layer.cornerRadius = .cornerRadius4
         checkBoxView.layer.borderColor = UIColor.themeGray.cgColor
+        checkBoxView.layer.borderWidth = .heightOneDp + .heightOnePixel
 
         checkBoxView.addSubview(checkBoxImageView)
         checkBoxImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
         }
 
-        checkBoxImageView.image = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
-        checkBoxImageView.tintColor = .themeWhite
+        checkBoxImageView.image = UIImage(named: "check_2_20")?.withRenderingMode(.alwaysTemplate)
+        checkBoxImageView.tintColor = .themeJacob
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
@@ -53,11 +55,10 @@ class CheckboxCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?, checked: Bool) {
+    func bind(text: String?, checked: Bool, backgroundStyle: BackgroundStyle, isFirst: Bool = false, isLast: Bool = false) {
+        set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
         descriptionLabel.text = text
 
-        checkBoxView.layer.borderWidth = checked ? 0 : 2
-        checkBoxView.backgroundColor = checked ? .themeRemus : .clear
         checkBoxImageView.isHidden = !checked
     }
 

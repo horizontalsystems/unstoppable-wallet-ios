@@ -107,7 +107,8 @@ extension UnlinkViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.bind(
                             text: viewItem.text,
-                            checked: viewItem.checked
+                            checked: viewItem.checked,
+                            backgroundStyle: .transparent
                     )
                 },
                 action: { [weak self] _ in
