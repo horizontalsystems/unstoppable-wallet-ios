@@ -43,7 +43,7 @@ extension MarketGlobalTvlFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .globalMarketTotalTvlSingle(platform: service.marketPlatformField.chain, currencyCode: currencyCode, timePeriod: timePeriod)
+                .marketInfoGlobalTvlSingle(platform: service.marketPlatformField.chain, currencyCode: currencyCode, timePeriod: timePeriod)
                 .map { points in
                     points.map { point -> MetricChartModule.Item in
                         MetricChartModule.Item(value: point.value, timestamp: point.timestamp)
