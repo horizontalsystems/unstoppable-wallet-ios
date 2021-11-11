@@ -588,6 +588,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.tweets.reference_type.replied" = "Replied to @%@";
 "coin_page.tweets.no_tweets_yet" = "No tweets yet";
 "coin_page.tweets.not_available" = "No twitter available";
+"coin_page.tweets.see_on_twitter" = "See on Twitter";
 
 // Transactions
 
