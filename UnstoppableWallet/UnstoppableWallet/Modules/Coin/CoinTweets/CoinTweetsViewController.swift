@@ -147,7 +147,7 @@ class CoinTweetsViewController: ThemeViewController {
         urlManager.open(url: webUrl, from: parentNavigationController)
     }
 
-    @objc private func onTapMore() {
+    private func onTapSeeOnTwitter() {
         guard let username = viewModel.username else {
             return
         }
@@ -184,13 +184,14 @@ extension CoinTweetsViewController: SectionsDataSource {
         Section(
                 id: "button_section",
                 headerState: .margin(height: .margin16),
+                footerState: .margin(height: .margin16),
                 rows: [
                     Row<ButtonCell>(
-                            id: "more_row",
+                            id: "see-on-twitter",
                             height: ButtonCell.height(style: .secondaryDefault),
                             bind: { [weak self] cell, _ in
-                                cell.bind(style: .secondaryDefault, title: "button.more".localized, compact: true) { [weak self] in
-                                    self?.onTapMore()
+                                cell.bind(style: .secondaryDefault, title: "coin_page.tweets.see_on_twitter".localized, compact: true) { [weak self] in
+                                    self?.onTapSeeOnTwitter()
                                 }
                             }
                     )
