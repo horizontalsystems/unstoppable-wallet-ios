@@ -34,12 +34,12 @@ class TransactionsViewModel {
                 self?.handle(updatedItem: item)
             }
         }
-        subscribe(disposeBag, service.syncingSignal) { [weak self] syncing in self?.handle(syncing: syncing) }
+        subscribe(disposeBag, service.syncStateSignal) { [weak self] syncState in self?.handle(syncState: syncState) }
 
         handle(typesFilters: service.typeFilters)
         handle(walletFilters: service.walletFilters)
         handle(items: service.items)
-        handle(syncing: service.syncing)
+        handle(syncState: service.syncState)
     }
 
     private func handle(typesFilters: (types: [TransactionTypeFilter], selected: Int)) {
@@ -70,13 +70,22 @@ class TransactionsViewModel {
         }
     }
 
-    private func handle(syncing: Bool) {
-        if syncing {
+    private func handle(syncState: AdapterState?) {
+        guard let syncState = syncState else {
+            return
+        }
+
+        switch syncState {
+        case .syncing, .searchingTxs:
             viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, showMessage: false))
-        } else if sections.isEmpty {
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: true))
-        } else {
+        case .notSynced:
             viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
+        case .synced:
+            if sections.isEmpty {
+                viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: true))
+            } else {
+                viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
+            }
         }
     }
 

@@ -5,29 +5,32 @@ class TransactionSyncStateService {
 
     private var adapterManager: TransactionAdapterManager
     private var adapters = [TransactionSource: ITransactionsAdapter]()
-    private(set) var syncing: Bool = false {
+    private(set) var syncState: AdapterState? = nil {
         didSet {
-            if syncing != oldValue {
-                syncingSubject.onNext(syncing)
+            if syncState != oldValue {
+                syncStateSubject.onNext(syncState)
             }
         }
     }
 
     private var lastBlockInfoSubject = PublishSubject<(TransactionSource, LastBlockInfo)>()
-    private var syncingSubject = PublishSubject<Bool>()
+    private var syncStateSubject = PublishSubject<AdapterState?>()
 
     init(adapterManager: TransactionAdapterManager) {
         self.adapterManager = adapterManager
     }
 
     func stateUpdated() {
-        syncing = adapters.values.map({ $0.transactionState }).contains {
-            if case .syncing = $0 {
-                return true
-            } else {
-                return false
+        for adapter in adapters.values {
+            switch adapter.transactionState {
+            case .syncing, .notSynced, .searchingTxs:
+                syncState = adapter.transactionState
+                return
+            case .synced: ()
             }
         }
+
+        syncState = .synced
     }
 
 }
@@ -38,8 +41,8 @@ extension TransactionSyncStateService {
         lastBlockInfoSubject.asObservable()
     }
 
-    var syncingObservable: Observable<Bool> {
-        syncingSubject.asObservable()
+    var syncStateObservable: Observable<AdapterState?> {
+        syncStateSubject.asObservable()
     }
 
     func lastBlockInfo(source: TransactionSource) -> LastBlockInfo? {

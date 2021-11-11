@@ -45,7 +45,7 @@ class SwapModule {
         let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, platformCoinFrom: platformCoinFrom)
 
         let viewModel =  SwapViewModel(dexManager: swapDexManager)
-        let viewController = SwapViewControllerNew(
+        let viewController = SwapViewController(
                 viewModel: viewModel,
                 dataSourceManager: swapDexManager
         )
