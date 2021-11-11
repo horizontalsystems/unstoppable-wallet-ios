@@ -102,6 +102,28 @@ extension MarketKit.CoinType {
         blockchainType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
     }
 
+    var order: Int {
+        switch self {
+        case .erc20: return 1
+        case .bep20: return 2
+        case .bep2: return 3
+        case .solana: return 4
+        case .avalanche: return 5
+        case .fantom: return 6
+        case .arbitrumOne: return 7
+        case .polygonPos: return 8
+        case .huobiToken: return 9
+        case .harmonyShard0: return 10
+        case .xdai: return 11
+        case .moonriver: return 12
+        case .okexChain: return 13
+        case .sora: return 14
+        case .tomochain: return 15
+        case .iotex: return 16
+        default: return Int.max
+        }
+    }
+
 }
 
 extension MarketKit.Coin {
