@@ -37,7 +37,8 @@ struct SendEvmData {
         let deadline: String?
         let recipientDomain: String?
         let price: String?
-        let priceImpact: String?
+        let priceImpact: UniswapModule.PriceImpactViewItem?
+        let warning: String?
     }
 
     struct OneInchSwapInfo {

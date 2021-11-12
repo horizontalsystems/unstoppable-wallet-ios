@@ -4,7 +4,6 @@ import ComponentKit
 
 class TitledHighlightedDescriptionCell: BaseThemeCell {
     private static let horizontalMargin: CGFloat = .margin16
-    private static let verticalMargin: CGFloat = .margin12
 
     private let descriptionView = TitledHighlightedDescriptionView()
 
@@ -16,8 +15,8 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
 
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(TitledHighlightedDescriptionCell.horizontalMargin)
-            maker.top.equalToSuperview().offset(TitledHighlightedDescriptionCell.verticalMargin)
+            maker.leading.trailing.equalToSuperview().inset(Self.horizontalMargin)
+            maker.top.equalToSuperview()
         }
     }
 
@@ -47,7 +46,7 @@ extension TitledHighlightedDescriptionCell {
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
         let descriptionViewHeight = TitledHighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)
-        return descriptionViewHeight + 2 * verticalMargin
+        return descriptionViewHeight
     }
 
 }
