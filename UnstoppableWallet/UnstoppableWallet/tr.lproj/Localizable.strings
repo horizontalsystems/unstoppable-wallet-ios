@@ -262,6 +262,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.price_impact" = "Fiyat Etkisi";
 "swap.maximum_paid" = "Maksimum Ödenen";
 "swap.minimum_got" = "Minimum Kazanılan";
+"swap.estimate_short" = "(est)";
+"swap.minimum_short" = "(min)";
 
 // Swap Advanced Settings
 
