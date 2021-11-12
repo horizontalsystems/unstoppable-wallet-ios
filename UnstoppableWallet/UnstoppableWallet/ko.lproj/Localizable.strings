@@ -261,6 +261,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
+"swap.estimate_short" = "(est)";
+"swap.minimum_short" = "(min)";
 
 // Swap Advanced Settings
 
