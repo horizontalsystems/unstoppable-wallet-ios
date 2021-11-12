@@ -28,6 +28,7 @@ class FormAmountInputView: UIView {
 
         subscribe(disposeBag, viewModel.prefixDriver) { [weak self] in self?.set(prefix: $0) }
         subscribe(disposeBag, viewModel.amountDriver) { [weak self] in self?.set(amount: $0) }
+        subscribe(disposeBag, viewModel.amountWarningDriver) { [weak self] in self?.set(amountWarning: $0) }
         subscribe(disposeBag, viewModel.isMaxEnabledDriver) { [weak self] in self?.amountInputView.maxButtonVisible = $0 }
         subscribe(disposeBag, viewModel.switchEnabledDriver) { [weak self] in self?.amountInputView.secondaryButtonEnabled = $0 }
         subscribe(disposeBag, viewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
@@ -51,6 +52,10 @@ class FormAmountInputView: UIView {
         }
 
         amountInputView.inputText = amount
+    }
+
+    private func set(amountWarning: String?) {
+        amountInputView.warningText = amountWarning
     }
 
     private func textColor(inputType: AmountInputViewModel.InputType) -> UIColor {
