@@ -164,6 +164,19 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
         Observable<Error?>.just(nil)
     }
 
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
+        tradeService.stateObservable.map { state in
+            guard case .ready(let trade) = state,
+                  let impactLevel = trade.impactLevel,
+                  case .forbidden = impactLevel,
+                  let priceImpact = trade.tradeData.priceImpact else {
+                return nil
+            }
+
+            return .highPriceImpact(priceImpact: priceImpact)
+        }
+    }
+
     func onChange(amount: Decimal) {
         tradeService.set(amountOut: amount)
     }

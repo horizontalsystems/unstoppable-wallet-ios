@@ -14,6 +14,7 @@ class AmountInputView: UIView {
     private let estimatedView = InputBadgeWrapperView()
     private let maxView = InputButtonWrapperView(style: .secondaryDefault)
     private let clearView = InputButtonWrapperView(style: .secondaryIcon)
+    private let warningView = UILabel()
 
     var maxButtonVisible = false {
         didSet {
@@ -51,7 +52,7 @@ class AmountInputView: UIView {
 
         addSubview(secondaryButton)
         secondaryButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.bottom.equalToSuperview()
             maker.top.equalTo(separatorView.snp.bottom)
         }
 
@@ -61,6 +62,16 @@ class AmountInputView: UIView {
         secondaryButton.setTitleColor(.themeBran, for: .normal)
         secondaryButton.setTitleColor(.themeGray50, for: .disabled)
         secondaryButton.addTarget(self, action: #selector(onTapSecondaryButton), for: .touchUpInside)
+
+        addSubview(warningView)
+        warningView.snp.makeConstraints { maker in
+            maker.leading.equalTo(secondaryButton.snp.trailing).offset(CGFloat.margin12)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin8)
+            maker.centerY.equalTo(secondaryButton.snp.centerY)
+        }
+        warningView.font = .caption
+        warningView.textColor = .themeLucian
+        warningView.isHidden = true
 
         prefixView.isHidden = true
 
@@ -172,6 +183,14 @@ extension AmountInputView {
      var estimatedVisible: Bool {
          get { estimatedView.isHidden }
          set { estimatedView.isHidden = !newValue }
+     }
+
+     var warningText: String? {
+         get { warningView.text }
+         set {
+             warningView.text = newValue
+             warningView.isHidden = (newValue == nil)
+         }
      }
 
     var isValidText: ((String) -> Bool)? {

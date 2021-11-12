@@ -10,8 +10,17 @@ protocol IAmountInputService {
 
     var amountObservable: Observable<Decimal> { get }
     var platformCoinObservable: Observable<PlatformCoin?> { get }
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> { get }
 
     func onChange(amount: Decimal)
+}
+
+extension IAmountInputService {
+
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
+        Observable.just(nil)
+    }
+
 }
 
 class AmountInputViewModel {
@@ -40,6 +49,7 @@ class AmountInputViewModel {
     private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
     private var secondaryTextTypeRelay = BehaviorRelay<InputType>(value: .currency)
     private var switchEnabledRelay: BehaviorRelay<Bool>
+    private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
     private var coinDecimals = AmountInputViewModel.maxCoinDecimals
 
@@ -52,6 +62,7 @@ class AmountInputViewModel {
         switchEnabledRelay = BehaviorRelay(value: switchService.toggleAvailable)
 
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
+        subscribe(disposeBag, service.amountWarningObservable) { [weak self] in self?.sync(amountWarning: $0) }
         subscribe(disposeBag, service.platformCoinObservable) { [weak self] in self?.sync(platformCoin: $0) }
         subscribe(disposeBag, fiatService.coinAmountObservable) { [weak self] in self?.syncCoin(amount: $0) }
         subscribe(disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
@@ -60,6 +71,15 @@ class AmountInputViewModel {
 
         sync(amount: service.amount)
         sync(platformCoin: service.platformCoin)
+    }
+
+    private func sync(amountWarning: AmountWarning?) {
+        amountWarningRelay.accept(amountWarning.flatMap { warning in
+            switch warning {
+            case .highPriceImpact(let priceImpact): return "-\(priceImpact.description)%"
+            default: return nil
+            }
+        })
     }
 
     private func sync(amount: Decimal) {
@@ -197,6 +217,10 @@ extension AmountInputViewModel {
         secondaryTextTypeRelay.distinctUntilChanged().asDriver(onErrorJustReturn: .coin)
     }
 
+    var amountWarningDriver: Driver<String?> {
+        amountWarningRelay.asDriver()
+    }
+
     func onChange(amount: String?) {
         let amount = decimalParser.parseAnyDecimal(from: amount) ?? 0
 
@@ -229,6 +253,10 @@ extension AmountInputViewModel {
             default: return .coin
             }
         }
+    }
+
+    enum AmountWarning {
+        case highPriceImpact(priceImpact: Decimal)
     }
 
 }
