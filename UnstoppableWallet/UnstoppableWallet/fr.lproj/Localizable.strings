@@ -261,6 +261,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.price_impact" = "Impact prix";
 "swap.maximum_paid" = "Montant maximum payé";
 "swap.minimum_got" = "Montant minimum reçu";
+"swap.estimate_short" = "(est)";
+"swap.minimum_short" = "(min)";
 
 // Swap Advanced Settings
 
