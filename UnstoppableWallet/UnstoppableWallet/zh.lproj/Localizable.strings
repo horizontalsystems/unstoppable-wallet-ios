@@ -708,11 +708,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "terms.title" = "条款";
 "terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
-                       It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
+It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
 
-                       The Unstoppable wallet is fully open-source and anyone can confirm the app works exactly as it claims to.
+The Unstoppable wallet is fully open-source and anyone can confirm the app works exactly as it claims to.
 
-                       We built Unstoppable for ourselves as the other available solutions were not up to par. Both from an engineering and usability perspective, we believe this wallet to be significantly ahead of alternative products.";
+We built Unstoppable for ourselves as the other available solutions were not up to par. Both from an engineering and usability perspective, we believe this wallet to be significantly ahead of alternative products.";
 "terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
 "terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand these private keys are stored on my smartphone and not elsewhere.";
 "terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without a safe PIN lock may potentially endanger the safety of my funds.";
