@@ -232,24 +232,30 @@ class SendEvmTransactionViewModel {
         case let .exactIn(amountIn, amountOutMin, _):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
-                .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: amountIn).formattedRawString, type: .outgoing)
+                .value(title: coinServiceIn.amountData(value: amountIn).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceIn.amountData(value: amountIn).primary.formattedString ?? "n/a".localized), type: .regular)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
-                estimatedSwapAmount(value: info.map { coinServiceOut.amountData(value: $0.estimatedOut).formattedRawString }, type: .incoming),
-                .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: amountOutMin).formattedRawString, type: .regular)
+                estimatedSwapAmount(
+                        title: info.flatMap { coinServiceOut.amountData(value: $0.estimatedOut).secondary?.formattedRawString },
+                        value: info.flatMap { coinServiceOut.amountData(value: $0.estimatedOut).primary.formattedString }, type: .incoming
+                ),
+                .value(title: coinServiceOut.amountData(value: amountOutMin).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceOut.amountData(value: amountOutMin).primary.formattedString ?? "n/a".localized) + " " + "swap.minimum_short".localized, type: .regular)
             ]))
         case let .exactOut(amountOut, amountInMax, _):
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
-                estimatedSwapAmount(value: info.map { coinServiceIn.amountData(value: $0.estimatedIn).formattedRawString }, type: .outgoing),
-                .value(title: "swap.confirmation.maximum".localized, value: coinServiceIn.amountData(value: amountInMax).formattedRawString, type: .regular)
+                estimatedSwapAmount(
+                        title: info.flatMap { coinServiceIn.amountData(value: $0.estimatedIn).secondary?.formattedRawString },
+                        value: info.flatMap { coinServiceIn.amountData(value: $0.estimatedIn).primary.formattedString }, type: .outgoing
+                ),
+                valueMin(title: coinServiceOut.amountData(value: amountInMax).secondary?.formattedRawString, value: coinServiceOut.amountData(value: amountInMax).primary.formattedString, type: .regular)
             ]))
 
             sections.append(SectionViewItem(viewItems: [
                 .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
-                .value(title: "send.confirmation.amount".localized, value: coinServiceOut.amountData(value: amountOut).formattedRawString, type: .incoming)
+                .value(title: coinServiceOut.amountData(value: amountOut).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceOut.amountData(value: amountOut).primary.formattedString ?? "n/a".localized), type: .regular)
             ]))
         }
 
@@ -293,19 +299,18 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name),
-            .value(title: "send.confirmation.amount".localized, value: coinServiceIn.amountData(value: fromAmount).formattedRawString, type: .outgoing)
+            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+            .value(title: coinServiceIn.amountData(value: fromAmount).secondary?.formattedRawString ?? "n/a".localized, value: coinServiceIn.amountData(value: fromAmount).primary.formattedString ?? "n/a".localized, type: .outgoing)
         ]))
-
 
         let methodEstimatedDecimal = toAmount.map { coinServiceOut.amountData(value: $0) }
         let estimatedAmountData = methodEstimatedDecimal ?? (info?.estimatedAmountTo).map { coinServiceOut.amountData(value: $0) }
 
-        let estimatedTo = estimatedAmountData.map { estimatedSwapAmount(value: $0.formattedRawString, type: .incoming) }
+        let estimatedTo = estimatedAmountData.map { estimatedSwapAmount(title: $0.secondary?.formattedRawString, value: $0.primary.formattedString, type: .incoming) }
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name),
+            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code),
             estimatedTo,
-            .value(title: "swap.confirmation.guaranteed".localized, value: coinServiceOut.amountData(value: toAmountMin).formattedRawString, type: .regular)
+            valueMin(title: coinServiceOut.amountData(value: toAmountMin).secondary?.formattedRawString, value: coinServiceOut.amountData(value: toAmountMin).primary.formattedString, type: .regular)
         ].compactMap { $0 }))
 
         var otherViewItems = [ViewItem]()
@@ -364,14 +369,20 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func estimatedSwapAmount(value: String?, type: ValueType) -> ViewItem {
-        let title = "swap.confirmation.estimated".localized
+    private func estimatedSwapAmount(title: String?, value: String?, type: ValueType) -> ViewItem {
+        let title = title ?? "n/a".localized
 
         if let value = value {
-            return .value(title: title, value: value, type: type)
+            return .value(title: title, value: value + " " + "swap.estimate_short".localized, type: type)
         } else {
             return .value(title: title, value: "n/a".localized, type: .disabled)
         }
+    }
+
+    private func valueMin(title: String?, value: String?, type: ValueType) -> ViewItem {
+        let title = title ?? "n/a".localized
+        let value = value.map { $0 + " " + "swap.minimum_short".localized } ?? "n/a".localized
+        return .value(title: title, value: value, type: type)
     }
 
     private func coinService(token: SwapMethodDecoration.Token) -> CoinService? {
