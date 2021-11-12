@@ -278,11 +278,22 @@ class SendEvmTransactionViewModel {
             otherViewItems.append(.value(title: "swap.price".localized, value: price, type: .regular))
         }
         if let priceImpact = info?.priceImpact {
-            otherViewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact, type: .regular))
+            var type: ValueType
+            switch priceImpact.level {
+            case .forbidden: type = .alert
+            case .warning: type = .warning
+            default: type = .regular
+            }
+
+            otherViewItems.append(.value(title: "swap.price_impact".localized, value: priceImpact.value, type: type))
         }
 
         if !otherViewItems.isEmpty {
             sections.append(SectionViewItem(viewItems: otherViewItems))
+        }
+
+        if let warning = info?.warning {
+            sections.append(SectionViewItem(viewItems: [.warning(title: "swap.price_impact".localized, value: warning)]))
         }
 
         return sections
@@ -454,6 +465,7 @@ extension SendEvmTransactionViewModel {
         case value(title: String, value: String, type: ValueType)
         case address(title: String, valueTitle: String, value: String)
         case input(value: String)
+        case warning(title: String, value: String)
     }
 
     enum ValueType {
@@ -461,6 +473,8 @@ extension SendEvmTransactionViewModel {
         case disabled
         case outgoing
         case incoming
+        case warning
+        case alert
     }
 
 }

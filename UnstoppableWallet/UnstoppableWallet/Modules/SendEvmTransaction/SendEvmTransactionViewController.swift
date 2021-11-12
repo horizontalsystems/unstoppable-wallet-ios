@@ -60,6 +60,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D9Cell.self)
         tableView.registerCell(forClass: AdditionalDataCell.self)
+        tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
@@ -176,9 +177,23 @@ class SendEvmTransactionViewController: ThemeViewController {
                     switch type {
                     case .regular: cell.valueColor = .themeBran
                     case .disabled: cell.valueColor = .themeGray
-                    case .outgoing: cell.valueColor = .themeJacob
+                    case .outgoing, .warning: cell.valueColor = .themeJacob
                     case .incoming: cell.valueColor = .themeRemus
+                    case .alert: cell.valueColor = .themeLucian
                     }
+                }
+        )
+    }
+
+    private func warningRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<TitledHighlightedDescriptionCell>(
+                id: title,
+                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
+                bind: { cell, _ in
+                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.tintColor = .themeJacob
+                    cell.titleText = title
+                    cell.descriptionText = value
                 }
         )
     }
@@ -189,6 +204,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         case let .value(title, value, type): return valueRow(title: title, value: value, type: type, index: index, isFirst: isFirst, isLast: isLast)
         case let .address(title, valueTitle, value): return hexRow(title: title, valueTitle: valueTitle, value: value, index: index, isFirst: isFirst, isLast: isLast)
         case .input(let value): return hexRow(title: "Input", valueTitle: value, value: value, index: index, isFirst: isFirst, isLast: isLast)
+        case let .warning(title, value): return warningRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
         }
     }
 
