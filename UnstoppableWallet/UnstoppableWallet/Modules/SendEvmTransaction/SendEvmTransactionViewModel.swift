@@ -163,21 +163,6 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func transferItems(from: EthereumKit.Address, to: EthereumKit.Address?, value: BigUInt, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem] {
-        var viewItems: [ViewItem] = [
-            .subhead(title: "send.confirmation.you_send".localized, value: coinServiceFactory.baseCoinService.platformCoin.coin.name),
-            .value(title: "send.confirmation.amount".localized, value: coinServiceFactory.baseCoinService.amountData(value: value).formattedRawString, type: .outgoing)
-        ]
-
-        if let to = to {
-            let addressValue = to.eip55
-            let addressTitle = additionalInfo?.sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
-            viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
-        }
-
-        return [SectionViewItem(viewItems: viewItems)]
-    }
-
     private func eip20TransferItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
@@ -185,7 +170,7 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(title: "send.confirmation.you_send".localized, value: coinService.platformCoin.coin.name),
-            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .outgoing)
+            .value(title: coinService.amountData(value: value).secondary?.formattedRawString ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedString ?? "n/a".localized), type: .outgoing)
         ]
 
         let addressValue = to.eip55
