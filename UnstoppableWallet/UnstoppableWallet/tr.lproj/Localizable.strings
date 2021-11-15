@@ -252,7 +252,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
-"swap.button_error.impact_too_high" = "Yüksek fiyat etkisi";
 "swap.switch_provider.title" = "Swap Provider";
 "swap.switch_provider.subtitle" = "Switcher";
 
@@ -296,6 +295,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.confirmation.guaranteed" = "Garanti";
 "swap.confirmation.maximum" = "Maksimum";
 "swap.confirmation.estimated" = "Tahmini";
+"swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
