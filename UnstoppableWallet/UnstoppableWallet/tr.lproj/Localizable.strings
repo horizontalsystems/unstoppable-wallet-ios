@@ -273,8 +273,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
+"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
-"swap.advanced_settings.error.higher_slippage" = "Maksimum izin verilen değer %@%%.";
+"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
 "swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
@@ -547,8 +548,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.already_added_to_wallet" = "Already added to wallet";
 
 "coin_page.major_holders" = "Major Holders";
-"coin_page.major_holders.chart.description" = "in top 10 wallets";
-"coin_page.major_holders.top_wallets" = "Top Wallets";
+"coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
+"coin_page.major_holders.top_ethereum_wallets" = "Top Ethereum Wallets";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
 
 
