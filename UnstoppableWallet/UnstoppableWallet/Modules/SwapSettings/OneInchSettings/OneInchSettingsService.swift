@@ -5,9 +5,9 @@ import RxSwift
 
 class OneInchSettingsService {
     static let defaultSlippage: Decimal = 1
-    var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...3 }
-    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...20 }
-
+    var recommendedSlippages: [Decimal] = [0.1, 3]
+    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...50 }
+    private var usualHighestSlippage: Decimal = 5
 
     private(set) var errors: [Error] = [] {
         didSet {
@@ -15,6 +15,7 @@ class OneInchSettingsService {
         }
     }
     private let errorsRelay = PublishRelay<[Error]>()
+    private let slippageChangeRelay = PublishRelay<Void>()
 
     private var stateRelay = BehaviorRelay<State>(value: .invalid)
 
@@ -27,6 +28,7 @@ class OneInchSettingsService {
     var slippage: Decimal {
         didSet {
             sync()
+            slippageChangeRelay.accept(())
         }
     }
 
@@ -135,14 +137,8 @@ extension OneInchSettingsService: ISlippageService {
         visibleSlippageError(errors: errors)
     }
 
-    var slippageErrorObservable: Observable<Error?> {
-        errorsRelay.map { [weak self] errors -> Error? in
-            self?.visibleSlippageError(errors: errors)
-        }
-    }
-
-    func set(slippage: Decimal) {
-        self.slippage = slippage
+    var unusualSlippage: Bool {
+        usualHighestSlippage < slippage
     }
 
     var defaultSlippage: Decimal {
@@ -155,6 +151,14 @@ extension OneInchSettingsService: ISlippageService {
         }
 
         return settings.allowedSlippage
+    }
+
+    var slippageChangeObservable: Observable<Void> {
+        slippageChangeRelay.asObservable()
+    }
+
+    func set(slippage: Decimal) {
+        self.slippage = slippage
     }
 
 }
