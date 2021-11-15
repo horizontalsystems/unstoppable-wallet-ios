@@ -104,7 +104,7 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.selectionStyle = .none
-                    cell.title = "coin_page.major_holders.top_wallets".localized
+                    cell.title = "coin_page.major_holders.top_ethereum_wallets".localized
                 }
         )
     }

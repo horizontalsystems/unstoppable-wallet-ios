@@ -34,8 +34,11 @@ class CoinMajorHolderChartCell: UITableViewCell {
             maker.centerX.equalToSuperview()
             maker.top.equalTo(percentLabel.snp.bottom).offset(CGFloat.margin8)
             maker.bottom.equalTo(donutChartView)
+            maker.width.equalTo(donutChartView).multipliedBy(0.4)
         }
 
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textAlignment = .center
         descriptionLabel.font = .subhead1
         descriptionLabel.textColor = .themeGray
         descriptionLabel.text = "coin_page.major_holders.chart.description".localized
