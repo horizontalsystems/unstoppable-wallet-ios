@@ -4,13 +4,13 @@ import RxCocoa
 import UniswapKit
 
 protocol ISlippageService {
+    var slippageChangeObservable: Observable<Void> { get }
+
     var defaultSlippage: Decimal { get }
     var initialSlippage: Decimal? { get }
-
-    var recommendedSlippageBounds: ClosedRange<Decimal> { get }
-
+    var recommendedSlippages: [Decimal] { get }
     var slippageError: Error? { get }
-    var slippageErrorObservable: Observable<Error?> { get }
+    var unusualSlippage: Bool { get }
 
     func set(slippage: Decimal)
 }
@@ -18,7 +18,6 @@ protocol ISlippageService {
 class SwapSlippageViewModel {
     private let disposeBag = DisposeBag()
 
-    private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
 
     private let service: ISlippageService
@@ -28,9 +27,9 @@ class SwapSlippageViewModel {
         self.service = service
         self.decimalParser = decimalParser
 
-        service.slippageErrorObservable
+        service.slippageChangeObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
+                .subscribe(onNext: { [weak self] in
                     self?.sync()
                 })
                 .disposed(by: disposeBag)
@@ -39,7 +38,17 @@ class SwapSlippageViewModel {
     }
 
     private func sync() {
-        cautionRelay.accept(service.slippageError.map { Caution(text: $0.smartDescription, type: .error)})
+        let caution: Caution?
+
+        if let error = service.slippageError {
+            caution = Caution(text: error.smartDescription, type: .error)
+        } else if service.unusualSlippage {
+            caution = Caution(text: "swap.advanced_settings.warning.unusual_slippage".localized, type: .warning)
+        } else {
+            caution = nil
+        }
+
+        cautionRelay.accept(caution)
     }
 
 }
@@ -55,12 +64,9 @@ extension SwapSlippageViewModel {
     }
 
     var shortcuts: [InputShortcut] {
-        let bounds = service.recommendedSlippageBounds
-
-        return [
-            InputShortcut(title: "\(bounds.lowerBound.description)%", value: bounds.lowerBound.description),
-            InputShortcut(title: "\(bounds.upperBound.description)%", value: bounds.upperBound.description),
-        ]
+        service.recommendedSlippages.map { slippage in
+            InputShortcut(title: "\(slippage.description)%", value: slippage.description)
+        }
     }
 
     var cautionDriver: Driver<Caution?> {
