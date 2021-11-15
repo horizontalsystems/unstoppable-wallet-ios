@@ -251,7 +251,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "审批中...";
 "swap.trade_error.not_found" = "无法交换代币";
 "swap.button_error.insufficient_balance" = "余额不足";
-"swap.button_error.impact_too_high" = "高价格影响";
 "swap.switch_provider.title" = "Swap Provider";
 "swap.switch_provider.subtitle" = "Switcher";
 
@@ -295,6 +294,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.confirmation.guaranteed" = "保证";
 "swap.confirmation.maximum" = "最大金额";
 "swap.confirmation.estimated" = "估计";
+"swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
