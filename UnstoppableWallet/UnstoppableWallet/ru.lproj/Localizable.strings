@@ -251,7 +251,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "Подтверждение...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
-"swap.button_error.impact_too_high" = "Высокое отклонение цены";
 "swap.switch_provider.title" = "Swap Provider";
 "swap.switch_provider.subtitle" = "Switcher";
 
@@ -295,6 +294,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.confirmation.guaranteed" = "Гарантировано";
 "swap.confirmation.maximum" = "Максимум";
 "swap.confirmation.estimated" = "Ориентировочно";
+"swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
