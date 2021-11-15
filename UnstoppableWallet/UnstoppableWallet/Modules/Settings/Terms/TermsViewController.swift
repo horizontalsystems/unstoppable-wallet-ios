@@ -51,8 +51,9 @@ class TermsViewController: ThemeViewController {
         Row<CheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(checked)",
+                autoDeselect: true,
                 dynamicHeight: { containerWidth in
-                    CheckboxCell.height(containerWidth: containerWidth, text: text)
+                    CheckboxCell.height(containerWidth: containerWidth, text: text, backgroundStyle: .lawrence)
                 },
                 bind: { cell, _ in
                     cell.bind(text: text, checked: checked, backgroundStyle: .lawrence, isFirst: index == 0, isLast: isLast)

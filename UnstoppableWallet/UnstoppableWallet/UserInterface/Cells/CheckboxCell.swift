@@ -2,11 +2,11 @@ import UIKit
 import ThemeKit
 import ComponentKit
 
-class CheckboxCell: BaseThemeCell {
-    private static let checkBoxLeadingMargin: CGFloat = .margin32
+class CheckboxCell: BaseSelectableThemeCell {
+    private static let checkBoxLeadingMargin: CGFloat = .margin16
     private static let checkBoxSize: CGFloat = 24
     private static let textLeadingMargin: CGFloat = .margin16
-    private static let textTrailingMargin: CGFloat = .margin32
+    private static let textTrailingMargin: CGFloat = .margin16
     private static let textVerticalMargin: CGFloat = .margin16
     private static let textFont: UIFont = .subhead2
 
@@ -18,9 +18,8 @@ class CheckboxCell: BaseThemeCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = .clear
-        selectionStyle = .none
 
-        contentView.addSubview(checkBoxView)
+        wrapperView.addSubview(checkBoxView)
         checkBoxView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CheckboxCell.checkBoxLeadingMargin)
             maker.centerY.equalToSuperview()
@@ -39,7 +38,7 @@ class CheckboxCell: BaseThemeCell {
         checkBoxImageView.image = UIImage(named: "check_2_20")?.withRenderingMode(.alwaysTemplate)
         checkBoxImageView.tintColor = .themeJacob
 
-        contentView.addSubview(descriptionLabel)
+        wrapperView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(checkBoxView.snp.trailing).offset(CheckboxCell.textLeadingMargin)
             maker.top.equalToSuperview().inset(CheckboxCell.textVerticalMargin)
@@ -66,8 +65,8 @@ class CheckboxCell: BaseThemeCell {
 
 extension CheckboxCell {
 
-    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
-        let textWidth = containerWidth - checkBoxLeadingMargin - checkBoxSize - textLeadingMargin - textTrailingMargin
+    static func height(containerWidth: CGFloat, text: String, backgroundStyle: BackgroundStyle) -> CGFloat {
+        let textWidth = containerWidth - Self.margin(backgroundStyle: backgroundStyle).width - checkBoxLeadingMargin - checkBoxSize - textLeadingMargin - textTrailingMargin
         let textHeight = text.height(forContainerWidth: textWidth, font: textFont)
 
         return textHeight + 2 * textVerticalMargin
