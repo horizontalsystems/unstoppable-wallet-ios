@@ -119,6 +119,10 @@ extension MarketKit.CoinType {
 
 extension MarketKit.Coin {
 
+    var isCustom: Bool {
+        uid.starts(with: CustomToken.uidPrefix)
+    }
+
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
         return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/ios/\(uid)@\(scale)x.png"
