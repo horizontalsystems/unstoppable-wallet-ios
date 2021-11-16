@@ -81,7 +81,7 @@ class CoinOverviewViewItemFactory {
             case .bep2(let symbol): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_chain_24", reference: symbol, explorerUrl: "https://explorer.binance.org/asset/\(symbol)")
             case .arbitrumOne(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_24", reference: address, explorerUrl: "https://arbiscan.io/token/\(address)")
             case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "avalanche_24", reference: address, explorerUrl: "https://avascan.info/blockchain/c/token/\(address)")
-            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_24", reference: address, explorerUrl: "https://ftmscan.com/token/\(address)")
+            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "fantom_24", reference: address, explorerUrl: "https://ftmscan.com/token/\(address)")
             case .harmonyShard0(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "harmony_24", reference: address, explorerUrl: "https://explorer.harmony.one/address/\(address)")
             case .huobiToken(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "heco_24", reference: address, explorerUrl: "https://hecoinfo.com/token/\(address)")
             case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "iotex_24", reference: address, explorerUrl: "https://iotexscan.io/token/\(address)")

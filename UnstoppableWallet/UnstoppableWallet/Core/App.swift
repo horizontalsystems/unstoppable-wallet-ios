@@ -217,6 +217,13 @@ class App {
                 networkManager: networkManager
         )
 
+        let restoreFavoriteCoinWorker = RestoreFavoriteCoinWorker(
+                coinManager: coinManager,
+                favoritesManager: favoritesManager,
+                localStorage: StorageKit.LocalStorage.default,
+                storage: storage
+        )
+
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
@@ -230,7 +237,8 @@ class App {
                 rateAppManager: rateAppManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
-                restoreCustomTokenWorker: restoreCustomTokenWorker
+                restoreCustomTokenWorker: restoreCustomTokenWorker,
+                restoreFavoriteCoinWorker: restoreFavoriteCoinWorker
         )
     }
 

@@ -559,12 +559,6 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("newStructureForFavoriteCoins") { db in
-            if try db.tableExists("favorite_coins_v20") {
-                try db.drop(table: "favorite_coins_v20")
-            }
-
-            // todo: create migration from coinType to coinUid
-
             try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
                 t.column(FavoriteCoinRecord.Columns.coinUid.name, .text).primaryKey()
             }
@@ -691,6 +685,14 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
         }
     }
 
+    func save(favoriteCoinRecords: [FavoriteCoinRecord]) {
+        _ = try! dbPool.write { db in
+            for record in favoriteCoinRecords {
+                try record.insert(db)
+            }
+        }
+    }
+
     func deleteFavoriteCoinRecord(coinUid: String) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord
@@ -704,6 +706,12 @@ extension GrdbStorage: IFavoriteCoinRecordStorage {
             try FavoriteCoinRecord
                     .filter(FavoriteCoinRecord.Columns.coinUid == coinUid)
                     .fetchCount(db) > 0
+        }
+    }
+
+    var favoriteCoinRecords_v_0_22: [FavoriteCoinRecord_v_0_22] {
+        try! dbPool.read { db in
+            try FavoriteCoinRecord_v_0_22.fetchAll(db)
         }
     }
 

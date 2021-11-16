@@ -335,8 +335,11 @@ protocol IGuidesManager {
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
     func save(favoriteCoinRecord: FavoriteCoinRecord)
+    func save(favoriteCoinRecords: [FavoriteCoinRecord])
     func deleteFavoriteCoinRecord(coinUid: String)
     func favoriteCoinRecordExists(coinUid: String) -> Bool
+
+    var favoriteCoinRecords_v_0_22: [FavoriteCoinRecord_v_0_22] { get }
 }
 
 protocol ITermsManager {
