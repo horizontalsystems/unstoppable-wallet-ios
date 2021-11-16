@@ -144,12 +144,14 @@ extension FiatService {
         if let platformCoin = platformCoin {
             sync(coinPrice: marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currency.code))
 
-            marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] coinPrice in
-                        self?.sync(coinPrice: coinPrice)
-                    })
-                    .disposed(by: coinPriceDisposeBag)
+            if !platformCoin.coin.isCustom {
+                marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                        .subscribe(onNext: { [weak self] coinPrice in
+                            self?.sync(coinPrice: coinPrice)
+                        })
+                        .disposed(by: coinPriceDisposeBag)
+            }
         } else {
             price = nil
             currencyAmount = nil

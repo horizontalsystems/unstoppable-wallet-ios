@@ -2,6 +2,8 @@ import GRDB
 import MarketKit
 
 class CustomToken: Record {
+    static let uidPrefix = "custom_"
+
     let coinName: String
     let coinCode: String
     let coinType: CoinType
@@ -17,7 +19,7 @@ class CustomToken: Record {
     }
 
     var platformCoin: PlatformCoin {
-        let coinUid = "custom_\(coinName)_\(coinCode)"
+        let coinUid = "\(Self.uidPrefix)\(coinName)_\(coinCode)"
 
         return PlatformCoin(
                 coin: Coin(uid: coinUid, name: coinName, code: coinCode),

@@ -46,7 +46,9 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(coin: platformCoin.coin, coinType: platformCoin.coinType)
         handler.onViewDidLoad()
 
-        interactor.subscribeToCoinPrice(coinUid: platformCoin.coin.uid, currencyCode: interactor.baseCurrency.code)
+        if !platformCoin.coin.isCustom {
+            interactor.subscribeToCoinPrice(coinUid: platformCoin.coin.uid, currencyCode: interactor.baseCurrency.code)
+        }
 
         let rateValue = interactor.nonExpiredRateValue(coinUid: platformCoin.coin.uid, currencyCode: interactor.baseCurrency.code)
         handler.sync(rateValue: rateValue)
