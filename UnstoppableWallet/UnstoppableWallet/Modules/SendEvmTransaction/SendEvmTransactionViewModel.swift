@@ -193,7 +193,7 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.platformCoin.coin.name),
-            .value(title: "send.confirmation.amount".localized, value: coinService.amountData(value: value).formattedRawString, type: .regular),
+            .value(title: coinService.amountData(value: value).secondary?.formattedRawString ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedString ?? "n/a".localized), type: .regular),
             .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
 
@@ -332,9 +332,9 @@ class SendEvmTransactionViewModel {
         let addressValue = transactionData.to.eip55
 
         let viewItems: [ViewItem] = [
-            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
-            .address(title: "To", valueTitle: addressValue, value: addressValue),
-            .subhead(title: "Method", value: method),
+            .value(title: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceFactory.baseCoinService.amountData(value: transactionData.value).primary.formattedString ?? "n/a".localized), type: .outgoing),
+            .address(title: "send.confirmation.to".localized, valueTitle: addressValue, value: addressValue),
+            .subhead(title: "send.confirmation.to".localized, value: method),
             .input(value: transactionData.input.toHexString())
         ]
 
@@ -356,8 +356,8 @@ class SendEvmTransactionViewModel {
 
         let viewItems: [ViewItem] = [
             youPayItem,
-            .value(title: "Amount", value: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).formattedRawString, type: .outgoing),
-            .address(title: "To", valueTitle: addressTitle, value: addressValue),
+            .value(title: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceFactory.baseCoinService.amountData(value: transactionData.value).primary.formattedString ?? "n/a".localized), type: .outgoing),
+            .address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue),
             transactionData.nonce.map { .value(title: "send.confirmation.nonce".localized, value: $0.description, type: .regular) },
             inputItem
         ].compactMap { $0 }

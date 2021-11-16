@@ -204,7 +204,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
 
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.amount" = "Amount";
 "send.confirmation.to" = "To";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Address";
