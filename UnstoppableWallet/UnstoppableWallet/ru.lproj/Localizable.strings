@@ -207,6 +207,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "send.confirmation.you_send" = "Вы Отправляете";
 "send.confirmation.to" = "Кому";
+"send.confirmation.method" = "Method";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Aккаунт";
