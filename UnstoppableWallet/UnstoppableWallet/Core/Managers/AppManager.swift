@@ -16,6 +16,7 @@ class AppManager {
     private let logRecordManager: ILogRecordManager
     private let deepLinkManager: IDeepLinkManager
     private let restoreCustomTokenWorker: RestoreCustomTokenWorker
+    private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -25,7 +26,7 @@ class AppManager {
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
          logRecordManager: ILogRecordManager,
-         deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker
+         deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -40,6 +41,7 @@ class AppManager {
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
         self.restoreCustomTokenWorker = restoreCustomTokenWorker
+        self.restoreFavoriteCoinWorker = restoreFavoriteCoinWorker
     }
 
 }
@@ -59,6 +61,7 @@ extension AppManager {
         rateAppManager.onLaunch()
 
         try? restoreCustomTokenWorker.run()
+        try? restoreFavoriteCoinWorker.run()
     }
 
     func willResignActive() {

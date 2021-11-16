@@ -53,10 +53,6 @@ class RestoreCustomTokenWorker {
         }
     }
 
-    private func setAlreadyRun() {
-
-    }
-
 }
 
 extension RestoreCustomTokenWorker {
