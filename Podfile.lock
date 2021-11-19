@@ -70,6 +70,7 @@ PODS:
     - HUD.swift (~> 1.2)
     - LanguageKit.swift (~> 1.0)
     - RxCocoa (~> 5.0)
+    - SectionsTableView.swift (~> 1.1)
     - SkeletonView (~> 1.11)
     - SnapKit (~> 5.0)
     - ThemeKit.swift (~> 1.0)
@@ -516,7 +517,7 @@ CHECKOUT OPTIONS:
     :commit: 6dfdfdb20c114f75298284bb959fdaeaa95393a8
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 33fd8b67aca1feda99c2d5a65a106e7bd4ceca29
+    :commit: 799e41791eb34674fd60001e4cb0aba8e49e8ab9
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -570,7 +571,7 @@ CHECKOUT OPTIONS:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   SectionsTableView.swift:
-    :commit: fd78dea0037e0a8199c650fec30974a684e0098b
+    :commit: 08fe412470d42eb097d2643cc7f2850098c739b4
     :git: https://github.com/horizontalsystems/gui-kit/
   StorageKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -614,7 +615,7 @@ SPEC CHECKSUMS:
   CNIOLinux: 5921dfefbc4bbe017380b34c510855622147ea41
   CNIOSHA1: cdf6523d56bbb78be9b11ae4e6340fbc591b492d
   CNIOWindows: f5aa9dfb401b440a7b4c9cd911e53e981a787193
-  ComponentKit.swift: 190a7c49a0747c020f5316f6b7f35358cfe159e8
+  ComponentKit.swift: 6ecfd034e3b82be6db74dd062d5e8000df546589
   CryptoSwift: 0bc800a7e6a24c4fc9ebeab97d44b0d5f73a78bd
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
   CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
