@@ -101,11 +101,9 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
     }
 }
 
-extension HsToolKit.WebSocketState.StateError: ConvertibleError {
+extension HsToolKit.WebSocketStateError: ConvertibleError {
     var convertedError: Error {
-        switch self {
-        case .notConnected: return AppError.noConnection
-        }
+        return AppError.noConnection
     }
 }
 
