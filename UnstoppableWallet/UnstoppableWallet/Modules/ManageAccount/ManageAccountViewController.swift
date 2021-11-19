@@ -13,9 +13,9 @@ class ManageAccountViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let nameCell = TextFieldCell()
-    private let showRecoveryPhraseCell = A1Cell()
-    private let backupRecoveryPhraseCell = A3Cell()
-    private let unlinkCell = ACell()
+    private let showRecoveryPhraseCell = BaseSelectableThemeCell()
+    private let backupRecoveryPhraseCell = BaseSelectableThemeCell()
+    private let unlinkCell = BaseSelectableThemeCell()
 
     private var keyActionState: ManageAccountViewModel.KeyActionState = .showRecoveryPhrase
     private var isLoaded = false
@@ -47,8 +47,6 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: A1Cell.self)
-        tableView.registerCell(forClass: A9Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         nameCell.inputText = viewModel.accountName
@@ -56,20 +54,43 @@ class ManageAccountViewController: ThemeViewController {
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
-        showRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
-        showRecoveryPhraseCell.title = "manage_account.show_recovery_phrase".localized
+        CellBuilder.build(cell: showRecoveryPhraseCell, elements: [.image, .text, .image])
+        showRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
+        })
+        showRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = "manage_account.show_recovery_phrase".localized
+        })
+        showRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+        })
 
         backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
-        backupRecoveryPhraseCell.titleImage = UIImage(named: "key_20")
-        backupRecoveryPhraseCell.title = "manage_account.backup_recovery_phrase".localized
-        backupRecoveryPhraseCell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-        backupRecoveryPhraseCell.valueImageTintColor = .themeLucian
+        CellBuilder.build(cell: backupRecoveryPhraseCell, elements: [.image, .text, .image, .margin12, .image])
+        backupRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
+        })
+        backupRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = "manage_account.backup_recovery_phrase".localized
+        })
+        backupRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+        })
+        backupRecoveryPhraseCell.bind(index: 3, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+        })
 
         unlinkCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        unlinkCell.titleImage = UIImage(named: "trash_20")?.withRenderingMode(.alwaysTemplate)
-        unlinkCell.titleImageTintColor = .themeLucian
-        unlinkCell.title = "manage_account.unlink".localized
-        unlinkCell.titleColor = .themeLucian
+        CellBuilder.build(cell: unlinkCell, elements: [.image, .text, .image])
+        unlinkCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
+        })
+        unlinkCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b5)
+            component.text = "manage_account.unlink".localized
+        })
 
         subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.keyActionStateDriver) { [weak self] in
@@ -174,15 +195,26 @@ extension ManageAccountViewController: SectionsDataSource {
 
         var rows = [
             row,
-            Row<A1Cell>(
+            CellBuilder.selectableRow(
+                    elements: [.image, .text, .image],
+                    tableView: tableView,
                     id: "network-settings",
                     height: .heightCell48,
-                    bind: { cell, _ in
+                    bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isLast: isLast)
-                        cell.title = "manage_account.network_settings".localized
-                        cell.titleImage = UIImage(named: "blocks_20")
+
+                        cell.bind(index: 0, block: { (component: ImageComponent) in
+                            component.imageView.image = UIImage(named: "blocks_20")?.withTintColor(.themeGray)
+                        })
+                        cell.bind(index: 1, block: { (component: TextComponent) in
+                            component.set(style: .b2)
+                            component.text = "manage_account.network_settings".localized
+                        })
+                        cell.bind(index: 2, block: { (component: ImageComponent) in
+                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                        })
                     },
-                    action: { [weak self] _ in
+                    action: { [weak self] in
                         self?.viewModel.onTapNetworkSettings()
                     }
             )
@@ -193,14 +225,28 @@ extension ManageAccountViewController: SectionsDataSource {
         for (index, viewItem) in viewItems.enumerated() {
             let isLast = index == viewItems.count - 1
 
-            let additionalRow = Row<A9Cell>(
+            let additionalRow = CellBuilder.row(
+                    elements: [.image, .text, .secondaryButton],
+                    tableView: tableView,
                     id: "additional-\(index)",
                     height: .heightCell48,
-                    bind: { cell, _ in
+                    bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isLast: isLast)
-                        cell.title = viewItem.title
-                        cell.titleImage = viewItem.icon
-                        cell.viewItem = .init(type: .raw, value: { viewItem.value })
+
+                        cell.bind(index: 0, block: { (component: ImageComponent) in
+                            component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
+                        })
+                        cell.bind(index: 1, block: { (component: TextComponent) in
+                            component.set(style: .b2)
+                            component.text = viewItem.title
+                        })
+                        cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
+                            component.button.set(style: .default)
+                            component.button.setTitle(viewItem.value, for: .normal)
+                            component.onTap = {
+                                CopyHelper.copyAndNotify(value: viewItem.value)
+                            }
+                        })
                     }
             )
 

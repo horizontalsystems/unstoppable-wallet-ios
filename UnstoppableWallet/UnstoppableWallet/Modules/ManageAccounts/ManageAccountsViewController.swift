@@ -12,8 +12,8 @@ class ManageAccountsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let createCell = ACell()
-    private let restoreCell = ACell()
+    private let createCell = BaseSelectableThemeCell()
+    private let restoreCell = BaseSelectableThemeCell()
 
     private var viewItems = [ManageAccountsViewModel.ViewItem]()
     private var isLoaded = false
@@ -48,20 +48,27 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: G19Cell.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
-        createCell.titleImage = UIImage(named: "plus_20")?.withRenderingMode(.alwaysTemplate)
-        createCell.titleImageTintColor = .themeJacob
-        createCell.title = "onboarding.balance.create".localized
-        createCell.titleColor = .themeJacob
+        CellBuilder.build(cell: createCell, elements: [.image, .text])
+        createCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "plus_20")?.withTintColor(.themeJacob)
+        })
+        createCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b3)
+            component.text = "onboarding.balance.create".localized
+        })
 
         restoreCell.set(backgroundStyle: .lawrence, isLast: true)
-        restoreCell.titleImage = UIImage(named: "download_20")?.withRenderingMode(.alwaysTemplate)
-        restoreCell.titleImageTintColor = .themeJacob
-        restoreCell.title = "onboarding.balance.restore".localized
-        restoreCell.titleColor = .themeJacob
+        CellBuilder.build(cell: restoreCell, elements: [.image, .text])
+        restoreCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
+        })
+        restoreCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b3)
+            component.text = "onboarding.balance.restore".localized
+        })
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
@@ -115,25 +122,42 @@ class ManageAccountsViewController: ThemeViewController {
 extension ManageAccountsViewController: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<G19Cell>(
+        CellBuilder.selectableRow(
+                elements: [.image, .multiText, .image, .margin0, .transparentIconButton, .margin4],
+                layoutMargins: UIEdgeInsets(top: 0, left: CellBuilder.defaultMargin, bottom: 0, right: .margin4),
+                tableView: tableView,
                 id: viewItem.accountId,
                 hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { [weak self] cell, _ in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "circle_radiooff_24")
-                    cell.titleImageTintColor = viewItem.selected ? .themeJacob : nil
-                    cell.title = viewItem.title
-                    cell.subtitle = viewItem.subtitle
-                    cell.valueImage = viewItem.alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-                    cell.valueImageTintColor = viewItem.alert ? .themeLucian : nil
-                    cell.valueButtonImage = UIImage(named: "more_2_20")
-                    cell.onTapValue = { [weak self] in
-                        self?.onTapEdit(accountId: viewItem.accountId)
-                    }
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
+                    })
+                    cell.bind(index: 1, block: { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.title
+                        component.subtitle.text = viewItem.subtitle
+                    })
+
+                    cell.bind(index: 2, block: { (component: ImageComponent) in
+                        component.isHidden = !viewItem.alert
+                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+                    })
+
+                    cell.bind(index: 3, block: { (component: TransparentIconButtonComponent) in
+                        component.button.set(image: UIImage(named: "more_2_20"))
+                        component.onTap = { [weak self] in
+                            self?.onTapEdit(accountId: viewItem.accountId)
+                        }
+                    })
                 },
-                action: { [weak self] _ in
+                action: { [weak self] in
                     self?.viewModel.onSelect(accountId: viewItem.accountId)
                 }
         )

@@ -478,6 +478,7 @@ extension CoinOverviewViewController {
                                     id: "contract-info",
                                     height: .heightCell48,
                                     bind: { cell, _ in
+                                        cell.selectionStyle = .none
                                         cell.set(backgroundStyle: .lawrence, isFirst: index <= 0, isLast: index >= contracts.count - 1)
 
                                         cell.titleStyle = .subhead2Grey
