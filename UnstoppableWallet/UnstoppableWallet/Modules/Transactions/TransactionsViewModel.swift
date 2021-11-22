@@ -54,9 +54,15 @@ class TransactionsViewModel {
 
     private func handle(items: [TransactionItem]) {
         let viewItems = items.map { factory.viewItem(item: $0) }
+        let sections = sections(viewItems: viewItems)
+        let showEmptyMessage = sections.isEmpty != self.sections.isEmpty
 
-        sections = sections(viewItems: viewItems)
+        self.sections = sections
         viewItemsRelay.accept(sections)
+
+        if showEmptyMessage {
+            handle(syncState: service.syncState)
+        }
     }
 
     private func handle(updatedItem: TransactionItem) {
