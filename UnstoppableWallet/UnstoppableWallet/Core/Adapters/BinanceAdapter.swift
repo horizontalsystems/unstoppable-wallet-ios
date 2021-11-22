@@ -180,7 +180,7 @@ extension BinanceAdapter: ITransactionsAdapter {
             case .all: binanceChainFilter = nil
             case .incoming: binanceChainFilter = .incoming
             case .outgoing: binanceChainFilter = .outgoing
-            default: binanceChainFilter = nil
+            default: return Observable.just([])
         }
 
         return asset.transactionsObservable(filterType: binanceChainFilter).map { [weak self] in
