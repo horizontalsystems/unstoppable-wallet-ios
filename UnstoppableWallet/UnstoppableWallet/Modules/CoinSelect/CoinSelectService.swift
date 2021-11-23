@@ -107,6 +107,31 @@ class CoinSelectService {
                 return lhsHasBalance
             }
 
+            if !filter.isEmpty {
+                let filter = filter.lowercased()
+
+                let lhsExactCode = lhsItem.platformCoin.coin.code.lowercased() == filter
+                let rhsExactCode = rhsItem.platformCoin.coin.code.lowercased() == filter
+
+                if lhsExactCode != rhsExactCode {
+                    return lhsExactCode
+                }
+
+                let lhsStartsWithCode = lhsItem.platformCoin.coin.code.lowercased().starts(with: filter)
+                let rhsStartsWithCode = rhsItem.platformCoin.coin.code.lowercased().starts(with: filter)
+
+                if lhsStartsWithCode != rhsStartsWithCode {
+                    return lhsStartsWithCode
+                }
+
+                let lhsStartsWithName = lhsItem.platformCoin.coin.name.lowercased().starts(with: filter)
+                let rhsStartsWithName = rhsItem.platformCoin.coin.name.lowercased().starts(with: filter)
+
+                if lhsStartsWithName != rhsStartsWithName {
+                    return lhsStartsWithName
+                }
+            }
+
             let lhsMarketCapRank = lhsItem.platformCoin.coin.marketCapRank ?? Int.max
             let rhsMarketCapRank = rhsItem.platformCoin.coin.marketCapRank ?? Int.max
 
