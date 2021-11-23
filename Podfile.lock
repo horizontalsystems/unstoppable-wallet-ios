@@ -93,7 +93,6 @@ PODS:
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
     - X11Kit.swift (~> 1.0)
-  - DeepDiff (2.3.1)
   - Erc20Kit.swift (0.15.1):
     - BigInt (~> 5.0)
     - EthereumKit.swift (~> 0.15)
@@ -337,7 +336,6 @@ DEPENDENCIES:
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
-  - DeepDiff
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
   - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
@@ -391,7 +389,6 @@ SPEC REPOS:
     - CNIOWindows
     - CryptoSwift
     - Cuckoo
-    - DeepDiff
     - EthereumAddress
     - GRDB.swift
     - gRPC-Swift
@@ -617,7 +614,6 @@ SPEC CHECKSUMS:
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
   CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
   DashKit.swift: c6f22c1b97409e06be1ae3998be680633f7467f4
-  DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Erc20Kit.swift: c02d1efa90b22888a3af3e7c72ffbcdd84ff7700
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
@@ -677,6 +673,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 98516c1aabc6d8ea210990fa82f4572693a2519b
+PODFILE CHECKSUM: 1013f66afb9fab0e95fd7c7c2b0637a029b463d0
 
 COCOAPODS: 1.11.2

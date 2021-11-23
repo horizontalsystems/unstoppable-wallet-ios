@@ -86,7 +86,6 @@ def appPods
   pod 'BigInt'
   pod 'KeychainAccess'
   pod 'SnapKit'
-  pod 'DeepDiff'
 
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
