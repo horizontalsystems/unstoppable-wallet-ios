@@ -156,3 +156,12 @@ extension MarketKit.CoinTreasury {
     }
 
 }
+
+extension MarketKit.Auditor {
+
+    var logoUrl: String {
+        let scale = Int(UIScreen.main.scale)
+        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/ios/\(name)@\(scale)x.png"
+    }
+
+}

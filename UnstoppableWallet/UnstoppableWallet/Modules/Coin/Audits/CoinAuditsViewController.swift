@@ -45,7 +45,7 @@ class CoinAuditsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: BCell.self)
+        tableView.registerCell(forClass: ACell.self)
         tableView.registerCell(forClass: F2Cell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
@@ -111,14 +111,15 @@ class CoinAuditsViewController: ThemeViewController {
 
 extension CoinAuditsViewController: SectionsDataSource {
 
-    private func headerRow(name: String) -> RowProtocol {
-        Row<BCell>(
+    private func headerRow(logoUrl: String, name: String) -> RowProtocol {
+        Row<ACell>(
                 id: "header-\(name)",
                 height: .heightCell48,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.selectionStyle = .none
                     cell.title = name
+                    cell.setTitleImage(urlString: logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
                 }
         )
     }
@@ -172,7 +173,7 @@ extension CoinAuditsViewController: SectionsDataSource {
                         headerState: .margin(height: .margin12),
                         footerState: .margin(height: .margin8),
                         rows: [
-                            headerRow(name: viewItem.name)
+                            headerRow(logoUrl: viewItem.logoUrl, name: viewItem.name)
                         ]
                 ),
                 Section(
