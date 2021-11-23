@@ -95,23 +95,7 @@ class RestoreSelectService {
     }
 
     private func sortFullCoins() {
-        fullCoins.sort { lhsFullCoin, rhsFullCoin in
-            let lhsEnabled = isEnabled(coin: lhsFullCoin.coin)
-            let rhsEnabled = isEnabled(coin: rhsFullCoin.coin)
-
-            if lhsEnabled != rhsEnabled {
-                return lhsEnabled
-            }
-
-            let lhsMarketCapRank = lhsFullCoin.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsFullCoin.coin.marketCapRank ?? Int.max
-
-            if lhsMarketCapRank != rhsMarketCapRank {
-                return lhsMarketCapRank < rhsMarketCapRank
-            }
-
-            return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
-        }
+        fullCoins.sort(filter: filter) { isEnabled(coin: $0) }
     }
 
     private func syncState() {
