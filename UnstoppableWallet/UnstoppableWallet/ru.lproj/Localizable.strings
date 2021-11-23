@@ -36,7 +36,7 @@
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
 "price" = "Цена";
-"value" = "Value";
+"value" = "Значение";
 "note" = "Примечание";
 
 "version" = "Версия %@";
@@ -45,31 +45,31 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
 
-Go to Settings - > Unstoppable and allow access to the camera.";
+Перейдите в \"Настройки\" - > Unstoppable и разрешите доступ к камере.";
 "access_camera.settings" = "Настройки";
 
 // Restore
 
 "restore.title" = "Выберите Кошелек";
 "restore.enter_key" = "Введите Ключ";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
+"restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "The passphrase cannot be empty";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
+"restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Newer (recommended)";
-"coin_settings.derivation.title.bip84" = "Newest";
+"coin_settings.derivation.title.bip49" = "Новые (рекомендуется)";
+"coin_settings.derivation.title.bip84" = "Новые";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "Из Блокчейна";
@@ -78,7 +78,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Coin Type";
+"coin_platforms.title" = "Тип Монеты";
 "coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
 "coin_platforms.native" = "Native";
 
@@ -91,7 +91,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "show_key.tab.private_keys" = "Приватные Ключи";
 "show_key.passphrase" = "Кодовая Фраза";
 
-"private_key_copying.title" = "Warning";
+"private_key_copying.title" = "Внимание";
 "private_key_copying.subtitle" = "Risk of Private Key copy";
 "private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
 "private_key_copying.copy_button" = "I will risk it";
@@ -99,12 +99,12 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Backup Key
 
 "backup_key.title" = "Резервная Копия";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
+"backup_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "backup_key.button_show" = "Показать";
 "backup_key.button_backup" = "Резервная Копия";
 "backup_key.passphrase" = "Кодовая Фраза";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
+"backup_key.confirmation.description" = "Введите фразы для восстановления в правильном порядке, чтобы подтвердить";
 "backup_key.confirmation.passphrase" = "Кодовая Фраза";
 "backup_key.confirmation.passphrase_description" = "Введите кодовую фразу";
 
@@ -117,7 +117,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "backup.backup_required" = "Необходима Резервная Копия";
 
-"error.send.self_transfer" = "Sending to yourself is not supported";
+"error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
 "error.send_z_cash.transparent_address" = "Unstoppable не поддерживает платежи на публичный адрес";
@@ -144,7 +144,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-"balance.sort.price_change" = "Price Change";
+"balance.sort.price_change" = "Изменение Цены";
 
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
@@ -198,16 +198,16 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.fee_info.title" = "Скорость Транзакции";
 "send.fee_info.description" = "Пользователи блокчейнов для Bitcoin и Ethereum должны оплачивать сетевые комиссии при отправке транзакций. Комиссии обычно выше при обработке большего количества транзакций в сети и ниже при меньшей занятости блокчейна.";
 "send.fee_info.header_slow" = "Низкая";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
+"send.fee_info.content_slow" = "Выбор значения из этого диапазона может привести к откладыванию обработки транзакции на некоторое время или ее полному отклонению. Чем меньше размер транзакции, тем дольше займет процесс ее подтверждения.";
 "send.fee_info.header_average" = "Рекомендовано";
-"send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.content_average" = "Обычно для этого диапазона комиссий характерна обработка транзакций в течение нескольких минут/часа для Bitcoin и в течение нескольких минут для Ethereum.";
 "send.fee_info.header_fast" = "Высокая";
-"send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_fast" = "В случае с приоритетными транзакциями лучше всего использовать настройку высокой комиссии. При выборе этой настройки транзакция Bitcoin будет обработана в течение 10 минут, ну а обработка транзакции Ethereum займет всего лишь 1-2 минуты.";
+"send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
 "send.confirmation.you_send" = "Вы Отправляете";
 "send.confirmation.to" = "Кому";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "Метод";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Aккаунт";
@@ -215,9 +215,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
 "send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.resend_button" = "Resend";
+"send.confirmation.resend_button" = "Отправить Повторно";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.cancel_button" = "Cancel Transaction";
+"send.confirmation.cancel_button" = "Отменить Транзакцию";
 "send.amount_error.balance" = "Недостаточно Средств";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
@@ -232,7 +232,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coins";
+"choose_coin.title" = "Выберите Токены";
 
 // Swap
 
@@ -247,7 +247,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings" = "Настройки Обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение Обмена";
-"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
+"swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Подтверждение...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
@@ -267,9 +267,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимость Отклонений";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
+"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
 "swap.advanced_settings.deadline" = "Срок Транзакции";
-"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
+"swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если перевод займет больше указанного срока.";
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
 "swap.advanced_settings.deadline_minute" = "%@ мин";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
@@ -298,15 +298,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.confirmation.estimated" = "Ориентировочно";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
 "swap.dex_info.header_dex_related" = "o %@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount of currency that service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "Сумма в некоторых валютах, которую сервис может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Гарантированная Сумма";
 "swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
 "swap.dex_info.header_maximum_spend" = "Максимальная Трата";
@@ -316,7 +316,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
 "swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
 "swap.dex_info.header_transaction_speed" = "Скорость Транзакции";
-"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
@@ -325,7 +325,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
 "market.category.overview" = "Обзор";
-"market.category.posts" = "News";
+"market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
 "market.24h_volume" = "Объем торгов за 24 ч";
@@ -347,9 +347,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.market_field.vol" = "Объём";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "Процент";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "Все";
 
 "market.sort_by" = "Сортировать По";
 
@@ -363,8 +363,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
 
-"market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
+"market_discovery.title" = "Токены";
+"market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 
@@ -422,7 +422,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Filters";
+"market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать Результаты";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
@@ -488,10 +488,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.roi.day200" = "6 Месяцев";
 "coin_page.roi.year1" = "1 Год";
 
-"coin_page.tab.overview" = "Overview";
-"coin_page.tab.markets" = "Market";
-"coin_page.tab.details" = "Details";
-"coin_page.tab.tweets" = "Tweets";
+"coin_page.tab.overview" = "Обзор";
+"coin_page.tab.markets" = "Рынок";
+"coin_page.tab.details" = "Подробности";
+"coin_page.tab.tweets" = "Твиты";
 
 "coin_page.market_cap" = "Рын. Капитализация";
 "coin_page.circulating_supply" = "В обороте";
@@ -508,11 +508,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.coin_markets.sort_by.highest_volume" = "Наивысшему Обьему";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Наименьшему Объему";
 
-"coin_page.token_liquidity" = "Token Liquidity";
-"coin_page.token_distribution" = "Token Distribution";
+"coin_page.token_liquidity" = "Ликвидность Токена";
+"coin_page.token_distribution" = "Распределение Токенов";
 
 "coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Total Volume";
+"coin_page.chart_volumes" = "Общий Объём";
 "coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Всего Залоченных Активов";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
@@ -522,8 +522,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Данные Инвестора";
 
 "coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filters";
-"coin_page.treasuries.filter.all" = "All";
+"coin_page.treasuries.filters" = "Фильтры";
+"coin_page.treasuries.filter.all" = "Все";
 "coin_page.treasuries.filter.public" = "Public";
 "coin_page.treasuries.filter.private" = "Private";
 "coin_page.treasuries.filter.etf" = "ETF";
@@ -575,9 +575,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.security_parameters.privacy.description.high" = "Транзакции с этим токеном анонимны по умолчанию или предоставляют такие возможности. Ни одна сущность не может связать различные транзакции с одним и тем же лицом или увидеть суммы транзакций.";
 "coin_page.security_parameters.issuance.description.decentralized" = "Количество токенов в обороте, контролируемое алгоритмом и работающее детерминированным образом вне централизованного влияния.";
 "coin_page.security_parameters.issuance.description.centralized" = "Количество токенов в обороте может быть потенциально увеличено или уменьшено  централизованной структурой по требованию.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can't be confiscated when kept in a non-custodial wallet.";
+"coin_page.security_parameters.confiscation_resistance.description.yes" = "Токены не могут быть конфискованы, если они хранятся в некастодиальном кошельке.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "Токены могут быть конфискованы или подделаны эмитентом.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
+"coin_page.security_parameters.censorship_resistance.description.yes" = "Владелец токена не подвергается цензуре во время транзакции.";
 "coin_page.security_parameters.censorship_resistance.description.no" = "Владелец токена может подвергаться цензуре во время транзакции.";
 
 "coin_page.info" = "Информация";
@@ -619,11 +619,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
 
-"transactions.types.all" = "All";
+"transactions.types.all" = "Все";
 "transactions.types.incoming" = "Incoming";
 "transactions.types.outgoing" = "Outgoing";
-"transactions.types.swap" = "Swap";
-"transactions.types.approve" = "Approve";
+"transactions.types.swap" = "Обменять";
+"transactions.types.approve" = "Подтвердить";
 
 // Transaction Info
 
@@ -638,8 +638,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.to_hash" = "Кому";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel";
+"tx_info.options.speed_up" = "Ускорение";
+"tx_info.options.cancel" = "Отменить";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
@@ -677,13 +677,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.title" = "Базовая Валюта";
 "settings.base_currency.other" = "Другое";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение Unstoppable Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
 "settings.base_currency.disclaimer.i_understand" = "Я Понимаю";
 
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Coin Manager";
+"manage_wallets.title" = "Токены";
 "manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
 
 "manage_coins.add_coin.title" = "Добавить %@";
