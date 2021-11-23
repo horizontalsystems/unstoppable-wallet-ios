@@ -2614,6 +2614,9 @@
 		D39C96E425BAA7450060E97C /* EnableCoinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35860B8B7FEE321C3DECF /* EnableCoinsViewModel.swift */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
+		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
+		D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5D274CAF1C00229A00 /* Down */; };
+		D3BF1E60274CAF2500229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5F274CAF2500229A00 /* Down */; };
 		E8F2E995F4C993306AF951A0 /* libPods-Unstoppable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EFAF75360D43B969DE7634 /* libPods-Unstoppable.a */; };
 /* End PBXBuildFile section */
 
@@ -3553,6 +3556,7 @@
 			files = (
 				D0DA7417272A6F1F0072BE86 /* UnicodeURL in Frameworks */,
 				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
+				D3BF1E60274CAF2500229A00 /* Down in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				5C6515B68A9686E10E658AE9 /* libPods-Unstoppable Dev T.a in Frameworks */,
 				D0DA7415272A6F1F0072BE86 /* IDNSDK in Frameworks */,
@@ -3573,6 +3577,7 @@
 			files = (
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
+				D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
 				2DE35E37F407C194CC843915 /* libPods-Unstoppable Dev.a in Frameworks */,
 				D0DA7411272A6F180072BE86 /* IDNSDK in Frameworks */,
@@ -3585,6 +3590,7 @@
 			files = (
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
+				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
 				E8F2E995F4C993306AF951A0 /* libPods-Unstoppable.a in Frameworks */,
 				D0DA740D272A6EFC0072BE86 /* IDNSDK in Frameworks */,
@@ -6012,6 +6018,7 @@
 			packageProductDependencies = (
 				D0DA7414272A6F1F0072BE86 /* IDNSDK */,
 				D0DA7416272A6F1F0072BE86 /* UnicodeURL */,
+				D3BF1E5F274CAF2500229A00 /* Down */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -6055,6 +6062,7 @@
 			packageProductDependencies = (
 				D0DA7410272A6F180072BE86 /* IDNSDK */,
 				D0DA7412272A6F180072BE86 /* UnicodeURL */,
+				D3BF1E5D274CAF1C00229A00 /* Down */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -6079,6 +6087,7 @@
 			packageProductDependencies = (
 				D0DA740C272A6EFC0072BE86 /* IDNSDK */,
 				D0DA740E272A6EFC0072BE86 /* UnicodeURL */,
+				D3BF1E5B274BC29D00229A00 /* Down */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -6129,7 +6138,8 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
+				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -9364,7 +9374,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -9372,38 +9382,61 @@
 				kind = branch;
 			};
 		};
+		D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnxnguyen/Down";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
+		};
+		D3BF1E5B274BC29D00229A00 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		D3BF1E5D274CAF1C00229A00 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		D3BF1E5F274CAF2500229A00 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

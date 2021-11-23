@@ -88,8 +88,6 @@ def appPods
   pod 'SnapKit'
   pod 'DeepDiff'
 
-  pod 'Down'
-
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
   pod 'EthereumABI', git: 'https://github.com/horizontalsystems/EthereumABI'
