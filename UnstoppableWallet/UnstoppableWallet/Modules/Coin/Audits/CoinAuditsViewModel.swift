@@ -47,6 +47,7 @@ class CoinAuditsViewModel {
 
     private func viewItem(auditor: Auditor) -> ViewItem {
         ViewItem(
+                logoUrl: auditor.logoUrl,
                 name: auditor.name,
                 auditViewItems: auditor.reports.map { auditViewItem(report: $0) }
         )
@@ -77,6 +78,7 @@ extension CoinAuditsViewModel {
 extension CoinAuditsViewModel {
 
     struct ViewItem {
+        let logoUrl: String
         let name: String
         let auditViewItems: [AuditViewItem]
     }
