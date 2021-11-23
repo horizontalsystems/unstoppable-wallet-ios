@@ -119,6 +119,7 @@ extension CoinAuditsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent)
                     cell.selectionStyle = .none
                     cell.title = name
+                    cell.set(titleImageSize: .iconSize24)
                     cell.setTitleImage(urlString: logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
                 }
         )
