@@ -17,18 +17,17 @@ class MainSettingsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let manageAccountsCell = BaseThemeCell()
-    private let securityCenterCell = BaseThemeCell()
-    private let walletConnectCell = BaseThemeCell()
-    private let launchScreenCell = BaseThemeCell()
-    private let baseCurrencyCell = BaseThemeCell()
-    private let languageCell = BaseThemeCell()
-    private let themeModeCell = BaseThemeCell()
-    private let aboutCell = BaseThemeCell()
+    private let manageAccountsCell = BaseSelectableThemeCell()
+    private let securityCenterCell = BaseSelectableThemeCell()
+    private let walletConnectCell = BaseSelectableThemeCell()
+    private let launchScreenCell = BaseSelectableThemeCell()
+    private let baseCurrencyCell = BaseSelectableThemeCell()
+    private let languageCell = BaseSelectableThemeCell()
+    private let themeModeCell = BaseSelectableThemeCell()
+    private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
 
     private let titleStyle: TextComponent.Style = .b2
-    private let valueStyle: TextComponent.Style = .c1
 
     init(viewModel: MainSettingsViewModel, urlManager: IUrlManager) {
         self.viewModel = viewModel
@@ -167,7 +166,7 @@ class MainSettingsViewController: ThemeViewController {
             component.text = title
         }
         cell.bind(index: 2) { (component: TextComponent) in
-            component.set(style: valueStyle)
+            component.set(style: .c1)
         }
         cell.bind(index: 3) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_big_forward_20")
