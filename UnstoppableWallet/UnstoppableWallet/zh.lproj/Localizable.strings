@@ -1,64 +1,64 @@
-"button.ok" = "确定";
-"button.apply" = "应用";
-"button.cancel" = "取消";
-"button.close" = "关闭";
-"button.done" = "完成";
-"button.restore" = "恢复";
-"button.next" = "下一步";
-"button.share" = "分享";
-"button.paste" = "粘帖";
-"button.backup" = "备份";
-"button.copy" = "复制";
-"button.retry" = "重试";
-"button.report" = "报告";
-"button.add" = "添加";
-"button.approve" = "批准";
-"button.reject" = "拒绝";
-"button.connect" = "连接";
-"button.save" = "保存";
-"button.sign" = "签名";
+"button.ok" = "OK";
+"button.apply" = "Apply";
+"button.cancel" = "Cancel";
+"button.close" = "Close";
+"button.done" = "Done";
+"button.restore" = "Restore";
+"button.next" = "Next";
+"button.share" = "Share";
+"button.paste" = "Paste";
+"button.backup" = "Backup";
+"button.copy" = "Copy";
+"button.retry" = "Retry";
+"button.report" = "Report";
+"button.add" = "Add";
+"button.approve" = "Approve";
+"button.reject" = "Reject";
+"button.connect" = "Connect";
+"button.save" = "Save";
+"button.sign" = "Sign";
 "button.more" = "Show More";
 
-"alert.copied" = "已复制";
-"alert.no_internet" = "没有网络";
-"alert.wrong_amount" = "金额有误";
-"alert.no_fee" = "错误费用";
-"alert.unknown_error" = "未知错误";
-"alert.success_action" = "完成";
+"alert.copied" = "Copied";
+"alert.no_internet" = "No Internet";
+"alert.wrong_amount" = "Wrong Amount";
+"alert.no_fee" = "Wrong Fee";
+"alert.unknown_error" = "Unknown Error";
+"alert.success_action" = "Done";
 
-"action.loading" = "正在加载...";
-"placeholder.search" = "搜索​​​​";
+"action.loading" = "loading...";
+"placeholder.search" = "Search";
 
-"status" = "状态";
-"connecting" = "正在连接...";
-"online" = "在线";
-"offline" = "离线";
-"confirm" = "确认";
-"connect" = "连接";
+"status" = "Status";
+"connecting" = "Connecting...";
+"online" = "Online";
+"offline" = "Offline";
+"confirm" = "Confirm";
+"connect" = "Connect";
 "price" = "Price";
 "value" = "Value";
-"note" = "备注";
+"note" = "Note";
 
-"version" = "版本%@";
+"version" = "Version %@";
 
-"n/a" = "不可用";
+"n/a" = "N/A";
 
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
 
 Go to Settings - > Unstoppable and allow access to the camera.";
-"access_camera.settings" = "设置";
+"access_camera.settings" = "Settings";
 
 // Restore
 
-"restore.title" = "选择钱包";
-"restore.enter_key" = "输入密钥";
+"restore.title" = "Choose Wallet";
+"restore.enter_key" = "Enter Key";
 "restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
-"restore.checksum_error" = "校验和无效";
-"restore.passphrase" = "密码";
-"restore.input.passphrase" = "密码";
+"restore.checksum_error" = "Invalid checksum";
+"restore.passphrase" = "Passphrase";
+"restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 
@@ -67,13 +67,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_settings.derivation.title.bip44" = "Legacy";
 "coin_settings.derivation.title.bip49" = "Newer (recommended)";
 "coin_settings.derivation.title.bip84" = "Newest";
-"coin_settings.title" = "区块链设置";
+"coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
-"sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.title" = "地址格式";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.title" = "Address Format";
 "blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
@@ -84,12 +84,12 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Show Key
 
-"show_key.title" = "密钥";
+"show_key.title" = "Key";
 "show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"show_key.button_show" = "显示";
-"show_key.tab.recovery_phrase" = "恢复码";
-"show_key.tab.private_keys" = "私钥";
-"show_key.passphrase" = "密码";
+"show_key.button_show" = "Show";
+"show_key.tab.recovery_phrase" = "Recovery Phrase";
+"show_key.tab.private_keys" = "Private Keys";
+"show_key.passphrase" = "Passphrase";
 
 "private_key_copying.title" = "Warning";
 "private_key_copying.subtitle" = "Risk of Private Key copy";
@@ -98,137 +98,137 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Backup Key
 
-"backup_key.title" = "备份";
+"backup_key.title" = "Backup";
 "backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"backup_key.button_show" = "显示";
-"backup_key.button_backup" = "备份";
-"backup_key.passphrase" = "密码";
+"backup_key.button_show" = "Show";
+"backup_key.button_backup" = "Backup";
+"backup_key.passphrase" = "Passphrase";
 
 "backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
-"backup_key.confirmation.passphrase" = "密码";
-"backup_key.confirmation.passphrase_description" = "输入密码";
+"backup_key.confirmation.passphrase" = "Passphrase";
+"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
 
-"backup_key.confirmation.empty_word" = "空单词";
-"backup_key.confirmation.invalid_word" = "无效单词";
-"backup_key.confirmation.empty_passphrase" = "空密码";
-"backup_key.confirmation.invalid_passphrase" = "无效密码";
+"backup_key.confirmation.empty_word" = "Empty word";
+"backup_key.confirmation.invalid_word" = "Invalid word";
+"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
+"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
 
 // Backup
 
-"backup.backup_required" = "需要备份";
+"backup.backup_required" = "Backup Required";
 
 "error.send.self_transfer" = "Sending to yourself is not supported";
-"error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
-"error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
-"error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
+"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
+"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
 
-"backup.confirmation.title" = "正在检查...";
+"backup.confirmation.title" = "Check ...";
 
 // Balance
 
-"balance.title" = "余额";
-"balance.tab_bar_item" = "余额";
-"balance.send" = "发送​​";
-"balance.swap" = "掉期交易";
-"balance.deposit" = "接收";
-"balance.rate_per_coin" = "%@ / %@";
-"balance.syncing" = "正在同步...";
-"balance.searching" = "正在搜索交易…...";
+"balance.title" = "Balance";
+"balance.tab_bar_item" = "Balance";
+"balance.send" = "Send";
+"balance.swap" = "Swap";
+"balance.deposit" = "Receive";
+"balance.rate_per_coin" = "%@ per %@";
+"balance.syncing" = "Syncing...";
+"balance.searching" = "Searching transactions...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "正在同步... %@";
-"balance.synced_through" = "直到 %@";
-"balance.add_coin" = "添加代币";
-"balance.empty.add_coins" = "添加代币";
-"balance.empty.description" = "您还没有添加任何代币到此钱包中。";
-"balance.sort_by" = "排序方式为";
-"balance.sort.header" = "排序方式";
-"balance.sort.valueHighToLow" = "余额";
-"balance.sort.az" = "名称";
+"balance.syncing_percent" = "Syncing... %@";
+"balance.synced_through" = "until %@";
+"balance.add_coin" = "Add Coin";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.sort_by" = "Sort By";
+"balance.sort.header" = "Sort by";
+"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.az" = "Name";
 "balance.sort.price_change" = "Price Change";
 
-"balance_error.change_source" = "更改源";
-"balance_error.sync_error" = "同步出错";
-"lost_accounts.warning_title" = "iOS Keychain 错误";
-"lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 
 //Account switcher
 
-"switch_account.title" = "切换钱包";
-"switch_account.subtitle" = "选择钱包以快速切换";
+"switch_account.title" = "Switch Wallet";
+"switch_account.subtitle" = "Select wallet for quick switch";
 //Release notes
 
-"release_notes.title" = "新增内容";
-"release_notes.follow_us" = "关注我们";
+"release_notes.title" = "What's New";
+"release_notes.follow_us" = "Follow Us";
 
 // Deposit
 
-"deposit.receive_coin" = "收到%@";
-"deposit.your_address" = "您的地址";
-"receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
+"deposit.receive_coin" = "Receive %@";
+"deposit.your_address" = "Your Address";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 
 // Send
 
-"send.title" = "发送%@";
-"send.amount_placeholder" = "金额";
-"send.address_placeholder" = "地址";
-"send.address_or_domain_placeholder" = "地址或域名";
-"send.fee" = "费用";
-"send.network_fee" = "网络费";
-"send.estimated_fee" = "预估费用";
-"send.max_fee" = "最大手续费";
-"send.tx_speed" = "交易费用";
-"send.tx_speed_low" = "低";
-"send.tx_speed_recommended" = "推荐";
-"send.tx_speed_high" = "高";
-"send.tx_speed_custom" = "自定义";
-"send.tx_duration" = "时长";
-"send.duration.hours" = "%d小时。";
-"send.duration.minutes" = "%d分钟。";
-"send.available_balance" = "可用余额";
-"send.max_button" = "最多";
-"send.next_button" = "下一步";
-"send.error.invalid_address" = "错误地址";
+"send.title" = "Send %@";
+"send.amount_placeholder" = "Amount";
+"send.address_placeholder" = "Address";
+"send.address_or_domain_placeholder" = "Address or Domain";
+"send.fee" = "Fee";
+"send.network_fee" = "Network Fee";
+"send.estimated_fee" = "Estimated Fee";
+"send.max_fee" = "Max Fee";
+"send.tx_speed" = "Transaction Fee";
+"send.tx_speed_low" = "Low";
+"send.tx_speed_recommended" = "Recommended";
+"send.tx_speed_high" = "High";
+"send.tx_speed_custom" = "Custom";
+"send.tx_duration" = "Duration";
+"send.duration.hours" = "%d h.";
+"send.duration.minutes" = "%d min.";
+"send.available_balance" = "Available Balance";
+"send.max_button" = "Max";
+"send.next_button" = "Next";
+"send.error.invalid_address" = "Invalid Address";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 小时";
-"send.hodler_locktime_month" = "1 个月";
-"send.hodler_locktime_half_year" = "6 个月";
-"send.hodler_locktime_year" = "1 年";
-"send.hodler_locktime_off" = "关";
-"send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
-"send.fee_info.title" = "交易速度";
-"send.fee_info.description" = "比特币和 Etherum区块链都要求用户在发送交易时支付网络费用。 当网络上发生大量交易时，费用较高，而区块链不那么繁忙时，费用较低。";
-"send.fee_info.header_slow" = "慢";
+"send.hodler_locktime_hour" = "1 hour";
+"send.hodler_locktime_month" = "1 month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "1 year";
+"send.hodler_locktime_off" = "Off";
+"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
+"send.fee_info.title" = "Transaction Speed";
+"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.header_slow" = "Low";
 "send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "平均";
+"send.fee_info.header_average" = "Recommended";
 "send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "快";
+"send.fee_info.header_fast" = "High";
 "send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
 "send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
 
-"send.confirmation.you_send" = "您发送";
-"send.confirmation.to" = "接收人";
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.to" = "To";
 "send.confirmation.method" = "Method";
-"send.confirmation.domain" = "域名";
-"send.confirmation.address" = "地址";
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "总额";
-"send.confirmation.send_button" = "发送​​";
+"send.confirmation.total" = "Total";
+"send.confirmation.send_button" = "Send";
 "send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend_button" = "Resend";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.cancel_button" = "Cancel Transaction";
-"send.amount_error.balance" = "余额不足";
-"send.amount_error.maximum_amount" = "最大金额 %@";
-"send.amount_error.minimum_amount" = "最小金额 %@";
-"send.amount_error.min_required_balance" = "最小要求剩余 %@";
-"send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
-"send.stuck_warning" = "警告！有被骗的风险";
+"send.amount_error.balance" = "Not Enough Balance";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "您批准";
-"approve.confirmation.spender" = "消费人";
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.spender" = "Spender";
 
 // CoinSelector
 
@@ -236,89 +236,89 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Swap
 
-"swap.title" = "掉期交易";
-"swap.you_pay" = "您支付";
-"swap.estimated" = "估计";
-"swap.balance" = "余额";
-"swap.powered_by" = "技术支持：";
-"swap.allowance" = "补贴";
-"swap.you_get" = "您获得";
-"swap.token" = "选择";
-"swap.advanced_settings" = "掉期设置";
-"swap.proceed_button" = "继续";
-"swap.approve.title" = "互兑批准";
+"swap.title" = "Swap";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.powered_by" = "Powered By";
+"swap.allowance" = "Allowance";
+"swap.you_get" = "You Get";
+"swap.token" = "Select";
+"swap.advanced_settings" = "Swap Settings";
+"swap.proceed_button" = "Next";
+"swap.approve.title" = "Swap Approve";
 "swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
-"swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
-"swap.approving_button" = "审批中...";
-"swap.trade_error.not_found" = "无法交换代币";
-"swap.button_error.insufficient_balance" = "余额不足";
+"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
+"swap.approving_button" = "Approving...";
+"swap.trade_error.not_found" = "Can't swap these tokens";
+"swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.switch_provider.title" = "Swap Provider";
 "swap.switch_provider.subtitle" = "Switcher";
 
-"swap.price" = "价格";
+"swap.price" = "Price";
 "swap.buy_price" = "Buy Price";
 "swap.sell_price" = "Sell Price";
-"swap.price_impact" = "价格影响";
-"swap.maximum_paid" = "最大支付金额";
-"swap.minimum_got" = "最小获取金额";
+"swap.price_impact" = "Price Impact";
+"swap.maximum_paid" = "Maximum Amount";
+"swap.minimum_got" = "Guaranteed Amount";
 "swap.estimate_short" = "(est)";
 "swap.minimum_short" = "(min)";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "下跌容忍度";
+"swap.advanced_settings.slippage" = "Slippage Tolerance";
 "swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
-"swap.advanced_settings.deadline" = "交易截止日期";
+"swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
-"swap.advanced_settings.deadline_minute" = "%@分钟。";
-"swap.advanced_settings.recipient_address" = "接收人地址";
+"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
+"swap.advanced_settings.deadline_minute" = "%@ min";
+"swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
-"swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
+"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
 "swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
-"swap.advanced_settings.error.invalid_address" = "无效地址";
-"swap.advanced_settings.error.invalid_slippage" = "无效延误";
-"swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
 
 
-"swap.service" = "服务";
-"swap.service.title" = "服务";
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "掉期交易";
+"swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.guaranteed" = "保证";
-"swap.confirmation.maximum" = "最大金额";
-"swap.confirmation.estimated" = "估计";
+"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.guaranteed" = "Guaranteed";
+"swap.confirmation.maximum" = "Maximum";
+"swap.confirmation.estimated" = "Estimated";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.dex_info.header_dex_related" = "%@关联";
-"swap.dex_info.header_allowance" = "补贴";
+"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_allowance" = "Allowance";
 "swap.dex_info.content_allowance" = "The amount of currency that service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
-"swap.dex_info.header_price_impact" = "价格影响";
+"swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "掉期交易费用";
+"swap.dex_info.header_swap_fee" = "Swap Fee";
 "swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "保证金额";
-"swap.dex_info.content_guaranteed_amount" = "一名用户因为互兑操作将收到的最小金额。";
-"swap.dex_info.header_maximum_spend" = "最大支出";
-"swap.dex_info.content_maximum_spend" = "一名用户因为互兑操作将收到的最大金额。";
+"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
+"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.dex_info.header_other" = "其他";
-"swap.dex_info.header_transaction_fee" = "交易费用";
-"swap.dex_info.content_transaction_fee" = "%@区块链上给定交易的预计处理成本。%@相关交易的成本通常会高于通用代币转账交易。";
-"swap.dex_info.header_transaction_speed" = "交易速度";
+"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.header_transaction_speed" = "Transaction Speed";
 "swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
-"swap.dex_info.link_button" = "%@ 站点";
+"swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
@@ -329,13 +329,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total Market Cap";
 "market.24h_volume" = "24h Volume";
-"market.defi_cap" = "DeFi市场价值";
-"market.defi_tvl" = "DeFi中的TVL";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
 
 "market.sync_error" = "Sync Error";
 "market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
-"market.top.section.header.see_all" = "查看全部";
+"market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.news" = "News";
@@ -404,7 +404,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market_discovery.filter_description.stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
 "market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
 "market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
+"market_discovery.filter_description.risk_management" = "Risk assessment, insurance, and hedging.";
 "market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
 "market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
 "market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
@@ -447,7 +447,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.reset_all" = "Reset";
 
 "market.advanced_search.any" = "Any";
-"market.advanced_search.less_5_m" = "<5M";
+"market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.m_5_m_20" = "5M - 20M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
@@ -595,29 +595,29 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Transactions
 
-"transactions.title" = "交易";
-"transactions.tab_bar_item" = "交易";
-"transactions.filter_all" = "全部";
-"transactions.empty_text" = "您还没有任何待定或成功的交易";
-"transactions.pending" = "待处理";
-"transactions.processing" = "正在处理";
-"transactions.completed" = "已完成";
-"transactions.failed" = "失败";
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
+"transactions.filter_all" = "All";
+"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.pending" = "Pending";
+"transactions.processing" = "Processing";
+"transactions.completed" = "Completed";
+"transactions.failed" = "Failed";
 
-"transactions.receive" = "接收";
-"transactions.send" = "发送​​";
-"transactions.approve" = "批准";
-"transactions.swap" = "掉期交易";
-"transactions.contract_call" = "合约调用";
-"transactions.contract_creation" = "合约创建";
+"transactions.receive" = "Receive";
+"transactions.send" = "Send";
+"transactions.approve" = "Approve";
+"transactions.swap" = "Swap";
+"transactions.contract_call" = "Contract Call";
+"transactions.contract_creation" = "Contract Creation";
 
-"transactions.to" = "接收人%@";
-"transactions.from" = "发送人%@";
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
-"transactions.value.unlimited" = "无限%@";
+"transactions.value.unlimited" = "unlimited %@";
 
-"transactions.today" = "今天";
-"transactions.yesterday" = "昨天";
+"transactions.today" = "Today";
+"transactions.yesterday" = "Yesterday";
 
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Incoming";
@@ -627,58 +627,58 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Transaction Info
 
-"tx_info.title" = "交易信息";
-"tx_info.date" = "日期";
-"tx_info.title_approval" = "互兑批准";
-"tx_info.status.pending" = "待处理";
-"tx_info.status.completed" = "已完成";
-"tx_info.status.failed" = "失败";
-"tx_info.from_hash" = "发件人";
-"tx_info.transaction_id" = "交易ID";
-"tx_info.to_hash" = "接收人";
-"tx_info.button_explorer" = "查看于%@";
-"tx_info.rate" = "历史价格";
+"tx_info.title" = "Transaction Info";
+"tx_info.date" = "Date";
+"tx_info.title_approval" = "Swap Approval";
+"tx_info.status.pending" = "Pending";
+"tx_info.status.completed" = "Completed";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
+"tx_info.transaction_id" = "ID";
+"tx_info.to_hash" = "To";
+"tx_info.button_explorer" = "View on %@";
+"tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
 "tx_info.options.cancel" = "Cancel";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
-"tx_info.fee" = "费用";
-"tx_info.fee.estimated" = "费用（预估）";
-"tx_info.to_self_note" = "交易已发送至自有地址";
-"tx_info.double_spent_note" = "双重支付风险！";
-"tx_info.locked_until" = "锁定至 %@";
-"tx_info.unlocked_at" = "在 %@ 解锁了";
-"tx_info.recipient_hash" = "收款人";
-"tx_info.raw_transaction" = "原始交易";
+"tx_info.fee" = "Fee";
+"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.to_self_note" = "This transaction sent to own address";
+"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.locked_until" = "Locked until %@";
+"tx_info.unlocked_at" = "Unlocked at %@";
+"tx_info.recipient_hash" = "Recipient";
+"tx_info.raw_transaction" = "Raw Transaction";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "服务";
-"tx_info.view_on" = "于%@查看";
-"tx_info.you_pay" = "您支付";
-"tx_info.you_get" = "您获得";
-"tx_info.you_paid" = "您已支付";
-"tx_info.you_got" = "您已获得";
-"tx_info.price" = "价格";
+"tx_info.service" = "Service";
+"tx_info.view_on" = "View on %@";
+"tx_info.you_pay" = "You Pay";
+"tx_info.you_get" = "You Get";
+"tx_info.you_paid" = "You Paid";
+"tx_info.you_got" = "You Got";
+"tx_info.price" = "Price";
 
 // Settings
 
-"settings.title" = "设置";
-"settings.tab_bar_item" = "设置";
-"settings.security_center" = "安全中心";
-"settings.manage_accounts" = "管理钱包";
-"settings.experimental_features" = "实验性功能";
-"settings.base_currency" = "基本货币";
-"settings.language" = "语言";
-"settings.faq" = "常见问题";
-"settings.theme" = "主题";
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.security_center" = "Security Center";
+"settings.manage_accounts" = "Manage Wallets";
+"settings.experimental_features" = "Experimental";
+"settings.base_currency" = "Base Currency";
+"settings.language" = "Language";
+"settings.faq" = "FAQ";
+"settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "分布式应用程序";
+"settings.info_subtitle" = "decentralized app";
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "基本货币";
-"settings.base_currency.other" = "其他";
-"settings.base_currency.disclaimer" = "声明";
+"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.other" = "Other";
+"settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "我理解";
+"settings.base_currency.disclaimer.i_understand" = "I Understand";
 
 
 // Settings -> Manage Wallet
@@ -686,30 +686,30 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
 
-"manage_coins.add_coin.title" = "添加%@ ";
-"manage_coins.add_coin.subtitle" = "%@钱包";
-"manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
+"manage_coins.add_coin.title" = "Add %@";
+"manage_coins.add_coin.subtitle" = "%@ Wallet";
+"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
 "manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or the Restore button to import an existing one.";
 "manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create a new %@ wallet. You’re only able to restore an existing one.";
-"manage_coins.add_coin.text.tokens" = "您可以使用%@钱包了";
-"manage_coins.add_coin.create" = "创建";
-"manage_coins.add_coin.restore" = "恢复";
+"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
+"manage_coins.add_coin.create" = "Create";
+"manage_coins.add_coin.restore" = "Restore";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "实验性";
+"settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "激活";
+"settings.bitcoin_hodling.lock_time" = "Activate";
 "settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the Unstoppable wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the Unstoppable wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself. \n\nBeing an experimental feature, the maximum amount per transaction is limited to 0.5 BTC.";
 
 // Settings -> Terms
 
-"terms.title" = "条款";
+"terms.title" = "Terms";
 "terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
 
 It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
@@ -717,7 +717,7 @@ It's a non-custodial, peer-to-peer wallet where only the user has control over t
 The Unstoppable wallet is fully open-source and anyone can confirm the app works exactly as it claims to.
 
 We built Unstoppable for ourselves as the other available solutions were not up to par. Both from an engineering and usability perspective, we believe this wallet to be significantly ahead of alternative products.";
-"terms.item.academy" = "我浏览了此应用的“学院”（Academy）部分并掌握了储存加密货币的基础知识。";
+"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
 "terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand these private keys are stored on my smartphone and not elsewhere.";
 "terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without a safe PIN lock may potentially endanger the safety of my funds.";
 "terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, and keeping the operating system outdated, can potentially endanger the safety of my funds.";
@@ -725,7 +725,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "terms.item.root" = "I understand I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys, it will be impossible to recover access to my wallet.";
 "terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase the wallet's private keys from my device. I will need my private keys to regain access to my funds.";
 "terms.item.pin" = "I understand that only I myself am responsible for the safety of my funds, and no other entity.";
-"terms.footer" = "感谢您选择我们的钱包！";
+"terms.footer" = "Thank you for choosing this wallet!";
 
 // Settings -> Tell Friends
 
@@ -733,24 +733,24 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Settings -> Security
 
-"settings_security.title" = "安全中心";
-"settings_security.passcode" = "密码";
-"settings_security.privacy" = "隐私";
-"settings_security.change_pin" = "编辑密码";
-"settings_security.touch_id" = "指纹识别";
-"settings_security.face_id" = "面部识别";
-"security_settings.delete_alert_button" = "从手机中删除";
-"settings_privacy.title" = "隐私";
-"settings_privacy.header_description" = "虽然此APP不会将您的个人数据提供给任何第三方，但您的某些个人数据（例如IP地址）在与区块链通信时可能会泄漏。单击右上角的“信息”按钮以获取更多详细信息。";
-"settings_privacy.sorting_title" = "输入/输出";
-"settings_privacy.sorting.section_header" = "区块链交易";
-"settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
+"settings_security.title" = "Security Center";
+"settings_security.passcode" = "Passcode";
+"settings_security.privacy" = "Privacy";
+"settings_security.change_pin" = "Edit Passcode";
+"settings_security.touch_id" = "Touch ID";
+"settings_security.face_id" = "Face ID";
+"security_settings.delete_alert_button" = "Delete from Phone";
+"settings_privacy.title" = "Privacy";
+"settings_privacy.header_description" = "This app doesn't collect any data about you.";
+"settings_privacy.sorting_title" = "Inputs/Outputs";
+"settings_privacy.sorting.section_header" = "Blockchain Transactions";
+"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
 "settings_privacy.connection.section_header" = "Blockchain Sync";
 "settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in a peer-to-peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
 "settings_privacy.sync.section_header" = "Blockchain Restore";
 "settings_privacy.sync.section_footer" = "Select a data source for restoring a wallet with transactions.";
 
-"settings_privacy_info.title" = "隐私设置";
+"settings_privacy_info.title" = "Privacy Settings";
 "settings_privacy_info.description" = "Below you will find a detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "The blockchain transactions setting controls the privacy tweaks for users' transactions when sending transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent. \n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where. \n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option. \n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
@@ -759,49 +759,49 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 
-"settings_privacy.alert_sync.title" = "恢复参数";
-"settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
-"settings_privacy.alert_sync.recommended" = "推荐";
-"settings_privacy.alert_sync.more_private" = "更私密";
+"settings_privacy.alert_sync.title" = "Restore Source";
+"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
+"settings_privacy.alert_sync.recommended" = "Recommended";
+"settings_privacy.alert_sync.more_private" = "More Private";
 
-"settings_privacy.alert_connection.title" = "同步区块链";
+"settings_privacy.alert_connection.title" = "Blockchain Sync";
 
-"settings_privacy.alert_sort.title" = "区块链交易";
-"settings_privacy.alert_sort.subtitle" = "输入/输出";
-"settings_privacy.sorting_default" = "默认";
-"settings_privacy.sorting_default.description" = "无任何设置";
-"settings_privacy.sorting_shuffle" = "随机排序";
-"settings_privacy.sorting_shuffle.description" = "随机索引";
-"settings_privacy.sorting_bip69" = "BIP69";
-"settings_privacy.sorting_bip69.description" = "词典索引";
+"settings_privacy.alert_sort.title" = "Blockchain Transactions";
+"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
+"settings_privacy.sorting_default" = "Default";
+"settings_privacy.sorting_default.description" = "Without any settings";
+"settings_privacy.sorting_shuffle" = "Shuffle";
+"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.sorting_bip69" = "Deterministic Bip69";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "管理钱包";
-"settings_manage_keys.delete" = "删除";
-"settings_manage_keys.backup" = "备份";
-"settings_manage_keys.create" = "创建";
-"settings_manage_keys.restore" = "恢复";
-"settings_manage_keys.delete.title" = "删除钱包";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.create" = "Create";
+"settings_manage_keys.restore" = "Restore";
+"settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
 
 // Settings -> About App
 
-"settings.about_app.title" = "关于应用";
-"settings.about_app.app_name" = "Unstoppable钱包";
-"settings.about_app.website" = "网站";
-"settings.about_app.contact" = "联系";
-"settings.about_app.rate_us" = "评价我们";
-"settings.about_app.tell_friends" = "分享给好友";
-"settings.about_app.email_copied" = "电子邮件地址已复制";
+"settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.website" = "Website";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
+"settings.about_app.email_copied" = "Email address copied";
 
 // Settings -> Theme
 
-"settings_theme.title" = "主题";
-"settings_theme.system" = "系统";
-"settings_theme.dark" = "深色";
-"settings_theme.light" = "浅色";
+"settings_theme.title" = "Theme";
+"settings_theme.system" = "System";
+"settings_theme.dark" = "Dark";
+"settings_theme.light" = "Light";
 
 // Settings -> Launch Screen
 
@@ -814,27 +814,27 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Set PIN
 
-"set_pin.title" = "密码";
-"set_pin.info" = "您的密码将用于解锁钱包和发送资金";
-"set_pin.wrong_confirmation" = "密码不匹配。请重试。";
+"set_pin.title" = "Passcode";
+"set_pin.info" = "Your passcode will be used to unlock your wallet";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "编辑密码";
-"edit_pin.unlock_info" = "当前密码";
-"edit_pin.new_pin_info" = "新密码";
+"edit_pin.title" = "Edit Passcode";
+"edit_pin.unlock_info" = "Current Passcode";
+"edit_pin.new_pin_info" = "New Passcode";
 
 // Unlock PIN
 
-"unlock_pin.info" = "密码";
-"unlock_pin.cant_save_pin" = "哎哟！我们无法保存您的密码，请尽快与我们联系，谢谢。";
-"unlock_pin.blocked_until" = "禁用至: %@";
+"unlock_pin.info" = "Passcode";
+"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
+"unlock_pin.blocked_until" = "Disabled until: %@";
 
 
 // Key Types
 
 "chart.time_duration.today" = "TDY";
-"chart.time_duration.day" = "24小时";
+"chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
@@ -843,20 +843,20 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 
-"chart.market_cap" = "市场价值";
-"chart.market_cap.thousand" = "%@千";
-"chart.market_cap.million" = "%@百万";
-"chart.market_cap.billion" = "%@十亿";
-"chart.market_cap.trillion" = "%@万亿";
-"chart.volume" = "量(24小时)";
-"chart.circulation" = "流通中";
+"chart.market_cap" = "Market Cap";
+"chart.market_cap.thousand" = "%@ k";
+"chart.market_cap.million" = "%@ M";
+"chart.market_cap.billion" = "%@ B";
+"chart.market_cap.trillion" = "%@ T";
+"chart.volume" = "Volume (24h)";
+"chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Vol";
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";
-"chart.market.volume" = "Volume(24h)";
+"chart.market.volume" = "Volume (24h)";
 "chart.market.circulation" = "In Circulation";
 "chart.market.total_supply" = "Total Supply";
 
@@ -871,18 +871,18 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Create Wallet
 
-"create_wallet.title" = "新钱包";
-"create_wallet.create_button" = "创建";
-"create_wallet.mnemonic" = "助记词";
-"create_wallet.n_words" = "%@ 个单词";
-"create_wallet.passphrase" = "密码";
-"create_wallet.input.passphrase" = "密码";
-"create_wallet.input.confirm" = "确认";
+"create_wallet.title" = "New Wallet";
+"create_wallet.create_button" = "Create";
+"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.n_words" = "%@ words";
+"create_wallet.passphrase" = "Passphrase";
+"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.input.confirm" = "Confirm";
 "create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "密码不能为空";
-"create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
-"create_wallet.error.invalid_confirmation" = "确认密码不匹配";
-"create_wallet.success" = "已创建";
+"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+"create_wallet.success" = "Created";
 
 // Restore Select
 
@@ -896,78 +896,78 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Double Spend Info
 
-"double_spend_info.title" = "双复支付";
+"double_spend_info.title" = "Double Spend";
 "double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "此Tx";
-"double_spend_info.conflicting_hash" = "冲突Tx";
+"double_spend_info.this_hash" = "This Tx";
+"double_spend_info.conflicting_hash" = "Conflicting Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lu天之前";
-"timestamp.hours_ago" = "%lu小时之前";
-"timestamp.min_ago" = "%lu分钟之前";
+"timestamp.days_ago" = "%lud ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
 
 // Intro
 
-"intro.next" = "继续";
-"intro.start" = "开始";
-"intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
-"intro.unchain_assets.title" = "解除资产";
-"intro.unchain_assets.description" = "请勿锁定您自己，也不要让别人对您这样做";
-"intro.go_borderless.title" = "进入无国界";
-"intro.go_borderless.description" = "避开有条件障碍，进入全球市场";
-"intro.stay_private.title" = "保持私密";
-"intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
+"intro.next" = "Next";
+"intro.start" = "Start";
+"intro.brand.description" = "Be Unstoppable";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
-"guides.tab_bar_item" = "学院";
-"guides.title" = "学院";
+"guides.tab_bar_item" = "Academy";
+"guides.title" = "Academy";
 
 // Add Token
 
-"add_token.title" = "添加代币";
+"add_token.title" = "Add Token";
 "add_token.coin_types" = "Coin Type(s)";
-"add_token.coin_name" = "代币图片";
-"add_token.coin_code" = "代币代码";
+"add_token.coin_name" = "Coin Name";
+"add_token.coin_code" = "Coin Code";
 "add_token.decimals" = "Decimals";
-"add_token.already_exists" = "该代币已在代币管理器列表中。";
-"add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
+"add_token.already_exists" = "This token is already in the coin manager list.";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
-"add_token.success_add" = "已添加";
+"add_token.success_add" = "Added";
 
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.error.invalid_url" = "无效的URL地址";
+"wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
-"wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
+"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
-"wallet_connect.button_disconnect" = "断开连接";
+"wallet_connect.button_disconnect" = "Disconnect";
 "ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
 "ethereum_transaction.error.reverted" = "The transaction cannot be executed: %@";
-"wallet_connect.request_title" = "请求";
+"wallet_connect.request_title" = "Contract Call";
 "wallet_connect.button.confirm" = "Confirm";
-"wallet_connect.sign.request_title" = "签名请求";
-"wallet_connect.sign.domain" = "域";
-"wallet_connect.sign.message" = "待签名消息";
-"wallet_connect.sign.description" = "请对消息签名以便进行验证";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.description" = "Please sign a message to authenticate";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "新连接";
+"wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
 
 // App Status
 
-"app_status.title" = "应用状态";
-"app_status.application_status" = "应用程序状态";
-"app_status.linked_wallets" = "已链接钱包";
-"app_status.version_history" = "版本历史";
-"app_status.blockchain_status" = "区块链状态";
+"app_status.title" = "App Status";
+"app_status.application_status" = "Application status";
+"app_status.linked_wallets" = "Linked Wallets";
+"app_status.version_history" = "Version History";
+"app_status.blockchain_status" = "Blockchain status";
 
 // FAQ
 
@@ -975,52 +975,52 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Status Info
 
-"status_info.title" = "状态";
-"status_info.pending.title" = "待处理";
+"status_info.title" = "Status";
+"status_info.pending.title" = "Pending";
 "status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "正在处理";
+"status_info.processing.title" = "Processing";
 "status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
-"status_info.completed.title" = "已完成";
-"status_info.confirmed.content" = "交易已完成并被视为永久和不可逆。";
-"status_info.failed.title" = "失败";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Transactions with a fail status are still written to the blockchain and consume transaction fees. The Unstoppable app is unable to show the fail reason for such transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Enable Coins
 
-"enable_coins.title" = "启用代币";
+"enable_coins.title" = "Enable Coins";
 "enable_coins.description" = "Enable all %@ based coins that have any balance.";
-"enable_coins.enable_button" = "启用";
-"enable_coins.enabling" = "正在启用...";
-"enable_coins.enabled_coins" = "已启用%@代币";
-"enable_coins.enabled_no_coins" = "找不到有余额的代币";
+"enable_coins.enable_button" = "Enable";
+"enable_coins.enabling" = "Enabling...";
+"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_no_coins" = "Did not find any new tokens with balance";
 
 // Onboarding
 
-"onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
-"onboarding.balance.create" = "创建";
-"onboarding.balance.restore" = "恢复";
+"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
+"onboarding.balance.create" = "Create";
+"onboarding.balance.restore" = "Restore";
 "onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ 个单词";
-"manage_accounts.n_words_with_passphrase" = "%@ 个单词的密码";
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
 
 // Manage Account
 
-"manage_account.name" = "名称";
-"manage_account.show_recovery_phrase" = "显示恢复码";
-"manage_account.backup_recovery_phrase" = "备份码";
-"manage_account.network_settings" = "网络设置";
-"manage_account.unlink" = "取消链接";
+"manage_account.name" = "Name";
+"manage_account.show_recovery_phrase" = "Show Phrase";
+"manage_account.backup_recovery_phrase" = "Backup Phrase";
+"manage_account.network_settings" = "Network Settings";
+"manage_account.unlink" = "Unlink";
 
 // Birthday Input
 
-"birthday_input.title" = "生日高度";
+"birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
-"birthday_input.input_placeholder" = "%@ （可选）";
-"restore_setting.birthday_height" = "%@ 生日高度";
+"birthday_input.input_placeholder" = "%@ (optional)";
+"restore_setting.birthday_height" = "%@ Birthday Height";
 
 // Network Settings
 
-"network_settings.title" = "网络设置";
+"network_settings.title" = "Network Settings";
