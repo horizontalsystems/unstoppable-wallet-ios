@@ -125,7 +125,7 @@ extension MarketKit.Coin {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/ios/\(uid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(uid)@\(scale)x.png"
     }
 
 }
@@ -134,7 +134,7 @@ extension MarketKit.CoinCategory {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/ios/\(uid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/\(uid)@\(scale)x.png"
     }
 
 }
@@ -143,7 +143,7 @@ extension MarketKit.CoinInvestment.Fund {
 
     var logoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/ios/\(uid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/\(uid)@\(scale)x.png"
     }
 
 }
@@ -152,7 +152,7 @@ extension MarketKit.CoinTreasury {
 
     var fundLogoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/ios/\(fundUid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/\(fundUid)@\(scale)x.png"
     }
 
 }
@@ -161,7 +161,7 @@ extension MarketKit.Auditor {
 
     var logoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/ios/\(name)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/\(name)@\(scale)x.png"
     }
 
 }

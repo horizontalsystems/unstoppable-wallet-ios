@@ -70,11 +70,12 @@ class FilterHeaderView: UITableViewHeaderFooterView {
 
         separator.backgroundColor = UIColor.themeSteel10
 
-        addSubview(selectedView)
+        collectionView.addSubview(selectedView)
         selectedView.snp.makeConstraints { maker in
-            maker.bottom.equalToSuperview().offset(2)
+            maker.bottom.equalTo(self.snp.bottom).offset(2)
             maker.leading.equalToSuperview()
             maker.height.equalTo(4)
+            maker.width.equalTo(50)
         }
 
         selectedView.cornerRadius = 2
@@ -150,6 +151,8 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
 
         itemWidths = items.sorted { $0.index < $1.index }.map { $0.width }
+
+        layoutSelectedView(indexPath: collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0))
     }
 
     func reload(filters: [ViewItem]) {
@@ -192,10 +195,6 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
         if let cell = cell as? FilterHeaderCell {
             let selected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
             cell.bind(title: title(index: indexPath.item), selected: selected, buttonStyle: buttonStyle)
-
-            if selected {
-                layoutSelectedView(toCell: cell)
-            }
         }
     }
 
@@ -225,19 +224,27 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
         guard let selectedCell = collectionView.cellForItem(at: indexPath) else {
             return
         }
-        layoutSelectedView(toCell: selectedCell)
+        layoutSelectedView(indexPath: indexPath)
 
         UIView.animate(withDuration: animationDuration, animations: {
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-            self.layoutSubviews()
+            self.collectionView.layoutSubviews()
         })
     }
 
-    private func layoutSelectedView(toCell cell: UICollectionViewCell) {
+    private func layoutSelectedView(indexPath: IndexPath) {
+        var offset: CGFloat = 0
+        let spacing = collectionView(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: 0)
+
+        for i in 0..<indexPath.item {
+            offset += itemWidths[i] + spacing
+        }
+
         selectedView.snp.remakeConstraints { maker in
-            maker.bottom.equalToSuperview().offset(2)
-            maker.leading.trailing.equalTo(cell.contentView)
+            maker.bottom.equalTo(self.snp.bottom).offset(2)
+            maker.leading.equalToSuperview().offset(offset)
             maker.height.equalTo(4)
+            maker.width.equalTo(itemWidths[indexPath.item])
         }
     }
 

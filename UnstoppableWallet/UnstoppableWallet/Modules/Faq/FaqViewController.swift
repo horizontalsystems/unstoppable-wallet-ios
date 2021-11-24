@@ -51,7 +51,7 @@ class FaqViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: FaqCell.self)
-        tableView.registerCell(forClass: BCell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
 
         sectionFilterView.onSelect = { [weak self] index in
             self?.sectionFilterSelected(index: index)
@@ -123,12 +123,7 @@ class FaqViewController: ThemeViewController {
 extension FaqViewController: SectionsDataSource {
 
     private var transparentRow: RowProtocol {
-        Row<UITableViewCell>(
-                id: "transparent_row",
-                height: 20,
-                bind: { cell, _ in
-                    cell.backgroundColor = .clear
-                })
+        Row<EmptyCell>(id: "transparent_row", height: 20)
     }
 
     private func itemsSection(sectionIndex: Int, items: [FaqService.Item]) -> SectionProtocol {
