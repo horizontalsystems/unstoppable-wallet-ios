@@ -40,12 +40,14 @@ class CoinTreasuriesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.sectionDataSource = self
-
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+        tableView.sectionDataSource = self
         tableView.registerCell(forClass: G14Cell.self)
 
         view.addSubview(spinner)
