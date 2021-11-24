@@ -6,8 +6,8 @@ class AppConfigProvider: IAppConfigProvider {
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
     let reportEmail = "support.unstoppable@protonmail.com"
     let btcCoreRpcUrl = "https://btc.horizontalsystems.xyz/rpc"
-    let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.1/index.json")!
-    let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json")!
+    let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
+    let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/v1.2/src/faq.json")!
 
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
