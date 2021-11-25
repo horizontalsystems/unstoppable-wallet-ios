@@ -17,7 +17,7 @@
 "button.connect" = "연결";
 "button.save" = "저장";
 "button.sign" = "가입";
-"button.more" = "Show More";
+"button.more" = "더 보기";
 
 "alert.copied" = "복사됨";
 "alert.no_internet" = "인터넷에 연결되지 않음";
@@ -36,7 +36,7 @@
 "confirm" = "확인";
 "connect" = "연결";
 "price" = "금액";
-"value" = "Value";
+"value" = "값";
 "note" = "참고";
 
 "version" = "버전 %@";
@@ -53,7 +53,7 @@
 "restore.title" = "지갑 선택";
 "restore.enter_key" = "암호를 입력하세요";
 "restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
+"restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
@@ -63,16 +63,16 @@
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Newer (recommended)";
-"coin_settings.derivation.title.bip84" = "Newest";
+"coin_settings.derivation.title.bip49" = "최신(권장)";
+"coin_settings.derivation.title.bip84" = "최신";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.title" = "주소 형식";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "코인의 주소 형식을 선택합니다. 확실하지 않은 경우 권장 옵션을 진행합니다. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
 // Coin Platforms
 
