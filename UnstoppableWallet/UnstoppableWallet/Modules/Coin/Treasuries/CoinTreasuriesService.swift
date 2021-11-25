@@ -61,7 +61,7 @@ class CoinTreasuriesService {
                         }
                     }
                     .sorted { lhsTreasury, rhsTreasury in
-                        sortDirectionAscending ? lhsTreasury.amount > rhsTreasury.amount : lhsTreasury.amount < rhsTreasury.amount
+                        sortDirectionAscending ? lhsTreasury.amount < rhsTreasury.amount : lhsTreasury.amount > rhsTreasury.amount
                     }
 
             state = .loaded(treasuries: treasuries, reorder: reorder)
