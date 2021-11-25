@@ -52,7 +52,7 @@ extension CoinTweetsService {
             single = marketKit
                     .twitterUsername(coinUid: coinUid)
                     .flatMap { [weak self] username in
-                        guard let service = self, let username = username else {
+                        guard let service = self, let username = username, !username.isEmpty else {
                             return Single.just(nil)
                         }
 
