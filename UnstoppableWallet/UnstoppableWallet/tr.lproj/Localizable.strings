@@ -1,324 +1,325 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
-"button.restore" = "Restore";
-"button.next" = "Next";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.sign" = "Sign";
-"button.more" = "Show More";
+"button.ok" = "Tamam";
+"button.apply" = "Uygula";
+"button.cancel" = "İptal";
+"button.close" = "Kapat";
+"button.done" = "Bitti";
+"button.restore" = "Geri Yükle";
+"button.next" = "İleri";
+"button.share" = "Paylaş";
+"button.paste" = "Yapıştır";
+"button.backup" = "Yedekle";
+"button.copy" = "Kopyala";
+"button.retry" = "Yeniden Dene";
+"button.report" = "Şikayet Et";
+"button.add" = "Ekle";
+"button.approve" = "Onayla";
+"button.reject" = "Reddet";
+"button.connect" = "Bağlan";
+"button.save" = "Kaydet";
+"button.sign" = "kaydol";
+"button.more" = "Daha Fazlası";
 
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.copied" = "Kopyalandı";
+"alert.no_internet" = "Internet Bağlantısı Yok";
+"alert.wrong_amount" = "Yanlış Tutar";
+"alert.no_fee" = "Yanlış Masraf";
+"alert.unknown_error" = "Bilinmeyen Hata";
+"alert.success_action" = "tamamlandı
+";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "yükleniyor...";
+"placeholder.search" = "Ara";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"status" = "Durum";
+"connecting" = "Bağlanıyor...";
+"online" = "Çevrimiçi";
+"offline" = "Çevrimdışı";
+"confirm" = "Onayla";
+"connect" = "Bağlan";
+"price" = "Fiyat";
+"value" = "Değer";
+"note" = "Not";
 
-"version" = "Version %@";
+"version" = "Sürüm %@";
 
 "n/a" = "N/A";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "Unstoppable, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
 
-Go to Settings - > Unstoppable and allow access to the camera.";
-"access_camera.settings" = "Settings";
+Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
+"access_camera.settings" = "Ayarlar";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
-"restore.checksum_error" = "Invalid checksum";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "The passphrase cannot be empty";
+"restore.title" = "Cüzdan Seçin";
+"restore.enter_key" = "Anahtarı girin";
+"restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir";
+"restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
+"restore.checksum_error" = "Geçersiz sağlama toplamı";
+"restore.passphrase" = "Parola";
+"restore.input.passphrase" = "Parola";
+"restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız şifreyi girin";
+"restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Newer (recommended)";
-"coin_settings.derivation.title.bip84" = "Newest";
-"coin_settings.title" = "Blockchain Settings";
+"coin_settings.derivation.title.bip49" = "Daha yeni (önerilen)";
+"coin_settings.derivation.title.bip84" = "En yeni";
+"coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.title" = "Address Format";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018 öncesinde yaygın";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018 sonrasında yaygın";
+"sync_mode.from_blockchain" = "Blockchain çıkışlı";
+"blockchain_settings.title" = "Adres Formatı";
+"blockchain_settings.description" = "Koin için adres formatını seçin. Emin değilseniz önerilen seçenekle devam edin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Coin Type";
-"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
-"coin_platforms.native" = "Native";
+"coin_platforms.title" = "Kripto Para Tipi";
+"coin_platforms.description" = "Bu token birden fazla blok zincirinde mevcuttur. Kullanmak istediğiniz sürümü/sürümleri seçin.";
+"coin_platforms.native" = "Yerel";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
-"show_key.passphrase" = "Passphrase";
+"show_key.title" = "Anahtar";
+"show_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
+"show_key.button_show" = "Göster";
+"show_key.tab.recovery_phrase" = "Kurtarma cümlesi";
+"show_key.tab.private_keys" = "Özel Anahtar";
+"show_key.passphrase" = "Parola";
 
-"private_key_copying.title" = "Warning";
-"private_key_copying.subtitle" = "Risk of Private Key copy";
-"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
-"private_key_copying.copy_button" = "I will risk it";
+"private_key_copying.title" = "Uyarı";
+"private_key_copying.subtitle" = "Özel Anahtar kopyalama riski";
+"private_key_copying.description" = "Bir güvenlik önlemi olarak, özel anahtar için kopyalama eylemi kullanılmamasını öneririz.";
+"private_key_copying.copy_button" = "Riski alıyorum";
 
 // Backup Key
 
-"backup_key.title" = "Backup";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
-"backup_key.passphrase" = "Passphrase";
+"backup_key.title" = "Yedekle";
+"backup_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
+"backup_key.button_show" = "Göster";
+"backup_key.button_backup" = "Yedekle";
+"backup_key.passphrase" = "Parola";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.description" = "Onaylamak için kurtarma ifadelerini doğru sırayla girin";
+"backup_key.confirmation.passphrase" = "Parola";
+"backup_key.confirmation.passphrase_description" = "Parolayı girin";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "Boş kelime";
+"backup_key.confirmation.invalid_word" = "Geçersiz kelime";
+"backup_key.confirmation.empty_passphrase" = "Boş parola";
+"backup_key.confirmation.invalid_passphrase" = "Geçersiz parola";
 
 // Backup
 
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "Yedekleme Gerekli";
 
-"error.send.self_transfer" = "Sending to yourself is not supported";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
+"error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
+"error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
+"error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
+"error.send_z_cash.transparent_address" = "Unstoppable, bir transparan adrese yapılan ödemeleri desteklemez";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "Kontrol etme ...";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.swap" = "Swap";
-"balance.deposit" = "Receive";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
-"balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.sort_by" = "Sort By";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
+"balance.title" = "Bakiye";
+"balance.tab_bar_item" = "Bakiye";
+"balance.send" = "Gönder";
+"balance.swap" = "Takas";
+"balance.deposit" = "Al";
+"balance.rate_per_coin" = "%@ = 1 %@";
+"balance.syncing" = "Eşitleniyor...";
+"balance.searching" = "İşlemler aranıyor ...";
+"balance.searching.count" = "bakiye.araması.miktar";
+"balance.syncing_percent" = "Senkronize ediliyor... %@";
+"balance.synced_through" = "%@ kadar";
+"balance.add_coin" = "Para Ekle";
+"balance.empty.add_coins" = "Kripto Para Ekle";
+"balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
+"balance.sort_by" = "Sırala";
+"balance.sort.header" = "Sıralama şekli";
+"balance.sort.valueHighToLow" = "Bakiye";
+"balance.sort.az" = "İsim";
 "balance.sort.price_change" = "Price Change";
 
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"balance_error.change_source" = "Kaynağı Değiştir";
+"balance_error.sync_error" = "Senk. hatası";
+"lost_accounts.warning_title" = "iOS Keychain Hatası";
+"lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
 //Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
+"switch_account.title" = "Cüzdan Değiştir";
+"switch_account.subtitle" = "Hızlı değiştirme için cüzdan seçin";
 //Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "Yenilikler";
+"release_notes.follow_us" = "Bizi Takip Et";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.your_address" = "Your Address";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"deposit.receive_coin" = "%@ al";
+"deposit.your_address" = "Adresiniz";
+"receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
 // Send
 
-"send.title" = "Send %@";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.address_or_domain_placeholder" = "Address or Domain";
-"send.fee" = "Fee";
-"send.network_fee" = "Network Fee";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
-"send.tx_speed" = "Transaction Fee";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_recommended" = "Recommended";
-"send.tx_speed_high" = "High";
-"send.tx_speed_custom" = "Custom";
-"send.tx_duration" = "Duration";
-"send.duration.hours" = "%d h.";
-"send.duration.minutes" = "%d min.";
-"send.available_balance" = "Available Balance";
-"send.max_button" = "Max";
-"send.next_button" = "Next";
-"send.error.invalid_address" = "Invalid Address";
+"send.title" = "%@ gönder";
+"send.amount_placeholder" = "Tutar";
+"send.address_placeholder" = "Adres";
+"send.address_or_domain_placeholder" = "Adres veya Domain";
+"send.fee" = "Ücret";
+"send.network_fee" = "Ağ Ücreti";
+"send.estimated_fee" = "Tahmini Ücret";
+"send.max_fee" = "Maksimum Ücret";
+"send.tx_speed" = "İşlem Ücreti";
+"send.tx_speed_low" = "Düşük";
+"send.tx_speed_recommended" = "Tavsiye Edilen";
+"send.tx_speed_high" = "Yüksek";
+"send.tx_speed_custom" = "Özel";
+"send.tx_duration" = "Süre";
+"send.duration.hours" = "%d sa.";
+"send.duration.minutes" = "%d dk.";
+"send.available_balance" = "Mevcut Bakiye";
+"send.max_button" = "Azami";
+"send.next_button" = "İleri";
+"send.error.invalid_address" = "Geçersiz Adres";
 "send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
-"send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
-"send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Low";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Recommended";
-"send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "High";
-"send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
+"send.hodler_locktime_hour" = "1 saat";
+"send.hodler_locktime_month" = "1 ay";
+"send.hodler_locktime_half_year" = "6 ay";
+"send.hodler_locktime_year" = "1 yıl";
+"send.hodler_locktime_off" = "Kapat";
+"send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
+"send.fee_info.title" = "İşlem hızı";
+"send.fee_info.description" = "Hem Bitcoin hem de Ethereum blok zincirleri, kullanıcıların işlem yaparken ağ ücreti ödemesini gerektirir. Ağda çok sayıda işlem gerçekleştiğinde ücretler daha yüksek ve blok zincir daha az meşgul olduğunda ücretler daha düşüktür.";
+"send.fee_info.header_slow" = "Yavaş";
+"send.fee_info.content_slow" = "Bu aralıktan bir değer seçmek, işlemin saatlerce beklemesine veya reddedilmesine neden olabilir. Değer ne kadar düşükse işlemin onaylanması o kadar uzun sürer.";
+"send.fee_info.header_average" = "Ortalama";
+"send.fee_info.content_average" = "Genellikle bu ücret, işlemin Bitcoin için dakikalar/saatler içinde ve Ethereum için dakikalar içinde işleme alınması için yeterli olacaktır.";
+"send.fee_info.header_fast" = "Hızlı";
+"send.fee_info.content_fast" = "Önceliğin önemli olduğu işlemler için yüksek ücret değeri kullanmanızı öneririz. Bir işlemin Bitcoin için 10 dakika, Ethereum için 1-2 dakika içerisinde tamamlanması için yeterli olacaktır.";
+"send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.method" = "Method";
+"send.confirmation.you_send" = "Gönderdiğiniz";
+"send.confirmation.to" = "Alan";
+"send.confirmation.method" = "Yöntem";
 "send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
-"send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.send_button" = "Send";
-"send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.resend_button" = "Resend";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.cancel_button" = "Cancel Transaction";
-"send.amount_error.balance" = "Not Enough Balance";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.confirmation.memo_placeholder" = "Not";
+"send.confirmation.total" = "Toplam";
+"send.confirmation.send_button" = "Gönder";
+"send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
+"send.confirmation.resend_button" = "Yeniden Gönder";
+"send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
+"send.confirmation.cancel_button" = "İşlemi İptal Et";
+"send.amount_error.balance" = "Yetersiz bakiye";
+"send.amount_error.maximum_amount" = "Maksimum miktar %@";
+"send.amount_error.minimum_amount" = "Minimum miktar %@";
+"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
+"send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
+"send.stuck_warning" = "Uyarı! Takılma riski";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Sen Onaylıyorsun";
+"approve.confirmation.spender" = "Harcayan";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coins";
+"choose_coin.title" = "Kripto Parayı Seç";
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
+"swap.title" = "Takas";
+"swap.you_pay" = "Ödediğiniz";
+"swap.estimated" = "tahmini";
+"swap.balance" = "Bakiye";
 "swap.powered_by" = "Powered By";
-"swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
-"swap.proceed_button" = "Next";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
-"swap.approving_button" = "Approving...";
-"swap.trade_error.not_found" = "Can't swap these tokens";
-"swap.button_error.insufficient_balance" = "Insufficient balance";
-"swap.switch_provider.title" = "Swap Provider";
-"swap.switch_provider.subtitle" = "Switcher";
+"swap.allowance" = "Ödenek";
+"swap.you_get" = "Kazandığınız";
+"swap.token" = "Seç";
+"swap.advanced_settings" = "Swap Ayarları";
+"swap.proceed_button" = "İleri";
+"swap.approve.title" = "Takas Onayı";
+"swap.approve.description" = "Verilen jetonu sizin adınıza swap yapmak için bir akıllı sözleşmeye izin vermelisiniz. Bu izin, akıllı sözleşme tarafından kullanılabilecek tutarı belirler. Bakiyenizi etkilemez ancak onay işlemini gerçekleştirmek için küçük bir ücret gerekir.\n\nHer alım satımdan önce talep üzerine yapılabilirken, ileriki alım satımlarda bizim için önceden daha yüksek tutarı onaylamanız durumunda çok daha ucuz olur.";
+"swap.approve.amount_error.already_approved" = "Bu miktar için zaten bir ödeneğiniz var";
+"swap.approving_button" = "Onaylanıyor...";
+"swap.trade_error.not_found" = "Bu token swap edilemez";
+"swap.button_error.insufficient_balance" = "Yetersiz bakiye";
+"swap.switch_provider.title" = "Swap Sağlayıcısı";
+"swap.switch_provider.subtitle" = "Değiştirici";
 
-"swap.price" = "Price";
-"swap.buy_price" = "Buy Price";
-"swap.sell_price" = "Sell Price";
-"swap.price_impact" = "Price Impact";
-"swap.maximum_paid" = "Maximum Amount";
-"swap.minimum_got" = "Guaranteed Amount";
-"swap.estimate_short" = "(est)";
+"swap.price" = "Fiyat";
+"swap.buy_price" = "Alış Fiyatı";
+"swap.sell_price" = "Satış Fiyatı";
+"swap.price_impact" = "Fiyat Etkisi";
+"swap.maximum_paid" = "Maksimum Ödenen";
+"swap.minimum_got" = "Minimum Kazanılan";
+"swap.estimate_short" = "(tah)";
 "swap.minimum_short" = "(min)";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
-"swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
-"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.slippage" = "Slipaj Toleransı";
+"swap.advanced_settings.slippage.footer" = "Fiyat bu yüzde oranından daha fazla olumsuz olarak değişirse, İşleminiz geri alınacaktır";
+"swap.advanced_settings.deadline" = "İşlem Son Günü";
+"swap.advanced_settings.deadline.footer" = "Bundan daha uzun süre beklemede olursa, İşleminiz geri alınacaktır.";
+"swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
+"swap.advanced_settings.deadline_minute" = "%@ dk";
+"swap.advanced_settings.recipient_address" = "Alıcı Adresi";
+"swap.advanced_settings.warning.unusual_slippage" = "İşleminiz varlık fiyatını etkileyebilir";
+"swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
+"swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
+"swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
+"swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
+"swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
-"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "Hata! Bakiyeyi kontrol edin ve ücreti karşılayacak kadar %@ olduğundan emin olun. Veya fiyat kayma miktarını artırmayı deneyin ve tekrar deneyin. 3 saniye sonra tekrar denenecektir...";
 
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "Hizmet";
+"swap.service.title" = "Hizmet";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "Takas";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
-"swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
+"swap.confirmation.swap_button" = "Takas";
+"swap.confirmation.guaranteed" = "Garanti";
+"swap.confirmation.maximum" = "Maksimum";
+"swap.confirmation.estimated" = "Tahmini";
+"swap.confirmation.impact_too_high" = "Rayiç fiyat ile beklenen uzlaşma fiyatı arasındaki fark çok yüksek.";
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
-"swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount of currency that service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
-"swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.header_dex_related" = "%@";
+"swap.dex_info.header_allowance" = "Ödenek";
+"swap.dex_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
+"swap.dex_info.header_price_impact" = "Fiyat Etkisi";
+"swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
+"swap.dex_info.header_swap_fee" = "Takas Ücreti";
+"swap.dex_info.content_swap_fee" = "Uniswap platformunda swap işlemi için kullanıcının sattığı para biriminde gösterilen bir hizmet ücreti. Çoğu talimatlar için % 0.3 veya % 0.6 olmalıdır.";
+"swap.dex_info.header_guaranteed_amount" = "Garantili Tutar";
+"swap.dex_info.content_guaranteed_amount" = "Bir swap işlemi sonucunda bir kullanıcının alacağı minimum tutar.";
+"swap.dex_info.header_maximum_spend" = "Maksimum Harcama";
+"swap.dex_info.content_maximum_spend" = "Bir swap işlemi sonucunda bir kullanıcının harcayacağı maksimum tutar.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.header_other" = "Diğer";
+"swap.dex_info.header_transaction_fee" = "İşlem Ücreti";
+"swap.dex_info.content_transaction_fee" = "%@ blok zincirinde verilen işlemin tahmini işleme maliyeti. %@ bağlantılı işlemler genellikle eşdeğer jeton transfer işlemlerinden daha pahalı olur.";
+"swap.dex_info.header_transaction_speed" = "İşlem hızı";
+"swap.dex_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "%@ Sitesi";
 
 // Market
 
@@ -398,13 +399,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
 "market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
 "market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real-world data to smart contracts.";
+"market_discovery.filter_description.oracles" = "Gerçek dünya verilerini akıllı sözleşmeler ile buluşturuyor.";
 "market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
 "market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
-"market_discovery.filter_description.stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
+"market_discovery.filter_description.stablecoins" = "Gerçek para ile birebir sabitlenmiş kripto tokenleri.";
+"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
 "market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance, and hedging.";
+"market_discovery.filter_description.risk_management" = "Risk değerlendirmesi, sigorta ve koruma.";
 "market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
 "market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
 "market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
@@ -412,7 +413,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
 "market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
 "market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.analytics" = "Token-powered analytics and investment instruments.";
+"market_discovery.filter_description.analytics" = "Token ile desteklenen analiz ve yatırım araçları.";
 "market_discovery.filter_description.storage" = "Decentralized data-storage.";
 "market_discovery.filter_description.identity" = "Decentralized identity.";
 "market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
@@ -473,7 +474,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.global.volume_24h.title" = "Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
+"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
 "market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
 "market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
@@ -550,7 +551,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.major_holders" = "Major Holders";
 "coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
 "coin_page.major_holders.top_ethereum_wallets" = "Top Ethereum Wallets";
-"coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
+"coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
 
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
@@ -570,7 +571,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.security_parameters.resistance.yes" = "Yes";
 "coin_page.security_parameters.resistance.no" = "No";
 
-"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted, and view user balances.";
+"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
 "coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
 "coin_page.security_parameters.issuance.description.decentralized" = "The amount of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
@@ -595,137 +596,137 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Transactions
 
-"transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "All";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
-"transactions.pending" = "Pending";
-"transactions.processing" = "Processing";
-"transactions.completed" = "Completed";
-"transactions.failed" = "Failed";
+"transactions.title" = "Hesap işlemleri";
+"transactions.tab_bar_item" = "Hesap işlemleri";
+"transactions.filter_all" = "Hepsi";
+"transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
+"transactions.pending" = "Bekleyen";
+"transactions.processing" = "İşleniyor";
+"transactions.completed" = "Tamamlandı";
+"transactions.failed" = "Başarısız";
 
-"transactions.receive" = "Receive";
-"transactions.send" = "Send";
-"transactions.approve" = "Approve";
+"transactions.receive" = "Al";
+"transactions.send" = "Gönder";
+"transactions.approve" = "Onayla";
 "transactions.swap" = "Swap";
-"transactions.contract_call" = "Contract Call";
-"transactions.contract_creation" = "Contract Creation";
+"transactions.contract_call" = "Sözleşme Çağrısı";
+"transactions.contract_creation" = "Sözleşme Oluşturma";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
+"transactions.to" = "%@ kişisine";
+"transactions.from" = "%@ kişisinden";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "sınırsız %@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Bugün";
+"transactions.yesterday" = "Dün";
 
-"transactions.types.all" = "All";
-"transactions.types.incoming" = "Incoming";
-"transactions.types.outgoing" = "Outgoing";
-"transactions.types.swap" = "Swap";
-"transactions.types.approve" = "Approve";
+"transactions.types.all" = "Hepsi";
+"transactions.types.incoming" = "Gelen";
+"transactions.types.outgoing" = "Giden";
+"transactions.types.swap" = "Takas";
+"transactions.types.approve" = "Onayla";
 
 // Transaction Info
 
-"tx_info.title" = "Transaction Info";
-"tx_info.date" = "Date";
-"tx_info.title_approval" = "Swap Approval";
-"tx_info.status.pending" = "Pending";
-"tx_info.status.completed" = "Completed";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
-"tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "To";
-"tx_info.button_explorer" = "View on %@";
-"tx_info.rate" = "Historical Rate";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel";
-"tx_info.transaction.already_in_block" = "Transaction already in block";
-"tx_info.fee" = "Fee";
-"tx_info.fee.estimated" = "Fee (est.)";
-"tx_info.to_self_note" = "This transaction sent to own address";
-"tx_info.double_spent_note" = "Double Spend Risk!";
-"tx_info.locked_until" = "Locked until %@";
-"tx_info.unlocked_at" = "Unlocked at %@";
-"tx_info.recipient_hash" = "Recipient";
-"tx_info.raw_transaction" = "Raw Transaction";
+"tx_info.title" = "İşlem Bilgileri";
+"tx_info.date" = "Tarih";
+"tx_info.title_approval" = "Swap Onaylama";
+"tx_info.status.pending" = "Devam ediyor";
+"tx_info.status.completed" = "Tamamlandı";
+"tx_info.status.failed" = "Başarısız";
+"tx_info.from_hash" = "Gönderen";
+"tx_info.transaction_id" = "İşlem ID'si";
+"tx_info.to_hash" = "Alan";
+"tx_info.button_explorer" = "%@ ile görüntüle";
+"tx_info.rate" = "Geçmiş Kur";
+"tx_info.options.speed_up" = "Hızlandır";
+"tx_info.options.cancel" = "İptal";
+"tx_info.transaction.already_in_block" = "İşlem zaten blokta";
+"tx_info.fee" = "Ücret";
+"tx_info.fee.estimated" = "Ücret (tahmini)";
+"tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
+"tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
+"tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
+"tx_info.unlocked_at" = "Kilid açıldı %@";
+"tx_info.recipient_hash" = "Alıcı";
+"tx_info.raw_transaction" = "Ham işlem";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Service";
-"tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
-"tx_info.you_paid" = "You Paid";
-"tx_info.you_got" = "You Got";
-"tx_info.price" = "Price";
+"tx_info.service" = "Hizmet";
+"tx_info.view_on" = "%@ ile görüntüle";
+"tx_info.you_pay" = "Ödeyeceğiniz Tutar";
+"tx_info.you_get" = "Alacağınız Tutar";
+"tx_info.you_paid" = "Ödediğiniz Tutar";
+"tx_info.you_got" = "Aldığınız Tutar";
+"tx_info.price" = "Fiyat";
 
 // Settings
 
-"settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
-"settings.manage_accounts" = "Manage Wallets";
-"settings.experimental_features" = "Experimental";
-"settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
+"settings.title" = "Ayarlar";
+"settings.tab_bar_item" = "Ayarlar";
+"settings.security_center" = "Güvenlik Merkezi";
+"settings.manage_accounts" = "Cüzdanları yönet";
+"settings.experimental_features" = "Deneysel";
+"settings.base_currency" = "Para birimi";
+"settings.language" = "Dil";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
+"settings.theme" = "Tema";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "decentralized uygulama";
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Base Currency";
-"settings.base_currency.other" = "Other";
-"settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
+"settings.base_currency.title" = "Para birimi";
+"settings.base_currency.other" = "Diğer";
+"settings.base_currency.disclaimer" = "Uyarı";
+"settings.base_currency.disclaimer.description" = "Üçüncü taraf bir hizmet olan Coingecko.com tarafından sağlanan döviz kuru verileri.\n\nDurdurulamaz cüzdan uygulaması, bu değerlerin her zaman doğru olduğunu ve piyasa verileriyle eşleştiğini garanti etmez. %@ Dışında herhangi bir temel para birimi seçerseniz tutarsızlık olasılığı daha yüksektir.";
+"settings.base_currency.disclaimer.i_understand" = "Anlıyorum";
 
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Coin Manager";
-"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+"manage_wallets.title" = "Cüzdanlar";
+"manage_wallets.not_found" = "Hiçbir sonuç bulunamadı. Akıllı sözleşme adresini biliyorsanız tokeni manüel olarak eklemeyi deneyin.";
 
-"manage_coins.add_coin.title" = "Add %@";
-"manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or the Restore button to import an existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create a new %@ wallet. You’re only able to restore an existing one.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
-"manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
+"manage_coins.add_coin.title" = "%@ ekle ";
+"manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
+"manage_coins.add_coin.text.set_up" = "Ancak %@ cüzdanını ayarladıktan sonra %@ gönderebilir veya alabilirsiniz için.";
+"manage_coins.add_coin.text.create_or_restore" = "Yeni bir %@ cüzdanı oluşturmak için aşağıdaki Oluştur düğmesini veya mevcut olanı geri yükleme için Geri Yükle düğmesini kullanın.";
+"manage_coins.add_coin.text.create_only" = "Uygulama henüz yeni %@ cüzdanı oluşturamamaktadır. Sadece var olan cüzda geri yüklenebilir.";
+"manage_coins.add_coin.text.tokens" = "Bu cüzdanı %@ için kullanabilirsiniz.";
+"manage_coins.add_coin.create" = "Oluştur";
+"manage_coins.add_coin.restore" = "Geri Yükle";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
+"settings.experimental_features.title" = "Deneysel";
+"settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the Unstoppable wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the Unstoppable wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself. \n\nBeing an experimental feature, the maximum amount per transaction is limited to 0.5 BTC.";
+"settings.bitcoin_hodling.lock_time" = "Aktiveet";
+"settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
-"terms.description" = "The Unstoppable wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.
+"terms.title" = "Şartlar";
+"terms.description" = "Durdurulamaz cüzdan, kripto para birimlerine özel ve bağımsız bir şekilde yatırım yapmak ve biriktirmek isteyenler için üretilmiştir.
 
-It's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.
+Bu, yalnızca kullanıcının fonlar üzerinde kontrol sahibi olduğu, gözetim dışı, uçtan uca bir cüzdandır. Herhangi bir veri toplamaz ve kullanıcının cüzdanını belirli bir cüzdan uygulamasına bağlamadan kullanıcıyı bağımsız tutar.
 
-The Unstoppable wallet is fully open-source and anyone can confirm the app works exactly as it claims to.
+Durdurulamaz cüzdan tamamen açık kaynaklıdır ve herkes uygulamanın tam olarak iddia edildiği gibi çalıştığını doğrulayabilir.
 
-We built Unstoppable for ourselves as the other available solutions were not up to par. Both from an engineering and usability perspective, we believe this wallet to be significantly ahead of alternative products.";
-"terms.item.academy" = "I went through the Academy section of this app and got familiar with the fundamental aspects of storing cryptocurrencies.";
-"terms.item.backup" = "I have backed up the private key(s) for my wallets that were shown to me in a form of 12-24 words. I understand these private keys are stored on my smartphone and not elsewhere.";
-"terms.item.owner" = "I understand that passing my phone to untrusted entities and leaving the wallet app without a safe PIN lock may potentially endanger the safety of my funds.";
-"terms.item.recover" = "I understand that jail breaking (rooting) my phone, installing third party apps from unknown sources, and keeping the operating system outdated, can potentially endanger the safety of my funds.";
-"terms.item.phone" = "I understand there may be undiscovered software issues in the code powering this wallet app, which may potentially lead to unexpected behavior or the app malfunctioning.";
-"terms.item.root" = "I understand I will need my private keys in order to restore access to my funds should I lose my phone or if the app malfunctions. Without my private keys, it will be impossible to recover access to my wallet.";
-"terms.item.bugs" = "I understand that disabling the phone unlock passcode in iPhone iOS Settings will erase the wallet's private keys from my device. I will need my private keys to regain access to my funds.";
-"terms.item.pin" = "I understand that only I myself am responsible for the safety of my funds, and no other entity.";
-"terms.footer" = "Thank you for choosing this wallet!";
+Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliştirdik. Hem mühendislik hem de kullanılabilirlik açısından bu cüzdanın alternatif ürünlerin çok önünde olduğuna inanıyoruz.";
+"terms.item.academy" = "Bu uygulamanın Akademi kısmını inceledim ve kripto para birimlerini biriktirmenin temel hususlarına aşina oldum.";
+"terms.item.backup" = "Bana 12-24 sözcük şeklinde gösterilen cüzdanlarım için özel anahtar(lar) ın yedeğini aldım. Bu özel anahtarların başka bir yerde değil akıllı telefonumda kaydedileceğini anladım.";
+"terms.item.owner" = "Telefonumu güvenilmeyen kişilere vermenin veya cüzdan uygulamasından güvenli PIN kilidi olmadan çıkmanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.recover" = "Telefonumun yazılımını kırmanın (rootlama), bilinmeyen kaynaklardan üçüncü taraf uygulamaları yüklemenin, işletim sistemini güncel tutmamanın fonlarımın güvenliğini potansiyel olarak tehlikeye atabileceğini anladım.";
+"terms.item.phone" = "Bu cüzdan uygulamasını çalıştıran kodda beklenmeyen durumlara veya uygulamanın hatalı çalışmasına neden olabilecek keşfedilmemiş yazılım sorunları olabileceğini anladım.";
+"terms.item.root" = "Telefonumu kaybedersem veya uygulama kullanım dışı kalırsa fonlarıma tekrar erişim sağlamak için özel anahtarlarıma ihtiyacım olacağını anladım. Özel anahtarlarım olmadan cüzdanıma erişimi kurtarmak imkansız olacaktır.";
+"terms.item.bugs" = "iOS Ayarlarında telefon kilit açma şifresini devre dışı bırakmanın, cihazımdaki cüzdan özel anahtarlarını sileceğini anlıyorum. Cüzdanıma yeniden erişmek için özel anahtarlarıma ihtiyacım olacak.";
+"terms.item.pin" = "Fonlarımın güvenliğinden yalnızca benim sorumlu olduğumu ve başka hiçbir kuruluşun sorumlu olmadığını anlıyorum.";
+"terms.footer" = "Bu cüzdanı seçtiğiniz için teşekkür ederiz!";
 
 // Settings -> Tell Friends
 
@@ -733,25 +734,25 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
-"settings_security.passcode" = "Passcode";
-"settings_security.privacy" = "Privacy";
-"settings_security.change_pin" = "Edit Passcode";
-"settings_security.touch_id" = "Touch ID";
+"settings_security.title" = "Güvenlik Merkezi";
+"settings_security.passcode" = "Kod";
+"settings_security.privacy" = "Gizlilik";
+"settings_security.change_pin" = "Kod Değiştir";
+"settings_security.touch_id" = "Dokunma Kimliği";
 "settings_security.face_id" = "Face ID";
-"security_settings.delete_alert_button" = "Delete from Phone";
-"settings_privacy.title" = "Privacy";
-"settings_privacy.header_description" = "This app doesn't collect any data about you.";
-"settings_privacy.sorting_title" = "Inputs/Outputs";
-"settings_privacy.sorting.section_header" = "Blockchain Transactions";
-"settings_privacy.sorting.section_footer" = "Make your BTC, LTC, BCH transactions harder to trace by changing the way transactions are structured.";
-"settings_privacy.connection.section_header" = "Blockchain Sync";
-"settings_privacy.connection.section_footer" = "Some blockchains do not yet provide means for mobile apps to operate in a peer-to-peer manner. The communications with BTC, BCH, LTC, DASH blockchains is fully peer to peer.";
-"settings_privacy.sync.section_header" = "Blockchain Restore";
-"settings_privacy.sync.section_footer" = "Select a data source for restoring a wallet with transactions.";
+"security_settings.delete_alert_button" = "Cihazdan sil";
+"settings_privacy.title" = "Gizlilik";
+"settings_privacy.header_description" = "Bu uygulama sizin hiçbir veriyi paylaşmıyor. Bununla birlikte, blok zincirlerle iletişim kurduğundan, IP adresi gibi bazı genel veriler potansiyel olarak sızdırılabilir. Her bölüm hakkında ayrıntılı bilgi almak için sağ üstteki bilgi düğmesini kullanın.";
+"settings_privacy.sorting_title" = "Giriş/Çıkış";
+"settings_privacy.sorting.section_header" = "Blockchain İşlemleri";
+"settings_privacy.sorting.section_footer" = "İşlemlerin yapılandırılma şeklini değiştirerek BTC, LTC, BCH işlemlerinizin izlenilmesini zorlaştırın.";
+"settings_privacy.connection.section_header" = "Blockchain Senk.";
+"settings_privacy.connection.section_footer" = "Bazı blok zincirler, mobil uygulamaların peer to peer şekilde çalışması için henüz bir araç sağlamamaktadır. BTC, BCH, LTC, DASH blok zincirleriyle iletişim tamamen peer to peer.";
+"settings_privacy.sync.section_header" = "Blockchain Geri Yükleme";
+"settings_privacy.sync.section_footer" = "Cüzdanı işlemlerle geri yüklemek için veri kaynağını seçin.";
 
-"settings_privacy_info.title" = "Privacy Settings";
-"settings_privacy_info.description" = "Below you will find a detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
+"settings_privacy_info.title" = "Gizlilik Ayarları";
+"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
 "settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
 "settings_privacy_info.content_blockchain_transactions" = "The blockchain transactions setting controls the privacy tweaks for users' transactions when sending transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent. \n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where. \n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option. \n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
@@ -759,98 +760,98 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 
-"settings_privacy.alert_sync.title" = "Restore Source";
-"settings_privacy.alert_sync.description" = "After this change the wallet will have to resync itself with the %@ blockchain.";
-"settings_privacy.alert_sync.recommended" = "Recommended";
-"settings_privacy.alert_sync.more_private" = "More Private";
+"settings_privacy.alert_sync.title" = "Geri Yükleme Kaynağı";
+"settings_privacy.alert_sync.description" = "Bu değişiklikten sonra cüzdan %@ blok zinciri ile kendini yeniden senkronize etmek zorunda kalacak.";
+"settings_privacy.alert_sync.recommended" = "Tavsiye Edilen";
+"settings_privacy.alert_sync.more_private" = "Daha Gizli";
 
-"settings_privacy.alert_connection.title" = "Blockchain Sync";
+"settings_privacy.alert_connection.title" = "Blockchain Senk.";
 
-"settings_privacy.alert_sort.title" = "Blockchain Transactions";
-"settings_privacy.alert_sort.subtitle" = "Inputs/Outputs";
-"settings_privacy.sorting_default" = "Default";
-"settings_privacy.sorting_default.description" = "Without any settings";
-"settings_privacy.sorting_shuffle" = "Shuffle";
-"settings_privacy.sorting_shuffle.description" = "Random Indexing";
+"settings_privacy.alert_sort.title" = "Blockchain İşlemleri";
+"settings_privacy.alert_sort.subtitle" = "Giriş/Çıkış";
+"settings_privacy.sorting_default" = "Varsayılan";
+"settings_privacy.sorting_default.description" = "Ayar yok";
+"settings_privacy.sorting_shuffle" = "Karıştır";
+"settings_privacy.sorting_shuffle.description" = "Rastgele Dizinleme";
 "settings_privacy.sorting_bip69" = "Deterministic Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexicographical Indexing";
+"settings_privacy.sorting_bip69.description" = "Lexicographical Dizinleme";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.delete" = "Delete";
-"settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
-"settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
+"settings_manage_keys.title" = "Cüzdanları yönet";
+"settings_manage_keys.delete" = "Sil";
+"settings_manage_keys.backup" = "Yedekle";
+"settings_manage_keys.create" = "Oluştur";
+"settings_manage_keys.restore" = "Geri Yükle";
+"settings_manage_keys.delete.title" = "Cüzdanı Sil";
+"settings_manage_keys.delete.confirmation_remove" = "Bu işlem Cüzdanını bu cihazdan kaldıracak.";
+"settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
 
 // Settings -> About App
 
-"settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.title" = "Uygulama Hakkında";
+"settings.about_app.app_name" = "Unstoppable Cüzdan";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
-"settings.about_app.rate_us" = "Rate Us";
-"settings.about_app.tell_friends" = "Tell Friends";
-"settings.about_app.email_copied" = "Email address copied";
+"settings.about_app.rate_us" = "Bizi Değerlendirin";
+"settings.about_app.tell_friends" = "Arkadaşlarına bahset";
+"settings.about_app.email_copied" = "E-posta adresi kopyalandı";
 
 // Settings -> Theme
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"settings_theme.title" = "Tema";
+"settings_theme.system" = "Sistem";
+"settings_theme.dark" = "Karanlık";
+"settings_theme.light" = "Açık";
 
 // Settings -> Launch Screen
 
-"settings.launch_screen.title" = "Launch Screen";
+"settings.launch_screen.title" = "Başlangıç Ekranı";
 
-"launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Balance";
-"launch_screen.market_overview" = "Market Overview";
-"launch_screen.watchlist" = "Watchlist";
+"launch_screen.auto" = "Oto";
+"launch_screen.balance" = "Bakiye";
+"launch_screen.market_overview" = "Piyasaya Genel Bakış";
+"launch_screen.watchlist" = "İzleme Listesi";
 
 // Set PIN
 
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
+"set_pin.title" = "Kod";
+"set_pin.info" = "Şifre, programı açmak ve para göndermek için kullanılacak";
+"set_pin.wrong_confirmation" = "Şifre uyuşmadı. Tekrar deneyin";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "Kod Değiştir";
+"edit_pin.unlock_info" = "Şimdiki Kod";
+"edit_pin.new_pin_info" = "Yeni Kod";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
+"unlock_pin.info" = "Kod";
+"unlock_pin.cant_save_pin" = "Eyvah! PİNninizi kaydetemiyoruz, acilen bizimle iletişime geçin!";
+"unlock_pin.blocked_until" = "Engellendi: %@";
 
 
 // Key Types
 
 "chart.time_duration.today" = "TDY";
-"chart.time_duration.day" = "24H";
-"chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2W";
-"chart.time_duration.month" = "1M";
-"chart.time_duration.month3" = "3M";
-"chart.time_duration.halyear" = "6M";
+"chart.time_duration.day" = "24S";
+"chart.time_duration.week" = "7G";
+"chart.time_duration.week2" = "2H";
+"chart.time_duration.month" = "1A";
+"chart.time_duration.month3" = "3A";
+"chart.time_duration.halyear" = "6A";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 
-"chart.market_cap" = "Market Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
+"chart.market_cap" = "Market kap.";
+"chart.market_cap.thousand" = "%@ bin";
+"chart.market_cap.million" = "%@ M-n";
+"chart.market_cap.billion" = "%@ M-r";
 "chart.market_cap.trillion" = "%@ T";
-"chart.volume" = "Volume (24h)";
-"chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Vol";
+"chart.volume" = "Birim(24 saat)";
+"chart.circulation" = "Dolaşan Arz	";
+"chart.selected.volume" = "Birim";
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
@@ -871,103 +872,103 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.create_button" = "Create";
+"create_wallet.title" = "Yeni Cüzdan";
+"create_wallet.create_button" = "Oluştur";
 "create_wallet.mnemonic" = "Mnemonic";
-"create_wallet.n_words" = "%@ words";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
-"create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
-"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
-"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
-"create_wallet.success" = "Created";
+"create_wallet.n_words" = "%@ kelime";
+"create_wallet.passphrase" = "Parola";
+"create_wallet.input.passphrase" = "Parola";
+"create_wallet.input.confirm" = "Onayla";
+"create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
+"create_wallet.error.empty_passphrase" = "Parola boş olamaz";
+"create_wallet.error.forbidden_symbols" = "Parola için lütfen yalnızca latin harfleri ve rakamları kullanın";
+"create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
+"create_wallet.success" = "Oluşturuldu";
 
 // Restore Select
 
-"restore_select.title" = "Choose Coins";
-"restore_select.not_found" = "Not found";
+"restore_select.title" = "Kripto Parayı Seç";
+"restore_select.not_found" = "Bulunamadı";
 
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.text" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
-"double_spend_info.this_hash" = "This Tx";
-"double_spend_info.conflicting_hash" = "Conflicting Tx";
+"double_spend_info.title" = "Çifte Harcama";
+"double_spend_info.header" = "Çifte Harcama Riski! Blockchain'de, bu işlemde kullanılan girdileri harcamaya çalışan başka bir işlem var. Ağ tarafından yalnızca bir işlem kabul edilecektir";
+"double_spend_info.this_hash" = "Bu Tx";
+"double_spend_info.conflicting_hash" = "Çakışan Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lud ago";
-"timestamp.hours_ago" = "%luh ago";
-"timestamp.min_ago" = "%lum ago";
+"timestamp.days_ago" = "%lusaat önce";
+"timestamp.hours_ago" = "%lusaat önce";
+"timestamp.min_ago" = "%ludk önce";
 
 // Intro
 
-"intro.next" = "Next";
-"intro.start" = "Start";
-"intro.brand.description" = "Be Unstoppable";
-"intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.next" = "İleri";
+"intro.start" = "Başlangıç";
+"intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
+"intro.unchain_assets.title" = "Varlıkları Serbest Bırak";
+"intro.unchain_assets.description" = "Kendinizi kilitlemeyin ve başkalarının bunu sizin için yapmasına izin vermeyin";
+"intro.go_borderless.title" = "Sınırları Kaldırın";
+"intro.go_borderless.description" = "Şartların getirdiği engelleri atlatın ve dünyanın her piyasasına erişim sağlayın";
+"intro.stay_private.title" = "Gizliliğinizi Koruyun";
+"intro.stay_private.description" = "Özel ve finansal bilgilerinizi dünyaya açmayın";
 
 // Guides
 
-"guides.tab_bar_item" = "Academy";
-"guides.title" = "Academy";
+"guides.tab_bar_item" = "Akademi";
+"guides.title" = "Akademi";
 
 // Add Token
 
-"add_token.title" = "Add Token";
-"add_token.coin_types" = "Coin Type(s)";
-"add_token.coin_name" = "Coin Name";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimals" = "Decimals";
-"add_token.already_exists" = "This token is already in the coin manager list.";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.token_not_found" = "Token not found";
-"add_token.success_add" = "Added";
+"add_token.title" = "Token Ekle";
+"add_token.coin_types" = "Kripto Para Tipi/Tipleri";
+"add_token.coin_name" = "Kripto Para Adı";
+"add_token.coin_code" = "Coin Kodu";
+"add_token.decimals" = "Ondalıklar";
+"add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
+"add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
+"add_token.token_not_found" = "Token bulunamadı";
+"add_token.success_add" = "Eklendi";
 
 // Wallet Connect
 
 "wallet_connect.title" = "Wallet Connect";
-"wallet_connect.error.invalid_url" = "Invalid URL Address";
+"wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
-"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
-"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
-"wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
-"wallet_connect.button_reconnect" = "Reconnect";
-"wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
-"ethereum_transaction.error.reverted" = "The transaction cannot be executed: %@";
-"wallet_connect.request_title" = "Contract Call";
-"wallet_connect.button.confirm" = "Confirm";
-"wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
-"wallet_connect.sign.message" = "Message to sign";
-"wallet_connect.sign.description" = "Please sign a message to authenticate";
+"wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
+"wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
+"wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
+"wallet_connect.button_reconnect" = "Yeniden bağlan";
+"wallet_connect.button_disconnect" = "Bağlantıyı Kes";
+"ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Seçilen ücret tutarı çok düşüktür ve reddedilecektir!";
+"ethereum_transaction.error.reverted" = "İşlem gerçekleştirilemiyor: %@";
+"wallet_connect.request_title" = "İstek";
+"wallet_connect.button.confirm" = "Onayla";
+"wallet_connect.sign.request_title" = "İmza Talebi";
+"wallet_connect.sign.domain" = "Alan Adı";
+"wallet_connect.sign.message" = "İmza için mesaj";
+"wallet_connect.sign.description" = "Lütfen doğrulamak için bir mesajı imzalayın";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect_list.new_connection" = "New Connection";
-"wallet_connect_list.disconnecting" = "Disconnecting";
+"wallet_connect_list.new_connection" = "Yeni bağlantı";
+"wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
 
 // App Status
 
-"app_status.title" = "App Status";
-"app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
-"app_status.version_history" = "Version History";
-"app_status.blockchain_status" = "Blockchain status";
+"app_status.title" = "Uygulama Durumu";
+"app_status.application_status" = "Uygulama durumu";
+"app_status.linked_wallets" = "Bağlantılı Cüzdanlar";
+"app_status.version_history" = "Sürüm Geçmişi";
+"app_status.blockchain_status" = "Blok Zinciri durumu";
 
 // FAQ
 
@@ -975,52 +976,52 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Status Info
 
-"status_info.title" = "Status";
-"status_info.pending.title" = "Pending";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
-"status_info.processing.title" = "Processing";
-"status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
-"status_info.completed.title" = "Completed";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
-"status_info.failed.title" = "Failed";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Transactions with a fail status are still written to the blockchain and consume transaction fees. The Unstoppable app is unable to show the fail reason for such transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.title" = "Durum";
+"status_info.pending.title" = "Devam ediyor";
+"status_info.pending.content" = "İşlem henüz blok zincirinde onaylanmadı. Tavsiye edilen veya daha yüksek ücret ayarı ile gönderilen işlemler genellikle 10 dakika içerisinde işlenir. Düşük bir ücretle gönderilen işlemler birkaç saat hatta günlerce beklemede kalabilir ve hatta tamamen reddedilebilir.";
+"status_info.processing.title" = "İşleniyor";
+"status_info.processing.content" = "İşlem blok zincirine dahil edildi ama kalıcı bir sonuca ulaşmadı. Bu noktada, küçük ödemeler için işlemin tamamlandığını düşünebilirsiniz. Daha büyük ödemeler için ise, işlem durumu tamamlandı olarak değişene kadar beklemeniz önerilir.";
+"status_info.completed.title" = "Tamamlandı";
+"status_info.confirmed.content" = "İşlem tamamlandı ve bunun kalıcı ve tersine çevrilemez olduğu kabul edilir.";
+"status_info.failed.title" = "Başarısız";
+"status_info.failed.content" = "İşlem gerçekleşmedi ve hiçbir değer transfer edilmedi. Başarısız durumdaki işlemler yine de blok zincirine yazılır ve işlem ücretlerini tüketir. Unstoppable uygulaması, bu tür işlemlerin başarısız olma nedenini gösteremez, ama kullanıcılar, etherscan.io gibi açık bir blok gezgininde bunu kontrol edebilirler.";
 
 // Enable Coins
 
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ based coins that have any balance.";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
-"enable_coins.enabled_no_coins" = "Did not find any new tokens with balance";
+"enable_coins.title" = "Kripto Paraları Etkinleştir";
+"enable_coins.description" = "Bakiyesi olan tüm %@ kripto paraları etkinleştirin.";
+"enable_coins.enable_button" = "Etkinleştir";
+"enable_coins.enabling" = "Etkinleştiriliyor…";
+"enable_coins.enabled_coins" = "%@ Kripto Para etkinleştirildi";
+"enable_coins.enabled_no_coins" = "Bakiyesi olan para bulunamadı";
 
 // Onboarding
 
-"onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
+"onboarding.balance.create" = "Oluştur";
+"onboarding.balance.restore" = "Geri Yükle";
+"onboarding.balance.password_hint" = "İpucu! Mevcut bir cüzdanı geri yüklemek, yeni bir şifre ile en baştan bir cüzdan oluşturur. Birden fazla cüzdan için 12-24 kelimelik tek bir hatırlatıcı kurtarma öbeği kullanmak istiyorsanız kullanışlıdır.";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ words";
-"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
+"manage_accounts.n_words" = "%@ kelime";
+"manage_accounts.n_words_with_passphrase" = "%@ parolalı kelime";
 
 // Manage Account
 
-"manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Show Phrase";
-"manage_account.backup_recovery_phrase" = "Backup Phrase";
-"manage_account.network_settings" = "Network Settings";
-"manage_account.unlink" = "Unlink";
+"manage_account.name" = "İsim";
+"manage_account.show_recovery_phrase" = "İfadeyi Göster";
+"manage_account.backup_recovery_phrase" = "Yedekleme İfadesi";
+"manage_account.network_settings" = "Ağ Ayarları";
+"manage_account.unlink" = "Ayır";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
-"birthday_input.input_placeholder" = "%@ (optional)";
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
+"birthday_input.description" = "Cüzdanınızın ilk gün boyunu biliyorsanız hızlı senkronizasyon için bunu girin.";
+"birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
+"restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
 
 // Network Settings
 
-"network_settings.title" = "Network Settings";
+"network_settings.title" = "Ağ Ayarları";
