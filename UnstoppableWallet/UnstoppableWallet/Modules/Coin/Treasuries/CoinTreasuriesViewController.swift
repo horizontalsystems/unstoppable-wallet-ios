@@ -49,6 +49,7 @@ class CoinTreasuriesViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: G14Cell.self)
+        tableView.registerCell(forClass: BrandFooterCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -117,6 +118,23 @@ extension CoinTreasuriesViewController: SectionsDataSource {
         )
     }
 
+    private func poweredBySection(text: String) -> SectionProtocol {
+        Section(
+                id: "powered-by",
+                rows: [
+                    Row<BrandFooterCell>(
+                            id: "powered-by",
+                            dynamicHeight: { containerWidth in
+                                BrandFooterCell.height(containerWidth: containerWidth, title: text)
+                            },
+                            bind: { cell, _ in
+                                cell.title = text
+                            }
+                    )
+                ]
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         guard let viewItems = viewItems else {
             return []
@@ -128,7 +146,8 @@ extension CoinTreasuriesViewController: SectionsDataSource {
                     headerState: .static(view: headerView, height: .heightSingleLineCell),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
-            )
+            ),
+            poweredBySection(text: "Powered by Bitcointreasuries.net")
         ]
     }
 
