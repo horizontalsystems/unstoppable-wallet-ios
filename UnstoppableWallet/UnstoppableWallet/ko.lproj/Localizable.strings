@@ -77,8 +77,8 @@
 // Coin Platforms
 
 "coin_platforms.title" = "코인 유형";
-"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
-"coin_platforms.native" = "Native";
+"coin_platforms.description" = "이 토큰은 여러 블록체인에 존재합니다. 사용하려는 버전을 선택하십시오.";
+"coin_platforms.native" = "네이티브";
 
 // Show Key
 
@@ -90,9 +90,9 @@
 "show_key.passphrase" = "암호 문구";
 
 "private_key_copying.title" = "경고";
-"private_key_copying.subtitle" = "Risk of Private Key copy";
-"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
-"private_key_copying.copy_button" = "I will risk it";
+"private_key_copying.subtitle" = "개인 키 복사의 위험";
+"private_key_copying.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
+"private_key_copying.copy_button" = "위험을 감수하겠습니다";
 
 // Backup Key
 
@@ -102,7 +102,7 @@
 "backup_key.button_backup" = "백업";
 "backup_key.passphrase" = "암호 문구";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
+"backup_key.confirmation.description" = "확인할 복구 문구를 올바른 순서로 입력하십시오";
 "backup_key.confirmation.passphrase" = "암호 문구";
 "backup_key.confirmation.passphrase_description" = "암호 문구 입력";
 
@@ -115,7 +115,7 @@
 
 "backup.backup_required" = "백업이 필요합니다";
 
-"error.send.self_transfer" = "Sending to yourself is not supported";
+"error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
@@ -142,7 +142,7 @@
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
-"balance.sort.price_change" = "Price Change";
+"balance.sort.price_change" = "가격 변경";
 
 "balance_error.change_source" = "출처를 변경하다";
 "balance_error.sync_error" = "동기화 오류";
@@ -212,10 +212,10 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
 "send.confirmation.send_button" = "전송";
-"send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend_button" = "재전송";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.cancel_button" = "Cancel Transaction";
+"send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
+"send.confirmation.cancel_button" = "트랜잭션 취소";
 "send.amount_error.balance" = "잔고 부족";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
@@ -250,17 +250,17 @@
 "swap.approving_button" = "승인 중...";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";
-"swap.switch_provider.title" = "Swap Provider";
-"swap.switch_provider.subtitle" = "Switcher";
+"swap.switch_provider.title" = "공급자 스왑";
+"swap.switch_provider.subtitle" = "스위처";
 
 "swap.price" = "금액";
-"swap.buy_price" = "Buy Price";
-"swap.sell_price" = "Sell Price";
+"swap.buy_price" = "구매 가격";
+"swap.sell_price" = "매도 가격";
 "swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
 "swap.estimate_short" = "(est)";
-"swap.minimum_short" = "(min)";
+"swap.minimum_short" = "(분)";
 
 // Swap Advanced Settings
 
@@ -271,14 +271,14 @@
 "swap.advanced_settings.recipient.footer" = "교환 작업 후, 금액은 지정된 주소로 이체됩니다.";
 "swap.advanced_settings.deadline_minute" = "최소 %@";
 "swap.advanced_settings.recipient_address" = "수취인 주소";
-"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
+"swap.advanced_settings.warning.unusual_slippage" = "거래가 프론트런 당할 수 있습니다";
 "swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
-"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
+"swap.advanced_settings.error.higher_slippage" = "슬리피지 허용 오차는 %@%%를 초과할 수 없습니다.";
 "swap.advanced_settings.error.invalid_address" = "잘못된 주소";
 "swap.advanced_settings.error.invalid_slippage" = "올바르지 않은 슬립";
 "swap.advanced_settings.error.invalid_deadline" = "올바르지 않은 마감 시간";
 
-"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "오류! 잔액을 확인하고 수수료를 충당하기에 충분한 %@이 있는지 확인하십시오. 또는 가격 슬리피지 양을 늘리고 다시 시도하십시오. 3초 후에 다시 시도합니다...";
 
 
 "swap.service" = "서비스";
@@ -294,7 +294,7 @@
 "swap.confirmation.guaranteed" = "보증됨";
 "swap.confirmation.maximum" = "최대";
 "swap.confirmation.estimated" = "예상";
-"swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
+"swap.confirmation.impact_too_high" = "시장 가격과 예상 결제 가격의 차이가 너무 큽니다.";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
 
