@@ -19,6 +19,7 @@ Pods/*
 .DS_Store
 /.irb-history
 /screenshot_*.png
+.build/
 
 history_bash.txt
 
