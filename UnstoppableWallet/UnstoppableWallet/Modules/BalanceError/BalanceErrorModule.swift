@@ -24,4 +24,5 @@ protocol IBalanceErrorInteractorDelegate: AnyObject {
 protocol IBalanceErrorRouter {
     func close()
     func closeAndOpenPrivacySettings()
+    func closeAndEvmNetwork(blockchain: EvmNetworkModule.Blockchain, account: Account)
 }
