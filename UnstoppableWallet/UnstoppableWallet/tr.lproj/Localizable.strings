@@ -992,7 +992,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "enable_coins.description" = "Bakiyesi olan tüm %@ kripto paraları etkinleştirin.";
 "enable_coins.enable_button" = "Etkinleştir";
 "enable_coins.enabling" = "Etkinleştiriliyor…";
-"enable_coins.enabled_coins" = "%@ Kripto Para etkinleştirildi";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "Bakiyesi olan para bulunamadı";
 
 // Onboarding
