@@ -989,7 +989,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "enable_coins.description" = "Alle %@ Coins aktivieren, die ein Guthaben haben.";
 "enable_coins.enable_button" = "Aktivieren";
 "enable_coins.enabling" = "Aktivieren...";
-"enable_coins.enabled_coins" = "Aktivierte %@ Coins";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "Keine Coins mit Guthaben gefunden";
 
 // Onboarding
@@ -1015,7 +1015,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Birthday Input
 
 "birthday_input.title" = "Geburtstagshöhe";
-"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
+"birthday_input.description" = "Wenn Sie die Blockgröße bei Kauf Ihres Wallets kennen, geben Sie diese für schnelle Synchronisierung ein.";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Geburtstagshöhe";
 
