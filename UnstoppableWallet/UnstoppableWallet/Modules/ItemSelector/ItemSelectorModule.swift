@@ -1,5 +1,6 @@
 import ThemeKit
 import UIKit
+import ComponentKit
 
 class ItemSelectorModule {
 
@@ -67,16 +68,16 @@ extension ItemSelectorModule {
 
     struct ComplexViewItem {
         let title: String
-        let titleColor: UIColor
+        let titleStyle: TextComponent.Style
         let subtitle: String?
-        let subtitleColor: UIColor
+        let subtitleStyle: TextComponent.Style
         let selected: Bool
 
-        init(title: String, titleColor: UIColor = .themeOz, subtitle: String? = nil, subtitleColor: UIColor = .themeGray, selected: Bool) {
+        init(title: String, titleStyle: TextComponent.Style = .b2, subtitle: String? = nil, subtitleStyle: TextComponent.Style = .d1, selected: Bool) {
             self.title = title
-            self.titleColor = titleColor
+            self.titleStyle = titleStyle
             self.subtitle = subtitle
-            self.subtitleColor = subtitleColor
+            self.subtitleStyle = subtitleStyle
             self.selected = selected
         }
     }

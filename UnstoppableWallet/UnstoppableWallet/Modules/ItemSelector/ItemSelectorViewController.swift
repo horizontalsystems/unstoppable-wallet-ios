@@ -61,8 +61,6 @@ class ItemSelectorViewController: ThemeActionSheetController {
 
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: ItemSelectorSimpleCell.self)
-        tableView.registerCell(forClass: B4Cell.self)
-        tableView.registerCell(forClass: F4Cell.self)
         tableView.sectionDataSource = self
 
         tableView.reload()
@@ -106,41 +104,58 @@ class ItemSelectorViewController: ThemeActionSheetController {
             )
         case .complex(let viewItem):
             if let subtitle = viewItem.subtitle {
-                return Row<F4Cell>(
+                return CellBuilder.selectableRow(
+                        elements: [.multiText, .image],
+                        tableView: tableView,
                         id: "row_\(rowIndex)",
                         hash: "\(viewItem.selected)",
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
-                        bind: { cell, _ in
+                        bind: { cell in
                             cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
-                            cell.title = viewItem.title
-                            cell.titleColor = viewItem.titleColor
 
-                            cell.subtitle = subtitle
-                            cell.subtitleColor = viewItem.subtitleColor
+                            cell.bind(index: 0, block: { (component: MultiTextComponent) in
+                                component.set(style: .m1)
 
-                            cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                            cell.valueImageTintColor = .themeJacob
+                                component.title.set(style: viewItem.titleStyle)
+                                component.title.text = viewItem.title
+
+                                component.subtitle.set(style: viewItem.subtitleStyle)
+                                component.subtitle.text = viewItem.subtitle
+                            })
+
+                            cell.bind(index: 1, block: { (component: ImageComponent) in
+                                component.isHidden = !viewItem.selected
+                                component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                            })
                         },
-                        action: { [weak self] _ in
+                        action: { [weak self] in
                             self?.onTap(at: rowIndex)
                         }
                 )
             }
-            return Row<B4Cell>(
+
+            return CellBuilder.selectableRow(
+                    elements: [.text, .image],
+                    tableView: tableView,
                     id: "row_\(rowIndex)",
                     hash: "\(viewItem.selected)",
                     height: .heightCell48,
                     autoDeselect: true,
-                    bind: { cell, _ in
+                    bind: { cell in
                         cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
-                        cell.title = viewItem.title
-                        cell.titleColor = viewItem.titleColor
 
-                        cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                        cell.valueImageTintColor = .themeJacob
+                        cell.bind(index: 0, block: { (component: TextComponent) in
+                            component.set(style: viewItem.titleStyle)
+                            component.text = viewItem.title
+                        })
+
+                        cell.bind(index: 1, block: { (component: ImageComponent) in
+                            component.isHidden = !viewItem.selected
+                            component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                        })
                     },
-                    action: { [weak self] _ in
+                    action: { [weak self] in
                         self?.onTap(at: rowIndex)
                     }
             )

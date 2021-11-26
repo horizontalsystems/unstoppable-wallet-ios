@@ -10,11 +10,11 @@ class MarketAdvancedSearchViewModel {
 
     private let buttonStateRelay = BehaviorRelay<ButtonState>(value: .loading)
 
-    private let coinListViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueColor: .none))
-    private let marketCapViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueColor: .none))
-    private let volumeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueColor: .none))
-    private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueColor: .none))
-    private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueColor: .none))
+    private let coinListViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let marketCapViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let volumeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let outperformedBtcRelay = BehaviorRelay<Bool>(value: false)
     private let outperformedEthRelay = BehaviorRelay<Bool>(value: false)
     private let outperformedBnbRelay = BehaviorRelay<Bool>(value: false)
@@ -62,23 +62,23 @@ class MarketAdvancedSearchViewModel {
     }
 
     private func sync(coinList: MarketAdvancedSearchService.CoinListCount) {
-        coinListViewItemRelay.accept(ViewItem(value: service.coinListCount.title, valueColor: .normal))
+        coinListViewItemRelay.accept(ViewItem(value: service.coinListCount.title, valueStyle: .normal))
     }
 
     private func sync(marketCap: MarketAdvancedSearchService.ValueFilter) {
-        marketCapViewItemRelay.accept(ViewItem(value: service.marketCap.title, valueColor: service.marketCap.valueColor))
+        marketCapViewItemRelay.accept(ViewItem(value: service.marketCap.title, valueStyle: service.marketCap.valueStyle))
     }
 
     private func sync(volume: MarketAdvancedSearchService.ValueFilter) {
-        volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueColor: service.volume.valueColor))
+        volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueStyle: service.volume.valueStyle))
     }
 
     private func sync(priceChangeType: MarketModule.PriceChangeType) {
-        priceChangeTypeViewItemRelay.accept(ViewItem(value: service.priceChangeType.title, valueColor: .normal))
+        priceChangeTypeViewItemRelay.accept(ViewItem(value: service.priceChangeType.title, valueStyle: .normal))
     }
 
     private func sync(priceChange: MarketAdvancedSearchService.PriceChangeFilter) {
-        priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueColor: service.priceChange.valueColor))
+        priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueStyle: service.priceChange.valueStyle))
     }
 
     private func sync(outperformedBtc: Bool) {
@@ -151,31 +151,31 @@ extension MarketAdvancedSearchViewModel {
 
     var coinListViewItems: [FilterViewItem] {
         MarketAdvancedSearchService.CoinListCount.allCases.map {
-            FilterViewItem(title: $0.title, color: .normal, selected: service.coinListCount == $0)
+            FilterViewItem(title: $0.title, style: .normal, selected: service.coinListCount == $0)
         }
     }
 
     var marketCapViewItems: [FilterViewItem] {
         MarketAdvancedSearchService.ValueFilter.allCases.map {
-            FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.marketCap == $0)
+            FilterViewItem(title: $0.title, style: $0.valueStyle, selected: service.marketCap == $0)
         }
     }
 
     var volumeViewItems: [FilterViewItem] {
         MarketAdvancedSearchService.ValueFilter.allCases.map {
-            FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.volume == $0)
+            FilterViewItem(title: $0.title, style: $0.valueStyle, selected: service.volume == $0)
         }
     }
 
     var priceChangeTypeViewItems: [FilterViewItem] {
         MarketModule.PriceChangeType.allCases.map {
-            FilterViewItem(title: $0.title, color: .normal, selected: service.priceChangeType == $0)
+            FilterViewItem(title: $0.title, style: .normal, selected: service.priceChangeType == $0)
         }
     }
 
     var priceChangeViewItems: [FilterViewItem] {
         MarketAdvancedSearchService.PriceChangeFilter.allCases.map {
-            FilterViewItem(title: $0.title, color: $0.valueColor, selected: service.priceChange == $0)
+            FilterViewItem(title: $0.title, style: $0.valueStyle, selected: service.priceChange == $0)
         }
     }
 
@@ -241,11 +241,11 @@ extension MarketAdvancedSearchViewModel {
 
     struct FilterViewItem {
         let title: String
-        let color: ValueColor
+        let style: ValueStyle
         let selected: Bool
     }
 
-    enum ValueColor {
+    enum ValueStyle {
         case normal
         case positive
         case negative
@@ -254,7 +254,7 @@ extension MarketAdvancedSearchViewModel {
 
     struct ViewItem {
         let value: String
-        let valueColor: ValueColor
+        let valueStyle: ValueStyle
     }
 
     enum ButtonState {
@@ -288,7 +288,7 @@ extension MarketAdvancedSearchService.ValueFilter {
         }
     }
 
-    var valueColor: MarketAdvancedSearchViewModel.ValueColor {
+    var valueStyle: MarketAdvancedSearchViewModel.ValueStyle {
         self == .none ? .none : .normal
     }
 
@@ -310,7 +310,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         }
     }
 
-    var valueColor: MarketAdvancedSearchViewModel.ValueColor {
+    var valueStyle: MarketAdvancedSearchViewModel.ValueStyle {
         switch self {
         case .none: return .none
         case .plus10, .plus25, .plus50, .plus100: return .positive
