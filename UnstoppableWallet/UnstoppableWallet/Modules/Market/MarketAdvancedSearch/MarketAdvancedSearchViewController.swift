@@ -12,17 +12,17 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let coinListCell = B5Cell()
-    private let marketCapCell = B5Cell()
-    private let volumeCell = B5Cell()
-    private let periodCell = B5Cell()
-    private let priceChangeCell = B5Cell()
+    private let coinListCell = BaseSelectableThemeCell()
+    private let marketCapCell = BaseSelectableThemeCell()
+    private let volumeCell = BaseSelectableThemeCell()
+    private let periodCell = BaseSelectableThemeCell()
+    private let priceChangeCell = BaseSelectableThemeCell()
 
-    private let outperformedBtcCell = B11Cell()
-    private let outperformedEthCell = B11Cell()
-    private let outperformedBnbCell = B11Cell()
-    private let priceCloseToAthCell = B11Cell()
-    private let priceCloseToAtlCell = B11Cell()
+    private let outperformedBtcCell = BaseThemeCell()
+    private let outperformedEthCell = BaseThemeCell()
+    private let outperformedBnbCell = BaseThemeCell()
+    private let priceCloseToAthCell = BaseThemeCell()
+    private let priceCloseToAtlCell = BaseThemeCell()
 
     private let showResultButtonHolder = BottomGradientHolder()
     private let showResultButton = ThemeButton()
@@ -61,39 +61,44 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapReset))
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        coinListCell.title = "market.advanced_search.choose_set".localized
+        buildSelector(cell: coinListCell, title: "market.advanced_search.choose_set".localized)
 
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        marketCapCell.title = "market.advanced_search.market_cap".localized
+        buildSelector(cell: marketCapCell, title: "market.advanced_search.market_cap".localized)
 
         volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-        volumeCell.title = "market.advanced_search.volume".localized
+        buildSelector(cell: volumeCell, title: "market.advanced_search.volume".localized)
 
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        priceChangeCell.title = "market.advanced_search.price_change".localized
+        buildSelector(cell: priceChangeCell, title: "market.advanced_search.price_change".localized)
 
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        periodCell.title = "market.advanced_search.price_period".localized
+        buildSelector(cell: periodCell, title: "market.advanced_search.price_period".localized)
 
         outperformedBtcCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        outperformedBtcCell.title = "market.advanced_search.outperformed_btc".localized
-        outperformedBtcCell.onToggle = { [weak self] in self?.onTapOutperformedBtcCell(isOn: $0) }
+        buildToggle(cell: outperformedBtcCell, title: "market.advanced_search.outperformed_btc".localized) { [weak self] in
+            self?.onTapOutperformedBtcCell(isOn: $0)
+        }
 
         outperformedEthCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        outperformedEthCell.title = "market.advanced_search.outperformed_eth".localized
-        outperformedEthCell.onToggle = { [weak self] in self?.onTapOutperformedEthCell(isOn: $0) }
+        buildToggle(cell: outperformedEthCell, title: "market.advanced_search.outperformed_eth".localized) { [weak self] in
+            self?.onTapOutperformedEthCell(isOn: $0)
+        }
 
         outperformedBnbCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        outperformedBnbCell.title = "market.advanced_search.outperformed_bnb".localized
-        outperformedBnbCell.onToggle = { [weak self] in self?.onTapOutperformedBnbCell(isOn: $0) }
+        buildToggle(cell: outperformedBnbCell, title: "market.advanced_search.outperformed_bnb".localized) { [weak self] in
+            self?.onTapOutperformedBnbCell(isOn: $0)
+        }
 
         priceCloseToAthCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        priceCloseToAthCell.title = "market.advanced_search.price_close_to_ath".localized
-        priceCloseToAthCell.onToggle = { [weak self] in self?.onTapPriceCloseToATHCell(isOn: $0) }
+        buildToggle(cell: priceCloseToAthCell, title: "market.advanced_search.price_close_to_ath".localized) { [weak self] in
+            self?.onTapPriceCloseToAthCell(isOn: $0)
+        }
 
         priceCloseToAtlCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-        priceCloseToAtlCell.title = "market.advanced_search.price_close_to_atl".localized
-        priceCloseToAtlCell.onToggle = { [weak self] in self?.onTapPriceCloseToATLCell(isOn: $0) }
+        buildToggle(cell: priceCloseToAtlCell, title: "market.advanced_search.price_close_to_atl".localized) { [weak self] in
+            self?.onTapPriceCloseToAtlCell(isOn: $0)
+        }
 
         view.addSubview(showResultButtonHolder)
         showResultButtonHolder.snp.makeConstraints { maker in
@@ -132,9 +137,31 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.buttonStateDriver) { [weak self] in self?.sync(buttonState: $0) }
     }
 
+    private func buildSelector(cell: BaseThemeCell, title: String) {
+        CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image])
+        cell.bind(index: 0) { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = title
+        }
+        cell.bind(index: 2) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "arrow_small_down_20")
+        }
+    }
+
+    private func buildToggle(cell: BaseThemeCell, title: String, onToggle: @escaping (Bool) -> ()) {
+        CellBuilder.build(cell: cell, elements: [.text, .switch])
+        cell.bind(index: 0) { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = title
+        }
+        cell.bind(index: 1) { (component: SwitchComponent) in
+            component.onSwitch = onToggle
+        }
+    }
+
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
         viewItems.map {
-            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleColor: $0.color.color, selected: $0.selected))
+            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleStyle: $0.style.filterTextStyle, selected: $0.selected))
         }
     }
 
@@ -226,11 +253,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         viewModel.setOutperformedBnb(isOn: isOn)
     }
 
-    private func onTapPriceCloseToATHCell(isOn: Bool) {
+    private func onTapPriceCloseToAthCell(isOn: Bool) {
         viewModel.setPriceCloseToATH(isOn: isOn)
     }
 
-    private func onTapPriceCloseToATLCell(isOn: Bool) {
+    private func onTapPriceCloseToAtlCell(isOn: Bool) {
         viewModel.setPriceCloseToATL(isOn: isOn)
     }
 
@@ -243,9 +270,17 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem, cell: B5Cell) {
-        cell.value = viewItem.value
-        cell.valueColor = viewItem.valueColor.color
+    private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem, cell: BaseThemeCell) {
+        cell.bind(index: 1) { (component: TextComponent) in
+            component.set(style: viewItem.valueStyle.valueTextStyle)
+            component.text = viewItem.value
+        }
+    }
+
+    private func set(isOn: Bool, cell: BaseThemeCell) {
+        cell.bind(index: 1) { (component: SwitchComponent) in
+            component.switchView.isOn = isOn
+        }
     }
 
     private func syncCoinList(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
@@ -269,23 +304,23 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     }
 
     private func syncOutperformedBtc(isOn: Bool) {
-        outperformedBtcCell.isOn = isOn
+        set(isOn: isOn, cell: outperformedBtcCell)
     }
 
     private func syncOutperformedEth(isOn: Bool) {
-        outperformedEthCell.isOn = isOn
+        set(isOn: isOn, cell: outperformedEthCell)
     }
 
     private func syncOutperformedBnb(isOn: Bool) {
-        outperformedBnbCell.isOn = isOn
+        set(isOn: isOn, cell: outperformedBnbCell)
     }
 
     private func syncPriceCloseToATH(isOn: Bool) {
-        priceCloseToAthCell.isOn = isOn
+        set(isOn: isOn, cell: priceCloseToAthCell)
     }
 
     private func syncPriceCloseToATL(isOn: Bool) {
-        priceCloseToAtlCell.isOn = isOn
+        set(isOn: isOn, cell: priceCloseToAtlCell)
     }
 
     private func sync(buttonState: MarketAdvancedSearchViewModel.ButtonState) {
@@ -378,14 +413,23 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
 }
 
-extension MarketAdvancedSearchViewModel.ValueColor {
+extension MarketAdvancedSearchViewModel.ValueStyle {
 
-    var color: UIColor {
+    var valueTextStyle: TextComponent.Style {
         switch self {
-        case .none: return .themeGray
-        case .positive: return .themeRemus
-        case .negative: return .themeLucian
-        case .normal: return .themeOz
+        case .none: return .c1
+        case .positive: return .c4
+        case .negative: return .c5
+        case .normal: return .c2
+        }
+    }
+
+    var filterTextStyle: TextComponent.Style {
+        switch self {
+        case .none: return .b1
+        case .positive: return .b4
+        case .negative: return .b5
+        case .normal: return .b2
         }
     }
 
