@@ -144,6 +144,10 @@ class MarketAdvancedSearchService {
         }
     }
 
+    var currencyCode: String {
+        currencyKit.baseCurrency.code
+    }
+
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
@@ -309,31 +313,69 @@ extension MarketAdvancedSearchService {
     enum ValueFilter: CaseIterable {
         case none
         case lessM5
+        case lessM10
+        case lessM50
+        case lessM500
         case m5m20
+        case m10m40
         case m20m100
+        case m40m200
+        case m50m200
         case m100b1
+        case m200b1
+        case m200b2
+        case m500b2
         case b1b5
+        case b1b10
+        case b2b10
+        case b10b50
+        case b10b100
+        case b100b500
         case moreB5
+        case moreB10
+        case moreB50
+        case moreB500
 
         var lowerBound: Decimal {
             switch self {
-            case .none, .lessM5: return 0
+            case .none, .lessM5, .lessM10, .lessM50, .lessM500: return 0
             case .m5m20: return 5_000_000
+            case .m10m40: return 10_000_000
             case .m20m100: return 20_000_000
+            case .m40m200: return 40_000_000
+            case .m50m200: return 50_000_000
             case .m100b1: return 100_000_000
-            case .b1b5: return 1_000_000_000
+            case .m200b1, .m200b2: return 200_000_000
+            case .m500b2: return 500_000_000
+            case .b1b5, .b1b10: return 1_000_000_000
+            case .b2b10: return 2_000_000_000
+            case .b10b50, .b10b100: return 10_000_000_000
+            case .b100b500: return 100_000_000_000
             case .moreB5: return 5_000_000_000
+            case .moreB10: return 10_000_000_000
+            case .moreB50: return 50_000_000_000
+            case .moreB500: return 500_000_000_000
             }
         }
 
         var upperBound: Decimal {
             switch self {
             case .lessM5: return 5_000_000
+            case .lessM10: return 10_000_000
+            case .lessM50: return 50_000_000
+            case .lessM500: return 500_000_000
             case .m5m20: return 20_000_000
+            case .m10m40: return 40_000_000
             case .m20m100: return 100_000_000
-            case .m100b1: return 1_000_000_000
+            case .m40m200, .m50m200: return 200_000_000
+            case .m100b1, .m200b1: return 1_000_000_000
+            case .m200b2, .m500b2: return 2_000_000_000
             case .b1b5: return 5_000_000_000
-            case .none, .moreB5: return Decimal.greatestFiniteMagnitude
+            case .b1b10, .b2b10: return 10_000_000_000
+            case .b10b50: return 50_000_000_000
+            case .b10b100: return 100_000_000_000
+            case .b100b500: return 500_000_000_000
+            case .none, .moreB5, .moreB10, .moreB50, .moreB500: return Decimal.greatestFiniteMagnitude
             }
         }
 
