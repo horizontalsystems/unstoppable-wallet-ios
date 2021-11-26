@@ -20,8 +20,8 @@ class BalanceErrorPresenter {
 
     private func isSourceChangeable(coinType: CoinType) -> Bool {
         switch coinType {
-        case .ethereum, .erc20, .bep2: return false
-        default: return true
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .ethereum, .erc20, .binanceSmartChain, .bep20: return true
+        default: return false
         }
     }
 
@@ -41,7 +41,16 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
     }
 
     func onTapChangeSource() {
-        router.closeAndOpenPrivacySettings()
+        switch wallet.coinType {
+        case .bitcoin, .bitcoinCash, .dash, .litecoin:
+            router.closeAndOpenPrivacySettings()
+        case .ethereum, .erc20:
+            router.closeAndEvmNetwork(blockchain: .ethereum, account: wallet.account)
+        case .binanceSmartChain, .bep20:
+            router.closeAndEvmNetwork(blockchain: .binanceSmartChain, account: wallet.account)
+        default:
+            ()
+        }
     }
 
     func onTapReport() {

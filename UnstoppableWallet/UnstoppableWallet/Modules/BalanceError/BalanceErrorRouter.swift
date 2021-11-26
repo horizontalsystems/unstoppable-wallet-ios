@@ -22,6 +22,12 @@ extension BalanceErrorRouter: IBalanceErrorRouter {
         }
     }
 
+    func closeAndEvmNetwork(blockchain: EvmNetworkModule.Blockchain, account: Account) {
+        viewController?.dismiss(animated: true) { [weak self] in
+            self?.navigationController?.pushViewController(EvmNetworkModule.viewController(blockchain: blockchain, account: account), animated: true)
+        }
+    }
+
 }
 
 extension BalanceErrorRouter {
