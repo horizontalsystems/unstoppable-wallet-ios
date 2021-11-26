@@ -27,6 +27,11 @@ class EnableCoinsService {
         self.bep2Provider = bep2Provider
     }
 
+    private func handle(fetchedCoinTypes coinTypes: [CoinType]) {
+        state = .success
+        enableCoinTypesRelay.accept(coinTypes)
+    }
+
     private func resolveTokenType(coinType: CoinType, accountType: AccountType) -> TokenType? {
         guard let seed = accountType.mnemonicSeed else {
             return nil
@@ -57,8 +62,7 @@ class EnableCoinsService {
             erc20Provider.coinTypesSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .subscribe(onSuccess: { [weak self] coinTypes in
-                        self?.state = .success(coinTypes: coinTypes)
-                        self?.enableCoinTypesRelay.accept(coinTypes)
+                        self?.handle(fetchedCoinTypes: coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -77,8 +81,7 @@ class EnableCoinsService {
             bep20Provider.coinTypesSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                     .subscribe(onSuccess: { [weak self] coinTypes in
-                        self?.state = .success(coinTypes: coinTypes)
-                        self?.enableCoinTypesRelay.accept(coinTypes)
+                        self?.handle(fetchedCoinTypes: coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -116,8 +119,7 @@ class EnableCoinsService {
             return .bep2(symbol: tokenSymbol)
         }
 
-        state = .success(coinTypes: coinTypes)
-        enableCoinTypesRelay.accept(coinTypes)
+        handle(fetchedCoinTypes: coinTypes)
     }
 
 }
@@ -165,7 +167,7 @@ extension EnableCoinsService {
         case idle
         case waitingForApprove(tokenType: TokenType)
         case loading
-        case success(coinTypes: [CoinType])
+        case success
         case failure(error: Error)
     }
 

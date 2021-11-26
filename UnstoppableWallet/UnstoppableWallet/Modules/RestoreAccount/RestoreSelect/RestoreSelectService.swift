@@ -28,6 +28,8 @@ class RestoreSelectService {
         }
     }
 
+    private let autoEnabledItemsRelay = PublishRelay<Int>()
+
     init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, enableCoinService: EnableCoinService, enableCoinsService: EnableCoinsService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
@@ -141,11 +143,15 @@ class RestoreSelectService {
 
     private func handleEnable(coinTypes: [CoinType]) {
         do {
-            let platformCoins = try coinManager.platformCoins(coinTypeIds: coinTypes.map { $0.id })
-
-            for platformCoin in platformCoins {
-                enabledCoins.insert(ConfiguredPlatformCoin(platformCoin: platformCoin))
+            var newCoinsCount = 0
+            for platformCoin in try coinManager.platformCoins(coinTypeIds: coinTypes.map { $0.id }) {
+                let (inserted, _) = enabledCoins.insert(ConfiguredPlatformCoin(platformCoin: platformCoin))
+                if inserted {
+                    newCoinsCount += 1
+                }
             }
+
+            autoEnabledItemsRelay.accept(newCoinsCount)
 
             syncFullCoins()
             sortFullCoins()
@@ -158,6 +164,10 @@ class RestoreSelectService {
 }
 
 extension RestoreSelectService {
+
+    var autoEnabledItemsObservable: Observable<Int> {
+        autoEnabledItemsRelay.asObservable()
+    }
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()

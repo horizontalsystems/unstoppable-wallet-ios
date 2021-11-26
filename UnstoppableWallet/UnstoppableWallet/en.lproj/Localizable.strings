@@ -991,7 +991,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "enable_coins.description" = "Enable all %@ based coins that have any balance.";
 "enable_coins.enable_button" = "Enable";
 "enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ coins";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "Did not find any new tokens with balance";
 
 // Onboarding
