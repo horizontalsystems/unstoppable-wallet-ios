@@ -991,7 +991,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "enable_coins.description" = "启用有余额的所有%@代币.";
 "enable_coins.enable_button" = "启用";
 "enable_coins.enabling" = "正在启用...";
-"enable_coins.enabled_coins" = "已启用%@代币";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "找不到有余额的代币";
 
 // Onboarding
