@@ -323,7 +323,7 @@
 "market.tab_bar_item" = "Marchés";
 "market.title" = "Marchés";
 "market.category.overview" = "Synthèse";
-"market.category.posts" = "News";
+"market.category.posts" = "Infos";
 "market.category.watchlist" = "Liste de suivi";
 "market.total_market_cap" = "Capitalisation de marché totale";
 "market.24h_volume" = "Volume des dernières 24h";
@@ -989,7 +989,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "enable_coins.description" = "Activer toutes les pièces %@ qui ont un solde.";
 "enable_coins.enable_button" = "Activer";
 "enable_coins.enabling" = "Activation...";
-"enable_coins.enabled_coins" = "%@ pièces activées";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "Aucune pièce trouvée avec un solde";
 
 // Onboarding
