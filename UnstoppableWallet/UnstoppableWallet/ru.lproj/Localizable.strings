@@ -991,7 +991,7 @@
 "enable_coins.description" = "Активировать все %@ монеты с любым балансом.";
 "enable_coins.enable_button" = "Активировать";
 "enable_coins.enabling" = "Идет активация...";
-"enable_coins.enabled_coins" = "Активировано %@ монет";
+"enable_coins.enabled_coins" = "Enabled %@ more coins";
 "enable_coins.enabled_no_coins" = "На балансе нет монет";
 
 // Onboarding
