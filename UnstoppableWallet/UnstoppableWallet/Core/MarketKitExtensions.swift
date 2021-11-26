@@ -159,9 +159,9 @@ extension MarketKit.CoinTreasury {
 
 extension MarketKit.Auditor {
 
-    var logoUrl: String {
+    var logoUrl: String? {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/\(name)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/\(name)@\(scale)x.png".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
 
 }

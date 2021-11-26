@@ -19,14 +19,14 @@ class CoinAuditsViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<[Auditor]>) {
+    private func sync(state: DataStatus<[CoinAuditsService.Item]>) {
         switch state {
         case .loading:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             errorRelay.accept(nil)
-        case .completed(let auditors):
-            viewItemsRelay.accept(auditors.map { viewItem(auditor: $0) })
+        case .completed(let items):
+            viewItemsRelay.accept(items.map { viewItem(item: $0) })
             loadingRelay.accept(false)
             errorRelay.accept(nil)
         case .failed:
@@ -38,18 +38,18 @@ class CoinAuditsViewModel {
 
     private func auditViewItem(report: AuditReport) -> AuditViewItem {
         AuditViewItem(
-                date: report.date.map { DateHelper.instance.formatFullDateOnly(from: $0) },
+                date: DateHelper.instance.formatFullDateOnly(from: report.date),
                 name: report.name,
                 issues: "coin_page.audits.issues".localized + ": \(report.issues)",
                 reportUrl: report.link
         )
     }
 
-    private func viewItem(auditor: Auditor) -> ViewItem {
+    private func viewItem(item: CoinAuditsService.Item) -> ViewItem {
         ViewItem(
-                logoUrl: auditor.logoUrl,
-                name: auditor.name,
-                auditViewItems: auditor.reports.map { auditViewItem(report: $0) }
+                logoUrl: item.logoUrl,
+                name: item.name,
+                auditViewItems: item.reports.map { auditViewItem(report: $0) }
         )
     }
 
@@ -78,7 +78,7 @@ extension CoinAuditsViewModel {
 extension CoinAuditsViewModel {
 
     struct ViewItem {
-        let logoUrl: String
+        let logoUrl: String?
         let name: String
         let auditViewItems: [AuditViewItem]
     }

@@ -111,7 +111,7 @@ class CoinAuditsViewController: ThemeViewController {
 
 extension CoinAuditsViewController: SectionsDataSource {
 
-    private func headerRow(logoUrl: String, name: String) -> RowProtocol {
+    private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
         Row<ACell>(
                 id: "header-\(name)",
                 height: .heightCell48,
