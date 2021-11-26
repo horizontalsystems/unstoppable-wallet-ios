@@ -10,12 +10,14 @@ class RestoreSelectViewModel {
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableCoinRelay = PublishRelay<Coin>()
     private let successRelay = PublishRelay<()>()
+    private let autoEnabledItemsRelay = PublishRelay<Int>()
 
     init(service: RestoreSelectService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.cancelEnableCoinObservable) { [weak self] in self?.disableCoinRelay.accept($0) }
+        subscribe(disposeBag, service.autoEnabledItemsObservable) { [weak self] in self?.autoEnabledItemsRelay.accept($0) }
 
         sync(items: service.items)
     }
@@ -80,6 +82,10 @@ extension RestoreSelectViewModel {
 
     var successSignal: Signal<()> {
         successRelay.asSignal()
+    }
+
+    var autoEnabledItemsSignal: Signal<Int> {
+        autoEnabledItemsRelay.asSignal()
     }
 
     func onRestore() {

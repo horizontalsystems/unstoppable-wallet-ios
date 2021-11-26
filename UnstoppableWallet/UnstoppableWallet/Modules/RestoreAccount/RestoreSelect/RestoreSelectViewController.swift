@@ -2,6 +2,7 @@ import ThemeKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
+import ComponentKit
 
 class RestoreSelectViewController: CoinToggleViewController {
     private let viewModel: RestoreSelectViewModel
@@ -51,6 +52,15 @@ class RestoreSelectViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in self?.dismiss(animated: true) }
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, coin: $0) }
+        subscribe(disposeBag, viewModel.autoEnabledItemsSignal) { [weak self] in self?.showEnabledMessage(count: $0) }
+    }
+
+    private func showEnabledMessage(count: Int) {
+        if count == 0 {
+            HudHelper.instance.showAttention(title: "enable_coins.enabled_no_coins".localized)
+        } else {
+            HudHelper.instance.showSuccess(title: "enable_coins.enabled_coins".localized(String(count)))
+        }
     }
 
     private func open(controller: UIViewController) {

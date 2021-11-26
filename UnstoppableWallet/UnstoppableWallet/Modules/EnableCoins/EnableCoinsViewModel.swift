@@ -31,8 +31,8 @@ class EnableCoinsViewModel {
             confirmationRelay.accept(tokenType.title)
         case .loading:
             hudStateRelay.accept(.loading)
-        case .success(let coins):
-            hudStateRelay.accept(.success(count: coins.count))
+        case .success:
+            hudStateRelay.accept(.success)
         case .failure:
             hudStateRelay.accept(.error)
         }
@@ -61,7 +61,7 @@ extension EnableCoinsViewModel {
     enum HudState {
         case hidden
         case loading
-        case success(count: Int)
+        case success
         case error
     }
 
