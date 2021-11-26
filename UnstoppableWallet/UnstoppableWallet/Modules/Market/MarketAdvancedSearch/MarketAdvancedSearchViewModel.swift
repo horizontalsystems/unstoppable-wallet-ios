@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import MarketKit
+import CurrencyKit
 
 class MarketAdvancedSearchViewModel {
     private let disposeBag = DisposeBag()
@@ -20,6 +21,10 @@ class MarketAdvancedSearchViewModel {
     private let outperformedBnbRelay = BehaviorRelay<Bool>(value: false)
     private let priceCloseToAthRelay = BehaviorRelay<Bool>(value: false)
     private let priceCloseToAtlRelay = BehaviorRelay<Bool>(value: false)
+
+    private var valueFilters: [MarketAdvancedSearchService.ValueFilter] {
+        MarketAdvancedSearchService.ValueFilter.valuesByCurrencyCode[service.currencyCode] ?? []
+    }
 
     init(service: MarketAdvancedSearchService) {
         self.service = service
@@ -156,13 +161,13 @@ extension MarketAdvancedSearchViewModel {
     }
 
     var marketCapViewItems: [FilterViewItem] {
-        MarketAdvancedSearchService.ValueFilter.allCases.map {
+        valueFilters.map {
             FilterViewItem(title: $0.title, style: $0.valueStyle, selected: service.marketCap == $0)
         }
     }
 
     var volumeViewItems: [FilterViewItem] {
-        MarketAdvancedSearchService.ValueFilter.allCases.map {
+        valueFilters.map {
             FilterViewItem(title: $0.title, style: $0.valueStyle, selected: service.volume == $0)
         }
     }
@@ -196,11 +201,11 @@ extension MarketAdvancedSearchViewModel {
     }
 
     func setMarketCap(at index: Int) {
-        service.marketCap = MarketAdvancedSearchService.ValueFilter.allCases[index]
+        service.marketCap = valueFilters[index]
     }
 
     func setVolume(at index: Int) {
-        service.volume = MarketAdvancedSearchService.ValueFilter.allCases[index]
+        service.volume = valueFilters[index]
     }
 
     func setPriceChangeType(at index: Int) {
@@ -276,15 +281,48 @@ extension MarketAdvancedSearchService.CoinListCount {
 
 extension MarketAdvancedSearchService.ValueFilter {
 
+    static let valuesByCurrencyCode: [String: [Self]] = [
+        "USD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "EUR": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "GBP": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "JPY": [.none, .lessM500, .m500b2, .b2b10, .b10b100, .b100b500, .moreB500],
+        "AUD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "BRL": [.none, .lessM50, .m50m200, .m200b1, .b1b10, .b10b50, .moreB50],
+        "CAD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "CHF": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5],
+        "CNY": [.none, .lessM50, .m50m200, .m200b1, .b1b10, .b10b50, .moreB50],
+        "HKD": [.none, .lessM50, .m50m200, .m200b1, .b1b10, .b10b50, .moreB50],
+        "ILS": [.none, .lessM10, .m10m40, .m40m200, .m200b2, .b2b10, .moreB10],
+        "RUB": [.none, .lessM500, .m500b2, .b2b10, .b10b100, .b100b500, .moreB500],
+        "SGD": [.none, .lessM5, .m5m20, .m20m100, .m100b1, .b1b5, .moreB5]
+    ]
+
     var title: String {
         switch self {
         case .none: return "market.advanced_search.any".localized
         case .lessM5: return "market.advanced_search.less_5_m".localized
+        case .lessM10: return "market.advanced_search.less_10_m".localized
+        case .lessM50: return "market.advanced_search.less_50_m".localized
+        case .lessM500: return "market.advanced_search.less_500_m".localized
         case .m5m20: return "market.advanced_search.m_5_m_20".localized
+        case .m10m40: return "market.advanced_search.m_10_m_40".localized
+        case .m40m200: return "market.advanced_search.m_40_m_200".localized
+        case .m50m200: return "market.advanced_search.m_50_m_200".localized
         case .m20m100: return "market.advanced_search.m_20_m_100".localized
         case .m100b1: return "market.advanced_search.m_100_b_1".localized
+        case .m200b1: return "market.advanced_search.m_200_b_1".localized
+        case .m200b2: return "market.advanced_search.m_200_b_2".localized
+        case .m500b2: return "market.advanced_search.m_500_b_2".localized
         case .b1b5: return "market.advanced_search.b_1_b_5".localized
+        case .b1b10: return "market.advanced_search.b_1_b_10".localized
+        case .b2b10: return "market.advanced_search.b_2_b_10".localized
+        case .b10b50: return "market.advanced_search.b_10_b_50".localized
+        case .b10b100: return "market.advanced_search.b_10_b_100".localized
+        case .b100b500: return "market.advanced_search.b_100_b_500".localized
         case .moreB5: return "market.advanced_search.more_5_b".localized
+        case .moreB10: return "market.advanced_search.more_10_b".localized
+        case .moreB50: return "market.advanced_search.more_50_b".localized
+        case .moreB500: return "market.advanced_search.more_500_b".localized
         }
     }
 

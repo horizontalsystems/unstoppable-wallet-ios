@@ -5558,7 +5558,6 @@
 				58AAAAF9DC549506AF5B4C6D /* MarketWatchlist */,
 				11B35677CF7976A3B13AAA6E /* MarketAdvancedSearch */,
 				11B35D945123DFF27A66FFC5 /* MarketAdvancedSearchResults */,
-				58AAAA1DF539FD8B1D32AAF3 /* MarketSearch */,
 				58AAA8784275769B6BEF45F5 /* MarketGlobal */,
 				58AAA113A485122CE8DBE7B4 /* MarketPosts */,
 				11B3508440D2593C95D34386 /* MarketCategory */,
@@ -5581,13 +5580,6 @@
 				58AAAB15987B812CD57520FC /* D8CollectionCell.swift */,
 			);
 			path = CollectionCells;
-			sourceTree = "<group>";
-		};
-		58AAAA1DF539FD8B1D32AAF3 /* MarketSearch */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MarketSearch;
 			sourceTree = "<group>";
 		};
 		58AAAA79207F87EB221F5381 /* SwapApprove */ = {
