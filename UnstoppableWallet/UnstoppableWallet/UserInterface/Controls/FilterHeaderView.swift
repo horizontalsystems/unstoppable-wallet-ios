@@ -16,7 +16,11 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     private let layout = UICollectionViewFlowLayout()
     private let collectionView: UICollectionView
     private var needCalculateItemWidths = true
-    private var itemWidths: [CGFloat] = []
+    private var itemWidths: [CGFloat] = [] {
+        didSet {
+            layoutSelectedView(indexPath: collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0))
+        }
+    }
     private var buttonStyle: ThemeButtonStyle
 
     private let selectedView = UIView()
@@ -151,8 +155,6 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
 
         itemWidths = items.sorted { $0.index < $1.index }.map { $0.width }
-
-        layoutSelectedView(indexPath: collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0))
     }
 
     func reload(filters: [ViewItem]) {
