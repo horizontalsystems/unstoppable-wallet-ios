@@ -1006,7 +1006,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "enable_coins.description" = "Alle %@ Coins aktivieren, die ein Guthaben haben.";
 "enable_coins.enable_button" = "Aktivieren";
 "enable_coins.enabling" = "Aktivieren...";
-"enable_coins.enabled_coins" = "Enabled %@ more coins";
+"enable_coins.enabled_coins" = "%@ weitere Coins aktiviert";
 "enable_coins.enabled_no_coins" = "Keine Coins mit Guthaben gefunden";
 
 // Onboarding
