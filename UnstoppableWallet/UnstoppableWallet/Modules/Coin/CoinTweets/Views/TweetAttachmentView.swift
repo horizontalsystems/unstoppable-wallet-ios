@@ -51,10 +51,7 @@ class TweetAttachmentView: UIView {
     }
 
     private func bindPhoto(url: String) {
-        imageView.af.cancelImageRequest()
-        if let url = URL(string: url) {
-            imageView.af.setImage(withURL: url)
-        }
+        imageView.kf.setImage(with: URL(string: url))
 
         pollView.snp.removeConstraints()
         imageView.snp.remakeConstraints { maker in
@@ -69,10 +66,7 @@ class TweetAttachmentView: UIView {
     }
 
     private func bindVideo(previewImageUrl: String) {
-        imageView.af.cancelImageRequest()
-        if let url = URL(string: previewImageUrl) {
-            imageView.af.setImage(withURL: url)
-        }
+        imageView.kf.setImage(with: URL(string: previewImageUrl))
 
         pollView.snp.removeConstraints()
         imageView.snp.remakeConstraints { maker in

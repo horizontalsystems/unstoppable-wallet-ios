@@ -6,7 +6,6 @@ import RxSwift
 import MarketKit
 import ComponentKit
 import Alamofire
-import AlamofireImage
 
 class CoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CoinSelectViewModel

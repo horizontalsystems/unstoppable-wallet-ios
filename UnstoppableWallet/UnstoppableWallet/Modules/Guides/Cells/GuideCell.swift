@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 import SnapKit
-import AlamofireImage
+import Kingfisher
 import ComponentKit
 
 class GuideCell: UITableViewCell {
@@ -76,12 +76,7 @@ class GuideCell: UITableViewCell {
             maker.bottom.equalToSuperview().inset(last ? GuideCell.cardBottomMarginLast : GuideCell.cardBottomMargin)
         }
 
-        guideImageView.af.cancelImageRequest()
-        guideImageView.image = nil
-
-        if let imageUrl = viewItem.imageUrl {
-            guideImageView.af.setImage(withURL: imageUrl)
-        }
+        guideImageView.kf.setImage(with: viewItem.imageUrl)
 
         dateLabel.text = GuideCell.formattedDate(viewItem: viewItem)
         titleLabel.text = viewItem.title

@@ -7,7 +7,6 @@ import RxCocoa
 import MarketKit
 import ComponentKit
 import Alamofire
-import AlamofireImage
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel

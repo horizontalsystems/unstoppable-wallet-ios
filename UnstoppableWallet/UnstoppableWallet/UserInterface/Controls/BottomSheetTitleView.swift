@@ -94,13 +94,7 @@ class BottomSheetTitleView: UIView {
 
     func bind(imageUrl: String?, placeholder: UIImage?) {
         iconImageView.tintColor = nil
-
-        iconImageView.af.cancelImageRequest()
-        iconImageView.image = placeholder
-
-        if let urlString = imageUrl, let url = URL(string: urlString) {
-            iconImageView.af.setImage(withURL: url, placeholderImage: placeholder)
-        }
+        iconImageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: placeholder, options: [.scaleFactor(UIScreen.main.scale)])
     }
 
     var titleColor: UIColor {

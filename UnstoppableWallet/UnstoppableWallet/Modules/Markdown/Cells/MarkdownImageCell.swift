@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 import ThemeKit
-import AlamofireImage
+import Kingfisher
 
 class MarkdownImageCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin3x
@@ -38,13 +38,13 @@ class MarkdownImageCell: UITableViewCell {
 
     func bind(imageUrl: URL, type: MarkdownImageType, tight: Bool) {
         placeholderImageView.isHidden = false
-        markdownImageView.image = nil
 
-        markdownImageView.af.setImage(withURL: imageUrl, completion: { [weak self] response in
-            if case .success = response.result {
-                self?.placeholderImageView.isHidden = true
+        markdownImageView.kf.setImage(with: imageUrl) { [weak self] result in
+            switch result {
+            case .success: self?.placeholderImageView.isHidden = true
+            default: ()
             }
-        })
+        }
 
         placeholderImageView.snp.remakeConstraints { maker in
             maker.leading.trailing.equalToSuperview()

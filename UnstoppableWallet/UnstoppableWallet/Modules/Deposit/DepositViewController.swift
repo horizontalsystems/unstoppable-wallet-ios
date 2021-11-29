@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 import Alamofire
-import AlamofireImage
+import Kingfisher
 
 class DepositViewController: ThemeViewController {
     private let qrCodeSideMargin: CGFloat = 72
@@ -30,12 +30,11 @@ class DepositViewController: ThemeViewController {
         let imageView = UIImageView()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
 
-        let placeholderImage = UIImage(named: viewModel.coinType.placeholderImageName)
-        if let url = URL(string: viewModel.coin.imageUrl) {
-            imageView.af.setImage(withURL: url, placeholderImage: placeholderImage)
-        } else {
-            imageView.image = placeholderImage
-        }
+        imageView.kf.setImage(
+                with: URL(string: viewModel.coin.imageUrl),
+                placeholder: UIImage(named: viewModel.coinType.placeholderImageName),
+                options: [.scaleFactor(UIScreen.main.scale)]
+        )
 
         let topWrapperView = UIView()
 

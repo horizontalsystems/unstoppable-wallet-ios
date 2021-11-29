@@ -84,10 +84,7 @@ class TweetCell: BaseSelectableThemeCell {
     }
 
     func bind(viewItem: CoinTweetsViewModel.ViewItem) {
-        titleImage.af.cancelImageRequest()
-        if let url = URL(string: viewItem.titleImageUrl) {
-            titleImage.af.setImage(withURL: url)
-        }
+        titleImage.kf.setImage(with: URL(string: viewItem.titleImageUrl))
 
         titleLabel.text = viewItem.title
         subTitleLabel.text = viewItem.subTitle
