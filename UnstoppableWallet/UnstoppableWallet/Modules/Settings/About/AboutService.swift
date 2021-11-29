@@ -3,10 +3,10 @@ import RxSwift
 class AboutService {
     private let termsManager: ITermsManager
     private let systemInfoManager: ISystemInfoManager
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let rateAppManager: IRateAppManager
 
-    init(termsManager: ITermsManager, systemInfoManager: ISystemInfoManager, appConfigProvider: IAppConfigProvider, rateAppManager: IRateAppManager) {
+    init(termsManager: ITermsManager, systemInfoManager: ISystemInfoManager, appConfigProvider: AppConfigProvider, rateAppManager: IRateAppManager) {
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
         self.appConfigProvider = appConfigProvider

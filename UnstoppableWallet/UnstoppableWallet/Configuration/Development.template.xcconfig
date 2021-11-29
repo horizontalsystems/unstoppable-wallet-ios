@@ -5,5 +5,6 @@ bscscan_api_key =
 cryptocompare_com_api_key =
 defiyield_api_key =
 twitter_bearer_token =
+market_api_url = https:/$()/markets-dev.horizontalsystems.xyz
 
 default_words =

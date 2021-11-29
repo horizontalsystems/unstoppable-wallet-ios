@@ -4,7 +4,7 @@ import RxRelay
 import EthereumKit
 
 class AdapterFactory {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let ethereumKitManager: EvmKitManager
     private let binanceSmartChainKitManager: EvmKitManager
     private let binanceKitManager: BinanceKitManager
@@ -12,7 +12,7 @@ class AdapterFactory {
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
 
-    init(appConfigProvider: IAppConfigProvider, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: InitialSyncSettingsManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager) {
+    init(appConfigProvider: AppConfigProvider, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: InitialSyncSettingsManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager) {
         self.appConfigProvider = appConfigProvider
         self.ethereumKitManager = ethereumKitManager
         self.binanceSmartChainKitManager = binanceSmartChainKitManager

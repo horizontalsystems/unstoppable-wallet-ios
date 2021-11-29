@@ -5,13 +5,13 @@ import HsToolKit
 class GuidesRepository {
     private let disposeBag = DisposeBag()
 
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let guidesManager: IGuidesManager
     private let reachabilityManager: IReachabilityManager
 
     private let categoriesRelay = BehaviorRelay<DataState<[GuideCategory]>>(value: .loading)
 
-    init(appConfigProvider: IAppConfigProvider, guidesManager: IGuidesManager, reachabilityManager: IReachabilityManager) {
+    init(appConfigProvider: AppConfigProvider, guidesManager: IGuidesManager, reachabilityManager: IReachabilityManager) {
         self.appConfigProvider = appConfigProvider
         self.guidesManager = guidesManager
         self.reachabilityManager = reachabilityManager

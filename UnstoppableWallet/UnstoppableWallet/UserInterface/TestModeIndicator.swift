@@ -4,7 +4,7 @@ import SnapKit
 class TestModeIndicator {
     private var window: UIWindow?
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         if appConfigProvider.testMode {
             DispatchQueue.main.async {
                 self.show()

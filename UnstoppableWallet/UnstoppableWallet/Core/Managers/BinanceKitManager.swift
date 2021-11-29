@@ -2,14 +2,14 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceKitManager {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
 
     private weak var _binanceKit: BinanceChainKit?
     private var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 

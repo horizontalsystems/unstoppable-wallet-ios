@@ -6,11 +6,11 @@ import LanguageKit
 class GuidesService {
     private let disposeBag = DisposeBag()
 
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let repository: GuidesRepository
     private let languageManager: LanguageManager
 
-    init(appConfigProvider: IAppConfigProvider, repository: GuidesRepository, languageManager: LanguageManager) {
+    init(appConfigProvider: AppConfigProvider, repository: GuidesRepository, languageManager: LanguageManager) {
         self.appConfigProvider = appConfigProvider
         self.repository = repository
         self.languageManager = languageManager

@@ -12,7 +12,7 @@ class CoinOverviewService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let languageManager: LanguageManager
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
@@ -21,7 +21,7 @@ class CoinOverviewService {
         }
     }
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: IAppConfigProvider) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: AppConfigProvider) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
