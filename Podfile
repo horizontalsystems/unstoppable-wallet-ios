@@ -74,7 +74,7 @@ def appPods
   # pod 'SectionsTableView.swift', path: '../gui-kit/'
 
   pod 'Alamofire'
-  pod 'AlamofireImage'
+  pod 'Kingfisher'
   pod 'ObjectMapper'
 
   pod 'GRDB.swift'

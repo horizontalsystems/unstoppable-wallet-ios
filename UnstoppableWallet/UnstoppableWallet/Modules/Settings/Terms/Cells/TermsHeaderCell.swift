@@ -63,12 +63,7 @@ class TermsHeaderCell: UITableViewCell {
     }
 
     func bind(image: UIImage? = nil, imageUrl: String? = nil, title: String, subtitle: String?) {
-        headerImageView.image = image
-        headerImageView.af.cancelImageRequest()
-
-        if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-            headerImageView.af.setImage(withURL: url)
-        }
+        headerImageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: image, options: [.scaleFactor(UIScreen.main.scale)])
 
         titleLabel.text = title
         subtitleLabel.text = subtitle
