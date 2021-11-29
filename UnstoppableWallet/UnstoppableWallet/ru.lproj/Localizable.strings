@@ -447,13 +447,13 @@
 "market.advanced_search.reset_all" = "Сбросить";
 
 "market.advanced_search.any" = "Любые";
-"market.advanced_search.less_5_m" = "< 5М";
+"market.advanced_search.less_5_m" = "< 5млн";
 "market.advanced_search.less_10_m" = "< 10млн";
 "market.advanced_search.less_50_m" = "< 50млн";
 "market.advanced_search.less_500_m" = "< 500млн";
-"market.advanced_search.m_5_m_20" = "5М - 20М";
+"market.advanced_search.m_5_m_20" = "5млн - 20млн";
 "market.advanced_search.m_10_m_40" = "10млн - 40млн";
-"market.advanced_search.m_20_m_100" = "20М - 100М";
+"market.advanced_search.m_20_m_100" = "20млн - 100млн";
 "market.advanced_search.m_40_m_200" = "40млн - 200млн";
 "market.advanced_search.m_50_m_200" = "50млн - 200млн";
 "market.advanced_search.m_100_b_1" = "100 млн - 1 млрд";
