@@ -457,7 +457,7 @@
 "market.advanced_search.m_100_b_1" = "100M - 1B";
 "market.advanced_search.m_200_b_1" = "200M - 1B";
 "market.advanced_search.m_200_b_2" = "200M - 2B";
-"market.advanced_search.m_500_b_2" = "500M - 2B";
+"market.advanced_search.m_500_b_2" = "200M - 2B";
 "market.advanced_search.b_1_b_5" = "1B - 5B";
 "market.advanced_search.b_1_b_10" = "1B - 10B";
 "market.advanced_search.b_2_b_10" = "2B - 10B";
@@ -1006,7 +1006,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "enable_coins.description" = "Activer toutes les pièces %@ qui ont un solde.";
 "enable_coins.enable_button" = "Activer";
 "enable_coins.enabling" = "Activation...";
-"enable_coins.enabled_coins" = "Enabled %@ more coins";
+"enable_coins.enabled_coins" = "%@ pièces supplémentaires activées";
 "enable_coins.enabled_no_coins" = "Aucune pièce trouvée avec un solde";
 
 // Onboarding
