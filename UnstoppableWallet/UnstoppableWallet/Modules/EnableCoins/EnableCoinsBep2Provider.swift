@@ -13,11 +13,13 @@ class EnableCoinsBep2Provider {
 extension EnableCoinsBep2Provider {
 
     func tokenSymbolsSingle(seed: Data) throws -> Single<[String]> {
-        try provider.accountSingle(seed: seed).map { account in
-            account.balances.compactMap { balance in
-                balance.free > 0 ? balance.symbol : nil
-            }
-        }
+        try provider.accountSingle(seed: seed)
+            .map({ account in
+                account.balances.compactMap { balance in
+                    balance.free > 0 ? balance.symbol : nil
+                }
+            })
+            .catchError({ _ in return Single.just([]) })
     }
 
 }
