@@ -3,7 +3,7 @@ import MarketKit
 class FeeRateProviderFactory {
     private let feeRateProvider: FeeRateProvider
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         feeRateProvider = FeeRateProvider(appConfigProvider: appConfigProvider)
     }
 

@@ -6,12 +6,12 @@ class FaqRepository {
     private let disposeBag = DisposeBag()
 
     private let networkManager: NetworkManager
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let reachabilityManager: IReachabilityManager
 
     private let faqRelay = BehaviorRelay<DataStatus<[FaqSection]>>(value: .loading)
 
-    init(networkManager: NetworkManager, appConfigProvider: IAppConfigProvider, reachabilityManager: IReachabilityManager) {
+    init(networkManager: NetworkManager, appConfigProvider: AppConfigProvider, reachabilityManager: IReachabilityManager) {
         self.networkManager = networkManager
         self.appConfigProvider = appConfigProvider
         self.reachabilityManager = reachabilityManager

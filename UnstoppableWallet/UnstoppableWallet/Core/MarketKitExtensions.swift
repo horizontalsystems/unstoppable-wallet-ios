@@ -152,7 +152,7 @@ extension MarketKit.CoinTreasury {
 
     var fundLogoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/\(fundUid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/treasury-icons/\(fundUid)@\(scale)x.png"
     }
 
 }

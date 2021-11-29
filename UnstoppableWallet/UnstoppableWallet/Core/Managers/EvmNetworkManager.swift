@@ -1,9 +1,9 @@
 import EthereumKit
 
 class EvmNetworkManager {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         self.appConfigProvider = appConfigProvider
     }
 

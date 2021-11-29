@@ -97,10 +97,10 @@ extension EvmKitManager {
 }
 
 class EthKitManagerDataSource: IEvmKitManagerDataSource {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let accountSettingManager: AccountSettingManager
 
-    init(appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
+    init(appConfigProvider: AppConfigProvider, accountSettingManager: AccountSettingManager) {
         self.appConfigProvider = appConfigProvider
         self.accountSettingManager = accountSettingManager
     }
@@ -120,10 +120,10 @@ class EthKitManagerDataSource: IEvmKitManagerDataSource {
 }
 
 class BscKitManagerDataSource: IEvmKitManagerDataSource {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let accountSettingManager: AccountSettingManager
 
-    init(appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
+    init(appConfigProvider: AppConfigProvider, accountSettingManager: AccountSettingManager) {
         self.appConfigProvider = appConfigProvider
         self.accountSettingManager = accountSettingManager
     }

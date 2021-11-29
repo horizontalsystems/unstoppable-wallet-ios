@@ -5,7 +5,7 @@ import BinanceChainKit
 import MarketKit
 
 class EnableCoinsService {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let erc20Provider: EnableCoinsEip20Provider
     private let bep20Provider: EnableCoinsEip20Provider
     private let bep2Provider: EnableCoinsBep2Provider
@@ -20,7 +20,7 @@ class EnableCoinsService {
         }
     }
 
-    init(appConfigProvider: IAppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider) {
+    init(appConfigProvider: AppConfigProvider, erc20Provider: EnableCoinsEip20Provider, bep20Provider: EnableCoinsEip20Provider, bep2Provider: EnableCoinsBep2Provider) {
         self.appConfigProvider = appConfigProvider
         self.erc20Provider = erc20Provider
         self.bep20Provider = bep20Provider

@@ -171,27 +171,6 @@ protocol ISystemInfoManager {
     var osVersion: String { get }
 }
 
-protocol IAppConfigProvider {
-    var companyWebPageLink: String { get }
-    var appWebPageLink: String { get }
-    var appGitHubLink: String { get }
-    var reportEmail: String { get }
-    var guidesIndexUrl: URL { get }
-    var faqIndexUrl: URL { get }
-
-    var testMode: Bool { get }
-    var officeMode: Bool { get }
-    var infuraCredentials: (id: String, secret: String?) { get }
-    var btcCoreRpcUrl: String { get }
-    var etherscanKey: String { get }
-    var bscscanKey: String { get }
-    var cryptoCompareApiKey: String? { get }
-    var defiYieldApiKey: String? { get }
-    var twitterBearerToken: String? { get }
-
-    var defaultWords: String { get }
-}
-
 protocol IEnabledWalletStorage {
     var enabledWallets: [EnabledWallet] { get }
     func enabledWallets(accountId: String) -> [EnabledWallet]

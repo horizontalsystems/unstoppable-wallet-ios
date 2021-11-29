@@ -4,7 +4,7 @@ import RxSwift
 class FeeRateProvider {
     private let feeRateKit: FeeRateKit.Kit
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         let providerConfig = FeeProviderConfig(
                 ethEvmUrl: FeeProviderConfig.infuraUrl(projectId: appConfigProvider.infuraCredentials.id),
                 ethEvmAuth: appConfigProvider.infuraCredentials.secret,

@@ -13,7 +13,7 @@ class App {
 
     let marketKit: MarketKit.Kit
 
-    let appConfigProvider: IAppConfigProvider
+    let appConfigProvider: AppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
@@ -95,8 +95,8 @@ class App {
         logRecordManager = LogRecordManager(storage: storage)
 
         marketKit = try! MarketKit.Kit.instance(
-                hsApiBaseUrl: "https://markets-dev.horizontalsystems.xyz",
-                hsOldApiBaseUrl: "https://markets.horizontalsystems.xyz",
+                hsApiBaseUrl: appConfigProvider.marketApiUrl,
+                hsOldApiBaseUrl: appConfigProvider.marketOldApiUrl,
                 cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
                 defiYieldApiKey: appConfigProvider.defiYieldApiKey
         )
