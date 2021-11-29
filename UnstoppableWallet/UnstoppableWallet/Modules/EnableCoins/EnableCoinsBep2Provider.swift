@@ -4,7 +4,7 @@ import BinanceChainKit
 class EnableCoinsBep2Provider {
     private let provider: BinanceChainKit.BinanceAccountProvider
 
-    init(appConfigProvider: IAppConfigProvider) {
+    init(appConfigProvider: AppConfigProvider) {
         provider = BinanceChainKit.BinanceAccountProvider(networkType: appConfigProvider.testMode ? .testNet : .mainNet)
     }
 

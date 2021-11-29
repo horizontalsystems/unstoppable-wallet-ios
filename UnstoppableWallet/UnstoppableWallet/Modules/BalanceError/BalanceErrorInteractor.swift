@@ -1,8 +1,8 @@
 class BalanceErrorInteractor {
     private let adapterManager: AdapterManager
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
 
-    init(adapterManager: AdapterManager, appConfigProvider: IAppConfigProvider) {
+    init(adapterManager: AdapterManager, appConfigProvider: AppConfigProvider) {
         self.adapterManager = adapterManager
         self.appConfigProvider = appConfigProvider
     }

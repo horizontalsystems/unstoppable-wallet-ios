@@ -5,11 +5,11 @@ import Alamofire
 import MarketKit
 
 class EnableCoinsEip20Provider {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let networkManager: NetworkManager
     private let mode: Mode
 
-    init(appConfigProvider: IAppConfigProvider, networkManager: NetworkManager, mode: Mode) {
+    init(appConfigProvider: AppConfigProvider, networkManager: NetworkManager, mode: Mode) {
         self.appConfigProvider = appConfigProvider
         self.networkManager = networkManager
         self.mode = mode

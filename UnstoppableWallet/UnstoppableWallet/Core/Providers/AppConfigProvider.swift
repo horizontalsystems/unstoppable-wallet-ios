@@ -1,6 +1,6 @@
 import Foundation
 
-class AppConfigProvider: IAppConfigProvider {
+class AppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
@@ -8,6 +8,11 @@ class AppConfigProvider: IAppConfigProvider {
     let btcCoreRpcUrl = "https://btc.horizontalsystems.xyz/rpc"
     let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/v1.2/src/faq.json")!
+    let marketOldApiUrl = "https://markets.horizontalsystems.xyz"
+
+    var marketApiUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
+    }
 
     var testMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"

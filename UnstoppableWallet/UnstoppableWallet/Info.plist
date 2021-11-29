@@ -55,6 +55,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MarketApiUrl</key>
+	<string>${market_api_url}</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to camera to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>

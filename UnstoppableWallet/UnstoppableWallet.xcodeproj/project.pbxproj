@@ -1054,6 +1054,7 @@
 		11B35D40702B98DD14429562 /* FormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */; };
 		11B35D41A0A6B20537BA55F4 /* TermsFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */; };
 		11B35D45BA3D8B9C5E2AE4ED /* ManageWalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3529B6C7C426755CE9E14 /* ManageWalletsService.swift */; };
+		11B35D46B65772A1CC17B099 /* MarketGlobalTvlMetricViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8E1106E31D68FD9181D /* MarketGlobalTvlMetricViewController.swift */; };
 		11B35D47EAA2EB26D8C3D6CF /* PrivacySortModeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3519C133E4C0A28943906 /* PrivacySortModeRouter.swift */; };
 		11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */; };
 		11B35D51B52EF0000711CE05 /* MultiTextMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359824DCDF3B05413CDD2 /* MultiTextMetricsView.swift */; };
@@ -8980,6 +8981,7 @@
 				11B35D16F2F7B8E11A771B18 /* FavoriteCoinRecord_v_0_22.swift in Sources */,
 				11B35677C6AC4AE96622CBD7 /* RestoreFavoriteCoinWorker.swift in Sources */,
 				11B35D376143026461DBBC92 /* MarketKitExtensions.swift in Sources */,
+				11B35D46B65772A1CC17B099 /* MarketGlobalTvlMetricViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

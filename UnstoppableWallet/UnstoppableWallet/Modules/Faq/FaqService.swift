@@ -3,11 +3,11 @@ import HsToolKit
 import LanguageKit
 
 class FaqService {
-    private let appConfigProvider: IAppConfigProvider
+    private let appConfigProvider: AppConfigProvider
     private let repository: FaqRepository
     private let languageManager: LanguageManager
 
-    init(appConfigProvider: IAppConfigProvider, repository: FaqRepository, languageManager: LanguageManager) {
+    init(appConfigProvider: AppConfigProvider, repository: FaqRepository, languageManager: LanguageManager) {
         self.appConfigProvider = appConfigProvider
         self.repository = repository
         self.languageManager = languageManager
