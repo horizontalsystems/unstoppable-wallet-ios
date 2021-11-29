@@ -323,7 +323,7 @@
 "market.tab_bar_item" = "Marchés";
 "market.title" = "Marchés";
 "market.category.overview" = "Synthèse";
-"market.category.posts" = "News";
+"market.category.posts" = "Infos";
 "market.category.watchlist" = "Liste de suivi";
 "market.total_market_cap" = "Capitalisation de marché totale";
 "market.24h_volume" = "Volume des dernières 24h";
@@ -446,11 +446,28 @@
 
 "market.advanced_search.any" = "N'importe quel";
 "market.advanced_search.less_5_m" = "< 5M";
+"market.advanced_search.less_10_m" = "< 10M";
+"market.advanced_search.less_50_m" = "< 50M";
+"market.advanced_search.less_500_m" = "< 500M";
 "market.advanced_search.m_5_m_20" = "5M - 20M";
+"market.advanced_search.m_10_m_40" = "10M - 40M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
+"market.advanced_search.m_40_m_200" = "40M - 200M";
+"market.advanced_search.m_50_m_200" = "50M - 200M";
 "market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.m_200_b_1" = "200M - 1B";
+"market.advanced_search.m_200_b_2" = "200M - 2B";
+"market.advanced_search.m_500_b_2" = "200M - 2B";
 "market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.b_1_b_10" = "1B - 10B";
+"market.advanced_search.b_2_b_10" = "2B - 10B";
+"market.advanced_search.b_10_b_50" = "10B - 50B";
+"market.advanced_search.b_10_b_100" = "10B - 100B";
+"market.advanced_search.b_100_b_500" = "100B - 500B";
 "market.advanced_search.more_5_b" = "> 5B";
+"market.advanced_search.more_10_b" = "> 10B";
+"market.advanced_search.more_50_b" = "> 50B";
+"market.advanced_search.more_500_b" = "> 500B";
 
 "market.advanced_search.day" = "1 Jour";
 "market.advanced_search.week" = "1 Semaine";
@@ -989,7 +1006,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "enable_coins.description" = "Activer toutes les pièces %@ qui ont un solde.";
 "enable_coins.enable_button" = "Activer";
 "enable_coins.enabling" = "Activation...";
-"enable_coins.enabled_coins" = "%@ pièces activées";
+"enable_coins.enabled_coins" = "%@ pièces supplémentaires activées";
 "enable_coins.enabled_no_coins" = "Aucune pièce trouvée avec un solde";
 
 // Onboarding
