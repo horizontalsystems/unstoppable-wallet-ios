@@ -6,8 +6,6 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
   - Alamofire (5.4.4)
-  - AlamofireImage (4.2.0):
-    - Alamofire (~> 5.4)
   - Base58Swift (2.1.10):
     - BigInt (~> 5.0.0)
   - BigInt (5.0.0)
@@ -66,8 +64,8 @@ PODS:
   - CNIOSHA1 (2.32.3)
   - CNIOWindows (2.32.3)
   - ComponentKit.swift (1.0):
-    - AlamofireImage (~> 4.1)
     - HUD.swift (~> 1.2)
+    - Kingfisher (~> 7.0)
     - LanguageKit.swift (~> 1.0)
     - RxCocoa (~> 5.0)
     - SectionsTableView.swift (~> 1.1)
@@ -151,6 +149,7 @@ PODS:
     - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1.1)
   - KeychainAccess (4.2.2)
+  - Kingfisher (7.1.1)
   - LanguageKit.swift (1.0):
     - UIExtensions.swift (~> 1.1)
   - LitecoinKit.swift (0.18):
@@ -298,7 +297,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - ThemeKit.swift (1.0):
     - Alamofire (~> 5.4)
-    - AlamofireImage (~> 4.2)
+    - Kingfisher (~> 7.0)
     - RxCocoa (~> 5.0)
     - UIExtensions.swift (~> 1.1)
   - UIExtensions.swift (1.1.1)
@@ -324,7 +323,6 @@ PODS:
 DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Alamofire
-  - AlamofireImage
   - Base58Swift (~> 2.1.10)
   - BigInt
   - BinanceChainKit.swift (from `https://github.com/horizontalsystems/binance-chain-kit-ios`)
@@ -346,6 +344,7 @@ DEPENDENCIES:
   - HsToolKit.swift (from `https://github.com/horizontalsystems/hs-tool-kit-ios`)
   - HUD.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - KeychainAccess
+  - Kingfisher
   - LanguageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - MarketKit.swift (from `https://github.com/horizontalsystems/market-kit-ios/`)
@@ -373,7 +372,6 @@ SPEC REPOS:
   trunk:
     - _NIODataStructures
     - Alamofire
-    - AlamofireImage
     - Base58Swift
     - BigInt
     - BlsKit.swift
@@ -393,6 +391,7 @@ SPEC REPOS:
     - GRDB.swift
     - gRPC-Swift
     - KeychainAccess
+    - Kingfisher
     - Logging
     - Nimble
     - ObjectMapper
@@ -511,7 +510,7 @@ CHECKOUT OPTIONS:
     :commit: 6dfdfdb20c114f75298284bb959fdaeaa95393a8
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 73c3358ac694b8ad9d727c5191cd43311ba9e5a8
+    :commit: 3981fb0296a341d12551b111dc34285d530dd34d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -571,7 +570,7 @@ CHECKOUT OPTIONS:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 6eacf632f3400c7fa271b9b282277287e5c53dad
+    :commit: 3981fb0296a341d12551b111dc34285d530dd34d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 3b1886c03600c421a0591cff3259013da606524e
@@ -590,7 +589,6 @@ SPEC CHECKSUMS:
   _NIODataStructures: e2077c7dc7c1d6c93e698c85fe04d663a17f53a4
   ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
-  AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: 5c282784ee82eb95117b584858f640e9769d4562
@@ -609,7 +607,7 @@ SPEC CHECKSUMS:
   CNIOLinux: 5921dfefbc4bbe017380b34c510855622147ea41
   CNIOSHA1: cdf6523d56bbb78be9b11ae4e6340fbc591b492d
   CNIOWindows: f5aa9dfb401b440a7b4c9cd911e53e981a787193
-  ComponentKit.swift: 6ecfd034e3b82be6db74dd062d5e8000df546589
+  ComponentKit.swift: b6e182474eece1ba52f6f7755a72a4c734648de1
   CryptoSwift: 0bc800a7e6a24c4fc9ebeab97d44b0d5f73a78bd
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
   CurrencyKit.swift: ae9fc9a81063804a4475016b11a17614ae890158
@@ -626,6 +624,7 @@ SPEC CHECKSUMS:
   HsToolKit.swift: 88f5c25dcf2b6fde2370f0125a8864782fbb3d90
   HUD.swift: 28fe655f5946e0f12fe3d24be54a57716d983c69
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
   LitecoinKit.swift: 69783a07fba32347020be4c277aa89c09c3a3eba
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
@@ -665,7 +664,7 @@ SPEC CHECKSUMS:
   SwiftNIOWebSocket: 035534780a7ed1c1b1fb068084690ce4747f83f5
   SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  ThemeKit.swift: 222dd88c100cdc85ef6aed68f514210490366ef5
+  ThemeKit.swift: 26260ac44437a1ae8ceecaf03e55e4a61bb9ddac
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: 8a61c5a0e01bce030ba367848c2a75b6291cd647
   UnstoppableDomainsResolution: 856ba43f08b31f3f34157c7257092bd0c6e31cf8
@@ -673,6 +672,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 1013f66afb9fab0e95fd7c7c2b0637a029b463d0
+PODFILE CHECKSUM: 81635fdb2e6a8c70e02e629178557481cd9193cb
 
 COCOAPODS: 1.11.2
