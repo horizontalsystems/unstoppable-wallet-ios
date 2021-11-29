@@ -6,7 +6,7 @@ import CurrencyKit
 import BigInt
 import EthereumKit
 import Foundation
-import CoinKit
+import MarketKit
 
 class UniswapService {
     let dex: SwapModule.Dex
@@ -60,13 +60,13 @@ class UniswapService {
             self?.onUpdateTrade(state: state)
         }
 
-        subscribe(scheduler, disposeBag, tradeService.coinInObservable) { [weak self] coin in
-            self?.onUpdate(coinIn: coin)
+        subscribe(scheduler, disposeBag, tradeService.platformCoinInObservable) { [weak self] platformCoin in
+            self?.onUpdate(platformCoin: platformCoin)
         }
-        onUpdate(coinIn: tradeService.coinIn)
+        onUpdate(platformCoin: tradeService.platformCoinIn)
 
-        subscribe(scheduler, disposeBag, tradeService.coinOutObservable) { [weak self] coin in
-            self?.onUpdate(coinOut: coin)
+        subscribe(scheduler, disposeBag, tradeService.platformCoinOutObservable) { [weak self] platformCoin in
+            self?.onUpdate(platformCoinOut: platformCoin)
         }
 
         subscribe(scheduler, disposeBag, tradeService.amountInObservable) { [weak self] amount in
@@ -84,18 +84,18 @@ class UniswapService {
         syncState()
     }
 
-    private func onUpdate(coinIn: Coin?) {
-        balanceIn = coinIn.flatMap { balance(coin: $0) }
-        allowanceService.set(coin: coinIn)
-        pendingAllowanceService.set(coin: coinIn)
+    private func onUpdate(platformCoin: PlatformCoin?) {
+        balanceIn = platformCoin.flatMap { balance(platformCoin: $0) }
+        allowanceService.set(platformCoin: platformCoin)
+        pendingAllowanceService.set(platformCoin: platformCoin)
     }
 
     private func onUpdate(amountIn: Decimal?) {
         syncState()
     }
 
-    private func onUpdate(coinOut: Coin?) {
-        balanceOut = coinOut.flatMap { balance(coin: $0) }
+    private func onUpdate(platformCoinOut: PlatformCoin?) {
+        balanceOut = platformCoinOut.flatMap { balance(platformCoin: $0) }
     }
 
     private func onUpdatePendingAllowanceState() {
@@ -112,10 +112,6 @@ class UniswapService {
         case .loading:
             loading = true
         case .ready(let trade):
-            if let impactLevel = trade.impactLevel, impactLevel == .forbidden {
-                allErrors.append(SwapModule.SwapError.forbiddenPriceImpactLevel)
-            }
-
             transactionData = try? tradeService.transactionData(tradeData: trade.tradeData)
         case .notReady(let errors):
             allErrors.append(contentsOf: errors)
@@ -157,8 +153,8 @@ class UniswapService {
         }
     }
 
-    private func balance(coin: Coin) -> Decimal? {
-        (adapterManager.adapter(for: coin) as? IBalanceAdapter)?.balanceData.balance
+    private func balance(platformCoin: PlatformCoin) -> Decimal? {
+        (adapterManager.adapter(for: platformCoin) as? IBalanceAdapter)?.balanceData.balance
     }
 
 }

@@ -1,12 +1,11 @@
 import UIKit
 import RxSwift
 import CurrencyKit
-import XRatesKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 protocol ISendView: AnyObject {
-    func set(coin: Coin)
+    func set(coin: Coin, coinType: CoinType)
 
     func showCopied()
     func show(error: Error)
@@ -31,16 +30,16 @@ protocol ISendInteractor {
     var baseCurrency: Currency { get }
     var defaultInputType: SendInputType { get }
 
-    func nonExpiredRateValue(coinType: CoinType, currencyCode: String) -> Decimal?
+    func nonExpiredRateValue(coinUid: String, currencyCode: String) -> Decimal?
     func send(single: Single<Void>, logger: Logger)
-    func subscribeToLatestRate(coinType: CoinType, currencyCode: String)
+    func subscribeToCoinPrice(coinUid: String, currencyCode: String)
 }
 
 protocol ISendInteractorDelegate: AnyObject {
     func sync()
     func didSend()
     func didFailToSend(error: Error)
-    func didReceive(latestRate: LatestRate)
+    func didReceive(coinPrice: CoinPrice)
 }
 
 protocol ISendHandler: AnyObject {
@@ -127,10 +126,6 @@ protocol ISendSubRouter: AnyObject {
     var viewController: UIViewController? { set get }
 }
 
-protocol ISendConfirmationItemFactory {
-    func viewItem(sendInputType: SendInputType, coinAmountValue: CoinValue, currencyAmountValue: CurrencyValue?, receiver: String, showMemo: Bool, coinFeeValue: CoinValue?, currencyFeeValue: CurrencyValue?, estimateTime: String?) -> SendConfirmationViewItem?
-}
-
 enum SendInputType: String {
     case coin = "coin"
     case currency = "currency"
@@ -170,7 +165,7 @@ enum AmountInfo {
     var decimal: Int {
         switch self {
         case .currencyValue(let currencyValue): return currencyValue.currency.decimal
-        case .coinValue(let coinValue): return coinValue.coin.decimal
+        case .coinValue(let coinValue): return coinValue.decimals
         }
     }
 

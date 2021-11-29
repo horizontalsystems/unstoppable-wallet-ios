@@ -3,7 +3,6 @@ import ThemeKit
 import ComponentKit
 
 class IndicatorSelectorCell: UITableViewCell {
-    private let topSeparatorView = UIView()
     private let bottomSeparatorView = UIView()
     private var indicatorViews = [ChartIndicatorSet : UIButton]()
 
@@ -16,12 +15,12 @@ class IndicatorSelectorCell: UITableViewCell {
         contentView.backgroundColor = .clear
         selectionStyle = .none
 
-        let emaIndicatorView = ThemeButton().apply(style: .tertiary)
+        let emaIndicatorView = ThemeButton().apply(style: .secondaryDefault)
         contentView.addSubview(emaIndicatorView)
         emaIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(24)
+            maker.height.equalTo(28)
         }
 
         emaIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
@@ -29,12 +28,12 @@ class IndicatorSelectorCell: UITableViewCell {
         emaIndicatorView.tag = Int(ChartIndicatorSet.ema.rawValue)
         indicatorViews[.ema] = emaIndicatorView
 
-        let macdIndicatorView = ThemeButton().apply(style: .tertiary)
+        let macdIndicatorView = ThemeButton().apply(style: .secondaryDefault)
         contentView.addSubview(macdIndicatorView)
         macdIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(emaIndicatorView.snp.trailing).offset(CGFloat.margin8)
-            maker.height.equalTo(24)
+            maker.height.equalTo(28)
         }
 
         macdIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
@@ -42,26 +41,18 @@ class IndicatorSelectorCell: UITableViewCell {
         macdIndicatorView.tag = Int(ChartIndicatorSet.macd.rawValue)
         indicatorViews[.macd] = macdIndicatorView
 
-        let rsiIndicatorView = ThemeButton().apply(style: .tertiary)
+        let rsiIndicatorView = ThemeButton().apply(style: .secondaryDefault)
         contentView.addSubview(rsiIndicatorView)
         rsiIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(macdIndicatorView.snp.trailing).offset(CGFloat.margin8)
-            maker.height.equalTo(24)
+            maker.height.equalTo(28)
         }
 
         rsiIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
         rsiIndicatorView.setTitle("RSI", for: .normal)
         rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)
         indicatorViews[.rsi] = rsiIndicatorView
-
-        contentView.addSubview(topSeparatorView)
-        topSeparatorView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        topSeparatorView.backgroundColor = .themeSteel10
 
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in

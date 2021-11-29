@@ -1,9 +1,8 @@
 import Foundation
-import XRatesKit
+import MarketKit
 import CurrencyKit
 import LanguageKit
 import Chart
-import CoinKit
 
 class CoinChartFactory {
     private let timelineHelper: ITimelineHelper
@@ -78,9 +77,9 @@ class CoinChartFactory {
         let items = points.map { (point: ChartPoint) -> ChartItem in
             let item = ChartItem(timestamp: point.timestamp)
 
-            item.add(name: .rate, value: point.value)
-            if let volume = point.volume {
-                item.add(name: .volume, value: volume)
+            item.added(name: .rate, value: point.value)
+            if let volume = point.extra[ChartPoint.volume] {
+                item.added(name: .volume, value: volume)
             }
 
             return item
@@ -100,7 +99,7 @@ class CoinChartFactory {
 
     private func chartItem(point: ChartPoint, previousValues: [Decimal]) -> ChartItem {
         let chartItem = ChartItem(timestamp: point.timestamp)
-        chartItem.add(name: .rate, value: point.value)
+        chartItem.added(name: .rate, value: point.value)
 
         let values = previousValues + [point.value]
 
@@ -149,13 +148,13 @@ class CoinChartFactory {
            timestamp > lastPointTimestamp {
             // add current rate in data
             endTimestamp = max(timestamp, endTimestamp)
-            points.append(ChartPoint(timestamp: timestamp, value: rate, volume: nil))
+            points.append(ChartPoint(timestamp: timestamp, value: rate))
 
             // create extended point for 24h ago
             if chartType == .day, let rateDiff24 = item.rateDiff24h {
                 let firstTimestamp = timestamp - 24 * 60 * 60
                 let price24h = 100 * rate / (100 + rateDiff24)
-                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h, volume: nil)
+                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
             }
 
             addCurrentRate = true
@@ -232,19 +231,17 @@ class CoinChartFactory {
             return nil
         }
 
-        let chartPoint = ChartPoint(timestamp: chartItem.timestamp, value: rate, volume: chartItem.indicators[.volume])
-
-        let date = Date(timeIntervalSince1970: chartPoint.timestamp)
+        let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
 
         currencyFormatter.currencyCode = currency.code
         currencyFormatter.currencySymbol = currency.symbol
         currencyFormatter.maximumFractionDigits = 8
 
-        let formattedValue = currencyFormatter.string(from: chartPoint.value as NSNumber)
+        let formattedValue = currencyFormatter.string(from: rate as NSNumber)
 
         var rightSideMode: SelectedPointViewItem.RightSideMode
-        if macdSelected{
+        if macdSelected {
             let macd = macdFormat(value: chartItem.indicators[.macd])
             let macdSignal = macdFormat(value: chartItem.indicators[.macdSignal])
             let macdHistogram = macdFormat(value: chartItem.indicators[.macdHistogram])
@@ -253,7 +250,7 @@ class CoinChartFactory {
             rightSideMode = .macd(macdInfo: MacdInfo(macd: macd, signal: macdSignal, histogram: macdHistogram, histogramDown: histogramDown))
         } else {
 
-            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartPoint.volume.flatMap { $0.isZero ? nil : $0 }))
+            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : $0 }))
         }
 
         return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)

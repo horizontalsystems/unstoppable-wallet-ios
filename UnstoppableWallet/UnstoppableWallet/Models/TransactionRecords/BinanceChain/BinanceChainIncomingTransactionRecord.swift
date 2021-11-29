@@ -1,18 +1,18 @@
 import BinanceChainKit
-import CoinKit
+import MarketKit
 
 class BinanceChainIncomingTransactionRecord: BinanceChainTransactionRecord {
-    let value: CoinValue
+    let value: TransactionValue
     let from: String
 
-    init(transaction: TransactionInfo, feeCoin: Coin, coin: Coin) {
-        value = CoinValue(coin: coin, value: transaction.amount)
+    init(source: TransactionSource, transaction: TransactionInfo, feeCoin: PlatformCoin, coin: PlatformCoin) {
+        value = .coinValue(platformCoin: coin, value: transaction.amount)
         from = transaction.from
 
-        super.init(transaction: transaction, feeCoin: feeCoin)
+        super.init(source: source, transaction: transaction, feeCoin: feeCoin)
     }
 
-    override var mainValue: CoinValue? {
+    override var mainValue: TransactionValue? {
         value
     }
 

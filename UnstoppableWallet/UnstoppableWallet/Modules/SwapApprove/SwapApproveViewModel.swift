@@ -5,7 +5,7 @@ import EthereumKit
 import BigInt
 
 class SwapApproveViewModel {
-    private let maxCoinDecimal = 8
+    private let maxCoinDecimals = 8
     private let disposeBag = DisposeBag()
 
     private let service: SwapApproveService
@@ -84,7 +84,7 @@ extension SwapApproveViewModel {
         }
 
         // TODO: Decimal count check must be implemented in coinService and used in other places too
-        return amount.decimalCount <= min(coinService.coin.decimal, maxCoinDecimal)
+        return amount.decimalCount <= min(coinService.platformCoin.decimals, maxCoinDecimals)
     }
 
     func onChange(amount: String?) {

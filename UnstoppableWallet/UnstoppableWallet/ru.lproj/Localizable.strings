@@ -17,6 +17,7 @@
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
 "button.sign" = "Подписать";
+"button.more" = "Показать еще";
 
 "alert.copied" = "Скопировано";
 "alert.no_internet" = "Нет Интернета";
@@ -35,13 +36,12 @@
 "confirm" = "Подтвердить";
 "connect" = "Подключиться";
 "price" = "Цена";
+"value" = "Значение";
 "note" = "Примечание";
 
 "version" = "Версия %@";
 
 "n/a" = "Нет данных";
-
-"biometric_usage_reason" = "Разблокировать Кошелек";
 
 // Access Camera
 
@@ -54,8 +54,8 @@
 
 "restore.title" = "Выберите Кошелек";
 "restore.enter_key" = "Введите Ключ";
-"restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами.";
-"restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12 или 24 слова. Длина вашей мнемонической фразы составляет: %@";
+"restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами";
+"restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
@@ -64,18 +64,23 @@
 
 // Coin Settings
 
-"coin_settings.derivation.description.bip44" = "Старые";
-"coin_settings.derivation.description.bip49" = "Популярные";
-"coin_settings.derivation.description.bip84" = "Новые";
-"coin_settings.derivation.starts_with" = "начинается с %@...";
+"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip49" = "Новые (рекомендуется)";
+"coin_settings.derivation.title.bip84" = "Новые";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Новый";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Старые кошельки (до августа 2017 г.)";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Новые Кошельки";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.title" = "Формат Адреса";
-"blockchain_settings.description" = "Выберите формат адреса для вашего %@ кошелька. Каждый выбранный формат представляет отдельный кошелек во вкладке приложения для отображения баланса.";
+"blockchain_settings.description" = "Выберите формат адреса для токена. Если вы сомневаетесь в правильности выбранного формата, выберите рекомендуемую опцию. При восстановлении существующего кошелька должен быть выбран правильный формат.";
+
+// Coin Platforms
+
+"coin_platforms.title" = "Тип Монеты";
+"coin_platforms.description" = "Этот токен существует в нескольких блокчейнах. Выберите версию (-и), которую (-ые) вы хотите использовать.";
+"coin_platforms.native" = "Нативный";
 
 // Show Key
 
@@ -85,6 +90,11 @@
 "show_key.tab.recovery_phrase" = "Фраза для восстановления";
 "show_key.tab.private_keys" = "Приватные Ключи";
 "show_key.passphrase" = "Кодовая Фраза";
+
+"private_key_copying.title" = "Внимание";
+"private_key_copying.subtitle" = "Риск копирования Секретного ключа";
+"private_key_copying.description" = "В целях безопасности мы не рекомендуем копировать секретный ключ.";
+"private_key_copying.copy_button" = "Я рискну";
 
 // Backup Key
 
@@ -134,7 +144,8 @@
 "balance.sort.header" = "Сортировать по";
 "balance.sort.valueHighToLow" = "Балансу";
 "balance.sort.az" = "Названию";
-"balance.sort.24h_change" = "Цене(%) за 24 ч";
+"balance.sort.price_change" = "Изменение Цены";
+
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";
@@ -195,14 +206,18 @@
 "send.fee_info.content_conclusion" = "Кошелек Unstoppable делает обоснованное предположение на основе сетевой активности и не может гарантировать, что предлагаемые значения комиссии всегда будут давать желаемый результат.";
 
 "send.confirmation.you_send" = "Вы Отправляете";
-"send.confirmation.amount" = "Сумма";
 "send.confirmation.to" = "Кому";
+"send.confirmation.method" = "Метод";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Aккаунт";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
 "send.confirmation.send_button" = "Отправить";
+"send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
+"send.confirmation.resend_button" = "Отправить Повторно";
+"send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
+"send.confirmation.cancel_button" = "Отменить Транзакцию";
 "send.amount_error.balance" = "Недостаточно Средств";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
@@ -217,7 +232,7 @@
 
 // CoinSelector
 
-"choose_coin.title" = "Выберите Токен";
+"choose_coin.title" = "Выберите Токены";
 
 // Swap
 
@@ -237,27 +252,36 @@
 "swap.approving_button" = "Подтверждение...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
-"swap.button_error.impact_too_high" = "Высокое отклонение цены";
+"swap.switch_provider.title" = "Смена провайдера";
+"swap.switch_provider.subtitle" = "Переключатель";
 
 "swap.price" = "Цена";
+"swap.buy_price" = "Цена покупки";
+"swap.sell_price" = "Цена продажи";
 "swap.price_impact" = "Отклонение от рын. цены";
 "swap.maximum_paid" = "Максимальная Выплата";
 "swap.minimum_got" = "Минимальная Выплата";
+"swap.estimate_short" = "(прим.)";
+"swap.minimum_short" = "(мин)";
 
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимость Отклонений";
-"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более, чем на этот процент";
+"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
 "swap.advanced_settings.deadline" = "Срок Транзакции";
 "swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если перевод займет больше указанного срока.";
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
 "swap.advanced_settings.deadline_minute" = "%@ мин";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
+"swap.advanced_settings.warning.unusual_slippage" = "Ваша транзакция может быть подвержена фронтраннингу.";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
-"swap.advanced_settings.error.higher_slippage" = "Макс. допустимое значение %@%%.";
+"swap.advanced_settings.error.higher_slippage" = "Сопротивление скольжению не может превышать %@%%";
 "swap.advanced_settings.error.invalid_address" = "Неверный Адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
+
+"swap.one_inch.error.cannot_estimate" = "Ошибка! Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
+
 
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
@@ -272,6 +296,7 @@
 "swap.confirmation.guaranteed" = "Гарантировано";
 "swap.confirmation.maximum" = "Максимум";
 "swap.confirmation.estimated" = "Ориентировочно";
+"swap.confirmation.impact_too_high" = "Разница между рыночной ценой и ожидаемой расчетной ценой слишком высока.";
 
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
@@ -291,7 +316,7 @@
 "swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
 "swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
 "swap.dex_info.header_transaction_speed" = "Скорость Транзакции";
-"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Верно и обратное.";
+"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
@@ -300,20 +325,19 @@
 "market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
 "market.category.overview" = "Обзор";
-"market.category.discovery" = "Токены";
+"market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
 "market.24h_volume" = "Объем торгов за 24 ч";
-"market.btc_dominance" = "Доминирование BTC";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
 "market.sync_error" = "Ошибка Синхронизации";
+"market.coin_not_supported_yet" = "Unstoppable пока не поддерживает этот токен";
 
 "market.top.section.header.see_all" = "Посмотреть Всё";
 "market.top.section.header.top_gainers" = "Взлеты";
 "market.top.section.header.top_losers" = "Падения";
-"market.top.section.header.top_volume" = "Топ По Объему";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объём";
 "market.top.market_cap.title" = "Рын. кап.";
@@ -322,7 +346,15 @@
 "market.market_field.mcap" = "Рын. кап.";
 "market.market_field.vol" = "Объём";
 
+"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.diff" = "Процент";
+
+"market.tvl.platform_field.all" = "Все";
+
 "market.sort_by" = "Сортировать По";
+
+"market.top.title" = "Лучшие токены";
+"market.top.description" = "Топ токенов по рыночной капитализации";
 
 "market.top.highest_cap" = "Наивысшей Кап.";
 "market.top.lowest_cap" = "Наименьшей Кап.";
@@ -330,6 +362,11 @@
 "market.top.lowest_volume" = "Наименьшему Объему";
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
+
+"market_discovery.title" = "Токены";
+"market_discovery.filters" = "Фильтры";
+"market_discovery.browse_categories" = "Посмотреть категории";
+"market_discovery.top_coins" = "Лучшие токены";
 
 "market_discovery.filter_title.blockchain" = "Blockchains";
 "market_discovery.filter_title.dexes" = "DEXes";
@@ -380,14 +417,14 @@
 "market_discovery.filter_description.identity" = "Децентрализованная идентификация.";
 "market_discovery.filter_description.yield_tokens" = "Прибыльные токены";
 
-
-"market_watchlist.empty.caption" = "У вас нет токенов в избранном. \nВы можете добавить сюда токены с помощью значка \"звездочка\" на странице токенов.";
+"market_watchlist.empty.caption" = "У вас нет токенов в избранном. Вы можете добавить сюда токены с помощью значка \"звездочка\" на странице токенов.";
 
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
 
-"market.advanced_search.title" = "Расширенный Поиск";
+"market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать Результаты";
+"market.advanced_search.empty_results" = "Сбросить результаты";
 "market.advanced_search.dex_description" = "Эта настройка применяется к токенам, торгуемым на Ethereum (Uniswap DEX) и Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24ч";
 
@@ -410,12 +447,29 @@
 "market.advanced_search.reset_all" = "Сбросить";
 
 "market.advanced_search.any" = "Любые";
-"market.advanced_search.less_5_m" = "< 5М";
-"market.advanced_search.m_5_m_20" = "5М - 20М";
-"market.advanced_search.m_20_m_100" = "20М - 100М";
-"market.advanced_search.m_100_b_1" = "100 млн - 1 млрд";
-"market.advanced_search.b_1_b_5" = "1млрд - 5 млрд";
-"market.advanced_search.more_5_b" = "> 5 млрд";
+"market.advanced_search.less_5_m" = "< 5млн";
+"market.advanced_search.less_10_m" = "< 10млн";
+"market.advanced_search.less_50_m" = "< 50млн";
+"market.advanced_search.less_500_m" = "< 500млн";
+"market.advanced_search.m_5_m_20" = "5млн - 20млн";
+"market.advanced_search.m_10_m_40" = "10млн - 40млн";
+"market.advanced_search.m_20_m_100" = "20млн - 100млн";
+"market.advanced_search.m_40_m_200" = "40млн - 200млн";
+"market.advanced_search.m_50_m_200" = "50млн - 200млн";
+"market.advanced_search.m_100_b_1" = "100млн - 1млрд";
+"market.advanced_search.m_200_b_1" = "200млн - 1млрд";
+"market.advanced_search.m_200_b_2" = "200млн - 2млрд";
+"market.advanced_search.m_500_b_2" = "500млн - 2млрд";
+"market.advanced_search.b_1_b_5" = "1млрд - 5млрд";
+"market.advanced_search.b_1_b_10" = "1млрд - 10млрд";
+"market.advanced_search.b_2_b_10" = "2млрд - 10млрд";
+"market.advanced_search.b_10_b_50" = "10млрд - 50млрд";
+"market.advanced_search.b_10_b_100" = "10млрд - 100млрд";
+"market.advanced_search.b_100_b_500" = "100млрд - 500млрд";
+"market.advanced_search.more_5_b" = "> 5млрд";
+"market.advanced_search.more_10_b" = "> 10млрд";
+"market.advanced_search.more_50_b" = "> 50млрд";
+"market.advanced_search.more_500_b" = "> 500млрд";
 
 "market.advanced_search.day" = "1 День";
 "market.advanced_search.week" = "1 Неделя";
@@ -424,7 +478,9 @@
 "market.advanced_search.month6" = "6 Месяцев";
 "market.advanced_search.year" = "1 Год";
 
-"market.global.btc_dominance.title" = "Доминирование Bitcoin";
+"market.advanced_search_results.title" = "Результаты";
+
+"market.global.total_market_cap.title" = "Полная Рыночная Капитализация";
 "market.global.volume_24h.title" = "Объем";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
@@ -434,7 +490,7 @@
 "market.global.volume_24h.title" = "Объем";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
-"market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка наоборот.";
+"market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
 "market.global.tvl_in_defi.description" = "Историческое изменение в совокупной стоимости всех криптовалют, управляемых децентрализованными протоколами.";
@@ -449,6 +505,11 @@
 "coin_page.roi.day200" = "6 Месяцев";
 "coin_page.roi.year1" = "1 Год";
 
+"coin_page.tab.overview" = "Обзор";
+"coin_page.tab.markets" = "Рынок";
+"coin_page.tab.details" = "Подробности";
+"coin_page.tab.tweets" = "Твиты";
+
 "coin_page.market_cap" = "Рын. Капитализация";
 "coin_page.circulating_supply" = "В обороте";
 "coin_page.total_supply" = "Макс.Выпуск";
@@ -458,13 +519,18 @@
 "coin_page.trading_volume" = "Объем Торговли";
 "coin_page.trading_volume.description" = "Историческое изменение усредненного ежедневного объема торговли для %@";
 "coin_page.markets" = "Рынки";
-"coin_page.funds_invested" = "Вложенные Средства";
 
 "coin_page.coin_markets" = "%@ Рынки";
 "coin_page.coin_markets.sort_by" = "Сортировать По";
 "coin_page.coin_markets.sort_by.highest_volume" = "Наивысшему Обьему";
 "coin_page.coin_markets.sort_by.lowest_volume" = "Наименьшему Объему";
 
+"coin_page.token_liquidity" = "Ликвидность Токена";
+"coin_page.token_distribution" = "Распределение Токенов";
+
+"coin_page.chart_tvl" = "Токен TVL";
+"coin_page.chart_volumes" = "Общий Объём";
+"coin_page.token_tvl" = "Токен TVL";
 "coin_page.tvl" = "Всего Залоченных Активов";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
 "coin_page.tvl_rank" = "Рейтинг TVL";
@@ -472,30 +538,40 @@
 
 "coin_page.investor_data" = "Данные Инвестора";
 
+"coin_page.treasuries" = "Казначейские ценные бумаги";
+"coin_page.treasuries.filters" = "Фильтры";
+"coin_page.treasuries.filter.all" = "Все";
+"coin_page.treasuries.filter.public" = "В открытом доступе";
+"coin_page.treasuries.filter.private" = "В закрытом доступе";
+"coin_page.treasuries.filter.etf" = "ETF";
+
+"coin_page.funds_invested" = "Вложенные Средства";
+"coin_page.funds_invested.lead" = "Лиды";
+
+"coin_page.reports" = "Отчёты";
+
 "coin_page.category" = "Категория";
-"coin_page.contract" = "%@ Контракт";
-"coin_page.bep2_symbol" = "Символ BEP2";
+
+"coin_page.contracts" = "Контракты";
+"coin_page.links" = "Ссылки";
 
 "coin_page.guide" = "Руководство";
 "coin_page.website" = "Веб-сайт";
-"coin_page.whitepaper" = "Whitepaper";
+"coin_page.whitepaper" = "Белая бумага";
 
 "coin_page.favorited" = "Добавлено в Избранное";
 "coin_page.unfavorited" = "Удалить из Избранного";
+"coin_page.added_to_wallet" = "Добавлено в Кошелек";
+"coin_page.already_added_to_wallet" = "Уже добавлено в кошелек";
 
 "coin_page.major_holders" = "Основные Владельцы";
-"coin_page.major_holders.chart.description" = "в Топ-10 кошельках";
-"coin_page.major_holders.top_wallets" = "Топ Кошельки";
+"coin_page.major_holders.chart.description" = "Топ-10 лучших кошельков Ethereum";
+"coin_page.major_holders.top_ethereum_wallets" = "Лучшие кошельки Ethereum";
 "coin_page.major_holders.description" = "На графике выше показано % всех жетонов, находящихся в обороте топ-10 кошельков. Чем ниже это процентное соотношение, тем выше распределение коина.";
-"coin_page.major_holders.sync_error" = "Ошибка Синхронизации";
+
 
 "coin_page.tvl_rank.multi_chain" = "Мультичейн";
-"coin_page.tvl_rank.sync_error" = "Ошибка Синхронизации";
-"coin_page.tvl_rank.filters" = "Фильтры";
-"coin_page.tvl_rank.filters.all" = "Все";
-"coin_page.tvl_rank.sort_by" = "Сортировать по";
-"coin_page.tvl_rank.sort_by.highest_tvl" = "Наивысшему TVL";
-"coin_page.tvl_rank.sort_by.lowest_tvl" = "Наименьшему TVL";
+"coin_page.tvl_rank.filter_by_chain" = "Сортировать по блокчейну";
 
 "coin_page.security_parameters" = "Параметры Безопасности";
 "coin_page.security_parameters.privacy" = "Приватность";
@@ -526,7 +602,13 @@
 "coin_page.audits" = "Аудиты";
 "coin_page.audits.issues" = "Запросы";
 "coin_page.audits.no_reports" = "Нет аудиторских отчетов";
-"coin_page.audits.sync_error" = "Ошибка Синхронизации";
+
+"coin_page.tweets.reference_type.retweeted" = "Ретвитнул @%@";
+"coin_page.tweets.reference_type.quoted" = "Процитировал @%@";
+"coin_page.tweets.reference_type.replied" = "Ответил @%@";
+"coin_page.tweets.no_tweets_yet" = "Пока нет твитов";
+"coin_page.tweets.not_available" = "Twitter не доступен";
+"coin_page.tweets.see_on_twitter" = "Посмотреть в Twitter";
 
 // Transactions
 
@@ -554,6 +636,12 @@
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
 
+"transactions.types.all" = "Все";
+"transactions.types.incoming" = "Входящие";
+"transactions.types.outgoing" = "Исходящие";
+"transactions.types.swap" = "Обменять";
+"transactions.types.approve" = "Подтвердить";
+
 // Transaction Info
 
 "tx_info.title" = "Информация о Транзакции";
@@ -567,6 +655,9 @@
 "tx_info.to_hash" = "Кому";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
+"tx_info.options.speed_up" = "Ускорение";
+"tx_info.options.cancel" = "Отменить";
+"tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
 "tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
@@ -591,7 +682,6 @@
 "settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
 "settings.experimental_features" = "Экспериментальные Функции";
-"settings.notifications" = "Уведомления";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
 "settings.faq" = "FAQ";
@@ -607,24 +697,12 @@
 "settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение Unstoppable Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
 "settings.base_currency.disclaimer.i_understand" = "Я Понимаю";
 
-// Settings -> Notifications
-
-"settings_notifications.title" = "Уведомления";
-"settings_notifications.toggle_title" = "Push-уведомления";
-"settings_notifications.description" = "Установите уведомления об изменении курса отслеживаемых вами монет.\n\nВы получите уведомление, когда изменение курса за последние 24 часа превысит выбранный порог.\n\n Уведомление о тенденции цен предупреждает об изменениях в движении цен в краткосрочной перспективе (1 неделя), и долгосрочной перспективе (6 месяцев).";
-"settings_notifications.alert_off" = "Выкл.";
-"settings.notifications.disabled_text" = "Уведомления для приложения Unstoppable Wallet отключены. Чтобы получать уведомления об изменении цен, вам нужно включить уведомления и разрешить запуск приложения в фоновом режиме.";
-"settings.notifications.settings_button" = "Включить в настройках";
-"settings_notifications.trend_short" = "Краткосрочно 7Д";
-"settings_notifications.trend_long" = "Долгосрочно 6М";
-"settings_notifications.reset_all_title" = "Сбросить Всё";
-"settings_notifications.trend_settings_title" = "Тенденция Цен";
 
 // Settings -> Manage Wallet
 
-"manage_coins.title" = "Выберите Токены";
-"manage_coins.add_token" = "Добавить Токен";
-"manage_coins.search" = "Поиск";
+"manage_wallets.title" = "Токены";
+"manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную, если вы знаете его адрес смарт-контракта.";
+
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
 "manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
@@ -692,11 +770,11 @@
 "settings_privacy_info.title" = "Настройки Приватности";
 "settings_privacy_info.description" = "Ниже вы найдете подробное описание доступных в приложении настроек конфиденциальности. Эти настройки предназначены для тех, кому нужна полная конфиденциальность.";
 "settings_privacy_info.header_blockchain_transactions" = "Tранзакции Блокчейна";
-"settings_privacy_info.content_blockchain_transactions" = "Этот параметр контролирует уровень конфиденциальности пользовательских транзакций в блокчейнах Bitcoin, Bitcoin Cash и Litecoin.\n\nБольшинство транзакций с биткойнами генерируют два выхода. Один - сумма для отправки получателю, а другой - сдача для возврата отправителю. Особенности создания транзакций большинством кошельков позволяют третьей стороне отслеживать блокчейн Bitcoin на предмет того, какая из этих двух сумм была отправлена принимающей стороне, и какая сумма была возвращена отправителю. Возвращенная отправителю сумма может быть позже использована в будущих сделках и для дальнейшего раскрытия сведений контролирующей стороне.\n\nКошелек Unstoppable принимает меры для затруднения идентификации направлений отправки этих двух сумм. Для пользователей Unstoppable доступны две опции:\n\n1. Перемешивание: Рандомизируется порядок выхода каждой транзакции. Иногда сдача может отправляться первой, а иногда второй. Если вы доверяете разработчику приложения, то воспользуйтесь рекомендуемым вариантом.\n\n2. Детерминистский подход: существует общепринятый стандарт заказа выходов транзакций (именуемый BIP69). Используя стандартные кошельки с открытым исходным кодом, пользователи не должны волноваться о том, как разработчики приложения реализуют выходы. Так как это новый стандарт, он еще не реализован во многих кошельках. В результате, пока что в блокчейн можно увидеть, была ли отправлена транзакция из кошелька, который использует этот стандарт или нет.";
+"settings_privacy_info.content_blockchain_transactions" = "Настройка транзакций блокчейн контролирует твики конфиденциальности для транзакций пользователей при отправке транзакций через Bitcoin, Bitcoin Cash и Litecoin blockchains.\n\nБольшинство транзакций генерируют два вывода. Один вывод - это сумма, которая направляется к получателю, а другой - результат изменения, возвращаемый отправителю. То, как большинство кошельков создают транзакции, позволяет третьей стороне легко понять, какая из выходов была отправлена получателю и какая сумма была возвращена отправителю. По мере того, как в будущих транзакциях возвращается вывод отправителя, становится очевидной связь между этими двумя транзакциями. \n\nНеостановимый кошелек реализует меры, чтобы сделать его более трудным для кого-то выяснить, какой выходной вывод есть. \n\nЕсть два варианта неостановимых пользователей:\n\n1. Shuffle: Порядок вывода транзакций разбивается на случайные по каждой транзакции. Иногда изменения могут быть первым выходом, иногда это может быть вторым. Если пользователь доверяет разработчику приложения, то рассмотрите его рекомендуемый вариант. \n\n\n. Deterministic: Существует общепринятый стандарт сортировки выходов транзакций (известный как BIP69). В кошельках с открытым исходным кодом стандарт гарантирует, что пользователям кошелька не нужно доверять то, как разработчики приложения реализуют заказы выходов. Так как этот стандарт новый, еще не многие кошельки реализовали его. В результате несколько можно посмотреть на блокчейне, была ли отправлена транзакция из кошелька, использующего этот стандарт или нет.";
 "settings_privacy_info.header_blockchain_connection" = "Синхронизация Блокчейна";
-"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains (sending/receiving transactions). In case of Bitcoin, Bitcoin Cash, Litecoin and Dash it is fully peer to peer. The app pings many nodes and communicates with them. Potentially these nodes can record IP address and data requested but since they are chosen randomly, each time the app connects to a different node.\n\nIn case of Ethereum, there is no alternative for mobile wallets to interact with blockchain other than via third party providers (i.e. Infura.io) or personal Ethereum nodes. Third party services can potentially record IP addresses and the requests made. That info can reveal location, balance, transactions etc. Moreover, the wallet has to trust that information returned is correct. There is a an alternative known as Incubed which in essence is a network of special Ethereum nodes. These nodes can also record IP addresses and requests made, but they are chosen randomly each time. While being slightly slower than Infura, the way Incubed works pretty much guarantees that the information returned is correct (not fake).\n\nWhen it comes to other blockchains like EOSIO and Binance Chain, at this point they only provide centralized means of connecting, without viable alternatives. Potentially they can be recording IP addresses and requests made.";
+"settings_privacy_info.content_blockchain_connection" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 "settings_privacy_info.header_blockchain_restore" = "Восстановить Блокчейн";
-"settings_privacy_info.content_blockchain_restore" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления...";
+"settings_privacy_info.content_blockchain_restore" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
 
 "settings_privacy.alert_sync.title" = "Источник Восстановления";
 "settings_privacy.alert_sync.description" = "После вступления данного изменения в силу кошелек должен будет повторно синхронизироваться с блокчейном %@.";
@@ -741,6 +819,15 @@
 "settings_theme.system" = "Системная";
 "settings_theme.dark" = "Тёмная";
 "settings_theme.light" = "Светлая";
+
+// Settings -> Launch Screen
+
+"settings.launch_screen.title" = "Экран запуска";
+
+"launch_screen.auto" = "По умолчанию";
+"launch_screen.balance" = "Баланс";
+"launch_screen.market_overview" = "Обзор Рынка";
+"launch_screen.watchlist" = "Избранное";
 
 // Set PIN
 
@@ -814,9 +901,10 @@
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
 "create_wallet.success" = "Создан";
 
-// Select Coins
+// Restore Select
 
-"select_coins.choose_crypto" = "Выберите Валюту";
+"restore_select.title" = "Выберите Токены";
+"restore_select.not_found" = "Не найдено";
 
 // Lock Info
 
@@ -839,7 +927,7 @@
 
 "intro.next" = "Далее";
 "intro.start" = "Начать";
-"intro.brand.description" = "Be Unstoppable";
+"intro.brand.description" = "Двигайтесь вперед!";
 "intro.unchain_assets.title" = "Освободите Активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
 "intro.go_borderless.title" = "Избавьтесь от Границ";
@@ -855,26 +943,14 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_type" = "Тип Монеты";
+"add_token.coin_types" = "Тип(-ы) токенов";
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Код Монеты";
-"add_token.decimal" = "Десятичный";
+"add_token.decimals" = "Десятичные знаки";
 "add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
-"add_token.contract_not_found" = "Контракт не найден";
-"add_token.symbol_not_found" = "Символ не найден";
+"add_token.token_not_found" = "Токен не найден";
 "add_token.success_add" = "Добавлен";
-
-"change_24hour_up" = "%@ цена: повысилась на %@%%%@";
-"change_24hour_down" = "%@ цена: понизилась на %@%%%@";
-"trend_shortterm_up" = "краткосрочный тренд %@: вверх %@";
-"trend_shortterm_down" = "краткосрочный тренд %@: вниз %@";
-"trend_longterm_up" = "долгосрочный тренд %@: вверх %@";
-"trend_longterm_down" = "долгосрочный тренд %@: вниз %@";
-
-"chart_alert.title" = "Уведомления ";
-"chart_alert.24h_description" = "Изменение цены 24 ч";
-"chart_alert.trend_description" = "Изменение Тренда";
 
 // Wallet Connect
 
@@ -883,13 +959,15 @@
 "wallet_connect.url" = "URL";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
 "wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
-"wallet_connect.no_connection" = "Wallet Connect не отвечает";
+"wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
+"wallet_connect.button_reconnect" = "Повторное подключение";
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс ETH ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
+"wallet_connect.button.confirm" = "Подтвердить";
 "wallet_connect.sign.request_title" = "Запрос на подпись";
 "wallet_connect.sign.domain" = "Домен";
 "wallet_connect.sign.message" = "Сообщение для подписи";
@@ -897,6 +975,8 @@
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect_list.new_connection" = "Новое Подключение";
+"wallet_connect_list.disconnecting" = "Отсоединяет...";
+
 
 // App Status
 
@@ -925,10 +1005,10 @@
 // Enable Coins
 
 "enable_coins.title" = "Активировать Монеты";
-"enable_coins.description" = "Активировать все %@ монеты с любым балансом";
+"enable_coins.description" = "Активировать все %@ монеты с любым балансом.";
 "enable_coins.enable_button" = "Активировать";
 "enable_coins.enabling" = "Идет активация...";
-"enable_coins.enabled_coins" = "Активировано %@ монет";
+"enable_coins.enabled_coins" = "Включено ещё %@ монет";
 "enable_coins.enabled_no_coins" = "На балансе нет монет";
 
 // Onboarding
@@ -954,7 +1034,7 @@
 // Birthday Input
 
 "birthday_input.title" = "Блок Создания";
-"birthday_input.description" = "Если вы знаете блок создания вашего Zcash кошелька, добавьте его ниже для ускорения процесса синхронизации.";
+"birthday_input.description" = "Если вы знаете дату создания вашего кошелька, укажите ее для быстрой синхронизации.";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 "restore_setting.birthday_height" = "%@ Блок Создания";
 

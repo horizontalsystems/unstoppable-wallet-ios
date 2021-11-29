@@ -54,8 +54,7 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
             maker.width.equalTo(CGFloat.margin4x + 24 + CGFloat.margin4x)
         }
 
-        sortButton.setImageTintColor(.themeJacob, for: .normal)
-        sortButton.setImage(UIImage(named: "sort_6_24"), for: .normal)
+        sortButton.setImage(UIImage(named: "sort_6_24")?.withTintColor(.themeJacob), for: .normal)
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
     }
 

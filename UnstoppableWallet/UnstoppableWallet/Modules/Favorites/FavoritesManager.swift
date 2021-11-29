@@ -1,11 +1,10 @@
 import RxSwift
 import RxCocoa
-import CoinKit
 
 class FavoritesManager {
     private let storage: IFavoriteCoinRecordStorage
 
-    private let dataUpdatedRelay = PublishRelay<()>()
+    private let coinUidsUpdatedRelay = PublishRelay<()>()
 
     init(storage: IFavoriteCoinRecordStorage) {
         self.storage = storage
@@ -13,30 +12,33 @@ class FavoritesManager {
 
 }
 
-extension FavoritesManager: IFavoritesManager {
+extension FavoritesManager {
 
-    public var dataUpdatedObservable: Observable<()> {
-        dataUpdatedRelay.asObservable()
+    var coinUidsUpdatedObservable: Observable<()> {
+        coinUidsUpdatedRelay.asObservable()
     }
 
-    public var all: [FavoriteCoinRecord] {
-        storage.favoriteCoinRecords
+    var allCoinUids: [String] {
+        storage.favoriteCoinRecords.map { $0.coinUid }
     }
 
-    public func add(coinType: CoinType) {
-        storage.save(coinType: coinType)
-
-        dataUpdatedRelay.accept(())
+    func add(coinUid: String) {
+        storage.save(favoriteCoinRecord: FavoriteCoinRecord(coinUid: coinUid))
+        coinUidsUpdatedRelay.accept(())
     }
 
-    public func remove(coinType: CoinType) {
-        storage.deleteFavoriteCoinRecord(coinType: coinType)
-
-        dataUpdatedRelay.accept(())
+    func add(coinUids: [String]) {
+        storage.save(favoriteCoinRecords: coinUids.map { FavoriteCoinRecord(coinUid: $0) })
+        coinUidsUpdatedRelay.accept(())
     }
 
-    public func isFavorite(coinType: CoinType) -> Bool {
-        storage.inFavorites(coinType: coinType)
+    func remove(coinUid: String) {
+        storage.deleteFavoriteCoinRecord(coinUid: coinUid)
+        coinUidsUpdatedRelay.accept(())
+    }
+
+    func isFavorite(coinUid: String) -> Bool {
+        storage.favoriteCoinRecordExists(coinUid: coinUid)
     }
 
 }

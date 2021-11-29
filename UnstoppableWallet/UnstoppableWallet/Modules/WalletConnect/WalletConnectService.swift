@@ -1,5 +1,5 @@
 import EthereumKit
-import WalletConnect
+import WalletConnectV1
 import RxSwift
 import RxRelay
 import CurrencyKit
@@ -18,6 +18,7 @@ class WalletConnectService {
     private var stateRelay = PublishRelay<State>()
     private var connectionStateRelay = PublishRelay<WalletConnectInteractor.State>()
     private var requestRelay = PublishRelay<WalletConnectRequest>()
+    private var errorRelay = PublishRelay<Error>()
 
     private var pendingRequests = [Int: WalletConnectRequest]()
     private var requestIsProcessing = false
@@ -127,6 +128,10 @@ extension WalletConnectService {
         requestRelay.asObservable()
     }
 
+    var errorObservable: Observable<Error> {
+        errorRelay.asObservable()
+    }
+
     var remotePeerMeta: WCPeerMeta? {
         sessionData?.peerMeta
     }
@@ -145,7 +150,22 @@ extension WalletConnectService {
         interactor?.connect()
     }
 
+    func reconnect() {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
+        interactor?.delegate = self
+        interactor?.connect()
+    }
+
     func approveSession() {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         guard let interactor = interactor, let sessionData = sessionData else {
             return
         }
@@ -166,6 +186,11 @@ extension WalletConnectService {
     }
 
     func rejectSession() {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         guard let interactor = interactor else {
             return
         }
@@ -176,6 +201,11 @@ extension WalletConnectService {
     }
 
     func approveRequest(id: Int, result: Any) {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         queue.async {
             if let request = self.pendingRequests.removeValue(forKey: id), let convertedResult = request.convert(result: result) {
                 self.interactor?.approveRequest(id: id, result: convertedResult)
@@ -187,6 +217,11 @@ extension WalletConnectService {
     }
 
     func rejectRequest(id: Int) {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         queue.async {
             self.pendingRequests.removeValue(forKey: id)
 

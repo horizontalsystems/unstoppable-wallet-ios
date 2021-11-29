@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 import EthereumKit
 import SectionsTableView
 import ThemeKit
@@ -33,6 +33,7 @@ protocol ISwapDataSource: AnyObject {
     var state: SwapModule.DataSourceState { get }
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? { get set }
+    var onOpenSelectProvider: (() -> ())? { get set }
     var onOpenSettings: (() -> ())? { get set }
     var onClose: (() -> ())? { get set }
     var onReload: (() -> ())? { get set }
@@ -40,11 +41,11 @@ protocol ISwapDataSource: AnyObject {
 
 class SwapModule {
 
-    static func viewController(coinFrom: Coin? = nil) -> UIViewController? {
-        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, coinFrom: coinFrom)
+    static func viewController(platformCoinFrom: PlatformCoin? = nil) -> UIViewController? {
+        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, platformCoinFrom: platformCoinFrom)
 
         let viewModel =  SwapViewModel(dexManager: swapDexManager)
-        let viewController = SwapViewControllerNew(
+        let viewController = SwapViewController(
                 viewModel: viewModel,
                 dataSourceManager: swapDexManager
         )
@@ -61,15 +62,15 @@ extension SwapModule {
     }
 
     class DataSourceState {
-        var coinFrom: Coin?
-        var coinTo: Coin?
+        var platformCoinFrom: PlatformCoin?
+        var platformCoinTo: PlatformCoin?
         var amountFrom: Decimal?
         var amountTo: Decimal?
         var exactFrom: Bool
 
-        init(coinFrom: Coin?, coinTo: Coin? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
-            self.coinFrom = coinFrom
-            self.coinTo = coinTo
+        init(platformCoinFrom: PlatformCoin?, platformCoinTo: PlatformCoin? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
+            self.platformCoinFrom = platformCoinFrom
+            self.platformCoinTo = platformCoinTo
             self.amountFrom = amountFrom
             self.amountTo = amountTo
             self.exactFrom = exactFrom
@@ -110,7 +111,6 @@ extension SwapModule {
         case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
-        case forbiddenPriceImpactLevel
     }
 
 }
@@ -135,10 +135,10 @@ extension SwapModule.Dex {
             }
         }
 
-        var coin: Coin? {
+        var platformCoin: PlatformCoin? {
             switch self {
-            case .ethereum: return App.shared.coinKit.coin(type: .ethereum)
-            case .binanceSmartChain: return App.shared.coinKit.coin(type: .binanceSmartChain)
+            case .ethereum: return try? App.shared.marketKit.platformCoin(coinType: .ethereum)
+            case .binanceSmartChain: return try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
             }
         }
 

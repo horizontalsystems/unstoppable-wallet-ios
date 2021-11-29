@@ -34,7 +34,7 @@ class FormField: UIView {
         }
 
         copyButton.apply(style: .secondaryIcon)
-        copyButton.apply(secondaryIconImage: UIImage(named: "copy_20"))
+        copyButton.setImage(UIImage(named: "copy_20"), for: .normal)
         copyButton.addTarget(self, action: #selector(_onTapCopy), for: .touchUpInside)
     }
 

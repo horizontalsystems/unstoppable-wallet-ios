@@ -1,83 +1,76 @@
-import Foundation
-import DeepDiff
 import CurrencyKit
-import CoinKit
+import UIKit
+import RxSwift
+import MarketKit
 
-protocol ITransactionsView: AnyObject {
-    func set(status: TransactionViewStatus)
-    func show(filters: [FilterHeaderView.ViewItem])
-    func show(transactions: [TransactionViewItem], animated: Bool)
-    func showNoTransactions()
-    func reloadTransactions()
+struct TransactionsModule {
+
+    static let pageLimit = 10
+
+    static func instance() -> UIViewController {
+        let service = TransactionsService(
+                walletManager: App.shared.walletManager,
+                adapterManager: App.shared.transactionAdapterManager
+        )
+        let viewModel = TransactionsViewModel(service: service, factory: TransactionsViewItemFactory())
+        let viewController = TransactionsViewController(viewModel: viewModel)
+
+        return viewController
+    }
+
+    struct ViewStatus {
+        let showProgress: Bool
+        let showMessage: Bool
+    }
+
 }
 
-protocol ITransactionsViewDelegate {
-    func viewDidLoad()
-    func onFilterSelect(index: Int)
-
-    func onBottomReached()
-
-    func onTransactionClick(item: TransactionViewItem)
-    func willShow(item: TransactionViewItem)
+enum TransactionTypeFilter: String, CaseIterable {
+    case all, incoming, outgoing, swap, approve
 }
 
-protocol ITransactionsInteractor {
-    func initialFetch()
-    func fetchLastBlockHeights(wallets: [TransactionWallet])
-
-    func fetchRecords(fetchDataList: [FetchData], initial: Bool)
-    func fetchRate(coin: Coin, date: Date)
-    func observe(wallets: [TransactionWallet])
+struct TransactionItem {
+    let record: TransactionRecord
+    var lastBlockInfo: LastBlockInfo?
+    var currencyValue: CurrencyValue?
 }
 
-protocol ITransactionsInteractorDelegate: AnyObject {
-    func onUpdate(wallets: [Wallet])
-    func onUpdate(lastBlockInfos: [(TransactionWallet, LastBlockInfo?)])
-    func onUpdate(states: [TransactionWallet: AdapterState])
-
-    func onUpdateBaseCurrency()
-    func onConnectionRestore()
-
-    func onUpdate(lastBlockInfo: LastBlockInfo, wallet: TransactionWallet)
-    func didUpdate(records: [TransactionRecord], wallet: TransactionWallet)
-    func didUpdate(state: AdapterState, wallet: TransactionWallet)
-
-    func didFetch(rateValue: Decimal, coin: Coin, currency: Currency, date: Date)
-    func didFetch(recordsData: [TransactionWallet: [TransactionRecord]], initial: Bool)
+struct TransactionViewItem {
+    let uid: String
+    let date: Date
+    let typeImage: ColoredImage
+    let progress: Float?
+    let title: String
+    let subTitle: String
+    let primaryValue: ColoredValue?
+    let secondaryValue: ColoredValue?
+    let sentToSelf: Bool
+    let locked: Bool?
 }
 
-protocol ITransactionsRouter {
-    func openTransactionInfo(viewItem: TransactionViewItem)
+struct ColoredValue {
+    let value: String
+    let color: UIColor
 }
 
-protocol ITransactionViewItemFactory {
-    func filterItems(wallets: [Wallet]) -> [FilterHeaderView.ViewItem]
-    func viewItem(fromRecord record: TransactionRecord, wallet: TransactionWallet, lastBlockInfo: LastBlockInfo?, mainAmountCurrencyValue: CurrencyValue?) -> TransactionViewItem
-    func currencyString(from: CurrencyValue) -> String
-    func viewStatus(adapterStates: [AdapterState], transactionsCount: Int) -> TransactionViewStatus
-}
-
-protocol IDiffer {
-    func changes<T: DiffAware>(old: [T], new: [T], section: Int) -> ChangeWithIndexPath
-}
-
-struct FetchData {
-    let wallet: TransactionWallet
-    let from: TransactionRecord?
-    let limit: Int
+struct ColoredImage {
+    let imageName: String
+    let color: UIColor
 }
 
 struct TransactionWallet: Hashable {
-    let coin: Coin?
+    let coin: PlatformCoin?
     let source: TransactionSource
+    let badge: String?
 
     func hash(into hasher: inout Hasher) {
         coin?.hash(into: &hasher)
         source.hash(into: &hasher)
+        badge.hash(into: &hasher)
     }
 
     static func ==(lhs: TransactionWallet, rhs: TransactionWallet) -> Bool {
-        lhs.coin == rhs.coin && lhs.source == rhs.source
+        lhs.coin == rhs.coin && lhs.source == rhs.source && lhs.badge == rhs.badge
     }
 }
 

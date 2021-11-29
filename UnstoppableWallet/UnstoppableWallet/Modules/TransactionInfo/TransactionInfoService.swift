@@ -1,64 +1,77 @@
 import CurrencyKit
 import EthereumKit
-import CoinKit
+import MarketKit
 import RxSwift
-import RxCocoa
 
 class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
     private let adapter: ITransactionsAdapter
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let feeCoinProvider: IFeeCoinProvider
-    private let appConfigProvider: IAppConfigProvider
-    private let accountSettingManager: AccountSettingManager
 
-    private let ratesRelay = PublishRelay<[Coin: CurrencyValue]>()
+    private var rates = [Coin: CurrencyValue]()
+    private var transactionRecord: TransactionRecord
 
-    init(adapter: ITransactionsAdapter, rateManager: IRateManager, currencyKit: CurrencyKit.Kit, feeCoinProvider: IFeeCoinProvider,
-         appConfigProvider: IAppConfigProvider, accountSettingManager: AccountSettingManager) {
+    private let transactionInfoItemSubject = PublishSubject<TransactionInfoItem>()
+
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.transactionRecord = transactionRecord
         self.adapter = adapter
-        self.rateManager = rateManager
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.feeCoinProvider = feeCoinProvider
-        self.appConfigProvider = appConfigProvider
-        self.accountSettingManager = accountSettingManager
-    }
-}
 
-extension TransactionInfoService {
+        subscribe(disposeBag, adapter.transactionsObservable(coin: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
+        subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncLastBlockUpdated() }
 
-    var ratesSignal: Signal<[Coin: CurrencyValue]> {
-        ratesRelay.asSignal()
+        fetchRates()
     }
 
-    var baseCurrency: Currency {
-        currencyKit.baseCurrency
+    private var coinsForRates: [Coin] {
+        var coins = [Coin?]()
+
+        switch transactionRecord {
+        case let tx as EvmIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as EvmOutgoingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as SwapTransactionRecord:
+            coins.append(tx.valueIn.coin)
+            tx.valueOut.flatMap { coins.append($0.coin) }
+
+        case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
+        case let tx as ContractCallTransactionRecord:
+            if !tx.value.zeroValue {
+                coins.append(tx.value.coin)
+            }
+            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+
+        case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BitcoinOutgoingTransactionRecord:
+            tx.fee.flatMap { coins.append($0.coin) }
+            coins.append(tx.value.coin)
+
+        case let tx as BinanceChainIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BinanceChainOutgoingTransactionRecord:
+            coins.append(tx.fee.coin)
+            coins.append(tx.value.coin)
+
+        default: ()
+        }
+
+        if let evmTransaction = transactionRecord as? EvmTransactionRecord, !evmTransaction.foreignTransaction {
+            coins.append(evmTransaction.fee.coin)
+        }
+
+        return Array(Set(coins.compactMap({ $0 })))
     }
 
-    var lastBlockInfo: LastBlockInfo? {
-        adapter.lastBlockInfo
-    }
+    private func fetchRates() {
+        let baseCurrency = currencyKit.baseCurrency
 
-    var testMode: Bool {
-        appConfigProvider.testMode
-    }
-
-    func ethereumNetworkType(account: Account) -> NetworkType {
-        accountSettingManager.ethereumNetwork(account: account).networkType
-    }
-
-    func binanceSmartChainNetworkType(account: Account) -> NetworkType {
-        accountSettingManager.binanceSmartChainNetwork(account: account).networkType
-    }
-
-    func fetchRates(coins: [Coin], timestamp: TimeInterval) {
-        let baseCurrency = baseCurrency
-
-        let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coins.map { coin in
-            rateManager
-                    .historicalRate(coinType: coin.type, currencyCode: baseCurrency.code, timestamp: timestamp)
+        let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coinsForRates.map { coin in
+            marketKit
+                    .coinHistoricalPriceValueSingle(coinUid: coin.uid, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
                     .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }
         }
 
@@ -69,13 +82,49 @@ extension TransactionInfoService {
                         ratesMap[rate.coin] = rate.currencyValue
                     }
 
-                    self?.ratesRelay.accept(ratesMap)
+                    self?.updateRates(rates: ratesMap)
                 }
                 .disposed(by: disposeBag)
     }
 
-    func rawTransaction(hash: String) -> String? {
-        adapter.rawTransaction(hash: hash)
+    private func sync(transactionRecords: [TransactionRecord]) {
+        guard let transactionRecord = transactionRecords.first(where: { self.transactionRecord == $0 }) else {
+            return
+        }
+
+        self.transactionRecord = transactionRecord
+        transactionInfoItemSubject.onNext(item)
+    }
+
+    private func syncLastBlockUpdated() {
+        transactionInfoItemSubject.onNext(item)
+    }
+
+    private func updateRates(rates: [Coin: CurrencyValue]) {
+        self.rates = rates
+        transactionInfoItemSubject.onNext(item)
+    }
+
+}
+
+extension TransactionInfoService {
+
+    var item: TransactionInfoItem {
+        TransactionInfoItem(
+                record: transactionRecord,
+                lastBlockInfo: adapter.lastBlockInfo,
+                rates: rates,
+                explorerTitle: adapter.explorerTitle,
+                explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
+        )
+    }
+
+    var transactionItemUpdatedObserver: Observable<TransactionInfoItem> {
+        transactionInfoItemSubject.asObservable()
+    }
+
+    func rawTransaction() -> String? {
+        adapter.rawTransaction(hash: transactionRecord.transactionHash)
     }
 
 }

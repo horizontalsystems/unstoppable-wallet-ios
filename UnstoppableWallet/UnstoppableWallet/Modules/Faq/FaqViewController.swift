@@ -9,11 +9,14 @@ import ComponentKit
 class FaqViewController: ThemeViewController {
     private let viewModel: FaqViewModel
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .plain)
+    private let sectionFilterView = FilterHeaderView(buttonStyle: .tab)
 
     private let spinner = HUDActivityView.create(with: .large48)
 
     private let errorLabel = UILabel()
+
+    private var currentSection = 0
     private var sectionItems = [FaqService.SectionItem]()
 
     private let disposeBag = DisposeBag()
@@ -40,12 +43,19 @@ class FaqViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: FaqCell.self)
-        tableView.registerCell(forClass: BCell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
+
+        sectionFilterView.onSelect = { [weak self] index in
+            self?.sectionFilterSelected(index: index)
+        }
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -61,10 +71,7 @@ class FaqViewController: ThemeViewController {
         errorLabel.textColor = .themeGray
 
         viewModel.sectionItemsDriver
-                .drive(onNext: { [weak self] sectionItems in
-                    self?.sectionItems = sectionItems
-                    self?.tableView.reload()
-                })
+                .drive(onNext: { [weak self] in self?.sync(sectionItems: $0) })
                 .disposed(by: disposeBag)
 
         viewModel.loadingDriver
@@ -96,34 +103,35 @@ class FaqViewController: ThemeViewController {
         }
     }
 
+    private func sync(sectionItems: [FaqService.SectionItem]) {
+        self.sectionItems = sectionItems
+
+        sectionFilterView.reload(filters: sectionItems.map { FilterHeaderView.ViewItem.item(title: $0.title) })
+        sectionFilterView.select(index: 0)
+        currentSection = 0
+
+        tableView.reload()
+    }
+
+    private func sectionFilterSelected(index: Int) {
+        currentSection = index
+        tableView.reload()
+    }
+
 }
 
 extension FaqViewController: SectionsDataSource {
 
-    private func headerSection(index: Int, title: String) -> SectionProtocol {
-        Section(
-                id: "header-\(index)",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin8),
-                rows: [
-                    Row<BCell>(
-                            id: "header-\(index)",
-                            height: .heightSingleLineCell,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .transparent)
-                                cell.selectionStyle = .none
-                                cell.title = title
-                            }
-                    )
-                ]
-        )
+    private var transparentRow: RowProtocol {
+        Row<EmptyCell>(id: "transparent_row", height: 20)
     }
 
-    private func itemsSection(sectionIndex: Int, isLastSection: Bool, items: [FaqService.Item]) -> SectionProtocol {
+    private func itemsSection(sectionIndex: Int, items: [FaqService.Item]) -> SectionProtocol {
         Section(
                 id: "items-\(sectionIndex)",
-                footerState: .margin(height: isLastSection ? .margin32 : 0),
-                rows: items.enumerated().map { index, item in
+                headerState: .static(view: sectionFilterView, height: .heightSingleLineCell),
+                footerState: .marginColor(height: .margin32, color: .clear),
+                rows: [transparentRow] + items.enumerated().map { index, item in
                     let isFirst = index == 0
                     let isLast = index == items.count - 1
 
@@ -152,10 +160,11 @@ extension FaqViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        for (index, sectionItem) in sectionItems.enumerated() {
-            sections.append(headerSection(index: index, title: sectionItem.title))
-            sections.append(itemsSection(sectionIndex: index, isLastSection: index == sectionItems.count - 1, items: sectionItem.items))
+        guard currentSection < sectionItems.count else {
+            return sections
         }
+
+        sections.append(itemsSection(sectionIndex: currentSection, items: sectionItems[currentSection].items))
 
         return sections
     }

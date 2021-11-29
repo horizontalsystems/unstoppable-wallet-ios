@@ -49,6 +49,14 @@ class ZcashTransaction {
         failed = pendingTransaction.isFailure
     }
 
+    func sentTo(address: String) -> Bool {
+        if let toAddress = toAddress, toAddress != address {
+            return false
+        }
+
+        return true
+    }
+
 }
 
 extension ZcashTransaction: Comparable {

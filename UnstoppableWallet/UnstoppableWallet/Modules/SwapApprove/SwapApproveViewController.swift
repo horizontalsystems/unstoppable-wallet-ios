@@ -27,7 +27,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         buttonCell = ButtonCell()
 
-        super.init(scrollView: tableView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {

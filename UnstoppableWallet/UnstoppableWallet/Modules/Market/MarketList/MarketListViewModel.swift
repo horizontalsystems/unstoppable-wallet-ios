@@ -1,123 +1,127 @@
-import CurrencyKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
+import MarketKit
 
-class MarketListViewModel {
-    private let service: MarketListService
+protocol IMarketListService {
+    associatedtype Item
+
+    var state: MarketListServiceState<Item> { get }
+    var stateObservable: Observable<MarketListServiceState<Item>> { get }
+    func refresh()
+}
+
+protocol IMarketListCoinUidService {
+    func coinUid(index: Int) -> String?
+}
+
+protocol IMarketListDecoratorService {
+    var initialMarketField: MarketModule.MarketField { get }
+    var currency: Currency { get }
+    var priceChangeType: MarketModule.PriceChangeType { get }
+    func onUpdate(marketField: MarketModule.MarketField)
+}
+
+protocol IMarketListDecorator {
+    associatedtype Item
+
+    func listViewItem(item: Item) -> MarketModule.ListViewItem
+}
+
+enum MarketListServiceState<T> {
+    case loading
+    case loaded(items: [T], softUpdate: Bool, reorder: Bool)
+    case failed(error: Error)
+}
+
+class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDecorator> {
+    private let service: Service
+    private let watchlistToggleService: MarketWatchlistToggleService
+    private let decorator: Decorator
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
-    private let sortingFieldTitleRelay: BehaviorRelay<String>
-    private let marketFieldRelay = BehaviorRelay<MarketModule.MarketField>(value: .price)
+    private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let scrollToTopRelay = PublishRelay<()>()
 
-    private var sortingField: MarketModule.SortingField = .highestCap {
-        didSet {
-            sortingFieldTitleRelay.accept(sortingField.title)
-        }
-    }
-
-    init(service: MarketListService) {
+    init(service: Service, watchlistToggleService: MarketWatchlistToggleService, decorator: Decorator) {
         self.service = service
-        sortingFieldTitleRelay = BehaviorRelay(value: sortingField.title)
+        self.watchlistToggleService = watchlistToggleService
+        self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
         sync(state: service.state)
     }
 
-    private func sync(state: MarketListService.State) {
+    private func sync(state: MarketListServiceState<Service.Item>) {
         switch state {
         case .loading:
-            if service.items.isEmpty {
-                stateRelay.accept(.loading)
+            viewItemDataRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .loaded(let items, let softUpdate, let reorder):
+            let data = MarketModule.ListViewItemData(viewItems: viewItems(items: items), softUpdate: softUpdate)
+            viewItemDataRelay.accept(data)
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
+
+            if reorder {
+                scrollToTopRelay.accept(())
             }
-        case .loaded:
-            stateRelay.accept(.loaded(viewItems: viewItems))
         case .failed:
-            stateRelay.accept(.error(description: "market.sync_error".localized))
+            viewItemDataRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
         }
     }
 
-    private var viewItems: [MarketModule.ViewItem] {
-        service.items.sort(by: sortingField).map {
-            MarketModule.ViewItem(item: $0, marketField: marketFieldRelay.value, currency: service.currency)
-        }
-    }
+    private func viewItems(items: [Service.Item]) -> [MarketModule.ListViewItem] {
+        items.compactMap { item in
+            guard let item = item as? Decorator.Item else {
+                return nil
+            }
 
-    private func syncViewItemsIfPossible() {
-        guard case .loaded = stateRelay.value  else {
-            return
+            return decorator.listViewItem(item: item)
         }
-
-        stateRelay.accept(.loaded(viewItems: viewItems))
     }
 
 }
 
-extension MarketListViewModel {
+extension MarketListViewModel: IMarketListViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> {
+        viewItemDataRelay.asDriver()
     }
 
-    var sortingFieldTitleDriver: Driver<String> {
-        sortingFieldTitleRelay.asDriver()
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
     }
 
-    var marketFieldDriver: Driver<MarketModule.MarketField> {
-        marketFieldRelay.asDriver()
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
-    var allMarketFields: [MarketModule.MarketField] {
-        service.allMarketFields
+    var scrollToTopSignal: Signal<()> {
+        scrollToTopRelay.asSignal()
     }
 
-    var sortingFieldViewItems: [SortingFieldViewItem] {
-        MarketModule.SortingField.allCases.map {
-            SortingFieldViewItem(
-                    title: $0.title,
-                    selected: sortingField == $0
-            )
-        }
+    func isFavorite(index: Int) -> Bool? {
+        watchlistToggleService.isFavorite(index: index)
     }
 
-    func setSortingField(at index: Int) {
-        sortingField = MarketModule.SortingField.allCases[index]
-
-        syncViewItemsIfPossible()
+    func favorite(index: Int) {
+        watchlistToggleService.favorite(index: index)
     }
 
-    func set(marketField: MarketModule.MarketField) {
-        marketFieldRelay.accept(marketField)
-
-        syncViewItemsIfPossible()
-    }
-
-    func set(listType: MarketModule.ListType) {
-        sortingField = listType.sortingField
-        marketFieldRelay.accept(listType.marketField)
-
-        syncViewItemsIfPossible()
+    func unfavorite(index: Int) {
+        watchlistToggleService.unfavorite(index: index)
     }
 
     func refresh() {
         service.refresh()
-    }
-
-}
-
-extension MarketListViewModel {
-
-    struct SortingFieldViewItem {
-        let title: String
-        let selected: Bool
-    }
-
-    enum State {
-        case loading
-        case loaded(viewItems: [MarketModule.ViewItem])
-        case error(description: String)
     }
 
 }

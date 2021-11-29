@@ -23,6 +23,7 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = "wallet_connect.request_title".localized
+        isModalInPresentation = true
 
         bottomWrapper.addSubview(approveButton)
         approveButton.snp.makeConstraints { maker in
@@ -32,7 +33,7 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
         }
 
         approveButton.apply(style: .primaryYellow)
-        approveButton.setTitle("button.approve".localized, for: .normal)
+        approveButton.setTitle("wallet_connect.button.confirm".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)

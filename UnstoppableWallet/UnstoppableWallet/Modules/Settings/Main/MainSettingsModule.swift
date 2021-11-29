@@ -11,7 +11,8 @@ struct MainSettingsModule {
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider,
-                walletConnectSessionManager: App.shared.walletConnectSessionManager
+                walletConnectSessionManager: App.shared.walletConnectSessionManager,
+                launchScreenManager: App.shared.launchScreenManager
         )
 
         let viewModel = MainSettingsViewModel(service: service)

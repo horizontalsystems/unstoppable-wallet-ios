@@ -1,5 +1,5 @@
 import UIKit
-import CoinKit
+import MarketKit
 
 class BalanceErrorPresenter {
     weak var view: IBalanceErrorView?
@@ -20,8 +20,8 @@ class BalanceErrorPresenter {
 
     private func isSourceChangeable(coinType: CoinType) -> Bool {
         switch coinType {
-        case .ethereum, .erc20, .bep2: return false
-        default: return true
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .ethereum, .erc20, .binanceSmartChain, .bep20: return true
+        default: return false
         }
     }
 
@@ -30,8 +30,8 @@ class BalanceErrorPresenter {
 extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
 
     func onLoad() {
-        view?.set(coinTitle: wallet.coin.title)
-        view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coin.type))
+        view?.set(coinTitle: wallet.coin.name)
+        view?.setChangeSourceButton(hidden: !isSourceChangeable(coinType: wallet.coinType))
     }
 
     func onTapRetry() {
@@ -41,7 +41,16 @@ extension BalanceErrorPresenter: IBalanceErrorViewDelegate {
     }
 
     func onTapChangeSource() {
-        router.closeAndOpenPrivacySettings()
+        switch wallet.coinType {
+        case .bitcoin, .bitcoinCash, .dash, .litecoin:
+            router.closeAndOpenPrivacySettings()
+        case .ethereum, .erc20:
+            router.closeAndEvmNetwork(blockchain: .ethereum, account: wallet.account)
+        case .binanceSmartChain, .bep20:
+            router.closeAndEvmNetwork(blockchain: .binanceSmartChain, account: wallet.account)
+        default:
+            ()
+        }
     }
 
     func onTapReport() {

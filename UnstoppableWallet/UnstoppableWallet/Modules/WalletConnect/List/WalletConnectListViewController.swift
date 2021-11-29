@@ -45,11 +45,21 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(sectionViewItems: $0) }
+        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
+
+        if viewModel.emptySessionList {
+            WalletConnectModule.start(sourceViewController: self)
+        }
     }
 
     private func sync(sectionViewItems: [WalletConnectListViewModel.SectionViewItem]) {
         self.sectionViewItems = sectionViewItems
         tableView.reload()
+    }
+
+    private func kill(session: WalletConnectSession) {
+        viewModel.kill(session: session)
     }
 
     private var newConnectionSection: SectionProtocol {
@@ -75,6 +85,15 @@ class WalletConnectListViewController: ThemeViewController {
         )
     }
 
+    private func deleteRowAction(viewItem: WalletConnectListViewModel.ViewItem) -> RowAction {
+        RowAction(pattern: .icon(
+                image: UIImage(named: "circle_minus_shifted_24"),
+                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        ), action: { [weak self] cell in
+            self?.kill(session: viewItem.session)
+        })
+    }
+
     private func section(sectionViewItem: WalletConnectListViewModel.SectionViewItem) -> SectionProtocol {
         Section(
                 id: "sessions_\(sectionViewItem.title)",
@@ -83,15 +102,17 @@ class WalletConnectListViewController: ThemeViewController {
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == sectionViewItem.viewItems.count - 1
+                    let rowAction = deleteRowAction(viewItem: viewItem)
 
                     return Row<G1Cell>(
                             id: viewItem.session.peerId,
                             height: .heightDoubleLineCell,
                             autoDeselect: true,
+                            rowActionProvider: { [rowAction] },
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                 cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl)
+                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
                                 cell.title = viewItem.title
                                 cell.subtitle = viewItem.url
                             },

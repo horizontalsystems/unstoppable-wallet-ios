@@ -3,18 +3,22 @@ import Erc20Kit
 import RxSwift
 import BigInt
 import HsToolKit
+import MarketKit
 
 class Evm20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     let evm20Kit: Erc20Kit.Kit
     private let contractAddress: EthereumKit.Address
+    private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, contractAddress: String, decimal: Int, coinManager: ICoinManager) throws {
+    init(evmKit: EthereumKit.Kit, contractAddress: String, wallet: Wallet, baseCoin: PlatformCoin, coinManager: CoinManager) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKit, contractAddress: address)
         self.contractAddress = address
 
-        super.init(evmKit: evmKit, decimal: decimal, coinManager: coinManager)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
+
+        super.init(evmKit: evmKit, decimals: wallet.decimals)
     }
 
 }
@@ -76,7 +80,7 @@ extension Evm20Adapter: IErc20Adapter {
         evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { [unowned self] allowanceString in
                     if let significand = Decimal(string: allowanceString) {
-                        return Decimal(sign: .plus, exponent: -decimal, significand: significand)
+                        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
                     }
 
                     return 0

@@ -1,15 +1,16 @@
+import Foundation
 import UniswapKit
-import CoinKit
+import MarketKit
 
 class SwapViewItemHelper {
 
-    func priceValue(executionPrice: Decimal?, coinIn: Coin?, coinOut: Coin?) -> PriceCoinValue? {
-        guard let price = executionPrice, let coinOut = coinOut, let coinIn = coinIn else {
+    func priceValue(executionPrice: Decimal?, platformCoinIn: PlatformCoin?, platformCoinOut: PlatformCoin?) -> PriceCoinValue? {
+        guard let price = executionPrice, let platformCoinOut = platformCoinOut, let platformCoinIn = platformCoinIn else {
             return nil
         }
 
         let value = price.isZero ? 0 : 1 / price
-        return PriceCoinValue(baseCoin: coinOut, quoteCoin: CoinValue(coin: coinIn, value: value))
+        return PriceCoinValue(baseCoin: platformCoinOut.coin, quoteCoinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoinIn), value: value))
     }
 
     func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
@@ -23,25 +24,25 @@ class SwapViewItemHelper {
         )
     }
 
-    func guaranteedAmountViewItem(tradeData: TradeData, coinIn: Coin?, coinOut: Coin?) -> UniswapModule.GuaranteedAmountViewItem? {
+    func guaranteedAmountViewItem(tradeData: TradeData, platformCoinIn: PlatformCoin?, platformCoinOut: PlatformCoin?) -> UniswapModule.GuaranteedAmountViewItem? {
         switch tradeData.type {
         case .exactIn:
-            guard let amount = tradeData.amountOutMin, let coin = coinOut else {
+            guard let amount = tradeData.amountOutMin, let platformCoin = platformCoinOut else {
                 return nil
             }
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.minimum_got".localized,
-                    value: CoinValue(coin: coin, value: amount).formattedString
+                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
             )
         case .exactOut:
-            guard let amount = tradeData.amountInMax, let coin = coinIn else {
+            guard let amount = tradeData.amountInMax, let platformCoin = platformCoinIn else {
                 return nil
             }
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.maximum_paid".localized,
-                    value: CoinValue(coin: coin, value: amount).formattedString
+                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
             )
         }
     }
@@ -61,10 +62,10 @@ extension SwapViewItemHelper {
 
     struct PriceCoinValue {
         let baseCoin: Coin
-        let quoteCoin: CoinValue
+        let quoteCoinValue: CoinValue
 
         var formattedString: String {
-            ValueFormatter.instance.format(coinValue: quoteCoin).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+            ValueFormatter.instance.format(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
 
     }

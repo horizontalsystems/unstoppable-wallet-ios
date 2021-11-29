@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 import RxSwift
 import RxRelay
 
@@ -10,13 +10,13 @@ class InitialSyncSettingsManager {
         SupportedCoinType(coinType: .litecoin, defaultSyncMode: .fast, changeable: true),
     ]
 
-    private let coinKit: CoinKit.Kit
+    private let marketKit: Kit
     private let storage: IBlockchainSettingsStorage
 
     private let settingUpdatedRelay = PublishRelay<InitialSyncSetting>()
 
-    init(coinKit: CoinKit.Kit, storage: IBlockchainSettingsStorage) {
-        self.coinKit = coinKit
+    init(marketKit: Kit, storage: IBlockchainSettingsStorage) {
+        self.marketKit = marketKit
         self.storage = storage
     }
 
@@ -32,19 +32,13 @@ extension InitialSyncSettingsManager {
         settingUpdatedRelay.asObservable()
     }
 
-    var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
-        let coins = coinKit.coins
-
-        return supportedCoinTypes.compactMap { supportedCoinType in
-            guard let coinTypeCoin = (coins.first { $0.type == supportedCoinType.coinType }) else {
-                return nil
-            }
-
+    var allSettings: [(setting: InitialSyncSetting, changeable: Bool)] {
+        supportedCoinTypes.compactMap { supportedCoinType in
             guard let setting = setting(coinType: supportedCoinType.coinType, accountOrigin: .restored) else {
                 return nil
             }
 
-            return (setting: setting, coin: coinTypeCoin, supportedCoinType.changeable)
+            return (setting: setting, changeable: supportedCoinType.changeable)
         }
     }
 

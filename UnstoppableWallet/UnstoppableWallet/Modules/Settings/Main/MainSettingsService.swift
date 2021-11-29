@@ -3,7 +3,7 @@ import LanguageKit
 import ThemeKit
 import CurrencyKit
 import PinKit
-import WalletConnect
+import WalletConnectV1
 import ThemeKit
 
 class MainSettingsService {
@@ -15,10 +15,11 @@ class MainSettingsService {
     private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: IAppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
+    private let launchScreenManager: LaunchScreenManager
 
     init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
          systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: IAppConfigProvider,
-         walletConnectSessionManager: WalletConnectSessionManager) {
+         walletConnectSessionManager: WalletConnectSessionManager, launchScreenManager: LaunchScreenManager) {
         self.backupManager = backupManager
         self.pinKit = pinKit
         self.termsManager = termsManager
@@ -27,6 +28,7 @@ class MainSettingsService {
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
         self.walletConnectSessionManager = walletConnectSessionManager
+        self.launchScreenManager = launchScreenManager
     }
 
 }
@@ -71,6 +73,14 @@ extension MainSettingsService {
 
     var currentLanguageDisplayName: String? {
         LanguageManager.shared.currentLanguageDisplayName
+    }
+
+    var launchScreen: LaunchScreen {
+        launchScreenManager.launchScreen
+    }
+
+    var launchScreenObservable: Observable<LaunchScreen> {
+        launchScreenManager.launchScreenObservable
     }
 
     var baseCurrency: Currency {

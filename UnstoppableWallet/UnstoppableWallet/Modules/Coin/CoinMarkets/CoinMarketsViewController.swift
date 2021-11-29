@@ -1,85 +1,103 @@
+import UIKit
+import RxSwift
 import ThemeKit
-import SnapKit
 import SectionsTableView
 import ComponentKit
-import RxSwift
-import RxCocoa
+import HUD
 
 class CoinMarketsViewController: ThemeViewController {
     private let viewModel: CoinMarketsViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
-    private let headerView = CoinMarketsHeaderView()
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = MarketListErrorView()
+    private let headerView: MarketSingleSortHeaderView
 
-    private var viewItems = [CoinMarketsViewModel.ViewItem]()
-    private var isLoaded = false
+    private var viewItems: [CoinMarketsViewModel.ViewItem]?
 
-    init(viewModel: CoinMarketsViewModel) {
+    init(viewModel: CoinMarketsViewModel, headerViewModel: MarketSingleSortHeaderViewModel) {
         self.viewModel = viewModel
+        headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let wrapperView = UIView()
+
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        wrapperView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.onTapRetry = { [weak self] in self?.viewModel.onRefresh() }
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        title = viewModel.title
-
-        tableView.sectionDataSource = self
-
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
 
+        tableView.sectionDataSource = self
         tableView.registerCell(forClass: G14Cell.self)
 
-        headerView.set(volumeTypes: viewModel.volumeTypes)
-        headerView.onTapSortType = { [weak self] in
-            self?.openSortTypeSelector()
-        }
-        headerView.onSelectVolumeType = { [weak self] index in
-            self?.viewModel.onSelectVolumeType(index: index)
-        }
-
-        subscribe(disposeBag, viewModel.sortTypeDriver) { [weak self] in self?.sync(sortType: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
+            } else {
+                self?.errorView.isHidden = true
+            }
+        }
+        subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
-        tableView.buildSections()
-
-        isLoaded = true
+        viewModel.onLoad()
     }
 
-    private func sync(sortType: String) {
-        headerView.set(sortType: sortType)
-    }
-
-    private func sync(viewItems: [CoinMarketsViewModel.ViewItem]) {
+    private func sync(viewItems: [CoinMarketsViewModel.ViewItem]?) {
         self.viewItems = viewItems
 
-        if isLoaded {
-            tableView.reload()
+        if let viewItems = viewItems, !viewItems.isEmpty {
+            tableView.isHidden = false
+        } else {
+            tableView.isHidden = true
         }
+
+        tableView.reload()
     }
 
-    private func openSortTypeSelector() {
-        let alertController = AlertRouter.module(
-                title: "coin_page.coin_markets.sort_by".localized,
-                viewItems: viewModel.sortTypeViewItems
-        ) { [weak self] index in
-            self?.viewModel.onSelectSortType(index: index)
-        }
-
-        present(alertController, animated: true)
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
 }
@@ -88,11 +106,11 @@ extension CoinMarketsViewController: SectionsDataSource {
 
     private func row(viewItem: CoinMarketsViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
         Row<G14Cell>(
-                id: "item-\(index)",
+                id: "row-\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    cell.setTitleImage(urlString: viewItem.marketImageUrl)
+                    cell.setTitleImage(urlString: viewItem.marketImageUrl, placeholder: nil)
                     cell.titleImageCornerRadius = .cornerRadius4
                     cell.titleImageBackgroundColor = .themeSteel10
                     cell.topText = viewItem.market
@@ -105,14 +123,22 @@ extension CoinMarketsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
+        let headerState: ViewState<UITableViewHeaderFooterView>
+
+        if let viewItems = viewItems, !viewItems.isEmpty {
+            headerState = .static(view: headerView, height: .heightSingleLineCell)
+        } else {
+            headerState = .margin(height: 0)
+        }
+
+        return [
             Section(
-                    id: "main",
-                    headerState: .static(view: headerView, height: CoinMarketsHeaderView.height),
-                    footerState: .marginColor(height: .margin32, color: .clear),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isLast: index == viewItems.count - 1)
-                    }
+                    id: "coins",
+                    headerState: headerState,
+                    footerState: .marginColor(height: .margin32, color: .clear) ,
+                    rows: viewItems.map { viewItems in
+                        viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
+                    } ?? []
             )
         ]
     }

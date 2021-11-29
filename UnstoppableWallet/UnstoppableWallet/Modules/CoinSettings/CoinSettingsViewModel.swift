@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import CoinKit
+import MarketKit
 
 class CoinSettingsViewModel {
     private let service: CoinSettingsService
@@ -22,39 +22,37 @@ class CoinSettingsViewModel {
 
         switch request.type {
         case let .derivation(allDerivations, current):
-            config = derivationConfig(coin: request.coin, allDerivations: allDerivations, current: current)
+            config = derivationConfig(platformCoin: request.platformCoin, allDerivations: allDerivations, current: current)
         case let .bitcoinCashCoinType(allTypes, current):
-            config = bitcoinCashCoinTypeConfig(coin: request.coin, allTypes: allTypes, current: current)
+            config = bitcoinCashCoinTypeConfig(platformCoin: request.platformCoin, allTypes: allTypes, current: current)
         }
 
         currentRequest = request
         openBottomSelectorRelay.accept(config)
     }
 
-    private func derivationConfig(coin: Coin, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
+    private func derivationConfig(platformCoin: PlatformCoin, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
-                icon: .image(coinType: coin.type),
-                iconTint: nil,
+                icon: .remote(iconUrl: platformCoin.coin.imageUrl, placeholder: platformCoin.fullCoin.placeholderImageName),
                 title: "blockchain_settings.title".localized,
-                subtitle: coin.title,
-                description: "blockchain_settings.description".localized(coin.title),
+                subtitle: platformCoin.coin.name,
+                description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
                     BottomMultiSelectorViewController.ViewItem(
                             title: derivation.title,
-                            subtitle: derivation.description(coinType: coin.type)
+                            subtitle: derivation.description
                     )
                 }
         )
     }
 
-    private func bitcoinCashCoinTypeConfig(coin: Coin, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
+    private func bitcoinCashCoinTypeConfig(platformCoin: PlatformCoin, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
-                icon: .image(coinType: coin.type),
-                iconTint: nil,
+                icon: .remote(iconUrl: platformCoin.coin.imageUrl, placeholder: platformCoin.fullCoin.placeholderImageName),
                 title: "blockchain_settings.title".localized,
-                subtitle: coin.title,
-                description: "blockchain_settings.description".localized(coin.title),
+                subtitle: platformCoin.coin.name,
+                description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
                     BottomMultiSelectorViewController.ViewItem(
@@ -80,9 +78,9 @@ extension CoinSettingsViewModel {
 
         switch request.type {
         case .derivation(let derivations, _):
-            service.select(derivations: indexes.map { derivations[$0] }, coin: request.coin)
+            service.select(derivations: indexes.map { derivations[$0] }, platformCoin: request.platformCoin)
         case .bitcoinCashCoinType(let types, _):
-            service.select(bitcoinCashCoinTypes: indexes.map { types[$0] }, coin: request.coin)
+            service.select(bitcoinCashCoinTypes: indexes.map { types[$0] }, platformCoin: request.platformCoin)
         }
     }
 
@@ -91,7 +89,7 @@ extension CoinSettingsViewModel {
             return
         }
 
-        service.cancel(coin: request.coin)
+        service.cancel(coin: request.platformCoin.coin)
     }
 
 }

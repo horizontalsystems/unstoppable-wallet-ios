@@ -17,7 +17,7 @@ class CurrencyCompactFormatter {
 
         var index = 1
         var power: Decimal = 1000
-        while value >= power {
+        while abs(value) >= power {
             power = pow(ten, (index + 1) * 3)
             index += 1
             if index > postfixes.count {
@@ -28,7 +28,7 @@ class CurrencyCompactFormatter {
         return (value: value / pow(ten, (index - 1) * 3), postfix: postfix)
     }
 
-    public func format(currency: Currency, value: Decimal?, fractionMaximumFractionDigits: Int = 1) -> String? {
+    public func format(currency: Currency, value: Decimal?, fractionMaximumFractionDigits: Int = 1, alwaysSigned: Bool = false) -> String? {
         guard let value = value else {
             return nil
         }
@@ -38,8 +38,14 @@ class CurrencyCompactFormatter {
         currencyFormatter.currencySymbol = currency.symbol
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
-        guard let formattedValue = currencyFormatter.string(from: data.value as NSNumber) else {
+        let universalValue = alwaysSigned ? abs(data.value) : data.value
+        guard var formattedValue = currencyFormatter.string(from: universalValue as NSNumber) else {
             return nil
+        }
+
+        if alwaysSigned {
+            let sign = data.value.isSignMinus ? "-" : "+"
+            formattedValue = sign + formattedValue
         }
         return data.postfix?.localized(formattedValue) ?? formattedValue
     }

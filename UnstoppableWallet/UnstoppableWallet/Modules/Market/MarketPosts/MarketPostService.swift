@@ -1,13 +1,10 @@
-import CurrencyKit
-import XRatesKit
-import Foundation
 import RxSwift
 import RxRelay
+import MarketKit
 
 class MarketPostService {
-    private var postsDisposeBag = DisposeBag()
-
-    private let postManager: IPostsManager
+    private let marketKit: Kit
+    private var disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
@@ -16,44 +13,26 @@ class MarketPostService {
         }
     }
 
-    private(set) var items = [Item]()
-
-    init(postManager: IPostsManager) {
-        self.postManager = postManager
+    init(marketKit: Kit) {
+        self.marketKit = marketKit
 
         fetch()
     }
 
     private func fetch() {
-        postsDisposeBag = DisposeBag()
+        disposeBag = DisposeBag()
 
-        state = .loading
-
-        postManager.postsSingle
-                .subscribe(onSuccess: { [weak self] in
-                    self?.onFetchSuccess(items: $0)
-                }, onError: { [weak self] error in
-                    self?.onFetchFailed(error: error)
-                })
-                .disposed(by: postsDisposeBag)
-    }
-
-    private func onFetchSuccess(items: [CryptoNewsPost]) {
-        self.items = items.map {
-            Item(
-                timestamp: $0.timestamp,
-                imageUrl: $0.imageUrl,
-                source: $0.source,
-                title: $0.title,
-                url: $0.url,
-                body: $0.body)
+        if case .failed = state {
+            state = .loading
         }
 
-        state = .loaded
-    }
-
-    private func onFetchFailed(error: Error) {
-        state = .failed(error: error)
+        marketKit.postsSingle()
+                .subscribe(onSuccess: { [weak self] posts in
+                    self?.state = .loaded(posts: posts)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error: error)
+                })
+                .disposed(by: disposeBag)
     }
 
 }
@@ -72,18 +51,9 @@ extension MarketPostService {
 
 extension MarketPostService {
 
-    struct Item {
-        let timestamp: TimeInterval
-        let imageUrl: String?
-        let source: String
-        let title: String
-        let url: String
-        let body: String
-    }
-
     enum State {
-        case loaded
         case loading
+        case loaded(posts: [Post])
         case failed(error: Error)
     }
 

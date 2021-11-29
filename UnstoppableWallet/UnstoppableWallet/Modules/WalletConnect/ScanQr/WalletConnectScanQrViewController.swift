@@ -43,7 +43,9 @@ class WalletConnectScanQrViewController: ScanQrViewController {
 
     private func openMain() {
         let viewController = WalletConnectMainViewController(baseViewModel: baseViewModel, sourceViewController: sourceViewController)
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        }
     }
 
     private func openError(error: Error) {

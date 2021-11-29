@@ -1,5 +1,3 @@
-import CoinKit
-
 class PrivacyInteractor {
     private let accountManager: IAccountManager
     private let initialSyncSettingsManager: InitialSyncSettingsManager
@@ -19,7 +17,7 @@ extension PrivacyInteractor: IPrivacyInteractor {
         accountManager.activeAccount
     }
 
-    var syncSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] {
+    var syncSettings: [(setting: InitialSyncSetting, changeable: Bool)] {
         initialSyncSettingsManager.allSettings
     }
 

@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 import DeepDiff
 import HUD
-import CoinKit
+import MarketKit
 import ComponentKit
 
 class WalletViewController: ThemeViewController {
@@ -21,6 +21,7 @@ class WalletViewController: ThemeViewController {
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
+    private var sortBy: String?
     private var isLoaded = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_view_controller", qos: .userInitiated)
@@ -39,6 +40,10 @@ class WalletViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
@@ -95,8 +100,8 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
+        subscribe(disposeBag, viewModel.sortByDriver) { [weak self] in self?.sync(sortBy: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.openSortTypeSignal) { [weak self] in self?.openSortType() }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
         subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
@@ -104,6 +109,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
+        subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
         isLoaded = true
     }
@@ -146,6 +152,14 @@ class WalletViewController: ThemeViewController {
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
         self.headerViewItem = headerViewItem
+
+        if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
+            bind(headerView: headerView)
+        }
+    }
+
+    private func sync(sortBy: String?) {
+        self.sortBy = sortBy
 
         if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
             bind(headerView: headerView)
@@ -202,12 +216,6 @@ class WalletViewController: ThemeViewController {
         DispatchQueue.main.sync {
             viewItems = newViewItems
 
-            updateIndexes.forEach {
-                if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
-                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
-                }
-            }
-
             UIView.animate(withDuration: animationDuration) {
                 self.tableView.beginUpdates()
 
@@ -216,6 +224,12 @@ class WalletViewController: ThemeViewController {
                 }
 
                 self.tableView.endUpdates()
+            }
+
+            updateIndexes.forEach {
+                if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? BalanceCell {
+                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
+                }
             }
         }
     }
@@ -245,16 +259,23 @@ class WalletViewController: ThemeViewController {
 
     private func bind(headerView: WalletHeaderView) {
         if let viewItem = headerViewItem {
-            headerView.bind(viewItem: viewItem)
+            headerView.bind(viewItem: viewItem, sortBy: sortBy)
 
             headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
-            headerView.onTapSortBy = { [weak self] in self?.viewModel.onTapSortBy() }
+            headerView.onTapSortBy = { [weak self] in self?.openSortType() }
             headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
         }
     }
 
     private func openSortType() {
-        present(SortTypeRouter.module(), animated: true)
+        let alertController = AlertRouter.module(
+                title: "balance.sort.header".localized,
+                viewItems: viewModel.sortTypeViewItems
+        ) { [weak self] index in
+            self?.viewModel.onSelectSortType(index: index)
+        }
+
+        present(alertController, animated: true)
     }
 
     private func openReceive(wallet: Wallet) {
@@ -270,18 +291,19 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSwap(wallet: Wallet) {
-        if let module = SwapModule.viewController(coinFrom: wallet.coin) {
+        if let module = SwapModule.viewController(platformCoinFrom: wallet.platformCoin) {
             present(module, animated: true)
         }
     }
 
     private func openCoinPage(coin: Coin) {
-        let viewController = CoinPageModule.viewController(launchMode: .coin(coin: coin))
-        present(viewController, animated: true)
+        if let viewController = CoinPageModule.viewController(coinUid: coin.uid) {
+            present(viewController, animated: true)
+        }
     }
 
     private func openBackupRequired(wallet: Wallet) {
-        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.title)
+        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)
         let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: self).toBottomSheet
         present(module, animated: true)
     }
@@ -309,6 +331,10 @@ class WalletViewController: ThemeViewController {
 
     private func playHaptic() {
         HapticGenerator.instance.notification(.feedback(.soft))
+    }
+
+    private func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
 }

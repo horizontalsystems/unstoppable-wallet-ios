@@ -101,11 +101,9 @@ extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
     }
 }
 
-extension HsToolKit.WebSocketState.StateError: ConvertibleError {
+extension HsToolKit.WebSocketStateError: ConvertibleError {
     var convertedError: Error {
-        switch self {
-        case .notConnected: return AppError.noConnection
-        }
+        return AppError.noConnection
     }
 }
 
@@ -137,7 +135,18 @@ extension OneInchKit.Kit.SwapError: ConvertibleError {
 
     var convertedError: Error {
         switch self {
-        case .cannotEstimate: return AppError.oneInch(reason: .insufficientBalanceWithFee)
+        case .notEnough: return AppError.oneInch(reason: .insufficientBalanceWithFee)
+        case .cannotEstimate: return AppError.oneInch(reason: .cannotEstimate)
+        }
+    }
+
+}
+
+extension OneInchKit.Kit.QuoteError: ConvertibleError {
+
+    var convertedError: Error {
+        switch self {
+            case .insufficientLiquidity: return AppError.oneInch(reason: .insufficientLiquidity)
         }
     }
 

@@ -6,11 +6,12 @@ import OneInchKit
 struct SwapConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let coin = dex.blockchain.coin, let evmKit = dex.blockchain.evmKit, let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+        guard let platformCoin = dex.blockchain.platformCoin, let evmKit = dex.blockchain.evmKit,
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
-        let coinServiceFactory = EvmCoinServiceFactory(baseCoin: coin, coinKit: App.shared.coinKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 20)
         let service = SendEvmTransactionService(sendData: sendData, evmKit: evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
@@ -21,16 +22,16 @@ struct SwapConfirmationModule {
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let coin = dex.blockchain.coin,
+        guard let platformCoin = dex.blockchain.platformCoin,
               let evmKit = dex.blockchain.evmKit,
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: coin.type) else {
+              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
         let swapKit = OneInchKit.Kit.instance(evmKit: evmKit)
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
-        let coinServiceFactory = EvmCoinServiceFactory(baseCoin: coin, coinKit: App.shared.coinKit, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let transactionFeeService = OneInchTransactionFeeService(provider: oneInchProvider, parameters: parameters, feeRateProvider: feeRateProvider)
 
         let service = OneInchSendEvmTransactionService(evmKit: evmKit, transactionFeeService: transactionFeeService, activateCoinManager: App.shared.activateCoinManager)

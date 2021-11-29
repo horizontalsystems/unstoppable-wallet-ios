@@ -47,15 +47,16 @@ class TermsViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    private func checkboxRow(index: Int, text: String, checked: Bool) -> RowProtocol {
+    private func checkboxRow(index: Int, text: String, checked: Bool, isLast: Bool) -> RowProtocol {
         Row<CheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(checked)",
+                autoDeselect: true,
                 dynamicHeight: { containerWidth in
-                    CheckboxCell.height(containerWidth: containerWidth, text: text)
+                    CheckboxCell.height(containerWidth: containerWidth, text: text, backgroundStyle: .lawrence)
                 },
                 bind: { cell, _ in
-                    cell.bind(text: text, checked: checked)
+                    cell.bind(text: text, checked: checked, backgroundStyle: .lawrence, isFirst: index == 0, isLast: isLast)
                 },
                 action: { [weak self] _ in
                     self?.delegate.onTapTerm(index: index)
@@ -83,20 +84,18 @@ extension TermsViewController: SectionsDataSource {
                                 bind: { cell, _ in
                                     cell.bind(text: descriptionText)
                                 }
-                        ),
-                        Row<TermsSeparatorCell>(
-                                id: "separator",
-                                height: TermsSeparatorCell.height
                         )
                     ]
             ),
             Section(
                     id: "terms",
+                    headerState: .margin(height: .margin24),
                     rows: terms.enumerated().map { index, term in
                         checkboxRow(
                                 index: index,
                                 text: "terms.item.\(term.id)".localized,
-                                checked: term.accepted
+                                checked: term.accepted,
+                                isLast: index == terms.count - 1
                         )
                     }
             ),

@@ -2,7 +2,7 @@ import OneInchKit
 import RxSwift
 import EthereumKit
 import Foundation
-import CoinKit
+import MarketKit
 import BigInt
 
 class OneInchProvider {
@@ -12,13 +12,13 @@ class OneInchProvider {
         self.swapKit = swapKit
     }
 
-    private func units(amount: Decimal, coin: Coin) -> BigUInt? {
-        let amountUnitString = (amount * pow(10, coin.decimal)).roundedString(decimal: 0)
+    private func units(amount: Decimal, platformCoin: PlatformCoin) -> BigUInt? {
+        let amountUnitString = (amount * pow(10, platformCoin.decimals)).roundedString(decimal: 0)
         return BigUInt(amountUnitString)
     }
 
-    private func address(coin: Coin) throws -> EthereumKit.Address {
-        switch coin.type {
+    private func address(platformCoin: PlatformCoin) throws -> EthereumKit.Address {
+        switch platformCoin.coinType {
         case .ethereum, .binanceSmartChain: return try EthereumKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         case .erc20(let address): return try EthereumKit.Address(hex: address)
         case .bep20(let address): return try EthereumKit.Address(hex: address)
@@ -34,14 +34,14 @@ extension OneInchProvider {
         swapKit.routerAddress
     }
 
-    func quoteSingle(coinIn: Coin, coinOut: Coin, amount: Decimal) -> Single<OneInchKit.Quote> {
-        guard let amountUnits = units(amount: amount, coin: coinIn) else {
+    func quoteSingle(platformCoinIn: PlatformCoin, platformCoinOut: PlatformCoin, amount: Decimal) -> Single<OneInchKit.Quote> {
+        guard let amountUnits = units(amount: amount, platformCoin: platformCoinIn) else {
             return Single.error(SwapError.insufficientAmount)
         }
 
         do {
-            let addressFrom = try address(coin: coinIn)
-            let addressTo = try address(coin: coinOut)
+            let addressFrom = try address(platformCoin: platformCoinIn)
+            let addressTo = try address(platformCoin: platformCoinOut)
 
             return swapKit.quoteSingle(fromToken: addressFrom,
                     toToken: addressTo,
@@ -58,14 +58,14 @@ extension OneInchProvider {
         }
     }
 
-    func swapSingle(coinFrom: Coin, coinTo: Coin, amount: Decimal, recipient: EthereumKit.Address?, slippage: Decimal, gasPrice: Int?) -> Single<OneInchKit.Swap> {
-        guard let amountUnits = units(amount: amount, coin: coinFrom) else {
+    func swapSingle(platformCoinFrom: PlatformCoin, platformCoinTo: PlatformCoin, amount: Decimal, recipient: EthereumKit.Address?, slippage: Decimal, gasPrice: Int?) -> Single<OneInchKit.Swap> {
+        guard let amountUnits = units(amount: amount, platformCoin: platformCoinFrom) else {
             return Single.error(SwapError.insufficientAmount)
         }
 
         do {
-            let addressFrom = try address(coin: coinFrom)
-            let addressTo = try address(coin: coinTo)
+            let addressFrom = try address(platformCoin: platformCoinFrom)
+            let addressTo = try address(platformCoin: platformCoinTo)
 
             return swapKit.swapSingle(fromToken: addressFrom,
                     toToken: addressTo,

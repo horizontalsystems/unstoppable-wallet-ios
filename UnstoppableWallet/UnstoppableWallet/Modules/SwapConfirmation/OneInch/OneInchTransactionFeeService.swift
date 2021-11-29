@@ -1,21 +1,21 @@
 import Foundation
-import CoinKit
+import MarketKit
 import RxSwift
 import RxRelay
 import EthereumKit
 import OneInchKit
 
 struct OneInchSwapParameters: Equatable {
-    let coinFrom: Coin
-    let coinTo: Coin
+    let platformCoinFrom: PlatformCoin
+    let platformCoinTo: PlatformCoin
     let amountFrom: Decimal
     var amountTo: Decimal
     let slippage: Decimal
     let recipient: Address?
 
     static func ==(lhs: OneInchSwapParameters, rhs: OneInchSwapParameters) -> Bool {
-        lhs.coinFrom == rhs.coinFrom &&
-        lhs.coinTo == rhs.coinTo &&
+        lhs.platformCoinFrom == rhs.platformCoinFrom &&
+        lhs.platformCoinTo == rhs.platformCoinTo &&
         lhs.amountFrom == rhs.amountFrom &&
         lhs.amountTo == rhs.amountTo &&
         lhs.slippage == rhs.slippage &&
@@ -25,13 +25,15 @@ struct OneInchSwapParameters: Equatable {
 }
 
 class OneInchTransactionFeeService {
+    private static let retryInterval = 3
     private var disposeBag = DisposeBag()
+    private var retryDisposeBag = DisposeBag()
 
     private static let gasLimitSurchargePercent = 25
 
     private let provider: OneInchProvider
     private(set) var parameters: OneInchSwapParameters
-    private let feeRateProvider: IFeeRateProvider
+    private let feeRateProvider: ICustomRangedFeeRateProvider
 
     private let transactionStatusRelay = PublishRelay<DataStatus<EvmTransactionService.Transaction>>()
     private(set) var transactionStatus: DataStatus<EvmTransactionService.Transaction> = .failed(EvmTransactionService.GasDataError.noTransactionData) {
@@ -52,7 +54,7 @@ class OneInchTransactionFeeService {
     private var recommendedGasPrice: Int?
     private let warningOfStuckRelay = PublishRelay<Bool>()
 
-    init(provider: OneInchProvider, parameters: OneInchSwapParameters, feeRateProvider: IFeeRateProvider) {
+    init(provider: OneInchProvider, parameters: OneInchSwapParameters, feeRateProvider: ICustomRangedFeeRateProvider) {
         self.provider = provider
         self.parameters = parameters
         self.feeRateProvider = feeRateProvider
@@ -68,8 +70,8 @@ class OneInchTransactionFeeService {
         let recipient: EthereumKit.Address? = parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }
 
         gasPriceSingle(gasPriceType: gasPriceType).flatMap { [unowned self] gasPrice -> Single<OneInchKit.Swap> in
-                    provider.swapSingle(coinFrom: parameters.coinFrom,
-                            coinTo: parameters.coinTo,
+                    provider.swapSingle(platformCoinFrom: parameters.platformCoinFrom,
+                            platformCoinTo: parameters.platformCoinTo,
                             amount: parameters.amountFrom,
                             recipient: recipient,
                             slippage: parameters.slippage,
@@ -80,11 +82,25 @@ class OneInchTransactionFeeService {
         .subscribe(onSuccess: { [weak self] swap in
             self?.sync(swap: swap)
         }, onError: { [weak self] error in
-            self?.parameters.amountTo = 0
-            self?.transactionStatus = .failed(error.convertedError)
+            self?.onSwap(error: error)
         })
         .disposed(by: disposeBag)
+    }
 
+    private func onSwap(error: Error) {
+        parameters.amountTo = 0
+
+        if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate {       // retry request fee every 5 seconds if cannot estimate
+            let retryTimer = Observable.just(()).delay(.seconds(Self.retryInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+
+            subscribe(retryDisposeBag, retryTimer) { [weak self] in
+                self?.retryDisposeBag = DisposeBag()
+
+                self?.sync()
+            }
+        }
+
+        transactionStatus = .failed(error.convertedError)
     }
 
     private func sync(swap: OneInchKit.Swap) {
@@ -133,6 +149,10 @@ class OneInchTransactionFeeService {
 }
 
 extension OneInchTransactionFeeService: IEvmTransactionFeeService {
+
+    var customFeeRange: ClosedRange<Int> {
+        feeRateProvider.customFeeRange
+    }
 
     func set(transactionData: TransactionData?) {
 

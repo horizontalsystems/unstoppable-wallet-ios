@@ -7,18 +7,18 @@ class MarketViewController: ThemeViewController {
     private let viewModel: MarketViewModel
     private let disposeBag = DisposeBag()
 
-    private let tabsView = FilterHeaderView()
+    private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: MarketOverviewViewController
-    private let discoveryViewController: MarketDiscoveryViewController
+    private let postViewController: MarketPostViewController
     private let watchlistViewController: MarketWatchlistViewController
 
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
-        overviewController = MarketOverviewModule.viewController(marketViewModel: viewModel)
-        discoveryViewController = MarketDiscoveryModule.viewController(marketViewModel: viewModel)
+        overviewController = MarketOverviewModule.viewController()
+        postViewController = MarketPostModule.viewController()
         watchlistViewController = MarketWatchlistModule.viewController()
 
         super.init()
@@ -59,10 +59,10 @@ class MarketViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_24"), style: .plain, target: self, action: #selector(onTapSearch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_discovery_24"), style: .plain, target: self, action: #selector(onTapDiscovery))
 
         overviewController.parentNavigationController = navigationController
-        discoveryViewController.parentNavigationController = navigationController
+        postViewController.parentNavigationController = navigationController
         watchlistViewController.parentNavigationController = navigationController
 
         subscribe(disposeBag, viewModel.currentTabDriver) { [weak self] in self?.sync(currentTab: $0) }
@@ -88,13 +88,13 @@ class MarketViewController: ThemeViewController {
     private func viewController(tab: MarketModule.Tab) -> UIViewController {
         switch tab {
         case .overview: return overviewController
-        case .discovery: return discoveryViewController
+        case .posts: return postViewController
         case .watchlist: return watchlistViewController
         }
     }
 
-    @objc private func onTapSearch() {
-        present(MarketSearchModule.viewController(), animated: true)
+    @objc private func onTapDiscovery() {
+        navigationController?.pushViewController(MarketDiscoveryModule.viewController(), animated: true)
     }
 
 }

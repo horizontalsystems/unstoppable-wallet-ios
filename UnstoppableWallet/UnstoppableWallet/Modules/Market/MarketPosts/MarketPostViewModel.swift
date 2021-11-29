@@ -1,22 +1,49 @@
-import CurrencyKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import MarketKit
 
 class MarketPostViewModel {
     private let service: MarketPostService
-    private let postLimit: Int?
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: .loading)
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: MarketPostService, postLimit: Int? = nil) {
+    init(service: MarketPostService) {
         self.service = service
-        self.postLimit = postLimit
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
         sync(state: service.state)
+    }
+
+    private func sync(state: MarketPostService.State) {
+        switch state {
+        case .loading:
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(true)
+            errorRelay.accept(nil)
+        case .loaded(let posts):
+            viewItemsRelay.accept(posts.map { viewItem(post: $0) })
+            loadingRelay.accept(false)
+            errorRelay.accept(nil)
+        case .failed:
+            viewItemsRelay.accept(nil)
+            loadingRelay.accept(false)
+            errorRelay.accept("market.sync_error".localized)
+        }
+    }
+
+    private func viewItem(post: Post) -> ViewItem {
+        ViewItem(
+                source: post.source,
+                title: post.title,
+                body: post.body,
+                timeAgo: timeAgo(interval: Date().timeIntervalSince1970 - post.timestamp),
+                url: post.url
+        )
     }
 
     private func timeAgo(interval: TimeInterval) -> String {
@@ -38,42 +65,20 @@ class MarketPostViewModel {
         return "timestamp.days_ago".localized(interval)
     }
 
-    private var postViewItems: [ViewItem] {
-        let currentTimeInterval = Date().timeIntervalSince1970
-
-        return Array(
-                service.items.map { item in
-                    ViewItem(
-                            source: item.source,
-                            title: item.title,
-                            body: item.body,
-                            timestamp: timeAgo(interval: currentTimeInterval - item.timestamp),
-                            url: item.url,
-                            imageUrl: item.url)
-                }.prefix(postLimit ?? Int.max))
-    }
-
-    private func sync(state: MarketPostService.State) {
-        switch state {
-        case .loading:
-            switch stateRelay.value {
-            case .loading, .error:
-                stateRelay.accept(.loading)
-            default: ()
-            }
-        case .loaded:
-            stateRelay.accept(.loaded(posts: postViewItems))
-        case .failed:
-            stateRelay.accept(.error(description: "market.sync_error".localized))
-        }
-    }
-
 }
 
 extension MarketPostViewModel {
 
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    var viewItemsDriver: Driver<[ViewItem]?> {
+        viewItemsRelay.asDriver()
+    }
+
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var errorDriver: Driver<String?> {
+        errorRelay.asDriver()
     }
 
     func refresh() {
@@ -88,15 +93,8 @@ extension MarketPostViewModel {
         let source: String
         let title: String
         let body: String
-        let timestamp: String
+        let timeAgo: String
         let url: String
-        let imageUrl: String?
-    }
-
-    enum State {
-        case loading
-        case loaded(posts: [ViewItem])
-        case error(description: String)
     }
 
 }

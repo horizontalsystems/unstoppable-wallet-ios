@@ -6,10 +6,10 @@ import Erc20Kit
 import UniswapKit
 
 class EvmAdapter: BaseEvmAdapter {
-    static let decimal = 18
+    static let decimals = 18
 
-    init(evmKit: EthereumKit.Kit, coinManager: ICoinManager) {
-        super.init(evmKit: evmKit, decimal: EvmAdapter.decimal, coinManager: coinManager)
+    init(evmKit: EthereumKit.Kit) {
+        super.init(evmKit: evmKit, decimals: EvmAdapter.decimals)
     }
 
 }

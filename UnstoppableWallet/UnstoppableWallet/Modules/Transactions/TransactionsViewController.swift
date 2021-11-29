@@ -5,21 +5,22 @@ import ThemeKit
 import HUD
 import ComponentKit
 import CurrencyKit
+import RxSwift
 
 class TransactionsViewController: ThemeViewController {
-    private let delegate: ITransactionsViewDelegate
-
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view", qos: .userInitiated)
+    private let disposeBag = DisposeBag()
+    private let viewModel: TransactionsViewModel
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyLabel = UILabel()
-    private let filterHeaderView = FilterHeaderView()
+    private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
+    private let coinFiltersView = MarketDiscoveryFilterHeaderView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sections = [Section]()
 
-    init(delegate: ITransactionsViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: TransactionsViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -38,31 +39,40 @@ class TransactionsViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
         }
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.contentInset = UIEdgeInsets(top: FilterHeaderView.height, left: 0, bottom: 0, right: 0)
-        tableView.scrollIndicatorInsets = tableView.contentInset
 
         tableView.registerCell(forClass: H23Cell.self)
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
         tableView.estimatedRowHeight = 0
         tableView.delaysContentTouches = false
 
-        view.addSubview(filterHeaderView)
-        filterHeaderView.snp.makeConstraints { maker in
+        view.addSubview(typeFiltersView)
+        typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.height.equalTo(FilterHeaderView.height)
         }
 
-        filterHeaderView.onSelect = { [weak self] index in
-            self?.delegate.onFilterSelect(index: index)
+        typeFiltersView.onSelect = { [weak self] index in
+            self?.viewModel.typeFilterSelected(index: index)
+        }
+
+        view.addSubview(coinFiltersView)
+        coinFiltersView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(typeFiltersView.snp.bottom)
+            maker.height.equalTo(MarketDiscoveryFilterHeaderView.headerHeight)
+        }
+
+        coinFiltersView.onSelect = { [weak self] index in
+            self?.viewModel.coinFilterSelected(index: index)
         }
 
         view.addSubview(emptyLabel)
@@ -83,147 +93,87 @@ class TransactionsViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
 
-        delegate.viewDidLoad()
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] sections in self?.show(sections: sections) }
+        subscribe(disposeBag, viewModel.updatedViewItemSignal) { [weak self] (sectionIndex, rowIndex, item) in self?.update(sectionIndex: sectionIndex, rowIndex: rowIndex, item: item) }
+        subscribe(disposeBag, viewModel.typeFiltersDriver) { [weak self] coinFilters in self?.show(typeFilters: coinFilters) }
+        subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(coinFilters: coinFilters) }
+        subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] status in self?.show(status: status) }
+
+        tableView.snp.makeConstraints { maker in
+            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+        tableView.reloadData()
+    }
+
+    private func itemClicked(item: TransactionViewItem) {
+        if let item = viewModel.transactionItem(uid: item.uid) {
+            guard let module = TransactionInfoModule.instance(transactionItem: item) else {
+                return
+            }
+
+            present(ThemeNavigationController(rootViewController: module), animated: true)
+        }
+    }
+
+    private func update(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem) {
+        DispatchQueue.main.async {
+            self.sections[sectionIndex].viewItems[rowIndex] = item
+
+            let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+            if let cell = self.tableView.cellForRow(at: indexPath) as? H23Cell {
+                self.bind(item: item, cell: cell)
+            }
+        }
     }
 
     private func bind(item: TransactionViewItem, cell: H23Cell) {
-        delegate.willShow(item: item)
+        viewModel.willShow(uid: item.uid)
 
-        var image: UIImage? = nil
-        var imageColor: UIColor
-        var spinnerProgress: Float? = nil
-        var topText: String
-        var bottomText: String = ""
-        var valueTopText: String = ""
-        var valueTopTextColor: UIColor = .themeJacob
-        var valueBottomText: String? = nil
-        var valueBottomTextColor: UIColor = .themeGray
-        var valueLeftIconImage: UIImage? = nil
-        var valueRightIconImage: UIImage? = nil
+        cell.leftImage = UIImage(named: item.typeImage.imageName)?.withRenderingMode(.alwaysTemplate)
+        cell.leftImageTintColor = item.typeImage.color
+        cell.set(spinnerProgress: item.progress)
 
-        switch item.type {
-        case .incoming(let from, let amount, let lockState, _):
-            image = UIImage(named: "arrow_medium_main_down_left_20")
-            imageColor = .themeRemus
-            topText = "transactions.receive".localized
-            bottomText = from.flatMap { "transactions.from".localized($0) } ?? "---"
-
-            if let currencyValueString = item.mainAmountCurrencyString {
-                valueTopText = currencyValueString
-                valueTopTextColor = .themeRemus
-            }
-
-            valueBottomText = amount
-
-            if let lockState = lockState {
-                if lockState.locked {
-                    valueLeftIconImage = UIImage(named: "lock_20")?.withRenderingMode(.alwaysTemplate)
-                } else {
-                    valueLeftIconImage = UIImage(named: "unlock_20")?.withRenderingMode(.alwaysTemplate)
-                }
-                cell.valueLeftIconTinColor = .themeGray
-            }
-
-        case .outgoing(let to, let amount, let lockState, _, let sentToSelf):
-            image = UIImage(named: "arrow_medium_main_up_right_20")
-            imageColor = .themeJacob
-            topText = "transactions.send".localized
-            bottomText = to.flatMap { "transactions.to".localized($0) } ?? "---"
-
-            if let currencyValueString = item.mainAmountCurrencyString {
-                valueTopText = currencyValueString
-                valueTopTextColor = .themeJacob
-            }
-
-            valueBottomText = amount
-
-            if let lockState = lockState {
-                if lockState.locked {
-                    valueLeftIconImage = UIImage(named: "lock_20")?.withRenderingMode(.alwaysTemplate)
-                } else {
-                    valueLeftIconImage = UIImage(named: "unlock_20")?.withRenderingMode(.alwaysTemplate)
-                }
-                cell.valueLeftIconTinColor = .themeGray
-            }
-
-            if sentToSelf {
-                valueRightIconImage = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
-                cell.valueRightIconTinColor = .themeRemus
-            }
-
-        case .approve(let spender, let amount, let isMaxAmount, let coinCode):
-            image = UIImage(named: "check_2_20")
-            imageColor = .themeLeah
-            topText = "transactions.approve".localized
-            bottomText = "transactions.from".localized(spender)
-            valueTopTextColor = .themeLeah
-
-            if isMaxAmount {
-                valueTopText = "∞"
-                valueBottomText = "transactions.value.unlimited".localized(coinCode)
-            } else {
-                if let currencyValueString = item.mainAmountCurrencyString {
-                    valueTopText = currencyValueString
-                } else {
-                    valueTopText = ""
-                }
-                valueBottomText = amount
-            }
-
-        case .swap(let exchangeAddress, let amountIn, let amountOut, let foreignRecipient):
-            image = UIImage(named: "swap_2_20")
-            imageColor = .themeLeah
-            topText = "transactions.swap".localized
-            bottomText = exchangeAddress
-
-            valueTopText = amountIn
-            valueTopTextColor = .themeJacob
-
-            valueBottomText = amountOut
-            valueBottomTextColor = foreignRecipient ? .themeGray : .themeRemus
-
-        case .contractCall(let contractAddress, let blockchain, let method):
-            image = UIImage(named: "unordered_20")
-            imageColor = .themeLeah
-            topText = method?.uppercased() ?? "\(blockchain) \("transactions.contract_call".localized)"
-            bottomText = contractAddress
-
-        case .contractCreation:
-            image = UIImage(named: "unordered_20")
-            imageColor = .themeLeah
-            topText = "transactions.contract_creation".localized
-            bottomText = "---"
-        }
-
-        switch item.status {
-        case .pending:
-            spinnerProgress = 0.2
-
-        case .processing(let progress):
-            spinnerProgress = Float(progress) * 0.8 + 0.2
-
-        case .failed:
-            image = UIImage(named: "warning_2_20")
-            imageColor = .themeLucian
-
-        default: ()
-        }
-
-        cell.leftImage = image?.withRenderingMode(.alwaysTemplate)
-        cell.leftImageTintColor = imageColor
-        cell.set(spinnerProgress: spinnerProgress)
-
-        cell.topText = topText
+        cell.topText = item.title
         cell.topTextColor = .themeOz
-        cell.bottomText = bottomText
+        cell.bottomText = item.subTitle
 
-        cell.valueTopText = valueTopText
-        cell.valueTopTextColor = valueTopTextColor
-        cell.valueBottomText = valueBottomText
-        cell.valueBottomTextColor = valueBottomTextColor
-        
-        cell.valueLeftIconImage = valueLeftIconImage
-        cell.valueRightIconImage = valueRightIconImage
+        cell.valueTopText = item.primaryValue?.value
+        cell.valueTopTextColor = item.primaryValue?.color ?? .themeGray
+        cell.valueBottomText = item.secondaryValue?.value
+        cell.valueBottomTextColor = item.secondaryValue?.color ?? .themeGray
+
+        if item.sentToSelf {
+            cell.valueLeftIconImage = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
+            cell.valueLeftIconTinColor = .themeRemus
+        } else {
+            cell.valueLeftIconImage = nil
+        }
+
+        if let locked = item.locked {
+            cell.valueRightIconImage = locked ? UIImage(named: "lock_20")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "unlock_20")?.withRenderingMode(.alwaysTemplate)
+            cell.valueRightIconTinColor = .themeGray
+        } else {
+            cell.valueRightIconImage = nil
+        }
+    }
+
+    private func rowsBeforeBottom(indexPath: IndexPath) -> Int {
+        var section = tableView.numberOfSections
+        var count = 0
+
+        while indexPath.section < section {
+            section -= 1
+            let rowsCount = tableView.numberOfRows(inSection: section)
+
+            if indexPath.section == section {
+                return count + rowsCount - (indexPath.row + 1)
+            } else {
+                count += rowsCount
+            }
+        }
+
+        return count
     }
 
     private func bind(itemAt indexPath: IndexPath, to cell: UITableViewCell?) {
@@ -234,12 +184,21 @@ class TransactionsViewController: ThemeViewController {
             bind(item: item, cell: cell)
         }
 
-        if indexPath.row >= self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
-            delegate.onBottomReached()
+        if rowsBeforeBottom(indexPath: indexPath) <= 10 {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.viewModel.bottomReached()
+            }
         }
     }
 
-    private func show(status: TransactionViewStatus) {
+    private func show(sections: [Section]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.sections = sections
+            self?.tableView.reloadData()
+        }
+    }
+
+    private func show(status: TransactionsModule.ViewStatus) {
         syncSpinner.isHidden = !status.showProgress
         if status.showProgress {
             syncSpinner.startAnimating()
@@ -250,67 +209,14 @@ class TransactionsViewController: ThemeViewController {
         emptyLabel.isHidden = !status.showMessage
     }
 
-    private func sections(viewItems: [TransactionViewItem]) -> [Section] {
-        var sections = [Section]()
-        var lastDaysAgo = -1
-
-        for viewItem in viewItems {
-            let daysAgo = daysFrom(date: viewItem.date)
-
-            if daysAgo != lastDaysAgo {
-                sections.append(Section(daysAgo: daysAgo, viewItems: [viewItem]))
-            } else {
-                sections[sections.count - 1].viewItems.append(viewItem)
-            }
-
-            lastDaysAgo = daysAgo
-        }
-
-        return sections
+    private func show(typeFilters: (filters: [FilterHeaderView.ViewItem], selected: Int)) {
+        typeFiltersView.reload(filters: typeFilters.filters)
+        typeFiltersView.select(index: typeFilters.selected)
     }
 
-    private func daysFrom(date: Date) -> Int {
-        let calendar = Calendar.current
-        let startOfNow = calendar.startOfDay(for: Date())
-        let startOfDate = calendar.startOfDay(for: date)
-        let components = calendar.dateComponents([.day], from: startOfDate, to: startOfNow)
-
-        return components.day ?? 0
-    }
-
-}
-
-extension TransactionsViewController: ITransactionsView {
-
-    func set(status: TransactionViewStatus) {
-        DispatchQueue.main.async { [weak self] in
-            self?.show(status: status)
-        }
-    }
-
-    func show(filters: [FilterHeaderView.ViewItem]) {
-        filterHeaderView.reload(filters: filters)
-    }
-
-    func show(transactions newViewItems: [TransactionViewItem], animated: Bool) {
-        queue.async {
-            let newSections = self.sections(viewItems: newViewItems)
-
-            DispatchQueue.main.sync { [weak self] in
-                self?.sections = newSections
-                self?.tableView.reloadData()
-            }
-        }
-    }
-
-    func showNoTransactions() {
-        show(transactions: [], animated: true)
-    }
-
-    func reloadTransactions() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
+    private func show(coinFilters: (filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)) {
+        coinFiltersView.set(filters: coinFilters.filters)
+        coinFiltersView.setSelected(index: coinFilters.selected)
     }
 
 }
@@ -335,7 +241,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate.onTransactionClick(item: sections[indexPath.section].viewItems[indexPath.row])
+        itemClicked(item: sections[indexPath.section].viewItems[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -355,18 +261,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
             return
         }
 
-        view.text = dateHeaderTitle(daysAgo: sections[section].daysAgo).uppercased()
-    }
-
-    private func dateHeaderTitle(daysAgo: Int) -> String {
-        if daysAgo == 0 {
-            return "transactions.today".localized
-        } else if daysAgo == 1 {
-            return "transactions.yesterday".localized
-        } else {
-            let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 - Double(daysAgo * 60 * 60 * 24))
-            return DateHelper.instance.formatTransactionDate(from: date)
-        }
+        view.text = sections[section].title
     }
 
 }
@@ -374,7 +269,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 extension TransactionsViewController {
 
     struct Section {
-        let daysAgo: Int
+        let title: String
         var viewItems: [TransactionViewItem]
     }
 

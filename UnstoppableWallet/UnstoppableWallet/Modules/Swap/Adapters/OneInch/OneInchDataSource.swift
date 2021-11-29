@@ -14,11 +14,12 @@ class OneInchDataSource {
 
     private let viewModel: OneInchViewModel
 
+    private let settingsHeaderView = TextDropDownAndSettingsView()
+
     private let fromCoinCardCell: SwapCoinCardCell
     private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
-    private let poweredByCell = AdditionalDataCellNew()
-    private let priceCell = AdditionalDataCellNew()
+    private let buyPriceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
 
     private let errorCell = SendEthereumErrorCell()
@@ -28,6 +29,7 @@ class OneInchDataSource {
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
+    var onOpenSelectProvider: (() -> ())? = nil
     var onOpenSettings: (() -> ())? = nil
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
@@ -47,6 +49,10 @@ class OneInchDataSource {
             self?.viewModel.onTapSwitch()
         }
 
+        settingsHeaderView.bind(dropdownTitle: viewModel.dexName)
+        settingsHeaderView.onTapDropDown = { [weak self] in self?.onOpenSelectProvider?() }
+        settingsHeaderView.onTapSettings = { [weak self] in self?.onOpenSettings?() }
+
         initCells()
     }
 
@@ -58,11 +64,9 @@ class OneInchDataSource {
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
-        poweredByCell.title = "swap.powered_by".localized
-        poweredByCell.value = viewModel.dexName
 
-        priceCell.title = "swap.price".localized
-        priceCell.isVisible = false
+        buyPriceCell.title = "swap.buy_price".localized
+        buyPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
 
         approveButton.apply(style: .primaryGray)
@@ -152,10 +156,6 @@ class OneInchDataSource {
         viewModel.onTapProceed()
     }
 
-    @objc func onTapAdvancedSettings() {
-        onOpenSettings?()
-    }
-
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
         guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
             return
@@ -178,8 +178,8 @@ extension OneInchDataSource: ISwapDataSource {
 
     var state: SwapModule.DataSourceState {
         SwapModule.DataSourceState(
-                coinFrom: viewModel.tradeService.coinIn,
-                coinTo: viewModel.tradeService.coinOut,
+                platformCoinFrom: viewModel.tradeService.platformCoinIn,
+                platformCoinTo: viewModel.tradeService.platformCoinOut,
                 amountFrom: viewModel.tradeService.amountIn,
                 amountTo: viewModel.tradeService.amountOut,
                 exactFrom: false)
@@ -190,6 +190,7 @@ extension OneInchDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "main",
+                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
                 rows: [
                     StaticRow(
                             cell: fromCoinCardCell,
@@ -215,14 +216,9 @@ extension OneInchDataSource: ISwapDataSource {
                 footerState: .margin(height: 6),
                 rows: [
                     StaticRow(
-                            cell: poweredByCell,
-                            id: "powered_by",
-                            height: poweredByCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: priceCell,
+                            cell: buyPriceCell,
                             id: "execution-price",
-                            height: priceCell.cellHeight
+                            height: buyPriceCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,

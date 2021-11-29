@@ -1,21 +1,72 @@
-import CoinKit
+import MarketKit
 
 struct Wallet {
-    let configuredCoin: ConfiguredCoin
+    let configuredPlatformCoin: ConfiguredPlatformCoin
     let account: Account
 
-    init(configuredCoin: ConfiguredCoin, account: Account) {
-        self.configuredCoin = configuredCoin
+    init(configuredPlatformCoin: ConfiguredPlatformCoin, account: Account) {
+        self.configuredPlatformCoin = configuredPlatformCoin
         self.account = account
     }
 
-    init(coin: Coin, account: Account) {
-        configuredCoin = ConfiguredCoin(coin: coin)
+    init(platformCoin: PlatformCoin, account: Account) {
+        configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin)
         self.account = account
+    }
+
+    var platformCoin: PlatformCoin {
+        configuredPlatformCoin.platformCoin
+    }
+
+    var coinSettings: CoinSettings {
+        configuredPlatformCoin.coinSettings
     }
 
     var coin: Coin {
-        configuredCoin.coin
+        platformCoin.coin
+    }
+
+    var platform: Platform {
+        platformCoin.platform
+    }
+
+    var coinType: CoinType {
+        platform.coinType
+    }
+
+    var decimals: Int {
+        platform.decimals
+    }
+
+    var transactionSource: TransactionSource {
+        let blockchain: TransactionSource.Blockchain
+
+        switch coinType {
+        case .bitcoin:
+            blockchain = .bitcoin
+        case .bitcoinCash:
+            blockchain = .bitcoinCash
+        case .dash:
+            blockchain = .dash
+        case .litecoin:
+            blockchain = .litecoin
+        case .zcash:
+            blockchain = .zcash
+        case .bep2(let symbol):
+            blockchain = .bep2(symbol: symbol)
+        case .ethereum:
+            blockchain = .ethereum
+        case .binanceSmartChain:
+            blockchain = .binanceSmartChain
+        case .erc20:
+            blockchain = .ethereum
+        case .bep20:
+            blockchain = .binanceSmartChain
+        default:
+            fatalError("Unsupported coin may not have transactions to show")
+        }
+
+        return TransactionSource(blockchain: blockchain, account: account, coinSettings: coinSettings)
     }
 
 }
@@ -23,12 +74,27 @@ struct Wallet {
 extension Wallet: Hashable {
 
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
-        lhs.configuredCoin == rhs.configuredCoin && lhs.account == rhs.account
+        lhs.configuredPlatformCoin == rhs.configuredPlatformCoin && lhs.account == rhs.account
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(configuredCoin)
+        hasher.combine(configuredPlatformCoin)
         hasher.combine(account)
+    }
+
+}
+
+extension Wallet {
+
+    public var badge: String? {
+        switch coinType {
+        case .bitcoin, .litecoin:
+            return coinSettings.derivation?.rawValue.uppercased()
+        case .bitcoinCash:
+            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
+        default:
+            return coinType.blockchainType
+        }
     }
 
 }

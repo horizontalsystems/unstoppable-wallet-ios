@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import XRatesKit
+import MarketKit
 import Chart
 import CurrencyKit
 import HUD
@@ -52,7 +52,7 @@ class CoinChartViewModel {
         }
 
         let rateValue = state.data?.rate.map { CurrencyValue(currency: service.currency, value: $0) }
-        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.format(currencyValue: $0) })
+        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.format(currencyValue: $0, fractionPolicy: .threshold(high: 1000, low: 0.01), trimmable: false) })
         rateDiffRelay.accept(state.data?.rateDiff24h)
 
         guard let item = state.data else {
@@ -112,6 +112,10 @@ extension CoinChartViewModel {
         service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
     }
 
+    func viewDidLoad() {
+        service.fetchChartData()
+    }
+
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {
@@ -160,6 +164,7 @@ extension ChartType {
         case .week: return "chart.time_duration.week".localized
         case .week2: return "chart.time_duration.week2".localized
         case .month: return "chart.time_duration.month".localized
+        case .monthByDay: return "chart.time_duration.month".localized
         case .month3: return "chart.time_duration.month3".localized
         case .halfYear: return "chart.time_duration.halyear".localized
         case .year: return "chart.time_duration.year".localized

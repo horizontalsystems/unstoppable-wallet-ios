@@ -27,12 +27,8 @@ class EnableCoinsView {
             HudHelper.instance.hide()
         case .loading:
             HudHelper.instance.showSpinner(title: "enable_coins.enabling".localized)
-        case .success(let count):
-            if count == 0 {
-                HudHelper.instance.showAttention(title: "enable_coins.enabled_no_coins".localized)
-            } else {
-                HudHelper.instance.showSuccess(title: "enable_coins.enabled_coins".localized(String(count)))
-            }
+        case .success:
+            HudHelper.instance.hide()
         case .error:
             HudHelper.instance.showError()
         }

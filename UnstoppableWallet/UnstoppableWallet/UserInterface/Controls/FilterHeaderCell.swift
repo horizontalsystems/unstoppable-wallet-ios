@@ -4,9 +4,8 @@ import SnapKit
 import ComponentKit
 
 class FilterHeaderCell: UICollectionViewCell {
-    private static let buttonStyle: ThemeButtonStyle = .secondaryTransparent
-
     private let button = ThemeButton()
+    private var buttonStyle: ThemeButtonStyle = .tab
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,7 +15,6 @@ class FilterHeaderCell: UICollectionViewCell {
             maker.edges.equalToSuperview()
         }
 
-        button.apply(style: FilterHeaderCell.buttonStyle)
         button.isUserInteractionEnabled = false
     }
 
@@ -26,7 +24,7 @@ class FilterHeaderCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            bind(selected: isSelected)
+            bind(selected: isSelected, buttonStyle: buttonStyle)
         }
     }
 
@@ -36,13 +34,16 @@ class FilterHeaderCell: UICollectionViewCell {
         }
     }
 
-    func bind(title: String?, selected: Bool) {
+    func bind(title: String?, selected: Bool, buttonStyle: ThemeButtonStyle) {
+        self.buttonStyle = buttonStyle
+
+        button.apply(style: buttonStyle)
         button.setTitle(title, for: .normal)
 
-        bind(selected: selected)
+        bind(selected: selected, buttonStyle: buttonStyle)
     }
 
-    private func bind(selected: Bool) {
+    private func bind(selected: Bool, buttonStyle: ThemeButtonStyle) {
         button.isSelected = selected
     }
 
@@ -54,8 +55,12 @@ class FilterHeaderCell: UICollectionViewCell {
 
 extension FilterHeaderCell {
 
-    static func size(for title: String) -> CGSize {
-        ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle)
+    static func height(buttonStyle: ThemeButtonStyle) -> CGFloat {
+        buttonStyle == .tab ? CGFloat.heightSingleLineCell : 28
+    }
+
+    static func width(for title: String, buttonStyle: ThemeButtonStyle) -> CGFloat {
+        ThemeButton.size(containerWidth: .greatestFiniteMagnitude, text: title, style: buttonStyle).width
     }
 
 }

@@ -1,26 +1,27 @@
 import Foundation
-import CoinKit
+import MarketKit
 
 class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
-    let value: CoinValue
+    let value: TransactionValue
     let to: String?
     let sentToSelf: Bool
 
-    init(coin: Coin, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
+    init(coin: PlatformCoin, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
          amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil) {
-        value = CoinValue(coin: coin, value: amount)
+        value = .coinValue(platformCoin: coin, value: amount)
         self.to = to
         self.sentToSelf = sentToSelf
 
         super.init(
+                source: source,
                 uid: uid,
                 transactionHash: transactionHash,
                 transactionIndex: transactionIndex,
                 blockHeight: blockHeight,
                 confirmationsThreshold: confirmationsThreshold,
                 date: date,
-                fee: fee.flatMap { CoinValue(coin: coin, value: $0) },
+                fee: fee.flatMap { .coinValue(platformCoin: coin, value: $0) },
                 failed: failed,
                 lockInfo: lockInfo,
                 conflictingHash: conflictingHash,
@@ -29,7 +30,7 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         )
     }
 
-    override var mainValue: CoinValue? {
+    override var mainValue: TransactionValue? {
         value
     }
 

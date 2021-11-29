@@ -1,22 +1,22 @@
-import XRatesKit
 import RxSwift
 import Foundation
-import CoinKit
+import MarketKit
+import Chart
 
 class CoinTvlFetcher {
-    private let rateManager: IRateManager
-    private let coinType: CoinType
+    private let marketKit: MarketKit.Kit
+    private let coinUid: String
 
-    init(rateManager: IRateManager, coinType: CoinType) {
-        self.rateManager = rateManager
-        self.coinType = coinType
+    init(marketKit: MarketKit.Kit, coinUid: String) {
+        self.marketKit = marketKit
+        self.coinUid = coinUid
     }
 
 }
 
 extension CoinTvlFetcher: IMetricChartConfiguration {
     var title: String { "coin_page.tvl".localized }
-    var description: String? { "coin_page.tvl.description".localized }
+    var description: String? { "coin_page.tvl.description".localized  }
     var poweredBy: String { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
@@ -28,10 +28,10 @@ extension CoinTvlFetcher: IMetricChartConfiguration {
 extension CoinTvlFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, timePeriod: TimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
-        rateManager
-                .defiTvlPoints(coinType: coinType, currencyCode: currencyCode, fetchDiffPeriod: timePeriod)
+        marketKit
+                .marketInfoTvlSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: timePeriod)
                 .map { points in
-                    points.map { MetricChartModule.Item(value: $0.tvl, timestamp: TimeInterval($0.timestamp)) }
+                    points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) }
                 }
     }
 

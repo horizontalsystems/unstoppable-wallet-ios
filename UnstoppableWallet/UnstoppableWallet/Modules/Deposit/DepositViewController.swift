@@ -2,9 +2,12 @@ import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
+import Alamofire
+import AlamofireImage
 
 class DepositViewController: ThemeViewController {
     private let qrCodeSideMargin: CGFloat = 72
+    private let smallScreenQrCodeSideMargin: CGFloat = 88
 
     private let viewModel: DepositViewModel
 
@@ -21,13 +24,18 @@ class DepositViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let iconImageView = UIImageView()
-
         title = "deposit.receive_coin".localized(viewModel.coin.code)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        iconImageView.image = .image(coinType: viewModel.coin.type)
+        let imageView = UIImageView()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
+
+        let placeholderImage = UIImage(named: viewModel.coinType.placeholderImageName)
+        if let url = URL(string: viewModel.coin.imageUrl) {
+            imageView.af.setImage(withURL: url, placeholderImage: placeholderImage)
+        } else {
+            imageView.image = placeholderImage
+        }
 
         let topWrapperView = UIView()
 
@@ -35,15 +43,6 @@ class DepositViewController: ThemeViewController {
         topWrapperView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        let bottomWrapperView = UIView()
-
-        view.addSubview(bottomWrapperView)
-        bottomWrapperView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(topWrapperView.snp.bottom)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
         let contentWrapperView = UIView()
@@ -54,11 +53,12 @@ class DepositViewController: ThemeViewController {
             maker.centerY.equalToSuperview()
         }
 
+        let margin = view.width > 320 ? qrCodeSideMargin : smallScreenQrCodeSideMargin
         let qrCodeImageView = UIImageView()
 
         contentWrapperView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(qrCodeSideMargin)
+            maker.leading.trailing.equalToSuperview().inset(margin)
             maker.top.equalToSuperview()
             maker.width.equalTo(qrCodeImageView.snp.height)
         }
@@ -73,7 +73,10 @@ class DepositViewController: ThemeViewController {
         qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)
 
         let address = viewModel.address
-        let size = view.width - 2 * qrCodeSideMargin
+
+
+        let size = view.width - 2 * margin
+
         qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: address, size: size)  }
 
         if !viewModel.isMainNet {
@@ -116,6 +119,7 @@ class DepositViewController: ThemeViewController {
         addressLabelWrapper.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(addressTitleLabel.snp.bottom)
+            maker.bottom.equalToSuperview()
         }
 
         let addressRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
@@ -136,51 +140,30 @@ class DepositViewController: ThemeViewController {
         addressLabel.textColor = .themeBran
         addressLabel.text = viewModel.address
 
-        let buttonsWrapper = UIView()
-
-        contentWrapperView.addSubview(buttonsWrapper)
-        buttonsWrapper.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(addressLabelWrapper.snp.bottom).offset(CGFloat.margin12)
-            maker.bottom.equalToSuperview()
-        }
-
         let copyButton = ThemeButton()
 
-        buttonsWrapper.addSubview(copyButton)
+        view.addSubview(copyButton)
         copyButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.top.equalTo(topWrapperView.snp.bottom).offset(CGFloat.margin24)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        copyButton.apply(style: .secondaryDefault)
+        copyButton.apply(style: .primaryYellow)
         copyButton.setTitle("button.copy".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
-
+        copyButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         let shareButton = ThemeButton()
 
-        buttonsWrapper.addSubview(shareButton)
+        view.addSubview(shareButton)
         shareButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(copyButton.snp.trailing).offset(CGFloat.margin12)
-            maker.trailing.equalToSuperview()
-            maker.top.equalToSuperview()
+            maker.top.equalTo(copyButton.snp.bottom).offset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalToSuperview().inset(44)
         }
 
-        shareButton.apply(style: .secondaryDefault)
+        shareButton.apply(style: .primaryGray)
         shareButton.setTitle("button.share".localized, for: .normal)
         shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
-
-        let closeButton = ThemeButton()
-
-        bottomWrapperView.addSubview(closeButton)
-        closeButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        closeButton.apply(style: .primaryYellow)
-        closeButton.setTitle("button.close".localized, for: .normal)
-        closeButton.addTarget(self, action: #selector(onTapClose), for: .touchUpInside)
     }
 
     @objc private func onTapCopy() {

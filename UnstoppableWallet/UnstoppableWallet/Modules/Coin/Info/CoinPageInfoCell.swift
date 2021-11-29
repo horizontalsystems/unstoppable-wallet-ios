@@ -40,9 +40,9 @@ class CoinPageInfoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItem: CoinPageViewModel.SecurityInfoViewItem) {
+    func bind(viewItem: CoinDetailsViewModel.SecurityInfoViewItem) {
         titleLabel.text = viewItem.title
-        titleLabel.textColor = viewItem.titleColor
+        titleLabel.textColor = viewItem.grade.color
         descriptionLabel.text = viewItem.text
     }
 

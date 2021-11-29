@@ -7,7 +7,7 @@ import RxCocoa
 import ComponentKit
 import ActionSheet
 
-class SwitchAccountViewController: ThemeViewController {
+class SwitchAccountViewController: ThemeActionSheetController {
     private let viewModel: SwitchAccountViewModel
     private let disposeBag = DisposeBag()
 

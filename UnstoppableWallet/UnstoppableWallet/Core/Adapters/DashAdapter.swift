@@ -17,9 +17,17 @@ class DashAdapter: BitcoinBaseAdapter {
 
         dashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: dashKit, coin: wallet.coin)
+        super.init(abstractKit: dashKit, wallet: wallet, testMode: testMode)
 
         dashKit.delegate = self
+    }
+
+    override var explorerTitle: String {
+        "dash.org"
+    }
+
+    override func explorerUrl(transactionHash: String) -> String? {
+        testMode ? nil : "https://insight.dash.org/insight/tx/" + transactionHash
     }
 
 }
@@ -27,7 +35,7 @@ class DashAdapter: BitcoinBaseAdapter {
 extension DashAdapter: DashKitDelegate {
 
     public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
-        var records = [TransactionRecord]()
+        var records = [BitcoinTransactionRecord]()
 
         for info in inserted {
             records.append(transactionRecord(fromTransaction: info))

@@ -10,7 +10,7 @@ struct CreateAccountModule {
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
                 passphraseValidator: PassphraseValidator(),
-                coinKit: App.shared.coinKit
+                marketKit: App.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)
         let viewController = CreateAccountViewController(viewModel: viewModel)

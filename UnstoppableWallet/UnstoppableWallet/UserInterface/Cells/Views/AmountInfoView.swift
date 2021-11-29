@@ -3,8 +3,6 @@ import UIKit
 class AmountInfoView: UIView {
     private let secondaryAmountTitleLabel = UILabel()
     private let primaryAmountLabel = UILabel()
-    private let lockImageView = UIImageView()
-    private let sentToSelfImageView = UIImageView()
     private let secondaryAmountLabel = UILabel()
     private let primaryAmountTitleLabel = UILabel()
 
@@ -35,13 +33,6 @@ class AmountInfoView: UIView {
         primaryAmountLabel.font = .headline1
         primaryAmountLabel.textAlignment = .right
 
-        addSubview(lockImageView)
-
-        addSubview(sentToSelfImageView)
-
-        sentToSelfImageView.image = UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate)
-        sentToSelfImageView.tintColor = .themeRemus
-
         addSubview(secondaryAmountLabel)
         secondaryAmountLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
@@ -68,23 +59,15 @@ class AmountInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?, type: TransactionViewItem.TransactionType = .contractCreation, lockState: TransactionLockState? = nil) {
-        let primaryColor: UIColor
-        switch type {
-        case .incoming:
-            primaryColor = .themeGreenD
-        case .outgoing:
-            primaryColor = .themeYellowD
-        default:
-            primaryColor = .themeLeah
-        }
+    func bind(primaryAmountInfo: AmountInfo, secondaryAmountInfo: AmountInfo?) {
+        let primaryColor: UIColor = .themeLeah
 
         primaryAmountLabel.textColor = primaryColor
 
         let amountLabel: String?
         switch primaryAmountInfo {
         case .coinValue(let coinValue):
-            primaryAmountTitleLabel.text = coinValue.coin.title
+            primaryAmountTitleLabel.text = coinValue.coin.name
             amountLabel = ValueFormatter.instance.format(coinValue: coinValue)
         case .currencyValue(let currencyValue):
             primaryAmountTitleLabel.text = currencyValue.currency.code
@@ -96,42 +79,10 @@ class AmountInfoView: UIView {
             secondaryAmountLabel.text = secondaryAmountInfo.formattedString
 
             switch secondaryAmountInfo {
-            case .coinValue(let coinValue): secondaryAmountTitleLabel.text = coinValue.coin.title
+            case .coinValue(let coinValue): secondaryAmountTitleLabel.text = coinValue.coin.name
             case .currencyValue(let currencyValue): secondaryAmountTitleLabel.text = currencyValue.currency.code
             }
         }
-
-        if let lockState = lockState {
-            lockImageView.image = UIImage(named: lockState.locked ? "lock_20" : "unlock_20")
-
-            lockImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(primaryAmountLabel.snp.trailing).offset(CGFloat.margin4)
-                maker.centerY.equalTo(primaryAmountLabel)
-                maker.size.equalTo(20)
-            }
-        } else {
-            lockImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(primaryAmountLabel.snp.trailing)
-                maker.centerY.equalTo(primaryAmountLabel)
-                maker.size.equalTo(0)
-            }
-        }
-
-//        if type == .sentToSelf {
-//            sentToSelfImageView.snp.remakeConstraints { maker in
-//                maker.leading.equalTo(lockImageView.snp.trailing).offset(CGFloat.margin4)
-//                maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-//                maker.centerY.equalTo(primaryAmountLabel)
-//                maker.size.equalTo(20)
-//            }
-//        } else {
-            sentToSelfImageView.snp.remakeConstraints { maker in
-                maker.leading.equalTo(lockImageView.snp.trailing)
-                maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.centerY.equalTo(primaryAmountLabel)
-                maker.size.equalTo(0)
-            }
-//        }
     }
 
 }

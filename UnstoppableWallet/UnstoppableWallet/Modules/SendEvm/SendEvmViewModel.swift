@@ -1,7 +1,7 @@
 import RxSwift
 import RxCocoa
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class SendEvmViewModel {
     private let service: SendEvmService
@@ -48,8 +48,8 @@ extension SendEvmViewModel {
         proceedRelay.asSignal()
     }
 
-    var coin: Coin {
-        service.sendCoin
+    var platformCoin: PlatformCoin {
+        service.sendPlatformCoin
     }
 
     func didTapProceed() {

@@ -5,23 +5,23 @@ class WalletSorter {
     private let descending: (WalletService.Item, WalletService.Item) -> Bool = { item, item2 in
         let balance = item.balanceData.balance
         let balance2 = item2.balanceData.balance
-        let hasRate = item.rateItem != nil
-        let hasRate2 = item2.rateItem != nil
+        let hasPrice = item.priceItem != nil
+        let hasPrice2 = item2.priceItem != nil
 
-        if hasRate == hasRate2 {
-            guard let rate = item.rateItem?.rate.value, let rate2 = item2.rateItem?.rate.value else {
+        if hasPrice == hasPrice2 {
+            guard let price = item.priceItem?.price.value, let price2 = item2.priceItem?.price.value else {
                 return balance > balance2
             }
-            return balance * rate > balance2 * rate2
+            return balance * price > balance2 * price2
         }
-        return hasRate
+        return hasPrice
     }
 
-    func sort(items: [WalletService.Item], sort: SortType) -> [WalletService.Item] {
-        switch sort {
-        case .value:
+    func sort(items: [WalletService.Item], sortType: WalletModule.SortType) -> [WalletService.Item] {
+        switch sortType {
+        case .balance:
             let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
-            let zeroItems = items.filter{ $0.balanceData.balance.isZero }
+            let zeroItems = items.filter { $0.balanceData.balance.isZero }
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:
@@ -30,8 +30,8 @@ class WalletSorter {
             }
         case .percentGrowth:
             return items.sorted { item, item2 in
-                guard let diff = item.rateItem?.diff24h, let diff2 = item2.rateItem?.diff24h else {
-                    return item.rateItem?.diff24h != nil
+                guard let diff = item.priceItem?.diff, let diff2 = item2.priceItem?.diff else {
+                    return item.priceItem?.diff != nil
                 }
 
                 return diff > diff2

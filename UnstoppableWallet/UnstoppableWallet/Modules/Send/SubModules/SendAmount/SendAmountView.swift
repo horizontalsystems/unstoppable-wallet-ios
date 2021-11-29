@@ -105,7 +105,7 @@ class SendAmountView: UIView {
     }
 
     private func format(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
+        decimalFormatter.maximumFractionDigits = min(coinValue.decimals, 8)
         return decimalFormatter.string(from: coinValue.value as NSNumber)
     }
 

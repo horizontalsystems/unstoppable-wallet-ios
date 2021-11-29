@@ -9,7 +9,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let bitcoinCashCoinType = wallet.configuredCoin.settings.bitcoinCashCoinType else {
+        guard let bitcoinCashCoinType = wallet.coinSettings.bitcoinCashCoinType else {
             throw AdapterError.wrongParameters
         }
 
@@ -25,9 +25,17 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
 
         bitcoinCashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: bitcoinCashKit, coin: wallet.coin)
+        super.init(abstractKit: bitcoinCashKit, wallet: wallet, testMode: testMode)
 
         bitcoinCashKit.delegate = self
+    }
+
+    override var explorerTitle: String {
+        "btc.com"
+    }
+
+    override func explorerUrl(transactionHash: String) -> String? {
+        testMode ? nil : "https://bch.btc.com/" + transactionHash
     }
 
 }

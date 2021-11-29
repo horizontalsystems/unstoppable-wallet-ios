@@ -104,8 +104,6 @@ class UniswapViewModel {
         } else if case .ready = tradeService.state {
             if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
                 proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if service.errors.contains(where: { .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
-                proceedActionRelay.accept(.disabled(title: "swap.button_error.impact_too_high".localized))
             } else if pendingAllowanceService.state == .pending {
                 proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
             } else {
@@ -126,7 +124,7 @@ class UniswapViewModel {
         } else if case .notReady = tradeService.state {
             approveAction = .hidden
             approveStep = .notApproved
-        } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError || .forbiddenPriceImpactLevel == $0 as? SwapModule.SwapError }) {
+        } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
             approveAction = .hidden
             approveStep = .notApproved
         } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
@@ -146,9 +144,10 @@ class UniswapViewModel {
 
     private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
+                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, platformCoinIn: tradeService.platformCoinOut, platformCoinOut: tradeService.platformCoinIn)?.formattedString,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
-                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)
+                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)
         )
     }
 
@@ -233,8 +232,9 @@ extension UniswapViewModel {
                 slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
                 deadline: viewItemHelper.deadline(tradeService.settings.ttl),
                 recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, coinIn: tradeService.coinIn, coinOut: tradeService.coinOut)?.formattedString,
-                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)?.value
+                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
+                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade),
+                warning: trade.impactLevel == .forbidden ? "swap.confirmation.impact_too_high".localized : nil
         )
 
         openConfirmRelay.accept(SendEvmData(transactionData: transactionData, additionalInfo: .uniswap(info: swapInfo)))
@@ -246,6 +246,7 @@ extension UniswapViewModel {
 
     struct TradeViewItem {
         let executionPrice: String?
+        let executionPriceInverted: String?
         let priceImpact: UniswapModule.PriceImpactViewItem?
         let guaranteedAmount: UniswapModule.GuaranteedAmountViewItem?
     }

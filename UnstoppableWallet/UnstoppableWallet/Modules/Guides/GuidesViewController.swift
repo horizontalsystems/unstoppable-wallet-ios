@@ -9,7 +9,7 @@ class GuidesViewController: ThemeViewController {
     private let viewModel: IGuidesViewModel
 
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let filterHeaderView = FilterHeaderView()
+    private let filterHeaderView = FilterHeaderView(buttonStyle: .tab)
 
     private let spinner = HUDActivityView.create(with: .large48)
 
@@ -41,6 +41,9 @@ class GuidesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 

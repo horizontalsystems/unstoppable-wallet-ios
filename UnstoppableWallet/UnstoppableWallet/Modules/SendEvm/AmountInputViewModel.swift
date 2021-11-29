@@ -1,21 +1,30 @@
 import RxSwift
 import RxCocoa
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 protocol IAmountInputService {
     var amount: Decimal { get }
-    var coin: Coin? { get }
+    var platformCoin: PlatformCoin? { get }
     var balance: Decimal? { get }
 
     var amountObservable: Observable<Decimal> { get }
-    var coinObservable: Observable<Coin?> { get }
+    var platformCoinObservable: Observable<PlatformCoin?> { get }
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> { get }
 
     func onChange(amount: Decimal)
 }
 
+extension IAmountInputService {
+
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
+        Observable.just(nil)
+    }
+
+}
+
 class AmountInputViewModel {
-    private static let maxCoinDecimal = 8
+    private static let maxCoinDecimals = 8
 
     private let disposeBag = DisposeBag()
 
@@ -40,8 +49,9 @@ class AmountInputViewModel {
     private var secondaryTextRelay = BehaviorRelay<String?>(value: nil)
     private var secondaryTextTypeRelay = BehaviorRelay<InputType>(value: .currency)
     private var switchEnabledRelay: BehaviorRelay<Bool>
+    private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
-    private var coinDecimal = AmountInputViewModel.maxCoinDecimal
+    private var coinDecimals = AmountInputViewModel.maxCoinDecimals
 
     init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
         self.service = service
@@ -52,27 +62,35 @@ class AmountInputViewModel {
         switchEnabledRelay = BehaviorRelay(value: switchService.toggleAvailable)
 
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
-        subscribe(disposeBag, service.coinObservable) { [weak self] in self?.sync(coin: $0) }
+        subscribe(disposeBag, service.amountWarningObservable) { [weak self] in self?.sync(amountWarning: $0) }
+        subscribe(disposeBag, service.platformCoinObservable) { [weak self] in self?.sync(platformCoin: $0) }
         subscribe(disposeBag, fiatService.coinAmountObservable) { [weak self] in self?.syncCoin(amount: $0) }
         subscribe(disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
         subscribe(disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.syncSecondary(amountInfo: $0) }
         subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.switchEnabledRelay.accept($0) }
 
         sync(amount: service.amount)
-        sync(coin: service.coin)
-        sync(primaryInfo: fiatService.primaryInfo)
-        syncSecondary(amountInfo: fiatService.secondaryAmountInfo)
+        sync(platformCoin: service.platformCoin)
+    }
+
+    private func sync(amountWarning: AmountWarning?) {
+        amountWarningRelay.accept(amountWarning.flatMap { warning in
+            switch warning {
+            case .highPriceImpact(let priceImpact): return "-\(priceImpact.description)%"
+            default: return nil
+            }
+        })
     }
 
     private func sync(amount: Decimal) {
         fiatService.set(coinAmount: amount)
     }
 
-    private func sync(coin: Coin?) {
-        let max = AmountInputViewModel.maxCoinDecimal
-        coinDecimal = min(max, (coin?.decimal ?? max))
+    private func sync(platformCoin: PlatformCoin?) {
+        let max = AmountInputViewModel.maxCoinDecimals
+        coinDecimals = min(max, (platformCoin?.decimals ?? max))
 
-        fiatService.set(coin: coin)
+        fiatService.set(platformCoin: platformCoin)
 
         isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
@@ -112,7 +130,7 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimal)
+            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimals)
             return decimalFormatter.string(from: amountInfo.value as NSNumber)
         case .amount(let amount):
             amountTypeRelay.accept(.coin)
@@ -121,7 +139,7 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimal
+            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimals
             return decimalFormatter.string(from: amount as NSNumber)
         }
     }
@@ -155,7 +173,7 @@ extension AmountInputViewModel {
         }
 
         switch switchService.amountType {
-        case .coin: return amount.decimalCount <= coinDecimal
+        case .coin: return amount.decimalCount <= coinDecimals
         case .currency: return amount.decimalCount <= fiatService.currency.decimal
         }
     }
@@ -199,6 +217,10 @@ extension AmountInputViewModel {
         secondaryTextTypeRelay.distinctUntilChanged().asDriver(onErrorJustReturn: .coin)
     }
 
+    var amountWarningDriver: Driver<String?> {
+        amountWarningRelay.asDriver()
+    }
+
     func onChange(amount: String?) {
         let amount = decimalParser.parseAnyDecimal(from: amount) ?? 0
 
@@ -231,6 +253,10 @@ extension AmountInputViewModel {
             default: return .coin
             }
         }
+    }
+
+    enum AmountWarning {
+        case highPriceImpact(priceImpact: Decimal)
     }
 
 }

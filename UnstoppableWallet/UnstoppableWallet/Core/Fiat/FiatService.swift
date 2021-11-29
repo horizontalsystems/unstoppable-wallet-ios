@@ -1,21 +1,21 @@
 import CurrencyKit
 import RxSwift
 import RxRelay
-import XRatesKit
-import CoinKit
+import MarketKit
 
 class FiatService {
     private var disposeBag = DisposeBag()
-    private var latestRateDisposeBag = DisposeBag()
+    private var coinPriceDisposeBag = DisposeBag()
+    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
 
     private let switchService: AmountTypeSwitchService
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: IRateManager
+    private let marketKit: MarketKit.Kit
 
-    private var coin: Coin?
-    private var rate: Decimal? {
+    private var platformCoin: PlatformCoin?
+    private var price: Decimal? {
         didSet {
-            toggleAvailableRelay.accept(rate != nil)
+            toggleAvailableRelay.accept(price != nil)
         }
     }
 
@@ -46,32 +46,28 @@ class FiatService {
 
     var coinAmountLocked = false
 
-    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
+    init(switchService: AmountTypeSwitchService, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
         self.switchService = switchService
         self.currencyKit = currencyKit
-        self.rateManager = rateManager
+        self.marketKit = marketKit
 
         subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
 
         sync()
     }
 
-    private func sync(latestRate: LatestRate?) {
-        if let latestRate = latestRate, !latestRate.expired {
-            rate = latestRate.rate
+    private func sync(coinPrice: CoinPrice?) {
+        if let coinPrice = coinPrice, !coinPrice.expired {
+            price = coinPrice.value
 
             if coinAmountLocked {
                 syncCurrencyAmount()
             } else {
-                switch switchService.amountType {
-                case .coin:
-                    syncCurrencyAmount()
-                case .currency:
-                    syncCoinAmount()
-                }
+                syncCurrencyAmount()
+                syncCoinAmount()
             }
         } else {
-            rate = nil
+            price = nil
         }
 
         sync()
@@ -82,27 +78,29 @@ class FiatService {
     }
 
     private func sync() {
-        if let coin = coin {
-            let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(coin: coin, value: coinAmount))
-            let currencyAmountInfo: AmountInfo? = currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: currency, value: $0)) }
+        queue.async {
+            if let platformCoin = self.platformCoin {
+                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: self.coinAmount))
+                let currencyAmountInfo: AmountInfo? = self.currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: self.currency, value: $0)) }
 
-            switch switchService.amountType {
-            case .coin:
-                primaryInfo = .amountInfo(amountInfo: coinAmountInfo)
-                secondaryAmountInfo = currencyAmountInfo
-            case .currency:
-                primaryInfo = .amountInfo(amountInfo: currencyAmountInfo)
-                secondaryAmountInfo = coinAmountInfo
+                switch self.switchService.amountType {
+                case .coin:
+                    self.primaryInfo = .amountInfo(amountInfo: coinAmountInfo)
+                    self.secondaryAmountInfo = currencyAmountInfo
+                case .currency:
+                    self.primaryInfo = .amountInfo(amountInfo: currencyAmountInfo)
+                    self.secondaryAmountInfo = coinAmountInfo
+                }
+            } else {
+                self.primaryInfo = .amount(amount: self.coinAmount)
+                self.secondaryAmountInfo = .currencyValue(currencyValue: .init(currency: self.currency, value: 0))
             }
-        } else {
-            primaryInfo = .amount(amount: coinAmount)
-            secondaryAmountInfo = .currencyValue(currencyValue: .init(currency: currency, value: 0))
         }
     }
 
     private func syncCoinAmount() {
-        if let currencyAmount = currencyAmount, let rate = rate {
-            coinAmount = rate == 0 ? 0 : currencyAmount / rate
+        if let currencyAmount = currencyAmount, let price = price {
+            coinAmount = price == 0 ? 0 : currencyAmount / price
         } else {
             coinAmount = 0
         }
@@ -111,8 +109,8 @@ class FiatService {
     }
 
     private func syncCurrencyAmount() {
-        if let rate = rate {
-            currencyAmount = coinAmount * rate
+        if let price = price {
+            currencyAmount = coinAmount * price
         } else {
             currencyAmount = nil
         }
@@ -138,22 +136,24 @@ extension FiatService {
         toggleAvailableRelay.asObservable()
     }
 
-    func set(coin: Coin?) {
-        self.coin = coin
+    func set(platformCoin: PlatformCoin?) {
+        self.platformCoin = platformCoin
 
-        latestRateDisposeBag = DisposeBag()
+        coinPriceDisposeBag = DisposeBag()
 
-        if let coin = coin {
-            sync(latestRate: rateManager.latestRate(coinType: coin.type, currencyCode: currency.code))
+        if let platformCoin = platformCoin {
+            sync(coinPrice: marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currency.code))
 
-            rateManager.latestRateObservable(coinType: coin.type, currencyCode: currency.code)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] latestRate in
-                        self?.sync(latestRate: latestRate)
-                    })
-                    .disposed(by: latestRateDisposeBag)
+            if !platformCoin.coin.isCustom {
+                marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                        .subscribe(onNext: { [weak self] coinPrice in
+                            self?.sync(coinPrice: coinPrice)
+                        })
+                        .disposed(by: coinPriceDisposeBag)
+            }
         } else {
-            rate = nil
+            price = nil
             currencyAmount = nil
             sync()
         }

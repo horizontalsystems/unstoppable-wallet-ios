@@ -31,8 +31,8 @@ class NetworkSettingsViewModel {
 
     private func iconName(blockchain: NetworkSettingsService.Blockchain) -> String {
         switch blockchain {
-        case .ethereum: return "ethereum"
-        case .binanceSmartChain: return "binanceSmartChain"
+        case .ethereum: return "ethereum_24"
+        case .binanceSmartChain: return "binance_smart_chain_24"
         }
     }
 

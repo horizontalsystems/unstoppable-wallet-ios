@@ -13,10 +13,10 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = ErrorView()
+    private let errorView = MarketListErrorView()
     private var chartCell = CoinMajorHolderChartCell()
 
-    private var viewItems = [CoinMajorHoldersViewModel.ViewItem]()
+    private var stateViewItem: CoinMajorHoldersViewModel.StateViewItem?
 
     init(viewModel: CoinMajorHoldersViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
@@ -53,34 +53,40 @@ class CoinMajorHoldersViewController: ThemeViewController {
             maker.center.equalToSuperview()
         }
 
+        spinner.startAnimating()
+
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin16)
+            maker.edges.equalToSuperview()
         }
 
-        errorView.text = "coin_page.major_holders.sync_error".localized
+        errorView.onTapRetry = { [weak self] in self?.viewModel.refresh() }
 
-        subscribe(disposeBag, viewModel.stateDriver) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in self?.sync(stateViewItem: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
+            } else {
+                self?.errorView.isHidden = true
+            }
+        }
     }
 
-    private func sync(state: CoinMajorHoldersViewModel.State) {
-        tableView.isHidden = true
-        spinner.isHidden = true
-        errorView.isHidden = true
+    private func sync(stateViewItem: CoinMajorHoldersViewModel.StateViewItem?) {
+        self.stateViewItem = stateViewItem
 
-        switch state {
-        case .loading:
-            spinner.isHidden = false
-            spinner.startAnimating()
-        case .failed:
-            errorView.isHidden = false
-        case .loaded(let stateViewItem):
+        if let stateViewItem = stateViewItem {
+            tableView.bounces = true
             chartCell.set(chartPercents: stateViewItem.chartPercents, percent: stateViewItem.percent)
-            viewItems = stateViewItem.viewItems
-
-            tableView.reload()
-            tableView.isHidden = false
+        } else {
+            tableView.bounces = false
         }
+
+        tableView.reload()
     }
 
     private func open(address: String) {
@@ -98,7 +104,7 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.selectionStyle = .none
-                    cell.title = "coin_page.major_holders.top_wallets".localized
+                    cell.title = "coin_page.major_holders.top_ethereum_wallets".localized
                 }
         )
     }
@@ -132,7 +138,11 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
+        guard let stateViewItem = stateViewItem else {
+            return []
+        }
+
+        return [
             Section(
                     id: "chart",
                     footerState: footer(text: "coin_page.major_holders.description".localized),
@@ -149,7 +159,7 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
             Section(
                     id: "holders",
                     footerState: .margin(height: .margin32),
-                    rows: [headerRow] + viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == viewItems.count - 1) }
+                    rows: [headerRow] + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
             )
         ]
     }

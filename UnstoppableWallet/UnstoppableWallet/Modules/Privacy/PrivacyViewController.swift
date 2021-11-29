@@ -113,7 +113,7 @@ class PrivacyViewController: ThemeViewController {
     }
 
     private func row(id: String, item: PrivacyViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())?) -> RowProtocol {
-        if item.changable {
+        if item.changeable {
             return Row<A5Cell>(
                     id: id,
                     hash: "\(item.value)",

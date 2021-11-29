@@ -10,7 +10,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        guard let walletDerivation = wallet.configuredCoin.settings.derivation else {
+        guard let walletDerivation = wallet.coinSettings.derivation else {
             throw AdapterError.wrongParameters
         }
 
@@ -21,9 +21,17 @@ class LitecoinAdapter: BitcoinBaseAdapter {
 
         litecoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
-        super.init(abstractKit: litecoinKit, coin: wallet.coin)
+        super.init(abstractKit: litecoinKit, wallet: wallet, testMode: testMode)
 
         litecoinKit.delegate = self
+    }
+
+    override var explorerTitle: String {
+        "blockchair.com"
+    }
+
+    override func explorerUrl(transactionHash: String) -> String? {
+        testMode ? nil : "https://blockchair.com/litecoin/transaction/" + transactionHash
     }
 
 }

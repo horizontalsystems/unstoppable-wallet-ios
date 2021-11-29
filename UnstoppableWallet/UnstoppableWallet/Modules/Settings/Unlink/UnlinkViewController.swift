@@ -97,17 +97,21 @@ class UnlinkViewController: ThemeActionSheetController {
 
 extension UnlinkViewController: SectionsDataSource {
 
-    private func checkboxRow(viewItem: UnlinkViewModel.ViewItem, index: Int) -> RowProtocol {
+    private func checkboxRow(viewItem: UnlinkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<CheckboxCell>(
                 id: "checkbox_\(index)",
                 hash: "\(viewItem.checked)",
+                autoDeselect: true,
                 dynamicHeight: { width in
-                    CheckboxCell.height(containerWidth: width, text: viewItem.text)
+                    CheckboxCell.height(containerWidth: width, text: viewItem.text, backgroundStyle: .transparent)
                 },
                 bind: { cell, _ in
                     cell.bind(
                             text: viewItem.text,
-                            checked: viewItem.checked
+                            checked: viewItem.checked,
+                            backgroundStyle: .transparent,
+                            isFirst: isFirst,
+                            isLast: isLast
                     )
                 },
                 action: { [weak self] _ in
@@ -120,8 +124,8 @@ extension UnlinkViewController: SectionsDataSource {
         [
             Section(
                     id: "main",
-                    rows: viewItems.enumerated().map {
-                        checkboxRow(viewItem: $1, index: $0)
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        checkboxRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                     }
             )
         ]

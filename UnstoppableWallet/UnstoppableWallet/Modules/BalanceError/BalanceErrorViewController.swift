@@ -53,7 +53,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
         }
 
         changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
-        changeSourceButton.apply(style: .primaryGreen)
+        changeSourceButton.apply(style: .primaryGray)
         changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
 
         view.addSubview(reportButton)

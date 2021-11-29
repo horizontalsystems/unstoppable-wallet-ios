@@ -1,9 +1,9 @@
 import Foundation
 import CurrencyKit
-import CoinKit
+import MarketKit
 
 class SendAmountPresenter {
-    private let maxCoinDecimal = 8
+    private let maxCoinDecimals = 8
 
     weak var view: ISendAmountView?
     weak var delegate: ISendAmountDelegate?
@@ -11,7 +11,7 @@ class SendAmountPresenter {
     private let interactor: ISendAmountInteractor
     private let decimalParser: IAmountDecimalParser
 
-    private let coin: Coin
+    private let platformCoin: PlatformCoin
     let currency: Currency
 
     private var availableAmount: Decimal?
@@ -26,8 +26,8 @@ class SendAmountPresenter {
     var sendAmountInfo: SendAmountInfo = .notEntered
     var rateValue: Decimal?
 
-    init(coin: Coin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
-        self.coin = coin
+    init(platformCoin: PlatformCoin, interactor: ISendAmountInteractor, decimalParser: IAmountDecimalParser) {
+        self.platformCoin = platformCoin
         self.interactor = interactor
         self.decimalParser = decimalParser
 
@@ -84,7 +84,7 @@ class SendAmountPresenter {
     private func primaryAmountInfo(amount: Decimal) -> AmountInfo {
         switch inputType {
         case .coin:
-            return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
         case .currency:
             if let rateValue = rateValue {
                 return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
@@ -97,7 +97,7 @@ class SendAmountPresenter {
     private func secondaryAmountInfo(amount: Decimal) -> AmountInfo? {
         switch inputType.reversed {
         case .coin:
-            return .coinValue(coinValue: CoinValue(coin: coin, value: amount))
+            return .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
         case .currency:
             if let rateValue = rateValue {
                 return .currencyValue(currencyValue: CurrencyValue(currency: currency, value: amount * rateValue))
@@ -125,7 +125,7 @@ class SendAmountPresenter {
             if availableAmount < amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.insufficientBalance(availableAmount: .coinValue(coinValue: CoinValue(coin: coin, value: availableAmount)))
+                    throw ValidationError.insufficientBalance(availableAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: availableAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.insufficientBalance(availableAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: availableAmount * rateValue)))
@@ -140,7 +140,7 @@ class SendAmountPresenter {
             if maximumAmount < amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.maximumAmountExceeded(maximumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: maximumAmount)))
+                    throw ValidationError.maximumAmountExceeded(maximumAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: maximumAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.maximumAmountExceeded(maximumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: maximumAmount * rateValue)))
@@ -155,7 +155,7 @@ class SendAmountPresenter {
             if minimumAmount > amount {
                 switch inputType {
                 case .coin:
-                    throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(coin: coin, value: minimumAmount)))
+                    throw ValidationError.tooFewAmount(minimumAmount: .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: minimumAmount)))
                 case .currency:
                     if let rateValue = rateValue {
                         throw ValidationError.tooFewAmount(minimumAmount: .currencyValue(currencyValue: CurrencyValue(currency: currency, value: minimumAmount * rateValue)))
@@ -334,7 +334,7 @@ extension SendAmountPresenter: ISendAmountViewDelegate {
         }
 
         switch inputType {
-        case .coin: return value.decimalCount <= min(coin.decimal, maxCoinDecimal)
+        case .coin: return value.decimalCount <= min(platformCoin.decimals, maxCoinDecimals)
         case .currency: return value.decimalCount <= currency.decimal
         }
     }

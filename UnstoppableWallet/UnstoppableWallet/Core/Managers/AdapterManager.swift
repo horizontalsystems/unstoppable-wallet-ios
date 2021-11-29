@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class AdapterManager {
     private let disposeBag = DisposeBag()
@@ -15,9 +15,6 @@ class AdapterManager {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var _adapterMap = [Wallet: IAdapter]()
-
-    private var ethereumTransactionsAdapter: ITransactionsAdapter? = nil
-    private var bscTransactionsAdapter: ITransactionsAdapter? = nil
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, initialSyncSettingsManager: InitialSyncSettingsManager) {
         self.adapterFactory = adapterFactory
@@ -36,24 +33,6 @@ class AdapterManager {
         subscribe(disposeBag, ethereumKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEthereumKit() }
         subscribe(disposeBag, binanceSmartChainKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedBinanceSmartChainKit() }
         subscribe(disposeBag, initialSyncSettingsManager.settingUpdatedObservable) { [weak self] in self?.handleUpdated(setting: $0) }
-    }
-
-    private func evmTransactionAdapter(wallets: [Wallet], blockchain: TransactionSource.Blockchain) -> ITransactionsAdapter? {
-        for wallet in wallets {
-            switch wallet.coin.type {
-            case .ethereum, .erc20:
-                if case .ethereum = blockchain {
-                    return adapterFactory.ethereumTransactionsAdapter(account: wallet.account)
-                }
-            case .binanceSmartChain, .bep20:
-                if case .binanceSmartChain = blockchain {
-                    return adapterFactory.bscTransactionsAdapter(account: wallet.account)
-                }
-            default: ()
-            }
-        }
-
-        return nil
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -82,8 +61,6 @@ class AdapterManager {
 
         queue.async {
             self._adapterMap = newAdapterMap
-            self.ethereumTransactionsAdapter = self.evmTransactionAdapter(wallets: wallets, blockchain: .ethereum)
-            self.bscTransactionsAdapter = self.evmTransactionAdapter(wallets: wallets, blockchain: .binanceSmartChain)
             self.adaptersReadyRelay.accept(newAdapterMap)
         }
 
@@ -96,7 +73,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            switch $0.coin.type {
+            switch $0.coinType {
             case .ethereum, .erc20: return true
             default: return false
             }
@@ -107,7 +84,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            switch $0.coin.type {
+            switch $0.coinType {
             case .binanceSmartChain, .bep20: return true
             default: return false
             }
@@ -118,7 +95,7 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            setting.coinType == $0.coin.type && $0.account.origin == .restored
+            setting.coinType == $0.coinType && $0.account.origin == .restored
         })
     }
 
@@ -153,9 +130,9 @@ extension AdapterManager {
         queue.sync { _adapterMap[wallet] }
     }
 
-    func adapter(for coin: Coin) -> IAdapter? {
+    func adapter(for platformCoin: PlatformCoin) -> IAdapter? {
         queue.sync {
-            guard let wallet = walletManager.activeWallets.first(where: { $0.coin == coin } ) else {
+            guard let wallet = walletManager.activeWallets.first(where: { $0.platformCoin == platformCoin } ) else {
                 return nil
             }
 
@@ -165,21 +142,6 @@ extension AdapterManager {
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
         queue.sync { _adapterMap[wallet] as? IBalanceAdapter }
-    }
-
-    func transactionsAdapter(for wallet: TransactionWallet) -> ITransactionsAdapter? {
-        queue.sync {
-            switch wallet.source.blockchain {
-            case .ethereum: return ethereumTransactionsAdapter
-            case .binanceSmartChain: return bscTransactionsAdapter
-            default:
-                return wallet.coin.flatMap {
-                    let configuredCoin = ConfiguredCoin(coin: $0, settings: wallet.source.coinSettings)
-                    let wallet = Wallet(configuredCoin: configuredCoin, account: wallet.source.account)
-                    return _adapterMap[wallet] as? ITransactionsAdapter
-                }
-            }
-        }
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
@@ -193,7 +155,7 @@ extension AdapterManager {
             var binanceKitUpdated = false
 
             for (wallet, adapter) in self._adapterMap {
-                switch wallet.coin.type {
+                switch wallet.coinType {
                 case .ethereum, .erc20:
                     if !ethereumKitUpdated {
                         adapter.refresh()

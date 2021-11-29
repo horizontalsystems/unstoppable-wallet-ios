@@ -1,20 +1,21 @@
 import UIKit
 import ThemeKit
-import CoinKit
+import MarketKit
+import StorageKit
 
 class SendEvmModule {
 
-    static func viewController(coin: Coin, adapter: ISendEthereumAdapter) -> UIViewController {
-        let service = SendEvmService(coin: coin, adapter: adapter)
-        let switchService = AmountTypeSwitchService()
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+    static func viewController(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter) -> UIViewController {
+        let service = SendEvmService(platformCoin: platformCoin, adapter: adapter)
+        let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
-        let coinService = CoinService(coin: coin, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         let viewModel = SendEvmViewModel(service: service)
-        let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService)
+        let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)
 
         let amountViewModel = AmountInputViewModel(
                 service: service,
@@ -23,11 +24,17 @@ class SendEvmModule {
                 decimalParser: AmountDecimalParser()
         )
 
+        let chainCoinCode = AddressResolutionService.chainCoinCode(coinType: platformCoin.platform.coinType) ?? platformCoin.code
+        let resolutionService = AddressResolutionService(
+                coinCode: chainCoinCode,
+                chain: nil
+        )
+
         let addressParserFactory = AddressParserFactory()
         let recipientViewModel = RecipientAddressViewModel(
                 service: service,
-                resolutionService: AddressResolutionService(coinCode: coin.code),
-                addressParser: addressParserFactory.parser(coin: coin)
+                resolutionService: resolutionService,
+                addressParser: addressParserFactory.parser(coinType: platformCoin.coinType)
         )
 
         let viewController = SendEvmViewController(

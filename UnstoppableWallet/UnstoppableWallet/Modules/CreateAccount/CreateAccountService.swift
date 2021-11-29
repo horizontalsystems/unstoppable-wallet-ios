@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import CoinKit
+import MarketKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
@@ -8,7 +8,7 @@ class CreateAccountService {
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
     private let passphraseValidator: PassphraseValidator
-    private let coinKit: CoinKit.Kit
+    private let marketKit: Kit
 
     private let kindRelay = BehaviorRelay<CreateAccountModule.Kind>(value: .mnemonic12)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -16,13 +16,13 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, coinKit: CoinKit.Kit) {
+    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.passphraseValidator = passphraseValidator
-        self.coinKit = coinKit
+        self.marketKit = marketKit
     }
 
     private func resolveAccountType() throws -> AccountType {
@@ -45,18 +45,18 @@ class CreateAccountService {
         var wallets = [Wallet]()
 
         for coinType in defaultCoinTypes {
-            guard let coin = coinKit.coin(type: coinType) else {
+            guard let platformCoin = try? marketKit.platformCoin(coinType: coinType) else {
                 continue
             }
 
             let defaultSettingsArray = coinType.defaultSettingsArray
 
             if defaultSettingsArray.isEmpty {
-                wallets.append(Wallet(coin: coin, account: account))
+                wallets.append(Wallet(platformCoin: platformCoin, account: account))
             } else {
                 for coinSettings in defaultSettingsArray {
-                    let configuredCoin = ConfiguredCoin(coin: coin, settings: coinSettings)
-                    wallets.append(Wallet(configuredCoin: configuredCoin, account: account))
+                    let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
+                    wallets.append(Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account))
                 }
             }
         }

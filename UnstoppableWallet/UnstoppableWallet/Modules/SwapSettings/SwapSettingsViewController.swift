@@ -12,7 +12,6 @@ class SwapSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let dataSourceManager: ISwapDataSourceManager
-    private let viewModel: SwapSettingsViewModel
     private let tableView = SectionsTableView(style: .grouped)
 
     private let chooseServiceCell = B2Cell()
@@ -20,8 +19,7 @@ class SwapSettingsViewController: ThemeViewController {
 
     private var isLoaded: Bool = false
 
-    init(viewModel: SwapSettingsViewModel, dataSourceManager: ISwapDataSourceManager) {
-        self.viewModel = viewModel
+    init(dataSourceManager: ISwapDataSourceManager) {
         self.dataSourceManager = dataSourceManager
 
         super.init()
@@ -56,9 +54,6 @@ class SwapSettingsViewController: ThemeViewController {
         chooseServiceCell.valueColor = .themeLeah
         chooseServiceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-        subscribe(disposeBag, viewModel.providerNameDriver) { [weak self] in self?.sync(providerName: $0) }
-        sync(providerName: viewModel.providerName)
-
         subscribe(disposeBag, dataSourceManager.dataSourceUpdated) { [weak self] _ in self?.updateDataSource() }
         updateDataSource()
     }
@@ -75,10 +70,6 @@ class SwapSettingsViewController: ThemeViewController {
 
     @objc private func didTapCancel() {
         dismiss(animated: true)
-    }
-
-    private func didTapSelectProvider() {
-        navigationController?.pushViewController(SwapSelectProviderModule.viewController(dexManager: viewModel.dexManager), animated: true)
     }
 
     private func updateDataSource() {
@@ -108,20 +99,6 @@ extension SwapSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-
-        sections.append(Section(id: "provider",
-                headerState: .margin(height: CGFloat.margin12),
-                footerState: .margin(height: CGFloat.margin12),
-                rows: [StaticRow(
-                        cell: chooseServiceCell,
-                        id: "provider-cell",
-                        height: .heightCell48,
-                        autoDeselect: true,
-                        action: { [weak self] in
-                            self?.didTapSelectProvider()
-                        }
-                )
-                ]))
 
         if let dataSource = dataSource {
             sections.append(contentsOf: dataSource.buildSections())

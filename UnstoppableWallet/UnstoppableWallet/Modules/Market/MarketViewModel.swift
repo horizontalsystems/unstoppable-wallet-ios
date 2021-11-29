@@ -7,12 +7,11 @@ class MarketViewModel {
     private let disposeBag = DisposeBag()
 
     private let currentTabRelay: BehaviorRelay<MarketModule.Tab>
-    private let discoveryListTypeRelay = BehaviorRelay<MarketModule.ListType?>(value: nil)
 
     init(service: MarketService) {
         self.service = service
 
-        currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.currentTab ?? .overview)
+        currentTabRelay = BehaviorRelay<MarketModule.Tab>(value: service.initialTab)
     }
 
 }
@@ -23,22 +22,13 @@ extension MarketViewModel {
         currentTabRelay.asDriver()
     }
 
-    var discoveryListTypeDriver: Driver<MarketModule.ListType?> {
-        discoveryListTypeRelay.asDriver()
-    }
-
     var tabs: [MarketModule.Tab] {
         MarketModule.Tab.allCases
     }
 
     func onSelect(tab: MarketModule.Tab) {
-        service.currentTab = tab
+        service.set(tab: tab)
         currentTabRelay.accept(tab)
-    }
-
-    func handleTapSeeAll(listType: MarketModule.ListType) {
-        discoveryListTypeRelay.accept(listType)
-        onSelect(tab: .discovery)
     }
 
 }

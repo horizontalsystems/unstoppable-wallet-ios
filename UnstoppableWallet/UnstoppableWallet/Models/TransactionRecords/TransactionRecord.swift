@@ -1,7 +1,7 @@
 import Foundation
-import CoinKit
 
 class TransactionRecord {
+    let source: TransactionSource
     let uid: String
     let transactionHash: String
     let transactionIndex: Int
@@ -10,7 +10,8 @@ class TransactionRecord {
     let date: Date
     let failed: Bool
 
-    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool) {
+    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool) {
+        self.source = source
         self.uid = uid
         self.transactionHash = transactionHash
         self.transactionIndex = transactionIndex
@@ -37,7 +38,7 @@ class TransactionRecord {
         return .pending
     }
 
-    open var mainValue: CoinValue? {
+    open var mainValue: TransactionValue? {
         nil
     }
 
@@ -78,6 +79,7 @@ extension TransactionStatus: Equatable {
 
     public static func ==(lhs: TransactionStatus, rhs: TransactionStatus) -> Bool {
         switch (lhs, rhs) {
+        case (.failed, .failed): return true
         case (.pending, .pending): return true
         case (let .processing(lhsProgress), let .processing(rhsProgress)): return lhsProgress == rhsProgress
         case (.completed, .completed): return true

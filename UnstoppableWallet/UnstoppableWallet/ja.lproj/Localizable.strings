@@ -27,8 +27,6 @@
 
 "n/a" = "N/A";
 
-"biometric_usage_reason" = "Unlock wallet";
-
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan QR code.\n\nGo to Settings - > Unstoppable and allow access to Camera.";
@@ -110,7 +108,7 @@
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
-"balance.sort.24h_change" = "24h Change";
+"balance.sort.price_change" = "24h Change";
 // Deposit
 
 "deposit.receive_coin" = "受取 %@";

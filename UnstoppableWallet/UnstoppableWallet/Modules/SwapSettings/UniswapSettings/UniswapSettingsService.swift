@@ -5,8 +5,9 @@ import RxCocoa
 import RxSwift
 
 class UniswapSettingsService {
-    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...20 }
-    var recommendedSlippageBounds: ClosedRange<Decimal> { 0.1...1 }
+    var recommendedSlippages: [Decimal] = [0.1, 1]
+    private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...50 }
+    private var usualHighestSlippage: Decimal = 5
 
     var recommendedDeadlineBounds: ClosedRange<TimeInterval> { 600...1800 }
 
@@ -16,6 +17,7 @@ class UniswapSettingsService {
         }
     }
     private let errorsRelay = PublishRelay<[Error]>()
+    private let slippageChangeRelay = PublishRelay<Void>()
 
     private var stateRelay = BehaviorRelay<State>(value: .invalid)
 
@@ -28,6 +30,7 @@ class UniswapSettingsService {
     var slippage: Decimal {
         didSet {
             sync()
+            slippageChangeRelay.accept(())
         }
     }
 
@@ -150,14 +153,8 @@ extension UniswapSettingsService: ISlippageService {
         visibleSlippageError(errors: errors)
     }
 
-    var slippageErrorObservable: Observable<Error?> {
-        errorsRelay.map { [weak self] errors -> Error? in
-            self?.visibleSlippageError(errors: errors)
-        }
-    }
-
-    func set(slippage: Decimal) {
-        self.slippage = slippage
+    var unusualSlippage: Bool {
+        usualHighestSlippage < slippage
     }
 
     var defaultSlippage: Decimal {
@@ -170,6 +167,14 @@ extension UniswapSettingsService: ISlippageService {
         }
 
         return settings.allowedSlippage
+    }
+
+    var slippageChangeObservable: Observable<Void> {
+        slippageChangeRelay.asObservable()
+    }
+
+    func set(slippage: Decimal) {
+        self.slippage = slippage
     }
 
 }

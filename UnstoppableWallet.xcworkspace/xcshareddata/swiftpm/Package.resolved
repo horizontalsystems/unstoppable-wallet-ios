@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "DeepDiff",
+        "repositoryURL": "https://github.com/onmyway133/DeepDiff",
+        "state": {
+          "branch": null,
+          "revision": "2639b3a11054d666a4c5ec1b7dd2808e437f3289",
+          "version": "2.3.3"
+        }
+      },
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/johnxnguyen/Down",
+        "state": {
+          "branch": null,
+          "revision": "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+          "version": "0.11.0"
+        }
+      },
+      {
+        "package": "UnicodeURL",
+        "repositoryURL": "https://github.com/nysander/UnicodeURL.git",
+        "state": {
+          "branch": "main",
+          "revision": "fe15c8b585c2e6d22dfe81da899183e6aa376a93",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

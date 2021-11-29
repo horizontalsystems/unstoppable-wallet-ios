@@ -12,7 +12,7 @@ class ReadMoreTextCell: BaseThemeCell {
     private static let buttonHeight: CGFloat = 33
 
     private let labelWrapper = GradientClippingView(clippingHeight: .margin16)
-    private let readMoreTextLabel = UILabel()
+    private let readMoreTextView = MarkdownTextView()
     private let collapseButton = UIButton()
 
     private var collapsed = true
@@ -23,6 +23,7 @@ class ReadMoreTextCell: BaseThemeCell {
         }
     }
 
+    var onTapLink: ((URL) -> ())?
     var onChangeHeight: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -34,13 +35,12 @@ class ReadMoreTextCell: BaseThemeCell {
             maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
         }
 
-        labelWrapper.addSubview(readMoreTextLabel)
-        readMoreTextLabel.snp.makeConstraints { maker in
+        labelWrapper.addSubview(readMoreTextView)
+        readMoreTextView.snp.makeConstraints { maker in
             maker.top.leading.trailing.equalToSuperview()
         }
 
-        readMoreTextLabel.numberOfLines = 0
-        readMoreTextLabel.lineBreakMode = .byTruncatingTail
+        readMoreTextView.delegate = self
 
         contentView.addSubview(collapseButton)
         collapseButton.snp.makeConstraints { maker in
@@ -72,15 +72,15 @@ class ReadMoreTextCell: BaseThemeCell {
     }
 
     var contentText: NSAttributedString? {
-        get { readMoreTextLabel.attributedText }
+        get { readMoreTextView.attributedText }
         set {
-            readMoreTextLabel.attributedText = newValue
+            readMoreTextView.attributedText = newValue
             updateLayout()
         }
     }
 
     private var textHeight: CGFloat {
-        readMoreTextLabel.attributedText?.height(containerWidth: containerWidth - 2 * ReadMoreTextCell.horizontalPadding) ?? 0
+        readMoreTextView.attributedText?.height(containerWidth: containerWidth - 2 * ReadMoreTextCell.horizontalPadding) ?? 0
     }
 
     func cellHeight(containerWidth: CGFloat) -> CGFloat {
@@ -123,6 +123,15 @@ class ReadMoreTextCell: BaseThemeCell {
             collapseButton.isHidden = false
             expandable = true
         }
+    }
+
+}
+
+extension ReadMoreTextCell: UITextViewDelegate {
+
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        onTapLink?(URL)
+        return true
     }
 
 }

@@ -90,11 +90,6 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         delegate.onCopy(receiver: receiver)
     }
 
-    private func format(coinValue: CoinValue) -> String? {
-        decimalFormatter.maximumFractionDigits = min(coinValue.coin.decimal, 8)
-        return decimalFormatter.string(from: coinValue.value as NSNumber)
-    }
-
     private func format(currencyValue: CurrencyValue) -> String? {
         decimalFormatter.maximumFractionDigits = currencyValue.currency.decimal
         return decimalFormatter.string(from: currencyValue.value as NSNumber)

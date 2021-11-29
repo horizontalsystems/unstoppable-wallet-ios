@@ -1,15 +1,16 @@
 import BinanceChainKit
-import CoinKit
+import MarketKit
 
 class BinanceChainTransactionRecord: TransactionRecord {
-    let fee: CoinValue
+    let fee: TransactionValue
     let memo: String?
 
-    init(transaction: TransactionInfo, feeCoin: Coin) {
-        fee = CoinValue(coin: feeCoin, value: BinanceAdapter.transferFee)
+    init(source: TransactionSource, transaction: TransactionInfo, feeCoin: PlatformCoin) {
+        fee = .coinValue(platformCoin: feeCoin, value: BinanceAdapter.transferFee)
         memo = transaction.memo
 
         super.init(
+                source: source,
                 uid: transaction.hash,
                 transactionHash: transaction.hash,
                 transactionIndex: 0,

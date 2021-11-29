@@ -1,6 +1,6 @@
 import UIKit
 import ThemeKit
-import CoinKit
+import MarketKit
 
 class PrivacyRouter {
     weak var viewController: UIViewController?
@@ -13,8 +13,8 @@ extension PrivacyRouter: IPrivacyRouter {
         viewController?.present(module, animated: true)
     }
 
-    func showSyncMode(coin: Coin, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) {
-        let module = PrivacySyncModeRouter.module(coin: coin, currentSyncMode: currentSyncMode, delegate: delegate)
+    func showSyncMode(coinTitle: String, coinIconName: String, coinType: CoinType, currentSyncMode: SyncMode, delegate: IPrivacySyncModeDelegate) {
+        let module = PrivacySyncModeRouter.module(coinTitle: coinTitle, coinIconName: coinIconName, coinType: coinType, currentSyncMode: currentSyncMode, delegate: delegate)
         viewController?.present(module, animated: true)
     }
 

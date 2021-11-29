@@ -1,12 +1,12 @@
 import Foundation
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class EvmTransactionRecord: TransactionRecord {
     let foreignTransaction: Bool
-    let fee: CoinValue
+    let fee: TransactionValue
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin, foreignTransaction: Bool = false) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, foreignTransaction: Bool = false) {
         let transaction = fullTransaction.transaction
         let receipt = fullTransaction.receiptWithLogs?.receipt
         let txHash = transaction.hash.toHexString()
@@ -19,10 +19,11 @@ class EvmTransactionRecord: TransactionRecord {
             feeAmount = fullTransaction.transaction.gasLimit
         }
 
-        let feeDecimal = Decimal(sign: .plus, exponent: -EvmAdapter.decimal, significand: Decimal(feeAmount * transaction.gasPrice))
-        fee = CoinValue(coin: baseCoin, value: feeDecimal)
+        let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount * transaction.gasPrice))
+        fee = .coinValue(platformCoin: baseCoin, value: feeDecimal)
 
         super.init(
+                source: source,
                 uid: txHash,
                 transactionHash: txHash,
                 transactionIndex: receipt?.transactionIndex ?? 0,

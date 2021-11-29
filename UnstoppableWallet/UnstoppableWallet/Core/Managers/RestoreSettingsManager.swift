@@ -1,4 +1,4 @@
-import CoinKit
+import MarketKit
 import ZcashLightClientKit
 
 class RestoreSettingsManager {
@@ -56,7 +56,7 @@ enum RestoreSettingType: String {
         switch self {
         case .birthdayHeight:
             switch coinType {
-            case .zcash: return "\(ZcashNetworkBuilder.network(for: .mainnet))"     // FIX: get real network
+            case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: .mainnet)))"
             default: return nil
             }
         }

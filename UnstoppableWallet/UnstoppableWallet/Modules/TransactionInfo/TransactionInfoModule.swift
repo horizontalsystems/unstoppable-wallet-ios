@@ -1,17 +1,18 @@
 import UIKit
 import CurrencyKit
+import MarketKit
 
 struct TransactionInfoModule {
 
-    static func instance(transaction: TransactionRecord, wallet: TransactionWallet) -> UIViewController? {
-        guard let adapter = App.shared.adapterManager.transactionsAdapter(for: wallet) else {
+    static func instance(transactionItem: TransactionItem) -> UIViewController? {
+        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionItem.record.source) else {
             return nil
         }
 
-        let service = TransactionInfoService(adapter: adapter, rateManager: App.shared.rateManager, currencyKit: App.shared.currencyKit, feeCoinProvider: App.shared.feeCoinProvider, appConfigProvider: App.shared.appConfigProvider, accountSettingManager: App.shared.accountSettingManager)
+        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let factory = TransactionInfoViewItemFactory()
-        let viewModel = TransactionInfoViewModel(service: service, factory: factory, transaction: transaction, wallet: wallet)
-        let viewController = TransactionInfoViewController(viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
+        let viewModel = TransactionInfoViewModel(service: service, factory: factory)
+        let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
         return viewController
     }
@@ -20,10 +21,43 @@ struct TransactionInfoModule {
 
 extension TransactionInfoModule {
 
+    enum Option {
+        case speedUp
+        case cancel
+
+        var confirmTitle: String {
+            switch self {
+            case .speedUp: return "tx_info.options.speed_up"
+            case .cancel: return "tx_info.options.cancel"
+            }
+        }
+
+        var confirmButtonTitle: String {
+            switch self {
+            case .speedUp: return "send.confirmation.resend_button"
+            case .cancel: return "send.confirmation.cancel_button"
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .speedUp: return "send.confirmation.resend_description"
+            case .cancel: return "send.confirmation.cancel_description"
+            }
+        }
+    }
+
+    struct OptionViewItem {
+        let title: String
+        let active: Bool
+        let option: Option
+    }
+
     enum ViewItem {
         case actionTitle(title: String, subTitle: String?)
         case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
         case status(status: TransactionStatus)
+        case options(actions: [OptionViewItem])
         case date(date: Date)
         case from(value: String)
         case to(value: String)
@@ -41,4 +75,12 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
     }
 
+}
+
+struct TransactionInfoItem {
+    let record: TransactionRecord
+    var lastBlockInfo: LastBlockInfo?
+    var rates: [Coin: CurrencyValue]
+    let explorerTitle: String
+    let explorerUrl: String?
 }

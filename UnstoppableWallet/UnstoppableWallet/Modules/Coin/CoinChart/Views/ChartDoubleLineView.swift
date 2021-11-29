@@ -13,11 +13,11 @@ class ChartDoubleLineView: UIView {
 
         titleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalToSuperview().inset(CGFloat.margin4)
+            maker.top.equalToSuperview().inset(CGFloat.margin6)
         }
         subtitleLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleLabel.snp.bottom).offset(6)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin4)
         }
 
         titleLabel.textColor = titleColor
@@ -35,6 +35,16 @@ class ChartDoubleLineView: UIView {
     func bind(title: String?, subtitle: String?) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
+    }
+
+    var titleColor: UIColor {
+        get { titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
+    var subtitleColor: UIColor {
+        get { subtitleLabel.textColor }
+        set { subtitleLabel.textColor = newValue }
     }
 
 }

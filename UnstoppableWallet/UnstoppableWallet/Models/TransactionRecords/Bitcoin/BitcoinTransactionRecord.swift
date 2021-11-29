@@ -1,14 +1,14 @@
 import Foundation
-import CoinKit
+import MarketKit
 
 class BitcoinTransactionRecord: TransactionRecord {
     let lockInfo: TransactionLockInfo?
-    let fee: CoinValue?
+    let fee: TransactionValue?
     let conflictingHash: String?
     let showRawTransaction: Bool
     let memo: String?
 
-    init(uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: CoinValue?, failed: Bool,
+    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: TransactionValue?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool, memo: String?) {
         self.lockInfo = lockInfo
         self.fee = fee
@@ -17,6 +17,7 @@ class BitcoinTransactionRecord: TransactionRecord {
         self.memo = memo
 
         super.init(
+                source: source,
                 uid: uid,
                 transactionHash: transactionHash,
                 transactionIndex: transactionIndex,

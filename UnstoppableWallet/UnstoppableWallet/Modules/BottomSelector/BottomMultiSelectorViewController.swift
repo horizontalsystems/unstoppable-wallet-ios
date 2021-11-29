@@ -41,12 +41,14 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: config.title,
-                subtitle: config.subtitle,
-                image: config.icon,
-                tintColor: config.iconTint
-        )
+        titleView.bind(title: config.title, subtitle: config.subtitle)
+        switch config.icon {
+        case .local(let icon, let tintColor):
+            titleView.bind(image: icon, tintColor: tintColor)
+        case .remote(let iconUrl, let iconPlaceholder):
+            titleView.bind(imageUrl: iconUrl, placeholder: UIImage(named: iconPlaceholder))
+        }
+
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -84,7 +86,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.top.equalTo(lastView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: F4Cell.self)
+        tableView.registerCell(forClass: F11Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
@@ -118,14 +120,13 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         dismiss(animated: true)
     }
 
-    private func onTap(index: Int) {
-        if currentIndexes.contains(index) {
-            currentIndexes.remove(index)
-        } else {
+    private func onToggle(index: Int, isOn: Bool) {
+        if isOn {
             currentIndexes.insert(index)
+        } else {
+            currentIndexes.remove(index)
         }
 
-        tableView.reload(animated: true)
         syncDoneButton()
     }
 
@@ -146,20 +147,16 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                         let isFirst = index == 0
                         let isLast = index == config.viewItems.count - 1
 
-                        return Row<F4Cell>(
+                        return Row<F11Cell>(
                                 id: "item_\(index)",
                                 hash: "\(selected)",
                                 height: .heightDoubleLineCell,
-                                autoDeselect: true,
                                 bind: { cell, _ in
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
                                     cell.title = viewItem.title
                                     cell.subtitle = viewItem.subtitle
-                                    cell.valueImageTintColor = .themeJacob
-                                    cell.valueImage = selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                                },
-                                action: { [weak self] _ in
-                                    self?.onTap(index: index)
+                                    cell.isOn = selected
+                                    cell.onToggle = { [weak self] in self?.onToggle(index: index, isOn: $0) }
                                 }
                         )
                     }
@@ -172,13 +169,17 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
 extension BottomMultiSelectorViewController {
 
     struct Config {
-        let icon: UIImage?
-        let iconTint: UIColor?
+        let icon: IconStyle
         let title: String
         let subtitle: String
         let description: String?
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
+
+        enum IconStyle {
+            case local(icon: UIImage?, iconTint: UIColor?)
+            case remote(iconUrl: String, placeholder: String)
+        }
     }
 
     struct ViewItem {

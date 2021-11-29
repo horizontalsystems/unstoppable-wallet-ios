@@ -2,16 +2,15 @@ import UIKit
 import RxSwift
 import Chart
 import LanguageKit
-import XRatesKit
-import CoinKit
 
 class CoinTvlModule {
 
-    static func viewController(coinType: CoinType) -> UIViewController {
-        let chartFetcher = CoinTvlFetcher(rateManager: App.shared.rateManager, coinType: coinType)
+    static func tvlViewController(coinUid: String) -> UIViewController {
+        let chartFetcher = CoinTvlFetcher(marketKit: App.shared.marketKit, coinUid: coinUid)
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
-                chartFetcher: chartFetcher
+                chartFetcher: chartFetcher,
+                chartType: .month
         )
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)

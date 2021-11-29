@@ -1,13 +1,12 @@
 import Foundation
 import RxSwift
 import GRDB
-import XRatesKit
 import UniswapKit
 import EthereumKit
 import ThemeKit
 import Alamofire
 import HsToolKit
-import CoinKit
+import MarketKit
 import BigInt
 
 typealias CoinCode = String
@@ -18,7 +17,6 @@ protocol IRandomManager {
 
 protocol ILocalStorage: AnyObject {
     var agreementAccepted: Bool { get set }
-    var sortType: SortType? { get set }
     var debugLog: String? { get set }
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
@@ -27,10 +25,6 @@ protocol ILocalStorage: AnyObject {
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
-    var balanceHidden: Bool { get set }
-    var pushToken: String? { get set }
-    var pushNotificationsOn: Bool { get set }
-    var marketCategory: Int? { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
 
     func defaultProvider(blockchain: SwapModule.Dex.Blockchain) -> SwapModule.Dex.Provider
@@ -47,19 +41,6 @@ protocol ILogRecordStorage {
     func save(logRecord: LogRecord)
     func logsCount() -> Int
     func removeFirstLogs(count: Int)
-}
-
-protocol IChartTypeStorage: AnyObject {
-    var chartType: ChartType? { get set }
-}
-
-protocol IPriceAlertManager {
-    var updateObservable: Observable<[PriceAlert]> { get }
-    var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: CoinType, title: String) -> PriceAlert?
-    func save(priceAlerts: [PriceAlert]) -> Observable<[()]>
-    func deleteAllAlerts() -> Single<()>
-    func updateTopics() -> Observable<[()]>
 }
 
 protocol IBaseAdapter {
@@ -91,8 +72,10 @@ protocol ITransactionsAdapter {
     var transactionStateUpdatedObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
-    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]>
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]>
+    var explorerTitle: String { get }
+    func explorerUrl(transactionHash: String) -> String?
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]>
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]>
     func rawTransaction(hash: String) -> String?
 }
 
@@ -181,52 +164,6 @@ protocol IBlurManager {
     func didBecomeActive()
 }
 
-protocol IRateManager {
-    func refresh(currencyCode: String)
-
-    func globalMarketInfoSingle(currencyCode: String, period: TimePeriod) -> Single<GlobalCoinMarket>
-    func topMarketsSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemCount: Int) -> Single<[CoinMarket]>
-    func coinsMarketSingle(currencyCode: String, coinTypes: [CoinType]) -> Single<[CoinMarket]>
-    func searchCoins(text: String) -> [CoinData]
-    func latestRate(coinType: CoinType, currencyCode: String) -> LatestRate?
-    func latestRateMap(coinTypes: [CoinType], currencyCode: String) -> [CoinType: LatestRate]
-    func latestRateObservable(coinType: CoinType, currencyCode: String) -> Observable<LatestRate>
-    func latestRatesObservable(coinTypes: [CoinType], currencyCode: String) -> Observable<[CoinType: LatestRate]>
-    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Single<Decimal>
-    func historicalRate(coinType: CoinType, currencyCode: String, timestamp: TimeInterval) -> Decimal?
-    func chartInfo(coinType: CoinType, currencyCode: String, chartType: ChartType) -> ChartInfo?
-    func chartInfoObservable(coinType: CoinType, currencyCode: String, chartType: ChartType) -> Observable<ChartInfo>
-    func coinMarketInfoSingle(coinType: CoinType, currencyCode: String, rateDiffTimePeriods: [TimePeriod], rateDiffCoinCodes: [String]) -> Single<CoinMarketInfo>
-    func globalMarketInfoPointsSingle(currencyCode: String, timePeriod: TimePeriod) -> Single<[GlobalCoinMarketPoint]>
-    func topDefiTvlSingle(currencyCode: String, fetchDiffPeriod: TimePeriod, itemsCount: Int, chain: String?) -> Single<[DefiTvl]>
-    func defiTvlPoints(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[DefiTvlPoint]>
-    func defiTvl(coinType: CoinType, currencyCode: String) -> Single<DefiTvl?>
-    func coinMarketPointsSingle(coinType: CoinType, currencyCode: String, fetchDiffPeriod: TimePeriod) -> Single<[CoinMarketPoint]>
-    func topTokenHoldersSingle(coinType: CoinType, itemsCount: Int) -> Single<[TokenHolder]>
-    func auditReportsSingle(coinType: CoinType) -> Single<[Auditor]>
-    func coinTypes(for category: String) -> [CoinType]
-}
-
-protocol IFavoritesManager {
-    var dataUpdatedObservable: Observable<()> { get }
-    var all: [FavoriteCoinRecord] { get }
-
-    func add(coinType: CoinType)
-    func remove(coinType: CoinType)
-    func isFavorite(coinType: CoinType) -> Bool
-}
-
-protocol IPostsManager {
-    func posts(timestamp: TimeInterval) -> [CryptoNewsPost]?
-    var postsSingle: Single<[CryptoNewsPost]> { get }
-}
-
-protocol IRateCoinMapper {
-    func convert(coin: Coin) -> Coin?
-    func convert(coinCode: String) -> String?
-    func unconvert(coinCode: String) -> [String]
-}
-
 protocol ISystemInfoManager {
     var appVersion: AppVersion { get }
     var passcodeSet: Bool { get }
@@ -241,33 +178,18 @@ protocol IAppConfigProvider {
     var reportEmail: String { get }
     var guidesIndexUrl: URL { get }
     var faqIndexUrl: URL { get }
-    var uniswapSubgraphUrl: String { get }
-    var providerCoinsUrl: String { get }
-    var coinsUrl: String { get }
 
     var testMode: Bool { get }
     var officeMode: Bool { get }
-    var sandbox: Bool { get }
     var infuraCredentials: (id: String, secret: String?) { get }
     var btcCoreRpcUrl: String { get }
     var etherscanKey: String { get }
     var bscscanKey: String { get }
-    var coinMarketCapApiKey: String { get }
     var cryptoCompareApiKey: String? { get }
     var defiYieldApiKey: String? { get }
-    var currencyCodes: [String] { get }
-    var feeRateAdjustedForCurrencyCodes: [String] { get }
-
-    var pnsUrl: String { get }
-
-    var featuredCoinTypes: [CoinType] { get }
-    func defaultWords(count: Int) -> String
+    var twitterBearerToken: String? { get }
 
     var defaultWords: String { get }
-}
-
-protocol ICoinMigration {
-    var coinMigrationObservable: Observable<[Coin]> { get }
 }
 
 protocol IEnabledWalletStorage {
@@ -279,33 +201,6 @@ protocol IEnabledWalletStorage {
 
 protocol IActiveAccountStorage: AnyObject {
     var activeAccountId: String? { get set }
-}
-
-protocol IPriceAlertStorage {
-    var priceAlerts: [PriceAlert] { get }
-    func priceAlert(coinType: CoinType) -> PriceAlert?
-    var activePriceAlerts: [PriceAlert] { get }
-    func save(priceAlerts: [PriceAlert])
-    func deleteAll()
-}
-
-protocol IPriceAlertRecordStorage {
-    var priceAlertRecords: [PriceAlertRecord] { get }
-    func priceAlertRecord(forCoinId coinCode: String) -> PriceAlertRecord?
-    func save(priceAlertRecords: [PriceAlertRecord])
-    func deleteAllPriceAlertRecords()
-}
-
-protocol IPriceAlertRequestStorage {
-    var requests: [PriceAlertRequest] { get }
-    func save(requests: [PriceAlertRequest])
-    func delete(requests: [PriceAlertRequest])
-}
-
-protocol IPriceAlertRequestRecordStorage {
-    var priceAlertRequestRecords: [PriceAlertRequestRecord] { get }
-    func save(priceAlertRequestRecords: [PriceAlertRequestRecord])
-    func delete(priceAlertRequestRecords: [PriceAlertRequestRecord])
 }
 
 protocol IAppVersionStorage {
@@ -325,7 +220,7 @@ protocol IBlockchainSettingsRecordStorage {
 }
 
 protocol IBlockchainSettingsStorage: AnyObject {
-    func initialSyncSetting(coinType: CoinType) -> InitialSyncSetting?
+    func initialSyncSetting(coinType: MarketKit.CoinType) -> InitialSyncSetting?
     func save(initialSyncSetting: InitialSyncSetting)
 }
 
@@ -380,6 +275,10 @@ protocol IFeeRateProvider {
     func feeRate(priority: FeeRatePriority) -> Single<Int>
 }
 
+protocol ICustomRangedFeeRateProvider: IFeeRateProvider {
+    var customFeeRange: ClosedRange<Int> { get }
+}
+
 protocol IEncryptionManager {
     func encrypt(data: Data) throws -> Data
     func decrypt(data: Data) throws -> Data
@@ -392,31 +291,6 @@ protocol IUUIDProvider {
 protocol IAppManager {
     var didBecomeActiveObservable: Observable<()> { get }
     var willEnterForegroundObservable: Observable<()> { get }
-}
-
-protocol IWalletStorage {
-    func wallets(accounts: [Account]) -> [Wallet]
-    func wallets(account: Account) -> [Wallet]
-    func handle(newWallets: [Wallet], deletedWallets: [Wallet])
-    func clearWallets()
-}
-
-protocol IDefaultWalletCreator {
-    func createWallets(account: Account)
-    func createWallet(account: Account, coin: Coin)
-}
-
-protocol IFeeCoinProvider {
-    func feeCoin(coin: Coin) -> Coin?
-    func feeCoinProtocol(coin: Coin) -> String?
-}
-
-protocol INotificationManager: AnyObject {
-    var token: String? { get }
-    func handleLaunch()
-    func requestPermission(onComplete: @escaping (Bool) -> ())
-    func removeNotifications()
-    func didReceivePushToken(tokenData: Data)
 }
 
 protocol IDebugLogger {
@@ -449,55 +323,23 @@ protocol IRateAppManager {
     func forceShow()
 }
 
-protocol IRemoteAlertManager {
-    var notificationManager: INotificationManager? { get set }
-
-    func handle(requests: [PriceAlertRequest]) -> Observable<[()]>
-    func schedule(requests: [PriceAlertRequest])
-
-    func unsubscribeAll() -> Single<()>
-
-    func checkScheduledRequests()
-}
-
-protocol IInitialSyncSettingsManager: AnyObject {
-    var allSettings: [(setting: InitialSyncSetting, coin: Coin, changeable: Bool)] { get }
-    func setting(coinType: CoinType, accountOrigin: AccountOrigin) -> InitialSyncSetting?
-    func save(setting: InitialSyncSetting)
-}
-
 protocol ITransactionDataSortModeSettingManager {
     var setting: TransactionDataSortMode { get }
     func save(setting: TransactionDataSortMode)
-}
-
-protocol ISortTypeManager: AnyObject {
-    var sortType: SortType { get set }
-    var sortTypeObservable: Observable<SortType> { get }
 }
 
 protocol IGuidesManager {
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]>
 }
 
-protocol IErc20ContractInfoProvider {
-    func coinSingle(address: String) -> Single<Coin>
-}
-
-protocol ICoinManager {
-    var coinsAddedObservable: Observable<[Coin]> { get }
-    var coins: [Coin] { get }
-    var groupedCoins: (featured: [Coin], regular: [Coin]) { get }
-    func coin(type: CoinType) -> Coin?
-    func coinOrStub(type: CoinType) -> Coin
-    func save(coins: [Coin])
-}
-
 protocol IFavoriteCoinRecordStorage {
     var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(coinType: CoinType)
-    func deleteFavoriteCoinRecord(coinType: CoinType)
-    func inFavorites(coinType: CoinType) -> Bool
+    func save(favoriteCoinRecord: FavoriteCoinRecord)
+    func save(favoriteCoinRecords: [FavoriteCoinRecord])
+    func deleteFavoriteCoinRecord(coinUid: String)
+    func favoriteCoinRecordExists(coinUid: String) -> Bool
+
+    var favoriteCoinRecords_v_0_22: [FavoriteCoinRecord_v_0_22] { get }
 }
 
 protocol ITermsManager {
@@ -533,4 +375,16 @@ protocol IEnabledWalletCacheStorage {
     func enabledWalletCaches(accountId: String) -> [EnabledWalletCache]
     func save(enabledWalletCaches: [EnabledWalletCache])
     func deleteEnabledWalletCaches(accountId: String)
+}
+
+protocol ICustomTokenStorage {
+    func customTokens(platformType: PlatformType, filter: String) -> [CustomToken]
+    func customTokens(filter: String) -> [CustomToken]
+    func customTokens(coinTypeIds: [String]) -> [CustomToken]
+    func customToken(coinType: MarketKit.CoinType) -> CustomToken?
+    func save(customTokens: [CustomToken])
+}
+
+protocol IChartTypeStorage: AnyObject {
+    var chartType: ChartType? { get set }
 }

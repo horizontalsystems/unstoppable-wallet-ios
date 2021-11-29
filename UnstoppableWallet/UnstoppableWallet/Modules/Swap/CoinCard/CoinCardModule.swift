@@ -1,23 +1,23 @@
 import UniswapKit
 import RxSwift
-import CoinKit
+import MarketKit
 
 protocol ISwapCoinCardService: AnyObject {
     var dex: SwapModule.Dex { get }
     var readOnly: Bool { get }
     var isEstimated: Bool { get }
-    var coin: Coin? { get }
+    var platformCoin: PlatformCoin? { get }
     var balance: Decimal? { get }
     var amount: Decimal { get }
 
     var readOnlyObservable: Observable<Bool> { get }
     var isEstimatedObservable: Observable<Bool> { get }
-    var coinObservable: Observable<Coin?> { get }
+    var platformCoinObservable: Observable<PlatformCoin?> { get }
     var balanceObservable: Observable<Decimal?> { get }
     var errorObservable: Observable<Error?> { get }
     var amountObservable: Observable<Decimal> { get }
 
-    func onChange(coin: Coin)
+    func onChange(platformCoin: PlatformCoin)
 }
 
 extension ISwapCoinCardService {
@@ -37,7 +37,7 @@ struct CoinCardModule {
     static func fromCell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapFromCoinCardService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -54,7 +54,7 @@ struct CoinCardModule {
     static func toCell(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapToCoinCardService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -72,7 +72,7 @@ struct CoinCardModule {
     static func fromCell(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapFromCoinCardOneInchService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -89,7 +89,7 @@ struct CoinCardModule {
     static func toCell(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService) -> SwapCoinCardCell {
         let coinCardService = SwapToCoinCardOneInchService(service: service, tradeService: tradeService)
 
-        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, rateManager: App.shared.rateManager)
+        let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
         let viewModel = SwapCoinCardViewModel(coinCardService: coinCardService, fiatService: fiatService)
@@ -118,12 +118,12 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactIn }
     var amount: Decimal { tradeService.amountIn }
-    var coin: Coin? { tradeService.coinIn }
+    var platformCoin: PlatformCoin? { tradeService.platformCoinIn }
     var balance: Decimal? { service.balanceIn }
 
     var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactIn } }
     var amountObservable: Observable<Decimal> { tradeService.amountInObservable }
-    var coinObservable: Observable<Coin?> { tradeService.coinInObservable }
+    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinInObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
@@ -135,8 +135,8 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
         tradeService.set(amountIn: amount)
     }
 
-    func onChange(coin: Coin) {
-        tradeService.set(coinIn: coin)
+    func onChange(platformCoin: PlatformCoin) {
+        tradeService.set(platformCoinIn: platformCoin)
     }
 
 }
@@ -153,23 +153,36 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactOut }
     var amount: Decimal { tradeService.amountOut }
-    var coin: Coin? { tradeService.coinOut }
+    var platformCoin: PlatformCoin? { tradeService.platformCoinOut }
     var balance: Decimal? { service.balanceOut }
 
     var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactOut } }
     var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
-    var coinObservable: Observable<Coin?> { tradeService.coinOutObservable }
+    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinOutObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
+    }
+
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
+        tradeService.stateObservable.map { state in
+            guard case .ready(let trade) = state,
+                  let impactLevel = trade.impactLevel,
+                  case .forbidden = impactLevel,
+                  let priceImpact = trade.tradeData.priceImpact else {
+                return nil
+            }
+
+            return .highPriceImpact(priceImpact: priceImpact)
+        }
     }
 
     func onChange(amount: Decimal) {
         tradeService.set(amountOut: amount)
     }
 
-    func onChange(coin: Coin) {
-        tradeService.set(coinOut: coin)
+    func onChange(platformCoin: PlatformCoin) {
+        tradeService.set(platformCoinOut: platformCoin)
     }
 
 }
@@ -186,12 +199,12 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { false }
     var amount: Decimal { tradeService.amountIn }
-    var coin: Coin? { tradeService.coinIn }
+    var platformCoin: PlatformCoin? { tradeService.platformCoinIn }
     var balance: Decimal? { service.balanceIn }
 
     var isEstimatedObservable: Observable<Bool> { Observable.just(true) }
     var amountObservable: Observable<Decimal> { tradeService.amountInObservable }
-    var coinObservable: Observable<Coin?> { tradeService.coinInObservable }
+    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinInObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
@@ -203,8 +216,8 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
         tradeService.set(amountIn: amount)
     }
 
-    func onChange(coin: Coin) {
-        tradeService.set(coinIn: coin)
+    func onChange(platformCoin: PlatformCoin) {
+        tradeService.set(platformCoinIn: platformCoin)
     }
 
 }
@@ -222,13 +235,13 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     var readOnly: Bool { true }
     var isEstimated: Bool { true }
     var amount: Decimal { tradeService.amountOut }
-    var coin: Coin? { tradeService.coinOut }
+    var platformCoin: PlatformCoin? { tradeService.platformCoinOut }
     var balance: Decimal? { service.balanceOut }
 
     var readOnlyObservable: Observable<Bool> { Observable.just(true) }
     var isEstimatedObservable: Observable<Bool> { Observable.just(false) }
     var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
-    var coinObservable: Observable<Coin?> { tradeService.coinOutObservable }
+    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinOutObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
@@ -238,8 +251,8 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
         // can't change to-card
     }
 
-    func onChange(coin: Coin) {
-        tradeService.set(coinOut: coin)
+    func onChange(platformCoin: PlatformCoin) {
+        tradeService.set(platformCoinOut: platformCoin)
     }
 
 }

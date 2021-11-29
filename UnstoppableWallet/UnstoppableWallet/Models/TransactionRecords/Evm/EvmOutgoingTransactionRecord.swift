@@ -1,21 +1,21 @@
 import Foundation
 import EthereumKit
-import CoinKit
+import MarketKit
 
 class EvmOutgoingTransactionRecord: EvmTransactionRecord {
     let to: String
-    let value: CoinValue
+    let value: TransactionValue
     let sentToSelf: Bool
 
-    init(fullTransaction: FullTransaction, baseCoin: Coin, amount: Decimal, to: String, token: Coin, sentToSelf: Bool) {
+    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, to: String, value: TransactionValue, sentToSelf: Bool) {
         self.to = to
-        value = CoinValue(coin: token, value: amount)
+        self.value = value
         self.sentToSelf = sentToSelf
 
-        super.init(fullTransaction: fullTransaction, baseCoin: baseCoin)
+        super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin)
     }
 
-    override var mainValue: CoinValue? {
+    override var mainValue: TransactionValue? {
         value
     }
 

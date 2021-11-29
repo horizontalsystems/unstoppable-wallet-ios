@@ -4,7 +4,7 @@ import ZcashLightClientKit
 import RxSwift
 import HdWalletKit
 import HsToolKit
-import CoinKit
+import MarketKit
 
 class ZcashAdapter {
     private let disposeBag = DisposeBag()
@@ -12,7 +12,8 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.ZATOSHI_PER_ZEC)
     var fee: Decimal { defaultFee() }
 
-    private let coin: Coin
+    private let coin: PlatformCoin
+    private let transactionSource: TransactionSource
     private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
@@ -54,7 +55,8 @@ class ZcashAdapter {
         network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
-        coin = wallet.coin
+        coin = wallet.platformCoin
+        transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
         let birthday: Int
         switch wallet.account.origin {
@@ -76,7 +78,7 @@ class ZcashAdapter {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        self.address = ua
+        address = ua
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
@@ -92,14 +94,13 @@ class ZcashAdapter {
 
         
         try initializer.initialize()
-        keys = try derivationTool.deriveSpendingKeys(seed: seedData,
-                                                             numberOfAccounts: 1)
+        keys = try derivationTool.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
         
         synchronizer = try SDKSynchronizer(initializer: initializer)
         
         try synchronizer.prepare()
 
-        transactionPool = ZcashTransactionPool()
+        transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         balanceState = .syncing(progress: 0, lastBlockDate: nil)
@@ -145,7 +146,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: Date())
+            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
         }
     }
 
@@ -154,8 +155,6 @@ class ZcashAdapter {
         var blockDate: Date? = nil
         if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
             blockDate = blockTime
-        } else {
-            blockDate = Date()
         }
         switch synchronizer.status {
         case .disconnected: newState = .notSynced(error: AppError.noConnection)
@@ -214,17 +213,13 @@ class ZcashAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
-        var incoming = true
-        if let toAddress = transaction.toAddress, toAddress != receiveAddress {
-            incoming = false
-        }
-
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
         // TODO: Should have it's own transactions with memo
-        if incoming {
+        if transaction.sentTo(address: receiveAddress) {
             return BitcoinIncomingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
@@ -243,6 +238,7 @@ class ZcashAdapter {
         } else {
             return BitcoinOutgoingTransactionRecord(
                     coin: coin,
+                    source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
                     transactionIndex: transaction.transactionIndex,
@@ -458,12 +454,31 @@ extension ZcashAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
-    func transactionsObservable(coin: Coin?) -> Observable<[TransactionRecord]> {
-        transactionRecordsSubject.asObservable()
+    var explorerTitle: String {
+        "blockchair.com"
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: Coin?, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool.transactionsSingle(from: from, limit: limit).map { [weak self] txs in
+    func explorerUrl(transactionHash: String) -> String? {
+        network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
+    }
+
+    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+        transactionRecordsSubject.asObservable()
+                .map { transactions in
+                    transactions.compactMap { transaction -> TransactionRecord? in
+                        switch (transaction, filter) {
+                        case (_, .all): return transaction
+                        case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
+                        case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
+                        default: return nil
+                        }
+                    }
+                }
+                .filter { !$0.isEmpty }
+    }
+
+    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+        transactionPool.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }
     }
@@ -494,7 +509,7 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        self.address.zAddress
+        address.zAddress
     }
 
 }
@@ -566,7 +581,7 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
     private let logger: HsToolKit.Logger
 
     init(logLevel: HsToolKit.Logger.Level) {
-        self.level = logLevel
+        level = logLevel
 
         logger = Logger(minLogLevel: logLevel)
     }
@@ -602,7 +617,7 @@ private class ZcashLogger: ZcashLightClientKit.Logger {
 
 extension EnhancementProgress {
     var progress: Int {
-        guard self.totalTransactions <= 0 else {
+        guard totalTransactions <= 0 else {
             return 0
         }
         return Int(Double(self.enhancedTransactions)/Double(self.totalTransactions)) * 100

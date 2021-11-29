@@ -21,8 +21,6 @@ def appPods
 
   pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.12.0-beta.2'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
-  pod 'CoinKit.swift', git: 'https://github.com/horizontalsystems/coin-kit-ios'
-  # pod 'CoinKit.swift', path: '../coin-kit-ios/'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
@@ -39,8 +37,8 @@ def appPods
   pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
   # pod 'HdWalletKit.swift', path: '../hd-wallet-kit-ios/'
 
-  pod 'XRatesKit.swift', git: 'https://github.com/horizontalsystems/xrates-kit-ios/'
-  # pod 'XRatesKit.swift', path: '../xrates-kit-ios/'
+  pod 'MarketKit.swift', git: 'https://github.com/horizontalsystems/market-kit-ios/'
+  # pod 'MarketKit.swift', path: '../market-kit-ios/'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
   # pod 'FeeRateKit.swift', path: '../blockchain-fee-rate-kit-ios/'
 
@@ -88,15 +86,12 @@ def appPods
   pod 'BigInt'
   pod 'KeychainAccess'
   pod 'SnapKit'
-  pod 'DeepDiff'
 
-  pod 'Down'
-
-  pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift', branch: 'master'
+  pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
   pod 'EthereumABI', git: 'https://github.com/horizontalsystems/EthereumABI'
   pod 'Base58Swift', '~> 2.1.10'
-  pod 'UnstoppableDomainsResolution'
+  pod 'UnstoppableDomainsResolution', '~> 2.0.1'
 end
 
 target 'Unstoppable Dev T' do

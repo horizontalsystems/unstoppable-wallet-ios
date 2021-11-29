@@ -1,51 +1,78 @@
 import Foundation
 import RxSwift
 import RxRelay
-import CoinKit
-import XRatesKit
+import MarketKit
 
 class CoinAuditsService {
-    private let coinType: CoinType
-    private let rateManager: IRateManager
-    private let disposeBag = DisposeBag()
+    private let addresses: [String]
+    private let marketKit: Kit
+    private var disposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<DataStatus<[Item]>>()
+    private(set) var state: DataStatus<[Item]> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(coinType: CoinType, rateManager: IRateManager) {
-        self.coinType = coinType
-        self.rateManager = rateManager
+    init(addresses: [String], marketKit: Kit) {
+        self.addresses = addresses
+        self.marketKit = marketKit
 
-        rateManager.auditReportsSingle(coinType: coinType)
+        sync()
+    }
+
+    private func sync() {
+        disposeBag = DisposeBag()
+
+        state = .loading
+
+        marketKit.auditReportsSingle(addresses: addresses)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] auditors in
-                    self?.state = .loaded(auditors: auditors)
-                }, onError: { [weak self] _ in
-                    self?.state = .failed
+                    self?.handle(auditors: auditors)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
 
-}
+    private func handle(auditors: [Auditor]) {
+        let items = auditors.map { auditor -> Item in
+            let sortedReports = auditor.reports.sorted { $0.date > $1.date }
 
-extension CoinAuditsService {
+            return Item(
+                    logoUrl: auditor.logoUrl,
+                    name: auditor.name,
+                    latestDate: sortedReports.first?.date ?? Date(timeIntervalSince1970: 0),
+                    reports: sortedReports
+            )
+        }
 
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+        state = .completed(items.sorted { $0.latestDate > $1.latestDate })
     }
 
 }
 
 extension CoinAuditsService {
 
-    enum State {
-        case loading
-        case failed
-        case loaded(auditors: [Auditor])
+    var stateObservable: Observable<DataStatus<[Item]>> {
+        stateRelay.asObservable()
+    }
+
+    func refresh() {
+        sync()
+    }
+
+}
+
+extension CoinAuditsService {
+
+    struct Item {
+        let logoUrl: String?
+        let name: String
+        let latestDate: Date
+        let reports: [AuditReport]
     }
 
 }

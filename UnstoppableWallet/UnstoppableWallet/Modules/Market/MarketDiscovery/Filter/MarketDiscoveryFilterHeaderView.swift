@@ -1,22 +1,32 @@
 import UIKit
 import SnapKit
 
-class MarketDiscoveryFilterHeaderView: UIView {
-    public static var headerHeight: CGFloat = 108
+extension MarketDiscoveryFilterHeaderView {
+    struct ViewItem {
+        let iconUrl: String
+        let iconPlaceholder: String
+        let title: String
+        let blockchainBadge: String?
+    }
+}
 
-    private var filters = [MarketFilterViewItem]()
+class MarketDiscoveryFilterHeaderView: UIView {
+    public static var headerHeight: CGFloat = 118
+
+    private var filters = [MarketDiscoveryFilterHeaderView.ViewItem]()
 
     private let collectionView: UICollectionView
+    private var loaded = false
 
     var onSelect: ((Int?) -> ())?
 
-    override init(frame: CGRect) {
+    init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
 
         addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
@@ -32,13 +42,32 @@ class MarketDiscoveryFilterHeaderView: UIView {
 
         collectionView.registerCell(forClass: FilterCard.self)
 
-        filters = MarketDiscoveryFilter.allCases.map {
-            MarketFilterViewItem(icon: $0.icon, title: $0.title, description: $0.description)
+        let separator = UIView()
+        addSubview(separator)
+        separator.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
         }
+
+        separator.backgroundColor = .themeSteel10
+
+        loaded = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
+    }
+
+}
+
+extension MarketDiscoveryFilterHeaderView {
+
+    func set(filters: [MarketDiscoveryFilterHeaderView.ViewItem]) {
+        self.filters = filters
+
+        if loaded {
+            collectionView.reloadData()
+        }
     }
 
 }
@@ -60,7 +89,7 @@ extension MarketDiscoveryFilterHeaderView: UICollectionViewDelegateFlowLayout, U
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        FilterCard.size(item: filters[indexPath.item], selected: collectionView.indexPathsForSelectedItems?.first == indexPath)
+        FilterCard.size(item: filters[indexPath.item])
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

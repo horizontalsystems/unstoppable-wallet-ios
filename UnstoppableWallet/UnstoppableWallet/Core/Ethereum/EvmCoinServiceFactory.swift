@@ -1,39 +1,37 @@
 import CurrencyKit
 import BigInt
-import CoinKit
+import MarketKit
 import EthereumKit
 
 class EvmCoinServiceFactory {
-    private let baseCoin: Coin
-    private let coinKit: CoinKit.Kit
+    private let basePlatformCoin: PlatformCoin
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let rateManager: IRateManager
 
     let baseCoinService: CoinService
 
-    init(baseCoin: Coin, coinKit: CoinKit.Kit, currencyKit: CurrencyKit.Kit, rateManager: IRateManager) {
-        self.baseCoin = baseCoin
-        self.coinKit = coinKit
+    init(basePlatformCoin: PlatformCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.basePlatformCoin = basePlatformCoin
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.rateManager = rateManager
 
-        baseCoinService = CoinService(coin: baseCoin, currencyKit: currencyKit, rateManager: rateManager)
+        baseCoinService = CoinService(platformCoin: basePlatformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
     func coinService(contractAddress: EthereumKit.Address) -> CoinService? {
-        guard let coin = coin(contractAddress: contractAddress) else {
+        guard let platformCoin = platformCoin(contractAddress: contractAddress) else {
             return nil
         }
 
-        return CoinService(coin: coin, currencyKit: currencyKit, rateManager: rateManager)
+        return CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
-    private func coin(contractAddress: EthereumKit.Address) -> Coin? {
-        switch baseCoin.type {
+    private func platformCoin(contractAddress: EthereumKit.Address) -> PlatformCoin? {
+        switch basePlatformCoin.coinType {
         case .ethereum:
-            return coinKit.coin(type: .erc20(address: contractAddress.hex))
+            return try? marketKit.platformCoin(coinType: .erc20(address: contractAddress.hex))
         case .binanceSmartChain:
-            return coinKit.coin(type: .bep20(address: contractAddress.hex))
+            return try? marketKit.platformCoin(coinType: .bep20(address: contractAddress.hex))
         default:
             return nil
         }

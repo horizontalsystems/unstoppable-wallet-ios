@@ -1,9 +1,8 @@
 import Foundation
-import XRatesKit
+import MarketKit
 import LanguageKit
 import CurrencyKit
 import Chart
-import CoinKit
 
 class MetricChartFactory {
     static private let noChangesLimitPercent: Decimal = 0.2
@@ -22,7 +21,11 @@ class MetricChartFactory {
         let items = points.map { (point: MetricChartModule.Item) -> ChartItem in
             let item = ChartItem(timestamp: point.timestamp)
 
-            item.add(name: .rate, value: point.value)
+            item.added(name: .rate, value: point.value)
+            point.indicators?.forEach { key, value in
+                item.added(name: key, value: value)
+            }
+
             return item
         }
 
@@ -101,7 +104,11 @@ extension MetricChartFactory {
 
         let formattedValue = format(value: value, currency: currency, valueType: valueType, exactlyValue: true)
 
-        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: .none)
+        var rightSideMode: SelectedPointViewItem.RightSideMode = .none
+        if let dominance = chartItem.indicators[.dominance] {
+            rightSideMode = .dominance(value: dominance)
+        }
+        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
     }
 
 }

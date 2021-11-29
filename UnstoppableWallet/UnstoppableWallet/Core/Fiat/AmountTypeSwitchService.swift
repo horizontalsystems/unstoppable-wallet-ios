@@ -1,7 +1,11 @@
 import RxSwift
 import RxRelay
+import StorageKit
 
 class AmountTypeSwitchService {
+    private let amountTypeKey = "amount-type-switch-service-amount-type"
+    private let localStorage: StorageKit.ILocalStorage
+
     private var toggleAvailableObservables = [Observable<Bool>]()
     private var disposeBag = DisposeBag()
 
@@ -21,8 +25,9 @@ class AmountTypeSwitchService {
         }
     }
 
-    init(default: AmountType = .coin) {
-        amountType = `default`
+    init(localStorage: StorageKit.ILocalStorage) {
+        amountType = localStorage.value(for: amountTypeKey).flatMap { AmountType(rawValue: $0) } ?? .coin
+        self.localStorage = localStorage
     }
 
     private func subscribeToObservables() {
@@ -41,6 +46,10 @@ class AmountTypeSwitchService {
 
         if !toggleAvailable && amountType == .currency { // reset input type if it was set to currency
             amountType = .coin
+        } else if toggleAvailable,
+                  let savedAmountType = localStorage.value(for: amountTypeKey).flatMap({ AmountType(rawValue: $0) }),
+                  savedAmountType == .currency && amountType == .coin {
+            amountType = .currency
         }
     }
 
@@ -51,6 +60,7 @@ extension AmountTypeSwitchService {
     func toggle() {
         if toggleAvailable {
             amountType = !amountType
+            localStorage.set(value: amountType.rawValue, for: amountTypeKey)
         }
     }
 
@@ -71,7 +81,7 @@ extension AmountTypeSwitchService {
 
 extension AmountTypeSwitchService {
 
-    enum AmountType {
+    enum AmountType: String {
         case coin
         case currency
 

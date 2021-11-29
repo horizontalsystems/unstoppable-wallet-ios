@@ -1,5 +1,5 @@
 import GRDB
-import WalletConnect
+import WalletConnectV1
 
 class WalletConnectSession: Codable, FetchableRecord, PersistableRecord, TableRecord {
     let chainId: Int

@@ -1,43 +1,158 @@
-import XRatesKit
 import RxSwift
 import RxRelay
+import MarketKit
+import CurrencyKit
+import StorageKit
 
-class MarketWatchlistService {
-    private let rateManager: IRateManager
-    private let favoritesManager: IFavoritesManager
+class MarketWatchlistService: IMarketMultiSortHeaderService {
+    typealias Item = MarketInfo
+
+    private let keySortingField = "market-watchlist-sorting-field"
+    private let keyMarketField = "market-watchlist-market-field"
+
+    private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
+    private let favoritesManager: FavoritesManager
+    private let storage: StorageKit.ILocalStorage
     private let disposeBag = DisposeBag()
+    private var syncDisposeBag = DisposeBag()
 
-    private let refetchRelay = PublishRelay<()>()
-
-    init(rateManager: IRateManager, favoritesManager: IFavoritesManager) {
-        self.rateManager = rateManager
-        self.favoritesManager = favoritesManager
-
-        subscribe(disposeBag, favoritesManager.dataUpdatedObservable) { [weak self] in
-            self?.refetchRelay.accept(())
+    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
+    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
+        didSet {
+            stateRelay.accept(state)
         }
+    }
+
+    var sortingField: MarketModule.SortingField {
+        didSet {
+            syncIfPossible()
+            storage.set(value: sortingField.rawValue, for: keySortingField)
+        }
+    }
+
+    private var coinUids = [String]()
+
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager, appManager: IAppManager, storage: StorageKit.ILocalStorage) {
+        self.marketKit = marketKit
+        self.currencyKit = currencyKit
+        self.favoritesManager = favoritesManager
+        self.storage = storage
+
+        if let rawValue: Int = storage.value(for: keySortingField), let sortingField = MarketModule.SortingField(rawValue: rawValue) {
+            self.sortingField = sortingField
+        } else {
+            sortingField = .highestCap
+        }
+
+        subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
+        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncMarketInfos() }
+        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
+
+        syncCoinUids()
+    }
+
+    private func syncCoinUids() {
+        coinUids = favoritesManager.allCoinUids
+
+        if case .loaded(let marketInfos, _, _) = state {
+            let newMarketInfos = marketInfos.filter { marketInfo in
+                coinUids.contains(marketInfo.fullCoin.coin.uid)
+            }
+
+            if newMarketInfos.count == coinUids.count {
+                state = .loaded(items: newMarketInfos, softUpdate: true, reorder: false)
+                return
+            }
+        }
+
+        syncMarketInfos()
+    }
+
+    private func syncMarketInfos() {
+        syncDisposeBag = DisposeBag()
+
+        if coinUids.isEmpty {
+            state = .loaded(items: [], softUpdate: false, reorder: false)
+            return
+        }
+
+        if case .failed = state {
+            state = .loading
+        }
+
+        marketKit.marketInfosSingle(coinUids: coinUids, currencyCode: currency.code)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] marketInfos in
+                    self?.sync(marketInfos: marketInfos)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error: error)
+                })
+                .disposed(by: syncDisposeBag)
+    }
+
+    private func sync(marketInfos: [MarketInfo], reorder: Bool = false) {
+        state = .loaded(items: marketInfos.sorted(sortingField: sortingField, priceChangeType: priceChangeType), softUpdate: false, reorder: reorder)
+    }
+
+    private func syncIfPossible() {
+        guard case .loaded(let marketInfos, _, _) = state else {
+            return
+        }
+
+        sync(marketInfos: marketInfos, reorder: true)
     }
 
 }
 
-extension MarketWatchlistService: IMarketListFetcher {
+extension MarketWatchlistService: IMarketListService {
 
-    func fetchSingle(currencyCode: String) -> Single<[MarketModule.Item]> {
-        let coinTypes = favoritesManager.all.map { $0.coinType }
-        guard !coinTypes.isEmpty else {
-            return Single.just([])
-        }
-
-        return rateManager.coinsMarketSingle(currencyCode: currencyCode, coinTypes: coinTypes)
-                .map { coinMarkets in
-                    coinMarkets.map { coinMarket in
-                        MarketModule.Item(coinMarket: coinMarket)
-                    }
-                }
+    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
+        stateRelay.asObservable()
     }
 
-    var refetchObservable: Observable<()> {
-        refetchRelay.asObservable()
+    func refresh() {
+        syncMarketInfos()
+    }
+
+}
+
+extension MarketWatchlistService: IMarketListCoinUidService {
+
+    func coinUid(index: Int) -> String? {
+        guard case .loaded(let marketInfos, _, _) = state, index < marketInfos.count else {
+            return nil
+        }
+
+        return marketInfos[index].fullCoin.coin.uid
+    }
+
+}
+
+extension MarketWatchlistService: IMarketListDecoratorService {
+
+    var initialMarketField: MarketModule.MarketField {
+        if let rawValue: Int = storage.value(for: keyMarketField), let marketField = MarketModule.MarketField(rawValue: rawValue) {
+            return marketField
+        }
+
+        return .price
+    }
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    var priceChangeType: MarketModule.PriceChangeType {
+        .day
+    }
+
+    func onUpdate(marketField: MarketModule.MarketField) {
+        if case .loaded(let marketInfos, _, _) = state {
+            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
+        }
+
+        storage.set(value: marketField.rawValue, for: keyMarketField)
     }
 
 }

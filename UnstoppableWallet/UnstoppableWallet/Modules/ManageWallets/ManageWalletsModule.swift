@@ -4,20 +4,13 @@ import ThemeKit
 struct ManageWalletsModule {
 
     static func viewController() -> UIViewController? {
-        let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
-        let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
-        let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
-
-        let coinSettingsService = CoinSettingsService()
-        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
-        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
+        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
 
         guard let service = ManageWalletsService(
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
-                restoreSettingsService: restoreSettingsService,
-                coinSettingsService: coinSettingsService
+                enableCoinService: enableCoinService
         ) else {
             return nil
         }
@@ -26,8 +19,7 @@ struct ManageWalletsModule {
 
         let viewController = ManageWalletsViewController(
                 viewModel: viewModel,
-                restoreSettingsView: restoreSettingsView,
-                coinSettingsView: coinSettingsView
+                enableCoinView: enableCoinView
         )
 
         return ThemeNavigationController(rootViewController: viewController)

@@ -14,14 +14,16 @@ class UniswapDataSource {
 
     private let viewModel: UniswapViewModel
 
+    private let settingsHeaderView = TextDropDownAndSettingsView()
+
     private let fromCoinCardCell: SwapCoinCardCell
     private let switchCell = SwapSwitchCell()
     private let toCoinCardCell: SwapCoinCardCell
 //    private let slippageCell = AdditionalDataCellNew()
 //    private let deadlineCell = AdditionalDataCellNew()
 //    private let recipientCell = AdditionalDataCellNew()
-    private let poweredByCell = AdditionalDataCellNew()
-    private let priceCell = AdditionalDataCellNew()
+    private let buyPriceCell = AdditionalDataCellNew()
+    private let sellPriceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
@@ -33,6 +35,7 @@ class UniswapDataSource {
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
+    var onOpenSelectProvider: (() -> ())? = nil
     var onOpenSettings: (() -> ())? = nil
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
@@ -52,6 +55,10 @@ class UniswapDataSource {
             self?.viewModel.onTapSwitch()
         }
 
+        settingsHeaderView.bind(dropdownTitle: viewModel.dexName)
+        settingsHeaderView.onTapDropDown = { [weak self] in self?.onOpenSelectProvider?() }
+        settingsHeaderView.onTapSettings = { [weak self] in self?.onOpenSettings?() }
+
         initCells()
     }
 
@@ -63,11 +70,11 @@ class UniswapDataSource {
 //        slippageCell.title = "swap.advanced_settings.slippage".localized
 //        deadlineCell.title = "swap.advanced_settings.deadline".localized
 //        recipientCell.title = "swap.advanced_settings.recipient_address".localized
-        poweredByCell.title = "swap.powered_by".localized
-        poweredByCell.value = viewModel.dexName
 
-        priceCell.title = "swap.price".localized
-        priceCell.isVisible = false
+        buyPriceCell.title = "swap.buy_price".localized
+        buyPriceCell.isVisible = false
+        sellPriceCell.title = "swap.sell_price".localized
+        sellPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
@@ -112,10 +119,16 @@ class UniswapDataSource {
 
     private func handle(tradeViewItem: UniswapViewModel.TradeViewItem?) {
         if let viewItem = tradeViewItem?.executionPrice {
-            priceCell.isVisible = true
-            priceCell.value = viewItem
+            buyPriceCell.isVisible = true
+            buyPriceCell.value = viewItem
         } else {
-            priceCell.isVisible = false
+            buyPriceCell.isVisible = false
+        }
+        if let viewItem = tradeViewItem?.executionPriceInverted {
+            sellPriceCell.isVisible = true
+            sellPriceCell.value = viewItem
+        } else {
+            sellPriceCell.isVisible = false
         }
 
         if let viewItem = tradeViewItem?.priceImpact {
@@ -209,10 +222,6 @@ class UniswapDataSource {
         viewModel.onTapProceed()
     }
 
-    @objc func onTapAdvancedSettings() {
-        onOpenSettings?()
-    }
-
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
         guard let viewController = SwapApproveModule.instance(data: approveData, delegate: self) else {
             return
@@ -236,8 +245,8 @@ extension UniswapDataSource: ISwapDataSource {
     var state: SwapModule.DataSourceState {
         let exactIn = viewModel.tradeService.tradeType == .exactIn
         return SwapModule.DataSourceState(
-                coinFrom: viewModel.tradeService.coinIn,
-                coinTo: viewModel.tradeService.coinOut,
+                platformCoinFrom: viewModel.tradeService.platformCoinIn,
+                platformCoinTo: viewModel.tradeService.platformCoinOut,
                 amountFrom: viewModel.tradeService.amountIn,
                 amountTo: viewModel.tradeService.amountOut,
                 exactFrom: exactIn)
@@ -248,6 +257,7 @@ extension UniswapDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "main",
+                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
                 rows: [
                     StaticRow(
                             cell: fromCoinCardCell,
@@ -288,14 +298,14 @@ extension UniswapDataSource: ISwapDataSource {
 //                            height: recipientCell.cellHeight
 //                    ),
                     StaticRow(
-                            cell: poweredByCell,
-                            id: "powered_by",
-                            height: poweredByCell.cellHeight
+                            cell: buyPriceCell,
+                            id: "execution-price",
+                            height: buyPriceCell.cellHeight
                     ),
                     StaticRow(
-                            cell: priceCell,
+                            cell: sellPriceCell,
                             id: "execution-price",
-                            height: priceCell.cellHeight
+                            height: sellPriceCell.cellHeight
                     ),
                     StaticRow(
                             cell: allowanceCell,

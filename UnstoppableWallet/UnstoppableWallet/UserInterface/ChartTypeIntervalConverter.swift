@@ -1,4 +1,4 @@
-import XRatesKit
+import MarketKit
 
 class ChartTypeIntervalConverter {
     private static let day = 24
@@ -11,6 +11,7 @@ class ChartTypeIntervalConverter {
         case .week: return 2 * day
         case .week2: return 3 * day
         case .month: return 6 * day
+        case .monthByDay: return 6 * day
         case .month3: return 18 * day
         case .halfYear: return month
         case .year: return 2 * month

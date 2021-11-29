@@ -2,14 +2,14 @@ import RxSwift
 import HsToolKit
 import Alamofire
 import ObjectMapper
-import CoinKit
+import MarketKit
 
 class AddBep2TokenBlockchainService {
-    private let appConfigProvider: IAppConfigProvider
+    private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
+
     private let networkManager: NetworkManager
 
-    init(appConfigProvider: IAppConfigProvider, networkManager: NetworkManager) {
-        self.appConfigProvider = appConfigProvider
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
 
@@ -29,28 +29,23 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         .bep2(symbol: reference.uppercased())
     }
 
-    func coinSingle(reference: String) -> Single<Coin> {
+    func customTokenSingle(reference: String) -> Single<CustomToken> {
+        let reference = reference.uppercased()
+
         let parameters: Parameters = [
-            "limit": 10000
+            "symbol": reference
         ]
 
-        let apiUrl = appConfigProvider.testMode ? "https://testnet-dex-atlantic.binance.org/api/v1/tokens/" : "https://dex.binance.org/api/v1/tokens/"
-        let request = networkManager.session.request(apiUrl, parameters: parameters)
+        let url = "\(apiUrl)/v1/token_info/bep2"
+        let request = networkManager.session.request(url, parameters: parameters)
 
-        let tokensSingle: Single<[Token]> = networkManager.single(request: request)
-
-        return tokensSingle.flatMap { tokens -> Single<Coin> in
-            if let token = tokens.first(where: { $0.symbol.lowercased() == reference.lowercased() }) {
-                let coin = Coin(
-                        title: token.name,
-                        code: token.originalSymbol,
-                        decimal: 8,
-                        type: .bep2(symbol: token.symbol)
-                )
-                return Single.just(coin)
-            } else {
-                return Single.error(ApiError.tokenDoesNotExist)
-            }
+        return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
+            CustomToken(
+                    coinName: tokenInfo.name,
+                    coinCode: tokenInfo.originalSymbol,
+                    coinType: .bep2(symbol: reference),
+                    decimals: tokenInfo.decimals
+            )
         }
     }
 
@@ -58,27 +53,16 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
 extension AddBep2TokenBlockchainService {
 
-    struct Token: ImmutableMappable {
+    struct TokenInfo: ImmutableMappable {
         let name: String
         let originalSymbol: String
-        let symbol: String
+        let decimals: Int
 
         init(map: Map) throws {
             name = try map.value("name")
             originalSymbol = try map.value("original_symbol")
-            symbol = try map.value("symbol")
+            decimals = try map.value("contract_decimals")
         }
-    }
-
-    enum ApiError: LocalizedError {
-        case tokenDoesNotExist
-
-        var errorDescription: String? {
-            switch self {
-            case .tokenDoesNotExist: return "add_token.symbol_not_found".localized
-            }
-        }
-
     }
 
 }

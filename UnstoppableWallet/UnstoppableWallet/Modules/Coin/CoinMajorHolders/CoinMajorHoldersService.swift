@@ -1,30 +1,37 @@
 import RxSwift
 import RxRelay
-import CoinKit
-import XRatesKit
+import MarketKit
 
 class CoinMajorHoldersService {
-    private let coinType: CoinType
-    private let rateManager: IRateManager
-    private let disposeBag = DisposeBag()
+    private let coinUid: String
+    private let marketKit: Kit
+    private var disposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
+    private let stateRelay = PublishRelay<DataStatus<[TokenHolder]>>()
+    private(set) var state: DataStatus<[TokenHolder]> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(coinType: CoinType, rateManager: IRateManager) {
-        self.coinType = coinType
-        self.rateManager = rateManager
+    init(coinUid: String, marketKit: Kit) {
+        self.coinUid = coinUid
+        self.marketKit = marketKit
 
-        rateManager.topTokenHoldersSingle(coinType: coinType, itemsCount: 10)
+        sync()
+    }
+
+    private func sync() {
+        disposeBag = DisposeBag()
+
+        state = .loading
+
+        marketKit.topHoldersSingle(coinUid: coinUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] holders in
-                    self?.state = .loaded(items: holders)
-                }, onError: { [weak self] _ in
-                    self?.state = .failed
+                    self?.state = .completed(holders)
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
@@ -33,18 +40,12 @@ class CoinMajorHoldersService {
 
 extension CoinMajorHoldersService {
 
-    var stateObservable: Observable<State> {
+    var stateObservable: Observable<DataStatus<[TokenHolder]>> {
         stateRelay.asObservable()
     }
 
-}
-
-extension CoinMajorHoldersService {
-
-    enum State {
-        case loading
-        case failed
-        case loaded(items: [TokenHolder])
+    func refresh() {
+        sync()
     }
 
 }

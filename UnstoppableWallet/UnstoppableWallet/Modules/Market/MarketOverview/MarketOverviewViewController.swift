@@ -3,31 +3,30 @@ import RxSwift
 import ThemeKit
 import SectionsTableView
 import ComponentKit
+import HUD
+import Chart
 
 class MarketOverviewViewController: ThemeViewController {
-    private let marketViewModel: MarketViewModel
-    private let postViewModel: MarketPostViewModel
-    private let overviewViewModel: MarketOverviewViewModel
-    private let urlManager: IUrlManager
+    private let viewModel: MarketOverviewViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = MarketListErrorView()
     private let refreshControl = UIRefreshControl()
 
-    private let marketMetricsCell: MarketMetricsCellNew
+    private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
-    weak var parentNavigationController: UINavigationController?
+    weak var parentNavigationController: UINavigationController? {
+        didSet {
+            marketMetricsCell.viewController = parentNavigationController
+        }
+    }
 
-    private var overviewState: MarketOverviewViewModel.State = .loading
-    private var postState: MarketPostViewModel.State = .loading
+    private var topViewItems: [MarketOverviewViewModel.TopViewItem]?
 
-    init(marketViewModel: MarketViewModel, postViewModel: MarketPostViewModel, overviewViewModel: MarketOverviewViewModel, urlManager: IUrlManager) {
-        self.marketViewModel = marketViewModel
-        self.postViewModel = postViewModel
-        self.overviewViewModel = overviewViewModel
-        self.urlManager = urlManager
-
-        marketMetricsCell = MarketMetricsModule.cell()
+    init(viewModel: MarketOverviewViewModel) {
+        self.viewModel = viewModel
 
         super.init()
     }
@@ -52,32 +51,46 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-
-        tableView.registerHeaderFooter(forClass: MarketSectionHeaderView.self)
+        tableView.registerCell(forClass: MarketOverviewHeaderCell.self)
         tableView.registerCell(forClass: G14Cell.self)
-        tableView.registerCell(forClass: ACell.self)
-        tableView.registerCell(forClass: A2Cell.self)
-        tableView.registerCell(forClass: SpinnerCell.self)
-        tableView.registerCell(forClass: ErrorCell.self)
-        tableView.registerCell(forClass: MarketPostCell.self)
+        tableView.registerCell(forClass: B1Cell.self)
 
-        subscribe(disposeBag, overviewViewModel.stateDriver) { [weak self] state in
-            self?.overviewState = state
-            self?.tableView.reload()
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
         }
 
-        subscribe(disposeBag, postViewModel.stateDriver) { [weak self] state in
-            self?.postState = state
-            self?.tableView.reload()
+        spinner.startAnimating()
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        subscribe(disposeBag, marketMetricsCell.onTapMetricsSignal) { [weak self] in self?.onTap(metricType: $0) }
+        errorView.onTapRetry = { [weak self] in self?.refresh() }
+
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
+            if let error = error {
+                self?.errorView.text = error
+                self?.errorView.isHidden = false
+            } else {
+                self?.errorView.isHidden = true
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         tableView.refreshControl = refreshControl
+    }
+
+    private func refresh() {
+        viewModel.refresh()
     }
 
     @objc func onRefresh() {
@@ -88,212 +101,143 @@ class MarketOverviewViewController: ThemeViewController {
         }
     }
 
-    private func headerRow(listType: MarketModule.ListType) -> RowProtocol {
-        Row<A2Cell>(
-                id: "section_header_\(listType.rawValue)",
-                height: .heightSingleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.value = "market.top.section.header.see_all".localized
-                    cell.valueColor = .themeGray
+    private func sync(viewItem: MarketOverviewViewModel.ViewItem?) {
+        topViewItems = viewItem?.topViewItems
 
-                    switch listType {
-                    case .topGainers:
-                        cell.titleImage = UIImage(named: "circle_up_20")
-                        cell.title = "market.top.section.header.top_gainers".localized
-                    case .topLosers:
-                        cell.titleImage = UIImage(named: "circle_down_20")
-                        cell.title = "market.top.section.header.top_losers".localized
-                    case .topVolume:
-                        cell.titleImage = UIImage(named: "chart_20")
-                        cell.title = "market.top.section.header.top_volume".localized
-                    }
-                },
-                action: { [weak self] _ in
-                    self?.didTapSeeAll(listType: listType)
-                }
-        )
-    }
-
-    private func row(viewItem: MarketModule.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<G14Cell>(
-                id: viewItem.coinCode,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    MarketModule.bind(cell: cell, viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                }
-        )
-    }
-
-    private func row(viewItem: MarketPostViewModel.ViewItem) -> RowProtocol {
-        Row<MarketPostCell>(
-                id: viewItem.title,
-                height: MarketPostCell.height,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                    cell.set(source: viewItem.source, title: viewItem.title, description: viewItem.body, date: viewItem.timestamp)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                }
-        )
-    }
-
-    private func onSelect(viewItem: MarketModule.ViewItem) {
-        let viewController = CoinPageModule.viewController(launchMode: .partial(coinCode: viewItem.coinCode, coinTitle: viewItem.coinName, coinType: viewItem.coinType))
-        parentNavigationController?.present(viewController, animated: true)
-    }
-
-    private func onSelect(viewItem: MarketPostViewModel.ViewItem) {
-        urlManager.open(url: viewItem.url, from: parentNavigationController)
-    }
-
-    private func onTap(metricType: MarketGlobalModule.MetricsType) {
-        let viewController = MarketGlobalModule.viewController(type: metricType)
-        present(viewController, animated: true)
-    }
-
-    private func didTapSeeAll(listType: MarketModule.ListType) {
-        marketViewModel.handleTapSeeAll(listType: listType)
-    }
-
-    private var postSections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        sections.append(
-                Section(id: "header_posts",
-                        footerState: .margin(height: .margin12),
-                        rows: [
-                            Row<ACell>(
-                                    id: "posts_header_section",
-                                    height: .heightSingleLineCell,
-                                    autoDeselect: true,
-                                    bind: { cell, _ in
-                                        cell.set(backgroundStyle: .transparent)
-
-                                        cell.titleImage = UIImage(named: "message_square_20")
-                                        cell.title = "market.top.section.header.news".localized
-
-                                        cell.selectionStyle = .none
-                                    }
-                            )]
-                )
-        )
-
-        switch postState {
-        case .loading:
-            let row = Row<SpinnerCell>(
-                    id: "post_spinner",
-                    height: .heightCell48
-            )
-
-            sections.append(Section(id: "post_spinner", rows: [row]))
-        case .error(let errorDescription):
-            let row = Row<ErrorCell>(
-                    id: "post_error",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.errorText = errorDescription
-                    }
-            )
-
-            sections.append(Section(id: "post_error", rows: [row]))
-        case .loaded(let postViewItems):
-            guard !postViewItems.isEmpty else {
-                return sections
-            }
-
-            sections.append(contentsOf:
-                    postViewItems.enumerated().map { (index, item) in Section(
-                            id: "post_\(index)",
-                            footerState: .margin(height: .margin12),
-                            rows: [row(viewItem: item)]
-                    )})
+        if let globalMarketViewItem = viewItem?.globalMarketViewItem {
+            marketMetricsCell.set(viewItem: globalMarketViewItem)
         }
 
-        return sections
+        if viewItem != nil {
+            tableView.bounces = true
+        } else {
+            tableView.bounces = false
+        }
+
+        tableView.reload()
+    }
+
+    private func onSelect(listViewItem: MarketModule.ListViewItem) {
+        guard let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
+            return
+        }
+
+        parentNavigationController?.present(module, animated: true)
+    }
+
+    private func didTapSeeAll(listType: MarketOverviewService.ListType) {
+        let module = MarketTopModule.viewController(
+                marketTop: viewModel.marketTop(listType: listType),
+                sortingField: listType.sortingField,
+                marketField: listType.marketField
+        )
+        parentNavigationController?.present(module, animated: true)
     }
 
 }
 
 extension MarketOverviewViewController: SectionsDataSource {
 
+    private func row(listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
+        Row<G14Cell>(
+                id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst)
+                    MarketModule.bind(cell: cell, viewItem: listViewItem)
+                },
+                action: { [weak self] _ in
+                    self?.onSelect(listViewItem: listViewItem)
+                })
+    }
+
+    private func rows(listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
+        listViewItems.enumerated().map { index, listViewItem in
+            row(listViewItem: listViewItem, isFirst: index == 0)
+        }
+    }
+
+    private func seeAllRow(id: String, action: @escaping () -> ()) -> RowProtocol {
+        Row<B1Cell>(
+                id: id,
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell, _ in
+                    cell.set(backgroundStyle: .lawrence, isLast: true)
+                    cell.title = "market.top.section.header.see_all".localized
+                },
+                action: { _ in
+                    action()
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
-        var sections: [SectionProtocol] = [
-            Section(
+        var sections = [SectionProtocol]()
+
+        if let viewItems = topViewItems {
+            let metricsSection = Section(
                     id: "market_metrics",
                     rows: [
                         StaticRow(
                                 cell: marketMetricsCell,
                                 id: "metrics",
-                                height: MarketMetricsCellNew.cellHeight
+                                height: MarketOverviewMetricsCell.cellHeight
                         )
                     ]
             )
-        ]
 
-        switch overviewState {
-        case .loading:
-            let row = Row<SpinnerCell>(
-                    id: "spinner",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
-                    }
-            )
+            sections.append(metricsSection)
 
-            sections.append(Section(id: "spinner", rows: [row]))
+            let marketTops = viewModel.marketTops
 
-        case .loaded(let sectionViewItems):
-            sectionViewItems.enumerated().forEach { index, sectionViewItem in
-                sections.append(
-                        Section(id: "header_\(sectionViewItem.listType.rawValue)",
-                                footerState: .margin(height: .margin12),
-                                rows: [
-                                    headerRow(listType: sectionViewItem.listType)
-                                ])
+            for viewItem in viewItems {
+                let listType = viewItem.listType
+                let currentMarketTopIndex = viewModel.marketTopIndex(listType: listType)
+
+                let headerSection = Section(
+                        id: "header_\(listType.rawValue)",
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            Row<MarketOverviewHeaderCell>(
+                                    id: "header_\(listType.rawValue)",
+                                    height: .heightCell48,
+                                    bind: { [weak self] cell, _ in
+                                        cell.set(backgroundStyle: .transparent)
+
+                                        cell.set(values: marketTops)
+                                        cell.setSelected(index: currentMarketTopIndex)
+                                        cell.onSelect = { index in
+                                            self?.viewModel.onSelect(marketTopIndex: index, listType: listType)
+                                        }
+
+                                        cell.titleImage = UIImage(named: viewItem.imageName)
+                                        cell.title = viewItem.title
+                                    }
+                            )
+                        ]
                 )
 
-                sections.append(
-                        Section(
-                                id: sectionViewItem.listType.rawValue,
-                                footerState: .margin(height: .margin12),
-                                rows: sectionViewItem.viewItems.enumerated().map { (index, item) in
-                                    row(viewItem: item, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1)
-                                })
+                let listSection = Section(
+                        id: viewItem.listType.rawValue,
+                        footerState: .margin(height: .margin24),
+                        rows: rows(listViewItems: viewItem.listViewItems) + [
+                            seeAllRow(
+                                    id: "\(viewItem.listType.rawValue)-see-all",
+                                    action: { [weak self] in
+                                        self?.didTapSeeAll(listType: viewItem.listType)
+                                    }
+                            )
+                        ]
                 )
+
+                sections.append(headerSection)
+                sections.append(listSection)
             }
-
-            // posts state showed only when completed coin request
-            sections.append(contentsOf: postSections)
-
-        case .error(let errorDescription):
-            let row = Row<ErrorCell>(
-                    id: "error",
-                    dynamicHeight: { [weak self] _ in
-                        max(0, (self?.tableView.height ?? 0) - MarketMetricsCellNew.cellHeight)
-                    },
-                    bind: { cell, _ in
-                        cell.errorText = errorDescription
-                    }
-            )
-
-            sections.append(Section(id: "error", rows: [row]))
         }
 
         return sections
-    }
-
-    public func refresh() {
-        marketMetricsCell.refresh()
-        overviewViewModel.refresh()
-        postViewModel.refresh()
     }
 
 }
