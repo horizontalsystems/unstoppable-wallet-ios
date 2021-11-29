@@ -1007,7 +1007,7 @@ poner en peligro la seguridad de mis fondos.";
 "enable_coins.description" = "Habilitar todas las %@ monedas que tengan saldo.";
 "enable_coins.enable_button" = "Habilitar";
 "enable_coins.enabling" = "Activando...";
-"enable_coins.enabled_coins" = "Enabled %@ more coins";
+"enable_coins.enabled_coins" = "Activado %@ monedas más";
 "enable_coins.enabled_no_coins" = "No hay monedas con saldo";
 
 // Onboarding
