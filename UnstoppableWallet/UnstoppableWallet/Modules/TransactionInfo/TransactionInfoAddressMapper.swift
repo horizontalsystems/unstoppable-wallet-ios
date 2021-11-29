@@ -7,6 +7,7 @@ class TransactionInfoAddressMapper {
         "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd": "SushiSwap",
         "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f": "SushiSwap",
         "0x8798249c2e607446efb7ad49ec89dd1865ff4272": "SushiSwap",
+        "0x1111111254fb6c44bac0bed2854e76f90643097d": "1Inch V4",
 
         // Binanace Smart Chain
         "0x05ff2b0db69458a0750badebc4f9e13add608c7f": "PancakeSwap",
