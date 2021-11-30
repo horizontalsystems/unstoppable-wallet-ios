@@ -4,7 +4,7 @@
 "button.close" = "Закрыть";
 "button.done" = "Готово";
 "button.restore" = "Восстановить";
-"button.next" = "Вперед";
+"button.next" = "Далее";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
 "button.backup" = "Резервная Копия";
@@ -141,10 +141,10 @@
 "balance.empty.add_coins" = "Добавить Токены";
 "balance.empty.description" = "Вы еще не добавили монеты в этот кошелек.";
 "balance.sort_by" = "Сортировать по";
-"balance.sort.header" = "Сортировать по";
-"balance.sort.valueHighToLow" = "Балансу";
-"balance.sort.az" = "Названию";
-"balance.sort.price_change" = "Изменение Цены";
+"balance.sort.header" = "Сортировать";
+"balance.sort.valueHighToLow" = "По Балансу";
+"balance.sort.az" = "По Названию";
+"balance.sort.price_change" = "По Изменению Цены(%)";
 
 "balance_error.change_source" = "Сменить Источник";
 "balance_error.sync_error" = "Ошибка Синхронизации";
@@ -621,11 +621,11 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получить";
-"transactions.send" = "Отправить";
-"transactions.approve" = "Подтвердить";
+"transactions.receive" = "Получено";
+"transactions.send" = "Отправлено";
+"transactions.approve" = "Подтверждение";
 "transactions.swap" = "Обмен";
-"transactions.contract_call" = "Вызов Контракта";
+"transactions.contract_call" = "Вызов Смарт Контракта";
 "transactions.contract_creation" = "Создание Контракта";
 
 "transactions.to" = "Кому %@";
@@ -639,8 +639,8 @@
 "transactions.types.all" = "Все";
 "transactions.types.incoming" = "Входящие";
 "transactions.types.outgoing" = "Исходящие";
-"transactions.types.swap" = "Обменять";
-"transactions.types.approve" = "Подтвердить";
+"transactions.types.swap" = "Обмен";
+"transactions.types.approve" = "Подтверждение";
 
 // Transaction Info
 
@@ -805,7 +805,7 @@
 
 // Settings -> About App
 
-"settings.about_app.title" = "Информация о приложении";
+"settings.about_app.title" = "О приложении";
 "settings.about_app.app_name" = "Unstoppable Кошелек";
 "settings.about_app.website" = "Веб-сайт";
 "settings.about_app.contact" = "Kонтакты";
