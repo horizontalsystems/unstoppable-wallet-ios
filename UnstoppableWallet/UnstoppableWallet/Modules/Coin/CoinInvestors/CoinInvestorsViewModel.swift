@@ -38,7 +38,7 @@ class CoinInvestorsViewModel {
 
     private func viewItem(investment: CoinInvestment) -> ViewItem {
         ViewItem(
-                amount: CurrencyCompactFormatter.instance.format(currency: service.currency, value: investment.amountInCurrency) ?? "---",
+                amount: CurrencyCompactFormatter.instance.format(currency: service.currency, value: investment.amount) ?? "---",
                 info: "\(investment.round) - \(DateHelper.instance.formatFullDateOnly(from: investment.date))",
                 fundViewItems: investment.funds.map { fundViewItem(fund: $0) }
         )

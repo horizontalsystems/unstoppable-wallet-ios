@@ -48,7 +48,8 @@ extension CoinInvestorsService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        let currencies = currencyKit.currencies
+        return currencies.first { $0.code == "USD" } ?? currencies[0]
     }
 
     func refresh() {
