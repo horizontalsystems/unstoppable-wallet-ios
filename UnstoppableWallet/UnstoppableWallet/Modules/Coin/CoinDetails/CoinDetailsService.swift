@@ -61,6 +61,11 @@ extension CoinDetailsService {
         currencyKit.baseCurrency
     }
 
+    var usdCurrency: Currency {
+        let currencies = currencyKit.currencies
+        return currencies.first { $0.code == "USD" } ?? currencies[0]
+    }
+
     var coin: Coin {
         fullCoin.coin
     }
