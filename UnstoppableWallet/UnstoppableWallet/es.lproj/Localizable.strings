@@ -415,7 +415,7 @@
 "market_discovery.filter_description.identity" = "Identidad descentralizada.";
 "market_discovery.filter_description.yield_tokens" = "Tokens Interesantes.";
 
-"market_watchlist.empty.caption" = "Watchlist is empty. You may add coins to your watchlist using the star icon on a coin page.";
+"market_watchlist.empty.caption" = "Your watchlist is empty.";
 
 "market.search.title" = "Búsqueda";
 "market.search.empty_text" = "No se han encontrado resultados";
