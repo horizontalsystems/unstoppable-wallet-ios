@@ -417,7 +417,7 @@
 "market_discovery.filter_description.identity" = "Децентрализованная идентификация.";
 "market_discovery.filter_description.yield_tokens" = "Прибыльные токены";
 
-"market_watchlist.empty.caption" = "У вас нет токенов в избранном. Вы можете добавить сюда токены с помощью значка \"звездочка\" на странице токенов.";
+"market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
 "market.search.title" = "Поиск";
 "market.search.empty_text" = "Ничего не найдено";
