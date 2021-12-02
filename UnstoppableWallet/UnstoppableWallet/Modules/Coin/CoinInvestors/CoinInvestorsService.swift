@@ -29,7 +29,7 @@ class CoinInvestorsService {
 
         state = .loading
 
-        marketKit.investmentsSingle(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code)
+        marketKit.investmentsSingle(coinUid: coinUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] investments in
                     self?.state = .completed(investments)
@@ -47,7 +47,7 @@ extension CoinInvestorsService {
         stateRelay.asObservable()
     }
 
-    var currency: Currency {
+    var usdCurrency: Currency {
         let currencies = currencyKit.currencies
         return currencies.first { $0.code == "USD" } ?? currencies[0]
     }
