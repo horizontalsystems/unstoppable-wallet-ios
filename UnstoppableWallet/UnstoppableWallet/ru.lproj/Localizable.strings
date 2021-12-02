@@ -227,7 +227,7 @@
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "Вы Подтверждаете";
+"approve.confirmation.you_approve" = "Вы Разрешаете";
 "approve.confirmation.spender" = "Покупатель";
 
 // CoinSelector
@@ -249,7 +249,7 @@
 "swap.approve.title" = "Разрешение Обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
-"swap.approving_button" = "Подтверждение...";
+"swap.approving_button" = "Разрешение...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.switch_provider.title" = "Смена провайдера";
@@ -623,7 +623,7 @@
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
-"transactions.approve" = "Подтверждение";
+"transactions.approve" = "Разрешение";
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
 "transactions.contract_creation" = "Создание Контракта";
@@ -646,7 +646,7 @@
 
 "tx_info.title" = "Информация о Транзакции";
 "tx_info.date" = "Дата";
-"tx_info.title_approval" = "Подтверждение Обмена";
+"tx_info.title_approval" = "Разрешение Обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Не удалось";
