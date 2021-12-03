@@ -97,7 +97,8 @@ class App {
         marketKit = try! MarketKit.Kit.instance(
                 hsApiBaseUrl: appConfigProvider.marketApiUrl,
                 cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
-                defiYieldApiKey: appConfigProvider.defiYieldApiKey
+                defiYieldApiKey: appConfigProvider.defiYieldApiKey,
+                hsProviderApiKey: appConfigProvider.hsProviderApiKey
         )
         marketKit.sync()
 
