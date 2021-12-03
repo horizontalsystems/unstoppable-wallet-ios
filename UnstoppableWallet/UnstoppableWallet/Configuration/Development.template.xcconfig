@@ -6,5 +6,5 @@ cryptocompare_com_api_key =
 defiyield_api_key =
 twitter_bearer_token =
 market_api_url = https:/$()/api-dev.blocksdecoded.com
-
+hs_provider_api_key =
 default_words =
