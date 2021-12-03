@@ -78,7 +78,7 @@ class MarketOverviewService {
     private func globalMarketData(globalMarketPoints: [GlobalMarketPoint]) -> GlobalMarketData {
         let marketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.marketCap) }
         let volume24hPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.volume24h) }
-        let defiMarketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.marketCapDefi) }
+        let defiMarketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.defiMarketCap) }
         let tvlPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.tvl) }
 
         return GlobalMarketData(
