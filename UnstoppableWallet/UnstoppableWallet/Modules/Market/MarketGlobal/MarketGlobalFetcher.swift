@@ -36,10 +36,10 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
                         var additional = [ChartIndicatorName: Decimal]()
 
                         switch self?.metricsType {
-                        case .defiCap: value = point.marketCapDefi
+                        case .defiCap: value = point.defiMarketCap
                         case .totalMarketCap:
                             value = point.marketCap
-                            additional[.dominance] = point.dominanceBtc
+                            additional[.dominance] = point.defiMarketCap
                         case .tvlInDefi: value = point.tvl
                         case .none, .volume24h: value = point.volume24h
                         }
