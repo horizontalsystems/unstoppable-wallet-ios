@@ -39,7 +39,7 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
                         case .defiCap: value = point.defiMarketCap
                         case .totalMarketCap:
                             value = point.marketCap
-                            additional[.dominance] = point.defiMarketCap
+                            additional[.dominance] = point.btcDominance
                         case .tvlInDefi: value = point.tvl
                         case .none, .volume24h: value = point.volume24h
                         }
