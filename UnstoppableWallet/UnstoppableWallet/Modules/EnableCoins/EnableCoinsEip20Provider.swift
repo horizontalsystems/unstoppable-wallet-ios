@@ -5,12 +5,10 @@ import Alamofire
 import MarketKit
 
 class EnableCoinsEip20Provider {
-    private let appConfigProvider: AppConfigProvider
     private let networkManager: NetworkManager
     private let mode: Mode
 
-    init(appConfigProvider: AppConfigProvider, networkManager: NetworkManager, mode: Mode) {
-        self.appConfigProvider = appConfigProvider
+    init(networkManager: NetworkManager, mode: Mode) {
         self.networkManager = networkManager
         self.mode = mode
     }
@@ -19,13 +17,6 @@ class EnableCoinsEip20Provider {
         switch mode {
         case .erc20: return "https://api.etherscan.io/api"
         case .bep20: return "https://api.bscscan.com/api"
-        }
-    }
-
-    private var apiKey: String {
-        switch mode {
-        case .erc20: return appConfigProvider.etherscanKey
-        case .bep20: return appConfigProvider.bscscanKey
         }
     }
 
@@ -50,8 +41,7 @@ extension EnableCoinsEip20Provider {
             "module": "account",
             "action": "tokentx",
             "address": address,
-            "sort": "asc",
-            "apikey": apiKey
+            "sort": "asc"
         ]
 
         let request = networkManager.session.request(url, parameters: parameters)
