@@ -328,7 +328,7 @@
 "market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
 "market.total_market_cap" = "Полная Рыночная Капитализация";
-"market.24h_volume" = "Объем торгов за 24 ч";
+"market.24h_volume" = "Объем торгов (24ч)";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
@@ -481,13 +481,13 @@
 "market.advanced_search_results.title" = "Результаты";
 
 "market.global.total_market_cap.title" = "Полная Рыночная Капитализация";
-"market.global.volume_24h.title" = "Объем";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.subtitle" = "График";
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
@@ -507,7 +507,7 @@
 
 "coin_page.tab.overview" = "Обзор";
 "coin_page.tab.markets" = "Рынок";
-"coin_page.tab.details" = "Подробности";
+"coin_page.tab.details" = "Детали";
 "coin_page.tab.tweets" = "Твиты";
 
 "coin_page.market_cap" = "Рын. Капитализация";
