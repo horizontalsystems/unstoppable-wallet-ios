@@ -808,6 +808,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.whats_new" = "What's New";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";

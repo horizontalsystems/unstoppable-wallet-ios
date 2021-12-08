@@ -291,6 +291,7 @@ protocol IAppStatusManager {
 protocol IAppVersionManager {
     func checkLatestVersion()
     var newVersionObservable: Observable<AppVersion?> { get }
+    var currentVersion: AppVersion { get }
 }
 
 protocol IRateAppManager {

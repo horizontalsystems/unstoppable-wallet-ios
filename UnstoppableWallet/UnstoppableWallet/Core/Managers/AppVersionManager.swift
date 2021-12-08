@@ -42,4 +42,8 @@ extension AppVersionManager: IAppVersionManager {
         newVersionRelay.asObservable()
     }
 
+    var currentVersion: AppVersion {
+        systemInfoManager.appVersion
+    }
+
 }

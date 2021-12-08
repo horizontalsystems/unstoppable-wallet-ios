@@ -114,6 +114,40 @@ extension AboutViewController: SectionsDataSource {
             ),
 
             Section(
+                    id: "release-notes",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        CellBuilder.selectableRow(
+                                elements: [.image, .text, .image],
+                                tableView: tableView,
+                                id: "release-notes",
+                                height: .heightCell48,
+                                bind: {cell in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+
+                                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                                        component.imageView.image = UIImage(named: "circle_information_20")
+                                    })
+                                    cell.bind(index: 1, block: { (component: TextComponent) in
+                                        component.set(style: .b2)
+                                        component.text = "settings.about_app.whats_new".localized
+                                    })
+                                    cell.bind(index: 2, block: { (component: ImageComponent) in
+                                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                                    })
+                                },
+                                action: { [weak self] in
+                                    guard let url = self?.viewModel.releaseNotesUrl else {
+                                        return
+                                    }
+
+                                    self?.navigationController?.pushViewController(MarkdownModule.gitReleaseNotesMarkdownViewController(url: url), animated: true)
+                                }
+                        )
+                    ]
+            ),
+
+            Section(
                     id: "main",
                     footerState: .margin(height: .margin32),
                     rows: [

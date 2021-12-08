@@ -4,13 +4,15 @@ import RxCocoa
 
 class AboutViewModel {
     private let service: AboutService
+    private let releaseNotesService: ReleaseNotesService
     private let disposeBag = DisposeBag()
 
     private let termsAlertRelay: BehaviorRelay<Bool>
     private let openLinkRelay = PublishRelay<String>()
 
-    init(service: AboutService) {
+    init(service: AboutService, releaseNotesService: ReleaseNotesService) {
         self.service = service
+        self.releaseNotesService = releaseNotesService
 
         termsAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
@@ -44,6 +46,10 @@ extension AboutViewModel {
 
     var contactEmail: String {
         service.contactEmail
+    }
+
+    var releaseNotesUrl: URL? {
+        releaseNotesService.lastVersionUrl
     }
 
     func onTapGithubLink() {
