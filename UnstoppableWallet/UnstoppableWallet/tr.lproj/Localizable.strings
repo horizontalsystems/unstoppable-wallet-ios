@@ -1042,3 +1042,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Network Settings
 
 "network_settings.title" = "Ağ Ayarları";
+
+// EVM Network
+
+"evm_network.switches_automatically" = "switches automatically";
+"evm_network.description" = "MainNet HTTP uses the links listed below and switches automatically.";

@@ -22,26 +22,35 @@ class EvmNetworkViewModel {
         let testNetItems = items.filter { !$0.mainNet }
 
         let sectionViewItems: [SectionViewItem?] = [
-            sectionViewItem(title: "MainNet", viewItems: mainNetItems.map { viewItem(item: $0) }),
-            sectionViewItem(title: "TestNet", viewItems: testNetItems.map { viewItem(item: $0) })
+            sectionViewItem(title: "MainNet", items: mainNetItems),
+            sectionViewItem(title: "TestNet", items: testNetItems)
         ]
 
         sectionViewItemsRelay.accept(sectionViewItems.compactMap { $0 })
     }
 
-    private func sectionViewItem(title: String, viewItems: [ViewItem]) -> SectionViewItem? {
+    private func sectionViewItem(title: String, items: [EvmNetworkService.Item]) -> SectionViewItem? {
+        let viewItems = items.map { viewItem(item: $0) }
         guard !viewItems.isEmpty else {
             return nil
         }
 
-        return SectionViewItem(title: title, viewItems: viewItems)
+        var description: String? = nil
+
+        if let selectedItem = items.first(where: { $0.selected }),
+           selectedItem.network.syncSource.urls.count > 1 {
+            let links = selectedItem.network.syncSource.urls.map({ " • \($0.absoluteString)" }).joined(separator: "\n")
+            description = "\("evm_network.description".localized)\n\n\(links)"
+        }
+
+        return SectionViewItem(title: title, viewItems: viewItems, description: description)
     }
 
     private func viewItem(item: EvmNetworkService.Item) -> ViewItem {
         ViewItem(
                 id: item.network.id,
                 name: item.network.name,
-                url: item.network.syncSource.url.absoluteString,
+                url: item.network.syncSource.urls.count == 1 ? item.network.syncSource.urls[0].absoluteString : "evm_network.switches_automatically".localized,
                 selected: item.selected
         )
     }
@@ -77,6 +86,7 @@ extension EvmNetworkViewModel {
     struct SectionViewItem {
         let title: String
         let viewItems: [ViewItem]
+        let description: String?
     }
 
     struct ViewItem {

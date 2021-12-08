@@ -40,6 +40,7 @@ class EvmNetworkViewController: ThemeViewController {
 
         tableView.registerCell(forClass: F4Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
+        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] sectionViewItems in
@@ -77,10 +78,20 @@ extension EvmNetworkViewController: SectionsDataSource {
     }
 
     private func section(sectionViewItem: EvmNetworkViewModel.SectionViewItem) -> SectionProtocol {
-        Section(
+        let containerWidth: CGFloat = tableView.bounds.width
+
+        let footerState: ViewState<TopDescriptionHeaderFooterView> = sectionViewItem.description.flatMap { descriptionText in
+            .cellType(hash: "bottom_description", binder: { view in
+                view.bind(text: descriptionText)
+            }, dynamicHeight: { [weak self] _ in
+                TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
+            })
+        } ?? .margin(height: .margin32)
+
+        return Section(
                 id: sectionViewItem.title,
                 headerState: header(text: sectionViewItem.title),
-                footerState: .margin(height: .margin32),
+                footerState: footerState,
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == sectionViewItem.viewItems.count - 1

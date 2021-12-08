@@ -12,7 +12,7 @@ class EvmNetwork {
     }
 
     var id: String {
-        "\(networkType.chainId)|\(syncSource.url.absoluteString)"
+        "\(networkType.chainId)|\(syncSource.urls.map({ $0.absoluteString }).joined(separator: ","))"
     }
 
 }
