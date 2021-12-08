@@ -1039,3 +1039,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Network Settings
 
 "network_settings.title" = "Netzwerkeinstellungen";
+
+// EVM Network
+
+"evm_network.switches_automatically" = "switches automatically";
+"evm_network.description" = "MainNet HTTP uses the links listed below and switches automatically.";
