@@ -3,6 +3,8 @@ import RxSwift
 import RxRelay
 
 class ReleaseNotesService {
+    static private let releaseUrl = "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/"
+
     private let appVersionManager: IAppVersionManager
 
     init(appVersionManager: IAppVersionManager) {
@@ -15,8 +17,12 @@ class ReleaseNotesService {
                 return Observable.just(nil)
             }
 
-            return Observable.just(URL(string: "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/\(version)"))
+            return Observable.just(URL(string: Self.releaseUrl + version))
         }
+    }
+
+    var lastVersionUrl: URL? {
+        URL(string: Self.releaseUrl + appVersionManager.currentVersion.releaseNotesVersion)
     }
 
 }
