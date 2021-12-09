@@ -1043,4 +1043,4 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // EVM Network
 
 "evm_network.switches_automatically" = "switches automatically";
-"evm_network.description" = "MainNet HTTP uses the links listed below and switches automatically.";
+"evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";

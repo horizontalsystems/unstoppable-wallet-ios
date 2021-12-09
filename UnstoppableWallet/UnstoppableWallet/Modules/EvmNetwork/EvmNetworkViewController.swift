@@ -78,13 +78,15 @@ extension EvmNetworkViewController: SectionsDataSource {
     }
 
     private func section(sectionViewItem: EvmNetworkViewModel.SectionViewItem) -> SectionProtocol {
-        let containerWidth: CGFloat = tableView.bounds.width
-
         let footerState: ViewState<TopDescriptionHeaderFooterView> = sectionViewItem.description.flatMap { descriptionText in
             .cellType(hash: "bottom_description", binder: { view in
                 view.bind(text: descriptionText)
             }, dynamicHeight: { [weak self] _ in
-                TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
+                if let containerWidth = self?.tableView.bounds.width {
+                    return TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
+                } else {
+                    return 0
+                }
             })
         } ?? .margin(height: .margin32)
 
