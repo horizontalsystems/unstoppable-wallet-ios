@@ -60,14 +60,12 @@ class CreateAccountViewController: KeyboardAwareViewController {
         passphraseToggleCell.onToggle = { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
 
         passphraseCell.inputPlaceholder = "create_wallet.input.passphrase".localized
-        passphraseCell.isSecureTextEntry = true
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
         passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         passphraseConfirmationCell.inputPlaceholder = "create_wallet.input.confirm".localized
-        passphraseConfirmationCell.isSecureTextEntry = true
         passphraseConfirmationCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphraseConfirmation: $0 ?? "") }
         passphraseConfirmationCell.isValidText = { [weak self] in self?.viewModel.validatePassphraseConfirmation(text: $0) ?? true }
 
