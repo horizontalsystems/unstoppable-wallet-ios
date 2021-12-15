@@ -58,7 +58,6 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         passphraseToggleCell.onToggle = { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
 
         passphraseCell.inputPlaceholder = "restore.input.passphrase".localized
-        passphraseCell.isSecureTextEntry = true
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
         passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
 
