@@ -19,10 +19,10 @@ class SendEvmService {
     private var evmAmount: BigUInt?
     private var addressData: AddressData?
 
-    private let amountErrorRelay = PublishRelay<Error?>()
-    private var amountError: Error? {
+    private let amountCautionRelay = PublishRelay<(error: Error?, warning: AmountWarning?)>()
+    private var amountCaution: (error: Error?, warning: AmountWarning?) = (error: nil, warning: nil) {
         didSet {
-            amountErrorRelay.accept(amountError)
+            amountCautionRelay.accept(amountCaution)
         }
     }
 
@@ -39,7 +39,7 @@ class SendEvmService {
     }
 
     private func syncState() {
-        if amountError == nil, addressError == nil, let evmAmount = evmAmount, let addressData = addressData {
+        if amountCaution.error == nil, addressError == nil, let evmAmount = evmAmount, let addressData = addressData {
             let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
             let sendInfo = SendEvmData.SendInfo(domain: addressData.domain)
 
@@ -70,8 +70,8 @@ extension SendEvmService {
         stateRelay.asObservable()
     }
 
-    var amountErrorObservable: Observable<Error?> {
-        amountErrorRelay.asObservable()
+    var amountCautionObservable: Observable<(error: Error?, warning: AmountWarning?)> {
+        amountCautionRelay.asObservable()
     }
 
 }
@@ -110,14 +110,23 @@ extension SendEvmService: IAmountInputService {
         if amount > 0 {
             do {
                 evmAmount = try validEvmAmount(amount: amount)
-                amountError = nil
+
+                var amountWarning: AmountWarning? = nil
+                if amount.isEqual(to: adapter.balanceData.balance) {
+                    switch sendPlatformCoin.coinType {
+                    case .binanceSmartChain, .ethereum: amountWarning = AmountWarning.coinNeededForFee
+                    default: ()
+                    }
+                }
+
+                amountCaution = (error: nil, warning: amountWarning)
             } catch {
                 evmAmount = nil
-                amountError = error
+                amountCaution = (error: error, warning: nil)
             }
         } else {
             evmAmount = nil
-            amountError = nil
+            amountCaution = (error: nil, warning: nil)
         }
 
         syncState()
@@ -172,6 +181,10 @@ extension SendEvmService {
     enum AmountError: Error {
         case invalidDecimal
         case insufficientBalance
+    }
+
+    enum AmountWarning {
+        case coinNeededForFee
     }
 
     private struct AddressData {

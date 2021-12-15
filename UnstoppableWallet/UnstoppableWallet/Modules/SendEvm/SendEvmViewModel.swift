@@ -15,7 +15,7 @@ class SendEvmViewModel {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.amountErrorObservable) { [weak self] in self?.sync(amountError: $0) }
+        subscribe(disposeBag, service.amountCautionObservable) { [weak self] in self?.sync(amountCaution: $0) }
 
         sync(state: service.state)
     }
@@ -28,8 +28,18 @@ class SendEvmViewModel {
         }
     }
 
-    private func sync(amountError: Error?) {
-        amountCautionRelay.accept(amountError.map { Caution(text: $0.smartDescription, type: .error) })
+    private func sync(amountCaution: (error: Error?, warning: SendEvmService.AmountWarning?)) {
+        var caution: Caution? = nil
+
+        if let error = amountCaution.error {
+            caution = Caution(text: error.smartDescription, type: .error)
+        } else if let warning = amountCaution.warning {
+            switch warning {
+            case .coinNeededForFee: caution = Caution(text: "send.amount_warning.coin_needed_for_fee".localized(service.sendPlatformCoin.code), type: .warning)
+            }
+        }
+
+        amountCautionRelay.accept(caution)
     }
 
 }
