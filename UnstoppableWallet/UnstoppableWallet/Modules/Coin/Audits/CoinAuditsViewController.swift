@@ -45,8 +45,6 @@ class CoinAuditsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: ACell.self)
-        tableView.registerCell(forClass: F2Cell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
         view.addSubview(emptyLabel)
@@ -112,34 +110,75 @@ class CoinAuditsViewController: ThemeViewController {
 extension CoinAuditsViewController: SectionsDataSource {
 
     private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
-        Row<ACell>(
+        CellBuilder.row(
+                elements: [.image, .text],
+                tableView: tableView,
                 id: "header-\(name)",
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent)
-                    cell.selectionStyle = .none
-                    cell.title = name
-                    cell.set(titleImageSize: .iconSize24)
-                    cell.setTitleImage(urlString: logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.setImage(urlString: logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+                    })
+
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = name
+                    })
                 }
         )
     }
 
     private func row(auditViewItem: CoinAuditsViewModel.AuditViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<F2Cell>(
-                id: auditViewItem.reportUrl,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.title = auditViewItem.date
-                    cell.subtitle = auditViewItem.name
-                    cell.value = auditViewItem.issues
-                },
-                action: { [weak self] _ in
-                    self?.open(url: auditViewItem.reportUrl)
-                }
-        )
+        let bindBlock = { (cell: BaseThemeCell) in
+            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+            cell.bind(index: 0, block: { (component: MultiTextComponent) in
+                component.set(style: .m1)
+                component.title.set(style: .b2)
+                component.subtitle.set(style: .d1)
+
+                component.title.text = auditViewItem.date
+                component.subtitle.text = auditViewItem.name
+            })
+
+            cell.bind(index: 1, block: { (component: TextComponent) in
+                component.setContentHuggingPriority(.required, for: .horizontal)
+                component.set(style: .c1)
+                component.text = auditViewItem.issues
+            })
+        }
+
+        if let reportUrl = auditViewItem.reportUrl {
+            return CellBuilder.selectableRow(
+                    elements: [.multiText, .text, .margin8, .image],
+                    tableView: tableView,
+                    id: reportUrl,
+                    height: .heightDoubleLineCell,
+                    autoDeselect: true,
+                    bind: { cell in
+                        bindBlock(cell)
+
+                        cell.bind(index: 2, block: { (component: ImageComponent) in
+                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                        })
+                    },
+                    action: { [weak self] in
+                        self?.open(url: reportUrl)
+                    }
+            )
+        } else {
+            return CellBuilder.row(
+                    elements: [.multiText, .text],
+                    tableView: tableView,
+                    id: auditViewItem.name,
+                    height: .heightDoubleLineCell,
+                    bind: { cell in
+                        bindBlock(cell)
+                    }
+            )
+        }
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
@@ -179,6 +218,7 @@ extension CoinAuditsViewController: SectionsDataSource {
                 ),
                 Section(
                         id: "audits-\(index)",
+                        footerState: .margin(height: .margin12),
                         rows: viewItem.auditViewItems.enumerated().map { index, auditViewItem in
                             row(
                                     auditViewItem: auditViewItem,
