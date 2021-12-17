@@ -87,7 +87,7 @@ extension CoinAuditsViewModel {
         let date: String?
         let name: String
         let issues: String
-        let reportUrl: String
+        let reportUrl: String?
     }
 
 }
