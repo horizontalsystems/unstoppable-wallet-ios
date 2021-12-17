@@ -45,6 +45,7 @@ class MnemonicInputCell: UITableViewCell {
         textView.textContainerInset = UIEdgeInsets(top: textViewInset, left: textViewInset, bottom: textViewInset, right: textViewInset)
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no
+        textView.spellCheckingType = .no
 
         textView.delegate = self
     }
