@@ -15,6 +15,7 @@ class TextFieldStackView: UIView {
         super.init(frame: .zero)
 
         textField.autocorrectionType = .no
+        textField.spellCheckingType = .no
         textField.autocapitalizationType = .none
         textField.keyboardAppearance = .themeDefault
         textField.tintColor = .themeInputFieldTintColor
