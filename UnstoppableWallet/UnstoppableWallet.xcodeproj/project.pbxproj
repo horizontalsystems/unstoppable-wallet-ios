@@ -9188,7 +9188,6 @@
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
@@ -9206,7 +9205,6 @@
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev.testnet";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
@@ -9266,7 +9264,6 @@
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
@@ -9283,7 +9280,6 @@
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = true;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
@@ -9300,7 +9296,6 @@
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
@@ -9317,7 +9312,6 @@
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.24;
 				OfficeMode = false;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
