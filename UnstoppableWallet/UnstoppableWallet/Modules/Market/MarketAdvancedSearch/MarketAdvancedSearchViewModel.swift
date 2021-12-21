@@ -14,6 +14,7 @@ class MarketAdvancedSearchViewModel {
     private let coinListViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let marketCapViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let volumeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
+    private let blockchainsViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let outperformedBtcRelay = BehaviorRelay<Bool>(value: false)
@@ -34,6 +35,7 @@ class MarketAdvancedSearchViewModel {
         subscribe(disposeBag, service.coinListObservable) { [weak self] in self?.sync(coinList: $0) }
         subscribe(disposeBag, service.marketCapObservable) { [weak self] in self?.sync(marketCap: $0) }
         subscribe(disposeBag, service.volumeObservable) { [weak self] in self?.sync(volume: $0) }
+        subscribe(disposeBag, service.blockchainsObservable) { [weak self] in self?.sync(blockchains: $0) }
         subscribe(disposeBag, service.priceChangeTypeObservable) { [weak self] in self?.sync(priceChangeType: $0) }
         subscribe(disposeBag, service.priceChangeObservable) { [weak self] in self?.sync(priceChange: $0) }
         subscribe(disposeBag, service.outperformedBtcObservable) { [weak self] in self?.sync(outperformedBtc: $0) }
@@ -45,6 +47,7 @@ class MarketAdvancedSearchViewModel {
         sync(coinList: service.coinListCount)
         sync(marketCap: service.marketCap)
         sync(volume: service.volume)
+        sync(blockchains: service.blockchains)
         sync(priceChangeType: service.priceChangeType)
         sync(priceChange: service.priceChange)
 
@@ -76,6 +79,24 @@ class MarketAdvancedSearchViewModel {
 
     private func sync(volume: MarketAdvancedSearchService.ValueFilter) {
         volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueStyle: service.volume.valueStyle))
+    }
+
+    private func sync(blockchains: [MarketAdvancedSearchModule.Blockchain]) {
+        let value: String
+        let valueStyle: ValueStyle
+
+        if service.blockchains.isEmpty {
+            value = "market.advanced_search.any".localized
+            valueStyle = .none
+        } else if service.blockchains.count == 1 {
+            value = service.blockchains[0].rawValue
+            valueStyle = .normal
+        } else {
+            value = "\(service.blockchains.count)"
+            valueStyle = .normal
+        }
+
+        blockchainsViewItemRelay.accept(ViewItem(value: value, valueStyle: valueStyle))
     }
 
     private func sync(priceChangeType: MarketModule.PriceChangeType) {
@@ -126,6 +147,10 @@ extension MarketAdvancedSearchViewModel {
         volumeViewItemRelay.asDriver()
     }
 
+    var blockchainsViewItemDriver: Driver<ViewItem> {
+        blockchainsViewItemRelay.asDriver()
+    }
+
     var priceChangeTypeViewItemDriver: Driver<ViewItem> {
         priceChangeTypeViewItemRelay.asDriver()
     }
@@ -172,6 +197,15 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 
+    var blockchainViewItems: [MultiSelectorViewController.ViewItem] {
+        MarketAdvancedSearchModule.Blockchain.allCases.map { blockchain in
+            MultiSelectorViewController.ViewItem(
+                    value: blockchain.rawValue,
+                    selected: service.blockchains.contains(blockchain)
+            )
+        }
+    }
+
     var priceChangeTypeViewItems: [FilterViewItem] {
         MarketModule.PriceChangeType.allCases.map {
             FilterViewItem(title: $0.title, style: .normal, selected: service.priceChangeType == $0)
@@ -206,6 +240,10 @@ extension MarketAdvancedSearchViewModel {
 
     func setVolume(at index: Int) {
         service.volume = valueFilters[index]
+    }
+
+    func setBlockchains(indexes: [Int]) {
+        service.blockchains = indexes.map { MarketAdvancedSearchModule.Blockchain.allCases[$0] }
     }
 
     func setPriceChangeType(at index: Int) {
