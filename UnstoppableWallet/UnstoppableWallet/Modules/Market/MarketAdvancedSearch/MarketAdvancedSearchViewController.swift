@@ -15,6 +15,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let coinListCell = BaseSelectableThemeCell()
     private let marketCapCell = BaseSelectableThemeCell()
     private let volumeCell = BaseSelectableThemeCell()
+    private let blockchainsCell = BaseSelectableThemeCell()
     private let periodCell = BaseSelectableThemeCell()
     private let priceChangeCell = BaseSelectableThemeCell()
 
@@ -68,6 +69,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
         buildSelector(cell: volumeCell, title: "market.advanced_search.volume".localized)
+
+        blockchainsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        buildSelector(cell: blockchainsCell, title: "market.advanced_search.blockchains".localized)
 
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         buildSelector(cell: priceChangeCell, title: "market.advanced_search.price_change".localized)
@@ -125,6 +129,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.coinListViewItemDriver) { [weak self] in self?.syncCoinList(viewItem: $0) }
         subscribe(disposeBag, viewModel.marketCapViewItemDriver) { [weak self] in self?.syncMarketCap(viewItem: $0) }
         subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in self?.syncVolume(viewItem: $0) }
+        subscribe(disposeBag, viewModel.blockchainsViewItemDriver) { [weak self] in self?.syncBlockchains(viewItem: $0) }
         subscribe(disposeBag, viewModel.priceChangeTypeViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
         subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
 
@@ -215,6 +220,18 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         })
     }
 
+    private func onTapBlockchainsCell() {
+        let controller = MultiSelectorViewController(
+                title: "market.advanced_search.blockchains".localized,
+                viewItems: viewModel.blockchainViewItems,
+                onFinish: { [weak self] in
+                    self?.viewModel.setBlockchains(indexes: $0)
+                }
+        )
+
+        present(ThemeNavigationController(rootViewController: controller), animated: true)
+    }
+
     private func onTapPeriodCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.price_period".localized,
@@ -293,6 +310,10 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func syncVolume(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
         set(viewItem: viewItem, cell: volumeCell)
+    }
+
+    private func syncBlockchains(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
+        set(viewItem: viewItem, cell: blockchainsCell)
     }
 
     private func syncPeriod(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
@@ -390,6 +411,15 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 rows: [
                     row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
                     row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
+                ])
+        )
+
+        sections.append(Section(
+                id: "network_filters",
+                headerState: header(text: "market.advanced_search.network_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    row(cell: blockchainsCell, id: "blockchains") { [weak self] in self?.onTapBlockchainsCell() }
                 ])
         )
 

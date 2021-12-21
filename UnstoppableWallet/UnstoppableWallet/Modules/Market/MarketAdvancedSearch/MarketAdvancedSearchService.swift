@@ -59,6 +59,17 @@ class MarketAdvancedSearchService {
         }
     }
 
+    private var blockchainsRelay = PublishRelay<[MarketAdvancedSearchModule.Blockchain]>()
+    var blockchains: [MarketAdvancedSearchModule.Blockchain] = [] {
+        didSet {
+            guard blockchains != oldValue else {
+                return
+            }
+
+            blockchainsRelay.accept(blockchains)
+            syncState()
+        }
+    }
 
     private var priceChangeRelay = PublishRelay<PriceChangeFilter>()
     var priceChange: PriceChangeFilter = .none {
@@ -215,12 +226,53 @@ class MarketAdvancedSearchService {
         return abs(value) < allTimeDeltaPercent
     }
 
+    private func inBlockchain(coinTypes: [CoinType]?) -> Bool {
+        guard !blockchains.isEmpty else {
+            return true
+        }
+
+        guard let coinTypes = coinTypes else {
+            return false
+        }
+
+        for coinType in coinTypes {
+            for blockchain in blockchains {
+                switch (blockchain, coinType) {
+                case (.ethereum, .ethereum),
+                     (.ethereum, .erc20),
+                     (.binanceSmartChain, .binanceSmartChain),
+                     (.binanceSmartChain, .bep20),
+                     (.binance, .bep2),
+                     (.arbitrum, .arbitrumOne),
+                     (.avalanche, .avalanche),
+                     (.fantom, .fantom),
+                     (.harmony, .harmonyShard0),
+                     (.huobi, .huobiToken),
+                     (.iotex, .iotex),
+                     (.moonriver, .moonriver),
+                     (.okex, .okexChain),
+                     (.okex, .okexChain),
+                     (.polygon, .polygonPos),
+                     (.solana, .solana),
+                     (.sora, .sora),
+                     (.tomochain, .tomochain),
+                     (.xdai, .xdai):
+                    return true
+                default: ()
+                }
+            }
+        }
+
+        return false
+    }
+
     private func filtered(marketInfos: [MarketInfo]) -> [MarketInfo] {
         marketInfos.filter { marketInfo in
             let priceChangeValue = marketInfo.priceChangeValue(type: priceChangeType)
 
             return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                     inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
+                    inBlockchain(coinTypes: marketInfo.coinTypes) &&
                     inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
                     (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                     (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
@@ -248,6 +300,10 @@ extension MarketAdvancedSearchService {
 
     var volumeObservable: Observable<ValueFilter> {
         volumeRelay.asObservable()
+    }
+
+    var blockchainsObservable: Observable<[MarketAdvancedSearchModule.Blockchain]> {
+        blockchainsRelay.asObservable()
     }
 
     var priceChangeObservable: Observable<PriceChangeFilter> {
@@ -280,8 +336,9 @@ extension MarketAdvancedSearchService {
 
     func reset() {
         coinListCount = .top250
-        volume = .none
         marketCap = .none
+        volume = .none
+        blockchains = []
         priceChangeType = .day
         priceChange = .none
 
