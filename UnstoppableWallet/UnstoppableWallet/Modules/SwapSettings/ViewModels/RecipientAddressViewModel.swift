@@ -2,59 +2,56 @@ import RxSwift
 import RxCocoa
 
 protocol IRecipientAddressService {
-    var initialAddress: Address? { get }
+    var addressState: AddressParserChain.State { get }
+    var addressStateObservable: Observable<AddressParserChain.State> { get }
     var recipientError: Error? { get }
     var recipientErrorObservable: Observable<Error?> { get }
-    func set(address: Address?)
+    func set(address: String?)
     func set(amount: Decimal)
 }
 
 class RecipientAddressViewModel {
     private let service: IRecipientAddressService
-    private let resolutionService: AddressResolutionService
     private let addressParser: IAddressParser
     private let disposeBag = DisposeBag()
 
+    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = PublishRelay<String?>()
 
     private var editing = false
     private var forceShowError = false
 
-    init(service: IRecipientAddressService, resolutionService: AddressResolutionService, addressParser: IAddressParser) {
+    init(service: IRecipientAddressService, addressParser: IAddressParser) {
         self.service = service
-        self.resolutionService = resolutionService
         self.addressParser = addressParser
 
-        service.recipientErrorObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] _ in
-                    self?.sync()
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, service.addressStateObservable) { [weak self] addressState in
+            self?.sync(addressState: addressState)
+        }
 
-        resolutionService.resolveFinishedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] address in
-                    self?.forceShowError = true
-
-                    if let address = address {
-                        self?.service.set(address: address)
-                    } else {
-                        self?.sync()
-                    }
-                })
-                .disposed(by: disposeBag)
-
-        sync()
+        sync(addressState: service.addressState)
     }
 
-    private func sync() {
-        if (editing && !forceShowError) || resolutionService.isResolving {
+    private func sync(addressState: AddressParserChain.State) {
+        switch addressState {
+        case .empty:
             cautionRelay.accept(nil)
-        } else {
-            cautionRelay.accept(service.recipientError.map { Caution(text: $0.smartDescription, type: .error) })
+            isLoadingRelay.accept(false)
+        case .loading:
+            cautionRelay.accept(nil)
+            isLoadingRelay.accept(true)
+        case .validationError(let error):
+            cautionRelay.accept(editing ? nil : Caution(text: error.smartDescription, type: .error))
+            isLoadingRelay.accept(false)
+        case .fetchError(let error):
+            cautionRelay.accept(Caution(text: error.smartDescription, type: .error))
+            isLoadingRelay.accept(false)
+        case .success:
+            cautionRelay.accept(nil)
+            isLoadingRelay.accept(false)
         }
+
     }
 
 }
@@ -62,11 +59,15 @@ class RecipientAddressViewModel {
 extension RecipientAddressViewModel {
 
     var initialValue: String? {
-        service.initialAddress?.title
+        if case let .success(address) = service.addressState {
+            return address.title
+        }
+
+        return nil
     }
 
     var isLoadingDriver: Driver<Bool> {
-        resolutionService.isResolvingObservable.asDriver(onErrorJustReturn: false)
+        isLoadingRelay.asDriver()
     }
 
     var cautionDriver: Driver<Caution?> {
@@ -78,10 +79,7 @@ extension RecipientAddressViewModel {
     }
 
     func onChange(text: String?) {
-        forceShowError = false
-
-        service.set(address: text.map { Address(raw: $0) })
-        resolutionService.set(text: text)
+        service.set(address: text)
     }
 
     func onFetch(text: String?) {
@@ -100,12 +98,8 @@ extension RecipientAddressViewModel {
     }
 
     func onChange(editing: Bool) {
-        if editing {
-            forceShowError = true
-        }
-
         self.editing = editing
-        sync()
+        sync(addressState: service.addressState)
     }
 
 }
