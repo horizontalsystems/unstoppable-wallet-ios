@@ -14,6 +14,7 @@ class ManageAccountsViewController: ThemeViewController {
 
     private let createCell = BaseSelectableThemeCell()
     private let restoreCell = BaseSelectableThemeCell()
+    private let watchCell = BaseSelectableThemeCell()
 
     private var viewItems = [ManageAccountsViewModel.ViewItem]()
     private var isLoaded = false
@@ -60,7 +61,7 @@ class ManageAccountsViewController: ThemeViewController {
             component.text = "onboarding.balance.create".localized
         })
 
-        restoreCell.set(backgroundStyle: .lawrence, isLast: true)
+        restoreCell.set(backgroundStyle: .lawrence)
         CellBuilder.build(cell: restoreCell, elements: [.image, .text])
         restoreCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
@@ -68,6 +69,16 @@ class ManageAccountsViewController: ThemeViewController {
         restoreCell.bind(index: 1, block: { (component: TextComponent) in
             component.set(style: .b3)
             component.text = "onboarding.balance.restore".localized
+        })
+
+        watchCell.set(backgroundStyle: .lawrence, isLast: true)
+        CellBuilder.build(cell: watchCell, elements: [.image, .text])
+        watchCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
+        })
+        watchCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .b3)
+            component.text = "onboarding.balance.watch".localized
         })
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
@@ -93,6 +104,11 @@ class ManageAccountsViewController: ThemeViewController {
 
     private func onTapRestore() {
         let viewController = RestoreMnemonicModule.viewController()
+        present(viewController, animated: true)
+    }
+
+    private func onTapWatch() {
+        let viewController = WatchAddressModule.viewController()
         present(viewController, animated: true)
     }
 
@@ -123,7 +139,7 @@ extension ManageAccountsViewController: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image, .multiText, .image, .margin0, .transparentIconButton, .margin4],
+                elements: [.image, .multiText, viewItem.alert ? .margin16 : .margin0, .image, .margin0, .transparentIconButton, .margin4],
                 layoutMargins: UIEdgeInsets(top: 0, left: CellBuilder.defaultMargin, bottom: 0, right: .margin4),
                 tableView: tableView,
                 id: viewItem.accountId,
@@ -143,6 +159,7 @@ extension ManageAccountsViewController: SectionsDataSource {
 
                         component.title.text = viewItem.title
                         component.subtitle.text = viewItem.subtitle
+                        component.subtitle.lineBreakMode = .byTruncatingMiddle
                     })
 
                     cell.bind(index: 2, block: { (component: ImageComponent) in
@@ -200,6 +217,15 @@ extension ManageAccountsViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 action: { [weak self] in
                                     self?.onTapRestore()
+                                }
+                        ),
+                        StaticRow(
+                                cell: watchCell,
+                                id: "watch",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapWatch()
                                 }
                         )
                     ]

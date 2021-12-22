@@ -6,7 +6,7 @@ class ManageAccountViewModel {
     private let service: ManageAccountService
     private let disposeBag = DisposeBag()
 
-    private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .showRecoveryPhrase)
+    private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .none)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openShowKeyRelay = PublishRelay<Account>()
     private let openBackupKeyRelay = PublishRelay<Account>()
@@ -36,7 +36,16 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
-        keyActionStateRelay.accept(account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase)
+        let keyAccountState: KeyActionState
+
+        switch account.type {
+        case .address:
+            keyAccountState = .none
+        default:
+            keyAccountState = account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase
+        }
+
+        keyActionStateRelay.accept(keyAccountState)
     }
 
     private func syncAccountSettings() {
@@ -115,6 +124,7 @@ extension ManageAccountViewModel {
 extension ManageAccountViewModel {
 
     enum KeyActionState {
+        case none
         case showRecoveryPhrase
         case backupRecoveryPhrase
     }

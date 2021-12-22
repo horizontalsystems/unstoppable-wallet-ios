@@ -17,7 +17,7 @@ class ManageAccountViewController: ThemeViewController {
     private let backupRecoveryPhraseCell = BaseSelectableThemeCell()
     private let unlinkCell = BaseSelectableThemeCell()
 
-    private var keyActionState: ManageAccountViewModel.KeyActionState = .showRecoveryPhrase
+    private var keyActionState: ManageAccountViewModel.KeyActionState = .none
     private var isLoaded = false
 
     init(viewModel: ManageAccountViewModel) {
@@ -166,11 +166,11 @@ extension ManageAccountViewController: SectionsDataSource {
     }
 
     private var keyActionSection: SectionProtocol {
-        let row: RowProtocol
+        var rows = [RowProtocol]()
 
         switch keyActionState {
         case .showRecoveryPhrase:
-            row = StaticRow(
+            let row = StaticRow(
                     cell: showRecoveryPhraseCell,
                     id: "show-recovery-phrase",
                     height: .heightCell48,
@@ -179,8 +179,9 @@ extension ManageAccountViewController: SectionsDataSource {
                         self?.viewModel.onTapShowKey()
                     }
             )
+            rows.append(row)
         case .backupRecoveryPhrase:
-            row = StaticRow(
+            let row = StaticRow(
                     cell: backupRecoveryPhraseCell,
                     id: "backup-recovery-phrase",
                     height: .heightCell48,
@@ -189,36 +190,37 @@ extension ManageAccountViewController: SectionsDataSource {
                         self?.viewModel.onTapBackupKey()
                     }
             )
+            rows.append(row)
+        default: ()
         }
 
+        let isFirst = rows.isEmpty
         let isLast = viewModel.additionalViewItems.isEmpty
 
-        var rows = [
-            row,
-            CellBuilder.selectableRow(
-                    elements: [.image, .text, .image],
-                    tableView: tableView,
-                    id: "network-settings",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
+        let networkSettingsRow = CellBuilder.selectableRow(
+                elements: [.image, .text, .image],
+                tableView: tableView,
+                id: "network-settings",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
-                        cell.bind(index: 0, block: { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: "blocks_20")?.withTintColor(.themeGray)
-                        })
-                        cell.bind(index: 1, block: { (component: TextComponent) in
-                            component.set(style: .b2)
-                            component.text = "manage_account.network_settings".localized
-                        })
-                        cell.bind(index: 2, block: { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                        })
-                    },
-                    action: { [weak self] in
-                        self?.viewModel.onTapNetworkSettings()
-                    }
-            )
-        ]
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "blocks_20")?.withTintColor(.themeGray)
+                    })
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = "manage_account.network_settings".localized
+                    })
+                    cell.bind(index: 2, block: { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                    })
+                },
+                action: { [weak self] in
+                    self?.viewModel.onTapNetworkSettings()
+                }
+        )
+        rows.append(networkSettingsRow)
 
         let viewItems = viewModel.additionalViewItems
 
