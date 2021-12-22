@@ -1,9 +1,11 @@
 import Foundation
 import HdWalletKit
+import EthereumKit
 
 enum AccountType {
     case mnemonic(words: [String], salt: String)
     case privateKey(data: Data)
+    case address(address: EthereumKit.Address)
 
     var mnemonicSeed: Data? {
         switch self {
@@ -17,6 +19,8 @@ enum AccountType {
         case .mnemonic(let words, let salt):
             let count = "\(words.count)"
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
+        case .address(let address):
+            return address.eip55
         default:
             return ""
         }
@@ -32,6 +36,8 @@ extension AccountType: Hashable {
             return lhsWords == rhsWords && lhsSalt == rhsSalt
         case (let .privateKey(lhsData), let .privateKey(rhsData)):
             return lhsData == rhsData
+        case (let .address(lhsAddress), let .address(rhsAddress)):
+            return lhsAddress == rhsAddress
         default: return false
         }
     }
@@ -43,6 +49,8 @@ extension AccountType: Hashable {
             hasher.combine(salt)
         case let .privateKey(data):
             hasher.combine(data)
+        case let .address(address):
+            hasher.combine(address.raw)
         }
     }
 

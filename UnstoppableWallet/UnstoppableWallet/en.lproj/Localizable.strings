@@ -1019,6 +1019,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "onboarding.balance.description" = "You don't have any wallets yet. Create new or restore existing";
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
+"onboarding.balance.watch" = "Watch Address";
 "onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
@@ -1049,3 +1050,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "evm_network.switches_automatically" = "switches automatically";
 "evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+
+// Watch Address
+
+"watch_address.title" = "Address";
+"watch_address.watch" = "Watch";

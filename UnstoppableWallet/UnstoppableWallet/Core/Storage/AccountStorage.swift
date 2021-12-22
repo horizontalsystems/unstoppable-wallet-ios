@@ -1,4 +1,5 @@
 import StorageKit
+import EthereumKit
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
@@ -37,6 +38,12 @@ class AccountStorage {
             }
 
             type = .privateKey(data: data)
+        case .address:
+            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
+                return nil
+            }
+
+            type = .address(address: EthereumKit.Address(raw: data))
         }
 
         return Account(
@@ -64,6 +71,9 @@ class AccountStorage {
         case .privateKey(let data):
             typeName = .privateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
+        case .address(let address):
+            typeName = .address
+            dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
         }
 
         return AccountRecord(
@@ -87,6 +97,8 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .privateKey:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .privateKey, keyName: .data))
+        case .address:
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .address, keyName: .data))
         }
     }
 
@@ -169,6 +181,7 @@ extension AccountStorage {
     private enum TypeName: String {
         case mnemonic
         case privateKey
+        case address
     }
 
     private enum KeyName: String {
