@@ -9,6 +9,9 @@ class OneInchSettingsService {
     private var limitSlippageBounds: ClosedRange<Decimal> { 0.01...50 }
     private var usualHighestSlippage: Decimal = 5
 
+    private let disposeBag = DisposeBag()
+    private let addressParserChain: AddressParserChain
+
     private(set) var errors: [Error] = [] {
         didSet {
             errorsRelay.accept(errors)
@@ -32,32 +35,28 @@ class OneInchSettingsService {
         }
     }
 
-    var recipient: Address? {
-        didSet {
-            sync()
-        }
-    }
-
-    init(settings: OneInchSettings) {
+    init(settings: OneInchSettings, addressParserChain: AddressParserChain) {
+        self.addressParserChain = addressParserChain
         slippage = settings.allowedSlippage
-        recipient = settings.recipient
 
         state = .valid(settings)
+
+        subscribe(disposeBag, addressParserChain.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
     private func sync() {
         var errors = [Error]()
+        var loading = false
 
         var settings = OneInchSettings()
 
-        if let recipient = recipient, !recipient.raw.isEmpty {
-            do {
-                _ = try EthereumKit.Address(hex: recipient.raw)
-                settings.recipient = recipient
-            } catch {
-                errors.append(SwapSettingsModule.AddressError.invalidAddress)
-            }
+        switch addressParserChain.state {
+        case .loading: loading = true
+        case .success(let address): settings.recipient = address
+        case .validationError(_): errors.append(SwapSettingsModule.AddressError.invalidAddress)
+        case .fetchError(_): errors.append(SwapSettingsModule.AddressError.invalidAddress)
+        default: ()
         }
 
         if slippage == .zero {
@@ -72,7 +71,7 @@ class OneInchSettingsService {
 
         self.errors = errors
 
-        state = errors.isEmpty ? .valid(settings) : .invalid
+        state = (!errors.isEmpty || loading) ? .invalid : .valid(settings)
     }
 
 }
@@ -91,13 +90,16 @@ extension OneInchSettingsService {
 
 extension OneInchSettingsService: IRecipientAddressService {
 
-    var initialAddress: Address? {
-        guard case let .valid(tradeOptions) = state else {
-            return nil
-        }
+    var addressState: AddressParserChain.State {
+        addressParserChain.state
+    }
 
-        return tradeOptions.recipient
+    var addressStateObservable: Observable<AddressParserChain.State> {
+        addressParserChain.stateObservable
+    }
 
+    func set(address: String?) {
+        addressParserChain.handle(address: address)
     }
 
     var recipientError: Error? {
@@ -108,10 +110,6 @@ extension OneInchSettingsService: IRecipientAddressService {
         errorsRelay.map { errors -> Error? in
             errors.first { $0 is SwapSettingsModule.AddressError }
         }
-    }
-
-    func set(address: Address?) {
-        recipient = address
     }
 
     func set(amount: Decimal) {

@@ -1825,6 +1825,7 @@
 		58AAA05F4B98AA46B01CCEEB /* SwapTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA32D9367A5BBA5C2EC45 /* SwapTokenManager.swift */; };
 		58AAA0642CB9B7B19C6235B5 /* AmountDecimalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF740AE2BEBD7CEBD563 /* AmountDecimalParser.swift */; };
 		58AAA074070ED1A81B4535D1 /* FeeSliderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC2D03916C80C8DC5FE5 /* FeeSliderWrapper.swift */; };
+		58AAA07852495906A28F0AFF /* AddressParserChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */; };
 		58AAA07B54F11F0DF5E3E876 /* MarketPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA263DAB58FD63E6A9351 /* MarketPostViewController.swift */; };
 		58AAA08E3204C7E7326E1DF9 /* MarketTvlSortHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78BB269FEBB430092A3 /* MarketTvlSortHeaderViewModel.swift */; };
 		58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA444C885BCC354F1B7B3 /* CoinPageMarkdownParser.swift */; };
@@ -1837,6 +1838,7 @@
 		58AAA0D14CD9EDAE2DBF7540 /* SwapApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA681BF5F2CBDCD0D8898 /* SwapApproveViewController.swift */; };
 		58AAA0D2812D3C3F49127E48 /* OneInchSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA75A0580C45CC08D89E8 /* OneInchSettingsService.swift */; };
 		58AAA0E359CC392E653AB767 /* ChartMarketPerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0AC8DAD6E6083B332B7 /* ChartMarketPerformanceCell.swift */; };
+		58AAA0FD31A3FE55093D0842 /* EvmAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC62C5B05463D339BCC /* EvmAddressParser.swift */; };
 		58AAA109348EF36940B08F54 /* DoubleSpendInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5AE34C515816D2D4977 /* DoubleSpendInfoRouter.swift */; };
 		58AAA10A9FA9580420843F55 /* CoinTvlModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA51D834698DB1F273093 /* CoinTvlModule.swift */; };
 		58AAA10B748931BA5FA867DA /* SwapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEB2257174A64DE5E51B /* SwapViewModel.swift */; };
@@ -1847,6 +1849,7 @@
 		58AAA1283FC7F83F62FC5961 /* FeeSliderValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3C555FBFB5423CCF8E0 /* FeeSliderValueView.swift */; };
 		58AAA12BF592B078A74570F5 /* MarketSingleSortHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA15F4FA7B9EC091EDFF3 /* MarketSingleSortHeaderView.swift */; };
 		58AAA1389E524074EE29F7A7 /* SwapApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA681BF5F2CBDCD0D8898 /* SwapApproveViewController.swift */; };
+		58AAA13C1DC5FA79BCA1D732 /* UDNAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9A4761030BE9F60C85E /* UDNAddressParser.swift */; };
 		58AAA153DF6764D7FEA99D63 /* MarketGlobalTvlMetricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADBB7B760C189AD6032F /* MarketGlobalTvlMetricService.swift */; };
 		58AAA158CE08BE54E4D5C412 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF5D0242DF2FE5D79926 /* SendAddressView.swift */; };
 		58AAA15A6F863CD3940FEBCC /* CoinCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8AD6794AD2AAF462B7B /* CoinCardModule.swift */; };
@@ -2000,6 +2003,7 @@
 		58AAA55C7B8D4391DB3A8C01 /* SimpleSheetTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA54E84B5C1B68644AE46 /* SimpleSheetTitleView.swift */; };
 		58AAA56A4BD68CC35A4E3D6E /* SendAddressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA047F8B03E37F51F6AC1 /* SendAddressRouter.swift */; };
 		58AAA56C780EF5C92C1D1A32 /* AddressResolutionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA25A23A8EBB537DD56C2 /* AddressResolutionProvider.swift */; };
+		58AAA57E1D7AF0943273E58A /* UDNAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9A4761030BE9F60C85E /* UDNAddressParser.swift */; };
 		58AAA58C37EA1B03E5B4094E /* CoinChartRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3AE7E1B121B6C991ABA /* CoinChartRateCell.swift */; };
 		58AAA5902DE534C8FD70011F /* MarketGlobalFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A9EA8A2210522F38EE /* MarketGlobalFetcher.swift */; };
 		58AAA592A5066885027B4B4D /* ChartIntervalAndSelectedRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE79C0AE58E9AACE8791 /* ChartIntervalAndSelectedRateCell.swift */; };
@@ -2211,6 +2215,7 @@
 		58AAAB92C2ABB375E76223C8 /* AmountInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E453A954DBFA84E89 /* AmountInfoView.swift */; };
 		58AAAB97145C7C427DB27067 /* ChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */; };
 		58AAAB9BE155C6F7630BCE31 /* MarketSingleSortHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA15F4FA7B9EC091EDFF3 /* MarketSingleSortHeaderView.swift */; };
+		58AAAB9E86439B6DE1D22538 /* EvmAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC62C5B05463D339BCC /* EvmAddressParser.swift */; };
 		58AAABA757EDC7CD5E630500 /* MarketOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD58451E4F995221244 /* MarketOverviewViewModel.swift */; };
 		58AAABA864BFEC1F10F57E4B /* CoinChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA13C7C5B258310BA61AF /* CoinChartService.swift */; };
 		58AAABB6B1B9557E9FD70EA2 /* MarketPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA11651E3CE29A461BF42 /* MarketPostViewModel.swift */; };
@@ -2225,6 +2230,7 @@
 		58AAAC124DDA9BF9F9D272C4 /* CoinTvlModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA51D834698DB1F273093 /* CoinTvlModule.swift */; };
 		58AAAC4DD7A8CE99D195EB9F /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */; };
 		58AAAC4F4425F8C33B604020 /* SwapPendingAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACF9B71A0C0DCFF7117E /* SwapPendingAllowanceService.swift */; };
+		58AAAC635552C279592F60F9 /* EvmAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAAC62C5B05463D339BCC /* EvmAddressParser.swift */; };
 		58AAAC646AF735F5D1F0350A /* EvmKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B00009B199A687EF3 /* EvmKitManager.swift */; };
 		58AAAC7A09B53B8B1DCCE6EB /* LockScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B9EF4DD882EF4020C5 /* LockScreenModule.swift */; };
 		58AAAC7A561E4A44951A020F /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E43BB1F4A9472DFED4 /* SendConfirmationViewController.swift */; };
@@ -2252,6 +2258,7 @@
 		58AAACF322E073F1DDA1FBDC /* MarketTvlSortHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA78BB269FEBB430092A3 /* MarketTvlSortHeaderViewModel.swift */; };
 		58AAACFF52132947B4F707C7 /* FeeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA24B6EB7103CB072A53D /* FeeSlider.swift */; };
 		58AAAD10078FF803A3C27F7C /* MetricChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8CB22CEF84A71CF044F /* MetricChartService.swift */; };
+		58AAAD1BFFE70A777DDF27A9 /* AddressParserChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */; };
 		58AAAD224E1641AFF9B7EC4A /* ItemSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACB7FAE34A043DD3F1DC /* ItemSelectorViewController.swift */; };
 		58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */; };
 		58AAAD3A237C3A2F46FD2509 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4022C5803D2440F43C7 /* DebugPresenter.swift */; };
@@ -2277,6 +2284,7 @@
 		58AAADEAADDF07F0036F8F61 /* ItemSelectorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1016E563805456AC2F7 /* ItemSelectorModule.swift */; };
 		58AAADEACD5A3912F199A0AD /* MetricChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA765922F6668954C238E /* MetricChartViewModel.swift */; };
 		58AAADEE16D9605E4FA0390A /* UniswapSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA76748B32A4D8FCD765A /* UniswapSettingsViewModel.swift */; };
+		58AAADEF6F21AED422D7B569 /* AddressParserChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */; };
 		58AAADF0F0A5801361CF4B82 /* AdditionalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */; };
 		58AAAE020611495B6294ED96 /* MarketGlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7D7F06F7C044DF9CE0A /* MarketGlobalModule.swift */; };
 		58AAAE02A5B4368374B6CDCB /* SendAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA37F862C32C60A4A44AB /* SendAmountView.swift */; };
@@ -2293,6 +2301,7 @@
 		58AAAE67CC6A40257B6E9855 /* ItemSelectorSimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA1584471D0A8DD0F187B /* ItemSelectorSimpleCell.swift */; };
 		58AAAE6CFB04C47AC24A69D7 /* MarketGlobalFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0A9EA8A2210522F38EE /* MarketGlobalFetcher.swift */; };
 		58AAAE6DD4B6C3E52DA4FD6C /* SelectResourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA94FF8FEFE09549D4829 /* SelectResourceCell.swift */; };
+		58AAAE7400CF208B3268064D /* UDNAddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9A4761030BE9F60C85E /* UDNAddressParser.swift */; };
 		58AAAE7CA65D1A4906C5E65E /* SwapSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9828D8742CD3D9995D9 /* SwapSwitchCell.swift */; };
 		58AAAE8699540F1A80E62163 /* SwapConfirmationAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5BF9EE200DAA24AD42A /* SwapConfirmationAmountCell.swift */; };
 		58AAAE8DBB161631F1529B9C /* SendAmountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD6F502BE56E4FECFBA0 /* SendAmountInteractor.swift */; };
@@ -3378,6 +3387,7 @@
 		58AAA705C07A98577339714D /* D9CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = D9CollectionCell.swift; sourceTree = "<group>"; };
 		58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSpendInfoViewController.swift; sourceTree = "<group>"; };
 		58AAA730263782B3D5EC89A1 /* OneInchSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneInchSettings.swift; sourceTree = "<group>"; };
+		58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressParserChain.swift; sourceTree = "<group>"; };
 		58AAA7365FA7771481534710 /* OneInchSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneInchSettingsViewModel.swift; sourceTree = "<group>"; };
 		58AAA75A0580C45CC08D89E8 /* OneInchSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneInchSettingsService.swift; sourceTree = "<group>"; };
 		58AAA765922F6668954C238E /* MetricChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricChartViewModel.swift; sourceTree = "<group>"; };
@@ -3417,6 +3427,7 @@
 		58AAA94FF8FEFE09549D4829 /* SelectResourceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectResourceCell.swift; sourceTree = "<group>"; };
 		58AAA9828D8742CD3D9995D9 /* SwapSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapSwitchCell.swift; sourceTree = "<group>"; };
 		58AAA99102ABF17C356AA280 /* MetricChartCurrentInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricChartCurrentInfoCell.swift; sourceTree = "<group>"; };
+		58AAA9A4761030BE9F60C85E /* UDNAddressParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UDNAddressParser.swift; sourceTree = "<group>"; };
 		58AAA9B26F62DB74FF3830D5 /* MarketListTvlDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketListTvlDecorator.swift; sourceTree = "<group>"; };
 		58AAA9BBAB97C2D21A83956C /* CoinSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinSelectViewController.swift; sourceTree = "<group>"; };
 		58AAA9D55F97CE089EC67766 /* LastBlockInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastBlockInfo.swift; sourceTree = "<group>"; };
@@ -3430,6 +3441,7 @@
 		58AAAA86B59A4D59F08EB334 /* SwapSlippageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapSlippageViewModel.swift; sourceTree = "<group>"; };
 		58AAAA9DFF1F23B0B8A8CEAD /* MarketViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketViewModel.swift; sourceTree = "<group>"; };
 		58AAAABC4D800144DACD877C /* MarketInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketInfoCell.swift; sourceTree = "<group>"; };
+		58AAAAC62C5B05463D339BCC /* EvmAddressParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAddressParser.swift; sourceTree = "<group>"; };
 		58AAAAD2AA132E9B13726D8B /* MetricChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricChartViewController.swift; sourceTree = "<group>"; };
 		58AAAB126AA1B83DD40C426F /* CALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
 		58AAAB15987B812CD57520FC /* D8CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = D8CollectionCell.swift; sourceTree = "<group>"; };
@@ -3936,6 +3948,7 @@
 				58AAA8B7E47FF3B010851E58 /* Global.swift */,
 				11B35EB74882A82F7F8E763A /* Workers */,
 				11B3593BF5A5B267BF518F69 /* MarketKitExtensions.swift */,
+				58AAA0C31F14444C22ACF393 /* Address */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -5253,6 +5266,16 @@
 				58AAAD02C2210D9DA14D1E21 /* UniswapSettingsDataSource.swift */,
 			);
 			path = UniswapSettings;
+			sourceTree = "<group>";
+		};
+		58AAA0C31F14444C22ACF393 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */,
+				58AAAAC62C5B05463D339BCC /* EvmAddressParser.swift */,
+				58AAA9A4761030BE9F60C85E /* UDNAddressParser.swift */,
+			);
+			path = Address;
 			sourceTree = "<group>";
 		};
 		58AAA0E2A105973F53166334 /* Views */ = {
@@ -7247,7 +7270,10 @@
 				11B356F3DD7E439039413852 /* FavoriteCoinRecord_v_0_22.swift in Sources */,
 				11B35C5A4B773BFC506A1F7F /* RestoreFavoriteCoinWorker.swift in Sources */,
 				11B3568555D3EFED049C0589 /* MarketKitExtensions.swift in Sources */,
-				11B35B75561B71EF159E322E /* MultiSelectorViewController.swift in Sources */,
+                58AAA07852495906A28F0AFF /* AddressParserChain.swift in Sources */,
+                58AAA0FD31A3FE55093D0842 /* EvmAddressParser.swift in Sources */,
+                58AAAE7400CF208B3268064D /* UDNAddressParser.swift in Sources */,
+                11B35B75561B71EF159E322E /* MultiSelectorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8122,6 +8148,9 @@
 				11B354283B8AC609B65AADDF /* FavoriteCoinRecord_v_0_22.swift in Sources */,
 				11B3506936C38D7C5077CDDF /* RestoreFavoriteCoinWorker.swift in Sources */,
 				11B355C1067BFBF57FE287F9 /* MarketKitExtensions.swift in Sources */,
+				58AAAD1BFFE70A777DDF27A9 /* AddressParserChain.swift in Sources */,
+				58AAAB9E86439B6DE1D22538 /* EvmAddressParser.swift in Sources */,
+				58AAA13C1DC5FA79BCA1D732 /* UDNAddressParser.swift in Sources */,
 				11B35A342F02B58443E7CBCB /* MultiSelectorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8989,6 +9018,9 @@
 				11B35677C6AC4AE96622CBD7 /* RestoreFavoriteCoinWorker.swift in Sources */,
 				11B35D376143026461DBBC92 /* MarketKitExtensions.swift in Sources */,
 				11B35D46B65772A1CC17B099 /* MarketGlobalTvlMetricViewController.swift in Sources */,
+				58AAADEF6F21AED422D7B569 /* AddressParserChain.swift in Sources */,
+				58AAAC635552C279592F60F9 /* EvmAddressParser.swift in Sources */,
+				58AAA57E1D7AF0943273E58A /* UDNAddressParser.swift in Sources */,
 				11B35A949C780AD4E30CCDB7 /* MultiSelectorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

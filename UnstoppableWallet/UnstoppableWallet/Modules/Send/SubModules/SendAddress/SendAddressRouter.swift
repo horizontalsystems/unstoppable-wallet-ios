@@ -16,11 +16,13 @@ extension SendAddressRouter: ISendAddressRouter {
 extension SendAddressRouter {
 
     static func module(platformCoin: PlatformCoin, isResolutionEnabled: Bool = true) -> (UIView, ISendAddressModule, ISendSubRouter) {
-        let addressParserFactory = AddressParserFactory()
+        let addressParserChain = AddressParserChain()
+        addressParserChain.append(handler: EvmAddressParser())
 
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
 
+        //todo: refactor send to use new addressParserChain
         let resolutionService = AddressResolutionService(
                 coinCode: platformCoin.coin.code,
                 chain: nil,
@@ -28,8 +30,7 @@ extension SendAddressRouter {
 
         let viewModel = RecipientAddressViewModel(
                 service: presenter,
-                resolutionService: resolutionService,
-                addressParser: addressParserFactory.parser(coinType: platformCoin.coinType)
+                addressParser: AddressParserFactory.parser(coinType: platformCoin.coinType)
         )
         let view = SendAddressView(viewModel: viewModel, isResolutionEnabled: isResolutionEnabled, delegate: presenter)
 
