@@ -16,7 +16,7 @@ class UDNAddressParserItem {
     private func resolve(domain: String) -> Single<Address> {
         provider
                 .resolveSingle(domain: domain, ticker: coinCode, chain: chain)
-                .catchError { _ in Single.error(AddressParserChain.ParserError.invalidAddress) }
+                .catchError { _ in Single.error(AddressService.AddressError.invalidAddress) }
                 .flatMap { resolvedAddress in
                     Single.just(Address(raw: resolvedAddress, domain: domain))
                 }
@@ -29,7 +29,7 @@ extension UDNAddressParserItem: IAddressParserItem {
     func handle(address: String) -> Single<Address> {
         provider
                 .resolveSingle(domain: address, ticker: coinCode, chain: chain)
-                .catchError { _ in Single.error(AddressParserChain.ParserError.invalidAddress) }
+                .catchError { _ in Single.error(AddressService.AddressError.invalidAddress) }
                 .flatMap { resolvedAddress in
                     Single.just(Address(raw: resolvedAddress, domain: address))
                 }

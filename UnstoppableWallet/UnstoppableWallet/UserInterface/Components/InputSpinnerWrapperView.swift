@@ -35,6 +35,18 @@ class InputSpinnerWrapperView: UIView, ISizeAwareView {
         }
     }
 
+    var isSpinnerVisible: Bool = false {
+        didSet {
+            if isSpinnerVisible {
+                spinner.alpha = 1
+                spinner.stopAnimating()
+            } else {
+                spinner.alpha = 0
+                spinner.startAnimating()
+            }
+        }
+    }
+
     func width(containerWidth: CGFloat) -> CGFloat {
         20
     }

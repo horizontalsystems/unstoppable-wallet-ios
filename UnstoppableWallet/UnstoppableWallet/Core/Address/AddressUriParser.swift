@@ -1,6 +1,6 @@
 import Foundation
 
-class AddressParser: IAddressParser {
+class AddressUriParser: IAddressUriParser {
     fileprivate static let parameterVersion = "version"
     fileprivate static let parameterAmount = "amount"
     fileprivate static let parameterLabel = "label"
@@ -44,7 +44,7 @@ class AddressParser: IAddressParser {
             return AddressData(address: address)
         }
         address = versionSeparatedParts.removeFirst()
-        if let firstPart = versionSeparatedParts.first?.lowercased(), firstPart.range(of: AddressParser.parameterVersion) != nil {
+        if let firstPart = versionSeparatedParts.first?.lowercased(), firstPart.range(of: AddressUriParser.parameterVersion) != nil {
             parametersParts.append(firstPart)
 
             versionSeparatedParts.removeFirst(1)
@@ -59,10 +59,10 @@ class AddressParser: IAddressParser {
             let parts = parameter.components(separatedBy: "=")
             if parts.count == 2 {
                 switch parts[0] {
-                case AddressParser.parameterVersion: version = parts[1]
-                case AddressParser.parameterAmount: amount = Double(parts[1]) ?? nil
-                case AddressParser.parameterLabel: label = parts[1].removingPercentEncoding
-                case AddressParser.parameterMessage: message = parts[1].removingPercentEncoding
+                case AddressUriParser.parameterVersion: version = parts[1]
+                case AddressUriParser.parameterAmount: amount = Double(parts[1]) ?? nil
+                case AddressUriParser.parameterLabel: label = parts[1].removingPercentEncoding
+                case AddressUriParser.parameterMessage: message = parts[1].removingPercentEncoding
                 default: parameters[parts[0]] = parts[1].removingPercentEncoding
                 }
             }

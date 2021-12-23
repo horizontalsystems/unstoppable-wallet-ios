@@ -26,7 +26,6 @@ class SendAddressView: UIView {
         }
 
         addressInputView.inputPlaceholder = isResolutionEnabled ? "send.address_or_domain_placeholder".localized : "send.address_placeholder".localized
-        addressInputView.inputText = viewModel.initialValue
         addressInputView.onOpenViewController = { [weak self] controller in
             self?.delegate.onOpenScan(controller: controller)
         }
@@ -62,7 +61,7 @@ class SendAddressView: UIView {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
             self?.addressInputView.set(isLoading: $0)
         }
-        subscribe(disposeBag, viewModel.setTextSignal) { [weak self] in
+        subscribe(disposeBag, viewModel.setTextDriver) { [weak self] in
             self?.addressInputView.inputText = $0
         }
     }

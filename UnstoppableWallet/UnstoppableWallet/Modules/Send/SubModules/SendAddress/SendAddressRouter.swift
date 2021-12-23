@@ -21,6 +21,8 @@ extension SendAddressRouter {
 
         let router = SendAddressRouter()
         let presenter = SendAddressPresenter(router: router)
+        let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
+        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         //todo: refactor send to use new addressParserChain
         let resolutionService = AddressResolutionService(
@@ -28,10 +30,7 @@ extension SendAddressRouter {
                 chain: nil,
                 isResolutionEnabled: isResolutionEnabled)
 
-        let viewModel = RecipientAddressViewModel(
-                service: presenter,
-                addressParser: AddressParserFactory.parser(coinType: platformCoin.coinType)
-        )
+        let viewModel = RecipientAddressViewModel(service: addressService)
         let view = SendAddressView(viewModel: viewModel, isResolutionEnabled: isResolutionEnabled, delegate: presenter)
 
         return (view, presenter, router)

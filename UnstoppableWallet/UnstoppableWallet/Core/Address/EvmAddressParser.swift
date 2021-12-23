@@ -5,7 +5,7 @@ class EvmAddressParser: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
         guard let address = try? EthereumKit.Address(hex: address) else {
-            return Single.error(AddressParserChain.ParserError.invalidAddress)
+            return Single.error(AddressService.AddressError.invalidAddress)
         }
 
         return Single.just(Address(raw: address.hex))

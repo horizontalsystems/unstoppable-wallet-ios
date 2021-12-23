@@ -29,7 +29,7 @@ class AddressInputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        spinnerView.isHidden = true
+        spinnerView.isSpinnerVisible = false
 
         deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
@@ -120,7 +120,7 @@ extension AddressInputView {
     }
 
     func set(isLoading: Bool) {
-        spinnerView.isHidden = !isLoading
+        spinnerView.isSpinnerVisible = isLoading
     }
 
     var onChangeEditing: ((Bool) -> ())? {

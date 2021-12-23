@@ -83,15 +83,16 @@ extension SendAddressPresenter: ISendAddressModule {
 
 extension SendAddressPresenter: IRecipientAddressService {
 
-    var addressState: AddressParserChain.State {
+    var addressState: AddressService.State {
         .empty
     }
 
-    var addressStateObservable: Observable<AddressParserChain.State> {
+    var addressStateObservable: Observable<AddressService.State> {
         Observable.just(.empty)
     }
 
     func set(address: String?) {
+
     }
 
     var recipientErrorObservable: Observable<Error?> {

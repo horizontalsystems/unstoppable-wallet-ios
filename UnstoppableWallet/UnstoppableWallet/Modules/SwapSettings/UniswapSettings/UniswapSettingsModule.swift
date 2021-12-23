@@ -9,17 +9,17 @@ struct UniswapSettingsModule {
         }
         let chainCoinCode = tradeService.platformCoinIn.flatMap { AddressResolutionService.chainCoinCode(coinType: $0.coinType) } ?? ethereumPlatformCoin.code
 
-        let addressParserChain = AddressParserChain(address: tradeService.settings.recipient)
+        let addressParserChain = AddressParserChain()
                 .append(handler: EvmAddressParser())
                 .append(handler: UDNAddressParserItem(coinCode: chainCoinCode, chain: nil))
 
-        let service = UniswapSettingsService(tradeOptions: tradeService.settings, addressParserChain: addressParserChain)
+        let addressUriParser = AddressParserFactory.parser(coinType: ethereumPlatformCoin.coinType)
+        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain, initialAddress: tradeService.settings.recipient)
+
+        let service = UniswapSettingsService(tradeOptions: tradeService.settings, addressService: addressService)
         let viewModel = UniswapSettingsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
 
-        let recipientViewModel = RecipientAddressViewModel(
-                service: service,
-                addressParser: AddressParserFactory.parser(coinType: ethereumPlatformCoin.coinType)
-        )
+        let recipientViewModel = RecipientAddressViewModel(service: addressService)
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
         let deadlineViewModel = SwapDeadlineViewModel(service: service, decimalParser: AmountDecimalParser())
 
