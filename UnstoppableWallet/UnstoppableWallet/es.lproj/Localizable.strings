@@ -543,7 +543,7 @@
 "coin_page.treasuries.filter.private" = "Private";
 "coin_page.treasuries.filter.etf" = "ETF";
 
-"coin_page.funds_invested" = "Fondos invertidos";
+"coin_page.funds_invested" = "Funds Invested";
 "coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.reports" = "Reports";
