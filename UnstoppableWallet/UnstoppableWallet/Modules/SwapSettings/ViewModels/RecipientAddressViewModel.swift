@@ -2,8 +2,8 @@ import RxSwift
 import RxCocoa
 
 protocol IRecipientAddressService {
-    var addressState: AddressParserChain.State { get }
-    var addressStateObservable: Observable<AddressParserChain.State> { get }
+    var addressState: AddressService.State { get }
+    var addressStateObservable: Observable<AddressService.State> { get }
     var recipientError: Error? { get }
     var recipientErrorObservable: Observable<Error?> { get }
     func set(address: String?)
@@ -11,43 +11,41 @@ protocol IRecipientAddressService {
 }
 
 class RecipientAddressViewModel {
-    private let service: IRecipientAddressService
-    private let addressParser: IAddressParser
     private let disposeBag = DisposeBag()
+    private let service: AddressService
 
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let setTextRelay = PublishRelay<String?>()
+    private let setTextRelay = BehaviorRelay<String?>(value: nil)
 
     private var editing = false
-    private var forceShowError = false
 
-    init(service: IRecipientAddressService, addressParser: IAddressParser) {
+    init(service: AddressService) {
         self.service = service
-        self.addressParser = addressParser
 
-        subscribe(disposeBag, service.addressStateObservable) { [weak self] addressState in
-            self?.sync(addressState: addressState)
+        subscribe(disposeBag, service.stateObservable) { [weak self] state in
+            self?.sync(state: state)
         }
 
-        sync(addressState: service.addressState)
+        sync(state: service.state)
     }
 
-    private func sync(addressState: AddressParserChain.State) {
-        switch addressState {
+    private func sync(state: AddressService.State) {
+        switch state {
         case .empty:
             cautionRelay.accept(nil)
             isLoadingRelay.accept(false)
         case .loading:
             cautionRelay.accept(nil)
             isLoadingRelay.accept(true)
-        case .validationError(let error):
-            cautionRelay.accept(editing ? nil : Caution(text: error.smartDescription, type: .error))
+        case .validationError:
+            cautionRelay.accept(editing ? nil : Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
             isLoadingRelay.accept(false)
-        case .fetchError(let error):
-            cautionRelay.accept(Caution(text: error.smartDescription, type: .error))
+        case .fetchError:
+            cautionRelay.accept(Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
             isLoadingRelay.accept(false)
-        case .success:
+        case .success(let address):
+            setTextRelay.accept(address.title)
             cautionRelay.accept(nil)
             isLoadingRelay.accept(false)
         }
@@ -58,14 +56,6 @@ class RecipientAddressViewModel {
 
 extension RecipientAddressViewModel {
 
-    var initialValue: String? {
-        if case let .success(address) = service.addressState {
-            return address.title
-        }
-
-        return nil
-    }
-
     var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
     }
@@ -74,37 +64,27 @@ extension RecipientAddressViewModel {
         cautionRelay.asDriver()
     }
 
-    var setTextSignal: Signal<String?> {
-        setTextRelay.asSignal()
+    var setTextDriver: Driver<String?> {
+        setTextRelay.asDriver()
     }
 
     func onChange(text: String?) {
-        service.set(address: text)
+        service.set(text: text ?? "")
     }
 
     func onFetch(text: String?) {
-        guard let text = text, !text.isEmpty else {
-            return
-        }
-
-        let addressData = addressParser.parse(paymentAddress: text)
-
-        setTextRelay.accept(addressData.address)
-        onChange(text: addressData.address)
-
-        if let amount = addressData.amount {
-            service.set(amount: Decimal(amount))
-        }
+        let text = service.handleFetched(text: text ?? "")
+        setTextRelay.accept(text)
     }
 
     func onChange(editing: Bool) {
         self.editing = editing
-        sync(addressState: service.addressState)
+        sync(state: service.state)
     }
 
 }
 
-extension SwapSettingsModule.AddressError: LocalizedError {
+extension AddressService.AddressError: LocalizedError {
 
     var errorDescription: String? {
         switch self {

@@ -9,7 +9,11 @@ class SendEvmModule {
         let addressParserChain = AddressParserChain()
         addressParserChain.append(handler: EvmAddressParser())
 
-        let service = SendEvmService(platformCoin: platformCoin, adapter: adapter, addressParserChain: addressParserChain)
+        let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
+        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
+
+        let service = SendEvmService(platformCoin: platformCoin, adapter: adapter, addressService: addressService)
+
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
@@ -30,10 +34,7 @@ class SendEvmModule {
         let chainCoinCode = AddressResolutionService.chainCoinCode(coinType: platformCoin.platform.coinType) ?? platformCoin.code
         addressParserChain.append(handler: UDNAddressParserItem(coinCode: chainCoinCode, chain: nil))
 
-        let recipientViewModel = RecipientAddressViewModel(
-                service: service,
-                addressParser: AddressParserFactory.parser(coinType: platformCoin.coinType)
-        )
+        let recipientViewModel = RecipientAddressViewModel(service: addressService)
 
         let viewController = SendEvmViewController(
                 evmKit: adapter.evmKit,

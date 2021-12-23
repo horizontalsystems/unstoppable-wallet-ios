@@ -243,7 +243,7 @@ protocol ICurrentDateProvider {
     var currentDate: Date { get }
 }
 
-protocol IAddressParser {
+protocol IAddressUriParser {
     func parse(paymentAddress: String) -> AddressData
 }
 

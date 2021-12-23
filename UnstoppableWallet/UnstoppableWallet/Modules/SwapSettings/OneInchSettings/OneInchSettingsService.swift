@@ -10,7 +10,7 @@ class OneInchSettingsService {
     private var usualHighestSlippage: Decimal = 5
 
     private let disposeBag = DisposeBag()
-    private let addressParserChain: AddressParserChain
+    private let addressService: AddressService
 
     private(set) var errors: [Error] = [] {
         didSet {
@@ -35,13 +35,13 @@ class OneInchSettingsService {
         }
     }
 
-    init(settings: OneInchSettings, addressParserChain: AddressParserChain) {
-        self.addressParserChain = addressParserChain
+    init(settings: OneInchSettings, addressService: AddressService) {
+        self.addressService = addressService
         slippage = settings.allowedSlippage
 
         state = .valid(settings)
 
-        subscribe(disposeBag, addressParserChain.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
@@ -51,11 +51,11 @@ class OneInchSettingsService {
 
         var settings = OneInchSettings()
 
-        switch addressParserChain.state {
+        switch addressService.state {
         case .loading: loading = true
         case .success(let address): settings.recipient = address
-        case .validationError(_): errors.append(SwapSettingsModule.AddressError.invalidAddress)
-        case .fetchError(_): errors.append(SwapSettingsModule.AddressError.invalidAddress)
+        case .validationError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
+        case .fetchError: errors.append(SwapSettingsModule.AddressError.invalidAddress)
         default: ()
         }
 
@@ -84,35 +84,6 @@ extension OneInchSettingsService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
-    }
-
-}
-
-extension OneInchSettingsService: IRecipientAddressService {
-
-    var addressState: AddressParserChain.State {
-        addressParserChain.state
-    }
-
-    var addressStateObservable: Observable<AddressParserChain.State> {
-        addressParserChain.stateObservable
-    }
-
-    func set(address: String?) {
-        addressParserChain.handle(address: address)
-    }
-
-    var recipientError: Error? {
-        errors.first { $0 is SwapSettingsModule.AddressError }
-    }
-
-    var recipientErrorObservable: Observable<Error?> {
-        errorsRelay.map { errors -> Error? in
-            errors.first { $0 is SwapSettingsModule.AddressError }
-        }
-    }
-
-    func set(amount: Decimal) {
     }
 
 }

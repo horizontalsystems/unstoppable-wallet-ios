@@ -11,7 +11,6 @@ class RecipientAddressInputCell: AddressInputCell {
         super.init()
 
         inputPlaceholder = "send.address_or_domain_placeholder".localized
-        inputText = viewModel.initialValue
         onChangeText = { [weak self] in self?.viewModel.onChange(text: $0) }
         onFetchText = { [weak self] in self?.viewModel.onFetch(text: $0) }
         onChangeEditing = { [weak self] in self?.viewModel.onChange(editing: $0) }
@@ -22,7 +21,7 @@ class RecipientAddressInputCell: AddressInputCell {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
             self?.set(isLoading: $0)
         }
-        subscribe(disposeBag, viewModel.setTextSignal) { [weak self] in
+        subscribe(disposeBag, viewModel.setTextDriver) { [weak self] in
             self?.inputText = $0
         }
     }
