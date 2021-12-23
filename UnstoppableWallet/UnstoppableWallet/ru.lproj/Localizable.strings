@@ -545,8 +545,8 @@
 "coin_page.treasuries.filter.private" = "В закрытом доступе";
 "coin_page.treasuries.filter.etf" = "ETF";
 
-"coin_page.funds_invested" = "Вложенные Средства";
-"coin_page.funds_invested.lead" = "Лиды";
+"coin_page.funds_invested" = "Funds Invested";
+"coin_page.funds_invested.lead" = "Лид";
 
 "coin_page.reports" = "Отчёты";
 
