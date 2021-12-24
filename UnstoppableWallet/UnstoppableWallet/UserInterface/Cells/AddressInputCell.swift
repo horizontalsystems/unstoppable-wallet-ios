@@ -44,6 +44,10 @@ extension AddressInputCell {
         addressInputView.set(cautionType: cautionType)
     }
 
+    func set(isSuccess: Bool) {
+        addressInputView.set(isSuccess: isSuccess)
+    }
+
     func set(isLoading: Bool) {
         addressInputView.set(isLoading: isLoading)
     }

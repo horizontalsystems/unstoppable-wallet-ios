@@ -3,8 +3,9 @@ import ThemeKit
 import SnapKit
 import HUD
 
-class InputSpinnerWrapperView: UIView, ISizeAwareView {
+class InputStateWrapperView: UIView, ISizeAwareView {
     private let spinner = HUDActivityView.create(with: .small20)
+    private let successImageView = UIImageView()
 
     init() {
         super.init(frame: .zero)
@@ -14,6 +15,14 @@ class InputSpinnerWrapperView: UIView, ISizeAwareView {
             maker.leading.trailing.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
+
+        addSubview(successImageView)
+        successImageView.snp.makeConstraints { maker in
+            maker.edges.equalTo(spinner)
+        }
+
+        successImageView.image = UIImage(named: "circle_check_20")?.withRenderingMode(.alwaysTemplate)
+        successImageView.tintColor = .themeRemus
     }
 
     required init?(coder: NSCoder) {
@@ -44,6 +53,12 @@ class InputSpinnerWrapperView: UIView, ISizeAwareView {
                 spinner.alpha = 0
                 spinner.startAnimating()
             }
+        }
+    }
+
+    var isSuccessVisible: Bool = false {
+        didSet {
+            successImageView.alpha = isSuccessVisible ? 1 : 0
         }
     }
 

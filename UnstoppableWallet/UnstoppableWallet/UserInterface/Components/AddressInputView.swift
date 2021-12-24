@@ -7,7 +7,7 @@ class AddressInputView: UIView {
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView()
 
-    private let spinnerView = InputSpinnerWrapperView()
+    private let stateView = InputStateWrapperView()
 
     private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
     private let scanView = InputButtonWrapperView(style: .secondaryIcon)
@@ -29,7 +29,8 @@ class AddressInputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        spinnerView.isSpinnerVisible = false
+        stateView.isSpinnerVisible = false
+        stateView.isSuccessVisible = false
 
         deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
@@ -41,7 +42,7 @@ class AddressInputView: UIView {
         pasteView.onTapButton = { [weak self] in self?.onTapPaste() }
         pasteView.button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        inputStackView.appendSubview(spinnerView)
+        inputStackView.appendSubview(stateView)
         inputStackView.appendSubview(deleteView)
         inputStackView.appendSubview(scanView)
         inputStackView.appendSubview(pasteView)
@@ -119,8 +120,12 @@ extension AddressInputView {
         formValidatedView.set(cautionType: cautionType)
     }
 
+    func set(isSuccess: Bool) {
+        stateView.isSuccessVisible = isSuccess
+    }
+
     func set(isLoading: Bool) {
-        spinnerView.isSpinnerVisible = isLoading
+        stateView.isSpinnerVisible = isLoading
     }
 
     var onChangeEditing: ((Bool) -> ())? {
