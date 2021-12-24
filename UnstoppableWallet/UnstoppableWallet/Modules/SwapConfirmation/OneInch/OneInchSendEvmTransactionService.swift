@@ -93,22 +93,15 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-
-    private func formatted(slippage: Decimal) -> String? {
-        guard slippage != OneInchSettingsService.defaultSlippage else {
-            return nil
-        }
-
-        return "\(slippage)%"
-    }
-
     private func additionalInfo(parameters: OneInchSwapParameters) -> SendEvmData.AdditionInfo {
         .oneInchSwap(info:
             SendEvmData.OneInchSwapInfo(
+                platformCoinFrom: parameters.platformCoinFrom,
                 platformCoinTo: parameters.platformCoinTo,
+                amountFrom: parameters.amountFrom,
                 estimatedAmountTo: parameters.amountTo,
-                slippage: formatted(slippage: parameters.slippage),
-                recipientDomain: parameters.recipient?.domain
+                slippage: parameters.slippage,
+                recipient: parameters.recipient
             )
         )
     }
@@ -125,7 +118,7 @@ class OneInchSendEvmTransactionService {
     private func swapDecoration(parameters: OneInchSwapParameters) -> ContractMethodDecoration? {
         let amountOutMinDecimal = parameters.amountTo * (1 - parameters.slippage / 100)
         guard
-            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.platformCoinFrom.decimals)).description),
+            let amountIn = BigUInt((parameters.amountFrom * pow(10, parameters.platformCoinFrom.decimals)).roundedString(decimal: 0)),
             let amountOutMin = BigUInt((amountOutMinDecimal * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
             let amountOut = BigUInt((parameters.amountTo * pow(10, parameters.platformCoinTo.decimals)).roundedString(decimal: 0)),
             let tokenIn = swapToken(platformCoin: parameters.platformCoinFrom),

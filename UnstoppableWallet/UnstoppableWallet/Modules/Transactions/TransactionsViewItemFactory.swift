@@ -64,6 +64,14 @@ class TransactionsViewItemFactory {
             primaryValue = ColoredValue(value: coinString(from: swap.valueIn), color: .themeJacob)
             secondaryValue = swap.valueOut.flatMap { ColoredValue(value: coinString(from: $0), color: swap.foreignRecipient ? .themeGray : .themeRemus) }
 
+        case let swap as UnknownSwapTransactionRecord:
+            typeImage = ColoredImage(imageName: "swap_2_20", color: .themeLeah)
+            title = "transactions.swap".localized
+            subTitle = TransactionInfoAddressMapper.map(swap.exchangeAddress)
+
+            primaryValue = nil
+            secondaryValue = nil
+
         case let approve as ApproveTransactionRecord:
             typeImage = ColoredImage(imageName: "check_2_20", color: .themeLeah)
             title = "transactions.approve".localized

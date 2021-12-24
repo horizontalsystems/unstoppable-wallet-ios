@@ -166,6 +166,55 @@ class TransactionInfoViewItemFactory {
                 sections.append(actionSectionItems(title: youGetString(status: status), transactionValue: valueOut, rate: _rate(valueOut), incoming: true))
             }
 
+        case let swap as UnknownSwapTransactionRecord:
+            let transactionValue = swap.value
+
+            if swap.outgoingEip20Events.count > 0 || (!transactionValue.zeroValue && !swap.foreignTransaction) {
+                var youPaySection: [TransactionInfoModule.ViewItem] = [
+                    .actionTitle(title: youPayString(status: status), subTitle: nil)
+                ]
+
+                if !transactionValue.zeroValue && !swap.foreignTransaction {
+                    let currencyValue = _currencyValue(transactionValue)
+                    youPaySection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
+                }
+
+                for event in swap.outgoingEip20Events {
+                    let currencyValue = _currencyValue(event.value)
+                    youPaySection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
+                }
+
+                sections.append(youPaySection)
+            }
+
+            if swap.incomingEip20Events.count > 0 || swap.incomingInternalETHs.count > 0 {
+                var youGetSection: [TransactionInfoModule.ViewItem] = [
+                    .actionTitle(title: youGetString(status: status), subTitle: nil)
+                ]
+
+                if let incomingInternalTx = swap.incomingInternalETHs.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
+                    var ethValue: Decimal = 0
+                    for tx in swap.incomingInternalETHs {
+                        ethValue += tx.value.decimalValue ?? 0
+                    }
+
+                    let transactionValue = TransactionValue.coinValue(platformCoin: platformCoin, value: ethValue)
+
+                    let currencyValue = _currencyValue(transactionValue)
+                    youGetSection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
+                }
+
+                for event in swap.incomingEip20Events {
+                    let currencyValue = _currencyValue(event.value)
+                    youGetSection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
+                }
+
+                sections.append(youGetSection)
+            }
+
+            middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
+            middleSectionItems.append(.id(value: swap.transactionHash))
+
         case let approve as ApproveTransactionRecord:
             middleSectionItems.append(evmFeeItem(transactionValue: approve.fee, rate: _rate(approve.fee), status: status))
 
