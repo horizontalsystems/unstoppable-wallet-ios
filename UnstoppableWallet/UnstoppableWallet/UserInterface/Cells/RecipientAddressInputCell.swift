@@ -18,6 +18,9 @@ class RecipientAddressInputCell: AddressInputCell {
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in
             self?.set(cautionType: $0?.type)
         }
+        subscribe(disposeBag, viewModel.isSuccessDriver) { [weak self] in
+            self?.set(isSuccess: $0)
+        }
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
             self?.set(isLoading: $0)
         }

@@ -14,6 +14,7 @@ class RecipientAddressViewModel {
     private let disposeBag = DisposeBag()
     private let service: AddressService
 
+    private let isSuccessRelay = BehaviorRelay<Bool>(value: false)
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = BehaviorRelay<String?>(value: nil)
@@ -34,19 +35,24 @@ class RecipientAddressViewModel {
         switch state {
         case .empty:
             cautionRelay.accept(nil)
+            isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
         case .loading:
             cautionRelay.accept(nil)
+            isSuccessRelay.accept(false)
             isLoadingRelay.accept(true)
         case .validationError:
             cautionRelay.accept(editing ? nil : Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
+            isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
         case .fetchError:
             cautionRelay.accept(Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
+            isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
         case .success(let address):
             setTextRelay.accept(address.title)
             cautionRelay.accept(nil)
+            isSuccessRelay.accept(true)
             isLoadingRelay.accept(false)
         }
 
@@ -55,6 +61,10 @@ class RecipientAddressViewModel {
 }
 
 extension RecipientAddressViewModel {
+
+    var isSuccessDriver: Driver<Bool> {
+        isSuccessRelay.asDriver()
+    }
 
     var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
