@@ -76,6 +76,14 @@ class SendEvmTransactionViewModel {
         }
     }
 
+    private func formatted(slippage: Decimal) -> String? {
+        guard slippage != OneInchSettingsService.defaultSlippage else {
+            return nil
+        }
+
+        return "\(slippage)%"
+    }
+
     private func sync(sendState: SendEvmTransactionService.SendState) {
         switch sendState {
         case .idle: ()
@@ -140,6 +148,10 @@ class SendEvmTransactionViewModel {
                     toAmount: method.amountOut,
                     toAmountMin: method.amountOutMin,
                     additionalInfo: additionalInfo)
+        }
+
+        if let method = decoration as? OneInchMethodDecoration {
+            return swapItems(additionalInfo: additionalInfo)
         }
 
         guard let transactionData = transactionData else {
@@ -284,6 +296,55 @@ class SendEvmTransactionViewModel {
         return sections
     }
 
+    private func swapItems(additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
+        guard let additionalInfo = additionalInfo, let info = additionalInfo.oneInchSwapInfo else {
+            return nil
+        }
+
+        guard let coinServiceIn = coinService(platformCoin: info.platformCoinFrom),
+              let coinServiceOut = coinService(platformCoin: info.platformCoinTo) else {
+            return nil
+        }
+
+        var sections = [SectionViewItem]()
+
+        sections.append(SectionViewItem(viewItems: [
+            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+            .value(title: coinServiceIn.amountData(value: info.amountFrom).secondary?.formattedRawString ?? "n/a".localized, value: coinServiceIn.amountData(value: info.amountFrom).primary.formattedString ?? "n/a".localized, type: .outgoing)
+        ]))
+
+        let estimatedAmountData = coinServiceOut.amountData(value: info.estimatedAmountTo)
+        let amountOutMinDecimal = info.estimatedAmountTo * (1 - info.slippage / 100)
+        let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, info.platformCoinTo.decimals)).roundedString(decimal: 0)) ?? 0
+        let estimatedTo = estimatedSwapAmount(title: estimatedAmountData.secondary?.formattedRawString, value: estimatedAmountData.primary.formattedString, type: .incoming)
+
+        sections.append(SectionViewItem(viewItems: [
+            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code),
+            estimatedTo,
+            valueMin(title: coinServiceOut.amountData(value: toAmountMin).secondary?.formattedRawString, value: coinServiceOut.amountData(value: toAmountMin).primary.formattedString, type: .regular)
+        ].compactMap { $0 }))
+
+        var otherViewItems = [ViewItem]()
+
+        if let slippage = formatted(slippage: info.slippage) {
+            otherViewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage, type: .regular))
+        }
+
+        if let toAddress = info.recipient,
+           let to = try? EthereumKit.Address(hex: toAddress.raw),
+           to != service.ownAddress {
+            let addressValue = to.eip55
+            let addressTitle = info.recipient?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+            otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
+        }
+
+        if !otherViewItems.isEmpty {
+            sections.append(SectionViewItem(viewItems: otherViewItems))
+        }
+
+        return sections
+    }
+
     private func swapItems(tokenIn: OneInchMethodDecoration.Token, tokenOut: OneInchMethodDecoration.Token?, to: EthereumKit.Address? = nil, fromAmount: BigUInt = 0, toAmount: BigUInt?, toAmountMin: BigUInt = 0, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
         let info = additionalInfo?.oneInchSwapInfo
 
@@ -311,13 +372,13 @@ class SendEvmTransactionViewModel {
 
         var otherViewItems = [ViewItem]()
 
-        if let slippage = info?.slippage {
-            otherViewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: slippage, type: .regular))
+        if let slippage = info?.slippage, let formattedSlippage = formatted(slippage: slippage) {
+            otherViewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: formattedSlippage, type: .regular))
         }
 
         if let to = to, to != service.ownAddress {
             let addressValue = to.eip55
-            let addressTitle = info?.recipientDomain ?? TransactionInfoAddressMapper.map(addressValue)
+            let addressTitle = info?.recipient?.domain ?? TransactionInfoAddressMapper.map(addressValue)
             otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
         }
 
