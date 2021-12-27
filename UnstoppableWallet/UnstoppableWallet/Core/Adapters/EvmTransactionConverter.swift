@@ -269,7 +269,7 @@ class EvmTransactionConverter {
                         source: source,
                         fullTransaction: fullTransaction,
                         baseCoin: baseCoin,
-                        from: decoration.to.eip55,
+                        from: fullTransaction.transaction.from.eip55,
                         value: eip20Value(tokenAddress: to, value: decoration.value, sign: .plus),
                         foreignTransaction: true
                 )
