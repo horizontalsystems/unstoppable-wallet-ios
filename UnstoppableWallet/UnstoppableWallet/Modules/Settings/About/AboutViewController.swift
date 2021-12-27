@@ -141,7 +141,7 @@ extension AboutViewController: SectionsDataSource {
                                         return
                                     }
 
-                                    self?.navigationController?.pushViewController(MarkdownModule.gitReleaseNotesMarkdownViewController(url: url), animated: true)
+                                    self?.navigationController?.pushViewController(MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: false), animated: true)
                                 }
                         )
                     ]

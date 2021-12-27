@@ -40,16 +40,6 @@ extension MarketKit.CoinType {
         }
     }
 
-    var restoreUrl: String {
-        switch self {
-        case .bitcoin: return "https://btc.horizontalsystems.xyz/apg"
-        case .litecoin: return "https://ltc.horizontalsystems.xyz/api"
-        case .bitcoinCash: return "https://explorer.bitcoin.com/bch/"
-        case .dash: return "https://dash.horizontalsystems.xyz"
-        default: return ""
-        }
-    }
-
     var title: String {
         switch self {
         case .bitcoin: return "Bitcoin"
