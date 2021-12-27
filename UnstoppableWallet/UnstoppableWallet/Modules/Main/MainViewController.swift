@@ -105,11 +105,15 @@ class MainViewController: ThemeTabBarController {
         }
 
         showAlerts.append({
-            let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, closeHandler: { [weak self] in
+            let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: true, closeHandler: { [weak self] in
                 self?.showNextAlert()
             })
             DispatchQueue.main.async {
-                self.present(ThemeNavigationController(rootViewController: module), animated: true)
+                let controller = ThemeNavigationController(rootViewController: module)
+                if let delegate = module as? UIAdaptivePresentationControllerDelegate {
+                    controller.presentationController?.delegate = delegate
+                }
+                return self.present(controller, animated: true)
             }
         })
     }

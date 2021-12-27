@@ -11,13 +11,13 @@ struct MarkdownModule {
         return MarkdownViewController(viewModel: viewModel, handleRelativeUrl: handleRelativeUrl)
     }
 
-    static func gitReleaseNotesMarkdownViewController(url: URL, closeHandler: (() -> ())? = nil) -> UIViewController {
+    static func gitReleaseNotesMarkdownViewController(url: URL, presented: Bool, closeHandler: (() -> ())? = nil) -> UIViewController {
         let provider = MarkdownGitReleaseContentProvider(url: url, networkManager: App.shared.networkManager)
         let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()
         let viewModel = MarkdownViewModel(service: service, parser: parser)
 
-        return ReleaseNotesViewController(viewModel: viewModel, handleRelativeUrl: false, urlManager: UrlManager(inApp: false), closeHandler: closeHandler)
+        return ReleaseNotesViewController(viewModel: viewModel, handleRelativeUrl: false, urlManager: UrlManager(inApp: false), presented: presented, closeHandler: closeHandler)
     }
 
 }

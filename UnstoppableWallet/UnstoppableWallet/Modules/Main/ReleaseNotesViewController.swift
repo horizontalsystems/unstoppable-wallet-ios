@@ -4,12 +4,14 @@ import SnapKit
 
 class ReleaseNotesViewController: MarkdownViewController {
     private let urlManager: IUrlManager
+    private let presented: Bool
     private let closeHandler: (() -> ())?
 
     let bottomHolder = UIView()
 
-    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: IUrlManager, closeHandler: (() -> ())? = nil) {
+    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: IUrlManager, presented: Bool, closeHandler: (() -> ())? = nil) {
         self.urlManager = urlManager
+        self.presented = presented
         self.closeHandler = closeHandler
 
         super.init(viewModel: viewModel, handleRelativeUrl: handleRelativeUrl)
@@ -24,7 +26,9 @@ class ReleaseNotesViewController: MarkdownViewController {
     override func viewDidLoad() {
         title = "release_notes.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        if presented {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        }
 
         super.viewDidLoad()
 
@@ -114,6 +118,14 @@ class ReleaseNotesViewController: MarkdownViewController {
 
     @objc private func onRedditTap() {
         urlManager.open(url: "https://www.reddit.com/r/UNSTOPPABLEWallet", from: nil)
+    }
+
+}
+
+extension ReleaseNotesViewController: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        closeHandler?()
     }
 
 }

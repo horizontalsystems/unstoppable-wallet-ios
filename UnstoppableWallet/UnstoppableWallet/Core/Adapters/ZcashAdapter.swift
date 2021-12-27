@@ -68,11 +68,11 @@ class ZcashAdapter {
                 birthday = network.constants.SAPLING_ACTIVATION_HEIGHT
             }
         }
-        
+
         let seedData = [UInt8](seed)
         let derivationTool = DerivationTool(networkType: network.networkType)
         let unifiedViewingKeys = try derivationTool.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
-        
+
         guard let uvk = unifiedViewingKeys.first,
               let ua = try? derivationTool.deriveUnifiedAddressFromUnifiedViewingKey(uvk) else {
             throw AppError.ZcashError.noReceiveAddress
@@ -92,12 +92,12 @@ class ZcashAdapter {
                 loggerProxy: loggingProxy)
 
 
-        
+
         try initializer.initialize()
         keys = try derivationTool.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
-        
+
         synchronizer = try SDKSynchronizer(initializer: initializer)
-        
+
         try synchronizer.prepare()
 
         transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
@@ -526,17 +526,17 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func validate(address: String) throws -> AddressType {
-        
+
         guard address != receiveAddress else {
             throw AppError.addressInvalid
         }
 
         do {
             let derivationTool = DerivationTool(networkType: self.network.networkType)
-            
+
             let validZAddress = try derivationTool.isValidShieldedAddress(address)
             let validTAddress = try derivationTool.isValidTransparentAddress(address)
-            
+
             guard validZAddress || validTAddress else {
                 throw AppError.addressInvalid
             }
