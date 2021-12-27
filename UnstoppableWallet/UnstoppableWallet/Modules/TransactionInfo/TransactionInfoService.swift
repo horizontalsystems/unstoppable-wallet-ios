@@ -37,6 +37,14 @@ class TransactionInfoService {
             coins.append(tx.valueIn.coin)
             tx.valueOut.flatMap { coins.append($0.coin) }
 
+        case let tx as UnknownSwapTransactionRecord:
+            if !tx.value.zeroValue {
+                coins.append(tx.value.coin)
+            }
+            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
             if !tx.value.zeroValue {

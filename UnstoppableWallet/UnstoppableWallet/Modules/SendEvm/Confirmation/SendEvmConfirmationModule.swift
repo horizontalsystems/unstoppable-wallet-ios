@@ -42,10 +42,12 @@ struct SendEvmData {
     }
 
     struct OneInchSwapInfo {
+        let platformCoinFrom: PlatformCoin
         let platformCoinTo: PlatformCoin
+        let amountFrom: Decimal
         let estimatedAmountTo: Decimal
-        let slippage: String?
-        let recipientDomain: String?
+        let slippage: Decimal
+        let recipient: Address?
     }
 
 }
