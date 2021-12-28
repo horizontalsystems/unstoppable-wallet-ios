@@ -2,21 +2,22 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
+import Down
 
 class MarkdownViewModel {
     private let service: MarkdownService
     private let parser: MarkdownParser
+    private let parserConfig: DownStylerConfiguration
     private let disposeBag = DisposeBag()
-
-    private var fontSize: Int = 17
 
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let viewItemsRelay = BehaviorRelay<[MarkdownBlockViewItem]?>(value: nil)
     private let openUrlRelay = PublishRelay<URL>()
 
-    init(service: MarkdownService, parser: MarkdownParser) {
+    init(service: MarkdownService, parser: MarkdownParser, parserConfig: DownStylerConfiguration) {
         self.service = service
         self.parser = parser
+        self.parserConfig = parserConfig
 
         sync(content: service.content)
 
@@ -31,7 +32,7 @@ class MarkdownViewModel {
     private func sync(content: String?) {
         loadingRelay.accept(content == nil)
 
-        viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.markdownUrl, fontSize: fontSize) })
+        viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.markdownUrl, configuration: parserConfig) })
     }
 
 }
