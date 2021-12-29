@@ -334,9 +334,9 @@ DEPENDENCIES:
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
-  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, branch `version/0.23`)
+  - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
-  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, branch `version/0.23`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -351,7 +351,7 @@ DEPENDENCIES:
   - ModuleKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Nimble
   - ObjectMapper
-  - OneInchKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, branch `version/0.23`)
+  - OneInchKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Quick
   - RxCocoa
@@ -363,7 +363,7 @@ DEPENDENCIES:
   - StorageKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
-  - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`, branch `version/0.23`)
+  - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 2.0.1)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.2`)
@@ -445,12 +445,10 @@ EXTERNAL SOURCES:
   DashKit.swift:
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :branch: version/0.23
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :branch: version/0.23
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -471,7 +469,6 @@ EXTERNAL SOURCES:
   ModuleKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
-    :branch: version/0.23
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -486,7 +483,6 @@ EXTERNAL SOURCES:
   UIExtensions.swift:
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :branch: version/0.23
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
@@ -523,13 +519,13 @@ CHECKOUT OPTIONS:
     :commit: 5ce8892ad352d5eb837742cb17a94fd2a561ef73
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 18b514359430afeea19a5c4966d3a3defa0b5f39
+    :commit: 6c2a60ecc143321f5a3445159377a7c27bed1856
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: 18b514359430afeea19a5c4966d3a3defa0b5f39
+    :commit: 6c2a60ecc143321f5a3445159377a7c27bed1856
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
@@ -559,7 +555,7 @@ CHECKOUT OPTIONS:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
-    :commit: 18b514359430afeea19a5c4966d3a3defa0b5f39
+    :commit: 6c2a60ecc143321f5a3445159377a7c27bed1856
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   PinKit.swift:
     :commit: 44162b713df1858b02640b93e3b75bfbbaa4a3f2
@@ -580,7 +576,7 @@ CHECKOUT OPTIONS:
     :commit: 3b1886c03600c421a0591cff3259013da606524e
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: 18b514359430afeea19a5c4966d3a3defa0b5f39
+    :commit: 6c2a60ecc143321f5a3445159377a7c27bed1856
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 1336f67877608e271107cd96bb852f76fd51eddf
@@ -676,6 +672,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: b34672444ae7cff711b279ea621e9660cc21d98d
 
-PODFILE CHECKSUM: 92717850b87bdd0e2c8aac350ed6935633109433
+PODFILE CHECKSUM: 81635fdb2e6a8c70e02e629178557481cd9193cb
 
 COCOAPODS: 1.11.2

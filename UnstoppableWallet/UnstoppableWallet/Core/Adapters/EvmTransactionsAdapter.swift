@@ -11,10 +11,10 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKit: EthereumKit.Kit, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager) {
-        transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKit)
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager) {
+        transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKitWrapper.evmKit)
 
-        super.init(evmKit: evmKit, decimals: EvmAdapter.decimals)
+        super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }
 
     private func coinTagName(coin: PlatformCoin) -> String {

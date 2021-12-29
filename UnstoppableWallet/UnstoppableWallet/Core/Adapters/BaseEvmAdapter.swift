@@ -6,12 +6,16 @@ import HsToolKit
 class BaseEvmAdapter {
     static let confirmationsThreshold = 12
 
-    let evmKit: EthereumKit.Kit
+    let evmKitWrapper: EvmKitWrapper
     let decimals: Int
 
-    init(evmKit: EthereumKit.Kit, decimals: Int) {
-        self.evmKit = evmKit
+    init(evmKitWrapper: EvmKitWrapper, decimals: Int) {
+        self.evmKitWrapper = evmKitWrapper
         self.decimals = decimals
+    }
+
+    var evmKit: EthereumKit.Kit {
+        evmKitWrapper.evmKit
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {

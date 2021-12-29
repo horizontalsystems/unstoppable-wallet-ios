@@ -98,7 +98,7 @@ protocol ISendDashAdapter {
 }
 
 protocol ISendEthereumAdapter {
-    var evmKit: EthereumKit.Kit { get }
+    var evmKitWrapper: EvmKitWrapper { get }
     var balanceData: BalanceData { get }
     func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData
 }

@@ -3,20 +3,20 @@ import EthereumKit
 class WalletConnectSignMessageRequestService {
     private let request: WalletConnectSignMessageRequest
     private let baseService: WalletConnectService
-    private let evmKit: EthereumKit.Kit
+    private let signer: Signer
 
-    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectService, evmKit: EthereumKit.Kit) {
+    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectService, signer: Signer) {
         self.request = request
         self.baseService = baseService
-        self.evmKit = evmKit
+        self.signer = signer
     }
 
     private func sign(message: Data) throws -> Data {
-        try evmKit.signed(message: message)
+        try signer.signed(message: message)
     }
 
     private func signTypedData(message: Data) throws -> Data {
-        try evmKit.signTypedData(message: message)
+        try signer.signTypedData(message: message)
     }
 
 }
@@ -41,7 +41,7 @@ extension WalletConnectSignMessageRequestService {
 
     var domain: String? {
         if case let .signTypeData(_, data, _) = request.payload {
-            let typeData = try? evmKit.parseTypedData(rawJson: data)
+            let typeData = try? signer.parseTypedData(rawJson: data)
             if case let .object(json) = typeData?.domain, let domainJson = json["name"], case let .string(domainString) = domainJson {
                 return domainString
             }

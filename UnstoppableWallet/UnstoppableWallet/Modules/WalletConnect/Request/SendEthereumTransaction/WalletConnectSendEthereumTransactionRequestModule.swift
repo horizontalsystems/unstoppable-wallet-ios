@@ -5,13 +5,13 @@ import MarketKit
 struct WalletConnectSendEthereumTransactionRequestModule {
 
     static func viewController(baseService: WalletConnectService, requestId: Int) -> UIViewController? {
-        guard let request = baseService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest, let evmKit = baseService.evmKit else {
+        guard let request = baseService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest, let evmKitWrapper = baseService.evmKitWrapper else {
             return nil
         }
 
         let feePlatformCoin: PlatformCoin?
 
-        switch evmKit.networkType {
+        switch evmKitWrapper.evmKit.networkType {
         case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum)
         case .bscMainNet: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
         }
@@ -22,8 +22,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: baseService)
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 10)
-        let sendService = SendEvmTransactionService(sendData: SendEvmData(transactionData: service.transactionData, additionalInfo: nil), gasPrice: service.gasPrice, evmKit: evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
+        let transactionService = EvmTransactionService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 10)
+        let sendService = SendEvmTransactionService(sendData: SendEvmData(transactionData: service.transactionData, additionalInfo: nil), gasPrice: service.gasPrice, evmKitWrapper: evmKitWrapper, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)

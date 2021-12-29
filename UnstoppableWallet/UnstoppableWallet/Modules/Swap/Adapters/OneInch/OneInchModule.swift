@@ -9,7 +9,7 @@ class OneInchModule {
     private let service: OneInchService
 
     init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
-        guard let evmKit = dex.blockchain.evmKit else {
+        guard let evmKit = dex.blockchain.evmKitWrapper?.evmKit else {
             return nil
         }
 

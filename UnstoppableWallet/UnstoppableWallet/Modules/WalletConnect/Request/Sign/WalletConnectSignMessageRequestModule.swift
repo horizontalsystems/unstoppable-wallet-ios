@@ -7,11 +7,11 @@ struct WalletConnectSignMessageRequestModule {
         guard let request = baseService.pendingRequest(requestId: requestId) as? WalletConnectSignMessageRequest else {
             return nil
         }
-        guard let evmKit = baseService.evmKit else {
+        guard let evmKitWrapper = baseService.evmKitWrapper else {
             return nil
         }
 
-        let service = WalletConnectSignMessageRequestService(request: request, baseService: baseService, evmKit: evmKit)
+        let service = WalletConnectSignMessageRequestService(request: request, baseService: baseService, signer: evmKitWrapper.signer)
         let viewModel = WalletConnectSignMessageRequestViewModel(service: service)
 
         return WalletConnectSignMessageRequestViewController(viewModel: viewModel)
