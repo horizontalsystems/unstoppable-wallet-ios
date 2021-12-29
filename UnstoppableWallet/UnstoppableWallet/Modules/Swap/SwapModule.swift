@@ -128,10 +128,10 @@ extension SwapModule.Dex {
             }
         }
 
-        var evmKit: EthereumKit.Kit? {
+        var evmKitWrapper: EvmKitWrapper? {
             switch self {
-            case .ethereum: return App.shared.ethereumKitManager.evmKit
-            case .binanceSmartChain: return App.shared.binanceSmartChainKitManager.evmKit
+            case .ethereum: return App.shared.ethereumKitManager.evmKitWrapper
+            case .binanceSmartChain: return App.shared.binanceSmartChainKitManager.evmKitWrapper
             }
         }
 
@@ -143,7 +143,7 @@ extension SwapModule.Dex {
         }
 
         var isMainNet: Bool {
-            evmKit?.networkType.isMainNet ?? true
+            evmKitWrapper?.evmKit.networkType.isMainNet ?? true
         }
 
     }

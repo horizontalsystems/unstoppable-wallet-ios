@@ -62,15 +62,15 @@ struct SendEvmConfirmationModule {
         }
     }
 
-    static func viewController(evmKit: EthereumKit.Kit, sendData: SendEvmData) -> UIViewController? {
-        guard let platformCoin = platformCoin(networkType: evmKit.networkType),
+    static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
+        guard let platformCoin = platformCoin(networkType: evmKitWrapper.evmKit.networkType),
               let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let transactionService = EvmTransactionService(evmKit: evmKit, feeRateProvider: feeRateProvider)
-        let service = SendEvmTransactionService(sendData: sendData, evmKit: evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
+        let transactionService = EvmTransactionService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)
@@ -112,7 +112,7 @@ struct SendEvmConfirmationModule {
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let transactionService = EvmTransactionService(evmKit: adapter.evmKit, feeRateProvider: feeRateProvider)
-        let service = SendEvmTransactionService(sendData: sendData, evmKit: adapter.evmKit, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: adapter.evmKitWrapper, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
         let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)

@@ -31,11 +31,11 @@ extension ShowKeyService {
     }
 
     var ethereumPrivateKey: String? {
-        try? EthereumKit.Kit.privateKey(seed: seed, networkType: accountSettingManager.ethereumNetwork(account: account).networkType).raw.hex
+        try? Signer.privateKey(seed: seed, networkType: accountSettingManager.ethereumNetwork(account: account).networkType).raw.hex
     }
 
     var binanceSmartChainPrivateKey: String? {
-        try? EthereumKit.Kit.privateKey(seed: seed, networkType: accountSettingManager.binanceSmartChainNetwork(account: account).networkType).raw.hex
+        try? Signer.privateKey(seed: seed, networkType: accountSettingManager.binanceSmartChainNetwork(account: account).networkType).raw.hex
     }
 
 }

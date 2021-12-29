@@ -13,6 +13,13 @@ class Account {
         self.backedUp = backedUp
     }
 
+    var watchAccount: Bool {
+        switch type {
+        case .address: return true
+        default: return false
+        }
+    }
+
 }
 
 extension Account: Hashable {

@@ -55,7 +55,7 @@ class EnableCoinsService {
 
     private func fetchErc20Tokens(seed: Data) {
         do {
-            let address = try Kit.address(seed: seed, networkType: appConfigProvider.testMode ? .ropsten : .ethMainNet)
+            let address = try Signer.address(seed: seed, networkType: appConfigProvider.testMode ? .ropsten : .ethMainNet)
 
             state = .loading
 
@@ -74,7 +74,7 @@ class EnableCoinsService {
 
     private func fetchBep20Tokens(seed: Data) {
         do {
-            let address = try Kit.address(seed: seed, networkType: .bscMainNet)
+            let address = try Signer.address(seed: seed, networkType: .bscMainNet)
 
             state = .loading
 

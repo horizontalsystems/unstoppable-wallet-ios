@@ -7,7 +7,7 @@ import RxCocoa
 import EthereumKit
 
 class SendEvmViewController: ThemeViewController {
-    private let evmKit: EthereumKit.Kit
+    private let evmKitWrapper: EvmKitWrapper
     private let viewModel: SendEvmViewModel
     private let disposeBag = DisposeBag()
 
@@ -27,8 +27,8 @@ class SendEvmViewController: ThemeViewController {
     private var isLoaded = false
     private var keyboardShown = false
 
-    init(evmKit: EthereumKit.Kit, viewModel: SendEvmViewModel, availableBalanceViewModel: SendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
-        self.evmKit = evmKit
+    init(evmKitWrapper: EvmKitWrapper, viewModel: SendEvmViewModel, availableBalanceViewModel: SendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
+        self.evmKitWrapper = evmKitWrapper
         self.viewModel = viewModel
 
         availableBalanceCell = SendAvailableBalanceCell(viewModel: availableBalanceViewModel)
@@ -118,7 +118,7 @@ class SendEvmViewController: ThemeViewController {
     }
 
     private func openConfirm(sendData: SendEvmData) {
-        guard let viewController = SendEvmConfirmationModule.viewController(evmKit: evmKit, sendData: sendData) else {
+        guard let viewController = SendEvmConfirmationModule.viewController(evmKitWrapper: evmKitWrapper, sendData: sendData) else {
             return
         }
         navigationController?.pushViewController(viewController, animated: true)

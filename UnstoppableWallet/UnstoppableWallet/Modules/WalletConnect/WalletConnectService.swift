@@ -82,11 +82,11 @@ class WalletConnectService {
             throw SessionError.noSuitableAccount
         }
 
-        guard let evmKit = manager.evmKit(chainId: chainId, account: account) else {
+        guard let evmKitWrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
             throw SessionError.unsupportedChainId
         }
 
-        sessionData = SessionData(peerId: peerId, peerMeta: peerMeta, account: account, evmKit: evmKit)
+        sessionData = SessionData(peerId: peerId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
@@ -136,8 +136,8 @@ extension WalletConnectService {
         sessionData?.peerMeta
     }
 
-    var evmKit: EthereumKit.Kit? {
-        sessionData?.evmKit
+    var evmKitWrapper: EvmKitWrapper? {
+        sessionData?.evmKitWrapper
     }
 
     func pendingRequest(requestId: Int) -> WalletConnectRequest? {
@@ -170,10 +170,10 @@ extension WalletConnectService {
             return
         }
 
-        interactor.approveSession(address: sessionData.evmKit.address.eip55, chainId: sessionData.evmKit.networkType.chainId)
+        interactor.approveSession(address: sessionData.evmKitWrapper.evmKit.address.eip55, chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId)
 
         let session = WalletConnectSession(
-                chainId: sessionData.evmKit.networkType.chainId,
+                chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId,
                 accountId: sessionData.account.id,
                 session: interactor.session,
                 peerId: sessionData.peerId,
@@ -326,7 +326,7 @@ extension WalletConnectService {
         let peerId: String
         let peerMeta: WCPeerMeta
         let account: Account
-        let evmKit: EthereumKit.Kit
+        let evmKitWrapper: EvmKitWrapper
     }
 
 }

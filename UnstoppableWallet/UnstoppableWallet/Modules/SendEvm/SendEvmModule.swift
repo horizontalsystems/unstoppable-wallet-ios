@@ -37,7 +37,7 @@ class SendEvmModule {
         let recipientViewModel = RecipientAddressViewModel(service: addressService)
 
         let viewController = SendEvmViewController(
-                evmKit: adapter.evmKit,
+                evmKitWrapper: adapter.evmKitWrapper,
                 viewModel: viewModel,
                 availableBalanceViewModel: availableBalanceViewModel,
                 amountViewModel: amountViewModel,

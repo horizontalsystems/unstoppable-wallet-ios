@@ -13,7 +13,7 @@ import BigInt
 class OneInchSendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
-    private let evmKit: EthereumKit.Kit
+    private let evmKitWrapper: EvmKitWrapper
     private let transactionFeeService: OneInchTransactionFeeService
     private let activateCoinManager: ActivateCoinManager
 
@@ -38,8 +38,8 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    init(evmKit: EthereumKit.Kit, transactionFeeService: OneInchTransactionFeeService, activateCoinManager: ActivateCoinManager) {
-        self.evmKit = evmKit
+    init(evmKitWrapper: EvmKitWrapper, transactionFeeService: OneInchTransactionFeeService, activateCoinManager: ActivateCoinManager) {
+        self.evmKitWrapper = evmKitWrapper
         self.transactionFeeService = transactionFeeService
         self.activateCoinManager = activateCoinManager
 
@@ -53,6 +53,10 @@ class OneInchSendEvmTransactionService {
                                 decoration: swapDecoration(parameters: transactionFeeService.parameters)
                         )
         )
+    }
+
+    private var evmKit: EthereumKit.Kit {
+        evmKitWrapper.evmKit
     }
 
     private var evmBalance: BigUInt {
@@ -205,7 +209,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
 
         sendState = .sending
 
-        evmKit.sendSingle(
+        evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
                         gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit

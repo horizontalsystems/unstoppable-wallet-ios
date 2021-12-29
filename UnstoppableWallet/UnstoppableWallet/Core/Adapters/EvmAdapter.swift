@@ -8,8 +8,8 @@ import UniswapKit
 class EvmAdapter: BaseEvmAdapter {
     static let decimals = 18
 
-    init(evmKit: EthereumKit.Kit) {
-        super.init(evmKit: evmKit, decimals: EvmAdapter.decimals)
+    init(evmKitWrapper: EvmKitWrapper) {
+        super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }
 
 }
