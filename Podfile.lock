@@ -532,7 +532,7 @@ CHECKOUT OPTIONS:
     :commit: 18b514359430afeea19a5c4966d3a3defa0b5f39
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
-    :commit: 763394a92bdf091517376776bccecf9e7edbb49f
+    :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
     :commit: dd560907666008fc326c1715c6437a40266cca19
