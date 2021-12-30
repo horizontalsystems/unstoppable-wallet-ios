@@ -349,7 +349,7 @@
 		11B354542A3E929C1A7924FD /* CoinReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7FCEFE15A50EB5C6E0 /* CoinReportsViewController.swift */; };
 		11B3545570D47601B8FAB459 /* FaqModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355D5EFD2B74DE15F0C2A /* FaqModule.swift */; };
 		11B35456B6B2C721C92EF966 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352DBDCB8EB39203870F6 /* LaunchScreenViewController.swift */; };
-		11B3545A8A2A23ADB5BA1E0A /* IntroPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* IntroPageView.swift */; };
+		11B3545A8A2A23ADB5BA1E0A /* WelcomeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */; };
 		11B3545B8A5568792A4C43D8 /* CoinTreasuriesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F08C14B3F0D978E2E7F /* CoinTreasuriesModule.swift */; };
 		11B35465DD4B55E6F99D885E /* MarkdownHeader3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A78367D108DD529C1B /* MarkdownHeader3Cell.swift */; };
 		11B35467AC08F3C5439B250F /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FB85F826A825CB401D /* AboutViewModel.swift */; };
@@ -694,7 +694,7 @@
 		11B35895DA5403AE180E8A6B /* SystemInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357BA1A6AC79F07B54FB5 /* SystemInfoManager.swift */; };
 		11B35897228706209BB05CD7 /* BinanceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */; };
 		11B35897566548048FCEC11E /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AE5785634316A1A5DA8 /* WalletService.swift */; };
-		11B35898D710EC75D922785D /* IntroPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* IntroPageView.swift */; };
+		11B35898D710EC75D922785D /* WelcomeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */; };
 		11B3589A7F904F70549D0098 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C996B6E9B084C05A087 /* TextFieldCell.swift */; };
 		11B358A0F588238E8C5D02BA /* FormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352A41EC99ADCC8F3E3E9 /* FormAmountInputView.swift */; };
 		11B358A32C6A00F1C677EACD /* ShowKeyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351699DF6C45C1627F66A /* ShowKeyModule.swift */; };
@@ -1171,7 +1171,7 @@
 		11B35EA3CBC8B198C3A71382 /* EvmNetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35471A187C4F02BCFBFB9 /* EvmNetworkModule.swift */; };
 		11B35EAA016597334C854617 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357736B8C29DF38F5DCBA /* AlertViewController.swift */; };
 		11B35EAA520B6385169C1AF2 /* SendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3585438D1F0C4223AB1BC /* SendPresenter.swift */; };
-		11B35EAC18ECB4C418C76D72 /* IntroPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* IntroPageView.swift */; };
+		11B35EAC18ECB4C418C76D72 /* WelcomeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */; };
 		11B35EAFACEA4EA6410E41B7 /* AlertItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */; };
 		11B35EB04C0F94CDA28ECC20 /* CoinDetailsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3545402F742FE641B9B6C /* CoinDetailsModule.swift */; };
 		11B35EB4F179DB6A897E8929 /* PrivacySyncModeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3582F19DA36A2A941E5B4 /* PrivacySyncModeModule.swift */; };
@@ -2931,7 +2931,7 @@
 		11B359F01A63378AFAAEE113 /* ManageAccountsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsModule.swift; sourceTree = "<group>"; };
 		11B359FAA3732BC839196AD5 /* BackupKeyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupKeyViewModel.swift; sourceTree = "<group>"; };
 		11B359FB85F826A825CB401D /* AboutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
-		11B35A05B93CB243B6404C4A /* IntroPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPageView.swift; sourceTree = "<group>"; };
+		11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeTextView.swift; sourceTree = "<group>"; };
 		11B35A0F912218FEC2A196C0 /* CoinInvestorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinInvestorsViewController.swift; sourceTree = "<group>"; };
 		11B35A12A3B7218DF597C172 /* MarketAdvancedSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchViewController.swift; sourceTree = "<group>"; };
 		11B35A1AE56A94BEB52AC4D1 /* GrdbStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrdbStorage.swift; sourceTree = "<group>"; };
@@ -5172,7 +5172,7 @@
 			isa = PBXGroup;
 			children = (
 				3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */,
-				11B35A05B93CB243B6404C4A /* IntroPageView.swift */,
+				11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -6656,7 +6656,7 @@
 				58AAACFF52132947B4F707C7 /* FeeSlider.swift in Sources */,
 				58AAA1E977EB94A7A7937BE3 /* FeeSliderValueView.swift in Sources */,
 				58AAA074070ED1A81B4535D1 /* FeeSliderWrapper.swift in Sources */,
-				11B35EAC18ECB4C418C76D72 /* IntroPageView.swift in Sources */,
+				11B35EAC18ECB4C418C76D72 /* WelcomeTextView.swift in Sources */,
 				1A564233549A8E76442B5F44 /* BlockchainSettingRecord.swift in Sources */,
 				1A5643C2E0840ACC9E483665 /* BlockchainSettingsStorage.swift in Sources */,
 				1A564E2C05FD912670191539 /* BlockchainSetting.swift in Sources */,
@@ -7537,7 +7537,7 @@
 				58AAA393DF93EFFA5047589B /* FeeSlider.swift in Sources */,
 				58AAA1283FC7F83F62FC5961 /* FeeSliderValueView.swift in Sources */,
 				58AAA0C0DB5C901FE58F5F9B /* FeeSliderWrapper.swift in Sources */,
-				11B3545A8A2A23ADB5BA1E0A /* IntroPageView.swift in Sources */,
+				11B3545A8A2A23ADB5BA1E0A /* WelcomeTextView.swift in Sources */,
 				1A56424B5327D4ADFD728B0B /* BlockchainSettingRecord.swift in Sources */,
 				1A564CBB4708B7DAC6D6A2AD /* BlockchainSettingsStorage.swift in Sources */,
 				1A564F14BF18252599471902 /* BlockchainSetting.swift in Sources */,
@@ -8407,7 +8407,7 @@
 				58AAA3A5967BAB513DD4B33F /* FeeSlider.swift in Sources */,
 				58AAAA534E94A3276B7F7EF2 /* FeeSliderValueView.swift in Sources */,
 				58AAAF3B68B9F64DF20FA5AB /* FeeSliderWrapper.swift in Sources */,
-				11B35898D710EC75D922785D /* IntroPageView.swift in Sources */,
+				11B35898D710EC75D922785D /* WelcomeTextView.swift in Sources */,
 				1A5643651979E1907BE1B12C /* BlockchainSettingRecord.swift in Sources */,
 				1A56463AB918839385E8CDBD /* BlockchainSettingsStorage.swift in Sources */,
 				1A564254C815E13F59B6C220 /* BlockchainSetting.swift in Sources */,
