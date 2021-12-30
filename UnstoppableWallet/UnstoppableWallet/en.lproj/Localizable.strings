@@ -930,9 +930,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Intro
 
-"intro.next" = "Next";
-"intro.start" = "Start";
-"intro.brand.description" = "Be Unstoppable";
+"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Unchain Assets";
 "intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
 "intro.go_borderless.title" = "Go Borderless";

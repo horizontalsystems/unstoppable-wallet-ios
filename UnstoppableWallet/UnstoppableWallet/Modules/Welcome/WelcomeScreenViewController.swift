@@ -4,20 +4,16 @@ import ThemeKit
 import ComponentKit
 
 class WelcomeScreenViewController: UIViewController {
-    private let bottomInset: CGFloat = 118
-
     private let scrollView = UIScrollView()
-    private let circleImageView = UIImageView(image: UIImage(named: "Intro - Circle"))
-    private var imageViews = [UIImageView]()
+    private var textViews = [WelcomeTextView]()
     private let pageControl: BarPageControl
 
-    private let nextButton = ThemeButton()
-    private let startButton = ThemeButton()
+    private let logoWrapperView = UIView()
+    private let logoView = UIView()
 
     private var pageIndex = 0
 
     private let slides = [
-        Slide(title: nil, description: "intro.brand.description".localized, image: "Intro - Logo"),
         Slide(title: "intro.unchain_assets.title".localized, description: "intro.unchain_assets.description".localized, image: "Intro - Unchain Assets"),
         Slide(title: "intro.go_borderless.title".localized, description: "intro.go_borderless.description".localized, image: "Intro - Go Borderless"),
         Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private")
@@ -36,111 +32,185 @@ class WelcomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .themeDarker
+        let backgroundImageView = UIImageView()
 
-        let wrapperView = UIView()
+        view.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
-        view.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { maker in
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.image = UIImage(named: "Intro - Background")
+
+        let topSpaceView = UIView()
+
+        view.addSubview(topSpaceView)
+        topSpaceView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(view.safeAreaLayoutGuide)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(bottomInset)
         }
 
-        let imageWrapperView = UIView()
+        let middleUpperSpaceView = UIView()
 
-        wrapperView.addSubview(imageWrapperView)
-        imageWrapperView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalToSuperview().multipliedBy(2.0 / 3.0)
+        view.addSubview(middleUpperSpaceView)
+        middleUpperSpaceView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(topSpaceView.snp.height).multipliedBy(0.5)
         }
 
-        imageWrapperView.addSubview(circleImageView)
-        circleImageView.snp.makeConstraints { maker in
+        view.addSubview(pageControl)
+        pageControl.snp.makeConstraints { maker in
             maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview()
-            maker.size.equalTo(imageWrapperView.snp.height).multipliedBy(4.0 / 5.0)
+            maker.top.equalTo(middleUpperSpaceView.snp.bottom)
+        }
+
+        pageControl.currentPage = 0
+
+        let middleLowerSpaceView = UIView()
+
+        view.addSubview(middleLowerSpaceView)
+        middleLowerSpaceView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(pageControl.snp.bottom)
+            maker.height.equalTo(topSpaceView.snp.height).multipliedBy(0.5)
+        }
+
+        let textWrapperView = UIView()
+
+        view.addSubview(textWrapperView)
+        textWrapperView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.equalTo(middleLowerSpaceView.snp.bottom)
+            maker.height.equalTo(82)
+        }
+
+        let bottomSpaceView = UIView()
+
+        view.addSubview(bottomSpaceView)
+        bottomSpaceView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(textWrapperView.snp.bottom)
+            maker.height.equalTo(topSpaceView.snp.height)
         }
 
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.safeAreaLayoutGuide)
+            maker.top.equalTo(topSpaceView)
+            maker.bottom.equalTo(bottomSpaceView)
         }
 
         scrollView.delegate = self
-        scrollView.contentSize = CGSize(width: view.width * CGFloat(slides.count), height: view.height)
+        scrollView.contentSize = CGSize(width: view.width * CGFloat(slides.count), height: 0)
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
 
         for (index, slide) in slides.enumerated() {
-            let slideView = IntroPageView(title: slide.title, description: slide.description, bottomInset: bottomInset)
-            scrollView.addSubview(slideView)
-            slideView.frame = CGRect(x: view.width * CGFloat(index), y: 0, width: view.width, height: view.height)
-
-            let imageView = UIImageView(image: UIImage(named: slide.image))
-
-            imageWrapperView.addSubview(imageView)
-            imageView.snp.makeConstraints { maker in
-                maker.centerX.equalToSuperview()
-                maker.centerY.equalToSuperview()
-                maker.size.equalTo(imageWrapperView.snp.height).multipliedBy(4.0 / 5.0)
+            guard let image = UIImage(named: slide.image) else {
+                continue
             }
 
-            imageView.alpha = 0
-            imageViews.append(imageView)
+            let imageView = UIImageView(image: image)
+            scrollView.addSubview(imageView)
+            imageView.snp.makeConstraints { maker in
+                maker.leading.equalTo(view.width * CGFloat(index))
+                maker.top.equalTo(topSpaceView.snp.bottom)
+                maker.bottom.equalTo(middleUpperSpaceView.snp.top)
+                maker.width.equalTo(view)
+                maker.height.equalTo(view.width / (image.size.width / image.size.height))
+            }
+
+            let textView = WelcomeTextView(title: slide.title, description: slide.description)
+
+            textWrapperView.addSubview(textView)
+            textView.snp.makeConstraints { maker in
+                maker.edges.equalToSuperview()
+            }
+
+            textView.alpha = 0
+            textViews.append(textView)
         }
 
         scrollViewDidScroll(scrollView)
 
-        view.addSubview(pageControl)
-        pageControl.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-        }
-
-        pageControl.currentPage = 0
-
-        view.addSubview(nextButton)
-        nextButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(pageControl.snp.bottom).offset(CGFloat.margin32)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
-        }
-
-        nextButton.apply(style: .primaryGray)
-        nextButton.setTitle("intro.next".localized, for: .normal)
-        nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
+        let startButton = ThemeButton()
 
         view.addSubview(startButton)
         startButton.snp.makeConstraints { maker in
-            maker.edges.equalTo(nextButton)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin32)
+            maker.top.equalTo(scrollView.snp.bottom)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
         }
 
-        startButton.isHidden = true
         startButton.apply(style: .primaryYellow)
         startButton.setTitle("intro.start".localized, for: .normal)
         startButton.addTarget(self, action: #selector(onTapStart), for: .touchUpInside)
+
+        view.addSubview(logoWrapperView)
+        logoWrapperView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        logoWrapperView.backgroundColor = .themeDark
+
+        logoWrapperView.addSubview(logoView)
+        logoView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        logoView.alpha = 0
+
+        let logoImageView = UIImageView()
+
+        logoView.addSubview(logoImageView)
+        logoImageView.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalToSuperview()
+            maker.size.equalTo(72)
+        }
+
+        logoImageView.image = .appIcon
+        logoImageView.contentMode = .scaleAspectFill
+        logoImageView.cornerRadius = .cornerRadius16
+        logoImageView.clipsToBounds = true
+
+        let logoTitleLabel = UILabel()
+
+        logoView.addSubview(logoTitleLabel)
+        logoTitleLabel.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.equalTo(logoImageView.snp.bottom).offset(28)
+            maker.bottom.equalToSuperview()
+        }
+
+        logoTitleLabel.numberOfLines = 0
+        logoTitleLabel.textAlignment = .center
+        logoTitleLabel.font = .title2
+        logoTitleLabel.textColor = .themeSteelLight
+        logoTitleLabel.text = "Unstoppable\nWallet"
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        UIView.animate(withDuration: 0.5, delay: 0.5, animations: { [weak self] in
+            self?.logoView.alpha = 1
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, delay: 1, animations: { [weak self] in
+                self?.logoWrapperView.alpha = 0
+            }, completion: { [weak self] _ in
+                self?.logoWrapperView.removeFromSuperview()
+            })
+        })
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
 
-    @objc private func onTapNext() {
-        if pageControl.currentPage < pageControl.numberOfPages - 1 {
-            scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
-        }
-    }
-
     @objc private func onTapStart() {
         UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
-    }
-
-    private func onSwitchSlide(index: Int) {
-        let lastSlide = index == pageControl.numberOfPages - 1
-
-        nextButton.set(hidden: lastSlide, animated: true, duration: 0.2)
-        startButton.set(hidden: !lastSlide, animated: true, duration: 0.2)
     }
 
 }
@@ -152,7 +222,6 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 
         if pageControl.currentPage != pageIndex {
             pageControl.currentPage = pageIndex
-            onSwitchSlide(index: pageIndex)
         }
 
         let maximumOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
@@ -168,11 +237,9 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
                 let offset: CGFloat = abs((fi * pagePercent) - currentPercent)
                 let percent: CGFloat = offset / pagePercent
 
-                imageViews[i].alpha = 1 - percent
-
-                circleImageView.alpha = min(currentPercent, pagePercent) / pagePercent
+                textViews[i].alpha = 1 - percent
             } else {
-                imageViews[i].alpha = 0
+                textViews[i].alpha = 0
             }
         }
     }
@@ -182,7 +249,7 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 extension WelcomeScreenViewController {
 
     private struct Slide {
-        let title: String?
+        let title: String
         let description: String
         let image: String
     }

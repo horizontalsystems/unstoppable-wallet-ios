@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "circle@2x.png",
+      "filename" : "Backround@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "circle@3x.png",
+      "filename" : "Backround@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
