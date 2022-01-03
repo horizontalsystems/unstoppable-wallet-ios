@@ -8,7 +8,7 @@ class AppManager {
     private let adapterManager: AdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
-    private let blurManager: IBlurManager
+    private let blurManager: BlurManager
     private let kitCleaner: IKitCleaner
     private let debugBackgroundLogger: IDebugLogger?
     private let appVersionManager: IAppVersionManager
@@ -22,7 +22,7 @@ class AppManager {
     private let willEnterForegroundSubject = PublishSubject<()>()
 
     init(accountManager: IAccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
-         keychainKit: IKeychainKit, blurManager: IBlurManager,
+         keychainKit: IKeychainKit, blurManager: BlurManager,
          kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
          appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
          logRecordManager: ILogRecordManager,
@@ -86,6 +86,7 @@ extension AppManager {
     func willEnterForeground() {
         accountManager.handleForeground()
 
+        blurManager.willEnterForeground()
         debugBackgroundLogger?.logEnterForeground()
         willEnterForegroundSubject.onNext(())
 

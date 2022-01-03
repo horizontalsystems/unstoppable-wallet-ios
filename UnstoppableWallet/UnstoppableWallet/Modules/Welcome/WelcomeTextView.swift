@@ -17,7 +17,7 @@ class WelcomeTextView: UIView {
 
         titleLabel.textAlignment = .center
         titleLabel.font = .title3
-        titleLabel.textColor = .themeSteelLight
+        titleLabel.textColor = .themeLeah
         titleLabel.text = title
 
         let descriptionLabel = UILabel()
