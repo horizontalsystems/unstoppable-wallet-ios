@@ -159,11 +159,6 @@ protocol IBackupManager {
     func setAccountBackedUp(id: String)
 }
 
-protocol IBlurManager {
-    func willResignActive()
-    func didBecomeActive()
-}
-
 protocol ISystemInfoManager {
     var appVersion: AppVersion { get }
     var passcodeSet: Bool { get }

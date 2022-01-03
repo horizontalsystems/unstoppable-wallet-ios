@@ -182,7 +182,7 @@ class App {
         transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
-        let blurManager: IBlurManager = BlurManager(pinKit: pinKit)
+        let blurManager = BlurManager(pinKit: pinKit)
 
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 

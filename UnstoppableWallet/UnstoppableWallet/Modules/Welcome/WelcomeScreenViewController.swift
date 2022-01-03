@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 import ComponentKit
 
-class WelcomeScreenViewController: UIViewController {
+class WelcomeScreenViewController: ThemeViewController {
     private let scrollView = UIScrollView()
     private var textViews = [WelcomeTextView]()
     private let pageControl: BarPageControl
@@ -19,10 +19,10 @@ class WelcomeScreenViewController: UIViewController {
         Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private")
     ]
 
-    init() {
+    override init() {
         pageControl = BarPageControl(barCount: slides.count)
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -152,7 +152,7 @@ class WelcomeScreenViewController: UIViewController {
             maker.edges.equalToSuperview()
         }
 
-        logoWrapperView.backgroundColor = .themeDark
+        logoWrapperView.backgroundColor = .themeTyler
 
         logoWrapperView.addSubview(logoView)
         logoView.snp.makeConstraints { maker in
@@ -187,7 +187,7 @@ class WelcomeScreenViewController: UIViewController {
         logoTitleLabel.numberOfLines = 0
         logoTitleLabel.textAlignment = .center
         logoTitleLabel.font = .title2
-        logoTitleLabel.textColor = .themeSteelLight
+        logoTitleLabel.textColor = .themeLeah
         logoTitleLabel.text = "Unstoppable\nWallet"
     }
 
@@ -203,10 +203,6 @@ class WelcomeScreenViewController: UIViewController {
                 self?.logoWrapperView.removeFromSuperview()
             })
         })
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
     }
 
     @objc private func onTapStart() {
