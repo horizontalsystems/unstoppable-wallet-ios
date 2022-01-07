@@ -363,3 +363,8 @@ protocol ICustomTokenStorage {
 protocol IChartTypeStorage: AnyObject {
     var chartType: ChartType? { get set }
 }
+
+protocol IEvmAccountSyncStateStorage {
+    func evmAccountSyncState(accountId: String, chainId: Int) -> EvmAccountSyncState?
+    func save(evmAccountSyncState: EvmAccountSyncState)
+}

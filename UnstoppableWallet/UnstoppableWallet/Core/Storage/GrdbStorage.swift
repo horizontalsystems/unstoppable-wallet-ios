@@ -547,6 +547,7 @@ class GrdbStorage {
             }
         }
 
+
         migrator.registerMigration("createCustomTokens") { db in
             try db.create(table: CustomToken.databaseTableName) { t in
                 t.column(CustomToken.Columns.coinName.name, .text).notNull()
@@ -561,6 +562,16 @@ class GrdbStorage {
         migrator.registerMigration("newStructureForFavoriteCoins") { db in
             try db.create(table: FavoriteCoinRecord.databaseTableName) { t in
                 t.column(FavoriteCoinRecord.Columns.coinUid.name, .text).primaryKey()
+            }
+        }
+
+        migrator.registerMigration("createEvmAccountSyncStates") { db in
+            try db.create(table: EvmAccountSyncState.databaseTableName) { t in
+                t.column(EvmAccountSyncState.Columns.accountId.name, .text).notNull()
+                t.column(EvmAccountSyncState.Columns.chainId.name, .integer).notNull()
+                t.column(EvmAccountSyncState.Columns.lastTransactionBlockNumber.name, .integer)
+
+                t.primaryKey([EvmAccountSyncState.Columns.accountId.name, EvmAccountSyncState.Columns.chainId.name], onConflict: .replace)
             }
         }
 
@@ -918,6 +929,22 @@ extension GrdbStorage: ICustomTokenStorage {
             for customToken in customTokens {
                 try customToken.insert(db)
             }
+        }
+    }
+
+}
+
+extension GrdbStorage: IEvmAccountSyncStateStorage {
+
+    func evmAccountSyncState(accountId: String, chainId: Int) -> EvmAccountSyncState? {
+        try! dbPool.read { db in
+            try EvmAccountSyncState.filter(EvmAccountSyncState.Columns.accountId == accountId && EvmAccountSyncState.Columns.chainId == chainId).fetchOne(db)
+        }
+    }
+
+    func save(evmAccountSyncState: EvmAccountSyncState) {
+        _ = try! dbPool.write { db in
+            try evmAccountSyncState.insert(db)
         }
     }
 

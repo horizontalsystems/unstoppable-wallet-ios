@@ -103,6 +103,10 @@ extension CoinManager {
         return appFullCoins + kitFullCoins
     }
 
+    func fullCoins(coinUids: [String]) throws -> [FullCoin] {
+        try marketKit.fullCoins(coinUids: coinUids)
+    }
+
     func platformCoin(coinType: CoinType) throws -> PlatformCoin? {
         try marketKit.platformCoin(coinType: coinType) ?? customPlatformCoin(coinType: coinType)
     }

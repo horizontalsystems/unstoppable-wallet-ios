@@ -6,6 +6,8 @@ import EthereumKit
 class WatchAddressService {
     private let accountFactory: AccountFactory
     private let accountManager: IAccountManager
+    private let coinManager: CoinManager
+    private let walletManager: WalletManager
     private let addressService: AddressService
     private let disposeBag = DisposeBag()
 
@@ -16,9 +18,11 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: IAccountManager, addressService: AddressService) {
+    init(accountFactory: AccountFactory, accountManager: IAccountManager, coinManager: CoinManager, walletManager: WalletManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
+        self.coinManager = coinManager
+        self.walletManager = walletManager
         self.addressService = addressService
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
@@ -52,6 +56,15 @@ extension WatchAddressService {
 
         let account = accountFactory.watchAccount(address: address)
         accountManager.save(account: account)
+
+        do {
+            let platformCoins = try coinManager.platformCoins(coinTypes: [.ethereum, .binanceSmartChain])
+            let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
+
+            walletManager.save(wallets: wallets)
+        } catch {
+            // do nothing
+        }
     }
 
 }

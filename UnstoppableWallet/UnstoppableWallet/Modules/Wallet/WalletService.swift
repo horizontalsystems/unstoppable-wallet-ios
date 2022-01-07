@@ -331,6 +331,10 @@ extension WalletService {
         sortTypeRelay.asObservable()
     }
 
+    var watchAccount: Bool {
+        accountManager.activeAccount?.watchAccount ?? false
+    }
+
     var activeAccount: Account? {
         accountManager.activeAccount
     }

@@ -4,6 +4,7 @@ import EthereumKit
 import Erc20Kit
 import UniswapKit
 import OneInchKit
+import HdWalletKit
 
 protocol IEvmKitManagerDataSource {
     var explorerApiKey: String { get }
@@ -17,6 +18,7 @@ class EvmKitManager {
 
     private weak var _evmKitWrapper: EvmKitWrapper?
 
+    private let evmKitCreatedRelay = PublishRelay<Void>()
     private let evmKitUpdatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
@@ -46,14 +48,21 @@ class EvmKitManager {
             return _evmKitWrapper
         }
 
-        guard let seed = account.type.mnemonicSeed else {
-            throw AdapterError.unsupportedAccount
-        }
-
         let evmNetwork = dataSource.evmNetwork(account: account)
 
-        let address = try Signer.address(seed: seed, networkType: evmNetwork.networkType)
-        let signer = try Signer.instance(seed: seed, networkType: evmNetwork.networkType)
+        let address: EthereumKit.Address
+        var signer: Signer?
+
+        switch account.type {
+        case let .mnemonic(words, salt):
+            let seed = Mnemonic.seed(mnemonic: words, passphrase: salt)
+            address = try Signer.address(seed: seed, networkType: evmNetwork.networkType)
+            signer = try Signer.instance(seed: seed, networkType: evmNetwork.networkType)
+        case let .address(value):
+            address = value
+        default:
+            throw AdapterError.unsupportedAccount
+        }
 
         let evmKit = try EthereumKit.Kit.instance(
                 address: address,
@@ -80,12 +89,18 @@ class EvmKitManager {
         _evmKitWrapper = wrapper
         currentAccount = account
 
+        evmKitCreatedRelay.accept(())
+
         return wrapper
     }
 
 }
 
 extension EvmKitManager {
+
+    var evmKitCreatedObservable: Observable<Void> {
+        evmKitCreatedRelay.asObservable()
+    }
 
     var evmKitUpdatedObservable: Observable<Void> {
         evmKitUpdatedRelay.asObservable()
@@ -95,16 +110,8 @@ extension EvmKitManager {
         queue.sync { _evmKitWrapper }
     }
 
-    func evmKit(account: Account) throws -> EthereumKit.Kit {
-        try queue.sync { try _evmKitWrapper(account: account).evmKit  }
-    }
-
     func evmKitWrapper(account: Account) throws -> EvmKitWrapper {
         try queue.sync { try _evmKitWrapper(account: account)  }
-    }
-
-    func signer(account: Account) throws -> Signer {
-        try queue.sync { try _evmKitWrapper(account: account).signer  }
     }
 
 }
@@ -157,15 +164,19 @@ class BscKitManagerDataSource: IEvmKitManagerDataSource {
 
 class EvmKitWrapper {
     let evmKit: EthereumKit.Kit
-    let signer: Signer
+    let signer: Signer?
 
-    init(evmKit: EthereumKit.Kit, signer: Signer) {
+    init(evmKit: EthereumKit.Kit, signer: Signer?) {
         self.evmKit = evmKit
         self.signer = signer
     }
 
     func sendSingle(transactionData: TransactionData, gasPrice: Int, gasLimit: Int, nonce: Int? = nil) -> Single<FullTransaction> {
-        evmKit.rawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
+        guard let signer = signer else {
+            return Single.error(SignerError.signerNotSupported)
+        }
+
+        return evmKit.rawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
                 .flatMap { [unowned self] rawTransaction in
                     do {
                         let signature = try signer.signature(rawTransaction: rawTransaction)
@@ -174,6 +185,14 @@ class EvmKitWrapper {
                         return Single.error(error)
                     }
                 }
+    }
+
+}
+
+extension EvmKitWrapper {
+
+    enum SignerError: Error {
+        case signerNotSupported
     }
 
 }

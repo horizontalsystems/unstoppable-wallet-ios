@@ -59,10 +59,10 @@ class EnableCoinsService {
 
             state = .loading
 
-            erc20Provider.coinTypesSingle(address: address.hex)
+            erc20Provider.coinTypeInfoSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] coinTypes in
-                        self?.handle(fetchedCoinTypes: coinTypes)
+                    .subscribe(onSuccess: { [weak self] info in
+                        self?.handle(fetchedCoinTypes: info.coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })
@@ -78,10 +78,10 @@ class EnableCoinsService {
 
             state = .loading
 
-            bep20Provider.coinTypesSingle(address: address.hex)
+            bep20Provider.coinTypeInfoSingle(address: address.hex)
                     .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .subscribe(onSuccess: { [weak self] coinTypes in
-                        self?.handle(fetchedCoinTypes: coinTypes)
+                    .subscribe(onSuccess: { [weak self] info in
+                        self?.handle(fetchedCoinTypes: info.coinTypes)
                     }, onError: { [weak self] error in
                         self?.state = .failure(error: error)
                     })

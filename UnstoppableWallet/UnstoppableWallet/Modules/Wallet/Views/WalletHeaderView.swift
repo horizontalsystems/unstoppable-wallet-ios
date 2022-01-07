@@ -74,7 +74,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         amountButton.setTitle(viewItem.amount, for: .normal)
         amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
 
-        sortAddCoinView.bind(dropdownTitle: sortBy)
+        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
     }
 
     static var height: CGFloat {
