@@ -16,7 +16,7 @@ class App {
     let appConfigProvider: AppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -84,6 +84,8 @@ class App {
 
     let deepLinkManager: IDeepLinkManager
     let launchScreenManager: LaunchScreenManager
+
+    let evmAccountManager: EvmAccountManager
 
     let appManager: AppManager
 
@@ -208,6 +210,8 @@ class App {
 
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
+
+        evmAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, networkManager: networkManager, appConfigProvider: appConfigProvider, storage: storage)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(
                 coinManager: coinManager,

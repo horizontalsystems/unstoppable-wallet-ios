@@ -11,7 +11,13 @@ struct WatchAddressModule {
         let addressUriParser = AddressParserFactory.parser(coinType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
-        let service = WatchAddressService(accountFactory: App.shared.accountFactory, accountManager: App.shared.accountManager, addressService: addressService)
+        let service = WatchAddressService(
+                accountFactory: App.shared.accountFactory,
+                accountManager: App.shared.accountManager,
+                coinManager: App.shared.coinManager,
+                walletManager: App.shared.walletManager,
+                addressService: addressService
+        )
         let viewModel = WatchAddressViewModel(service: service)
 
         let addressViewModel = RecipientAddressViewModel(service: addressService)

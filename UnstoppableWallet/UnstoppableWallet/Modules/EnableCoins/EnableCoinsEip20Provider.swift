@@ -6,10 +6,12 @@ import MarketKit
 
 class EnableCoinsEip20Provider {
     private let networkManager: NetworkManager
+    private let appConfigProvider: AppConfigProvider
     private let mode: Mode
 
-    init(networkManager: NetworkManager, mode: Mode) {
+    init(networkManager: NetworkManager, appConfigProvider: AppConfigProvider, mode: Mode) {
         self.networkManager = networkManager
+        self.appConfigProvider = appConfigProvider
         self.mode = mode
     }
 
@@ -20,6 +22,13 @@ class EnableCoinsEip20Provider {
         }
     }
 
+    private var apiKey: String {
+        switch mode {
+        case .erc20: return appConfigProvider.etherscanKey
+        case .bep20: return appConfigProvider.bscscanKey
+        }
+    }
+
     private func coinType(address: String) -> CoinType {
         switch mode {
         case .erc20: return .erc20(address: address)
@@ -27,27 +36,32 @@ class EnableCoinsEip20Provider {
         }
     }
 
-    private func coinTypes(transactions: [Transaction]) -> [CoinType] {
+    private func coinTypeInfo(transactions: [Transaction]) -> CoinTypeInfo {
         let transactionCoinTypes = transactions.map { coinType(address: $0.contractAddress) }
-        return Array(Set(transactionCoinTypes))
+        let coinTypes = Array(Set(transactionCoinTypes))
+        let lastTransactionBlockNumber = transactions.last.flatMap { Int($0.blockNumber) }
+
+        return CoinTypeInfo(coinTypes: coinTypes, lastTransactionBlockNumber: lastTransactionBlockNumber)
     }
 
 }
 
 extension EnableCoinsEip20Provider {
 
-    func coinTypesSingle(address: String) -> Single<[CoinType]> {
+    func coinTypeInfoSingle(address: String, startBlock: Int? = nil) -> Single<CoinTypeInfo> {
         let parameters: Parameters = [
             "module": "account",
             "action": "tokentx",
             "address": address,
-            "sort": "asc"
+            "startblock": startBlock ?? 0,
+            "sort": "asc",
+            "apikey": apiKey
         ]
 
         let request = networkManager.session.request(url, parameters: parameters)
 
-        return networkManager.single(request: request).map { [weak self] (response: Response) -> [CoinType] in
-            self?.coinTypes(transactions: response.result) ?? []
+        return networkManager.single(request: request).map { [unowned self] (response: Response) -> CoinTypeInfo in
+            coinTypeInfo(transactions: response.result)
         }
     }
 
@@ -58,6 +72,11 @@ extension EnableCoinsEip20Provider {
     enum Mode {
         case erc20
         case bep20
+    }
+
+    struct CoinTypeInfo {
+        let coinTypes: [CoinType]
+        let lastTransactionBlockNumber: Int?
     }
 
     struct Response: ImmutableMappable {
@@ -71,9 +90,11 @@ extension EnableCoinsEip20Provider {
     }
 
     struct Transaction: ImmutableMappable {
+        let blockNumber: String
         let contractAddress: String
 
         init(map: Map) throws {
+            blockNumber = try map.value("blockNumber")
             contractAddress = try map.value("contractAddress")
         }
     }
