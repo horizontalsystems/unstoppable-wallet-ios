@@ -169,17 +169,25 @@ extension ManageWalletsService {
         syncState()
     }
 
-    func enable(fullCoin: FullCoin) {
+    func enable(uid: String) {
+        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+            return
+        }
+
         enableCoinService.enable(fullCoin: fullCoin, account: account)
     }
 
-    func disable(coin: Coin) {
-        let walletsToDelete = wallets.filter { $0.coin == coin }
+    func disable(uid: String) {
+        let walletsToDelete = wallets.filter { $0.coin.uid == uid }
         walletManager.delete(wallets: Array(walletsToDelete))
     }
 
-    func configure(fullCoin: FullCoin) {
-        let coinWallets = wallets.filter { $0.coin == fullCoin.coin }
+    func configure(uid: String) {
+        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+            return
+        }
+
+        let coinWallets = wallets.filter { $0.coin.uid == uid }
         enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: coinWallets.map { $0.configuredPlatformCoin })
     }
 
