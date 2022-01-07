@@ -85,7 +85,8 @@ class App {
     let deepLinkManager: IDeepLinkManager
     let launchScreenManager: LaunchScreenManager
 
-    let evmAccountManager: EvmAccountManager
+    let ethereumAccountManager: EvmAccountManager
+    let binanceSmartChainAccountManager: EvmAccountManager
 
     let appManager: AppManager
 
@@ -211,7 +212,11 @@ class App {
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
 
-        evmAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager, networkManager: networkManager, appConfigProvider: appConfigProvider, storage: storage)
+        let enableCoinsErc20Provider = EnableCoinsEip20Provider(networkManager: networkManager, appConfigProvider: appConfigProvider, mode: .erc20)
+        let enableCoinsBep20Provider = EnableCoinsEip20Provider(networkManager: networkManager, appConfigProvider: appConfigProvider, mode: .bep20)
+
+        ethereumAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, evmKitManager: ethereumKitManager, provider: enableCoinsErc20Provider, storage: storage)
+        binanceSmartChainAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, evmKitManager: binanceSmartChainKitManager, provider: enableCoinsBep20Provider, storage: storage)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(
                 coinManager: coinManager,

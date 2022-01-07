@@ -6,39 +6,24 @@ class EvmAccountManager {
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
     private let coinManager: CoinManager
-    private let ethereumKitManager: EvmKitManager
-    private let binanceSmartChainKitManager: EvmKitManager
+    private let evmKitManager: EvmKitManager
+    private let provider: EnableCoinsEip20Provider
     private let storage: IEvmAccountSyncStateStorage
-
-    private let erc20Provider: EnableCoinsEip20Provider
-    private let bep20Provider: EnableCoinsEip20Provider
 
     private let disposeBag = DisposeBag()
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, networkManager: NetworkManager, appConfigProvider: AppConfigProvider, storage: IEvmAccountSyncStateStorage) {
+    init(accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, evmKitManager: EvmKitManager, provider: EnableCoinsEip20Provider, storage: IEvmAccountSyncStateStorage) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
-        self.ethereumKitManager = ethereumKitManager
-        self.binanceSmartChainKitManager = binanceSmartChainKitManager
+        self.evmKitManager = evmKitManager
+        self.provider = provider
         self.storage = storage
 
-        erc20Provider = EnableCoinsEip20Provider(networkManager: networkManager, appConfigProvider: appConfigProvider, mode: .erc20)
-        bep20Provider = EnableCoinsEip20Provider(networkManager: networkManager, appConfigProvider: appConfigProvider, mode: .bep20)
-
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, ethereumKitManager.evmKitCreatedObservable) { [weak self] in self?.syncEthereum() }
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, binanceSmartChainKitManager.evmKitCreatedObservable) { [weak self] in self?.syncBinanceSmartChain() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.sync() }
     }
 
-    private func syncEthereum() {
-        sync(evmKitManager: ethereumKitManager, provider: erc20Provider)
-    }
-
-    private func syncBinanceSmartChain() {
-        sync(evmKitManager: binanceSmartChainKitManager, provider: bep20Provider)
-    }
-
-    private func sync(evmKitManager: EvmKitManager, provider: EnableCoinsEip20Provider) {
+    private func sync() {
         guard let account = accountManager.activeAccount else {
             return
         }
