@@ -50,7 +50,7 @@ class ManageWalletsViewController: CoinToggleViewController {
         }
 
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
-        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, coin: $0) }
+        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, uid: $0.uid) }
     }
 
     private func open(controller: UIViewController) {

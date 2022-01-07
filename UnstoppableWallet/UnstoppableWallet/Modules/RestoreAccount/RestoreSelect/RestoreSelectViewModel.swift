@@ -46,16 +46,16 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
         viewItemsRelay.asDriver()
     }
 
-    func onEnable(fullCoin: FullCoin) {
-        service.enable(fullCoin: fullCoin)
+    func onEnable(uid: String) {
+        service.enable(uid: uid)
     }
 
-    func onDisable(coin: Coin) {
-        service.disable(coin: coin)
+    func onDisable(uid: String) {
+        service.disable(uid: uid)
     }
 
-    func onTapSettings(fullCoin: FullCoin) {
-        service.configure(fullCoin: fullCoin)
+    func onTapSettings(uid: String) {
+        service.configure(uid: uid)
     }
 
     func onUpdate(filter: String) {

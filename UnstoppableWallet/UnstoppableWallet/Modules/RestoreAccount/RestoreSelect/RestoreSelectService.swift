@@ -189,18 +189,26 @@ extension RestoreSelectService {
         syncState()
     }
 
-    func enable(fullCoin: FullCoin) {
+    func enable(uid: String) {
+        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+            return
+        }
+
         enableCoinService.enable(fullCoin: fullCoin)
     }
 
-    func disable(coin: Coin) {
-        enabledCoins = enabledCoins.filter { $0.platformCoin.coin != coin }
+    func disable(uid: String) {
+        enabledCoins = enabledCoins.filter { $0.platformCoin.coin.uid != uid }
 
         syncState()
         syncCanRestore()
     }
 
-    func configure(fullCoin: FullCoin) {
+    func configure(uid: String) {
+        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+            return
+        }
+
         enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin.coin == fullCoin.coin })
     }
 

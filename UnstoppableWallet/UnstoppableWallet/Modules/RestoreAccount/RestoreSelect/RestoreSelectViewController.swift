@@ -51,7 +51,7 @@ class RestoreSelectViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in self?.dismiss(animated: true) }
-        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, coin: $0) }
+        subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, uid: $0.uid) }
         subscribe(disposeBag, viewModel.autoEnabledItemsSignal) { [weak self] in self?.showEnabledMessage(count: $0) }
     }
 
