@@ -188,7 +188,7 @@ class WelcomeScreenViewController: ThemeViewController {
         logoTitleLabel.textAlignment = .center
         logoTitleLabel.font = .title2
         logoTitleLabel.textColor = .themeLeah
-        logoTitleLabel.text = "Unstoppable\nWallet"
+        logoTitleLabel.text = "Unstoppable"
     }
 
     override func viewDidAppear(_ animated: Bool) {
