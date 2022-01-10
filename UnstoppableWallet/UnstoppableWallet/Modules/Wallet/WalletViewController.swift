@@ -390,6 +390,10 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard viewModel.swipeActionsEnabled else {
+            return nil
+        }
+
         let wallet = viewItems[indexPath.row].wallet
 
         let action = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in

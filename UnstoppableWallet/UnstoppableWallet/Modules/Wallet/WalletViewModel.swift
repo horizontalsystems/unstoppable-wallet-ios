@@ -164,6 +164,10 @@ extension WalletViewModel {
         }
     }
 
+    var swipeActionsEnabled: Bool {
+        !service.watchAccount
+    }
+
     func onSelectSortType(index: Int) {
         service.sortType = WalletModule.SortType.allCases[index]
     }
