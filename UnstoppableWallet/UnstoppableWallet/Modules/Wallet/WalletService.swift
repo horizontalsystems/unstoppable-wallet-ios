@@ -39,6 +39,16 @@ class WalletService {
         }
     }
 
+    private(set) var allItems: [Item] = [] {
+        didSet {
+            if watchAccount {
+                items = allItems.filter { $0.balanceData.balanceTotal != 0 }
+            } else {
+                items = allItems
+            }
+        }
+    }
+
     private let sortTypeRelay = PublishRelay<WalletModule.SortType>()
     var sortType: WalletModule.SortType {
         didSet {
@@ -115,7 +125,7 @@ class WalletService {
 
     private func handleUpdateSortType() {
         queue.async {
-            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
         }
     }
 
@@ -140,7 +150,7 @@ class WalletService {
             return item
         }
 
-        self.items = sorter.sort(items: items, sortType: sortType)
+        allItems = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
         let coinUids = Set(wallets.filter { !$0.coin.isCustom }.map { $0.coin.uid })
@@ -149,7 +159,7 @@ class WalletService {
     }
 
     private func items(coinUid: String) -> [Item] {
-        items.filter { $0.wallet.coin.uid == coinUid }
+        allItems.filter { $0.wallet.coin.uid == coinUid }
     }
 
     private func syncTotalItem() {
@@ -176,7 +186,7 @@ class WalletService {
     }
 
     private func _item(wallet: Wallet) -> Item? {
-        items.first { $0.wallet == wallet }
+        allItems.first { $0.wallet == wallet }
     }
 
     private var fallbackIsMainNet: Bool {
@@ -199,7 +209,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
         queue.async {
             var balanceDataMap = [Wallet: BalanceData]()
 
-            for item in self.items {
+            for item in self.allItems {
                 let balanceData = self.adapterService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
 
                 item.isMainNet = self.adapterService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
@@ -209,7 +219,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
                 balanceDataMap[item.wallet] = balanceData
             }
 
-            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
             self.syncTotalItem()
 
             self.cacheManager.set(balanceDataMap: balanceDataMap)
@@ -236,8 +246,8 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
             item.balanceData = balanceData
 
-            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
-                self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            if self.sortType == .balance, self.allItems.allSatisfy({ $0.state.isSynced }) {
+                self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
             } else {
                 self.itemUpdatedRelay.accept(item)
             }
@@ -257,8 +267,8 @@ extension WalletService: IWalletAdapterServiceDelegate {
             let oldState = item.state
             item.state = state
 
-            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
-                self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            if self.sortType == .balance, self.allItems.allSatisfy({ $0.state.isSynced }) {
+                self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
             } else {
                 self.itemUpdatedRelay.accept(item)
             }
@@ -275,13 +285,13 @@ extension WalletService: IWalletRateServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
-            let priceItemMap = self.coinPriceService.itemMap(coinUids: self.items.map { $0.wallet.coin.uid })
+            let priceItemMap = self.coinPriceService.itemMap(coinUids: self.allItems.map { $0.wallet.coin.uid })
 
-            for item in self.items {
+            for item in self.allItems {
                 item.priceItem = priceItemMap[item.wallet.coin.uid]
             }
 
-            self.items = self.sorter.sort(items: self.items, sortType: self.sortType)
+            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
             self.syncTotalItem()
         }
     }
