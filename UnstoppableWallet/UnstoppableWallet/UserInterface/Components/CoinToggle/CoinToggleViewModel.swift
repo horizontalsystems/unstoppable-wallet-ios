@@ -20,15 +20,6 @@ class CoinToggleViewModel {
         let title: String
         let subtitle: String
         let state: ViewItemState
-
-        init(fullCoin: FullCoin, state: ViewItemState) {
-            uid = fullCoin.coin.uid
-            imageUrl = fullCoin.coin.imageUrl
-            placeholderImageName = fullCoin.placeholderImageName
-            title = fullCoin.coin.name
-            subtitle = fullCoin.coin.code
-            self.state = state
-        }
     }
 
     enum ViewItemState {

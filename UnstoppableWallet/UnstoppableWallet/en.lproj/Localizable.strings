@@ -908,8 +908,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Restore Select
 
-"restore_select.title" = "Choose Coins";
-"restore_select.not_found" = "Not found";
+"restore_select.title" = "Choose Blockchains";
 
 // Lock Info
 
@@ -1004,15 +1003,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
 "status_info.failed.title" = "Failed";
 "status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Transactions with a fail status are still written to the blockchain and consume transaction fees. The Unstoppable app is unable to show the fail reason for such transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
-
-// Enable Coins
-
-"enable_coins.title" = "Enable Coins";
-"enable_coins.description" = "Enable all %@ based coins that have any balance.";
-"enable_coins.enable_button" = "Enable";
-"enable_coins.enabling" = "Enabling...";
-"enable_coins.enabled_coins" = "Enabled %@ more coins";
-"enable_coins.enabled_no_coins" = "Did not find any new tokens with balance";
 
 // Onboarding
 

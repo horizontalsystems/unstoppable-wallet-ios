@@ -28,7 +28,14 @@ class ManageWalletsViewModel {
         case .unsupported: viewItemState = .toggleHidden
         }
 
-        return CoinToggleViewModel.ViewItem(fullCoin: item.fullCoin, state: viewItemState)
+        return CoinToggleViewModel.ViewItem(
+                uid: item.fullCoin.coin.uid,
+                imageUrl: item.fullCoin.coin.imageUrl,
+                placeholderImageName: item.fullCoin.placeholderImageName,
+                title: item.fullCoin.coin.name,
+                subtitle: item.fullCoin.coin.code,
+                state: viewItemState
+        )
     }
 
     private func sync(items: [ManageWalletsService.Item]) {

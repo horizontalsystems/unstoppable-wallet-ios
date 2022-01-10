@@ -60,7 +60,7 @@ extension CoinPlatformsViewModel {
             return
         }
 
-        service.cancel(coin: request.fullCoin.coin)
+        service.cancel(fullCoin: request.fullCoin)
     }
 
 }

@@ -4,7 +4,7 @@ import MarketKit
 
 class CoinSettingsService {
     private let approveSettingsRelay = PublishRelay<CoinWithSettings>()
-    private let rejectApproveSettingsRelay = PublishRelay<Coin>()
+    private let rejectApproveSettingsRelay = PublishRelay<PlatformCoin>()
 
     private let requestRelay = PublishRelay<Request>()
 }
@@ -15,7 +15,7 @@ extension CoinSettingsService {
         approveSettingsRelay.asObservable()
     }
 
-    var rejectApproveSettingsObservable: Observable<Coin> {
+    var rejectApproveSettingsObservable: Observable<PlatformCoin> {
         rejectApproveSettingsRelay.asObservable()
     }
 
@@ -65,8 +65,8 @@ extension CoinSettingsService {
         approveSettingsRelay.accept(coinWithSettings)
     }
 
-    func cancel(coin: Coin) {
-        rejectApproveSettingsRelay.accept(coin)
+    func cancel(platformCoin: PlatformCoin) {
+        rejectApproveSettingsRelay.accept(platformCoin)
     }
 
 }

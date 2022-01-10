@@ -9,16 +9,14 @@ class RestoreSelectService {
     private let walletManager: WalletManager
     private let coinManager: CoinManager
     private let enableCoinService: EnableCoinService
-    private let enableCoinsService: EnableCoinsService
     private let disposeBag = DisposeBag()
 
-    private var fullCoins = [FullCoin]()
+    private var internalItems = [InternalItem]()
     private(set) var enabledCoins = Set<ConfiguredPlatformCoin>()
-    private var filter: String = ""
 
     private var restoreSettingsMap = [PlatformCoin: RestoreSettings]()
 
-    private let cancelEnableCoinRelay = PublishRelay<Coin>()
+    private let cancelEnableBlockchainRelay = PublishRelay<RestoreSelectModule.Blockchain>()
     private let canRestoreRelay = BehaviorRelay<Bool>(value: false)
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -28,80 +26,60 @@ class RestoreSelectService {
         }
     }
 
-    private let autoEnabledItemsRelay = PublishRelay<Int>()
-
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, enableCoinService: EnableCoinService, enableCoinsService: EnableCoinsService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
         self.enableCoinService = enableCoinService
-        self.enableCoinsService = enableCoinsService
 
-        subscribe(disposeBag, enableCoinsService.enableCoinTypesObservable) { [weak self] coinTypes in
-            self?.handleEnable(coinTypes: coinTypes)
-        }
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
             self?.handleEnableCoin(configuredPlatformCoins: configuredPlatformsCoins, restoreSettings: restoreSettings)
         }
-        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
-            self?.handleCancelEnable(coin: coin)
+        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
+            self?.handleCancelEnable(fullCoin: fullCoin)
         }
 
-        syncFullCoins()
-        sortFullCoins()
+        syncInternalItems()
         syncState()
     }
 
-    private func syncFullCoins() {
+    private func syncInternalItems() {
         do {
-            if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                fullCoins = try coinManager.featuredFullCoins(enabledPlatformCoins: enabledCoins.map { $0.platformCoin })
-            } else {
-                fullCoins = try coinManager.fullCoins(filter: filter, limit: 20)
+            let platformCoins = try coinManager.platformCoins(coinTypes: RestoreSelectModule.Blockchain.allCases.map { $0.coinType })
+
+            internalItems = RestoreSelectModule.Blockchain.allCases.compactMap { blockchain in
+                guard let platformCoin = platformCoins.first(where: { $0.coinType == blockchain.coinType }) else {
+                    return nil
+                }
+
+                return InternalItem(blockchain: blockchain, platformCoin: platformCoin)
             }
         } catch {
             // todo
         }
     }
 
-    private func isEnabled(coin: Coin) -> Bool {
-        enabledCoins.contains { $0.platformCoin.coin == coin }
+    private func isEnabled(internalItem: InternalItem) -> Bool {
+        enabledCoins.contains { $0.platformCoin == internalItem.platformCoin }
     }
 
-    private func hasSettingsOrPlatforms(fullCoin: FullCoin) -> Bool {
-        if fullCoin.platforms.count == 1 {
-            let platform = fullCoin.platforms[0]
-            return !platform.coinType.coinSettingTypes.isEmpty
-        } else {
-            return true
-        }
+    private func hasSettings(platformCoin: PlatformCoin) -> Bool {
+        !platformCoin.coinType.coinSettingTypes.isEmpty
     }
 
-    private func item(fullCoin: FullCoin) -> Item {
-        let supportedPlatforms = fullCoin.platforms.filter { $0.coinType.isSupported }
-
-        let fullCoin = FullCoin(coin: fullCoin.coin, platforms: supportedPlatforms)
-
+    private func item(internalItem: InternalItem) -> Item {
         let itemState: ItemState
 
-        if fullCoin.platforms.isEmpty {
-            itemState = .unsupported
-        } else {
-            let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(fullCoin: fullCoin))
-        }
+        let enabled = isEnabled(internalItem: internalItem)
+        itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettings(platformCoin: internalItem.platformCoin))
 
-        return Item(fullCoin: fullCoin, state: itemState)
-    }
-
-    private func sortFullCoins() {
-        fullCoins.sort(filter: filter) { isEnabled(coin: $0) }
+        return Item(blockchain: internalItem.blockchain, state: itemState)
     }
 
     private func syncState() {
-        items = fullCoins.map { item(fullCoin: $0) }
+        items = internalItems.map { item(internalItem: $0) }
     }
 
     private func syncCanRestore() {
@@ -117,7 +95,7 @@ class RestoreSelectService {
             restoreSettingsMap[platformCoin] = restoreSettings
         }
 
-        let existingConfiguredPlatformCoins = enabledCoins.filter { $0.platformCoin.coin == platformCoin.coin }
+        let existingConfiguredPlatformCoins = enabledCoins.filter { $0.platformCoin == platformCoin }
 
         let newConfiguredPlatformCoins = configuredPlatformCoins.filter { !existingConfiguredPlatformCoins.contains($0) }
         let removedConfiguredPlatformCoins = existingConfiguredPlatformCoins.filter { !configuredPlatformCoins.contains($0) }
@@ -132,32 +110,15 @@ class RestoreSelectService {
 
         syncCanRestore()
         syncState()
-        enableCoinsService.handle(coinTypes: newConfiguredPlatformCoins.map { $0.platformCoin.coinType }, accountType: accountType)
     }
 
-    private func handleCancelEnable(coin: Coin) {
-        if !isEnabled(coin: coin) {
-            cancelEnableCoinRelay.accept(coin)
+    private func handleCancelEnable(fullCoin: FullCoin) {
+        guard let internalItem = internalItems.first(where: { fullCoin.platforms.contains($0.platformCoin.platform) }) else {
+            return
         }
-    }
 
-    private func handleEnable(coinTypes: [CoinType]) {
-        do {
-            var newCoinsCount = 0
-            for platformCoin in try coinManager.platformCoins(coinTypeIds: coinTypes.map { $0.id }) {
-                let (inserted, _) = enabledCoins.insert(ConfiguredPlatformCoin(platformCoin: platformCoin))
-                if inserted {
-                    newCoinsCount += 1
-                }
-            }
-
-            autoEnabledItemsRelay.accept(newCoinsCount)
-
-            syncFullCoins()
-            sortFullCoins()
-            syncState()
-        } catch {
-            // todo
+        if !isEnabled(internalItem: internalItem) {
+            cancelEnableBlockchainRelay.accept(internalItem.blockchain)
         }
     }
 
@@ -165,51 +126,43 @@ class RestoreSelectService {
 
 extension RestoreSelectService {
 
-    var autoEnabledItemsObservable: Observable<Int> {
-        autoEnabledItemsRelay.asObservable()
-    }
-
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
 
-    var cancelEnableCoinObservable: Observable<Coin> {
-        cancelEnableCoinRelay.asObservable()
+    var cancelEnableBlockchainObservable: Observable<RestoreSelectModule.Blockchain> {
+        cancelEnableBlockchainRelay.asObservable()
     }
 
     var canRestoreObservable: Observable<Bool> {
         canRestoreRelay.asObservable()
     }
 
-    func set(filter: String) {
-        self.filter = filter
-
-        syncFullCoins()
-        sortFullCoins()
-        syncState()
-    }
-
-    func enable(uid: String) {
-        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+    func enable(blockchain: RestoreSelectModule.Blockchain) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
             return
         }
 
-        enableCoinService.enable(fullCoin: fullCoin)
+        enableCoinService.enable(fullCoin: internalItem.platformCoin.fullCoin)
     }
 
-    func disable(uid: String) {
-        enabledCoins = enabledCoins.filter { $0.platformCoin.coin.uid != uid }
+    func disable(blockchain: RestoreSelectModule.Blockchain) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
+            return
+        }
+
+        enabledCoins = enabledCoins.filter { $0.platformCoin != internalItem.platformCoin }
 
         syncState()
         syncCanRestore()
     }
 
-    func configure(uid: String) {
-        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+    func configure(blockchain: RestoreSelectModule.Blockchain) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
             return
         }
 
-        enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin.coin == fullCoin.coin })
+        enableCoinService.configure(fullCoin: internalItem.platformCoin.fullCoin, configuredPlatformCoins: enabledCoins.filter { $0.platformCoin == internalItem.platformCoin })
     }
 
     func restore() {
@@ -232,8 +185,13 @@ extension RestoreSelectService {
 
 extension RestoreSelectService {
 
+    struct InternalItem {
+        let blockchain: RestoreSelectModule.Blockchain
+        let platformCoin: PlatformCoin
+    }
+
     struct Item {
-        let fullCoin: FullCoin
+        let blockchain: RestoreSelectModule.Blockchain
         let state: ItemState
     }
 

@@ -50,7 +50,7 @@ extension RestoreSettingsViewModel {
             return
         }
 
-        service.cancel(coin: request.platformCoin.coin)
+        service.cancel(platformCoin: request.platformCoin)
     }
 
 }
