@@ -9,7 +9,7 @@ class EnableCoinService {
     private let disposeBag = DisposeBag()
 
     private let enableCoinRelay = PublishRelay<([ConfiguredPlatformCoin], RestoreSettings)>()
-    private let cancelEnableCoinRelay = PublishRelay<Coin>()
+    private let cancelEnableCoinRelay = PublishRelay<FullCoin>()
 
     init(coinPlatformsService: CoinPlatformsService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
         self.coinPlatformsService = coinPlatformsService
@@ -19,20 +19,20 @@ class EnableCoinService {
         subscribe(disposeBag, coinPlatformsService.approvePlatformsObservable) { [weak self] coinWithPlatforms in
             self?.handleApproveCoinPlatforms(coin: coinWithPlatforms.coin, platforms: coinWithPlatforms.platforms)
         }
-        subscribe(disposeBag, coinPlatformsService.rejectApprovePlatformsObservable) { [weak self] coin in
-            self?.handleRejectApprovePlatformSettings(coin: coin)
+        subscribe(disposeBag, coinPlatformsService.rejectApprovePlatformsObservable) { [weak self] fullCoin in
+            self?.handleRejectApprovePlatformSettings(fullCoin: fullCoin)
         }
         subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
             self?.handleApproveRestoreSettings(platformCoin: coinWithSettings.platformCoin, settings: coinWithSettings.settings)
         }
-        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
-            self?.handleRejectApproveRestoreSettings(coin: coin)
+        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] platformCoin in
+            self?.handleRejectApproveRestoreSettings(platformCoin: platformCoin)
         }
         subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] coinWithSettings in
             self?.handleApproveCoinSettings(platformCoin: coinWithSettings.platformCoin, settingsArray: coinWithSettings.settingsArray)
         }
-        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] coin in
-            self?.handleRejectApproveCoinSettings(coin: coin)
+        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] platformCoin in
+            self?.handleRejectApproveCoinSettings(platformCoin: platformCoin)
         }
     }
 
@@ -40,8 +40,8 @@ class EnableCoinService {
         enableCoinRelay.accept(([ConfiguredPlatformCoin(platformCoin: platformCoin)], settings))
     }
 
-    private func handleRejectApproveRestoreSettings(coin: Coin) {
-        cancelEnableCoinRelay.accept(coin)
+    private func handleRejectApproveRestoreSettings(platformCoin: PlatformCoin) {
+        cancelEnableCoinRelay.accept(platformCoin.fullCoin)
     }
 
     private func handleApproveCoinSettings(platformCoin: PlatformCoin, settingsArray: [CoinSettings] = []) {
@@ -49,8 +49,8 @@ class EnableCoinService {
         enableCoinRelay.accept((configuredPlatformCoins, [:]))
     }
 
-    private func handleRejectApproveCoinSettings(coin: Coin) {
-        cancelEnableCoinRelay.accept(coin)
+    private func handleRejectApproveCoinSettings(platformCoin: PlatformCoin) {
+        cancelEnableCoinRelay.accept(platformCoin.fullCoin)
     }
 
     private func handleApproveCoinPlatforms(coin: Coin, platforms: [Platform]) {
@@ -58,8 +58,8 @@ class EnableCoinService {
         enableCoinRelay.accept((configuredPlatformCoins, [:]))
     }
 
-    private func handleRejectApprovePlatformSettings(coin: Coin) {
-        cancelEnableCoinRelay.accept(coin)
+    private func handleRejectApprovePlatformSettings(fullCoin: FullCoin) {
+        cancelEnableCoinRelay.accept(fullCoin)
     }
 
 }
@@ -70,7 +70,7 @@ extension EnableCoinService {
         enableCoinRelay.asObservable()
     }
 
-    var cancelEnableCoinObservable: Observable<Coin> {
+    var cancelEnableCoinObservable: Observable<FullCoin> {
         cancelEnableCoinRelay.asObservable()
     }
 

@@ -40,8 +40,8 @@ class ManageWalletsService {
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
             self?.handleEnableCoin(configuredPlatformCoins: configuredPlatformsCoins, restoreSettings: restoreSettings)
         }
-        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
-            self?.handleCancelEnable(coin: coin)
+        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
+            self?.handleCancelEnable(fullCoin: fullCoin)
         }
 
         sync(wallets: walletManager.activeWallets)
@@ -143,9 +143,9 @@ class ManageWalletsService {
         }
     }
 
-    private func handleCancelEnable(coin: Coin) {
-        if !isEnabled(coin: coin) {
-            cancelEnableCoinRelay.accept(coin)
+    private func handleCancelEnable(fullCoin: FullCoin) {
+        if !isEnabled(coin: fullCoin.coin) {
+            cancelEnableCoinRelay.accept(fullCoin.coin)
         }
     }
 

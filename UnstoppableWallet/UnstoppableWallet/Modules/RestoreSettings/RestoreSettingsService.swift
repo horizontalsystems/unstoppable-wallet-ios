@@ -6,7 +6,7 @@ class RestoreSettingsService {
     private let manager: RestoreSettingsManager
 
     private let approveSettingsRelay = PublishRelay<CoinWithSettings>()
-    private let rejectApproveSettingsRelay = PublishRelay<Coin>()
+    private let rejectApproveSettingsRelay = PublishRelay<PlatformCoin>()
 
     private let requestRelay = PublishRelay<Request>()
 
@@ -22,7 +22,7 @@ extension RestoreSettingsService {
         approveSettingsRelay.asObservable()
     }
 
-    var rejectApproveSettingsObservable: Observable<Coin> {
+    var rejectApproveSettingsObservable: Observable<PlatformCoin> {
         rejectApproveSettingsRelay.asObservable()
     }
 
@@ -71,8 +71,8 @@ extension RestoreSettingsService {
         approveSettingsRelay.accept(coinWithSettings)
     }
 
-    func cancel(coin: Coin) {
-        rejectApproveSettingsRelay.accept(coin)
+    func cancel(platformCoin: PlatformCoin) {
+        rejectApproveSettingsRelay.accept(platformCoin)
     }
 
 }

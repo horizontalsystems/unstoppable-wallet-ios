@@ -1,3 +1,4 @@
+import UIKit
 import RxSwift
 import RxCocoa
 import MarketKit
@@ -7,17 +8,14 @@ class RestoreSelectViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
-    private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let disableCoinRelay = PublishRelay<Coin>()
+    private let disableBlockchainRelay = PublishRelay<String>()
     private let successRelay = PublishRelay<()>()
-    private let autoEnabledItemsRelay = PublishRelay<Int>()
 
     init(service: RestoreSelectService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        subscribe(disposeBag, service.cancelEnableCoinObservable) { [weak self] in self?.disableCoinRelay.accept($0) }
-        subscribe(disposeBag, service.autoEnabledItemsObservable) { [weak self] in self?.autoEnabledItemsRelay.accept($0) }
+        subscribe(disposeBag, service.cancelEnableBlockchainObservable) { [weak self] in self?.disableBlockchainRelay.accept($0.rawValue) }
 
         sync(items: service.items)
     }
@@ -30,12 +28,21 @@ class RestoreSelectViewModel {
         case .unsupported: viewItemState = .toggleHidden
         }
 
-        return CoinToggleViewModel.ViewItem(fullCoin: item.fullCoin, state: viewItemState)
+        let scale = Int(UIScreen.main.scale)
+        let imageUrl = "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(item.blockchain.iconUid)@\(scale)x.png"
+
+        return CoinToggleViewModel.ViewItem(
+                uid: item.blockchain.rawValue,
+                imageUrl: imageUrl,
+                placeholderImageName: nil,
+                title: item.blockchain.title,
+                subtitle: item.blockchain.description,
+                state: viewItemState
+        )
     }
 
     private func sync(items: [RestoreSelectService.Item]) {
         viewItemsRelay.accept(items.map { viewItem(item: $0) })
-        notFoundVisibleRelay.accept(items.isEmpty)
     }
 
 }
@@ -47,33 +54,38 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(uid: String) {
-        service.enable(uid: uid)
+        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
+            return
+        }
+
+        service.enable(blockchain: blockchain)
     }
 
     func onDisable(uid: String) {
-        service.disable(uid: uid)
+        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
+            return
+        }
+
+        service.disable(blockchain: blockchain)
     }
 
     func onTapSettings(uid: String) {
-        service.configure(uid: uid)
+        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
+            return
+        }
+
+        service.configure(blockchain: blockchain)
     }
 
     func onUpdate(filter: String) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.service.set(filter: filter)
-        }
     }
 
 }
 
 extension RestoreSelectViewModel {
 
-    var notFoundVisibleDriver: Driver<Bool> {
-        notFoundVisibleRelay.asDriver()
-    }
-
-    var disableCoinSignal: Signal<Coin> {
-        disableCoinRelay.asSignal()
+    var disableBlockchainSignal: Signal<String> {
+        disableBlockchainRelay.asSignal()
     }
 
     var restoreEnabledDriver: Driver<Bool> {
@@ -82,10 +94,6 @@ extension RestoreSelectViewModel {
 
     var successSignal: Signal<()> {
         successRelay.asSignal()
-    }
-
-    var autoEnabledItemsSignal: Signal<Int> {
-        autoEnabledItemsRelay.asSignal()
     }
 
     func onRestore() {
