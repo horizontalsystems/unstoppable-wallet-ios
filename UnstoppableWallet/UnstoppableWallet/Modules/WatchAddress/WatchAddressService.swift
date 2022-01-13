@@ -32,7 +32,7 @@ class WatchAddressService {
         switch addressState {
         case .success(let address):
             do {
-                state = .ready(address: try EthereumKit.Address(hex: address.raw))
+                state = .ready(address: try EthereumKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 state = .notReady
             }
@@ -50,11 +50,11 @@ extension WatchAddressService {
     }
 
     func watch() throws {
-        guard case .ready(let address) = state else {
+        guard case let .ready(address, domain) = state else {
             throw StateError.notReady
         }
 
-        let account = accountFactory.watchAccount(address: address)
+        let account = accountFactory.watchAccount(address: address, domain: domain)
         accountManager.save(account: account)
 
         do {
@@ -72,7 +72,7 @@ extension WatchAddressService {
 extension WatchAddressService {
 
     enum State {
-        case ready(address: EthereumKit.Address)
+        case ready(address: EthereumKit.Address, domain: String?)
         case notReady
     }
 
