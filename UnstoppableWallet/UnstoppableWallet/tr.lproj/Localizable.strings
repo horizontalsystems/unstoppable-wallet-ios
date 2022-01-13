@@ -509,9 +509,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
 
-"coin_page.tab.overview" = "Overview";
-"coin_page.tab.markets" = "Market";
-"coin_page.tab.details" = "Details";
+"coin_page.tab.overview" = "Price";
+"coin_page.tab.markets" = "Markets";
+"coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Market Cap";
@@ -643,8 +643,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Incoming";
 "transactions.types.outgoing" = "Outgoing";
-"transactions.types.swap" = "Swap";
-"transactions.types.approve" = "Approve";
+"transactions.types.swap" = "Swaps";
+"transactions.types.approve" = "Approvals";
 
 // Transaction Info
 
