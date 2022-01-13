@@ -569,7 +569,7 @@ class GrdbStorage {
             try db.create(table: EvmAccountSyncState.databaseTableName) { t in
                 t.column(EvmAccountSyncState.Columns.accountId.name, .text).notNull()
                 t.column(EvmAccountSyncState.Columns.chainId.name, .integer).notNull()
-                t.column(EvmAccountSyncState.Columns.lastTransactionBlockNumber.name, .integer)
+                t.column(EvmAccountSyncState.Columns.lastBlockNumber.name, .integer).notNull()
 
                 t.primaryKey([EvmAccountSyncState.Columns.accountId.name, EvmAccountSyncState.Columns.chainId.name], onConflict: .replace)
             }

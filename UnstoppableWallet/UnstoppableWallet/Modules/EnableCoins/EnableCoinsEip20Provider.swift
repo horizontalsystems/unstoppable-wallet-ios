@@ -36,32 +36,43 @@ class EnableCoinsEip20Provider {
         }
     }
 
-    private func coinTypeInfo(transactions: [Transaction]) -> CoinTypeInfo {
+    private func coinTypes(transactions: [Transaction]) -> [CoinType] {
         let transactionCoinTypes = transactions.map { coinType(address: $0.contractAddress) }
-        let coinTypes = Array(Set(transactionCoinTypes))
-        let lastTransactionBlockNumber = transactions.last.flatMap { Int($0.blockNumber) }
-
-        return CoinTypeInfo(coinTypes: coinTypes, lastTransactionBlockNumber: lastTransactionBlockNumber)
+        return Array(Set(transactionCoinTypes))
     }
 
 }
 
 extension EnableCoinsEip20Provider {
 
-    func coinTypeInfoSingle(address: String, startBlock: Int? = nil) -> Single<CoinTypeInfo> {
+    func blockNumberSingle() -> Single<Int> {
+        let parameters: Parameters = [
+            "module": "proxy",
+            "action": "eth_blockNumber",
+            "apikey": apiKey
+        ]
+
+        let request = networkManager.session.request(url, parameters: parameters)
+
+        return networkManager.single(request: request).map { [unowned self] (response: RpcResponse) -> Int in
+            Int(response.result.stripHexPrefix(), radix: 16) ?? 0
+        }
+    }
+
+    func coinTypesSingle(address: String, startBlock: Int = 0) -> Single<[CoinType]> {
         let parameters: Parameters = [
             "module": "account",
             "action": "tokentx",
             "address": address,
-            "startblock": startBlock ?? 0,
+            "startblock": startBlock,
             "sort": "asc",
             "apikey": apiKey
         ]
 
         let request = networkManager.session.request(url, parameters: parameters)
 
-        return networkManager.single(request: request).map { [unowned self] (response: Response) -> CoinTypeInfo in
-            coinTypeInfo(transactions: response.result)
+        return networkManager.single(request: request).map { [unowned self] (response: Response) -> [CoinType] in
+            coinTypes(transactions: response.result)
         }
     }
 
@@ -74,11 +85,6 @@ extension EnableCoinsEip20Provider {
         case bep20
     }
 
-    struct CoinTypeInfo {
-        let coinTypes: [CoinType]
-        let lastTransactionBlockNumber: Int?
-    }
-
     struct Response: ImmutableMappable {
         let status: String
         let result: [Transaction]
@@ -89,12 +95,18 @@ extension EnableCoinsEip20Provider {
         }
     }
 
+    struct RpcResponse: ImmutableMappable {
+        let result: String
+
+        init(map: Map) throws {
+            result = try map.value("result")
+        }
+    }
+
     struct Transaction: ImmutableMappable {
-        let blockNumber: String
         let contractAddress: String
 
         init(map: Map) throws {
-            blockNumber = try map.value("blockNumber")
             contractAddress = try map.value("contractAddress")
         }
     }
