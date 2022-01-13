@@ -58,13 +58,26 @@ class OnboardingBalanceViewController: ThemeViewController {
         restoreButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
         restoreButton.apply(style: .primaryGray)
         restoreButton.setTitle("onboarding.balance.restore".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
+
+        let watchButton = ThemeButton()
+
+        view.addSubview(watchButton)
+        watchButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        watchButton.apply(style: .primaryGray)
+        watchButton.setTitle("onboarding.balance.watch".localized, for: .normal)
+        watchButton.addTarget(self, action: #selector(didTapWatch), for: .touchUpInside)
     }
 
     @objc func didTapCreate() {
@@ -74,6 +87,11 @@ class OnboardingBalanceViewController: ThemeViewController {
 
     @objc func didTapRestore() {
         let viewController = RestoreMnemonicModule.viewController()
+        present(viewController, animated: true)
+    }
+
+    @objc func didTapWatch() {
+        let viewController = WatchAddressModule.viewController()
         present(viewController, animated: true)
     }
 
