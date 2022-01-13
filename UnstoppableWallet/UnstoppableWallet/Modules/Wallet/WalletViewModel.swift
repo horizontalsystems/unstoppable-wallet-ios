@@ -84,7 +84,7 @@ class WalletViewModel {
             self.viewItemsRelay.accept(self.viewItems)
         }
 
-        displayModeRelay.accept(items.isEmpty ? .empty : .list)
+        displayModeRelay.accept(items.isEmpty ? (service.watchAccount ? .watchEmpty : .empty) : .list)
     }
 
     private func viewItem(item: WalletService.Item) -> BalanceViewItem {
@@ -255,6 +255,7 @@ extension WalletViewModel {
     enum DisplayMode {
         case list
         case empty
+        case watchEmpty
     }
 
     struct HeaderViewItem {
