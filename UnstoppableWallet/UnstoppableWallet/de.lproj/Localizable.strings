@@ -523,6 +523,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
+"coin_page.markets.empty" = "No data available";
+
 
 "coin_page.coin_markets" = "%@ Markets";
 "coin_page.coin_markets.sort_by" = "Sort By";
