@@ -36,10 +36,6 @@ extension SendDashInteractor: ISendDashInteractor {
         }
     }
 
-    func validate(address: String) throws {
-        try adapter.validate(address: address)
-    }
-
     func fetchFee(amount: Decimal, address: String?) {
         DispatchQueue.global(qos: .userInitiated).async {
             let fee = self.adapter.fee(amount: amount, address: address)

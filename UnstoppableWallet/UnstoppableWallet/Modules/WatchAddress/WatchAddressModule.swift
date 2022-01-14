@@ -20,7 +20,7 @@ struct WatchAddressModule {
         )
         let viewModel = WatchAddressViewModel(service: service)
 
-        let addressViewModel = RecipientAddressViewModel(service: addressService)
+        let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
         let viewController = WatchAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel)
 
