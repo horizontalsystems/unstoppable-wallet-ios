@@ -140,6 +140,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.watch_empty.description" = "This wallet address does not have any balance";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
