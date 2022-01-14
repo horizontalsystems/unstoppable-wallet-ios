@@ -19,7 +19,7 @@ struct UniswapSettingsModule {
         let service = UniswapSettingsService(tradeOptions: tradeService.settings, addressService: addressService)
         let viewModel = UniswapSettingsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
 
-        let recipientViewModel = RecipientAddressViewModel(service: addressService)
+        let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
         let deadlineViewModel = SwapDeadlineViewModel(service: service, decimalParser: AmountDecimalParser())
 

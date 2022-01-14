@@ -19,10 +19,6 @@ extension SendBinanceInteractor: ISendBinanceInteractor {
         return adapter.availableBinanceBalance
     }
 
-    func validate(address: String) throws {
-        try adapter.validate(address: address)
-    }
-
     var fee: Decimal {
         return adapter.fee
     }

@@ -23,7 +23,6 @@ class SendBinanceHandler {
 
     private func syncValidation() {
         var amountError: Error?
-        var addressError: Error?
 
         do {
             _ = try amountModule.validAmount()
@@ -31,13 +30,7 @@ class SendBinanceHandler {
             amountError = error
         }
 
-        do {
-            try addressModule.validateAddress()
-        } catch {
-            addressError = error
-        }
-
-        delegate?.onChange(isValid: amountError == nil && addressError == nil && feeModule.isValid, amountError: amountError, addressError: addressError)
+        delegate?.onChange(isValid: amountError == nil && feeModule.isValid, amountError: amountError, addressError: nil)
     }
 
 }
@@ -100,10 +93,6 @@ extension SendBinanceHandler: ISendAmountDelegate {
 }
 
 extension SendBinanceHandler: ISendAddressDelegate {
-
-    func validate(address: String) throws {
-        try interactor.validate(address: address)
-    }
 
     func onUpdateAddress() {
         syncValidation()

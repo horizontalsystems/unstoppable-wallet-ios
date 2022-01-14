@@ -6,13 +6,14 @@ protocol IRecipientAddressService {
     var addressStateObservable: Observable<AddressService.State> { get }
     var recipientError: Error? { get }
     var recipientErrorObservable: Observable<Error?> { get }
-    func set(address: String?)
+    func set(address: Address?)
     func set(amount: Decimal)
 }
 
 class RecipientAddressViewModel {
     private let disposeBag = DisposeBag()
     private let service: AddressService
+    private let handlerDelegate: IRecipientAddressService? // for legacy handlers
 
     private let isSuccessRelay = BehaviorRelay<Bool>(value: false)
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -21,8 +22,9 @@ class RecipientAddressViewModel {
 
     private var editing = false
 
-    init(service: AddressService) {
+    init(service: AddressService, handlerDelegate: IRecipientAddressService?) {
         self.service = service
+        self.handlerDelegate = handlerDelegate
 
         subscribe(disposeBag, service.stateObservable) { [weak self] state in
             self?.sync(state: state)
@@ -37,23 +39,33 @@ class RecipientAddressViewModel {
             cautionRelay.accept(nil)
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
+
+            handlerDelegate?.set(address: nil)
         case .loading:
             cautionRelay.accept(nil)
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(true)
+
+            handlerDelegate?.set(address: nil)
         case .validationError:
             cautionRelay.accept(editing ? nil : Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
+
+            handlerDelegate?.set(address: nil)
         case .fetchError:
             cautionRelay.accept(Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
+
+            handlerDelegate?.set(address: nil)
         case .success(let address):
             setTextRelay.accept(address.title)
             cautionRelay.accept(nil)
             isSuccessRelay.accept(true)
             isLoadingRelay.accept(false)
+
+            handlerDelegate?.set(address: address)
         }
 
     }

@@ -19,7 +19,7 @@ struct OneInchSettingsModule {
         let service = OneInchSettingsService(settings: tradeService.settings, addressService: addressService)
         let viewModel = OneInchSettingsViewModel(service: service, tradeService: tradeService, decimalParser: AmountDecimalParser())
 
-        let recipientViewModel = RecipientAddressViewModel(service: addressService)
+        let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
 
         return OneInchSettingsDataSource(

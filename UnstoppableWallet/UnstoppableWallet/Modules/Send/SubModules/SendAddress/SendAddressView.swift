@@ -61,6 +61,9 @@ class SendAddressView: UIView {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in
             self?.addressInputView.set(isLoading: $0)
         }
+        subscribe(disposeBag, viewModel.isSuccessDriver) { [weak self] in
+            self?.addressInputView.set(isSuccess: $0)
+        }
         subscribe(disposeBag, viewModel.setTextDriver) { [weak self] in
             self?.addressInputView.inputText = $0
         }

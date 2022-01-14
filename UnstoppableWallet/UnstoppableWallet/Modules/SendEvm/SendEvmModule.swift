@@ -34,7 +34,7 @@ class SendEvmModule {
         let chainCoinCode = AddressResolutionService.chainCoinCode(coinType: platformCoin.platform.coinType) ?? platformCoin.code
         addressParserChain.append(handler: UDNAddressParserItem(coinCode: chainCoinCode, chain: nil))
 
-        let recipientViewModel = RecipientAddressViewModel(service: addressService)
+        let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
         let viewController = SendEvmViewController(
                 evmKitWrapper: adapter.evmKitWrapper,
