@@ -41,6 +41,10 @@ extension SwapSelectProviderService {
         itemsRelay.asObservable()
     }
 
+    var blockchain: SwapModule.Dex.Blockchain? {
+        dexManager.dex?.blockchain
+    }
+
     func set(provider: SwapModule.Dex.Provider) {
         dexManager.set(provider: provider)
 

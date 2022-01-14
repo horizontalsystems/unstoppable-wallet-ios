@@ -48,6 +48,10 @@ extension SwapSelectProviderViewModel {
         sectionViewItemsRelay.asDriver()
     }
 
+    var blockchainTitle: String? {
+        service.blockchain?.title
+    }
+
     func onSelect(index: Int) {
         service.set(provider: service.items[index].provider)
         selectedRelay.accept(())
