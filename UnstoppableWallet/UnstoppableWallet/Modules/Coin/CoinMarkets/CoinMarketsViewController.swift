@@ -11,6 +11,7 @@ class CoinMarketsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
+    private let infoLabel = UILabel()
     private let errorView = MarketListErrorView()
     private let headerView: MarketSingleSortHeaderView
 
@@ -67,10 +68,30 @@ class CoinMarketsViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: G14Cell.self)
 
+        wrapperView.addSubview(infoLabel)
+        infoLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.centerY.equalToSuperview()
+        }
+
+        infoLabel.textAlignment = .center
+        infoLabel.numberOfLines = 0
+        infoLabel.font = .subhead2
+        infoLabel.textColor = .themeGray
+
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
+        subscribe(disposeBag, viewModel.infoDriver) { [weak self] info in
+            if let info = info {
+                self?.infoLabel.text = info
+                self?.infoLabel.isHidden = false
+            } else {
+                self?.infoLabel.isHidden = true
+            }
+        }
+
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
             if let error = error {
                 self?.errorView.text = error
