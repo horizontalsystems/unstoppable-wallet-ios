@@ -58,12 +58,14 @@ class CoinPageService {
     }
 
     private func syncWalletState() {
-        guard accountManager.activeAccount != nil else {
+        guard let activeAccount = accountManager.activeAccount else {
             walletState = .noActiveAccount
             return
         }
 
-        if supportedPlatforms.isEmpty {
+        if activeAccount.watchAccount {
+            walletState = .watchAccount
+        } else if supportedPlatforms.isEmpty {
             walletState = .unsupported
         } else {
             walletState = .supported(added: !enabledWallets.isEmpty)
@@ -117,6 +119,7 @@ extension CoinPageService {
 
     enum WalletState {
         case noActiveAccount
+        case watchAccount
         case unsupported
         case supported(added: Bool)
     }
