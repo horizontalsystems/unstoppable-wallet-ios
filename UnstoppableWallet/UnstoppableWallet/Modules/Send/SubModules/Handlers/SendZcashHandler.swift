@@ -11,14 +11,16 @@ class SendZcashHandler {
     private let addressModule: ISendAddressModule
     private let memoModule: ISendMemoModule
     private let feeModule: ISendFeeModule
+    private let zCashAddressParser: ZcashAddressParserItem
 
-    init(interactor: ISendZcashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule) {
+    init(interactor: ISendZcashInteractor, amountModule: ISendAmountModule, addressModule: ISendAddressModule, memoModule: ISendMemoModule, feeModule: ISendFeeModule, zCashAddressParser: ZcashAddressParserItem) {
         self.interactor = interactor
 
         self.amountModule = amountModule
         self.addressModule = addressModule
         self.memoModule = memoModule
         self.feeModule = feeModule
+        self.zCashAddressParser = zCashAddressParser
 
         self.memoModule.set(hidden: true)
     }
@@ -34,7 +36,12 @@ class SendZcashHandler {
         }
 
         do {
-            try addressModule.validateAddress()
+            if let address = addressModule.currentAddress {
+                let addressType = try zCashAddressParser.validate(address: address.raw)
+                memoModule.set(hidden: addressType == .transparent)
+            } else {
+                memoModule.set(hidden: true)
+            }
         } catch {
             addressError = error
 
@@ -111,16 +118,6 @@ extension SendZcashHandler: ISendAmountDelegate {
 }
 
 extension SendZcashHandler: ISendAddressDelegate {
-
-    func validate(address: String) throws {
-        do {
-            let addressType = try interactor.validate(address: address)
-            memoModule.set(hidden: addressType == .transparent)
-        } catch {
-            memoModule.set(hidden: true)
-            throw error
-        }
-    }
 
     func onUpdateAddress() {
         syncValidation()
