@@ -33,7 +33,9 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         titleView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
         }
-        titleView.bind(title: "swap.switch_provider.title".localized, subtitle: "swap.switch_provider.subtitle".localized, image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob))
+
+        titleView.bind(title: "swap.switch_provider.title".localized, subtitle: viewModel.blockchainTitle, image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob))
+        titleView.onTapClose = { [weak self] in self?.dismiss(animated: true) }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
