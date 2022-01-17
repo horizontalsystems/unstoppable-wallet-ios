@@ -64,16 +64,16 @@ extension RestoreSelectModule {
             }
         }
 
-        var iconUid: String {
+        var icon: BlockchainIcon {
             switch self {
-            case .bitcoin: return "bitcoin"
-            case .ethereum: return "ethereum"
-            case .binanceSmartChain: return "binancecoin"
-            case .bitcoinCash: return "bitcoin-cash"
-            case .zcash: return "zcash"
-            case .litecoin: return "litecoin"
-            case .dash: return "dash"
-            case .binanceChain: return "binancecoin"
+            case .bitcoin: return .remote(iconUid: "bitcoin")
+            case .ethereum: return .remote(iconUid: "ethereum")
+            case .binanceSmartChain: return .local(imageName: "binance_smart_chain_24")
+            case .bitcoinCash: return .remote(iconUid: "bitcoin-cash")
+            case .zcash: return .remote(iconUid: "zcash")
+            case .litecoin: return .remote(iconUid: "litecoin")
+            case .dash: return .remote(iconUid: "dash")
+            case .binanceChain: return .local(imageName: "binance_chain_24")
             }
         }
 
@@ -87,6 +87,30 @@ extension RestoreSelectModule {
             case .litecoin: return .litecoin
             case .dash: return .dash
             case .binanceChain: return .bep2(symbol: "BNB")
+            }
+        }
+    }
+
+    enum BlockchainIcon {
+        case remote(iconUid: String)
+        case local(imageName: String)
+
+        var imageUrl: String {
+            switch self {
+            case .remote(let iconUid):
+                let scale = Int(UIScreen.main.scale)
+                return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(iconUid)@\(scale)x.png"
+            case .local:
+                return ""
+            }
+        }
+
+        var placeholderImageName: String? {
+            switch self {
+            case .remote:
+                return nil
+            case .local(let imageName):
+                return imageName
             }
         }
     }
