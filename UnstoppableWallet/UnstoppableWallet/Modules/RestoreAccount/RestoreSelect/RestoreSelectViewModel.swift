@@ -28,13 +28,10 @@ class RestoreSelectViewModel {
         case .unsupported: viewItemState = .toggleHidden
         }
 
-        let scale = Int(UIScreen.main.scale)
-        let imageUrl = "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(item.blockchain.iconUid)@\(scale)x.png"
-
         return CoinToggleViewModel.ViewItem(
                 uid: item.blockchain.rawValue,
-                imageUrl: imageUrl,
-                placeholderImageName: nil,
+                imageUrl: item.blockchain.icon.imageUrl,
+                placeholderImageName: item.blockchain.icon.placeholderImageName,
                 title: item.blockchain.title,
                 subtitle: item.blockchain.description,
                 state: viewItemState
