@@ -131,6 +131,7 @@ class MainSettingsViewController: ThemeViewController {
             }
         }
 
+        subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
             self?.urlManager.open(url: url, from: self)
         }
@@ -202,7 +203,7 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightCell48,
                     autoDeselect: true,
                     action: { [weak self] in
-                        self?.openWalletConnect()
+                        self?.viewModel.onTapWalletConnect()
                     }
             )
         ]
@@ -310,8 +311,15 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private func openWalletConnect() {
-        navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+    private func openWalletConnect(mode: MainSettingsViewModel.WalletConnectOpenMode) {
+        switch mode {
+        case .noAccount:
+            present(WalletConnectNoAccountViewController().toBottomSheet, animated: true)
+        case .watchAccount:
+            present(WalletConnectWatchAccountViewController(sourceViewController: self).toBottomSheet, animated: true)
+        case .list:
+            navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
+        }
     }
 
 }

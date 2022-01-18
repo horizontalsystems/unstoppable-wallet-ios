@@ -19,6 +19,7 @@
 "button.sign" = "Sign";
 "button.more" = "Show More";
 
+"alert" = "Alert";
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
@@ -982,6 +983,11 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.i_understand" = "I Understand";
+
+"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
+"wallet_connect.watch_account.switch" = "Switch";
 
 // App Status
 

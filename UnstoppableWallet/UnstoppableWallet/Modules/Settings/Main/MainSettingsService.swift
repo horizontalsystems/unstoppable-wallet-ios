@@ -8,6 +8,7 @@ import ThemeKit
 
 class MainSettingsService {
     private let backupManager: IBackupManager
+    private let accountManager: IAccountManager
     private let pinKit: IPinKit
     private let termsManager: ITermsManager
     private let themeManager: ThemeManager
@@ -17,10 +18,11 @@ class MainSettingsService {
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let launchScreenManager: LaunchScreenManager
 
-    init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
+    init(backupManager: IBackupManager, accountManager: IAccountManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
          systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, launchScreenManager: LaunchScreenManager) {
         self.backupManager = backupManager
+        self.accountManager = accountManager
         self.pinKit = pinKit
         self.termsManager = termsManager
         self.themeManager = themeManager
@@ -101,6 +103,10 @@ extension MainSettingsService {
 
     var appVersion: String {
         systemInfoManager.appVersion.description
+    }
+
+    var activeAccount: Account? {
+        accountManager.activeAccount
     }
 
 }
