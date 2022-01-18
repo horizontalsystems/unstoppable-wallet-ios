@@ -60,7 +60,6 @@ class CoinToggleViewController: ThemeSearchViewController {
         cell.set(backgroundStyle: .claude, isLast: isLast)
 
         cell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.cornerRadius = .cornerRadius12
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })
         })
 
