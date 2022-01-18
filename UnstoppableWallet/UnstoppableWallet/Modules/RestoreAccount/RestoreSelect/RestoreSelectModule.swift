@@ -64,16 +64,16 @@ extension RestoreSelectModule {
             }
         }
 
-        var icon: BlockchainIcon {
+        var imageName: String {
             switch self {
-            case .bitcoin: return .remote(iconUid: "bitcoin")
-            case .ethereum: return .remote(iconUid: "ethereum")
-            case .binanceSmartChain: return .local(imageName: "binance_smart_chain_24")
-            case .bitcoinCash: return .remote(iconUid: "bitcoin-cash")
-            case .zcash: return .remote(iconUid: "zcash")
-            case .litecoin: return .remote(iconUid: "litecoin")
-            case .dash: return .remote(iconUid: "dash")
-            case .binanceChain: return .local(imageName: "binance_chain_24")
+            case .bitcoin: return "bitcoin_24"
+            case .ethereum: return "ethereum_24"
+            case .binanceSmartChain: return "binance_smart_chain_24"
+            case .bitcoinCash: return "bitcoin_cash_24"
+            case .zcash: return "zcash_24"
+            case .litecoin: return "litecoin_24"
+            case .dash: return "dash_24"
+            case .binanceChain: return "binance_chain_24"
             }
         }
 
@@ -87,30 +87,6 @@ extension RestoreSelectModule {
             case .litecoin: return .litecoin
             case .dash: return .dash
             case .binanceChain: return .bep2(symbol: "BNB")
-            }
-        }
-    }
-
-    enum BlockchainIcon {
-        case remote(iconUid: String)
-        case local(imageName: String)
-
-        var imageUrl: String {
-            switch self {
-            case .remote(let iconUid):
-                let scale = Int(UIScreen.main.scale)
-                return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(iconUid)@\(scale)x.png"
-            case .local:
-                return ""
-            }
-        }
-
-        var placeholderImageName: String? {
-            switch self {
-            case .remote:
-                return nil
-            case .local(let imageName):
-                return imageName
             }
         }
     }
