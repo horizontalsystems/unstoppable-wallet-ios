@@ -2654,6 +2654,12 @@
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
 		D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E64274CBBE400229A00 /* DeepDiff */; };
 		D3BF1E67274CBBF100229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E66274CBBF100229A00 /* DeepDiff */; };
+		D3F5F3B02796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AE2796E6F700E069D1 /* WalletConnectNoAccountViewController.swift */; };
+		D3F5F3B12796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AE2796E6F700E069D1 /* WalletConnectNoAccountViewController.swift */; };
+		D3F5F3B22796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AE2796E6F700E069D1 /* WalletConnectNoAccountViewController.swift */; };
+		D3F5F3B32796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AF2796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift */; };
+		D3F5F3B42796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AF2796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift */; };
+		D3F5F3B52796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5F3AF2796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift */; };
 		E8F2E995F4C993306AF951A0 /* libPods-Unstoppable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EFAF75360D43B969DE7634 /* libPods-Unstoppable.a */; };
 /* End PBXBuildFile section */
 
@@ -3594,6 +3600,8 @@
 		D3B476A621D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D3F5F3AE2796E6F700E069D1 /* WalletConnectNoAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectNoAccountViewController.swift; sourceTree = "<group>"; };
+		D3F5F3AF2796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectWatchAccountViewController.swift; sourceTree = "<group>"; };
 		D49B17029DA4D31B6711E524 /* Pods-Unstoppable Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -5002,6 +5010,8 @@
 				1A5640528EFD15137E218EA3 /* MainSettingsViewModel.swift */,
 				1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */,
 				11B35BD9A836C953CCF8D077 /* MainSettingsFooterCell.swift */,
+				D3F5F3AE2796E6F700E069D1 /* WalletConnectNoAccountViewController.swift */,
+				D3F5F3AF2796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -6211,7 +6221,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 			);
@@ -6457,6 +6467,7 @@
 				D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */,
 				D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */,
 				D0F7675426BA8E2900093AFF /* TransactionsViewModel.swift in Sources */,
+				D3F5F3B22796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */,
 				11B353814993068D6DD2E3D6 /* MainModule.swift in Sources */,
 				D38344202609DDB8002AA58D /* BasePerformanceCollectionViewCell.swift in Sources */,
 				11B354D04599199832DDAC94 /* Protocols.swift in Sources */,
@@ -7267,6 +7278,7 @@
 				11B357AEAA938388DF266841 /* MarketAdvancedSearchViewModel.swift in Sources */,
 				D36DE0AD272FD612000BC916 /* SwapViewController.swift in Sources */,
 				11B35E4EA232D1A202A3B9B8 /* MarketAdvancedSearchService.swift in Sources */,
+				D3F5F3B52796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */,
 				11B352014AB8A556A8A785F4 /* MarketAdvancedSearchModule.swift in Sources */,
 				11B358026ACD3DBDECB82462 /* MarketListMarketFieldDecorator.swift in Sources */,
 				58AAA994AF6A040B17D6DB28 /* MarketTvlSortHeaderViewModel.swift in Sources */,
@@ -7342,6 +7354,7 @@
 				D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */,
 				D38404E8218317DF007D50AD /* MainViewController.swift in Sources */,
 				D0F7675326BA8E2900093AFF /* TransactionsViewModel.swift in Sources */,
+				D3F5F3B12796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */,
 				D38404F9218317DF007D50AD /* MainModule.swift in Sources */,
 				D3840502218317DF007D50AD /* Protocols.swift in Sources */,
 				D3840505218317DF007D50AD /* LaunchRouter.swift in Sources */,
@@ -8152,6 +8165,7 @@
 				11B35F173689829256427A34 /* MarketAdvancedSearchViewModel.swift in Sources */,
 				D36DE0AC272FD612000BC916 /* SwapViewController.swift in Sources */,
 				11B3505A12674A5FF36D3CC8 /* MarketAdvancedSearchService.swift in Sources */,
+				D3F5F3B42796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */,
 				11B359B11871F76B25426D58 /* MarketAdvancedSearchModule.swift in Sources */,
 				11B350F36947CF278CDB436B /* MarketListMarketFieldDecorator.swift in Sources */,
 				58AAACF322E073F1DDA1FBDC /* MarketTvlSortHeaderViewModel.swift in Sources */,
@@ -8219,6 +8233,7 @@
 				D38405D321831B3D007D50AD /* AppDelegate.swift in Sources */,
 				D36DE0FC272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
 				D38405D721831B3D007D50AD /* MainViewController.swift in Sources */,
+				D3F5F3B02796E6F700E069D1 /* WalletConnectNoAccountViewController.swift in Sources */,
 				D38405E821831B3D007D50AD /* MainModule.swift in Sources */,
 				D38405F121831B3D007D50AD /* Protocols.swift in Sources */,
 				D38405F421831B3D007D50AD /* LaunchRouter.swift in Sources */,
@@ -9029,6 +9044,7 @@
 				11B35DDC98FFF447333278FF /* MarketAdvancedSearchViewController.swift in Sources */,
 				11B3506ECD6D4D8D0C7717B6 /* MarketAdvancedSearchViewModel.swift in Sources */,
 				11B359DDFEAF887EEE3063A7 /* MarketAdvancedSearchService.swift in Sources */,
+				D3F5F3B32796E6F700E069D1 /* WalletConnectWatchAccountViewController.swift in Sources */,
 				11B350FF14C22F4CE7FB153F /* MarketAdvancedSearchModule.swift in Sources */,
 				11B35C5E7A90AA7B302EB0CD /* MarketListMarketFieldDecorator.swift in Sources */,
 				58AAA08E3204C7E7326E1DF9 /* MarketTvlSortHeaderViewModel.swift in Sources */,
@@ -9476,7 +9492,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -9505,32 +9521,32 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {
