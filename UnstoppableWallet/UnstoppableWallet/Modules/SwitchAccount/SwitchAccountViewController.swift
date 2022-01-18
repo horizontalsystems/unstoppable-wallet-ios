@@ -45,10 +45,11 @@ class SwitchAccountViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: G4Cell.self)
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.automaticallyAdjustsScrollIndicatorInsets = false
         tableView.sectionDataSource = self
 
         tableView.buildSections()
@@ -60,28 +61,46 @@ class SwitchAccountViewController: ThemeActionSheetController {
 
 extension SwitchAccountViewController: SectionsDataSource {
 
+    private func row(viewItem: SwitchAccountViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.selectableRow(
+                elements: [.image, .multiText, .image],
+                tableView: tableView,
+                id: "item_\(index)",
+                height: .heightDoubleLineCell,
+                bind: { [weak self] cell in
+                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
+                    })
+                    cell.bind(index: 1, block: { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.title
+                        component.subtitle.text = viewItem.subtitle
+                        component.subtitle.lineBreakMode = .byTruncatingMiddle
+                    })
+
+                    cell.bind(index: 2, block: { (component: ImageComponent) in
+                        component.isHidden = !viewItem.watchAccount
+                        component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeGray)
+                    })
+                },
+                action: { [weak self] in
+                    self?.viewModel.onSelect(accountId: viewItem.accountId)
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "main",
+                    footerState: .margin(height: .margin16),
                     rows: viewModel.viewItems.enumerated().map { index, viewItem in
-                        let isFirst = index == 0
-                        let isLast = index == viewModel.viewItems.count - 1
-
-                        return Row<G4Cell>(
-                                id: "item_\(index)",
-                                height: .heightDoubleLineCell,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-                                    cell.titleImage = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "circle_radiooff_24")
-                                    cell.titleImageTintColor = viewItem.selected ? .themeJacob : nil
-                                    cell.title = viewItem.title
-                                    cell.subtitle = viewItem.subtitle
-                                },
-                                action: { [weak self] _ in
-                                    self?.viewModel.onSelect(accountId: viewItem.accountId)
-                                }
-                        )
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.viewItems.count - 1)
                     }
             )
         ]
@@ -92,12 +111,12 @@ extension SwitchAccountViewController: SectionsDataSource {
 extension SwitchAccountViewController: ActionSheetViewDelegate {
 
     public var height: CGFloat? {
-        let availableHeight = (view.window?.bounds.height ?? 0) - BottomSheetTitleView.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 100
-        if tableView.intrinsicContentSize.height > availableHeight {
-            return availableHeight
-        } else {
+        guard let window = view.window else {
             return nil
         }
+
+        let availableHeight = window.bounds.height - BottomSheetTitleView.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 100
+        return tableView.intrinsicContentSize.height > availableHeight ? availableHeight : nil
     }
 
 }
