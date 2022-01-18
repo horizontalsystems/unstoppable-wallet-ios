@@ -16,7 +16,7 @@ class ManageAccountsViewController: ThemeViewController {
     private let restoreCell = BaseSelectableThemeCell()
     private let watchCell = BaseSelectableThemeCell()
 
-    private var viewItems = [ManageAccountsViewModel.ViewItem]()
+    private var viewState = ManageAccountsViewModel.ViewState.empty
     private var isLoaded = false
 
     init(viewModel: ManageAccountsViewModel) {
@@ -81,7 +81,7 @@ class ManageAccountsViewController: ThemeViewController {
             component.text = "onboarding.balance.watch".localized
         })
 
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.sync(viewState: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
 
         tableView.buildSections()
@@ -120,8 +120,8 @@ class ManageAccountsViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func sync(viewItems: [ManageAccountsViewModel.ViewItem]) {
-        self.viewItems = viewItems
+    private func sync(viewState: ManageAccountsViewModel.ViewState) {
+        self.viewState = viewState
         reloadTable()
     }
 
@@ -139,11 +139,11 @@ extension ManageAccountsViewController: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image, .multiText, viewItem.alert ? .margin16 : .margin0, .image, .margin0, .transparentIconButton, .margin4],
+                elements: [.image, .multiText, viewItem.alert || viewItem.watchAccount ? .margin16 : .margin0, .image, .margin0, .transparentIconButton, .margin4],
                 layoutMargins: UIEdgeInsets(top: 0, left: CellBuilder.defaultMargin, bottom: 0, right: .margin4),
                 tableView: tableView,
                 id: viewItem.accountId,
-                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(isFirst)-\(isLast)",
+                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { [weak self] cell in
@@ -163,8 +163,13 @@ extension ManageAccountsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.isHidden = !viewItem.alert
-                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+                        component.isHidden = !viewItem.alert && !viewItem.watchAccount
+
+                        if viewItem.alert {
+                            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+                        } else if viewItem.watchAccount {
+                            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeGray)
+                        }
                     })
 
                     cell.bind(index: 3, block: { (component: TransparentIconButtonComponent) in
@@ -190,11 +195,18 @@ extension ManageAccountsViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "view-items",
+                    id: "regular-view-items",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: viewItems.isEmpty ? 0 : .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
+                    footerState: .margin(height: viewState.regularViewItems.isEmpty ? 0 : .margin32),
+                    rows: viewState.regularViewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.regularViewItems.count - 1)
+                    }
+            ),
+            Section(
+                    id: "watch-view-items",
+                    footerState: .margin(height: viewState.watchViewItems.isEmpty ? 0 : .margin32),
+                    rows: viewState.watchViewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewState.watchViewItems.count - 1)
                     }
             ),
             Section(
