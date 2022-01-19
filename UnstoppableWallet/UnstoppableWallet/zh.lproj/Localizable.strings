@@ -1,67 +1,67 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
-"button.restore" = "Restore";
-"button.next" = "Next";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.sign" = "Sign";
-"button.more" = "Show More";
+"button.ok" = "确定";
+"button.apply" = "应用";
+"button.cancel" = "取消";
+"button.close" = "关闭";
+"button.done" = "完成";
+"button.restore" = "恢复";
+"button.next" = "下一步";
+"button.share" = "分享";
+"button.paste" = "粘帖";
+"button.backup" = "备份";
+"button.copy" = "复制";
+"button.retry" = "重试";
+"button.report" = "报告";
+"button.add" = "添加";
+"button.approve" = "批准";
+"button.reject" = "拒绝";
+"button.connect" = "连接";
+"button.save" = "保存";
+"button.sign" = "签名";
+"button.more" = "显示更多";
 
 "alert" = "Alert";
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.copied" = "已复制";
+"alert.no_internet" = "没有网络";
+"alert.wrong_amount" = "金额有误";
+"alert.no_fee" = "错误费用";
+"alert.unknown_error" = "未知错误";
+"alert.success_action" = "完成";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "正在加载...";
+"placeholder.search" = "搜索​​​​";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"status" = "状态";
+"connecting" = "正在连接...";
+"online" = "在线";
+"offline" = "离线";
+"confirm" = "确认";
+"connect" = "连接";
+"price" = "价格";
+"value" = "价值";
+"note" = "备注";
 
-"version" = "Version %@";
+"version" = "版本%@";
 
-"n/a" = "N/A";
+"n/a" = "不可用";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "Unstoppable需要使用相机扫描二维码。
 
-Go to Settings - > Unstoppable and allow access to the camera.";
-"access_camera.settings" = "Settings";
+请前往”设置 -> Unstoppable”并授权对相机的访问。";
+"access_camera.settings" = "设置";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
-"restore.checksum_error" = "Invalid checksum";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "The passphrase cannot be empty";
+"restore.title" = "选择钱包";
+"restore.enter_key" = "输入密钥";
+"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔";
+"restore_error.mnemonic_word_count" = "字数有误。必须为12到24个单词。您输入了：%@";
+"restore.checksum_error" = "校验和无效";
+"restore.passphrase" = "密码";
+"restore.input.passphrase" = "密码";
+"restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
+"restore.error.empty_passphrase" = "密码不能为空白";
 
 // Coin Settings
 
@@ -198,68 +198,68 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.hodler_locktime_off" = "Off";
 "send.hodler_error.unsupported_address" = "Time locking works only with P2PKH addresses (starting with 1)";
 "send.fee_info.title" = "Transaction Speed";
-"send.fee_info.description" = "Both Bitcoin and Ethereum blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
-"send.fee_info.header_slow" = "Low";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Recommended";
-"send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
-"send.fee_info.header_fast" = "High";
-"send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
+"send.fee_info.description" = "比特币和 Etherum区块链都要求用户在发送交易时支付网络费用。 当网络上发生大量交易时，费用较高，而区块链不那么繁忙时，费用较低。";
+"send.fee_info.header_slow" = "慢";
+"send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
+"send.fee_info.header_average" = "平均";
+"send.fee_info.content_average" = "通常，此费用范围应足以使比特币（Bitcoin）交易在数分钟/小时、以太币（Ethereum）在数分钟内得到处理。";
+"send.fee_info.header_fast" = "快";
+"send.fee_info.content_fast" = "对于优先级重要的交易，我们建议使用高收费值。 预计这将足以在10分钟内完成比特币交易，1-2分钟以内完成Etherefis。";
+"send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.method" = "Method";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
-"send.confirmation.account" = "Account";
-"send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.send_button" = "Send";
-"send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.resend_button" = "Resend";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.cancel_button" = "Cancel Transaction";
+"send.confirmation.you_send" = "您发送";
+"send.confirmation.to" = "接收人";
+"send.confirmation.method" = "方法";
+"send.confirmation.domain" = "域名";
+"send.confirmation.address" = "地址";
+"send.confirmation.account" = "账户";
+"send.confirmation.memo_placeholder" = "备忘录";
+"send.confirmation.total" = "总额";
+"send.confirmation.send_button" = "发送​​";
+"send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.resend_button" = "重新发送";
+"send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.cancel_button" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
-"send.amount_error.balance" = "Not Enough Balance";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_error.balance" = "余额不足";
+"send.amount_error.maximum_amount" = "最大金额 %@";
+"send.amount_error.minimum_amount" = "最小金额 %@";
+"send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = " Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
+"send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "您批准";
+"approve.confirmation.spender" = "消费人";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coins";
+"choose_coin.title" = "选择代币";
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.powered_by" = "Powered By";
-"swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
-"swap.proceed_button" = "Next";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
-"swap.approving_button" = "Approving...";
-"swap.trade_error.not_found" = "Can't swap these tokens";
-"swap.button_error.insufficient_balance" = "Insufficient balance";
+"swap.title" = "掉期交易";
+"swap.you_pay" = "您支付";
+"swap.estimated" = "估计";
+"swap.balance" = "余额";
+"swap.powered_by" = "技术支持：";
+"swap.allowance" = "补贴";
+"swap.you_get" = "您获得";
+"swap.token" = "选择";
+"swap.advanced_settings" = "掉期设置";
+"swap.proceed_button" = "继续";
+"swap.approve.title" = "互兑批准";
+"swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
+"swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
+"swap.approving_button" = "审批中...";
+"swap.trade_error.not_found" = "无法交换代币";
+"swap.button_error.insufficient_balance" = "余额不足";
 "swap.switch_provider.title" = "Swap Service";
 
-"swap.price" = "Price";
-"swap.buy_price" = "Buy Price";
+"swap.price" = "价格";
+"swap.buy_price" = "买入价";
 "swap.sell_price" = "Sell Price";
 "swap.price_impact" = "Price Impact";
 "swap.maximum_paid" = "Maximum Amount";
