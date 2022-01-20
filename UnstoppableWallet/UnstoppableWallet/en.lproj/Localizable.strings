@@ -641,8 +641,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.yesterday" = "Yesterday";
 
 "transactions.types.all" = "All";
-"transactions.types.incoming" = "Incoming";
-"transactions.types.outgoing" = "Outgoing";
+"transactions.types.incoming" = "Received";
+"transactions.types.outgoing" = "Sent";
 "transactions.types.swap" = "Swap";
 "transactions.types.approve" = "Approve";
 
@@ -996,7 +996,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pending";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected entirely.";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Also keep in mind that status of an individual transaction shown in Unstoppable wallet interface typically updated with a short delay.";
 "status_info.processing.title" = "Processing";
 "status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
 "status_info.completed.title" = "Completed";
