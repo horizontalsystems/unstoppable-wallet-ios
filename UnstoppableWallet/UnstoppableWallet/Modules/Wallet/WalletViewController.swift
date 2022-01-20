@@ -18,6 +18,7 @@ class WalletViewController: ThemeViewController {
     private let refreshControl = UIRefreshControl()
 
     private let emptyView = UIView()
+    private let watchEmptyView = UIView()
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
@@ -97,6 +98,23 @@ class WalletViewController: ThemeViewController {
         addCoinButton.setTitle("balance.empty.add_coins".localized, for: .normal)
         addCoinButton.addTarget(self, action: #selector(onTapAddCoin), for: .touchUpInside)
 
+        view.addSubview(watchEmptyView)
+        watchEmptyView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.centerY.equalToSuperview()
+        }
+
+        let watchCautionView = CircleCautionView()
+
+        watchEmptyView.addSubview(watchCautionView)
+        watchCautionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
+            maker.top.bottom.equalToSuperview()
+        }
+
+        watchCautionView.image = UIImage(named: "empty_wallet_48")
+        watchCautionView.text = "balance.watch_empty.description".localized
+
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
@@ -148,6 +166,7 @@ class WalletViewController: ThemeViewController {
     private func sync(displayMode: WalletViewModel.DisplayMode) {
         tableView.isHidden = displayMode != .list
         emptyView.isHidden = displayMode != .empty
+        watchEmptyView.isHidden = displayMode != .watchEmpty
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {

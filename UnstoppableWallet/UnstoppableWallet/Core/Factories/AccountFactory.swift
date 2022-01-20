@@ -48,10 +48,10 @@ extension AccountFactory {
         )
     }
 
-    func watchAccount(address: EthereumKit.Address) -> Account {
+    func watchAccount(address: EthereumKit.Address, domain: String?) -> Account {
         Account(
                 id: UUID().uuidString,
-                name: nextWatchAccountName,
+                name: domain ?? nextWatchAccountName,
                 type: .address(address: address),
                 origin: .restored,
                 backedUp: true

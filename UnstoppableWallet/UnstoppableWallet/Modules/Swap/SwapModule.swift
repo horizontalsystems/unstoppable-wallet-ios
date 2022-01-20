@@ -121,6 +121,13 @@ extension SwapModule.Dex {
         case ethereum
         case binanceSmartChain
 
+        var title: String {
+            switch self {
+            case .ethereum: return "Ethereum"
+            case .binanceSmartChain: return "Binance Smart Chain"
+            }
+        }
+
         var allowedProviders: [Provider] {
             switch self {
             case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]

@@ -12,7 +12,11 @@ class SwitchAccountViewModel {
         self.service = service
 
         let sortedItems = service.items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
-        viewItems = sortedItems.map { viewItem(item: $0) }
+
+        let regularViewItems = sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) }
+        let watchViewItems = sortedItems.filter { $0.account.watchAccount }.map { viewItem(item: $0) }
+
+        viewItems = regularViewItems + watchViewItems
     }
 
     private func viewItem(item: SwitchAccountService.Item) -> ViewItem {
@@ -20,7 +24,8 @@ class SwitchAccountViewModel {
                 accountId: item.account.id,
                 title: item.account.name,
                 subtitle: item.account.type.description,
-                selected: item.isActive
+                selected: item.isActive,
+                watchAccount: item.account.watchAccount
         )
     }
 
@@ -46,6 +51,7 @@ extension SwitchAccountViewModel {
         let title: String
         let subtitle: String
         let selected: Bool
+        let watchAccount: Bool
     }
 
 }

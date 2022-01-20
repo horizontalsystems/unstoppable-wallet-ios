@@ -64,16 +64,16 @@ extension RestoreSelectModule {
             }
         }
 
-        var iconUid: String {
+        var imageName: String {
             switch self {
-            case .bitcoin: return "bitcoin"
-            case .ethereum: return "ethereum"
-            case .binanceSmartChain: return "binancecoin"
-            case .bitcoinCash: return "bitcoin-cash"
-            case .zcash: return "zcash"
-            case .litecoin: return "litecoin"
-            case .dash: return "dash"
-            case .binanceChain: return "binancecoin"
+            case .bitcoin: return "bitcoin_24"
+            case .ethereum: return "ethereum_24"
+            case .binanceSmartChain: return "binance_smart_chain_24"
+            case .bitcoinCash: return "bitcoin_cash_24"
+            case .zcash: return "zcash_24"
+            case .litecoin: return "litecoin_24"
+            case .dash: return "dash_24"
+            case .binanceChain: return "binance_chain_24"
             }
         }
 

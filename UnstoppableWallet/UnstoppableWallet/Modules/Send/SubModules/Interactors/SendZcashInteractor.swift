@@ -15,10 +15,6 @@ extension SendZcashInteractor: ISendZcashInteractor {
         adapter.availableBalance
     }
 
-    func validate(address: String) throws -> ZcashAdapter.AddressType {
-        try adapter.validate(address: address)
-    }
-
     var fee: Decimal {
         adapter.fee
     }

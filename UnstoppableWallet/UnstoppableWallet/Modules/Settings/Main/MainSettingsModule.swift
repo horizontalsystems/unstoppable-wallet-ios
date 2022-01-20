@@ -5,6 +5,7 @@ struct MainSettingsModule {
     static func viewController() -> UIViewController {
         let service = MainSettingsService(
                 backupManager: App.shared.backupManager,
+                accountManager: App.shared.accountManager,
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
                 themeManager: App.shared.themeManager,

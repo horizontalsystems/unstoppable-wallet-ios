@@ -73,7 +73,12 @@ extension SendRouter {
         let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
         views.append(amountView)
 
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
+        let addressParserChain = AddressParserChain()
+        let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
+        addressParserChain.append(handler: bitcoinParserItem)
+        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "BTC", chain: nil))
+
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         views.append(addressView)
         routers.append(addressRouter)
 
@@ -103,7 +108,8 @@ extension SendRouter {
                 addressModule: addressModule,
                 feeModule: feeModule,
                 feePriorityModule: feePriorityModule,
-                hodlerModule: hodlerModule
+                hodlerModule: hodlerModule,
+                bitcoinAddressParser: bitcoinParserItem
         )
 
         interactor.delegate = presenter
@@ -118,7 +124,12 @@ extension SendRouter {
 
     private static func module(platformCoin: PlatformCoin, adapter: ISendDashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
+
+        let addressParserChain = AddressParserChain()
+        let dashParserItem = DashAddressParserItem(adapter: adapter)
+        addressParserChain.append(handler: dashParserItem)
+
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
         let interactor = SendDashInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager)
@@ -134,7 +145,12 @@ extension SendRouter {
 
     private static func module(platformCoin: PlatformCoin, adapter: ISendBinanceAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin)
+
+        let addressParserChain = AddressParserChain()
+        let binanceParserItem = BinanceAddressParserItem(adapter: adapter)
+        addressParserChain.append(handler: binanceParserItem)
+
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         let (memoView, memoModule) = SendMemoRouter.module()
         let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
@@ -149,12 +165,17 @@ extension SendRouter {
 
     private static func module(platformCoin: PlatformCoin, adapter: ISendZcashAdapter) -> (ISendHandler, [UIView], [ISendSubRouter]) {
         let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
-        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, isResolutionEnabled: false)
+
+        let addressParserChain = AddressParserChain()
+        let zCashParserItem = ZcashAddressParserItem(adapter: adapter)
+        addressParserChain.append(handler: zCashParserItem)
+
+        let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         let (memoView, memoModule) = SendMemoRouter.module()
         let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
         let interactor = SendZcashInteractor(adapter: adapter)
-        let presenter = SendZcashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule)
+        let presenter = SendZcashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, memoModule: memoModule, feeModule: feeModule, zCashAddressParser: zCashParserItem)
 
         amountModule.delegate = presenter
         addressModule.delegate = presenter

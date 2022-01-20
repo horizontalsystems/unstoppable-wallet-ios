@@ -3,12 +3,12 @@ import GRDB
 class EvmAccountSyncState: Record {
     let accountId: String
     let chainId: Int
-    let lastTransactionBlockNumber: Int?
+    let lastBlockNumber: Int
 
-    init(accountId: String, chainId: Int, lastTransactionBlockNumber: Int?) {
+    init(accountId: String, chainId: Int, lastBlockNumber: Int) {
         self.accountId = accountId
         self.chainId = chainId
-        self.lastTransactionBlockNumber = lastTransactionBlockNumber
+        self.lastBlockNumber = lastBlockNumber
 
         super.init()
     }
@@ -18,13 +18,13 @@ class EvmAccountSyncState: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case accountId, chainId, lastTransactionBlockNumber
+        case accountId, chainId, lastBlockNumber
     }
 
     required init(row: Row) {
         accountId = row[Columns.accountId]
         chainId = row[Columns.chainId]
-        lastTransactionBlockNumber = row[Columns.lastTransactionBlockNumber]
+        lastBlockNumber = row[Columns.lastBlockNumber]
 
         super.init(row: row)
     }
@@ -32,7 +32,7 @@ class EvmAccountSyncState: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.accountId] = accountId
         container[Columns.chainId] = chainId
-        container[Columns.lastTransactionBlockNumber] = lastTransactionBlockNumber
+        container[Columns.lastBlockNumber] = lastBlockNumber
     }
 
 }

@@ -1,6 +1,7 @@
 import RxSwift
 import MarketKit
 import HsToolKit
+import EthereumKit
 
 class EvmAccountManager {
     private let accountManager: IAccountManager
@@ -11,6 +12,9 @@ class EvmAccountManager {
     private let storage: IEvmAccountSyncStateStorage
 
     private let disposeBag = DisposeBag()
+    private var internalDisposeBag = DisposeBag()
+
+    private var syncing = false
 
     init(accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, evmKitManager: EvmKitManager, provider: EnableCoinsEip20Provider, storage: IEvmAccountSyncStateStorage) {
         self.accountManager = accountManager
@@ -20,7 +24,14 @@ class EvmAccountManager {
         self.provider = provider
         self.storage = storage
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.sync() }
+        subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
+    }
+
+    private func handleEvmKitCreated() {
+        internalDisposeBag = DisposeBag()
+
+        sync()
+        subscribeToTransactions()
     }
 
     private func sync() {
@@ -32,27 +43,84 @@ class EvmAccountManager {
             return
         }
 
+        guard !syncing else {
+            return
+        }
+
+        syncing = true
+
 //        print("Sync: \(evmKitWrapper.evmKit.networkType)")
 
         let chainId = evmKitWrapper.evmKit.networkType.chainId
-        let startBlock = storage.evmAccountSyncState(accountId: account.id, chainId: chainId)?.lastTransactionBlockNumber
+        var startBlock = 0
 
-        provider.coinTypeInfoSingle(address: evmKitWrapper.evmKit.address.hex, startBlock: startBlock.map { $0 + 1 })
+        if let state = storage.evmAccountSyncState(accountId: account.id, chainId: chainId) {
+            startBlock = state.lastBlockNumber + 1
+        }
+
+        Single.zip(
+                        provider.blockNumberSingle(),
+                        provider.coinTypesSingle(address: evmKitWrapper.evmKit.address.hex, startBlock: startBlock)
+                )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] info in
-//                    print("\(evmKitWrapper.evmKit.networkType): \(info.coinTypes.count): \(info.lastTransactionBlockNumber): \(info.coinTypes)")
+                .subscribe(onSuccess: { [weak self] blockNumber, coinTypes in
+//                    print("\(evmKitWrapper.evmKit.networkType) --- count: \(coinTypes.count) --- blockNumber: \(blockNumber)")
 
-                    self?.handle(coinTypes: info.coinTypes, account: account)
+                    self?.handle(coinTypes: coinTypes, account: account)
 
-                    if let lastTransactionBlockNumber = info.lastTransactionBlockNumber {
-                        let state = EvmAccountSyncState(accountId: account.id, chainId: chainId, lastTransactionBlockNumber: lastTransactionBlockNumber)
-                        self?.storage.save(evmAccountSyncState: state)
-                    }
+                    let state = EvmAccountSyncState(accountId: account.id, chainId: chainId, lastBlockNumber: blockNumber)
+                    self?.storage.save(evmAccountSyncState: state)
+
+                    self?.syncing = false
+                }, onError: { [weak self] _ in
+                    self?.syncing = false
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: internalDisposeBag)
+    }
+
+    private func subscribeToTransactions() {
+        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
+            return
+        }
+
+//        print("Subscribe: \(evmKitWrapper.evmKit.networkType)")
+
+        evmKitWrapper.evmKit.allTransactionsObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] transactions in
+                    self?.handle(transactions: transactions)
+                })
+                .disposed(by: internalDisposeBag)
+    }
+
+    private func handle(transactions: [FullTransaction]) {
+//        print("Tx count: \(transactions.count)")
+
+        guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
+            return
+        }
+
+        let lastBlockNumber = storage.evmAccountSyncState(accountId: account.id, chainId: evmKitWrapper.evmKit.networkType.chainId)?.lastBlockNumber ?? 0
+
+        for tx in transactions {
+//            print("TX: \(tx.receiptWithLogs?.receipt.blockNumber) --- \(lastBlockNumber)")
+            if let blockNumber = tx.receiptWithLogs?.receipt.blockNumber, blockNumber > lastBlockNumber {
+//                print("newer block: \(blockNumber), last - \(lastBlockNumber)")
+                sync()
+                return
+            }
+        }
     }
 
     private func handle(coinTypes: [CoinType], account: Account) {
+        guard !coinTypes.isEmpty else {
+            return
+        }
+
         do {
             let platformCoins = try coinManager.platformCoins(coinTypes: coinTypes)
 
@@ -70,17 +138,21 @@ class EvmAccountManager {
     }
 
     private func handle(platformCoins: [PlatformCoin], account: Account) {
+        guard !platformCoins.isEmpty else {
+            return
+        }
+
         let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
-
         let existingWallets = walletManager.activeWallets
-
         let newWallets = wallets.filter { !existingWallets.contains($0) }
 
 //        print("New wallets: \(newWallets.count)")
 
-        if !newWallets.isEmpty {
-            walletManager.save(wallets: newWallets)
+        guard !newWallets.isEmpty else {
+            return
         }
+
+        walletManager.save(wallets: newWallets)
     }
 
 }

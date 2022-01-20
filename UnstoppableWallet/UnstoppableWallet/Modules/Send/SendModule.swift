@@ -64,7 +64,6 @@ protocol ISendBitcoinInteractor {
     func fetchAvailableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func fetchMaximumAmount(pluginData: [UInt8: IBitcoinPluginData])
     func fetchMinimumAmount(address: String?)
-    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fetchFee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData])
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], logger: Logger) -> Single<Void>
 }
@@ -79,7 +78,6 @@ protocol ISendBitcoinInteractorDelegate: AnyObject {
 protocol ISendDashInteractor {
     func fetchAvailableBalance(address: String?)
     func fetchMinimumAmount(address: String?)
-    func validate(address: String) throws
     func fetchFee(amount: Decimal, address: String?)
     func sendSingle(amount: Decimal, address: String, logger: Logger) -> Single<Void>
 }
@@ -105,14 +103,12 @@ protocol ISendEthereumInteractor {
 protocol ISendBinanceInteractor {
     var availableBalance: Decimal { get }
     var availableBinanceBalance: Decimal { get }
-    func validate(address: String) throws
     var fee: Decimal { get }
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
 protocol ISendZcashInteractor {
     var availableBalance: Decimal { get }
-    func validate(address: String) throws -> ZcashAdapter.AddressType
     var fee: Decimal { get }
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }

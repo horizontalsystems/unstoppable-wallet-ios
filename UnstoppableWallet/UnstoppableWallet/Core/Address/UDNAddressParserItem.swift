@@ -5,12 +5,10 @@ class UDNAddressParserItem {
     private let provider = AddressResolutionProvider()
     private let coinCode: String
     private let chain: String?
-    private let isResolutionEnabled: Bool
 
-    init(coinCode: String, chain: String?, isResolutionEnabled: Bool = true) {
+    init(coinCode: String, chain: String?) {
         self.coinCode = coinCode
         self.chain = chain
-        self.isResolutionEnabled = isResolutionEnabled
     }
 
     private func resolve(domain: String) -> Single<Address> {

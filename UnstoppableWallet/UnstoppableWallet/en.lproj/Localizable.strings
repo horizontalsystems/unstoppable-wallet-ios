@@ -19,6 +19,7 @@
 "button.sign" = "Sign";
 "button.more" = "Show More";
 
+"alert" = "Alert";
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
@@ -140,6 +141,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.watch_empty.description" = "This wallet address does not have any balance";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
@@ -254,8 +256,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "Approving...";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
-"swap.switch_provider.title" = "Swap Provider";
-"swap.switch_provider.subtitle" = "Switcher";
+"swap.switch_provider.title" = "Swap Service";
 
 "swap.price" = "Price";
 "swap.buy_price" = "Buy Price";
@@ -509,9 +510,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
 
-"coin_page.tab.overview" = "Overview";
-"coin_page.tab.markets" = "Market";
-"coin_page.tab.details" = "Details";
+"coin_page.tab.overview" = "Price";
+"coin_page.tab.markets" = "Markets";
+"coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Market Cap";
@@ -523,6 +524,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
+"coin_page.markets.empty" = "No data available";
+
 
 "coin_page.coin_markets" = "%@ Markets";
 "coin_page.coin_markets.sort_by" = "Sort By";
@@ -643,8 +646,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Received";
 "transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swap";
-"transactions.types.approve" = "Approve";
+"transactions.types.swap" = "Swaps";
+"transactions.types.approve" = "Approvals";
 
 // Transaction Info
 
@@ -806,6 +809,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
+"settings_manage_keys.delete.confirmation_watch" = "Are you sure you want to delete this wallet?";
 
 // Settings -> About App
 
@@ -979,6 +983,11 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.i_understand" = "I Understand";
+
+"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
+"wallet_connect.watch_account.switch" = "Switch";
 
 // App Status
 

@@ -30,7 +30,7 @@ class CoinPageViewModel {
 
     private func sync(walletState: CoinPageService.WalletState) {
         switch walletState {
-        case .noActiveAccount, .unsupported:
+        case .noActiveAccount, .watchAccount, .unsupported:
             addWalletStateRelay.accept(.hidden)
         case .supported(let added):
             addWalletStateRelay.accept(.visible(added: added))
