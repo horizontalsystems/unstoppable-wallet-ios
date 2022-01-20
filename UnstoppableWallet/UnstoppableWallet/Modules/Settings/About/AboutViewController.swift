@@ -118,7 +118,7 @@ extension AboutViewController: SectionsDataSource {
                     footerState: .margin(height: .margin32),
                     rows: [
                         CellBuilder.selectableRow(
-                                elements: [.image, .text, .image],
+                                elements: [.image20, .text, .image20],
                                 tableView: tableView,
                                 id: "release-notes",
                                 height: .heightCell48,

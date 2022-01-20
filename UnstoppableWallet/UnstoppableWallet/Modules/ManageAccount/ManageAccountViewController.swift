@@ -54,7 +54,7 @@ class ManageAccountViewController: ThemeViewController {
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
-        CellBuilder.build(cell: showRecoveryPhraseCell, elements: [.image, .text, .image])
+        CellBuilder.build(cell: showRecoveryPhraseCell, elements: [.image20, .text, .image20])
         showRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
@@ -67,7 +67,7 @@ class ManageAccountViewController: ThemeViewController {
         })
 
         backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
-        CellBuilder.build(cell: backupRecoveryPhraseCell, elements: [.image, .text, .image, .margin12, .image])
+        CellBuilder.build(cell: backupRecoveryPhraseCell, elements: [.image20, .text, .image20, .margin12, .image20])
         backupRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
@@ -83,7 +83,7 @@ class ManageAccountViewController: ThemeViewController {
         })
 
         unlinkCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        CellBuilder.build(cell: unlinkCell, elements: [.image, .text, .image])
+        CellBuilder.build(cell: unlinkCell, elements: [.image20, .text])
         unlinkCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
         })
@@ -198,7 +198,7 @@ extension ManageAccountViewController: SectionsDataSource {
         let isLast = viewModel.additionalViewItems.isEmpty
 
         let networkSettingsRow = CellBuilder.selectableRow(
-                elements: [.image, .text, .image],
+                elements: [.image20, .text, .image20],
                 tableView: tableView,
                 id: "network-settings",
                 height: .heightCell48,
@@ -228,7 +228,7 @@ extension ManageAccountViewController: SectionsDataSource {
             let isLast = index == viewItems.count - 1
 
             let additionalRow = CellBuilder.row(
-                    elements: [.image, .text, .secondaryButton],
+                    elements: [.image20, .text, .secondaryButton],
                     tableView: tableView,
                     id: "additional-\(index)",
                     height: .heightCell48,

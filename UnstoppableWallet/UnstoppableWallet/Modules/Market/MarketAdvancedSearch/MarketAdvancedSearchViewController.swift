@@ -143,7 +143,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     }
 
     private func buildSelector(cell: BaseThemeCell, title: String) {
-        CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image])
+        CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image20])
         cell.bind(index: 0) { (component: TextComponent) in
             component.set(style: .b2)
             component.text = title

@@ -221,7 +221,7 @@ PODS:
   - SectionsTableView.swift (1.1):
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
-  - SkeletonView (1.29.1)
+  - SkeletonView (1.29.2)
   - SnapKit (5.0.1)
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
@@ -510,7 +510,7 @@ CHECKOUT OPTIONS:
     :commit: 6dfdfdb20c114f75298284bb959fdaeaa95393a8
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 9ab51dc163b5a4f431c701d4395cd5e5e48e1262
+    :commit: 067d4d17116ae97c625585ae24e0923adeef685a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
@@ -570,7 +570,7 @@ CHECKOUT OPTIONS:
     :commit: 1ba3514ba9bbb649f02402d10570b0ef0de2407c
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: 3981fb0296a341d12551b111dc34285d530dd34d
+    :commit: 067d4d17116ae97c625585ae24e0923adeef685a
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 3b1886c03600c421a0591cff3259013da606524e
@@ -644,7 +644,7 @@ SPEC CHECKSUMS:
   ScanQrKit.swift: c6f0c2c8593fe6e9d85e8b094ea33ab07fe6b68c
   Secp256k1Kit.swift: 322a66c4b3e95e96a397d73d45ad4d79af991bab
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
-  SkeletonView: e2667ec83098a438eff6279fbaa49d2865b7af23
+  SkeletonView: 915a80ecc2b6421ab7ac0f0212321c0cc1406472
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   StorageKit.swift: 1a041c9f9a80c3388373e4ba105aadd09339ff7a

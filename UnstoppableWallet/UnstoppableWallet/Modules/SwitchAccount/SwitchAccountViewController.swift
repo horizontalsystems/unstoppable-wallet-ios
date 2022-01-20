@@ -63,7 +63,7 @@ extension SwitchAccountViewController: SectionsDataSource {
 
     private func row(viewItem: SwitchAccountViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image, .multiText, .image],
+                elements: [.image24, .multiText, .image20],
                 tableView: tableView,
                 id: "item_\(index)",
                 height: .heightDoubleLineCell,

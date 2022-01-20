@@ -73,7 +73,7 @@ extension MultiSelectorViewController: SectionsDataSource {
 
     private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueStyle: TextComponent.Style, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.text, .image],
+                elements: [.text, .image20],
                 tableView: tableView,
                 id: id,
                 hash: "\(selected)",
