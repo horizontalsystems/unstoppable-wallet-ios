@@ -49,6 +49,8 @@ class WalletViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "image_2_24"), style: .plain, target: self, action: #selector(onTapNft))
+
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -157,6 +159,10 @@ class WalletViewController: ThemeViewController {
     @objc private func onTapSwitchWallet() {
         let viewController = ManageAccountsModule.viewController(mode: .switcher)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    @objc private func onTapNft() {
+        navigationController?.pushViewController(NftCollectionsModule.viewController(), animated: true)
     }
 
     @objc private func onTapAddCoin() {

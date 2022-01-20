@@ -52,7 +52,7 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
-        CellBuilder.build(cell: createCell, elements: [.image, .text])
+        CellBuilder.build(cell: createCell, elements: [.image20, .text])
         createCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "plus_20")?.withTintColor(.themeJacob)
         })
@@ -62,7 +62,7 @@ class ManageAccountsViewController: ThemeViewController {
         })
 
         restoreCell.set(backgroundStyle: .lawrence)
-        CellBuilder.build(cell: restoreCell, elements: [.image, .text])
+        CellBuilder.build(cell: restoreCell, elements: [.image20, .text])
         restoreCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
         })
@@ -72,7 +72,7 @@ class ManageAccountsViewController: ThemeViewController {
         })
 
         watchCell.set(backgroundStyle: .lawrence, isLast: true)
-        CellBuilder.build(cell: watchCell, elements: [.image, .text])
+        CellBuilder.build(cell: watchCell, elements: [.image20, .text])
         watchCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
         })
@@ -139,7 +139,7 @@ extension ManageAccountsViewController: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image, .multiText, viewItem.alert || viewItem.watchAccount ? .margin16 : .margin0, .image, .margin0, .transparentIconButton, .margin4],
+                elements: [.image24, .multiText, viewItem.alert || viewItem.watchAccount ? .margin16 : .margin0, .image20, .margin0, .transparentIconButton, .margin4],
                 layoutMargins: UIEdgeInsets(top: 0, left: CellBuilder.defaultMargin, bottom: 0, right: .margin4),
                 tableView: tableView,
                 id: viewItem.accountId,

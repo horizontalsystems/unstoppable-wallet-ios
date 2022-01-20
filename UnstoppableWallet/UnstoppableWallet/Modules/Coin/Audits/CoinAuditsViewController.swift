@@ -111,7 +111,7 @@ extension CoinAuditsViewController: SectionsDataSource {
 
     private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
         CellBuilder.row(
-                elements: [.image, .text],
+                elements: [.image24, .text],
                 tableView: tableView,
                 id: "header-\(name)",
                 height: .heightCell48,
@@ -152,7 +152,7 @@ extension CoinAuditsViewController: SectionsDataSource {
 
         if let reportUrl = auditViewItem.reportUrl {
             return CellBuilder.selectableRow(
-                    elements: [.multiText, .text, .margin8, .image],
+                    elements: [.multiText, .text, .margin8, .image20],
                     tableView: tableView,
                     id: reportUrl,
                     height: .heightDoubleLineCell,

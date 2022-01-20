@@ -136,7 +136,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
     private func row(fundViewItem: CoinInvestorsViewModel.FundViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         if fundViewItem.url.isEmpty {
             return CellBuilder.row(
-                    elements: [.image, .text, .text],
+                    elements: [.image24, .text, .text],
                     tableView: tableView,
                     id: fundViewItem.uid,
                     height: .heightCell48,
@@ -147,7 +147,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
             )
         } else {
             return CellBuilder.selectableRow(
-                    elements: [.image, .text, .text, .margin8, .image],
+                    elements: [.image24, .text, .text, .margin8, .image20],
                     tableView: tableView,
                     id: fundViewItem.uid,
                     height: .heightCell48,

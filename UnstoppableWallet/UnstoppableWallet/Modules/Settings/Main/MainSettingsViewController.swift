@@ -144,7 +144,7 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private func buildTitleImage(cell: BaseThemeCell, image: UIImage?, title: String) {
-        CellBuilder.build(cell: cell, elements: [.image, .text, .image, .margin8, .image])
+        CellBuilder.build(cell: cell, elements: [.image20, .text, .image20, .margin8, .image20])
         cell.bind(index: 0) { (component: ImageComponent) in
             component.imageView.image = image
         }
@@ -158,7 +158,7 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private func buildTitleValue(cell: BaseThemeCell, image: UIImage?, title: String) {
-        CellBuilder.build(cell: cell, elements: [.image, .text, .text, .margin8, .image])
+        CellBuilder.build(cell: cell, elements: [.image20, .text, .text, .margin8, .image20])
         cell.bind(index: 0) { (component: ImageComponent) in
             component.imageView.image = image
         }
