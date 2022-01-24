@@ -809,7 +809,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
-"settings_manage_keys.delete.confirmation_watch" = "Are you sure you want to delete this wallet?";
+"settings_manage_keys.delete.confirmation_watch" = "Are you sure want to delete this wallet?";
 
 // Settings -> About App
 
