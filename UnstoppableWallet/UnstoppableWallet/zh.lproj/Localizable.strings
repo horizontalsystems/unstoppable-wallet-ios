@@ -1054,3 +1054,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "watch_address.title" = "Address";
 "watch_address.watch" = "Watch";
+
+// Nft Collections
+
+"nft_collections.title" = "NFTs";
+"nft_collections.last_price" = "Last Price";
+"nft_collections.floor_price" = "Floor Price";
