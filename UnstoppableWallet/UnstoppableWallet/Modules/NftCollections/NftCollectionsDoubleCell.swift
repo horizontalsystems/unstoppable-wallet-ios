@@ -35,8 +35,10 @@ class NftCollectionsDoubleCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    private func bind(view: NftCollectionsTokenView, viewItem: NftCollectionsViewModel.TokenViewItem, onTap: @escaping (String) -> ()) {
+    private func bind(view: NftCollectionsTokenView, viewItem: NftCollectionsViewModel.AssetViewItem, onTap: @escaping (String) -> ()) {
         view.name = viewItem.name
+        view.coinPrice = viewItem.coinPrice
+        view.fiatPrice = viewItem.fiatPrice
         view.setImage(url: viewItem.imageUrl)
         view.onTap = { onTap(viewItem.uid) }
     }
@@ -45,7 +47,7 @@ class NftCollectionsDoubleCell: UITableViewCell {
 
 extension NftCollectionsDoubleCell {
 
-    func bind(leftViewItem: NftCollectionsViewModel.TokenViewItem, rightViewItem: NftCollectionsViewModel.TokenViewItem?, onTap: @escaping (String) -> ()) {
+    func bind(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, onTap: @escaping (String) -> ()) {
         bind(view: leftView, viewItem: leftViewItem, onTap: onTap)
 
         if let rightViewItem = rightViewItem {

@@ -32,7 +32,7 @@ class NftCollectionsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "NFTs"
+        title = "nft_collections.title".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -67,7 +67,7 @@ class NftCollectionsViewController: ThemeViewController {
 
 extension NftCollectionsViewController: SectionsDataSource {
 
-    private func row(leftViewItem: NftCollectionsViewModel.TokenViewItem, rightViewItem: NftCollectionsViewModel.TokenViewItem?, isLast: Bool) -> RowProtocol {
+    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, isLast: Bool) -> RowProtocol {
         Row<NftCollectionsDoubleCell>(
                 id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
                 dynamicHeight: { width in
@@ -103,6 +103,8 @@ extension NftCollectionsViewController: SectionsDataSource {
                     cell.bind(index: 2, block: { (component: TextComponent) in
                         component.set(style: .c1)
                         component.text = viewItem.count
+                        component.setContentHuggingPriority(.required, for: .horizontal)
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     })
                     cell.bind(index: 3, block: { (component: ImageComponent) in
                         component.imageView.image = UIImage(named: viewItem.expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
@@ -120,21 +122,21 @@ extension NftCollectionsViewController: SectionsDataSource {
         for (index, viewItem) in viewItems.enumerated() {
             rows.append(row(viewItem: viewItem, index: index))
 
-            let doubleRowCount = viewItem.tokenViewItems.count / 2
-            let hasSingleRow = viewItem.tokenViewItems.count % 2 == 1
+            let doubleRowCount = viewItem.assetViewItems.count / 2
+            let hasSingleRow = viewItem.assetViewItems.count % 2 == 1
 
             for i in 0..<doubleRowCount {
                 let row = row(
-                        leftViewItem: viewItem.tokenViewItems[i * 2],
-                        rightViewItem: viewItem.tokenViewItems[(i * 2) + 1],
+                        leftViewItem: viewItem.assetViewItems[i * 2],
+                        rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
                         isLast: i == doubleRowCount - 1 && !hasSingleRow
                 )
                 rows.append(row)
             }
 
-            if let tokenViewItem = viewItem.tokenViewItems.last, hasSingleRow {
+            if let assetViewItem = viewItem.assetViewItems.last, hasSingleRow {
                 let row = row(
-                        leftViewItem: tokenViewItem,
+                        leftViewItem: assetViewItem,
                         rightViewItem: nil,
                         isLast: true
                 )
@@ -150,6 +152,7 @@ extension NftCollectionsViewController: SectionsDataSource {
             Section(
                     id: "main",
                     headerState: .static(view: headerView, height: .heightCell48),
+                    footerState: .marginColor(height: .margin32, color: .clear),
                     rows: rows(viewItems: viewItems)
             )
         ]

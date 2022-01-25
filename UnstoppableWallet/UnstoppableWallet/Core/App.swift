@@ -1,3 +1,5 @@
+import Foundation
+import GRDB
 import ThemeKit
 import StorageKit
 import PinKit
@@ -88,13 +90,21 @@ class App {
     let ethereumAccountManager: EvmAccountManager
     let binanceSmartChainAccountManager: EvmAccountManager
 
+    let nftManager: NftManager
+
     let appManager: AppManager
 
     init() {
         appConfigProvider = AppConfigProvider()
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
-        storage = GrdbStorage()
+
+        let databaseURL = try! FileManager.default
+                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .appendingPathComponent("bank.sqlite")
+        let dbPool = try! DatabasePool(path: databaseURL.path)
+        storage = GrdbStorage(dbPool: dbPool)
+
         logRecordManager = LogRecordManager(storage: storage)
 
         marketKit = try! MarketKit.Kit.instance(
@@ -217,6 +227,11 @@ class App {
 
         ethereumAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, evmKitManager: ethereumKitManager, provider: enableCoinsErc20Provider, storage: storage)
         binanceSmartChainAccountManager = EvmAccountManager(accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, evmKitManager: binanceSmartChainKitManager, provider: enableCoinsBep20Provider, storage: storage)
+
+        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
+        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
+        let nftProvider = OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit)
+        nftManager = NftManager(accountManager: accountManager, storage: nftStorage, provider: nftProvider)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(
                 coinManager: coinManager,

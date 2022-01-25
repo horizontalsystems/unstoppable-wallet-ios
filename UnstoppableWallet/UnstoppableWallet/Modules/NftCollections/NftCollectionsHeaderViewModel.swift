@@ -11,7 +11,21 @@ class NftCollectionsHeaderViewModel {
     init(service: NftCollectionsService) {
         self.service = service
 
-        amountRelay.accept("$123980")
+        subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
+
+        sync(totalItem: service.totalItem)
+    }
+
+    private func sync(totalItem: NftCollectionsService.TotalItem?) {
+        let formattedValue = totalItem.flatMap { ValueFormatter.instance.format(currencyValue: $0.currencyValue) }
+        amountRelay.accept(formattedValue)
+    }
+
+    private func title(mode: NftCollectionsService.Mode) -> String {
+        switch mode {
+        case .lastPrice: return "nft_collections.last_price".localized
+        case .floorPrice: return "nft_collections.floor_price".localized
+        }
     }
 
 }
@@ -23,15 +37,15 @@ extension NftCollectionsHeaderViewModel {
     }
 
     var priceTypeItems: [String] {
-        ["Last Price", "Floor Price"]
+        NftCollectionsService.Mode.allCases.map { title(mode: $0) }
     }
 
     var priceTypeIndex: Int {
-        0
+        NftCollectionsService.Mode.allCases.firstIndex(of: service.mode) ?? 0
     }
 
     func onSelectPriceType(index: Int) {
-
+        service.mode = NftCollectionsService.Mode.allCases[index]
     }
 
 }

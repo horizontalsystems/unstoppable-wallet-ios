@@ -10,6 +10,8 @@ class NftCollectionsTokenView: UIView {
     private let button = UIButton()
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
+    private let coinPriceLabel = UILabel()
+    private let fiatPriceLabel = UILabel()
 
     var onTap: (() -> ())?
 
@@ -33,7 +35,8 @@ class NftCollectionsTokenView: UIView {
             maker.height.equalTo(imageView.snp.width)
         }
 
-        imageView.cornerRadius = .cornerRadius12
+        imageView.contentMode = .scaleAspectFill
+        imageView.cornerRadius = .cornerRadius8
         imageView.backgroundColor = .themeSteel10
 
         addSubview(nameLabel)
@@ -44,6 +47,26 @@ class NftCollectionsTokenView: UIView {
 
         nameLabel.font = .microSB
         nameLabel.textColor = .themeGray
+
+        addSubview(coinPriceLabel)
+        coinPriceLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(10)
+            maker.top.equalTo(nameLabel.snp.bottom).offset(CGFloat.margin4)
+        }
+
+        coinPriceLabel.setContentHuggingPriority(.required, for: .horizontal)
+        coinPriceLabel.font = .captionSB
+        coinPriceLabel.textColor = .themeLeah
+
+        addSubview(fiatPriceLabel)
+        fiatPriceLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(coinPriceLabel.snp.trailing).offset(CGFloat.margin4)
+            maker.trailing.equalToSuperview().inset(10)
+            maker.centerY.equalTo(coinPriceLabel)
+        }
+
+        fiatPriceLabel.font = .micro
+        fiatPriceLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +80,16 @@ class NftCollectionsTokenView: UIView {
     var name: String? {
         get { nameLabel.text }
         set { nameLabel.text = newValue }
+    }
+
+    var coinPrice: String? {
+        get { coinPriceLabel.text }
+        set { coinPriceLabel.text = newValue }
+    }
+
+    var fiatPrice: String? {
+        get { fiatPriceLabel.text }
+        set { fiatPriceLabel.text = newValue }
     }
 
     func setImage(url: String?) {
