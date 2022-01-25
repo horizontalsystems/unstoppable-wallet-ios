@@ -71,76 +71,76 @@
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.title" = "Address Format";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
+"sync_mode.from_blockchain" = "来自区块链";
+"blockchain_settings.title" = "地址格式";
+"blockchain_settings.description" = "选择代币的地址格式。如果不确定，请使用建议选项继续。应在恢复现有钱包时选择正确的格式。";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Coin Type";
-"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
-"coin_platforms.native" = "Native";
+"coin_platforms.title" = "代币类型";
+"coin_platforms.description" = "此令牌存在于多个区块链上。请选择您想要使用的版本。";
+"coin_platforms.native" = "原生";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"show_key.button_show" = "Show";
-"show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
-"show_key.passphrase" = "Passphrase";
+"show_key.title" = "密钥";
+"show_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"show_key.button_show" = "显示";
+"show_key.tab.recovery_phrase" = "恢复码";
+"show_key.tab.private_keys" = "私钥";
+"show_key.passphrase" = "密码";
 
-"private_key_copying.title" = "Warning";
-"private_key_copying.subtitle" = "Risk of Private Key copy";
-"private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
-"private_key_copying.copy_button" = "I will risk it";
+"private_key_copying.title" = "警告";
+"private_key_copying.subtitle" = "私钥复制风险";
+"private_key_copying.description" = "作为一项安全措施，我们建议不要在私钥上使用复制操作。";
+"private_key_copying.copy_button" = "我将冒险使用此操作";
 
 // Backup Key
 
-"backup_key.title" = "Backup";
-"backup_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"backup_key.button_show" = "Show";
-"backup_key.button_backup" = "Backup";
-"backup_key.passphrase" = "Passphrase";
+"backup_key.title" = "备份";
+"backup_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
+"backup_key.button_show" = "显示";
+"backup_key.button_backup" = "备份";
+"backup_key.passphrase" = "密码";
 
-"backup_key.confirmation.description" = "Enter the recovery phrases in the correct order to confirm";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Enter the passphrase";
+"backup_key.confirmation.description" = "以正确顺序输入恢复码进行确认";
+"backup_key.confirmation.passphrase" = "密码";
+"backup_key.confirmation.passphrase_description" = "输入密码";
 
-"backup_key.confirmation.empty_word" = "Empty word";
-"backup_key.confirmation.invalid_word" = "Invalid word";
-"backup_key.confirmation.empty_passphrase" = "Empty passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Invalid passphrase";
+"backup_key.confirmation.empty_word" = "空单词";
+"backup_key.confirmation.invalid_word" = "无效单词";
+"backup_key.confirmation.empty_passphrase" = "空密码";
+"backup_key.confirmation.invalid_passphrase" = "无效密码";
 
 // Backup
 
-"backup.backup_required" = "Backup Required";
+"backup.backup_required" = "需要备份";
 
-"error.send.self_transfer" = "Sending to yourself is not supported";
-"error.send_binance.memo_required" = "Receiver requires non-empty memo in transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.send_z_cash.transparent_address" = "Unstoppable doesn't support payments to a transparent address";
+"error.send.self_transfer" = "不支持发送给自己";
+"error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
+"error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
+"error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
 
-"backup.confirmation.title" = "Check ...";
+"backup.confirmation.title" = "正在检查...";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
-"balance.send" = "Send";
-"balance.swap" = "Swap";
-"balance.deposit" = "Receive";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
+"balance.title" = "余额";
+"balance.tab_bar_item" = "余额";
+"balance.send" = "发送​​";
+"balance.swap" = "掉期交易";
+"balance.deposit" = "接收";
+"balance.rate_per_coin" = "%@ / %@";
+"balance.syncing" = "正在同步...";
+"balance.searching" = "正在搜索交易…...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.syncing_percent" = "正在同步... %@";
+"balance.synced_through" = "直到 %@";
+"balance.add_coin" = "添加代币";
+"balance.empty.add_coins" = "添加代币";
+"balance.empty.description" = "您还没有添加任何代币到此钱包中。";
 "balance.watch_empty.description" = "This wallet address does not have any balance";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
@@ -269,36 +269,36 @@
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
-"swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
-"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.slippage" = "下跌容忍度";
+"swap.advanced_settings.slippage.footer" = "如果价格的不利变化超过这个百分比，您的交易将被退回。";
+"swap.advanced_settings.deadline" = "交易截止日期";
+"swap.advanced_settings.deadline.footer" = "如果您交易的待定时间多于此时间，您的交易将恢复原有的状态。";
+"swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
+"swap.advanced_settings.deadline_minute" = "%@分钟。";
+"swap.advanced_settings.recipient_address" = "接收人地址";
+"swap.advanced_settings.warning.unusual_slippage" = "您的交易可能提前完成";
+"swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
+"swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
+"swap.advanced_settings.error.invalid_address" = "无效地址";
+"swap.advanced_settings.error.invalid_slippage" = "无效延误";
+"swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
-"swap.one_inch.error.cannot_estimate" = "Error! Check balance and ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
 
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "服务";
+"swap.service.title" = "服务";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "掉期交易";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
+"swap.confirmation.swap_button" = "掉期交易";
+"swap.confirmation.guaranteed" = "保证";
+"swap.confirmation.maximum" = "最大金额";
+"swap.confirmation.estimated" = "估计";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
