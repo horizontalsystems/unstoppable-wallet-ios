@@ -10,12 +10,8 @@ import MarketKit
 class GrdbStorage {
     private let dbPool: DatabasePool
 
-    init() {
-        let databaseURL = try! FileManager.default
-                .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                .appendingPathComponent("bank.sqlite")
-
-        dbPool = try! DatabasePool(path: databaseURL.path)
+    init(dbPool: DatabasePool) {
+        self.dbPool = dbPool
 
         try! migrator.migrate(dbPool)
     }

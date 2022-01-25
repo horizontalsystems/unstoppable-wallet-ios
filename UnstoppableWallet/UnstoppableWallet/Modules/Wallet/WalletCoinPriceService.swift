@@ -17,7 +17,7 @@ class WalletCoinPriceService {
     private var coinPriceDisposeBag = DisposeBag()
 
     private(set) var currency: Currency
-    private var coinUids = [String]()
+    private var coinUids = Set<String>()
 
     init(currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
         self.currencyKit = currencyKit
@@ -39,7 +39,7 @@ class WalletCoinPriceService {
     private func subscribeToCoinPrices() {
         coinPriceDisposeBag = DisposeBag()
 
-        subscribe(coinPriceDisposeBag, marketKit.coinPriceMapObservable(coinUids: coinUids, currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
+        subscribe(coinPriceDisposeBag, marketKit.coinPriceMapObservable(coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
             self?.onUpdate(coinPriceMap: $0)
         }
     }
@@ -63,7 +63,11 @@ class WalletCoinPriceService {
 
 extension WalletCoinPriceService {
 
-    func set(coinUids: [String]) {
+    func set(coinUids: Set<String>) {
+        guard self.coinUids != coinUids else {
+            return
+        }
+
         self.coinUids = coinUids
         subscribeToCoinPrices()
     }

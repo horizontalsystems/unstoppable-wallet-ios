@@ -1,11 +1,30 @@
 import Foundation
 import RxSwift
 import RxRelay
+import MarketKit
 import CurrencyKit
 
 class NftCollectionsService {
-    private let currencyKit: CurrencyKit.Kit
+    private let nftManager: NftManager
+    private let coinPriceService: WalletCoinPriceService
     private let disposeBag = DisposeBag()
+
+    var mode: Mode = .lastPrice {
+        didSet {
+            if mode != oldValue {
+                syncItems()
+            }
+        }
+    }
+
+    private var collections = [NftCollection]()
+
+    private let totalItemRelay = PublishRelay<TotalItem?>()
+    private(set) var totalItem: TotalItem? {
+        didSet {
+            totalItemRelay.accept(totalItem)
+        }
+    }
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items: [Item] = [] {
@@ -14,27 +33,127 @@ class NftCollectionsService {
         }
     }
 
-    init(currencyKit: CurrencyKit.Kit) {
-        self.currencyKit = currencyKit
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collections-service", qos: .userInitiated)
 
-        syncItems()
+    init(nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
+        self.nftManager = nftManager
+        self.coinPriceService = coinPriceService
+
+        subscribe(disposeBag, nftManager.collectionsObservable) { [weak self] in self?.sync(collections: $0) }
+
+        _sync(collections: nftManager.collections())
+    }
+
+    private func allCoinUids(items: [Item]) -> Set<String> {
+        var uids = Set<String>()
+
+        for item in items {
+            for assetItem in item.assetItems {
+                if let price = assetItem.price {
+                    uids.insert(price.platformCoin.coin.uid)
+                }
+            }
+        }
+
+        return uids
+    }
+
+    private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
+        for item in items {
+            for assetItem in item.assetItems {
+                assetItem.priceItem = assetItem.price.flatMap { map[$0.platformCoin.coin.uid] }
+            }
+        }
+    }
+
+    private func sync(collections: [NftCollection]) {
+        queue.async {
+            self.sync(collections: collections)
+        }
+    }
+
+    private func _sync(collections: [NftCollection]) {
+        self.collections = collections
+        _syncItems()
+
+        coinPriceService.set(coinUids: allCoinUids(items: items))
     }
 
     private func syncItems() {
-        items = [
-            Item(imageUrl: "https://lh3.googleusercontent.com/34ogFJ5huHsQ38cwS59DTgSeaRjFTcCwu0ZSKBv8_Y8UAdiYnq5VACaBIYy09fXOKaWnrjfLQxI7PsLjedm4RJrO-VCbwASkF2dlsWc=w72", name: "CryptoPunks", tokens: [
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/DsOEz1GCOdms2i7YDoH976ie1iQRYp3ATpu_CHddlBbCYfT0KX0neWEY1pHJEFIPR-o-M1eYEQY5rcPYqBNPe5oiXtl6YDjaExq1kC0=w335", name: "CryptoPunk #170", floorPrice: 23500, lastPrice: 38200),
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/tnle-unQg5Vw3y6--Zyd8mFW_7YfGZYM3NgAh0m0cKBIqt8Qsa_AIjGKdGgHWbkInSISxQCWPGZ_Ku8BDAO0aC_Zsbo1WkaIF8kv=w335", name: "CryptoPunk #1116", floorPrice: 16100, lastPrice: 27400)
-            ]),
-            Item(imageUrl: "https://lh3.googleusercontent.com/mPpOei8345NWTVxmzN5wv_jU4xWsG_KZWBH28pFMuKdLQz-hq5AzeKMC3zA9-dMwZdKiZ6tvvpC4uzZzgYScpi6jEWTen3VUgrmjgw=w72", name: "Bored Ape Yacht Club", tokens: [
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/RTvkOSzBsTG0E54t8g4MyXTxETwoIy-91kYLIogGPZx05TX751dRAB7AOSrS74t5Yykay8LuCzy4Ep9UsTaOotYr5lBvpu_oEGoe=w600", name: "Bored Ape #7", floorPrice: 45800, lastPrice: 17700)
-            ]),
-            Item(imageUrl: "https://lh3.googleusercontent.com/KiU7VA0H20i3eyKgRQWTTyQyqOH5it_mppRvX4iaE35rfo066h2DVpM4iQrp-Jwo5_PniPtS8Qqi8pug3ftNK2o-aBIb7wxeNz-g4g=w72", name: "Cool Cats NFT", tokens: [
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/3JWSITJETJAvxTaCzI-aEPsVUCcPRRXrU12wJ5q9YO_huBPdICVtfQq8RP23bDC_4lTdj7Yfi9lFIgPSIYqy6K_JNOSXmAHz0Z1e=w335", name: "Cool Cat #4638", floorPrice: 450, lastPrice: 160),
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/R9OKtUkqOdZNdXs2knGKQ993Aaa27RCfpLU6f_u3e9Rmr1O7gCQ0GITO3t_IPRGsLE1ZuZzgzQ-ul1SNj31MctlPC7ro3fwmeT8HFQ=w335", name: "Cool Cat #4604", floorPrice: 550, lastPrice: 170),
-                TokenItem(imageUrl: "https://lh3.googleusercontent.com/Swbn4NzXbxm5OwzBSAwVw3w0t6HRloIzNTj9vE1iGLIk3gNJbqe_zvH-x3HeAqypikiR4MKWBJ89YAgJHrDodZij7XZano_EF9pyxnE=w335", name: "Cool Cat #8515", floorPrice: 650, lastPrice: 180),
-            ])
-        ]
+        queue.async {
+            self._syncItems()
+        }
+    }
+
+    private func _syncItems() {
+        let items = collections.map { collection in
+            Item(
+                    uid: collection.slug,
+                    imageUrl: collection.imageUrl,
+                    name: collection.name,
+                    assetItems: collection.assets.map { asset in
+                        var price: NftPrice?
+
+                        switch mode {
+                        case .lastPrice: price = asset.lastPrice
+                        case .floorPrice: price = collection.floorPrice
+                        }
+
+                        return AssetItem(
+                                uid: "\(collection.slug)-\(asset.tokenId)",
+                                tokenId: asset.tokenId,
+                                imageUrl: asset.imageUrl,
+                                name: asset.name,
+                                price: price
+                        )
+                    }
+            )
+        }
+
+        updatePriceItems(items: items, map: coinPriceService.itemMap(coinUids: Array(allCoinUids(items: items))))
+
+        self.items = sort(items: items)
+        syncTotalItem()
+    }
+
+    private func syncTotalItem() {
+        var total: Decimal = 0
+
+        for item in items {
+            for assetItem in item.assetItems {
+                if let price = assetItem.price, let priceItem = assetItem.priceItem {
+                    total += price.value * priceItem.price.value
+                }
+            }
+        }
+
+        totalItem = TotalItem(currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total))
+    }
+
+    func sort(items: [Item]) -> [Item] {
+        items.sorted { item, item2 in
+            item.name.caseInsensitiveCompare(item2.name) == .orderedAscending
+        }
+    }
+
+}
+
+extension NftCollectionsService: IWalletRateServiceDelegate {
+
+    func didUpdateBaseCurrency() {
+        queue.async {
+            self.updatePriceItems(items: self.items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: self.items))))
+            self.items = self.sort(items: self.items)
+            self.syncTotalItem()
+        }
+    }
+
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
+        queue.async {
+            self.updatePriceItems(items: self.items, map: itemsMap)
+            self.items = self.sort(items: self.items)
+            self.syncTotalItem()
+        }
     }
 
 }
@@ -45,25 +164,53 @@ extension NftCollectionsService {
         itemsRelay.asObservable()
     }
 
-    var currency: Currency {
-        currencyKit.baseCurrency
+    var totalItemObservable: Observable<TotalItem?> {
+        totalItemRelay.asObservable()
     }
 
 }
 
 extension NftCollectionsService {
 
-    struct Item {
-        let imageUrl: String
+    class Item {
+        let uid: String
+        let imageUrl: String?
         let name: String
-        let tokens: [TokenItem]
+        let assetItems: [AssetItem]
+
+        init(uid: String, imageUrl: String?, name: String, assetItems: [AssetItem]) {
+            self.uid = uid
+            self.imageUrl = imageUrl
+            self.name = name
+            self.assetItems = assetItems
+        }
     }
 
-    struct TokenItem {
+    class AssetItem {
+        let uid: String
+        let tokenId: Decimal
         let imageUrl: String
-        let name: String
-        let floorPrice: Decimal
-        let lastPrice: Decimal
+        let name: String?
+        let price: NftPrice?
+        var priceItem: WalletCoinPriceService.Item?
+
+        init(uid: String, tokenId: Decimal, imageUrl: String, name: String?, price: NftPrice?) {
+            self.uid = uid
+            self.tokenId = tokenId
+            self.imageUrl = imageUrl
+            self.name = name
+            self.price = price
+        }
+
+    }
+
+    struct TotalItem {
+        let currencyValue: CurrencyValue
+    }
+
+    enum Mode: CaseIterable {
+        case lastPrice
+        case floorPrice
     }
 
 }

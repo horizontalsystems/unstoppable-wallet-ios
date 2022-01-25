@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
 
 class NftCollectionsViewModel {
     private let service: NftCollectionsService
@@ -27,26 +28,40 @@ class NftCollectionsViewModel {
     }
 
     private func viewItem(item: NftCollectionsService.Item) -> ViewItem {
-        let uid = item.name // todo
-        let expanded = expandedUids.contains(uid)
+        let expanded = expandedUids.contains(item.uid)
 
         return ViewItem(
-                uid: uid,
+                uid: item.uid,
                 imageUrl: item.imageUrl,
                 name: item.name,
-                count: "\(item.tokens.count)",
+                count: "\(item.assetItems.count)",
                 expanded: expanded,
-                tokenViewItems: expanded ? item.tokens.map { tokenViewItem(tokenItem: $0) } : []
+                assetViewItems: expanded ? item.assetItems.map { assetViewItem(item: item, assetItem: $0) } : []
         )
     }
 
-    private func tokenViewItem(tokenItem: NftCollectionsService.TokenItem) -> TokenViewItem {
-        TokenViewItem(
-                uid: tokenItem.name,
-                imageUrl: tokenItem.imageUrl,
-                name: tokenItem.name,
-                floorPrice: "\(tokenItem.floorPrice)",
-                lastPrice: "\(tokenItem.lastPrice)"
+    private func assetViewItem(item: NftCollectionsService.Item, assetItem: NftCollectionsService.AssetItem) -> AssetViewItem {
+        var coinPrice = "---"
+        var fiatPrice: String?
+
+        if let price = assetItem.price {
+            let coinValue = CoinValue(kind: .platformCoin(platformCoin: price.platformCoin), value: price.value)
+            if let value = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) {
+                coinPrice = value
+            }
+
+            if let priceItem = assetItem.priceItem {
+                let currencyValue = CurrencyValue(currency: priceItem.price.currency, value: price.value * priceItem.price.value)
+                fiatPrice = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01))
+            }
+        }
+
+        return AssetViewItem(
+                uid: assetItem.uid,
+                imageUrl: assetItem.imageUrl,
+                name: assetItem.name ?? "\(item.name) #\(assetItem.tokenId)",
+                coinPrice: coinPrice,
+                fiatPrice: fiatPrice
         )
     }
 
@@ -76,19 +91,19 @@ extension NftCollectionsViewModel {
 
     struct ViewItem {
         let uid: String
-        let imageUrl: String
+        let imageUrl: String?
         let name: String
         let count: String
         let expanded: Bool
-        let tokenViewItems: [TokenViewItem]
+        let assetViewItems: [AssetViewItem]
     }
 
-    struct TokenViewItem {
+    struct AssetViewItem {
         let uid: String
         let imageUrl: String
         let name: String
-        let floorPrice: String
-        let lastPrice: String
+        let coinPrice: String
+        let fiatPrice: String?
     }
 
 }
