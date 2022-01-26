@@ -133,14 +133,14 @@ extension OpenSeaNftProvider {
     struct AssetResponse: ImmutableMappable {
         let tokenId: Decimal
         let name: String?
-        let imageUrl: String
+        let imageUrl: String?
         let collection: CollectionResponse
         let lastSale: SaleResponse?
 
         init(map: Map) throws {
             tokenId = try map.value("token_id", using: OpenSeaNftProvider.stringToDecimalTransform)
             name = try? map.value("name")
-            imageUrl = try map.value("image_preview_url")
+            imageUrl = try? map.value("image_preview_url")
             collection = try map.value("collection")
             lastSale = try? map.value("last_sale")
         }
