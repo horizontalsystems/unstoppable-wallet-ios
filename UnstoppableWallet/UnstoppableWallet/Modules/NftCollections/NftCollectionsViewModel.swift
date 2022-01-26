@@ -100,7 +100,7 @@ extension NftCollectionsViewModel {
 
     struct AssetViewItem {
         let uid: String
-        let imageUrl: String
+        let imageUrl: String?
         let name: String
         let coinPrice: String
         let fiatPrice: String?

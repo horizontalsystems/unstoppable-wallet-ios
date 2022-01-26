@@ -6,7 +6,7 @@ class NftAssetRecord: Record {
     let collectionSlug: String
     let tokenId: Decimal
     let name: String?
-    let imageUrl: String
+    let imageUrl: String?
     let lastPrice: NftPriceRecord?
 
     init(accountId: String, collection: NftCollection, asset: NftAsset) {

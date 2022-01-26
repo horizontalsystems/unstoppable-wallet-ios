@@ -189,12 +189,12 @@ extension NftCollectionsService {
     class AssetItem {
         let uid: String
         let tokenId: Decimal
-        let imageUrl: String
+        let imageUrl: String?
         let name: String?
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(uid: String, tokenId: Decimal, imageUrl: String, name: String?, price: NftPrice?) {
+        init(uid: String, tokenId: Decimal, imageUrl: String?, name: String?, price: NftPrice?) {
             self.uid = uid
             self.tokenId = tokenId
             self.imageUrl = imageUrl
