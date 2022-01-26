@@ -325,13 +325,13 @@
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total Cap";
-"market.24h_volume" = "24h Volume";
+"market.tab_bar_item" = "市场";
+"market.title" = "市场";
+"market.category.overview" = "行情";
+"market.category.posts" = "发现";
+"market.category.watchlist" = "关注";
+"market.total_market_cap" = "总市值";
+"market.24h_volume" = "24h成交量";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
@@ -339,35 +339,35 @@
 "market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
 "market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.news" = "News";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.section.header.top_gainers" = "涨幅榜";
+"market.top.section.header.top_losers" = "跌幅榜";
+"market.top.section.header.news" = "发现";
+"market.top.volume.title" = "成交量";
+"market.top.market_cap.title" = "市值";
+"market.top.diluted_market_cap.title" = "稀释市值";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
+"market.market_field.mcap" = "市值";
+"market.market_field.vol" = "成交量";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "百分比";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "所有";
 
 "market.sort_by" = "Sort By";
 
 "market.top.title" = "Top Coins";
 "market.top.description" = "Top Coins by market cap rank";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
+"market.top.highest_cap" = "市值由高到低";
+"market.top.lowest_cap" = "市值由低到高";
+"market.top.highest_volume" = "成交量由高到低";
+"market.top.lowest_volume" = "成交量由低到高";
+"market.top.top_gainers" = "涨幅榜";
+"market.top.top_losers" = "跌幅榜";
 
 "market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
+"market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 
