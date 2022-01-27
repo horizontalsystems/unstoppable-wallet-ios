@@ -63,6 +63,14 @@ class NftCollectionsViewController: ThemeViewController {
         }
     }
 
+    private func openAsset(viewItem: NftCollectionsViewModel.AssetViewItem) {
+        guard let module = NftAssetModule.viewController(collectionSlug: viewItem.collectionSlug, tokenId: viewItem.tokenId) else {
+            return
+        }
+
+        present(module, animated: true)
+    }
+
 }
 
 extension NftCollectionsViewController: SectionsDataSource {
@@ -74,8 +82,8 @@ extension NftCollectionsViewController: SectionsDataSource {
                     NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] uid in
-                        print("On Tap: \(uid)")
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
+                        self?.openAsset(viewItem: viewItem)
                     }
                 }
         )
@@ -85,7 +93,7 @@ extension NftCollectionsViewController: SectionsDataSource {
         CellBuilder.selectableRow(
                 elements: [.image24, .text, .text, .margin8, .image20],
                 tableView: tableView,
-                id: "collection-\(viewItem.uid)",
+                id: "collection-\(viewItem.slug)",
                 hash: "\(viewItem.count)-\(viewItem.expanded)",
                 height: .heightCell48,
                 bind: { [weak self] cell in

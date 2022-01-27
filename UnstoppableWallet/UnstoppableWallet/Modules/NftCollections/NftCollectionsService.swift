@@ -88,7 +88,7 @@ class NftCollectionsService {
     private func _syncItems() {
         let items = collections.map { collection in
             Item(
-                    uid: collection.slug,
+                    slug: collection.slug,
                     imageUrl: collection.imageUrl,
                     name: collection.name,
                     assetItems: collection.assets.map { asset in
@@ -100,7 +100,7 @@ class NftCollectionsService {
                         }
 
                         return AssetItem(
-                                uid: "\(collection.slug)-\(asset.tokenId)",
+                                collectionSlug: collection.slug,
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
@@ -173,13 +173,13 @@ extension NftCollectionsService {
 extension NftCollectionsService {
 
     class Item {
-        let uid: String
+        let slug: String
         let imageUrl: String?
         let name: String
         let assetItems: [AssetItem]
 
-        init(uid: String, imageUrl: String?, name: String, assetItems: [AssetItem]) {
-            self.uid = uid
+        init(slug: String, imageUrl: String?, name: String, assetItems: [AssetItem]) {
+            self.slug = slug
             self.imageUrl = imageUrl
             self.name = name
             self.assetItems = assetItems
@@ -187,15 +187,15 @@ extension NftCollectionsService {
     }
 
     class AssetItem {
-        let uid: String
+        let collectionSlug: String
         let tokenId: Decimal
         let imageUrl: String?
         let name: String?
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(uid: String, tokenId: Decimal, imageUrl: String?, name: String?, price: NftPrice?) {
-            self.uid = uid
+        init(collectionSlug: String, tokenId: Decimal, imageUrl: String?, name: String?, price: NftPrice?) {
+            self.collectionSlug = collectionSlug
             self.tokenId = tokenId
             self.imageUrl = imageUrl
             self.name = name
