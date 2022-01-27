@@ -487,14 +487,14 @@
 
 "market.global.total_market_cap.title" = "Total Cap";
 "market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 
-"market.global.subtitle" = "Chart";
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.subtitle" = "图表";
+"market.global.btc_dominance.title" = "Bitcoin市场占比";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 "market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
 "market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
@@ -502,8 +502,8 @@
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hour";
-"coin_page.roi.hour24" = "1 Day";
+"coin_page.roi.hour1" = "1 小时";
+"coin_page.roi.hour24" = "1天";
 "coin_page.roi.day7" = "1 Week";
 "coin_page.roi.day14" = "2 Weeks";
 "coin_page.roi.day30" = "1 Month";
@@ -559,40 +559,40 @@
 
 "coin_page.category" = "Category";
 
-"coin_page.contracts" = "Contracts";
-"coin_page.links" = "Links";
+"coin_page.contracts" = "合约";
+"coin_page.links" = "链接";
 
-"coin_page.guide" = "Guide";
-"coin_page.website" = "Website";
-"coin_page.whitepaper" = "Whitepaper";
+"coin_page.guide" = "指南";
+"coin_page.website" = "网站";
+"coin_page.whitepaper" = "白皮书";
 
-"coin_page.favorited" = "Added To Watchlist";
-"coin_page.unfavorited" = "Removed from Watchlist";
-"coin_page.added_to_wallet" = "Added to wallet";
-"coin_page.already_added_to_wallet" = "Already added to wallet";
+"coin_page.favorited" = "添加到关注列表";
+"coin_page.unfavorited" = "从关注列表移除";
+"coin_page.added_to_wallet" = "加入钱包";
+"coin_page.already_added_to_wallet" = "已经加入钱包";
 
-"coin_page.major_holders" = "Major Holders";
-"coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
+"coin_page.major_holders" = "主要持有者";
+"coin_page.major_holders.chart.description" = "前10名地址";
 "coin_page.major_holders.top_ethereum_wallets" = "Top Ethereum Wallets";
 "coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
 
 
-"coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.filter_by_chain" = "Filter by chain";
+"coin_page.tvl_rank.multi_chain" = "多链";
+"coin_page.tvl_rank.filter_by_chain" = "通过区块链过滤";
 
-"coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
-"coin_page.security_parameters.issuance" = "Issuance";
-"coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
-"coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
+"coin_page.security_parameters" = "安全参数";
+"coin_page.security_parameters.privacy" = "隐私";
+"coin_page.security_parameters.issuance" = "发行量";
+"coin_page.security_parameters.confiscation_resistance" = "抗征收";
+"coin_page.security_parameters.censorship_resistance" = "抗审查";
 
-"coin_page.security_parameters.level.low" = "Low";
-"coin_page.security_parameters.level.medium" = "Medium";
-"coin_page.security_parameters.level.high" = "High";
-"coin_page.security_parameters.issuance.decentralized" = "Decentralized";
-"coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
+"coin_page.security_parameters.level.low" = "低";
+"coin_page.security_parameters.level.medium" = "中";
+"coin_page.security_parameters.level.high" = "高";
+"coin_page.security_parameters.issuance.decentralized" = "去中心化";
+"coin_page.security_parameters.issuance.centralized" = "中心化";
+"coin_page.security_parameters.resistance.yes" = "是";
+"coin_page.security_parameters.resistance.no" = "否";
 
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
@@ -604,11 +604,11 @@
 "coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
 "coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
 
-"coin_page.info" = "Info";
+"coin_page.info" = "信息";
 
-"coin_page.audits" = "Audits";
+"coin_page.audits" = "审计";
 "coin_page.audits.issues" = "Issues";
-"coin_page.audits.no_reports" = "No audit reports";
+"coin_page.audits.no_reports" = "没有审计报告";
 
 "coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
 "coin_page.tweets.reference_type.quoted" = "Quoted @%@";
@@ -889,9 +889,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.performance.week_changes" = "Changes (1W)";
 "chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "关于";
+"chart.about.read_more" = "查看更多";
+"chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -912,7 +912,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Restore Select
 
-"restore_select.title" = "Choose Blockchains";
+"restore_select.title" = "选择区块链";
 
 // Lock Info
 
@@ -984,7 +984,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
-"wallet_connect.no_account.i_understand" = "I Understand";
+"wallet_connect.no_account.i_understand" = "我理解";
 
 "wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
 "wallet_connect.watch_account.switch" = "Switch";
