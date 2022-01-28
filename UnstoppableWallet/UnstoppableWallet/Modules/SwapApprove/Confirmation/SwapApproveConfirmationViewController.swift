@@ -9,7 +9,7 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = ThemeButton()
     private weak var delegate: ISwapApproveDelegate?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel, delegate: ISwapApproveDelegate?) {
+    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
         self.delegate = delegate
 
         super.init(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
