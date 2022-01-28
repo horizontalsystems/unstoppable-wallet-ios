@@ -507,11 +507,11 @@
 "coin_page.roi.day7" = "1 Week";
 "coin_page.roi.day14" = "2 Weeks";
 "coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
-"coin_page.roi.year1" = "1 Year";
+"coin_page.roi.day200" = "6月";
+"coin_page.roi.year1" = "1 年";
 
-"coin_page.tab.overview" = "Price";
-"coin_page.tab.markets" = "Markets";
+"coin_page.tab.overview" = "行情";
+"coin_page.tab.markets" = "市场";
 "coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
@@ -523,17 +523,17 @@
 
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "市场";
 "coin_page.markets.empty" = "No data available";
 
 
-"coin_page.coin_markets" = "%@ Markets";
+"coin_page.coin_markets" = "%@ 市场";
 "coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
+"coin_page.coin_markets.sort_by.highest_volume" = "成交量由高到低";
+"coin_page.coin_markets.sort_by.lowest_volume" = "成交量由低到高";
 
-"coin_page.token_liquidity" = "Token Liquidity";
-"coin_page.token_distribution" = "Token Distribution";
+"coin_page.token_liquidity" = "代币流动性";
+"coin_page.token_distribution" = "代币分布";
 
 "coin_page.chart_tvl" = "Token TVL";
 "coin_page.chart_volumes" = "Total Volume";
