@@ -14,9 +14,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let estimatedFeeCell: SendFeeCell
     private let maxFeeCell: SendFeeCell
-    private let feePriorityCell: SendFeePriorityCell
     private let errorCell = SendEthereumErrorCell()
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
@@ -24,19 +22,12 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     var topDescription: String?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
+    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.transactionViewModel = transactionViewModel
 
-        estimatedFeeCell = SendFeeCell(driver: feeViewModel.estimatedFeeDriver)
         maxFeeCell = SendFeeCell(driver: feeViewModel.feeDriver)
-        feePriorityCell = SendFeePriorityCell(viewModel: feeViewModel)
 
         super.init()
-
-        feePriorityCell.delegate = self
-
-        estimatedFeeCell.titleType = .estimatedFee
-        subscribe(disposeBag, feeViewModel.estimatedFeeDriver) { [weak self] in self?.maxFeeCell.titleType = $0 == nil ? .fee : .maxFee }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -243,33 +234,9 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                     headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
-                                cell: estimatedFeeCell,
-                                id: "estimated-fee",
-                                height: estimatedFeeCell.cellHeight
-                        ),
-                        StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
                                 height: maxFeeCell.cellHeight
-                        )
-                    ]
-            ),
-            Section(
-                    id: "fee-priority",
-                    headerState: .margin(height: 6),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: feePriorityCell,
-                                id: "fee-priority",
-                                height: feePriorityCell.cellHeight
-                        ),
-                        StaticRow(
-                                cell: errorCell,
-                                id: "error",
-                                dynamicHeight: { [weak self] width in
-                                    self?.errorCell.cellHeight(width: width) ?? 0
-                                }
                         )
                     ]
             )

@@ -9,7 +9,7 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
     private let approveButton = ThemeButton()
     private let rejectButton = ThemeButton()
 
-    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EthereumFeeViewModel) {
+    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.viewModel = viewModel
 
         super.init(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
