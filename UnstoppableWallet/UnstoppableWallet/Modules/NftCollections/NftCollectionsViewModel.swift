@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -10,7 +9,7 @@ class NftCollectionsViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
 
-    private var expandedSlugs = Set<String>()
+    private var expandedUids = Set<String>()
 
     init(service: NftCollectionsService) {
         self.service = service
@@ -29,10 +28,10 @@ class NftCollectionsViewModel {
     }
 
     private func viewItem(item: NftCollectionsService.Item) -> ViewItem {
-        let expanded = expandedSlugs.contains(item.slug)
+        let expanded = expandedUids.contains(item.uid)
 
         return ViewItem(
-                slug: item.slug,
+                uid: item.uid,
                 imageUrl: item.imageUrl,
                 name: item.name,
                 count: "\(item.assetItems.count)",
@@ -58,8 +57,7 @@ class NftCollectionsViewModel {
         }
 
         return AssetViewItem(
-                collectionSlug: item.slug,
-                tokenId: assetItem.tokenId,
+                uid: assetItem.uid,
                 imageUrl: assetItem.imageUrl,
                 name: assetItem.name ?? "\(item.name) #\(assetItem.tokenId)",
                 coinPrice: coinPrice,
@@ -76,12 +74,12 @@ extension NftCollectionsViewModel {
     }
 
     func onTapViewItem(index: Int) {
-        let slug = viewItemsRelay.value[index].slug
+        let uid = viewItemsRelay.value[index].uid
 
-        if expandedSlugs.contains(slug) {
-            expandedSlugs.remove(slug)
+        if expandedUids.contains(uid) {
+            expandedUids.remove(uid)
         } else {
-            expandedSlugs.insert(slug)
+            expandedUids.insert(uid)
         }
 
         syncState()
@@ -92,7 +90,7 @@ extension NftCollectionsViewModel {
 extension NftCollectionsViewModel {
 
     struct ViewItem {
-        let slug: String
+        let uid: String
         let imageUrl: String?
         let name: String
         let count: String
@@ -101,16 +99,11 @@ extension NftCollectionsViewModel {
     }
 
     struct AssetViewItem {
-        let collectionSlug: String
-        let tokenId: Decimal
+        let uid: String
         let imageUrl: String?
         let name: String
         let coinPrice: String
         let fiatPrice: String?
-
-        var uid: String {
-            "\(collectionSlug)-\(tokenId)"
-        }
     }
 
 }

@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 import RxRelay
 import EthereumKit
@@ -63,11 +62,14 @@ class NftManager {
 
     private func handle(collections: [NftCollection], account: Account) {
         collectionsRelay.accept(collections)
+        try? storage.save(collections: collections, accountId: account.id)
+    }
 
+    private func collectionsFromStorage(account: Account) -> [NftCollection] {
         do {
-            try storage.save(collections: collections, accountId: account.id)
+            return try storage.collections(accountId: account.id)
         } catch {
-            print("Failed to save collections: \(error)")
+            return []
         }
     }
 
@@ -84,35 +86,7 @@ extension NftManager {
             return []
         }
 
-        do {
-            return try storage.collections(accountId: account.id)
-        } catch {
-            return []
-        }
-    }
-
-    func collection(slug: String) -> NftCollection? {
-        guard let account = accountManager.activeAccount else {
-            return nil
-        }
-
-        do {
-            return try storage.collection(accountId: account.id, slug: slug)
-        } catch {
-            return nil
-        }
-    }
-
-    func asset(collectionSlug: String, tokenId: Decimal) -> NftAsset? {
-        guard let account = accountManager.activeAccount else {
-            return nil
-        }
-
-        do {
-            return try storage.asset(accountId: account.id, collectionSlug: collectionSlug, tokenId: tokenId)
-        } catch {
-            return nil
-        }
+        return collectionsFromStorage(account: account)
     }
 
 }

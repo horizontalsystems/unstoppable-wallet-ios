@@ -94,7 +94,7 @@ class NftCollectionsTokenView: UIView {
 
     func setImage(url: String?) {
         if let url = url {
-            imageView.kf.setImage(with: URL(string: url), options: [.transition(.fade(0.5))])
+            imageView.kf.setImage(with: URL(string: url))
         } else {
             imageView.image = nil
         }

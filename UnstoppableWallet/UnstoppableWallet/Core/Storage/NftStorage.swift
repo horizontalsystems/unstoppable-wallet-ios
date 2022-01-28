@@ -1,4 +1,3 @@
-import Foundation
 import RxSwift
 import MarketKit
 
@@ -41,25 +40,6 @@ class NftStorage {
         return NftPrice(platformCoin: platformCoin, value: record.value)
     }
 
-    private func asset(record: NftAssetRecord, platformCoins: [PlatformCoin]) -> NftAsset {
-        NftAsset(
-                tokenId: record.tokenId,
-                name: record.name,
-                imageUrl: record.imageUrl,
-                lastPrice: nftPrice(record: record.lastPrice, platformCoins: platformCoins)
-        )
-    }
-
-    private func collection(record: NftCollectionRecord, assetRecords: [NftAssetRecord], platformCoins: [PlatformCoin]) -> NftCollection {
-        NftCollection(
-                slug: record.slug,
-                name: record.name,
-                imageUrl: record.imageUrl,
-                floorPrice: nftPrice(record: record.floorPrice, platformCoins: platformCoins),
-                assets: assetRecords.filter { $0.collectionSlug == record.slug }.map { asset(record: $0, platformCoins: platformCoins) }
-        )
-    }
-
 }
 
 extension NftStorage {
@@ -67,27 +47,25 @@ extension NftStorage {
     func collections(accountId: String) throws -> [NftCollection] {
         let collectionRecords = try storage.collections(accountId: accountId)
         let assetRecords = try storage.assets(accountId: accountId)
+
         let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(collectionRecords: collectionRecords, assetRecords: assetRecords))
 
-        return collectionRecords.map { collection(record: $0, assetRecords: assetRecords, platformCoins: platformCoins) }
-    }
-
-    func collection(accountId: String, slug: String) throws -> NftCollection? {
-        guard let collectionRecord = try storage.collection(accountId: accountId, slug: slug) else {
-            return nil
+        return collectionRecords.map { collectionRecord in
+            NftCollection(
+                    slug: collectionRecord.slug,
+                    name: collectionRecord.name,
+                    imageUrl: collectionRecord.imageUrl,
+                    floorPrice: nftPrice(record: collectionRecord.floorPrice, platformCoins: platformCoins),
+                    assets: assetRecords.filter { $0.collectionSlug == collectionRecord.slug }.map { assetRecord in
+                        NftAsset(
+                                tokenId: assetRecord.tokenId,
+                                name: assetRecord.name,
+                                imageUrl: assetRecord.imageUrl,
+                                lastPrice: nftPrice(record: assetRecord.lastPrice, platformCoins: platformCoins)
+                        )
+                    }
+            )
         }
-
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(collectionRecords: [collectionRecord], assetRecords: []))
-        return collection(record: collectionRecord, assetRecords: [], platformCoins: platformCoins)
-    }
-
-    func asset(accountId: String, collectionSlug: String, tokenId: Decimal) throws -> NftAsset? {
-        guard let assetRecord = try storage.asset(accountId: accountId, collectionSlug: collectionSlug, tokenId: tokenId) else {
-            return nil
-        }
-
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(collectionRecords: [], assetRecords: [assetRecord]))
-        return asset(record: assetRecord, platformCoins: platformCoins)
     }
 
     func save(collections: [NftCollection], accountId: String) throws {
