@@ -568,8 +568,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.favorited" = "Added To Watchlist";
 "coin_page.unfavorited" = "Removed from Watchlist";
-"coin_page.added_to_wallet" = "Added to wallet";
-"coin_page.already_added_to_wallet" = "Already added to wallet";
+"coin_page.added_to_wallet" = "Ajouté au portefeuille";
+"coin_page.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 
 "coin_page.major_holders" = "Major Holders";
 "coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
@@ -984,7 +984,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
-"wallet_connect.no_account.i_understand" = "I Understand";
+"wallet_connect.no_account.i_understand" = "J’ai Compris";
 
 "wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
 "wallet_connect.watch_account.switch" = "Switch";
