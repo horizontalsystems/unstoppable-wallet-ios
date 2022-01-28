@@ -14,7 +14,7 @@ class OneInchSendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
     private let evmKitWrapper: EvmKitWrapper
-    private let transactionFeeService: OneInchTransactionFeeService
+    private let transactionFeeService: OneInchFeeService
     private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<SendEvmTransactionService.State>()
@@ -38,12 +38,12 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    init(evmKitWrapper: EvmKitWrapper, transactionFeeService: OneInchTransactionFeeService, activateCoinManager: ActivateCoinManager) {
+    init(evmKitWrapper: EvmKitWrapper, transactionFeeService: OneInchFeeService, activateCoinManager: ActivateCoinManager) {
         self.evmKitWrapper = evmKitWrapper
         self.transactionFeeService = transactionFeeService
         self.activateCoinManager = activateCoinManager
 
-        subscribe(disposeBag, transactionFeeService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
+        subscribe(disposeBag, transactionFeeService.statusObservable) { [weak self] _ in self?.syncState() }
 
         // show initial info from parameters
         dataState = .completed(
@@ -64,7 +64,7 @@ class OneInchSendEvmTransactionService {
     }
 
     private func syncState() {
-        switch transactionFeeService.transactionStatus {
+        switch transactionFeeService.status {
         case .loading:
             state = .notReady(errors: [])
         case .failed(let error):
@@ -81,7 +81,7 @@ class OneInchSendEvmTransactionService {
     }
 
     private func syncDataState() {
-        switch transactionFeeService.transactionStatus {
+        switch transactionFeeService.status {
         case .loading:
             dataState = .loading
         case .failed(let error):
@@ -203,7 +203,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let transaction) = transactionFeeService.transactionStatus else {
+        guard case .ready = state, case .completed(let transaction) = transactionFeeService.status else {
             return
         }
 
@@ -211,7 +211,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
 
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.gasPrice,
+                        gasPrice: transaction.gasData.gasPrice.max,
                         gasLimit: transaction.gasData.gasLimit
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

@@ -27,7 +27,7 @@ class SendEvmTransactionService {
 
     private let sendData: SendEvmData
     private let evmKitWrapper: EvmKitWrapper
-    private let transactionService: EvmTransactionService
+    private let feeService: EvmFeeService
     private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<State>()
@@ -51,10 +51,10 @@ class SendEvmTransactionService {
         }
     }
 
-    init(sendData: SendEvmData, gasPrice: Int? = nil, evmKitWrapper: EvmKitWrapper, transactionService: EvmTransactionService, activateCoinManager: ActivateCoinManager) {
+    init(sendData: SendEvmData, evmKitWrapper: EvmKitWrapper, feeService: EvmFeeService, activateCoinManager: ActivateCoinManager) {
         self.sendData = sendData
         self.evmKitWrapper = evmKitWrapper
-        self.transactionService = transactionService
+        self.feeService = feeService
         self.activateCoinManager = activateCoinManager
 
         dataState = .completed(
@@ -65,13 +65,7 @@ class SendEvmTransactionService {
                 )
         )
 
-        subscribe(disposeBag, transactionService.transactionStatusObservable) { [weak self] _ in self?.syncState() }
-
-        transactionService.set(transactionData: sendData.transactionData)
-
-        if let gasPrice = gasPrice {
-            transactionService.set(gasPriceType: .custom(gasPrice: gasPrice))
-        }
+        subscribe(disposeBag, feeService.statusObservable) { [weak self] _ in self?.syncState() }
     }
 
     private var evmKit: EthereumKit.Kit {
@@ -83,7 +77,7 @@ class SendEvmTransactionService {
     }
 
     private func syncState() {
-        switch transactionService.transactionStatus {
+        switch feeService.status {
         case .loading:
             state = .notReady(errors: [])
         case .failed(let error):
@@ -99,7 +93,7 @@ class SendEvmTransactionService {
         }
     }
 
-    private func syncDataState(transaction: EvmTransactionService.Transaction? = nil) {
+    private func syncDataState(transaction: EvmFeeModule.Transaction? = nil) {
         let transactionData = transaction?.transactionData ?? sendData.transactionData
 
         dataState = .completed(
@@ -181,7 +175,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let transaction) = transactionService.transactionStatus else {
+        guard case .ready = state, case .completed(let transaction) = feeService.status else {
             return
         }
 
@@ -189,7 +183,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.gasPrice,
+                        gasPrice: transaction.gasData.gasPrice.max,
                         gasLimit: transaction.gasData.gasLimit,
                         nonce: transaction.transactionData.nonce
                 )

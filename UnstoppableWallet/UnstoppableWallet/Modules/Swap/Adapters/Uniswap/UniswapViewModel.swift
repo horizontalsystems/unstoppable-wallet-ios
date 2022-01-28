@@ -65,7 +65,7 @@ class UniswapViewModel {
         let filtered = errors.filter { error in
             switch error {
             case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
-            case _ as EvmTransactionService.GasDataError: return false
+            case _ as EvmFeeModule.GasDataError: return false
             case _ as SwapModule.SwapError: return false
             default: return true
             }

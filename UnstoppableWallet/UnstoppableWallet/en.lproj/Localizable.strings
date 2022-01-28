@@ -989,6 +989,15 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "evm_network.switches_automatically" = "switches automatically";
 "evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
 
+// Fee Settings
+
+"fee_settings.errors.insufficient_balance" = "Insufficient balance";
+"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
+"fee_settings.warning.high_base_fee" = "Base Fee is too high";
+"fee_settings.warning.high_base_fee.info" = "At the moment the base fee for transacting is high. It may go down when the network becomes less congested.";
+
 // Watch Address
 
 "watch_address.title" = "Address";

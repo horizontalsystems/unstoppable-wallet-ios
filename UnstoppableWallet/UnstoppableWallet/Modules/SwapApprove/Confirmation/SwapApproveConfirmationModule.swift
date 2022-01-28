@@ -11,11 +11,12 @@ struct SwapApproveConfirmationModule {
         }
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let transactionService = EvmTransactionService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 20)
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
+        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
+        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimitSurchargePercent: 20)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
-        let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)
+        let feeViewModel = EvmFeeViewModel(service: feeService, coinService: coinServiceFactory.baseCoinService)
 
         return SwapApproveConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel, delegate: delegate)
     }

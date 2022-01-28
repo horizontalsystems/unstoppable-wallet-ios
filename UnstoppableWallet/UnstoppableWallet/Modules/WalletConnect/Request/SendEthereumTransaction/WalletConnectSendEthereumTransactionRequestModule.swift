@@ -22,11 +22,12 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: baseService)
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let transactionService = EvmTransactionService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider, gasLimitSurchargePercent: 10)
-        let sendService = SendEvmTransactionService(sendData: SendEvmData(transactionData: service.transactionData, additionalInfo: nil), gasPrice: service.gasPrice, evmKitWrapper: evmKitWrapper, transactionService: transactionService, activateCoinManager: App.shared.activateCoinManager)
+        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider, gasPrice: service.gasPrice)
+        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: service.transactionData, gasLimitSurchargePercent: 10)
+        let sendService = SendEvmTransactionService(sendData: SendEvmData(transactionData: service.transactionData, additionalInfo: nil), evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory)
-        let feeViewModel = EthereumFeeViewModel(service: transactionService, coinService: coinServiceFactory.baseCoinService)
+        let feeViewModel = EvmFeeViewModel(service: feeService, coinService: coinServiceFactory.baseCoinService)
         let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service)
 
         return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
