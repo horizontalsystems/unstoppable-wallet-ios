@@ -34,7 +34,7 @@ class NftAssetTitleCell: UITableViewCell {
 
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = Self.subtitleFont
-        subtitleLabel.textColor = .themeJacob
+        subtitleLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
