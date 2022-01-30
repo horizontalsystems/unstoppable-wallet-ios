@@ -5,7 +5,7 @@ import EthereumKit
 import HdWalletKit
 
 protocol INftProvider {
-    func collectionsSingle(address: String) -> Single<[NftCollection]>
+    func assetCollection(address: String) -> Single<NftAssetCollection>
 }
 
 class NftManager {
@@ -15,7 +15,7 @@ class NftManager {
     private let disposeBag = DisposeBag()
     private var providerDisposeBag = DisposeBag()
 
-    private let collectionsRelay = PublishRelay<[NftCollection]>()
+    private let assetCollectionRelay = PublishRelay<NftAssetCollection>()
 
     init(accountManager: IAccountManager, storage: NftStorage, provider: INftProvider) {
         self.accountManager = accountManager
@@ -53,21 +53,21 @@ class NftManager {
     private func update(account: Account, address: String) {
         providerDisposeBag = DisposeBag()
 
-        provider.collectionsSingle(address: address)
+        provider.assetCollection(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] collections in
-                    self?.handle(collections: collections, account: account)
+                .subscribe(onSuccess: { [weak self] assetCollection in
+                    self?.handle(assetCollection: assetCollection, account: account)
                 })
                 .disposed(by: providerDisposeBag)
     }
 
-    private func handle(collections: [NftCollection], account: Account) {
-        collectionsRelay.accept(collections)
+    private func handle(assetCollection: NftAssetCollection, account: Account) {
+        assetCollectionRelay.accept(assetCollection)
 
         do {
-            try storage.save(collections: collections, accountId: account.id)
+            try storage.save(assetCollection: assetCollection, accountId: account.id)
         } catch {
-            print("Failed to save collections: \(error)")
+            print("Failed to save asset collection: \(error)")
         }
     }
 
@@ -75,19 +75,19 @@ class NftManager {
 
 extension NftManager {
 
-    var collectionsObservable: Observable<[NftCollection]> {
-        collectionsRelay.asObservable()
+    var assetCollectionObservable: Observable<NftAssetCollection> {
+        assetCollectionRelay.asObservable()
     }
 
-    func collections() -> [NftCollection] {
+    func assetCollection() -> NftAssetCollection {
         guard let account = accountManager.activeAccount else {
-            return []
+            return .empty
         }
 
         do {
-            return try storage.collections(accountId: account.id)
+            return try storage.assetCollection(accountId: account.id)
         } catch {
-            return []
+            return .empty
         }
     }
 
@@ -103,7 +103,7 @@ extension NftManager {
         }
     }
 
-    func asset(collectionSlug: String, tokenId: Decimal) -> NftAsset? {
+    func asset(collectionSlug: String, tokenId: String) -> NftAsset? {
         guard let account = accountManager.activeAccount else {
             return nil
         }

@@ -1058,5 +1058,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
-"nft_collections.last_price" = "Last Price";
-"nft_collections.floor_price" = "Floor Price";
+"nft_collections.last_sale" = "Last Sale";
+"nft_collections.average_7d" = "Average 7D";
+"nft_collections.average_30d" = "Average 30D";

@@ -23,8 +23,9 @@ class NftCollectionsHeaderViewModel {
 
     private func title(mode: NftCollectionsService.Mode) -> String {
         switch mode {
-        case .lastPrice: return "nft_collections.last_price".localized
-        case .floorPrice: return "nft_collections.floor_price".localized
+        case .lastSale: return "nft_collections.last_sale".localized
+        case .average7d: return "nft_collections.average_7d".localized
+        case .average30d: return "nft_collections.average_30d".localized
         }
     }
 

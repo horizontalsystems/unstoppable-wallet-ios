@@ -9,7 +9,7 @@ class NftCollectionsService {
     private let coinPriceService: WalletCoinPriceService
     private let disposeBag = DisposeBag()
 
-    var mode: Mode = .lastPrice {
+    var mode: Mode = .lastSale {
         didSet {
             if mode != oldValue {
                 syncItems()
@@ -17,7 +17,7 @@ class NftCollectionsService {
         }
     }
 
-    private var collections = [NftCollection]()
+    private var assetCollection = NftAssetCollection.empty
 
     private let totalItemRelay = PublishRelay<TotalItem?>()
     private(set) var totalItem: TotalItem? {
@@ -39,9 +39,9 @@ class NftCollectionsService {
         self.nftManager = nftManager
         self.coinPriceService = coinPriceService
 
-        subscribe(disposeBag, nftManager.collectionsObservable) { [weak self] in self?.sync(collections: $0) }
+        subscribe(disposeBag, nftManager.assetCollectionObservable) { [weak self] in self?.sync(assetCollection: $0) }
 
-        _sync(collections: nftManager.collections())
+        _sync(assetCollection: nftManager.assetCollection())
     }
 
     private func allCoinUids(items: [Item]) -> Set<String> {
@@ -66,14 +66,14 @@ class NftCollectionsService {
         }
     }
 
-    private func sync(collections: [NftCollection]) {
+    private func sync(assetCollection: NftAssetCollection) {
         queue.async {
-            self.sync(collections: collections)
+            self.sync(assetCollection: assetCollection)
         }
     }
 
-    private func _sync(collections: [NftCollection]) {
-        self.collections = collections
+    private func _sync(assetCollection: NftAssetCollection) {
+        self.assetCollection = assetCollection
         _syncItems()
 
         coinPriceService.set(coinUids: allCoinUids(items: items))
@@ -86,21 +86,24 @@ class NftCollectionsService {
     }
 
     private func _syncItems() {
-        let items = collections.map { collection in
-            Item(
+        let items = assetCollection.collections.map { collection -> Item in
+            let assets = assetCollection.assets.filter { $0.collectionSlug == collection.slug }
+
+            return Item(
                     slug: collection.slug,
                     imageUrl: collection.imageUrl,
                     name: collection.name,
-                    assetItems: collection.assets.map { asset in
+                    assetItems: assets.map { asset in
                         var price: NftPrice?
 
                         switch mode {
-                        case .lastPrice: price = asset.lastPrice
-                        case .floorPrice: price = collection.floorPrice
+                        case .lastSale: price = asset.lastSalePrice
+                        case .average7d: price = collection.averagePrice7d
+                        case .average30d: price = collection.averagePrice30d
                         }
 
                         return AssetItem(
-                                collectionSlug: collection.slug,
+                                collectionSlug: asset.collectionSlug,
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
@@ -188,13 +191,13 @@ extension NftCollectionsService {
 
     class AssetItem {
         let collectionSlug: String
-        let tokenId: Decimal
+        let tokenId: String
         let imageUrl: String?
         let name: String?
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(collectionSlug: String, tokenId: Decimal, imageUrl: String?, name: String?, price: NftPrice?) {
+        init(collectionSlug: String, tokenId: String, imageUrl: String?, name: String?, price: NftPrice?) {
             self.collectionSlug = collectionSlug
             self.tokenId = tokenId
             self.imageUrl = imageUrl
@@ -209,8 +212,9 @@ extension NftCollectionsService {
     }
 
     enum Mode: CaseIterable {
-        case lastPrice
-        case floorPrice
+        case lastSale
+        case average7d
+        case average30d
     }
 
 }
