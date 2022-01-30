@@ -12,7 +12,7 @@ class NftAssetService {
     let collection: NftCollection
     let asset: NftAsset
 
-    init?(collectionSlug: String, tokenId: Decimal, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
+    init?(collectionSlug: String, tokenId: String, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
         self.nftManager = nftManager
         self.coinPriceService = coinPriceService
 

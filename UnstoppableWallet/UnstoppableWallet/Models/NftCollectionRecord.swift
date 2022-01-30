@@ -3,17 +3,34 @@ import GRDB
 
 class NftCollectionRecord: Record {
     let accountId: String
+
+    let contracts: [NftCollection.Contract]
     let slug: String
     let name: String
+    let description: String?
     let imageUrl: String?
-    var floorPrice: NftPriceRecord?
+    let featuredImageUrl: String?
+    let externalUrl: String?
+    let discordUrl: String?
+    let twitterUsername: String?
+    let averagePrice7d: NftPriceRecord?
+    let averagePrice30d: NftPriceRecord?
+    let totalSupply: Int
 
     init(accountId: String, collection: NftCollection) {
         self.accountId = accountId
+        contracts = collection.contracts
         slug = collection.slug
         name = collection.name
+        description = collection.description
         imageUrl = collection.imageUrl
-        floorPrice = collection.floorPrice.map { NftPriceRecord(price: $0) }
+        featuredImageUrl = collection.featuredImageUrl
+        externalUrl = collection.externalUrl
+        discordUrl = collection.discordUrl
+        twitterUsername = collection.twitterUsername
+        averagePrice7d = collection.averagePrice7d.map { NftPriceRecord(price: $0) }
+        averagePrice30d = collection.averagePrice30d.map { NftPriceRecord(price: $0) }
+        totalSupply = collection.totalSupply
 
         super.init()
     }
@@ -23,26 +40,57 @@ class NftCollectionRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case accountId, slug, name, imageUrl, floorPriceCoinTypeId, floorPriceValue
+        case accountId
+        case contracts
+        case slug
+        case name
+        case description
+        case imageUrl
+        case featuredImageUrl
+        case externalUrl
+        case discordUrl
+        case twitterUsername
+        case averagePrice7dCoinTypeId
+        case averagePrice7dValue
+        case averagePrice30dCoinTypeId
+        case averagePrice30dValue
+        case totalSupply
     }
 
     required init(row: Row) {
         accountId = row[Columns.accountId]
+        contracts = [NftCollection.Contract](JSONString: row[Columns.contracts]) ?? []
         slug = row[Columns.slug]
         name = row[Columns.name]
+        description = row[Columns.description]
         imageUrl = row[Columns.imageUrl]
-        floorPrice = NftPriceRecord(coinTypeId: row[Columns.floorPriceCoinTypeId], value: row[Columns.floorPriceValue])
+        featuredImageUrl = row[Columns.featuredImageUrl]
+        externalUrl = row[Columns.externalUrl]
+        discordUrl = row[Columns.discordUrl]
+        twitterUsername = row[Columns.twitterUsername]
+        averagePrice7d = NftPriceRecord(coinTypeId: row[Columns.averagePrice7dCoinTypeId], value: row[Columns.averagePrice7dValue])
+        averagePrice30d = NftPriceRecord(coinTypeId: row[Columns.averagePrice30dCoinTypeId], value: row[Columns.averagePrice30dValue])
+        totalSupply = row[Columns.totalSupply]
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.accountId] = accountId
+        container[Columns.contracts] = contracts.toJSONString()
         container[Columns.slug] = slug
         container[Columns.name] = name
+        container[Columns.description] = description
         container[Columns.imageUrl] = imageUrl
-        container[Columns.floorPriceCoinTypeId] = floorPrice?.coinTypeId
-        container[Columns.floorPriceValue] = floorPrice?.value
+        container[Columns.featuredImageUrl] = featuredImageUrl
+        container[Columns.externalUrl] = externalUrl
+        container[Columns.discordUrl] = discordUrl
+        container[Columns.twitterUsername] = twitterUsername
+        container[Columns.averagePrice7dCoinTypeId] = averagePrice7d?.coinTypeId
+        container[Columns.averagePrice7dValue] = averagePrice7d?.value
+        container[Columns.averagePrice30dCoinTypeId] = averagePrice30d?.coinTypeId
+        container[Columns.averagePrice30dValue] = averagePrice30d?.value
+        container[Columns.totalSupply] = totalSupply
     }
 
 }

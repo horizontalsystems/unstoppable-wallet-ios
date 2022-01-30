@@ -37,11 +37,11 @@ class NftCollectionsViewModel {
                 name: item.name,
                 count: "\(item.assetItems.count)",
                 expanded: expanded,
-                assetViewItems: expanded ? item.assetItems.map { assetViewItem(item: item, assetItem: $0) } : []
+                assetViewItems: expanded ? item.assetItems.map { assetViewItem(assetItem: $0) } : []
         )
     }
 
-    private func assetViewItem(item: NftCollectionsService.Item, assetItem: NftCollectionsService.AssetItem) -> AssetViewItem {
+    private func assetViewItem(assetItem: NftCollectionsService.AssetItem) -> AssetViewItem {
         var coinPrice = "---"
         var fiatPrice: String?
 
@@ -58,10 +58,10 @@ class NftCollectionsViewModel {
         }
 
         return AssetViewItem(
-                collectionSlug: item.slug,
+                collectionSlug: assetItem.collectionSlug,
                 tokenId: assetItem.tokenId,
                 imageUrl: assetItem.imageUrl,
-                name: assetItem.name ?? "\(item.name) #\(assetItem.tokenId)",
+                name: assetItem.name ?? "#\(assetItem.tokenId)",
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
@@ -102,7 +102,7 @@ extension NftCollectionsViewModel {
 
     struct AssetViewItem {
         let collectionSlug: String
-        let tokenId: Decimal
+        let tokenId: String
         let imageUrl: String?
         let name: String
         let coinPrice: String

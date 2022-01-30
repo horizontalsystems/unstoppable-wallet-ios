@@ -16,25 +16,41 @@ class NftDatabaseStorage {
         migrator.registerMigration("Create NftCollectionRecord and NftAssetRecord") { db in
             try db.create(table: NftCollectionRecord.databaseTableName) { t in
                 t.column(NftCollectionRecord.Columns.accountId.name, .text).notNull()
+                t.column(NftCollectionRecord.Columns.contracts.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.slug.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.name.name, .text).notNull()
+                t.column(NftCollectionRecord.Columns.description.name, .text)
                 t.column(NftCollectionRecord.Columns.imageUrl.name, .text)
-                t.column(NftCollectionRecord.Columns.floorPriceCoinTypeId.name, .text)
-                t.column(NftCollectionRecord.Columns.floorPriceValue.name, .text)
+                t.column(NftCollectionRecord.Columns.featuredImageUrl.name, .text)
+                t.column(NftCollectionRecord.Columns.externalUrl.name, .text)
+                t.column(NftCollectionRecord.Columns.discordUrl.name, .text)
+                t.column(NftCollectionRecord.Columns.twitterUsername.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice7dCoinTypeId.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice7dValue.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice30dCoinTypeId.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice30dValue.name, .text)
+                t.column(NftCollectionRecord.Columns.totalSupply.name, .integer).notNull()
 
-                t.primaryKey([NftCollectionRecord.Columns.accountId.name, NftCollectionRecord.Columns.slug.name], onConflict: .replace)
+                t.primaryKey([NftCollectionRecord.Columns.accountId.name, NftCollectionRecord.Columns.contracts.name], onConflict: .replace)
             }
 
             try db.create(table: NftAssetRecord.databaseTableName) { t in
                 t.column(NftAssetRecord.Columns.accountId.name, .text).notNull()
+                t.column(NftAssetRecord.Columns.contractAddress.name, .text).notNull()
+                t.column(NftAssetRecord.Columns.contractSchemaName.name, .text).notNull()
                 t.column(NftAssetRecord.Columns.collectionSlug.name, .text).notNull()
                 t.column(NftAssetRecord.Columns.tokenId.name, .text).notNull()
                 t.column(NftAssetRecord.Columns.name.name, .text)
                 t.column(NftAssetRecord.Columns.imageUrl.name, .text)
-                t.column(NftAssetRecord.Columns.lastPriceCoinTypeId.name, .text)
-                t.column(NftAssetRecord.Columns.lastPriceValue.name, .text)
+                t.column(NftAssetRecord.Columns.imagePreviewUrl.name, .text)
+                t.column(NftAssetRecord.Columns.description.name, .text)
+                t.column(NftAssetRecord.Columns.externalLink.name, .text)
+                t.column(NftAssetRecord.Columns.permalink.name, .text)
+                t.column(NftAssetRecord.Columns.traits.name, .text).notNull()
+                t.column(NftAssetRecord.Columns.lastSalePriceCoinTypeId.name, .text)
+                t.column(NftAssetRecord.Columns.lastSalePriceValue.name, .text)
 
-                t.primaryKey([NftAssetRecord.Columns.accountId.name, NftAssetRecord.Columns.collectionSlug.name, NftAssetRecord.Columns.tokenId.name], onConflict: .replace)
+                t.primaryKey([NftAssetRecord.Columns.accountId.name, NftAssetRecord.Columns.contractAddress.name, NftAssetRecord.Columns.tokenId.name], onConflict: .replace)
             }
         }
 
@@ -51,21 +67,21 @@ extension NftDatabaseStorage {
         }
     }
 
+    func assets(accountId: String) throws -> [NftAssetRecord] {
+        try dbPool.read { db in
+            try NftAssetRecord.filter(NftAssetRecord.Columns.accountId == accountId).fetchAll(db)
+        }
+    }
+
     func collection(accountId: String, slug: String) throws -> NftCollectionRecord? {
         try dbPool.read { db in
             try NftCollectionRecord.filter(NftCollectionRecord.Columns.accountId == accountId && NftCollectionRecord.Columns.slug == slug).fetchOne(db)
         }
     }
 
-    func asset(accountId: String, collectionSlug: String, tokenId: Decimal) throws -> NftAssetRecord? {
+    func asset(accountId: String, collectionSlug: String, tokenId: String) throws -> NftAssetRecord? {
         try dbPool.read { db in
             try NftAssetRecord.filter(NftAssetRecord.Columns.accountId == accountId && NftAssetRecord.Columns.collectionSlug == collectionSlug && NftAssetRecord.Columns.tokenId == tokenId).fetchOne(db)
-        }
-    }
-
-    func assets(accountId: String) throws -> [NftAssetRecord] {
-        try dbPool.read { db in
-            try NftAssetRecord.filter(NftAssetRecord.Columns.accountId == accountId).fetchAll(db)
         }
     }
 

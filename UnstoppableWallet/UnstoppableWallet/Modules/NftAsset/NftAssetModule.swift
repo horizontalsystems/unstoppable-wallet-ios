@@ -3,7 +3,7 @@ import ThemeKit
 
 struct NftAssetModule {
 
-    static func viewController(collectionSlug: String, tokenId: Decimal) -> UIViewController? {
+    static func viewController(collectionSlug: String, tokenId: String) -> UIViewController? {
         let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         guard let service = NftAssetService(collectionSlug: collectionSlug, tokenId: tokenId, nftManager: App.shared.nftManager, coinPriceService: coinPriceService) else {

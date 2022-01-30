@@ -20,7 +20,7 @@ class NftAssetViewModel {
         let collection = service.collection
 
         let viewItem = ViewItem(
-                name: asset.name ?? "\(collection.name) #\(asset.tokenId)",
+                name: asset.name ?? "#\(asset.tokenId)",
                 collectionName: collection.name
         )
 
