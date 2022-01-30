@@ -100,6 +100,14 @@ class NftCollectionsTokenView: UIView {
         }
     }
 
+    var imageRatio: CGFloat {
+        if let image = imageView.image {
+            return image.size.height / image.size.width
+        } else {
+            return 1
+        }
+    }
+
 }
 
 extension NftCollectionsTokenView {
