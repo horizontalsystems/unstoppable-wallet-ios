@@ -1061,3 +1061,15 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_collections.last_sale" = "Last Sale";
 "nft_collections.average_7d" = "Average 7D";
 "nft_collections.average_30d" = "Average 30D";
+
+// Nft Asset
+
+"nft_asset.properties" = "Properties";
+"nft_asset.description" = "Description";
+"nft_asset.details" = "Details";
+"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details.token_id" = "Token ID";
+"nft_asset.details.token_standard" = "Token Standard";
+"nft_asset.details.blockchain" = "Blockchain";
+"nft_asset.links" = "Links";
+"nft_asset.links.website" = "Website";
