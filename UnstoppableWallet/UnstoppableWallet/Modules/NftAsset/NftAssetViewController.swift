@@ -7,6 +7,8 @@ import SectionsTableView
 
 class NftAssetViewController: ThemeViewController {
     private let viewModel: NftAssetViewModel
+    private var urlManager: IUrlManager
+    private var imageRatio: CGFloat
     private let disposeBag = DisposeBag()
 
     private var viewItem: NftAssetViewModel.ViewItem?
@@ -16,8 +18,10 @@ class NftAssetViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: NftAssetViewModel) {
+    init(viewModel: NftAssetViewModel, urlManager: IUrlManager, imageRatio: CGFloat) {
         self.viewModel = viewModel
+        self.urlManager = urlManager
+        self.imageRatio = imageRatio
 
         super.init()
     }
@@ -31,7 +35,6 @@ class NftAssetViewController: ThemeViewController {
 
         navigationItem.largeTitleDisplayMode = .never
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapShare))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         view.addSubview(tableView)
@@ -45,6 +48,7 @@ class NftAssetViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
+        tableView.registerCell(forClass: NftAssetImageCell.self)
         tableView.registerCell(forClass: NftAssetTitleCell.self)
         tableView.registerCell(forClass: TextCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
@@ -58,9 +62,6 @@ class NftAssetViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
 
         loaded = true
-    }
-
-    @objc private func onTapShare() {
     }
 
     @objc private func onTapClose() {
@@ -84,6 +85,42 @@ class NftAssetViewController: ThemeViewController {
         tableView.endUpdates()
     }
 
+    private func openShare(text: String) {
+        let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
+        present(activityViewController, animated: true, completion: nil)
+    }
+
+    private func linkTitle(type: NftAssetViewModel.LinkType) -> String {
+        switch type {
+        case .website: return "nft_asset.links.website".localized
+        case .openSea: return "OpenSea"
+        case .discord: return "Discord"
+        case .twitter: return "Twitter"
+        }
+    }
+
+    private func linkIcon(type: NftAssetViewModel.LinkType) -> UIImage? {
+        switch type {
+        case .website: return UIImage(named: "globe_20")
+        case .openSea: return UIImage(named: "open_sea_20")
+        case .discord: return UIImage(named: "discord_20")
+        case .twitter: return UIImage(named: "twitter_20")
+        }
+    }
+
+    private func openLink(url: String) {
+        if url.hasPrefix("https://twitter.com/") {
+            let account = url.stripping(prefix: "https://twitter.com/")
+
+            if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+                UIApplication.shared.open(appUrl)
+                return
+            }
+        }
+
+        urlManager.open(url: url, from: self)
+    }
+
 }
 
 extension NftAssetViewController: SectionsDataSource {
@@ -103,6 +140,24 @@ extension NftAssetViewController: SectionsDataSource {
                         component.text = title
                     }
                 }
+        )
+    }
+
+    private func imageSection(url: String, ratio: CGFloat) -> SectionProtocol {
+        Section(
+                id: "image",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    Row<NftAssetImageCell>(
+                            id: "image",
+                            dynamicHeight: { width in
+                                NftAssetImageCell.height(containerWidth: width, ratio: ratio)
+                            },
+                            bind: { cell, _ in
+                                cell.bind(url: url)
+                            }
+                    )
+                ]
         )
     }
 
@@ -130,7 +185,7 @@ extension NftAssetViewController: SectionsDataSource {
 
         return Section(
                 id: "traits",
-                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
                 rows: [
                     headerRow(title: "nft_asset.properties".localized),
                     Row<TextCell>(
@@ -159,12 +214,139 @@ extension NftAssetViewController: SectionsDataSource {
 
         return Section(
                 id: "description",
-                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin24),
                 rows: [
                     headerRow(title: "nft_asset.description".localized),
                     descriptionRow
                 ]
         )
+    }
+
+    private func contractAddressRow(value: String) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .secondaryCircleButton, .secondaryCircleButton],
+                tableView: tableView,
+                id: "contract-address",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = "nft_asset.details.contract_address".localized
+                    }
+                    cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "copy_20"))
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: value)
+                        }
+                    }
+                    cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "share_1_20"))
+                        component.onTap = { [weak self] in
+                            self?.openShare(text: value)
+                        }
+                    }
+                }
+        )
+    }
+
+    private func detailRow(title: String, value: String, isLast: Bool = false) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
+                id: "detail-\(title)",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                    }
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .c1)
+                        component.text = value
+                        component.setContentHuggingPriority(.required, for: .horizontal)
+                        component.lineBreakMode = .byTruncatingMiddle
+                    }
+                }
+        )
+    }
+
+    private func detailsSections(viewItem: NftAssetViewModel.ViewItem) -> [SectionProtocol] {
+        [
+            Section(
+                    id: "details-header",
+                    rows: [
+                        headerRow(title: "nft_asset.details".localized)
+                    ]
+            ),
+            Section(
+                    id: "details",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        contractAddressRow(value: viewItem.contractAddress),
+                        detailRow(title: "nft_asset.details.token_id".localized, value: viewItem.tokenId),
+                        detailRow(title: "nft_asset.details.token_standard".localized, value: viewItem.schemaName),
+                        detailRow(title: "nft_asset.details.blockchain".localized, value: viewItem.blockchain, isLast: true)
+                    ]
+            )
+        ]
+    }
+
+    private func linkRow(iconImage: UIImage?, title: String, url: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.selectableRow(
+                elements: [.image20, .text, .image20],
+                tableView: tableView,
+                id: "link-\(title)",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.imageView.image = iconImage?.withTintColor(.themeGray)
+                    }
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                    }
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_small_forward_20")?.withTintColor(.themeGray)
+                    }
+                },
+                action: { [weak self] in
+                    self?.openLink(url: url)
+                }
+        )
+    }
+
+    private func linksSections(links: [NftAssetViewModel.LinkViewItem]) -> [SectionProtocol] {
+        [
+            Section(
+                    id: "links-header",
+                    rows: [
+                        headerRow(title: "nft_asset.links".localized)
+                    ]
+            ),
+            Section(
+                    id: "links",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
+                    rows: links.enumerated().map { index, link in
+                        linkRow(
+                                iconImage: linkIcon(type: link.type),
+                                title: linkTitle(type: link.type),
+                                url: link.url,
+                                isFirst: index == 0,
+                                isLast: index == links.count - 1
+                        )
+                    }
+            )
+        ]
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {
@@ -189,6 +371,10 @@ extension NftAssetViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
+            if let imageUrl = viewItem.imageUrl {
+                sections.append(imageSection(url: imageUrl, ratio: imageRatio))
+            }
+
             sections.append(titleSection(title: viewItem.name, subtitle: viewItem.collectionName))
 
             if !viewItem.traits.isEmpty {
@@ -197,6 +383,12 @@ extension NftAssetViewController: SectionsDataSource {
 
             if let description = viewItem.description {
                 sections.append(descriptionSection(description: description))
+            }
+
+            sections.append(contentsOf: detailsSections(viewItem: viewItem))
+
+            if !viewItem.links.isEmpty {
+                sections.append(contentsOf: linksSections(links: viewItem.links))
             }
 
             sections.append(poweredBySection(text: "Powered by OpenSea API"))

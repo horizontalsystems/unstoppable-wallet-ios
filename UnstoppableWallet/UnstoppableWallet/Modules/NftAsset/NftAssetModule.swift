@@ -3,7 +3,7 @@ import ThemeKit
 
 struct NftAssetModule {
 
-    static func viewController(collectionSlug: String, tokenId: String) -> UIViewController? {
+    static func viewController(collectionSlug: String, tokenId: String, imageRatio: CGFloat) -> UIViewController? {
         let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         guard let service = NftAssetService(collectionSlug: collectionSlug, tokenId: tokenId, nftManager: App.shared.nftManager, coinPriceService: coinPriceService) else {
@@ -13,7 +13,7 @@ struct NftAssetModule {
         coinPriceService.delegate = service
 
         let viewModel = NftAssetViewModel(service: service)
-        let viewController = NftAssetViewController(viewModel: viewModel)
+        let viewController = NftAssetViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true), imageRatio: imageRatio)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

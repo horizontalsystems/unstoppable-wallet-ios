@@ -63,8 +63,8 @@ class NftCollectionsViewController: ThemeViewController {
         }
     }
 
-    private func openAsset(viewItem: NftCollectionsViewModel.AssetViewItem) {
-        guard let module = NftAssetModule.viewController(collectionSlug: viewItem.collectionSlug, tokenId: viewItem.tokenId) else {
+    private func openAsset(viewItem: NftCollectionsViewModel.AssetViewItem, imageRatio: CGFloat) {
+        guard let module = NftAssetModule.viewController(collectionSlug: viewItem.collectionSlug, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
             return
         }
 
@@ -82,8 +82,8 @@ extension NftCollectionsViewController: SectionsDataSource {
                     NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
-                        self?.openAsset(viewItem: viewItem)
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
+                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
                     }
                 }
         )
