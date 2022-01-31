@@ -1064,6 +1064,16 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Nft Asset
 
+"nft_asset.last_sale" = "Last Sale";
+"nft_asset.average_7d" = "7 Day Average";
+"nft_asset.average_30d" = "30 Day Average";
+"nft_asset.floor_price" = "Floor Price";
+"nft_asset.on_sale" = "On Sale";
+"nft_asset.until_date" = "until %@";
+"nft_asset.buy_now" = "Buy Now";
+"nft_asset.top_bid" = "Top Bid";
+"nft_asset.minimum_bid" = "Minimum Bid";
+"nft_asset.best_offer" = "Best Offer";
 "nft_asset.properties" = "Properties";
 "nft_asset.description" = "Description";
 "nft_asset.details" = "Details";
