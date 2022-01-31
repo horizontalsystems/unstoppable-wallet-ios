@@ -12,6 +12,7 @@ class NftAssetViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private var viewItem: NftAssetViewModel.ViewItem?
+    private var statsViewItem: NftAssetViewModel.StatsViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
     private let descriptionTextCell = ReadMoreTextCell()
@@ -60,6 +61,7 @@ class NftAssetViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.statsViewItemDriver) { [weak self] in self?.sync(statsViewItem: $0) }
 
         loaded = true
     }
@@ -70,6 +72,16 @@ class NftAssetViewController: ThemeViewController {
 
     private func sync(viewItem: NftAssetViewModel.ViewItem?) {
         self.viewItem = viewItem
+
+        if loaded {
+            tableView.reload()
+        } else {
+            tableView.buildSections()
+        }
+    }
+
+    private func sync(statsViewItem: NftAssetViewModel.StatsViewItem?) {
+        self.statsViewItem = statsViewItem
 
         if loaded {
             tableView.reload()
@@ -177,6 +189,70 @@ extension NftAssetViewController: SectionsDataSource {
                             }
                     )
                 ]
+        )
+    }
+
+    private func priceRow(title: String, viewItem: NftAssetViewModel.PriceViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .multiText],
+                tableView: tableView,
+                id: "price-\(title)",
+                height: .heightDoubleLineCell,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                    }
+                    cell.bind(index: 1) { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b3)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.coinValue
+                        component.title.textAlignment = .right
+                        component.title.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+                        component.subtitle.text = viewItem.fiatValue
+                        component.subtitle.textAlignment = .right
+                        component.subtitle.setContentCompressionResistancePriority(.required, for: .horizontal)
+                    }
+                }
+        )
+    }
+
+    private func statsSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+        var rows = [(String, NftAssetViewModel.PriceViewItem)]()
+
+        if let priceViewItem = viewItem.lastSale {
+            rows.append(("nft_asset.last_sale".localized, priceViewItem))
+        }
+        if let priceViewItem = viewItem.average7d {
+            rows.append(("nft_asset.average_7d".localized, priceViewItem))
+        }
+        if let priceViewItem = viewItem.average30d {
+            rows.append(("nft_asset.average_30d".localized, priceViewItem))
+        }
+        if let priceViewItem = viewItem.collectionFloor {
+            rows.append(("nft_asset.floor_price".localized, priceViewItem))
+        }
+
+        guard !rows.isEmpty else {
+            return nil
+        }
+
+        return Section(
+                id: "stats",
+                footerState: .margin(height: viewItem.sale == nil && viewItem.bestOffer == nil ? .margin24 : .margin12),
+                rows: rows.enumerated().map { index, rowInfo in
+                    priceRow(
+                            title: rowInfo.0,
+                            viewItem: rowInfo.1,
+                            isFirst: index == 0,
+                            isLast: index == rows.count - 1
+                    )
+                }
         )
     }
 
@@ -376,6 +452,12 @@ extension NftAssetViewController: SectionsDataSource {
             }
 
             sections.append(titleSection(title: viewItem.name, subtitle: viewItem.collectionName))
+
+            if let statsViewItem = statsViewItem {
+                if let section = statsSection(viewItem: statsViewItem) {
+                    sections.append(section)
+                }
+            }
 
             if !viewItem.traits.isEmpty {
                 sections.append(traitsSection(traits: viewItem.traits))
