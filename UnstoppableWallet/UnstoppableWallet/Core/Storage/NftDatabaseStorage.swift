@@ -31,7 +31,7 @@ class NftDatabaseStorage {
                 t.column(NftCollectionRecord.Columns.averagePrice30dValue.name, .text)
                 t.column(NftCollectionRecord.Columns.totalSupply.name, .integer).notNull()
 
-                t.primaryKey([NftCollectionRecord.Columns.accountId.name, NftCollectionRecord.Columns.contracts.name], onConflict: .replace)
+                t.primaryKey([NftCollectionRecord.Columns.accountId.name, NftCollectionRecord.Columns.slug.name], onConflict: .replace)
             }
 
             try db.create(table: NftAssetRecord.databaseTableName) { t in
@@ -87,7 +87,7 @@ extension NftDatabaseStorage {
 
     func save(collections: [NftCollectionRecord], assets: [NftAssetRecord], accountId: String) throws {
         _ = try dbPool.write { db in
-            try NftCollectionRecord.filter(NftAssetRecord.Columns.accountId == accountId).deleteAll(db)
+            try NftCollectionRecord.filter(NftCollectionRecord.Columns.accountId == accountId).deleteAll(db)
             try NftAssetRecord.filter(NftAssetRecord.Columns.accountId == accountId).deleteAll(db)
 
             for collection in collections {
