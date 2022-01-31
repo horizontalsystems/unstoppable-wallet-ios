@@ -53,8 +53,8 @@ class OpenSeaNftProvider {
         }
     }
 
-    private func nftPrice(platformCoin: PlatformCoin?, value: Decimal, shift: Bool) -> NftPrice? {
-        guard let platformCoin = platformCoin else {
+    private func nftPrice(platformCoin: PlatformCoin?, value: Decimal?, shift: Bool) -> NftPrice? {
+        guard let platformCoin = platformCoin, let value = value else {
             return nil
         }
 
@@ -113,6 +113,16 @@ class OpenSeaNftProvider {
         }
     }
 
+    private func collectionStats(response: CollectionStatsResponse) -> NftCollectionStats {
+        let ethereumPlatformCoin = try? marketKit.platformCoin(coinType: .ethereum)
+
+        return NftCollectionStats(
+                averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
+                averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
+                floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false)
+        )
+    }
+
     private func collectionsSingle(address: String, offset: Int) -> Single<[CollectionResponse]> {
         let parameters: Parameters = [
             "format": "json",
@@ -163,7 +173,7 @@ class OpenSeaNftProvider {
 
 extension OpenSeaNftProvider: INftProvider {
 
-    func assetCollection(address: String) -> Single<NftAssetCollection> {
+    func assetCollectionSingle(address: String) -> Single<NftAssetCollection> {
         let collectionsSingle = recursiveCollectionsSingle(address: address).map { [weak self] responses in
             self?.collections(responses: responses) ?? []
         }
@@ -174,6 +184,17 @@ extension OpenSeaNftProvider: INftProvider {
 
         return Single.zip(collectionsSingle, assetsSingle).map { collections, assets in
             NftAssetCollection(collections: collections, assets: assets)
+        }
+    }
+
+    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats> {
+        let parameters: Parameters = [
+            "format": "json"
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/collection/\(slug)/stats", parameters: parameters, headers: headers)
+        return networkManager.single(request: request).map { [unowned self] response in
+            collectionStats(response: response)
         }
     }
 
@@ -285,6 +306,18 @@ extension OpenSeaNftProvider {
         init(map: Map) throws {
             totalPrice = try map.value("total_price", using: OpenSeaNftProvider.stringToDecimalTransform)
             paymentTokenAddress = try map.value("payment_token.address")
+        }
+    }
+
+    private struct CollectionStatsResponse: ImmutableMappable {
+        let averagePrice7d: Decimal
+        let averagePrice30d: Decimal
+        let floorPrice: Decimal?
+
+        init(map: Map) throws {
+            averagePrice7d = try map.value("stats.seven_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
+            averagePrice30d = try map.value("stats.thirty_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
+            floorPrice = try? map.value("stats.floor_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
         }
     }
 

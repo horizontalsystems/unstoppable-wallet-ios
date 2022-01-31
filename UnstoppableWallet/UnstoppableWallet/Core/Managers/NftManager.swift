@@ -5,7 +5,8 @@ import EthereumKit
 import HdWalletKit
 
 protocol INftProvider {
-    func assetCollection(address: String) -> Single<NftAssetCollection>
+    func assetCollectionSingle(address: String) -> Single<NftAssetCollection>
+    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats>
 }
 
 class NftManager {
@@ -53,7 +54,7 @@ class NftManager {
     private func update(account: Account, address: String) {
         providerDisposeBag = DisposeBag()
 
-        provider.assetCollection(address: address)
+        provider.assetCollectionSingle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] assetCollection in
                     self?.handle(assetCollection: assetCollection, account: account)
@@ -113,6 +114,10 @@ extension NftManager {
         } catch {
             return nil
         }
+    }
+
+    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats> {
+        provider.collectionStatsSingle(slug: slug)
     }
 
 }

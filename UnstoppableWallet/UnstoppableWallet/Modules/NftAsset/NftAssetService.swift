@@ -35,6 +35,27 @@ class NftAssetService {
         )
 
         _syncCoinPrices()
+        syncCollectionStats()
+    }
+
+    private func syncCollectionStats() {
+        nftManager.collectionStatsSingle(slug: collection.slug)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onSuccess: { [weak self] stats in
+                    self?.handle(stats: stats)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func handle(stats: NftCollectionStats) {
+        queue.async {
+            self.statsItem.average7d = stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
+            self.statsItem.average30d = stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
+            self.statsItem.collectionFloor = stats.floorPrice.map { PriceItem(nftPrice: $0) }
+
+            self._syncCoinPrices()
+            self.handleStatsItemChange()
+        }
     }
 
     private func syncCoinPrices() {
