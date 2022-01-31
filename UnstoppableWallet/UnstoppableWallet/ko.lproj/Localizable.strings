@@ -183,7 +183,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.tx_speed_recommended" = "Recommended";
 "send.tx_speed_high" = "High";
 "send.tx_speed_custom" = "Custom";
-"send.tx_duration" = "Duration";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Available Balance";
@@ -209,7 +208,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.to" = "To";
-"send.confirmation.method" = "Method";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Address";
 "send.confirmation.account" = "Account";
@@ -244,7 +242,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
-"swap.powered_by" = "Powered By";
 "swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Select";
@@ -296,9 +293,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.guaranteed" = "Guaranteed";
-"swap.confirmation.maximum" = "Maximum";
-"swap.confirmation.estimated" = "Estimated";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
@@ -370,55 +364,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
-
-"market_discovery.filter_title.blockchain" = "Blockchains";
-"market_discovery.filter_title.dexes" = "DEXes";
-"market_discovery.filter_title.lending" = "Lending";
-"market_discovery.filter_title.privacy" = "Privacy";
-"market_discovery.filter_title.scaling" = "Scaling";
-"market_discovery.filter_title.oracles" = "Oracles";
-"market_discovery.filter_title.prediction_markets" = "Prediction";
-"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_title.stablecoins" = "Stablecoins";
-"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.risk_management" = "Risk Management";
-"market_discovery.filter_title.wallets" = "Wallets";
-"market_discovery.filter_title.synthetics" = "Synthetics";
-"market_discovery.filter_title.index_funds" = "Index Funds";
-"market_discovery.filter_title.nft" = "NFT";
-"market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming";
-"market_discovery.filter_title.infrastructure" = "Infrastructure";
-"market_discovery.filter_title.analytics" = "Analytics";
-"market_discovery.filter_title.storage" = "Storage";
-"market_discovery.filter_title.identity" = "Identity";
-"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
-
-
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real-world data to smart contracts.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
-"market_discovery.filter_description.stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
-"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance, and hedging.";
-"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
-"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "NFT projects.";
-"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.analytics" = "Token-powered analytics and investment instruments.";
-"market_discovery.filter_description.storage" = "Decentralized data-storage.";
-"market_discovery.filter_description.identity" = "Decentralized identity.";
-"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -525,12 +470,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
 "coin_page.markets.empty" = "No data available";
-
-
-"coin_page.coin_markets" = "%@ Markets";
-"coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
 
 "coin_page.token_liquidity" = "Token Liquidity";
 "coin_page.token_distribution" = "Token Distribution";
@@ -815,7 +754,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.whats_new" = "새로운 기능";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
@@ -912,7 +851,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Restore Select
 
-"restore_select.title" = "Choose Blockchains";
+"restore_select.title" = "블록체인 선택";
 
 // Lock Info
 
