@@ -183,7 +183,6 @@
 "send.tx_speed_recommended" = "Recommended";
 "send.tx_speed_high" = "High";
 "send.tx_speed_custom" = "Custom";
-"send.tx_duration" = "Duration";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Available Balance";
@@ -209,7 +208,6 @@
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
-"send.confirmation.method" = "方法";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
@@ -244,7 +242,6 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
-"swap.powered_by" = "技术支持：";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
@@ -296,9 +293,6 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.guaranteed" = "保证";
-"swap.confirmation.maximum" = "最大金额";
-"swap.confirmation.estimated" = "估计";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
@@ -370,55 +364,6 @@
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
-
-"market_discovery.filter_title.blockchain" = "Blockchains";
-"market_discovery.filter_title.dexes" = "DEXes";
-"market_discovery.filter_title.lending" = "Lending";
-"market_discovery.filter_title.privacy" = "Privacy";
-"market_discovery.filter_title.scaling" = "Scaling";
-"market_discovery.filter_title.oracles" = "Oracles";
-"market_discovery.filter_title.prediction_markets" = "Prediction";
-"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_title.stablecoins" = "Stablecoins";
-"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.risk_management" = "Risk Management";
-"market_discovery.filter_title.wallets" = "Wallets";
-"market_discovery.filter_title.synthetics" = "Synthetics";
-"market_discovery.filter_title.index_funds" = "Index Funds";
-"market_discovery.filter_title.nft" = "NFT";
-"market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming";
-"market_discovery.filter_title.infrastructure" = "Infrastructure";
-"market_discovery.filter_title.analytics" = "Analytics";
-"market_discovery.filter_title.storage" = "Storage";
-"market_discovery.filter_title.identity" = "Identity";
-"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
-
-
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real-world data to smart contracts.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "用空闲加密资产来挣钱的解决方案。";
-"market_discovery.filter_description.stablecoins" = "用于1:1锚定现有加密货币的伪货币。";
-"market_discovery.filter_description.tokenized_bitcoin" = "用于1:1锚定比特币价格。";
-"market_discovery.filter_description.exchange_tokens" = "由中心化交易所发行的代币。";
-"market_discovery.filter_description.risk_management" = "风险资产，保险和对冲。";
-"market_discovery.filter_description.wallets" = "由加密货币钱包发行的代币。";
-"market_discovery.filter_description.synthetics" = "创建去中心化合成资产的平台。";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "非同质化代币项目。";
-"market_discovery.filter_description.fundraising" = "众筹和加密货币销售平台。";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.analytics" = "Token-powered analytics and investment instruments.";
-"market_discovery.filter_description.storage" = "Decentralized data-storage.";
-"market_discovery.filter_description.identity" = "Decentralized identity.";
-"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -525,12 +470,6 @@
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "市场";
 "coin_page.markets.empty" = "No data available";
-
-
-"coin_page.coin_markets" = "%@ 市场";
-"coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "成交量由高到低";
-"coin_page.coin_markets.sort_by.lowest_volume" = "成交量由低到高";
 
 "coin_page.token_liquidity" = "代币流动性";
 "coin_page.token_distribution" = "代币分布";
