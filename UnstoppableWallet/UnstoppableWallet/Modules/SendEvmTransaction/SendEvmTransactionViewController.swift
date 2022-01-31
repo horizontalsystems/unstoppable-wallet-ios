@@ -10,6 +10,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
     let transactionViewModel: SendEvmTransactionViewModel
+    private let feeViewModel: EvmFeeViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
@@ -24,6 +25,7 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.transactionViewModel = transactionViewModel
+        self.feeViewModel = feeViewModel
 
         maxFeeCell = SendFeeCell(driver: feeViewModel.feeDriver)
 
