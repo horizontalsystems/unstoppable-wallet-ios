@@ -328,7 +328,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.tab_bar_item" = "Markets";
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
-"market.category.posts" = "News";
+"market.category.posts" = "Noticias";
 "market.category.watchlist" = "Watchlist";
 "market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24h Volume";
@@ -352,7 +352,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.tvl.market_field.value" = "USD";
 "market.tvl.market_field.diff" = "Percent";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "Todo";
 
 "market.sort_by" = "Sort By";
 
@@ -366,8 +366,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_losers" = "Top Losers";
 
-"market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
+"market_discovery.title" = "Descubrimiento";
+"market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 
@@ -425,7 +425,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.search.title" = "Search";
 "market.search.empty_text" = "No results found";
 
-"market.advanced_search.title" = "Filters";
+"market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
