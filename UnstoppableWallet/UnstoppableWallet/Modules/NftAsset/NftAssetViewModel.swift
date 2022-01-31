@@ -61,8 +61,8 @@ class NftAssetViewModel {
                 untilDate: "nft_asset.until_date".localized(DateHelper.instance.formatFullTime(from: saleItem.untilDate)),
                 type: saleItem.type,
                 price: PriceViewItem(
-                        coinValue: coinValue(priceItem: saleItem.price),
-                        fiatValue: fiatValue(priceItem: saleItem.price)
+                        coinValue: saleItem.price.map { coinValue(priceItem: $0) } ?? "---",
+                        fiatValue: saleItem.price.map { fiatValue(priceItem: $0) } ?? "---"
                 )
         )
     }

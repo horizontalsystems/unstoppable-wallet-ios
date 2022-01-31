@@ -35,26 +35,68 @@ class NftAssetService {
         )
 
         _syncCoinPrices()
-        syncCollectionStats()
+        syncCollectionStatsAndOrders()
     }
 
-    private func syncCollectionStats() {
-        nftManager.collectionStatsSingle(slug: collection.slug)
+    private func syncCollectionStatsAndOrders() {
+        Single.zip(nftManager.collectionStatsSingle(slug: collection.slug), nftManager.assetOrdersSingle(contractAddress: asset.contract.address, tokenId: asset.tokenId))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] stats in
-                    self?.handle(stats: stats)
+                .subscribe(onSuccess: { [weak self] stats, orders in
+                    self?.handle(stats: stats, orders: orders)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func handle(stats: NftCollectionStats) {
+    private func handle(stats: NftCollectionStats, orders: [NftAssetOrder]) {
         queue.async {
-            self.statsItem.average7d = stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
-            self.statsItem.average30d = stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
-            self.statsItem.collectionFloor = stats.floorPrice.map { PriceItem(nftPrice: $0) }
+            self.handle(stats: stats)
+            self.handle(orders: orders)
 
             self._syncCoinPrices()
             self.handleStatsItemChange()
+        }
+    }
+
+    private func handle(stats: NftCollectionStats) {
+        statsItem.average7d = stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
+        statsItem.average30d = stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
+        statsItem.collectionFloor = stats.floorPrice.map { PriceItem(nftPrice: $0) }
+    }
+
+    private func handle(orders: [NftAssetOrder]) {
+        var hasTopBid = false
+        let auctionOrders = orders.filter { $0.side == 1 && $0.v == nil }.sorted { $0.ethValue < $1.ethValue }
+
+        if let order = auctionOrders.first {
+            let bidOrders = orders.filter { $0.side == 0 && !$0.emptyTaker }.sorted { $0.ethValue > $1.ethValue }
+
+            let type: SalePriceType
+            var nftPrice: NftPrice?
+
+            if let bidOrder = bidOrders.first {
+                type = .topBid
+                nftPrice = bidOrder.price
+                hasTopBid = true
+            } else {
+                type = .minimumBid
+                nftPrice = order.price
+            }
+
+            statsItem.sale = SaleItem(untilDate: order.closingDate, type: type, price: nftPrice.map { PriceItem(nftPrice: $0) })
+        } else {
+            let buyNowOrders = orders.filter { $0.side == 1 && $0.v != nil }.sorted { $0.ethValue < $1.ethValue }
+
+            if let order = buyNowOrders.first {
+                statsItem.sale = SaleItem(untilDate: order.closingDate, type: .buyNow, price: order.price.map { PriceItem(nftPrice: $0) })
+            }
+        }
+
+        if !hasTopBid {
+            let offerOrders = orders.filter { $0.side == 0 }.sorted { $0.ethValue > $1.ethValue }
+
+            if let order = offerOrders.first {
+                statsItem.bestOffer = order.price.map { PriceItem(nftPrice: $0) }
+            }
         }
     }
 
@@ -148,9 +190,9 @@ extension NftAssetService {
     class SaleItem {
         let untilDate: Date
         let type: SalePriceType
-        let price: PriceItem
+        let price: PriceItem?
 
-        init(untilDate: Date, type: SalePriceType, price: PriceItem) {
+        init(untilDate: Date, type: SalePriceType, price: PriceItem?) {
             self.untilDate = untilDate
             self.type = type
             self.price = price

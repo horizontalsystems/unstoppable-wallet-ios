@@ -7,6 +7,7 @@ import HdWalletKit
 protocol INftProvider {
     func assetCollectionSingle(address: String) -> Single<NftAssetCollection>
     func collectionStatsSingle(slug: String) -> Single<NftCollectionStats>
+    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]>
 }
 
 class NftManager {
@@ -118,6 +119,10 @@ extension NftManager {
 
     func collectionStatsSingle(slug: String) -> Single<NftCollectionStats> {
         provider.collectionStatsSingle(slug: slug)
+    }
+
+    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
+        provider.assetOrdersSingle(contractAddress: contractAddress, tokenId: tokenId)
     }
 
 }

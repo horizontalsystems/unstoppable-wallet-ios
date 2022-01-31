@@ -6,7 +6,7 @@ import Alamofire
 import MarketKit
 
 class OpenSeaNftProvider {
-    private let ethereumAddress = "0x0000000000000000000000000000000000000000"
+    private let zeroAddress = "0x0000000000000000000000000000000000000000"
     private let apiUrl = "https://api.opensea.io/api"
     private let headers = HTTPHeaders([
         HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
@@ -23,7 +23,7 @@ class OpenSeaNftProvider {
     }
 
     private func coinType(address: String) -> CoinType {
-        if address == ethereumAddress {
+        if address == zeroAddress {
             return .ethereum
         } else {
             return .erc20(address: address)
@@ -39,7 +39,7 @@ class OpenSeaNftProvider {
             for platformCoin in platformCoins {
                 switch platformCoin.coinType {
                 case .ethereum:
-                    map[ethereumAddress] = platformCoin
+                    map[zeroAddress] = platformCoin
                 case .erc20(let address):
                     map[address.lowercased()] = platformCoin
                 default:
@@ -123,6 +123,21 @@ class OpenSeaNftProvider {
         )
     }
 
+    private func assetOrders(responses: [OrderResponse]) -> [NftAssetOrder] {
+        let map = platformCoinMap(addresses: responses.map { $0.paymentToken.address })
+
+        return responses.map { response in
+            NftAssetOrder(
+                    closingDate: response.closingDate,
+                    price: map[response.paymentToken.address].flatMap { nftPrice(platformCoin: $0, value: response.currentPrice, shift: true) },
+                    emptyTaker: response.takerAddress == zeroAddress,
+                    side: response.side,
+                    v: response.v,
+                    ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) / response.paymentToken.ethPrice
+            )
+        }
+    }
+
     private func collectionsSingle(address: String, offset: Int) -> Single<[CollectionResponse]> {
         let parameters: Parameters = [
             "format": "json",
@@ -195,6 +210,17 @@ extension OpenSeaNftProvider: INftProvider {
         let request = networkManager.session.request("\(apiUrl)/v1/collection/\(slug)/stats", parameters: parameters, headers: headers)
         return networkManager.single(request: request).map { [unowned self] response in
             collectionStats(response: response)
+        }
+    }
+
+    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
+        let parameters: Parameters = [
+            "format": "json"
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/asset/\(contractAddress)/\(tokenId)", parameters: parameters, headers: headers)
+        return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
+            assetOrders(responses: response.orders)
         }
     }
 
@@ -318,6 +344,50 @@ extension OpenSeaNftProvider {
             averagePrice7d = try map.value("stats.seven_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("stats.thirty_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("stats.floor_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
+        }
+    }
+
+    private struct SingleAssetResponse: ImmutableMappable {
+        let orders: [OrderResponse]
+
+        init(map: Map) throws {
+            orders = try map.value("orders")
+        }
+    }
+
+    private struct OrderResponse: ImmutableMappable {
+        private static let reusableDateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+
+        let closingDate: Date
+        let currentPrice: Decimal
+        let paymentToken: PaymentTokenResponse
+        let takerAddress: String
+        let side: Int
+        let v: Int?
+
+        init(map: Map) throws {
+            closingDate = try map.value("closing_date", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))
+            currentPrice = try map.value("current_price", using: OpenSeaNftProvider.stringToDecimalTransform)
+            paymentToken = try map.value("payment_token_contract")
+            takerAddress = try map.value("taker.address")
+            side = try map.value("side")
+            v = try? map.value("v")
+        }
+    }
+
+    private struct PaymentTokenResponse: ImmutableMappable {
+        let address: String
+        let decimals: Int
+        let ethPrice: Decimal
+
+        init(map: Map) throws {
+            address = try map.value("address")
+            decimals = try map.value("decimals")
+            ethPrice = try map.value("eth_price", using: OpenSeaNftProvider.stringToDecimalTransform)
         }
     }
 
