@@ -94,10 +94,27 @@ class NftAssetViewModel {
     }
 
     private func traitViewItem(trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {
-        TraitViewItem(
+        var percentString: String?
+
+        if trait.count != 0 && totalSupply != 0 {
+            let percent = Double(trait.count) * 100.0 / Double(totalSupply)
+            let rounded: Double
+
+            if percent >= 10 {
+                rounded = round(percent)
+            } else if percent >= 1 {
+                rounded = Double(round(percent * 10) / 10)
+            } else {
+                rounded = Double(round(percent * 100) / 100)
+            }
+
+            percentString = String(format: "%g", rounded)
+        }
+
+        return TraitViewItem(
                 type: trait.type.capitalized,
                 value: trait.value.capitalized,
-                percent: trait.count == 0 || totalSupply == 0 ? nil : "\(trait.count * 100 / totalSupply)%"
+                percent: percentString.map { "\($0)%" }
         )
     }
 
