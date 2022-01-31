@@ -24,12 +24,7 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    private let dataStateRelay = PublishRelay<DataStatus<SendEvmTransactionService.DataState>>()
-    private(set) var dataState: DataStatus<SendEvmTransactionService.DataState> = .failed(SendEvmTransactionService.TransactionError.noTransactionData) {
-        didSet {
-            dataStateRelay.accept(dataState)
-        }
-    }
+    private(set) var dataState: SendEvmTransactionService.DataState = SendEvmTransactionService.DataState(transactionData: nil, additionalInfo: nil, decoration: nil)
 
     private let sendStateRelay = PublishRelay<SendEvmTransactionService.SendState>()
     private(set) var sendState: SendEvmTransactionService.SendState = .idle {
@@ -46,12 +41,10 @@ class OneInchSendEvmTransactionService {
         subscribe(disposeBag, transactionFeeService.statusObservable) { [weak self] in self?.sync(status: $0) }
 
         // show initial info from parameters
-        dataState = .completed(
-                        SendEvmTransactionService.DataState(
-                                transactionData: nil,
-                                additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
-                                decoration: swapDecoration(parameters: transactionFeeService.parameters)
-                        )
+        dataState = SendEvmTransactionService.DataState(
+                transactionData: nil,
+                additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
+                decoration: swapDecoration(parameters: transactionFeeService.parameters)
         )
     }
 
@@ -67,12 +60,17 @@ class OneInchSendEvmTransactionService {
         switch status {
         case .loading:
             state = .notReady(errors: [])
-            dataState = .loading
         case .failed(let error):
             state = .notReady(errors: [error])
-            dataState = .failed(error)
         case .completed(let fallibleTransaction):
             let transaction = fallibleTransaction.data
+
+            dataState = SendEvmTransactionService.DataState(
+                    transactionData: transaction.transactionData,
+                    additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
+                    decoration: evmKit.decorate(transactionData: transaction.transactionData)
+            )
+
             var errors: [Error] = fallibleTransaction.errors
 
             if transaction.totalAmount > evmBalance {
@@ -84,14 +82,6 @@ class OneInchSendEvmTransactionService {
             } else {
                 state = .notReady(errors: errors)
             }
-
-            dataState = .completed(
-                    SendEvmTransactionService.DataState(
-                            transactionData: transaction.transactionData,
-                            additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
-                            decoration: evmKit.decorate(transactionData: transaction.transactionData)
-                    )
-            )
         }
     }
 
@@ -153,10 +143,10 @@ class OneInchSendEvmTransactionService {
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.data?.decoration as? OneInchUnoswapMethodDecoration, let tokenOut = decoration.tokenOut {
+        if let decoration = dataState.decoration as? OneInchUnoswapMethodDecoration, let tokenOut = decoration.tokenOut {
             activateSwapCoinOut(tokenOut: tokenOut)
         }
-        if let decoration = dataState.data?.decoration as? OneInchSwapMethodDecoration {
+        if let decoration = dataState.decoration as? OneInchSwapMethodDecoration {
             activateSwapCoinOut(tokenOut: decoration.tokenOut)
         }
     }
@@ -186,10 +176,6 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
 
     var stateObservable: Observable<SendEvmTransactionService.State> {
         stateRelay.asObservable()
-    }
-
-    var dataStateObservable: Observable<DataStatus<SendEvmTransactionService.DataState>> {
-        dataStateRelay.asObservable()
     }
 
     var sendStateObservable: Observable<SendEvmTransactionService.SendState> {
