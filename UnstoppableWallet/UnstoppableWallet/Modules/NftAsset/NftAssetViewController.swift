@@ -120,6 +120,14 @@ class NftAssetViewController: ThemeViewController {
         }
     }
 
+    private func saleTitle(type: NftAssetService.SalePriceType) -> String {
+        switch type {
+        case .buyNow: return "nft_asset.buy_now".localized
+        case .topBid: return "nft_asset.top_bid".localized
+        case .minimumBid: return "nft_asset.minimum_bid".localized
+        }
+    }
+
     private func openLink(url: String) {
         if url.hasPrefix("https://twitter.com/") {
             let account = url.stripping(prefix: "https://twitter.com/")
@@ -253,6 +261,66 @@ extension NftAssetViewController: SectionsDataSource {
                             isLast: index == rows.count - 1
                     )
                 }
+        )
+    }
+
+    private func saleRow(untilDate: String) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.multiText],
+                tableView: tableView,
+                id: "sale-until",
+                height: .heightDoubleLineCell,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+
+                    cell.bind(index: 0) { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = "nft_asset.on_sale".localized
+                        component.subtitle.text = untilDate
+                    }
+                }
+        )
+    }
+
+    private func saleSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+        guard let saleViewItem = viewItem.sale else {
+            return nil
+        }
+
+        return Section(
+                id: "sale",
+                footerState: .margin(height: viewItem.bestOffer == nil ? .margin24 : .margin12),
+                rows: [
+                    saleRow(untilDate: saleViewItem.untilDate),
+                    priceRow(
+                            title: saleTitle(type: saleViewItem.type),
+                            viewItem: saleViewItem.price,
+                            isFirst: false,
+                            isLast: true
+                    )
+                ]
+        )
+    }
+
+    private func bestOfferSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+        guard let priceViewItem = viewItem.bestOffer else {
+            return nil
+        }
+
+        return Section(
+                id: "best-offer",
+                footerState: .margin(height: .margin24),
+                rows: [
+                    priceRow(
+                            title: "nft_asset.best_offer".localized,
+                            viewItem: priceViewItem,
+                            isFirst: true,
+                            isLast: true
+                    )
+                ]
         )
     }
 
@@ -455,6 +523,14 @@ extension NftAssetViewController: SectionsDataSource {
 
             if let statsViewItem = statsViewItem {
                 if let section = statsSection(viewItem: statsViewItem) {
+                    sections.append(section)
+                }
+
+                if let section = saleSection(viewItem: statsViewItem) {
+                    sections.append(section)
+                }
+
+                if let section = bestOfferSection(viewItem: statsViewItem) {
                     sections.append(section)
                 }
             }
