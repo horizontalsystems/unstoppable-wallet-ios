@@ -43,7 +43,7 @@ class OneInchSendEvmTransactionService {
         self.transactionFeeService = transactionFeeService
         self.activateCoinManager = activateCoinManager
 
-        subscribe(disposeBag, transactionFeeService.statusObservable) { [weak self] _ in self?.syncState() }
+        subscribe(disposeBag, transactionFeeService.statusObservable) { [weak self] in self?.sync(status: $0) }
 
         // show initial info from parameters
         dataState = .completed(
@@ -63,30 +63,28 @@ class OneInchSendEvmTransactionService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func syncState() {
-        switch transactionFeeService.status {
+    private func sync(status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+        switch status {
         case .loading:
             state = .notReady(errors: [])
-        case .failed(let error):
-            state = .notReady(errors: [error])
-            syncDataState()
-        case .completed(let transaction):
-            if transaction.totalAmount > evmBalance {
-                state = .notReady(errors: [SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount)])
-            } else {
-                state = .ready
-            }
-            syncDataState()
-        }
-    }
-
-    private func syncDataState() {
-        switch transactionFeeService.status {
-        case .loading:
             dataState = .loading
         case .failed(let error):
+            state = .notReady(errors: [error])
             dataState = .failed(error)
-        case .completed(let transaction):
+        case .completed(let fallibleTransaction):
+            let transaction = fallibleTransaction.data
+            var errors: [Error] = fallibleTransaction.errors
+
+            if transaction.totalAmount > evmBalance {
+                errors.append(SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount))
+            }
+
+            if errors.isEmpty {
+                state = .ready
+            } else {
+                state = .notReady(errors: errors)
+            }
+
             dataState = .completed(
                     SendEvmTransactionService.DataState(
                             transactionData: transaction.transactionData,
@@ -203,9 +201,10 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let transaction) = transactionFeeService.status else {
+        guard case .ready = state, case .completed(let fallibleTransaction) = transactionFeeService.status else {
             return
         }
+        let transaction = fallibleTransaction.data
 
         sendState = .sending
 

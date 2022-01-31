@@ -5,6 +5,7 @@ import RxCocoa
 import BigInt
 
 class LegacyGasPriceService {
+    private static let safeFeeDifference = 1
     private var disposeBag = DisposeBag()
 
     private let evmKit: EthereumKit.Kit
@@ -13,20 +14,16 @@ class LegacyGasPriceService {
     private var recommendedGasPrice: Int = 0
     private var legacyGasPrice: Int = 0 {
         didSet {
-            status = .completed(.legacy(gasPrice: legacyGasPrice))
-
-            validate()
+            sync()
         }
     }
 
-    private let statusRelay = PublishRelay<DataStatus<EvmFeeModule.GasPrice>>()
-    private(set) var status: DataStatus<EvmFeeModule.GasPrice> = .loading {
+    private let statusRelay = PublishRelay<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>>()
+    private(set) var status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>> = .loading {
         didSet {
             statusRelay.accept(status)
         }
     }
-
-    private let cautionsSubject = PublishSubject<(errors: [EvmFeeModule.GasDataError], warnings: [EvmFeeModule.GasDataWarning])>()
 
     init(evmKit: EthereumKit.Kit, feeRateProvider: ICustomRangedFeeRateProvider, gasPrice: Int? = nil) {
         self.evmKit = evmKit
@@ -39,34 +36,28 @@ class LegacyGasPriceService {
         }
     }
 
-    private func validate() {
+    private func sync() {
         var warnings = [EvmFeeModule.GasDataWarning]()
 
-        if legacyGasPrice < recommendedGasPrice {
+        if legacyGasPrice < recommendedGasPrice - Self.safeFeeDifference {
             warnings.append(.riskOfGettingStuck)
         }
 
-        cautionsSubject.onNext((errors: [], warnings: warnings))
+        if legacyGasPrice > recommendedGasPrice + Self.safeFeeDifference {
+            warnings.append(.overpricing)
+        }
+
+        status = .completed(EvmFeeModule.FallibleData(
+                data: .legacy(gasPrice: legacyGasPrice), errors: [], warnings: warnings
+        ))
     }
 
 }
 
 extension LegacyGasPriceService {
 
-    var gasPrice: EvmFeeModule.GasPrice {
-        .legacy(gasPrice: legacyGasPrice)
-    }
-
-    var statusObservable: Observable<DataStatus<EvmFeeModule.GasPrice>> {
+    var statusObservable: Observable<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>> {
         statusRelay.asObservable()
-    }
-
-    var cautionsObservable: Observable<(errors: [EvmFeeModule.GasDataError], warnings: [EvmFeeModule.GasDataWarning])> {
-        cautionsSubject.asObservable()
-    }
-
-    func setRecommendedGasPrice(gasPrice: Int) {
-        recommendedGasPrice = gasPrice
     }
 
 }

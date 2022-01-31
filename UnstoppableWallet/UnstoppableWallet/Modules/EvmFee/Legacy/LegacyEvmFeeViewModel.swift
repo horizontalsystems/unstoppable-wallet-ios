@@ -22,42 +22,35 @@ class LegacyEvmFeeViewModel {
 
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
         subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
-        subscribe(disposeBag, gasPriceService.cautionsObservable) { [weak self] in self?.sync(errors: $0.errors, warnings: $0.warnings) }
     }
 
-    private func sync(gasPriceStatus: DataStatus<EvmFeeModule.GasPrice>) {
+    private func sync(gasPriceStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>) {
         switch gasPriceStatus {
-        case .completed(let gasPrice):
-            if case .legacy(let legacyGasPrice) = gasPrice {
+        case .completed(let fallibleGasPrice):
+            var cautions = [Caution]()
 
+            for error in fallibleGasPrice.errors {
+                switch error {
+                case .insufficientBalance:
+                    cautions.append(Caution(text: "fee_settings.errors.insufficient_balance.info".localized(coinService.platformCoin.code), type: .error))
+                default: ()
+                }
             }
+
+            for warning in fallibleGasPrice.warnings {
+                switch warning {
+                case .riskOfGettingStuck:
+                    cautions.append(Caution(text: "fee_settings.warnings.risk_of_getting_stuck.info", type: .warning))
+                default: ()
+                }
+            }
+
+            cautionsRelay.accept(cautions)
         default: ()
         }
     }
 
-    private func sync(errors: [EvmFeeModule.GasDataError], warnings: [EvmFeeModule.GasDataWarning]) {
-        var cautions = [Caution]()
-
-        for error in errors {
-            switch error {
-            case .insufficientBalance:
-                cautions.append(Caution(text: "fee_settings.errors.insufficient_balance.info".localized(coinService.platformCoin.code), type: .error))
-            default: ()
-            }
-        }
-
-        for warning in warnings {
-            switch warning {
-            case .riskOfGettingStuck:
-                cautions.append(Caution(text: "fee_settings.warnings.risk_of_getting_stuck.info", type: .warning))
-            default: ()
-            }
-        }
-
-        cautionsRelay.accept(cautions)
-    }
-
-    private func sync(transactionStatus: DataStatus<EvmFeeModule.Transaction>) {
+    private func sync(transactionStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
         let maxFeeStatus: String
 
         switch transactionStatus {
@@ -65,8 +58,8 @@ class LegacyEvmFeeViewModel {
             maxFeeStatus = "action.loading".localized
         case .failed:
             maxFeeStatus = "n/a".localized
-        case .completed(let transaction):
-            maxFeeStatus = coinService.amountData(value: transaction.gasData.fee).formattedString
+        case .completed(let fallibleTransaction):
+            maxFeeStatus = coinService.amountData(value: fallibleTransaction.data.gasData.fee).formattedString
         }
 
         feeStatusRelay.accept(maxFeeStatus)

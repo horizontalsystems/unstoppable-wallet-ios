@@ -65,7 +65,7 @@ class SendEvmTransactionService {
                 )
         )
 
-        subscribe(disposeBag, feeService.statusObservable) { [weak self] _ in self?.syncState() }
+        subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(status: $0) }
     }
 
     private var evmKit: EthereumKit.Kit {
@@ -76,20 +76,27 @@ class SendEvmTransactionService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func syncState() {
-        switch feeService.status {
+    private func sync(status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+        switch status {
         case .loading:
             state = .notReady(errors: [])
         case .failed(let error):
             state = .notReady(errors: [error])
             syncDataState()
-        case .completed(let transaction):
-            if transaction.totalAmount > evmBalance {
-                state = .notReady(errors: [TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount)])
-            } else {
-                state = .ready
+        case .completed(let fallibleTransaction):
+            var errors: [Error] = fallibleTransaction.errors
+
+            if fallibleTransaction.data.totalAmount > evmBalance {
+                errors.append(TransactionError.insufficientBalance(requiredBalance: fallibleTransaction.data.totalAmount))
             }
-            syncDataState(transaction: transaction)
+
+            if errors.isEmpty {
+                state = .ready
+            } else {
+                state = .notReady(errors: errors)
+            }
+
+            syncDataState(transaction: fallibleTransaction.data)
         }
     }
 
@@ -175,9 +182,10 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let transaction) = feeService.status else {
+        guard case .ready = state, case .completed(let fallibleTransaction) = feeService.status else {
             return
         }
+        let transaction = fallibleTransaction.data
 
         sendState = .sending
 
