@@ -11,8 +11,7 @@ protocol ISendEvmTransactionService {
     var state: SendEvmTransactionService.State { get }
     var stateObservable: Observable<SendEvmTransactionService.State> { get }
 
-    var dataState: DataStatus<SendEvmTransactionService.DataState> { get }
-    var dataStateObservable: Observable<DataStatus<SendEvmTransactionService.DataState>> { get }
+    var dataState: SendEvmTransactionService.DataState { get }
 
     var sendState: SendEvmTransactionService.SendState { get }
     var sendStateObservable: Observable<SendEvmTransactionService.SendState> { get }
@@ -37,12 +36,7 @@ class SendEvmTransactionService {
         }
     }
 
-    private let dataStateRelay = PublishRelay<DataStatus<DataState>>()
-    private(set) var dataState: DataStatus<DataState> {
-        didSet {
-            dataStateRelay.accept(dataState)
-        }
-    }
+    private(set) var dataState: DataState
 
     private let sendStateRelay = PublishRelay<SendState>()
     private(set) var sendState: SendState = .idle {
@@ -57,12 +51,10 @@ class SendEvmTransactionService {
         self.feeService = feeService
         self.activateCoinManager = activateCoinManager
 
-        dataState = .completed(
-                DataState(
-                        transactionData: sendData.transactionData,
-                        additionalInfo: sendData.additionalInfo,
-                        decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData)
-                )
+        dataState = DataState(
+                transactionData: sendData.transactionData,
+                additionalInfo: sendData.additionalInfo,
+                decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData)
         )
 
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(status: $0) }
@@ -81,9 +73,11 @@ class SendEvmTransactionService {
         case .loading:
             state = .notReady(errors: [])
         case .failed(let error):
-            state = .notReady(errors: [error])
             syncDataState()
+            state = .notReady(errors: [error])
         case .completed(let fallibleTransaction):
+            syncDataState(transaction: fallibleTransaction.data)
+
             var errors: [Error] = fallibleTransaction.errors
 
             if fallibleTransaction.data.totalAmount > evmBalance {
@@ -95,30 +89,26 @@ class SendEvmTransactionService {
             } else {
                 state = .notReady(errors: errors)
             }
-
-            syncDataState(transaction: fallibleTransaction.data)
         }
     }
 
     private func syncDataState(transaction: EvmFeeModule.Transaction? = nil) {
         let transactionData = transaction?.transactionData ?? sendData.transactionData
 
-        dataState = .completed(
-                DataState(
-                        transactionData: transactionData,
-                        additionalInfo: sendData.additionalInfo,
-                        decoration: evmKit.decorate(transactionData: transactionData)
-                )
+        dataState = DataState(
+                transactionData: transactionData,
+                additionalInfo: sendData.additionalInfo,
+                decoration: evmKit.decorate(transactionData: transactionData)
         )
     }
 
     private func handlePostSendActions() {
-        if let decoration = dataState.data?.decoration as? SwapMethodDecoration {
+        if let decoration = dataState.decoration as? SwapMethodDecoration {
             activateUniswap(token: decoration.tokenIn)
             activateUniswap(token: decoration.tokenOut)
         }
 
-        if let decoration = dataState.data?.decoration as? OneInchMethodDecoration {
+        if let decoration = dataState.decoration as? OneInchMethodDecoration {
             var tokens = [OneInchMethodDecoration.Token]()
 
             switch decoration {
@@ -167,10 +157,6 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
-    }
-
-    var dataStateObservable: Observable<DataStatus<DataState>> {
-        dataStateRelay.asObservable()
     }
 
     var sendStateObservable: Observable<SendState> {

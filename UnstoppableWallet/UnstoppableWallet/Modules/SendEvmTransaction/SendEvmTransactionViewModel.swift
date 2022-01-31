@@ -28,11 +28,9 @@ class SendEvmTransactionViewModel {
         self.coinServiceFactory = coinServiceFactory
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.dataStateObservable) { [weak self] in self?.sync(dataState: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
 
         sync(state: service.state)
-        sync(dataState: service.dataState)
         sync(sendState: service.sendState)
     }
 
@@ -48,27 +46,21 @@ class SendEvmTransactionViewModel {
         } else {
             errorRelay.accept(nil)
         }
-    }
 
-    private func sync(dataState: DataStatus<SendEvmTransactionService.DataState>) {
+        let dataState = service.dataState
         var items: [SectionViewItem]? = nil
 
-        switch dataState {
-        case let .completed(data):
+        if let decoration = dataState.decoration,
+           let decoratedItems = self.items(
+                   decoration: decoration,
+                   transactionData: dataState.transactionData,
+                   additionalInfo: dataState.additionalInfo) {
 
-            if let decoration = data.decoration,
-               let decoratedItems = self.items(
-                       decoration: decoration,
-                       transactionData: data.transactionData,
-                       additionalInfo: data.additionalInfo) {
-
-                items = decoratedItems
-            }
-        default: ()
+            items = decoratedItems
         }
 
-        if items == nil, let data = dataState.data?.transactionData {
-            items = unknownMethodItems(transactionData: data, additionalInfo: dataState.data?.additionalInfo)
+        if items == nil, let data = dataState.transactionData {
+            items = unknownMethodItems(transactionData: data, additionalInfo: dataState.additionalInfo)
         }
 
         if let items = items {
