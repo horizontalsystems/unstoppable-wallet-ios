@@ -1,10 +1,10 @@
 "button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
+"button.apply" = "Appliquer";
+"button.cancel" = "Annuler";
 "button.close" = "Close";
-"button.done" = "Done";
-"button.restore" = "Restore";
-"button.next" = "Next";
+"button.done" = "Fait";
+"button.restore" = "Restaurer";
+"button.next" = "Suivant";
 "button.share" = "Share";
 "button.paste" = "Paste";
 "button.backup" = "Backup";
@@ -350,9 +350,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.market_field.vol" = "Vol";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "Pourcent";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "Tout";
 
 "market.sort_by" = "Sort By";
 
@@ -483,7 +483,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.month6" = "6 Months";
 "market.advanced_search.year" = "1 Year";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Résultat";
 
 "market.global.total_market_cap.title" = "Total Cap";
 "market.global.volume_24h.title" = "24h Volume";
@@ -546,7 +546,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.investor_data" = "Investor Data";
 
 "coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filters";
+"coin_page.treasuries.filters" = "Filtres";
 "coin_page.treasuries.filter.all" = "All";
 "coin_page.treasuries.filter.public" = "Public";
 "coin_page.treasuries.filter.private" = "Private";
@@ -604,7 +604,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
 "coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
 
-"coin_page.info" = "Info";
+"coin_page.info" = "Infos";
 
 "coin_page.audits" = "Audits";
 "coin_page.audits.issues" = "Issues";
@@ -644,9 +644,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.yesterday" = "Yesterday";
 
 "transactions.types.all" = "All";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swaps";
+"transactions.types.incoming" = "Reçue";
+"transactions.types.outgoing" = "Envoyée";
+"transactions.types.swap" = "Echanger";
 "transactions.types.approve" = "Approvals";
 
 // Transaction Info
@@ -814,7 +814,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
+"settings.about_app.app_name" = "Portefeuille Unstoppable";
 "settings.about_app.whats_new" = "What's New";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
@@ -834,7 +834,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings.launch_screen.title" = "Launch Screen";
 
 "launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Balance";
+"launch_screen.balance" = "Solde";
 "launch_screen.market_overview" = "Market Overview";
 "launch_screen.watchlist" = "Watchlist";
 
@@ -1076,10 +1076,10 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.best_offer" = "Best Offer";
 "nft_asset.properties" = "Properties";
 "nft_asset.description" = "Description";
-"nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details" = "Détailles";
+"nft_asset.details.contract_address" = "Adresse du contrat";
 "nft_asset.details.token_id" = "Token ID";
 "nft_asset.details.token_standard" = "Token Standard";
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
+"nft_asset.links.website" = "Site Web";
