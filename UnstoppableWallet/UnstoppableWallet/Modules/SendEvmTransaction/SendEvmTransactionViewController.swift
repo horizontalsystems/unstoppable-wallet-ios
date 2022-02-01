@@ -19,6 +19,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let errorCell = SendEthereumErrorCell()
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
+    private var cautionViewItems = [TitledCaution]()
     private var isLoaded = false
 
     var topDescription: String?
@@ -65,7 +66,7 @@ class SendEvmTransactionViewController: ThemeViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
-        subscribe(disposeBag, transactionViewModel.errorDriver) { [weak self] in self?.handle(error: $0) }
+        subscribe(disposeBag, transactionViewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
         subscribe(disposeBag, transactionViewModel.sendingSignal) { HudHelper.instance.showSpinner() }
         subscribe(disposeBag, transactionViewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess(transactionHash: $0) }
         subscribe(disposeBag, transactionViewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
@@ -80,8 +81,8 @@ class SendEvmTransactionViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func handle(error: String?) {
-        errorCell.bind(text: error)
+    private func handle(cautions: [TitledCaution]) {
+        cautionViewItems = cautions
         reloadTable()
     }
 
@@ -178,6 +179,19 @@ class SendEvmTransactionViewController: ThemeViewController {
         )
     }
 
+    private func errorRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        Row<TitledHighlightedDescriptionCell>(
+                id: title,
+                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
+                bind: { cell, _ in
+                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.tintColor = .themeLucian
+                    cell.titleText = title
+                    cell.descriptionText = value
+                }
+        )
+    }
+
     private func warningRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         Row<TitledHighlightedDescriptionCell>(
                 id: title,
@@ -197,7 +211,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         case let .value(title, value, type): return valueRow(title: title, value: value, type: type, index: index, isFirst: isFirst, isLast: isLast)
         case let .address(title, valueTitle, value): return hexRow(title: title, valueTitle: valueTitle, value: value, index: index, isFirst: isFirst, isLast: isLast)
         case .input(let value): return hexRow(title: "Input", valueTitle: value, value: value, index: index, isFirst: isFirst, isLast: isLast)
-        case let .warning(title, value): return warningRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
         }
     }
 
@@ -244,7 +257,20 @@ extension SendEvmTransactionViewController: SectionsDataSource {
             )
         ]
 
-        return transactionSections + feeSections
+        let cautionsSections: [SectionProtocol] = [
+            Section(
+                    id: "cautions",
+                    headerState: .margin(height: .margin12),
+                    rows: cautionViewItems.enumerated().map { index, caution in
+                        switch caution.type {
+                        case .error: return errorRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
+                        case .warning: return warningRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
+                        }
+                    }
+            )
+        ]
+
+        return transactionSections + feeSections + cautionsSections
     }
 
 }

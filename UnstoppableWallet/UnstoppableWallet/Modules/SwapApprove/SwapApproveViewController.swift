@@ -89,7 +89,9 @@ class SwapApproveViewController: KeyboardAwareViewController {
     }
 
     private func openConfirm(transactionData: TransactionData) {
-        guard let viewController = SwapApproveConfirmationModule.viewController(sendData: SendEvmData(transactionData: transactionData, additionalInfo: nil), dex: dex, delegate: delegate) else {
+        let sendEvmData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
+
+        guard let viewController = SwapApproveConfirmationModule.viewController(sendData: sendEvmData, dex: dex, delegate: delegate) else {
             return
         }
 

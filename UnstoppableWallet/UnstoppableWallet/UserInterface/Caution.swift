@@ -25,3 +25,9 @@ enum CautionType {
     }
 
 }
+
+struct TitledCaution {
+    let title: String
+    let text: String
+    let type: CautionType
+}

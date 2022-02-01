@@ -20,11 +20,11 @@ class EvmFeeViewModel {
         subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+    private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         feeStatusRelay.accept(feeStatus(transactionStatus: status))
     }
 
-    private func feeStatus(transactionStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) -> String {
+    private func feeStatus(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) -> String {
         switch transactionStatus {
         case .loading:
             return "action.loading".localized
