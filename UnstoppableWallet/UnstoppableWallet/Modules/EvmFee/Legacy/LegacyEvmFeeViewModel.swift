@@ -24,33 +24,17 @@ class LegacyEvmFeeViewModel {
         subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
     }
 
-    private func sync(gasPriceStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrice>>) {
         switch gasPriceStatus {
         case .completed(let fallibleGasPrice):
             var cautions = [Caution]()
-
-            for error in fallibleGasPrice.errors {
-                switch error {
-                case .insufficientBalance:
-                    cautions.append(Caution(text: "fee_settings.errors.insufficient_balance.info".localized(coinService.platformCoin.code), type: .error))
-                default: ()
-                }
-            }
-
-            for warning in fallibleGasPrice.warnings {
-                switch warning {
-                case .riskOfGettingStuck:
-                    cautions.append(Caution(text: "fee_settings.warnings.risk_of_getting_stuck.info", type: .warning))
-                default: ()
-                }
-            }
 
             cautionsRelay.accept(cautions)
         default: ()
         }
     }
 
-    private func sync(transactionStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+    private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         let maxFeeStatus: String
 
         switch transactionStatus {

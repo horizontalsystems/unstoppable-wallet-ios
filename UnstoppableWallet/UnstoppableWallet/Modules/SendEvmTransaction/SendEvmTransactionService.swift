@@ -30,7 +30,7 @@ class SendEvmTransactionService {
     private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .notReady(errors: []) {
+    private(set) var state: State = .notReady(errors: [], warnings: []) {
         didSet {
             stateRelay.accept(state)
         }
@@ -68,26 +68,27 @@ class SendEvmTransactionService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func sync(status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+    private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         switch status {
         case .loading:
-            state = .notReady(errors: [])
+            state = .notReady(errors: [], warnings: [])
         case .failed(let error):
             syncDataState()
-            state = .notReady(errors: [error])
+            state = .notReady(errors: [error], warnings: [])
         case .completed(let fallibleTransaction):
             syncDataState(transaction: fallibleTransaction.data)
 
             var errors: [Error] = fallibleTransaction.errors
+            let warnings = sendData.warnings + fallibleTransaction.warnings
 
             if fallibleTransaction.data.totalAmount > evmBalance {
                 errors.append(TransactionError.insufficientBalance(requiredBalance: fallibleTransaction.data.totalAmount))
             }
 
             if errors.isEmpty {
-                state = .ready
+                state = .ready(warnings: warnings)
             } else {
-                state = .notReady(errors: errors)
+                state = .notReady(errors: errors, warnings: warnings)
             }
         }
     }
@@ -196,8 +197,8 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 extension SendEvmTransactionService {
 
     enum State {
-        case ready
-        case notReady(errors: [Error])
+        case ready(warnings: [Warning])
+        case notReady(errors: [Error], warnings: [Warning])
     }
 
     struct DataState {

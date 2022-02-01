@@ -62,7 +62,7 @@ class SendEvmService {
             let transactionData = adapter.transactionData(amount: evmAmount, address: addressData.evmAddress)
             let sendInfo = SendEvmData.SendInfo(domain: addressData.domain)
 
-            let sendData = SendEvmData(transactionData: transactionData, additionalInfo: .send(info: sendInfo))
+            let sendData = SendEvmData(transactionData: transactionData, additionalInfo: .send(info: sendInfo), warnings: [])
             state = .ready(sendData: sendData)
         } else {
             state = .notReady

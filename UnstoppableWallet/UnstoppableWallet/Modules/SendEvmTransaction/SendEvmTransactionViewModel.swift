@@ -13,19 +13,21 @@ class SendEvmTransactionViewModel {
 
     private let service: ISendEvmTransactionService
     private let coinServiceFactory: EvmCoinServiceFactory
+    private let cautionsFactory: SendEvmCautionsFactory
 
     private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
 
     private let sendEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
 
     private let sendingRelay = PublishRelay<()>()
     private let sendSuccessRelay = PublishRelay<Data>()
     private let sendFailedRelay = PublishRelay<String>()
 
-    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory) {
+    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory, cautionsFactory: SendEvmCautionsFactory) {
         self.service = service
         self.coinServiceFactory = coinServiceFactory
+        self.cautionsFactory = cautionsFactory
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
@@ -35,16 +37,13 @@ class SendEvmTransactionViewModel {
     }
 
     private func sync(state: SendEvmTransactionService.State) {
-        if case .ready = state {
+        switch state {
+        case .ready(let warnings):
+            cautionsRelay.accept(cautionsFactory.items(errors: [], warnings: warnings, baseCoinService: coinServiceFactory.baseCoinService))
             sendEnabledRelay.accept(true)
-        } else {
+        case .notReady(let errors, let warnings):
+            cautionsRelay.accept(cautionsFactory.items(errors: errors, warnings: warnings, baseCoinService: coinServiceFactory.baseCoinService))
             sendEnabledRelay.accept(false)
-        }
-
-        if case .notReady(let errors) = state {
-            errorRelay.accept(errors.first.map { convert(error: $0) })
-        } else {
-            errorRelay.accept(nil)
         }
 
         let dataState = service.dataState
@@ -83,31 +82,6 @@ class SendEvmTransactionViewModel {
         case .sent(let transactionHash): sendSuccessRelay.accept(transactionHash)
         case .failed(let error): sendFailedRelay.accept(error.convertedError.smartDescription)
         }
-    }
-
-    private func convert(error: Error) -> String {
-        if case SendEvmTransactionService.TransactionError.insufficientBalance(let requiredBalance) = error {
-            let amountData = coinServiceFactory.baseCoinService.amountData(value: requiredBalance)
-            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
-        }
-
-        if case AppError.ethereum(let reason) = error.convertedError {
-            switch reason {
-            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
-            case .lowerThanBaseGasLimit: return "ethereum_transaction.error.lower_than_base_gas_limit".localized
-            }
-        }
-
-        if case AppError.oneInch(let reason) = error.convertedError {
-            switch reason {
-            case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
-            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized(coinServiceFactory.baseCoinService.platformCoin.coin.code)
-            case .insufficientLiquidity: return
-                "swap.one_inch.error.insufficient_liquidity".localized()
-            }
-        }
-
-        return error.convertedError.smartDescription
     }
 
     private func items(decoration: ContractMethodDecoration, transactionData: TransactionData?, additionalInfo: SendEvmData.AdditionInfo?) -> [SectionViewItem]? {
@@ -279,10 +253,6 @@ class SendEvmTransactionViewModel {
 
         if !otherViewItems.isEmpty {
             sections.append(SectionViewItem(viewItems: otherViewItems))
-        }
-
-        if let warning = info?.warning {
-            sections.append(SectionViewItem(viewItems: [.warning(title: "swap.price_impact".localized, value: warning)]))
         }
 
         return sections
@@ -470,8 +440,8 @@ extension SendEvmTransactionViewModel {
         sendEnabledRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var cautionsDriver: Driver<[TitledCaution]> {
+        cautionsRelay.asDriver()
     }
 
     var sendingSignal: Signal<()> {
@@ -503,7 +473,6 @@ extension SendEvmTransactionViewModel {
         case value(title: String, value: String, type: ValueType)
         case address(title: String, valueTitle: String, value: String)
         case input(value: String)
-        case warning(title: String, value: String)
     }
 
     enum ValueType {

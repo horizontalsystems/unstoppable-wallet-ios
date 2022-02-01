@@ -90,6 +90,10 @@ extension UniswapModule {
         let value: String
     }
 
+    enum UniswapWarning: Warning {
+        case highPriceImpact
+    }
+
 }
 
 extension UniswapKit.Kit.TradeError: LocalizedError {
