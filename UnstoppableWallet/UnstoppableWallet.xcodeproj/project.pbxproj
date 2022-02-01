@@ -1744,6 +1744,7 @@
 		2FA5D371A14CFEB296C58801 /* TransactionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8490F7D8ACA18DC807A /* TransactionInfoViewController.swift */; };
 		2FA5D37E2FC7A6926302E925 /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB79666823038C1455A9 /* TransactionsService.swift */; };
 		2FA5D3809B7BA6E0AD28344F /* TransactionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD7B706142D9572E7109 /* TransactionValue.swift */; };
+		2FA5D3893C3B6F2270F857C7 /* SendEvmCautionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */; };
 		2FA5D38EB47D156EA06E8E43 /* TransactionRecordDataSourceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D31D04DA07DC1E7B00DD /* TransactionRecordDataSourceGroup.swift */; };
 		2FA5D3AFFBE0E51DD79236EF /* LegacyEvmFeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeViewController.swift */; };
 		2FA5D3C71DD0DBD7EE6236ED /* TransactionsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D7ADF6367D172C582009 /* TransactionsViewItemFactory.swift */; };
@@ -1802,6 +1803,7 @@
 		2FA5D7CDF884D2655E066C3E /* TransactionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD7B706142D9572E7109 /* TransactionValue.swift */; };
 		2FA5D7DC6E8D68CD487D0825 /* LogRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */; };
 		2FA5D7DD3CEFEE5CD80B337B /* Erc20AvailableBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D69E0937472AB2B9CA81 /* Erc20AvailableBalanceViewModel.swift */; };
+		2FA5D7E8805931F9F566668E /* SendEvmCautionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */; };
 		2FA5D8190A8858830880C114 /* LogRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */; };
 		2FA5D85F4B651A201D3DA020 /* TransactionInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2FB94B5545387375AA3 /* TransactionInfoService.swift */; };
 		2FA5D86DD2D1331EFBC63350 /* ContractCallTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D008CA69267C8E5E00001E0A /* ContractCallTransactionRecord.swift */; };
@@ -1866,6 +1868,7 @@
 		2FA5DCC4695C6D90275575A3 /* TransactionAdapterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DFE7C4A198C235B2EAB5 /* TransactionAdapterManager.swift */; };
 		2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
 		2FA5DCD7C15977D0B3603481 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 2FA5D3C5601F70AF1E2DFD04 /* LegacyGasPriceService.swift */; };
+		2FA5DCDA3F6DD826177FC28B /* SendEvmCautionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */; };
 		2FA5DCF3032EF2F8B99BFDFE /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB79666823038C1455A9 /* TransactionsService.swift */; };
 		2FA5DCF5BF374655BAC4F2B9 /* LegacyEvmFeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeViewController.swift */; };
 		2FA5DCF958DD56D1C19C9DFA /* EvmFeeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DBA901685468016F595A /* EvmFeeModule.swift */; };
@@ -3469,6 +3472,7 @@
 		2FA5DD10AB8935BD2987D806 /* TransactionStatusInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionStatusInfoViewController.swift; sourceTree = "<group>"; };
 		2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractCreationTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmTransactionConverter.swift; sourceTree = "<group>"; };
+		2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEvmCautionsFactory.swift; sourceTree = "<group>"; };
 		2FA5DD6BA841ACBF6C2C0AC1 /* EvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmFeeViewModel.swift; sourceTree = "<group>"; };
 		2FA5DD7B706142D9572E7109 /* TransactionValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionValue.swift; sourceTree = "<group>"; };
 		2FA5DE28AF115C592B9EAD13 /* LegacyEvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyEvmFeeViewModel.swift; sourceTree = "<group>"; };
@@ -3912,6 +3916,7 @@
 				11B35C7F043B6C41E53D43BC /* SendEvmTransactionService.swift */,
 				11B35785C46145F04D21302C /* SendEvmTransactionViewModel.swift */,
 				11B35B31362C98B401A8F9A1 /* SendEvmTransactionViewController.swift */,
+				2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */,
 			);
 			path = SendEvmTransaction;
 			sourceTree = "<group>";
@@ -7642,6 +7647,7 @@
 				2FA5D2A9EDB97A07571E595E /* LegacyGasPriceService.swift in Sources */,
 				2FA5D89E8204B588D683EC63 /* EvmFeeViewModel.swift in Sources */,
 				2FA5DCF958DD56D1C19C9DFA /* EvmFeeModule.swift in Sources */,
+				2FA5DCDA3F6DD826177FC28B /* SendEvmCautionsFactory.swift in Sources */,
 				11B352A2ED21F4EBE9415B74 /* NftAssetModule.swift in Sources */,
 				11B35BF0AF4C6F264EC01FEE /* NftAssetService.swift in Sources */,
 				11B35B0357F313E7FBA7EDF1 /* NftAssetViewController.swift in Sources */,
@@ -8566,6 +8572,7 @@
 				2FA5DEC1DC9150B6A44C9187 /* LegacyGasPriceService.swift in Sources */,
 				2FA5DF7EE8E919248A186D43 /* EvmFeeViewModel.swift in Sources */,
 				2FA5D6B8DBE60F89E78F0EF8 /* EvmFeeModule.swift in Sources */,
+				2FA5D3893C3B6F2270F857C7 /* SendEvmCautionsFactory.swift in Sources */,
 				11B35C7DBF3920FF4B55F08D /* NftAssetModule.swift in Sources */,
 				11B354A28704A60A45CCE6A9 /* NftAssetService.swift in Sources */,
 				11B3587199B825691E85EFD9 /* NftAssetViewController.swift in Sources */,
@@ -9482,6 +9489,7 @@
 				2FA5DB404D05A47AD451C1B5 /* LegacyGasPriceService.swift in Sources */,
 				2FA5D316F182EE677FF67F43 /* EvmFeeViewModel.swift in Sources */,
 				2FA5D32AB5511C0B349AF6DC /* EvmFeeModule.swift in Sources */,
+				2FA5D7E8805931F9F566668E /* SendEvmCautionsFactory.swift in Sources */,
 				11B35C8043F6F6EB221AF1C1 /* NftAssetModule.swift in Sources */,
 				11B35E970A372811CDCDD38D /* NftAssetService.swift in Sources */,
 				11B35D23FF565B45C22BA854 /* NftAssetViewController.swift in Sources */,

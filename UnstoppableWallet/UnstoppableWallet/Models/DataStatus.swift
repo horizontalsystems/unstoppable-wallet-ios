@@ -100,3 +100,9 @@ extension DataStatus: Equatable {
     }
 
 }
+
+struct FallibleData<T> {
+    let data: T
+    let errors: [Error]
+    let warnings: [Warning]
+}

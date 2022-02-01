@@ -18,7 +18,7 @@ class OneInchSendEvmTransactionService {
     private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<SendEvmTransactionService.State>()
-    private(set) var state: SendEvmTransactionService.State = .notReady(errors: []) {
+    private(set) var state: SendEvmTransactionService.State = .notReady(errors: [], warnings: []) {
         didSet {
             stateRelay.accept(state)
         }
@@ -56,12 +56,12 @@ class OneInchSendEvmTransactionService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func sync(status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>) {
+    private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         switch status {
         case .loading:
-            state = .notReady(errors: [])
+            state = .notReady(errors: [], warnings: [])
         case .failed(let error):
-            state = .notReady(errors: [error])
+            state = .notReady(errors: [error], warnings: [])
         case .completed(let fallibleTransaction):
             let transaction = fallibleTransaction.data
 
@@ -78,9 +78,9 @@ class OneInchSendEvmTransactionService {
             }
 
             if errors.isEmpty {
-                state = .ready
+                state = .ready(warnings: fallibleTransaction.warnings)
             } else {
-                state = .notReady(errors: errors)
+                state = .notReady(errors: errors, warnings: fallibleTransaction.warnings)
             }
         }
     }

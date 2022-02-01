@@ -11,8 +11,8 @@ class EvmFeeService {
     private var transactionData: TransactionData
     let gasLimitSurchargePercent: Int
 
-    private let transactionStatusRelay = PublishRelay<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>>()
-    private(set) var status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>> = .failed(EvmFeeModule.GasDataError.noTransactionData) {
+    private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
+    private(set) var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> = .loading {
         didSet {
             transactionStatusRelay.accept(status)
         }
@@ -35,7 +35,7 @@ class EvmFeeService {
         evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice.max) // TODO: estimateGas must accept GasPrice enum
     }
 
-    private func sync(gasPriceStatus: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrice>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
         case .failed(let error): status = .failed(error)
@@ -43,7 +43,7 @@ class EvmFeeService {
         }
     }
 
-    private func sync(fallibleGasPrice: EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>) {
+    private func sync(fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
         disposeBag = DisposeBag()
 
         status = .loading
@@ -51,7 +51,7 @@ class EvmFeeService {
         transactionSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transaction in
-                    self?.status = .completed(EvmFeeModule.FallibleData<EvmFeeModule.Transaction>(
+                    self?.status = .completed(FallibleData<EvmFeeModule.Transaction>(
                             data: transaction, errors: fallibleGasPrice.errors, warnings: fallibleGasPrice.warnings
                     ))
                 }, onError: { [weak self] error in
@@ -105,7 +105,7 @@ class EvmFeeService {
 
 extension EvmFeeService: IEvmFeeService {
 
-    var statusObservable: Observable<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>> {
+    var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> {
         transactionStatusRelay.asObservable()
     }
 

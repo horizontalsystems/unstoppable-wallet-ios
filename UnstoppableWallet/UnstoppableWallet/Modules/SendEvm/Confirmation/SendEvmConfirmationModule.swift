@@ -7,6 +7,7 @@ import MarketKit
 struct SendEvmData {
     let transactionData: TransactionData
     let additionalInfo: AdditionInfo?
+    let warnings: [Warning]
 
     enum AdditionInfo {
         case send(info: SendInfo)
@@ -38,7 +39,6 @@ struct SendEvmData {
         let recipientDomain: String?
         let price: String?
         let priceImpact: UniswapModule.PriceImpactViewItem?
-        let warning: String?
     }
 
     struct OneInchSwapInfo {
@@ -73,7 +73,7 @@ struct SendEvmConfirmationModule {
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
+        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory())
         let feeViewModel = EvmFeeViewModel(service: feeService, coinService: coinServiceFactory.baseCoinService)
 
         let controller = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
@@ -105,11 +105,11 @@ struct SendEvmConfirmationModule {
         case .speedUp:
             let tx = fullTransaction.transaction
             let transactionData = TransactionData(to: toAddress, value: tx.value, input: tx.input, nonce: tx.nonce)
-            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil)
+            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         case .cancel:
             let tx = fullTransaction.transaction
             let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data(), nonce: tx.nonce)
-            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil)
+            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         }
 
         let evmKitWrapper = adapter.evmKitWrapper
@@ -118,7 +118,7 @@ struct SendEvmConfirmationModule {
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory)
+        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory())
         let feeViewModel = EvmFeeViewModel(service: feeService, coinService: coinServiceFactory.baseCoinService)
 
         let viewController = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)

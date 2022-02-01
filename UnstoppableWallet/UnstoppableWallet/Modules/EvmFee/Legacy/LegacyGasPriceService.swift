@@ -18,8 +18,8 @@ class LegacyGasPriceService {
         }
     }
 
-    private let statusRelay = PublishRelay<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>>()
-    private(set) var status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>> = .loading {
+    private let statusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.GasPrice>>>()
+    private(set) var status: DataStatus<FallibleData<EvmFeeModule.GasPrice>> = .loading {
         didSet {
             statusRelay.accept(status)
         }
@@ -47,7 +47,7 @@ class LegacyGasPriceService {
             warnings.append(.overpricing)
         }
 
-        status = .completed(EvmFeeModule.FallibleData(
+        status = .completed(FallibleData(
                 data: .legacy(gasPrice: legacyGasPrice), errors: [], warnings: warnings
         ))
     }
@@ -56,7 +56,7 @@ class LegacyGasPriceService {
 
 extension LegacyGasPriceService {
 
-    var statusObservable: Observable<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.GasPrice>>> {
+    var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.GasPrice>>> {
         statusRelay.asObservable()
     }
 

@@ -368,3 +368,5 @@ protocol IEvmAccountSyncStateStorage {
     func evmAccountSyncState(accountId: String, chainId: Int) -> EvmAccountSyncState?
     func save(evmAccountSyncState: EvmAccountSyncState)
 }
+
+protocol Warning {}

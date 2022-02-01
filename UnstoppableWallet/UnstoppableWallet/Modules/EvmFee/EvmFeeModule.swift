@@ -23,14 +23,13 @@ extension EvmFeeModule {
     }
 
     enum GasDataError: Error {
-        case noTransactionData
         case insufficientBalance
     }
 
-    enum GasDataWarning {
+    enum GasDataWarning: Warning {
         case riskOfGettingStuck
+        case highBaseFee
         case overpricing
-        case probablyAtSpike
     }
 
     struct GasData {
@@ -51,17 +50,11 @@ extension EvmFeeModule {
         }
     }
 
-    struct FallibleData<T> {
-        let data: T
-        let errors: [GasDataError]
-        let warnings: [GasDataWarning]
-    }
-
 }
 
 protocol IEvmFeeService {
-    var status: DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>> { get }
-    var statusObservable: Observable<DataStatus<EvmFeeModule.FallibleData<EvmFeeModule.Transaction>>> { get }
+    var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> { get }
+    var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> { get }
 }
 
 protocol IEvmGasPriceService {
