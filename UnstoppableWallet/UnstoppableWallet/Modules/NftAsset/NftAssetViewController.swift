@@ -15,6 +15,7 @@ class NftAssetViewController: ThemeViewController {
     private var statsViewItem: NftAssetViewModel.StatsViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let imageCell = NftAssetImageCell()
     private let descriptionTextCell = ReadMoreTextCell()
 
     private var loaded = false
@@ -141,6 +142,55 @@ class NftAssetViewController: ThemeViewController {
         urlManager.open(url: url, from: self)
     }
 
+    private func openOptionsMenu() {
+        let controller = AlertViewControllerNew.instance(
+                viewItems: [
+                    .init(text: "button.share".localized),
+                    .init(text: "nft_asset.options.save_to_photos".localized),
+//                    .init(text: "nft_asset.options.set_as_watch_face".localized)
+                ],
+                reportAfterDismiss: true,
+                onSelect: { [weak self] index in
+                    switch index {
+                    case 0: self?.handleShare()
+                    case 1: self?.handleSaveToPhotos()
+//                    case 2: self?.handleSetWatchFace()
+                    default: ()
+                    }
+                }
+        )
+
+        present(controller, animated: true)
+    }
+
+    private func handleShare() {
+        if let openSeaUrl = openSeaUrl {
+            openShare(text: openSeaUrl)
+        }
+    }
+
+    private func handleSaveToPhotos() {
+        if let image = imageCell.currentImage {
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(onSaveToPhotos), nil)
+        }
+    }
+
+    private func handleSetWatchFace() {
+        print("Set as Watch Face")
+    }
+
+    private var openSeaUrl: String? {
+        viewItem?.links.first(where: { $0.type == .openSea })?.url
+    }
+
+    @objc private func onSaveToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error == nil {
+            HudHelper.instance.showSuccess(title: "nft_asset.save_to_photos.success".localized)
+        } else {
+            HudHelper.instance.showError(title: "nft_asset.save_to_photos.failed".localized)
+        }
+    }
+
 }
 
 extension NftAssetViewController: SectionsDataSource {
@@ -167,14 +217,13 @@ extension NftAssetViewController: SectionsDataSource {
         Section(
                 id: "image",
                 headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin12),
                 rows: [
-                    Row<NftAssetImageCell>(
+                    StaticRow(
+                            cell: imageCell,
                             id: "image",
                             dynamicHeight: { width in
                                 NftAssetImageCell.height(containerWidth: width, ratio: ratio)
-                            },
-                            bind: { cell, _ in
-                                cell.bind(url: url)
                             }
                     )
                 ]
@@ -184,7 +233,7 @@ extension NftAssetViewController: SectionsDataSource {
     private func titleSection(title: String, subtitle: String) -> SectionProtocol {
         Section(
                 id: "title",
-                headerState: .margin(height: .margin24),
+                headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin24),
                 rows: [
                     Row<NftAssetTitleCell>(
@@ -193,7 +242,18 @@ extension NftAssetViewController: SectionsDataSource {
                                 NftAssetTitleCell.height(containerWidth: width, title: title, subtitle: subtitle)
                             },
                             bind: { cell, _ in
-                                cell.bind(title: title, subtitle: subtitle)
+                                cell.bind(
+                                        title: title,
+                                        subtitle: subtitle,
+                                        onTapOpenSea: { [weak self] in
+                                            if let url = self?.openSeaUrl {
+                                                self?.openLink(url: url)
+                                            }
+                                        },
+                                        onTapMore: { [weak self] in
+                                            self?.openOptionsMenu()
+                                        }
+                                )
                             }
                     )
                 ]
@@ -496,7 +556,7 @@ extension NftAssetViewController: SectionsDataSource {
     private func poweredBySection(text: String) -> SectionProtocol {
         Section(
                 id: "powered-by",
-                headerState: .margin(height: .margin32),
+                headerState: .margin(height: .margin8),
                 rows: [
                     Row<BrandFooterCell>(
                             id: "powered-by",
@@ -516,6 +576,7 @@ extension NftAssetViewController: SectionsDataSource {
 
         if let viewItem = viewItem {
             if let imageUrl = viewItem.imageUrl {
+                imageCell.bind(url: imageUrl)
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 

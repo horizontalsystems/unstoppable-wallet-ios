@@ -1022,3 +1022,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Website";
+"nft_asset.options.save_to_photos" = "Save to Photos";
+"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
+"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
+"nft_asset.save_to_photos.failed" = "Failed to save NFT image";

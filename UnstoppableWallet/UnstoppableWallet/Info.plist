@@ -65,6 +65,8 @@
 	<string>We use Face ID to unlock wallet.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>We need access to local network to discover blockchain nodes</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to photo library to save NFT images</string>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
 	<key>ShowBuildNumber</key>
