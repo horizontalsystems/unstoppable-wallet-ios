@@ -31,6 +31,10 @@ class NftAssetImageCell: UITableViewCell {
         assetImageView.kf.setImage(with: URL(string: url), options: [.transition(.fade(0.5))])
     }
 
+    var currentImage: UIImage? {
+        assetImageView.image
+    }
+
 }
 
 extension NftAssetImageCell {
