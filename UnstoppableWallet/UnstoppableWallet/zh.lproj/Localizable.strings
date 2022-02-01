@@ -416,17 +416,17 @@
 "market.advanced_search.b_10_b_50" = "10十亿 - 50十亿";
 "market.advanced_search.b_10_b_100" = "10十亿 - 100十亿";
 "market.advanced_search.b_100_b_500" = "100十亿 - 500十亿";
-"market.advanced_search.more_5_b" = "> 5B";
-"market.advanced_search.more_10_b" = "> 10B";
-"market.advanced_search.more_50_b" = "> 50B";
-"market.advanced_search.more_500_b" = "> 500B";
+"market.advanced_search.more_5_b" = "> 5十亿";
+"market.advanced_search.more_10_b" = "> 10十亿";
+"market.advanced_search.more_50_b" = "> 50十亿";
+"market.advanced_search.more_500_b" = "> 500十亿";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1天";
+"market.advanced_search.week" = "1周";
+"market.advanced_search.week2" = "2周";
+"market.advanced_search.month" = "1月";
+"market.advanced_search.month6" = "6 个月";
+"market.advanced_search.year" = "1 年";
 
 "market.advanced_search_results.title" = "Results";
 
@@ -460,16 +460,16 @@
 "coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
-"coin_page.market_cap" = "Market Cap";
-"coin_page.circulating_supply" = "In Circulation";
-"coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
-"coin_page.genesis_date" = "Inception Date";
+"coin_page.market_cap" = "市场价值";
+"coin_page.circulating_supply" = "流通中";
+"coin_page.total_supply" = "供应总额";
+"coin_page.dilluted_market_cap" = "稀释市值";
+"coin_page.genesis_date" = "起始日期";
 
-"coin_page.trading_volume" = "Trading Volume";
-"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
+"coin_page.trading_volume" = "成交量";
+"coin_page.trading_volume.description" = "%@ 每日交易量的历史变化";
 "coin_page.markets" = "市场";
-"coin_page.markets.empty" = "No data available";
+"coin_page.markets.empty" = "没有可用数据";
 
 "coin_page.token_liquidity" = "代币流动性";
 "coin_page.token_distribution" = "代币分布";
@@ -479,15 +479,15 @@
 "coin_page.token_tvl" = "Token TVL";
 "coin_page.tvl" = "Total Value Locked";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
-"coin_page.tvl_rank" = "TVL Rank";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.tvl_rank" = "锁仓排名";
+"coin_page.tvl.description" = "以贷款抵押品或流动性池的形式存入平台的资本。";
 
 "coin_page.investor_data" = "Investor Data";
 
 "coin_page.treasuries" = "Treasuries";
 "coin_page.treasuries.filters" = "Filters";
 "coin_page.treasuries.filter.all" = "All";
-"coin_page.treasuries.filter.public" = "Public";
+"coin_page.treasuries.filter.public" = "公用";
 "coin_page.treasuries.filter.private" = "Private";
 "coin_page.treasuries.filter.etf" = "ETF";
 
@@ -1022,3 +1022,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Website";
+"nft_asset.options.save_to_photos" = "Save to Photos";
+"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
+"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
+"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
