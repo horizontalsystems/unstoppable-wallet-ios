@@ -36,7 +36,7 @@
 "offline" = "Offline";
 "confirm" = "Confirm";
 "connect" = "Connect";
-"price" = "Price";
+"price" = "Preis";
 "value" = "Value";
 "note" = "Note";
 
@@ -754,7 +754,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
@@ -1009,7 +1009,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.average_30d" = "30 Day Average";
 "nft_asset.floor_price" = "Floor Price";
 "nft_asset.on_sale" = "On Sale";
-"nft_asset.until_date" = "until %@";
+"nft_asset.until_date" = "bis %@";
 "nft_asset.buy_now" = "Buy Now";
 "nft_asset.top_bid" = "Top Bid";
 "nft_asset.minimum_bid" = "Minimum Bid";
