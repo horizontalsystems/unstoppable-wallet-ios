@@ -12,6 +12,8 @@ class NftCollectionsTokenView: UIView {
     private let nameLabel = UILabel()
     private let coinPriceLabel = UILabel()
     private let fiatPriceLabel = UILabel()
+    private let onSaleWrapper = UIView()
+    private let onSaleLabel = UILabel()
 
     var onTap: (() -> ())?
 
@@ -38,6 +40,25 @@ class NftCollectionsTokenView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.cornerRadius = .cornerRadius8
         imageView.backgroundColor = .themeSteel10
+
+        addSubview(onSaleWrapper)
+        onSaleWrapper.snp.makeConstraints { maker in
+            maker.top.trailing.equalTo(imageView).inset(CGFloat.margin4)
+            maker.height.equalTo(15)
+        }
+
+        onSaleWrapper.backgroundColor = .themeLightGray
+        onSaleWrapper.cornerRadius = .cornerRadius4
+
+        onSaleWrapper.addSubview(onSaleLabel)
+        onSaleLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4)
+            maker.centerY.equalToSuperview()
+        }
+
+        onSaleLabel.font = .microSB
+        onSaleLabel.textColor = .themeDarker
+        onSaleLabel.text = "nft_collections.on_sale".localized
 
         addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
@@ -90,6 +111,11 @@ class NftCollectionsTokenView: UIView {
     var fiatPrice: String? {
         get { fiatPriceLabel.text }
         set { fiatPriceLabel.text = newValue }
+    }
+
+    var onSaleHidden: Bool {
+        get { onSaleWrapper.isHidden }
+        set { onSaleWrapper.isHidden = newValue }
     }
 
     func setImage(url: String?) {

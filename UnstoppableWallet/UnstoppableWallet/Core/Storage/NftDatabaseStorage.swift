@@ -49,6 +49,7 @@ class NftDatabaseStorage {
                 t.column(NftAssetRecord.Columns.traits.name, .text).notNull()
                 t.column(NftAssetRecord.Columns.lastSalePriceCoinTypeId.name, .text)
                 t.column(NftAssetRecord.Columns.lastSalePriceValue.name, .text)
+                t.column(NftAssetRecord.Columns.onSale.name, .boolean)
 
                 t.primaryKey([NftAssetRecord.Columns.accountId.name, NftAssetRecord.Columns.contractAddress.name, NftAssetRecord.Columns.tokenId.name], onConflict: .replace)
             }
