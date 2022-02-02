@@ -386,7 +386,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func traitsSection(traits: [NftAssetViewModel.TraitViewItem]) -> SectionProtocol {
+    private func traitSections(traits: [NftAssetViewModel.TraitViewItem]) -> [SectionProtocol] {
         var traits = traits
         var sortedTraits = [NftAssetViewModel.TraitViewItem]()
 
@@ -418,21 +418,28 @@ extension NftAssetViewController: SectionsDataSource {
             lines += 1
         }
 
-        return Section(
-                id: "traits",
-                footerState: .margin(height: .margin24),
-                rows: [
-                    headerRow(title: "nft_asset.properties".localized),
-
-                    Row<TraitsCell>(
-                            id: "traits",
-                            height: TraitsCell.height(lines: lines),
-                            bind: { cell, _ in
-                                cell.bind(viewItems: sortedTraits)
-                            }
-                    )
-                ]
-        )
+        return [
+            Section(
+                    id: "traits-header",
+                    rows: [
+                        headerRow(title: "nft_asset.properties".localized)
+                    ]
+            ),
+            Section(
+                    id: "traits",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        Row<TraitsCell>(
+                                id: "traits",
+                                height: TraitsCell.height(lines: lines),
+                                bind: { cell, _ in
+                                    cell.bind(viewItems: sortedTraits)
+                                }
+                        )
+                    ]
+            )
+        ]
     }
 
     private func descriptionSection(description: String) -> SectionProtocol {
@@ -627,7 +634,7 @@ extension NftAssetViewController: SectionsDataSource {
             }
 
             if !viewItem.traits.isEmpty {
-                sections.append(traitsSection(traits: viewItem.traits))
+                sections.append(contentsOf: traitSections(traits: viewItem.traits))
             }
 
             if let description = viewItem.description {
