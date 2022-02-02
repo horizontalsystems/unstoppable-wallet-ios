@@ -1,25 +1,28 @@
 class SendEvmCautionsFactory {
 
     func items(errors: [Error], warnings: [Warning], baseCoinService: CoinService) -> [TitledCaution] {
-        var errorCautions = [TitledCaution]()
         var warningCautions = [TitledCaution]()
 
         for error in errors {
             if let error = error as? EvmFeeModule.GasDataError {
                 switch error {
                 case .insufficientBalance:
-                    errorCautions.append(TitledCaution(
-                            title: "fee_settings.errors.insufficient_balance".localized,
-                            text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.platformCoin.coin.code),
-                            type: .error
-                    ))
+                    return [
+                        TitledCaution(
+                                title: "fee_settings.errors.insufficient_balance".localized,
+                                text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.platformCoin.coin.code),
+                                type: .error
+                        )
+                    ]
                 }
             } else {
-                errorCautions.append(TitledCaution(
-                        title: "ethereum_transaction.error.title".localized,
-                        text: convert(error: error, baseCoinService: baseCoinService),
-                        type: .error
-                ))
+                return [
+                    TitledCaution(
+                            title: "ethereum_transaction.error.title".localized,
+                            text: convert(error: error, baseCoinService: baseCoinService),
+                            type: .error
+                    )
+                ]
             }
         }
 
@@ -41,7 +44,7 @@ class SendEvmCautionsFactory {
             }
         }
 
-        return errorCautions + warningCautions
+        return warningCautions
     }
 
     private func convert(error: Error, baseCoinService: CoinService) -> String {

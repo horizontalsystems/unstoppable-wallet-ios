@@ -78,17 +78,12 @@ class SendEvmTransactionService {
         case .completed(let fallibleTransaction):
             syncDataState(transaction: fallibleTransaction.data)
 
-            var errors: [Error] = fallibleTransaction.errors
             let warnings = sendData.warnings + fallibleTransaction.warnings
 
-            if fallibleTransaction.data.totalAmount > evmBalance {
-                errors.append(TransactionError.insufficientBalance(requiredBalance: fallibleTransaction.data.totalAmount))
-            }
-
-            if errors.isEmpty {
+            if fallibleTransaction.errors.isEmpty {
                 state = .ready(warnings: warnings)
             } else {
-                state = .notReady(errors: errors, warnings: warnings)
+                state = .notReady(errors: fallibleTransaction.errors, warnings: warnings)
             }
         }
     }

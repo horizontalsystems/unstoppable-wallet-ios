@@ -4,6 +4,7 @@ import RxSwift
 import RxRelay
 import EthereumKit
 import OneInchKit
+import BigInt
 
 struct OneInchSwapParameters: Equatable {
     let platformCoinFrom: PlatformCoin
@@ -32,8 +33,9 @@ class OneInchFeeService {
 
     private static let gasLimitSurchargePercent = 25
 
+    private let evmKit: EthereumKit.Kit
     private let provider: OneInchProvider
-    private let gasPriceService: LegacyGasPriceService
+    let gasPriceService: LegacyGasPriceService
     private(set) var parameters: OneInchSwapParameters
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
@@ -45,13 +47,18 @@ class OneInchFeeService {
 
     var amountTo: Decimal?
 
-    init(provider: OneInchProvider, gasPriceService: LegacyGasPriceService, parameters: OneInchSwapParameters) {
+    init(evmKit: EthereumKit.Kit, provider: OneInchProvider, gasPriceService: LegacyGasPriceService, parameters: OneInchSwapParameters) {
+        self.evmKit = evmKit
         self.provider = provider
         self.gasPriceService = gasPriceService
         self.parameters = parameters
 
         sync(gasPriceStatus: gasPriceService.status)
         subscribe(gasPriceDisposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
+    }
+
+    private var evmBalance: BigUInt {
+        evmKit.accountState?.balance ?? 0
     }
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrice>>) {
@@ -110,10 +117,16 @@ class OneInchFeeService {
 
         parameters.amountTo = swap.amountOut ?? 0
         let transactionData = EthereumKit.TransactionData(to: tx.to, value: tx.value, input: tx.data)
+        let totalAmount = transactionData.value + gasData.fee
+        var errors: [Error] = fallibleGasPrice.errors
+
+        if totalAmount > evmBalance {
+            errors.append(SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance: totalAmount))
+        }
 
         status = .completed(FallibleData<EvmFeeModule.Transaction>(
                 data: EvmFeeModule.Transaction(transactionData: transactionData, gasData: gasData),
-                errors: fallibleGasPrice.errors,
+                errors: errors,
                 warnings: fallibleGasPrice.warnings
         ))
     }
