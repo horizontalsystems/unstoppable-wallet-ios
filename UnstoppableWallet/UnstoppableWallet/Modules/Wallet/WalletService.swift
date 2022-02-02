@@ -283,29 +283,24 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
 extension WalletService: IWalletRateServiceDelegate {
 
+    private func handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
+        for item in allItems {
+            item.priceItem = priceItemMap[item.wallet.coin.uid]
+        }
+
+        allItems = sorter.sort(items: allItems, sortType: sortType)
+        syncTotalItem()
+    }
+
     func didUpdateBaseCurrency() {
         queue.async {
-            let priceItemMap = self.coinPriceService.itemMap(coinUids: self.allItems.map { $0.wallet.coin.uid })
-
-            for item in self.allItems {
-                item.priceItem = priceItemMap[item.wallet.coin.uid]
-            }
-
-            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
-            self.syncTotalItem()
+            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: self.allItems.map { $0.wallet.coin.uid }))
         }
     }
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            for (coinUid, priceItem) in itemsMap {
-                for item in self.items(coinUid: coinUid) {
-                    item.priceItem = priceItem
-                    self.itemUpdatedRelay.accept(item)
-                }
-            }
-
-            self.syncTotalItem()
+            self.handleUpdated(priceItemMap: itemsMap)
         }
     }
 
