@@ -15,6 +15,7 @@ class NftAssetRecord: Record {
     let permalink: String?
     let traits: [NftAsset.Trait]
     let lastSalePrice: NftPriceRecord?
+    let onSale: Bool
 
     init(accountId: String, asset: NftAsset) {
         self.accountId = accountId
@@ -29,6 +30,7 @@ class NftAssetRecord: Record {
         permalink = asset.permalink
         traits = asset.traits
         lastSalePrice = asset.lastSalePrice.map { NftPriceRecord(price: $0) }
+        onSale = asset.onSale
 
         super.init()
     }
@@ -52,6 +54,7 @@ class NftAssetRecord: Record {
         case traits
         case lastSalePriceCoinTypeId
         case lastSalePriceValue
+        case onSale
     }
 
     required init(row: Row) {
@@ -67,6 +70,7 @@ class NftAssetRecord: Record {
         permalink = row[Columns.permalink]
         traits = [NftAsset.Trait](JSONString: row[Columns.traits]) ?? []
         lastSalePrice = NftPriceRecord(coinTypeId: row[Columns.lastSalePriceCoinTypeId], value: row[Columns.lastSalePriceValue])
+        onSale = row[Columns.onSale]
 
         super.init(row: row)
     }
@@ -86,6 +90,7 @@ class NftAssetRecord: Record {
         container[Columns.traits] = traits.toJSONString()
         container[Columns.lastSalePriceCoinTypeId] = lastSalePrice?.coinTypeId
         container[Columns.lastSalePriceValue] = lastSalePrice?.value
+        container[Columns.onSale] = onSale
     }
 
 }

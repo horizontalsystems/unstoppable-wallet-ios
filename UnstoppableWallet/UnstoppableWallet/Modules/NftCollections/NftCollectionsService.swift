@@ -107,6 +107,7 @@ class NftCollectionsService {
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
+                                onSale: asset.onSale,
                                 price: price
                         )
                     }
@@ -194,14 +195,16 @@ extension NftCollectionsService {
         let tokenId: String
         let imageUrl: String?
         let name: String?
+        let onSale: Bool
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(collectionSlug: String, tokenId: String, imageUrl: String?, name: String?, price: NftPrice?) {
+        init(collectionSlug: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
             self.collectionSlug = collectionSlug
             self.tokenId = tokenId
             self.imageUrl = imageUrl
             self.name = name
+            self.onSale = onSale
             self.price = price
         }
 

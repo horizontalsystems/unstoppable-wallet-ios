@@ -108,7 +108,8 @@ class OpenSeaNftProvider {
                     externalLink: response.externalLink,
                     permalink: response.permalink,
                     traits: response.traits.map { NftAsset.Trait(type: $0.type, value: $0.value, count: $0.count) },
-                    lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: platformCoinMap[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) }
+                    lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: platformCoinMap[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) },
+                    onSale: !response.sellOrders.isEmpty
             )
         }
     }
@@ -164,7 +165,7 @@ class OpenSeaNftProvider {
         let parameters: Parameters = [
             "format": "json",
             "limit": assetLimit,
-            "offset": offset,
+//            "offset": offset, // temp fix for API
             "owner": address
         ]
 
@@ -193,7 +194,12 @@ extension OpenSeaNftProvider: INftProvider {
             self?.collections(responses: responses) ?? []
         }
 
-        let assetsSingle = recursiveAssetsSingle(address: address).map { [weak self] responses in
+//        let assetsSingle = recursiveAssetsSingle(address: address).map { [weak self] responses in
+//            self?.assets(responses: responses) ?? []
+//        }
+
+        // temp fix for API
+        let assetsSingle = assetsSingle(address: address, offset: 0).map { [weak self] responses in
             self?.assets(responses: responses) ?? []
         }
 
@@ -289,6 +295,7 @@ extension OpenSeaNftProvider {
         let permalink: String?
         let traits: [TraitResponse]
         let lastSale: SaleResponse?
+        let sellOrders: [OrderResponse]
 
         init(map: Map) throws {
             contract = try map.value("asset_contract")
@@ -302,6 +309,7 @@ extension OpenSeaNftProvider {
             permalink = try? map.value("permalink")
             traits = try map.value("traits")
             lastSale = try? map.value("last_sale")
+            sellOrders = (try? map.value("sell_orders")) ?? []
         }
     }
 

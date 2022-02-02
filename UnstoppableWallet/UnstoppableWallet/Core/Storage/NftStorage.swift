@@ -39,7 +39,8 @@ class NftStorage {
                 externalLink: record.externalLink,
                 permalink: record.permalink,
                 traits: record.traits,
-                lastSalePrice: nftPrice(record: record.lastSalePrice, platformCoins: platformCoins)
+                lastSalePrice: nftPrice(record: record.lastSalePrice, platformCoins: platformCoins),
+                onSale: record.onSale
         )
     }
 

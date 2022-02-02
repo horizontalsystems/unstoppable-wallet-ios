@@ -62,6 +62,7 @@ class NftCollectionsViewModel {
                 tokenId: assetItem.tokenId,
                 imageUrl: assetItem.imageUrl,
                 name: assetItem.name ?? "#\(assetItem.tokenId)",
+                onSale: assetItem.onSale,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
@@ -105,6 +106,7 @@ extension NftCollectionsViewModel {
         let tokenId: String
         let imageUrl: String?
         let name: String
+        let onSale: Bool
         let coinPrice: String
         let fiatPrice: String?
 

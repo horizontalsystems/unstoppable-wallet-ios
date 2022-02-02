@@ -12,6 +12,7 @@ struct NftAsset {
     let permalink: String?
     let traits: [Trait]
     let lastSalePrice: NftPrice?
+    let onSale: Bool
 
     struct Trait: ImmutableMappable {
         let type: String
