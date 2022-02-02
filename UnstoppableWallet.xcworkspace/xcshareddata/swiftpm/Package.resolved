@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "AlignedCollectionViewFlowLayout",
+        "repositoryURL": "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout",
+        "state": {
+          "branch": "master",
+          "revision": "49330ef67177dba5c9e1a3efdd0df93d83f12ee7",
+          "version": null
+        }
+      },
+      {
         "package": "DeepDiff",
         "repositoryURL": "https://github.com/onmyway133/DeepDiff",
         "state": {
