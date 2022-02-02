@@ -34,7 +34,7 @@ struct SwapConfirmationModule {
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
-        let feeService = OneInchFeeService(provider: oneInchProvider, gasPriceService: gasPriceService, parameters: parameters)
+        let feeService = OneInchFeeService(evmKit: evmKitWrapper.evmKit,  provider: oneInchProvider, gasPriceService: gasPriceService, parameters: parameters)
 
         let service = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, transactionFeeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 

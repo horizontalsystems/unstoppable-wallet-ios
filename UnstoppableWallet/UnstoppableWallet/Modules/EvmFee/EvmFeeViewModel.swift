@@ -3,14 +3,13 @@ import RxRelay
 import RxCocoa
 
 class EvmFeeViewModel {
-    private let customFeeUnit = "gwei"
-
-    private let service: IEvmFeeService
-    private let coinService: CoinService
+    let service: IEvmFeeService
+    let coinService: CoinService
 
     private let disposeBag = DisposeBag()
 
     private let feeStatusRelay = BehaviorRelay<String?>(value: "")
+    private let editButtonVisibleRelay = BehaviorRelay<Bool>(value: true)
 
     init(service: IEvmFeeService, coinService: CoinService) {
         self.service = service
@@ -27,20 +26,27 @@ class EvmFeeViewModel {
     private func feeStatus(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) -> String {
         switch transactionStatus {
         case .loading:
+            editButtonVisibleRelay.accept(false)
             return "action.loading".localized
         case .failed:
+            editButtonVisibleRelay.accept(true)
             return "n/a".localized
         case .completed(let fallibleTransaction):
+            editButtonVisibleRelay.accept(true)
             return coinService.amountData(value: fallibleTransaction.data.gasData.fee).formattedString
         }
     }
 
 }
 
-extension EvmFeeViewModel {
+extension EvmFeeViewModel: IFeeViewModel {
 
-    var feeDriver: Driver<String?> {
+    var feeStatusDriver: Driver<String?> {
         feeStatusRelay.asDriver()
+    }
+
+    var editButtonVisibleDriver: Driver<Bool> {
+        editButtonVisibleRelay.asDriver()
     }
 
 }

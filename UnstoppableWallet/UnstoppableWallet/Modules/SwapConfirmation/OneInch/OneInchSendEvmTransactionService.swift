@@ -52,10 +52,6 @@ class OneInchSendEvmTransactionService {
         evmKitWrapper.evmKit
     }
 
-    private var evmBalance: BigUInt {
-        evmKit.accountState?.balance ?? 0
-    }
-
     private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         switch status {
         case .loading:
@@ -71,16 +67,10 @@ class OneInchSendEvmTransactionService {
                     decoration: evmKit.decorate(transactionData: transaction.transactionData)
             )
 
-            var errors: [Error] = fallibleTransaction.errors
-
-            if transaction.totalAmount > evmBalance {
-                errors.append(SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance: transaction.totalAmount))
-            }
-
-            if errors.isEmpty {
+            if fallibleTransaction.errors.isEmpty {
                 state = .ready(warnings: fallibleTransaction.warnings)
             } else {
-                state = .notReady(errors: errors, warnings: fallibleTransaction.warnings)
+                state = .notReady(errors: fallibleTransaction.errors, warnings: fallibleTransaction.warnings)
             }
         }
     }

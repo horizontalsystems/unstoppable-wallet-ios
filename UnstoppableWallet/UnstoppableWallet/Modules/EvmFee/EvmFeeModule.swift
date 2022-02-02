@@ -1,10 +1,25 @@
+import UIKit
 import BigInt
 import EthereumKit
 import RxSwift
+import RxCocoa
+import ThemeKit
 
 struct EvmFeeModule {
 
+    static func viewController(feeViewModel: EvmFeeViewModel) -> UIViewController? {
+        let feeService = feeViewModel.service
+        let coinService = feeViewModel.coinService
+        let gasPriceService = feeService.gasPriceService
 
+        switch gasPriceService {
+        case let legacyService as LegacyGasPriceService:
+            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, cautionsFactory: SendEvmCautionsFactory())
+            return ThemeNavigationController(rootViewController: LegacyEvmFeeViewController(viewModel: viewModel))
+
+        default: return nil
+        }
+    }
 
 }
 
@@ -53,6 +68,7 @@ extension EvmFeeModule {
 }
 
 protocol IEvmFeeService {
+    var gasPriceService: LegacyGasPriceService { get }
     var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> { get }
     var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> { get }
 }

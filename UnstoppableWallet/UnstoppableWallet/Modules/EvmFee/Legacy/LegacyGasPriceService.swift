@@ -60,6 +60,10 @@ extension LegacyGasPriceService {
         statusRelay.asObservable()
     }
 
+    public var gasPriceRange: ClosedRange<Int> {
+        feeRateProvider.customFeeRange
+    }
+
 }
 
 extension LegacyGasPriceService {
