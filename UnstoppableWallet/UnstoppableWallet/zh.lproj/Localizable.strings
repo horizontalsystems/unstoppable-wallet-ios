@@ -1000,6 +1000,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.last_sale" = "Last Sale";
 "nft_collections.average_7d" = "Average 7D";
 "nft_collections.average_30d" = "Average 30D";
+"nft_collections.on_sale" = "On Sale";
 
 // Nft Asset
 
