@@ -54,6 +54,7 @@ class NftAssetViewController: ThemeViewController {
         tableView.registerCell(forClass: NftAssetTitleCell.self)
         tableView.registerCell(forClass: TextCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
+        tableView.registerCell(forClass: TraitsCell.self)
         tableView.sectionDataSource = self
 
         descriptionTextCell.set(backgroundStyle: .transparent, isFirst: true)
@@ -274,6 +275,7 @@ extension NftAssetViewController: SectionsDataSource {
                         component.text = title
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
+                        component.titleSpacingView.isHidden = true
                         component.set(style: .m1)
                         component.title.set(style: .b3)
                         component.subtitle.set(style: .d1)
@@ -385,20 +387,48 @@ extension NftAssetViewController: SectionsDataSource {
     }
 
     private func traitsSection(traits: [NftAssetViewModel.TraitViewItem]) -> SectionProtocol {
-        let text = traits.map { "\($0.type) - \($0.value)\($0.percent.map { " - \($0)" } ?? "")" }.joined(separator: "\n")
+        var traits = traits
+        var sortedTraits = [NftAssetViewModel.TraitViewItem]()
+
+        let containerWidth = view.width - 2 * TraitsCell.horizontalInset
+        var remainingWidth = containerWidth
+        var lines = 0
+
+        while !traits.isEmpty {
+            let trait = traits.removeFirst()
+            let traitSize = TraitCell.size(for: trait, containerWidth: containerWidth)
+
+            sortedTraits.append(trait)
+            remainingWidth -= traitSize.width + TraitsCell.interItemSpacing
+
+            var remainingTraits = traits
+
+            while !remainingTraits.isEmpty {
+                let trait = remainingTraits.removeFirst()
+                let traitSize = TraitCell.size(for: trait, containerWidth: containerWidth)
+
+                if traitSize.width <= remainingWidth {
+                    sortedTraits.append(trait)
+                    traits.removeAll { $0.value == trait.value && $0.type == trait.type }
+                    remainingWidth -= traitSize.width + TraitsCell.interItemSpacing
+                }
+            }
+
+            remainingWidth = containerWidth
+            lines += 1
+        }
 
         return Section(
                 id: "traits",
                 footerState: .margin(height: .margin24),
                 rows: [
                     headerRow(title: "nft_asset.properties".localized),
-                    Row<TextCell>(
+
+                    Row<TraitsCell>(
                             id: "traits",
-                            dynamicHeight: { width in
-                                TextCell.height(containerWidth: width, text: text)
-                            },
+                            height: TraitsCell.height(lines: lines),
                             bind: { cell, _ in
-                                cell.contentText = text
+                                cell.bind(viewItems: sortedTraits)
                             }
                     )
                 ]
