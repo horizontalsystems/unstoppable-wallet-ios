@@ -3,6 +3,7 @@
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";
+"button.reset" = "Reset";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.share" = "Share";
@@ -992,6 +993,9 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Fee Settings
 
+"fee_settings" = "Fee Settings";
+"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_price" = "Gas Price";
 "fee_settings.errors.insufficient_balance" = "Insufficient balance";
 "fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";

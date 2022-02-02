@@ -6,7 +6,7 @@ import RxRelay
 
 class EvmFeeService {
     private let evmKit: EthereumKit.Kit
-    private let gasPriceService: LegacyGasPriceService
+    let gasPriceService: LegacyGasPriceService
 
     private var transactionData: TransactionData
     let gasLimitSurchargePercent: Int
@@ -51,9 +51,7 @@ class EvmFeeService {
         transactionSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transaction in
-                    self?.status = .completed(FallibleData<EvmFeeModule.Transaction>(
-                            data: transaction, errors: fallibleGasPrice.errors, warnings: fallibleGasPrice.warnings
-                    ))
+                    self?.sync(transaction: transaction, fallibleGasPrice: fallibleGasPrice)
                 }, onError: { [weak self] error in
                     self?.status = .failed(error)
                 })
@@ -62,6 +60,19 @@ class EvmFeeService {
 
     private var evmBalance: BigUInt {
         evmKit.accountState?.balance ?? 0
+    }
+
+    private func sync(transaction: EvmFeeModule.Transaction, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+        var errors: [Error] = fallibleGasPrice.errors
+
+        let totalAmount = transaction.transactionData.value + transaction.gasData.fee
+        if totalAmount > evmBalance {
+            errors.append(SendEvmTransactionService.TransactionError.insufficientBalance(requiredBalance: totalAmount))
+        }
+
+        status = .completed(FallibleData<EvmFeeModule.Transaction>(
+                data: transaction, errors: errors, warnings: fallibleGasPrice.warnings
+        ))
     }
 
     private func surchargedGasLimit(estimatedGasLimit: Int) -> Int {

@@ -10,13 +10,11 @@ class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
     let transactionViewModel: SendEvmTransactionViewModel
-    private let feeViewModel: EvmFeeViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let maxFeeCell: SendFeeCell
-    private let errorCell = SendEthereumErrorCell()
+    private let maxFeeCell: FeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private var cautionViewItems = [TitledCaution]()
@@ -26,11 +24,14 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.transactionViewModel = transactionViewModel
-        self.feeViewModel = feeViewModel
 
-        maxFeeCell = SendFeeCell(driver: feeViewModel.feeDriver)
+        maxFeeCell = FeeCell(feeViewModel: feeViewModel)
 
         super.init()
+
+        maxFeeCell.onTapEdit = { [weak self] in
+            self?.openFeeSettings(feeViewModel: feeViewModel)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -90,6 +91,14 @@ class SendEvmTransactionViewController: ThemeViewController {
         HudHelper.instance.showSuccess(title: "alert.success_action".localized)
 
         dismiss(animated: true)
+    }
+
+    private func openFeeSettings(feeViewModel: EvmFeeViewModel) {
+        guard let controller = EvmFeeModule.viewController(feeViewModel: feeViewModel) else {
+            return
+        }
+
+        present(controller, animated: true)
     }
 
     private func handleSendFailed(error: String) {
@@ -271,18 +280,6 @@ extension SendEvmTransactionViewController: SectionsDataSource {
         ]
 
         return transactionSections + feeSections + cautionsSections
-    }
-
-}
-
-extension SendEvmTransactionViewController: ISendFeePriorityCellDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
-    }
-
-    func onChangeHeight() {
-        reloadTable()
     }
 
 }
