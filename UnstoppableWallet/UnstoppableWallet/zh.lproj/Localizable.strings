@@ -3,6 +3,7 @@
 "button.cancel" = "取消";
 "button.close" = "关闭";
 "button.done" = "完成";
+"button.reset" = "Reset";
 "button.restore" = "恢复";
 "button.next" = "下一步";
 "button.share" = "分享";
@@ -907,6 +908,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
 "wallet_connect.button_reconnect" = "重新连接";
 "wallet_connect.button_disconnect" = "断开连接";
+"ethereum_transaction.error.title" = "Error";
 "ethereum_transaction.error.insufficient_balance" = "交易需要%@才能发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
@@ -988,6 +990,20 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "evm_network.switches_automatically" = "switches automatically";
 "evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+
+// Fee Settings
+
+"fee_settings" = "Fee Settings";
+"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_price" = "Gas Price";
+"fee_settings.errors.insufficient_balance" = "Insufficient balance";
+"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
+"fee_settings.warning.high_base_fee" = "Base Fee is too high";
+"fee_settings.warning.high_base_fee.info" = "At the moment the base fee for transacting is high. It may go down when the network becomes less congested.";
+"fee_settings.warning.overpricing" = "Overpricing";
+"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
 
 // Watch Address
 
