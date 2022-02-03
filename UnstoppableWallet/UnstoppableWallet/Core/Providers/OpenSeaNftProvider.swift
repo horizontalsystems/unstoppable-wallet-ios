@@ -153,10 +153,12 @@ class OpenSeaNftProvider {
 
     private func recursiveCollectionsSingle(address: String, offset: Int = 0, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
         collectionsSingle(address: address, offset: offset).flatMap { [unowned self] collections in
+            let allCollections = allCollections + collections
+
             if collections.count == collectionLimit {
-                return recursiveCollectionsSingle(address: address, offset: offset + collectionLimit, allCollections: allCollections + collections)
+                return recursiveCollectionsSingle(address: address, offset: offset + collectionLimit, allCollections: allCollections)
             } else {
-                return Single.just(collections)
+                return Single.just(allCollections)
             }
         }
     }
@@ -177,10 +179,12 @@ class OpenSeaNftProvider {
 
     private func recursiveAssetsSingle(address: String, offset: Int = 0, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
         assetsSingle(address: address, offset: offset).flatMap { [unowned self] assets in
+            let allAssets = allAssets + assets
+
             if assets.count == assetLimit {
-                return recursiveAssetsSingle(address: address, offset: offset + assetLimit, allAssets: allAssets + assets)
+                return recursiveAssetsSingle(address: address, offset: offset + assetLimit, allAssets: allAssets)
             } else {
-                return Single.just(assets)
+                return Single.just(allAssets)
             }
         }
     }
