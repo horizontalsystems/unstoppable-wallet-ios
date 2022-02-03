@@ -90,13 +90,15 @@ extension NftCollectionsViewController: SectionsDataSource {
     private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, expanded: Bool, isLast: Bool) -> RowProtocol {
         Row<NftCollectionsDoubleCell>(
                 id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
-                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
+                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")-\(expanded)",
                 dynamicHeight: { width in
                     expanded ? NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast) : 0
                 },
                 bind: { cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
-                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
+                    if expanded {
+                        cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
+                            self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
+                        }
                     }
                 }
         )
