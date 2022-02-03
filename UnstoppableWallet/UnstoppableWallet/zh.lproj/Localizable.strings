@@ -3,7 +3,7 @@
 "button.cancel" = "取消";
 "button.close" = "关闭";
 "button.done" = "完成";
-"button.reset" = "Reset";
+"button.reset" = "重置";
 "button.restore" = "恢复";
 "button.next" = "下一步";
 "button.share" = "分享";
@@ -994,10 +994,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "Fee Settings";
-"fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_price" = "Gas Price";
-"fee_settings.errors.insufficient_balance" = "Insufficient balance";
-"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.gas_limit" = "燃料限制";
+"fee_settings.gas_price" = "燃料价格";
+"fee_settings.errors.insufficient_balance" = "余额不足";
+"fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
 "fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
 "fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
 "fee_settings.warning.high_base_fee" = "Base Fee is too high";
@@ -1033,7 +1033,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.properties" = "Properties";
 "nft_asset.description" = "Description";
 "nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details.contract_address" = "智能合约地址";
 "nft_asset.details.token_id" = "Token ID";
 "nft_asset.details.token_standard" = "Token Standard";
 "nft_asset.details.blockchain" = "Blockchain";
