@@ -15,6 +15,7 @@ class NftCollectionsDoubleCell: UITableViewCell {
 
         backgroundColor = .clear
         selectionStyle = .none
+        clipsToBounds = true
 
         contentView.addSubview(leftView)
         leftView.snp.makeConstraints { maker in

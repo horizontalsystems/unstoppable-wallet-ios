@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 import RxSwift
 import RxCocoa
 import ThemeKit
@@ -11,6 +12,7 @@ class NftCollectionsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private var viewItems = [NftCollectionsViewModel.ViewItem]()
+    private var expandedSlugs = Set<String>()
 
     private let tableView = SectionsTableView(style: .plain)
 
@@ -49,7 +51,9 @@ class NftCollectionsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.expandedSlugsDriver) { [weak self] in self?.sync(expandedSlugs: $0) }
 
+        tableView.buildSections()
         loaded = true
     }
 
@@ -57,9 +61,17 @@ class NftCollectionsViewController: ThemeViewController {
         self.viewItems = viewItems
 
         if loaded {
-            tableView.reload()
-        } else {
-            tableView.buildSections()
+            tableView.reload(animated: true)
+        }
+    }
+
+    private func sync(expandedSlugs: Set<String>) {
+        self.expandedSlugs = expandedSlugs
+
+        if loaded {
+            tableView.beginUpdates()
+            tableView.reload(animated: true)
+            tableView.endUpdates()
         }
     }
 
@@ -75,11 +87,12 @@ class NftCollectionsViewController: ThemeViewController {
 
 extension NftCollectionsViewController: SectionsDataSource {
 
-    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, isLast: Bool) -> RowProtocol {
+    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, expanded: Bool, isLast: Bool) -> RowProtocol {
         Row<NftCollectionsDoubleCell>(
                 id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
+                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
                 dynamicHeight: { width in
-                    NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast)
+                    expanded ? NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast) : 0
                 },
                 bind: { cell, _ in
                     cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
@@ -89,12 +102,12 @@ extension NftCollectionsViewController: SectionsDataSource {
         )
     }
 
-    private func row(viewItem: NftCollectionsViewModel.ViewItem, index: Int) -> RowProtocol {
+    private func row(viewItem: NftCollectionsViewModel.ViewItem, expanded: Bool, index: Int) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image24, .text, .text, .margin8, .image20],
                 tableView: tableView,
                 id: "collection-\(viewItem.slug)",
-                hash: "\(viewItem.count)-\(viewItem.expanded)",
+                hash: "\(viewItem.count)-\(expanded)",
                 height: .heightCell48,
                 bind: { [weak self] cell in
                     cell.set(backgroundStyle: .transparent)
@@ -115,11 +128,11 @@ extension NftCollectionsViewController: SectionsDataSource {
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     })
                     cell.bind(index: 3, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
+                        component.imageView.image = UIImage(named: expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
                     })
                 },
                 action: { [weak self] in
-                    self?.viewModel.onTapViewItem(index: index)
+                    self?.viewModel.onTap(slug: viewItem.slug)
                 }
         )
     }
@@ -128,7 +141,9 @@ extension NftCollectionsViewController: SectionsDataSource {
         var rows = [RowProtocol]()
 
         for (index, viewItem) in viewItems.enumerated() {
-            rows.append(row(viewItem: viewItem, index: index))
+            let expanded = expandedSlugs.contains(viewItem.slug)
+
+            rows.append(row(viewItem: viewItem, expanded: expanded, index: index))
 
             let doubleRowCount = viewItem.assetViewItems.count / 2
             let hasSingleRow = viewItem.assetViewItems.count % 2 == 1
@@ -137,6 +152,7 @@ extension NftCollectionsViewController: SectionsDataSource {
                 let row = row(
                         leftViewItem: viewItem.assetViewItems[i * 2],
                         rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
+                        expanded: expanded,
                         isLast: i == doubleRowCount - 1 && !hasSingleRow
                 )
                 rows.append(row)
@@ -146,6 +162,7 @@ extension NftCollectionsViewController: SectionsDataSource {
                 let row = row(
                         leftViewItem: assetViewItem,
                         rightViewItem: nil,
+                        expanded: expanded,
                         isLast: true
                 )
                 rows.append(row)
