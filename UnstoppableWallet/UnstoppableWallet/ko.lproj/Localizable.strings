@@ -3,6 +3,7 @@
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";
+"button.reset" = "Reset";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.share" = "Share";
@@ -907,6 +908,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
+"ethereum_transaction.error.title" = "Error";
 "ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
@@ -988,6 +990,20 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "evm_network.switches_automatically" = "switches automatically";
 "evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+
+// Fee Settings
+
+"fee_settings" = "Fee Settings";
+"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_price" = "Gas Price";
+"fee_settings.errors.insufficient_balance" = "Insufficient balance";
+"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
+"fee_settings.warning.high_base_fee" = "Base Fee is too high";
+"fee_settings.warning.high_base_fee.info" = "At the moment the base fee for transacting is high. It may go down when the network becomes less congested.";
+"fee_settings.warning.overpricing" = "Overpricing";
+"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
 
 // Watch Address
 
