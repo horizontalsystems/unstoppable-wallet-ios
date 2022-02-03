@@ -76,7 +76,7 @@ class NftAssetViewController: ThemeViewController {
         self.viewItem = viewItem
 
         if loaded {
-            tableView.reload()
+            tableView.reload(animated: true)
         } else {
             tableView.buildSections()
         }
@@ -86,7 +86,7 @@ class NftAssetViewController: ThemeViewController {
         self.statsViewItem = statsViewItem
 
         if loaded {
-            tableView.reload()
+            tableView.reload(animated: true)
         } else {
             tableView.buildSections()
         }
@@ -201,7 +201,6 @@ extension NftAssetViewController: SectionsDataSource {
                 elements: [.text],
                 tableView: tableView,
                 id: "header-\(title)",
-                hash: title,
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent)
@@ -266,6 +265,7 @@ extension NftAssetViewController: SectionsDataSource {
                 elements: [.text, .multiText],
                 tableView: tableView,
                 id: "price-\(title)",
+                hash: "\(viewItem.coinValue)-\(viewItem.fiatValue)-\(isLast)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
@@ -331,6 +331,7 @@ extension NftAssetViewController: SectionsDataSource {
                 elements: [.multiText],
                 tableView: tableView,
                 id: "sale-until",
+                hash: untilDate,
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true)
