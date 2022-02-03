@@ -585,7 +585,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
+"transactions.types.outgoing" = "Enviado";
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Approvals";
 
@@ -755,7 +755,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
@@ -852,7 +852,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Restore Select
 
-"restore_select.title" = "Choose Blockchains";
+"restore_select.title" = "Elegir Blockchain";
 
 // Lock Info
 
@@ -908,7 +908,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.title" = "Error";
+"ethereum_transaction.error.title" = "Erreur";
 "ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
@@ -996,8 +996,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "fee_settings" = "Fee Settings";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.errors.insufficient_balance" = "Insufficient balance";
-"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
+"fee_settings.errors.insufficient_balance.info" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
 "fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
 "fee_settings.warning.high_base_fee" = "Base Fee is too high";
