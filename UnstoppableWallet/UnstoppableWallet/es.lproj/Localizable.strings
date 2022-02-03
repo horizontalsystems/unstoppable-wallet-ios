@@ -1,35 +1,35 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
-"button.reset" = "Reset";
-"button.restore" = "Restore";
-"button.next" = "Next";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.sign" = "Sign";
-"button.more" = "Show More";
+"button.ok" = "Aceptar";
+"button.apply" = "Aplicar";
+"button.cancel" = "Cancelar";
+"button.close" = "Cerrar";
+"button.done" = "Listo";
+"button.reset" = "Reiniciar";
+"button.restore" = "Restaurar";
+"button.next" = "Siguiente";
+"button.share" = "Compartir";
+"button.paste" = "Pegar";
+"button.backup" = "Copia de seguridad";
+"button.copy" = "Copiar";
+"button.retry" = "Reintentar";
+"button.report" = "Reportar";
+"button.add" = "Añadir";
+"button.approve" = "Aprobar";
+"button.reject" = "Rechazar";
+"button.connect" = "Conectar";
+"button.save" = "Guardar";
+"button.sign" = "Firma";
+"button.more" = "Mostrar más";
 
 "alert" = "Alert";
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.copied" = "Copiado";
+"alert.no_internet" = "Sin conexión a Internet";
+"alert.wrong_amount" = "Cantidad Incorrecta";
+"alert.no_fee" = "Tarifa Incorrecta";
+"alert.unknown_error" = "Error Desconocido";
+"alert.success_action" = "Listo";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "cargando...";
+"placeholder.search" = "Buscar";
 
 "status" = "Status";
 "connecting" = "Connecting...";
@@ -320,8 +320,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
+"market.tab_bar_item" = "Mercados";
+"market.title" = "Mercados";
 "market.category.overview" = "Overview";
 "market.category.posts" = "Noticias";
 "market.category.watchlist" = "Watchlist";
@@ -441,7 +441,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
+"market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
 "market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
 "market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
@@ -457,7 +457,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.tab.overview" = "Price";
-"coin_page.tab.markets" = "Markets";
+"coin_page.tab.markets" = "Mercados";
 "coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
@@ -469,7 +469,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Mercados";
 "coin_page.markets.empty" = "No data available";
 
 "coin_page.token_liquidity" = "Token Liquidity";
@@ -877,7 +877,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "intro.unchain_assets.title" = "Unchain Assets";
 "intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
 "intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.go_borderless.description" = "Supere las barreras condicionales y acceda a los mercados a nivel mundial";
 "intro.stay_private.title" = "Stay Private";
 "intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
