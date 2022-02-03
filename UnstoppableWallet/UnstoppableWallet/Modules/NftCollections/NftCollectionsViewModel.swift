@@ -9,8 +9,7 @@ class NftCollectionsViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-
-    private var expandedSlugs = Set<String>()
+    private let expandedSlugsRelay = BehaviorRelay<Set<String>>(value: Set<String>())
 
     init(service: NftCollectionsService) {
         self.service = service
@@ -29,15 +28,14 @@ class NftCollectionsViewModel {
     }
 
     private func viewItem(item: NftCollectionsService.Item) -> ViewItem {
-        let expanded = expandedSlugs.contains(item.slug)
-
-        return ViewItem(
+        ViewItem(
                 slug: item.slug,
                 imageUrl: item.imageUrl,
                 name: item.name,
                 count: "\(item.assetItems.count)",
-                expanded: expanded,
-                assetViewItems: expanded ? item.assetItems.map { assetViewItem(assetItem: $0) } : []
+                assetViewItems: item.assetItems.map {
+                    assetViewItem(assetItem: $0)
+                }
         )
     }
 
@@ -76,8 +74,12 @@ extension NftCollectionsViewModel {
         viewItemsRelay.asDriver()
     }
 
-    func onTapViewItem(index: Int) {
-        let slug = viewItemsRelay.value[index].slug
+    var expandedSlugsDriver: Driver<Set<String>> {
+        expandedSlugsRelay.asDriver()
+    }
+
+    func onTap(slug: String) {
+        var expandedSlugs = expandedSlugsRelay.value
 
         if expandedSlugs.contains(slug) {
             expandedSlugs.remove(slug)
@@ -85,7 +87,7 @@ extension NftCollectionsViewModel {
             expandedSlugs.insert(slug)
         }
 
-        syncState()
+        expandedSlugsRelay.accept(expandedSlugs)
     }
 
 }
@@ -97,7 +99,6 @@ extension NftCollectionsViewModel {
         let imageUrl: String?
         let name: String
         let count: String
-        let expanded: Bool
         let assetViewItems: [AssetViewItem]
     }
 
@@ -112,6 +113,10 @@ extension NftCollectionsViewModel {
 
         var uid: String {
             "\(collectionSlug)-\(tokenId)"
+        }
+
+        var hash: String {
+            "\(onSale)-\(coinPrice)-\(fiatPrice ?? "nil")"
         }
     }
 
