@@ -1,14 +1,13 @@
 import UIKit
 import SnapKit
 import ThemeKit
-import Kingfisher
 
 class NftCollectionsTokenView: UIView {
     private static let imageMargin: CGFloat = .margin4
     private static let bottomHeight: CGFloat = 52
 
     private let button = UIButton()
-    private let imageView = UIImageView()
+    private let imageView = NftImageView()
     private let nameLabel = UILabel()
     private let coinPriceLabel = UILabel()
     private let fiatPriceLabel = UILabel()
@@ -37,9 +36,7 @@ class NftCollectionsTokenView: UIView {
             maker.height.equalTo(imageView.snp.width)
         }
 
-        imageView.contentMode = .scaleAspectFill
         imageView.cornerRadius = .cornerRadius8
-        imageView.backgroundColor = .themeSteel10
 
         addSubview(onSaleWrapper)
         onSaleWrapper.snp.makeConstraints { maker in
@@ -119,19 +116,11 @@ class NftCollectionsTokenView: UIView {
     }
 
     func setImage(url: String?) {
-        if let url = url {
-            imageView.kf.setImage(with: URL(string: url), options: [.transition(.fade(0.5))])
-        } else {
-            imageView.image = nil
-        }
+        imageView.setImage(url: url)
     }
 
     var imageRatio: CGFloat {
-        if let image = imageView.image {
-            return image.size.height / image.size.width
-        } else {
-            return 1
-        }
+        imageView.imageRatio
     }
 
 }

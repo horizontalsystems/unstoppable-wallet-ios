@@ -1,11 +1,10 @@
 import UIKit
 import ComponentKit
-import Kingfisher
 
 class NftAssetImageCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
 
-    private let assetImageView = UIImageView()
+    private let nftImageView = NftImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -13,14 +12,13 @@ class NftAssetImageCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(assetImageView)
-        assetImageView.snp.makeConstraints { maker in
+        contentView.addSubview(nftImageView)
+        nftImageView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(Self.horizontalMargin)
             maker.top.bottom.equalToSuperview()
         }
 
-        assetImageView.contentMode = .scaleAspectFill
-        assetImageView.cornerRadius = .cornerRadius12
+        nftImageView.cornerRadius = .cornerRadius12
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -28,11 +26,11 @@ class NftAssetImageCell: UITableViewCell {
     }
 
     func bind(url: String) {
-        assetImageView.kf.setImage(with: URL(string: url), options: [.transition(.fade(0.5))])
+        nftImageView.setImage(url: url)
     }
 
     var currentImage: UIImage? {
-        assetImageView.image
+        nftImageView.currentImage
     }
 
 }
