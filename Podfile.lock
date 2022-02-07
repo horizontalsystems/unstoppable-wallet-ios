@@ -366,7 +366,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 2.0.1)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.6`)
 
 SPEC REPOS:
   trunk:
@@ -488,6 +488,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
+    :tag: 0.12.0-beta.6
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -583,6 +584,7 @@ CHECKOUT OPTIONS:
   ZcashLightClientKit:
     :commit: 01bf30b081806a017ec933c5c971b18229afe77b
     :git: https://github.com/zcash/ZcashLightClientKit
+    :tag: 0.12.0-beta.6
 
 SPEC CHECKSUMS:
   _NIODataStructures: e2077c7dc7c1d6c93e698c85fe04d663a17f53a4
@@ -671,6 +673,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: e6d2d19781f0fab725ed4b9b8796c54a72d3de1d
 
-PODFILE CHECKSUM: c8a470ede33b1741a0bc3b054b6ef87686ffd8f6
+PODFILE CHECKSUM: e72f47de21f7d60405df85bfe2979c17ad6300bf
 
 COCOAPODS: 1.11.2
