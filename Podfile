@@ -19,7 +19,7 @@ def appPods
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.12.0-beta.6'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
