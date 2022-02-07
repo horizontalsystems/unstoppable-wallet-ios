@@ -5,6 +5,7 @@ import RxCocoa
 import ThemeKit
 import ComponentKit
 import SectionsTableView
+import Kingfisher
 
 class NftCollectionsViewController: ThemeViewController {
     private let viewModel: NftCollectionsViewModel
@@ -116,8 +117,12 @@ extension NftCollectionsViewController: SectionsDataSource {
                     cell.selectionStyle = .none
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                        component.imageView.kf.setImage(
+                                with: viewItem.imageUrl.flatMap { URL(string: $0) },
+                                options: [.scaleFactor(UIScreen.main.scale), .onlyLoadFirstFrame]
+                        )
                         component.imageView.cornerRadius = .cornerRadius4
+                        component.imageView.backgroundColor = .themeSteel20
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
                         component.set(style: .a2)
