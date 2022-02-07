@@ -549,7 +549,7 @@ CHECKOUT OPTIONS:
     :commit: 5ce8892ad352d5eb837742cb17a94fd2a561ef73
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: ea57596617a16efaf448a9b8317c2f509cd85b94
+    :commit: 57311a4aab7b2ce6bea5ff759503f73e1d66dcff
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 067d4d17116ae97c625585ae24e0923adeef685a
