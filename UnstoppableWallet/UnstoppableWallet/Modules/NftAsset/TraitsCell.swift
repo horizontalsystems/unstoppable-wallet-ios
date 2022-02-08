@@ -12,6 +12,8 @@ class TraitsCell: UITableViewCell {
     private let collectionView: UICollectionView
     private var viewItems: [NftAssetViewModel.TraitViewItem] = []
 
+    private var onSelect: ((Int) -> ())?
+
     override init(style: CellStyle, reuseIdentifier: String?) {
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
@@ -32,7 +34,6 @@ class TraitsCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 0, left: Self.horizontalInset, bottom: 0, right: Self.horizontalInset)
-        collectionView.allowsSelection = false
         collectionView.backgroundColor = .clear
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -44,8 +45,9 @@ class TraitsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItems: [NftAssetViewModel.TraitViewItem]) {
+    func bind(viewItems: [NftAssetViewModel.TraitViewItem], onSelect: @escaping (Int) -> ()) {
         self.viewItems = viewItems
+        self.onSelect = onSelect
 
         collectionView.reloadData()
     }
@@ -78,6 +80,15 @@ extension TraitsCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         Self.interItemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.item < viewItems.count else {
+            return
+        }
+
+        let viewItem = viewItems[indexPath.item]
+        onSelect?(viewItem.index)
     }
 
 }

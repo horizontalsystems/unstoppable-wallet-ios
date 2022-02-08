@@ -9,6 +9,7 @@ class NftAssetViewModel {
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let statsViewItemRelay = BehaviorRelay<StatsViewItem?>(value: nil)
+    private let openTraitRelay = PublishRelay<String>()
 
     init(service: NftAssetService) {
         self.service = service
@@ -27,7 +28,7 @@ class NftAssetViewModel {
                 imageUrl: asset.imageUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
                 collectionName: collection.name,
-                traits: asset.traits.map { traitViewItem(trait: $0, totalSupply: collection.totalSupply) },
+                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
                 description: asset.description,
                 contractAddress: asset.contract.address,
                 tokenId: asset.tokenId,
@@ -93,7 +94,7 @@ class NftAssetViewModel {
         return ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? "---"
     }
 
-    private func traitViewItem(trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {
+    private func traitViewItem(index: Int, trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {
         var percentString: String?
 
         if trait.count != 0 && totalSupply != 0 {
@@ -112,6 +113,7 @@ class NftAssetViewModel {
         }
 
         return TraitViewItem(
+                index: index,
                 type: trait.type.capitalized,
                 value: trait.value.capitalized,
                 percent: percentString.map { "\($0)%" }
@@ -147,6 +149,27 @@ extension NftAssetViewModel {
 
     var statsViewItemDriver: Driver<StatsViewItem?> {
         statsViewItemRelay.asDriver()
+    }
+
+    var openTraitSignal: Signal<String> {
+        openTraitRelay.asSignal()
+    }
+
+    func onSelectTrait(index: Int) {
+        guard index < service.asset.traits.count else {
+            return
+        }
+
+        let trait = service.asset.traits[index]
+
+        guard let traitName = trait.type.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let traitValue = trait.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return
+        }
+
+        let slug = service.collection.slug
+
+        let url = "https://opensea.io/assets/\(slug)?search[stringTraits][0][name]=\(traitName)&search[stringTraits][0][values][0]=\(traitValue)&search[sortAscending]=true&search[sortBy]=PRICE"
+        openTraitRelay.accept(url)
     }
 
 }
@@ -187,6 +210,7 @@ extension NftAssetViewModel {
     }
 
     struct TraitViewItem {
+        let index: Int
         let type: String
         let value: String
         let percent: String?
