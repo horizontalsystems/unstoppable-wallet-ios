@@ -3,33 +3,7 @@ import RxSwift
 import Chart
 import LanguageKit
 
-class MarketGlobalModule {
-
-    static func viewController(type: MetricsType) -> UIViewController {
-        let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: type)
-        let chartService = MetricChartService(
-                currencyKit: App.shared.currencyKit,
-                chartFetcher: chartFetcher,
-                chartType: .day
-        )
-
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
-
-        let configuration: ChartConfiguration
-        switch type {
-        case .totalMarketCap: configuration = ChartConfiguration.chartWithDominance
-        default: configuration = ChartConfiguration.chartWithoutIndicators
-        }
-
-        return MetricChartViewController(
-                viewModel: chartViewModel,
-                configuration: configuration).toBottomSheet
-    }
-
-}
-
-extension MarketGlobalModule {
+struct MarketGlobalModule {
 
     enum MetricsType {
         case totalMarketCap, volume24h, defiCap, tvlInDefi
