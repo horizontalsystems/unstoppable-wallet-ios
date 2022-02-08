@@ -1,10 +1,10 @@
-"button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
-"button.reset" = "Reset";
-"button.restore" = "Restore";
+"button.ok" = "Tamam";
+"button.apply" = "Uygula";
+"button.cancel" = "İptal";
+"button.close" = "Kapat";
+"button.done" = "Bitti";
+"button.reset" = "Sıfırla";
+"button.restore" = "Geri Yükle";
 "button.next" = "Next";
 "button.share" = "Share";
 "button.paste" = "Paste";
