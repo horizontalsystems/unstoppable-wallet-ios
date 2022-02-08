@@ -75,4 +75,14 @@ class TraitCell: UICollectionViewCell {
         return CGSize(width: max(titleWidth, propertyWidth), height: height)
     }
 
+    override var isHighlighted: Bool {
+        get {
+            super.isHighlighted
+        }
+        set {
+            super.isHighlighted = newValue
+            contentView.backgroundColor = newValue ? .themeLawrencePressed : .themeLawrence
+        }
+    }
+
 }

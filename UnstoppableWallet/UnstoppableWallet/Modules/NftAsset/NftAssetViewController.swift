@@ -64,6 +64,7 @@ class NftAssetViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
         subscribe(disposeBag, viewModel.statsViewItemDriver) { [weak self] in self?.sync(statsViewItem: $0) }
+        subscribe(disposeBag, viewModel.openTraitSignal) { [weak self] in self?.openTrait(url: $0) }
 
         loaded = true
     }
@@ -90,6 +91,10 @@ class NftAssetViewController: ThemeViewController {
         } else {
             tableView.buildSections()
         }
+    }
+
+    private func openTrait(url: String) {
+        urlManager.open(url: url, from: self)
     }
 
     private func reloadTable() {
@@ -435,7 +440,9 @@ extension NftAssetViewController: SectionsDataSource {
                                 id: "traits",
                                 height: TraitsCell.height(lines: lines),
                                 bind: { cell, _ in
-                                    cell.bind(viewItems: sortedTraits)
+                                    cell.bind(viewItems: sortedTraits, onSelect: { [weak self] index in
+                                        self?.viewModel.onSelectTrait(index: index)
+                                    })
                                 }
                         )
                     ]
