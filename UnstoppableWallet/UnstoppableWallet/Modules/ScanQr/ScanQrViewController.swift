@@ -5,7 +5,7 @@ import ScanQrKit
 import ComponentKit
 
 protocol IScanQrViewControllerDelegate: AnyObject {
-    func didScan(string: String)
+    func didScan(viewController: UIViewController, string: String)
 }
 
 class ScanQrViewController: ThemeViewController {
@@ -54,8 +54,12 @@ class ScanQrViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
+    func startCaptureSession() {
+        scanView.startCaptureSession()
+    }
+
     func onScan(string: String) {
-        delegate?.didScan(string: string)
+        delegate?.didScan(viewController: self, string: string)
         dismiss(animated: true)
     }
 

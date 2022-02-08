@@ -2,10 +2,10 @@ import EthereumKit
 
 class WalletConnectSignMessageRequestService {
     private let request: WalletConnectSignMessageRequest
-    private let baseService: WalletConnectService
+    private let baseService: WalletConnectV1XMainService
     private let signer: Signer
 
-    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectService, signer: Signer) {
+    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectV1XMainService, signer: Signer) {
         self.request = request
         self.baseService = baseService
         self.signer = signer

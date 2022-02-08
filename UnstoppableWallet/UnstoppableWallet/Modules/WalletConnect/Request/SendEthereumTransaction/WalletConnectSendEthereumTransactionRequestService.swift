@@ -2,9 +2,9 @@ import EthereumKit
 
 class WalletConnectSendEthereumTransactionRequestService {
     private let request: WalletConnectSendEthereumTransactionRequest
-    private let baseService: WalletConnectService
+    private let baseService: WalletConnectV1XMainService
 
-    init(request: WalletConnectSendEthereumTransactionRequest, baseService: WalletConnectService) {
+    init(request: WalletConnectSendEthereumTransactionRequest, baseService: WalletConnectV1XMainService) {
         self.request = request
         self.baseService = baseService
     }

@@ -1,16 +1,20 @@
 import ThemeKit
 import ComponentKit
 
+protocol IWalletConnectErrorDelegate: AnyObject {
+    func onDismiss()
+}
+
 class WalletConnectErrorViewController: ThemeViewController {
-    private let error: Error
-    private weak var sourceViewController: UIViewController?
+    private let error: String
 
     private let errorView = RequestErrorViewNew()
     private let closeButton = ThemeButton()
 
-    init(error: Error, sourceViewController: UIViewController?) {
+    weak var delegate: IWalletConnectErrorDelegate?
+
+    init(error: String) {
         self.error = error
-        self.sourceViewController = sourceViewController
 
         super.init()
     }
@@ -30,7 +34,7 @@ class WalletConnectErrorViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
 
-        errorView.bind(image: UIImage(named: "close_48"), text: error.smartDescription)
+        errorView.bind(image: UIImage(named: "close_48"), text: error)
 
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
@@ -44,8 +48,14 @@ class WalletConnectErrorViewController: ThemeViewController {
         closeButton.addTarget(self, action: #selector(onClose), for: .touchUpInside)
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        delegate?.onDismiss()
+    }
+
     @objc private func onClose() {
-        sourceViewController?.dismiss(animated: true)
+        dismiss(animated: true)
     }
 
 }

@@ -49,7 +49,7 @@ class WalletConnectScanQrViewController: ScanQrViewController {
     }
 
     private func openError(error: Error) {
-        let viewController = WalletConnectErrorViewController(error: error, sourceViewController: sourceViewController)
+        let viewController = WalletConnectErrorViewController(error: error.smartDescription)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 

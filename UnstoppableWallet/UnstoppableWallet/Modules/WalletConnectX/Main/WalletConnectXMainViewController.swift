@@ -1,3 +1,4 @@
+import UIKit
 import ThemeKit
 import RxSwift
 import RxCocoa
@@ -7,10 +8,10 @@ import SectionsTableView
 import SnapKit
 import ComponentKit
 
-class WalletConnectMainViewController: ThemeViewController {
-    private let baseViewModel: WalletConnectViewModel
-    private let viewModel: WalletConnectMainViewModel
+class WalletConnectXMainViewController: ThemeViewController {
+    private let viewModel: WalletConnectXMainViewModel
     private weak var sourceViewController: UIViewController?
+    var requestView: IWalletConnectXMainRequestView?
 
     private let spinner = HUDActivityView.create(with: .large48)
 
@@ -36,13 +37,12 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
-    private var peerMeta: WalletConnectMainViewModel.PeerMetaViewItem?
-    private var status: WalletConnectMainViewModel.Status?
+    private var appMeta: WalletConnectXMainViewModel.AppMetaViewItem?
+    private var status: WalletConnectXMainViewModel.Status?
     private var hint: String?
 
-    init(baseViewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
-        self.baseViewModel = baseViewModel
-        viewModel = baseViewModel.mainViewModel
+    init(viewModel: WalletConnectXMainViewModel, sourceViewController: UIViewController?) {
+        self.viewModel = viewModel
         self.sourceViewController = sourceViewController
 
         super.init()
@@ -151,9 +151,8 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.disconnectButton.isEnabled = state == .enabled
         }
         subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in self?.syncCloseButton(visible: $0) }
-//        subscribe(disposeBag, viewModel.signedTransactionsVisibleDriver) { [weak self] in () }
-        subscribe(disposeBag, viewModel.peerMetaDriver) { [weak self] in
-            self?.peerMeta = $0
+        subscribe(disposeBag, viewModel.appMetaDriver) { [weak self] in
+            self?.appMeta = $0
             self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.hintDriver) { [weak self] in
@@ -164,12 +163,11 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.status = $0
             self?.tableView.reload()
         }
-//        subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.close() }
     }
 
-    private func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+    private func show(error: String) {
+        HudHelper.instance.showError(title: error)
     }
 
     private func sync(connecting: Bool) {
@@ -218,42 +216,26 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
-    private func open(request: WalletConnectRequest) {
-//        var viewController: UIViewController?
-//
-//        switch request {
-//        case let request as WalletConnectSendEthereumTransactionRequest:
-//            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
-//        case let request as WalletConnectSignMessageRequest:
-//            viewController = WalletConnectSignMessageRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
-//        default: ()
-//        }
-//
-//        if let viewController = viewController {
-//            present(ThemeNavigationController(rootViewController: viewController), animated: true)
-//        }
-    }
-
     private func close() {
         sourceViewController?.dismiss(animated: true)
     }
 
 }
 
-extension WalletConnectMainViewController: SectionsDataSource {
+extension WalletConnectXMainViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
-        if let imageUrl = peerMeta?.icon, let title = peerMeta?.name {
+        if let imageUrl = appMeta?.icon, let title = appMeta?.name {
             rows.append(headerRow(imageUrl: imageUrl, title: title))
         }
 
         if let status = status {
-            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: peerMeta == nil, valueColor: status.color))
+            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: appMeta == nil, valueColor: status.color))
         }
 
-        if let url = peerMeta?.url {
+        if let url = appMeta?.url {
             rows.append(valueRow(title: "wallet_connect.url".localized, value: url, isFirst: status == nil, isLast: true))
         }
 
