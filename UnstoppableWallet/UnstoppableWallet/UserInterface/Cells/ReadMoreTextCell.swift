@@ -42,6 +42,15 @@ class ReadMoreTextCell: BaseThemeCell {
 
         readMoreTextView.delegate = self
 
+        let closeButtonBackground = UIView()
+        contentView.addSubview(closeButtonBackground)
+        closeButtonBackground.snp.makeConstraints { maker in
+            maker.leading.bottom.trailing.equalToSuperview()
+            maker.height.equalTo(30)
+        }
+
+        closeButtonBackground.backgroundColor = .themeTyler
+
         contentView.addSubview(collapseButton)
         collapseButton.snp.makeConstraints { maker in
             maker.top.equalTo(labelWrapper.snp.bottom).offset(ReadMoreTextCell.verticalPadding)
