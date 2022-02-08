@@ -144,14 +144,9 @@ class MainViewController: ThemeTabBarController {
             return
         }
 
-        var controller: UIViewController? = self
-        while let presentedController = controller?.presentedViewController {
-            controller = presentedController
-        }
-
         switch deepLink {
         case let .walletConnect(url):
-            WalletConnectModule.start(uri: url, sourceViewController: controller)
+            WalletConnectModule.start(uri: url, sourceViewController: visibleController)
         }
     }
 

@@ -1,4 +1,5 @@
 import UIKit
+import ThemeKit
 
 struct WalletConnectModule {
 
@@ -15,17 +16,25 @@ struct WalletConnectModule {
     }
 
     private static func internalStart(session: WalletConnectSession? = nil, uri: String? = nil, sourceViewController: UIViewController?) {
-        let service = WalletConnectService(
-                session: session,
-                uri: uri,
-                manager: App.shared.walletConnectManager,
-                sessionManager: App.shared.walletConnectSessionManager,
-                reachabilityManager: App.shared.reachabilityManager
-        )
-        let viewModel = WalletConnectViewModel(service: service)
-        let view = WalletConnectView(viewModel: viewModel, sourceViewController: sourceViewController)
-
-        sourceViewController?.present(view.initialViewController, animated: true)
+//        let openScanQrController = session == nil && uri == nil
+//
+//        let viewController: UIViewController
+//        if openScanQrController {
+//            let viewModel = WalletConnectScanQrViewModel()
+//            viewController = WalletConnectScanQrViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+//        } else {
+//            let service = WalletConnectService(
+//                    session: session,
+//                    uri: uri,
+//                    manager: App.shared.walletConnectManager,
+//                    sessionManager: App.shared.walletConnectSessionManager,
+//                    reachabilityManager: App.shared.reachabilityManager
+//            )
+//            let moduleFactory = WalletConnectMainFactory(service: service)
+//            viewController = ThemeNavigationController(rootViewController: WalletConnectMainViewController(moduleFactory: moduleFactory, sourceViewController: sourceViewController))
+//        }
+//
+//        sourceViewController?.present(viewController, animated: true)
     }
 
 }
