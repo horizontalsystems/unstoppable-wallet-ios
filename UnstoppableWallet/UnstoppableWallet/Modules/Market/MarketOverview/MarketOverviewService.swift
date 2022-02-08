@@ -46,7 +46,7 @@ class MarketOverviewService {
 
         Single.zip(
                         marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code),
-                        marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .hour24)
+                        marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .day1)
                 )
                 .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
                     self?.internalState = .loaded(marketInfos: marketInfos, globalMarketPoints: globalMarketPoints)

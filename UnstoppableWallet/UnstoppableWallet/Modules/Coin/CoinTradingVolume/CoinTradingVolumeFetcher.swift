@@ -29,19 +29,11 @@ extension CoinTradingVolumeFetcher: IMetricChartConfiguration {
 extension CoinTradingVolumeFetcher: IMetricChartFetcher {
 
     var chartTypes: [ChartType] {
-        [.monthByDay, .halfYear, .year]
+        [.monthByDay, .month3, .halfYear, .year]
     }
 
-    func fetchSingle(currencyCode: String, timePeriod: MarketKit.TimePeriod) -> Single<[MetricChartModule.Item]> {
-        let chartType: ChartType
-        switch timePeriod {
-        case .day30:  chartType = .monthByDay
-        case .day200: chartType = .halfYear
-        case .year1: chartType = .year
-        default: chartType = .monthByDay
-        }
-
-        return marketKit
+    func fetchSingle(currencyCode: String, chartType: ChartType) -> Single<[MetricChartModule.Item]> {
+        marketKit
             .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, chartType: chartType)
             .map { info in
                 info

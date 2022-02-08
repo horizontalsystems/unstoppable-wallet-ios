@@ -27,7 +27,7 @@ class CoinDetailsService {
     private func fetchCharts(details: MarketInfoDetails) -> Single<Item> {
         let tvlSingle: Single<[ChartPoint]>
         if details.tvl != nil {
-            tvlSingle = marketKit.marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .day30)
+            tvlSingle = marketKit.marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .month1)
         } else {
             tvlSingle = Single.just([])
         }

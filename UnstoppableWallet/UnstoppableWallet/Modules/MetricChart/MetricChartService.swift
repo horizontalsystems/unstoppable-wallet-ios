@@ -43,7 +43,7 @@ class MetricChartService {
         state = .loading
 
         chartFetcher
-            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: TimePeriod(chartType: chartType))
+            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, chartType: chartType)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] items in
                 self?.state = .completed(items)
