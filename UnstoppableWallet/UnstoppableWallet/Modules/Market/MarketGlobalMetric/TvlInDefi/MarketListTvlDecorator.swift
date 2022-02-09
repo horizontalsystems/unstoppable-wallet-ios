@@ -17,20 +17,6 @@ extension MarketListTvlDecorator: IMarketListDecorator {
     func listViewItem(item defiCoin: DefiCoin) -> MarketModule.ListViewItem {
         let currency = service.currency
 
-        var tvlChange: Decimal?
-        switch service.marketTvlPriceChangeField {
-        case .day: tvlChange = defiCoin.tvlChange1d
-        case .week: tvlChange = defiCoin.tvlChange7d
-        case .month: tvlChange = defiCoin.tvlChange30d
-        default: ()
-        }
-
-        let diff: MarketModule.MarketDataValue
-        switch service.marketTvlField {
-        case .diff: diff = .diff(tvlChange)
-        case .value: diff = .valueDiff(CurrencyValue(currency: currency, value: defiCoin.tvl), tvlChange)
-        }
-
         var uid: String?
         let iconUrl: String
         let iconPlaceholderName: String
@@ -48,6 +34,32 @@ extension MarketListTvlDecorator: IMarketListDecorator {
             name = defiName
         }
 
+        var tvl: Decimal?
+        let diff: MarketModule.MarketDataValue
+
+        switch service.marketPlatformField {
+        case .all:
+            tvl = defiCoin.tvl
+
+            var tvlChange: Decimal?
+            switch service.priceChangePeriod {
+            case .day1: tvlChange = defiCoin.tvlChange1d
+            case .week1: tvlChange = defiCoin.tvlChange1w
+            case .week2: tvlChange = defiCoin.tvlChange2w
+            case .month1: tvlChange = defiCoin.tvlChange1m
+            case .month3: tvlChange = defiCoin.tvlChange3m
+            case .month6: tvlChange = defiCoin.tvlChange6m
+            case .year1: tvlChange = defiCoin.tvlChange1y
+            }
+
+            switch service.marketTvlField {
+            case .diff: diff = .diff(tvlChange)
+            case .value: diff = .valueDiff(CurrencyValue(currency: currency, value: defiCoin.tvl), tvlChange)
+            }
+        default:
+            tvl = defiCoin.chainTvls[service.marketPlatformField.chain]
+            diff = .diff(nil)
+        }
 
         return MarketModule.ListViewItem(
                 uid: uid,
@@ -56,7 +68,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
                 name: name,
                 code: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
                 rank: "\(defiCoin.tvlRank)",
-                price: CurrencyCompactFormatter.instance.format(currency: currency, value: defiCoin.tvl, alwaysSigned: false) ?? "n/a".localized,
+                price: CurrencyCompactFormatter.instance.format(currency: currency, value: tvl, alwaysSigned: false) ?? "n/a".localized,
                 dataValue: diff
         )
     }
