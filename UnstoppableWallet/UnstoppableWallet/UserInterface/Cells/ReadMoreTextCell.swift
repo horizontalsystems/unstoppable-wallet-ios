@@ -13,6 +13,7 @@ class ReadMoreTextCell: BaseThemeCell {
 
     private let labelWrapper = GradientClippingView(clippingHeight: .margin16)
     private let readMoreTextView = MarkdownTextView()
+    private let collapseButtonBackground = UIView()
     private let collapseButton = UIButton()
 
     private var collapsed = true
@@ -42,14 +43,13 @@ class ReadMoreTextCell: BaseThemeCell {
 
         readMoreTextView.delegate = self
 
-        let closeButtonBackground = UIView()
-        contentView.addSubview(closeButtonBackground)
-        closeButtonBackground.snp.makeConstraints { maker in
+        contentView.addSubview(collapseButtonBackground)
+        collapseButtonBackground.snp.makeConstraints { maker in
             maker.leading.bottom.trailing.equalToSuperview()
             maker.height.equalTo(30)
         }
 
-        closeButtonBackground.backgroundColor = .themeTyler
+        collapseButtonBackground.backgroundColor = .themeTyler
 
         contentView.addSubview(collapseButton)
         collapseButton.snp.makeConstraints { maker in
@@ -111,6 +111,7 @@ class ReadMoreTextCell: BaseThemeCell {
                 maker.leading.trailing.equalToSuperview().inset(ReadMoreTextCell.horizontalPadding)
             }
 
+            collapseButtonBackground.isHidden = true
             collapseButton.isHidden = true
             labelWrapper.isClipping = false
             expandable = false
@@ -129,6 +130,7 @@ class ReadMoreTextCell: BaseThemeCell {
                 maker.height.equalTo(ReadMoreTextCell.buttonHeight)
             }
 
+            collapseButtonBackground.isHidden = false
             collapseButton.isHidden = false
             expandable = true
         }
