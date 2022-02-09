@@ -43,7 +43,7 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    private(set) var marketTvlPriceChangeField: MarketModule.PriceChangeType = .day {
+    private(set) var priceChangePeriod: HsTimePeriod = .day1 {
         didSet {
             syncIfPossible()
         }
@@ -73,29 +73,23 @@ class MarketGlobalTvlMetricService {
                 .disposed(by: syncDisposeBag)
     }
 
-    private func sync(defiCoins: [DefiCoin], reorder: Bool = false) {
-        state = .loaded(
-                items: defiCoins.sorted { lhsDefiCoin, rhsDefiCoin in
-                    sortDirectionAscending ? lhsDefiCoin.tvlRank > rhsDefiCoin.tvlRank : lhsDefiCoin.tvlRank < rhsDefiCoin.tvlRank
-                },
-                softUpdate: false,
-                reorder: reorder
-        )
-    }
-
     private func syncState(reorder: Bool = false) {
         switch internalState {
         case .loading:
             state = .loading
         case .loaded(let defiCoins):
-            let defiCoins = defiCoins.filter { defiCoin in
-                switch marketPlatformField {
-                case .all: return true
-                default: return defiCoin.chains.contains(marketPlatformField.chain)
-                }
-            }.sorted { lhsDefiCoin, rhsDefiCoin in
-                sortDirectionAscending ? lhsDefiCoin.tvlRank > rhsDefiCoin.tvlRank : lhsDefiCoin.tvlRank < rhsDefiCoin.tvlRank
-            }
+            let defiCoins = defiCoins
+                    .filter { defiCoin in
+                        switch marketPlatformField {
+                        case .all: return true
+                        default: return defiCoin.chains.contains(marketPlatformField.chain)
+                        }
+                    }
+                    .sorted { lhsDefiCoin, rhsDefiCoin in
+                        let lhsTvl = lhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
+                        let rhsTvl = rhsDefiCoin.tvl(marketPlatformField: marketPlatformField) ?? 0
+                        return sortDirectionAscending ? lhsTvl < rhsTvl : lhsTvl > rhsTvl
+                    }
             state = .loaded(items: defiCoins, softUpdate: false, reorder: reorder)
         case .failed(let error):
             state = .failed(error: error)
@@ -119,11 +113,11 @@ extension MarketGlobalTvlMetricService {
     }
 
     func setPriceChange(index: Int) {
-        let tvlChartCompatibleFields: [MarketModule.PriceChangeType] = [.day, .week, .month]
-        if index < tvlChartCompatibleFields.count {
-            marketTvlPriceChangeField = tvlChartCompatibleFields[index]
+        let tvlChartCompatiblePeriods: [HsTimePeriod] = [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
+        if index < tvlChartCompatiblePeriods.count {
+            priceChangePeriod = tvlChartCompatiblePeriods[index]
         } else {
-            marketTvlPriceChangeField = tvlChartCompatibleFields[0]
+            priceChangePeriod = tvlChartCompatiblePeriods[0]
         }
     }
 
@@ -170,6 +164,17 @@ extension MarketGlobalTvlMetricService {
         case loading
         case loaded(defiCoins: [DefiCoin])
         case failed(error: Error)
+    }
+
+}
+
+extension DefiCoin {
+
+    func tvl(marketPlatformField: MarketModule.MarketPlatformField) -> Decimal? {
+        switch marketPlatformField {
+        case .all: return tvl
+        default: return chainTvls[marketPlatformField.chain]
+        }
     }
 
 }
