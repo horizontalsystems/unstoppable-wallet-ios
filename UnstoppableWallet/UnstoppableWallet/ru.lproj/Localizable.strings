@@ -1,67 +1,67 @@
 "button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.done" = "Done";
+"button.apply" = "Применить";
+"button.cancel" = "Отменить";
+"button.close" = "Закрыть";
+"button.done" = "Готово";
 "button.reset" = "Сбросить";
-"button.restore" = "Restore";
-"button.next" = "Next";
-"button.share" = "Share";
-"button.paste" = "Paste";
-"button.backup" = "Backup";
-"button.copy" = "Copy";
-"button.retry" = "Retry";
-"button.report" = "Report";
-"button.add" = "Add";
-"button.approve" = "Approve";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.sign" = "Sign";
-"button.more" = "Show More";
+"button.restore" = "Восстановить";
+"button.next" = "Далее";
+"button.share" = "Поделиться";
+"button.paste" = "Вставить";
+"button.backup" = "Резервная Копия";
+"button.copy" = "Скопировать";
+"button.retry" = "Повторить";
+"button.report" = "Пожаловаться";
+"button.add" = "Добавить";
+"button.approve" = "Разрешить";
+"button.reject" = "Отклонить";
+"button.connect" = "Подключиться";
+"button.save" = "Сохранить";
+"button.sign" = "Подписать";
+"button.more" = "Показать Ещё";
 
 "alert" = "Alert";
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.copied" = "Скопировано";
+"alert.no_internet" = "Нет Интернета";
+"alert.wrong_amount" = "Неверная Сумма";
+"alert.no_fee" = "Неверная Комиссия";
+"alert.unknown_error" = "Неизвестная Ошибка";
+"alert.success_action" = "Готово!";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "загрузка...";
+"placeholder.search" = "Поиск";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"status" = "Статус";
+"connecting" = "Подключение...";
+"online" = "Доступен";
+"offline" = "Не доступен";
+"confirm" = "Подтвердить";
+"connect" = "Подключиться";
+"price" = "Цена";
+"value" = "Значение";
+"note" = "Примечание";
 
-"version" = "Version %@";
+"version" = "Версия %@";
 
-"n/a" = "N/A";
+"n/a" = "Нет данных";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
 
-Go to Settings - > Unstoppable and allow access to the camera.";
-"access_camera.settings" = "Settings";
+Перейдите в \"Настройки\" - > Unstoppable и разрешите доступ к камере.";
+"access_camera.settings" = "Настройки";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
-"restore.checksum_error" = "Invalid checksum";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
+"restore.title" = "Выберите Кошелек";
+"restore.enter_key" = "Введите Ключ";
+"restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами";
+"restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
+"restore.checksum_error" = "Неверная контрольная сумма";
+"restore.passphrase" = "Кодовая Фраза";
+"restore.input.passphrase" = "Кодовая Фраза";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 
 // Coin Settings
@@ -137,27 +137,27 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.watch_empty.description" = "This wallet address does not have any balance";
-"balance.sort_by" = "Sort By";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.price_change" = "Price Change";
+"balance.syncing_percent" = "Синхронизация... %@";
+"balance.synced_through" = "до %@";
+"balance.add_coin" = "Добавить Токен";
+"balance.empty.add_coins" = "Добавить Токены";
+"balance.empty.description" = "Вы еще не добавили монеты в этот кошелек.";
+"balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
+"balance.sort_by" = "Сортировать по";
+"balance.sort.header" = "Сортировать";
+"balance.sort.valueHighToLow" = "По Балансу";
+"balance.sort.az" = "По Названию";
+"balance.sort.price_change" = "По Изменению Цены(%)";
 
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"balance_error.change_source" = "Сменить Источник";
+"balance_error.sync_error" = "Ошибка Синхронизации";
+"lost_accounts.warning_title" = "Ошибка связки ключей iOS";
+"lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
 //Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
+"switch_account.title" = "Сменить Кошелек";
+"switch_account.subtitle" = "Выберите кошелек для быстрого переключения";
 //Release notes
 
 "release_notes.title" = "What's New";
