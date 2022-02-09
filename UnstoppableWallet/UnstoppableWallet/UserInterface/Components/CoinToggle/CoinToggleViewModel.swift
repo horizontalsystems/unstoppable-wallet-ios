@@ -20,6 +20,7 @@ class CoinToggleViewModel {
         let title: String
         let subtitle: String
         let state: ViewItemState
+        let blockchainBadge: String?
     }
 
     enum ViewItemState {

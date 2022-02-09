@@ -34,7 +34,8 @@ class RestoreSelectViewModel {
                 placeholderImageName: item.blockchain.imageName,
                 title: item.blockchain.title,
                 subtitle: item.blockchain.description,
-                state: viewItemState
+                state: viewItemState,
+                blockchainBadge: nil
         )
     }
 
