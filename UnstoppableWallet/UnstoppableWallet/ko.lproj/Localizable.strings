@@ -3,7 +3,7 @@
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";
-"button.reset" = "Reset";
+"button.reset" = "초기화";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.share" = "Share";
@@ -20,7 +20,7 @@
 "button.sign" = "Sign";
 "button.more" = "Show More";
 
-"alert" = "Alert";
+"alert" = "알림";
 "alert.copied" = "Copied";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
@@ -142,7 +142,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.watch_empty.description" = "This wallet address does not have any balance";
+"balance.watch_empty.description" = "이 지갑 주소에는 잔액이 없습니다";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
@@ -224,7 +224,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.amount_warning.coin_needed_for_fee" = " Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.amount_warning.coin_needed_for_fee" = " 향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
 "send.stuck_warning" = "Warning! Risk of getting stuck";
 
@@ -254,7 +254,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "Approving...";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
-"swap.switch_provider.title" = "Swap Service";
+"swap.switch_provider.title" = "스왑 서비스";
 
 "swap.price" = "Price";
 "swap.buy_price" = "Buy Price";
@@ -584,10 +584,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.yesterday" = "Yesterday";
 
 "transactions.types.all" = "All";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Approvals";
+"transactions.types.incoming" = "수령됨";
+"transactions.types.outgoing" = "전송됨";
+"transactions.types.swap" = "스왑";
+"transactions.types.approve" = "승인";
 
 // Transaction Info
 
@@ -602,9 +602,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.to_hash" = "To";
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
-"tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel";
-"tx_info.transaction.already_in_block" = "Transaction already in block";
+"tx_info.options.speed_up" = "가속";
+"tx_info.options.cancel" = "취소";
+"tx_info.transaction.already_in_block" = "이미 차단된 거래";
 "tx_info.fee" = "Fee";
 "tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "This transaction sent to own address";
@@ -749,7 +749,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
-"settings_manage_keys.delete.confirmation_watch" = "Are you sure want to delete this wallet?";
+"settings_manage_keys.delete.confirmation_watch" = "이 지갑을 삭제하시겠습니까?";
 
 // Settings -> About App
 
@@ -908,7 +908,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.title" = "Error";
+"ethereum_transaction.error.title" = "오류";
 "ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
@@ -924,11 +924,11 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
-"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.description" = "적합한 지갑이 없습니다. 기존 지갑을 생성하거나 복원해야 합니다.";
 "wallet_connect.no_account.i_understand" = "I Understand";
 
-"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
-"wallet_connect.watch_account.switch" = "Switch";
+"wallet_connect.watch_account.description" = "이 기능은 시계 전용 지갑에서는 작동하지 않으므로 복원 또는 생성된 지갑으로 전환해야 합니다.";
+"wallet_connect.watch_account.switch" = "전환";
 
 // App Status
 
@@ -946,7 +946,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pending";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Also keep in mind that status of an individual transaction shown in Unstoppable wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "거래는 아직 블록체인에서 확인되지 않았습니다. 권장 또는 더 높은 수수료 설정으로 전송된 거래는 일반적으로 10분 이내에 처리됩니다. 낮은 수수료로 전송된 거래는 몇 시간 또는 며칠 동안 보류 상태로 남아 있을 수 있으며 거부될 수도 있습니다. 또한 Unstoppable 지갑 인터페이스에 표시되는 개별 트랜잭션의 상태는 일반적으로 짧은 지연으로 업데이트됩니다.";
 "status_info.processing.title" = "Processing";
 "status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
 "status_info.completed.title" = "Completed";
@@ -988,16 +988,16 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
+"evm_network.switches_automatically" = "자동으로 전환";
 "evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
 
 // Fee Settings
 
-"fee_settings" = "Fee Settings";
+"fee_settings" = "수수료 설정";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_price" = "Gas Price";
-"fee_settings.errors.insufficient_balance" = "Insufficient balance";
-"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.gas_price" = "Gas Used";
+"fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
+"fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
 "fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
 "fee_settings.warning.high_base_fee" = "Base Fee is too high";
