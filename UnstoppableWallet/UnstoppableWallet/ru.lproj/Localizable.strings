@@ -3,7 +3,7 @@
 "button.cancel" = "Cancel";
 "button.close" = "Close";
 "button.done" = "Done";
-"button.reset" = "Reset";
+"button.reset" = "Сбросить";
 "button.restore" = "Restore";
 "button.next" = "Next";
 "button.share" = "Share";
@@ -325,7 +325,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total Cap";
+"market.total_market_cap" = "Общая Капитализация";
 "market.24h_volume" = "24h Volume";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
@@ -363,7 +363,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
-"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.browse_categories" = "Обзор Категорий";
 "market_discovery.top_coins" = "TOP Coins";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
@@ -384,7 +384,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.blockchains" = "Blockchains";
+"market.advanced_search.blockchains" = "Блокчейны";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
 
@@ -431,16 +431,16 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "market.advanced_search_results.title" = "Results";
 
-"market.global.total_market_cap.title" = "Total Cap";
+"market.global.total_market_cap.title" = "Общая Капитализация";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
 "market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
 "market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
@@ -456,9 +456,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
 
-"coin_page.tab.overview" = "Price";
-"coin_page.tab.markets" = "Markets";
-"coin_page.tab.details" = "Analytics";
+"coin_page.tab.overview" = "Цена";
+"coin_page.tab.markets" = "Рынки";
+"coin_page.tab.details" = "Аналитика";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Market Cap";
@@ -584,8 +584,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.yesterday" = "Yesterday";
 
 "transactions.types.all" = "All";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
+"transactions.types.incoming" = "Получено";
+"transactions.types.outgoing" = "Отправлено";
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Approvals";
 
@@ -755,7 +755,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.whats_new" = "Что Нового";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
@@ -908,7 +908,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
-"ethereum_transaction.error.title" = "Error";
+"ethereum_transaction.error.title" = "Ошибка";
 "ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
@@ -925,7 +925,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
-"wallet_connect.no_account.i_understand" = "I Understand";
+"wallet_connect.no_account.i_understand" = "Я Понимаю";
 
 "wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
 "wallet_connect.watch_account.switch" = "Switch";
@@ -1007,7 +1007,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Watch Address
 
-"watch_address.title" = "Address";
+"watch_address.title" = "Адрес";
 "watch_address.watch" = "Watch";
 
 // Nft Collections
