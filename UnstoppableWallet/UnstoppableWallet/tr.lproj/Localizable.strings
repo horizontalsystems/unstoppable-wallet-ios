@@ -5,8 +5,8 @@
 "button.done" = "Bitti";
 "button.reset" = "Sıfırla";
 "button.restore" = "Geri Yükle";
-"button.next" = "Next";
-"button.share" = "Share";
+"button.next" = "İleri";
+"button.share" = "Paylaş";
 "button.paste" = "Paste";
 "button.backup" = "Backup";
 "button.copy" = "Copy";
