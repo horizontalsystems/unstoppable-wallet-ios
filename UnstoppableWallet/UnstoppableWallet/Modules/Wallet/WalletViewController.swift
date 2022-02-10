@@ -210,6 +210,7 @@ class WalletViewController: ThemeViewController {
 
         if changes.contains(where: {
             if case .insert = $0 { return true }
+            if case .delete = $0 { return true }
             return false
         }) {
             DispatchQueue.main.sync {
@@ -219,20 +220,14 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        var deletedIndexes = Set<Int>()
         var updateIndexes = Set<Int>()
 
         for change in changes {
             switch change {
-            case .delete(let delete):
-//                print("delete \(delete.item.wallet.coin.code) [\(delete.index)]")
-                deletedIndexes.insert(delete.index)
             case .move(let move):
-//                print("move \(move.item.wallet.coin.code) [\(move.fromIndex) -> \(move.toIndex)]")
                 updateIndexes.insert(move.fromIndex)
                 updateIndexes.insert(move.toIndex)
             case .replace(let replace):
-//                print("replace\n\(replace.oldItem)\n\(replace.newItem)\n[\(replace.index)]")
                 updateIndexes.insert(replace.index)
             default: ()
             }
@@ -243,11 +238,6 @@ class WalletViewController: ThemeViewController {
 
             UIView.animate(withDuration: animationDuration) {
                 self.tableView.beginUpdates()
-
-                if !deletedIndexes.isEmpty {
-                    self.tableView.deleteRows(at: deletedIndexes.map { IndexPath(row: $0, section: 0) }, with: .fade)
-                }
-
                 self.tableView.endUpdates()
             }
 
@@ -362,6 +352,24 @@ class WalletViewController: ThemeViewController {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
 
+    private func handleRemove(indexPath: IndexPath) {
+        let index = indexPath.row
+
+        guard index < viewItems.count else {
+            return
+        }
+
+        let wallet = viewItems[index].wallet
+
+        viewItems.remove(at: index)
+
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+
+        viewModel.onDisable(wallet: wallet)
+    }
+
 }
 
 extension WalletViewController: UITableViewDataSource {
@@ -419,10 +427,8 @@ extension WalletViewController: UITableViewDelegate {
             return nil
         }
 
-        let wallet = viewItems[indexPath.row].wallet
-
         let action = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
-            self?.viewModel.onDisable(wallet: wallet)
+            self?.handleRemove(indexPath: indexPath)
             completion(true)
         }
 
