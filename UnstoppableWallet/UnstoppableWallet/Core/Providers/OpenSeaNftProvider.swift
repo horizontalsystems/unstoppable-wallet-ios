@@ -8,18 +8,21 @@ import MarketKit
 class OpenSeaNftProvider {
     private let zeroAddress = "0x0000000000000000000000000000000000000000"
     private let apiUrl = "https://api.opensea.io/api"
-    private let headers = HTTPHeaders([
-        HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
-    ])
     private let collectionLimit = 300
     private let assetLimit = 50
 
     private let networkManager: NetworkManager
     private let marketKit: MarketKit.Kit
+    private let headers: HTTPHeaders
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit) {
+    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
         self.marketKit = marketKit
+
+        headers = HTTPHeaders([
+            HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"),
+            HTTPHeader(name: "X-API-KEY", value: appConfigProvider.openSeaApiKey)
+        ])
     }
 
     private func coinType(address: String) -> CoinType {
@@ -167,7 +170,7 @@ class OpenSeaNftProvider {
         let parameters: Parameters = [
             "format": "json",
             "limit": assetLimit,
-//            "offset": offset, // temp fix for API
+            "offset": offset,
             "owner": address
         ]
 
@@ -198,12 +201,7 @@ extension OpenSeaNftProvider: INftProvider {
             self?.collections(responses: responses) ?? []
         }
 
-//        let assetsSingle = recursiveAssetsSingle(address: address).map { [weak self] responses in
-//            self?.assets(responses: responses) ?? []
-//        }
-
-        // temp fix for API
-        let assetsSingle = assetsSingle(address: address, offset: 0).map { [weak self] responses in
+        let assetsSingle = recursiveAssetsSingle(address: address).map { [weak self] responses in
             self?.assets(responses: responses) ?? []
         }
 

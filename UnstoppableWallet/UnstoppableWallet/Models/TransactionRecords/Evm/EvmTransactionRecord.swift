@@ -19,7 +19,7 @@ class EvmTransactionRecord: TransactionRecord {
             feeAmount = fullTransaction.transaction.gasLimit
         }
 
-        let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount * transaction.gasPrice))
+        let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount) * Decimal(transaction.gasPrice))
         fee = .coinValue(platformCoin: baseCoin, value: feeDecimal)
 
         super.init(
