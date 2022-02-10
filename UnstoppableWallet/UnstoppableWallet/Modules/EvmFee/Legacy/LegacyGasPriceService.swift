@@ -5,11 +5,14 @@ import RxCocoa
 import BigInt
 
 class LegacyGasPriceService {
-    private static let safeFeeDifference = 1
+    private static let gasPriceSafeRangeBounds = RangeBounds(lower: .distance(1), upper: .distance(1))
+    private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.7), upper: .factor(3))
+
     private var disposeBag = DisposeBag()
 
     private let evmKit: EthereumKit.Kit
-    private let feeRateProvider: ICustomRangedFeeRateProvider
+    private let gasPriceProvider: LegacyGasPriceProvider
+
 
     private var recommendedGasPrice: Int = 0
     private var legacyGasPrice: Int = 0 {
@@ -18,18 +21,18 @@ class LegacyGasPriceService {
         }
     }
 
-    private let statusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.GasPrice>>>()
-    private(set) var status: DataStatus<FallibleData<EvmFeeModule.GasPrice>> = .loading {
+    private let statusRelay = PublishRelay<DataStatus<FallibleData<GasPrice>>>()
+    private(set) var status: DataStatus<FallibleData<GasPrice>> = .loading {
         didSet {
             statusRelay.accept(status)
         }
     }
 
-    init(evmKit: EthereumKit.Kit, feeRateProvider: ICustomRangedFeeRateProvider, gasPrice: Int? = nil) {
+    init(evmKit: EthereumKit.Kit, initialGasPrice: Int? = nil) {
         self.evmKit = evmKit
-        self.feeRateProvider = feeRateProvider
+        gasPriceProvider = LegacyGasPriceProvider(evmKit: evmKit)
 
-        if let gasPrice = gasPrice {
+        if let gasPrice = initialGasPrice {
             legacyGasPrice = gasPrice
         } else {
             setRecommendedGasPrice()
@@ -39,11 +42,13 @@ class LegacyGasPriceService {
     private func sync() {
         var warnings = [EvmFeeModule.GasDataWarning]()
 
-        if legacyGasPrice < recommendedGasPrice - Self.safeFeeDifference {
+        let gasPriceSafeRange = Self.gasPriceSafeRangeBounds.range(around: recommendedGasPrice)
+
+        if legacyGasPrice < gasPriceSafeRange.lowerBound {
             warnings.append(.riskOfGettingStuck)
         }
 
-        if legacyGasPrice > recommendedGasPrice + Self.safeFeeDifference {
+        if legacyGasPrice > gasPriceSafeRange.upperBound {
             warnings.append(.overpricing)
         }
 
@@ -54,19 +59,19 @@ class LegacyGasPriceService {
 
 }
 
-extension LegacyGasPriceService {
+extension LegacyGasPriceService: IGasPriceService {
 
-    var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.GasPrice>>> {
+    var statusObservable: Observable<DataStatus<FallibleData<GasPrice>>> {
         statusRelay.asObservable()
-    }
-
-    public var gasPriceRange: ClosedRange<Int> {
-        feeRateProvider.customFeeRange
     }
 
 }
 
 extension LegacyGasPriceService {
+
+    var gasPriceRange: ClosedRange<Int> {
+        Self.gasPriceAvailableRangeBounds.range(around: recommendedGasPrice)
+    }
 
     func set(gasPrice: Int) {
         legacyGasPrice = gasPrice
@@ -77,7 +82,7 @@ extension LegacyGasPriceService {
 
         status = .loading
 
-        feeRateProvider.feeRate(priority: .recommended)
+        gasPriceProvider.gasPriceSingle()
                 .subscribe(
                         onSuccess: { [weak self] gasPrice in
                             self?.recommendedGasPrice = gasPrice

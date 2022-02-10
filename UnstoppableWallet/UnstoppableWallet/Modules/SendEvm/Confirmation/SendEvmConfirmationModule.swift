@@ -63,14 +63,16 @@ struct SendEvmConfirmationModule {
     }
 
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
-        guard let platformCoin = platformCoin(networkType: evmKitWrapper.evmKit.networkType),
+        let evmKit = evmKitWrapper.evmKit
+
+        guard let platformCoin = platformCoin(networkType: evmKit.networkType),
               let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
+        let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory())
@@ -95,8 +97,7 @@ struct SendEvmConfirmationModule {
         let gasPrice = fullTransaction.transaction.gasPrice
         let feeRange = gasPrice...(4 * gasPrice)
         
-        guard let platformCoin = platformCoin(networkType: adapter.evmKit.networkType),
-              let feeRateProvider = App.shared.feeRateProviderFactory.forcedProvider(coinType: platformCoin.coinType, customFeeRange: feeRange, multiply: Self.forceMultiplier) else {
+        guard let platformCoin = platformCoin(networkType: adapter.evmKit.networkType) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 
@@ -114,7 +115,7 @@ struct SendEvmConfirmationModule {
 
         let evmKitWrapper = adapter.evmKitWrapper
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 

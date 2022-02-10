@@ -2,20 +2,14 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import ThemeKit
 import ComponentKit
 
-struct SendPriorityViewItem {
-    let title: String
-    let selected: Bool
-}
-
-struct SendFeeSliderViewItem {
+struct FeeSliderViewItem {
     let initialValue: Int
     let range: ClosedRange<Int>
 }
 
-protocol ISendFeePriorityCellDelegate: IDynamicHeightCellDelegate {
+protocol IFeeSliderCellDelegate: AnyObject {
     func open(viewController: UIViewController)
 }
 
@@ -24,18 +18,14 @@ protocol IDynamicHeightCellDelegate: AnyObject {
 }
 
 class FeeSliderCell: UITableViewCell {
-    weak var delegate: ISendFeePriorityCellDelegate?
-
-    private let viewModel: LegacyEvmFeeViewModel
     private let feeSliderWrapper = FeeSliderWrapper()
 
     private let disposeBag = DisposeBag()
 
     var isVisible = true
+    var onFinishTracking: ((Int) -> ())?
 
-    init(viewModel: LegacyEvmFeeViewModel) {
-        self.viewModel = viewModel
-
+    init(sliderDriver: Driver<FeeSliderViewItem?>) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -48,18 +38,16 @@ class FeeSliderCell: UITableViewCell {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
         }
         feeSliderWrapper.finishTracking = { [weak self] value in
-            self?.finishTracking(value: value)
+            self?.onFinishTracking?(value)
         }
 
-        subscribe(disposeBag, viewModel.feeSliderDriver) { [weak self] viewItem in
+        subscribe(disposeBag, sliderDriver) { [weak self] viewItem in
                     if let viewItem = viewItem {
                         self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: "gwei")
                         self?.feeSliderWrapper.isHidden = false
                     } else {
                         self?.feeSliderWrapper.isHidden = true
                     }
-
-                    self?.delegate?.onChangeHeight()
                 }
     }
 
@@ -67,21 +55,12 @@ class FeeSliderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func openFeeInfo() {
-        let infoController = InfoModule.viewController(dataSource: FeeInfoDataSource())
-        delegate?.open(viewController: ThemeNavigationController(rootViewController: infoController))
-    }
-
-    private func finishTracking(value: Int) {
-        viewModel.set(value: value)
-    }
-
 }
 
 extension FeeSliderCell {
 
     var cellHeight: CGFloat {
-        29
+        35
     }
 
 }

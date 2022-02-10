@@ -41,7 +41,7 @@ class EvmFeeViewModel {
 
 extension EvmFeeViewModel: IFeeViewModel {
 
-    var feeStatusDriver: Driver<String?> {
+    var maxFeeDriver: Driver<String?> {
         feeStatusRelay.asDriver()
     }
 

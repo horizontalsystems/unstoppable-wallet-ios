@@ -14,6 +14,14 @@ class SendEvmCautionsFactory {
                                 type: .error
                         )
                     ]
+                case .lowBaseFee:
+                    return [
+                        TitledCaution(
+                                title: "fee_settings.errors.low_base_fee".localized,
+                                text: "fee_settings.errors.low_base_fee.info".localized(baseCoinService.platformCoin.coin.code),
+                                type: .error
+                        )
+                    ]
                 }
             } else {
                 return [
@@ -31,8 +39,6 @@ class SendEvmCautionsFactory {
                 switch warning {
                 case .riskOfGettingStuck:
                     warningCautions.append(TitledCaution(title: "fee_settings.warning.risk_of_getting_stuck".localized, text: "fee_settings.warning.risk_of_getting_stuck.info".localized, type: .warning))
-                case .highBaseFee:
-                    warningCautions.append(TitledCaution(title: "fee_settings.warning.high_base_fee".localized, text: "fee_settings.warning.high_base_fee.info".localized, type: .warning))
                 case .overpricing:
                     warningCautions.append(TitledCaution(title: "fee_settings.warning.overpricing".localized, text: "fee_settings.warning.overpricing.info".localized, type: .warning))
                 }

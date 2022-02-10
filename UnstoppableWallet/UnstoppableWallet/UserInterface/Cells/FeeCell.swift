@@ -2,13 +2,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ComponentKit
+import ThemeKit
+
 
 protocol IFeeViewModel {
-    var feeStatusDriver: Driver<String?> { get }
+    var maxFeeDriver: Driver<String?> { get }
     var editButtonVisibleDriver: Driver<Bool> { get }
 }
 
 class FeeCell: UITableViewCell {
+    weak var delegate: IFeeSliderCellDelegate?
+
     private let disposeBag = DisposeBag()
     var titleType: TitleType = .fee {
         didSet {
@@ -68,7 +72,7 @@ class FeeCell: UITableViewCell {
 
         buttonComponent.button.set(image: UIImage(named: "edit2_20"))
 
-        feeViewModel.feeStatusDriver
+        feeViewModel.maxFeeDriver
                 .drive(onNext: { [weak self] status in
                     self?.isVisible = status != nil
                     self?.value = status
@@ -103,6 +107,11 @@ class FeeCell: UITableViewCell {
 
     var cellHeight: CGFloat {
         isVisible ? 29 : 0
+    }
+
+    private func openFeeInfo() {
+        let infoController = InfoModule.viewController(dataSource: FeeInfoDataSource())
+        delegate?.open(viewController: ThemeNavigationController(rootViewController: infoController))
     }
 
 }

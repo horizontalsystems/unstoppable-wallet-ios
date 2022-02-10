@@ -1,12 +1,12 @@
 import RxSwift
-import RxCocoa
 import RxRelay
+import RxCocoa
 import EthereumKit
 
-class LegacyEvmFeeViewModel {
+class Eip1559EvmFeeViewModel {
     private let disposeBag = DisposeBag()
 
-    private let gasPriceService: LegacyGasPriceService
+    private let gasPriceService: Eip1559GasPriceService
     private let feeService: IEvmFeeService
     private let coinService: CoinService
     private let cautionsFactory: SendEvmCautionsFactory
@@ -14,11 +14,14 @@ class LegacyEvmFeeViewModel {
     private let resetButtonActiveRelay = BehaviorRelay<Bool>(value: false)
     private let maxFeeRelay = BehaviorRelay<String?>(value: nil)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
-    private let gasPriceRelay = BehaviorRelay<String>(value: "n/a")
-    private let gasPriceSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
+    private let currentBaseFeeRelay = BehaviorRelay<String>(value: "n/a")
+    private let baseFeeRelay = BehaviorRelay<String>(value: "n/a")
+    private let tipsRelay = BehaviorRelay<String>(value: "n/a")
+    private let baseFeeSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
+    private let tipsSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
     private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
 
-    init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
+    init(gasPriceService: Eip1559GasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
         self.gasPriceService = gasPriceService
         self.feeService = feeService
         self.coinService = coinService
@@ -26,20 +29,13 @@ class LegacyEvmFeeViewModel {
 
         sync(transactionStatus: feeService.status)
         sync(gasPriceStatus: gasPriceService.status)
+        sync(recommendedBaseFee: gasPriceService.recommendedBaseFee)
 
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
         subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
-    }
-
-    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
-        if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data {
-            let gweiGasPrice = gwei(wei: gasPrice)
-            gasPriceRelay.accept("\(gweiGasPrice) gwei")
-            gasPriceSliderRelay.accept(FeeSliderViewItem(initialValue: gweiGasPrice, range: gwei(range: gasPriceService.gasPriceRange)))
-        } else {
-            gasPriceRelay.accept("n/a".localized)
-            gasPriceSliderRelay.accept(nil)
-        }
+        subscribe(disposeBag, gasPriceService.recommendedBaseFeeObservable) { [weak self] in self?.sync(recommendedBaseFee: $0) }
+        subscribe(disposeBag, gasPriceService.baseFeeRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
+        subscribe(disposeBag, gasPriceService.tipsRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
     }
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
@@ -69,6 +65,30 @@ class LegacyEvmFeeViewModel {
         cautionsRelay.accept(cautions)
     }
 
+    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>?) {
+        let gasPriceStatus = gasPriceStatus ?? gasPriceService.status
+
+        guard case .completed = gasPriceStatus else {
+            baseFeeRelay.accept("n/a")
+            tipsRelay.accept("n/a")
+            baseFeeSliderRelay.accept(nil)
+            tipsSliderRelay.accept(nil)
+            return
+        }
+
+        let gweiBaseFee = gwei(wei: gasPriceService.baseFee)
+        baseFeeRelay.accept("\(gweiBaseFee) gwei")
+        baseFeeSliderRelay.accept(FeeSliderViewItem(initialValue: gweiBaseFee, range: gwei(range: gasPriceService.baseFeeRange)))
+
+        let gweiTips = gwei(wei: gasPriceService.tips)
+        tipsRelay.accept("\(gweiTips) gwei")
+        tipsSliderRelay.accept(FeeSliderViewItem(initialValue: gweiTips, range: gwei(range: gasPriceService.tipsRange)))
+    }
+
+    private func sync(recommendedBaseFee: Int) {
+        currentBaseFeeRelay.accept("\(gwei(wei: recommendedBaseFee)) gwei")
+    }
+
     private func gwei(wei: Int) -> Int {
         wei / 1_000_000_000
     }
@@ -83,18 +103,30 @@ class LegacyEvmFeeViewModel {
 
 }
 
-extension LegacyEvmFeeViewModel {
+extension Eip1559EvmFeeViewModel {
 
     var gasLimitDriver: Driver<String> {
         gasLimitRelay.asDriver()
     }
 
-    var gasPriceDriver: Driver<String> {
-        gasPriceRelay.asDriver()
+    var currentBaseFeeDriver: Driver<String> {
+        currentBaseFeeRelay.asDriver()
     }
 
-    var gasPriceSliderDriver: Driver<FeeSliderViewItem?> {
-        gasPriceSliderRelay.asDriver()
+    var baseFeeDriver: Driver<String> {
+        baseFeeRelay.asDriver()
+    }
+
+    var tipsDriver: Driver<String> {
+        tipsRelay.asDriver()
+    }
+
+    var baseFeeSliderDriver: Driver<FeeSliderViewItem?> {
+        baseFeeSliderRelay.asDriver()
+    }
+
+    var tipsSliderDriver: Driver<FeeSliderViewItem?> {
+        tipsSliderRelay.asDriver()
     }
 
     var cautionsDriver: Driver<[TitledCaution]> {
@@ -105,17 +137,24 @@ extension LegacyEvmFeeViewModel {
         resetButtonActiveRelay.asDriver()
     }
 
-    func set(value: Int) {
-        gasPriceService.set(gasPrice: wei(gwei: value))
+    func set(baseFee: Int) {
+        gasPriceService.set(baseFee: wei(gwei: baseFee))
+        resetButtonActiveRelay.accept(true)
+    }
+
+    func set(tips: Int) {
+        gasPriceService.set(tips: wei(gwei: tips))
+        resetButtonActiveRelay.accept(true)
     }
 
     func reset() {
         gasPriceService.setRecommendedGasPrice()
+        resetButtonActiveRelay.accept(false)
     }
 
 }
 
-extension LegacyEvmFeeViewModel: IFeeViewModel {
+extension Eip1559EvmFeeViewModel: IFeeViewModel {
 
     var maxFeeDriver: Driver<String?> {
         maxFeeRelay.asDriver()

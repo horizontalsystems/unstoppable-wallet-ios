@@ -6,13 +6,12 @@ import OneInchKit
 struct SwapConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let platformCoin = dex.blockchain.platformCoin, let evmKitWrapper = dex.blockchain.evmKitWrapper,
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
+        guard let platformCoin = dex.blockchain.platformCoin, let evmKitWrapper = dex.blockchain.evmKitWrapper else {
             return nil
         }
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimitSurchargePercent: 20)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
@@ -24,8 +23,7 @@ struct SwapConfirmationModule {
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
         guard let platformCoin = dex.blockchain.platformCoin,
-              let evmKitWrapper = dex.blockchain.evmKitWrapper,
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
+              let evmKitWrapper = dex.blockchain.evmKitWrapper else {
             return nil
         }
 
@@ -33,9 +31,8 @@ struct SwapConfirmationModule {
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = LegacyGasPriceService(evmKit: evmKitWrapper.evmKit, feeRateProvider: feeRateProvider)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit)
         let feeService = OneInchFeeService(evmKit: evmKitWrapper.evmKit,  provider: oneInchProvider, gasPriceService: gasPriceService, parameters: parameters)
-
         let service = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, transactionFeeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory())

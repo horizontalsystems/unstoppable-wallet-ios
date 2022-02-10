@@ -218,7 +218,7 @@ class EvmTransactionConverter {
                     foreignRecipient: decoration.recipient != evmKit.address
             )
 
-        case let decoration as OneInchMethodDecoration:
+        case _ as OneInchMethodDecoration:
             return UnknownSwapTransactionRecord(
                     source: source,
                     fullTransaction: fullTransaction,

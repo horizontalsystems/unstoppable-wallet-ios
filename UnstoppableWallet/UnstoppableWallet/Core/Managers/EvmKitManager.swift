@@ -171,7 +171,7 @@ class EvmKitWrapper {
         self.signer = signer
     }
 
-    func sendSingle(transactionData: TransactionData, gasPrice: Int, gasLimit: Int, nonce: Int? = nil) -> Single<FullTransaction> {
+    func sendSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<FullTransaction> {
         guard let signer = signer else {
             return Single.error(SignerError.signerNotSupported)
         }

@@ -35,7 +35,7 @@ class OneInchFeeService {
 
     private let evmKit: EthereumKit.Kit
     private let provider: OneInchProvider
-    let gasPriceService: LegacyGasPriceService
+    let gasPriceService: IGasPriceService
     private(set) var parameters: OneInchSwapParameters
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
@@ -47,7 +47,7 @@ class OneInchFeeService {
 
     var amountTo: Decimal?
 
-    init(evmKit: EthereumKit.Kit, provider: OneInchProvider, gasPriceService: LegacyGasPriceService, parameters: OneInchSwapParameters) {
+    init(evmKit: EthereumKit.Kit, provider: OneInchProvider, gasPriceService: IGasPriceService, parameters: OneInchSwapParameters) {
         self.evmKit = evmKit
         self.provider = provider
         self.gasPriceService = gasPriceService
@@ -61,7 +61,7 @@ class OneInchFeeService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
         case .failed(let error): status = .failed(error)
@@ -69,7 +69,7 @@ class OneInchFeeService {
         }
     }
 
-    private func sync(fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+    private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
         disposeBag = DisposeBag()
 
         status = .loading
@@ -81,7 +81,7 @@ class OneInchFeeService {
                         amount: parameters.amountFrom,
                         recipient: recipient,
                         slippage: parameters.slippage,
-                        gasPrice: fallibleGasPrice.data.max
+                        gasPrice: fallibleGasPrice.data.max // TODO: Must pass GasPrice object
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] swap in
@@ -92,7 +92,7 @@ class OneInchFeeService {
                 .disposed(by: disposeBag)
     }
 
-    private func onSwap(error: Error, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+    private func onSwap(error: Error, fallibleGasPrice: FallibleData<GasPrice>) {
         parameters.amountTo = 0
 
         if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate {       // retry request fee every 5 seconds if cannot estimate
@@ -108,7 +108,7 @@ class OneInchFeeService {
         status = .failed(error.convertedError)
     }
 
-    private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+    private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<GasPrice>) {
         let tx = swap.transaction
         let gasData = EvmFeeModule.GasData(
                 gasLimit: surchargedGasLimit(gasLimit: surchargedGasLimit(gasLimit: tx.gasLimit)),
