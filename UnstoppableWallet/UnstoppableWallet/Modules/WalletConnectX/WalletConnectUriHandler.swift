@@ -18,6 +18,27 @@ class WalletConnectUriHandler {
         return .success(service)
     }
 
+    private func createModuleV2(uri: String) -> Result<IWalletConnectXMainService, Error> {
+        do {
+            try App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
+        } catch {
+            return .failure(error)
+        }
+
+        let service = App.shared.walletConnectV2SessionManager.service
+        let pingService = WalletConnectV2PingService(service: service)
+        let mainService = WalletConnectV2XMainService(
+                session: nil,
+                uri: uri,
+                service: service,
+                pingService: pingService,
+                manager: App.shared.walletConnectManager,
+                evmChainParser: WalletConnectEvmChainParser()
+        )
+
+        return .success(mainService)
+    }
+
 }
 
 extension WalletConnectUriHandler {
@@ -29,7 +50,7 @@ extension WalletConnectUriHandler {
         if uri.contains("@1?") {
             return createModuleV1(uri: uri)
         } else if uri.contains("@2?") {
-            return  .failure(ConnectionError.unsupportedV2)
+            return createModuleV2(uri: uri)
         } else {
             return  .failure(ConnectionError.wrongUri)
         }

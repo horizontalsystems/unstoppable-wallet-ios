@@ -282,7 +282,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSignEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
-        print("didRequestSignEthereumTransaction")
+//        print("didRequestSignEthereumTransaction")
     }
 
     func didRequestSign(id: Int, payload: WCEthereumSignPayload) {

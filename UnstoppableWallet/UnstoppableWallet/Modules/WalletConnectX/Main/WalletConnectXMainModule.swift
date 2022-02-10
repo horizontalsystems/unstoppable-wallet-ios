@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import RxSwift
+import WalletConnect
 
 protocol IWalletConnectXMainService {
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? { get }
@@ -34,6 +35,21 @@ struct WalletConnectXMainModule {
         return viewController(service: service, sourceViewController: sourceViewController)
     }
 
+    static func viewController(session: Session, sourceViewController: UIViewController?) -> UIViewController? {
+        let service = App.shared.walletConnectV2SessionManager.service
+        let pingService = WalletConnectV2PingService(service: service)
+
+        let mainService = WalletConnectV2XMainService(
+            session: session,
+            service: service,
+            pingService: pingService,
+            manager: App.shared.walletConnectManager,
+            evmChainParser: WalletConnectEvmChainParser()
+        )
+
+        return viewController(service: mainService, sourceViewController: sourceViewController)
+    }
+
     static func viewController(service: IWalletConnectXMainService, sourceViewController: UIViewController?) -> UIViewController? {
         let viewModel = WalletConnectXMainViewModel(service: service)
         let viewController = WalletConnectXMainViewController(viewModel: viewModel, sourceViewController: sourceViewController)
@@ -44,6 +60,7 @@ struct WalletConnectXMainModule {
             requestView.sourceViewController = viewController
 
             viewController.requestView = requestView
+        case let service as WalletConnectV2XMainService: ()
         default: return nil
         }
 
@@ -84,6 +101,12 @@ extension WalletConnectXMainModule {
         case connected
         case connecting
         case disconnected
+    }
+
+    enum SessionError: Error {
+        case invalidUrl
+        case unsupportedChainId
+        case noSuitableAccount
     }
 
 }

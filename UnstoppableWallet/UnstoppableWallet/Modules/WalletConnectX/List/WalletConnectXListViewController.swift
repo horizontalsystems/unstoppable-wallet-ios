@@ -10,12 +10,14 @@ class WalletConnectXListViewController: ThemeViewController {
 
     private let viewModel: WalletConnectXListViewModel
     private let listViewV1: WalletConnectV1XListView
+    private let listViewV2: WalletConnectV2XListView
 
     private let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectXScanQrViewController?
 
-    init(listViewV1: WalletConnectV1XListView, viewModel: WalletConnectXListViewModel) {
+    init(listViewV1: WalletConnectV1XListView, listViewV2: WalletConnectV2XListView, viewModel: WalletConnectXListViewModel) {
         self.listViewV1 = listViewV1
+        self.listViewV2 = listViewV2
         self.viewModel = viewModel
 
         super.init()
@@ -51,10 +53,12 @@ class WalletConnectXListViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
         subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }
         subscribe(disposeBag, listViewV1.reloadTableSignal) { [weak self] in self?.tableView.reload() }
+        subscribe(disposeBag, listViewV2.reloadTableSignal) { [weak self] in self?.tableView.reload() }
 
         listViewV1.viewDidLoad()
+        listViewV2.viewDidLoad()
 
-        if listViewV1.emptySessionList {
+        if listViewV1.emptySessionList && listViewV2.emptySessionList {
             startNewConnection()
         }
     }
@@ -94,7 +98,7 @@ class WalletConnectXListViewController: ThemeViewController {
 extension WalletConnectXListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [listViewV1.section].flatMap { $0 }
+        [listViewV2.section, listViewV1.section].flatMap { $0 }
     }
 
 }
