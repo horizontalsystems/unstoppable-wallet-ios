@@ -116,7 +116,7 @@ class SendEvmTransactionViewModel {
                     additionalInfo: additionalInfo)
         }
 
-        if let method = decoration as? OneInchMethodDecoration {
+        if decoration is OneInchMethodDecoration {
             return swapItems(additionalInfo: additionalInfo)
         }
 
