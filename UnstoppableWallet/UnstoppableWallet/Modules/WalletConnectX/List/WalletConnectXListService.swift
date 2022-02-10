@@ -1,6 +1,8 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import WalletConnect
+import WalletConnectUtils
 
 class WalletConnectXListService {
     private var disposeBag = DisposeBag()
@@ -10,13 +12,18 @@ class WalletConnectXListService {
     private let connectionErrorRelay = PublishRelay<Error>()
 
     private let sessionManager: WalletConnectSessionManager
+    private let sessionManagerV2: WalletConnectV2SessionManager
+
     private var sessionKiller: WalletConnectSessionKiller?
     private let showSessionV1Relay = PublishRelay<WalletConnectSession>()
+    private let showSessionV2Relay = PublishRelay<Session>()
     private let sessionKillingRelay = PublishRelay<SessionKillingState>()
 
-    init(uriHandler: WalletConnectUriHandler, sessionManager: WalletConnectSessionManager) {
+
+    init(uriHandler: WalletConnectUriHandler, sessionManager: WalletConnectSessionManager, sessionManagerV2: WalletConnectV2SessionManager) {
         self.uriHandler = uriHandler
         self.sessionManager = sessionManager
+        self.sessionManagerV2 = sessionManagerV2
     }
 
     private func onUpdateSessionKiller(state: WalletConnectSessionKiller.State) {
@@ -52,6 +59,20 @@ class WalletConnectXListService {
         }
     }
 
+    private func items(sessions: [Session]) -> [Item] {
+        sessions.map {
+            Item(
+                id: $0.id,
+                chains: [Chain.ethereum], //todo //Array($0.permissions.blockchains).map { 1 },
+                version: 2,
+                appName: $0.peer.name ?? "",
+                appUrl: $0.peer.url ?? "",
+                appDescription: $0.peer.description ?? "",
+                appIcons: $0.peer.icons ?? []
+            )
+        }
+    }
+
 }
 
 extension WalletConnectXListService {
@@ -61,7 +82,7 @@ extension WalletConnectXListService {
     }
 
     var itemsV2: [Item] {
-        []
+        items(sessions: sessionManagerV2.sessions)
     }
 
     var sessionV1Count: Int {
@@ -69,7 +90,7 @@ extension WalletConnectXListService {
     }
 
     var sessionV2Count: Int {
-        0
+        sessionManagerV2.sessions.count
     }
 
     var itemsV1Observable: Observable<[Item]> {
@@ -79,13 +100,17 @@ extension WalletConnectXListService {
     }
 
     var itemsV2Observable: Observable<[Item]> {
-        sessionManager.sessionsObservable.map { [weak self] in
+        sessionManagerV2.sessionsObservable.map { [weak self] in
             self?.items(sessions: $0) ?? []
         }
     }
 
     var showSessionV1Observable: Observable<WalletConnectSession> {
         showSessionV1Relay.asObservable()
+    }
+
+    var showSessionV2Observable: Observable<Session> {
+        showSessionV2Relay.asObservable()
     }
 
     var sessionKillingObservable: Observable<SessionKillingState> {
@@ -109,6 +134,12 @@ extension WalletConnectXListService {
             sessionKiller.kill()
             self.sessionKiller = sessionKiller
         }
+        if let session = sessionManagerV2.sessions.first(where: { $0.id == id }) {
+            let killTimer = Observable.just(()).delay(.seconds(1), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            subscribe(disposeBag, killTimer) { [weak self] in
+                self?.sessionManagerV2.deleteSession(topic: session.topic)
+            }
+        }
     }
 
     var createModuleObservable: Observable<IWalletConnectXMainService> {
@@ -131,6 +162,9 @@ extension WalletConnectXListService {
     func showSession(id: Int) {
         if let sessionV1 = sessionManager.sessions.first(where: { $0.id == id }) {
             showSessionV1Relay.accept(sessionV1)
+        }
+        if let sessionV2 = sessionManagerV2.sessions.first(where: { $0.id == id }) {
+            showSessionV2Relay.accept(sessionV2)
         }
     }
 

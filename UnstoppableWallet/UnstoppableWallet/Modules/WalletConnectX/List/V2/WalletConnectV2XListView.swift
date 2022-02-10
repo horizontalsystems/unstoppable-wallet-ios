@@ -4,17 +4,18 @@ import SectionsTableView
 import ComponentKit
 import RxSwift
 import RxCocoa
+import WalletConnect
 
-class WalletConnectV1XListView {
+class WalletConnectV2XListView {
     private let disposeBag = DisposeBag()
-    private let viewModel: WalletConnectV1XListViewModel
+    private let viewModel: WalletConnectV2XListViewModel
     weak var sourceViewController: WalletConnectXListViewController?
 
-    private(set) var viewItems = [WalletConnectV1XListViewModel.ViewItem]()
+    private(set) var viewItems = [WalletConnectV2XListViewModel.ViewItem]()
 
     private let reloadTableRelay = PublishRelay<()>()
 
-    init(viewModel: WalletConnectV1XListViewModel) {
+    init(viewModel: WalletConnectV2XListViewModel) {
         self.viewModel = viewModel
     }
 
@@ -25,13 +26,13 @@ class WalletConnectV1XListView {
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
-    private func sync(viewItems: [WalletConnectV1XListViewModel.ViewItem]) {
+    private func sync(viewItems: [WalletConnectV2XListViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         reloadTableRelay.accept(())
     }
 
-    private func show(session: WalletConnectSession) {
+    private func show(session: Session) {
         guard let viewController = WalletConnectXMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }
@@ -72,10 +73,10 @@ class WalletConnectV1XListView {
         )
     }
 
-    private func section(viewItems: [WalletConnectV1XListViewModel.ViewItem]) -> SectionProtocol {
+    private func section(viewItems: [WalletConnectV2XListViewModel.ViewItem]) -> SectionProtocol {
         Section(
-                id: "section_1",
-                headerState: header(text: "version 1.0"),
+                id: "section_2",
+                headerState: header(text: "version 2.0"),
                 footerState: .margin(height: .margin32),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
@@ -104,7 +105,7 @@ class WalletConnectV1XListView {
 
 }
 
-extension WalletConnectV1XListView {
+extension WalletConnectV2XListView {
 
     var emptySessionList: Bool {
         viewModel.emptySessionList

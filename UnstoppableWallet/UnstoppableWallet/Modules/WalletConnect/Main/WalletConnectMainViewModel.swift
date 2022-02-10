@@ -39,8 +39,6 @@ class WalletConnectMainViewModel {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
 
-        print("\(state) --- \(connectionState)")
-
         guard state != .killed else {
             showSuccessRelay.accept(())
             finishRelay.accept(())

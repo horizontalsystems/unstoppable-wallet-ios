@@ -5,13 +5,21 @@ class WalletConnectXListModule {
 
     static func viewController() -> UIViewController {
         let uriHandler = WalletConnectUriHandler()
-        let service = WalletConnectXListService(uriHandler: uriHandler, sessionManager: App.shared.walletConnectSessionManager)
+        let service = WalletConnectXListService(
+                uriHandler: uriHandler,
+                sessionManager: App.shared.walletConnectSessionManager,
+                sessionManagerV2: App.shared.walletConnectV2SessionManager
+        )
         let listViewModelV1 = WalletConnectV1XListViewModel(service: service)
         let listViewV1 = WalletConnectV1XListView(viewModel: listViewModelV1)
 
+        let listViewModelV2 = WalletConnectV2XListViewModel(service: service)
+        let listViewV2 = WalletConnectV2XListView(viewModel: listViewModelV2)
+
         let viewModel = WalletConnectXListViewModel(service: service)
-        let viewController = WalletConnectXListViewController(listViewV1: listViewV1, viewModel: viewModel)
+        let viewController = WalletConnectXListViewController(listViewV1: listViewV1, listViewV2: listViewV2, viewModel: viewModel)
         listViewV1.sourceViewController = viewController
+        listViewV2.sourceViewController = viewController
 
         return viewController
     }

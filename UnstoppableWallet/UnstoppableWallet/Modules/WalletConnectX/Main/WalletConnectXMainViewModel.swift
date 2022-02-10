@@ -29,7 +29,7 @@ class WalletConnectXMainViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.connectionStateObservable) { [weak self] in self?.sync(connectionState: $0) }
 
-        appMetaRelay.accept(service.appMetaItem.map { viewItem(appMetaItem: $0) })
+        sync()
     }
 
     private func viewItem(appMetaItem: WalletConnectXMainModule.AppMetaItem) -> AppMetaViewItem {

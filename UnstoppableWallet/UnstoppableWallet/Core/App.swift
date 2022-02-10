@@ -80,6 +80,7 @@ class App {
     let termsManager: ITermsManager
 
     let walletConnectSessionManager: WalletConnectSessionManager
+    let walletConnectV2SessionManager: WalletConnectV2SessionManager
     let walletConnectManager: WalletConnectManager
 
     let activateCoinManager: ActivateCoinManager
@@ -216,6 +217,19 @@ class App {
 
         walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, accountSettingManager: accountSettingManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, ethereumKitManager: ethereumKitManager, binanceSmartChainKitManager: binanceSmartChainKitManager)
+
+        let walletClientInfo = WalletConnectClientInfo(
+                projectId: appConfigProvider.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
+                relayHost: "relay.walletconnect.com",
+                clientName: "io.horizontalsystems.bank.dev",
+                name: "Unstoppable Wallet",
+                description: nil,
+                url: appConfigProvider.companyWebPageLink,
+                icons: []
+        )
+
+        let walletConnectV2Service = WalletConnectV2Service(info: walletClientInfo)
+        walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
 
         activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 

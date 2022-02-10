@@ -82,11 +82,11 @@ class WalletConnectV1XMainService {
 
     private func initSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int) throws {
         guard let account = manager.activeAccount else {
-            throw SessionError.noSuitableAccount
+            throw WalletConnectXMainModule.SessionError.noSuitableAccount
         }
 
         guard let evmKitWrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
-            throw SessionError.unsupportedChainId
+            throw WalletConnectXMainModule.SessionError.unsupportedChainId
         }
 
         sessionData = SessionData(peerId: peerId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
@@ -337,12 +337,6 @@ extension WalletConnectV1XMainService: IWalletConnectInteractorDelegate {
 }
 
 extension WalletConnectV1XMainService {
-
-    enum SessionError: Error {
-        case invalidUrl
-        case unsupportedChainId
-        case noSuitableAccount
-    }
 
     struct SessionData {
         let peerId: String
