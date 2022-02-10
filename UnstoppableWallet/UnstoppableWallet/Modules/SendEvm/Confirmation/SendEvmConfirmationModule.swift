@@ -94,9 +94,6 @@ struct SendEvmConfirmationModule {
             throw CreateModuleError.alreadyInBlock
         }
 
-        let gasPrice = fullTransaction.transaction.gasPrice
-        let feeRange = gasPrice...(4 * gasPrice)
-        
         guard let platformCoin = platformCoin(networkType: adapter.evmKit.networkType) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }

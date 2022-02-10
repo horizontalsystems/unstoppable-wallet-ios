@@ -81,7 +81,7 @@ class OneInchFeeService {
                         amount: parameters.amountFrom,
                         recipient: recipient,
                         slippage: parameters.slippage,
-                        gasPrice: fallibleGasPrice.data.max // TODO: Must pass GasPrice object
+                        gasPrice: fallibleGasPrice.data
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] swap in
