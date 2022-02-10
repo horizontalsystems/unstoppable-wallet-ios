@@ -70,9 +70,7 @@ class NftCollectionsViewController: ThemeViewController {
         self.expandedSlugs = expandedSlugs
 
         if loaded {
-            tableView.beginUpdates()
             tableView.reload(animated: true)
-            tableView.endUpdates()
         }
     }
 
@@ -88,18 +86,16 @@ class NftCollectionsViewController: ThemeViewController {
 
 extension NftCollectionsViewController: SectionsDataSource {
 
-    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, expanded: Bool, isLast: Bool) -> RowProtocol {
+    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, isLast: Bool) -> RowProtocol {
         Row<NftCollectionsDoubleCell>(
                 id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
-                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")-\(expanded)",
+                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
                 dynamicHeight: { width in
-                    expanded ? NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast) : 0
+                    NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { cell, _ in
-                    if expanded {
-                        cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
-                            self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
-                        }
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
+                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
                     }
                 }
         )
@@ -112,15 +108,13 @@ extension NftCollectionsViewController: SectionsDataSource {
                 id: "collection-\(viewItem.slug)",
                 hash: "\(viewItem.count)-\(expanded)",
                 height: .heightCell48,
-                bind: { [weak self] cell in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent)
+                    cell.wrapperView.backgroundColor = .themeTyler
                     cell.selectionStyle = .none
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.kf.setImage(
-                                with: viewItem.imageUrl.flatMap { URL(string: $0) },
-                                options: [.scaleFactor(UIScreen.main.scale), .onlyLoadFirstFrame]
-                        )
+                        component.imageView.kf.setImage(with: viewItem.imageUrl.flatMap { URL(string: $0) })
                         component.imageView.cornerRadius = .cornerRadius4
                         component.imageView.backgroundColor = .themeSteel20
                     })
@@ -152,27 +146,27 @@ extension NftCollectionsViewController: SectionsDataSource {
 
             rows.append(row(viewItem: viewItem, expanded: expanded, index: index))
 
-            let doubleRowCount = viewItem.assetViewItems.count / 2
-            let hasSingleRow = viewItem.assetViewItems.count % 2 == 1
+            if expanded {
+                let doubleRowCount = viewItem.assetViewItems.count / 2
+                let hasSingleRow = viewItem.assetViewItems.count % 2 == 1
 
-            for i in 0..<doubleRowCount {
-                let row = row(
-                        leftViewItem: viewItem.assetViewItems[i * 2],
-                        rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
-                        expanded: expanded,
-                        isLast: i == doubleRowCount - 1 && !hasSingleRow
-                )
-                rows.append(row)
-            }
+                for i in 0..<doubleRowCount {
+                    let row = row(
+                            leftViewItem: viewItem.assetViewItems[i * 2],
+                            rightViewItem: viewItem.assetViewItems[(i * 2) + 1],
+                            isLast: i == doubleRowCount - 1 && !hasSingleRow
+                    )
+                    rows.append(row)
+                }
 
-            if let assetViewItem = viewItem.assetViewItems.last, hasSingleRow {
-                let row = row(
-                        leftViewItem: assetViewItem,
-                        rightViewItem: nil,
-                        expanded: expanded,
-                        isLast: true
-                )
-                rows.append(row)
+                if let assetViewItem = viewItem.assetViewItems.last, hasSingleRow {
+                    let row = row(
+                            leftViewItem: assetViewItem,
+                            rightViewItem: nil,
+                            isLast: true
+                    )
+                    rows.append(row)
+                }
             }
         }
 
