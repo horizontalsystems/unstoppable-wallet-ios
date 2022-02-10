@@ -999,11 +999,11 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "fee_settings.tips" = "Max Miner Tips";
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
-"fee_settings.errors.low_base_fee" = "Low base fee";
-"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
+"fee_settings.errors.low_base_fee" = "낮은 기본 수수료";
+"fee_settings.errors.low_base_fee.info" = "최대 기본 수수료 설정이 거래를 포함하기에는 너무 낮습니다.";
 "fee_settings.warning.risk_of_getting_stuck" = "갇힐 위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 중단되거나 실패할 수 있습니다.";
-"fee_settings.warning.overpricing" = "Overpricing";
+"fee_settings.warning.overpricing" = "과대 가격 층정";
 "fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
 
 // Watch Address
@@ -1026,7 +1026,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_asset.average_30d" = "30 Day Average";
 "nft_asset.floor_price" = "Floor Price";
 "nft_asset.on_sale" = "On Sale";
-"nft_asset.until_date" = "until %@";
+"nft_asset.until_date" = "%@ 까지";
 "nft_asset.buy_now" = "Buy Now";
 "nft_asset.top_bid" = "Top Bid";
 "nft_asset.minimum_bid" = "Minimum Bid";
@@ -1034,12 +1034,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_asset.properties" = "Properties";
 "nft_asset.description" = "Description";
 "nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details.contract_address" = "계약 주소";
 "nft_asset.details.token_id" = "Token ID";
 "nft_asset.details.token_standard" = "Token Standard";
-"nft_asset.details.blockchain" = "Blockchain";
+"nft_asset.details.blockchain" = "블록 체인";
 "nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
+"nft_asset.links.website" = "웹사이트";
 "nft_asset.options.save_to_photos" = "Save to Photos";
 "nft_asset.options.set_as_watch_face" = "Set as Watch Face";
 "nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
