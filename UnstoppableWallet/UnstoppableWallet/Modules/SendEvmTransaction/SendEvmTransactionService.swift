@@ -173,7 +173,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.gasPrice.max,
+                        gasPrice: transaction.gasData.gasPrice,
                         gasLimit: transaction.gasData.gasLimit,
                         nonce: transaction.transactionData.nonce
                 )

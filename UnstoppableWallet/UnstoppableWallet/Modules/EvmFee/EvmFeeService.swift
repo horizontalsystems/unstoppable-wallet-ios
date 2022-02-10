@@ -6,7 +6,7 @@ import RxRelay
 
 class EvmFeeService {
     private let evmKit: EthereumKit.Kit
-    let gasPriceService: LegacyGasPriceService
+    let gasPriceService: IGasPriceService
 
     private var transactionData: TransactionData
     let gasLimitSurchargePercent: Int
@@ -21,7 +21,7 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EthereumKit.Kit, gasPriceService: LegacyGasPriceService, transactionData: TransactionData, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, transactionData: TransactionData, gasLimitSurchargePercent: Int = 0) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
         self.transactionData = transactionData
@@ -31,11 +31,11 @@ class EvmFeeService {
         subscribe(gasPriceDisposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
     }
 
-    private func gasLimitSingle(gasPrice: EvmFeeModule.GasPrice, transactionData: TransactionData) -> Single<Int> {
-        evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice.max) // TODO: estimateGas must accept GasPrice enum
+    private func gasLimitSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<Int> {
+        evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
         case .failed(let error): status = .failed(error)
@@ -43,7 +43,7 @@ class EvmFeeService {
         }
     }
 
-    private func sync(fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+    private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
         disposeBag = DisposeBag()
 
         status = .loading
@@ -62,7 +62,7 @@ class EvmFeeService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func sync(transaction: EvmFeeModule.Transaction, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrice>) {
+    private func sync(transaction: EvmFeeModule.Transaction, fallibleGasPrice: FallibleData<GasPrice>) {
         var errors: [Error] = fallibleGasPrice.errors
 
         let totalAmount = transaction.transactionData.value + transaction.gasData.fee
@@ -79,7 +79,7 @@ class EvmFeeService {
         estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
     }
 
-    private func transactionSingle(gasPrice: EvmFeeModule.GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction> {
+    private func transactionSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction> {
         adjustedTransactionDataSingle(gasPrice: gasPrice, transactionData: transactionData).flatMap { [unowned self] transactionData in
             gasLimitSingle(gasPrice: gasPrice, transactionData: transactionData).map { [unowned self] estimatedGasLimit in
                 let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
@@ -92,7 +92,7 @@ class EvmFeeService {
         }
     }
 
-    private func adjustedTransactionDataSingle(gasPrice: EvmFeeModule.GasPrice, transactionData: TransactionData) -> Single<TransactionData> {
+    private func adjustedTransactionDataSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<TransactionData> {
         if transactionData.input.isEmpty && transactionData.value == evmBalance {
             let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: Data())
 

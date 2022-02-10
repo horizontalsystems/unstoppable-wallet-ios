@@ -6,31 +6,36 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-class LegacyEvmFeeViewController: ThemeViewController {
+class Eip1559EvmFeeViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
-    private let viewModel: LegacyEvmFeeViewModel
+    private let viewModel: Eip1559EvmFeeViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
     private let maxFeeCell: FeeCell
     private var gasLimitCell = A7Cell()
-    private var gasPriceCell = A7Cell()
-    private let gasPriceSliderCell: FeeSliderCell
+    private var currentBaseFeeCell = A7Cell()
+    private var baseFeeCell = A7Cell()
+    private let baseFeeSliderCell: FeeSliderCell
+    private var tipsCell = A7Cell()
+    private let tipsSliderCell: FeeSliderCell
     private var cautionViewItems = [TitledCaution]()
     private let doneButton = ThemeButton()
 
-    init(viewModel: LegacyEvmFeeViewModel) {
+    init(viewModel: Eip1559EvmFeeViewModel) {
         self.viewModel = viewModel
 
         maxFeeCell = FeeCell(feeViewModel: viewModel)
-        gasPriceSliderCell = FeeSliderCell(sliderDriver: viewModel.gasPriceSliderDriver)
+        baseFeeSliderCell = FeeSliderCell(sliderDriver: viewModel.baseFeeSliderDriver)
+        tipsSliderCell = FeeSliderCell(sliderDriver: viewModel.tipsSliderDriver)
 
         super.init()
 
         maxFeeCell.delegate = self
-        gasPriceSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(value: value) }
+        baseFeeSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(baseFee: value) }
+        tipsSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(tips: value) }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -85,17 +90,35 @@ class LegacyEvmFeeViewController: ThemeViewController {
         gasLimitCell.title = "fee_settings.gas_limit".localized
         gasLimitCell.titleImage = UIImage(named: "circle_information_20")
 
-        gasPriceCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        gasPriceCell.titleColor = .themeGray
-        gasPriceCell.set(titleImageSize: .iconSize24)
-        gasPriceCell.valueColor = .themeGray
-        gasPriceCell.selectionStyle = .none
-        gasPriceCell.title = "fee_settings.gas_price".localized
-        gasPriceCell.titleImage = UIImage(named: "circle_information_20")
+        currentBaseFeeCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
+        currentBaseFeeCell.titleColor = .themeGray
+        currentBaseFeeCell.set(titleImageSize: .iconSize24)
+        currentBaseFeeCell.valueColor = .themeGray
+        currentBaseFeeCell.selectionStyle = .none
+        currentBaseFeeCell.title = "fee_settings.current_base_fee".localized
+        currentBaseFeeCell.titleImage = UIImage(named: "circle_information_20")
 
-        subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
+        baseFeeCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
+        baseFeeCell.titleColor = .themeGray
+        baseFeeCell.set(titleImageSize: .iconSize24)
+        baseFeeCell.valueColor = .themeGray
+        baseFeeCell.selectionStyle = .none
+        baseFeeCell.title = "fee_settings.base_fee".localized
+        baseFeeCell.titleImage = UIImage(named: "circle_information_20")
+
+        tipsCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
+        tipsCell.titleColor = .themeGray
+        tipsCell.set(titleImageSize: .iconSize24)
+        tipsCell.valueColor = .themeGray
+        tipsCell.selectionStyle = .none
+        tipsCell.title = "fee_settings.tips".localized
+        tipsCell.titleImage = UIImage(named: "circle_information_20")
+
+        subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] in self?.currentBaseFeeCell.value = $0 }
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.gasLimitCell.value = $0 }
-        subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] in self?.gasPriceCell.value = $0 }
+        subscribe(disposeBag, viewModel.baseFeeDriver) { [weak self] in self?.baseFeeCell.value = $0 }
+        subscribe(disposeBag, viewModel.tipsDriver) { [weak self] in self?.tipsCell.value = $0 }
+        subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
 
         tableView.buildSections()
     }
@@ -150,7 +173,7 @@ class LegacyEvmFeeViewController: ThemeViewController {
 
 }
 
-extension LegacyEvmFeeViewController: SectionsDataSource {
+extension Eip1559EvmFeeViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         let feeSections: [SectionProtocol] = [
@@ -162,7 +185,14 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
                                 cell: maxFeeCell,
                                 id: "fee",
                                 height: maxFeeCell.cellHeight
-                        ),
+                        )
+                    ]
+            ),
+            Section(
+                    id: "current-base-fee",
+                    headerState: .margin(height: 6),
+                    footerState: .margin(height: .margin32),
+                    rows: [
                         StaticRow(
                                 cell: gasLimitCell,
                                 id: "gas-limit",
@@ -174,21 +204,36 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
 
         let gasDataSections: [SectionProtocol] = [
             Section(
-                id: "gas-data",
-                headerState: .margin(height: 6),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                            cell: gasPriceCell,
-                            id: "gas-price",
-                            height: gasPriceCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: gasPriceSliderCell,
-                            id: "gas-price-slider",
-                            height: gasPriceSliderCell.cellHeight
-                    )
-                ]
+                    id: "gas-data",
+                    headerState: .margin(height: 2),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: currentBaseFeeCell,
+                                id: "current-base-fee-cell",
+                                height: currentBaseFeeCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: baseFeeCell,
+                                id: "base-fee",
+                                height: baseFeeCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: baseFeeSliderCell,
+                                id: "base-fee-slider",
+                                height: baseFeeSliderCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: tipsCell,
+                                id: "tips",
+                                height: tipsCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: tipsSliderCell,
+                                id: "tips-slider",
+                                height: tipsSliderCell.cellHeight
+                        )
+                    ]
             )
         ]
 
@@ -210,7 +255,7 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
 
 }
 
-extension LegacyEvmFeeViewController: IFeeSliderCellDelegate {
+extension Eip1559EvmFeeViewController: IFeeSliderCellDelegate {
 
     func open(viewController: UIViewController) {
         present(viewController, animated: true)
