@@ -1,2 +1,3 @@
 "NSCameraUsageDescription" = "L'application doit accéder à la caméra afin de scanner les codes QR.";
 "NSFaceIDUsageDescription" = "FaceID sera utilisé pour déverrouiller le portefeuille.";
+"NSPhotoLibraryAddUsageDescription" = "Nous avons besoin d'avoir accès à vos photos pour enregistrer les images NFT";

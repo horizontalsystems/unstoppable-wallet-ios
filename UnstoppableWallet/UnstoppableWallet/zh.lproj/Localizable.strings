@@ -3,6 +3,7 @@
 "button.cancel" = "取消";
 "button.close" = "关闭";
 "button.done" = "完成";
+"button.reset" = "重置";
 "button.restore" = "恢复";
 "button.next" = "下一步";
 "button.share" = "分享";
@@ -19,6 +20,7 @@
 "button.sign" = "签名";
 "button.more" = "显示更多";
 
+"alert" = "警报";
 "alert.copied" = "已复制";
 "alert.no_internet" = "没有网络";
 "alert.wrong_amount" = "金额有误";
@@ -140,6 +142,7 @@
 "balance.add_coin" = "添加代币";
 "balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
+"balance.watch_empty.description" = "此钱包地址没有任何余额";
 "balance.sort_by" = "排序方式为";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
@@ -181,7 +184,6 @@
 "send.tx_speed_recommended" = "推荐";
 "send.tx_speed_high" = "高";
 "send.tx_speed_custom" = "自定义";
-"send.tx_duration" = "时长";
 "send.duration.hours" = "%d小时。";
 "send.duration.minutes" = "%d分钟。";
 "send.available_balance" = "可用余额";
@@ -207,7 +209,6 @@
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
-"send.confirmation.method" = "方法";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
@@ -218,10 +219,12 @@
 "send.confirmation.resend_button" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.cancel_button" = "取消交易";
+"send.confirmation.nonce" = "Nonce";
 "send.amount_error.balance" = "余额不足";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
+"send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 "send.stuck_warning" = "警告！有被骗的风险";
 
@@ -240,7 +243,6 @@
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
-"swap.powered_by" = "技术支持：";
 "swap.allowance" = "补贴";
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
@@ -252,8 +254,7 @@
 "swap.approving_button" = "审批中...";
 "swap.trade_error.not_found" = "无法交换代币";
 "swap.button_error.insufficient_balance" = "余额不足";
-"swap.switch_provider.title" = "掉期供应商";
-"swap.switch_provider.subtitle" = "切换器";
+"swap.switch_provider.title" = "互兑供应商";
 
 "swap.price" = "价格";
 "swap.buy_price" = "买入价";
@@ -293,9 +294,6 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.guaranteed" = "保证";
-"swap.confirmation.maximum" = "最大金额";
-"swap.confirmation.estimated" = "估计";
 "swap.confirmation.impact_too_high" = "市场价格与预期结算价格之间的差额太高。";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
@@ -322,293 +320,242 @@
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total Market Cap";
-"market.24h_volume" = "24h Volume";
+"market.tab_bar_item" = "市场";
+"market.title" = "市场";
+"market.category.overview" = "行情";
+"market.category.posts" = "发现";
+"market.category.watchlist" = "关注";
+"market.total_market_cap" = "总市值";
+"market.24h_volume" = "24h成交量";
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
-"market.sync_error" = "Sync Error";
-"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
+"market.sync_error" = "同步出错";
+"market.coin_not_supported_yet" = "Unstoppable尚不支持此代币";
 
 "market.top.section.header.see_all" = "查看全部";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.news" = "News";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.section.header.top_gainers" = "涨幅榜";
+"market.top.section.header.top_losers" = "跌幅榜";
+"market.top.section.header.news" = "发现";
+"market.top.volume.title" = "成交量";
+"market.top.market_cap.title" = "市值";
+"market.top.diluted_market_cap.title" = "稀释市值";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
+"market.market_field.mcap" = "市值";
+"market.market_field.vol" = "成交量";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "百分比";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "所有";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "排序方式为";
 
 "market.top.title" = "Top Coins";
-"market.top.description" = "Top Coins by market cap rank";
+"market.top.description" = "币种排名描述";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
+"market.top.highest_cap" = "市值由高到低";
+"market.top.lowest_cap" = "市值由低到高";
+"market.top.highest_volume" = "成交量由高到低";
+"market.top.lowest_volume" = "成交量由低到高";
+"market.top.top_gainers" = "涨幅榜";
+"market.top.top_losers" = "跌幅榜";
 
 "market_discovery.title" = "Discovery";
-"market_discovery.filters" = "Filters";
-"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.filters" = "过滤器";
+"market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
 
-"market_discovery.filter_title.blockchain" = "Blockchains";
-"market_discovery.filter_title.dexes" = "DEXes";
-"market_discovery.filter_title.lending" = "Lending";
-"market_discovery.filter_title.privacy" = "Privacy";
-"market_discovery.filter_title.scaling" = "Scaling";
-"market_discovery.filter_title.oracles" = "Oracles";
-"market_discovery.filter_title.prediction_markets" = "Prediction";
-"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_title.stablecoins" = "Stablecoins";
-"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.risk_management" = "Risk Management";
-"market_discovery.filter_title.wallets" = "Wallets";
-"market_discovery.filter_title.synthetics" = "Synthetics";
-"market_discovery.filter_title.index_funds" = "Index Funds";
-"market_discovery.filter_title.nft" = "NFT";
-"market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming";
-"market_discovery.filter_title.infrastructure" = "Infrastructure";
-"market_discovery.filter_title.analytics" = "Analytics";
-"market_discovery.filter_title.storage" = "Storage";
-"market_discovery.filter_title.identity" = "Identity";
-"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
+"market_watchlist.empty.caption" = "您的观察列表为空。";
 
+"market.search.title" = "查询";
+"market.search.empty_text" = "未发现结果";
 
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Connecting real-world data to smart contracts.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
-"market_discovery.filter_description.stablecoins" = "Crypto tokens pegged 1-1 to fiat currency.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1-1 to Bitcoin price.";
-"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk assessment, insurance and hedging.";
-"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
-"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "NFT projects.";
-"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.analytics" = "Token-powered analytics and investment instruments.";
-"market_discovery.filter_description.storage" = "Decentralized data-storage.";
-"market_discovery.filter_description.identity" = "Decentralized identity.";
-"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
+"market.advanced_search.title" = "过滤器";
+"market.advanced_search.show_results" = "显示结果";
+"market.advanced_search.empty_results" = "空结果";
+"market.advanced_search.dex_description" = "此设置将应用于在以太坊（Uniswap DEX）和币安智能链（Pancake DEX）上交易的代币。";
+"market.advanced_search.24h" = "24小时";
 
-"market_watchlist.empty.caption" = "Your watchlist is empty.";
+"market.advanced_search.market_parameters" = "市场参数";
+"market.advanced_search.network_parameters" = "网络参数";
+"market.advanced_search.price_parameters" = "价格参数";
+"market.advanced_search.choose_set" = "可选集合";
+"market.advanced_search.market_cap" = "市场价值";
+"market.advanced_search.volume" = "成交量";
+"market.advanced_search.liquidity" = "DEX流动性";
+"market.advanced_search.blockchains" = "区块链";
+"market.advanced_search.price_period" = "价格区间";
+"market.advanced_search.price_change" = "价格变化";
 
-"market.search.title" = "Search";
-"market.search.empty_text" = "No results found";
+"market.advanced_search.outperformed_btc" = "跑赢BTC";
+"market.advanced_search.outperformed_eth" = "跑赢ETH";
+"market.advanced_search.outperformed_bnb" = "跑赢BNB";
+"market.advanced_search.price_close_to_ath" = "接近历史最高价";
+"market.advanced_search.price_close_to_atl" = "接近历史最低价";
 
-"market.advanced_search.title" = "Filters";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.empty_results" = "Empty Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.top" = "前 %d";
+"market.advanced_search.reset_all" = "重置";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.price_parameters" = "Price Parameters";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
-
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
-
-"market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
-
-"market.advanced_search.any" = "Any";
+"market.advanced_search.any" = "任何";
 "market.advanced_search.less_5_m" = "<5M";
-"market.advanced_search.less_10_m" = "< 10M";
-"market.advanced_search.less_50_m" = "< 50M";
-"market.advanced_search.less_500_m" = "< 500M";
-"market.advanced_search.m_5_m_20" = "5M - 20M";
-"market.advanced_search.m_10_m_40" = "10M - 40M";
-"market.advanced_search.m_20_m_100" = "20M - 100M";
-"market.advanced_search.m_40_m_200" = "40M - 200M";
-"market.advanced_search.m_50_m_200" = "50M - 200M";
-"market.advanced_search.m_100_b_1" = "100M - 1B";
-"market.advanced_search.m_200_b_1" = "200M - 1B";
-"market.advanced_search.m_200_b_2" = "200M - 2B";
-"market.advanced_search.m_500_b_2" = "500M - 2B";
-"market.advanced_search.b_1_b_5" = "1B - 5B";
-"market.advanced_search.b_1_b_10" = "1B - 10B";
-"market.advanced_search.b_2_b_10" = "2B - 10B";
-"market.advanced_search.b_10_b_50" = "10B - 50B";
-"market.advanced_search.b_10_b_100" = "10B - 100B";
-"market.advanced_search.b_100_b_500" = "100B - 500B";
-"market.advanced_search.more_5_b" = "> 5B";
-"market.advanced_search.more_10_b" = "> 10B";
-"market.advanced_search.more_50_b" = "> 50B";
-"market.advanced_search.more_500_b" = "> 500B";
+"market.advanced_search.less_10_m" = "<10百万";
+"market.advanced_search.less_50_m" = "<50百万";
+"market.advanced_search.less_500_m" = "< 500百万";
+"market.advanced_search.m_5_m_20" = "5百万 - 20百万";
+"market.advanced_search.m_10_m_40" = "10百万 - 40百万";
+"market.advanced_search.m_20_m_100" = "20百万 - 100百万";
+"market.advanced_search.m_40_m_200" = "40百万 - 200百万";
+"market.advanced_search.m_50_m_200" = "50百万 - 200百万";
+"market.advanced_search.m_100_b_1" = "100百万 - 1十亿";
+"market.advanced_search.m_200_b_1" = "200百万  - 1十亿";
+"market.advanced_search.m_200_b_2" = "200百万 - 2十亿";
+"market.advanced_search.m_500_b_2" = "500百万 - 2十亿";
+"market.advanced_search.b_1_b_5" = "1十亿 - 5十亿";
+"market.advanced_search.b_1_b_10" = "1十亿 - 10十亿";
+"market.advanced_search.b_2_b_10" = "2十亿 - 10十亿";
+"market.advanced_search.b_10_b_50" = "10十亿 - 50十亿";
+"market.advanced_search.b_10_b_100" = "10十亿 - 100十亿";
+"market.advanced_search.b_100_b_500" = "100十亿 - 500十亿";
+"market.advanced_search.more_5_b" = "> 5十亿";
+"market.advanced_search.more_10_b" = "> 10十亿";
+"market.advanced_search.more_50_b" = "> 50十亿";
+"market.advanced_search.more_500_b" = "> 500十亿";
 
-"market.advanced_search.day" = "1 Day";
-"market.advanced_search.week" = "1 Week";
-"market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.day" = "1天";
+"market.advanced_search.week" = "1周";
+"market.advanced_search.week2" = "2周";
+"market.advanced_search.month" = "1月";
+"market.advanced_search.month6" = "6 个月";
+"market.advanced_search.year" = "1 年";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "搜索结果";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.total_market_cap.title" = "总市值";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 
-"market.global.subtitle" = "Chart";
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
-"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
-"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+"market.global.subtitle" = "图表";
+"market.global.btc_dominance.title" = "Bitcoin市场占比";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
+"market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
+"market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
+"market.global.tvl_in_defi.description" = "由去中心化协议管理的所有加密货币累积价值的历史变化。";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hour";
-"coin_page.roi.hour24" = "1 Day";
-"coin_page.roi.day7" = "1 Week";
-"coin_page.roi.day14" = "2 Weeks";
-"coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
-"coin_page.roi.year1" = "1 Year";
+"coin_page.roi.hour1" = "1 小时";
+"coin_page.roi.hour24" = "1天";
+"coin_page.roi.day7" = "1周";
+"coin_page.roi.day14" = "2周";
+"coin_page.roi.day30" = "1月";
+"coin_page.roi.day200" = "6月";
+"coin_page.roi.year1" = "1 年";
 
-"coin_page.tab.overview" = "Overview";
-"coin_page.tab.markets" = "Market";
-"coin_page.tab.details" = "Details";
-"coin_page.tab.tweets" = "Tweets";
+"coin_page.tab.overview" = "行情";
+"coin_page.tab.markets" = "市场";
+"coin_page.tab.details" = "分析";
+"coin_page.tab.tweets" = "推文";
 
-"coin_page.market_cap" = "Market Cap";
-"coin_page.circulating_supply" = "In Circulation";
-"coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
-"coin_page.genesis_date" = "Inception Date";
+"coin_page.market_cap" = "市场价值";
+"coin_page.circulating_supply" = "流通中";
+"coin_page.total_supply" = "供应总额";
+"coin_page.dilluted_market_cap" = "稀释市值";
+"coin_page.genesis_date" = "起始日期";
 
-"coin_page.trading_volume" = "Trading Volume";
-"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
-"coin_page.markets" = "Markets";
+"coin_page.trading_volume" = "成交量";
+"coin_page.trading_volume.description" = "%@ 每日交易量的历史变化";
+"coin_page.markets" = "市场";
+"coin_page.markets.empty" = "没有可用数据";
 
-"coin_page.coin_markets" = "%@ Markets";
-"coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
+"coin_page.token_liquidity" = "代币流动性";
+"coin_page.token_distribution" = "代币分布";
 
-"coin_page.token_liquidity" = "Token Liquidity";
-"coin_page.token_distribution" = "Token Distribution";
+"coin_page.chart_tvl" = "代币锁仓量";
+"coin_page.chart_volumes" = "成交量";
+"coin_page.token_tvl" = "代币锁仓量";
+"coin_page.tvl" = "总锁定";
+"coin_page.market_cap_tvl_ratio" = "稀释市值/锁定 比例";
+"coin_page.tvl_rank" = "锁仓排名";
+"coin_page.tvl.description" = "以贷款抵押品或流动性池的形式存入平台的资本。";
 
-"coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Total Volume";
-"coin_page.token_tvl" = "Token TVL";
-"coin_page.tvl" = "Total Value Locked";
-"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
-"coin_page.tvl_rank" = "TVL Rank";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.investor_data" = "投资数据";
 
-"coin_page.investor_data" = "Investor Data";
-
-"coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filters";
-"coin_page.treasuries.filter.all" = "All";
-"coin_page.treasuries.filter.public" = "Public";
-"coin_page.treasuries.filter.private" = "Private";
+"coin_page.treasuries" = "国库券";
+"coin_page.treasuries.filters" = "过滤器";
+"coin_page.treasuries.filter.all" = "所有";
+"coin_page.treasuries.filter.public" = "公用";
+"coin_page.treasuries.filter.private" = "一对多";
 "coin_page.treasuries.filter.etf" = "ETF";
 
-"coin_page.funds_invested" = "Funds Invested";
-"coin_page.funds_invested.lead" = "Lead";
+"coin_page.funds_invested" = "已投资金";
+"coin_page.funds_invested.lead" = "领投";
 
-"coin_page.reports" = "Reports";
+"coin_page.reports" = "报告";
 
-"coin_page.category" = "Category";
+"coin_page.category" = "分类";
 
-"coin_page.contracts" = "Contracts";
-"coin_page.links" = "Links";
+"coin_page.contracts" = "合约";
+"coin_page.links" = "链接";
 
-"coin_page.guide" = "Guide";
-"coin_page.website" = "Website";
-"coin_page.whitepaper" = "Whitepaper";
+"coin_page.guide" = "指南";
+"coin_page.website" = "网站";
+"coin_page.whitepaper" = "白皮书";
 
-"coin_page.favorited" = "Added To Watchlist";
-"coin_page.unfavorited" = "Removed from Watchlist";
-"coin_page.added_to_wallet" = "Added to wallet";
-"coin_page.already_added_to_wallet" = "Already added to wallet";
+"coin_page.favorited" = "添加到关注列表";
+"coin_page.unfavorited" = "从关注列表移除";
+"coin_page.added_to_wallet" = "加入钱包";
+"coin_page.already_added_to_wallet" = "已经加入钱包";
 
-"coin_page.major_holders" = "Major Holders";
-"coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
-"coin_page.major_holders.top_ethereum_wallets" = "Top Ethereum Wallets";
-"coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
+"coin_page.major_holders" = "主要持有者";
+"coin_page.major_holders.chart.description" = "前10名地址";
+"coin_page.major_holders.top_ethereum_wallets" = "最好的以太坊钱包";
+"coin_page.major_holders.description" = "上方图表显示了前10个钱包所持有的所有代币的百分比。 百分比越低，代币的分布越广。";
 
 
-"coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.filter_by_chain" = "Filter by chain";
+"coin_page.tvl_rank.multi_chain" = "多链";
+"coin_page.tvl_rank.filter_by_chain" = "通过区块链过滤";
 
-"coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
-"coin_page.security_parameters.issuance" = "Issuance";
-"coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
-"coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
+"coin_page.security_parameters" = "安全参数";
+"coin_page.security_parameters.privacy" = "隐私";
+"coin_page.security_parameters.issuance" = "发行量";
+"coin_page.security_parameters.confiscation_resistance" = "抗征收";
+"coin_page.security_parameters.censorship_resistance" = "抗审查";
 
-"coin_page.security_parameters.level.low" = "Low";
-"coin_page.security_parameters.level.medium" = "Medium";
-"coin_page.security_parameters.level.high" = "High";
-"coin_page.security_parameters.issuance.decentralized" = "Decentralized";
-"coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
+"coin_page.security_parameters.level.low" = "低";
+"coin_page.security_parameters.level.medium" = "中";
+"coin_page.security_parameters.level.high" = "高";
+"coin_page.security_parameters.issuance.decentralized" = "去中心化";
+"coin_page.security_parameters.issuance.centralized" = "中心化";
+"coin_page.security_parameters.resistance.yes" = "是";
+"coin_page.security_parameters.resistance.no" = "否";
 
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
-"coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
-"coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The amount of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The amount of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can't be confiscated when kept in a non-custodial wallet.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "The tokens can be confiscated or tampered with by an issuing entity.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
+"coin_page.security_parameters.privacy.description.medium" = "使用此代币的交易是半匿名的。第三方服务能够查看交易金额，并将不同的交易部分链接到同一实体。";
+"coin_page.security_parameters.privacy.description.high" = "默认情况下，使用此代币的交易是匿名的，或者提供此类功能。任何实体都无法将不同的交易链接到同一个人或查看交易金额.";
+"coin_page.security_parameters.issuance.description.decentralized" = "流通中的代币数量由算法控制，以确定的方式工作，不受中心化机构影响。";
+"coin_page.security_parameters.issuance.description.centralized" = "流通中的代币数量可以由一个中心化的实体随意增加或减少。";
+"coin_page.security_parameters.confiscation_resistance.description.yes" = "代币存放在非保管钱包内时不得没收。";
+"coin_page.security_parameters.confiscation_resistance.description.no" = "代币可以被发行实体没收或篡改。";
+"coin_page.security_parameters.censorship_resistance.description.yes" = "无法对代币持有人进行交易审查。";
+"coin_page.security_parameters.censorship_resistance.description.no" = "可以禁止代币持有者进行交易。";
 
-"coin_page.info" = "Info";
+"coin_page.info" = "信息";
 
-"coin_page.audits" = "Audits";
-"coin_page.audits.issues" = "Issues";
-"coin_page.audits.no_reports" = "No audit reports";
+"coin_page.audits" = "审计";
+"coin_page.audits.issues" = "问题";
+"coin_page.audits.no_reports" = "没有审计报告";
 
-"coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_page.tweets.reference_type.quoted" = "Quoted @%@";
-"coin_page.tweets.reference_type.replied" = "Replied to @%@";
-"coin_page.tweets.no_tweets_yet" = "No tweets yet";
-"coin_page.tweets.not_available" = "No twitter available";
-"coin_page.tweets.see_on_twitter" = "See on Twitter";
+"coin_page.tweets.reference_type.retweeted" = "转发 @%@";
+"coin_page.tweets.reference_type.quoted" = "引用 @%@";
+"coin_page.tweets.reference_type.replied" = "回复到 @%@";
+"coin_page.tweets.no_tweets_yet" = "暂无推文";
+"coin_page.tweets.not_available" = "没有twitter";
+"coin_page.tweets.see_on_twitter" = "打开Twitter";
 
 // Transactions
 
@@ -637,8 +584,8 @@
 "transactions.yesterday" = "昨天";
 
 "transactions.types.all" = "全部";
-"transactions.types.incoming" = "传入";
-"transactions.types.outgoing" = "发出";
+"transactions.types.incoming" = "已收到";
+"transactions.types.outgoing" = "已发送";
 "transactions.types.swap" = "掉期交易";
 "transactions.types.approve" = "批准";
 
@@ -802,11 +749,13 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除钱包。";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
+"settings_manage_keys.delete.confirmation_watch" = "您确定要删除此钱包吗？";
 
 // Settings -> About App
 
 "settings.about_app.title" = "关于应用";
 "settings.about_app.app_name" = "Unstoppable钱包";
+"settings.about_app.whats_new" = "新增内容";
 "settings.about_app.website" = "网站";
 "settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
@@ -826,7 +775,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "launch_screen.auto" = "自动";
 "launch_screen.balance" = "余额";
-"launch_screen.market_overview" = "Market Overview";
+"launch_screen.market_overview" = "行情";
 "launch_screen.watchlist" = "观看列表";
 
 // Set PIN
@@ -871,18 +820,18 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.price_indicator_range.day" = "24小时范围";
 "chart.price_indicator_range.year" = "52星期范围";
 
-"chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
-"chart.market.volume" = "Volume(24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.header" = "市场";
+"chart.market.market_cap" = "市场价值";
+"chart.market.volume" = "量(24小时)";
+"chart.market.circulation" = "流通中";
+"chart.market.total_supply" = "供应总额";
 
-"chart.performance.week_changes" = "Changes (1W)";
-"chart.performance.month_changes" = "Changes (1M)";
+"chart.performance.week_changes" = "变更（1周）";
+"chart.performance.month_changes" = "变更（1月）";
 
-"chart.about.header" = "About";
-"chart.about.read_more" = "Read More";
-"chart.about.read_less" = "Read Less";
+"chart.about.header" = "关于";
+"chart.about.read_more" = "查看更多";
+"chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
 
@@ -903,8 +852,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Restore Select
 
-"restore_select.title" = "选择代币";
-"restore_select.not_found" = "找不到";
+"restore_select.title" = "选择区块链";
 
 // Lock Info
 
@@ -925,9 +873,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Intro
 
-"intro.next" = "继续";
-"intro.start" = "开始";
-"intro.brand.description" = "存储和交易加密货币。完全控制资产。保持匿名。";
+"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "解除资产";
 "intro.unchain_assets.description" = "请勿锁定您自己，也不要让别人对您这样做";
 "intro.go_borderless.title" = "进入无国界";
@@ -962,6 +908,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
 "wallet_connect.button_reconnect" = "重新连接";
 "wallet_connect.button_disconnect" = "断开连接";
+"ethereum_transaction.error.title" = "出错";
 "ethereum_transaction.error.insufficient_balance" = "交易需要%@才能发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
@@ -977,6 +924,11 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
 
+"wallet_connect.no_account.description" = "没有合适的钱包。您需要创建或恢复现有钱包.";
+"wallet_connect.no_account.i_understand" = "我理解";
+
+"wallet_connect.watch_account.description" = "此功能不适用于观察中的钱包，您需要切换到恢复或创建的钱包.";
+"wallet_connect.watch_account.switch" = "切换";
 
 // App Status
 
@@ -994,7 +946,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "status_info.title" = "状态";
 "status_info.pending.title" = "待处理";
-"status_info.pending.content" = "交易尚未在区块链上得到确认。带有推荐或更高费用设置发送的交易通常会在10分钟内得到处理。以低费用发送的交易将在数小时甚至数天内仍将处于待处理状态，并且可能会被完全拒绝。";
+"status_info.pending.content" = "交易尚未在区块链上得到确认。带有推荐或更高费用设置发送的交易通常会在10分钟内得到处理。以低费用发送的交易将在数小时甚至数天内仍将处于待处理状态，并且可能会被完全拒绝。同时请谨记，显示在Unstoppable钱包界面中的个别交易的状态通常将在较短延时内得到更新。";
 "status_info.processing.title" = "正在处理";
 "status_info.processing.content" = "交易已包括在区块链中，但尚未达到永久终结状态。此时，可以安全地考虑以较小金额完成的交易。对于大额支付，建议等待直至交易状态变为已完成。";
 "status_info.completed.title" = "已完成";
@@ -1002,20 +954,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "status_info.failed.title" = "失败";
 "status_info.failed.content" = "交易未得到处理，也未发生价值转移。状态为失败的交易仍然被写入区块链，并耗费交易费用。Unstoppable应用无法显示此类交易失败的原因，但用户可以自己在公共区块资源管理器上查找，如etherscan.io。";
 
-// Enable Coins
-
-"enable_coins.title" = "启用代币";
-"enable_coins.description" = "启用有余额的所有%@代币.";
-"enable_coins.enable_button" = "启用";
-"enable_coins.enabling" = "正在启用...";
-"enable_coins.enabled_coins" = "启用了 %@ 多硬币";
-"enable_coins.enabled_no_coins" = "找不到有余额的代币";
-
 // Onboarding
 
-"onboarding.balance.description" = "您还没有任何钱包。创建新钱包或恢复已有钱包";
+"onboarding.balance.description" = "No wallets yet";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
+"onboarding.balance.watch" = "观察地址";
 "onboarding.balance.password_hint" = "贴士！使用一个新密码恢复现有的钱包将生成一个全新的钱包。如果您希望对多个钱包使用单个12-24个单词的助记词恢复码，这将非常方便。";
 
 // Manage Accounts
@@ -1044,5 +988,61 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
-"evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+"evm_network.switches_automatically" = "自动切换";
+"evm_network.description" = "MainNet HTTP提供商使用了若干来源 (在下方列出)，并自动在它们之间切换。";
+
+// Fee Settings
+
+"fee_settings" = "费用设置";
+"fee_settings.gas_limit" = "燃料限制";
+"fee_settings.gas_price" = "燃料价格";
+"fee_settings.current_base_fee" = "Current Base Fee";
+"fee_settings.base_fee" = "Max Base Fee";
+"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.errors.insufficient_balance" = "余额不足";
+"fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
+"fee_settings.errors.low_base_fee" = "Low base fee";
+"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
+"fee_settings.warning.risk_of_getting_stuck" = "有被卡的风险";
+"fee_settings.warning.risk_of_getting_stuck.info" = "交易可能被卡或失败。";
+"fee_settings.warning.overpricing" = "定价过高";
+"fee_settings.warning.overpricing.info" = "天然气价格高于交易所需的价格。";
+
+// Watch Address
+
+"watch_address.title" = "地址";
+"watch_address.watch" = "观察";
+
+// Nft Collections
+
+"nft_collections.title" = "NFT";
+"nft_collections.last_sale" = "收盘价";
+"nft_collections.average_7d" = "平均7天";
+"nft_collections.average_30d" = "平均30天";
+"nft_collections.on_sale" = "在售";
+
+// Nft Asset
+
+"nft_asset.last_sale" = "收盘价";
+"nft_asset.average_7d" = "7天平均";
+"nft_asset.average_30d" = "30天平均";
+"nft_asset.floor_price" = "底价";
+"nft_asset.on_sale" = "在售";
+"nft_asset.until_date" = "直到 %@";
+"nft_asset.buy_now" = "立即购买";
+"nft_asset.top_bid" = "最高出价";
+"nft_asset.minimum_bid" = "最低出价";
+"nft_asset.best_offer" = "最佳报价";
+"nft_asset.properties" = "属性";
+"nft_asset.description" = "描述";
+"nft_asset.details" = "详细信息";
+"nft_asset.details.contract_address" = "智能合约地址";
+"nft_asset.details.token_id" = "代币 ID";
+"nft_asset.details.token_standard" = "代币标准";
+"nft_asset.details.blockchain" = "区块链";
+"nft_asset.links" = "链接";
+"nft_asset.links.website" = "网站";
+"nft_asset.options.save_to_photos" = "保存到照片";
+"nft_asset.options.set_as_watch_face" = "设为表盘";
+"nft_asset.save_to_photos.success" = "NFT 图像已保存到您的照片库";
+"nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";

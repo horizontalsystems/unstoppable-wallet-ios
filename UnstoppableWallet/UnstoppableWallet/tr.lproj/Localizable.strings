@@ -3,6 +3,7 @@
 "button.cancel" = "İptal";
 "button.close" = "Kapat";
 "button.done" = "Bitti";
+"button.reset" = "Sıfırla";
 "button.restore" = "Geri Yükle";
 "button.next" = "İleri";
 "button.share" = "Paylaş";
@@ -19,6 +20,7 @@
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
 
+"alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
@@ -141,11 +143,12 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "balance.add_coin" = "Para Ekle";
 "balance.empty.add_coins" = "Kripto Para Ekle";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
+"balance.watch_empty.description" = "Bu cüzdan adresinde bakiye bulunmuyor";
 "balance.sort_by" = "Sırala";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
-"balance.sort.price_change" = "Price Change";
+"balance.sort.price_change" = "Fiyat Değişimi";
 
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
@@ -182,7 +185,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.tx_speed_recommended" = "Tavsiye Edilen";
 "send.tx_speed_high" = "Yüksek";
 "send.tx_speed_custom" = "Özel";
-"send.tx_duration" = "Süre";
 "send.duration.hours" = "%d sa.";
 "send.duration.minutes" = "%d dk.";
 "send.available_balance" = "Mevcut Bakiye";
@@ -208,7 +210,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.to" = "Alan";
-"send.confirmation.method" = "Yöntem";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
@@ -219,10 +220,12 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.resend_button" = "Yeniden Gönder";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.cancel_button" = "İşlemi İptal Et";
+"send.confirmation.nonce" = "Nonce";
 "send.amount_error.balance" = "Yetersiz bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
+"send.amount_warning.coin_needed_for_fee" = " Gelecekteki işlemler için ödeme yapabilmek için bakiyenizde biraz %@ bırakmayı göz önünde bulundurun.";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 "send.stuck_warning" = "Uyarı! Takılma riski";
 
@@ -241,7 +244,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
-"swap.powered_by" = "Powered By";
 "swap.allowance" = "Ödenek";
 "swap.you_get" = "Kazandığınız";
 "swap.token" = "Seç";
@@ -253,8 +255,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
-"swap.switch_provider.title" = "Swap Sağlayıcısı";
-"swap.switch_provider.subtitle" = "Değiştirici";
+"swap.switch_provider.title" = "Swap Hizmeti";
 
 "swap.price" = "Fiyat";
 "swap.buy_price" = "Alış Fiyatı";
@@ -263,7 +264,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.maximum_paid" = "Maksimum Ödenen";
 "swap.minimum_got" = "Minimum Kazanılan";
 "swap.estimate_short" = "(tah)";
-"swap.minimum_short" = "(min)";
+"swap.minimum_short" = "(dk)";
 
 // Swap Advanced Settings
 
@@ -294,9 +295,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Takas";
-"swap.confirmation.guaranteed" = "Garanti";
-"swap.confirmation.maximum" = "Maksimum";
-"swap.confirmation.estimated" = "Tahmini";
 "swap.confirmation.impact_too_high" = "Rayiç fiyat ile beklenen uzlaşma fiyatı arasındaki fark çok yüksek.";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
@@ -328,7 +326,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
 "market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total Market Cap";
+"market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24h Volume";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
@@ -369,55 +367,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 
-"market_discovery.filter_title.blockchain" = "Blockchains";
-"market_discovery.filter_title.dexes" = "DEXes";
-"market_discovery.filter_title.lending" = "Lending";
-"market_discovery.filter_title.privacy" = "Privacy";
-"market_discovery.filter_title.scaling" = "Scaling";
-"market_discovery.filter_title.oracles" = "Oracles";
-"market_discovery.filter_title.prediction_markets" = "Prediction";
-"market_discovery.filter_title.yield_aggregators" = "Yield Aggregators";
-"market_discovery.filter_title.stablecoins" = "Stablecoins";
-"market_discovery.filter_title.tokenized_bitcoin" = "Tokenized Bitcoin";
-"market_discovery.filter_title.exchange_tokens" = "Exchange Tokens";
-"market_discovery.filter_title.risk_management" = "Risk Management";
-"market_discovery.filter_title.wallets" = "Wallets";
-"market_discovery.filter_title.synthetics" = "Synthetics";
-"market_discovery.filter_title.index_funds" = "Index Funds";
-"market_discovery.filter_title.nft" = "NFT";
-"market_discovery.filter_title.fundraising" = "Fundraising";
-"market_discovery.filter_title.gaming" = "Gaming";
-"market_discovery.filter_title.infrastructure" = "Infrastructure";
-"market_discovery.filter_title.analytics" = "Analytics";
-"market_discovery.filter_title.storage" = "Storage";
-"market_discovery.filter_title.identity" = "Identity";
-"market_discovery.filter_title.yield_tokens" = "Yield Tokens";
-
-
-"market_discovery.filter_description.blockchain" = "Native cryptocurrencies on major blockchains.";
-"market_discovery.filter_description.dexes" = "Decentralized cryptocurrency exchanges.";
-"market_discovery.filter_description.lending" = "Protocols for lending and borrowing.";
-"market_discovery.filter_description.privacy" = "Anonymous cryptocurrencies and privacy solutions.";
-"market_discovery.filter_description.scaling" = "Solutions for faster blockchain transactions.";
-"market_discovery.filter_description.oracles" = "Gerçek dünya verilerini akıllı sözleşmeler ile buluşturuyor.";
-"market_discovery.filter_description.prediction_markets" = "Markets to bet on events in the future.";
-"market_discovery.filter_description.yield_aggregators" = "Solutions for earning from idle crypto assets.";
-"market_discovery.filter_description.stablecoins" = "Gerçek para ile birebir sabitlenmiş kripto tokenleri.";
-"market_discovery.filter_description.tokenized_bitcoin" = "Crypto tokens pegged 1–1 to Bitcoin price.";
-"market_discovery.filter_description.exchange_tokens" = "Tokens issued by centralized exchanges.";
-"market_discovery.filter_description.risk_management" = "Risk değerlendirmesi, sigorta ve koruma.";
-"market_discovery.filter_description.wallets" = "Tokens issued by cryptocurrency wallets.";
-"market_discovery.filter_description.synthetics" = "Platforms for creating decentralized synthetic assets.";
-"market_discovery.filter_description.index_funds" = "Assets that pegged in price to a set of tokens.";
-"market_discovery.filter_description.nft" = "NFT projects.";
-"market_discovery.filter_description.fundraising" = "Fundraising and token sale platforms.";
-"market_discovery.filter_description.gaming" = "Crypto projects in gaming and VR sector.";
-"market_discovery.filter_description.infrastructure" = "Projects building infrastructure solutions.";
-"market_discovery.filter_description.analytics" = "Token ile desteklenen analiz ve yatırım araçları.";
-"market_discovery.filter_description.storage" = "Decentralized data-storage.";
-"market_discovery.filter_description.identity" = "Decentralized identity.";
-"market_discovery.filter_description.yield_tokens" = "Interesting Bearing Tokens.";
-
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
 "market.search.title" = "Search";
@@ -430,11 +379,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.24h" = "24h";
 
 "market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.network_parameters" = "Network Parameters";
 "market.advanced_search.price_parameters" = "Price Parameters";
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume";
 "market.advanced_search.liquidity" = "DEX Liquidity";
+"market.advanced_search.blockchains" = "Blockchains";
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
 
@@ -481,7 +432,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "market.advanced_search_results.title" = "Results";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.title" = "Total Cap";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
@@ -506,9 +457,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_page.roi.day200" = "6 Month";
 "coin_page.roi.year1" = "1 Year";
 
-"coin_page.tab.overview" = "Overview";
-"coin_page.tab.markets" = "Market";
-"coin_page.tab.details" = "Details";
+"coin_page.tab.overview" = "Price";
+"coin_page.tab.markets" = "Markets";
+"coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Market Cap";
@@ -520,11 +471,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_page.trading_volume" = "Trading Volume";
 "coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
 "coin_page.markets" = "Markets";
-
-"coin_page.coin_markets" = "%@ Markets";
-"coin_page.coin_markets.sort_by" = "Sort By";
-"coin_page.coin_markets.sort_by.highest_volume" = "Highest Volume";
-"coin_page.coin_markets.sort_by.lowest_volume" = "Lowest Volume";
+"coin_page.markets.empty" = "No data available";
 
 "coin_page.token_liquidity" = "Token Liquidity";
 "coin_page.token_distribution" = "Token Distribution";
@@ -638,10 +585,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.yesterday" = "Dün";
 
 "transactions.types.all" = "Hepsi";
-"transactions.types.incoming" = "Gelen";
-"transactions.types.outgoing" = "Giden";
-"transactions.types.swap" = "Takas";
-"transactions.types.approve" = "Onayla";
+"transactions.types.incoming" = "Alındı";
+"transactions.types.outgoing" = "Gönderildi";
+"transactions.types.swap" = "Swap";
+"transactions.types.approve" = "Onaylar";
 
 // Transaction Info
 
@@ -803,13 +750,15 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
 "settings_manage_keys.delete.confirmation_remove" = "Bu işlem Cüzdanını bu cihazdan kaldıracak.";
 "settings_manage_keys.delete.confirmation_loose" = "Bu cüzdanın özel anahtarını yedeklemediyseniz, fonlarınıza erişiminizi kaybedersiniz.";
+"settings_manage_keys.delete.confirmation_watch" = "Bu cüzdanı silmek istediğinizden emin misiniz?";
 
 // Settings -> About App
 
 "settings.about_app.title" = "Uygulama Hakkında";
 "settings.about_app.app_name" = "Unstoppable Cüzdan";
-"settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact";
+"settings.about_app.whats_new" = "Yenilikler";
+"settings.about_app.website" = "Web sitesi";
+"settings.about_app.contact" = "Iletişim";
 "settings.about_app.rate_us" = "Bizi Değerlendirin";
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 "settings.about_app.email_copied" = "E-posta adresi kopyalandı";
@@ -904,8 +853,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Restore Select
 
-"restore_select.title" = "Kripto Parayı Seç";
-"restore_select.not_found" = "Bulunamadı";
+"restore_select.title" = "Blockchain Seç";
 
 // Lock Info
 
@@ -926,9 +874,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Intro
 
-"intro.next" = "İleri";
-"intro.start" = "Başlangıç";
-"intro.brand.description" = "Kripto Biriktirin ve Ticaretini Yapın. Mevduat üzerinde tam kontrole sahip olun. Anonim kalın.";
+"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Varlıkları Serbest Bırak";
 "intro.unchain_assets.description" = "Kendinizi kilitlemeyin ve başkalarının bunu sizin için yapmasına izin vermeyin";
 "intro.go_borderless.title" = "Sınırları Kaldırın";
@@ -963,6 +909,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
 "wallet_connect.button_reconnect" = "Yeniden bağlan";
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
+"ethereum_transaction.error.title" = "Hata";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Seçilen ücret tutarı çok düşüktür ve reddedilecektir!";
@@ -978,6 +925,11 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
+"wallet_connect.no_account.description" = "Uygun Cüzdan yok. Cüzdan oluşturmanız veya mevcut cüzdanı geri yüklemeniz gerekiyor.";
+"wallet_connect.no_account.i_understand" = "Anlıyorum";
+
+"wallet_connect.watch_account.description" = "Bu özellik salt izlenir cüzdanlarda çalışmaz, geri yüklediğiniz veya oluşturduğunuz bir cüzdana geçmeniz gerekiyor.";
+"wallet_connect.watch_account.switch" = "Değiştir";
 
 // App Status
 
@@ -995,7 +947,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "status_info.title" = "Durum";
 "status_info.pending.title" = "Devam ediyor";
-"status_info.pending.content" = "İşlem henüz blok zincirinde onaylanmadı. Tavsiye edilen veya daha yüksek ücret ayarı ile gönderilen işlemler genellikle 10 dakika içerisinde işlenir. Düşük bir ücretle gönderilen işlemler birkaç saat hatta günlerce beklemede kalabilir ve hatta tamamen reddedilebilir.";
+"status_info.pending.content" = "İşlem henüz blok zincirinde onaylanmadı. Tavsiye edilen veya daha yüksek ücret ayarı ile gönderilen işlemler genellikle 10 dakika içerisinde işlenir. Düşük bir ücretle gönderilen işlemler birkaç saat hatta günlerce beklemede kalabilir ve hatta reddedilebilir. Ayrıca, Unstoppable cüzdan arayüzünde görüntülenen bir işlemin durumunun genellikle kısa bir gecikmeyle güncellendiğini de unutmayın.";
 "status_info.processing.title" = "İşleniyor";
 "status_info.processing.content" = "İşlem blok zincirine dahil edildi ama kalıcı bir sonuca ulaşmadı. Bu noktada, küçük ödemeler için işlemin tamamlandığını düşünebilirsiniz. Daha büyük ödemeler için ise, işlem durumu tamamlandı olarak değişene kadar beklemeniz önerilir.";
 "status_info.completed.title" = "Tamamlandı";
@@ -1003,20 +955,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "status_info.failed.title" = "Başarısız";
 "status_info.failed.content" = "İşlem gerçekleşmedi ve hiçbir değer transfer edilmedi. Başarısız durumdaki işlemler yine de blok zincirine yazılır ve işlem ücretlerini tüketir. Unstoppable uygulaması, bu tür işlemlerin başarısız olma nedenini gösteremez, ama kullanıcılar, etherscan.io gibi açık bir blok gezgininde bunu kontrol edebilirler.";
 
-// Enable Coins
-
-"enable_coins.title" = "Kripto Paraları Etkinleştir";
-"enable_coins.description" = "Bakiyesi olan tüm %@ kripto paraları etkinleştirin.";
-"enable_coins.enable_button" = "Etkinleştir";
-"enable_coins.enabling" = "Etkinleştiriliyor…";
-"enable_coins.enabled_coins" = "Enabled %@ more coins";
-"enable_coins.enabled_no_coins" = "Bakiyesi olan para bulunamadı";
-
 // Onboarding
 
-"onboarding.balance.description" = "Henüz cüzdanınız yok. Yeni oluşturun veya mevcut olanı geri yükleyin";
+"onboarding.balance.description" = "Henüz cüzdan yok";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
+"onboarding.balance.watch" = "Adresi İzle";
 "onboarding.balance.password_hint" = "İpucu! Mevcut bir cüzdanı geri yüklemek, yeni bir şifre ile en baştan bir cüzdan oluşturur. Birden fazla cüzdan için 12-24 kelimelik tek bir hatırlatıcı kurtarma öbeği kullanmak istiyorsanız kullanışlıdır.";
 
 // Manage Accounts
@@ -1045,5 +989,61 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
-"evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+"evm_network.switches_automatically" = "otomatik olarak değişir";
+"evm_network.description" = "MainNet HTTP sağlayıcısı bir dizi kaynak kullanır (aşağıda listelenmiştir) ve bunlar arasında otomatik olarak geçiş yapar.";
+
+// Fee Settings
+
+"fee_settings" = "Ücret Ayarları";
+"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_price" = "Gas Price";
+"fee_settings.current_base_fee" = "Current Base Fee";
+"fee_settings.base_fee" = "Max Base Fee";
+"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.errors.insufficient_balance" = "Yetersiz bakiye";
+"fee_settings.errors.insufficient_balance.info" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
+"fee_settings.errors.low_base_fee" = "Low base fee";
+"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
+"fee_settings.warning.risk_of_getting_stuck" = "Takılma riski";
+"fee_settings.warning.risk_of_getting_stuck.info" = "İşlem takılabilir veya başarısız olabilir.";
+"fee_settings.warning.overpricing" = "Aşırı yüksek fiyat";
+"fee_settings.warning.overpricing.info" = "Gaz ücreti, işlem için normal olandan daha yüksek.";
+
+// Watch Address
+
+"watch_address.title" = "Adres";
+"watch_address.watch" = "İzle";
+
+// Nft Collections
+
+"nft_collections.title" = "NFT'ler";
+"nft_collections.last_sale" = "Son İndirim";
+"nft_collections.average_7d" = "Ortalama 7G";
+"nft_collections.average_30d" = "Ortalama 30G";
+"nft_collections.on_sale" = "İndirimde";
+
+// Nft Asset
+
+"nft_asset.last_sale" = "Son İndirim";
+"nft_asset.average_7d" = "7 Günlük Ortalama";
+"nft_asset.average_30d" = "30 Günlük Ortalama";
+"nft_asset.floor_price" = "Taban Fiyatı";
+"nft_asset.on_sale" = "İndirimde";
+"nft_asset.until_date" = "%@ tarihine kadar";
+"nft_asset.buy_now" = "Şimdi Al";
+"nft_asset.top_bid" = "En Yüksek Teklif";
+"nft_asset.minimum_bid" = "Minimum Teklif";
+"nft_asset.best_offer" = "En İyi Teklif";
+"nft_asset.properties" = "Özellikler";
+"nft_asset.description" = "Açıklama";
+"nft_asset.details" = "Ayrıntılar";
+"nft_asset.details.contract_address" = "Sözleşme Adresi";
+"nft_asset.details.token_id" = "Token Kimliği";
+"nft_asset.details.token_standard" = "Token Standardı";
+"nft_asset.details.blockchain" = "Blockchain";
+"nft_asset.links" = "Bağlantılar";
+"nft_asset.links.website" = "Web sitesi";
+"nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
+"nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
+"nft_asset.save_to_photos.success" = "NFT resmi fotoğraf kitaplığınıza kaydedildi";
+"nft_asset.save_to_photos.failed" = "NFT resmi kaydedilemedi";

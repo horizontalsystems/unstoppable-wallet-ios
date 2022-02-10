@@ -1,2 +1,3 @@
 "NSCameraUsageDescription" = "Необходим доступ к вашей камере для сканирования QR-код.";
 "NSFaceIDUsageDescription" = "FaceID будет использован для разблокировки кошелька.";
+"NSPhotoLibraryAddUsageDescription" = "Нам нужен доступ к фотоальбому для сохранения NFT-изображений.";
