@@ -14,81 +14,82 @@
 "button.report" = "Şikayet Et";
 "button.add" = "Ekle";
 "button.approve" = "Onayla";
-"button.reject" = "Reject";
-"button.connect" = "Connect";
-"button.save" = "Save";
-"button.sign" = "Sign";
-"button.more" = "Show More";
+"button.reject" = "Reddet";
+"button.connect" = "Bağlan";
+"button.save" = "Kaydet";
+"button.sign" = "kaydol";
+"button.more" = "Daha Fazlası";
 
-"alert" = "Alert";
-"alert.copied" = "Copied";
-"alert.no_internet" = "No Internet";
-"alert.wrong_amount" = "Wrong Amount";
-"alert.no_fee" = "Wrong Fee";
-"alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert" = "Uyarı";
+"alert.copied" = "Kopyalandı";
+"alert.no_internet" = "Internet Bağlantısı Yok";
+"alert.wrong_amount" = "Yanlış Tutar";
+"alert.no_fee" = "Yanlış Masraf";
+"alert.unknown_error" = "Bilinmeyen Hata";
+"alert.success_action" = "tamamlandı
+";
 
-"action.loading" = "loading...";
-"placeholder.search" = "Search";
+"action.loading" = "yükleniyor...";
+"placeholder.search" = "Ara";
 
-"status" = "Status";
-"connecting" = "Connecting...";
-"online" = "Online";
-"offline" = "Offline";
-"confirm" = "Confirm";
-"connect" = "Connect";
-"price" = "Price";
-"value" = "Value";
-"note" = "Note";
+"status" = "Durum";
+"connecting" = "Bağlanıyor...";
+"online" = "Çevrimiçi";
+"offline" = "Çevrimdışı";
+"confirm" = "Onayla";
+"connect" = "Bağlan";
+"price" = "Fiyat";
+"value" = "Değer";
+"note" = "Not";
 
-"version" = "Version %@";
+"version" = "Sürüm %@";
 
 "n/a" = "N/A";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "Unstoppable, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
 
-Go to Settings - > Unstoppable and allow access to the camera.";
-"access_camera.settings" = "Settings";
+Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
+"access_camera.settings" = "Ayarlar";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of between 12 and 24 words. The words need to be entered in the correct order and separated by spaces";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
-"restore.checksum_error" = "Invalid checksum";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
-"restore.error.empty_passphrase" = "The passphrase cannot be empty";
+"restore.title" = "Cüzdan Seçin";
+"restore.enter_key" = "Anahtarı girin";
+"restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir";
+"restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
+"restore.checksum_error" = "Geçersiz sağlama toplamı";
+"restore.passphrase" = "Parola";
+"restore.input.passphrase" = "Parola";
+"restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız şifreyi girin";
+"restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Newer (recommended)";
-"coin_settings.derivation.title.bip84" = "Newest";
-"coin_settings.title" = "Blockchain Settings";
+"coin_settings.derivation.title.bip49" = "Daha yeni (önerilen)";
+"coin_settings.derivation.title.bip84" = "En yeni";
+"coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
-"sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.title" = "Address Format";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
+"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018 öncesinde yaygın";
+"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018 sonrasında yaygın";
+"sync_mode.from_blockchain" = "Blockchain çıkışlı";
+"blockchain_settings.title" = "Adres Formatı";
+"blockchain_settings.description" = "Koin için adres formatını seçin. Emin değilseniz önerilen seçenekle devam edin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Coin Type";
-"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
-"coin_platforms.native" = "Native";
+"coin_platforms.title" = "Kripto Para Tipi";
+"coin_platforms.description" = "Bu token birden fazla blok zincirinde mevcuttur. Kullanmak istediğiniz sürümü/sürümleri seçin.";
+"coin_platforms.native" = "Yerel";
 
 // Show Key
 
-"show_key.title" = "Key";
-"show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
-"show_key.button_show" = "Show";
+"show_key.title" = "Anahtar";
+"show_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
+"show_key.button_show" = "Göster";
 "show_key.tab.recovery_phrase" = "Recovery Phrase";
 "show_key.tab.private_keys" = "Private Keys";
 "show_key.passphrase" = "Passphrase";
@@ -141,8 +142,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.synced_through" = "until %@";
 "balance.add_coin" = "Add Coin";
 "balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.watch_empty.description" = "This wallet address does not have any balance";
+"balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
+"balance.watch_empty.description" = "Bu cüzdan adresinde bakiye bulunmuyor";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
@@ -152,12 +153,12 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
 //Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
+"switch_account.title" = "Cüzdan Değiştir";
+"switch_account.subtitle" = "Hızlı değiştirme için cüzdan seçin";
 //Release notes
 
 "release_notes.title" = "What's New";
@@ -205,7 +206,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
 "send.fee_info.header_fast" = "High";
 "send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_conclusion" = "Unstoppable cüzdan, ağ etkinliğine dayalı olarak eğitimli bir tahmin yapar ve önerilen ücret değerlerinin her zaman beklenen davranışla sonuçlanacağını garanti edemez.";
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.to" = "To";
@@ -514,7 +515,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.major_holders" = "Major Holders";
 "coin_page.major_holders.chart.description" = "In top 10 Ethereum wallets";
 "coin_page.major_holders.top_ethereum_wallets" = "Top Ethereum Wallets";
-"coin_page.major_holders.description" = "The chart above shows the % of all tokens in circulation held by the top 10 wallets. The lower the % the more distributed the coin is.";
+"coin_page.major_holders.description" = "Chart above shows the % of all tokens in circulation held by top 10 wallets. The lower the % the more distributed the coin is.";
 
 
 "coin_page.tvl_rank.multi_chain" = "Multi-Chain";
@@ -837,14 +838,14 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Create";
 "create_wallet.mnemonic" = "Mnemonic";
 "create_wallet.n_words" = "%@ words";
 "create_wallet.passphrase" = "Passphrase";
 "create_wallet.input.passphrase" = "Passphrase";
 "create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
+"create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
@@ -924,17 +925,17 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
-"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.description" = "Uygun Cüzdan yok. Cüzdan oluşturmanız veya mevcut cüzdanı geri yüklemeniz gerekiyor.";
 "wallet_connect.no_account.i_understand" = "Anlıyorum";
 
-"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
+"wallet_connect.watch_account.description" = "Bu özellik salt izlenir cüzdanlarda çalışmaz, geri yüklediğiniz veya oluşturduğunuz bir cüzdana geçmeniz gerekiyor.";
 "wallet_connect.watch_account.switch" = "Switch";
 
 // App Status
 
 "app_status.title" = "App Status";
 "app_status.application_status" = "Application status";
-"app_status.linked_wallets" = "Linked Wallets";
+"app_status.linked_wallets" = "Bağlantılı Cüzdanlar";
 "app_status.version_history" = "Version History";
 "app_status.blockchain_status" = "Blockchain status";
 
