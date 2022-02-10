@@ -996,12 +996,15 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "fee_settings" = "Fee Settings";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_price" = "燃料价格";
+"fee_settings.current_base_fee" = "Current Base Fee";
+"fee_settings.base_fee" = "Max Base Fee";
+"fee_settings.tips" = "Max Miner Tips";
 "fee_settings.errors.insufficient_balance" = "余额不足";
 "fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
+"fee_settings.errors.low_base_fee" = "Low base fee";
+"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
 "fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
-"fee_settings.warning.high_base_fee" = "Base Fee is too high";
-"fee_settings.warning.high_base_fee.info" = "At the moment the base fee for transacting is high. It may go down when the network becomes less congested.";
 "fee_settings.warning.overpricing" = "Overpricing";
 "fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
 
