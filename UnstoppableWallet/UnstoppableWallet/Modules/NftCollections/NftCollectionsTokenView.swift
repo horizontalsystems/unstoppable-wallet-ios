@@ -9,6 +9,7 @@ class NftCollectionsTokenView: UIView {
 
     private let button = UIButton()
     private let imageView = UIImageView()
+    private let imagePlaceholderLabel = UILabel()
     private let nameLabel = UILabel()
     private let coinPriceLabel = UILabel()
     private let fiatPriceLabel = UILabel()
@@ -30,7 +31,19 @@ class NftCollectionsTokenView: UIView {
         button.setBackgroundColor(.themeLawrencePressed, for: .highlighted)
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
 
+        addSubview(imagePlaceholderLabel)
         addSubview(imageView)
+
+        imagePlaceholderLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(imageView).inset(CGFloat.margin12)
+            maker.centerY.equalTo(imageView)
+        }
+
+        imagePlaceholderLabel.numberOfLines = 0
+        imagePlaceholderLabel.textAlignment = .center
+        imagePlaceholderLabel.font = .microSB
+        imagePlaceholderLabel.textColor = .themeGray
+
         imageView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview().inset(Self.imageMargin)
             maker.bottom.equalToSuperview().inset(Self.bottomHeight)
@@ -98,6 +111,11 @@ class NftCollectionsTokenView: UIView {
         onTap?()
     }
 
+    var imagePlaceholder: String? {
+        get { imagePlaceholderLabel.text }
+        set { imagePlaceholderLabel.text = newValue }
+    }
+
     var name: String? {
         get { nameLabel.text }
         set { nameLabel.text = newValue }
@@ -119,8 +137,14 @@ class NftCollectionsTokenView: UIView {
     }
 
     func setImage(url: String?) {
+        imagePlaceholderLabel.isHidden = false
+
         if let urlString = url, let url = URL(string: urlString) {
-            imageView.kf.setImage(with: url, options: [.transition(.fade(0.5))])
+            imageView.kf.setImage(with: url, options: [.transition(.fade(0.5))]) { [weak self] result in
+                if case .success = result {
+                    self?.imagePlaceholderLabel.isHidden = true
+                }
+            }
         } else {
             imageView.image = nil
         }

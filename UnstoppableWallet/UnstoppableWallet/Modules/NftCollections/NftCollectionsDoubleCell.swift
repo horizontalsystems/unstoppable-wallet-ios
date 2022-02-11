@@ -37,6 +37,7 @@ class NftCollectionsDoubleCell: UITableViewCell {
     }
 
     private func bind(view: NftCollectionsTokenView, viewItem: NftCollectionsViewModel.AssetViewItem, onTap: @escaping (NftCollectionsViewModel.AssetViewItem, CGFloat) -> ()) {
+        view.imagePlaceholder = viewItem.name
         view.name = viewItem.name
         view.coinPrice = viewItem.coinPrice
         view.fiatPrice = viewItem.fiatPrice
