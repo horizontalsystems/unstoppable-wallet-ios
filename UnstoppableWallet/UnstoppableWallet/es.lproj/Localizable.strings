@@ -926,8 +926,8 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.no_account.description" = "No es un monedero adecuado. Necesitas crear o restaurar el monedero existente.";
 "wallet_connect.no_account.i_understand" = "Entiendo";
 
-"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
-"wallet_connect.watch_account.switch" = "Switch";
+"wallet_connect.watch_account.description" = "Esta característica no funciona con los monederos \"watch-only\", necesita cambiar a un monedero restaurado o creado.";
+"wallet_connect.watch_account.switch" = "Cambiar";
 
 // App Status
 
@@ -945,7 +945,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "status_info.title" = "Estado";
 "status_info.pending.title" = "Pendiente";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within 10 minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Also keep in mind that status of an individual transaction shown in Unstoppable wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "La transacción todavía no ha sido confirmada en la blockchain. Las transacciones enviadas con valores de comisión recomendados o más altos, generalmente se procesan dentro de 10 minutos. Las transacciones enviadas con una tarifa baja pueden permanecer pendientes por unas pocas horas o incluso días, y hasta pueden ser rechazadas por completo. Además, tenga en cuenta que el estado de una transacción individual que se muestra en la interfaz de Unstoppable wallet generalmente se actualiza con un breve retraso.";
 "status_info.processing.title" = "Procesando";
 "status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
@@ -955,10 +955,10 @@ poner en peligro la seguridad de mis fondos.";
 
 // Onboarding
 
-"onboarding.balance.description" = "No wallets yet";
+"onboarding.balance.description" = "Todavía no hay monederos";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.watch" = "Watch Address";
+"onboarding.balance.watch" = "Ver Dirección";
 "onboarding.balance.password_hint" = "¡Sugerencia! Restaurar un monedero existente pero con una nueva contraseña generará un nuevo monedero. Esto puede ser útil si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples monederos.";
 
 // Manage Accounts
@@ -987,61 +987,61 @@ poner en peligro la seguridad de mis fondos.";
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
-"evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+"evm_network.switches_automatically" = "cambiar automáticamente";
+"evm_network.description" = "El proveedor HTTP MainNet utiliza un número de fuentes (enumeradas a continuación) y cambia entre ellas automáticamente.";
 
 // Fee Settings
 
-"fee_settings" = "Fee Settings";
+"fee_settings" = "Configuración de tarifas";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.current_base_fee" = "Current Base Fee";
-"fee_settings.base_fee" = "Max Base Fee";
-"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.current_base_fee" = "Tarifa Base actual";
+"fee_settings.base_fee" = "Tarifa Base Máxima";
+"fee_settings.tips" = "Tips de los mejores mineros";
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.insufficient_balance.info" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
-"fee_settings.errors.low_base_fee" = "Low base fee";
-"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
-"fee_settings.warning.overpricing" = "Overpricing";
-"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
+"fee_settings.errors.low_base_fee" = "Tarifa Base baja";
+"fee_settings.errors.low_base_fee.info" = "La tarifa base máxima configurada es demasiado baja para incluir la transacción.";
+"fee_settings.warning.risk_of_getting_stuck" = "Riesgo de atascarse";
+"fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede quedarse atascada o fallar.";
+"fee_settings.warning.overpricing" = "Sobreprecio";
+"fee_settings.warning.overpricing.info" = "El precio del gas es más alto de lo necesario para la transacción.";
 
 // Watch Address
 
-"watch_address.title" = "Address";
-"watch_address.watch" = "Watch";
+"watch_address.title" = "Dirección";
+"watch_address.watch" = "Ver";
 
 // Nft Collections
 
-"nft_collections.title" = "NFTs";
-"nft_collections.last_sale" = "Last Sale";
-"nft_collections.average_7d" = "Average 7D";
-"nft_collections.average_30d" = "Average 30D";
-"nft_collections.on_sale" = "On Sale";
+"nft_collections.title" = "NFTS";
+"nft_collections.last_sale" = "Última venta";
+"nft_collections.average_7d" = "Promedio 7D";
+"nft_collections.average_30d" = "Promedio 30D";
+"nft_collections.on_sale" = "En venta";
 
 // Nft Asset
 
-"nft_asset.last_sale" = "Last Sale";
-"nft_asset.average_7d" = "7 Day Average";
-"nft_asset.average_30d" = "30 Day Average";
-"nft_asset.floor_price" = "Floor Price";
-"nft_asset.on_sale" = "On Sale";
-"nft_asset.until_date" = "until %@";
-"nft_asset.buy_now" = "Buy Now";
-"nft_asset.top_bid" = "Top Bid";
-"nft_asset.minimum_bid" = "Minimum Bid";
-"nft_asset.best_offer" = "Best Offer";
-"nft_asset.properties" = "Properties";
-"nft_asset.description" = "Description";
-"nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
-"nft_asset.details.token_id" = "Token ID";
-"nft_asset.details.token_standard" = "Token Standard";
+"nft_asset.last_sale" = "Última venta";
+"nft_asset.average_7d" = "Promedio de 7 días";
+"nft_asset.average_30d" = "Promedio de 30 días";
+"nft_asset.floor_price" = "Precio mínimo";
+"nft_asset.on_sale" = "En venta";
+"nft_asset.until_date" = "hasta %@";
+"nft_asset.buy_now" = "Comprar ahora";
+"nft_asset.top_bid" = "Lcitación Superior";
+"nft_asset.minimum_bid" = "Licitación Mínima";
+"nft_asset.best_offer" = "Mejor oferta";
+"nft_asset.properties" = "Propiedades";
+"nft_asset.description" = "Descripción";
+"nft_asset.details" = "Detalles";
+"nft_asset.details.contract_address" = "Dirección del contrato";
+"nft_asset.details.token_id" = "ID del token";
+"nft_asset.details.token_standard" = "Token estándar";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "Enlaces";
 "nft_asset.links.website" = "Sitio Web";
-"nft_asset.options.save_to_photos" = "Save to Photos";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
-"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
+"nft_asset.options.save_to_photos" = "Guardar a Fotos";
+"nft_asset.options.set_as_watch_face" = "Establecer como Watch Face";
+"nft_asset.save_to_photos.success" = "La imagen NFT se guardó en tu galería de fotos";
+"nft_asset.save_to_photos.failed" = "Error al guardar la imagen NFT";
