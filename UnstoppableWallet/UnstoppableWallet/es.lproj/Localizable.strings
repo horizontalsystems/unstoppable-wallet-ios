@@ -20,7 +20,7 @@
 "button.sign" = "Firma";
 "button.more" = "Mostrar más";
 
-"alert" = "Alert";
+"alert" = "Alerta";
 "alert.copied" = "Copiado";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.wrong_amount" = "Cantidad Incorrecta";
@@ -140,7 +140,7 @@
 "balance.add_coin" = "Añadir Monedas";
 "balance.empty.add_coins" = "Añadir Monedas";
 "balance.empty.description" = "No has añadido ninguna moneda a este monedero.";
-"balance.watch_empty.description" = "This wallet address does not have any balance";
+"balance.watch_empty.description" = "Esta dirección de billetera no tiene saldo";
 "balance.sort_by" = "Ordenar por";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
@@ -222,7 +222,7 @@
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
-"send.amount_warning.coin_needed_for_fee" = " Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.amount_warning.coin_needed_for_fee" = " Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 "send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
@@ -252,7 +252,7 @@
 "swap.approving_button" = "Aprobando...";
 "swap.trade_error.not_found" = "No se pueden permutar estos tokens";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
-"swap.switch_provider.title" = "Swap Service";
+"swap.switch_provider.title" = "Servicio de Intercambio";
 
 "swap.price" = "Precio";
 "swap.buy_price" = "Precio de Compra";
@@ -490,7 +490,7 @@
 "coin_page.treasuries.filter.private" = "Private";
 "coin_page.treasuries.filter.etf" = "ETF";
 
-"coin_page.funds_invested" = "Funds Invested";
+"coin_page.funds_invested" = "Fondos invertidos";
 "coin_page.funds_invested.lead" = "Lead";
 
 "coin_page.reports" = "Reports";
@@ -582,10 +582,10 @@
 "transactions.yesterday" = "Ayer";
 
 "transactions.types.all" = "Todo";
-"transactions.types.incoming" = "Received";
+"transactions.types.incoming" = "Recibido";
 "transactions.types.outgoing" = "Enviado";
 "transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Approvals";
+"transactions.types.approve" = "Aprobaciones";
 
 // Transaction Info
 
@@ -748,7 +748,7 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos de este dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"settings_manage_keys.delete.confirmation_watch" = "Are you sure want to delete this wallet?";
+"settings_manage_keys.delete.confirmation_watch" = "¿Estás seguro que deseas borrar este monedero?";
 
 // Settings -> About App
 
@@ -923,7 +923,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
-"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.description" = "No es un monedero adecuado. Necesitas crear o restaurar el monedero existente.";
 "wallet_connect.no_account.i_understand" = "Entiendo";
 
 "wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
