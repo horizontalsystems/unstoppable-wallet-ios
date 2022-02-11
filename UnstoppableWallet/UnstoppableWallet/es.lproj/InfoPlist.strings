@@ -1,3 +1,3 @@
 "NSCameraUsageDescription" = "La aplicación necesita acceder a la cámara para escanear códigos QR.";
 "NSFaceIDUsageDescription" = "Se utilizará FaceID para desbloquear el monedero.";
-"NSPhotoLibraryAddUsageDescription" = "We need access to photo library to save NFT images";
+"NSPhotoLibraryAddUsageDescription" = "Necesitamos acceso a tu galería de fotos para guardar las imágenes NFT";
