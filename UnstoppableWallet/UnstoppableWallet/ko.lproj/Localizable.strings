@@ -957,7 +957,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "onboarding.balance.description" = "No wallets yet";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
-"onboarding.balance.watch" = "Watch Address";
+"onboarding.balance.watch" = "주소 관찰";
 "onboarding.balance.password_hint" = "중요! 기존 지갑을 복원하지만 새로운 암호를 사용하면 완전히 새로운 지갑이 생성됩니다. 여러 지갑에 대해 단일 12-24 단어 니모닉 복구 구문을 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
@@ -1004,12 +1004,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "fee_settings.warning.risk_of_getting_stuck" = "갇힐 위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 중단되거나 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "과대 가격 층정";
-"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
+"fee_settings.warning.overpricing.info" = "가스 가격이 거래에 필요한 것보다 높습니다.";
 
 // Watch Address
 
-"watch_address.title" = "Address";
-"watch_address.watch" = "Watch";
+"watch_address.title" = "주소";
+"watch_address.watch" = "관찰";
 
 // Nft Collections
 
