@@ -956,7 +956,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Onboarding
 
-"onboarding.balance.description" = "No wallets yet";
+"onboarding.balance.description" = "尚无钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
 "onboarding.balance.watch" = "观察地址";
