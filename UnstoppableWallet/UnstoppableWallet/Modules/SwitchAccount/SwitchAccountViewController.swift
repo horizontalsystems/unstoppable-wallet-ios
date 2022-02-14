@@ -67,7 +67,7 @@ extension SwitchAccountViewController: SectionsDataSource {
                 tableView: tableView,
                 id: "item_\(index)",
                 height: .heightDoubleLineCell,
-                bind: { [weak self] cell in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in

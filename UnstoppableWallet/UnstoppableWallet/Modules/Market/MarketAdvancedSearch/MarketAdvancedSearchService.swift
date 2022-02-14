@@ -251,7 +251,6 @@ class MarketAdvancedSearchService {
                      (.iotex, .iotex),
                      (.moonriver, .moonriver),
                      (.okex, .okexChain),
-                     (.okex, .okexChain),
                      (.polygon, .polygonPos),
                      (.solana, .solana),
                      (.sora, .sora),

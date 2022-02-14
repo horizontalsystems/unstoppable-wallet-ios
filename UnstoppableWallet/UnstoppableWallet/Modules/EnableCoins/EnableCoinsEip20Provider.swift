@@ -54,7 +54,7 @@ extension EnableCoinsEip20Provider {
 
         let request = networkManager.session.request(url, parameters: parameters)
 
-        return networkManager.single(request: request).map { [unowned self] (response: RpcResponse) -> Int in
+        return networkManager.single(request: request).map { (response: RpcResponse) -> Int in
             Int(response.result.stripHexPrefix(), radix: 16) ?? 0
         }
     }
