@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import LanguageKit
 
 struct MarketCategoryModule {
 
@@ -7,7 +8,8 @@ struct MarketCategoryModule {
         guard let service = MarketCategoryService(
                 categoryUid: categoryUid,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
+                currencyKit: App.shared.currencyKit,
+                languageManager: LanguageManager.shared
         ) else {
             return nil
         }
