@@ -31,7 +31,7 @@ class AddressParserChain {
                 if let address = handlerStates.first(where: { $0.address != nil })?.address {
                     return Single.just(address)
                 }
-                if let error = handlerStates.first(where: { $0.error != nil })?.error {
+                if let _ = handlerStates.first(where: { $0.error != nil })?.error {
                     return Single.error(ParserError.fetchError)
                 }
 

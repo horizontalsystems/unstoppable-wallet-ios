@@ -65,8 +65,7 @@ struct SendEvmConfirmationModule {
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
-        guard let platformCoin = platformCoin(networkType: evmKit.networkType),
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) as? ICustomRangedFeeRateProvider else {
+        guard let platformCoin = platformCoin(networkType: evmKit.networkType) else {
             return nil
         }
 

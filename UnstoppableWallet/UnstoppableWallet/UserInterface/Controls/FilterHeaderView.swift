@@ -223,7 +223,7 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     }
 
     private func handleSelected(indexPath: IndexPath) {
-        guard let selectedCell = collectionView.cellForItem(at: indexPath) else {
+        guard collectionView.cellForItem(at: indexPath) != nil else {
             return
         }
         layoutSelectedView(indexPath: indexPath)

@@ -77,7 +77,6 @@ class AmountInputViewModel {
         amountWarningRelay.accept(amountWarning.flatMap { warning in
             switch warning {
             case .highPriceImpact(let priceImpact): return "-\(priceImpact.description)%"
-            default: return nil
             }
         })
     }

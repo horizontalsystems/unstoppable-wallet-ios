@@ -18,7 +18,7 @@ extension ZcashAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
         do {
-            try validate(address: address)
+            _ = try validate(address: address)
             return Single.just(Address(raw: address, domain: nil))
         } catch {
             return Single.error(AddressService.AddressError.invalidAddress)
@@ -27,7 +27,7 @@ extension ZcashAddressParserItem: IAddressParserItem {
 
     func isValid(address: String) -> Single<Bool> {
         do {
-            try adapter.validate(address: address)
+            _ = try adapter.validate(address: address)
             return Single.just(true)
         } catch {
             return Single.just(false)
