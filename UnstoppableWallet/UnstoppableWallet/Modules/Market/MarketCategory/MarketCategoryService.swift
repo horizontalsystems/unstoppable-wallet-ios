@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import LanguageKit
 
 class MarketCategoryService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
@@ -9,6 +10,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
     let category: CoinCategory
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let languageManager: LanguageManager
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
@@ -25,7 +27,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         }
     }
 
-    init?(categoryUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init?(categoryUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager) {
         guard let category = try? marketKit.coinCategory(uid: categoryUid) else {
             return nil
         }
@@ -33,6 +35,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         self.category = category
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.languageManager = languageManager
 
         syncMarketInfos()
     }
@@ -72,6 +75,10 @@ extension MarketCategoryService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
+    }
+
+    var categoryDescription: String? {
+        category.descriptions[languageManager.currentLanguage] ?? category.descriptions.first?.value
     }
 
     func refresh() {

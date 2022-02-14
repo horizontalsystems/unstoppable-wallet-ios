@@ -9,7 +9,7 @@ class MarketCategoryViewModel {
 
         viewItem = ViewItem(
                 name: service.category.name,
-                description: service.category.descriptions.first?.value,
+                description: service.categoryDescription,
                 imageUrl: service.category.imageUrl
         )
     }
