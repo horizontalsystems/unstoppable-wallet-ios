@@ -14,11 +14,11 @@ class SendEvmCautionsFactory {
                                 type: .error
                         )
                     ]
-                case .lowBaseFee:
+                case .lowMaxFee:
                     return [
                         TitledCaution(
-                                title: "fee_settings.errors.low_base_fee".localized,
-                                text: "fee_settings.errors.low_base_fee.info".localized(baseCoinService.platformCoin.coin.code),
+                                title: "fee_settings.errors.low_max_fee".localized,
+                                text: "fee_settings.errors.low_max_fee.info".localized(baseCoinService.platformCoin.coin.code),
                                 type: .error
                         )
                     ]

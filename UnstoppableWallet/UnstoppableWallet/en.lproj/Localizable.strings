@@ -1008,12 +1008,12 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "fee_settings.tips.info" = "Miner tips are defined as optional fees that users may include to incentivize network participants to prioritize user's transaction.";
 "fee_settings.errors.insufficient_balance" = "Insufficient balance";
 "fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
-"fee_settings.errors.low_base_fee" = "Low base fee";
-"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risk of getting stuck";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may get stuck or fail.";
-"fee_settings.warning.overpricing" = "Overpricing";
-"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
+"fee_settings.errors.low_max_fee" = "Low Fee";
+"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Fee Too High";
+"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
 // Watch Address
 
