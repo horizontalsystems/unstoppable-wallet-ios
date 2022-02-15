@@ -16,6 +16,7 @@ class InputBadgeWrapperView: UIView, ISizeAwareView {
             maker.centerY.equalToSuperview()
         }
 
+        badgeView.set(style: .small)
         badgeView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 

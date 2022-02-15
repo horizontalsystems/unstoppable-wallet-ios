@@ -12,7 +12,7 @@ class WalletConnectXListViewController: ThemeViewController {
     private let listViewV1: WalletConnectV1XListView
     private let listViewV2: WalletConnectV2XListView
 
-    private let tableView = SectionsTableView(style: .grouped)
+    let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectXScanQrViewController?
 
     init(listViewV1: WalletConnectV1XListView, listViewV2: WalletConnectV2XListView, viewModel: WalletConnectXListViewModel) {
@@ -98,7 +98,7 @@ class WalletConnectXListViewController: ThemeViewController {
 extension WalletConnectXListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [listViewV2.section, listViewV1.section].flatMap { $0 }
+        (listViewV2.sections + listViewV1.sections).compactMap { $0 }
     }
 
 }
@@ -107,13 +107,6 @@ extension WalletConnectXListViewController: IScanQrViewControllerDelegate {
 
     func didScan(viewController: UIViewController, string: String) {
         viewModel.didScan(string: string)
-    }
-
-}
-extension WalletConnectXListViewController {
-
-    var containerBounds: CGRect {
-        tableView.bounds
     }
 
 }

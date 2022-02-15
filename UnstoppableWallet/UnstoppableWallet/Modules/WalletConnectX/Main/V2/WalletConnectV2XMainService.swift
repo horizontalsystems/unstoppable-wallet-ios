@@ -82,8 +82,8 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
         if let proposal = proposal {
             return WalletConnectXMainModule.AppMetaItem(
                     name: proposal.proposer.name ?? "",
-                    url: proposal.proposer.description ?? "",
-                    description: proposal.proposer.url ?? "",
+                    url: proposal.proposer.url ?? "",
+                    description: proposal.proposer.description ?? "",
                     icons: proposal.proposer.icons ?? []
             )
         }

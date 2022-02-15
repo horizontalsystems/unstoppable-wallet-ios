@@ -11,7 +11,8 @@ class WalletConnectV2XListView {
     private let viewModel: WalletConnectV2XListViewModel
     weak var sourceViewController: WalletConnectXListViewController?
 
-    private(set) var viewItems = [WalletConnectV2XListViewModel.ViewItem]()
+    private var viewItems = [WalletConnectV2XListViewModel.ViewItem]()
+    private var pendingRequestCount: Int = 0
 
     private let reloadTableRelay = PublishRelay<()>()
 
@@ -21,6 +22,7 @@ class WalletConnectV2XListView {
 
     func viewDidLoad() {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.pendingRequestCountDriver) { [weak self] in self?.sync(pendingRequestCount: $0) }
         subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
         subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
@@ -32,12 +34,24 @@ class WalletConnectV2XListView {
         reloadTableRelay.accept(())
     }
 
+    private func sync(pendingRequestCount: Int) {
+        self.pendingRequestCount = pendingRequestCount
+
+        reloadTableRelay.accept(())
+    }
+
     private func show(session: Session) {
         guard let viewController = WalletConnectXMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }
 
         sourceViewController?.navigationController?.present(viewController, animated: true)
+    }
+
+    private func showPendingRequests() {
+        let viewController = WalletConnectV2PendingRequestsModule.viewController()
+
+        sourceViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func deleteRowAction(id: Int) -> RowAction {
@@ -68,37 +82,105 @@ class WalletConnectV2XListView {
                     view.bind(text: text)
                 },
                 dynamicHeight: { [weak self] _ in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.sourceViewController?.containerBounds.width ?? 0, text: text)
+                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.sourceViewController?.tableView.bounds.width ?? 0, text: text)
                 }
+        )
+    }
+
+    private func cell(viewItem: WalletConnectV2XListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
+        guard let tableView = sourceViewController?.tableView else {
+            return nil
+        }
+        let rowAction = deleteRowAction(id: viewItem.id)
+
+        return CellBuilder.selectableRow(
+                elements: [.image24, .multiText, .image20],
+                tableView: tableView,
+                id: "session-\(viewItem.id)",
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                rowActionProvider: {
+                    [rowAction]
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                    }
+
+                    cell.bind(index: 1) { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.title
+                        component.subtitle.text = viewItem.description
+                    }
+
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                    }
+                },
+                action: action
+        )
+    }
+
+    private func pendingRequestCountCell(pendingRequestCount: Int) -> RowProtocol? {
+        guard let tableView = sourceViewController?.tableView, pendingRequestCount != 0 else {
+            return nil
+        }
+
+        return CellBuilder.selectableRow(
+                elements: [.text, .badge, .image20],
+                tableView: tableView,
+                id: "session-pending_requests",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = "Pending Requests"
+                    }
+
+                    cell.bind(index: 1) { (component: BadgeComponent) in
+                        component.badgeView.set(style: .medium)
+                        component.badgeView.text = "\(pendingRequestCount)"
+                    }
+
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                    }
+                },
+                action: { [weak self] in
+                    self?.showPendingRequests()
+                }
+        )
+    }
+
+    private func pendingRequestSection() -> SectionProtocol {
+        let cell = pendingRequestCountCell(pendingRequestCount: pendingRequestCount)
+        return Section(
+                id: "section_pending_requests",
+                headerState: header(text: "version 2.0"),
+                footerState: .margin(height: cell == nil ? 0 : .margin12),
+                rows: [cell].compactMap { $0 }
         )
     }
 
     private func section(viewItems: [WalletConnectV2XListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_2",
-                headerState: header(text: "version 2.0"),
                 footerState: .margin(height: .margin32),
-                rows: viewItems.enumerated().map { index, viewItem in
+                rows: viewItems.enumerated().compactMap { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
-                    let rowAction = deleteRowAction(id: viewItem.id)
 
-                    return Row<G1Cell>(
-                            id: viewItem.id.description,
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            rowActionProvider: { [rowAction] },
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
-                                cell.title = viewItem.title
-                                cell.subtitle = viewItem.description
-                            },
-                            action: { [weak self] _ in
-                                self?.viewModel.showSession(id: viewItem.id)
-                            }
-                    )
+                    return cell(viewItem: viewItem, isFirst: isFirst, isLast: isLast) { [weak self] in
+                        self?.viewModel.showSession(id: viewItem.id)
+                    }
                 }
         )
     }
@@ -111,12 +193,12 @@ extension WalletConnectV2XListView {
         viewModel.emptySessionList
     }
 
-    var section: SectionProtocol? {
+    var sections: [SectionProtocol] {
         guard !viewItems.isEmpty else {
-            return nil
+            return []
         }
 
-        return section(viewItems: viewItems)
+        return [pendingRequestSection(), section(viewItems: viewItems)].compactMap { $0 }
     }
 
     var reloadTableSignal: Signal<()> {

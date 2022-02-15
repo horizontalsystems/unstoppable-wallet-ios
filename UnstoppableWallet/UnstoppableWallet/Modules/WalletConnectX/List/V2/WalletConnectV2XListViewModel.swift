@@ -10,6 +10,7 @@ class WalletConnectV2XListViewModel {
     private let showWalletConnectSessionRelay = PublishRelay<Session>()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let pendingRequestCountRelay = BehaviorRelay<Int>(value: 0)
     private let showLoadingRelay = PublishRelay<()>()
     private let showSuccessRelay = PublishRelay<String?>()
 
@@ -17,10 +18,12 @@ class WalletConnectV2XListViewModel {
         self.service = service
 
         subscribe(disposeBag, service.itemsV2Observable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.pendingRequestsV2Observable) { [weak self] in self?.sync(pendingRequests: $0) }
 //        subscribe(disposeBag, service.sessionKillingObservable) { [weak self] in self?.sync(sessionKillingState: $0) }
         subscribe(disposeBag, service.showSessionV2Observable) { [weak self] in self?.show(session: $0) }
 
         sync(items: service.itemsV2)
+        sync(pendingRequests: service.pendingRequestsV2)
     }
 
     private func sync(items: [WalletConnectXListService.Item]) {
@@ -36,13 +39,11 @@ class WalletConnectV2XListViewModel {
         viewItemsRelay.accept(viewItems)
     }
 
-//    private func sync(sessionKillingState: WalletConnectXListService.SessionKillingState) {
-//        switch sessionKillingState {
-//        case .processing: showLoadingRelay.accept(())
-//        case .completed: showSuccessRelay.accept("alert.success_action".localized)
-//        case .removedOnly: showSuccessRelay.accept("alert.success_action".localized)     // app just remove peerId from database
-//        }
-//    }
+    private func sync(pendingRequests: [Request]) {
+        print("WalletConnectV2XListViewModel : sync(pendingRequests)")
+
+        pendingRequestCountRelay.accept(pendingRequests.count)
+    }
 
     private func show(session: Session) {
         showWalletConnectSessionRelay.accept(session)
@@ -62,6 +63,10 @@ extension WalletConnectV2XListViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
+    }
+
+    var pendingRequestCountDriver: Driver<Int> {
+        pendingRequestCountRelay.asDriver()
     }
 
     var showLoadingSignal: Signal<()> {

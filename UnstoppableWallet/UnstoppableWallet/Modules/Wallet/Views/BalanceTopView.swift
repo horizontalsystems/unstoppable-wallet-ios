@@ -52,6 +52,8 @@ class BalanceTopView: UIView {
             maker.centerY.equalTo(nameLabel.snp.centerY)
         }
 
+        blockchainBadgeView.set(style: .small)
+
         addSubview(currencyValueLabel)
         currencyValueLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(14)

@@ -16,11 +16,12 @@ class MainSettingsService {
     private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: AppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
+    private let walletConnectV2SessionManager: WalletConnectV2SessionManager
     private let launchScreenManager: LaunchScreenManager
 
     init(backupManager: IBackupManager, accountManager: IAccountManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
          systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
-         walletConnectSessionManager: WalletConnectSessionManager, launchScreenManager: LaunchScreenManager) {
+         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, launchScreenManager: LaunchScreenManager) {
         self.backupManager = backupManager
         self.accountManager = accountManager
         self.pinKit = pinKit
@@ -30,6 +31,7 @@ class MainSettingsService {
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
         self.walletConnectSessionManager = walletConnectSessionManager
+        self.walletConnectV2SessionManager = walletConnectV2SessionManager
         self.launchScreenManager = launchScreenManager
     }
 
@@ -66,11 +68,14 @@ extension MainSettingsService {
     }
 
     var walletConnectSessionCount: Int {
-        walletConnectSessionManager.sessions.count
+        walletConnectSessionManager.sessions.count + walletConnectV2SessionManager.sessions.count
     }
 
     var walletConnectSessionCountObservable: Observable<Int> {
-        walletConnectSessionManager.sessionsObservable.map { $0.count }
+        return Observable.combineLatest(walletConnectSessionManager.sessionsObservable, walletConnectV2SessionManager.sessionsObservable).map {
+            print("combine latest : \($0.count) + \($1.count)")
+            return $0.count + $1.count
+        }
     }
 
     var currentLanguageDisplayName: String? {

@@ -18,7 +18,7 @@ class App {
     let appConfigProvider: AppConfigProvider
 
     let localStorage: ILocalStorage & IChartTypeStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage& IWalletConnectV2SessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -229,7 +229,7 @@ class App {
         )
 
         let walletConnectV2Service = WalletConnectV2Service(info: walletClientInfo)
-        walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
+        walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: storage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
 
         activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 
