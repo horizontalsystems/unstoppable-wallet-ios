@@ -6,20 +6,20 @@ class Eip1559GasPriceService {
     private static let feeHistoryBlocksCount = 10
     private static let feeHistoryRewardPercentile = [50]
 
-    private static let baseFeeSafeRangeBounds = RangeBounds(lower: .distance(0), upper: .factor(1.1))
+    private static let tipsSafeRangeBounds = RangeBounds(lower: .distance(2_000_000_000), upper: .distance(2_000_000_000))
     private static let baseFeeAvailableRangeBounds = RangeBounds(lower: .factor(0.7), upper: .factor(3))
-    private static let tipsSafeRangeBounds = RangeBounds(lower: .distance(1_000_000_000), upper: .distance(1_000_000_000))
-    private static let tipsAvailableRangeBounds = RangeBounds(lower: .fixed(1_000_000_000), upper: .distance(5_000_000_000))
+    private static let tipsAvailableRangeBounds = RangeBounds(lower: .fixed(0), upper: .factor(10))
 
     private var disposeBag = DisposeBag()
 
     private let evmKit: EthereumKit.Kit
     private var feeHistoryProvider: EIP1559GasPriceProvider
 
-    private var useRecommended = true
-    private(set) var recommendedBaseFee = 0 { didSet { recommendedBaseFeeRelay.accept(recommendedBaseFee) } }
+    private let minRecommendedTips: Int?
     private var recommendedTips = 0
+    var usingRecommended = true { didSet { usingRecommendedRelay.accept(usingRecommended) } }
 
+    private(set) var recommendedBaseFee = 0 { didSet { recommendedBaseFeeRelay.accept(recommendedBaseFee) } }
     private(set) var baseFee: Int = 0
     private(set) var tips: Int = 0
     private(set) var baseFeeRange: ClosedRange<Int> = 0...0  { didSet { baseFeeRangeChangedRelay.accept(()) }}
@@ -27,12 +27,14 @@ class Eip1559GasPriceService {
     private(set) var status: DataStatus<FallibleData<GasPrice>> = .loading { didSet { statusRelay.accept(status) } }
 
     private let recommendedBaseFeeRelay = PublishRelay<Int>()
+    private let usingRecommendedRelay = PublishRelay<Bool>()
     private let baseFeeRangeChangedRelay = PublishRelay<Void>()
     private let tipsRangeChangedRelay = PublishRelay<Void>()
     private let statusRelay = PublishRelay<DataStatus<FallibleData<GasPrice>>>()
 
-    init(evmKit: EthereumKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil) {
+    init(evmKit: EthereumKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil, minRecommendedTips: Int? = nil) {
         self.evmKit = evmKit
+        self.minRecommendedTips = minRecommendedTips
 
         feeHistoryProvider = EIP1559GasPriceProvider(evmKit: evmKit)
         feeHistoryProvider.feeHistoryObservable(blocksCount: Self.feeHistoryBlocksCount, rewardPercentile: Self.feeHistoryRewardPercentile)
@@ -44,6 +46,7 @@ class Eip1559GasPriceService {
                 .disposed(by: disposeBag)
 
         if let maxBaseFee = initialMaxBaseFee, let maxTips = initialMaxTips {
+            usingRecommended = false
             tips = maxTips
             baseFee = maxBaseFee - maxTips
             sync()
@@ -62,23 +65,21 @@ class Eip1559GasPriceService {
         var warnings = [EvmFeeModule.GasDataWarning]()
         var errors = [EvmFeeModule.GasDataError]()
 
-        let baseFeeSafeRange = Self.baseFeeSafeRangeBounds.range(around: recommendedBaseFee)
+        // Here, `tips` is the actual tips miners get, if the transaction included in the next block.
+        // We only check tips is within safe range. Because tips incentivizes miners, whereas baseFee doesn't depend on what user selects.
+        let actualTips = min(baseFee + tips - recommendedBaseFee, tips)
         let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
 
-        if baseFee < baseFeeSafeRange.lowerBound {
-            errors.append(.lowBaseFee)
-        }
-
-        if baseFee > baseFeeSafeRange.upperBound {
-            warnings.append(.overpricing)
-        }
-
-        if tips < tipsSafeRange.lowerBound {
+        if actualTips < tipsSafeRange.lowerBound {
             warnings.append(.riskOfGettingStuck)
         }
 
-        if tips > tipsSafeRange.upperBound {
+        if actualTips > tipsSafeRange.upperBound {
             warnings.append(.overpricing)
+        }
+
+        if baseFee + tips <= 0 {
+            errors.append(.lowBaseFee)
         }
 
         status = .completed(FallibleData(
@@ -97,6 +98,14 @@ class Eip1559GasPriceService {
 
         recommendedBaseFee = baseFeesConsidered.max() ?? 0
         recommendedTips = tipsConsidered.reduce(0, +) / tipsConsidered.count
+        if let minRecommendedTips = minRecommendedTips {
+            recommendedTips = max(recommendedTips, minRecommendedTips)
+        }
+
+        if usingRecommended {
+            baseFee = recommendedBaseFee
+            tips = recommendedTips
+        }
 
         if !baseFeeRange.contains(recommendedBaseFee) {
             baseFeeRange = Self.baseFeeAvailableRangeBounds.range(around: recommendedBaseFee, containing: baseFee)
@@ -106,10 +115,6 @@ class Eip1559GasPriceService {
             tipsRange = Self.tipsAvailableRangeBounds.range(around: recommendedTips, containing: tips)
         }
 
-        if useRecommended {
-            baseFee = recommendedBaseFee
-            tips = recommendedTips
-        }
         sync()
     }
 
@@ -129,6 +134,10 @@ extension Eip1559GasPriceService {
         recommendedBaseFeeRelay.asObservable()
     }
 
+    var usingRecommendedObservable: Observable<Bool> {
+        usingRecommendedRelay.asObservable()
+    }
+
     var baseFeeRangeChangedObservable: Observable<Void> {
         baseFeeRangeChangedRelay.asObservable()
     }
@@ -138,21 +147,21 @@ extension Eip1559GasPriceService {
     }
 
     func set(baseFee: Int) {
-        useRecommended = false
         self.baseFee = baseFee
+        usingRecommended = false
         sync()
     }
 
     func set(tips: Int) {
-        useRecommended = false
         self.tips = tips
+        usingRecommended = false
         sync()
     }
 
     func setRecommendedGasPrice() {
-        useRecommended = true
         baseFee = recommendedBaseFee
         tips = recommendedTips
+        usingRecommended = true
         sync()
     }
 

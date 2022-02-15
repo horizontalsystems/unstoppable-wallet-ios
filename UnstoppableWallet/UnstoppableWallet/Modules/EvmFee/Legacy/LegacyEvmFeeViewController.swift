@@ -15,8 +15,8 @@ class LegacyEvmFeeViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let maxFeeCell: FeeCell
-    private var gasLimitCell = A7Cell()
-    private var gasPriceCell = A7Cell()
+    private var gasLimitCell = BaseThemeCell()
+    private var gasPriceCell = BaseThemeCell()
     private let gasPriceSliderCell: FeeSliderCell
     private var cautionViewItems = [TitledCaution]()
     private let doneButton = ThemeButton()
@@ -24,12 +24,11 @@ class LegacyEvmFeeViewController: ThemeViewController {
     init(viewModel: LegacyEvmFeeViewModel) {
         self.viewModel = viewModel
 
-        maxFeeCell = FeeCell(feeViewModel: viewModel)
+        maxFeeCell = FeeCell(viewModel: viewModel)
         gasPriceSliderCell = FeeSliderCell(sliderDriver: viewModel.gasPriceSliderDriver)
 
         super.init()
 
-        maxFeeCell.delegate = self
         gasPriceSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(value: value) }
     }
 
@@ -54,7 +53,6 @@ class LegacyEvmFeeViewController: ThemeViewController {
         tableView.delaysContentTouches = false
         tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: A7Cell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
 
@@ -77,25 +75,48 @@ class LegacyEvmFeeViewController: ThemeViewController {
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
-        gasLimitCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        gasLimitCell.titleColor = .themeGray
-        gasLimitCell.set(titleImageSize: .iconSize24)
-        gasLimitCell.valueColor = .themeGray
-        gasLimitCell.selectionStyle = .none
-        gasLimitCell.title = "fee_settings.gas_limit".localized
-        gasLimitCell.titleImage = UIImage(named: "circle_information_20")
+        gasLimitCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+        CellBuilder.build(cell: gasLimitCell, elements: [.image20, .text, .text])
+        gasLimitCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "circle_information_20")
+        })
+        gasLimitCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .d1)
+            component.text = "fee_settings.gas_limit".localized
+        })
+        gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
+            component.set(style: .c2)
+        })
 
-        gasPriceCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        gasPriceCell.titleColor = .themeGray
-        gasPriceCell.set(titleImageSize: .iconSize24)
-        gasPriceCell.valueColor = .themeGray
-        gasPriceCell.selectionStyle = .none
-        gasPriceCell.title = "fee_settings.gas_price".localized
-        gasPriceCell.titleImage = UIImage(named: "circle_information_20")
+        gasPriceCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+        CellBuilder.build(cell: gasPriceCell, elements: [.image20, .text, .text])
+        gasPriceCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "circle_information_20")
+        })
+        gasPriceCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .d1)
+            component.text = "fee_settings.gas_price".localized
+        })
+        gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
+            component.set(style: .c2)
+        })
+
+        gasPriceSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
         subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
-        subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.gasLimitCell.value = $0 }
-        subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] in self?.gasPriceCell.value = $0 }
+        subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] value in
+            self?.gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
+                component.text = value
+            })
+        }
+        subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] value in
+            self?.gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
+                component.text = value
+            })
+        }
+        subscribe(disposeBag, viewModel.resetButtonActiveDriver) { [weak self] active in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = active
+        }
 
         tableView.buildSections()
     }
@@ -111,32 +132,6 @@ class LegacyEvmFeeViewController: ThemeViewController {
     private func handle(cautions: [TitledCaution]) {
         cautionViewItems = cautions
         reloadTable()
-    }
-
-    private func errorRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeLucian
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
-    }
-
-    private func warningRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeJacob
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
     }
 
     private func reloadTable() {
@@ -162,11 +157,6 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
                                 cell: maxFeeCell,
                                 id: "fee",
                                 height: maxFeeCell.cellHeight
-                        ),
-                        StaticRow(
-                                cell: gasLimitCell,
-                                id: "gas-limit",
-                                height: gasLimitCell.cellHeight
                         )
                     ]
             )
@@ -175,45 +165,36 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
         let gasDataSections: [SectionProtocol] = [
             Section(
                 id: "gas-data",
-                headerState: .margin(height: 6),
-                footerState: .margin(height: .margin32),
+                headerState: .margin(height: .margin8),
                 rows: [
+                    StaticRow(
+                            cell: gasLimitCell,
+                            id: "gas-limit",
+                            height: .heightCell48
+                    ),
                     StaticRow(
                             cell: gasPriceCell,
                             id: "gas-price",
-                            height: gasPriceCell.cellHeight
+                            height: .heightCell48
                     ),
                     StaticRow(
                             cell: gasPriceSliderCell,
                             id: "gas-price-slider",
-                            height: gasPriceSliderCell.cellHeight
+                            height: .heightCell48
                     )
                 ]
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = [
+        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
             Section(
-                    id: "cautions",
+                    id: "cautions_\(index)",
                     headerState: .margin(height: .margin12),
-                    rows: cautionViewItems.enumerated().map { index, caution in
-                        switch caution.type {
-                        case .error: return errorRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        case .warning: return warningRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        }
-                    }
+                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
             )
-        ]
+        }
 
         return feeSections + gasDataSections + cautionsSections
-    }
-
-}
-
-extension LegacyEvmFeeViewController: IFeeSliderCellDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
     }
 
 }

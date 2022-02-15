@@ -10,7 +10,7 @@ struct EvmFeeModule {
     static func viewController(feeViewModel: EvmFeeViewModel) -> UIViewController? {
         let feeService = feeViewModel.service
         let coinService = feeViewModel.coinService
-        let gasPriceService = feeService.gasPriceService
+        let gasPriceService = feeViewModel.gasPriceService
         let cautionsFactory = SendEvmCautionsFactory()
 
         switch gasPriceService {
@@ -26,25 +26,35 @@ struct EvmFeeModule {
         }
     }
 
-    static func gasPriceService(evmKit: EthereumKit.Kit, gasPrice: GasPrice? = nil) -> IGasPriceService {
+    static func gasPriceService(evmKit: EthereumKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EthereumKit.Transaction? = nil) -> IGasPriceService {
         if evmKit.networkType.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
             var initialMaxTips: Int? = nil
+            var minRecommendedTips: Int? = nil
 
             if case .eip1559(let maxBaseFee, let maxTips) = gasPrice {
                 initialMaxBaseFee = maxBaseFee
                 initialMaxTips = maxTips
             }
 
-            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips)
+            if let previousTips = previousTransaction?.maxPriorityFeePerGas {
+                minRecommendedTips = previousTips
+            }
+
+            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips, minRecommendedTips: minRecommendedTips)
         } else {
             var initialGasPrice: Int? = nil
+            var minRecommendedGasPrice: Int? = nil
 
             if case .legacy(let gasPrice) = gasPrice {
                 initialGasPrice = gasPrice
             }
 
-            return LegacyGasPriceService(evmKit: evmKit, initialGasPrice: initialGasPrice)
+            if let previousGasPrice = previousTransaction?.gasPrice {
+                minRecommendedGasPrice = previousGasPrice
+            }
+
+            return LegacyGasPriceService(evmKit: evmKit, initialGasPrice: initialGasPrice, minRecommendedGasPrice: minRecommendedGasPrice)
         }
     }
 }
@@ -82,18 +92,14 @@ extension EvmFeeModule {
 }
 
 protocol IEvmFeeService {
-    var gasPriceService: IGasPriceService { get }
     var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> { get }
     var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> { get }
-}
-
-protocol IEvmGasPriceService {
-    var customFeeRange: ClosedRange<Int> { get }
 }
 
 protocol IGasPriceService {
     var status: DataStatus<FallibleData<GasPrice>> { get }
     var statusObservable: Observable<DataStatus<FallibleData<GasPrice>>> { get }
+    var usingRecommended: Bool { get }
 }
 
 struct RangeBounds {

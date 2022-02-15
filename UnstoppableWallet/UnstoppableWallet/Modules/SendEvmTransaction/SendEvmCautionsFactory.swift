@@ -24,13 +24,7 @@ class SendEvmCautionsFactory {
                     ]
                 }
             } else {
-                return [
-                    TitledCaution(
-                            title: "ethereum_transaction.error.title".localized,
-                            text: convert(error: error, baseCoinService: baseCoinService),
-                            type: .error
-                    )
-                ]
+                return [convert(error: error, baseCoinService: baseCoinService)]
             }
         }
 
@@ -53,28 +47,46 @@ class SendEvmCautionsFactory {
         return warningCautions
     }
 
-    private func convert(error: Error, baseCoinService: CoinService) -> String {
+    private func convert(error: Error, baseCoinService: CoinService) -> TitledCaution {
+        var title: String? = nil
+        var text: String? = nil
+
         if case SendEvmTransactionService.TransactionError.insufficientBalance(let requiredBalance) = error {
             let amountData = baseCoinService.amountData(value: requiredBalance)
-            return "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
+            title = "fee_settings.errors.insufficient_balance".localized
+            text = "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
         }
 
         if case AppError.ethereum(let reason) = error.convertedError {
             switch reason {
-            case .insufficientBalanceWithFee, .executionReverted: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
-            case .lowerThanBaseGasLimit: return "ethereum_transaction.error.lower_than_base_gas_limit".localized
+            case .insufficientBalanceWithFee, .executionReverted:
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
+            case .lowerThanBaseGasLimit:
+                title = "fee_settings.errors.low_base_fee".localized
+                text = "fee_settings.errors.low_base_fee.info".localized
             }
         }
 
         if case AppError.oneInch(let reason) = error.convertedError {
             switch reason {
-            case .insufficientBalanceWithFee: return "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
-            case .cannotEstimate: return "swap.one_inch.error.cannot_estimate".localized(baseCoinService.platformCoin.coin.code)
-            case .insufficientLiquidity: return "swap.one_inch.error.insufficient_liquidity".localized()
+            case .insufficientBalanceWithFee:
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
+            case .cannotEstimate:
+                title = "swap.one_inch.error.cannot_estimate".localized
+                text = "swap.one_inch.error.cannot_estimate.info".localized(baseCoinService.platformCoin.coin.code)
+            case .insufficientLiquidity:
+                text = "swap.one_inch.error.insufficient_liquidity".localized()
+                text = "swap.one_inch.error.insufficient_liquidity.info".localized()
             }
         }
 
-        return error.convertedError.smartDescription
+        return TitledCaution(
+                title: title ?? "ethereum_transaction.error.title".localized,
+                text: text ?? error.convertedError.smartDescription,
+                type: .error
+        )
     }
 
 }

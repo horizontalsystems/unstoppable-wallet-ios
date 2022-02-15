@@ -15,11 +15,11 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let maxFeeCell: FeeCell
-    private var gasLimitCell = A7Cell()
-    private var currentBaseFeeCell = A7Cell()
-    private var baseFeeCell = A7Cell()
+    private var gasLimitCell = BaseThemeCell()
+    private var currentBaseFeeCell = BaseThemeCell()
+    private var baseFeeCell = BaseThemeCell()
     private let baseFeeSliderCell: FeeSliderCell
-    private var tipsCell = A7Cell()
+    private var tipsCell = BaseThemeCell()
     private let tipsSliderCell: FeeSliderCell
     private var cautionViewItems = [TitledCaution]()
     private let doneButton = ThemeButton()
@@ -27,19 +27,38 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     init(viewModel: Eip1559EvmFeeViewModel) {
         self.viewModel = viewModel
 
-        maxFeeCell = FeeCell(feeViewModel: viewModel)
+        maxFeeCell = FeeCell(viewModel: viewModel)
         baseFeeSliderCell = FeeSliderCell(sliderDriver: viewModel.baseFeeSliderDriver)
         tipsSliderCell = FeeSliderCell(sliderDriver: viewModel.tipsSliderDriver)
 
         super.init()
 
-        maxFeeCell.delegate = self
         baseFeeSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(baseFee: value) }
         tipsSliderCell.onFinishTracking = { [weak self] value in self?.viewModel.set(tips: value) }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bindSelectableCell(cell: BaseThemeCell, title: String, subscribeTo driver: Driver<String>, isFirst: Bool = false, isLast: Bool = false) {
+        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+        CellBuilder.build(cell: cell, elements: [.image20, .text, .text])
+        cell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "circle_information_20")
+        })
+        cell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .d1)
+            component.text = title
+        })
+        cell.bind(index: 2, block: { (component: TextComponent) in
+            component.set(style: .c2)
+        })
+        subscribe(disposeBag, driver) { value in
+            cell.bind(index: 2, block: { (component: TextComponent) in
+                component.text = value
+            })
+        }
     }
 
     override func viewDidLoad() {
@@ -59,7 +78,45 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         tableView.delaysContentTouches = false
         tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: A7Cell.self)
+        bindSelectableCell(cell: gasLimitCell, title: "fee_settings.gas_limit".localized, subscribeTo: viewModel.gasLimitDriver, isFirst: true, isLast: false)
+        currentBaseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        CellBuilder.build(cell: currentBaseFeeCell, elements: [.text, .text])
+        currentBaseFeeCell.bind(index: 0, block: { (component: TextComponent) in
+            component.set(style: .d1)
+            component.text = "fee_settings.current_base_fee".localized
+        })
+        currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .c2)
+        })
+        subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] value in
+           self?.currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
+                component.text = value
+            })
+        }
+
+        baseFeeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+        CellBuilder.build(cell: baseFeeCell, elements: [.image20, .text, .text])
+        baseFeeCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "circle_information_20")
+        })
+        baseFeeCell.bind(index: 1, block: { (component: TextComponent) in
+            component.set(style: .d1)
+            component.text = "fee_settings.base_fee".localized
+        })
+        baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
+            component.set(style: .c2)
+        })
+        subscribe(disposeBag, viewModel.baseFeeDriver) { [weak self] value in
+            self?.baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
+                component.text = value
+            })
+        }
+
+        baseFeeSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
+
+        bindSelectableCell(cell: tipsCell, title: "fee_settings.tips".localized, subscribeTo: viewModel.tipsDriver, isFirst: false, isLast: false)
+        tipsSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
 
@@ -82,43 +139,10 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
-        gasLimitCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        gasLimitCell.titleColor = .themeGray
-        gasLimitCell.set(titleImageSize: .iconSize24)
-        gasLimitCell.valueColor = .themeGray
-        gasLimitCell.selectionStyle = .none
-        gasLimitCell.title = "fee_settings.gas_limit".localized
-        gasLimitCell.titleImage = UIImage(named: "circle_information_20")
-
-        currentBaseFeeCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        currentBaseFeeCell.titleColor = .themeGray
-        currentBaseFeeCell.set(titleImageSize: .iconSize24)
-        currentBaseFeeCell.valueColor = .themeGray
-        currentBaseFeeCell.selectionStyle = .none
-        currentBaseFeeCell.title = "fee_settings.current_base_fee".localized
-        currentBaseFeeCell.titleImage = UIImage(named: "circle_information_20")
-
-        baseFeeCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        baseFeeCell.titleColor = .themeGray
-        baseFeeCell.set(titleImageSize: .iconSize24)
-        baseFeeCell.valueColor = .themeGray
-        baseFeeCell.selectionStyle = .none
-        baseFeeCell.title = "fee_settings.base_fee".localized
-        baseFeeCell.titleImage = UIImage(named: "circle_information_20")
-
-        tipsCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
-        tipsCell.titleColor = .themeGray
-        tipsCell.set(titleImageSize: .iconSize24)
-        tipsCell.valueColor = .themeGray
-        tipsCell.selectionStyle = .none
-        tipsCell.title = "fee_settings.tips".localized
-        tipsCell.titleImage = UIImage(named: "circle_information_20")
-
-        subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] in self?.currentBaseFeeCell.value = $0 }
-        subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.gasLimitCell.value = $0 }
-        subscribe(disposeBag, viewModel.baseFeeDriver) { [weak self] in self?.baseFeeCell.value = $0 }
-        subscribe(disposeBag, viewModel.tipsDriver) { [weak self] in self?.tipsCell.value = $0 }
         subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
+        subscribe(disposeBag, viewModel.resetButtonActiveDriver) { [weak self] active in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = active
+        }
 
         tableView.buildSections()
     }
@@ -134,32 +158,6 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     private func handle(cautions: [TitledCaution]) {
         cautionViewItems = cautions
         reloadTable()
-    }
-
-    private func errorRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeLucian
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
-    }
-
-    private func warningRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeJacob
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
     }
 
     private func reloadTable() {
@@ -184,19 +182,23 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: maxFeeCell.cellHeight
+                                height: .heightCell48
                         )
                     ]
             ),
             Section(
-                    id: "current-base-fee",
-                    headerState: .margin(height: 6),
-                    footerState: .margin(height: .margin32),
+                    id: "gas-data-0",
+                    headerState: .margin(height: .margin8),
                     rows: [
                         StaticRow(
                                 cell: gasLimitCell,
                                 id: "gas-limit",
-                                height: gasLimitCell.cellHeight
+                                height: .heightCell48
+                        ),
+                        StaticRow(
+                                cell: currentBaseFeeCell,
+                                id: "current-base-fee-cell",
+                                height: .heightCell48
                         )
                     ]
             )
@@ -204,61 +206,42 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
 
         let gasDataSections: [SectionProtocol] = [
             Section(
-                    id: "gas-data",
-                    headerState: .margin(height: 2),
-                    footerState: .margin(height: .margin32),
+                    id: "gas-data-1",
+                    headerState: .margin(height: .margin8),
                     rows: [
-                        StaticRow(
-                                cell: currentBaseFeeCell,
-                                id: "current-base-fee-cell",
-                                height: currentBaseFeeCell.cellHeight
-                        ),
                         StaticRow(
                                 cell: baseFeeCell,
                                 id: "base-fee",
-                                height: baseFeeCell.cellHeight
+                                height: .heightCell48
                         ),
                         StaticRow(
                                 cell: baseFeeSliderCell,
                                 id: "base-fee-slider",
-                                height: baseFeeSliderCell.cellHeight
+                                height: .heightCell48
                         ),
                         StaticRow(
                                 cell: tipsCell,
                                 id: "tips",
-                                height: tipsCell.cellHeight
+                                height: .heightCell48
                         ),
                         StaticRow(
                                 cell: tipsSliderCell,
                                 id: "tips-slider",
-                                height: tipsSliderCell.cellHeight
+                                height: .heightCell48
                         )
                     ]
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = [
+        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
             Section(
-                    id: "cautions",
+                    id: "cautions_\(index)",
                     headerState: .margin(height: .margin12),
-                    rows: cautionViewItems.enumerated().map { index, caution in
-                        switch caution.type {
-                        case .error: return errorRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        case .warning: return warningRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        }
-                    }
+                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
             )
-        ]
+        }
 
         return feeSections + gasDataSections + cautionsSections
-    }
-
-}
-
-extension Eip1559EvmFeeViewController: IFeeSliderCellDelegate {
-
-    func open(viewController: UIViewController) {
-        present(viewController, animated: true)
     }
 
 }
