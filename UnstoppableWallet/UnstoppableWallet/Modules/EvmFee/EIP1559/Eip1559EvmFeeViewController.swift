@@ -15,11 +15,11 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let maxFeeCell: FeeCell
-    private var gasLimitCell = BaseThemeCell()
+    private var gasLimitCell = BaseSelectableThemeCell()
     private var currentBaseFeeCell = BaseThemeCell()
-    private var baseFeeCell = BaseThemeCell()
+    private var baseFeeCell = BaseSelectableThemeCell()
     private let baseFeeSliderCell: FeeSliderCell
-    private var tipsCell = BaseThemeCell()
+    private var tipsCell = BaseSelectableThemeCell()
     private let tipsSliderCell: FeeSliderCell
     private var cautionViewItems = [TitledCaution]()
     private let doneButton = ThemeButton()
@@ -76,7 +76,6 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
-        tableView.allowsSelection = false
 
         bindSelectableCell(cell: gasLimitCell, title: "fee_settings.gas_limit".localized, subscribeTo: viewModel.gasLimitDriver, isFirst: true, isLast: false)
         currentBaseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
@@ -169,6 +168,11 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         }
     }
 
+    private func openInfo(title: String, description: String) {
+        let viewController = EvmGasDataInfoViewController(title: title, description: description)
+        present(viewController.toBottomSheet, animated: true)
+    }
+
 }
 
 extension Eip1559EvmFeeViewController: SectionsDataSource {
@@ -193,7 +197,11 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: gasLimitCell,
                                 id: "gas-limit",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openInfo(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
+                                }
                         ),
                         StaticRow(
                                 cell: currentBaseFeeCell,
@@ -212,7 +220,11 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: baseFeeCell,
                                 id: "base-fee",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openInfo(title: "fee_settings.base_fee".localized, description: "fee_settings.base_fee.info".localized)
+                                }
                         ),
                         StaticRow(
                                 cell: baseFeeSliderCell,
@@ -222,7 +234,11 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: tipsCell,
                                 id: "tips",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openInfo(title: "fee_settings.tips".localized, description: "fee_settings.tips.info".localized)
+                                }
                         ),
                         StaticRow(
                                 cell: tipsSliderCell,

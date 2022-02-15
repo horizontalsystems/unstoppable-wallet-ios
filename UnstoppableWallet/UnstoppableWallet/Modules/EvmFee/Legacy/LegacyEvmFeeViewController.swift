@@ -15,8 +15,8 @@ class LegacyEvmFeeViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let maxFeeCell: FeeCell
-    private var gasLimitCell = BaseThemeCell()
-    private var gasPriceCell = BaseThemeCell()
+    private var gasLimitCell = BaseSelectableThemeCell()
+    private var gasPriceCell = BaseSelectableThemeCell()
     private let gasPriceSliderCell: FeeSliderCell
     private var cautionViewItems = [TitledCaution]()
     private let doneButton = ThemeButton()
@@ -51,7 +51,6 @@ class LegacyEvmFeeViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
-        tableView.allowsSelection = false
 
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
@@ -143,6 +142,11 @@ class LegacyEvmFeeViewController: ThemeViewController {
         }
     }
 
+    private func openInfo(title: String, description: String) {
+        let viewController = EvmGasDataInfoViewController(title: title, description: description)
+        present(viewController.toBottomSheet, animated: true)
+    }
+
 }
 
 extension LegacyEvmFeeViewController: SectionsDataSource {
@@ -170,12 +174,20 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
                     StaticRow(
                             cell: gasLimitCell,
                             id: "gas-limit",
-                            height: .heightCell48
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            action: { [weak self] in
+                                self?.openInfo(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
+                            }
                     ),
                     StaticRow(
                             cell: gasPriceCell,
                             id: "gas-price",
-                            height: .heightCell48
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            action: { [weak self] in
+                                self?.openInfo(title: "fee_settings.gas_price".localized, description: "fee_settings.gas_price.info".localized)
+                            }
                     ),
                     StaticRow(
                             cell: gasPriceSliderCell,
