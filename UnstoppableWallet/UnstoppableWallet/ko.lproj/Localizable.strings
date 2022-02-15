@@ -954,10 +954,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Onboarding
 
-"onboarding.balance.description" = "No wallets yet";
+"onboarding.balance.description" = "아직 지갑이 없습니다";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
-"onboarding.balance.watch" = "Watch Address";
+"onboarding.balance.watch" = "주소 관찰";
 "onboarding.balance.password_hint" = "중요! 기존 지갑을 복원하지만 새로운 암호를 사용하면 완전히 새로운 지갑이 생성됩니다. 여러 지갑에 대해 단일 12-24 단어 니모닉 복구 구문을 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
@@ -987,60 +987,60 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // EVM Network
 
 "evm_network.switches_automatically" = "자동으로 전환";
-"evm_network.description" = "MainNet HTTP provider uses a number of sources (listed below) and switches between them automatically.";
+"evm_network.description" = "메인넷 HTTP 공급자는 여러 소스(아래 나열)를 사용하고 자동으로 전환합니다.";
 
 // Fee Settings
 
 "fee_settings" = "수수료 설정";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_price" = "Gas Used";
-"fee_settings.current_base_fee" = "Current Base Fee";
-"fee_settings.base_fee" = "Max Base Fee";
-"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.current_base_fee" = "현재 기본 수수료";
+"fee_settings.base_fee" = "최대 기본 수수료";
+"fee_settings.tips" = "최대 채굴자 팁";
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
-"fee_settings.errors.low_base_fee" = "Low base fee";
-"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
+"fee_settings.errors.low_base_fee" = "낮은 기본 수수료";
+"fee_settings.errors.low_base_fee.info" = "최대 기본 수수료 설정이 거래를 포함하기에는 너무 낮습니다.";
 "fee_settings.warning.risk_of_getting_stuck" = "갇힐 위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 중단되거나 실패할 수 있습니다.";
-"fee_settings.warning.overpricing" = "Overpricing";
-"fee_settings.warning.overpricing.info" = "The gas price is higher than necessary for the transaction.";
+"fee_settings.warning.overpricing" = "과대 가격 층정";
+"fee_settings.warning.overpricing.info" = "가스 가격이 거래에 필요한 것보다 높습니다.";
 
 // Watch Address
 
-"watch_address.title" = "Address";
-"watch_address.watch" = "Watch";
+"watch_address.title" = "주소";
+"watch_address.watch" = "관찰";
 
 // Nft Collections
 
-"nft_collections.title" = "NFTs";
-"nft_collections.last_sale" = "Last Sale";
-"nft_collections.average_7d" = "Average 7D";
-"nft_collections.average_30d" = "Average 30D";
-"nft_collections.on_sale" = "On Sale";
+"nft_collections.title" = "NFT";
+"nft_collections.last_sale" = "마지막 판매";
+"nft_collections.average_7d" = "평균 7일";
+"nft_collections.average_30d" = "평균 30일";
+"nft_collections.on_sale" = "판매 중";
 
 // Nft Asset
 
-"nft_asset.last_sale" = "Last Sale";
-"nft_asset.average_7d" = "7 Day Average";
-"nft_asset.average_30d" = "30 Day Average";
-"nft_asset.floor_price" = "Floor Price";
-"nft_asset.on_sale" = "On Sale";
-"nft_asset.until_date" = "until %@";
-"nft_asset.buy_now" = "Buy Now";
-"nft_asset.top_bid" = "Top Bid";
-"nft_asset.minimum_bid" = "Minimum Bid";
-"nft_asset.best_offer" = "Best Offer";
-"nft_asset.properties" = "Properties";
-"nft_asset.description" = "Description";
-"nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
-"nft_asset.details.token_id" = "Token ID";
-"nft_asset.details.token_standard" = "Token Standard";
-"nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Save to Photos";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
-"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
+"nft_asset.last_sale" = "마지막 판매";
+"nft_asset.average_7d" = "7일 평균";
+"nft_asset.average_30d" = "30일 평균";
+"nft_asset.floor_price" = "바닥 가격";
+"nft_asset.on_sale" = "할인 중";
+"nft_asset.until_date" = "%@ 까지";
+"nft_asset.buy_now" = "지금 구매";
+"nft_asset.top_bid" = "최고 매수가";
+"nft_asset.minimum_bid" = "최저 매수가";
+"nft_asset.best_offer" = "최고 제안";
+"nft_asset.properties" = "속성";
+"nft_asset.description" = "설명";
+"nft_asset.details" = "상세 정보";
+"nft_asset.details.contract_address" = "계약 주소";
+"nft_asset.details.token_id" = "토큰 ID";
+"nft_asset.details.token_standard" = "토큰 표준";
+"nft_asset.details.blockchain" = "블록 체인";
+"nft_asset.links" = "링크";
+"nft_asset.links.website" = "웹사이트";
+"nft_asset.options.save_to_photos" = "사진 저장하기";
+"nft_asset.options.set_as_watch_face" = "시계 모드로 설정";
+"nft_asset.save_to_photos.success" = "NFT 이미지가 사진 라이브러리에 저장됩니다";
+"nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
