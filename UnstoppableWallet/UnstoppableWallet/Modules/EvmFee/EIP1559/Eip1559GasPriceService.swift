@@ -7,7 +7,7 @@ class Eip1559GasPriceService {
     private static let feeHistoryRewardPercentile = [50]
 
     private static let tipsSafeRangeBounds = RangeBounds(lower: .distance(2_000_000_000), upper: .distance(2_000_000_000))
-    private static let baseFeeAvailableRangeBounds = RangeBounds(lower: .factor(0.7), upper: .factor(3))
+    private static let baseFeeAvailableRangeBounds = RangeBounds(lower: .factor(0.5), upper: .factor(3))
     private static let tipsAvailableRangeBounds = RangeBounds(lower: .fixed(0), upper: .factor(10))
 
     private var disposeBag = DisposeBag()
