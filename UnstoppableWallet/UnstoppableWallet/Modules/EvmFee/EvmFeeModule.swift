@@ -63,7 +63,7 @@ extension EvmFeeModule {
 
     enum GasDataError: Error {
         case insufficientBalance
-        case lowBaseFee
+        case lowMaxFee
     }
 
     enum GasDataWarning: Warning {

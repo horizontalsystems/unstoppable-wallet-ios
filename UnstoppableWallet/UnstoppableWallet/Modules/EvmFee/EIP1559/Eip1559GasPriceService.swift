@@ -70,16 +70,14 @@ class Eip1559GasPriceService {
         let actualTips = min(baseFee + tips - recommendedBaseFee, tips)
         let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
 
-        if actualTips < tipsSafeRange.lowerBound {
+        if actualTips < 0 {
+            errors.append(.lowMaxFee)
+        } else if actualTips < tipsSafeRange.lowerBound {
             warnings.append(.riskOfGettingStuck)
         }
 
         if actualTips > tipsSafeRange.upperBound {
             warnings.append(.overpricing)
-        }
-
-        if baseFee + tips <= 0 {
-            errors.append(.lowBaseFee)
         }
 
         status = .completed(FallibleData(
