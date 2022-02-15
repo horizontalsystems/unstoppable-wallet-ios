@@ -279,8 +279,10 @@
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
-"swap.one_inch.error.cannot_estimate" = "¡Error! Comprueba el saldo y asegúrate de que hay suficientes %@ para cubrir la comisión. O intente aumentar la cantidad del deslizamiento del precio e intente de nuevo. Volverá a intentarlo en 3 segundos...";
-
+"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "Servicio";
 "swap.service.title" = "Servicio";
@@ -993,19 +995,24 @@ poner en peligro la seguridad de mis fondos.";
 // Fee Settings
 
 "fee_settings" = "Configuración de tarifas";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_limit.info" = "The fee for transacting on the network is measured in gas units. Gas Limit is the maximum amount of gas a user is willing to pay for confirming a transaction (min. 21,000). An insufficient gas limit is a common reason for a transaction to fail with an 'out of gas' error.";
 "fee_settings.gas_price" = "Gas Price";
+"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
 "fee_settings.current_base_fee" = "Tarifa Base actual";
 "fee_settings.base_fee" = "Tarifa Base Máxima";
+"fee_settings.base_fee.info" = "A base fee is the algorithmically determined price users need to pay for a transaction on Ethereum blockchain. The base fee automatically set by Ethereum network and is not controlled by a specific entity.";
 "fee_settings.tips" = "Tips de los mejores mineros";
+"fee_settings.tips.info" = "Miner tips are defined as optional fees that users may include to incentivize network participants to prioritize user's transaction.";
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.insufficient_balance.info" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
-"fee_settings.errors.low_base_fee" = "Tarifa Base baja";
-"fee_settings.errors.low_base_fee.info" = "La tarifa base máxima configurada es demasiado baja para incluir la transacción.";
-"fee_settings.warning.risk_of_getting_stuck" = "Riesgo de atascarse";
-"fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede quedarse atascada o fallar.";
-"fee_settings.warning.overpricing" = "Sobreprecio";
-"fee_settings.warning.overpricing.info" = "El precio del gas es más alto de lo necesario para la transacción.";
+"fee_settings.errors.low_max_fee" = "Low Fee";
+"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Fee Too High";
+"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
 // Watch Address
 
