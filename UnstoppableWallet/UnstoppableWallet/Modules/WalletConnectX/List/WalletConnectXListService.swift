@@ -49,7 +49,7 @@ class WalletConnectXListService {
         sessions.map {
             Item(
                 id: $0.id,
-                chains: [Chain(rawValue: $0.chainId)].flatMap { $0 },
+                chains: [Chain(rawValue: $0.chainId)].compactMap { $0 },
                 version: 1,
                 appName: $0.peerMeta.name,
                 appUrl: $0.peerMeta.url,
@@ -105,6 +105,14 @@ extension WalletConnectXListService {
         }
     }
 
+    var pendingRequestsV2: [Request] {
+        sessionManagerV2.pendingRequests()
+    }
+
+    var pendingRequestsV2Observable: Observable<[Request]> {
+        sessionManagerV2.pendingRequestsObservable
+    }
+
     var showSessionV1Observable: Observable<WalletConnectSession> {
         showSessionV1Relay.asObservable()
     }
@@ -135,9 +143,11 @@ extension WalletConnectXListService {
             self.sessionKiller = sessionKiller
         }
         if let session = sessionManagerV2.sessions.first(where: { $0.id == id }) {
-            let killTimer = Observable.just(()).delay(.seconds(1), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            sessionKillingRelay.accept(.processing)
+            let killTimer = Observable.just(()).delay(.milliseconds(600), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             subscribe(disposeBag, killTimer) { [weak self] in
                 self?.sessionManagerV2.deleteSession(topic: session.topic)
+                self?.sessionKillingRelay.accept(.completed)
             }
         }
     }

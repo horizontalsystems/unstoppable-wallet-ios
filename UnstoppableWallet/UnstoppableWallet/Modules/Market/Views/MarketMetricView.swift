@@ -71,6 +71,7 @@ class MarketMetricView: UIView {
             maker.centerY.equalTo(titleLabel.snp.centerY)
         }
 
+        badgeView.set(style: .small)
         badgeView.isHidden = true
 
         addSubview(valueLabel)

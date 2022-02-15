@@ -571,6 +571,15 @@ class GrdbStorage {
             }
         }
 
+        migrator.registerMigration("createWalletConnectV2Sessions") { db in
+            try db.create(table: WalletConnectV2Session.databaseTableName) { t in
+                t.column(WalletConnectV2Session.Columns.accountId.name, .text).notNull()
+                t.column(WalletConnectV2Session.Columns.topic.name, .text).notNull()
+
+                t.primaryKey([WalletConnectV2Session.Columns.accountId.name, WalletConnectV2Session.Columns.topic.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -787,6 +796,44 @@ extension GrdbStorage: IWalletConnectSessionStorage {
     func deleteSessions(accountId: String) {
         _ = try! dbPool.write { db in
             try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).deleteAll(db)
+        }
+    }
+
+}
+
+extension GrdbStorage: IWalletConnectV2SessionStorage {
+
+    func sessionsV2(accountId: String?) -> [WalletConnectV2Session] {
+        try! dbPool.read { db in
+            var request = WalletConnectV2Session.all()
+            if let accountId = accountId {
+                request = request.filter(WalletConnectV2Session.Columns.accountId == accountId)
+            }
+            return try request.fetchAll(db)
+        }
+    }
+
+    func save(sessions: [WalletConnectV2Session]) {
+        print("deleteSessionV2 with \(sessions.map { $0.topic }.joined(separator: "::"))")
+        _ = try! dbPool.write { db in
+            for session in sessions {
+                try session.insert(db)
+            }
+        }
+    }
+
+    func deleteSessionV2(topics: [String]) {
+        print("deleteSessionV2 with \(topics.joined(separator: "::"))")
+        _ = try! dbPool.write { db in
+            for topic in topics {
+                try WalletConnectV2Session.filter(WalletConnectV2Session.Columns.topic == topic).deleteAll(db)
+            }
+        }
+    }
+
+    func deleteSessionsV2(accountId: String) {
+        _ = try! dbPool.write { db in
+            try WalletConnectV2Session.filter(WalletConnectV2Session.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

@@ -67,7 +67,7 @@ class WalletConnectV1XListView {
                     view.bind(text: text)
                 },
                 dynamicHeight: { [weak self] _ in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.sourceViewController?.containerBounds.width ?? 0, text: text)
+                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.sourceViewController?.tableView.bounds.width ?? 0, text: text)
                 }
         )
     }
@@ -110,12 +110,12 @@ extension WalletConnectV1XListView {
         viewModel.emptySessionList
     }
 
-    var section: SectionProtocol? {
+    var sections: [SectionProtocol] {
         guard !viewItems.isEmpty else {
-            return nil
+            return []
         }
 
-        return section(viewItems: viewItems)
+        return [section(viewItems: viewItems)]
     }
 
     var reloadTableSignal: Signal<()> {

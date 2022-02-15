@@ -335,6 +335,13 @@ protocol IWalletConnectSessionStorage {
     func deleteSessions(accountId: String)
 }
 
+protocol IWalletConnectV2SessionStorage {
+    func sessionsV2(accountId: String?) -> [WalletConnectV2Session]
+    func save(sessions: [WalletConnectV2Session])
+    func deleteSessionV2(topics: [String])
+    func deleteSessionsV2(accountId: String)
+}
+
 protocol IDeepLinkManager {
     func handle(url: URL) -> Bool
     var newSchemeObservable: Observable<DeepLinkManager.DeepLink?> { get }
