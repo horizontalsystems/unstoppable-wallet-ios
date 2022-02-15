@@ -12,7 +12,8 @@ class Eip1559EvmFeeViewModel {
     private let cautionsFactory: SendEvmCautionsFactory
 
     private let resetButtonActiveRelay = BehaviorRelay<Bool>(value: false)
-    private let maxFeeRelay = BehaviorRelay<String?>(value: nil)
+    private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
+    private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let currentBaseFeeRelay = BehaviorRelay<String>(value: "n/a")
     private let baseFeeRelay = BehaviorRelay<String>(value: "n/a")
@@ -30,37 +31,45 @@ class Eip1559EvmFeeViewModel {
         sync(transactionStatus: feeService.status)
         sync(gasPriceStatus: gasPriceService.status)
         sync(recommendedBaseFee: gasPriceService.recommendedBaseFee)
+        sync(usingRecommended: gasPriceService.usingRecommended)
 
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
         subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
         subscribe(disposeBag, gasPriceService.recommendedBaseFeeObservable) { [weak self] in self?.sync(recommendedBaseFee: $0) }
         subscribe(disposeBag, gasPriceService.baseFeeRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
         subscribe(disposeBag, gasPriceService.tipsRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
+        subscribe(disposeBag, gasPriceService.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
     }
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
-        let maxFeeStatus: String
+        let spinnerVisible: Bool
+        let maxFeeValue: FeeCell.Value?
         let gasLimit: String
         let cautions: [TitledCaution]
 
         switch transactionStatus {
         case .loading:
-            maxFeeStatus = "action.loading".localized
+            spinnerVisible = true
+            maxFeeValue = nil
             gasLimit = "n/a".localized
             cautions = []
         case .failed(let error):
-            maxFeeStatus = "n/a".localized
+            spinnerVisible = false
+            maxFeeValue = FeeCell.Value(text: "n/a".localized, type: .error)
             gasLimit = "n/a".localized
             cautions = cautionsFactory.items(errors: [error], warnings: [], baseCoinService: coinService)
         case .completed(let fallibleTransaction):
-            let gasData = fallibleTransaction.data.gasData
+            spinnerVisible = false
 
-            maxFeeStatus = coinService.amountData(value: gasData.fee).formattedString
+            let gasData = fallibleTransaction.data.gasData
+            let valueType: FeeCell.ValueType = fallibleTransaction.errors.isEmpty ? .regular : .error
+            maxFeeValue = FeeCell.Value(text: coinService.amountData(value: gasData.fee).formattedString, type: valueType)
             gasLimit = gasData.gasLimit.description
             cautions = cautionsFactory.items(errors: fallibleTransaction.errors, warnings: fallibleTransaction.warnings, baseCoinService: coinService)
         }
 
-        maxFeeRelay.accept(maxFeeStatus)
+        spinnerVisibleRelay.accept(spinnerVisible)
+        valueRelay.accept(maxFeeValue)
         gasLimitRelay.accept(gasLimit)
         cautionsRelay.accept(cautions)
     }
@@ -68,7 +77,7 @@ class Eip1559EvmFeeViewModel {
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>?) {
         let gasPriceStatus = gasPriceStatus ?? gasPriceService.status
 
-        guard case .completed = gasPriceStatus else {
+        guard case .completed(let fallibleGasPrice) = gasPriceStatus else {
             baseFeeRelay.accept("n/a")
             tipsRelay.accept("n/a")
             baseFeeSliderRelay.accept(nil)
@@ -87,6 +96,10 @@ class Eip1559EvmFeeViewModel {
 
     private func sync(recommendedBaseFee: Int) {
         currentBaseFeeRelay.accept("\(gwei(wei: recommendedBaseFee)) gwei")
+    }
+
+    private func sync(usingRecommended: Bool) {
+        resetButtonActiveRelay.accept(!usingRecommended)
     }
 
     private func gwei(wei: Int) -> Int {
@@ -139,29 +152,26 @@ extension Eip1559EvmFeeViewModel {
 
     func set(baseFee: Int) {
         gasPriceService.set(baseFee: wei(gwei: baseFee))
-        resetButtonActiveRelay.accept(true)
     }
 
     func set(tips: Int) {
         gasPriceService.set(tips: wei(gwei: tips))
-        resetButtonActiveRelay.accept(true)
     }
 
     func reset() {
         gasPriceService.setRecommendedGasPrice()
-        resetButtonActiveRelay.accept(false)
     }
 
 }
 
 extension Eip1559EvmFeeViewModel: IFeeViewModel {
 
-    var maxFeeDriver: Driver<String?> {
-        maxFeeRelay.asDriver()
+    var valueDriver: Driver<FeeCell.Value?> {
+        valueRelay.asDriver()
     }
 
-    var editButtonVisibleDriver: Driver<Bool> {
-        Single<Bool>.just(false).asDriver(onErrorJustReturn: false)
+    var spinnerVisibleDriver: Driver<Bool> {
+        spinnerVisibleRelay.asDriver()
     }
 
 }

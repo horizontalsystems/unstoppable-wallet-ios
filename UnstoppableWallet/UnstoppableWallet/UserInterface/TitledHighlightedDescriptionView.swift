@@ -48,6 +48,11 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
         set { titleLabel.text = newValue }
     }
 
+    var titleColor: UIColor? {
+        get { titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
 }
 
 extension TitledHighlightedDescriptionView {

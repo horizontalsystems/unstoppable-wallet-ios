@@ -35,7 +35,7 @@ class OneInchFeeService {
 
     private let evmKit: EthereumKit.Kit
     private let provider: OneInchProvider
-    let gasPriceService: IGasPriceService
+    private let gasPriceService: IGasPriceService
     private(set) var parameters: OneInchSwapParameters
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()

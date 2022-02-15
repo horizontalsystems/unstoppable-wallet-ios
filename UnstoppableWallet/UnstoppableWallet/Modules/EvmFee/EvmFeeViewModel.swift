@@ -4,49 +4,72 @@ import RxCocoa
 
 class EvmFeeViewModel {
     let service: IEvmFeeService
+    let gasPriceService: IGasPriceService
     let coinService: CoinService
 
     private let disposeBag = DisposeBag()
 
-    private let feeStatusRelay = BehaviorRelay<String?>(value: "")
-    private let editButtonVisibleRelay = BehaviorRelay<Bool>(value: true)
+    private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
+    private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let editButtonVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let editButtonHighlightedRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: IEvmFeeService, coinService: CoinService) {
+    init(service: IEvmFeeService, gasPriceService: IGasPriceService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
+        self.gasPriceService = gasPriceService
 
         sync(status: service.status)
         subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(status: $0) }
     }
 
     private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
-        feeStatusRelay.accept(feeStatus(transactionStatus: status))
-    }
+        let editButtonVisible: Bool
+        let editButtonHighlighted: Bool
+        let spinnerVisible: Bool
+        let value: FeeCell.Value?
 
-    private func feeStatus(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) -> String {
-        switch transactionStatus {
+        switch status {
         case .loading:
-            editButtonVisibleRelay.accept(false)
-            return "action.loading".localized
+            editButtonVisible = false
+            editButtonHighlighted = false
+            spinnerVisible = true
+            value = nil
         case .failed:
-            editButtonVisibleRelay.accept(true)
-            return "n/a".localized
+            editButtonVisible = true
+            editButtonHighlighted = true
+            spinnerVisible = false
+
+            value = FeeCell.Value(text: "n/a".localized, type: .error)
         case .completed(let fallibleTransaction):
-            editButtonVisibleRelay.accept(true)
-            return coinService.amountData(value: fallibleTransaction.data.gasData.fee).formattedString
+            editButtonVisible = true
+            editButtonHighlighted = !fallibleTransaction.errors.isEmpty || !gasPriceService.usingRecommended
+            spinnerVisible = false
+
+            let valueType: FeeCell.ValueType = fallibleTransaction.errors.isEmpty ? .regular : .error
+            value = FeeCell.Value(text: coinService.amountData(value: fallibleTransaction.data.gasData.fee).formattedString, type: valueType)
         }
+
+        editButtonVisibleRelay.accept(editButtonVisible)
+        editButtonHighlightedRelay.accept(editButtonHighlighted)
+        spinnerVisibleRelay.accept(spinnerVisible)
+        valueRelay.accept(value)
     }
 
-}
+    var valueDriver: Driver<FeeCell.Value?> {
+        valueRelay.asDriver()
+    }
 
-extension EvmFeeViewModel: IFeeViewModel {
-
-    var maxFeeDriver: Driver<String?> {
-        feeStatusRelay.asDriver()
+    var spinnerVisibleDriver: Driver<Bool> {
+        spinnerVisibleRelay.asDriver()
     }
 
     var editButtonVisibleDriver: Driver<Bool> {
         editButtonVisibleRelay.asDriver()
+    }
+
+    var editButtonHighlightedDriver: Driver<Bool> {
+        editButtonHighlightedRelay.asDriver()
     }
 
 }

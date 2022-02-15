@@ -10,11 +10,12 @@ class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
     let transactionViewModel: SendEvmTransactionViewModel
+    let feeViewModel: EvmFeeViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let maxFeeCell: FeeCell
+    private let maxFeeCell: SelectableFeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private var cautionViewItems = [TitledCaution]()
@@ -24,14 +25,11 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.transactionViewModel = transactionViewModel
+        self.feeViewModel = feeViewModel
 
-        maxFeeCell = FeeCell(feeViewModel: feeViewModel)
+        maxFeeCell = SelectableFeeCell(viewModel: feeViewModel)
 
         super.init()
-
-        maxFeeCell.onTapEdit = { [weak self] in
-            self?.openFeeSettings(feeViewModel: feeViewModel)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +47,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
-        tableView.allowsSelection = false
 
         tableView.registerCell(forClass: B7Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
@@ -93,7 +90,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func openFeeSettings(feeViewModel: EvmFeeViewModel) {
+    private func openFeeSettings() {
         guard let controller = EvmFeeModule.viewController(feeViewModel: feeViewModel) else {
             return
         }
@@ -188,32 +185,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         )
     }
 
-    private func errorRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeLucian
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
-    }
-
-    private func warningRow(title: String, value: String, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: value) },
-                bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = .themeJacob
-                    cell.titleText = title
-                    cell.descriptionText = value
-                }
-        )
-    }
-
     private func row(viewItem: SendEvmTransactionViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case let .subhead(title, value): return subheadRow(title: title, value: value, index: index, isFirst: isFirst, isLast: isLast)
@@ -260,24 +231,23 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: maxFeeCell.cellHeight
+                                height: maxFeeCell.cellHeight,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openFeeSettings()
+                                }
                         )
                     ]
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = [
+        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
             Section(
-                    id: "cautions",
+                    id: "cautions_\(index)",
                     headerState: .margin(height: .margin12),
-                    rows: cautionViewItems.enumerated().map { index, caution in
-                        switch caution.type {
-                        case .error: return errorRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        case .warning: return warningRow(title: caution.title, value: caution.text, index: index, isFirst: index == 0, isLast: index == cautionViewItems.count - 1)
-                        }
-                    }
+                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
             )
-        ]
+        }
 
         return transactionSections + feeSections + cautionsSections
     }

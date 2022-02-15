@@ -6,7 +6,7 @@ import RxRelay
 
 class EvmFeeService {
     private let evmKit: EthereumKit.Kit
-    let gasPriceService: IGasPriceService
+    private let gasPriceService: IGasPriceService
 
     private var transactionData: TransactionData
     let gasLimitSurchargePercent: Int

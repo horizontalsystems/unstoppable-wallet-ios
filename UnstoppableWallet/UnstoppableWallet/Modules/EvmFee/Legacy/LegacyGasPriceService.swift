@@ -6,13 +6,13 @@ import BigInt
 
 class LegacyGasPriceService {
     private static let gasPriceSafeRangeBounds = RangeBounds(lower: .distance(1), upper: .distance(1))
-    private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.7), upper: .factor(3))
+    private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.6), upper: .factor(3))
 
     private var disposeBag = DisposeBag()
 
     private let evmKit: EthereumKit.Kit
     private let gasPriceProvider: LegacyGasPriceProvider
-
+    private let minRecommendedGasPrice: Int?
 
     private var recommendedGasPrice: Int = 0
     private var legacyGasPrice: Int = 0 {
@@ -21,6 +21,9 @@ class LegacyGasPriceService {
         }
     }
 
+    var usingRecommended = true { didSet { usingRecommendedRelay.accept(usingRecommended) } }
+    private let usingRecommendedRelay = PublishRelay<Bool>()
+
     private let statusRelay = PublishRelay<DataStatus<FallibleData<GasPrice>>>()
     private(set) var status: DataStatus<FallibleData<GasPrice>> = .loading {
         didSet {
@@ -28,9 +31,10 @@ class LegacyGasPriceService {
         }
     }
 
-    init(evmKit: EthereumKit.Kit, initialGasPrice: Int? = nil) {
+    init(evmKit: EthereumKit.Kit, initialGasPrice: Int? = nil, minRecommendedGasPrice: Int? = nil) {
         self.evmKit = evmKit
         gasPriceProvider = LegacyGasPriceProvider(evmKit: evmKit)
+        self.minRecommendedGasPrice = minRecommendedGasPrice
 
         if let gasPrice = initialGasPrice {
             legacyGasPrice = gasPrice
@@ -73,8 +77,13 @@ extension LegacyGasPriceService {
         Self.gasPriceAvailableRangeBounds.range(around: recommendedGasPrice)
     }
 
+    var usingRecommendedObservable: Observable<Bool> {
+        usingRecommendedRelay.asObservable()
+    }
+
     func set(gasPrice: Int) {
         legacyGasPrice = gasPrice
+        usingRecommended = false
     }
 
     func setRecommendedGasPrice() {
@@ -86,7 +95,11 @@ extension LegacyGasPriceService {
                 .subscribe(
                         onSuccess: { [weak self] gasPrice in
                             self?.recommendedGasPrice = gasPrice
+                            if let minRecommendedGasPrice = self?.minRecommendedGasPrice {
+                                self?.recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
+                            }
                             self?.legacyGasPrice = gasPrice
+                            self?.usingRecommended = true
                         },
                         onError: { [weak self] error in
                             self?.status = .failed(error)

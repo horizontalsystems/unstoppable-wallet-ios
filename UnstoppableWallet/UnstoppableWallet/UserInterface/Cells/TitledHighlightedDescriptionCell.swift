@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import ComponentKit
+import SectionsTableView
 
 class TitledHighlightedDescriptionCell: BaseThemeCell {
     private static let horizontalMargin: CGFloat = .margin16
@@ -39,9 +40,40 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         set { descriptionView.text = newValue }
     }
 
+    var contentBackgroundColor: UIColor? {
+        get { descriptionView.backgroundColor }
+        set { descriptionView.backgroundColor = newValue }
+    }
+
+    var contentBorderColor: UIColor? {
+        get { descriptionView.borderColor }
+        set { descriptionView.borderColor = newValue }
+    }
+
+    var titleColor: UIColor? {
+        get { descriptionView.titleColor }
+        set { descriptionView.titleColor = newValue }
+    }
+
 }
 
 extension TitledHighlightedDescriptionCell {
+
+    static func row(caution: TitledCaution) -> RowProtocol {
+        Row<TitledHighlightedDescriptionCell>(
+                id: caution.title,
+                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: caution.text) },
+                bind: { cell, _ in
+                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+                    cell.tintColor = caution.type == .error ? .themeLucian : .themeJacob
+                    cell.titleText = caution.title
+                    cell.titleColor = caution.type == .error ? .themeLucian : .themeJacob
+                    cell.descriptionText = caution.text
+                    cell.contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xff4820, alpha: 0.2) : .themeYellow20
+                    cell.contentBorderColor = caution.type == .error ? .themeLucian : .themeJacob
+                }
+        )
+    }
 
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
