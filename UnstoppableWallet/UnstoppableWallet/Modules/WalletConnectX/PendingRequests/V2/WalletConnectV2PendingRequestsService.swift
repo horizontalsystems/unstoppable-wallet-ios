@@ -15,14 +15,31 @@ class WalletConnectV2PendingRequestsService {
         }
     }
 
+    private var accounts = [Account]()
+
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
     init(sessionManager: WalletConnectV2SessionManager, accountManager: IAccountManager) {
         self.sessionManager = sessionManager
         self.accountManager = accountManager
 
-        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in
-            self?.syncPendingRequests()
+        subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
+        subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncPendingRequests() }
+        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
+
+        sync(accounts: accountManager.accounts)
+        syncPendingRequests()
+    }
+
+    private func sync(accounts: [Account]) {
+        guard let activeAccountId = accountManager.activeAccount?.id else {
+            return
+        }
+
+        if self.accounts.isEmpty {
+            self.accounts = accounts.sorted { account, _ in account.id == activeAccountId }
+        } else {
+            self.accounts = accounts
         }
 
         syncPendingRequests()
@@ -35,7 +52,7 @@ class WalletConnectV2PendingRequestsService {
         var items = [Item]()
         let allSessions = sessionManager.allSessions
 
-        accountManager.accounts.forEach { account in
+        accounts.forEach { account in
             let pendingRequests = sessionManager.pendingRequests(accountId: account.id)
             guard !pendingRequests.isEmpty else {
                 return
@@ -77,6 +94,10 @@ extension WalletConnectV2PendingRequestsService {
         }
 
         showPendingRequestRelay.accept(wcRequest)
+    }
+
+    func select(accountId: String) {
+        accountManager.set(activeAccountId: accountId)
     }
 
 }

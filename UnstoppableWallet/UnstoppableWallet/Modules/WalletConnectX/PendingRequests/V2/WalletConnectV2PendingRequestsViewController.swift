@@ -29,7 +29,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "settings_theme.title".localized
+        title = "wallet_connect.pending_requests_title".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -41,18 +41,23 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] viewItems in
-            self?.viewItems = viewItems
-
-            self?.reloadTable()
-        }
-        subscribe(disposeBag, viewModel.showPendingRequestSignal) { [weak self] request in
-            self?.showPending(request: request)
-        }
+        subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, viewModel.showPendingRequestSignal) { [weak self] in self?.showPending(request: $0) }
 
         tableView.buildSections()
 
         isLoaded = true
+    }
+
+    private func sync(items: [WalletConnectV2PendingRequestsViewModel.SectionViewItem]) {
+        viewItems = items
+        guard !viewItems.isEmpty else {
+            navigationController?.popViewController(animated: true)
+
+            return
+        }
+
+        reloadTable()
     }
 
     private func reloadTable() {
@@ -60,11 +65,15 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
             return
         }
 
-        tableView.reload(animated: true)
+        tableView.reload()
     }
 
     private func onSelect(requestId: Int64) {
         viewModel.onSelect(requestId: requestId)
+    }
+
+    private func onSelect(accountId: String) {
+        viewModel.onSelect(accountId: accountId)
     }
 
     private func showPending(request: WalletConnectRequest) {
@@ -75,7 +84,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-    private func accountCell(title: String, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func accountCell(id: String, title: String, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
         var elements: [CellBuilder.CellElement] = [.image20, .text]
 
         let binder: (BaseThemeCell) -> () = { cell in
@@ -115,7 +124,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: binder,
-                    action: { print("tap on cell!") }
+                    action: { [weak self] in self?.onSelect(accountId: id) }
             )
         }
 
@@ -134,9 +143,10 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                 footerState: .margin(height: .margin8x),
                 rows: [
                     accountCell(
+                            id: sectionViewItem.id,
                             title: sectionViewItem.title,
                             selected: sectionViewItem.selected,
-                            action: { print("Tap on Switch!") }
+                            action: { [weak self] in self?.onSelect(accountId: sectionViewItem.id) }
                     )
                 ] + sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     if sectionViewItem.selected {
@@ -196,9 +206,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
 extension WalletConnectV2PendingRequestsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        viewItems
-                .sorted { lhs, _ in lhs.selected }
-                .map { section(sectionViewItem: $0) }
+        viewItems.map { section(sectionViewItem: $0) }
     }
 
 }
