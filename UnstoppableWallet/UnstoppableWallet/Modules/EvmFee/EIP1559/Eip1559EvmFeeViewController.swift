@@ -21,8 +21,10 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     private let baseFeeSliderCell: FeeSliderCell
     private var tipsCell = BaseSelectableThemeCell()
     private let tipsSliderCell: FeeSliderCell
-    private var cautionViewItems = [TitledCaution]()
+    private let cautionCell = TitledHighlightedDescriptionCell()
     private let doneButton = ThemeButton()
+
+    private var loaded = false
 
     init(viewModel: Eip1559EvmFeeViewModel) {
         self.viewModel = viewModel
@@ -138,12 +140,14 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
-        subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
+        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
         subscribe(disposeBag, viewModel.resetButtonActiveDriver) { [weak self] active in
             self?.navigationItem.leftBarButtonItem?.isEnabled = active
         }
 
         tableView.buildSections()
+
+        loaded = true
     }
 
     @objc private func onTapDone() {
@@ -154,17 +158,18 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         viewModel.reset()
     }
 
-    private func handle(cautions: [TitledCaution]) {
-        cautionViewItems = cautions
-        reloadTable()
-    }
+    private func handle(caution: TitledCaution?) {
+        cautionCell.isVisible = caution != nil
 
-    private func reloadTable() {
-        tableView.reload(animated: true)
+        if let caution = caution {
+            cautionCell.bind(caution: caution)
+        }
 
-        UIView.animate(withDuration: 0.2) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+        if loaded {
+            UIView.animate(withDuration: 0.15) {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
         }
     }
 
@@ -249,13 +254,21 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
+        let cautionsSections: [SectionProtocol] = [
             Section(
-                    id: "cautions_\(index)",
+                    id: "caution",
                     headerState: .margin(height: .margin12),
-                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
+                    rows: [
+                        StaticRow(
+                                cell: cautionCell,
+                                id: "caution",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                                }
+                        )
+                    ]
             )
-        }
+        ]
 
         return feeSections + gasDataSections + cautionsSections
     }
