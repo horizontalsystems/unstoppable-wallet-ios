@@ -72,9 +72,8 @@ extension MainSettingsService {
     }
 
     var walletConnectSessionCountObservable: Observable<Int> {
-        return Observable.combineLatest(walletConnectSessionManager.sessionsObservable, walletConnectV2SessionManager.sessionsObservable).map {
-            print("combine latest : \($0.count) + \($1.count)")
-            return $0.count + $1.count
+        Observable.combineLatest(walletConnectSessionManager.sessionsObservable, walletConnectV2SessionManager.sessionsObservable).map {
+            $0.count + $1.count
         }
     }
 

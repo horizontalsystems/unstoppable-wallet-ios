@@ -40,6 +40,7 @@ class MainViewController: ThemeTabBarController {
 
         subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
         subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
+        subscribe(disposeBag, viewModel.showSessionRequestSignal) { [weak self] request in self?.handle(request: request) }
 
         if viewModel.needToShowJailbreakAlert {
             showJailbreakAlert()
@@ -146,8 +147,17 @@ class MainViewController: ThemeTabBarController {
 
         switch deepLink {
         case let .walletConnect(url):
+            // todo: Fix
             WalletConnectModule.start(uri: url, sourceViewController: visibleController)
         }
+    }
+
+    private func handle(request: WalletConnectRequest) {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+            return
+        }
+
+        visibleController.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
 }

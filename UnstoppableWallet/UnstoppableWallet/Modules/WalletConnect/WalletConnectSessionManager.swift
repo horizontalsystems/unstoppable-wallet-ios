@@ -45,7 +45,6 @@ class WalletConnectSessionManager {
     }
 
     private func syncSessions() {
-        print("WCv1 relay = \(sessions.count)")
         sessionsRelay.accept(sessions)
     }
 

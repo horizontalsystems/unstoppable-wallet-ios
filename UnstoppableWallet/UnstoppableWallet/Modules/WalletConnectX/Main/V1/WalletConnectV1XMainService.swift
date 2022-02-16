@@ -89,7 +89,7 @@ class WalletConnectV1XMainService {
             throw WalletConnectXMainModule.SessionError.unsupportedChainId
         }
 
-        sessionData = SessionData(peerId: peerId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
+        sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
@@ -241,14 +241,14 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
         state = .killed
     }
 
-    func approveRequest(id: Int, result: Any) {
+    func approveRequest(id: Int, anyResult: Any) {
         guard reachabilityManager.isReachable else {
             errorRelay.accept(AppError.noConnection)
             return
         }
 
         queue.async {
-            if let request = self.pendingRequests.removeValue(forKey: id), let convertedResult = request.convert(result: result) {
+            if let request = self.pendingRequests.removeValue(forKey: id), let convertedResult = request.convert(result: anyResult) {
                 self.interactor?.approveRequest(id: id, result: convertedResult)
             }
 
@@ -315,9 +315,10 @@ extension WalletConnectV1XMainService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
+        let chainId = sessionData?.chainId
         queue.async {
             self.handleRequest(id: id) {
-                try WalletConnectSendEthereumTransactionRequest(id: id, transaction: transaction)
+                try WalletConnectSendEthereumTransactionRequest(id: id, chainId: chainId, transaction: transaction)
             }
         }
     }
@@ -327,9 +328,10 @@ extension WalletConnectV1XMainService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSign(id: Int, payload: WCEthereumSignPayload) {
+        let chainId = sessionData?.chainId
         queue.async {
             self.handleRequest(id: id) {
-                WalletConnectSignMessageRequest(id: id, payload: payload)
+                WalletConnectSignMessageRequest(id: id, chainId: chainId, payload: payload)
             }
         }
     }
@@ -340,9 +342,18 @@ extension WalletConnectV1XMainService {
 
     struct SessionData {
         let peerId: String
+        let chainId: Int
         let peerMeta: WCPeerMeta
         let account: Account
         let evmKitWrapper: EvmKitWrapper
+    }
+
+}
+
+extension WalletConnectV1XMainService: IWalletConnectSignService {
+
+    func approveRequest(id: Int, result: Data) {
+        approveRequest(id: id, anyResult: result)
     }
 
 }

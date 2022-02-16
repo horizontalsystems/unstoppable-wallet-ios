@@ -40,8 +40,6 @@ class WalletConnectV2XListViewModel {
     }
 
     private func sync(pendingRequests: [Request]) {
-        print("WalletConnectV2XListViewModel : sync(pendingRequests)")
-
         pendingRequestCountRelay.accept(pendingRequests.count)
     }
 

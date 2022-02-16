@@ -14,6 +14,7 @@ struct MainModule {
                 storage: StorageKit.LocalStorage.default,
                 launchScreenManager: App.shared.launchScreenManager,
                 accountManager: App.shared.accountManager,
+                walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
                 presetTab: presetTab
         )
         let badgeService = MainBadgeService(

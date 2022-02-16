@@ -18,9 +18,9 @@ class WalletConnectV1XMainRequestView {
 
         switch request {
         case let request as WalletConnectSendEthereumTransactionRequest:
-            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseService: viewModel.service, requestId: request.id)
+            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(signService: viewModel.service, requestId: request.id)
         case let request as WalletConnectSignMessageRequest:
-            viewController = WalletConnectSignMessageRequestModule.viewController(baseService: viewModel.service, requestId: request.id)
+            viewController = WalletConnectSignMessageRequestModule.viewController(signService: viewModel.service, requestId: request.id)
         default: ()
         }
 

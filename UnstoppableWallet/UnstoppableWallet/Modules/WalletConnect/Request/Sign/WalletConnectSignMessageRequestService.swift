@@ -2,12 +2,12 @@ import EthereumKit
 
 class WalletConnectSignMessageRequestService {
     private let request: WalletConnectSignMessageRequest
-    private let baseService: WalletConnectV1XMainService
+    private let signService: IWalletConnectSignService
     private let signer: Signer
 
-    init(request: WalletConnectSignMessageRequest, baseService: WalletConnectV1XMainService, signer: Signer) {
+    init(request: WalletConnectSignMessageRequest, signService: IWalletConnectSignService, signer: Signer) {
         self.request = request
-        self.baseService = baseService
+        self.signService = signService
         self.signer = signer
     }
 
@@ -62,11 +62,11 @@ extension WalletConnectSignMessageRequestService {
             signedMessage = try signTypedData(message: data)
         }
 
-        baseService.approveRequest(id: request.id, result: signedMessage)
+        signService.approveRequest(id: request.id, result: signedMessage)
     }
 
     func reject() {
-        baseService.rejectRequest(id: request.id)
+        signService.rejectRequest(id: request.id)
     }
 
 }

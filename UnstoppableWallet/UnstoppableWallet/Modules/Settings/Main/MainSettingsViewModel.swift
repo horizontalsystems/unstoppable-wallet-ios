@@ -46,12 +46,13 @@ class MainSettingsViewModel {
         service.walletConnectSessionCountObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] count in
-                    print("Subscribed and changed to \(count)")
                     self?.walletConnectSessionCountRelay.accept(Self.convert(walletConnectSessionCount: count))
                 })
                 .disposed(by: disposeBag)
 
-        subscribe(disposeBag, service.launchScreenObservable) { [weak self] in self?.launchScreenRelay.accept($0.title) }
+        subscribe(disposeBag, service.launchScreenObservable) { [weak self] in
+            self?.launchScreenRelay.accept($0.title)
+        }
 
         service.baseCurrencyObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

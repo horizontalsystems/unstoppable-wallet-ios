@@ -48,13 +48,15 @@ class WalletConnectXListService {
     private func items(sessions: [WalletConnectSession]) -> [Item] {
         sessions.map {
             Item(
-                id: $0.id,
-                chains: [Chain(rawValue: $0.chainId)].compactMap { $0 },
-                version: 1,
-                appName: $0.peerMeta.name,
-                appUrl: $0.peerMeta.url,
-                appDescription: $0.peerMeta.description,
-                appIcons: $0.peerMeta.icons
+                    id: $0.id,
+                    chains: [Chain(rawValue: $0.chainId)].compactMap {
+                        $0
+                    },
+                    version: 1,
+                    appName: $0.peerMeta.name,
+                    appUrl: $0.peerMeta.url,
+                    appDescription: $0.peerMeta.description,
+                    appIcons: $0.peerMeta.icons
             )
         }
     }
@@ -62,13 +64,13 @@ class WalletConnectXListService {
     private func items(sessions: [Session]) -> [Item] {
         sessions.map {
             Item(
-                id: $0.id,
-                chains: [Chain.ethereum], //todo //Array($0.permissions.blockchains).map { 1 },
-                version: 2,
-                appName: $0.peer.name ?? "",
-                appUrl: $0.peer.url ?? "",
-                appDescription: $0.peer.description ?? "",
-                appIcons: $0.peer.icons ?? []
+                    id: $0.id,
+                    chains: [Chain.ethereum], //todo //Array($0.permissions.blockchains).map { 1 },
+                    version: 2,
+                    appName: $0.peer.name ?? "",
+                    appUrl: $0.peer.url ?? "",
+                    appDescription: $0.peer.description ?? "",
+                    appIcons: $0.peer.icons ?? []
             )
         }
     }

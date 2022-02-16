@@ -86,7 +86,7 @@ class WalletConnectService {
             throw SessionError.unsupportedChainId
         }
 
-        sessionData = SessionData(peerId: peerId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
+        sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
@@ -170,10 +170,10 @@ extension WalletConnectService {
             return
         }
 
-        interactor.approveSession(address: sessionData.evmKitWrapper.evmKit.address.eip55, chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId)
+        interactor.approveSession(address: sessionData.evmKitWrapper.evmKit.address.eip55, chainId: sessionData.chainId)
 
         let session = WalletConnectSession(
-                chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId,
+                chainId: sessionData.chainId,
                 accountId: sessionData.account.id,
                 session: interactor.session,
                 peerId: sessionData.peerId,
@@ -274,9 +274,10 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
+        let chainId = sessionData?.chainId
         queue.async {
             self.handleRequest(id: id) {
-                try WalletConnectSendEthereumTransactionRequest(id: id, transaction: transaction)
+                try WalletConnectSendEthereumTransactionRequest(id: id, chainId: chainId, transaction: transaction)
             }
         }
     }
@@ -286,9 +287,10 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSign(id: Int, payload: WCEthereumSignPayload) {
+        let chainId = sessionData?.chainId
         queue.async {
             self.handleRequest(id: id) {
-                WalletConnectSignMessageRequest(id: id, payload: payload)
+                WalletConnectSignMessageRequest(id: id, chainId: chainId, payload: payload)
             }
         }
     }
@@ -324,6 +326,7 @@ extension WalletConnectService {
 
     struct SessionData {
         let peerId: String
+        let chainId: Int
         let peerMeta: WCPeerMeta
         let account: Account
         let evmKitWrapper: EvmKitWrapper

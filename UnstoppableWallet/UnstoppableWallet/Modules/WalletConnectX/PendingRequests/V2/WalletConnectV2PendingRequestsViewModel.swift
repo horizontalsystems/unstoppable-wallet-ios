@@ -7,12 +7,16 @@ class WalletConnectV2PendingRequestsViewModel {
     private let disposeBag = DisposeBag()
 
     private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
+    private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
     init(service: WalletConnectV2PendingRequestsService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in
             self?.sync(items: $0)
+        }
+        subscribe(disposeBag, service.showPendingRequestObservable) { [weak self] in
+            self?.showPendingRequestRelay.accept($0)
         }
 
         sync(items: service.items)
@@ -26,7 +30,7 @@ class WalletConnectV2PendingRequestsViewModel {
                     title: item.accountName,
                     viewItems: item.requests.map { request in
                         ViewItem(
-                                id: request.id.description,
+                                id: request.id,
                                 title: title(method: request.method),
                                 subtitle: request.sessionName
                         )
@@ -54,8 +58,12 @@ extension WalletConnectV2PendingRequestsViewModel {
         sectionViewItemsRelay.asDriver()
     }
 
-    func onSelect(index: Int) {
-//        service.set(themeMode: service.items[index].themeMode)
+    var showPendingRequestSignal: Signal<WalletConnectRequest> {
+        showPendingRequestRelay.asSignal()
+    }
+
+    func onSelect(requestId: Int64) {
+        service.select(requestId: requestId)
     }
 
 }
@@ -63,7 +71,7 @@ extension WalletConnectV2PendingRequestsViewModel {
 extension WalletConnectV2PendingRequestsViewModel {
 
     struct ViewItem {
-        let id: String
+        let id: Int64
         let title: String
         let subtitle: String
     }

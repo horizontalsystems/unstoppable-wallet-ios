@@ -4,8 +4,17 @@ import MarketKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
-    static func viewController(baseService: WalletConnectV1XMainService, requestId: Int) -> UIViewController? {
-        guard let request = baseService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest, let evmKitWrapper = baseService.evmKitWrapper else {
+    static func viewController(signService: WalletConnectV1XMainService, requestId: Int) -> UIViewController? {
+        guard let request = signService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest, let evmKitWrapper = signService.evmKitWrapper else {
+            return nil
+        }
+
+        return viewController(signService: signService, request: request)
+    }
+
+    static func viewController(signService: IWalletConnectSignService, request: WalletConnectSendEthereumTransactionRequest) -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount,
+              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chainId ?? 1, account: account) else {
             return nil
         }
 
@@ -20,7 +29,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: baseService)
+        let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, gasPrice: service.gasPrice.flatMap { GasPrice.legacy(gasPrice: $0) }) // TODO: walletConnect service must pass GasPrice object
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: service.transactionData, gasLimitSurchargePercent: 10)

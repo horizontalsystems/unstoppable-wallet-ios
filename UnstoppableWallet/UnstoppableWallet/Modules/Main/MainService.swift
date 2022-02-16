@@ -10,6 +10,7 @@ class MainService {
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
     private let accountManager: IAccountManager
+    private let walletConnectV2Manager: WalletConnectV2SessionManager
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
 
@@ -22,11 +23,12 @@ class MainService {
         }
     }
 
-    init(localStorage: ILocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: IAccountManager, presetTab: MainModule.Tab?) {
+    init(localStorage: ILocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: IAccountManager, walletConnectV2Manager: WalletConnectV2SessionManager, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager
         self.accountManager = accountManager
+        self.walletConnectV2Manager = walletConnectV2Manager
         self.presetTab = presetTab
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
@@ -44,6 +46,10 @@ extension MainService {
 
     var hasAccountsObservable: Observable<Bool> {
         hasAccountsRelay.asObservable()
+    }
+
+    var showSessionRequestObservable: Observable<WalletConnectRequest> {
+        walletConnectV2Manager.sessionRequestReceivedObservable
     }
 
     var initialTab: MainModule.Tab {

@@ -2,11 +2,11 @@ import EthereumKit
 
 class WalletConnectSendEthereumTransactionRequestService {
     private let request: WalletConnectSendEthereumTransactionRequest
-    private let baseService: WalletConnectV1XMainService
+    private let signService: IWalletConnectSignService
 
-    init(request: WalletConnectSendEthereumTransactionRequest, baseService: WalletConnectV1XMainService) {
+    init(request: WalletConnectSendEthereumTransactionRequest, baseService: IWalletConnectSignService) {
         self.request = request
-        self.baseService = baseService
+        self.signService = baseService
     }
 
 }
@@ -26,11 +26,11 @@ extension WalletConnectSendEthereumTransactionRequestService {
     }
 
     func approve(transactionHash: Data) {
-        baseService.approveRequest(id: request.id, result: transactionHash)
+        signService.approveRequest(id: request.id, result: transactionHash)
     }
 
     func reject() {
-        baseService.rejectRequest(id: request.id)
+        signService.rejectRequest(id: request.id)
     }
 
 }
