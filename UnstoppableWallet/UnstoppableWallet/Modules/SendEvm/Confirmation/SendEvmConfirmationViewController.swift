@@ -15,7 +15,7 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = confirmationTitle.localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(sendButton)
         sendButton.snp.makeConstraints { maker in
