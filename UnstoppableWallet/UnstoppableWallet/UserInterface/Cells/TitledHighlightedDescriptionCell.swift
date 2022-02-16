@@ -55,6 +55,20 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         set { descriptionView.titleColor = newValue }
     }
 
+    func bind(caution: TitledCaution) {
+        titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
+        tintColor = caution.type == .error ? .themeLucian : .themeJacob
+        titleText = caution.title
+        titleColor = caution.type == .error ? .themeLucian : .themeJacob
+        descriptionText = caution.text
+        contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xff4820, alpha: 0.2) : .themeYellow20
+        contentBorderColor = caution.type == .error ? .themeLucian : .themeJacob
+    }
+
+    func cellHeight(containerWidth: CGFloat) -> CGFloat {
+        isVisible ? Self.height(containerWidth: containerWidth, text: descriptionText ?? "") : 0
+    }
+
 }
 
 extension TitledHighlightedDescriptionCell {
@@ -64,13 +78,7 @@ extension TitledHighlightedDescriptionCell {
                 id: caution.title,
                 dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: caution.text) },
                 bind: { cell, _ in
-                    cell.titleIcon = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.tintColor = caution.type == .error ? .themeLucian : .themeJacob
-                    cell.titleText = caution.title
-                    cell.titleColor = caution.type == .error ? .themeLucian : .themeJacob
-                    cell.descriptionText = caution.text
-                    cell.contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xff4820, alpha: 0.2) : .themeYellow20
-                    cell.contentBorderColor = caution.type == .error ? .themeLucian : .themeJacob
+                    cell.bind(caution: caution)
                 }
         )
     }

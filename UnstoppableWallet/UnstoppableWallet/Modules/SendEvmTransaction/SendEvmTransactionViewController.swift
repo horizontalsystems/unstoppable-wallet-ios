@@ -231,7 +231,7 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: maxFeeCell.cellHeight,
+                                height: .heightCell48,
                                 autoDeselect: true,
                                 action: { [weak self] in
                                     self?.openFeeSettings()

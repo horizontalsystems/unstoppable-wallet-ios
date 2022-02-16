@@ -20,7 +20,7 @@ class Eip1559EvmFeeViewModel {
     private let tipsRelay = BehaviorRelay<String>(value: "n/a")
     private let baseFeeSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
     private let tipsSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
-    private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
+    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
     init(gasPriceService: Eip1559GasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
         self.gasPriceService = gasPriceService
@@ -71,7 +71,7 @@ class Eip1559EvmFeeViewModel {
         spinnerVisibleRelay.accept(spinnerVisible)
         valueRelay.accept(maxFeeValue)
         gasLimitRelay.accept(gasLimit)
-        cautionsRelay.accept(cautions)
+        cautionRelay.accept(cautions.first)
     }
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>?) {
@@ -142,8 +142,8 @@ extension Eip1559EvmFeeViewModel {
         tipsSliderRelay.asDriver()
     }
 
-    var cautionsDriver: Driver<[TitledCaution]> {
-        cautionsRelay.asDriver()
+    var cautionDriver: Driver<TitledCaution?> {
+        cautionRelay.asDriver()
     }
 
     var resetButtonActiveDriver: Driver<Bool> {
