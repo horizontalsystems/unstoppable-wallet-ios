@@ -932,6 +932,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
 "wallet_connect.watch_account.switch" = "Switch";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "App Status";

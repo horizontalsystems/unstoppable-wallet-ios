@@ -66,6 +66,10 @@ extension WalletConnectV2PendingRequestsViewModel {
         service.select(requestId: requestId)
     }
 
+    func onSelect(accountId: String) {
+        service.select(accountId: accountId)
+    }
+
 }
 
 extension WalletConnectV2PendingRequestsViewModel {

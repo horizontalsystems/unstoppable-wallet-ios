@@ -135,6 +135,7 @@ extension WalletConnectV2Service: WalletConnectClientDelegate {
     //Receive request from dApp
     public func didReceive(sessionRequest: Request) {
         sessionRequestReceivedRelay.accept(sessionRequest)
+        print("WC2 : Service: update pending requests after come new one")
         pendingRequestsUpdatedRelay.accept(())
     }
 
