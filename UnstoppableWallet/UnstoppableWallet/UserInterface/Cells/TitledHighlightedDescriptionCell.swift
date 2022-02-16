@@ -73,16 +73,6 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
 
 extension TitledHighlightedDescriptionCell {
 
-    static func row(caution: TitledCaution) -> RowProtocol {
-        Row<TitledHighlightedDescriptionCell>(
-                id: caution.title,
-                dynamicHeight: { containerWidth in TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: caution.text) },
-                bind: { cell, _ in
-                    cell.bind(caution: caution)
-                }
-        )
-    }
-
     static func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
         let descriptionViewHeight = TitledHighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)

@@ -68,7 +68,7 @@ class Eip1559EvmFeeViewController: ThemeViewController {
 
         title = "fee_settings".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDone))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .done, target: self, action: #selector(onTapReset))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(onTapReset))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

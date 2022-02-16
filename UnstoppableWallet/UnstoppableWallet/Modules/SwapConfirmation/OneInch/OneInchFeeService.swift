@@ -72,8 +72,6 @@ class OneInchFeeService {
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
         disposeBag = DisposeBag()
 
-        status = .loading
-
         let recipient: EthereumKit.Address? = parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }
 
         provider.swapSingle(platformCoinFrom: parameters.platformCoinFrom,

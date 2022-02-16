@@ -37,11 +37,9 @@ class Eip1559GasPriceService {
         self.minRecommendedTips = minRecommendedTips
 
         feeHistoryProvider = EIP1559GasPriceProvider(evmKit: evmKit)
-        feeHistoryProvider.feeHistoryObservable(blocksCount: Self.feeHistoryBlocksCount, rewardPercentile: Self.feeHistoryRewardPercentile)
-                .subscribe(onNext: { [weak self] history in
-                    self?.handle(feeHistory: history)
-                }, onError: { [weak self] error in
-                    self?.status = .failed(error)
+        evmKit.lastBlockHeightObservable
+                .subscribe(onNext: { [weak self] _ in
+                    self?.updateFeeHistory()
                 })
                 .disposed(by: disposeBag)
 
@@ -51,14 +49,18 @@ class Eip1559GasPriceService {
             baseFee = maxBaseFee - maxTips
             sync()
         } else {
-            feeHistoryProvider.feeHistorySingle(blocksCount: Self.feeHistoryBlocksCount, rewardPercentile: Self.feeHistoryRewardPercentile)
-                    .subscribe(onSuccess: { [weak self] history in
-                        self?.handle(feeHistory: history)
-                    }, onError: { [weak self] error in
-                        self?.status = .failed(error)
-                    })
-                    .disposed(by: disposeBag)
+            updateFeeHistory()
         }
+    }
+
+    private func updateFeeHistory() {
+        feeHistoryProvider.feeHistorySingle(blocksCount: Self.feeHistoryBlocksCount, rewardPercentile: Self.feeHistoryRewardPercentile)
+                .subscribe(onSuccess: { [weak self] history in
+                    self?.handle(feeHistory: history)
+                }, onError: { [weak self] error in
+                    self?.status = .failed(error)
+                })
+                .disposed(by: disposeBag)
     }
 
     private func sync() {

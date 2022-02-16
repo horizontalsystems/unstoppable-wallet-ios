@@ -18,8 +18,10 @@ class LegacyEvmFeeViewController: ThemeViewController {
     private var gasLimitCell = BaseSelectableThemeCell()
     private var gasPriceCell = BaseSelectableThemeCell()
     private let gasPriceSliderCell: FeeSliderCell
-    private var cautionViewItems = [TitledCaution]()
+    private let cautionCell = TitledHighlightedDescriptionCell()
     private let doneButton = ThemeButton()
+
+    private var loaded = false
 
     init(viewModel: LegacyEvmFeeViewModel) {
         self.viewModel = viewModel
@@ -102,7 +104,7 @@ class LegacyEvmFeeViewController: ThemeViewController {
 
         gasPriceSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
-        subscribe(disposeBag, viewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
+        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] value in
             self?.gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
                 component.text = value
@@ -118,6 +120,8 @@ class LegacyEvmFeeViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+
+        loaded = true
     }
 
     @objc private func onTapDone() {
@@ -128,17 +132,18 @@ class LegacyEvmFeeViewController: ThemeViewController {
         viewModel.reset()
     }
 
-    private func handle(cautions: [TitledCaution]) {
-        cautionViewItems = cautions
-        reloadTable()
-    }
+    private func handle(caution: TitledCaution?) {
+        cautionCell.isVisible = caution != nil
 
-    private func reloadTable() {
-        tableView.reload(animated: true)
+        if let caution = caution {
+            cautionCell.bind(caution: caution)
+        }
 
-        UIView.animate(withDuration: 0.2) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+        if loaded {
+            UIView.animate(withDuration: 0.15) {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
         }
     }
 
@@ -198,13 +203,21 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
+        let cautionsSections: [SectionProtocol] = [
             Section(
-                    id: "cautions_\(index)",
+                    id: "caution",
                     headerState: .margin(height: .margin12),
-                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
+                    rows: [
+                        StaticRow(
+                                cell: cautionCell,
+                                id: "caution",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    self?.cautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                                }
+                        )
+                    ]
             )
-        }
+        ]
 
         return feeSections + gasDataSections + cautionsSections
     }

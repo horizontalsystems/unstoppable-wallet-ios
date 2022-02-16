@@ -63,8 +63,8 @@ class SendEvmCautionsFactory {
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
             case .lowerThanBaseGasLimit:
-                title = "fee_settings.errors.low_base_fee".localized
-                text = "fee_settings.errors.low_base_fee.info".localized
+                title = "fee_settings.errors.low_max_fee".localized
+                text = "fee_settings.errors.low_max_fee.info".localized
             }
         }
 

@@ -46,8 +46,6 @@ class EvmFeeService {
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
         disposeBag = DisposeBag()
 
-        status = .loading
-
         transactionSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] transaction in

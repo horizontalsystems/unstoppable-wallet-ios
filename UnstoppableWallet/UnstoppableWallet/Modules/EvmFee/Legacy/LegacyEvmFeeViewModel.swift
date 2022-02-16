@@ -17,7 +17,7 @@ class LegacyEvmFeeViewModel {
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let gasPriceRelay = BehaviorRelay<String>(value: "n/a")
     private let gasPriceSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
-    private let cautionsRelay = BehaviorRelay<[TitledCaution]>(value: [])
+    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
     init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
         self.gasPriceService = gasPriceService
@@ -75,7 +75,7 @@ class LegacyEvmFeeViewModel {
         spinnerVisibleRelay.accept(spinnerVisible)
         valueRelay.accept(maxFeeValue)
         gasLimitRelay.accept(gasLimit)
-        cautionsRelay.accept(cautions)
+        cautionRelay.accept(cautions.first)
     }
 
     private func sync(usingRecommended: Bool) {
@@ -110,8 +110,8 @@ extension LegacyEvmFeeViewModel {
         gasPriceSliderRelay.asDriver()
     }
 
-    var cautionsDriver: Driver<[TitledCaution]> {
-        cautionsRelay.asDriver()
+    var cautionDriver: Driver<TitledCaution?> {
+        cautionRelay.asDriver()
     }
 
     var resetButtonActiveDriver: Driver<Bool> {

@@ -18,7 +18,8 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let maxFeeCell: SelectableFeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
-    private var cautionViewItems = [TitledCaution]()
+    private let caution1Cell = TitledHighlightedDescriptionCell()
+    private let caution2Cell = TitledHighlightedDescriptionCell()
     private var isLoaded = false
 
     var topDescription: String?
@@ -80,7 +81,20 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func handle(cautions: [TitledCaution]) {
-        cautionViewItems = cautions
+        if let caution = cautions.first {
+            caution1Cell.bind(caution: caution)
+            caution1Cell.isVisible = true
+        } else {
+            caution1Cell.isVisible = false
+        }
+
+        if cautions.count > 1 {
+            caution2Cell.bind(caution: cautions[1])
+            caution2Cell.isVisible = true
+        } else {
+            caution2Cell.isVisible = false
+        }
+
         reloadTable()
     }
 
@@ -241,13 +255,33 @@ extension SendEvmTransactionViewController: SectionsDataSource {
             )
         ]
 
-        let cautionsSections: [SectionProtocol] = cautionViewItems.enumerated().map { index, caution in
+        let cautionsSections: [SectionProtocol] = [
             Section(
-                    id: "cautions_\(index)",
+                    id: "caution1",
                     headerState: .margin(height: .margin12),
-                    rows: [TitledHighlightedDescriptionCell.row(caution: caution)]
+                    rows: [
+                        StaticRow(
+                                cell: caution1Cell,
+                                id: "caution1",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    self?.caution1Cell.cellHeight(containerWidth: containerWidth) ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "caution2",
+                    headerState: .margin(height: .margin12),
+                    rows: [
+                        StaticRow(
+                                cell: caution2Cell,
+                                id: "caution2",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    self?.caution2Cell.cellHeight(containerWidth: containerWidth) ?? 0
+                                }
+                        )]
             )
-        }
+        ]
 
         return transactionSections + feeSections + cautionsSections
     }
