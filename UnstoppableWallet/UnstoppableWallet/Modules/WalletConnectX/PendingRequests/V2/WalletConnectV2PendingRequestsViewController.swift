@@ -3,6 +3,7 @@ import SectionsTableView
 import ThemeKit
 import RxSwift
 import ComponentKit
+import WalletConnect
 
 class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     private let viewModel: WalletConnectV2PendingRequestsViewModel
@@ -45,6 +46,9 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
 
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.showPendingRequestSignal) { [weak self] request in
+            self?.showPending(request: request)
+        }
 
         tableView.buildSections()
 
@@ -59,10 +63,22 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         tableView.reload(animated: true)
     }
 
+    private func onSelect(requestId: Int64) {
+        viewModel.onSelect(requestId: requestId)
+    }
+
+    private func showPending(request: WalletConnectRequest) {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+            return
+        }
+
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
     private func accountCell(title: String, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
         var elements: [CellBuilder.CellElement] = [.image20, .text]
 
-        let binder: ((BaseThemeCell) -> ()) = { cell in
+        let binder: (BaseThemeCell) -> () = { cell in
             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
 
             cell.bind(index: 0) { (component: ImageComponent) in
@@ -125,7 +141,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                 ] + sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     if sectionViewItem.selected {
                         return CellBuilder.selectableRow(
-                                elements: [.multiText, .image20, .margin0],
+                                elements: [.multiText, .image20],
                                 tableView: tableView,
                                 id: "request-selected-\(viewItem.id)",
                                 height: .heightDoubleLineCell,
@@ -145,7 +161,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                                         component.imageView.image = UIImage(named: "arrow_big_forward_20")
                                     }
                                 },
-                                action: { print("Select row!") }
+                                action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
                         )
                     } else {
                         return CellBuilder.row(

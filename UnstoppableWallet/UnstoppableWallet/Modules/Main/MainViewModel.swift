@@ -13,6 +13,7 @@ class MainViewModel {
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
+    private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
 
     init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService) {
         self.service = service
@@ -22,6 +23,7 @@ class MainViewModel {
         self.deepLinkService = deepLinkService
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
+        subscribe(disposeBag, service.showSessionRequestObservable) { [weak self] in self?.showSession(request: $0) }
 
         sync(hasAccounts: service.hasAccounts)
     }
@@ -29,6 +31,10 @@ class MainViewModel {
     private func sync(hasAccounts: Bool) {
         balanceTabStateRelay.accept(hasAccounts ? .balance : .onboarding)
         transactionsTabEnabledRelay.accept(hasAccounts)
+    }
+
+    private func showSession(request: WalletConnectRequest) {
+        showSessionRequestRelay.accept(request)
     }
 
 }
@@ -57,6 +63,10 @@ extension MainViewModel {
 
     var transactionsTabEnabledDriver: Driver<Bool> {
         transactionsTabEnabledRelay.asDriver()
+    }
+
+    var showSessionRequestSignal: Signal<WalletConnectRequest> {
+        showSessionRequestRelay.asSignal()
     }
 
     var initialTab: MainModule.Tab {

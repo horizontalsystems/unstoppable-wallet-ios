@@ -814,7 +814,6 @@ extension GrdbStorage: IWalletConnectV2SessionStorage {
     }
 
     func save(sessions: [WalletConnectV2Session]) {
-        print("deleteSessionV2 with \(sessions.map { $0.topic }.joined(separator: "::"))")
         _ = try! dbPool.write { db in
             for session in sessions {
                 try session.insert(db)
@@ -823,7 +822,6 @@ extension GrdbStorage: IWalletConnectV2SessionStorage {
     }
 
     func deleteSessionV2(topics: [String]) {
-        print("deleteSessionV2 with \(topics.joined(separator: "::"))")
         _ = try! dbPool.write { db in
             for topic in topics {
                 try WalletConnectV2Session.filter(WalletConnectV2Session.Columns.topic == topic).deleteAll(db)

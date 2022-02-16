@@ -13,7 +13,7 @@ class WalletConnectV2Service {
 
     private let sessionsItemUpdatedRelay = PublishRelay<()>()
     private let pendingRequestsUpdatedRelay = PublishRelay<()>()
-    private let sessionRequestUpdatedRelay = PublishRelay<Request>()
+    private let sessionRequestReceivedRelay = PublishRelay<Request>()
 
     init(info: WalletConnectClientInfo) {
         let metadata = AppMetadata(
@@ -106,23 +106,21 @@ extension WalletConnectV2Service {
     }
 
     //Works with Requests
-    public var sessionRequestObservable: Observable<Request> {
-        sessionRequestUpdatedRelay.asObservable()
+    public var sessionRequestReceivedObservable: Observable<Request> {
+        sessionRequestReceivedRelay.asObservable()
     }
 
-    public func sign(request: Request) {
-        let result = AnyCodable("")// Signer.signEth(request: request)
+    public func sign(request: Request, result: Data) {
+        let result = AnyCodable(result)// Signer.signEth(request: request)
         let response = JSONRPCResponse<AnyCodable>(id: request.id, result: result)
         client.respond(topic: request.topic, response: .response(response))
 
-        sessionRequestUpdatedRelay.accept(request)
         pendingRequestsUpdatedRelay.accept(())
     }
 
     public func reject(request: Request) {
-        client.respond(topic: request.topic, response: .error(JSONRPCErrorResponse(id: request.id, error: JSONRPCErrorResponse.Error(code: 0, message: ""))))
+        client.respond(topic: request.topic, response: .error(JSONRPCErrorResponse(id: request.id, error: JSONRPCErrorResponse.Error(code: 0, message: "reject by User"))))
 
-        sessionRequestUpdatedRelay.accept(request)
         pendingRequestsUpdatedRelay.accept(())
     }
 
@@ -136,9 +134,7 @@ extension WalletConnectV2Service: WalletConnectClientDelegate {
 
     //Receive request from dApp
     public func didReceive(sessionRequest: Request) {
-        print("didReceive(sessionRequest:")
-
-        sessionRequestUpdatedRelay.accept(sessionRequest)
+        sessionRequestReceivedRelay.accept(sessionRequest)
         pendingRequestsUpdatedRelay.accept(())
     }
 
@@ -160,8 +156,6 @@ extension WalletConnectV2Service: WalletConnectClientDelegate {
 
     // dApp disconnected session
     func didDelete(sessionTopic: String, reason: Reason) {
-        print("didDelete(sessionTopic: String \(sessionTopic) : \(reason.message)")
-
         deleteSessionRelay.accept((sessionTopic, reason))
         updateSessions()
     }
@@ -203,6 +197,24 @@ extension Session: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(topic)
+    }
+
+}
+
+extension WalletConnectV2Service: IWalletConnectSignService {
+
+    func approveRequest(id: Int, result: Data) {
+        guard let request = pendingRequests.first(where: { $0.id == id }) else {
+            return
+        }
+        sign(request: request, result: result)
+    }
+
+    func rejectRequest(id: Int) {
+        guard let request = pendingRequests.first(where: { $0.id == id }) else {
+            return
+        }
+        reject(request: request)
     }
 
 }

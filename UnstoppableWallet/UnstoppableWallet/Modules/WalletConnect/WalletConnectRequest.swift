@@ -4,9 +4,11 @@ import BigInt
 
 class WalletConnectRequest {
     let id: Int
+    let chainId: Int?
 
-    init(id: Int) {
+    init(id: Int, chainId: Int?) {
         self.id = id
+        self.chainId = chainId
     }
 
     func convert(result: Any) -> String? {
@@ -18,7 +20,7 @@ class WalletConnectRequest {
 class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
     let transaction: WalletConnectTransaction
 
-    init(id: Int, transaction: WCEthereumTransaction) throws {
+    init(id: Int, chainId: Int?, transaction: WCEthereumTransaction) throws {
         guard let to = transaction.to else {
             throw TransactionError.noRecipient
         }
@@ -33,7 +35,7 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
                 data: Data(hex: transaction.data)
         )
 
-        super.init(id: id)
+        super.init(id: id, chainId: chainId)
     }
 
     override func convert(result: Any) -> String? {
@@ -49,10 +51,10 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
 class WalletConnectSignMessageRequest: WalletConnectRequest {
     let payload: WCEthereumSignPayload
 
-    init(id: Int, payload: WCEthereumSignPayload) {
+    init(id: Int, chainId: Int?, payload: WCEthereumSignPayload) {
         self.payload = payload
 
-        super.init(id: id)
+        super.init(id: id, chainId: chainId)
     }
 
     override func convert(result: Any) -> String? {

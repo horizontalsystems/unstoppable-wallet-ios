@@ -2545,6 +2545,7 @@
 		ABC9A21C9D01209A433ABBBF /* WalletConnectV1XMainRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A59FB06683FCAB8F14DA /* WalletConnectV1XMainRequestView.swift */; };
 		ABC9A23DA7BACD715879CBF1 /* WalletConnectV2PendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A288DEDEA94520E8B35B /* WalletConnectV2PendingRequestsService.swift */; };
 		ABC9A26548408B9DFA066E11 /* WalletConnectV1XMainRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0FA593B7DE53FB2A68C /* WalletConnectV1XMainRequestViewModel.swift */; };
+		ABC9A2853E44FA2E5026F4A4 /* WalletConnectV2RequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6E5099222471B714E42 /* WalletConnectV2RequestMapper.swift */; };
 		ABC9A2C2F7B31FA421C18D1D /* WalletConnectV2XListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB1695345EA89C3034E1 /* WalletConnectV2XListViewModel.swift */; };
 		ABC9A2C94239A40A46730A43 /* WalletConnectV2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4544AB5CA22ADE16417 /* WalletConnectV2Session.swift */; };
 		ABC9A2D4D9FC7CB70800FFDF /* WalletConnectXScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD8C705A7BB5238903C1 /* WalletConnectXScanQrViewController.swift */; };
@@ -2571,6 +2572,7 @@
 		ABC9A7A9053C6ECF618D0E4A /* WalletConnectV2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4544AB5CA22ADE16417 /* WalletConnectV2Session.swift */; };
 		ABC9A7B41827D3AF3B01FE8F /* WalletConnectV2PendingRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC0F7B4921188FD3F5DA /* WalletConnectV2PendingRequestsViewController.swift */; };
 		ABC9A80B0EB6B5D95D234E1C /* WalletConnectV1XListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACD77C2A94E8EA916278 /* WalletConnectV1XListView.swift */; };
+		ABC9A80B925659FD24E473BB /* WalletConnectV2RequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6E5099222471B714E42 /* WalletConnectV2RequestMapper.swift */; };
 		ABC9A82C26EA9DC0B3ACA1C3 /* WalletConnectV2PingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD784D7B3879863F860E /* WalletConnectV2PingService.swift */; };
 		ABC9A88CA26DAC4F99F242C7 /* WalletConnectV1XListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE406FFC9FAEA791014 /* WalletConnectV1XListViewModel.swift */; };
 		ABC9A8ADE19E035D61AE24AF /* WalletConnectV2SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC0B5943DF3B61B20BF6 /* WalletConnectV2SessionManager.swift */; };
@@ -2596,15 +2598,18 @@
 		ABC9AAEBA90D44648856206B /* WalletConnectV2XListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB1695345EA89C3034E1 /* WalletConnectV2XListViewModel.swift */; };
 		ABC9AB44478D02BEBC344455 /* WalletConnectV1XListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACD77C2A94E8EA916278 /* WalletConnectV1XListView.swift */; };
 		ABC9AB4A7F833D17454CA6E9 /* WalletConnectXMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A74CAAEF94380C136DD1 /* WalletConnectXMainViewModel.swift */; };
+		ABC9AB654BC40A8A9D5485DA /* WalletConnectV2RequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6E5099222471B714E42 /* WalletConnectV2RequestMapper.swift */; };
 		ABC9ABBD0B110352560DD4A1 /* WalletConnectMainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE96C03C432E4DD2A832 /* WalletConnectMainModule.swift */; };
 		ABC9ABC09321233E1727A8DD /* WalletConnectV2Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4544AB5CA22ADE16417 /* WalletConnectV2Session.swift */; };
 		ABC9AC4AD6FD9FAC35D3EF85 /* WalletConnectV2XMainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF9F83FFAD564C56211 /* WalletConnectV2XMainService.swift */; };
 		ABC9ACC66CCED07F963F0D69 /* WalletConnectV2PingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD784D7B3879863F860E /* WalletConnectV2PingService.swift */; };
+		ABC9ACDAA05DE84605B2EDAC /* WalletConnectXModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFDE82286EF7319D5030 /* WalletConnectXModule.swift */; };
 		ABC9ACECC86B036A5079E85E /* WalletConnectV1XMainRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0FA593B7DE53FB2A68C /* WalletConnectV1XMainRequestViewModel.swift */; };
 		ABC9AD001671E1E90429C000 /* WalletConnectUriHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A324C4EC233344ABDB2A /* WalletConnectUriHandler.swift */; };
 		ABC9AD1F32EFA0C1DCE24B1C /* WalletConnectXListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4243C4A083AFF96224C /* WalletConnectXListService.swift */; };
 		ABC9AD7DC7BDD3644AC48DDE /* WalletConnectV2PendingRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7F4981552A534A92155 /* WalletConnectV2PendingRequestsViewModel.swift */; };
 		ABC9AD9D31237FC3C668DBC4 /* WalletConnectV2PendingRequestsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9533C9DC24048896503 /* WalletConnectV2PendingRequestsModule.swift */; };
+		ABC9ADA1E36826D8F139B937 /* WalletConnectXModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFDE82286EF7319D5030 /* WalletConnectXModule.swift */; };
 		ABC9ADA42CC698C4C57BC779 /* WalletConnectXListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5B60F02BA18B446C1CF /* WalletConnectXListViewController.swift */; };
 		ABC9ADDF9A732A52F6B5B906 /* WalletConnectXListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5B60F02BA18B446C1CF /* WalletConnectXListViewController.swift */; };
 		ABC9ADE82F111066C35BC512 /* WalletConnectV1XMainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A06B156151768B793F40 /* WalletConnectV1XMainService.swift */; };
@@ -2613,6 +2618,7 @@
 		ABC9AE2CF5CFDE99DF86003B /* WalletConnectXMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF0C03CBBF435455C26 /* WalletConnectXMainViewController.swift */; };
 		ABC9AE3F86911E3E50E8FF38 /* WalletConnectV2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE27C87672EB7102E42D /* WalletConnectV2Service.swift */; };
 		ABC9AE5B6AB070D07A796FC3 /* WalletConnectXMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF0C03CBBF435455C26 /* WalletConnectXMainViewController.swift */; };
+		ABC9AE5D6E8C7F4CB12B512B /* WalletConnectXModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFDE82286EF7319D5030 /* WalletConnectXModule.swift */; };
 		ABC9AE641E9FB2F4934FEC34 /* WalletConnectV2PendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A288DEDEA94520E8B35B /* WalletConnectV2PendingRequestsService.swift */; };
 		ABC9AEF520145874385958A2 /* WalletConnectXListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A476295E2360A5FC898B /* WalletConnectXListViewModel.swift */; };
 		ABC9AF2AA10F8FFB4BF04478 /* WalletConnectV2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE27C87672EB7102E42D /* WalletConnectV2Service.swift */; };
@@ -3817,6 +3823,7 @@
 		ABC9A476295E2360A5FC898B /* WalletConnectXListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectXListViewModel.swift; sourceTree = "<group>"; };
 		ABC9A59FB06683FCAB8F14DA /* WalletConnectV1XMainRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV1XMainRequestView.swift; sourceTree = "<group>"; };
 		ABC9A5B60F02BA18B446C1CF /* WalletConnectXListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectXListViewController.swift; sourceTree = "<group>"; };
+		ABC9A6E5099222471B714E42 /* WalletConnectV2RequestMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2RequestMapper.swift; sourceTree = "<group>"; };
 		ABC9A74CAAEF94380C136DD1 /* WalletConnectXMainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectXMainViewModel.swift; sourceTree = "<group>"; };
 		ABC9A7F4981552A534A92155 /* WalletConnectV2PendingRequestsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PendingRequestsViewModel.swift; sourceTree = "<group>"; };
 		ABC9A8234A073A290B92E065 /* WalletConnectXMainModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectXMainModule.swift; sourceTree = "<group>"; };
@@ -3836,6 +3843,7 @@
 		ABC9AE27C87672EB7102E42D /* WalletConnectV2Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2Service.swift; sourceTree = "<group>"; };
 		ABC9AE96C03C432E4DD2A832 /* WalletConnectMainModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectMainModule.swift; sourceTree = "<group>"; };
 		ABC9AE9731FD379E44892D75 /* WalletConnectEvmChainParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectEvmChainParser.swift; sourceTree = "<group>"; };
+		ABC9AFDE82286EF7319D5030 /* WalletConnectXModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectXModule.swift; sourceTree = "<group>"; };
 		B8E97143E5B72843BBAFAE2D /* Pods-Unstoppable Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev T.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		D003297526CD2C67002EC21D /* TransactionLockInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionLockInfo.swift; sourceTree = "<group>"; };
 		D003297926CD2E89002EC21D /* TransactionDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDateHeaderView.swift; sourceTree = "<group>"; };
@@ -6280,6 +6288,8 @@
 				ABC9AE27C87672EB7102E42D /* WalletConnectV2Service.swift */,
 				ABC9AD784D7B3879863F860E /* WalletConnectV2PingService.swift */,
 				ABC9AC9364260285342C762F /* PendingRequests */,
+				ABC9AFDE82286EF7319D5030 /* WalletConnectXModule.swift */,
+				ABC9A6E5099222471B714E42 /* WalletConnectV2RequestMapper.swift */,
 			);
 			path = WalletConnectX;
 			sourceTree = "<group>";
@@ -7920,6 +7930,8 @@
 				ABC9AE641E9FB2F4934FEC34 /* WalletConnectV2PendingRequestsService.swift in Sources */,
 				ABC9AD7DC7BDD3644AC48DDE /* WalletConnectV2PendingRequestsViewModel.swift in Sources */,
 				2FA5DA9F49EB0306047A8107 /* EvmGasDataInfoViewController.swift in Sources */,
+				ABC9ADA1E36826D8F139B937 /* WalletConnectXModule.swift in Sources */,
+				ABC9AB654BC40A8A9D5485DA /* WalletConnectV2RequestMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8880,6 +8892,8 @@
 				ABC9A23DA7BACD715879CBF1 /* WalletConnectV2PendingRequestsService.swift in Sources */,
 				ABC9A364F41E417CFE9BC161 /* WalletConnectV2PendingRequestsViewModel.swift in Sources */,
 				2FA5DDB457C9A5448D02A616 /* EvmGasDataInfoViewController.swift in Sources */,
+				ABC9AE5D6E8C7F4CB12B512B /* WalletConnectXModule.swift in Sources */,
+				ABC9A2853E44FA2E5026F4A4 /* WalletConnectV2RequestMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9832,6 +9846,8 @@
 				ABC9A5022C0BA3678AB1F385 /* WalletConnectV2PendingRequestsService.swift in Sources */,
 				ABC9A4F3D0C126BDF0047CED /* WalletConnectV2PendingRequestsViewModel.swift in Sources */,
 				2FA5DF6B4177C123F50D6B66 /* EvmGasDataInfoViewController.swift in Sources */,
+				ABC9ACDAA05DE84605B2EDAC /* WalletConnectXModule.swift in Sources */,
+				ABC9A80B925659FD24E473BB /* WalletConnectV2RequestMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

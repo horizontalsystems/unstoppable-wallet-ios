@@ -15,11 +15,15 @@ class WalletConnectV2PendingRequestsService {
         }
     }
 
+    private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
+
     init(sessionManager: WalletConnectV2SessionManager, accountManager: IAccountManager) {
         self.sessionManager = sessionManager
         self.accountManager = accountManager
 
-        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
+        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in
+            self?.syncPendingRequests()
+        }
 
         syncPendingRequests()
     }
@@ -60,6 +64,19 @@ extension WalletConnectV2PendingRequestsService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
+    }
+
+    var showPendingRequestObservable: Observable<WalletConnectRequest> {
+        showPendingRequestRelay.asObservable()
+    }
+
+    func select(requestId: Int64) {
+        guard let request = sessionManager.pendingRequests().first(where: { $0.id == requestId }),
+              let wcRequest = try? WalletConnectV2RequestMapper.map(request: request) else {
+            return
+        }
+
+        showPendingRequestRelay.accept(wcRequest)
     }
 
 }
