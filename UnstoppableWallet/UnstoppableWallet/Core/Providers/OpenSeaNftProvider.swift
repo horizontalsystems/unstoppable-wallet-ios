@@ -327,6 +327,8 @@ extension OpenSeaNftProvider {
                 self.value = value
             } else if let value: Int = try? map.value("value") {
                 self.value = "\(value)"
+            } else if let value: Double = try? map.value("value") {
+                self.value = "\(value)"
             } else {
                 value = ""
             }
