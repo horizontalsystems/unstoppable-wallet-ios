@@ -930,6 +930,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.watch_account.description" = "Diese Funktion funktioniert nicht mit den Watch Only Wallets, Sie müssen zu einem wiederhergestellten oder erstellten Wallet wechseln.";
 "wallet_connect.watch_account.switch" = "Wechseln";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "App-Status";
