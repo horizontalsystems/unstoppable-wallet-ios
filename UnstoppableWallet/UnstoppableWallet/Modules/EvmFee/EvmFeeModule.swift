@@ -30,6 +30,7 @@ struct EvmFeeModule {
         if evmKit.networkType.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
             var initialMaxTips: Int? = nil
+            var minRecommendedBaseFee: Int? = nil
             var minRecommendedTips: Int? = nil
 
             if case .eip1559(let maxBaseFee, let maxTips) = gasPrice {
@@ -37,11 +38,12 @@ struct EvmFeeModule {
                 initialMaxTips = maxTips
             }
 
-            if let previousTips = previousTransaction?.maxPriorityFeePerGas {
-                minRecommendedTips = previousTips
+            if let previousMaxFeePerGas = previousTransaction?.maxFeePerGas, let previousMaxPriorityFeePerGas = previousTransaction?.maxPriorityFeePerGas {
+                minRecommendedBaseFee = previousMaxFeePerGas - previousMaxPriorityFeePerGas
+                minRecommendedTips = previousMaxPriorityFeePerGas
             }
 
-            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips, minRecommendedTips: minRecommendedTips)
+            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips, minRecommendedBaseFee: minRecommendedBaseFee, minRecommendedTips: minRecommendedTips)
         } else {
             var initialGasPrice: Int? = nil
             var minRecommendedGasPrice: Int? = nil
