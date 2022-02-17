@@ -15,6 +15,7 @@ class Eip1559GasPriceService {
     private let evmKit: EthereumKit.Kit
     private var feeHistoryProvider: EIP1559GasPriceProvider
 
+    private let minRecommendedBaseFee: Int?
     private let minRecommendedTips: Int?
     private var recommendedTips = 0
     var usingRecommended = true { didSet { usingRecommendedRelay.accept(usingRecommended) } }
@@ -32,8 +33,9 @@ class Eip1559GasPriceService {
     private let tipsRangeChangedRelay = PublishRelay<Void>()
     private let statusRelay = PublishRelay<DataStatus<FallibleData<GasPrice>>>()
 
-    init(evmKit: EthereumKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil, minRecommendedTips: Int? = nil) {
+    init(evmKit: EthereumKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil, minRecommendedBaseFee: Int? = nil, minRecommendedTips: Int? = nil) {
         self.evmKit = evmKit
+        self.minRecommendedBaseFee = minRecommendedBaseFee
         self.minRecommendedTips = minRecommendedTips
 
         feeHistoryProvider = EIP1559GasPriceProvider(evmKit: evmKit)
@@ -97,6 +99,10 @@ class Eip1559GasPriceService {
         }
 
         recommendedBaseFee = baseFeesConsidered.max() ?? 0
+        if let minRecommendedBaseFee = minRecommendedBaseFee {
+            recommendedBaseFee = max(recommendedBaseFee, minRecommendedBaseFee)
+        }
+
         recommendedTips = tipsConsidered.reduce(0, +) / tipsConsidered.count
         if let minRecommendedTips = minRecommendedTips {
             recommendedTips = max(recommendedTips, minRecommendedTips)

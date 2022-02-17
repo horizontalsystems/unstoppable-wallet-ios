@@ -9,6 +9,7 @@ class EvmFeeService {
     private let gasPriceService: IGasPriceService
 
     private var transactionData: TransactionData
+    private let gasLimit: Int?
     let gasLimitSurchargePercent: Int
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
@@ -21,10 +22,11 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, transactionData: TransactionData, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, transactionData: TransactionData, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
         self.transactionData = transactionData
+        self.gasLimit = gasLimit
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
 
         sync(gasPriceStatus: gasPriceService.status)
@@ -44,6 +46,16 @@ class EvmFeeService {
     }
 
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
+        if let gasLimit = gasLimit {
+            let transaction = EvmFeeModule.Transaction(
+                    transactionData: transactionData,
+                    gasData: EvmFeeModule.GasData(gasLimit: gasLimit, gasPrice: fallibleGasPrice.data)
+            )
+
+            sync(transaction: transaction, fallibleGasPrice: fallibleGasPrice)
+            return
+        }
+
         disposeBag = DisposeBag()
 
         transactionSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)

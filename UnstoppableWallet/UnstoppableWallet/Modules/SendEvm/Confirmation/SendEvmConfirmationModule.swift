@@ -97,22 +97,22 @@ struct SendEvmConfirmationModule {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 
+        let transaction = fullTransaction.transaction
+
         let sendData: SendEvmData
         switch action {
         case .speedUp:
-            let tx = fullTransaction.transaction
-            let transactionData = TransactionData(to: toAddress, value: tx.value, input: tx.input, nonce: tx.nonce)
+            let transactionData = TransactionData(to: toAddress, value: transaction.value, input: transaction.input, nonce: transaction.nonce)
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         case .cancel:
-            let tx = fullTransaction.transaction
-            let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data(), nonce: tx.nonce)
+            let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data(), nonce: transaction.nonce)
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         }
 
         let evmKitWrapper = adapter.evmKitWrapper
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: fullTransaction.transaction)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: transaction)
+        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimit: transaction.gasLimit)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory())
