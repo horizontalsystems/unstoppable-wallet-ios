@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import WalletConnect
 import WalletConnectUtils
+import HsToolKit
 
 class WalletConnectV2XMainService {
     private let disposeBag = DisposeBag()
@@ -9,6 +10,8 @@ class WalletConnectV2XMainService {
     private let service: WalletConnectV2Service
     private let pingService: WalletConnectV2PingService
     private let manager: WalletConnectManager
+    private let reachabilityManager: IReachabilityManager
+    private let accountManager: IAccountManager
     private let evmChainParser: WalletConnectEvmChainParser
 
     private var proposal: Session.Proposal?
@@ -26,16 +29,29 @@ class WalletConnectV2XMainService {
         }
     }
 
-    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
         self.pingService = pingService
         self.manager = manager
+        self.reachabilityManager = reachabilityManager
+        self.accountManager = accountManager
         self.evmChainParser = evmChainParser
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in self?.didReceive(proposal: $0) }
         subscribe(disposeBag, service.receiveSessionObservable) { [weak self] in self?.didReceive(session: $0) }
         subscribe(disposeBag, service.deleteSessionObservable) { [weak self] in self?.didDelete(topic: $0, reason: $1) }
+        subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
+            if reachable {
+                if let topic = self?.session?.topic {
+                    self?.pingService.ping(topic: topic)
+                }
+            } else {
+                if self?.session != nil {
+                    self?.pingService.disconnect()
+                }
+            }
+        }
 
         if let session = session {
             state = .ready
@@ -116,11 +132,21 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
             return
         }
 
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         pingService.ping(topic: session.topic)
     }
 
     func approveSession() {
         guard let proposal = proposal else {
+            return
+        }
+
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
             return
         }
 
@@ -154,6 +180,11 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     }
 
     func rejectSession() {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         if let proposal = proposal {
             service.reject(proposal: proposal)
             pingService.disconnect()
@@ -162,6 +193,11 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     }
 
     func killSession() {
+        guard reachabilityManager.isReachable else {
+            errorRelay.accept(AppError.noConnection)
+            return
+        }
+
         guard let session = session else {
             return
         }

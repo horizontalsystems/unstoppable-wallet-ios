@@ -164,8 +164,8 @@ class PrivacyViewController: ThemeViewController {
                 binder: { view in
                     view.bind(text: text)
                 },
-                dynamicHeight: { [unowned self] _ in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: text)
+                dynamicHeight: { containerWidth in
+                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
                 }
         )
     }

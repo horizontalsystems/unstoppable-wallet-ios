@@ -66,8 +66,8 @@ class WalletConnectV1XListView {
                 binder: { view in
                     view.bind(text: text)
                 },
-                dynamicHeight: { [weak self] _ in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.sourceViewController?.tableView.bounds.width ?? 0, text: text)
+                dynamicHeight: { containerWidth in
+                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
                 }
         )
     }
@@ -76,7 +76,7 @@ class WalletConnectV1XListView {
         Section(
                 id: "section_1",
                 headerState: header(text: "version 1.0"),
-                footerState: .margin(height: .margin32),
+                footerState: footer(hash: "section_v1_footer", text: "wallet_connect.list.v1_bottom_text".localized),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
@@ -105,10 +105,6 @@ class WalletConnectV1XListView {
 }
 
 extension WalletConnectV1XListView {
-
-    var emptySessionList: Bool {
-        viewModel.emptySessionList
-    }
 
     var sections: [SectionProtocol] {
         guard !viewItems.isEmpty else {

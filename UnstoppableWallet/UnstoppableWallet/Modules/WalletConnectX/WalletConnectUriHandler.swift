@@ -1,6 +1,6 @@
 class WalletConnectUriHandler {
 
-    private func createModuleV1(uri: String) -> Result<IWalletConnectXMainService, Error> {
+    private static func createModuleV1(uri: String) -> Result<IWalletConnectXMainService, Error> {
         let service = WalletConnectV1XMainService(
                 session: nil,
                 uri: uri,
@@ -18,7 +18,7 @@ class WalletConnectUriHandler {
         return .success(service)
     }
 
-    private func createModuleV2(uri: String) -> Result<IWalletConnectXMainService, Error> {
+    private static func createModuleV2(uri: String) -> Result<IWalletConnectXMainService, Error> {
         do {
             try App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
         } catch {
@@ -33,6 +33,8 @@ class WalletConnectUriHandler {
                 service: service,
                 pingService: pingService,
                 manager: App.shared.walletConnectManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                accountManager: App.shared.accountManager,
                 evmChainParser: WalletConnectEvmChainParser()
         )
 
@@ -43,16 +45,15 @@ class WalletConnectUriHandler {
 
 extension WalletConnectUriHandler {
 
-    func connect(uri: String) -> Result<IWalletConnectXMainService, Error> {
+    static func connect(uri: String) -> Result<IWalletConnectXMainService, Error> {
 
         //todo parse version and create appropriate service
-        let version: Int?
         if uri.contains("@1?") {
             return createModuleV1(uri: uri)
         } else if uri.contains("@2?") {
             return createModuleV2(uri: uri)
         } else {
-            return  .failure(ConnectionError.wrongUri)
+            return .failure(ConnectionError.wrongUri)
         }
     }
 

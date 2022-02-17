@@ -6,13 +6,13 @@ import WalletConnectUtils
 
 class WalletConnectXListService {
     private var disposeBag = DisposeBag()
-    private let uriHandler: WalletConnectUriHandler
 
     private let createModuleRelay = PublishRelay<IWalletConnectXMainService>()
     private let connectionErrorRelay = PublishRelay<Error>()
 
     private let sessionManager: WalletConnectSessionManager
     private let sessionManagerV2: WalletConnectV2SessionManager
+    private let evmChainParser: WalletConnectEvmChainParser
 
     private var sessionKiller: WalletConnectSessionKiller?
     private let showSessionV1Relay = PublishRelay<WalletConnectSession>()
@@ -20,10 +20,10 @@ class WalletConnectXListService {
     private let sessionKillingRelay = PublishRelay<SessionKillingState>()
 
 
-    init(uriHandler: WalletConnectUriHandler, sessionManager: WalletConnectSessionManager, sessionManagerV2: WalletConnectV2SessionManager) {
-        self.uriHandler = uriHandler
+    init(sessionManager: WalletConnectSessionManager, sessionManagerV2: WalletConnectV2SessionManager, evmChainParser: WalletConnectEvmChainParser) {
         self.sessionManager = sessionManager
         self.sessionManagerV2 = sessionManagerV2
+        self.evmChainParser = evmChainParser
     }
 
     private func onUpdateSessionKiller(state: WalletConnectSessionKiller.State) {
@@ -62,15 +62,21 @@ class WalletConnectXListService {
     }
 
     private func items(sessions: [Session]) -> [Item] {
-        sessions.map {
-            Item(
-                    id: $0.id,
-                    chains: [Chain.ethereum], //todo //Array($0.permissions.blockchains).map { 1 },
+        sessions.map { session in
+            let chainIds = Array(session.permissions.blockchains).compactMap {
+                evmChainParser.chainId(blockchain: $0)
+            }
+
+            return Item(
+                    id: session.id,
+                    chains: chainIds.compactMap {
+                        Chain(rawValue: $0)
+                    },
                     version: 2,
-                    appName: $0.peer.name ?? "",
-                    appUrl: $0.peer.url ?? "",
-                    appDescription: $0.peer.description ?? "",
-                    appIcons: $0.peer.icons ?? []
+                    appName: session.peer.name ?? "",
+                    appUrl: session.peer.url ?? "",
+                    appDescription: session.peer.description ?? "",
+                    appIcons: session.peer.icons ?? []
             )
         }
     }
@@ -79,20 +85,16 @@ class WalletConnectXListService {
 
 extension WalletConnectXListService {
 
+    var emptySessionList: Bool {
+        (sessionManager.sessions.count + sessionManagerV2.sessions.count) == 0
+    }
+
     var itemsV1: [Item] {
         items(sessions: sessionManager.sessions)
     }
 
     var itemsV2: [Item] {
         items(sessions: sessionManagerV2.sessions)
-    }
-
-    var sessionV1Count: Int {
-        sessionManager.sessions.count
-    }
-
-    var sessionV2Count: Int {
-        sessionManagerV2.sessions.count
     }
 
     var itemsV1Observable: Observable<[Item]> {
@@ -163,7 +165,7 @@ extension WalletConnectXListService {
     }
 
     func connect(uri: String) {
-        let result = uriHandler.connect(uri: uri)
+        let result = WalletConnectUriHandler.connect(uri: uri)
 
         switch result {
         case .success(let service): createModuleRelay.accept(service)

@@ -12,6 +12,8 @@ class WalletConnectXListViewController: ThemeViewController {
     private let listViewV1: WalletConnectV1XListView
     private let listViewV2: WalletConnectV2XListView
 
+    private let emptyView = ErrorMessageView()
+
     let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectXScanQrViewController?
 
@@ -50,17 +52,33 @@ class WalletConnectXListViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        emptyView.text = "wallet_connect.list.empty_view_text".localized
+        emptyView.setButton(title: "wallet_connect.list.empty_view_button_text".localized)
+        emptyView.image = UIImage(named: "wallet_connect_48")
+        emptyView.onTapButton = { [weak self] in self?.startNewConnection() }
+
         subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
         subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }
-        subscribe(disposeBag, listViewV1.reloadTableSignal) { [weak self] in self?.tableView.reload() }
-        subscribe(disposeBag, listViewV2.reloadTableSignal) { [weak self] in self?.tableView.reload() }
+        subscribe(disposeBag, listViewV1.reloadTableSignal) { [weak self] in self?.syncItems() }
+        subscribe(disposeBag, listViewV2.reloadTableSignal) { [weak self] in self?.syncItems() }
 
         listViewV1.viewDidLoad()
         listViewV2.viewDidLoad()
 
-        if listViewV1.emptySessionList && listViewV2.emptySessionList {
+        if viewModel.emptySessionList {
             startNewConnection()
         }
+    }
+
+    private func syncItems() {
+        emptyView.isHidden = !viewModel.emptySessionList
+
+        tableView.reload()
     }
 
     @objc private func startNewConnection() {

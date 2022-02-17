@@ -4,11 +4,10 @@ import UIKit
 class WalletConnectXListModule {
 
     static func viewController() -> UIViewController {
-        let uriHandler = WalletConnectUriHandler()
         let service = WalletConnectXListService(
-                uriHandler: uriHandler,
                 sessionManager: App.shared.walletConnectSessionManager,
-                sessionManagerV2: App.shared.walletConnectV2SessionManager
+                sessionManagerV2: App.shared.walletConnectV2SessionManager,
+                evmChainParser: WalletConnectEvmChainParser()
         )
         let listViewModelV1 = WalletConnectV1XListViewModel(service: service)
         let listViewV1 = WalletConnectV1XListView(viewModel: listViewModelV1)
