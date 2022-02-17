@@ -87,10 +87,10 @@ class NftCollectionsService {
 
     private func _syncItems() {
         let items = assetCollection.collections.map { collection -> Item in
-            let assets = assetCollection.assets.filter { $0.collectionSlug == collection.slug }
+            let assets = assetCollection.assets.filter { $0.collectionUid == collection.uid }
 
             return Item(
-                    slug: collection.slug,
+                    uid: collection.uid,
                     imageUrl: collection.imageUrl,
                     name: collection.name,
                     assetItems: assets.map { asset in
@@ -103,7 +103,7 @@ class NftCollectionsService {
                         }
 
                         return AssetItem(
-                                collectionSlug: asset.collectionSlug,
+                                collectionUid: asset.collectionUid,
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
@@ -177,13 +177,13 @@ extension NftCollectionsService {
 extension NftCollectionsService {
 
     class Item {
-        let slug: String
+        let uid: String
         let imageUrl: String?
         let name: String
         let assetItems: [AssetItem]
 
-        init(slug: String, imageUrl: String?, name: String, assetItems: [AssetItem]) {
-            self.slug = slug
+        init(uid: String, imageUrl: String?, name: String, assetItems: [AssetItem]) {
+            self.uid = uid
             self.imageUrl = imageUrl
             self.name = name
             self.assetItems = assetItems
@@ -191,7 +191,7 @@ extension NftCollectionsService {
     }
 
     class AssetItem {
-        let collectionSlug: String
+        let collectionUid: String
         let tokenId: String
         let imageUrl: String?
         let name: String?
@@ -199,8 +199,8 @@ extension NftCollectionsService {
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(collectionSlug: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
-            self.collectionSlug = collectionSlug
+        init(collectionUid: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
+            self.collectionUid = collectionUid
             self.tokenId = tokenId
             self.imageUrl = imageUrl
             self.name = name

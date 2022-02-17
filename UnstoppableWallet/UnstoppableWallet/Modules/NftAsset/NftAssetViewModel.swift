@@ -166,7 +166,7 @@ extension NftAssetViewModel {
             return
         }
 
-        let slug = service.collection.slug
+        let slug = service.collection.uid
 
         let url = "https://opensea.io/assets/\(slug)?search[stringTraits][0][name]=\(traitName)&search[stringTraits][0][values][0]=\(traitValue)&search[sortAscending]=true&search[sortBy]=PRICE"
         openTraitRelay.accept(url)

@@ -12,6 +12,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
     private let sortAddCoinView = TextDropDownAndSettingsView()
     private let addressButton = ThemeButton()
 
+    private var currentAddress: String?
+
     var onTapAmount: (() -> ())?
     var onTapSortBy: (() -> ())?
     var onTapAddCoin: (() -> ())?
@@ -82,7 +84,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
     }
 
     @objc private func onTapAddressButton() {
-        guard let address = addressButton.title(for: .normal) else {
+        guard let address = currentAddress else {
             return
         }
 
@@ -97,7 +99,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
         if let address = viewItem.address {
             addressButton.isHidden = false
-            addressButton.setTitle(address, for: .normal)
+            addressButton.setTitle(address.shortenedAddress, for: .normal)
+            currentAddress = address
         } else {
             addressButton.isHidden = true
         }

@@ -8,4 +8,3 @@ twitter_bearer_token =
 market_api_url = https:/$()/api.blocksdecoded.com
 hs_provider_api_key =
 wallet_connect_v2_project_key =
-open_sea_api_key =

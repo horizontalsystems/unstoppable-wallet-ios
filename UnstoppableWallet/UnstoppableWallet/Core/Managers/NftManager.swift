@@ -6,7 +6,7 @@ import HdWalletKit
 
 protocol INftProvider {
     func assetCollectionSingle(address: String) -> Single<NftAssetCollection>
-    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats>
+    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats>
     func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]>
 }
 
@@ -93,32 +93,32 @@ extension NftManager {
         }
     }
 
-    func collection(slug: String) -> NftCollection? {
+    func collection(uid: String) -> NftCollection? {
         guard let account = accountManager.activeAccount else {
             return nil
         }
 
         do {
-            return try storage.collection(accountId: account.id, slug: slug)
+            return try storage.collection(accountId: account.id, uid: uid)
         } catch {
             return nil
         }
     }
 
-    func asset(collectionSlug: String, tokenId: String) -> NftAsset? {
+    func asset(collectionUid: String, tokenId: String) -> NftAsset? {
         guard let account = accountManager.activeAccount else {
             return nil
         }
 
         do {
-            return try storage.asset(accountId: account.id, collectionSlug: collectionSlug, tokenId: tokenId)
+            return try storage.asset(accountId: account.id, collectionUid: collectionUid, tokenId: tokenId)
         } catch {
             return nil
         }
     }
 
-    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats> {
-        provider.collectionStatsSingle(slug: slug)
+    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats> {
+        provider.collectionStatsSingle(uid: uid)
     }
 
     func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {

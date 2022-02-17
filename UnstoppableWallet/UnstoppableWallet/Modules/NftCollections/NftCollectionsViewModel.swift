@@ -9,7 +9,7 @@ class NftCollectionsViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let expandedSlugsRelay = BehaviorRelay<Set<String>>(value: Set<String>())
+    private let expandedUidsRelay = BehaviorRelay<Set<String>>(value: Set<String>())
 
     init(service: NftCollectionsService) {
         self.service = service
@@ -29,7 +29,7 @@ class NftCollectionsViewModel {
 
     private func viewItem(item: NftCollectionsService.Item) -> ViewItem {
         ViewItem(
-                slug: item.slug,
+                uid: item.uid,
                 imageUrl: item.imageUrl,
                 name: item.name,
                 count: "\(item.assetItems.count)",
@@ -56,7 +56,7 @@ class NftCollectionsViewModel {
         }
 
         return AssetViewItem(
-                collectionSlug: assetItem.collectionSlug,
+                collectionUid: assetItem.collectionUid,
                 tokenId: assetItem.tokenId,
                 imageUrl: assetItem.imageUrl,
                 name: assetItem.name ?? "#\(assetItem.tokenId)",
@@ -74,20 +74,20 @@ extension NftCollectionsViewModel {
         viewItemsRelay.asDriver()
     }
 
-    var expandedSlugsDriver: Driver<Set<String>> {
-        expandedSlugsRelay.asDriver()
+    var expandedUidsDriver: Driver<Set<String>> {
+        expandedUidsRelay.asDriver()
     }
 
-    func onTap(slug: String) {
-        var expandedSlugs = expandedSlugsRelay.value
+    func onTap(uid: String) {
+        var expandedUids = expandedUidsRelay.value
 
-        if expandedSlugs.contains(slug) {
-            expandedSlugs.remove(slug)
+        if expandedUids.contains(uid) {
+            expandedUids.remove(uid)
         } else {
-            expandedSlugs.insert(slug)
+            expandedUids.insert(uid)
         }
 
-        expandedSlugsRelay.accept(expandedSlugs)
+        expandedUidsRelay.accept(expandedUids)
     }
 
 }
@@ -95,7 +95,7 @@ extension NftCollectionsViewModel {
 extension NftCollectionsViewModel {
 
     struct ViewItem {
-        let slug: String
+        let uid: String
         let imageUrl: String?
         let name: String
         let count: String
@@ -103,7 +103,7 @@ extension NftCollectionsViewModel {
     }
 
     struct AssetViewItem {
-        let collectionSlug: String
+        let collectionUid: String
         let tokenId: String
         let imageUrl: String?
         let name: String
@@ -112,7 +112,7 @@ extension NftCollectionsViewModel {
         let fiatPrice: String?
 
         var uid: String {
-            "\(collectionSlug)-\(tokenId)"
+            "\(collectionUid)-\(tokenId)"
         }
 
         var hash: String {

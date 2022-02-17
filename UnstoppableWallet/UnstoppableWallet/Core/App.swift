@@ -244,7 +244,7 @@ class App {
 
         let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        let nftProvider = OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
+        let nftProvider = HsNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         nftManager = NftManager(accountManager: accountManager, storage: nftStorage, provider: nftProvider)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(

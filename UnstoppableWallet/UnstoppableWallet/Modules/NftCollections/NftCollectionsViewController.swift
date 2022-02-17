@@ -13,7 +13,7 @@ class NftCollectionsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private var viewItems = [NftCollectionsViewModel.ViewItem]()
-    private var expandedSlugs = Set<String>()
+    private var expandedUids = Set<String>()
 
     private let tableView = SectionsTableView(style: .plain)
 
@@ -52,7 +52,7 @@ class NftCollectionsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.expandedSlugsDriver) { [weak self] in self?.sync(expandedSlugs: $0) }
+        subscribe(disposeBag, viewModel.expandedUidsDriver) { [weak self] in self?.sync(expandedUids: $0) }
 
         tableView.buildSections()
         loaded = true
@@ -66,8 +66,8 @@ class NftCollectionsViewController: ThemeViewController {
         }
     }
 
-    private func sync(expandedSlugs: Set<String>) {
-        self.expandedSlugs = expandedSlugs
+    private func sync(expandedUids: Set<String>) {
+        self.expandedUids = expandedUids
 
         if loaded {
             tableView.reload(animated: true)
@@ -75,7 +75,7 @@ class NftCollectionsViewController: ThemeViewController {
     }
 
     private func openAsset(viewItem: NftCollectionsViewModel.AssetViewItem, imageRatio: CGFloat) {
-        guard let module = NftAssetModule.viewController(collectionSlug: viewItem.collectionSlug, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
+        guard let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
             return
         }
 
@@ -105,7 +105,7 @@ extension NftCollectionsViewController: SectionsDataSource {
         CellBuilder.selectableRow(
                 elements: [.image24, .text, .text, .margin8, .image20],
                 tableView: tableView,
-                id: "collection-\(viewItem.slug)",
+                id: "collection-\(viewItem.uid)",
                 hash: "\(viewItem.count)-\(expanded)",
                 height: .heightCell48,
                 bind: { cell in
@@ -133,7 +133,7 @@ extension NftCollectionsViewController: SectionsDataSource {
                     })
                 },
                 action: { [weak self] in
-                    self?.viewModel.onTap(slug: viewItem.slug)
+                    self?.viewModel.onTap(uid: viewItem.uid)
                 }
         )
     }
@@ -142,7 +142,7 @@ extension NftCollectionsViewController: SectionsDataSource {
         var rows = [RowProtocol]()
 
         for (index, viewItem) in viewItems.enumerated() {
-            let expanded = expandedSlugs.contains(viewItem.slug)
+            let expanded = expandedUids.contains(viewItem.uid)
 
             rows.append(row(viewItem: viewItem, expanded: expanded, index: index))
 

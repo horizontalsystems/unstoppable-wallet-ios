@@ -17,11 +17,11 @@ class NftAssetService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init?(collectionSlug: String, tokenId: String, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
+    init?(collectionUid: String, tokenId: String, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
         self.nftManager = nftManager
         self.coinPriceService = coinPriceService
 
-        guard let collection = nftManager.collection(slug: collectionSlug), let asset = nftManager.asset(collectionSlug: collectionSlug, tokenId: tokenId) else {
+        guard let collection = nftManager.collection(uid: collectionUid), let asset = nftManager.asset(collectionUid: collectionUid, tokenId: tokenId) else {
             return nil
         }
 
@@ -39,7 +39,7 @@ class NftAssetService {
     }
 
     private func syncCollectionStatsAndOrders() {
-        Single.zip(nftManager.collectionStatsSingle(slug: collection.slug), nftManager.assetOrdersSingle(contractAddress: asset.contract.address, tokenId: asset.tokenId))
+        Single.zip(nftManager.collectionStatsSingle(uid: collection.uid), nftManager.assetOrdersSingle(contractAddress: asset.contract.address, tokenId: asset.tokenId))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] stats, orders in
                     self?.handle(stats: stats, orders: orders)
