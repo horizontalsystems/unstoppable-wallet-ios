@@ -165,7 +165,11 @@ extension LegacyEvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: maxFeeCell.cellHeight
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openInfo(title: "fee_settings.max_fee".localized, description: "fee_settings.max_fee.info".localized)
+                                }
                         )
                     ]
             )

@@ -191,7 +191,11 @@ extension Eip1559EvmFeeViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openInfo(title: "fee_settings.max_fee".localized, description: "fee_settings.max_fee.info".localized)
+                                }
                         )
                     ]
             ),

@@ -4,7 +4,7 @@ import RxCocoa
 import ComponentKit
 import ThemeKit
 
-class SelectableFeeCell: BaseSelectableThemeCell {
+class EditableFeeCell: BaseSelectableThemeCell {
     private let disposeBag = DisposeBag()
 
     init(viewModel: EvmFeeViewModel) {
@@ -18,7 +18,7 @@ class SelectableFeeCell: BaseSelectableThemeCell {
 
         bind(index: 0) { (component: TextComponent) in
             component.set(style: .d1)
-            component.text = "fee_settings.max_fee".localized
+            component.text = "send.fee".localized
         }
 
         bind(index: 2) { (component: ImageComponent) in
