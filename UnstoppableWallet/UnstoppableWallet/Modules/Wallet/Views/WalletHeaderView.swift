@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
+import HUD
 
 class WalletHeaderView: UITableViewHeaderFooterView {
     private static let amountHeight: CGFloat = 40
@@ -9,6 +10,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
     private let amountButton = UIButton()
     private let sortAddCoinView = TextDropDownAndSettingsView()
+    private let addressButton = ThemeButton()
 
     var onTapAmount: (() -> ())?
     var onTapSortBy: (() -> ())?
@@ -60,6 +62,15 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
         sortAddCoinView.onTapDropDown = { [weak self] in self?.onTapSortBy?() }
         sortAddCoinView.onTapSettings = { [weak self] in self?.onTapAddCoin?() }
+
+        wrapperView.addSubview(addressButton)
+        addressButton.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalTo(sortAddCoinView)
+        }
+
+        addressButton.apply(style: .secondaryDefault)
+        addressButton.addTarget(self, action: #selector(onTapAddressButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,11 +81,26 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         onTapAmount?()
     }
 
+    @objc private func onTapAddressButton() {
+        guard let address = addressButton.title(for: .normal) else {
+            return
+        }
+
+        CopyHelper.copyAndNotify(value: address)
+    }
+
     func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
         amountButton.setTitle(viewItem.amount, for: .normal)
         amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
 
         sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
+
+        if let address = viewItem.address {
+            addressButton.isHidden = false
+            addressButton.setTitle(address, for: .normal)
+        } else {
+            addressButton.isHidden = true
+        }
     }
 
     static var height: CGFloat {

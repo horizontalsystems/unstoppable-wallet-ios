@@ -53,7 +53,7 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, manageWalletsHidden: service.watchAccount) }
+        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount, watchAccountAddress: service.watchAccountAddress) }
         headerViewItemRelay.accept(headerViewItem)
     }
 
@@ -178,21 +178,25 @@ extension WalletViewModel {
     }
 
     func onTap(wallet: Wallet) {
-        queue.async {
-            if self.expandedWallet == wallet {
-                self.expandedWallet = nil
-                self.syncViewItem(wallet: wallet)
-            } else {
-                let oldExpandedWallet = self.expandedWallet
-                self.expandedWallet = wallet
+        if service.watchAccount {
+            onTapChart(wallet: wallet)
+        } else {
+            queue.async {
+                if self.expandedWallet == wallet {
+                    self.expandedWallet = nil
+                    self.syncViewItem(wallet: wallet)
+                } else {
+                    let oldExpandedWallet = self.expandedWallet
+                    self.expandedWallet = wallet
 
-                if let oldExpandedWallet = oldExpandedWallet {
-                    self.syncViewItem(wallet: oldExpandedWallet)
+                    if let oldExpandedWallet = oldExpandedWallet {
+                        self.syncViewItem(wallet: oldExpandedWallet)
+                    }
+                    self.syncViewItem(wallet: wallet)
                 }
-                self.syncViewItem(wallet: wallet)
-            }
 
-            self.viewItemsRelay.accept(self.viewItems)
+                self.viewItemsRelay.accept(self.viewItems)
+            }
         }
     }
 
@@ -262,6 +266,7 @@ extension WalletViewModel {
         let amount: String?
         let amountExpired: Bool
         let manageWalletsHidden: Bool
+        let address: String?
     }
 
 }

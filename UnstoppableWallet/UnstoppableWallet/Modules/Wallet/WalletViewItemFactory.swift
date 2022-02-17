@@ -1,6 +1,7 @@
 import Foundation
 import CurrencyKit
 import MarketKit
+import EthereumKit
 
 class WalletViewItemFactory {
     private let minimumProgress = 10
@@ -159,14 +160,15 @@ extension WalletViewItemFactory {
         )
     }
 
-    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, manageWalletsHidden: Bool) -> WalletViewModel.HeaderViewItem {
+    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, watchAccount: Bool, watchAccountAddress: EthereumKit.Address?) -> WalletViewModel.HeaderViewItem {
         let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
         let amount = balanceHidden ? "*****" : ValueFormatter.instance.format(currencyValue: currencyValue)
 
         return WalletViewModel.HeaderViewItem(
                 amount: amount,
                 amountExpired: balanceHidden ? false : totalItem.expired,
-                manageWalletsHidden: manageWalletsHidden
+                manageWalletsHidden: watchAccount,
+                address: watchAccount ? watchAccountAddress?.eip55.shortenedAddress : nil
         )
     }
 
