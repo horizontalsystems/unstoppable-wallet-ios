@@ -282,8 +282,8 @@
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
 "swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.cannot_estimate.info" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
+"swap.one_inch.error.insufficient_liquidity" = "流动性不足";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "服务";
@@ -932,6 +932,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.watch_account.description" = "此功能不适用于观察中的钱包，您需要切换到恢复或创建的钱包.";
 "wallet_connect.watch_account.switch" = "切换";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "应用状态";
@@ -996,7 +998,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "最大手续费";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "The fee for transacting on the network is measured in gas units. Gas Limit is the maximum amount of gas a user is willing to pay for confirming a transaction (min. 21,000). An insufficient gas limit is a common reason for a transaction to fail with an 'out of gas' error.";
 "fee_settings.gas_price" = "燃料价格";
