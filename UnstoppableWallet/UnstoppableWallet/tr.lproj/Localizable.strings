@@ -933,6 +933,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.watch_account.description" = "Bu özellik salt izlenir cüzdanlarda çalışmaz, geri yüklediğiniz veya oluşturduğunuz bir cüzdana geçmeniz gerekiyor.";
 "wallet_connect.watch_account.switch" = "Değiştir";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "Uygulama Durumu";
