@@ -5,7 +5,7 @@ class NftAssetRecord: Record {
     let accountId: String
 
     let contract: NftCollection.Contract
-    let collectionSlug: String
+    let collectionUid: String
     let tokenId: String
     let name: String?
     let imageUrl: String?
@@ -20,7 +20,7 @@ class NftAssetRecord: Record {
     init(accountId: String, asset: NftAsset) {
         self.accountId = accountId
         contract = asset.contract
-        collectionSlug = asset.collectionSlug
+        collectionUid = asset.collectionUid
         tokenId = asset.tokenId
         name = asset.name
         imageUrl = asset.imageUrl
@@ -43,7 +43,7 @@ class NftAssetRecord: Record {
         case accountId
         case contractAddress
         case contractSchemaName
-        case collectionSlug
+        case collectionUid
         case tokenId
         case name
         case imageUrl
@@ -60,7 +60,7 @@ class NftAssetRecord: Record {
     required init(row: Row) {
         accountId = row[Columns.accountId]
         contract = NftCollection.Contract(address: row[Columns.contractAddress], schemaName: row[Columns.contractSchemaName])
-        collectionSlug = row[Columns.collectionSlug]
+        collectionUid = row[Columns.collectionUid]
         tokenId = row[Columns.tokenId]
         name = row[Columns.name]
         imageUrl = row[Columns.imageUrl]
@@ -79,7 +79,7 @@ class NftAssetRecord: Record {
         container[Columns.accountId] = accountId
         container[Columns.contractAddress] = contract.address
         container[Columns.contractSchemaName] = contract.schemaName
-        container[Columns.collectionSlug] = collectionSlug
+        container[Columns.collectionUid] = collectionUid
         container[Columns.tokenId] = tokenId
         container[Columns.name] = name
         container[Columns.imageUrl] = imageUrl

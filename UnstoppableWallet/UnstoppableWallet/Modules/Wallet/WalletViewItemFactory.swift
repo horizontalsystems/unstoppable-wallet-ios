@@ -168,7 +168,7 @@ extension WalletViewItemFactory {
                 amount: amount,
                 amountExpired: balanceHidden ? false : totalItem.expired,
                 manageWalletsHidden: watchAccount,
-                address: watchAccount ? watchAccountAddress?.eip55.shortenedAddress : nil
+                address: watchAccount ? watchAccountAddress?.eip55 : nil
         )
     }
 

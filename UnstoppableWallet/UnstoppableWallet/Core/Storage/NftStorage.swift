@@ -30,7 +30,7 @@ class NftStorage {
     private func asset(record: NftAssetRecord, platformCoins: [PlatformCoin]) -> NftAsset {
         NftAsset(
                 contract: record.contract,
-                collectionSlug: record.collectionSlug,
+                collectionUid: record.collectionUid,
                 tokenId: record.tokenId,
                 name: record.name,
                 imageUrl: record.imageUrl,
@@ -47,7 +47,7 @@ class NftStorage {
     private func collection(record: NftCollectionRecord, platformCoins: [PlatformCoin]) -> NftCollection {
         NftCollection(
                 contracts: record.contracts,
-                slug: record.slug,
+                uid: record.uid,
                 name: record.name,
                 description: record.description,
                 imageUrl: record.imageUrl,
@@ -86,8 +86,8 @@ extension NftStorage {
         )
     }
 
-    func collection(accountId: String, slug: String) throws -> NftCollection? {
-        guard let record = try storage.collection(accountId: accountId, slug: slug) else {
+    func collection(accountId: String, uid: String) throws -> NftCollection? {
+        guard let record = try storage.collection(accountId: accountId, uid: uid) else {
             return nil
         }
         let priceRecords = priceRecords(collectionRecords: [record])
@@ -96,8 +96,8 @@ extension NftStorage {
         return collection(record: record, platformCoins: platformCoins)
     }
 
-    func asset(accountId: String, collectionSlug: String, tokenId: String) throws -> NftAsset? {
-        guard let record = try storage.asset(accountId: accountId, collectionSlug: collectionSlug, tokenId: tokenId) else {
+    func asset(accountId: String, collectionUid: String, tokenId: String) throws -> NftAsset? {
+        guard let record = try storage.asset(accountId: accountId, collectionUid: collectionUid, tokenId: tokenId) else {
             return nil
         }
         let priceRecords = priceRecords(assetRecords: [record])

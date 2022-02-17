@@ -2,7 +2,7 @@ import ObjectMapper
 
 struct NftCollection {
     let contracts: [Contract]
-    let slug: String
+    let uid: String
     let name: String
     let description: String?
     let imageUrl: String?

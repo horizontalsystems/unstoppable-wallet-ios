@@ -5,24 +5,22 @@ import HsToolKit
 import Alamofire
 import MarketKit
 
-class OpenSeaNftProvider {
+class HsNftProvider {
     private let zeroAddress = "0x0000000000000000000000000000000000000000"
-    private let apiUrl = "https://api.opensea.io/api"
     private let collectionLimit = 300
     private let assetLimit = 50
 
     private let networkManager: NetworkManager
     private let marketKit: MarketKit.Kit
-    private let headers: HTTPHeaders
+    private let apiUrl: String
+    private let headers: HTTPHeaders?
 
     init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
         self.marketKit = marketKit
+        apiUrl = appConfigProvider.marketApiUrl
 
-        headers = HTTPHeaders([
-            HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"),
-            HTTPHeader(name: "X-API-KEY", value: appConfigProvider.openSeaApiKey)
-        ])
+        headers = appConfigProvider.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }
 
     private func coinType(address: String) -> CoinType {
@@ -72,8 +70,8 @@ class OpenSeaNftProvider {
 
         return responses.map { response in
             NftCollection(
-                    contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.schemaName) },
-                    slug: response.slug,
+                    contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.type) },
+                    uid: response.uid,
                     name: response.name,
                     description: response.description,
                     imageUrl: response.imageUrl,
@@ -101,8 +99,8 @@ class OpenSeaNftProvider {
 
         return responses.map { response in
             NftAsset(
-                    contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.schemaName),
-                    collectionSlug: response.collectionSlug,
+                    contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.type),
+                    collectionUid: response.collectionUid,
                     tokenId: response.tokenId,
                     name: response.name,
                     imageUrl: response.imageUrl,
@@ -144,13 +142,12 @@ class OpenSeaNftProvider {
 
     private func collectionsSingle(address: String, offset: Int) -> Single<[CollectionResponse]> {
         let parameters: Parameters = [
-            "format": "json",
+            "asset_owner": address,
             "limit": collectionLimit,
-            "offset": offset,
-            "asset_owner": address
+            "offset": offset
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/collections", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, headers: headers)
         return networkManager.single(request: request)
     }
 
@@ -168,16 +165,13 @@ class OpenSeaNftProvider {
 
     private func assetsSingle(address: String, offset: Int) -> Single<[AssetResponse]> {
         let parameters: Parameters = [
-            "format": "json",
+            "owner": address,
             "limit": assetLimit,
-            "offset": offset,
-            "owner": address
+            "offset": offset
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/assets", parameters: parameters, headers: headers)
-        return networkManager.single(request: request).map { (response: AssetsResponse) in
-            response.assets
-        }
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, headers: headers)
+        return networkManager.single(request: request)
     }
 
     private func recursiveAssetsSingle(address: String, offset: Int = 0, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
@@ -194,7 +188,7 @@ class OpenSeaNftProvider {
 
 }
 
-extension OpenSeaNftProvider: INftProvider {
+extension HsNftProvider: INftProvider {
 
     func assetCollectionSingle(address: String) -> Single<NftAssetCollection> {
         let collectionsSingle = recursiveCollectionsSingle(address: address).map { [weak self] responses in
@@ -210,23 +204,15 @@ extension OpenSeaNftProvider: INftProvider {
         }
     }
 
-    func collectionStatsSingle(slug: String) -> Single<NftCollectionStats> {
-        let parameters: Parameters = [
-            "format": "json"
-        ]
-
-        let request = networkManager.session.request("\(apiUrl)/v1/collection/\(slug)/stats", parameters: parameters, headers: headers)
+    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats> {
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)/stats", headers: headers)
         return networkManager.single(request: request).map { [unowned self] response in
             collectionStats(response: response)
         }
     }
 
     func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
-        let parameters: Parameters = [
-            "format": "json"
-        ]
-
-        let request = networkManager.session.request("\(apiUrl)/v1/asset/\(contractAddress)/\(tokenId)", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", headers: headers)
         return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
             assetOrders(responses: response.orders)
         }
@@ -234,11 +220,11 @@ extension OpenSeaNftProvider: INftProvider {
 
 }
 
-extension OpenSeaNftProvider {
+extension HsNftProvider {
 
     private struct CollectionResponse: ImmutableMappable {
         let contracts: [AssetContractResponse]
-        let slug: String
+        let uid: String
         let name: String
         let description: String?
         let imageUrl: String?
@@ -252,42 +238,34 @@ extension OpenSeaNftProvider {
         let totalSupply: Int
 
         init(map: Map) throws {
-            contracts = try map.value("primary_asset_contracts")
-            slug = try map.value("slug")
+            contracts = try map.value("asset_contracts")
+            uid = try map.value("uid")
             name = try map.value("name")
             description = try? map.value("description")
-            imageUrl = try? map.value("image_url")
-            featuredImageUrl = try? map.value("featured_image_url")
-            externalUrl = try? map.value("external_url")
-            discordUrl = try? map.value("discord_url")
-            twitterUsername = try? map.value("twitter_username")
-            averagePrice7d = try map.value("stats.seven_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
-            averagePrice30d = try map.value("stats.thirty_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
+            imageUrl = try? map.value("image_data.image_url")
+            featuredImageUrl = try? map.value("image_data.featured_image_url")
+            externalUrl = try? map.value("links.external_url")
+            discordUrl = try? map.value("links.discord_url")
+            twitterUsername = try? map.value("links.twitter_username")
+            averagePrice7d = try map.value("stats.seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
+            averagePrice30d = try map.value("stats.thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             totalSupply = try map.value("stats.total_supply")
         }
     }
 
     private struct AssetContractResponse: ImmutableMappable {
         let address: String
-        let schemaName: String
+        let type: String
 
         init(map: Map) throws {
             address = try map.value("address")
-            schemaName = try map.value("schema_name")
-        }
-    }
-
-    private struct AssetsResponse: ImmutableMappable {
-        let assets: [AssetResponse]
-
-        init(map: Map) throws {
-            assets = try map.value("assets")
+            type = try map.value("type")
         }
     }
 
     private struct AssetResponse: ImmutableMappable {
         let contract: AssetContractResponse
-        let collectionSlug: String
+        let collectionUid: String
         let tokenId: String
         let name: String?
         let imageUrl: String?
@@ -300,18 +278,18 @@ extension OpenSeaNftProvider {
         let sellOrders: [OrderResponse]
 
         init(map: Map) throws {
-            contract = try map.value("asset_contract")
-            collectionSlug = try map.value("collection.slug")
+            contract = try map.value("contract")
+            collectionUid = try map.value("collection_uid")
             tokenId = try map.value("token_id")
             name = try? map.value("name")
-            imageUrl = try? map.value("image_url")
-            imagePreviewUrl = try? map.value("image_preview_url")
+            imageUrl = try? map.value("image_data.image_url")
+            imagePreviewUrl = try? map.value("image_data.image_preview_url")
             description = try? map.value("description")
-            externalLink = try? map.value("external_link")
-            permalink = try? map.value("permalink")
-            traits = try map.value("traits")
-            lastSale = try? map.value("last_sale")
-            sellOrders = (try? map.value("sell_orders")) ?? []
+            externalLink = try? map.value("links.external_link")
+            permalink = try? map.value("links.permalink")
+            traits = try map.value("attributes")
+            lastSale = try? map.value("markets_data.last_sale")
+            sellOrders = (try? map.value("markets_data.sell_orders")) ?? []
         }
     }
 
@@ -342,7 +320,7 @@ extension OpenSeaNftProvider {
         let paymentTokenAddress: String
 
         init(map: Map) throws {
-            totalPrice = try map.value("total_price", using: OpenSeaNftProvider.stringToDecimalTransform)
+            totalPrice = try map.value("total_price", using: HsNftProvider.stringToDecimalTransform)
             paymentTokenAddress = try map.value("payment_token.address")
         }
     }
@@ -353,9 +331,9 @@ extension OpenSeaNftProvider {
         let floorPrice: Decimal?
 
         init(map: Map) throws {
-            averagePrice7d = try map.value("stats.seven_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
-            averagePrice30d = try map.value("stats.thirty_day_average_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
-            floorPrice = try? map.value("stats.floor_price", using: OpenSeaNftProvider.doubleToDecimalTransform)
+            averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
+            averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
+            floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)
         }
     }
 
@@ -363,7 +341,7 @@ extension OpenSeaNftProvider {
         let orders: [OrderResponse]
 
         init(map: Map) throws {
-            orders = try map.value("orders")
+            orders = try map.value("markets_data.orders")
         }
     }
 
@@ -383,7 +361,7 @@ extension OpenSeaNftProvider {
 
         init(map: Map) throws {
             closingDate = try map.value("closing_date", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))
-            currentPrice = try map.value("current_price", using: OpenSeaNftProvider.stringToDecimalTransform)
+            currentPrice = try map.value("current_price", using: HsNftProvider.stringToDecimalTransform)
             paymentToken = try map.value("payment_token_contract")
             takerAddress = try map.value("taker.address")
             side = try map.value("side")
@@ -399,7 +377,7 @@ extension OpenSeaNftProvider {
         init(map: Map) throws {
             address = try map.value("address")
             decimals = try map.value("decimals")
-            ethPrice = try map.value("eth_price", using: OpenSeaNftProvider.stringToDecimalTransform)
+            ethPrice = try map.value("eth_price", using: HsNftProvider.stringToDecimalTransform)
         }
     }
 

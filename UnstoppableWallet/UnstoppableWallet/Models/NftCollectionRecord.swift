@@ -5,7 +5,7 @@ class NftCollectionRecord: Record {
     let accountId: String
 
     let contracts: [NftCollection.Contract]
-    let slug: String
+    let uid: String
     let name: String
     let description: String?
     let imageUrl: String?
@@ -20,7 +20,7 @@ class NftCollectionRecord: Record {
     init(accountId: String, collection: NftCollection) {
         self.accountId = accountId
         contracts = collection.contracts
-        slug = collection.slug
+        uid = collection.uid
         name = collection.name
         description = collection.description
         imageUrl = collection.imageUrl
@@ -42,7 +42,7 @@ class NftCollectionRecord: Record {
     enum Columns: String, ColumnExpression {
         case accountId
         case contracts
-        case slug
+        case uid
         case name
         case description
         case imageUrl
@@ -60,7 +60,7 @@ class NftCollectionRecord: Record {
     required init(row: Row) {
         accountId = row[Columns.accountId]
         contracts = [NftCollection.Contract](JSONString: row[Columns.contracts]) ?? []
-        slug = row[Columns.slug]
+        uid = row[Columns.uid]
         name = row[Columns.name]
         description = row[Columns.description]
         imageUrl = row[Columns.imageUrl]
@@ -78,7 +78,7 @@ class NftCollectionRecord: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.accountId] = accountId
         container[Columns.contracts] = contracts.toJSONString()
-        container[Columns.slug] = slug
+        container[Columns.uid] = uid
         container[Columns.name] = name
         container[Columns.description] = description
         container[Columns.imageUrl] = imageUrl
