@@ -932,6 +932,8 @@
 "wallet_connect.watch_account.description" = "Эта функция не доступна для кошельков для просмотра, вам нужно выбрать восстановленный или созданный кошелек.";
 "wallet_connect.watch_account.switch" = "Выбрать";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "Статус Приложения";
