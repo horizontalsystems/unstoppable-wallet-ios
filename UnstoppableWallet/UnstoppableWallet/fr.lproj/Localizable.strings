@@ -281,7 +281,7 @@
 
 "swap.one_inch.error.cannot_estimate" = "Estimation Error";
 "swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.insufficient_liquidity" = "Liquidité insuffisante";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "Service";
@@ -930,6 +930,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.watch_account.description" = "Cette fonctionnalité ne peut être utilisée avec les portefeuilles de type watching only. Vous devez basculer vers un portefeuille restauré ou en créer un.";
 "wallet_connect.watch_account.switch" = "Basculer";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "Statut de l'appli";
@@ -994,7 +996,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Fee Settings
 
 "fee_settings" = "Paramètres des frais";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "Frais Max";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The fee for transacting on the network is measured in gas units. Gas Limit is the maximum amount of gas a user is willing to pay for confirming a transaction (min. 21,000). An insufficient gas limit is a common reason for a transaction to fail with an 'out of gas' error.";
 "fee_settings.gas_price" = "Gas Price";
