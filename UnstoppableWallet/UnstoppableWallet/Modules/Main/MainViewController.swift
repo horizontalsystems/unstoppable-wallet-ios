@@ -147,8 +147,18 @@ class MainViewController: ThemeTabBarController {
 
         switch deepLink {
         case let .walletConnect(url):
-            // todo: Fix
-            WalletConnectModule.start(uri: url, sourceViewController: visibleController)
+            let result = WalletConnectUriHandler.connect(uri: url)
+            switch result {
+            case .success(let service):
+                guard let viewController = WalletConnectXMainModule.viewController(
+                        service: service,
+                        sourceViewController: visibleController) else {
+                    return
+                }
+
+                visibleController.present(viewController, animated: true)
+            default: return
+            }
         }
     }
 

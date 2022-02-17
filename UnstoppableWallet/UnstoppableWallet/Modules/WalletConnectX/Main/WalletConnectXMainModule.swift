@@ -27,10 +27,10 @@ struct WalletConnectXMainModule {
 
     static func viewController(session: WalletConnectSession, sourceViewController: UIViewController?) -> UIViewController? {
         let service = WalletConnectV1XMainService(
-            session: session,
-            manager: App.shared.walletConnectManager,
-            sessionManager: App.shared.walletConnectSessionManager,
-            reachabilityManager: App.shared.reachabilityManager)
+                session: session,
+                manager: App.shared.walletConnectManager,
+                sessionManager: App.shared.walletConnectSessionManager,
+                reachabilityManager: App.shared.reachabilityManager)
 
         return viewController(service: service, sourceViewController: sourceViewController)
     }
@@ -40,11 +40,13 @@ struct WalletConnectXMainModule {
         let pingService = WalletConnectV2PingService(service: service)
 
         let mainService = WalletConnectV2XMainService(
-            session: session,
-            service: service,
-            pingService: pingService,
-            manager: App.shared.walletConnectManager,
-            evmChainParser: WalletConnectEvmChainParser()
+                session: session,
+                service: service,
+                pingService: pingService,
+                manager: App.shared.walletConnectManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                accountManager: App.shared.accountManager,
+                evmChainParser: WalletConnectEvmChainParser()
         )
 
         return viewController(service: mainService, sourceViewController: sourceViewController)
@@ -60,7 +62,7 @@ struct WalletConnectXMainModule {
             requestView.sourceViewController = viewController
 
             viewController.requestView = requestView
-        case let service as WalletConnectV2XMainService: ()
+        case is WalletConnectV2XMainService: ()
         default: return nil
         }
 

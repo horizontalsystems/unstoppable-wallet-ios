@@ -53,8 +53,6 @@ extension WalletConnectV1XListViewModel {
 
     //Connections section
 
-    var emptySessionList: Bool { service.sessionV1Count == 0 }
-
     var showWalletConnectSessionSignal: Signal<WalletConnectSession> {
         showWalletConnectSessionRelay.asSignal()
     }

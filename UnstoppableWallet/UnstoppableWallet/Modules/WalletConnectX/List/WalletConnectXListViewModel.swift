@@ -31,8 +31,8 @@ class WalletConnectXListViewModel {
 extension WalletConnectXListViewModel {
 
     // NewConnection section
-    func didScan(string: String) {
-        service.connect(uri: string)
+    var emptySessionList: Bool {
+        service.emptySessionList
     }
 
     var showWalletConnectMainModuleSignal: Signal<IWalletConnectXMainService> {
@@ -41,6 +41,10 @@ extension WalletConnectXListViewModel {
 
     var newConnectionErrorSignal: Signal<String> {
         newConnectionErrorRelay.asSignal()
+    }
+
+    func didScan(string: String) {
+        service.connect(uri: string)
     }
 
 }
