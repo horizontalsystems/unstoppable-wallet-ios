@@ -931,6 +931,8 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.watch_account.description" = "Esta característica no funciona con los monederos \"watch-only\", necesita cambiar a un monedero restaurado o creado.";
 "wallet_connect.watch_account.switch" = "Cambiar";
 
+"wallet_connect.pending_requests_title" = "Pending Requests";
+
 // App Status
 
 "app_status.title" = "Estado de la aplicación";
