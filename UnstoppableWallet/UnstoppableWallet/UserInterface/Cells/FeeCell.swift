@@ -9,26 +9,29 @@ protocol IFeeViewModel {
     var spinnerVisibleDriver: Driver<Bool> { get }
 }
 
-class FeeCell: BaseThemeCell {
+class FeeCell: BaseSelectableThemeCell {
     private let disposeBag = DisposeBag()
 
     init(viewModel: IFeeViewModel) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
-        selectionStyle = .none
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-        CellBuilder.build(cell: self, elements: [.text, .text, .spinner20])
+        CellBuilder.build(cell: self, elements: [.image20, .text, .text, .spinner20])
 
-        bind(index: 0) { (component: TextComponent) in
+        bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "circle_information_20")
+        })
+
+        bind(index: 1) { (component: TextComponent) in
             component.set(style: .d1)
             component.text = "fee_settings.max_fee".localized
         }
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
-            self?.bind(index: 1) { (component: TextComponent) in
+            self?.bind(index: 2) { (component: TextComponent) in
                 if let value = value {
                     component.isHidden = false
                     component.set(style: value.type.style)
@@ -40,7 +43,7 @@ class FeeCell: BaseThemeCell {
         }
 
         subscribe(disposeBag, viewModel.spinnerVisibleDriver) { [weak self] visible in
-            self?.bind(index: 2) { (component: SpinnerComponent) in
+            self?.bind(index: 3) { (component: SpinnerComponent) in
                 component.isHidden = !visible
             }
         }

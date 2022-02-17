@@ -15,7 +15,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let maxFeeCell: SelectableFeeCell
+    private let maxFeeCell: EditableFeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private let caution1Cell = TitledHighlightedDescriptionCell()
@@ -28,7 +28,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         self.transactionViewModel = transactionViewModel
         self.feeViewModel = feeViewModel
 
-        maxFeeCell = SelectableFeeCell(viewModel: feeViewModel)
+        maxFeeCell = EditableFeeCell(viewModel: feeViewModel)
 
         super.init()
     }
