@@ -25,3 +25,12 @@ class TransactionInfoAddressMapper {
     }
 
 }
+
+extension String {
+
+    var shortenedAddress: String {
+        let prefixCount = hasPrefix("0x") ? 7 : 5
+        return String(prefix(prefixCount)) + "..." + String(suffix(5))
+    }
+
+}
