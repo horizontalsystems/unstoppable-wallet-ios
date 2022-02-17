@@ -921,6 +921,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 
 "wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect.list.empty_view_text" = "You don’t have an connected dapps";
+"wallet_connect.list.empty_view_button_text" = "New Connection";
+"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "새로운 연결";
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
 
@@ -997,6 +1000,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "fee_settings" = "수수료 설정";
 "fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee.info" = "This is text for Max Fee.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The fee for transacting on the network is measured in gas units. Gas Limit is the maximum amount of gas a user is willing to pay for confirming a transaction (min. 21,000). An insufficient gas limit is a common reason for a transaction to fail with an 'out of gas' error.";
 "fee_settings.gas_price" = "Gas Used";
