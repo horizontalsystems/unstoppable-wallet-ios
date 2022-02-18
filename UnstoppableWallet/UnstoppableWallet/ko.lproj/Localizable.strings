@@ -222,7 +222,7 @@
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.amount_warning.coin_needed_for_fee" = "향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 "send.stuck_warning" = "경고! 갇힐 위험";
 
@@ -281,7 +281,7 @@
 
 "swap.one_inch.error.cannot_estimate" = "Estimation Error";
 "swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.insufficient_liquidity" = "유동성 부족";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "서비스";
@@ -922,7 +922,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
-"wallet_connect.list.empty_view_button_text" = "New Connection";
+"wallet_connect.list.empty_view_button_text" = "새로운 연결";
 "wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "새로운 연결";
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
@@ -999,7 +999,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Fee Settings
 
 "fee_settings" = "수수료 설정";
-"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee" = "최대 수수료";
 "fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
