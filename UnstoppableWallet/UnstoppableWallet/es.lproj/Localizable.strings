@@ -1016,7 +1016,7 @@ poner en peligro la seguridad de mis fondos.";
 "fee_settings.errors.low_max_fee" = "Low Fee";
 "fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
 "fee_settings.warning.overpricing" = "Fee Too High";
 "fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
