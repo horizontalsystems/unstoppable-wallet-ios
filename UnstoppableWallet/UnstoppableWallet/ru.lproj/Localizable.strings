@@ -224,7 +224,7 @@
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.amount_warning.coin_needed_for_fee" = "Вы можете оставить некоторую сумму в размере %@ на балансе, чтобы оплачивать будущие транзакции.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
@@ -281,10 +281,10 @@
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
-"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
+"swap.one_inch.error.cannot_estimate" = "Ошибка оценки";
+"swap.one_inch.error.cannot_estimate.info" = "Ошибка! Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
+"swap.one_inch.error.insufficient_liquidity" = "Недостаточно Ликвидности";
+"swap.one_inch.error.insufficient_liquidity.info" = "Кажется, для этой сделки не хватает ликвидности. Попробуйте уменьшить сумму сделки.";
 
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
@@ -878,10 +878,10 @@
 "intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.go_borderless.title" = "Избавьтесь от Границ";
+"intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте Конфиденциальность";
+"intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
 
@@ -923,9 +923,9 @@
 "wallet_connect.sign.description" = "Пожалуйста, подпишите сообщение для аутентификации";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect.list.empty_view_text" = "No active sessions";
-"wallet_connect.list.empty_view_button_text" = "New Connection";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
+"wallet_connect.list.empty_view_text" = "Нет активных сессий";
+"wallet_connect.list.empty_view_button_text" = "Новое Подключение";
+"wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
 "wallet_connect_list.new_connection" = "Новое Подключение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
@@ -935,7 +935,7 @@
 "wallet_connect.watch_account.description" = "Эта функция не доступна для кошельков для просмотра, вам нужно выбрать восстановленный или созданный кошелек.";
 "wallet_connect.watch_account.switch" = "Выбрать";
 
-"wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.pending_requests_title" = "Необработанные запросы";
 
 // App Status
 
@@ -995,16 +995,16 @@
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
+"evm_network.switches_automatically" = "переходит автоматически";
 "evm_network.description" = "Провайдер MainNet использует ряд приведенных ниже источников и автоматически переключается между ними.";
 
 // Fee Settings
 
 "fee_settings" = "Настройки Комиссии";
-"fee_settings.max_fee" = "Max. Fee";
-"fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
+"fee_settings.max_fee" = "Макс. Комиссия";
+"fee_settings.max_fee.info" = "Максимальная ожидаемая общая комиссия за данную транзакцию. Обычно, фактическая комиссия будет меньше.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
+"fee_settings.gas_limit.info" = "Лимит газа  - это максимальное количество единиц газа, которое пользователь готов потратить при отправке конкретной транзакции. Для выполнения более комплексных транзакций требуется большее количество единиц газ, чем для выполнения более простых. Лимит газа автоматически расчитывается и задается для каждой транзакции.";
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
 "fee_settings.current_base_fee" = "Current Base Fee";
