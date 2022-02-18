@@ -281,7 +281,7 @@
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate" = "估计错误";
 "swap.one_inch.error.cannot_estimate.info" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
 "swap.one_inch.error.insufficient_liquidity" = "流动性不足";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
@@ -1017,7 +1017,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "fee_settings.errors.low_max_fee" = "Low Fee";
 "fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
 "fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
 "fee_settings.warning.overpricing" = "Fee Too High";
 "fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
