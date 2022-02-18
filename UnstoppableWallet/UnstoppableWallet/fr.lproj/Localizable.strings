@@ -279,10 +279,10 @@
 "swap.advanced_settings.error.invalid_slippage" = "Slippage invalide";
 "swap.advanced_settings.error.invalid_deadline" = "Date limite invalide";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "Erreur d'estimation";
+"swap.one_inch.error.cannot_estimate.info" = "Vérifiez le solde pour vous assurer qu'il y a suffisamment de %@ pour couvrir les frais. Vous pouvez également tenter d'augmenter le montant du glissement de prix et réessayer. Nouvelle tentative automatique dans 3 secondes...";
 "swap.one_inch.error.insufficient_liquidity" = "Liquidité insuffisante";
-"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
+"swap.one_inch.error.insufficient_liquidity.info" = "Il n'y a probablement pas assez de liquidités disponibles pour effectuer cette transaction. Essayez de réduire le montant.";
 
 "swap.service" = "Service";
 "swap.service.title" = "Service";
@@ -921,9 +921,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.sign.description" = "Veuillez signer un message pour vous authentifier";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect.list.empty_view_text" = "No active sessions";
+"wallet_connect.list.empty_view_text" = "Aucune session active";
 "wallet_connect.list.empty_view_button_text" = "Nouvelle connexion";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
+"wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";
 
@@ -933,7 +933,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.watch_account.description" = "Cette fonctionnalité ne peut être utilisée avec les portefeuilles de type watching only. Vous devez basculer vers un portefeuille restauré ou en créer un.";
 "wallet_connect.watch_account.switch" = "Basculer";
 
-"wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.pending_requests_title" = "Demandes en attente";
 
 // App Status
 
@@ -1000,24 +1000,24 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "fee_settings" = "Paramètres des frais";
 "fee_settings.max_fee" = "Frais max.";
-"fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
+"fee_settings.max_fee.info" = "Les frais totaux maximums escomptés pour la transaction donnée. En règle générale, les frais réels de la transaction sont inférieurs à ce montant.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
+"fee_settings.gas_limit.info" = "La limite de gas est le montant maximum d'unités de gas qu'un utilisateur est prêt à dépenser lors de l'envoi d'une transaction donnée. Les transactions complexes nécessitent plus d'unités de gas que les transactions plus simples. La limite de gas est une estimation et est fixée automatiquement pour chaque transaction.";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
+"fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
 "fee_settings.current_base_fee" = "Frais de base actuels";
 "fee_settings.base_fee" = "Frais de base maximum";
-"fee_settings.base_fee.info" = "Each transaction on Ethereum requires the user to spend a certain amount of gas units for processing that transaction. The price of a single gas unit changes in real-time with network conditions and is not controlled by any single entity. The max. base fee rate in combination with optional miner tip (see below) refers to the highest price for a gas unit a user is willing to pay for sending the transaction.";
+"fee_settings.base_fee.info" = "Sur Ethereum, chaque transaction exige de l'utilisateur qu'il dépense une certaine quantité d'unités de gas pour le traitement de ladite transaction. Le prix d'une unité de gas unique change en temps réel en fonction des conditions du réseau et n'est pas contrôlé par une seule entité. Le taux de frais de base maximum combiné au pourboire optionnel pour le mineur (voir ci-dessous) fait référence au prix le plus élevé pour une unité de gas qu'un utilisateur est prêt à payer pour envoyer la transaction.";
 "fee_settings.tips" = "Conseils pour Max Miner";
-"fee_settings.tips.info" = "Miner fees (aka miner tip) refer to optional fees that users may include to incentivize network participants to prioritize their transactions.";
+"fee_settings.tips.info" = "Les frais de mineur (aussi pourboire de mineur) font référence aux frais facultatifs que les utilisateurs peuvent inclure pour inciter les participants au réseau à donner la priorité à leurs transactions.";
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
-"fee_settings.errors.low_max_fee" = "Low Fee";
-"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
-"fee_settings.warning.overpricing" = "Fee Too High";
-"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
+"fee_settings.errors.low_max_fee" = "Frais faibles";
+"fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risqué";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Frais trop élevés";
+"fee_settings.warning.overpricing.info" = "Les frais de transaction fixés sont plus élevés que ce qui est nécessaire pour traiter cette transaction immédiatement.";
 
 // Watch Address
 
