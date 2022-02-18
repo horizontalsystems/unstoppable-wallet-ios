@@ -224,7 +224,7 @@
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
-"send.amount_warning.coin_needed_for_fee" = "Вы можете оставить некоторую сумму в размере %@ на балансе, чтобы оплачивать будущие транзакции.";
+"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
@@ -923,7 +923,7 @@
 "wallet_connect.sign.description" = "Пожалуйста, подпишите сообщение для аутентификации";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect.list.empty_view_text" = "You don’t have an connected dapps";
+"wallet_connect.list.empty_view_text" = "No active sessions";
 "wallet_connect.list.empty_view_button_text" = "New Connection";
 "wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "Новое Подключение";
@@ -1001,17 +1001,17 @@
 // Fee Settings
 
 "fee_settings" = "Настройки Комиссии";
-"fee_settings.max_fee" = "Max Fee";
-"fee_settings.max_fee.info" = "This is text for Max Fee.";
+"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "The fee for transacting on the network is measured in gas units. Gas Limit is the maximum amount of gas a user is willing to pay for confirming a transaction (min. 21,000). An insufficient gas limit is a common reason for a transaction to fail with an 'out of gas' error.";
+"fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
 "fee_settings.current_base_fee" = "Current Base Fee";
 "fee_settings.base_fee" = "Max Base Fee";
-"fee_settings.base_fee.info" = "A base fee is the algorithmically determined price users need to pay for a transaction on Ethereum blockchain. The base fee automatically set by Ethereum network and is not controlled by a specific entity.";
+"fee_settings.base_fee.info" = "Each transaction on Ethereum requires the user to spend a certain amount of gas units for processing that transaction. The price of a single gas unit changes in real-time with network conditions and is not controlled by any single entity. The max. base fee rate in combination with optional miner tip (see below) refers to the highest price for a gas unit a user is willing to pay for sending the transaction.";
 "fee_settings.tips" = "Max Miner Tips";
-"fee_settings.tips.info" = "Miner tips are defined as optional fees that users may include to incentivize network participants to prioritize user's transaction.";
+"fee_settings.tips.info" = "Miner fees (aka miner tip) refer to optional fees that users may include to incentivize network participants to prioritize their transactions.";
 "fee_settings.errors.insufficient_balance" = "Недостаточный баланс";
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "fee_settings.errors.low_max_fee" = "Low Fee";
