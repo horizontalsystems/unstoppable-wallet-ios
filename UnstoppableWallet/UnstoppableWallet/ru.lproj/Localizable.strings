@@ -935,7 +935,7 @@
 "wallet_connect.watch_account.description" = "Эта функция не доступна для кошельков для просмотра, вам нужно выбрать восстановленный или созданный кошелек.";
 "wallet_connect.watch_account.switch" = "Выбрать";
 
-"wallet_connect.pending_requests_title" = "Необработанные запросы";
+"wallet_connect.pending_requests_title" = "Отложенные запросы";
 
 // App Status
 
@@ -1006,20 +1006,20 @@
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Лимит газа  - это максимальное количество единиц газа, которое пользователь готов потратить при отправке конкретной транзакции. Для выполнения более комплексных транзакций требуется большее количество единиц газ, чем для выполнения более простых. Лимит газа автоматически расчитывается и задается для каждой транзакции.";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
-"fee_settings.current_base_fee" = "Current Base Fee";
-"fee_settings.base_fee" = "Max Base Fee";
-"fee_settings.base_fee.info" = "Each transaction on Ethereum requires the user to spend a certain amount of gas units for processing that transaction. The price of a single gas unit changes in real-time with network conditions and is not controlled by any single entity. The max. base fee rate in combination with optional miner tip (see below) refers to the highest price for a gas unit a user is willing to pay for sending the transaction.";
-"fee_settings.tips" = "Max Miner Tips";
-"fee_settings.tips.info" = "Miner fees (aka miner tip) refer to optional fees that users may include to incentivize network participants to prioritize their transactions.";
+"fee_settings.gas_price.info" = "Комиссия за сетевую транзакцию измеряется в единицах газа. Цена газа – это сумма, которую пользователь готов заплатить за единицу газа. Когда сеть занята, цены на газ повышаются, а во время простоя они наоборот снижаются. Слишком низкая цена газа зачастую является основанием для длительного сохранения отложеннного статуса транзакции.";
+"fee_settings.current_base_fee" = "Текущая базовая комиссия";
+"fee_settings.base_fee" = "Максимальная базовая комиссия";
+"fee_settings.base_fee.info" = "Пользователь должен потратить определенное количество единиц газа на обработку каждой транзакции в Ethereum. Стоимость одной единицы газа изменяется в реальном времени в зависимости от статуса сети и не контролируется ни одной организацией. Максимальный размер базовой комиссии в сочетании с опциональными майнерскими чаевыми (см. ниже) - это самая высокая цена за единицу газа, которую пользователь готов оплатить за отправку транзакции.";
+"fee_settings.tips" = "Макс. майнерские чаевые";
+"fee_settings.tips.info" = "Плата майнерам (\"miner fee\") или так называемые \"майнерские чаевые\" - это дополнительная сумма, которую пользователи могут отправлять участникам сети, чтобы мотивировать их на приоритизацию своих транзакций.";
 "fee_settings.errors.insufficient_balance" = "Недостаточный баланс";
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
-"fee_settings.errors.low_max_fee" = "Low Fee";
-"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
-"fee_settings.warning.overpricing" = "Fee Too High";
-"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
+"fee_settings.errors.low_max_fee" = "Низкая комиссия";
+"fee_settings.errors.low_max_fee.info" = "Заданный размер комиссии за транзакцию недостаточен для ее обработки в настоящий момент.";
+"fee_settings.warning.risk_of_getting_stuck" = "Высокий риск";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Слишком высокая комиссия";
+"fee_settings.warning.overpricing.info" = "Заданный размер комиссии за транзакцию превышает размер комиссии, необходимый для обработки этой транзакции в настоящий момент.";
 
 // Watch Address
 
