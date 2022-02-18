@@ -225,7 +225,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.amount_warning.coin_needed_for_fee" = "Gelecekteki işlemler için ödeme yapabilmek için bakiyenizde biraz %@ bırakmayı göz önünde bulundurun.";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 "send.stuck_warning" = "Uyarı! Takılma riski";
 
@@ -283,8 +283,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
 "swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.cannot_estimate.info" = "Hata! Bakiyeyi kontrol edin ve ücreti karşılayacak kadar %@ olduğundan emin olun. Veya fiyat kayma miktarını artırmayı deneyin ve tekrar deneyin. 3 saniye sonra tekrar denenecektir...";
+"swap.one_inch.error.insufficient_liquidity" = "Likidite Yetersiz";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "Hizmet";
@@ -925,7 +925,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
-"wallet_connect.list.empty_view_button_text" = "New Connection";
+"wallet_connect.list.empty_view_button_text" = "Yeni bağlantı";
 "wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
@@ -1002,7 +1002,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Fee Settings
 
 "fee_settings" = "Ücret Ayarları";
-"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee" = "Maks. Ücret";
 "fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
