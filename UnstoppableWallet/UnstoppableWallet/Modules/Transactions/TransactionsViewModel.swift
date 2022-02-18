@@ -38,7 +38,7 @@ class TransactionsViewModel {
 
         handle(typesFilters: service.typeFilters)
         handle(walletFilters: service.walletFilters)
-        handle(items: service.items)
+        handle(items: service.allItems)
         handle(syncState: service.syncState)
     }
 

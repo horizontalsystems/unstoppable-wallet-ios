@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import CurrencyKit
 
@@ -7,8 +8,7 @@ class TransactionsService {
     private let syncStateService: TransactionSyncStateService
     private let rateService: HistoricalRateService
     private let filterHelper: TransactionFilterHelper
-
-    private let scheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .background)
 
     private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
@@ -16,7 +16,7 @@ class TransactionsService {
     private var updatedItemSubject = PublishSubject<TransactionItem>()
     private var syncStateSubject = PublishSubject<AdapterState?>()
 
-    private(set) var items = [TransactionItem]()
+    private var items = [TransactionItem]()
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
@@ -25,15 +25,15 @@ class TransactionsService {
         filterHelper = TransactionFilterHelper()
 
         recordsService.recordsObservable
-                .subscribe(onNext: { [weak self] records in self?.handle(records: records) })
+                .subscribe(onNext: { [weak self] records in self?.queue.async { self?.handle(records: records) }})
                 .disposed(by: disposeBag)
 
         recordsService.updatedRecordObservable
-                .subscribe(onNext: { [weak self] record in self?.handle(updatedRecord: record) })
+                .subscribe(onNext: { [weak self] record in self?.queue.async { self?.handle(updatedRecord: record) }})
                 .disposed(by: disposeBag)
 
         syncStateService.lastBlockInfoObservable
-                .subscribe(onNext: { [weak self] (source, lastBlockInfo) in self?.handle(source: source, lastBlockInfo: lastBlockInfo) })
+                .subscribe(onNext: { [weak self] (source, lastBlockInfo) in self?.queue.async { self?.handle(source: source, lastBlockInfo: lastBlockInfo) }})
                 .disposed(by: disposeBag)
 
         syncStateService.syncStateObservable
@@ -41,11 +41,11 @@ class TransactionsService {
                 .disposed(by: disposeBag)
 
         rateService.ratesChangedObservable
-                .subscribe(onNext: { [weak self] in self?.handleRatesChanged() })
+                .subscribe(onNext: { [weak self] in self?.queue.async { self?.handleRatesChanged() }})
                 .disposed(by: disposeBag)
 
         rateService.rateUpdatedObservable
-                .subscribe(onNext: { [weak self] rate in self?.handle(rate: rate) })
+                .subscribe(onNext: { [weak self] rate in self?.queue.async { self?.handle(rate: rate) }})
                 .disposed(by: disposeBag)
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] wallets in self?.handle(updatedWallets: walletManager.activeWallets) }
@@ -158,6 +158,12 @@ class TransactionsService {
 
 extension TransactionsService {
 
+    var allItems: [TransactionItem] {
+        queue.sync {
+            items
+        }
+    }
+
     var typeFilters: (types: [TransactionTypeFilter], selected: Int) {
         filterHelper.typeFilters
     }
@@ -212,7 +218,9 @@ extension TransactionsService {
     }
 
     func item(uid: String) -> TransactionItem? {
-        items.first(where: { $0.record.uid == uid })
+        queue.sync {
+            items.first(where: { $0.record.uid == uid })
+        }
     }
 
 }
