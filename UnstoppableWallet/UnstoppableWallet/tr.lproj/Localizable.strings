@@ -282,10 +282,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate" = "Tahmin Hatası";
 "swap.one_inch.error.cannot_estimate.info" = "Hata! Bakiyeyi kontrol edin ve ücreti karşılayacak kadar %@ olduğundan emin olun. Veya fiyat kayma miktarını artırmayı deneyin ve tekrar deneyin. 3 saniye sonra tekrar denenecektir...";
 "swap.one_inch.error.insufficient_liquidity" = "Likidite Yetersiz";
-"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
+"swap.one_inch.error.insufficient_liquidity.info" = "Muhtemelen bu işlemin gerçekleşmesi için yeterli likidite mevcut değil. Tutarı düşürmeyi deneyin.";
 
 "swap.service" = "Hizmet";
 "swap.service.title" = "Hizmet";
@@ -924,9 +924,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.sign.description" = "Lütfen doğrulamak için bir mesajı imzalayın";
 
 "wallet_connect_list.title" = "Wallet Connect";
-"wallet_connect.list.empty_view_text" = "No active sessions";
+"wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
 "wallet_connect.list.empty_view_button_text" = "Yeni bağlantı";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
+"wallet_connect.list.v1_bottom_text" = "WalletConnect'in ilk sürümünde, talebi görmek ve onaylamak için oturumlara gitmeniz gerekir";
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
@@ -936,7 +936,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.watch_account.description" = "Bu özellik salt izlenir cüzdanlarda çalışmaz, geri yüklediğiniz veya oluşturduğunuz bir cüzdana geçmeniz gerekiyor.";
 "wallet_connect.watch_account.switch" = "Değiştir";
 
-"wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.pending_requests_title" = "Bekleyen Talepler";
 
 // App Status
 
@@ -1003,24 +1003,24 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "fee_settings" = "Ücret Ayarları";
 "fee_settings.max_fee" = "Maks. Ücret";
-"fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
+"fee_settings.max_fee.info" = "Verilen işlem için beklenen maksimum toplam ücret. Genellikle, gerçek işlem ücreti daha düşük olur.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
+"fee_settings.gas_limit.info" = "Gaz limiti, bir kullanıcının belirli bir işlemi gerçekleştirirken harcamak istediği maksimum gaz birimi tutarıdır. Karmaşık işlemler, basit işlemlerden daha fazla gaz birimi gerektirir. Tahmini bir gaz limiti görüntülenir ve her işlem için otomatik olarak ayarlanır.";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
+"fee_settings.gas_price.info" = "Ağ üzerinde işlem yapmanın ücreti gaz birimleri cinsinden ölçülür. Gaz Fiyatı, bir kullanıcının bir işlemi gerçekleştirmek için ödemeye razı olduğu tutardır. Ağ yoğun olduğunda gaz fiyatları yüksek ve boşta olduğunda düşüktür. Gaz fiyatının yetersiz olması, genellikle bir işlemin uzun süre beklemede kalmasının bir nedenidir.";
 "fee_settings.current_base_fee" = "Mevcut Taban Ücret";
 "fee_settings.base_fee" = "Maksimum Taban Ücret";
-"fee_settings.base_fee.info" = "Each transaction on Ethereum requires the user to spend a certain amount of gas units for processing that transaction. The price of a single gas unit changes in real-time with network conditions and is not controlled by any single entity. The max. base fee rate in combination with optional miner tip (see below) refers to the highest price for a gas unit a user is willing to pay for sending the transaction.";
+"fee_settings.base_fee.info" = "Ethereum üzerindeki her işlem, kullanıcının bu işlemi gerçekleştirmek için belirli miktarda gaz birimi harcamasını gerektirir. Tek bir gaz biriminin fiyatı, ağ koşullarına göre gerçek zamanlı olarak değişir ve herhangi bir kişi veya kişiler tarafından kontrol edilmez. Opsiyonel madenci bahşişi ile birlikte maksimum taban ücret (aşağıya bakınız), bir kullanıcının işlemi gerçekleştirmek için ödemeye hazır olduğu en yüksek gaz birimi fiyatını ifade eder.";
 "fee_settings.tips" = "Maksimum Madenci Bahşişleri";
-"fee_settings.tips.info" = "Miner fees (aka miner tip) refer to optional fees that users may include to incentivize network participants to prioritize their transactions.";
+"fee_settings.tips.info" = "Madenci ğcretleri (ya da madenci bahşişleri), bir işleme öncelik verilmesi amacıyla kullanıcıların ağ katılımcılarını teşvik etmek için ekleyebileceği isteğe bağlı ücretler olarak tanımlanır.";
 "fee_settings.errors.insufficient_balance" = "Yetersiz bakiye";
 "fee_settings.errors.insufficient_balance.info" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
-"fee_settings.errors.low_max_fee" = "Low Fee";
-"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may fail or remain pending for a while or fail entirely.";
-"fee_settings.warning.overpricing" = "Fee Too High";
-"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
+"fee_settings.errors.low_max_fee" = "Düşük Ücret";
+"fee_settings.errors.low_max_fee.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için yetersiz.";
+"fee_settings.warning.risk_of_getting_stuck" = "Riskli";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
+"fee_settings.warning.overpricing.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için gereken ücretten daha yüksek.";
 
 // Watch Address
 
