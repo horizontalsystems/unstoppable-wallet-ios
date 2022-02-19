@@ -513,7 +513,7 @@
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
@@ -856,7 +856,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.time_duration.week2" = "2星期";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
-"chart.time_duration.halyear" = "6个月";
+"chart.time_duration.halfyear" = "6个月";
 "chart.time_duration.year" = "1年";
 "chart.time_duration.year2" = "2年";
 

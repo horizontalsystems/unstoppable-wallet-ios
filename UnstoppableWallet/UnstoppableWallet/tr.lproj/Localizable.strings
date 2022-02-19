@@ -514,7 +514,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
@@ -857,7 +857,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart.time_duration.week2" = "2H";
 "chart.time_duration.month" = "1A";
 "chart.time_duration.month3" = "3A";
-"chart.time_duration.halyear" = "6A";
+"chart.time_duration.halfyear" = "6A";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 
