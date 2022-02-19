@@ -121,7 +121,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
                 .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(for: title(index: $0), buttonStyle: buttonStyle)) }
 
         let initialItemWidth = items.reduce(0) { $0 + $1.width }
-        if initialItemWidth >= width {     // elements cant fit into screen
+        if initialItemWidth >= width {     // elements can't fit into screen
             itemWidths = items.map { $0.width }
             return
         }

@@ -36,7 +36,7 @@ extension ChartConfiguration {
         config.showBorders = false
         config.showIndicators = false
         config.showLimits = false
-        config.showVericalLines = false
+        config.showVerticalLines = false
         config.isInteractive = false
 
         return config

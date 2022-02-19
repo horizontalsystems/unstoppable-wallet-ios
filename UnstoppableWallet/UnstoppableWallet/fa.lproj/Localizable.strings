@@ -335,7 +335,7 @@
 "chart.time_duration.week" = "7D";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.quartal" = "3M";
-"chart.time_duration.halyear" = "6M";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 
 "chart.market_cap" = "Mkt. Cap";

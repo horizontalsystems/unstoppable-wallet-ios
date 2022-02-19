@@ -1,6 +1,6 @@
 With Unstoppable we aim to create a mainstream-friendly multi-blockchain wallet implementation on iOS and Android platforms. 
 
-We invite you to review, improve and reuse our codebase. If you are looking to contribute please familiarize yourself with the goals of the Unstoppable Wallet project. 
+We invite you to review, improve and reuse our codebase. If you are looking to contribute please familiarize yourself with the goals of the Unstoppable Wallet project.
 
 We are sailing towards an open-source wallet that:
 
@@ -12,11 +12,11 @@ We are sailing towards an open-source wallet that:
 
 - is expandable to support new blockchains without significant effort while keeping the technical debt at manageable levels. It should be possible to integrate new blockchains in a modularized way without adding to the complexity.
 
--  can always operate in a censorship-resistant and failure-free manner. The core wallet features i.e. crypto transfers or blockchain sync should always remain functional, even in cases where there is a deliberate attempt by someone to censor the wallet.
+- can always operate in a censorship-resistant and failure-free manner. The core wallet features i.e. crypto transfers or blockchain sync should always remain functional, even in cases where there is a deliberate attempt by someone to censor the wallet.
 
 - operates in a private manner, if the underlying blockchain protocol provides such capability. The wallet should have capability for the client to mask all outgoing/incoming traffic to make it impossible for any third party to obtain any identifiable data such as IP address, transaction history, etc.
 
-- adheres to the commonly accepted best practices (like test coverage) when it comes to the application architecture. 
+- adheres to the commonly accepted best practices (like test coverage) when it comes to the application architecture.
 
 Keeping above in mind we are looking forward for your input. For the sake of keeping the process technically objective our willingness to merge (or not to) some contributions is going to be purely based on our technical assessment of the submitted code and its impact on the existing codebase. While it’s in our best interests to make the contribution process as straightforward as possible it’s of paramount importance for us to keep  the project complexity at a level we are comfortable with so we can move fast.
 

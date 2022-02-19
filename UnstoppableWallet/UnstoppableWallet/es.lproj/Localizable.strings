@@ -511,7 +511,7 @@
 "coin_page.market_cap" = "Capitalización de Mercado";
 "coin_page.circulating_supply" = "En Circulación";
 "coin_page.total_supply" = "Suminstro Total";
-"coin_page.dilluted_market_cap" = "Capitalización de Mercado Diluida";
+"coin_page.diluted_market_cap" = "Capitalización de Mercado Diluida";
 "coin_page.genesis_date" = "Fecha de inicio";
 
 "coin_page.trading_volume" = "Volumen de comercio";
@@ -855,7 +855,7 @@ poner en peligro la seguridad de mis fondos.";
 "chart.time_duration.week2" = "2 S";
 "chart.time_duration.month" = "1 M";
 "chart.time_duration.month3" = "3 M";
-"chart.time_duration.halyear" = "6 M";
+"chart.time_duration.halfyear" = "6 M";
 "chart.time_duration.year" = "1 Año";
 "chart.time_duration.year2" = "2 Años";
 

@@ -541,7 +541,7 @@ extension CoinOverviewViewController {
                 (id: "volume24", title: "coin_page.trading_volume".localized, badge: nil, text: $0)
             },
             viewItem.dilutedMarketCap.map {
-                (id: "dilluted_m_cap", title: "coin_page.dilluted_market_cap".localized, badge: nil, text: $0)
+                (id: "diluted_m_cap", title: "coin_page.diluted_market_cap".localized, badge: nil, text: $0)
             },
             viewItem.tvl.map {
                 (id: "tvl", title: "coin_page.tvl".localized, badge: nil, text: $0)
