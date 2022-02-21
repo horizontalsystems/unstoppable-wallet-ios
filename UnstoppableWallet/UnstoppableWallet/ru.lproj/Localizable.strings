@@ -260,7 +260,7 @@
 "swap.buy_price" = "Цена покупки";
 "swap.sell_price" = "Цена продажи";
 "swap.price_impact" = "Отклонение от рын. цены";
-"swap.maximum_paid" = "Максимальная Выплата";
+"swap.maximum_paid" = "Макс. Сумма";
 "swap.minimum_got" = "Минимальная Выплата";
 "swap.estimate_short" = "(прим.)";
 "swap.minimum_short" = "(мин)";
@@ -281,8 +281,10 @@
 "swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
-"swap.one_inch.error.cannot_estimate" = "Ошибка! Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
-
+"swap.one_inch.error.cannot_estimate" = "Ошибка Оценки";
+"swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
+"swap.one_inch.error.insufficient_liquidity" = "Недостаточно Ликвидности";
+"swap.one_inch.error.insufficient_liquidity.info" = "Кажется, для этой сделки не хватает ликвидности. Попробуйте уменьшить сумму сделки.";
 
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
@@ -492,8 +494,8 @@
 "coin_page.treasuries.filter.private" = "В закрытом доступе";
 "coin_page.treasuries.filter.etf" = "ETF";
 
-"coin_page.funds_invested" = "Funds Invested";
-"coin_page.funds_invested.lead" = "Лид";
+"coin_page.funds_invested" = "Вложенные Средства";
+"coin_page.funds_invested.lead" = "Лиды";
 
 "coin_page.reports" = "Отчёты";
 
@@ -586,8 +588,8 @@
 "transactions.types.all" = "Все";
 "transactions.types.incoming" = "Получено";
 "transactions.types.outgoing" = "Отправлено";
-"transactions.types.swap" = "Обмен";
-"transactions.types.approve" = "Подтверждения";
+"transactions.types.swap" = "Обмены";
+"transactions.types.approve" = "Разрешения";
 
 // Transaction Info
 
@@ -921,6 +923,9 @@
 "wallet_connect.sign.description" = "Пожалуйста, подпишите сообщение для аутентификации";
 
 "wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect.list.empty_view_text" = "Нет активных сессий";
+"wallet_connect.list.empty_view_button_text" = "Новое Подключение";
+"wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
 "wallet_connect_list.new_connection" = "Новое Подключение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
@@ -928,7 +933,9 @@
 "wallet_connect.no_account.i_understand" = "Я Понимаю";
 
 "wallet_connect.watch_account.description" = "Эта функция не доступна для кошельков для просмотра, вам нужно выбрать восстановленный или созданный кошелек.";
-"wallet_connect.watch_account.switch" = "Выбрать";
+"wallet_connect.watch_account.switch" = "Перекл.";
+
+"wallet_connect.pending_requests_title" = "Отложенные Запросы";
 
 // App Status
 
@@ -994,24 +1001,30 @@
 // Fee Settings
 
 "fee_settings" = "Настройки Комиссии";
+"fee_settings.max_fee" = "Макс. Комиссия";
+"fee_settings.max_fee.info" = "Максимальная ожидаемая общая комиссия за данную транзакцию. Обычно, фактическая комиссия будет меньше.";
 "fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_limit.info" = "Gas Limit  - это максимальное количество единиц газа, которое пользователь готов потратить при отправке конкретной транзакции. Для выполнения более комплексных транзакций требуется большее количество единиц газ, чем для выполнения более простых. Лимит газа автоматически рассчитывается и задается для каждой транзакции.";
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.current_base_fee" = "Current Base Fee";
-"fee_settings.base_fee" = "Max Base Fee";
-"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.gas_price.info" = "Комиссия за сетевую транзакцию измеряется в единицах газа. Цена газа – это сумма, которую пользователь готов заплатить за единицу газа. Когда сеть занята, цены на газ повышаются, а во время простоя они наоборот снижаются. Слишком низкая цена газа зачастую является основанием для длительного сохранения отложенного статуса транзакции.";
+"fee_settings.current_base_fee" = "Текущая Базовая Комиссия";
+"fee_settings.base_fee" = "Макс. Базовая Комиссия";
+"fee_settings.base_fee.info" = "Пользователь должен потратить определенное количество единиц газа на обработку каждой транзакции в Ethereum. Стоимость одной единицы газа изменяется в реальном времени в зависимости от статуса сети и не контролируется ни одной организацией. Максимальный размер базовой комиссии в сочетании с опциональными майнерскими чаевыми (см. ниже) - это самая высокая цена за единицу газа, которую пользователь готов оплатить за отправку транзакции.";
+"fee_settings.tips" = "Оплата Майнерам";
+"fee_settings.tips.info" = "Плата майнерам (\"miner fee\") или так называемые \"майнерские чаевые\" - это дополнительная сумма, которую пользователи могут отправлять участникам сети, чтобы мотивировать их на приоритизацию своих транзакций.";
 "fee_settings.errors.insufficient_balance" = "Недостаточный баланс";
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
-"fee_settings.errors.low_base_fee" = "Low base fee";
-"fee_settings.errors.low_base_fee.info" = "The Max Base Fee set up is too low for including the transaction.";
-"fee_settings.warning.risk_of_getting_stuck" = "Внимание! Транзакция может застрять в сети.";
-"fee_settings.warning.risk_of_getting_stuck.info" = "Транзакция может застрять в сети или будет отклонена.";
-"fee_settings.warning.overpricing" = "Цены завышены";
-"fee_settings.warning.overpricing.info" = "Стоимость газа превышает подходящую для транзакции цену.";
+"fee_settings.errors.low_max_fee" = "Низкая Комиссия";
+"fee_settings.errors.low_max_fee.info" = "Установленная сумма комиссии недостаточно для обработки этой транзакции.";
+"fee_settings.warning.risk_of_getting_stuck" = "Риски";
+"fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
+"fee_settings.warning.overpricing" = "Слишком Высокая Комиссия";
+"fee_settings.warning.overpricing.info" = "Установленная комиссия за транзакцию больше чем требуется для обработки этой транзакции.";
 
 // Watch Address
 
 "watch_address.title" = "Адрес";
-"watch_address.watch" = "Посмотреть";
+"watch_address.watch" = "Смотреть";
 
 // Nft Collections
 

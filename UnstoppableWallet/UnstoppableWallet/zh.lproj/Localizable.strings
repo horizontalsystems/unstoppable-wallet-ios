@@ -224,7 +224,7 @@
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
-"send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
+"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 "send.stuck_warning" = "警告！有被骗的风险";
 
@@ -281,8 +281,10 @@
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
-"swap.one_inch.error.cannot_estimate" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
-
+"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate.info" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
+"swap.one_inch.error.insufficient_liquidity" = "流动性不足";
+"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
 "swap.service" = "服务";
 "swap.service.title" = "服务";
@@ -921,6 +923,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.sign.description" = "请对消息签名以便进行验证";
 
 "wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect.list.empty_view_text" = "No active sessions";
+"wallet_connect.list.empty_view_button_text" = "New Connection";
+"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
 
@@ -929,6 +934,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "wallet_connect.watch_account.description" = "此功能不适用于观察中的钱包，您需要切换到恢复或创建的钱包.";
 "wallet_connect.watch_account.switch" = "切换";
+
+"wallet_connect.pending_requests_title" = "Pending Requests";
 
 // App Status
 
@@ -956,7 +963,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Onboarding
 
-"onboarding.balance.description" = "尚无钱包";
+"onboarding.balance.description" = "No wallets yet";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
 "onboarding.balance.watch" = "观察地址";
@@ -994,19 +1001,25 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
+"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "燃料限制";
+"fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
 "fee_settings.gas_price" = "燃料价格";
-"fee_settings.current_base_fee" = "当前基本费用";
-"fee_settings.base_fee" = "最大基本费用";
-"fee_settings.tips" = "最大矿工提示";
+"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
+"fee_settings.current_base_fee" = "Current Base Fee";
+"fee_settings.base_fee" = "Max Base Fee";
+"fee_settings.base_fee.info" = "Each transaction on Ethereum requires the user to spend a certain amount of gas units for processing that transaction. The price of a single gas unit changes in real-time with network conditions and is not controlled by any single entity. The max. base fee rate in combination with optional miner tip (see below) refers to the highest price for a gas unit a user is willing to pay for sending the transaction.";
+"fee_settings.tips" = "Max Miner Tips";
+"fee_settings.tips.info" = "Miner fees (aka miner tip) refer to optional fees that users may include to incentivize network participants to prioritize their transactions.";
 "fee_settings.errors.insufficient_balance" = "余额不足";
 "fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
-"fee_settings.errors.low_base_fee" = "低基本费用";
-"fee_settings.errors.low_base_fee.info" = "设置的最大基本费用太低，不能包含交易。";
-"fee_settings.warning.risk_of_getting_stuck" = "有被卡的风险";
-"fee_settings.warning.risk_of_getting_stuck.info" = "交易可能被卡或失败。";
-"fee_settings.warning.overpricing" = "定价过高";
-"fee_settings.warning.overpricing.info" = "天然气价格高于交易所需的价格。";
+"fee_settings.errors.low_max_fee" = "Low Fee";
+"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Fee Too High";
+"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
 // Watch Address
 
