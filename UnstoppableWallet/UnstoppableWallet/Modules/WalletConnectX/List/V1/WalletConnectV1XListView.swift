@@ -75,7 +75,7 @@ class WalletConnectV1XListView {
     private func section(viewItems: [WalletConnectV1XListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_1",
-                headerState: header(text: "version 1.0"),
+                headerState: header(text: "wallet_connect.list.version_text".localized("1.0")),
                 footerState: footer(hash: "section_v1_footer", text: "wallet_connect.list.v1_bottom_text".localized),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0

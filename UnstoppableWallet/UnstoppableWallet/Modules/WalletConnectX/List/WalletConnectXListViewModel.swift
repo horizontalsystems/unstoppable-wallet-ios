@@ -72,8 +72,7 @@ extension WalletConnectUriHandler.ConnectionError : LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .unsupportedV2: return "UNSUPPORTED V2"
-        case .wrongUri: return "WRONG URI"
+        case .wrongUri: return "wallet_connect.error.invalid_url".localized
         }
     }
 

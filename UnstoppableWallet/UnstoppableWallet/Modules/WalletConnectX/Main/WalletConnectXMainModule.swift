@@ -79,6 +79,7 @@ struct WalletConnectXMainModule {
 extension WalletConnectXMainModule {
 
     struct AppMetaItem {
+        let editable: Bool
         let name: String
         let url: String
         let description: String
@@ -86,7 +87,6 @@ extension WalletConnectXMainModule {
     }
 
     struct Blockchain {
-        let chainId: Int
         let address: String
         let selected: Bool
     }
