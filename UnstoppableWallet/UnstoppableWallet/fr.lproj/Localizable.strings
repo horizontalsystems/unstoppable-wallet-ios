@@ -464,7 +464,7 @@
 "coin_page.market_cap" = "Cap. marché";
 "coin_page.circulating_supply" = "En circulation";
 "coin_page.total_supply" = "Offre totale";
-"coin_page.dilluted_market_cap" = "Cap. marché diluée";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Date de création";
 
 "coin_page.trading_volume" = "Volume de trading";
@@ -805,7 +805,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1 M";
 "chart.time_duration.month3" = "3 M";
-"chart.time_duration.halyear" = "6 M";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2A";
 
@@ -999,7 +999,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Fee Settings
 
 "fee_settings" = "Paramètres des frais";
-"fee_settings.max_fee" = "Frais max.";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "Les frais totaux maximums escomptés pour la transaction donnée. En règle générale, les frais réels de la transaction sont inférieurs à ce montant.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La limite de gas est le montant maximum d'unités de gas qu'un utilisateur est prêt à dépenser lors de l'envoi d'une transaction donnée. Les transactions complexes nécessitent plus d'unités de gas que les transactions plus simples. La limite de gas est une estimation et est fixée automatiquement pour chaque transaction.";
