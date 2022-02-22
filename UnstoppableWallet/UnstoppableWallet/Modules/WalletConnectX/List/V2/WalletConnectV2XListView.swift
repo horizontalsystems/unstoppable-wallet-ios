@@ -11,7 +11,7 @@ class WalletConnectV2XListView {
     private let viewModel: WalletConnectV2XListViewModel
     weak var sourceViewController: WalletConnectXListViewController?
 
-    private var viewItems = [WalletConnectV2XListViewModel.ViewItem]()
+    private var viewItems = [WalletConnectXListViewModel.ViewItem]()
     private var pendingRequestCount: Int = 0
 
     private let reloadTableRelay = PublishRelay<()>()
@@ -28,7 +28,7 @@ class WalletConnectV2XListView {
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
-    private func sync(viewItems: [WalletConnectV2XListViewModel.ViewItem]) {
+    private func sync(viewItems: [WalletConnectXListViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         reloadTableRelay.accept(())
@@ -87,7 +87,7 @@ class WalletConnectV2XListView {
         )
     }
 
-    private func cell(viewItem: WalletConnectV2XListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
+    private func cell(viewItem: WalletConnectXListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
         guard let tableView = sourceViewController?.tableView else {
             return nil
         }
@@ -142,7 +142,7 @@ class WalletConnectV2XListView {
 
                     cell.bind(index: 0) { (component: TextComponent) in
                         component.set(style: .b2)
-                        component.text = "Pending Requests"
+                        component.text = "wallet_connect.list.pending_requests".localized
                     }
 
                     cell.bind(index: 1) { (component: BadgeComponent) in
@@ -164,13 +164,13 @@ class WalletConnectV2XListView {
         let cell = pendingRequestCountCell(pendingRequestCount: pendingRequestCount)
         return Section(
                 id: "section_pending_requests",
-                headerState: header(text: "version 2.0"),
+                headerState: header(text: "wallet_connect.list.version_text".localized("2.0")),
                 footerState: .margin(height: cell == nil ? 0 : .margin12),
                 rows: [cell].compactMap { $0 }
         )
     }
 
-    private func section(viewItems: [WalletConnectV2XListViewModel.ViewItem]) -> SectionProtocol {
+    private func section(viewItems: [WalletConnectXListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_2",
                 footerState: .margin(height: .margin32),

@@ -9,7 +9,7 @@ class WalletConnectV2XListViewModel {
 
     private let showWalletConnectSessionRelay = PublishRelay<Session>()
 
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let viewItemsRelay = BehaviorRelay<[WalletConnectXListViewModel.ViewItem]>(value: [])
     private let pendingRequestCountRelay = BehaviorRelay<Int>(value: 0)
     private let showLoadingRelay = PublishRelay<()>()
     private let showSuccessRelay = PublishRelay<String?>()
@@ -19,7 +19,6 @@ class WalletConnectV2XListViewModel {
 
         subscribe(disposeBag, service.itemsV2Observable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.pendingRequestsV2Observable) { [weak self] in self?.sync(pendingRequests: $0) }
-//        subscribe(disposeBag, service.sessionKillingObservable) { [weak self] in self?.sync(sessionKillingState: $0) }
         subscribe(disposeBag, service.showSessionV2Observable) { [weak self] in self?.show(session: $0) }
 
         sync(items: service.itemsV2)
@@ -28,7 +27,7 @@ class WalletConnectV2XListViewModel {
 
     private func sync(items: [WalletConnectXListService.Item]) {
         let viewItems = items.map {
-            ViewItem(
+            WalletConnectXListViewModel.ViewItem(
                 id: $0.id,
                 title: $0.appName,
                 description: $0.chains.map { $0.title }.joined(separator: ", "),
@@ -57,7 +56,7 @@ extension WalletConnectV2XListViewModel {
         showWalletConnectSessionRelay.asSignal()
     }
 
-    var viewItemsDriver: Driver<[ViewItem]> {
+    var viewItemsDriver: Driver<[WalletConnectXListViewModel.ViewItem]> {
         viewItemsRelay.asDriver()
     }
 
@@ -81,11 +80,5 @@ extension WalletConnectV2XListViewModel {
     func kill(id: Int) {
         service.kill(id: id)
     }
-
-}
-
-extension WalletConnectV2XListViewModel {
-
-    class ViewItem: WalletConnectXListViewModel.ViewItem {}
 
 }

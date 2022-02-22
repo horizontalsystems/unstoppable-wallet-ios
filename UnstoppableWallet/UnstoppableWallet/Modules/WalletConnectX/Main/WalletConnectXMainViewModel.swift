@@ -4,6 +4,8 @@ import RxRelay
 import EthereumKit
 
 class WalletConnectXMainViewModel {
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.wallet_connect_main")
+
     private let disposeBag = DisposeBag()
 
     private let service: IWalletConnectXMainService
@@ -30,17 +32,17 @@ class WalletConnectXMainViewModel {
     init(service: IWalletConnectXMainService) {
         self.service = service
 
-        subscribe(disposeBag, service.errorObservable) { [weak self] in
+        subscribe(scheduler, disposeBag, service.errorObservable) { [weak self] in
             self?.showErrorRelay.accept($0.smartDescription)
         }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in
-            self?.sync(state: $0)
+        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] state in
+            self?.sync(state: state)
         }
-        subscribe(disposeBag, service.connectionStateObservable) { [weak self] in
-            self?.sync(connectionState: $0)
+        subscribe(scheduler, disposeBag, service.connectionStateObservable) { [weak self] connectionState in
+            self?.sync(connectionState: connectionState)
         }
-        subscribe(disposeBag, service.allowedBlockchainsObservable) { [weak self] in
-            self?.sync(allowedBlockchains: $0)
+        subscribe(scheduler, disposeBag, service.allowedBlockchainsObservable) { [weak self] allowedBlockchains in
+            self?.sync(allowedBlockchains: allowedBlockchains)
         }
 
         sync()
@@ -79,7 +81,10 @@ class WalletConnectXMainViewModel {
         appMetaRelay.accept(service.appMetaItem.map {
             viewItem(appMetaItem: $0)
         })
-        blockchainsEditableRelay.accept(state == .waitingForApproveSession)
+
+        let editable = service.appMetaItem?.editable ?? false
+        blockchainsEditableRelay.accept(editable && allowedBlockchains.count > 1)
+
         blockchainViewItemRelay.accept(
                 allowedBlockchains
                         .sorted {
@@ -119,7 +124,7 @@ class WalletConnectXMainViewModel {
         switch chainId {
         case 1: return "Ethereum"
         case 3, 4, 5, 42: return "Ethereum TN"
-        case 58: return "BSC"
+        case 56: return "Binance Smart Chain"
         default: return nil
         }
     }
@@ -261,6 +266,17 @@ extension WalletConnectXMainViewModel {
             case .offline: return "offline".localized
             case .online: return "online".localized
             }
+        }
+    }
+
+}
+
+extension WalletConnectXMainModule.SessionError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .unsupportedChainId: return "wallet_connect.main.unsupported_chains".localized
+        default: return nil
         }
     }
 

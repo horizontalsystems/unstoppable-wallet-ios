@@ -17,6 +17,13 @@ class WalletConnectV1XMainService {
     private var interactor: WalletConnectInteractor?
     private var sessionData: SessionData?
 
+    private let allowedBlockchainsRelay = PublishRelay<[Int: WalletConnectXMainModule.Blockchain]>()
+    private(set) var allowedBlockchains = [Int: WalletConnectXMainModule.Blockchain]() {
+        didSet {
+            allowedBlockchainsRelay.accept(allowedBlockchains)
+        }
+    }
+
     private var stateRelay = PublishRelay<WalletConnectXMainModule.State>()
     private var connectionStateRelay = PublishRelay<WalletConnectXMainModule.ConnectionState>()
     private var requestRelay = PublishRelay<WalletConnectRequest>()
@@ -53,7 +60,7 @@ class WalletConnectV1XMainService {
             do {
                 try connect(uri: uri)
 
-                state = .ready
+                state = .idle
             } catch {
                 state = .invalid(error: error)
             }
@@ -92,6 +99,7 @@ class WalletConnectV1XMainService {
             throw WalletConnectXMainModule.SessionError.unsupportedChainId
         }
 
+        allowedBlockchains[chainId] = WalletConnectXMainModule.Blockchain(address: evmKitWrapper.evmKit.address.eip55, selected: true)
         sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
@@ -134,11 +142,8 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
         stateRelay.asObservable()
     }
 
-    var allowedBlockchains: [Int: WalletConnectXMainModule.Blockchain] {
-        [:]
-    }
     var allowedBlockchainsObservable: Observable<[Int: WalletConnectXMainModule.Blockchain]> {
-        Observable.just([:])
+        allowedBlockchainsRelay.asObservable()
     }
 
     var connectionStateObservable: Observable<WalletConnectXMainModule.ConnectionState> {
@@ -160,10 +165,11 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? {
         (sessionData?.peerMeta).map {
             WalletConnectXMainModule.AppMetaItem(
-                name: $0.name,
-                url: $0.url,
-                description: $0.description,
-                icons: $0.icons
+                    editable: false,
+                    name: $0.name,
+                    url: $0.url,
+                    description: $0.description,
+                    icons: $0.icons
             )
         }
     }
@@ -196,7 +202,7 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
     }
 
     func toggle(chainId: Int) {
-
+        // can't handle toggle, because it's only 1 chainId.
     }
 
     func pendingRequest(requestId: Int) -> WalletConnectRequest? {
@@ -309,10 +315,6 @@ extension WalletConnectV1XMainService: IWalletConnectInteractorDelegate {
 
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int?) {
         do {
-//            guard let chainId = chainId else {
-//                throw SessionError.unsupportedChainId
-//            }
-
             let chainId = chainId ?? 1 // fallback to chainId = 1 (Ethereum MainNet)
 
             try initSession(peerId: peerId, peerMeta: peerMeta, chainId: chainId)

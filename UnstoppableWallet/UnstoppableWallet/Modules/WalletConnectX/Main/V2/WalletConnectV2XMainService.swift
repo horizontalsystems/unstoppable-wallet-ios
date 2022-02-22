@@ -55,6 +55,9 @@ class WalletConnectV2XMainService {
         subscribe(disposeBag, service.deleteSessionObservable) { [weak self] in
             self?.didDelete(topic: $0, reason: $1)
         }
+        subscribe(disposeBag, pingService.stateObservable) { [weak self] in
+            self?.connectionStateRelay.accept($0)
+        }
         subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
             if reachable {
                 if let topic = self?.session?.topic {
@@ -79,16 +82,21 @@ class WalletConnectV2XMainService {
         self.proposal = proposal
         allowedBlockchains = initialBlockchains
 
-        pingService.receiveResponse()
+        guard !initialBlockchains.isEmpty else {
+            state = .invalid(error: WalletConnectXMainModule.SessionError.unsupportedChainId)
+            return
+        }
+
         state = .waitingForApproveSession
+        pingService.receiveResponse()
     }
 
     private func didReceive(session: Session) {
         self.session = session
         allowedBlockchains = initialBlockchains
 
-        pingService.receiveResponse()
         state = .ready
+        pingService.receiveResponse()
     }
 
     private func didDelete(topic: String, reason: Reason) {
@@ -112,7 +120,7 @@ class WalletConnectV2XMainService {
             var blockchains = [Int: WalletConnectXMainModule.Blockchain]()
             sessionAccountData.forEach { account in
                 let blockchain = account.address.map {
-                    WalletConnectXMainModule.Blockchain(chainId: account.chainId, address: $0, selected: true)
+                    WalletConnectXMainModule.Blockchain(address: $0, selected: true)
                 }
                 blockchains[account.chainId] = blockchain
             }
@@ -132,7 +140,7 @@ class WalletConnectV2XMainService {
                 guard let address = try? Signer.address(seed: seed, networkType: type) else {
                     return
                 }
-                blockchains[type.chainId] = WalletConnectXMainModule.Blockchain(chainId: type.chainId, address: address.eip55, selected: true)
+                blockchains[type.chainId] = WalletConnectXMainModule.Blockchain(address: address.eip55, selected: true)
             }
             return blockchains
         }
@@ -151,6 +159,7 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? {
         if let session = session {
             return WalletConnectXMainModule.AppMetaItem(
+                    editable: false,
                     name: session.peer.name ?? "",
                     url: session.peer.url ?? "",
                     description: session.peer.description ?? "",
@@ -159,6 +168,7 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
         }
         if let proposal = proposal {
             return WalletConnectXMainModule.AppMetaItem(
+                    editable: true,
                     name: proposal.proposer.name ?? "",
                     url: proposal.proposer.url ?? "",
                     description: proposal.proposer.description ?? "",
@@ -198,7 +208,7 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     }
 
     var connectionStateObservable: Observable<WalletConnectXMainModule.ConnectionState> {
-        pingService.stateObservable
+        connectionStateRelay.asObservable()
     }
 
     var errorObservable: Observable<Error> {
@@ -210,11 +220,12 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     }
 
     func toggle(chainId: Int) {
-        guard let blockchain = allowedBlockchains[chainId] else {
+        guard let blockchain = allowedBlockchains[chainId],
+           blockchain.selected,
+           allowedBlockchains.filter({ key, value in value.selected }).count > 1 else {
             return
         }
-        allowedBlockchains[chainId] = WalletConnectXMainModule.Blockchain(chainId: chainId, address: blockchain.address, selected: !blockchain.selected)
-
+        allowedBlockchains[chainId] = WalletConnectXMainModule.Blockchain(address: blockchain.address, selected: !blockchain.selected)
     }
 
     func reconnect() {
@@ -245,27 +256,20 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
             return
         }
 
-        let chainIds = proposal.permissions.blockchains.compactMap {
-            evmChainParser.parse(string: $0)?.chainId
+        kitWrappers = [:]
+        var accounts = [String]()
+        allowedBlockchains.forEach { chainId, blockchain in
+            guard blockchain.selected, let wrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
+                return
+            }
+            kitWrappers[chainId] = wrapper
+
+            accounts.append("eip155:\(chainId):\(blockchain.address)")
         }
 
-        let wrappers = chainIds.reduce(into: [Int: EvmKitWrapper]()) {
-            $0[$1] = manager.evmKitWrapper(chainId: $1, account: account)
-        }
-
-        guard !wrappers.isEmpty else {
+        guard !kitWrappers.isEmpty else {
             state = .invalid(error: WalletConnectXMainModule.SessionError.unsupportedChainId)
             return
-        }
-
-        kitWrappers = wrappers
-
-        let accounts: [String] = chainIds.compactMap { chainId in
-            guard let wrapper = wrappers[chainId] else {
-                return nil
-            }
-
-            return "eip155:\(chainId):\(wrapper.evmKit.address.eip55)"
         }
 
         service.approve(proposal: proposal, accounts: Set(accounts))

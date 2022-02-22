@@ -63,7 +63,6 @@ extension WalletConnectUriHandler {
 extension WalletConnectUriHandler {
 
     enum ConnectionError: Error {
-        case unsupportedV2
         case wrongUri
     }
 
