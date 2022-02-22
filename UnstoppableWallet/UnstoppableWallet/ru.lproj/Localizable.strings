@@ -878,10 +878,10 @@
 "intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.go_borderless.title" = "Избавьтесь от Границ";
+"intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте Конфиденциальность";
+"intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
 
@@ -995,7 +995,7 @@
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
+"evm_network.switches_automatically" = "переходит автоматически";
 "evm_network.description" = "Провайдер MainNet использует ряд приведенных ниже источников и автоматически переключается между ними.";
 
 // Fee Settings
