@@ -6,7 +6,8 @@ class WalletConnectUriHandler {
                 uri: uri,
                 manager: App.shared.walletConnectManager,
                 sessionManager: App.shared.walletConnectSessionManager,
-                reachabilityManager: App.shared.reachabilityManager
+                reachabilityManager: App.shared.reachabilityManager,
+                accountManager: App.shared.accountManager
         )
 
         do {

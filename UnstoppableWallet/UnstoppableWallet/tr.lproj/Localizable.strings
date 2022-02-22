@@ -803,12 +803,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Key Types
 
 "chart.time_duration.today" = "TDY";
-"chart.time_duration.day" = "24S";
-"chart.time_duration.week" = "7G";
-"chart.time_duration.week2" = "2H";
-"chart.time_duration.month" = "1A";
-"chart.time_duration.month3" = "3A";
-"chart.time_duration.halfyear" = "6A";
+"chart.time_duration.day" = "24H";
+"chart.time_duration.week" = "7D";
+"chart.time_duration.week2" = "2W";
+"chart.time_duration.month" = "1M";
+"chart.time_duration.month3" = "3M";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 

@@ -810,6 +810,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.year2" = "2A";
 
 "chart.market_cap" = "Cap. marché";
+
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ Mrd";

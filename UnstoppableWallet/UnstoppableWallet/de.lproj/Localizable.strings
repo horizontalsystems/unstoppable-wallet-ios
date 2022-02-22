@@ -807,7 +807,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
-"chart.time_duration.year2" = "2Y";
+"chart.time_duration.year2" = "2J";
 
 "chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ tsd.";

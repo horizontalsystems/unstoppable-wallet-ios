@@ -1,6 +1,7 @@
 import RxSwift
 import RxCocoa
 import RxRelay
+import EthereumKit
 
 class WalletConnectXMainViewModel {
     private let disposeBag = DisposeBag()
@@ -16,34 +17,48 @@ class WalletConnectXMainViewModel {
     private let disconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
 
+    private let activeAccountNameRelay = BehaviorRelay<String?>(value: nil)
     private let appMetaRelay = BehaviorRelay<AppMetaViewItem?>(value: nil)
+    private let blockchainsEditableRelay = BehaviorRelay<Bool>(value: false)
+    private let blockchainViewItemRelay = BehaviorRelay<[BlockchainViewItem]?>(value: nil)
     private let hintRelay = BehaviorRelay<String?>(value: nil)
     private let statusRelay = BehaviorRelay<Status?>(value: nil)
+    private let reloadTableRelay = PublishRelay<()>()
 
     private let finishRelay = PublishRelay<Void>()
 
     init(service: IWalletConnectXMainService) {
         self.service = service
 
-        subscribe(disposeBag, service.errorObservable) { [weak self] in self?.showErrorRelay.accept($0.smartDescription) }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.connectionStateObservable) { [weak self] in self?.sync(connectionState: $0) }
+        subscribe(disposeBag, service.errorObservable) { [weak self] in
+            self?.showErrorRelay.accept($0.smartDescription)
+        }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in
+            self?.sync(state: $0)
+        }
+        subscribe(disposeBag, service.connectionStateObservable) { [weak self] in
+            self?.sync(connectionState: $0)
+        }
+        subscribe(disposeBag, service.allowedBlockchainsObservable) { [weak self] in
+            self?.sync(allowedBlockchains: $0)
+        }
 
         sync()
     }
 
     private func viewItem(appMetaItem: WalletConnectXMainModule.AppMetaItem) -> AppMetaViewItem {
         AppMetaViewItem(
-            name: appMetaItem.name,
-            url: appMetaItem.url,
-            description: appMetaItem.description,
-            icon: appMetaItem.icons.last
+                name: appMetaItem.name,
+                url: appMetaItem.url,
+                description: appMetaItem.description,
+                icon: appMetaItem.icons.last
         )
     }
 
-    private func sync(state: WalletConnectXMainModule.State? = nil, connectionState: WalletConnectXMainModule.ConnectionState? = nil) {
+    private func sync(state: WalletConnectXMainModule.State? = nil, connectionState: WalletConnectXMainModule.ConnectionState? = nil, allowedBlockchains: [Int: WalletConnectXMainModule.Blockchain]? = nil) {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
+        let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
 
         guard state != .killed else {
             showSuccessRelay.accept(())
@@ -60,9 +75,29 @@ class WalletConnectXMainViewModel {
         reconnectButtonRelay.accept(stateForReconnectButton ? (connectionState == .disconnected ? .enabled : .hidden) : .hidden)
         closeVisibleRelay.accept(state == .ready)
 
-        appMetaRelay.accept(service.appMetaItem.map { viewItem(appMetaItem: $0) })
+        activeAccountNameRelay.accept(service.activeAccountName)
+        appMetaRelay.accept(service.appMetaItem.map {
+            viewItem(appMetaItem: $0)
+        })
+        blockchainsEditableRelay.accept(state == .waitingForApproveSession)
+        blockchainViewItemRelay.accept(
+                allowedBlockchains
+                        .sorted {
+                            $0.key < $1.key
+                        }
+                        .map { key, value in
+                            BlockchainViewItem(
+                                    chainId: key,
+                                    chainTitle: title(chainId: key),
+                                    address: value.address.shortenedAddress,
+                                    selected: value.selected
+                            )
+                        }
+        )
         hintRelay.accept(service.hint?.localized)
         statusRelay.accept(status(connectionState: connectionState))
+
+        reloadTableRelay.accept(())
     }
 
     private func status(connectionState: WalletConnectXMainModule.ConnectionState) -> Status? {
@@ -77,6 +112,15 @@ class WalletConnectXMainViewModel {
             return .online
         case .disconnected:
             return .offline
+        }
+    }
+
+    private func title(chainId: Int) -> String? {
+        switch chainId {
+        case 1: return "Ethereum"
+        case 3, 4, 5, 42: return "Ethereum TN"
+        case 58: return "BSC"
+        default: return nil
         }
     }
 
@@ -116,8 +160,20 @@ extension WalletConnectXMainViewModel {
         closeVisibleRelay.asDriver()
     }
 
+    var activeAccountNameDriver: Driver<String?> {
+        activeAccountNameRelay.asDriver()
+    }
+
     var appMetaDriver: Driver<AppMetaViewItem?> {
         appMetaRelay.asDriver()
+    }
+
+    var blockchainsEditableDriver: Driver<Bool> {
+        blockchainsEditableRelay.asDriver()
+    }
+
+    var blockchainViewItemDriver: Driver<[BlockchainViewItem]?> {
+        blockchainViewItemRelay.asDriver()
     }
 
     var statusDriver: Driver<Status?> {
@@ -128,8 +184,16 @@ extension WalletConnectXMainViewModel {
         hintRelay.asDriver()
     }
 
+    var reloadTableSignal: Signal<()> {
+        reloadTableRelay.asSignal()
+    }
+
     var finishSignal: Signal<Void> {
         finishRelay.asSignal()
+    }
+
+    func onToggle(chainId: Int) {
+        service.toggle(chainId: chainId)
     }
 
     func cancel() {
@@ -169,6 +233,13 @@ extension WalletConnectXMainViewModel {
         let url: String
         let description: String
         let icon: String?
+    }
+
+    struct BlockchainViewItem {
+        let chainId: Int
+        let chainTitle: String?
+        let address: String
+        let selected: Bool
     }
 
     enum Status {

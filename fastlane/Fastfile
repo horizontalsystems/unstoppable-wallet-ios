@@ -115,6 +115,15 @@ def apply_prod_xcconfig
   update_prod_xcconfig('wallet_connect_v2_project_key', XCCONFIG_PROD_WALLET_CONNECT_V2_PROJECT_KEY)
 end
 
+def force_update_devices(type)
+  match(
+    type: type,
+    username: "hrzsystems8888@gmail.com",
+    app_identifier: "io.horizontalsystems.bank-wallet,io.horizontalsystems.bank-wallet.dev,io.horizontalsystems.bank-wallet.dev.testnet",
+    force_for_new_devices: true
+  )
+end
+
 platform :ios do
 
   lane :dev do
@@ -203,6 +212,11 @@ platform :ios do
     )
 
     delete_temp_keychain(keychain_name)
+  end
+
+  lane :new_device do
+    force_update_devices("development")
+    force_update_devices("adhoc")
   end
 
 end

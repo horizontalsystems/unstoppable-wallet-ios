@@ -466,7 +466,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
@@ -807,7 +807,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
-"chart.time_duration.halyear" = "6M";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 
@@ -905,6 +905,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
@@ -936,6 +937,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.watch_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -1001,7 +1003,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Fee Settings
 
 "fee_settings" = "Fee Settings";
-"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
