@@ -807,7 +807,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.time_duration.week2" = "2星期";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
-"chart.time_duration.halfyear" = "6M";
+"chart.time_duration.halfyear" = "6个月";
 "chart.time_duration.year" = "1年";
 "chart.time_duration.year2" = "2年";
 
@@ -905,6 +905,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
@@ -936,6 +937,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.watch_account.switch" = "切换";
 
 "wallet_connect.pending_requests_title" = "待处理请求";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -1001,7 +1003,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "最大手续费";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "燃料限制是用户发送给定交易时愿意花费的最大燃料单位。复杂交易比简单交易需要更多的燃料单位。每一交易的燃料限制将自动得到估计和设置。";
