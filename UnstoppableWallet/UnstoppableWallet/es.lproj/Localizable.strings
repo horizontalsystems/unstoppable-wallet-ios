@@ -464,7 +464,7 @@
 "coin_page.market_cap" = "Capitalización de Mercado";
 "coin_page.circulating_supply" = "En Circulación";
 "coin_page.total_supply" = "Suminstro Total";
-"coin_page.diluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Cap. de Mercado Diluida";
 "coin_page.genesis_date" = "Fecha de inicio";
 
 "coin_page.trading_volume" = "Volumen de comercio";
@@ -904,6 +904,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
 "wallet_connect.no_connection" = "Error al establecer la conexión. Intenta volver a conectarte.";
@@ -935,6 +936,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.watch_account.switch" = "Cambiar";
 
 "wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -1000,7 +1002,7 @@ poner en peligro la seguridad de mis fondos.";
 // Fee Settings
 
 "fee_settings" = "Configuración de tarifas";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "Comisión Máx.";
 "fee_settings.max_fee.info" = "La tarifa máxima total esperada para la transacción dada. Por lo general, la tarifa real de transacción va a ser menor.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "El límite de gas es la cantidad máxima de unidades de gas que un usuario está dispuesto a gastar al enviar una transacción determinada. Las transacciones complejas requieren más unidades de gas que las más simples. El límite de gas se calcula y se establece automáticamente para cada transacción.";
