@@ -807,7 +807,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1J";
-"chart.time_duration.year2" = "2J";
+"chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
 "chart.market_cap.thousand" = "%@ tsd.";
@@ -1003,9 +1003,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "fee_settings" = "Gebühreneinstellungen";
 "fee_settings.max_fee" = "Max Gebühr";
 "fee_settings.max_fee.info" = "Die maximal erwartete Gesamtgebühr für die jeweilige Transaktion. In der Regel ist die tatsächliche Transaktionsgebühr niedriger.";
-"fee_settings.gas_limit" = "Benzin-Grenzwert";
+"fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Das Gaslimit ist die maximale Menge an Gaseinheiten, die ein Nutzer für eine bestimmte Transaktion auszugeben bereit ist. Komplexe Transaktionen erfordern mehr Gaseinheiten als einfachere Transaktionen. Das Gaslimit wird geschätzt und automatisch für jede Transaktion festgelegt.";
-"fee_settings.gas_price" = "Benzinpreis";
+"fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Die Gebühr für Transaktionen im Netzwerk wird in Gaseinheiten gemessen. Der Gaspreis ist der Betrag, den ein Nutzer für eine Einheit Gas auszugeben bereit ist. Wenn das Netzwerk ausgelastet ist, sind die Gaspreise hoch, und niedrig, wenn es nicht genutzt wird. Ein unzureichender Gaspreis ist oft ein Grund dafür, dass eine Transaktion über einen längeren Zeitraum aussteht.";
 "fee_settings.current_base_fee" = "Aktuelle Grundgebühr";
 "fee_settings.base_fee" = "Max. Grundgebühr";
