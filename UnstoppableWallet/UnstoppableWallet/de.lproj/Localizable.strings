@@ -903,6 +903,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
 "wallet_connect.usage_description" = "Sie können den Browser aufrufen. Schließen Sie diese Seite nicht, während Sie im Browser interagieren.";
 "wallet_connect.no_connection" = "Verbindung konnte nicht hergestellt werden. Versuchen Sie, die Verbindung erneut herzustellen.";
@@ -934,6 +935,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.watch_account.switch" = "Wechseln";
 
 "wallet_connect.pending_requests_title" = "Ausstehende Anfragen";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -999,7 +1001,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Fee Settings
 
 "fee_settings" = "Gebühreneinstellungen";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "Max Gebühr";
 "fee_settings.max_fee.info" = "Die maximal erwartete Gesamtgebühr für die jeweilige Transaktion. In der Regel ist die tatsächliche Transaktionsgebühr niedriger.";
 "fee_settings.gas_limit" = "Benzin-Grenzwert";
 "fee_settings.gas_limit.info" = "Das Gaslimit ist die maximale Menge an Gaseinheiten, die ein Nutzer für eine bestimmte Transaktion auszugeben bereit ist. Komplexe Transaktionen erfordern mehr Gaseinheiten als einfachere Transaktionen. Das Gaslimit wird geschätzt und automatisch für jede Transaktion festgelegt.";
