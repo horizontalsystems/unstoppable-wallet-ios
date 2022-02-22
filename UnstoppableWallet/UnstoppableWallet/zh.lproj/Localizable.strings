@@ -466,7 +466,7 @@
 "coin_page.market_cap" = "市场价值";
 "coin_page.circulating_supply" = "流通中";
 "coin_page.total_supply" = "供应总额";
-"coin_page.dilluted_market_cap" = "稀释市值";
+"coin_page.diluted_market_cap" = "稀释市值";
 "coin_page.genesis_date" = "起始日期";
 
 "coin_page.trading_volume" = "成交量";
@@ -807,7 +807,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.time_duration.week2" = "2星期";
 "chart.time_duration.month" = "1个月";
 "chart.time_duration.month3" = "3个月";
-"chart.time_duration.halyear" = "6个月";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1年";
 "chart.time_duration.year2" = "2年";
 
@@ -1001,7 +1001,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
-"fee_settings.max_fee" = "最大手续费";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "燃料限制是用户发送给定交易时愿意花费的最大燃料单位。复杂交易比简单交易需要更多的燃料单位。每一交易的燃料限制将自动得到估计和设置。";
