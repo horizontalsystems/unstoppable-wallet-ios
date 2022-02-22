@@ -808,7 +808,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart.time_duration.week2" = "2H";
 "chart.time_duration.month" = "1A";
 "chart.time_duration.month3" = "3A";
-"chart.time_duration.halfyear" = "6M";
+"chart.time_duration.halfyear" = "6A";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
 
@@ -906,6 +906,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
 "wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
@@ -937,6 +938,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.watch_account.switch" = "Değiştir";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -1002,7 +1004,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Fee Settings
 
 "fee_settings" = "Ücret Ayarları";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "Maks. Ücret";
 "fee_settings.max_fee.info" = "Verilen işlem için beklenen maksimum toplam ücret. Genellikle, gerçek işlem ücreti daha düşük olur.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Gaz limiti, bir kullanıcının belirli bir işlemi gerçekleştirirken harcamak istediği maksimum gaz birimi tutarıdır. Karmaşık işlemler, basit işlemlerden daha fazla gaz birimi gerektirir. Tahmini bir gaz limiti görüntülenir ve her işlem için otomatik olarak ayarlanır.";
