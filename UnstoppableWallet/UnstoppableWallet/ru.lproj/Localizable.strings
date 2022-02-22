@@ -878,10 +878,10 @@
 "intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
-"intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
-"intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.go_borderless.title" = "Избавьтесь от Границ";
+"intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
+"intro.stay_private.title" = "Сохраняйте Конфиденциальность";
+"intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
 
@@ -905,6 +905,7 @@
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
 "wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
 "wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
@@ -936,6 +937,7 @@
 "wallet_connect.watch_account.switch" = "Перекл.";
 
 "wallet_connect.pending_requests_title" = "Отложенные Запросы";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -995,7 +997,7 @@
 
 // EVM Network
 
-"evm_network.switches_automatically" = "switches automatically";
+"evm_network.switches_automatically" = "переходит автоматически";
 "evm_network.description" = "Провайдер MainNet использует ряд приведенных ниже источников и автоматически переключается между ними.";
 
 // Fee Settings
