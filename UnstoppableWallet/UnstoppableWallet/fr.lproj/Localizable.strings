@@ -464,7 +464,7 @@
 "coin_page.market_cap" = "Cap. marché";
 "coin_page.circulating_supply" = "En circulation";
 "coin_page.total_supply" = "Offre totale";
-"coin_page.diluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Cap. marché diluée";
 "coin_page.genesis_date" = "Date de création";
 
 "coin_page.trading_volume" = "Volume de trading";
@@ -903,6 +903,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
+"wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "wallet_connect.usage_description" = "Vous pouvez aller sur le navigateur. Ne fermez pas cette page pendant que vous interagissez dans le navigateur.";
 "wallet_connect.no_connection" = "Échec de connexion. Essayez de vous reconnecter à nouveau.";
@@ -934,6 +935,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.watch_account.switch" = "Basculer";
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
@@ -999,7 +1001,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Fee Settings
 
 "fee_settings" = "Paramètres des frais";
-"fee_settings.max_fee" = "Max Fee";
+"fee_settings.max_fee" = "Frais Max";
 "fee_settings.max_fee.info" = "Les frais totaux maximums escomptés pour la transaction donnée. En règle générale, les frais réels de la transaction sont inférieurs à ce montant.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La limite de gas est le montant maximum d'unités de gas qu'un utilisateur est prêt à dépenser lors de l'envoi d'une transaction donnée. Les transactions complexes nécessitent plus d'unités de gas que les transactions plus simples. La limite de gas est une estimation et est fixée automatiquement pour chaque transaction.";
