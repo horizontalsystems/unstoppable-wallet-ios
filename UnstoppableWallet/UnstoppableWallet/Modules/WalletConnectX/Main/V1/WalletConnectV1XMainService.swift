@@ -7,10 +7,12 @@ import BigInt
 import HsToolKit
 
 class WalletConnectV1XMainService {
+    private let disposeBag = DisposeBag()
+
     private let manager: WalletConnectManager
     private let sessionManager: WalletConnectSessionManager
     private let reachabilityManager: IReachabilityManager
-    private let disposeBag = DisposeBag()
+    private let accountManager: IAccountManager
 
     private var interactor: WalletConnectInteractor?
     private var sessionData: SessionData?
@@ -38,10 +40,11 @@ class WalletConnectV1XMainService {
         return connectionState(state: interactor.state)
     }
 
-    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager) {
+    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager) {
         self.manager = manager
         self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager
+        self.accountManager = accountManager
 
         if let session = session {
             restore(session: session)
@@ -131,6 +134,13 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
         stateRelay.asObservable()
     }
 
+    var allowedBlockchains: [Int: WalletConnectXMainModule.Blockchain] {
+        [:]
+    }
+    var allowedBlockchainsObservable: Observable<[Int: WalletConnectXMainModule.Blockchain]> {
+        Observable.just([:])
+    }
+
     var connectionStateObservable: Observable<WalletConnectXMainModule.ConnectionState> {
         connectionStateRelay.asObservable()
     }
@@ -141,6 +151,10 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
 
     var errorObservable: Observable<Error> {
         errorRelay.asObservable()
+    }
+
+    var activeAccountName: String? {
+        accountManager.activeAccount?.name
     }
 
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? {
@@ -179,6 +193,10 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
 
     var evmKitWrapper: EvmKitWrapper? {
         sessionData?.evmKitWrapper
+    }
+
+    func toggle(chainId: Int) {
+
     }
 
     func pendingRequest(requestId: Int) -> WalletConnectRequest? {

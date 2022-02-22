@@ -3,6 +3,7 @@ import RxRelay
 import WalletConnect
 import WalletConnectUtils
 import HsToolKit
+import EthereumKit
 
 class WalletConnectV2XMainService {
     private let disposeBag = DisposeBag()
@@ -18,11 +19,18 @@ class WalletConnectV2XMainService {
     private var session: Session?
     private var kitWrappers = [Int: EvmKitWrapper]()
 
-    private var stateRelay = PublishRelay<WalletConnectXMainModule.State>()
-    private var connectionStateRelay = PublishRelay<WalletConnectXMainModule.ConnectionState>()
-    private var requestRelay = PublishRelay<Request>()
-    private var errorRelay = PublishRelay<Error>()
+    private let connectionStateRelay = PublishRelay<WalletConnectXMainModule.ConnectionState>()
+    private let requestRelay = PublishRelay<Request>()
+    private let errorRelay = PublishRelay<Error>()
 
+    private let allowedBlockchainsRelay = PublishRelay<[Int: WalletConnectXMainModule.Blockchain]>()
+    private(set) var allowedBlockchains = [Int: WalletConnectXMainModule.Blockchain]() {
+        didSet {
+            allowedBlockchainsRelay.accept(allowedBlockchains)
+        }
+    }
+
+    private let stateRelay = PublishRelay<WalletConnectXMainModule.State>()
     private(set) var state: WalletConnectXMainModule.State = .idle {
         didSet {
             stateRelay.accept(state)
@@ -38,9 +46,15 @@ class WalletConnectV2XMainService {
         self.accountManager = accountManager
         self.evmChainParser = evmChainParser
 
-        subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in self?.didReceive(proposal: $0) }
-        subscribe(disposeBag, service.receiveSessionObservable) { [weak self] in self?.didReceive(session: $0) }
-        subscribe(disposeBag, service.deleteSessionObservable) { [weak self] in self?.didDelete(topic: $0, reason: $1) }
+        subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
+            self?.didReceive(proposal: $0)
+        }
+        subscribe(disposeBag, service.receiveSessionObservable) { [weak self] in
+            self?.didReceive(session: $0)
+        }
+        subscribe(disposeBag, service.deleteSessionObservable) { [weak self] in
+            self?.didDelete(topic: $0, reason: $1)
+        }
         subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
             if reachable {
                 if let topic = self?.session?.topic {
@@ -55,12 +69,15 @@ class WalletConnectV2XMainService {
 
         if let session = session {
             state = .ready
+            allowedBlockchains = initialBlockchains
+
             pingService.ping(topic: session.topic)
         }
     }
 
     private func didReceive(proposal: Session.Proposal) {
         self.proposal = proposal
+        allowedBlockchains = initialBlockchains
 
         pingService.receiveResponse()
         state = .waitingForApproveSession
@@ -68,6 +85,7 @@ class WalletConnectV2XMainService {
 
     private func didReceive(session: Session) {
         self.session = session
+        allowedBlockchains = initialBlockchains
 
         pingService.receiveResponse()
         state = .ready
@@ -82,9 +100,53 @@ class WalletConnectV2XMainService {
         state = .killed
     }
 
+    private var initialBlockchains: [Int: WalletConnectXMainModule.Blockchain] {
+        guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
+            return [:]
+        }
+        if let session = session {
+            let sessionAccountData = session.accounts.compactMap {
+                evmChainParser.parse(string: $0)
+            }
+
+            var blockchains = [Int: WalletConnectXMainModule.Blockchain]()
+            sessionAccountData.forEach { account in
+                let blockchain = account.address.map {
+                    WalletConnectXMainModule.Blockchain(chainId: account.chainId, address: $0, selected: true)
+                }
+                blockchains[account.chainId] = blockchain
+            }
+            return blockchains
+        }
+        if let proposal = proposal {
+            // get chainIds
+            let proposalAccountData = proposal.permissions.blockchains.compactMap {
+                evmChainParser.parse(string: $0)
+            }
+            let allowedNetworkTypes = proposalAccountData.compactMap {
+                evmChainParser.networkType(chainId: $0.chainId)
+            }
+            // get addresses
+            var blockchains = [Int: WalletConnectXMainModule.Blockchain]()
+            allowedNetworkTypes.forEach { type in
+                guard let address = try? Signer.address(seed: seed, networkType: type) else {
+                    return
+                }
+                blockchains[type.chainId] = WalletConnectXMainModule.Blockchain(chainId: type.chainId, address: address.eip55, selected: true)
+            }
+            return blockchains
+        }
+
+        return [:]
+    }
+
 }
 
 extension WalletConnectV2XMainService: IWalletConnectXMainService {
+
+    var activeAccountName: String? {
+        accountManager.activeAccount?.name
+    }
 
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? {
         if let session = session {
@@ -108,7 +170,23 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
     }
 
     var hint: String? {
-        "Test v2 support"
+        switch connectionState {
+        case .disconnected:
+            if state == .waitingForApproveSession || state == .ready {
+                return "wallet_connect.no_connection"
+            }
+        case .connecting: return nil
+        case .connected: ()
+        }
+
+        switch state {
+        case .invalid(let error):
+            return error.smartDescription
+        case .waitingForApproveSession:
+            return "wallet_connect.connect_description"
+        default:
+            return nil
+        }
     }
 
     var stateObservable: Observable<WalletConnectXMainModule.State> {
@@ -125,6 +203,18 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
 
     var errorObservable: Observable<Error> {
         errorRelay.asObservable()
+    }
+
+    var allowedBlockchainsObservable: Observable<[Int: WalletConnectXMainModule.Blockchain]> {
+        allowedBlockchainsRelay.asObservable()
+    }
+
+    func toggle(chainId: Int) {
+        guard let blockchain = allowedBlockchains[chainId] else {
+            return
+        }
+        allowedBlockchains[chainId] = WalletConnectXMainModule.Blockchain(chainId: chainId, address: blockchain.address, selected: !blockchain.selected)
+
     }
 
     func reconnect() {
@@ -155,7 +245,9 @@ extension WalletConnectV2XMainService: IWalletConnectXMainService {
             return
         }
 
-        let chainIds = proposal.permissions.blockchains.compactMap { evmChainParser.chainId(blockchain: $0) }
+        let chainIds = proposal.permissions.blockchains.compactMap {
+            evmChainParser.parse(string: $0)?.chainId
+        }
 
         let wrappers = chainIds.reduce(into: [Int: EvmKitWrapper]()) {
             $0[$1] = manager.evmKitWrapper(chainId: $1, account: account)

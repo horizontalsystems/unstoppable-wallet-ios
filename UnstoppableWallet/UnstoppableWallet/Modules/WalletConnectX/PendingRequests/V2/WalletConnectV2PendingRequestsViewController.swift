@@ -39,6 +39,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
+        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(items: $0) }
@@ -137,10 +138,22 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         )
     }
 
+    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
+        .cellType(
+                hash: hash,
+                binder: { view in
+                    view.bind(text: text)
+                },
+                dynamicHeight: { width in
+                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
+                }
+        )
+    }
+
     private func section(sectionViewItem: WalletConnectV2PendingRequestsViewModel.SectionViewItem) -> SectionProtocol {
         Section(id: "section-\(sectionViewItem.title)",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin8x),
+                footerState: sectionViewItem.selected ? .margin(height: .margin32) : footer(hash: "non-active-wallet-\(sectionViewItem.id)", text: "wallet_connect.pending_requests.nonactive_footer".localized),
                 rows: [
                     accountCell(
                             id: sectionViewItem.id,
@@ -155,6 +168,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                                 tableView: tableView,
                                 id: "request-selected-\(viewItem.id)",
                                 height: .heightDoubleLineCell,
+                                autoDeselect: true,
                                 bind: { cell in
                                     cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
 
