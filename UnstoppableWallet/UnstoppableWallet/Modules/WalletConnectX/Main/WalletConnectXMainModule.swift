@@ -4,7 +4,10 @@ import RxSwift
 import WalletConnect
 
 protocol IWalletConnectXMainService {
+    var activeAccountName: String? { get }
     var appMetaItem: WalletConnectXMainModule.AppMetaItem? { get }
+    var allowedBlockchains: [Int: WalletConnectXMainModule.Blockchain] { get }
+    var allowedBlockchainsObservable: Observable<[Int: WalletConnectXMainModule.Blockchain]> { get }
     var hint: String? { get }
     var state: WalletConnectXMainModule.State { get }
     var connectionState: WalletConnectXMainModule.ConnectionState { get }
@@ -13,6 +16,7 @@ protocol IWalletConnectXMainService {
     var connectionStateObservable: Observable<WalletConnectXMainModule.ConnectionState> { get }
     var errorObservable: Observable<Error> { get }
 
+    func toggle(chainId: Int)
     func reconnect()
     func approveSession()
     func rejectSession()
@@ -30,7 +34,8 @@ struct WalletConnectXMainModule {
                 session: session,
                 manager: App.shared.walletConnectManager,
                 sessionManager: App.shared.walletConnectSessionManager,
-                reachabilityManager: App.shared.reachabilityManager)
+                reachabilityManager: App.shared.reachabilityManager,
+                accountManager: App.shared.accountManager)
 
         return viewController(service: service, sourceViewController: sourceViewController)
     }
@@ -78,6 +83,12 @@ extension WalletConnectXMainModule {
         let url: String
         let description: String
         let icons: [String]
+    }
+
+    struct Blockchain {
+        let chainId: Int
+        let address: String
+        let selected: Bool
     }
 
     enum State: Equatable {

@@ -64,7 +64,7 @@ class WalletConnectXListService {
     private func items(sessions: [Session]) -> [Item] {
         sessions.map { session in
             let chainIds = Array(session.permissions.blockchains).compactMap {
-                evmChainParser.chainId(blockchain: $0)
+                evmChainParser.parse(string: $0)?.chainId
             }
 
             return Item(
