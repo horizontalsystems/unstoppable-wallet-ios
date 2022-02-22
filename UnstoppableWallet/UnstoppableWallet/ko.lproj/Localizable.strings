@@ -464,7 +464,7 @@
 "coin_page.market_cap" = "Market Cap";
 "coin_page.circulating_supply" = "In Circulation";
 "coin_page.total_supply" = "Total Supply";
-"coin_page.dilluted_market_cap" = "Diluted MCap";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Inception Date";
 
 "coin_page.trading_volume" = "Trading Volume";
@@ -805,7 +805,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "chart.time_duration.week2" = "2주";
 "chart.time_duration.month" = "1개월";
 "chart.time_duration.month3" = "3개월";
-"chart.time_duration.halyear" = "6개월";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
 
@@ -999,7 +999,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Fee Settings
 
 "fee_settings" = "수수료 설정";
-"fee_settings.max_fee" = "최대 수수료";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "주어진 거래에 대한 최대 예상 총 수수료입니다. 일반적으로 실제 거래 수수료는 더 낮습니다.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "가스 한도는 사용자가 주어진 거래를 보낼 때 기꺼이 지출할 가스 단위의 최대량입니다. 복잡한 거래에는 단순한 거래보다 더 많은 가스 단위가 필요합니다. 가스 한도는 각 거래에 대해 자동으로 추정 및 설정됩니다.";
