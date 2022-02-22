@@ -1001,7 +1001,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Fee Settings
 
 "fee_settings" = "Fee Settings";
-"fee_settings.max_fee" = "Max. Fee";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "The maximum expected total fee for the given transaction. Typically, the actual transaction fee is going to be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "The gas limit is the maximum amount of gas units a user is willing to spend when sending a given transaction. Complex transactions require more gas units than simpler ones. The gas limit is estimated and set automatically for each transaction.";
