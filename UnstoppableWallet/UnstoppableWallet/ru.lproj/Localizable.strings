@@ -466,7 +466,7 @@
 "coin_page.market_cap" = "Рын. Капитализация";
 "coin_page.circulating_supply" = "В обороте";
 "coin_page.total_supply" = "Макс.Выпуск";
-"coin_page.dilluted_market_cap" = "Разводненная рын.кап.";
+"coin_page.diluted_market_cap" = "Diluted MCap";
 "coin_page.genesis_date" = "Дата Старта";
 
 "coin_page.trading_volume" = "Объем Торговли";
@@ -807,7 +807,7 @@
 "chart.time_duration.week2" = "2Н";
 "chart.time_duration.month" = "1М";
 "chart.time_duration.month3" = "3М";
-"chart.time_duration.halyear" = "6М";
+"chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
 
@@ -1001,7 +1001,7 @@
 // Fee Settings
 
 "fee_settings" = "Настройки Комиссии";
-"fee_settings.max_fee" = "Макс. Комиссия";
+"fee_settings.max_fee" = "Max Fee";
 "fee_settings.max_fee.info" = "Максимальная ожидаемая общая комиссия за данную транзакцию. Обычно, фактическая комиссия будет меньше.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Gas Limit  - это максимальное количество единиц газа, которое пользователь готов потратить при отправке конкретной транзакции. Для выполнения более комплексных транзакций требуется большее количество единиц газ, чем для выполнения более простых. Лимит газа автоматически рассчитывается и задается для каждой транзакции.";
