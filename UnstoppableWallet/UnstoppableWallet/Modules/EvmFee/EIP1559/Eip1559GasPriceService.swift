@@ -48,7 +48,7 @@ class Eip1559GasPriceService {
         if let maxBaseFee = initialMaxBaseFee, let maxTips = initialMaxTips {
             usingRecommended = false
             tips = maxTips
-            baseFee = maxBaseFee - maxTips
+            baseFee = maxBaseFee
             sync()
         } else {
             updateFeeHistory()

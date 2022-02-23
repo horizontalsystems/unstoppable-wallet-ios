@@ -31,6 +31,9 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
                 nonce: transaction.nonce.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
                 gasPrice: transaction.gasPrice.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
                 gasLimit: (transaction.gas ?? transaction.gasLimit).flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
+                maxPriorityFeePerGas: transaction.maxPriorityFeePerGas.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
+                maxFeePerGas: transaction.maxFeePerGas.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
+                type: transaction.type.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
                 value: transaction.value.flatMap { BigUInt($0.replacingOccurrences(of: "0x", with: ""), radix: 16) } ?? 0,
                 data: Data(hex: transaction.data)
         )
