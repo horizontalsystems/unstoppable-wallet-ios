@@ -903,8 +903,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
-"wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.main.unsupported_chains" = "No any supported chains!";
+"wallet_connect.active_account" = "Activer le portefeuille";
+"wallet_connect.main.unsupported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "wallet_connect.usage_description" = "Vous pouvez aller sur le navigateur. Ne fermez pas cette page pendant que vous interagissez dans le navigateur.";
 "wallet_connect.no_connection" = "Échec de connexion. Essayez de vous reconnecter à nouveau.";
@@ -926,7 +926,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 "wallet_connect.list.empty_view_button_text" = "Nouvelle connexion";
 
-"wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.list.version_text" = "version %@";
 "wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
@@ -939,7 +939,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.watch_account.switch" = "Basculer";
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
-"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Pour ouvrir une demande, vous devez activer le portefeuille désiré";
 
 // App Status
 
