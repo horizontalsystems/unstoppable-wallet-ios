@@ -190,14 +190,14 @@ PODS:
     - StorageKit.swift (~> 1.0)
     - ThemeKit.swift (~> 1.0)
     - UIExtensions.swift (~> 1.1)
-  - PromiseKit (6.15.3):
-    - PromiseKit/CorePromise (= 6.15.3)
-    - PromiseKit/Foundation (= 6.15.3)
-    - PromiseKit/UIKit (= 6.15.3)
-  - PromiseKit/CorePromise (6.15.3)
-  - PromiseKit/Foundation (6.15.3):
+  - PromiseKit (6.16.3):
+    - PromiseKit/CorePromise (= 6.16.3)
+    - PromiseKit/Foundation (= 6.16.3)
+    - PromiseKit/UIKit (= 6.16.3)
+  - PromiseKit/CorePromise (6.16.3)
+  - PromiseKit/Foundation (6.16.3):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.15.3):
+  - PromiseKit/UIKit (6.16.3):
     - PromiseKit/CorePromise
   - Quick (4.0.0)
   - RxCocoa (5.1.3):
@@ -579,7 +579,7 @@ CHECKOUT OPTIONS:
     :commit: 99d960a1e5d7fedcbee3e29200bec823493863bf
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
-    :commit: 1336f67877608e271107cd96bb852f76fd51eddf
+    :commit: 0e7d70923756d408b2ee7180fb2c3ec49bb8e509
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :commit: 01bf30b081806a017ec933c5c971b18229afe77b
@@ -636,7 +636,7 @@ SPEC CHECKSUMS:
   OneInchKit.swift: d41bce443c99389a5e08757a2975d33693054e3d
   OpenSslKit.swift: 0e2194853fd9ce42006cf18c89743331406a10a9
   PinKit.swift: a2e489a5391f8e1be11b328ec9e488cdd6888a86
-  PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
+  PromiseKit: ed0e2a8e3f3cd59d5d98ca0a6de481a2c5c59c0b
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
   RxGRDB: 39ead922d410a96c5a5883b1695cba48fe7818e2

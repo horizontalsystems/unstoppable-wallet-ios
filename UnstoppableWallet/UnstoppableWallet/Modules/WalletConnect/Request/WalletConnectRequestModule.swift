@@ -10,6 +10,9 @@ struct WalletConnectTransaction {
     let nonce: Int?
     let gasPrice: Int?
     let gasLimit: Int?
+    let maxPriorityFeePerGas: Int?
+    let maxFeePerGas: Int?
+    let type: Int?
     let value: BigUInt
     let data: Data
 }

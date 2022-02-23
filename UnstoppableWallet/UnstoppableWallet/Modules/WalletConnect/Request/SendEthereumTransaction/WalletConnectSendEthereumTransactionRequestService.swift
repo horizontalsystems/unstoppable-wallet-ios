@@ -6,7 +6,7 @@ class WalletConnectSendEthereumTransactionRequestService {
 
     init(request: WalletConnectSendEthereumTransactionRequest, baseService: IWalletConnectSignService) {
         self.request = request
-        self.signService = baseService
+        signService = baseService
     }
 
 }
@@ -21,8 +21,13 @@ extension WalletConnectSendEthereumTransactionRequestService {
         )
     }
 
-    var gasPrice: Int? {
-        request.transaction.gasPrice
+    var gasPrice: GasPrice? {
+        if let maxFeePerGas = request.transaction.maxFeePerGas,
+           let maxPriorityFeePerGas = request.transaction.maxPriorityFeePerGas {
+            return GasPrice.eip1559(maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas)
+        }
+
+        return request.transaction.gasPrice.flatMap { GasPrice.legacy(gasPrice: $0) }
     }
 
     func approve(transactionHash: Data) {

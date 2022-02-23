@@ -31,7 +31,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, gasPrice: service.gasPrice.flatMap { GasPrice.legacy(gasPrice: $0) }) // TODO: walletConnect service must pass GasPrice object
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, gasPrice: service.gasPrice)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: service.transactionData, gasLimitSurchargePercent: 10)
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: nil, warnings: [])
         let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
