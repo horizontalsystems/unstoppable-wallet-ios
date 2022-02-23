@@ -960,13 +960,13 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "status_info.title" = "Durum";
 "status_info.pending.title" = "Devam ediyor";
-"status_info.pending.content" = "İşlem henüz blok zincirinde onaylanmadı. Tavsiye edilen veya daha yüksek ücret ayarı ile gönderilen işlemler genellikle 10 dakika içerisinde işlenir. Düşük bir ücretle gönderilen işlemler birkaç saat hatta günlerce beklemede kalabilir ve hatta reddedilebilir. Ayrıca, Unstoppable cüzdan arayüzünde görüntülenen bir işlemin durumunun genellikle kısa bir gecikmeyle güncellendiğini de unutmayın.";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in Unstoppable wallet interface typically updated with a short delay.";
 "status_info.processing.title" = "İşleniyor";
 "status_info.processing.content" = "İşlem blok zincirine dahil edildi ama kalıcı bir sonuca ulaşmadı. Bu noktada, küçük ödemeler için işlemin tamamlandığını düşünebilirsiniz. Daha büyük ödemeler için ise, işlem durumu tamamlandı olarak değişene kadar beklemeniz önerilir.";
 "status_info.completed.title" = "Tamamlandı";
 "status_info.confirmed.content" = "İşlem tamamlandı ve bunun kalıcı ve tersine çevrilemez olduğu kabul edilir.";
 "status_info.failed.title" = "Başarısız";
-"status_info.failed.content" = "İşlem gerçekleşmedi ve hiçbir değer transfer edilmedi. Başarısız durumdaki işlemler yine de blok zincirine yazılır ve işlem ücretlerini tüketir. Unstoppable uygulaması, bu tür işlemlerin başarısız olma nedenini gösteremez, ama kullanıcılar, etherscan.io gibi açık bir blok gezgininde bunu kontrol edebilirler.";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or cancelled by another transaction do not consume transaction fees and will also appear sa failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Onboarding
 
