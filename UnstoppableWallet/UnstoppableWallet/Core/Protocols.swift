@@ -27,8 +27,8 @@ protocol ILocalStorage: AnyObject {
     var rateAppLastRequestDate: Date? { get set }
     var zcashAlwaysPendingRewind: Bool { get set }
 
-    func defaultProvider(blockchain: SwapModule.Dex.Blockchain) -> SwapModule.Dex.Provider
-    func setDefaultProvider(blockchain: SwapModule.Dex.Blockchain, provider: SwapModule.Dex.Provider)
+    func defaultProvider(blockchain: EvmBlockchain) -> SwapModule.Dex.Provider
+    func setDefaultProvider(blockchain: EvmBlockchain, provider: SwapModule.Dex.Provider)
 }
 
 protocol ILogRecordManager {

@@ -4,9 +4,11 @@ import HsToolKit
 import EthereumKit
 
 class EvmAccountManager {
+    private let blockchain: EvmBlockchain
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
     private let coinManager: CoinManager
+    private let syncSourceManager: EvmSyncSourceManager
     private let evmKitManager: EvmKitManager
     private let provider: EnableCoinsEip20Provider
     private let storage: IEvmAccountSyncStateStorage
@@ -16,10 +18,12 @@ class EvmAccountManager {
 
     private var syncing = false
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, evmKitManager: EvmKitManager, provider: EnableCoinsEip20Provider, storage: IEvmAccountSyncStateStorage) {
+    init(blockchain: EvmBlockchain, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, syncSourceManager: EvmSyncSourceManager, evmKitManager: EvmKitManager, provider: EnableCoinsEip20Provider, storage: IEvmAccountSyncStateStorage) {
+        self.blockchain = blockchain
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
+        self.syncSourceManager = syncSourceManager
         self.evmKitManager = evmKitManager
         self.provider = provider
         self.storage = storage
@@ -51,16 +55,18 @@ class EvmAccountManager {
 
 //        print("Sync: \(evmKitWrapper.evmKit.networkType)")
 
-        let chainId = evmKitWrapper.evmKit.networkType.chainId
+        let chainId = evmKitManager.chain.id
         var startBlock = 0
 
         if let state = storage.evmAccountSyncState(accountId: account.id, chainId: chainId) {
             startBlock = state.lastBlockNumber + 1
         }
 
+        let syncSource = syncSourceManager.syncSource(account: account, blockchain: blockchain)
+
         Single.zip(
-                        provider.blockNumberSingle(),
-                        provider.coinTypesSingle(address: evmKitWrapper.evmKit.address.hex, startBlock: startBlock)
+                        provider.blockNumberSingle(syncSource: syncSource),
+                        provider.coinTypesSingle(syncSource: syncSource, address: evmKitWrapper.evmKit.address.hex, startBlock: startBlock)
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] blockNumber, coinTypes in
@@ -100,11 +106,7 @@ class EvmAccountManager {
             return
         }
 
-        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
-            return
-        }
-
-        let lastBlockNumber = storage.evmAccountSyncState(accountId: account.id, chainId: evmKitWrapper.evmKit.networkType.chainId)?.lastBlockNumber ?? 0
+        let lastBlockNumber = storage.evmAccountSyncState(accountId: account.id, chainId: evmKitManager.chain.id)?.lastBlockNumber ?? 0
 
         for tx in transactions {
 //            print("TX: \(tx.receiptWithLogs?.receipt.blockNumber) --- \(lastBlockNumber)")

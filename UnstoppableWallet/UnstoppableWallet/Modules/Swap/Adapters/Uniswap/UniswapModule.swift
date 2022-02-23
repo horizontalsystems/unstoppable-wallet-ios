@@ -9,11 +9,14 @@ class UniswapModule {
     private let service: UniswapService
 
     init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
-        guard let evmKit = dex.blockchain.evmKitWrapper?.evmKit else {
+        guard let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper?.evmKit else {
             return nil
         }
 
-        let swapKit = UniswapKit.Kit.instance(evmKit: evmKit)
+        guard let swapKit = try? UniswapKit.Kit.instance(evmKit: evmKit) else {
+            return nil
+        }
+
         let uniswapRepository = UniswapProvider(swapKit: swapKit)
 
         tradeService = UniswapTradeService(

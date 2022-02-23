@@ -8,15 +8,19 @@ import BigInt
 
 class EvmTransactionConverter {
     private let coinManager: CoinManager
-    private let evmKit: EthereumKit.Kit
+    private let evmKitWrapper: EvmKitWrapper
     private let source: TransactionSource
     private let baseCoin: PlatformCoin
 
-    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager, evmKit: EthereumKit.Kit) {
+    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager, evmKitWrapper: EvmKitWrapper) {
         self.coinManager = coinManager
-        self.evmKit = evmKit
+        self.evmKitWrapper = evmKitWrapper
         self.source = source
         self.baseCoin = baseCoin
+    }
+
+    private var evmKit: EthereumKit.Kit {
+        evmKitWrapper.evmKit
     }
 
     private func convertAmount(amount: BigUInt, decimals: Int, sign: FloatingPointSign) -> Decimal {
@@ -28,12 +32,7 @@ class EvmTransactionConverter {
     }
 
     private func eip20Value(tokenAddress: EthereumKit.Address, value: BigUInt, sign: FloatingPointSign) -> TransactionValue {
-        let coinType: CoinType
-
-        switch evmKit.networkType {
-        case .bscMainNet: coinType = .bep20(address: tokenAddress.hex)
-        default: coinType = .erc20(address: tokenAddress.hex)
-        }
+        let coinType = evmKitWrapper.blockchain.evm20CoinType(address: tokenAddress.hex)
 
         if let platformCoin = try? coinManager.platformCoin(coinType: coinType) {
             let value = convertAmount(amount: value, decimals: platformCoin.decimals, sign: sign)

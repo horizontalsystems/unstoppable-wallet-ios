@@ -1,12 +1,11 @@
 import RxSwift
 import RxRelay
+import EthereumKit
 
 class EvmNetworkService {
-    let blockchain: EvmNetworkModule.Blockchain
+    let blockchain: EvmBlockchain
     private let account: Account
-    private let evmNetworkManager: EvmNetworkManager
-    private let accountSettingManager: AccountSettingManager
-    private let disposeBag = DisposeBag()
+    private let evmSyncSourceManager: EvmSyncSourceManager
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items: [Item] = [] {
@@ -15,39 +14,27 @@ class EvmNetworkService {
         }
     }
 
-    init(blockchain: EvmNetworkModule.Blockchain, account: Account, evmNetworkManager: EvmNetworkManager, accountSettingManager: AccountSettingManager) {
+    init(blockchain: EvmBlockchain, account: Account, evmSyncSourceManager: EvmSyncSourceManager) {
         self.blockchain = blockchain
         self.account = account
-        self.evmNetworkManager = evmNetworkManager
-        self.accountSettingManager = accountSettingManager
+        self.evmSyncSourceManager = evmSyncSourceManager
 
         syncItems()
     }
 
     private func syncItems() {
-        let currentNetwork = currentNetwork
+        let currentNetwork = currentSyncSource
 
-        items = networks.map { network in
+        items = evmSyncSourceManager.allSyncSources(blockchain: blockchain).map { syncSource in
             Item(
-                    network: network,
-                    mainNet: network.networkType.isMainNet,
-                    selected: network.id == currentNetwork.id
+                    syncSource: syncSource,
+                    selected: syncSource == currentNetwork
             )
         }
     }
 
-    private var networks: [EvmNetwork] {
-        switch blockchain {
-        case .ethereum: return evmNetworkManager.ethereumNetworks
-        case .binanceSmartChain: return evmNetworkManager.binanceSmartChainNetworks
-        }
-    }
-
-    private var currentNetwork: EvmNetwork {
-        switch blockchain {
-        case .ethereum: return accountSettingManager.ethereumNetwork(account: account)
-        case .binanceSmartChain: return accountSettingManager.binanceSmartChainNetwork(account: account)
-        }
+    private var currentSyncSource: EvmSyncSource {
+        evmSyncSourceManager.syncSource(account: account, blockchain: blockchain)
     }
 
 }
@@ -58,21 +45,12 @@ extension EvmNetworkService {
         itemsRelay.asObservable()
     }
 
-    func setCurrentNetwork(id: String) {
-        let networks = items.map { $0.network }
-
-        guard let network = networks.first(where: { $0.id == id }) else {
+    func setCurrent(syncSource: EvmSyncSource) {
+        guard currentSyncSource != syncSource else {
             return
         }
 
-        guard currentNetwork.id != network.id else {
-            return
-        }
-
-        switch blockchain {
-        case .ethereum: accountSettingManager.save(ethereumNetwork: network, account: account)
-        case .binanceSmartChain: accountSettingManager.save(binanceSmartChainNetwork: network, account: account)
-        }
+        evmSyncSourceManager.save(syncSource: syncSource, account: account, blockchain: blockchain)
     }
 
 }
@@ -80,8 +58,7 @@ extension EvmNetworkService {
 extension EvmNetworkService {
 
     struct Item {
-        let network: EvmNetwork
-        let mainNet: Bool
+        let syncSource: EvmSyncSource
         let selected: Bool
     }
 

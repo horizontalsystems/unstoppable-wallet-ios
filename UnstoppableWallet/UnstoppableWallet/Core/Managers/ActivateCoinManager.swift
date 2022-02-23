@@ -11,7 +11,7 @@ class ActivateCoinManager {
         self.accountManager = accountManager
     }
 
-    func activate(coinType: CoinType) {
+    private func activate(coinType: CoinType) {
         guard let platformCoin = try? marketKit.platformCoin(coinType: coinType) else {
             // coin type is not supported
             return
@@ -29,6 +29,18 @@ class ActivateCoinManager {
 
         let wallet = Wallet(platformCoin: platformCoin, account: account)
         walletManager.save(wallets: [wallet])
+    }
+
+}
+
+extension ActivateCoinManager {
+
+    func activateBaseCoin(blockchain: EvmBlockchain) {
+        activate(coinType: blockchain.baseCoinType)
+    }
+
+    func activateEvm20Coin(address: String, blockchain: EvmBlockchain) {
+        activate(coinType: blockchain.evm20CoinType(address: address))
     }
 
 }

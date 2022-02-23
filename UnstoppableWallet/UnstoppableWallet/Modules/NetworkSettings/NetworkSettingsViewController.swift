@@ -63,7 +63,7 @@ class NetworkSettingsViewController: ThemeViewController {
         tableView.reload(animated: true)
     }
 
-    private func openEvmNetwork(blockchain: EvmNetworkModule.Blockchain, account: Account) {
+    private func openEvmNetwork(blockchain: EvmBlockchain, account: Account) {
         navigationController?.pushViewController(EvmNetworkModule.viewController(blockchain: blockchain, account: account), animated: true)
     }
 

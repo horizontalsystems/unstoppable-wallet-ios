@@ -121,29 +121,15 @@ class SendEvmTransactionService {
 
     private func activateUniswap(token: SwapMethodDecoration.Token) {
         switch token {
-        case .evmCoin: activateCoinManager.activate(coinType: evmCoinType())
-        case .eip20Coin(let address): activateCoinManager.activate(coinType: eip20CoinType(contractAddress: address.hex))
+        case .evmCoin: activateCoinManager.activateBaseCoin(blockchain: evmKitWrapper.blockchain)
+        case .eip20Coin(let address): activateCoinManager.activateEvm20Coin(address: address.hex, blockchain: evmKitWrapper.blockchain)
         }
     }
 
     private func activateOneInch(token: OneInchMethodDecoration.Token) {
         switch token {
-        case .evmCoin: activateCoinManager.activate(coinType: evmCoinType())
-        case .eip20Coin(let address): activateCoinManager.activate(coinType: eip20CoinType(contractAddress: address.hex))
-        }
-    }
-
-    private func eip20CoinType(contractAddress: String) -> CoinType {
-        switch evmKit.networkType {
-            case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return .erc20(address: contractAddress)
-            case .bscMainNet: return .bep20(address: contractAddress)
-        }
-    }
-
-    private func evmCoinType() -> CoinType {
-        switch evmKit.networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return .ethereum
-        case .bscMainNet: return .binanceSmartChain
+        case .evmCoin: activateCoinManager.activateBaseCoin(blockchain: evmKitWrapper.blockchain)
+        case .eip20Coin(let address): activateCoinManager.activateEvm20Coin(address: address.hex, blockchain: evmKitWrapper.blockchain)
         }
     }
 

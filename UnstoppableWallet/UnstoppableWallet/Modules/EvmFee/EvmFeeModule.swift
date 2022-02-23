@@ -27,7 +27,7 @@ struct EvmFeeModule {
     }
 
     static func gasPriceService(evmKit: EthereumKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EthereumKit.Transaction? = nil) -> IGasPriceService {
-        if evmKit.networkType.isEIP1559Supported {
+        if evmKit.chain.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
             var initialMaxTips: Int? = nil
             var minRecommendedBaseFee: Int? = nil

@@ -79,7 +79,7 @@ extension SwapModule {
     }
 
     class Dex {
-        var blockchain: Blockchain {
+        var blockchain: EvmBlockchain {
             didSet {
                 let allowedProviders = blockchain.allowedProviders
                 if !allowedProviders.contains(provider) {
@@ -96,7 +96,7 @@ extension SwapModule {
             }
         }
 
-        init(blockchain: Blockchain, provider: Provider) {
+        init(blockchain: EvmBlockchain, provider: Provider) {
             self.blockchain = blockchain
             self.provider = provider
         }
@@ -115,52 +115,25 @@ extension SwapModule {
 
 }
 
-extension SwapModule.Dex {
+extension EvmBlockchain {
 
-    enum Blockchain: String {
-        case ethereum
-        case binanceSmartChain
-
-        var title: String {
-            switch self {
-            case .ethereum: return "Ethereum"
-            case .binanceSmartChain: return "Binance Smart Chain"
-            }
+    var allowedProviders: [SwapModule.Dex.Provider] {
+        switch self {
+        case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
+        case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
         }
-
-        var allowedProviders: [Provider] {
-            switch self {
-            case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
-            case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
-            }
-        }
-
-        var evmKitWrapper: EvmKitWrapper? {
-            switch self {
-            case .ethereum: return App.shared.ethereumKitManager.evmKitWrapper
-            case .binanceSmartChain: return App.shared.binanceSmartChainKitManager.evmKitWrapper
-            }
-        }
-
-        var platformCoin: PlatformCoin? {
-            switch self {
-            case .ethereum: return try? App.shared.marketKit.platformCoin(coinType: .ethereum)
-            case .binanceSmartChain: return try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
-            }
-        }
-
-        var isMainNet: Bool {
-            evmKitWrapper?.evmKit.networkType.isMainNet ?? true
-        }
-
     }
+
+}
+
+extension SwapModule.Dex {
 
     enum Provider: String {
         case uniswap = "Uniswap"
         case oneInch = "1Inch"
         case pancake = "PancakeSwap"
 
-        var allowedBlockchains: [Blockchain] {
+        var allowedBlockchains: [EvmBlockchain] {
             switch self {
             case .oneInch: return [.ethereum, .binanceSmartChain]
             case .uniswap: return [.ethereum]

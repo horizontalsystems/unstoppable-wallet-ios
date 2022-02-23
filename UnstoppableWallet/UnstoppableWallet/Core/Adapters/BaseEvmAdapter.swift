@@ -39,7 +39,7 @@ class BaseEvmAdapter {
     }
 
     var isMainNet: Bool {
-        evmKit.networkType.isMainNet
+        evmKitWrapper.blockchain.isMainNet
     }
 
     func balanceData(balance: BigUInt?) -> BalanceData {

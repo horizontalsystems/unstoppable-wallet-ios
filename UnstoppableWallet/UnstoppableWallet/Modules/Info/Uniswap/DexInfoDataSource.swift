@@ -16,10 +16,7 @@ class DexInfoDataSource: InfoDataSource {
     }
 
     private var blockchain: String {
-        switch dex.blockchain {
-        case .ethereum: return "Ethereum"
-        case .binanceSmartChain: return "Binance Smart Chain"
-        }
+        dex.blockchain.name
     }
 
     private var dexUrl: String {

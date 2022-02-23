@@ -24,22 +24,6 @@ class TransactionAdapterManager {
                 .disposed(by: disposeBag)
     }
 
-    private func evmTransactionAdapter(wallet: Wallet, blockchain: TransactionSource.Blockchain) -> ITransactionsAdapter? {
-        switch wallet.coinType {
-        case .ethereum, .erc20:
-            if case .ethereum = blockchain {
-                return adapterFactory.ethereumTransactionsAdapter(transactionSource: wallet.transactionSource)
-            }
-        case .binanceSmartChain, .bep20:
-            if case .binanceSmartChain = blockchain {
-                return adapterFactory.bscTransactionsAdapter(transactionSource: wallet.transactionSource)
-            }
-        default: ()
-        }
-
-        return nil
-    }
-
     private func initAdapters(adapterMap: [Wallet: IAdapter]) {
         var newAdapterMap = [TransactionSource: ITransactionsAdapter]()
 
@@ -53,9 +37,10 @@ class TransactionAdapterManager {
             let transactionsAdapter: ITransactionsAdapter?
 
             switch source.blockchain {
-            case .ethereum: transactionsAdapter = evmTransactionAdapter(wallet: wallet, blockchain: .ethereum)
-            case .binanceSmartChain: transactionsAdapter = evmTransactionAdapter(wallet: wallet, blockchain: .binanceSmartChain)
-            default: transactionsAdapter = adapter as? ITransactionsAdapter
+            case .evm(let blockchain):
+                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: wallet.transactionSource, blockchain: blockchain)
+            default:
+                transactionsAdapter = adapter as? ITransactionsAdapter
             }
 
 

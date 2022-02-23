@@ -6,7 +6,8 @@ import OneInchKit
 struct SwapConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let platformCoin = dex.blockchain.platformCoin, let evmKitWrapper = dex.blockchain.evmKitWrapper else {
+        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: dex.blockchain),
+              let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper else {
             return nil
         }
 
@@ -22,12 +23,15 @@ struct SwapConfirmationModule {
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let platformCoin = dex.blockchain.platformCoin,
-              let evmKitWrapper = dex.blockchain.evmKitWrapper else {
+        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: dex.blockchain),
+              let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper else {
             return nil
         }
 
-        let swapKit = OneInchKit.Kit.instance(evmKit: evmKitWrapper.evmKit)
+        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKitWrapper.evmKit) else {
+            return nil
+        }
+
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
         let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)

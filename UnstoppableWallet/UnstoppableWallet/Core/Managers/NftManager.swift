@@ -12,6 +12,7 @@ protocol INftProvider {
 
 class NftManager {
     private let accountManager: IAccountManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let storage: NftStorage
     private let provider: INftProvider
     private let disposeBag = DisposeBag()
@@ -19,8 +20,9 @@ class NftManager {
 
     private let assetCollectionRelay = PublishRelay<NftAssetCollection>()
 
-    init(accountManager: IAccountManager, storage: NftStorage, provider: INftProvider) {
+    init(accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: INftProvider) {
         self.accountManager = accountManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.storage = storage
         self.provider = provider
 
@@ -40,7 +42,8 @@ class NftManager {
             switch account.type {
             case let .mnemonic(words, salt):
                 let seed = Mnemonic.seed(mnemonic: words, passphrase: salt)
-                address = try Signer.address(seed: seed, networkType: .ethMainNet)
+                let chain = evmBlockchainManager.chain(blockchain: .ethereum)
+                address = try Signer.address(seed: seed, chain: chain)
             case let .address(value):
                 address = value
             default:

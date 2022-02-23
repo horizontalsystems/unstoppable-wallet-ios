@@ -1,9 +1,10 @@
 import RxSwift
 import RxRelay
+import EthereumKit
 
 class NetworkSettingsService {
     let account: Account
-    private let accountSettingManager: AccountSettingManager
+    private let evmSyncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -13,18 +14,13 @@ class NetworkSettingsService {
         }
     }
 
-    init(account: Account, accountSettingManager: AccountSettingManager) {
+    init(account: Account, evmSyncSourceManager: EvmSyncSourceManager) {
         self.account = account
-        self.accountSettingManager = accountSettingManager
+        self.evmSyncSourceManager = evmSyncSourceManager
 
-        subscribe(disposeBag, accountSettingManager.ethereumNetworkObservable) { [weak self] account, _ in self?.handleSettingsUpdated(account: account) }
-        subscribe(disposeBag, accountSettingManager.binanceSmartChainNetworkObservable) { [weak self] account, _ in self?.handleSettingsUpdated(account: account) }
+        subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] account, _, _ in self?.handleSettingsUpdated(account: account) }
 
         syncItems()
-    }
-
-    private func evmItem(blockchain: Blockchain, evmNetwork: EvmNetwork) -> Item {
-        Item(blockchain: blockchain, value: evmNetwork.name)
     }
 
     private func handleSettingsUpdated(account: Account) {
@@ -36,10 +32,12 @@ class NetworkSettingsService {
     }
 
     private func syncItems() {
-        items = [
-            evmItem(blockchain: .ethereum, evmNetwork: accountSettingManager.ethereumNetwork(account: account)),
-            evmItem(blockchain: .binanceSmartChain, evmNetwork: accountSettingManager.binanceSmartChainNetwork(account: account))
-        ]
+        items = EvmBlockchain.allCases.map { blockchain in
+            Item(
+                    blockchain: blockchain,
+                    syncSource: evmSyncSourceManager.syncSource(account: account, blockchain: blockchain)
+            )
+        }
     }
 
 }
@@ -54,14 +52,9 @@ extension NetworkSettingsService {
 
 extension NetworkSettingsService {
 
-    enum Blockchain {
-        case ethereum
-        case binanceSmartChain
-    }
-
     struct Item {
-        let blockchain: Blockchain
-        let value: String
+        let blockchain: EvmBlockchain
+        let syncSource: EvmSyncSource
     }
 
 }
