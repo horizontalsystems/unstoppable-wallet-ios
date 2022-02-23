@@ -8,6 +8,7 @@ import OneInchKit
 
 class SwapProviderManager {
     private let localStorage: ILocalStorage
+    private let evmBlockchainManager: EvmBlockchainManager
 
     private let dataSourceUpdatedRelay = PublishRelay<()>()
     private(set) var dataSourceProvider: ISwapProvider? {
@@ -23,8 +24,9 @@ class SwapProviderManager {
         }
     }
 
-    init(localStorage: ILocalStorage, platformCoinFrom: PlatformCoin?) {
+    init(localStorage: ILocalStorage, evmBlockchainManager: EvmBlockchainManager, platformCoinFrom: PlatformCoin?) {
         self.localStorage = localStorage
+        self.evmBlockchainManager = evmBlockchainManager
 
         initSectionsDataSource(platformCoinFrom: platformCoinFrom)
     }
@@ -33,7 +35,7 @@ class SwapProviderManager {
         let blockchain: EvmBlockchain
 
         if let platformCoinFrom = platformCoinFrom {
-            if let evmBlockchain = platformCoinFrom.coinType.blockchain {
+            if let evmBlockchain = evmBlockchainManager.blockchain(coinType: platformCoinFrom.coinType) {
                 blockchain = evmBlockchain
             } else {
                 return

@@ -42,7 +42,7 @@ protocol ISwapDataSource: AnyObject {
 class SwapModule {
 
     static func viewController(platformCoinFrom: PlatformCoin? = nil) -> UIViewController? {
-        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, platformCoinFrom: platformCoinFrom)
+        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, evmBlockchainManager: App.shared.evmBlockchainManager, platformCoinFrom: platformCoinFrom)
 
         let viewModel =  SwapViewModel(dexManager: swapDexManager)
         let viewController = SwapViewController(

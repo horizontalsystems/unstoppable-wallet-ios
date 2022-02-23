@@ -28,7 +28,7 @@ class AdapterFactory {
     }
 
     private func evmAdapter(wallet: Wallet) -> IAdapter? {
-        guard let blockchain = wallet.coinType.blockchain else {
+        guard let blockchain = evmBlockchainManager.blockchain(coinType: wallet.coinType) else {
             return nil
         }
         guard let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper(account: wallet.account, blockchain: blockchain) else {
@@ -39,7 +39,7 @@ class AdapterFactory {
     }
 
     private func evm20Adapter(address: String, wallet: Wallet, coinManager: CoinManager) -> IAdapter? {
-        guard let blockchain = wallet.coinType.blockchain else {
+        guard let blockchain = evmBlockchainManager.blockchain(coinType: wallet.coinType) else {
             return nil
         }
         guard let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper(account: wallet.account, blockchain: blockchain) else {

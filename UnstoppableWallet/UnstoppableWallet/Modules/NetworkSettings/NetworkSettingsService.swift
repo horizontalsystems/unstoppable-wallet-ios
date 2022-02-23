@@ -4,6 +4,7 @@ import EthereumKit
 
 class NetworkSettingsService {
     let account: Account
+    private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
@@ -14,8 +15,9 @@ class NetworkSettingsService {
         }
     }
 
-    init(account: Account, evmSyncSourceManager: EvmSyncSourceManager) {
+    init(account: Account, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.account = account
+        self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
 
         subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] account, _, _ in self?.handleSettingsUpdated(account: account) }
@@ -32,7 +34,7 @@ class NetworkSettingsService {
     }
 
     private func syncItems() {
-        items = EvmBlockchain.allCases.map { blockchain in
+        items = evmBlockchainManager.allBlockchains.map { blockchain in
             Item(
                     blockchain: blockchain,
                     syncSource: evmSyncSourceManager.syncSource(account: account, blockchain: blockchain)
