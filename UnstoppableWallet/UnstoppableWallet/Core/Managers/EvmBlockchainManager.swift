@@ -37,6 +37,10 @@ extension EvmBlockchainManager {
         EvmBlockchain.allCases.first(where: { chain(blockchain: $0).id == chainId })
     }
 
+    func chain(chainId: Int) -> Chain? {
+        blockchain(chainId: chainId).map { chain(blockchain: $0) }
+    }
+
     func chain(blockchain: EvmBlockchain) -> Chain {
         evmKitManager(blockchain: blockchain).chain
     }
