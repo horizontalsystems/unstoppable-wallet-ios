@@ -30,23 +30,16 @@ class SwapProviderManager {
     }
 
     private func initSectionsDataSource(platformCoinFrom: PlatformCoin?) {
-        let blockchain: SwapModule.Dex.Blockchain?
-        switch platformCoinFrom?.coinType {
-        case .ethereum, .erc20:
-            blockchain = .ethereum
-        case .binanceSmartChain, .bep20:
-            blockchain = .binanceSmartChain
-        case nil:
-            blockchain = .ethereum
-        default:
-            blockchain = nil
-            return
-        }
+        let blockchain: EvmBlockchain
 
-        guard let blockchain = blockchain else {
-            dex = nil
-            dataSourceProvider = nil
-            return
+        if let platformCoinFrom = platformCoinFrom {
+            if let evmBlockchain = platformCoinFrom.coinType.blockchain {
+                blockchain = evmBlockchain
+            } else {
+                return
+            }
+        } else {
+            blockchain = .ethereum
         }
 
         let dexProvider = localStorage.defaultProvider(blockchain: blockchain)

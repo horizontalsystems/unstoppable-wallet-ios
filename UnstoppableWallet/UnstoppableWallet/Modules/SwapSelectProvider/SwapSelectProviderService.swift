@@ -41,7 +41,7 @@ extension SwapSelectProviderService {
         itemsRelay.asObservable()
     }
 
-    var blockchain: SwapModule.Dex.Blockchain? {
+    var blockchain: EvmBlockchain? {
         dexManager.dex?.blockchain
     }
 

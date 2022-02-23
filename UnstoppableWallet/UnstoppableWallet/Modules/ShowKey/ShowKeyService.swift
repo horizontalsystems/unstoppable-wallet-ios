@@ -7,9 +7,9 @@ class ShowKeyService {
     let salt: String
     let seed: Data
     private let pinKit: IPinKit
-    private let accountSettingManager: AccountSettingManager
+    private let evmBlockchainManager: EvmBlockchainManager
 
-    init?(account: Account, pinKit: IPinKit, accountSettingManager: AccountSettingManager) {
+    init?(account: Account, pinKit: IPinKit, evmBlockchainManager: EvmBlockchainManager) {
         guard case let .mnemonic(words, salt) = account.type, let seed = account.type.mnemonicSeed else {
             return nil
         }
@@ -19,7 +19,7 @@ class ShowKeyService {
         self.salt = salt
         self.seed = seed
         self.pinKit = pinKit
-        self.accountSettingManager = accountSettingManager
+        self.evmBlockchainManager = evmBlockchainManager
     }
 
 }
@@ -31,11 +31,11 @@ extension ShowKeyService {
     }
 
     var ethereumPrivateKey: String? {
-        try? Signer.privateKey(seed: seed, networkType: accountSettingManager.ethereumNetwork(account: account).networkType).raw.hex
+        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchain: .ethereum)).raw.hex
     }
 
     var binanceSmartChainPrivateKey: String? {
-        try? Signer.privateKey(seed: seed, networkType: accountSettingManager.binanceSmartChainNetwork(account: account).networkType).raw.hex
+        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchain: .binanceSmartChain)).raw.hex
     }
 
 }

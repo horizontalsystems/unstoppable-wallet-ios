@@ -9,10 +9,12 @@ import MarketKit
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
 
+    private let evmTransactionSource: EthereumKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager) {
-        transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKitWrapper.evmKit)
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseCoin: PlatformCoin, evmTransactionSource: EthereumKit.TransactionSource, coinManager: CoinManager) {
+        self.evmTransactionSource = evmTransactionSource
+        transactionConverter = EvmTransactionConverter(source: source, baseCoin: baseCoin, coinManager: coinManager, evmKitWrapper: evmKitWrapper)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }
@@ -74,25 +76,11 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     }
 
     var explorerTitle: String {
-        switch evmKit.networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return "etherscan.io"
-        case .bscMainNet: return "bscscan.com"
-        }
+        evmTransactionSource.name
     }
 
     func explorerUrl(transactionHash: String) -> String? {
-        let domain: String
-
-        switch evmKit.networkType {
-        case .ethMainNet: domain = "etherscan.io"
-        case .bscMainNet: domain = "bscscan.com"
-        case .ropsten: domain = "ropsten.etherscan.io"
-        case .rinkeby: domain = "rinkeby.etherscan.io"
-        case .kovan: domain = "kovan.etherscan.io"
-        case .goerli: domain = "goerli.etherscan.io"
-        }
-
-        return "https://\(domain)/tx/" + transactionHash
+        evmTransactionSource.transactionUrl(hash: transactionHash)
     }
 
     func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {

@@ -9,11 +9,14 @@ class OneInchModule {
     private let service: OneInchService
 
     init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
-        guard let evmKit = dex.blockchain.evmKitWrapper?.evmKit else {
+        guard let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper?.evmKit else {
             return nil
         }
 
-        let swapKit = OneInchKit.Kit.instance(evmKit: evmKit)
+        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit) else {
+            return nil
+        }
+
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
         tradeService = OneInchTradeService(

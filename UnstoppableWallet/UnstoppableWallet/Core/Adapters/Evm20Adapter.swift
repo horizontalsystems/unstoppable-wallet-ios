@@ -16,7 +16,7 @@ class Evm20Adapter: BaseEvmAdapter {
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
 
-        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKit: evmKitWrapper.evmKit)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKitWrapper: evmKitWrapper)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }
@@ -36,8 +36,6 @@ extension Evm20Adapter: IAdapter {
     }
 
     func refresh() {
-        evmKit.refresh()
-        evm20Kit.refresh()
     }
 
 }

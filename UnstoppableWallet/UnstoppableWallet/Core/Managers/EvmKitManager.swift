@@ -6,14 +6,9 @@ import UniswapKit
 import OneInchKit
 import HdWalletKit
 
-protocol IEvmKitManagerDataSource {
-    var explorerApiKey: String { get }
-    var evmNetworkObservable: Observable<(Account, EvmNetwork)> { get }
-    func evmNetwork(account: Account) -> EvmNetwork
-}
-
 class EvmKitManager {
-    private let dataSource: IEvmKitManagerDataSource
+    let chain: Chain
+    private let syncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
     private weak var _evmKitWrapper: EvmKitWrapper?
@@ -24,31 +19,36 @@ class EvmKitManager {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
 
-    init(dataSource: IEvmKitManagerDataSource) {
-        self.dataSource = dataSource
+    init(chain: Chain, syncSourceManager: EvmSyncSourceManager) {
+        self.chain = chain
+        self.syncSourceManager = syncSourceManager
 
-        subscribe(disposeBag, dataSource.evmNetworkObservable) { [weak self] account, _ in
-            self?.handleUpdatedNetwork(account: account)
+        subscribe(disposeBag, syncSourceManager.syncSourceObservable) { [weak self] account, blockchain, _ in
+            self?.handleUpdatedSyncSource(account: account, blockchain: blockchain)
         }
     }
 
-    private func handleUpdatedNetwork(account: Account) {
+    private func handleUpdatedSyncSource(account: Account, blockchain: EvmBlockchain) {
         queue.sync {
-            guard account == currentAccount else {
+            guard let _evmKitWrapper = _evmKitWrapper else {
                 return
             }
 
-            _evmKitWrapper = nil
+            guard account == currentAccount, _evmKitWrapper.blockchain == blockchain else {
+                return
+            }
+
+            self._evmKitWrapper = nil
             evmKitUpdatedRelay.accept(())
         }
     }
 
-    private func _evmKitWrapper(account: Account) throws -> EvmKitWrapper {
+    private func _evmKitWrapper(account: Account, blockchain: EvmBlockchain) throws -> EvmKitWrapper {
         if let _evmKitWrapper = _evmKitWrapper, let currentAccount = currentAccount, currentAccount == account {
             return _evmKitWrapper
         }
 
-        let evmNetwork = dataSource.evmNetwork(account: account)
+        let syncSource = syncSourceManager.syncSource(account: account, blockchain: blockchain)
 
         let address: EthereumKit.Address
         var signer: Signer?
@@ -56,8 +56,8 @@ class EvmKitManager {
         switch account.type {
         case let .mnemonic(words, salt):
             let seed = Mnemonic.seed(mnemonic: words, passphrase: salt)
-            address = try Signer.address(seed: seed, networkType: evmNetwork.networkType)
-            signer = try Signer.instance(seed: seed, networkType: evmNetwork.networkType)
+            address = try Signer.address(seed: seed, chain: chain)
+            signer = try Signer.instance(seed: seed, chain: chain)
         case let .address(value):
             address = value
         default:
@@ -66,9 +66,9 @@ class EvmKitManager {
 
         let evmKit = try EthereumKit.Kit.instance(
                 address: address,
-                networkType: evmNetwork.networkType,
-                syncSource: evmNetwork.syncSource,
-                etherscanApiKey: dataSource.explorerApiKey,
+                chain: chain,
+                rpcSource: syncSource.rpcSource,
+                transactionSource: syncSource.transactionSource,
                 walletId: account.id,
                 minLogLevel: .error
         )
@@ -84,7 +84,7 @@ class EvmKitManager {
 
         evmKit.start()
 
-        let wrapper = EvmKitWrapper(evmKit: evmKit, signer: signer)
+        let wrapper = EvmKitWrapper(blockchain: blockchain, evmKit: evmKit, signer: signer)
 
         _evmKitWrapper = wrapper
         currentAccount = account
@@ -110,63 +110,19 @@ extension EvmKitManager {
         queue.sync { _evmKitWrapper }
     }
 
-    func evmKitWrapper(account: Account) throws -> EvmKitWrapper {
-        try queue.sync { try _evmKitWrapper(account: account)  }
-    }
-
-}
-
-class EthKitManagerDataSource: IEvmKitManagerDataSource {
-    private let appConfigProvider: AppConfigProvider
-    private let accountSettingManager: AccountSettingManager
-
-    init(appConfigProvider: AppConfigProvider, accountSettingManager: AccountSettingManager) {
-        self.appConfigProvider = appConfigProvider
-        self.accountSettingManager = accountSettingManager
-    }
-
-    var explorerApiKey: String {
-        appConfigProvider.etherscanKey
-    }
-
-    var evmNetworkObservable: Observable<(Account, EvmNetwork)> {
-        accountSettingManager.ethereumNetworkObservable
-    }
-
-    func evmNetwork(account: Account) -> EvmNetwork {
-        accountSettingManager.ethereumNetwork(account: account)
-    }
-
-}
-
-class BscKitManagerDataSource: IEvmKitManagerDataSource {
-    private let appConfigProvider: AppConfigProvider
-    private let accountSettingManager: AccountSettingManager
-
-    init(appConfigProvider: AppConfigProvider, accountSettingManager: AccountSettingManager) {
-        self.appConfigProvider = appConfigProvider
-        self.accountSettingManager = accountSettingManager
-    }
-
-    var explorerApiKey: String {
-        appConfigProvider.bscscanKey
-    }
-
-    var evmNetworkObservable: Observable<(Account, EvmNetwork)> {
-        accountSettingManager.binanceSmartChainNetworkObservable
-    }
-
-    func evmNetwork(account: Account) -> EvmNetwork {
-        accountSettingManager.binanceSmartChainNetwork(account: account)
+    func evmKitWrapper(account: Account, blockchain: EvmBlockchain) throws -> EvmKitWrapper {
+        try queue.sync { try _evmKitWrapper(account: account, blockchain: blockchain)  }
     }
 
 }
 
 class EvmKitWrapper {
+    let blockchain: EvmBlockchain
     let evmKit: EthereumKit.Kit
     let signer: Signer?
 
-    init(evmKit: EthereumKit.Kit, signer: Signer?) {
+    init(blockchain: EvmBlockchain, evmKit: EthereumKit.Kit, signer: Signer?) {
+        self.blockchain = blockchain
         self.evmKit = evmKit
         self.signer = signer
     }

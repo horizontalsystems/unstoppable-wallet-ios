@@ -7,8 +7,7 @@ class AdapterManager {
 
     private let adapterFactory: AdapterFactory
     private let walletManager: WalletManager
-    private let ethereumKitManager: EvmKitManager
-    private let binanceSmartChainKitManager: EvmKitManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let initialSyncSettingsManager: InitialSyncSettingsManager
 
     private let adaptersReadyRelay = PublishRelay<[Wallet: IAdapter]>()
@@ -16,11 +15,10 @@ class AdapterManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var _adapterMap = [Wallet: IAdapter]()
 
-    init(adapterFactory: AdapterFactory, walletManager: WalletManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager, initialSyncSettingsManager: InitialSyncSettingsManager) {
+    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, initialSyncSettingsManager: InitialSyncSettingsManager) {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
-        self.ethereumKitManager = ethereumKitManager
-        self.binanceSmartChainKitManager = binanceSmartChainKitManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.initialSyncSettingsManager = initialSyncSettingsManager
 
         walletManager.activeWalletsUpdatedObservable
@@ -30,8 +28,9 @@ class AdapterManager {
                 })
                 .disposed(by: disposeBag)
 
-        subscribe(disposeBag, ethereumKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEthereumKit() }
-        subscribe(disposeBag, binanceSmartChainKitManager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedBinanceSmartChainKit() }
+        for blockchain in EvmBlockchain.allCases {
+            subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
+        }
         subscribe(disposeBag, initialSyncSettingsManager.settingUpdatedObservable) { [weak self] in self?.handleUpdated(setting: $0) }
     }
 
@@ -69,25 +68,10 @@ class AdapterManager {
         }
     }
 
-    private func handleUpdatedEthereumKit() {
+    private func handleUpdatedEvmKit(blockchain: EvmBlockchain) {
         let wallets = queue.sync { _adapterMap.keys }
-
-        refreshAdapters(wallets: wallets.filter {
-            switch $0.coinType {
-            case .ethereum, .erc20: return true
-            default: return false
-            }
-        })
-    }
-
-    private func handleUpdatedBinanceSmartChainKit() {
-        let wallets = queue.sync { _adapterMap.keys }
-
-        refreshAdapters(wallets: wallets.filter {
-            switch $0.coinType {
-            case .binanceSmartChain, .bep20: return true
-            default: return false
-            }
+        refreshAdapters(wallets: wallets.filter { wallet in
+            blockchain.supports(coinType: wallet.coinType)
         })
     }
 
@@ -150,22 +134,13 @@ extension AdapterManager {
 
     func refresh() {
         queue.async {
-            var ethereumKitUpdated = false
-            var binanceSmartChainKitUpdated = false
+            for blockchain in EvmBlockchain.allCases {
+                self.evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper?.evmKit.refresh()
+            }
             var binanceKitUpdated = false
 
             for (wallet, adapter) in self._adapterMap {
                 switch wallet.coinType {
-                case .ethereum, .erc20:
-                    if !ethereumKitUpdated {
-                        adapter.refresh()
-                        ethereumKitUpdated = true
-                    }
-                case .binanceSmartChain, .bep20:
-                    if !binanceSmartChainKitUpdated {
-                        adapter.refresh()
-                        binanceSmartChainKitUpdated = true
-                    }
                 case .bep2:
                     if !binanceKitUpdated {
                         adapter.refresh()

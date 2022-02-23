@@ -49,7 +49,7 @@ extension SwapSelectProviderViewModel {
     }
 
     var blockchainTitle: String? {
-        service.blockchain?.title
+        service.blockchain?.name
     }
 
     func onSelect(index: Int) {

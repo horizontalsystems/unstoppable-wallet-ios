@@ -84,10 +84,9 @@ struct TransactionSource: Hashable {
         case litecoin
         case bitcoinCash
         case dash
-        case ethereum
         case zcash
-        case binanceSmartChain
         case bep2(symbol: String)
+        case evm(blockchain: EvmBlockchain)
 
         public var title: String {
             switch self {
@@ -95,10 +94,9 @@ struct TransactionSource: Hashable {
             case .litecoin: return "Litecoin"
             case .bitcoinCash: return "Bitcoin Cash"
             case .dash: return "Dash"
-            case .ethereum: return "Ethereum"
             case .zcash: return "ZCash"
-            case .binanceSmartChain: return "BSC"
             case .bep2: return "Binance Chain"
+            case .evm(let blockchain): return blockchain.shortName
             }
         }
 
@@ -108,10 +106,9 @@ struct TransactionSource: Hashable {
             case .litecoin: hasher.combine(1)
             case .bitcoinCash: hasher.combine(2)
             case .dash: hasher.combine(3)
-            case .ethereum: hasher.combine(4)
             case .zcash: hasher.combine(5)
-            case .binanceSmartChain: hasher.combine(6)
             case .bep2(let symbol): hasher.combine(symbol)
+            case .evm(let blockchain): hasher.combine(blockchain.name)
             }
         }
 
@@ -121,10 +118,9 @@ struct TransactionSource: Hashable {
             case (.litecoin, .litecoin): return true
             case (.bitcoinCash, .bitcoinCash): return true
             case (.dash, .dash): return true
-            case (.ethereum, .ethereum): return true
             case (.zcash, .zcash): return true
-            case (.binanceSmartChain, .binanceSmartChain): return true
             case (.bep2(let symbol1), .bep2(let symbol2)): return symbol1 == symbol2
+            case (.evm(let lhsBlockchain), .evm(let rhsBlockchain)): return lhsBlockchain == rhsBlockchain
             default: return false
             }
         }

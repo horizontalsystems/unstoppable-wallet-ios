@@ -55,17 +55,10 @@ struct SendEvmData {
 struct SendEvmConfirmationModule {
     private static let forceMultiplier: Double = 1.2
 
-    private static func platformCoin(networkType: NetworkType) -> PlatformCoin? {
-        switch networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: return try? App.shared.marketKit.platformCoin(coinType: .ethereum)
-        case .bscMainNet: return try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
-        }
-    }
-
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
-        guard let platformCoin = platformCoin(networkType: evmKit.networkType) else {
+        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: evmKitWrapper.blockchain) else {
             return nil
         }
 
@@ -93,7 +86,7 @@ struct SendEvmConfirmationModule {
             throw CreateModuleError.alreadyInBlock
         }
 
-        guard let platformCoin = platformCoin(networkType: adapter.evmKit.networkType) else {
+        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: adapter.evmKitWrapper.blockchain) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 

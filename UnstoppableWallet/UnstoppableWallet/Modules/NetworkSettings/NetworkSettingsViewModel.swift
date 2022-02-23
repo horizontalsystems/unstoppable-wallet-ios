@@ -1,13 +1,14 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import EthereumKit
 
 class NetworkSettingsViewModel {
     private let service: NetworkSettingsService
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let openEvmNetworkRelay = PublishRelay<(EvmNetworkModule.Blockchain, Account)>()
+    private let openEvmNetworkRelay = PublishRelay<(EvmBlockchain, Account)>()
 
     init(service: NetworkSettingsService) {
         self.service = service
@@ -20,27 +21,13 @@ class NetworkSettingsViewModel {
     private func sync(items: [NetworkSettingsService.Item]) {
         let viewItems = items.map { item in
             ViewItem(
-                    iconName: iconName(blockchain: item.blockchain),
-                    title: title(blockchain: item.blockchain),
-                    value: item.value
+                    iconName: item.blockchain.icon24,
+                    title: item.blockchain.shortName,
+                    value: item.syncSource.name
             )
         }
 
         viewItemsRelay.accept(viewItems)
-    }
-
-    private func iconName(blockchain: NetworkSettingsService.Blockchain) -> String {
-        switch blockchain {
-        case .ethereum: return "ethereum_24"
-        case .binanceSmartChain: return "binance_smart_chain_24"
-        }
-    }
-
-    private func title(blockchain: NetworkSettingsService.Blockchain) -> String {
-        switch blockchain {
-        case .ethereum: return "Ethereum"
-        case .binanceSmartChain: return "BSC"
-        }
     }
 
 }
@@ -51,17 +38,13 @@ extension NetworkSettingsViewModel {
         viewItemsRelay.asDriver()
     }
 
-    var openEvmNetworkSignal: Signal<(EvmNetworkModule.Blockchain, Account)> {
+    var openEvmNetworkSignal: Signal<(EvmBlockchain, Account)> {
         openEvmNetworkRelay.asSignal()
     }
 
     func onSelect(index: Int) {
         let blockchain = service.items[index].blockchain
-
-        switch blockchain {
-        case .ethereum: openEvmNetworkRelay.accept((.ethereum, service.account))
-        case .binanceSmartChain: openEvmNetworkRelay.accept((.binanceSmartChain, service.account))
-        }
+        openEvmNetworkRelay.accept((blockchain, service.account))
     }
 
 }

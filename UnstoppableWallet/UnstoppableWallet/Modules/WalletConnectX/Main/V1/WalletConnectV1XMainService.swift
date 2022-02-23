@@ -235,10 +235,10 @@ extension WalletConnectV1XMainService: IWalletConnectXMainService {
             return
         }
 
-        interactor.approveSession(address: sessionData.evmKitWrapper.evmKit.address.eip55, chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId)
+        interactor.approveSession(address: sessionData.evmKitWrapper.evmKit.address.eip55, chainId: sessionData.evmKitWrapper.evmKit.chain.id)
 
         let session = WalletConnectSession(
-                chainId: sessionData.evmKitWrapper.evmKit.networkType.chainId,
+                chainId: sessionData.evmKitWrapper.evmKit.chain.id,
                 accountId: sessionData.account.id,
                 session: interactor.session,
                 peerId: sessionData.peerId,

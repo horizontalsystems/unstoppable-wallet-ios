@@ -18,14 +18,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let feePlatformCoin: PlatformCoin?
-
-        switch evmKitWrapper.evmKit.networkType {
-        case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum)
-        case .bscMainNet: feePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .binanceSmartChain)
-        }
-
-        guard let platformCoin = feePlatformCoin else {
+        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: evmKitWrapper.blockchain) else {
             return nil
         }
 

@@ -2,13 +2,11 @@ import EthereumKit
 
 class WalletConnectManager {
     private let accountManager: IAccountManager
-    private let ethereumKitManager: EvmKitManager
-    private let binanceSmartChainKitManager: EvmKitManager
+    private let evmBlockchainManager: EvmBlockchainManager
 
-    init(accountManager: IAccountManager, ethereumKitManager: EvmKitManager, binanceSmartChainKitManager: EvmKitManager) {
+    init(accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager) {
         self.accountManager = accountManager
-        self.ethereumKitManager = ethereumKitManager
-        self.binanceSmartChainKitManager = binanceSmartChainKitManager
+        self.evmBlockchainManager = evmBlockchainManager
     }
 
     var activeAccount: Account? {
@@ -16,15 +14,11 @@ class WalletConnectManager {
     }
 
     func evmKitWrapper(chainId: Int, account: Account) -> EvmKitWrapper? {
-        if let ethereumKitWrapper = try? ethereumKitManager.evmKitWrapper(account: account), ethereumKitWrapper.evmKit.networkType.chainId == chainId {
-            return ethereumKitWrapper
+        guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+            return nil
         }
 
-        if let binanceSmartChainKitWrapper = try? binanceSmartChainKitManager.evmKitWrapper(account: account), binanceSmartChainKitWrapper.evmKit.networkType.chainId == chainId {
-            return binanceSmartChainKitWrapper
-        }
-
-        return nil
+        return try? evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper(account: account, blockchain: blockchain)
     }
 
 }

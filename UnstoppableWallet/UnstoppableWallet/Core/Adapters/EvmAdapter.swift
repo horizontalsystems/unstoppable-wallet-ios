@@ -34,7 +34,7 @@ extension EvmAdapter: IAdapter {
     }
 
     func refresh() {
-        evmKit.refresh()
+        // refreshed via EthereumKitManager
     }
 
 }

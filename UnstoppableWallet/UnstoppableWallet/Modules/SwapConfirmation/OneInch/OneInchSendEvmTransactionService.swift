@@ -142,22 +142,10 @@ class OneInchSendEvmTransactionService {
     }
 
     private func activateSwapCoinOut(tokenOut: OneInchMethodDecoration.Token) {
-        let coinType: CoinType
-
         switch tokenOut {
-        case .evmCoin:
-            switch evmKit.networkType {
-            case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: coinType = .ethereum
-            case .bscMainNet: coinType = .binanceSmartChain
-            }
-        case .eip20Coin(let address):
-            switch evmKit.networkType {
-            case .ethMainNet, .ropsten, .rinkeby, .kovan, .goerli: coinType = .erc20(address: address.hex)
-            case .bscMainNet: coinType = .bep20(address: address.hex)
-            }
+        case .evmCoin: activateCoinManager.activateBaseCoin(blockchain: evmKitWrapper.blockchain)
+        case .eip20Coin(let address): activateCoinManager.activateEvm20Coin(address: address.hex, blockchain: evmKitWrapper.blockchain)
         }
-
-        activateCoinManager.activate(coinType: coinType)
     }
 
 }
