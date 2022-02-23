@@ -28,7 +28,7 @@ class AdapterManager {
                 })
                 .disposed(by: disposeBag)
 
-        for blockchain in EvmBlockchain.allCases {
+        for blockchain in evmBlockchainManager.allBlockchains {
             subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
         }
         subscribe(disposeBag, initialSyncSettingsManager.settingUpdatedObservable) { [weak self] in self?.handleUpdated(setting: $0) }
@@ -134,7 +134,7 @@ extension AdapterManager {
 
     func refresh() {
         queue.async {
-            for blockchain in EvmBlockchain.allCases {
+            for blockchain in self.evmBlockchainManager.allBlockchains {
                 self.evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper?.evmKit.refresh()
             }
             var binanceKitUpdated = false

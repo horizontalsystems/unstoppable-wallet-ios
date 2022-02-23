@@ -1,7 +1,7 @@
 import EthereumKit
 import MarketKit
 
-enum EvmBlockchain: String, CaseIterable {
+enum EvmBlockchain: String {
     case ethereum
     case binanceSmartChain
 
@@ -60,14 +60,6 @@ enum EvmBlockchain: String, CaseIterable {
         case .ethereum: return true
         case .binanceSmartChain: return true
         }
-    }
-
-}
-
-extension CoinType {
-
-    var blockchain: EvmBlockchain? {
-        EvmBlockchain.allCases.first(where: { $0.supports(coinType: self) })
     }
 
 }

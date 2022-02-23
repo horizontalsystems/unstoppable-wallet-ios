@@ -33,8 +33,21 @@ class EvmBlockchainManager {
 
 extension EvmBlockchainManager {
 
+    var allBlockchains: [EvmBlockchain] {
+        [
+            .ethereum,
+            .binanceSmartChain
+        ]
+
+        // todo: load custom blockchains here
+    }
+
     func blockchain(chainId: Int) -> EvmBlockchain? {
-        EvmBlockchain.allCases.first(where: { chain(blockchain: $0).id == chainId })
+        allBlockchains.first(where: { chain(blockchain: $0).id == chainId })
+    }
+
+    func blockchain(coinType: CoinType) -> EvmBlockchain? {
+        allBlockchains.first(where: { $0.supports(coinType: coinType) })
     }
 
     func chain(chainId: Int) -> Chain? {
