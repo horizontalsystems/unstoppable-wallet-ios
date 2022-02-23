@@ -906,6 +906,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active Wallet";
+"wallet_connect.main.unsupported_chains" = "No any supported chains!";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
@@ -926,6 +927,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
 "wallet_connect.list.empty_view_button_text" = "新连接";
+
+"wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.list.version_text" = "version %@";
 "wallet_connect.list.v1_bottom_text" = "在WalletConnect的第一个版本中，您必须进入会话以查看和确认请求";
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
