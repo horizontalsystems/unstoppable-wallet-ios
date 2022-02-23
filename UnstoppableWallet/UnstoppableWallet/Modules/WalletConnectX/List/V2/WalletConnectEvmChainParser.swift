@@ -3,7 +3,7 @@ import EthereumKit
 
 class WalletConnectEvmChainParser {
 
-    public func parse(string: String) -> AccountData? {
+    func parse(string: String) -> AccountData? {
         // todo: parse blockchain and return evm-chainId if it's possible
 
         let chunks = string.split(separator: ":")
@@ -17,18 +17,6 @@ class WalletConnectEvmChainParser {
         }
 
         return chainId.map { AccountData(eip: String(chunks[0]), chainId: $0, address: address) }
-    }
-
-    public func networkType(chainId: Int) -> NetworkType? {
-        switch chainId {
-        case 1: return .ethMainNet
-        case 56: return .bscMainNet
-        case 3: return .ropsten
-        case 4: return .rinkeby
-        case 42: return .kovan
-        case 5: return .goerli
-        default: return nil
-        }
     }
 
 }

@@ -36,6 +36,7 @@ class WalletConnectUriHandler {
                 manager: App.shared.walletConnectManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 accountManager: App.shared.accountManager,
+                evmBlockchainManager: App.shared.evmBlockchainManager,
                 evmChainParser: WalletConnectEvmChainParser()
         )
 

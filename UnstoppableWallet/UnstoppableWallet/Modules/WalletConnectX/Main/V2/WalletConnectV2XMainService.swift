@@ -13,6 +13,7 @@ class WalletConnectV2XMainService {
     private let manager: WalletConnectManager
     private let reachabilityManager: IReachabilityManager
     private let accountManager: IAccountManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let evmChainParser: WalletConnectEvmChainParser
 
     private var proposal: Session.Proposal?
@@ -37,13 +38,14 @@ class WalletConnectV2XMainService {
         }
     }
 
-    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
         self.pingService = pingService
         self.manager = manager
         self.reachabilityManager = reachabilityManager
         self.accountManager = accountManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.evmChainParser = evmChainParser
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
@@ -131,16 +133,16 @@ class WalletConnectV2XMainService {
             let proposalAccountData = proposal.permissions.blockchains.compactMap {
                 evmChainParser.parse(string: $0)
             }
-            let allowedNetworkTypes = proposalAccountData.compactMap {
-                evmChainParser.networkType(chainId: $0.chainId)
+            let allowedChains = proposalAccountData.compactMap {
+                evmBlockchainManager.chain(chainId: $0.chainId)
             }
             // get addresses
             var blockchains = [Int: WalletConnectXMainModule.Blockchain]()
-            allowedNetworkTypes.forEach { type in
-                guard let address = try? Signer.address(seed: seed, networkType: type) else {
+            allowedChains.forEach { chain in
+                guard let address = try? Signer.address(seed: seed, chain: chain) else {
                     return
                 }
-                blockchains[type.chainId] = WalletConnectXMainModule.Blockchain(address: address.eip55, selected: true)
+                blockchains[chain.id] = WalletConnectXMainModule.Blockchain(address: address.eip55, selected: true)
             }
             return blockchains
         }
