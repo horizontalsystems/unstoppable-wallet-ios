@@ -904,8 +904,8 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
-"wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.main.unsupported_chains" = "No any supported chains!";
+"wallet_connect.active_account" = "Active su cartera";
+"wallet_connect.main.unsupported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
 "wallet_connect.no_connection" = "Error al establecer la conexión. Intenta volver a conectarte.";
@@ -927,8 +927,8 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
 "wallet_connect.list.empty_view_button_text" = "Nueva Conexión";
 
-"wallet_connect.list.pending_requests" = "Pending Requests";
-"wallet_connect.list.version_text" = "version %@";
+"wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
+"wallet_connect.list.version_text" = "versión %@";
 "wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, usted debe entrar en las sesiones para ver y confirmar la solicitud";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
@@ -940,7 +940,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.watch_account.switch" = "Cambiar";
 
 "wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
-"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
 
 // App Status
 
