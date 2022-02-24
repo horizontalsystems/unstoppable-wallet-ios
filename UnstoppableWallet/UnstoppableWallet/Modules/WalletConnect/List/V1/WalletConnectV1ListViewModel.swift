@@ -2,8 +2,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class WalletConnectV1XListViewModel {
-    private let service: WalletConnectXListService
+class WalletConnectV1ListViewModel {
+    private let service: WalletConnectListService
     private let disposeBag = DisposeBag()
 
     private let showWalletConnectSessionRelay = PublishRelay<WalletConnectSession>()
@@ -12,7 +12,7 @@ class WalletConnectV1XListViewModel {
     private let showLoadingRelay = PublishRelay<()>()
     private let showSuccessRelay = PublishRelay<String?>()
 
-    init(service: WalletConnectXListService) {
+    init(service: WalletConnectListService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsV1Observable) { [weak self] in self?.sync(items: $0) }
@@ -22,12 +22,12 @@ class WalletConnectV1XListViewModel {
         sync(items: service.itemsV1)
     }
 
-    private func sync(items: [WalletConnectXListService.Item]) {
+    private func sync(items: [WalletConnectListService.Item]) {
         let viewItems = items.map {
             ViewItem(
                 id: $0.id,
                 title: $0.appName,
-                description: $0.chains.map { $0.title }.joined(separator: ", "),
+                description: $0.chains.map { $0.shortName }.joined(separator: ", "),
                 imageUrl: $0.appIcons.last
             )
         }
@@ -35,7 +35,7 @@ class WalletConnectV1XListViewModel {
         viewItemsRelay.accept(viewItems)
     }
 
-    private func sync(sessionKillingState: WalletConnectXListService.SessionKillingState) {
+    private func sync(sessionKillingState: WalletConnectListService.SessionKillingState) {
         switch sessionKillingState {
         case .processing: showLoadingRelay.accept(())
         case .completed: showSuccessRelay.accept("alert.success_action".localized)
@@ -49,7 +49,7 @@ class WalletConnectV1XListViewModel {
 
 }
 
-extension WalletConnectV1XListViewModel {
+extension WalletConnectV1ListViewModel {
 
     //Connections section
 
@@ -80,8 +80,8 @@ extension WalletConnectV1XListViewModel {
 
 }
 
-extension WalletConnectV1XListViewModel {
+extension WalletConnectV1ListViewModel {
 
-    class ViewItem: WalletConnectXListViewModel.ViewItem {}
+    class ViewItem: WalletConnectListViewModel.ViewItem {}
 
 }

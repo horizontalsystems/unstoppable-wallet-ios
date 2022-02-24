@@ -6,14 +6,20 @@ import RxCocoa
 import ComponentKit
 
 class WalletConnectListViewController: ThemeViewController {
-    private let viewModel: WalletConnectListViewModel
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let viewModel: WalletConnectListViewModel
+    private let listViewV1: WalletConnectV1ListView
+    private let listViewV2: WalletConnectV2ListView
 
-    private var sectionViewItems = [WalletConnectListViewModel.SectionViewItem]()
+    private let emptyView = ErrorMessageView()
 
-    init(viewModel: WalletConnectListViewModel) {
+    let tableView = SectionsTableView(style: .grouped)
+    private weak var scanQrViewController: WalletConnectScanQrViewController?
+
+    init(listViewV1: WalletConnectV1ListView, listViewV2: WalletConnectV2ListView, viewModel: WalletConnectListViewModel) {
+        self.listViewV1 = listViewV1
+        self.listViewV2 = listViewV2
         self.viewModel = viewModel
 
         super.init()
@@ -30,6 +36,8 @@ class WalletConnectListViewController: ThemeViewController {
 
         title = "wallet_connect_list.title".localized
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "qr_scan_24"), style: .plain, target: self, action: #selector(startNewConnection))
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -44,108 +52,63 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
-        subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(sectionViewItems: $0) }
-        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        emptyView.text = "wallet_connect.list.empty_view_text".localized
+        emptyView.setButton(title: "wallet_connect.list.empty_view_button_text".localized)
+        emptyView.image = UIImage(named: "wallet_connect_48")
+        emptyView.onTapButton = { [weak self] in self?.startNewConnection() }
+
+        subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
+        subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }
+        subscribe(disposeBag, listViewV1.reloadTableSignal) { [weak self] in self?.syncItems() }
+        subscribe(disposeBag, listViewV2.reloadTableSignal) { [weak self] in self?.syncItems() }
+
+        listViewV1.viewDidLoad()
+        listViewV2.viewDidLoad()
 
         if viewModel.emptySessionList {
-            WalletConnectModule.start(sourceViewController: self)
+            startNewConnection()
         }
     }
 
-    private func sync(sectionViewItems: [WalletConnectListViewModel.SectionViewItem]) {
-        self.sectionViewItems = sectionViewItems
+    private func syncItems() {
+        emptyView.isHidden = !viewModel.emptySessionList
+
         tableView.reload()
     }
 
-    private func kill(session: WalletConnectSession) {
-        viewModel.kill(session: session)
+    @objc private func startNewConnection() {
+        let scanQrViewController = WalletConnectScanQrViewController()
+        self.scanQrViewController = scanQrViewController
+        scanQrViewController.delegate = self
+
+        present(scanQrViewController, animated: true)
     }
 
-    private var newConnectionSection: SectionProtocol {
-        Section(
-                id: "new-connection",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    Row<A1Cell>(
-                            id: "new-connection",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                cell.titleImage = UIImage(named: "wallet_connect_20")
-                                cell.title = "wallet_connect_list.new_connection".localized
-                            },
-                            action: { [weak self] _ in
-                                WalletConnectModule.start(sourceViewController: self)
-                            }
-                    )
-                ]
-        )
+    private func show(walletConnectMainModule: IWalletConnectMainService) {
+        guard let viewController = WalletConnectMainModule.viewController(service: walletConnectMainModule, sourceViewController: self) else {
+            return
+        }
+
+        guard let scanQrViewController = scanQrViewController else {
+            present(viewController, animated: true)
+            return
+        }
+
+        scanQrViewController.dismiss(animated: true) { [weak self] in
+            self?.present(viewController, animated: true)
+        }
     }
 
-    private func deleteRowAction(viewItem: WalletConnectListViewModel.ViewItem) -> RowAction {
-        RowAction(pattern: .icon(
-                image: UIImage(named: "circle_minus_shifted_24"),
-                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-        ), action: { [weak self] cell in
-            self?.kill(session: viewItem.session)
-        })
-    }
+    private func show(newConnectionError: String) {
+        let viewController = WalletConnectErrorViewController(error: newConnectionError)
+        viewController.delegate = scanQrViewController
 
-    private func section(sectionViewItem: WalletConnectListViewModel.SectionViewItem) -> SectionProtocol {
-        Section(
-                id: "sessions_\(sectionViewItem.title)",
-                headerState: header(text: sectionViewItem.title),
-                footerState: .margin(height: .margin32),
-                rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == sectionViewItem.viewItems.count - 1
-                    let rowAction = deleteRowAction(viewItem: viewItem)
-
-                    return Row<G1Cell>(
-                            id: viewItem.session.peerId,
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            rowActionProvider: { [rowAction] },
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
-                                cell.title = viewItem.title
-                                cell.subtitle = viewItem.url
-                            },
-                            action: { [weak self] _ in
-                                WalletConnectModule.start(session: viewItem.session, sourceViewController: self)
-                            }
-                    )
-                }
-        )
-    }
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { [weak self] _ in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: self?.tableView.bounds.width ?? 0, text: text)
-                }
-        )
+        scanQrViewController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
 }
@@ -153,7 +116,15 @@ class WalletConnectListViewController: ThemeViewController {
 extension WalletConnectListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [newConnectionSection] + sectionViewItems.map { section(sectionViewItem: $0) }
+        (listViewV2.sections + listViewV1.sections).compactMap { $0 }
+    }
+
+}
+
+extension WalletConnectListViewController: IScanQrViewControllerDelegate {
+
+    func didScan(viewController: UIViewController, string: String) {
+        viewModel.didScan(string: string)
     }
 
 }

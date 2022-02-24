@@ -6,17 +6,17 @@ import RxSwift
 import RxCocoa
 import WalletConnect
 
-class WalletConnectV2XListView {
+class WalletConnectV2ListView {
     private let disposeBag = DisposeBag()
-    private let viewModel: WalletConnectV2XListViewModel
-    weak var sourceViewController: WalletConnectXListViewController?
+    private let viewModel: WalletConnectV2ListViewModel
+    weak var sourceViewController: WalletConnectListViewController?
 
-    private var viewItems = [WalletConnectXListViewModel.ViewItem]()
+    private var viewItems = [WalletConnectListViewModel.ViewItem]()
     private var pendingRequestCount: Int = 0
 
     private let reloadTableRelay = PublishRelay<()>()
 
-    init(viewModel: WalletConnectV2XListViewModel) {
+    init(viewModel: WalletConnectV2ListViewModel) {
         self.viewModel = viewModel
     }
 
@@ -28,7 +28,7 @@ class WalletConnectV2XListView {
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
-    private func sync(viewItems: [WalletConnectXListViewModel.ViewItem]) {
+    private func sync(viewItems: [WalletConnectListViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         reloadTableRelay.accept(())
@@ -41,7 +41,7 @@ class WalletConnectV2XListView {
     }
 
     private func show(session: Session) {
-        guard let viewController = WalletConnectXMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
+        guard let viewController = WalletConnectMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }
 
@@ -87,7 +87,7 @@ class WalletConnectV2XListView {
         )
     }
 
-    private func cell(viewItem: WalletConnectXListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
+    private func cell(viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
         guard let tableView = sourceViewController?.tableView else {
             return nil
         }
@@ -170,7 +170,7 @@ class WalletConnectV2XListView {
         )
     }
 
-    private func section(viewItems: [WalletConnectXListViewModel.ViewItem]) -> SectionProtocol {
+    private func section(viewItems: [WalletConnectListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_2",
                 footerState: .margin(height: .margin32),
@@ -187,7 +187,7 @@ class WalletConnectV2XListView {
 
 }
 
-extension WalletConnectV2XListView {
+extension WalletConnectV2ListView {
 
     var sections: [SectionProtocol] {
         guard !viewItems.isEmpty else {

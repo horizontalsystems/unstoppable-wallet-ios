@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -6,88 +7,73 @@ class WalletConnectListViewModel {
     private let service: WalletConnectListService
     private let disposeBag = DisposeBag()
 
-    private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
-    private let showLoadingRelay = PublishRelay<()>()
-    private let showSuccessRelay = PublishRelay<String?>()
+    private let newConnectionErrorRelay = PublishRelay<String>()
+    private let showWalletConnectMainServiceRelay = PublishRelay<IWalletConnectMainService>()
+    private let showWalletConnectV1SessionRelay = PublishRelay<WalletConnectSession>()
 
     init(service: WalletConnectListService) {
         self.service = service
 
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        subscribe(disposeBag, service.sessionKillingObservable) { [weak self] in self?.sync(sessionKillingState: $0) }
-
-        sync(items: service.items)
+        subscribe(disposeBag, service.createModuleObservable) { [weak self] in self?.show(service: $0) }
+        subscribe(disposeBag, service.connectionErrorObservable) { [weak self] in self?.show(connectionError: $0) }
     }
 
-    private func sync(items: [WalletConnectListService.Item]) {
-        let sectionViewItems = items.map { item in
-            SectionViewItem(
-                    title: title(chain: item.chain),
-                    viewItems: item.sessions.map { session in
-                        ViewItem(
-                                session: session,
-                                title: session.peerMeta.name,
-                                url: session.peerMeta.url,
-                                imageUrl: session.peerMeta.icons.last
-                        )
-                    }
-            )
-        }
-
-        sectionViewItemsRelay.accept(sectionViewItems)
+    private func show(service: IWalletConnectMainService) {
+        showWalletConnectMainServiceRelay.accept(service)
     }
 
-    private func sync(sessionKillingState: WalletConnectListService.SessionKillingState) {
-        switch sessionKillingState {
-        case .processing: showLoadingRelay.accept(())
-        case .completed: showSuccessRelay.accept("alert.success_action".localized)
-        case .removedOnly: showSuccessRelay.accept("alert.success_action".localized)     // app just remove peerId from database
-        }
-    }
-
-    private func title(chain: WalletConnectListService.Chain) -> String {
-        switch chain {
-        case .ethereum, .ropsten, .rinkeby, .kovan, .goerli: return "Ethereum"
-        case .binanceSmartChain: return "Binance Smart Chain"
-        }
+    private func show(connectionError: Error) {
+        newConnectionErrorRelay.accept(connectionError.smartDescription)
     }
 
 }
 
 extension WalletConnectListViewModel {
 
-    var emptySessionList: Bool { service.sessionCount == 0 }
-
-    var sectionViewItemsDriver: Driver<[SectionViewItem]> {
-        sectionViewItemsRelay.asDriver()
+    // NewConnection section
+    var emptySessionList: Bool {
+        service.emptySessionList
     }
 
-    var showLoadingSignal: Signal<()> {
-        showLoadingRelay.asSignal()
+    var showWalletConnectMainModuleSignal: Signal<IWalletConnectMainService> {
+        showWalletConnectMainServiceRelay.asSignal()
     }
 
-    var showSuccessSignal: Signal<String?> {
-        showSuccessRelay.asSignal()
+    var newConnectionErrorSignal: Signal<String> {
+        newConnectionErrorRelay.asSignal()
     }
 
-    func kill(session: WalletConnectSession) {
-        service.kill(session: session)
+    func didScan(string: String) {
+        service.connect(uri: string)
     }
 
 }
 
 extension WalletConnectListViewModel {
 
-    struct SectionViewItem {
+    class ViewItem {
+        let id: Int
         let title: String
-        let viewItems: [ViewItem]
-    }
-
-    struct ViewItem {
-        let session: WalletConnectSession
-        let title: String
-        let url: String
+        let description: String
         let imageUrl: String?
+
+        init(id: Int, title: String, description: String, imageUrl: String?) {
+            self.id = id
+            self.title = title
+            self.description = description
+            self.imageUrl = imageUrl
+        }
+
+    }
+
+}
+
+extension WalletConnectUriHandler.ConnectionError : LocalizedError {
+
+    var errorDescription: String? {
+        switch self {
+        case .wrongUri: return "wallet_connect.error.invalid_url".localized
+        }
     }
 
 }

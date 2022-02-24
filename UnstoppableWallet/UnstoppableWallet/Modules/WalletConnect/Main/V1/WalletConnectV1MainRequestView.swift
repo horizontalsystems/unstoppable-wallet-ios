@@ -2,12 +2,12 @@ import UIKit
 import ThemeKit
 import RxSwift
 
-class WalletConnectV1XMainRequestView {
+class WalletConnectV1MainRequestView {
     private let disposeBag = DisposeBag()
-    private let viewModel: WalletConnectV1XMainRequestViewModel
+    private let viewModel: WalletConnectV1MainRequestViewModel
     weak var sourceViewController: UIViewController?
 
-    init(viewModel: WalletConnectV1XMainRequestViewModel) {
+    init(viewModel: WalletConnectV1MainRequestViewModel) {
         self.viewModel = viewModel
 
         subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
@@ -31,6 +31,6 @@ class WalletConnectV1XMainRequestView {
 
 }
 
-extension WalletConnectV1XMainRequestView: IWalletConnectXMainRequestView {
+extension WalletConnectV1MainRequestView: IWalletConnectMainRequestView {
 
 }

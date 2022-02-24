@@ -1,14 +1,16 @@
 import RxSwift
-import RxRelay
 import RxCocoa
-import WalletConnectV1
+import RxRelay
+import EthereumKit
 
 class WalletConnectMainViewModel {
-    private let service: WalletConnectService
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.wallet_connect_main")
 
     private let disposeBag = DisposeBag()
 
-    private let showErrorRelay = PublishRelay<Error>()
+    private let service: IWalletConnectMainService
+
+    private let showErrorRelay = PublishRelay<String>()
     private let showSuccessRelay = PublishRelay<()>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
@@ -16,28 +18,49 @@ class WalletConnectMainViewModel {
     private let reconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let disconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let signedTransactionsVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let peerMetaRelay = BehaviorRelay<PeerMetaViewItem?>(value: nil)
+
+    private let activeAccountNameRelay = BehaviorRelay<String?>(value: nil)
+    private let appMetaRelay = BehaviorRelay<AppMetaViewItem?>(value: nil)
+    private let blockchainsEditableRelay = BehaviorRelay<Bool>(value: false)
+    private let blockchainViewItemRelay = BehaviorRelay<[BlockchainViewItem]?>(value: nil)
     private let hintRelay = BehaviorRelay<String?>(value: nil)
     private let statusRelay = BehaviorRelay<Status?>(value: nil)
+    private let reloadTableRelay = PublishRelay<()>()
 
-    private let openRequestRelay = PublishRelay<WalletConnectRequest>()
     private let finishRelay = PublishRelay<Void>()
 
-    init(service: WalletConnectService) {
+    init(service: IWalletConnectMainService) {
         self.service = service
 
-        subscribe(disposeBag, service.errorObservable) { [weak self] in self?.showErrorRelay.accept($0) }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.connectionStateObservable) { [weak self] in self?.sync(connectionState: $0) }
-        subscribe(disposeBag, service.requestObservable) { [weak self] in self?.openRequestRelay.accept($0) }
+        subscribe(scheduler, disposeBag, service.errorObservable) { [weak self] in
+            self?.showErrorRelay.accept($0.smartDescription)
+        }
+        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] state in
+            self?.sync(state: state)
+        }
+        subscribe(scheduler, disposeBag, service.connectionStateObservable) { [weak self] connectionState in
+            self?.sync(connectionState: connectionState)
+        }
+        subscribe(scheduler, disposeBag, service.allowedBlockchainsObservable) { [weak self] allowedBlockchains in
+            self?.sync(allowedBlockchains: allowedBlockchains)
+        }
 
         sync()
     }
 
-    private func sync(state: WalletConnectService.State? = nil, connectionState: WalletConnectInteractor.State? = nil) {
+    private func viewItem(appMetaItem: WalletConnectMainModule.AppMetaItem) -> AppMetaViewItem {
+        AppMetaViewItem(
+                name: appMetaItem.name,
+                url: appMetaItem.url,
+                description: appMetaItem.description,
+                icon: appMetaItem.icons.last
+        )
+    }
+
+    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.Blockchain]? = nil) {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
+        let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
 
         guard state != .killed else {
             showSuccessRelay.accept(())
@@ -54,37 +77,33 @@ class WalletConnectMainViewModel {
         reconnectButtonRelay.accept(stateForReconnectButton ? (connectionState == .disconnected ? .enabled : .hidden) : .hidden)
         closeVisibleRelay.accept(state == .ready)
 
-//        signedTransactionsVisibleRelay.accept(state == .ready)
+        activeAccountNameRelay.accept(service.activeAccountName)
+        appMetaRelay.accept(service.appMetaItem.map {
+            viewItem(appMetaItem: $0)
+        })
 
-        peerMetaRelay.accept(service.remotePeerMeta.map { viewItem(peerMeta: $0) })
-        hintRelay.accept(hint(state: state, connection: connectionState))
+        let editable = service.appMetaItem?.editable ?? false
+        blockchainsEditableRelay.accept(editable && allowedBlockchains.count > 1)
+
+        blockchainViewItemRelay.accept(
+                allowedBlockchains
+                        .map { blockchain in
+                            BlockchainViewItem(
+                                    chainId: blockchain.chainId,
+                                    chainTitle: blockchain.evmBlockchain.name,
+                                    address: blockchain.address.shortenedAddress,
+                                    selected: blockchain.selected
+                            )
+                        }
+        )
+        hintRelay.accept(service.hint?.localized)
         statusRelay.accept(status(connectionState: connectionState))
+
+        reloadTableRelay.accept(())
     }
 
-    private func hint(state: WalletConnectService.State, connection: WalletConnectInteractor.State) -> String? {
-        switch connection {
-        case .disconnected:
-            if state == .waitingForApproveSession || state == .ready {
-                return "wallet_connect.no_connection".localized
-            }
-        case .connecting: return nil
-        case .connected: ()
-        }
-
-        switch state {
-        case .invalid(let error):
-            return error.smartDescription
-        case .waitingForApproveSession:
-            return "wallet_connect.connect_description".localized
-        case .ready:
-            return "wallet_connect.usage_description".localized
-        default:
-            return nil
-        }
-    }
-
-    private func status(connectionState: WalletConnectInteractor.State) -> Status? {
-        guard service.remotePeerMeta != nil else {
+    private func status(connectionState: WalletConnectMainModule.ConnectionState) -> Status? {
+        guard service.appMetaItem != nil else {
             return nil
         }
 
@@ -98,20 +117,11 @@ class WalletConnectMainViewModel {
         }
     }
 
-    private func viewItem(peerMeta: WCPeerMeta) -> PeerMetaViewItem {
-        PeerMetaViewItem(
-                name: peerMeta.name,
-                url: peerMeta.url,
-                description: peerMeta.description,
-                icon: peerMeta.icons.last
-        )
-    }
-
 }
 
 extension WalletConnectMainViewModel {
 
-    var showErrorSignal: Signal<Error> {
+    var showErrorSignal: Signal<String> {
         showErrorRelay.asSignal()
     }
 
@@ -143,28 +153,40 @@ extension WalletConnectMainViewModel {
         closeVisibleRelay.asDriver()
     }
 
-    var signedTransactionsVisibleDriver: Driver<Bool> {
-        signedTransactionsVisibleRelay.asDriver()
+    var activeAccountNameDriver: Driver<String?> {
+        activeAccountNameRelay.asDriver()
     }
 
-    var peerMetaDriver: Driver<PeerMetaViewItem?> {
-        peerMetaRelay.asDriver()
+    var appMetaDriver: Driver<AppMetaViewItem?> {
+        appMetaRelay.asDriver()
     }
 
-    var hintDriver: Driver<String?> {
-        hintRelay.asDriver()
+    var blockchainsEditableDriver: Driver<Bool> {
+        blockchainsEditableRelay.asDriver()
+    }
+
+    var blockchainViewItemDriver: Driver<[BlockchainViewItem]?> {
+        blockchainViewItemRelay.asDriver()
     }
 
     var statusDriver: Driver<Status?> {
         statusRelay.asDriver()
     }
 
-    var openRequestSignal: Signal<WalletConnectRequest> {
-        openRequestRelay.asSignal()
+    var hintDriver: Driver<String?> {
+        hintRelay.asDriver()
+    }
+
+    var reloadTableSignal: Signal<()> {
+        reloadTableRelay.asSignal()
     }
 
     var finishSignal: Signal<Void> {
         finishRelay.asSignal()
+    }
+
+    func onToggle(chainId: Int) {
+        service.toggle(chainId: chainId)
     }
 
     func cancel() {
@@ -195,23 +217,22 @@ extension WalletConnectMainViewModel {
         finishRelay.accept(())
     }
 
-    func approveRequest(id: Int, result: Any) {
-        service.approveRequest(id: id, result: result)
-    }
-
-    func rejectRequest(id: Int) {
-        service.rejectRequest(id: id)
-    }
-
 }
 
 extension WalletConnectMainViewModel {
 
-    struct PeerMetaViewItem {
+    struct AppMetaViewItem {
         let name: String
         let url: String
         let description: String
         let icon: String?
+    }
+
+    struct BlockchainViewItem {
+        let chainId: Int
+        let chainTitle: String?
+        let address: String
+        let selected: Bool
     }
 
     enum Status {
@@ -233,6 +254,17 @@ extension WalletConnectMainViewModel {
             case .offline: return "offline".localized
             case .online: return "online".localized
             }
+        }
+    }
+
+}
+
+extension WalletConnectMainModule.SessionError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .unsupportedChainId: return "wallet_connect.main.unsupported_chains".localized
+        default: return nil
         }
     }
 

@@ -318,7 +318,7 @@ class MainSettingsViewController: ThemeViewController {
         case .watchAccount:
             present(WalletConnectWatchAccountViewController(sourceViewController: self).toBottomSheet, animated: true)
         case .list:
-            navigationController?.pushViewController(WalletConnectXListModule.viewController(), animated: true)
+            navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
         }
     }
 
