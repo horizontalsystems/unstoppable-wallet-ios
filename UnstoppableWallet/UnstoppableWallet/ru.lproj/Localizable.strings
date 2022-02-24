@@ -516,7 +516,7 @@
 "coin_page.major_holders" = "Основные Владельцы";
 "coin_page.major_holders.chart.description" = "Топ-10 лучших кошельков Ethereum";
 "coin_page.major_holders.top_ethereum_wallets" = "Лучшие кошельки Ethereum";
-"coin_page.major_holders.description" = "На графике выше показано % всех жетонов, находящихся в обороте топ-10 кошельков. Чем ниже это процентное соотношение, тем выше распределение коина.";
+"coin_page.major_holders.description" = "На графике выше показано % всех токенов, находящихся в обороте топ-10 кошельков. Чем ниже это процентное соотношение, тем выше распределение коина.";
 
 
 "coin_page.tvl_rank.multi_chain" = "Мультичейн";
@@ -921,6 +921,7 @@
 "wallet_connect.button.confirm" = "Подтвердить";
 "wallet_connect.sign.request_title" = "Запрос на подпись";
 "wallet_connect.sign.domain" = "Домен";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Сообщение для подписи";
 "wallet_connect.sign.description" = "Пожалуйста, подпишите сообщение для аутентификации";
 
