@@ -921,6 +921,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.button.confirm" = "确认";
 "wallet_connect.sign.request_title" = "签名请求";
 "wallet_connect.sign.domain" = "域";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "待签名消息";
 "wallet_connect.sign.description" = "请对消息签名以便进行验证";
 
