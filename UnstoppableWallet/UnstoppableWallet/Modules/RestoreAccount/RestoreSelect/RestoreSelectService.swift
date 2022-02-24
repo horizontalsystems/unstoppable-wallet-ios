@@ -47,9 +47,9 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let platformCoins = try coinManager.platformCoins(coinTypes: RestoreSelectModule.Blockchain.allCases.map { $0.coinType })
+            let platformCoins = try coinManager.platformCoins(coinTypes: RestoreSelectModule.Blockchain.all.map { $0.coinType })
 
-            internalItems = RestoreSelectModule.Blockchain.allCases.compactMap { blockchain in
+            internalItems = RestoreSelectModule.Blockchain.all.compactMap { blockchain in
                 guard let platformCoin = platformCoins.first(where: { $0.coinType == blockchain.coinType }) else {
                     return nil
                 }
@@ -138,16 +138,16 @@ extension RestoreSelectService {
         canRestoreRelay.asObservable()
     }
 
-    func enable(blockchain: RestoreSelectModule.Blockchain) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
+    func enable(blockchainUid: String) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 
         enableCoinService.enable(fullCoin: internalItem.platformCoin.fullCoin)
     }
 
-    func disable(blockchain: RestoreSelectModule.Blockchain) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
+    func disable(blockchainUid: String) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 
@@ -157,8 +157,8 @@ extension RestoreSelectService {
         syncCanRestore()
     }
 
-    func configure(blockchain: RestoreSelectModule.Blockchain) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain == blockchain }) else {
+    func configure(blockchainUid: String) {
+        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 

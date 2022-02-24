@@ -62,6 +62,8 @@ struct Wallet {
             blockchain = .evm(blockchain: .ethereum)
         case .bep20:
             blockchain = .evm(blockchain: .binanceSmartChain)
+        case .polygonPos:
+            blockchain = .evm(blockchain: .polygon)
         default:
             fatalError("Unsupported coin may not have transactions to show")
         }

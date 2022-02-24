@@ -53,7 +53,7 @@ class EvmAccountManager {
 
         syncing = true
 
-//        print("Sync: \(evmKitWrapper.evmKit.networkType)")
+//        print("Sync: \(evmKitWrapper.blockchain.name)")
 
         let chainId = evmKitManager.chain.id
         var startBlock = 0

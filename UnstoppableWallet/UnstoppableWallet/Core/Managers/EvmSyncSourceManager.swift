@@ -41,6 +41,14 @@ class EvmSyncSourceManager {
                         transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
                 )
             ]
+        case .polygon:
+            return [
+                EvmSyncSource(
+                        name: "Polygon-RPC HTTP",
+                        rpcSource: .polygonRpcHttp(),
+                        transactionSource: .polygonscan(apiKey: appConfigProvider.polygonscanKey)
+                )
+            ]
         }
     }
 

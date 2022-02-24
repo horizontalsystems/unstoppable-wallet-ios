@@ -40,6 +40,7 @@ class CoinSelectService {
         switch dex.blockchain {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygonPos
         }
     }
 

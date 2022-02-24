@@ -15,7 +15,7 @@ class RestoreSelectViewModel {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        subscribe(disposeBag, service.cancelEnableBlockchainObservable) { [weak self] in self?.disableBlockchainRelay.accept($0.rawValue) }
+        subscribe(disposeBag, service.cancelEnableBlockchainObservable) { [weak self] in self?.disableBlockchainRelay.accept($0.uid) }
 
         sync(items: service.items)
     }
@@ -29,7 +29,7 @@ class RestoreSelectViewModel {
         }
 
         return CoinToggleViewModel.ViewItem(
-                uid: item.blockchain.rawValue,
+                uid: item.blockchain.uid,
                 imageUrl: "",
                 placeholderImageName: item.blockchain.imageName,
                 title: item.blockchain.title,
@@ -52,27 +52,15 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
     }
 
     func onEnable(uid: String) {
-        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
-            return
-        }
-
-        service.enable(blockchain: blockchain)
+        service.enable(blockchainUid: uid)
     }
 
     func onDisable(uid: String) {
-        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
-            return
-        }
-
-        service.disable(blockchain: blockchain)
+        service.disable(blockchainUid: uid)
     }
 
     func onTapSettings(uid: String) {
-        guard let blockchain = RestoreSelectModule.Blockchain(rawValue: uid) else {
-            return
-        }
-
-        service.configure(blockchain: blockchain)
+        service.configure(blockchainUid: uid)
     }
 
     func onUpdate(filter: String) {

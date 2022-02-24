@@ -7,6 +7,7 @@ extension MarketKit.CoinType {
         switch self {
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
+        case .polygonPos: return "MRC20"
         case .bep2: return "BEP2"
         default: ()
         }
@@ -18,6 +19,7 @@ extension MarketKit.CoinType {
         switch self {
         case .ethereum, .erc20: return "Ethereum"
         case .binanceSmartChain, .bep20: return "Binance Smart Chain"
+        case .polygonPos: return "Polygon"
         case .bep2: return "Binance"
         default: return ""
         }
@@ -28,6 +30,7 @@ extension MarketKit.CoinType {
         case .ethereum, .binanceSmartChain: return "coin_platforms.native".localized
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
+        case .polygonPos: return "MRC20"
         case .bep2: return "BEP2"
         default: return ""
         }
@@ -74,7 +77,7 @@ extension MarketKit.CoinType {
 
     var isSupported: Bool {
         switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .erc20, .bep20, .bep2: return true
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .erc20, .bep20, .bep2, .polygonPos: return true
         default: return false
         }
     }
