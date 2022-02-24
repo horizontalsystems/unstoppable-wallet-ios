@@ -17,6 +17,7 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
 
     private var domainCell: D7Cell?
     private let messageCell = D1Cell()
+    private var dAppNameCell: D7Cell?
 
     init(viewModel: WalletConnectSignMessageRequestViewModel) {
         self.viewModel = viewModel
@@ -85,9 +86,15 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
             domainCell?.value = domain
         }
 
-        messageCell.set(backgroundStyle: .lawrence, isFirst: domainCell == nil, isLast: true)
+        messageCell.set(backgroundStyle: .lawrence, isFirst: domainCell == nil, isLast: viewModel.dAppName == nil)
         messageCell.title = "wallet_connect.sign.message".localized
 
+        if let dAppName = viewModel.dAppName {
+            dAppNameCell = D7Cell()
+            dAppNameCell?.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+            dAppNameCell?.title = "wallet_connect.sign.dapp_name".localized
+            dAppNameCell?.value = dAppName
+        }
         tableView.buildSections()
 
         subscribe(disposeBag, viewModel.errorSignal) { [weak self] in self?.show(error: $0) }
@@ -141,6 +148,13 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
                     self?.showMessage()
                 }
         ))
+        if let dAppNameCell = dAppNameCell {
+            rows.append(StaticRow(
+                    cell: dAppNameCell,
+                    id: "dApp_name",
+                    height: .heightCell48
+            ))
+        }
 
         return [Section(
                 id: "sign_section",

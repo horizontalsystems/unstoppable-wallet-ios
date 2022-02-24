@@ -4,7 +4,7 @@ import WalletConnectV1
 
 struct WalletConnectV2RequestMapper {
 
-    static func map(request: Request) throws -> WalletConnectRequest? {
+    static func map(dAppName: String?, request: Request) throws -> WalletConnectRequest? {
         let chainId = request.chainId.flatMap {
             Int($0)
         }
@@ -18,6 +18,7 @@ struct WalletConnectV2RequestMapper {
             return WalletConnectSignMessageRequest(
                     id: Int(request.id),
                     chainId: chainId,
+                    dAppName: dAppName,
                     payload: WCEthereumSignPayload.personalSign(data: data, raw: params)
             )
         case "eth_signTypedData":
@@ -29,6 +30,7 @@ struct WalletConnectV2RequestMapper {
             return WalletConnectSignMessageRequest(
                     id: Int(request.id),
                     chainId: chainId,
+                    dAppName: dAppName,
                     payload: WCEthereumSignPayload.signTypeData(id: request.id, data: data, raw: params)
             )
         case "eth_sendTransaction":
@@ -39,6 +41,7 @@ struct WalletConnectV2RequestMapper {
             return try WalletConnectSendEthereumTransactionRequest(
                     id: Int(request.id),
                     chainId: chainId,
+                    dAppName: dAppName,
                     transaction: transactions[0]
             )
         default: return nil

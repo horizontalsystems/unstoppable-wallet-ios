@@ -32,6 +32,10 @@ extension WalletConnectSignMessageRequestViewModel {
         service.domain
     }
 
+    var dAppName: String? {
+        service.dAppName
+    }
+
     func onSign() {
         do {
             try service.sign()

@@ -5,10 +5,12 @@ import BigInt
 class WalletConnectRequest {
     let id: Int
     let chainId: Int?
+    let dAppName: String?
 
-    init(id: Int, chainId: Int?) {
+    init(id: Int, chainId: Int?, dAppName: String?) {
         self.id = id
         self.chainId = chainId
+        self.dAppName = dAppName
     }
 
     func convert(result: Any) -> String? {
@@ -20,7 +22,7 @@ class WalletConnectRequest {
 class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
     let transaction: WalletConnectTransaction
 
-    init(id: Int, chainId: Int?, transaction: WCEthereumTransaction) throws {
+    init(id: Int, chainId: Int?, dAppName: String?, transaction: WCEthereumTransaction) throws {
         guard let to = transaction.to else {
             throw TransactionError.noRecipient
         }
@@ -38,7 +40,7 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
                 data: Data(hex: transaction.data)
         )
 
-        super.init(id: id, chainId: chainId)
+        super.init(id: id, chainId: chainId, dAppName: dAppName)
     }
 
     override func convert(result: Any) -> String? {
@@ -54,10 +56,10 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
 class WalletConnectSignMessageRequest: WalletConnectRequest {
     let payload: WCEthereumSignPayload
 
-    init(id: Int, chainId: Int?, payload: WCEthereumSignPayload) {
+    init(id: Int, chainId: Int?, dAppName: String?, payload: WCEthereumSignPayload) {
         self.payload = payload
 
-        super.init(id: id, chainId: chainId)
+        super.init(id: id, chainId: chainId, dAppName: dAppName)
     }
 
     override func convert(result: Any) -> String? {

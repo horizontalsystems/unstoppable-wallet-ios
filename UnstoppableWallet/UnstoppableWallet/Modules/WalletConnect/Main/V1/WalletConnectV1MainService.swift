@@ -344,9 +344,10 @@ extension WalletConnectV1MainService: IWalletConnectInteractorDelegate {
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {
         let chainId = sessionData?.chainId
+        let peerName = sessionData?.peerMeta.name
         queue.async {
             self.handleRequest(id: id) {
-                try WalletConnectSendEthereumTransactionRequest(id: id, chainId: chainId, transaction: transaction)
+                try WalletConnectSendEthereumTransactionRequest(id: id, chainId: chainId, dAppName: peerName, transaction: transaction)
             }
         }
     }
@@ -357,9 +358,10 @@ extension WalletConnectV1MainService: IWalletConnectInteractorDelegate {
 
     func didRequestSign(id: Int, payload: WCEthereumSignPayload) {
         let chainId = sessionData?.chainId
+        let peerName = sessionData?.peerMeta.name
         queue.async {
             self.handleRequest(id: id) {
-                WalletConnectSignMessageRequest(id: id, chainId: chainId, payload: payload)
+                WalletConnectSignMessageRequest(id: id, chainId: chainId, dAppName: peerName, payload: payload)
             }
         }
     }

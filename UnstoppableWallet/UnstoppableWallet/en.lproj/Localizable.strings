@@ -921,6 +921,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Sign Request";
 "wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
 "wallet_connect.sign.description" = "Please sign a message to authenticate";
 

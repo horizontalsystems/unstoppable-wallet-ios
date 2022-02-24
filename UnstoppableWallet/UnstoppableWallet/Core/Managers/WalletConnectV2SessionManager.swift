@@ -85,7 +85,8 @@ class WalletConnectV2SessionManager {
         let activeSessions = storage.sessionsV2(accountId: accountId)
 
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
-              let request = try? WalletConnectV2RequestMapper.map(request: request) else {
+              let session = allSessions.first(where: { session in session.topic == request.topic }),
+              let request = try? WalletConnectV2RequestMapper.map(dAppName: session.peer.name, request: request) else {
             return
         }
 
