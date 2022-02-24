@@ -88,8 +88,11 @@ extension WalletConnectV2PendingRequestsService {
     }
 
     func select(requestId: Int64) {
-        guard let request = sessionManager.pendingRequests().first(where: { $0.id == requestId }),
-              let wcRequest = try? WalletConnectV2RequestMapper.map(request: request) else {
+        guard let request = sessionManager.pendingRequests().first(where: { $0.id == requestId }) else {
+            return
+        }
+        let session = sessionManager.sessions.first { $0.topic == request.topic }
+        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, request: request) else {
             return
         }
 

@@ -377,14 +377,16 @@ class SendEvmTransactionViewModel {
             inputItem = .input(value: transactionData.input.toHexString())
         }
 
-        let viewItems: [ViewItem] = [
+        var viewItems: [ViewItem] = [
             youPayItem,
             .value(title: coinServiceFactory.baseCoinService.amountData(value: transactionData.value).secondary?.formattedRawString ?? "n/a".localized, value: (coinServiceFactory.baseCoinService.amountData(value: transactionData.value).primary.formattedString ?? "n/a".localized), type: .outgoing),
             .address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue),
             transactionData.nonce.map { .value(title: "send.confirmation.nonce".localized, value: $0.description, type: .regular) },
             inputItem
         ].compactMap { $0 }
-
+        if let dAppName = additionalInfo?.dAppInfo?.name {
+            viewItems.append(.value(title: "wallet_connect.sign.dapp_name".localized, value: dAppName, type: .regular))
+        }
         return [SectionViewItem(viewItems: viewItems)]
     }
 

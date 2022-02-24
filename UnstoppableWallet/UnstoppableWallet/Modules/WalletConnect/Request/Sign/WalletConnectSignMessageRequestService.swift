@@ -50,6 +50,10 @@ extension WalletConnectSignMessageRequestService {
         return nil
     }
 
+    var dAppName: String? {
+        request.dAppName
+    }
+
     func sign() throws {
         let signedMessage: Data
 

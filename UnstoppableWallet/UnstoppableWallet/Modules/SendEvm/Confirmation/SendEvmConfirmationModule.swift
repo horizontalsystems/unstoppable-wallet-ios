@@ -10,9 +10,14 @@ struct SendEvmData {
     let warnings: [Warning]
 
     enum AdditionInfo {
+        case otherDApp(info: DAppInfo)
         case send(info: SendInfo)
         case uniswap(info: SwapInfo)
         case oneInchSwap(info: OneInchSwapInfo)
+
+        var dAppInfo: DAppInfo? {
+            if case .otherDApp(let info) = self { return info } else { return nil }
+        }
 
         var sendInfo: SendInfo? {
             if case .send(let info) = self { return info } else { return nil }
@@ -29,6 +34,10 @@ struct SendEvmData {
 
     struct SendInfo {
         let domain: String?
+    }
+
+    struct DAppInfo {
+        let name: String?
     }
 
     struct SwapInfo {

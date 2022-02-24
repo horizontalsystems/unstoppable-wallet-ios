@@ -328,21 +328,17 @@ class WalletConnectMainViewController: ThemeViewController {
 extension WalletConnectMainViewController: SectionsDataSource {
 
     public func buildSections() -> [SectionProtocol] {
-        print("BUILD SECTIONS")
         var rows = [RowProtocol]()
 
         guard let appMeta = appMeta else {
-            print("No appMeta")
             return [Section(id: "wallet_connect", rows: rows)]
         }
 
         if let imageUrl = appMeta.icon {
-            print("BUILD image")
             rows.append(headerRow(imageUrl: imageUrl, title: appMeta.name))
         }
 
         if let status = status {
-            print("BUILD status")
             rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: activeAccountName == nil, valueColor: status.color))
         }
 
