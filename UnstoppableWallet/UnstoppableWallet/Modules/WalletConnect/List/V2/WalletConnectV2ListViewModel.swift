@@ -3,18 +3,18 @@ import RxSwift
 import RxCocoa
 import WalletConnect
 
-class WalletConnectV2XListViewModel {
-    private let service: WalletConnectXListService
+class WalletConnectV2ListViewModel {
+    private let service: WalletConnectListService
     private let disposeBag = DisposeBag()
 
     private let showWalletConnectSessionRelay = PublishRelay<Session>()
 
-    private let viewItemsRelay = BehaviorRelay<[WalletConnectXListViewModel.ViewItem]>(value: [])
+    private let viewItemsRelay = BehaviorRelay<[WalletConnectListViewModel.ViewItem]>(value: [])
     private let pendingRequestCountRelay = BehaviorRelay<Int>(value: 0)
     private let showLoadingRelay = PublishRelay<()>()
     private let showSuccessRelay = PublishRelay<String?>()
 
-    init(service: WalletConnectXListService) {
+    init(service: WalletConnectListService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsV2Observable) { [weak self] in self?.sync(items: $0) }
@@ -25,12 +25,12 @@ class WalletConnectV2XListViewModel {
         sync(pendingRequests: service.pendingRequestsV2)
     }
 
-    private func sync(items: [WalletConnectXListService.Item]) {
+    private func sync(items: [WalletConnectListService.Item]) {
         let viewItems = items.map {
-            WalletConnectXListViewModel.ViewItem(
+            WalletConnectListViewModel.ViewItem(
                 id: $0.id,
                 title: $0.appName,
-                description: $0.chains.map { $0.title }.joined(separator: ", "),
+                description: $0.chains.map { $0.shortName }.joined(separator: ", "),
                 imageUrl: $0.appIcons.last
             )
         }
@@ -48,7 +48,7 @@ class WalletConnectV2XListViewModel {
 
 }
 
-extension WalletConnectV2XListViewModel {
+extension WalletConnectV2ListViewModel {
 
     //Connections section
 
@@ -56,7 +56,7 @@ extension WalletConnectV2XListViewModel {
         showWalletConnectSessionRelay.asSignal()
     }
 
-    var viewItemsDriver: Driver<[WalletConnectXListViewModel.ViewItem]> {
+    var viewItemsDriver: Driver<[WalletConnectListViewModel.ViewItem]> {
         viewItemsRelay.asDriver()
     }
 

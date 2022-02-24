@@ -1,3 +1,4 @@
+import UIKit
 import ThemeKit
 import RxSwift
 import RxCocoa
@@ -8,9 +9,9 @@ import SnapKit
 import ComponentKit
 
 class WalletConnectMainViewController: ThemeViewController {
-    private let baseViewModel: WalletConnectViewModel
     private let viewModel: WalletConnectMainViewModel
     private weak var sourceViewController: UIViewController?
+    var requestView: IWalletConnectMainRequestView?
 
     private let spinner = HUDActivityView.create(with: .large48)
 
@@ -36,13 +37,15 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let disposeBag = DisposeBag()
 
-    private var peerMeta: WalletConnectMainViewModel.PeerMetaViewItem?
+    private var activeAccountName: String?
+    private var appMeta: WalletConnectMainViewModel.AppMetaViewItem?
+    private var blockchainEditable: Bool = false
+    private var blockchains: [WalletConnectMainViewModel.BlockchainViewItem]?
     private var status: WalletConnectMainViewModel.Status?
     private var hint: String?
 
-    init(baseViewModel: WalletConnectViewModel, sourceViewController: UIViewController?) {
-        self.baseViewModel = baseViewModel
-        viewModel = baseViewModel.mainViewModel
+    init(viewModel: WalletConnectMainViewModel, sourceViewController: UIViewController?) {
+        self.viewModel = viewModel
         self.sourceViewController = sourceViewController
 
         super.init()
@@ -68,7 +71,6 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: TermsHeaderCell.self)
-        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(spinner)
@@ -133,10 +135,18 @@ class WalletConnectMainViewController: ThemeViewController {
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
-        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: "alert.success_action".localized) }
-        subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in self?.sync(connecting: $0) }
-        subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0) }
+        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in
+            self?.show(error: $0)
+        }
+        subscribe(disposeBag, viewModel.showSuccessSignal) {
+            HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+        }
+        subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in
+            self?.sync(connecting: $0)
+        }
+        subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in
+            self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0)
+        }
         subscribe(disposeBag, viewModel.connectButtonDriver) { [weak self] state in
             self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
             self?.connectButton.isEnabled = state == .enabled
@@ -150,26 +160,39 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: state != .hidden)
             self?.disconnectButton.isEnabled = state == .enabled
         }
-        subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in self?.syncCloseButton(visible: $0) }
-//        subscribe(disposeBag, viewModel.signedTransactionsVisibleDriver) { [weak self] in () }
-        subscribe(disposeBag, viewModel.peerMetaDriver) { [weak self] in
-            self?.peerMeta = $0
-            self?.tableView.reload()
+        subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in
+            self?.syncCloseButton(visible: $0)
+        }
+        subscribe(disposeBag, viewModel.activeAccountNameDriver) { [weak self] in
+            self?.activeAccountName = $0
+        }
+        subscribe(disposeBag, viewModel.appMetaDriver) { [weak self] in
+            self?.appMeta = $0
+        }
+        subscribe(disposeBag, viewModel.blockchainsEditableDriver) { [weak self] in
+            self?.blockchainEditable = $0
+        }
+        subscribe(disposeBag, viewModel.blockchainViewItemDriver) { [weak self] in
+            self?.blockchains = $0
         }
         subscribe(disposeBag, viewModel.hintDriver) { [weak self] in
             self?.hint = $0
-            self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in
             self?.status = $0
-            self?.tableView.reload()
         }
-//        subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.close() }
+        subscribe(disposeBag, viewModel.reloadTableSignal) { [weak self] in
+            self?.tableView.reload(animated: true)
+        }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
+            self?.close()
+        }
+
+        tableView.reload()
     }
 
-    private func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+    private func show(error: String) {
+        HudHelper.instance.showError(title: error)
     }
 
     private func sync(connecting: Bool) {
@@ -218,56 +241,15 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
-    private func open(request: WalletConnectRequest) {
-//        var viewController: UIViewController?
-//
-//        switch request {
-//        case let request as WalletConnectSendEthereumTransactionRequest:
-//            viewController = WalletConnectSendEthereumTransactionRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
-//        case let request as WalletConnectSignMessageRequest:
-//            viewController = WalletConnectSignMessageRequestModule.viewController(baseService: baseViewModel.service, requestId: request.id)
-//        default: ()
-//        }
-//
-//        if let viewController = viewController {
-//            present(ThemeNavigationController(rootViewController: viewController), animated: true)
-//        }
-    }
-
     private func close() {
         sourceViewController?.dismiss(animated: true)
-    }
-
-}
-
-extension WalletConnectMainViewController: SectionsDataSource {
-
-    public func buildSections() -> [SectionProtocol] {
-        var rows = [RowProtocol]()
-
-        if let imageUrl = peerMeta?.icon, let title = peerMeta?.name {
-            rows.append(headerRow(imageUrl: imageUrl, title: title))
-        }
-
-        if let status = status {
-            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: peerMeta == nil, valueColor: status.color))
-        }
-
-        if let url = peerMeta?.url {
-            rows.append(valueRow(title: "wallet_connect.url".localized, value: url, isFirst: status == nil, isLast: true))
-        }
-
-        if let footerRow = footer {
-            rows.append(footerRow)
-        }
-
-        return [Section(id: "wallet_connect", rows: rows)]
     }
 
     private var footer: RowProtocol? {
         hint.map { hint -> RowProtocol in
             Row<HighlightedDescriptionCell>(
                     id: "hint_footer",
+                    hash: hint,
                     dynamicHeight: { width in
                         HighlightedDescriptionCell.height(containerWidth: width, text: hint)
                     },
@@ -279,22 +261,128 @@ extension WalletConnectMainViewController: SectionsDataSource {
     }
 
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
-        Row<TermsHeaderCell>(id: "header", height: TermsHeaderCell.height, bind: { cell, _ in
-            cell.bind(imageUrl: imageUrl, title: title, subtitle: nil)
-        })
+        Row<TermsHeaderCell>(
+                id: "header",
+                hash: "\(title)-\(imageUrl ?? "N/A")",
+                height: TermsHeaderCell.height,
+                bind: { cell, _ in
+                    cell.bind(imageUrl: imageUrl, title: title, subtitle: nil)
+                }
+        )
     }
 
     private func valueRow(title: String, value: String, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil) -> RowProtocol {
-        Row<D7Cell>(
-                id: "row_\(title)",
+        CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
+                id: "non-selectable-row-\(title)",
+                hash: "non-selectable-\(title)-\(value)-\(isFirst.description)-\(isLast.description)",
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.title = title
-                    cell.value = value
-                    cell.valueColor = valueColor ?? .themeLeah
-                }
-        )
+                    cell.bind(index: 0, block: { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = title
+                    })
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = value
+                        if let color = valueColor {
+                            component.textColor = color
+                        }
+                    })
+                })
+    }
+
+    private func selectableValueRow(title: String, value: String, selected: Bool, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilder.selectableRow(
+                elements: [.image24, .text, .text],
+                tableView: tableView,
+                id: "selectable-row-\(title)",
+                hash: "selectable-\(title)-\(value)-\(selected.description)-\(isFirst.description)-\(isLast.description)",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
+                    })
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = title
+                    })
+                    cell.bind(index: 2, block: { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = value
+                        if let color = valueColor {
+                            component.textColor = color
+                        }
+                    })
+                },
+                action: action)
+    }
+
+}
+
+extension WalletConnectMainViewController: SectionsDataSource {
+
+    public func buildSections() -> [SectionProtocol] {
+        print("BUILD SECTIONS")
+        var rows = [RowProtocol]()
+
+        guard let appMeta = appMeta else {
+            print("No appMeta")
+            return [Section(id: "wallet_connect", rows: rows)]
+        }
+
+        if let imageUrl = appMeta.icon {
+            print("BUILD image")
+            rows.append(headerRow(imageUrl: imageUrl, title: appMeta.name))
+        }
+
+        if let status = status {
+            print("BUILD status")
+            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: activeAccountName == nil, valueColor: status.color))
+        }
+
+        rows.append(valueRow(title: "wallet_connect.url".localized, value: appMeta.url, isFirst: status == nil, isLast: activeAccountName == nil))
+
+        if let accountName = activeAccountName {
+            rows.append(valueRow(title: "wallet_connect.active_account".localized, value: accountName, isFirst: status == nil, isLast: (blockchains ?? []).isEmpty))
+        }
+
+        if let blockchains = blockchains, !blockchains.isEmpty {
+            rows.append(contentsOf: blockchains
+                    .enumerated()
+                    .map { index, blockchain in
+                        if blockchainEditable {
+                            return selectableValueRow(
+                                    title: blockchain.chainTitle ?? "Unsupported",
+                                    value: blockchain.address,
+                                    selected: blockchain.selected,
+                                    isFirst: false,
+                                    isLast: index == blockchains.count - 1,
+                                    action: { [weak self] in
+                                        self?.viewModel.onToggle(chainId: blockchain.chainId)
+                                    }
+                            )
+                        } else {
+                            return valueRow(
+                                    title: blockchain.chainTitle ?? "Unsupported",
+                                    value: blockchain.address,
+                                    isFirst: false,
+                                    isLast: index == blockchains.count - 1
+                            )
+                        }
+                    })
+        }
+
+        if let footerRow = footer {
+            rows.append(footerRow)
+        }
+
+        return [Section(id: "wallet_connect", rows: rows)]
     }
 
 }

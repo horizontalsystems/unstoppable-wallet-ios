@@ -10,8 +10,8 @@ class WalletConnectV2PingService {
     private var disposeBag = DisposeBag()
     private let service: WalletConnectV2Service
 
-    private let stateRelay = BehaviorRelay<WalletConnectXMainModule.ConnectionState>(value: .disconnected)
-    private(set) var state: WalletConnectXMainModule.ConnectionState = .disconnected {
+    private let stateRelay = BehaviorRelay<WalletConnectMainModule.ConnectionState>(value: .disconnected)
+    private(set) var state: WalletConnectMainModule.ConnectionState = .disconnected {
         didSet {
             if oldValue != state {
                 stateRelay.accept(state)
@@ -48,7 +48,7 @@ class WalletConnectV2PingService {
 
 extension WalletConnectV2PingService {
 
-    var stateObservable: Observable<WalletConnectXMainModule.ConnectionState> {
+    var stateObservable: Observable<WalletConnectMainModule.ConnectionState> {
         stateRelay.asObservable()
     }
 

@@ -5,16 +5,16 @@ import ComponentKit
 import RxSwift
 import RxCocoa
 
-class WalletConnectV1XListView {
+class WalletConnectV1ListView {
     private let disposeBag = DisposeBag()
-    private let viewModel: WalletConnectV1XListViewModel
-    weak var sourceViewController: WalletConnectXListViewController?
+    private let viewModel: WalletConnectV1ListViewModel
+    weak var sourceViewController: WalletConnectListViewController?
 
-    private(set) var viewItems = [WalletConnectV1XListViewModel.ViewItem]()
+    private(set) var viewItems = [WalletConnectV1ListViewModel.ViewItem]()
 
     private let reloadTableRelay = PublishRelay<()>()
 
-    init(viewModel: WalletConnectV1XListViewModel) {
+    init(viewModel: WalletConnectV1ListViewModel) {
         self.viewModel = viewModel
     }
 
@@ -25,14 +25,14 @@ class WalletConnectV1XListView {
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
-    private func sync(viewItems: [WalletConnectV1XListViewModel.ViewItem]) {
+    private func sync(viewItems: [WalletConnectV1ListViewModel.ViewItem]) {
         self.viewItems = viewItems
 
         reloadTableRelay.accept(())
     }
 
     private func show(session: WalletConnectSession) {
-        guard let viewController = WalletConnectXMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
+        guard let viewController = WalletConnectMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }
 
@@ -72,7 +72,7 @@ class WalletConnectV1XListView {
         )
     }
 
-    private func section(viewItems: [WalletConnectV1XListViewModel.ViewItem]) -> SectionProtocol {
+    private func section(viewItems: [WalletConnectV1ListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_1",
                 headerState: header(text: "wallet_connect.list.version_text".localized("1.0")),
@@ -104,7 +104,7 @@ class WalletConnectV1XListView {
 
 }
 
-extension WalletConnectV1XListView {
+extension WalletConnectV1ListView {
 
     var sections: [SectionProtocol] {
         guard !viewItems.isEmpty else {

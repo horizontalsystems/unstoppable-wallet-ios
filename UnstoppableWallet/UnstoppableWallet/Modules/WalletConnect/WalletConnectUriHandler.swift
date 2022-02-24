@@ -1,13 +1,14 @@
 class WalletConnectUriHandler {
 
-    private static func createModuleV1(uri: String) -> Result<IWalletConnectXMainService, Error> {
-        let service = WalletConnectV1XMainService(
+    private static func createModuleV1(uri: String) -> Result<IWalletConnectMainService, Error> {
+        let service = WalletConnectV1MainService(
                 session: nil,
                 uri: uri,
                 manager: App.shared.walletConnectManager,
                 sessionManager: App.shared.walletConnectSessionManager,
                 reachabilityManager: App.shared.reachabilityManager,
-                accountManager: App.shared.accountManager
+                accountManager: App.shared.accountManager,
+                evmBlockchainManager: App.shared.evmBlockchainManager
         )
 
         do {
@@ -19,7 +20,7 @@ class WalletConnectUriHandler {
         return .success(service)
     }
 
-    private static func createModuleV2(uri: String) -> Result<IWalletConnectXMainService, Error> {
+    private static func createModuleV2(uri: String) -> Result<IWalletConnectMainService, Error> {
         do {
             try App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
         } catch {
@@ -28,7 +29,7 @@ class WalletConnectUriHandler {
 
         let service = App.shared.walletConnectV2SessionManager.service
         let pingService = WalletConnectV2PingService(service: service)
-        let mainService = WalletConnectV2XMainService(
+        let mainService = WalletConnectV2MainService(
                 session: nil,
                 uri: uri,
                 service: service,
@@ -47,9 +48,7 @@ class WalletConnectUriHandler {
 
 extension WalletConnectUriHandler {
 
-    static func connect(uri: String) -> Result<IWalletConnectXMainService, Error> {
-
-        //todo parse version and create appropriate service
+    static func connect(uri: String) -> Result<IWalletConnectMainService, Error> {
         if uri.contains("@1?") {
             return createModuleV1(uri: uri)
         } else if uri.contains("@2?") {

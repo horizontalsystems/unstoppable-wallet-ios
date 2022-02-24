@@ -1,29 +1,31 @@
 import RxSwift
 import RxRelay
-import EthereumKit
+import RxCocoa
+import WalletConnect
+import WalletConnectUtils
 
 class WalletConnectListService {
-    private let sessionManager: WalletConnectSessionManager
-
-    private var sessionKiller: WalletConnectSessionKiller?
     private var disposeBag = DisposeBag()
 
+    private let createModuleRelay = PublishRelay<IWalletConnectMainService>()
+    private let connectionErrorRelay = PublishRelay<Error>()
+
+    private let sessionManager: WalletConnectSessionManager
+    private let sessionManagerV2: WalletConnectV2SessionManager
+    private let evmBlockchainManager: EvmBlockchainManager
+    private let evmChainParser: WalletConnectEvmChainParser
+
+    private var sessionKiller: WalletConnectSessionKiller?
+    private let showSessionV1Relay = PublishRelay<WalletConnectSession>()
+    private let showSessionV2Relay = PublishRelay<Session>()
     private let sessionKillingRelay = PublishRelay<SessionKillingState>()
 
-    init(sessionManager: WalletConnectSessionManager) {
+
+    init(sessionManager: WalletConnectSessionManager, sessionManagerV2: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.sessionManager = sessionManager
-    }
-
-    private func items(sessions: [WalletConnectSession]) -> [Item] {
-        Chain.allCases.compactMap { chain in
-            let sessions = sessions.filter { $0.chainId == chain.rawValue }
-
-            guard !sessions.isEmpty else {
-                return nil
-            }
-
-            return Item(chain: chain, sessions: sessions)
-        }
+        self.sessionManagerV2 = sessionManagerV2
+        self.evmBlockchainManager = evmBlockchainManager
+        self.evmChainParser = evmChainParser
     }
 
     private func onUpdateSessionKiller(state: WalletConnectSessionKiller.State) {
@@ -45,41 +47,142 @@ class WalletConnectListService {
         sessionKillingRelay.accept(successful ? .completed : .removedOnly)
     }
 
+    private func items(sessions: [WalletConnectSession]) -> [Item] {
+        sessions.compactMap {
+            guard let blockchain = evmBlockchainManager.blockchain(chainId: $0.chainId) else {
+                return nil
+            }
+            return Item(
+                    id: $0.id,
+                    chains: [blockchain],
+                    version: 1,
+                    appName: $0.peerMeta.name,
+                    appUrl: $0.peerMeta.url,
+                    appDescription: $0.peerMeta.description,
+                    appIcons: $0.peerMeta.icons
+            )
+        }
+    }
+
+    private func items(sessions: [Session]) -> [Item] {
+        sessions.map { session in
+            let chainIds = Array(session.permissions.blockchains).compactMap {
+                evmChainParser.parse(string: $0)?.chainId
+            }
+            let blockchains = chainIds.compactMap {
+                evmBlockchainManager.blockchain(chainId: $0)
+            }
+            return Item(
+                    id: session.id,
+                    chains: blockchains,
+                    version: 2,
+                    appName: session.peer.name ?? "",
+                    appUrl: session.peer.url ?? "",
+                    appDescription: session.peer.description ?? "",
+                    appIcons: session.peer.icons ?? []
+            )
+        }
+    }
+
 }
 
 extension WalletConnectListService {
 
-    var items: [Item] {
+    var emptySessionList: Bool {
+        (sessionManager.sessions.count + sessionManagerV2.sessions.count) == 0
+    }
+
+    var itemsV1: [Item] {
         items(sessions: sessionManager.sessions)
     }
 
-    var sessionCount: Int {
-        sessionManager.sessions.count
+    var itemsV2: [Item] {
+        items(sessions: sessionManagerV2.sessions)
     }
 
-    var itemsObservable: Observable<[Item]> {
+    var itemsV1Observable: Observable<[Item]> {
         sessionManager.sessionsObservable.map { [weak self] in
             self?.items(sessions: $0) ?? []
         }
+    }
+
+    var itemsV2Observable: Observable<[Item]> {
+        sessionManagerV2.sessionsObservable.map { [weak self] in
+            self?.items(sessions: $0) ?? []
+        }
+    }
+
+    var pendingRequestsV2: [Request] {
+        sessionManagerV2.pendingRequests()
+    }
+
+    var pendingRequestsV2Observable: Observable<[Request]> {
+        sessionManagerV2.pendingRequestsObservable
+    }
+
+    var showSessionV1Observable: Observable<WalletConnectSession> {
+        showSessionV1Relay.asObservable()
+    }
+
+    var showSessionV2Observable: Observable<Session> {
+        showSessionV2Relay.asObservable()
     }
 
     var sessionKillingObservable: Observable<SessionKillingState> {
         sessionKillingRelay.asObservable()
     }
 
-    func kill(session: WalletConnectSession) {
-        sessionKillingRelay.accept(.processing)
+    func kill(id: Int) {
+        if let session = sessionManager.sessions.first(where: { $0.id == id }) {
+            sessionKillingRelay.accept(.processing)
 
-        let sessionKiller = WalletConnectSessionKiller(session: session)
-        let forceTimer = Observable.just(()).delay(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            let sessionKiller = WalletConnectSessionKiller(session: session)
+            let forceTimer = Observable.just(()).delay(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
 
-        subscribe(disposeBag, forceTimer) { [weak self] in self?.finishSessionKill(successful: false) }
-        subscribe(disposeBag, sessionKiller.stateObservable) { [weak self] in
-            self?.onUpdateSessionKiller(state: $0)
+            subscribe(disposeBag, forceTimer) { [weak self] in
+                self?.finishSessionKill(successful: false)
+            }
+            subscribe(disposeBag, sessionKiller.stateObservable) { [weak self] in
+                self?.onUpdateSessionKiller(state: $0)
+            }
+
+            sessionKiller.kill()
+            self.sessionKiller = sessionKiller
         }
+        if let session = sessionManagerV2.sessions.first(where: { $0.id == id }) {
+            sessionKillingRelay.accept(.processing)
+            let killTimer = Observable.just(()).delay(.milliseconds(600), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            subscribe(disposeBag, killTimer) { [weak self] in
+                self?.sessionManagerV2.deleteSession(topic: session.topic)
+                self?.sessionKillingRelay.accept(.completed)
+            }
+        }
+    }
 
-        sessionKiller.kill()
-        self.sessionKiller = sessionKiller
+    var createModuleObservable: Observable<IWalletConnectMainService> {
+        createModuleRelay.asObservable()
+    }
+
+    var connectionErrorObservable: Observable<Error> {
+        connectionErrorRelay.asObservable()
+    }
+
+    func connect(uri: String) {
+        let result = WalletConnectUriHandler.connect(uri: uri)
+
+        switch result {
+        case .success(let service): createModuleRelay.accept(service)
+        case .failure(let error): connectionErrorRelay.accept(error)
+        }
+    }
+
+    func showSession(id: Int) {
+        if let sessionV1 = sessionManager.sessions.first(where: { $0.id == id }) {
+            showSessionV1Relay.accept(sessionV1)
+        }
+        if let sessionV2 = sessionManagerV2.sessions.first(where: { $0.id == id }) {
+            showSessionV2Relay.accept(sessionV2)
+        }
     }
 
 }
@@ -92,18 +195,32 @@ extension WalletConnectListService {
         case removedOnly
     }
 
-    enum Chain: Int, CaseIterable {
-        case ethereum = 1
-        case binanceSmartChain = 56
-        case ropsten = 3
-        case rinkeby = 4
-        case kovan = 42
-        case goerli = 5
+    struct Item {
+        let id: Int
+        let chains: [EvmBlockchain]
+        let version: Int
+
+        let appName: String
+        let appUrl: String
+        let appDescription: String
+        let appIcons: [String]
     }
 
-    struct Item {
-        let chain: Chain
-        let sessions: [WalletConnectSession]
+}
+
+extension WalletConnectSession: Hashable {
+
+    public var id: Int {
+        hashValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(accountId)
+        hasher.combine(peerId)
+    }
+
+    public static func ==(lhs: WalletConnectSession, rhs: WalletConnectSession) -> Bool {
+        lhs.accountId == rhs.accountId && lhs.peerId == rhs.peerId
     }
 
 }

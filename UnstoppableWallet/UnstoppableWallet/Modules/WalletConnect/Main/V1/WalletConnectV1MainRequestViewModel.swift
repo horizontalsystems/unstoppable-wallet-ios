@@ -3,13 +3,13 @@ import RxRelay
 import RxCocoa
 import WalletConnectV1
 
-class WalletConnectV1XMainRequestViewModel {
+class WalletConnectV1MainRequestViewModel {
     private let disposeBag = DisposeBag()
-    let service: WalletConnectV1XMainService
+    let service: WalletConnectV1MainService
 
     private let openRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV1XMainService) {
+    init(service: WalletConnectV1MainService) {
         self.service = service
 
         subscribe(disposeBag, service.requestObservable) { [weak self] in self?.openRequestRelay.accept($0) }
@@ -17,7 +17,7 @@ class WalletConnectV1XMainRequestViewModel {
 
 }
 
-extension WalletConnectV1XMainRequestViewModel {
+extension WalletConnectV1MainRequestViewModel {
 
     var openRequestSignal: Signal<WalletConnectRequest> {
         openRequestRelay.asSignal()

@@ -150,7 +150,7 @@ class MainViewController: ThemeTabBarController {
             let result = WalletConnectUriHandler.connect(uri: url)
             switch result {
             case .success(let service):
-                guard let viewController = WalletConnectXMainModule.viewController(
+                guard let viewController = WalletConnectMainModule.viewController(
                         service: service,
                         sourceViewController: visibleController) else {
                     return
