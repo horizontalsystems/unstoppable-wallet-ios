@@ -121,6 +121,7 @@ extension EvmBlockchain {
         switch self {
         case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
         case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
+        case .polygon: return []
         }
     }
 

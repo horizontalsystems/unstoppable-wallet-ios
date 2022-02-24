@@ -89,6 +89,8 @@ extension AdapterFactory {
             return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
         case let .bep20(address):
             return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
+        case let .polygonPos(address):
+            return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
         default: ()
         }
 

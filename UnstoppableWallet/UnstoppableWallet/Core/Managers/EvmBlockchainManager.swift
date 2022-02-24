@@ -26,6 +26,7 @@ class EvmBlockchainManager {
         switch blockchain {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygon
         }
     }
 
@@ -36,7 +37,8 @@ extension EvmBlockchainManager {
     var allBlockchains: [EvmBlockchain] {
         [
             .ethereum,
-            .binanceSmartChain
+            .binanceSmartChain,
+            .polygon
         ]
 
         // todo: load custom blockchains here

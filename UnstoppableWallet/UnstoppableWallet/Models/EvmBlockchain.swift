@@ -4,11 +4,13 @@ import MarketKit
 enum EvmBlockchain: String {
     case ethereum
     case binanceSmartChain
+    case polygon
 
     var baseCoinType: CoinType {
         switch self {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygonPos(address: "0x0000000000000000000000000000000000001010")
         }
     }
 
@@ -16,6 +18,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return .erc20(address: address)
         case .binanceSmartChain: return .bep20(address: address)
+        case .polygon: return .polygonPos(address: address)
         }
     }
 
@@ -23,7 +26,16 @@ enum EvmBlockchain: String {
         switch (coinType, self) {
         case (.ethereum, .ethereum), (.erc20, .ethereum): return true
         case (.binanceSmartChain, .binanceSmartChain), (.bep20, .binanceSmartChain): return true
+        case (.polygonPos, .polygon): return true
         default: return false
+        }
+    }
+
+    var uid: String {
+        switch self {
+        case .ethereum: return "ethereum"
+        case .binanceSmartChain: return "binance-smart-chain"
+        case .polygon: return "polygon"
         }
     }
 
@@ -31,6 +43,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return "Ethereum"
         case .binanceSmartChain: return "Binance Smart Chain"
+        case .polygon: return "Polygon"
         }
     }
 
@@ -45,6 +58,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return "ETH, ERC20 tokens"
         case .binanceSmartChain: return "BNB, BEP20 tokens"
+        case .polygon: return "MATIC, MRC20 tokens"
         }
     }
 
@@ -52,6 +66,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return "ethereum_24"
         case .binanceSmartChain: return "binance_smart_chain_24"
+        case .polygon: return "polygon_24"
         }
     }
 
@@ -59,6 +74,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return true
         case .binanceSmartChain: return true
+        case .polygon: return true
         }
     }
 
