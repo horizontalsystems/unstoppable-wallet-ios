@@ -920,6 +920,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.button.confirm" = "Confirmar";
 "wallet_connect.sign.request_title" = "Solicitud de Firma";
 "wallet_connect.sign.domain" = "Dominio";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensaje a firmar";
 "wallet_connect.sign.description" = "Por favor, firma un mensaje para autentificarte";
 
