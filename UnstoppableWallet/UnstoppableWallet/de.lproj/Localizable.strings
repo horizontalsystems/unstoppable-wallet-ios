@@ -919,6 +919,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "wallet_connect.button.confirm" = "Bestätigen";
 "wallet_connect.sign.request_title" = "Signaturanfrage";
 "wallet_connect.sign.domain" = "Domäne";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Zu unterzeichnende Nachricht";
 "wallet_connect.sign.description" = "Bitte signieren Sie eine Nachricht zur Authentifizierung";
 
