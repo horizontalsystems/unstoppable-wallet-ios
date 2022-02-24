@@ -810,7 +810,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.year2" = "2A";
 
 "chart.market_cap" = "Cap. marché";
-
 "chart.market_cap.thousand" = "%@ k";
 "chart.market_cap.million" = "%@ M";
 "chart.market_cap.billion" = "%@ Mrd";
@@ -904,7 +903,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
-"wallet_connect.active_account" = "Active Wallet";
+"wallet_connect.active_account" = "Activer le portefeuille";
+"wallet_connect.main.unsupported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "wallet_connect.usage_description" = "Vous pouvez aller sur le navigateur. Ne fermez pas cette page pendant que vous interagissez dans le navigateur.";
 "wallet_connect.no_connection" = "Échec de connexion. Essayez de vous reconnecter à nouveau.";
@@ -925,6 +925,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 "wallet_connect.list.empty_view_button_text" = "Nouvelle connexion";
+
+"wallet_connect.list.pending_requests" = "Demandes en attente";
+"wallet_connect.list.version_text" = "version %@";
 "wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";
@@ -936,7 +939,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.watch_account.switch" = "Basculer";
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
-"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Pour ouvrir une demande, vous devez activer le portefeuille désiré";
 
 // App Status
 
@@ -954,13 +957,13 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "status_info.title" = "Statut";
 "status_info.pending.title" = "En attente";
-"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Les transactions envoyées avec un paramètre de frais recommandé ou supérieur sont généralement traitées dans les 10 minutes. Les transactions envoyées avec des frais faibles peuvent rester en attente pendant quelques heures, voire quelques jours, et peuvent même être rejetées. Gardez également à l'esprit que le statut d'une transaction individuelle affiché dans l'interface du portefeuille Unstoppable est généralement mis à jour après un court délai.";
+"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Les transactions envoyées avec un montant de frais recommandé ou supérieur sont généralement traitées en quelques minutes. Les transactions envoyées avec des frais peu élevés risquent de rester en attente pendant quelques heures, voire quelques jours, et peuvent même être rejetées. Notez que le statut d'une transaction individuelle dans l'interface du portefeuille Unstoppable Wallet est généralement mis à jour avec un léger délai.";
 "status_info.processing.title" = "Traitement en cours";
 "status_info.processing.content" = "La transaction a déjà été incluse dans la blockchain mais n'a pas été finalisée. En ce qui concerne les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut de la transaction passe à terminé.";
 "status_info.completed.title" = "Terminé";
 "status_info.confirmed.content" = "La transaction est terminée et considérée comme permanente et irréversible.";
 "status_info.failed.title" = "Échec";
-"status_info.failed.content" = "La transaction n'a pas été traitée et aucun transfert de valeur n'a eu lieu. Les transactions avec un statut d'échec sont néanmoins inscrites sur la blockchain et génèrent des frais de transaction. L'application Unstoppable n'est pas en mesure d'afficher la raison de l'échec de ces transactions mais les utilisateurs peuvent la rechercher eux-mêmes sur un explorateur de bloc public, etherscan.io par exemple.";
+"status_info.failed.content" = "La transaction n'a pas été traitée et aucun transfert de fonds n'a eu lieu. En fonction de la raison de l'échec, certaines transactions qui ont échoué peuvent entraîner des frais de transaction. Les transactions qui ont été remplacées ou annulées par une autre transaction ne génèrent pas de frais et apparaîtront également comme ayant échoué. L'application Unstoppable n'est pas en mesure d'indiquer la raison de l'échec des transactions, mais les utilisateurs peuvent en trouver eux-mêmes la raison sur un explorateur de blocs public, comme etherscan.io par exemple.";
 
 // Onboarding
 
