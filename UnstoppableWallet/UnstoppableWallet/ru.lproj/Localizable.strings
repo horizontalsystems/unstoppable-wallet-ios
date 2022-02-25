@@ -513,9 +513,9 @@
 "coin_page.added_to_wallet" = "Добавлено в Кошелек";
 "coin_page.already_added_to_wallet" = "Уже добавлено в кошелек";
 
-"coin_page.major_holders" = "Основные Владельцы";
-"coin_page.major_holders.chart.description" = "Топ-10 лучших кошельков Ethereum";
-"coin_page.major_holders.top_ethereum_wallets" = "Лучшие кошельки Ethereum";
+"coin_page.major_holders" = "Крупные Держатели";
+"coin_page.major_holders.chart.description" = "Топ-10 кошельков Ethereum";
+"coin_page.major_holders.top_ethereum_wallets" = "Лучшие Кошельки Ethereum";
 "coin_page.major_holders.description" = "На графике выше показано % всех токенов, находящихся в обороте топ-10 кошельков. Чем ниже это процентное соотношение, тем выше распределение коина.";
 
 
