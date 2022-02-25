@@ -55,7 +55,7 @@ class SwapProviderManager {
         let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(platformCoinFrom: platformCoinFrom)
 
         switch dex.provider {
-        case .uniswap, .pancake:
+        case .uniswap, .pancake, .quickSwap:
             return UniswapModule(dex: dex, dataSourceState: state)
         case .oneInch:
             return OneInchModule(dex: dex, dataSourceState: state)

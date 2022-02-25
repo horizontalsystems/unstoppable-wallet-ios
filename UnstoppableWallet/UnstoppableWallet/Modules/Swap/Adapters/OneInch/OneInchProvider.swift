@@ -19,9 +19,10 @@ class OneInchProvider {
 
     private func address(platformCoin: PlatformCoin) throws -> EthereumKit.Address {
         switch platformCoin.coinType {
-        case .ethereum, .binanceSmartChain: return try EthereumKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        case .ethereum, .binanceSmartChain, .polygon: return try EthereumKit.Address(hex: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         case .erc20(let address): return try EthereumKit.Address(hex: address)
         case .bep20(let address): return try EthereumKit.Address(hex: address)
+        case .mrc20(let address): return try EthereumKit.Address(hex: address)
         default: throw SwapError.invalidAddress
         }
     }

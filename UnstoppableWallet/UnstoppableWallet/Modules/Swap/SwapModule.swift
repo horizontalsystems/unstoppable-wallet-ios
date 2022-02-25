@@ -121,7 +121,7 @@ extension EvmBlockchain {
         switch self {
         case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
         case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
-        case .polygon: return []
+        case .polygon: return isMainNet ? [.oneInch, .quickSwap] : [.quickSwap]
         }
     }
 
@@ -133,12 +133,41 @@ extension SwapModule.Dex {
         case uniswap = "Uniswap"
         case oneInch = "1Inch"
         case pancake = "PancakeSwap"
+        case quickSwap = "QuickSwap"
 
         var allowedBlockchains: [EvmBlockchain] {
             switch self {
-            case .oneInch: return [.ethereum, .binanceSmartChain]
             case .uniswap: return [.ethereum]
+            case .oneInch: return [.ethereum, .binanceSmartChain, .polygon]
             case .pancake: return [.binanceSmartChain]
+            case .quickSwap: return [.polygon]
+            }
+        }
+
+        var infoUrl: String {
+            switch self {
+            case .uniswap: return "https://uniswap.org/"
+            case .oneInch: return "https://app.1inch.io/"
+            case .pancake: return "https://pancakeswap.finance/"
+            case .quickSwap: return "https://quickswap.exchange/"
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .uniswap: return "Uniswap v.2"
+            case .oneInch: return "1Inch"
+            case .pancake: return "PancakeSwap"
+            case .quickSwap: return "QuickSwap"
+            }
+        }
+
+        var icon: String {
+            switch self {
+            case .uniswap: return "uniswap_24"
+            case .oneInch: return "1inch_24"
+            case .pancake: return "pancake_24"
+            case .quickSwap: return "quick_24"
             }
         }
 

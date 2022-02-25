@@ -12,13 +12,13 @@ class UniswapProvider {
     }
 
     private func uniswapToken(platformCoin: PlatformCoin) throws -> Token {
-        if case let .erc20(address) = platformCoin.coinType {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
-        } else if case let .bep20(address) = platformCoin.coinType {
-            return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
+        switch platformCoin.coinType {
+        case .ethereum, .binanceSmartChain, .polygon: return swapKit.etherToken
+        case let .erc20(address): return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
+        case let .bep20(address): return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
+        case let .mrc20(address): return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: platformCoin.decimals)
+        default: throw TokenError.unsupportedPlatformCoinType
         }
-
-        return swapKit.etherToken
     }
 
 }
@@ -51,6 +51,14 @@ extension UniswapProvider {
 
     func transactionData(tradeData: TradeData) throws -> TransactionData {
         try swapKit.transactionData(tradeData: tradeData)
+    }
+
+}
+
+extension UniswapProvider {
+
+    enum TokenError: Error {
+        case unsupportedPlatformCoinType
     }
 
 }
