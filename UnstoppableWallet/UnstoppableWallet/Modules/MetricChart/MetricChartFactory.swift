@@ -56,7 +56,7 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(items: [MetricChartModule.Item], chartType: ChartType, valueType: MetricChartModule.ValueType, currency: Currency) -> MetricChartViewModel.ViewItem {
+    func convert(items: [MetricChartModule.Item], interval: HsTimePeriod, valueType: MetricChartModule.ValueType, currency: Currency) -> MetricChartViewModel.ViewItem {
         // build data with rates
         let data = chartData(points: items)
 
@@ -84,7 +84,7 @@ extension MetricChartFactory {
 
         // make timeline for chart
 
-        let gridInterval = ChartTypeIntervalConverter.convert(chartType: chartType) // hours count
+        let gridInterval = ChartIntervalConverter.convert(interval: interval) // hours count
         let timeline = timelineHelper
                 .timestamps(startTimestamp: data.startWindow, endTimestamp: data.endWindow, separateHourlyInterval: gridInterval)
                 .map {
@@ -94,7 +94,7 @@ extension MetricChartFactory {
         return MetricChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, currentValue: value, minValue: minString, maxValue: maxString, chartDiff: valueDiff, timeline: timeline)
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, type: ChartType, valueType: MetricChartModule.ValueType, currency: Currency) -> SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, valueType: MetricChartModule.ValueType, currency: Currency) -> SelectedPointViewItem? {
         guard let value = chartItem.indicators[.rate] else {
             return nil
         }

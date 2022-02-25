@@ -121,7 +121,7 @@ class MetricChartViewController: ThemeActionSheetController {
     private func subscribeToInterval() {
         subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, viewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
     }
 
     private func subscribeToChart() {

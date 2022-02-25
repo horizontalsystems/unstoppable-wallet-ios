@@ -27,9 +27,9 @@ extension CoinTvlFetcher: IMetricChartConfiguration {
 
 extension CoinTvlFetcher: IMetricChartFetcher {
 
-    func fetchSingle(currencyCode: String, chartType: ChartType) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .marketInfoTvlSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: HsTimePeriod(chartType: chartType))
+                .marketInfoTvlSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval)
                 .map { points in
                     points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) }
                 }

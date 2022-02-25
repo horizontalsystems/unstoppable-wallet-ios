@@ -11,13 +11,13 @@ class MetricChartService {
     private var chartFetcher: IMetricChartFetcher
     private let currencyKit: CurrencyKit.Kit
 
-    private let chartTypeRelay = PublishRelay<ChartType>()
-    var chartType: ChartType {
+    private let intervalRelay = PublishRelay<HsTimePeriod>()
+    var interval: HsTimePeriod {
         didSet {
-            guard chartType != oldValue else {
+            guard interval != oldValue else {
                 return
             }
-            chartTypeRelay.accept(chartType)
+            intervalRelay.accept(interval)
             fetchChartData()
         }
     }
@@ -29,10 +29,10 @@ class MetricChartService {
         }
     }
 
-    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher, chartType: ChartType) {
+    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher, interval: HsTimePeriod) {
         self.currencyKit = currencyKit
         self.chartFetcher = chartFetcher
-        self.chartType = chartType
+        self.interval = interval
 
         fetchChartData()
         subscribe(fetcherDisposeBag, chartFetcher.needUpdateObservable) { [weak self] in self?.fetchChartData() }
@@ -43,7 +43,7 @@ class MetricChartService {
         state = .loading
 
         chartFetcher
-            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, chartType: chartType)
+            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, interval: interval)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] items in
                 self?.state = .completed(items)
@@ -57,10 +57,10 @@ class MetricChartService {
 
 extension MetricChartService {
 
-    var chartTypes: [ChartType] { chartFetcher.chartTypes }
+    var intervals: [HsTimePeriod] { chartFetcher.intervals }
 
-    var chartTypeObservable: Observable<ChartType> {
-        chartTypeRelay.asObservable()
+    var intervalObservable: Observable<HsTimePeriod> {
+        intervalRelay.asObservable()
     }
 
     var stateObservable: Observable<DataStatus<[MetricChartModule.Item]>> {

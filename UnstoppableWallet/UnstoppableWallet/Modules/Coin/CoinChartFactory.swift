@@ -136,7 +136,7 @@ class CoinChartFactory {
         return .neutral
     }
 
-    func convert(item: CoinChartService.Item, chartType: ChartType, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
+    func convert(item: CoinChartService.Item, interval: HsTimePeriod, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
         var points = item.chartInfo.points
         var endTimestamp = item.chartInfo.endTimestamp
 
@@ -151,7 +151,7 @@ class CoinChartFactory {
             points.append(ChartPoint(timestamp: timestamp, value: rate))
 
             // create extended point for 24h ago
-            if chartType == .day, let rateDiff24 = item.rateDiff24h {
+            if interval == .day1, let rateDiff24 = item.rateDiff24h {
                 let firstTimestamp = timestamp - 24 * 60 * 60
                 let price24h = 100 * rate / (100 + rateDiff24)
                 extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
@@ -212,7 +212,7 @@ class CoinChartFactory {
 
         // make timeline for chart
 
-        let gridInterval = ChartTypeIntervalConverter.convert(chartType: chartType) // hours count
+        let gridInterval = ChartIntervalConverter.convert(interval: interval) // hours count
         let timeline = timelineHelper
                 .timestamps(startTimestamp: data.startWindow, endTimestamp: data.endWindow, separateHourlyInterval: gridInterval)
                 .map {
@@ -220,13 +220,13 @@ class CoinChartFactory {
                 }
 
         // disable indicators if chart interval less than 7d
-        let correctedIndicator: ChartIndicatorSet? = [ChartType.today, ChartType.day].contains(chartType) ? nil : selectedIndicator
+        let correctedIndicator: ChartIndicatorSet? = [HsTimePeriod.day1].contains(interval) ? nil : selectedIndicator
 
         return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
                 trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, type: ChartType, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
         guard let rate = chartItem.indicators[.rate] else {
             return nil
         }

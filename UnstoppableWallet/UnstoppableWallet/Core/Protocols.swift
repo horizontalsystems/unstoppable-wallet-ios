@@ -367,8 +367,8 @@ protocol ICustomTokenStorage {
     func save(customTokens: [CustomToken])
 }
 
-protocol IChartTypeStorage: AnyObject {
-    var chartType: ChartType? { get set }
+protocol IChartIntervalStorage: AnyObject {
+    var interval: HsTimePeriod? { get set }
 }
 
 protocol IEvmAccountSyncStateStorage {

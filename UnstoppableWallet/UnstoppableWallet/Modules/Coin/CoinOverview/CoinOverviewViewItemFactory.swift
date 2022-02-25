@@ -19,17 +19,15 @@ class CoinOverviewViewItemFactory {
         return "\(formattedValue) \(coinCode)"
     }
 
-    private func roiTitle(timePeriod: TimePeriod) -> String {
+    private func roiTitle(timePeriod: HsTimePeriod) -> String {
         switch timePeriod {
-        case .all: return "n/a".localized
-        case .hour1: return "coin_page.roi.hour1".localized
-        case .dayStart: return "n/a".localized
-        case .hour24: return "coin_page.roi.hour24".localized
-        case .day7: return "coin_page.roi.day7".localized
-        case .day14: return "coin_page.roi.day14".localized
-        case .day30: return "coin_page.roi.day30".localized
-        case .day200: return "coin_page.roi.day200".localized
+        case .day1: return "coin_page.roi.hour24".localized
+        case .week1: return "coin_page.roi.day7".localized
+        case .week2: return "coin_page.roi.day14".localized
+        case .month1: return "coin_page.roi.day30".localized
+        case .month6: return "coin_page.roi.day200".localized
         case .year1: return "coin_page.roi.year1".localized
+        default: return "n/a".localized
         }
     }
 
@@ -39,17 +37,17 @@ class CoinOverviewViewItemFactory {
         var titleRow = [CoinOverviewViewModel.PerformanceViewItem]()
         titleRow.append(.title("coin_page.return_of_investments".localized))
 
-        var timePeriods = [TimePeriod]()
+        var intervals = [HsTimePeriod]()
         for row in info.performance {
-            for (timePeriod, _) in row.changes {
-                if !timePeriods.contains(timePeriod) {
-                    timePeriods.append(timePeriod)
+            for (interval, _) in row.changes {
+                if !intervals.contains(interval) {
+                    intervals.append(interval)
                 }
             }
         }
 
-        timePeriods.sort()
-        timePeriods.forEach { titleRow.append(.subtitle(roiTitle(timePeriod: $0))) }
+        intervals.sort()
+        intervals.forEach { titleRow.append(.subtitle(roiTitle(timePeriod: $0))) }
 
         viewItems.append(titleRow)
 
@@ -57,7 +55,7 @@ class CoinOverviewViewItemFactory {
             var row = [CoinOverviewViewModel.PerformanceViewItem]()
             row.append(.content("vs \(performanceRow.base.rawValue.uppercased())"))
 
-            timePeriods.forEach { timePeriod in
+            intervals.forEach { timePeriod in
                 row.append(.value(performanceRow.changes[timePeriod]))
             }
             viewItems.append(row)

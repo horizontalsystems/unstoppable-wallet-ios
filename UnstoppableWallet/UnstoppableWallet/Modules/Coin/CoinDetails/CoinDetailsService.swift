@@ -33,7 +33,7 @@ class CoinDetailsService {
         }
 
         let volumeSingle = marketKit
-                .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, chartType: .monthByDay)
+                .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, interval: .month1)
                 .map {
                     $0.points
                     .compactMap { point in

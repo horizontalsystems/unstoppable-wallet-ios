@@ -82,7 +82,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
     private func subscribeToInterval() {
         subscribe(disposeBag, chartViewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, chartViewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, chartViewModel.chartTypeIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, chartViewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
     }
 
     private func subscribeToChart() {

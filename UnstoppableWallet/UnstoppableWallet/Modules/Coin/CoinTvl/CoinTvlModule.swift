@@ -10,7 +10,7 @@ class CoinTvlModule {
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
-                chartType: .month
+                interval: .month1
         )
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)

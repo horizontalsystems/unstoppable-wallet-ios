@@ -16,7 +16,7 @@ class MetricChartViewModel {
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
 
-    private let chartTypeIndexRelay = BehaviorRelay<Int>(value: 0)
+    private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<MetricChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
@@ -30,15 +30,15 @@ class MetricChartViewModel {
         self.chartConfiguration = chartConfiguration
         self.factory = factory
 
-        subscribe(disposeBag, service.chartTypeObservable) { [weak self] in self?.sync(chartType: $0) }
+        subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        sync(chartType: service.chartType)
+        sync(interval: service.interval)
         sync(state: service.state)
     }
 
-    private func sync(chartType: ChartType) {
-        chartTypeIndexRelay.accept(service.chartTypes.firstIndex(of: chartType) ?? 0)
+    private func sync(interval: HsTimePeriod) {
+        intervalIndexRelay.accept(service.intervals.firstIndex(of: interval) ?? 0)
     }
 
     private func sync(state: DataStatus<[MetricChartModule.Item]>) {
@@ -55,7 +55,7 @@ class MetricChartViewModel {
             return
         }
 
-        chartInfoRelay.accept(factory.convert(items: items, chartType: service.chartType, valueType: chartConfiguration.valueType, currency: service.currency))
+        chartInfoRelay.accept(factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType, currency: service.currency))
     }
 
 }
@@ -70,8 +70,8 @@ extension MetricChartViewModel {
         pointSelectedItemRelay.asDriver()
     }
 
-    var chartTypeIndexDriver: Driver<Int> {
-        chartTypeIndexRelay.asDriver()
+    var intervalIndexDriver: Driver<Int> {
+        intervalIndexRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
@@ -86,15 +86,15 @@ extension MetricChartViewModel {
         errorRelay.asDriver()
     }
 
-    var chartTypes: [String] { service.chartTypes.map { $0.title.uppercased() } }
+    var chartTypes: [String] { service.intervals.map { $0.title.uppercased() } }
 
     func onSelectType(at index: Int) {
-        let chartTypes = service.chartTypes
+        let chartTypes = service.intervals
         guard chartTypes.count > index else {
             return
         }
 
-        service.chartType = chartTypes[index]
+        service.interval = chartTypes[index]
     }
 
 }
@@ -107,7 +107,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, valueType: chartConfiguration.valueType, currency: service.currency))
+        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, valueType: chartConfiguration.valueType, currency: service.currency))
     }
 
     public func touchUp() {

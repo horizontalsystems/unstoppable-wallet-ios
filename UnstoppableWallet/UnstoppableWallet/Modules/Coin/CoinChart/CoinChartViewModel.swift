@@ -23,21 +23,21 @@ class CoinChartViewModel {
     private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    let chartTypes = ChartType.allCases.map { $0.title.uppercased() }
+    let chartTypes = HsTimePeriod.allCases.map { $0.title.uppercased() }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
         self.factory = factory
 
-        subscribe(disposeBag, service.chartTypeObservable) { [weak self] in self?.sync(chartType: $0) }
+        subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        sync(chartType: service.chartType)
+        sync(interval: service.interval)
         sync(state: service.state)
     }
 
-    private func sync(chartType: ChartType) {
-        chartTypeIndexRelay.accept(ChartType.allCases.firstIndex(of: chartType) ?? 0)
+    private func sync(interval: HsTimePeriod) {
+        chartTypeIndexRelay.accept(HsTimePeriod.allCases.firstIndex(of: interval) ?? 0)
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
@@ -60,7 +60,7 @@ class CoinChartViewModel {
             return
         }
 
-        chartInfoRelay.accept(factory.convert(item: item, chartType: service.chartType, currency: service.currency, selectedIndicator: service.selectedIndicator))
+        chartInfoRelay.accept(factory.convert(item: item, interval: service.interval, currency: service.currency, selectedIndicator: service.selectedIndicator))
     }
 
 }
@@ -99,13 +99,13 @@ extension CoinChartViewModel {
         errorRelay.asDriver()
     }
 
-    func onSelectType(at index: Int) {
-        let chartTypes = ChartType.allCases
-        guard chartTypes.count > index else {
+    func onSelectInterval(at index: Int) {
+        let intervals = HsTimePeriod.allCases
+        guard intervals.count > index else {
             return
         }
 
-        service.chartType = chartTypes[index]
+        service.interval = intervals[index]
     }
 
     func onTap(indicator: ChartIndicatorSet) {
@@ -126,7 +126,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, type: service.chartType, currency: service.currency, macdSelected: service.selectedIndicator.contains(.macd)))
+        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, currency: service.currency, macdSelected: service.selectedIndicator.contains(.macd)))
     }
 
     public func touchUp() {
@@ -155,20 +155,19 @@ extension CoinChartViewModel {
 
 }
 
-extension ChartType {
+extension HsTimePeriod {
 
     var title: String {
         switch self {
-        case .today: return "chart.time_duration.today".localized
-        case .day: return "chart.time_duration.day".localized
-        case .week: return "chart.time_duration.week".localized
+//        case .today: return "chart.time_duration.today".localized
+        case .day1: return "chart.time_duration.day".localized
+        case .week1: return "chart.time_duration.week".localized
         case .week2: return "chart.time_duration.week2".localized
-        case .month: return "chart.time_duration.month".localized
-        case .monthByDay: return "chart.time_duration.month".localized
+        case .month1: return "chart.time_duration.month".localized
         case .month3: return "chart.time_duration.month3".localized
-        case .halfYear: return "chart.time_duration.halfyear".localized
-        case .year: return "chart.time_duration.year".localized
-        case .year2: return "chart.time_duration.year2".localized
+        case .month6: return "chart.time_duration.halfyear".localized
+        case .year1: return "chart.time_duration.year".localized
+//        case .year2: return "chart.time_duration.year2".localized
         }
     }
 
