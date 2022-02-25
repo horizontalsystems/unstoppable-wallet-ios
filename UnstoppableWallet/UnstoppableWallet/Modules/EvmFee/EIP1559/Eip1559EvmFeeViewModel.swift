@@ -77,7 +77,7 @@ class Eip1559EvmFeeViewModel {
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>?) {
         let gasPriceStatus = gasPriceStatus ?? gasPriceService.status
 
-        guard case .completed(let fallibleGasPrice) = gasPriceStatus else {
+        guard case .completed = gasPriceStatus else {
             baseFeeRelay.accept("n/a")
             tipsRelay.accept("n/a")
             baseFeeSliderRelay.accept(nil)

@@ -32,6 +32,8 @@ class EvmCoinServiceFactory {
             return try? marketKit.platformCoin(coinType: .erc20(address: contractAddress.hex))
         case .binanceSmartChain:
             return try? marketKit.platformCoin(coinType: .bep20(address: contractAddress.hex))
+        case .polygonPos:
+            return try? marketKit.platformCoin(coinType: .polygonPos(address: contractAddress.hex))
         default:
             return nil
         }
