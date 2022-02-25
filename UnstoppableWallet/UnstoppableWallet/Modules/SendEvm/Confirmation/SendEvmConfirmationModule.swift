@@ -67,11 +67,10 @@ struct SendEvmConfirmationModule {
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
-        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: evmKitWrapper.blockchain) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(evmBlockchain: evmKitWrapper.blockchain, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
             return nil
         }
 
-        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
         let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)
@@ -95,7 +94,8 @@ struct SendEvmConfirmationModule {
             throw CreateModuleError.alreadyInBlock
         }
 
-        guard let platformCoin = App.shared.evmBlockchainManager.basePlatformCoin(blockchain: adapter.evmKitWrapper.blockchain) else {
+        let evmKitWrapper = adapter.evmKitWrapper
+        guard let coinServiceFactory = EvmCoinServiceFactory(evmBlockchain: evmKitWrapper.blockchain, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 
@@ -111,8 +111,6 @@ struct SendEvmConfirmationModule {
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         }
 
-        let evmKitWrapper = adapter.evmKitWrapper
-        let coinServiceFactory = EvmCoinServiceFactory(basePlatformCoin: platformCoin, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: transaction)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimit: transaction.gasLimit)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, activateCoinManager: App.shared.activateCoinManager)

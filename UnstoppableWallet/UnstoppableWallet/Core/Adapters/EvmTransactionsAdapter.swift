@@ -21,10 +21,10 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
     private func coinTagName(coin: PlatformCoin) -> String {
         switch coin.coinType {
-        case .ethereum, .binanceSmartChain: return TransactionTag.evmCoin
+        case .ethereum, .binanceSmartChain, .polygon: return TransactionTag.evmCoin
         case .erc20(let address): return address
         case .bep20(let address): return address
-        case .polygonPos(let address): return address == "0x0000000000000000000000000000000000001010" ? TransactionTag.evmCoin : address
+        case .mrc20(let address): return address
         default: return ""
         }
     }
