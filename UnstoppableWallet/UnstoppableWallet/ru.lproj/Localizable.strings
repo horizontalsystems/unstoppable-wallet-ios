@@ -593,7 +593,7 @@
 
 // Transaction Info
 
-"tx_info.title" = "Информация о Транзакции";
+"tx_info.title" = "Детали Транзакции";
 "tx_info.date" = "Дата";
 "tx_info.title_approval" = "Разрешение Обмена";
 "tx_info.status.pending" = "В обработке";
@@ -604,7 +604,7 @@
 "tx_info.to_hash" = "Кому";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
-"tx_info.options.speed_up" = "Ускорение";
+"tx_info.options.speed_up" = "Ускорить";
 "tx_info.options.cancel" = "Отменить";
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
