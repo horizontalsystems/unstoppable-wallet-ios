@@ -8,34 +8,19 @@ class DexInfoDataSource: InfoDataSource {
     }
 
     private var dexName: String {
-        switch dex.provider {
-        case .uniswap: return "Uniswap"
-        case .pancake: return "PancakeSwap"
-        case .oneInch: return "1Inch"
-        }
+        dex.provider.rawValue
     }
 
     private var blockchain: String {
         dex.blockchain.name
     }
 
-    private var dexUrl: String {
-        switch dex.provider {
-        case .uniswap: return "https://uniswap.org/"
-        case .pancake: return "https://pancakeswap.finance/"
-        case .oneInch: return "https://app.1inch.io/"
-        }
-    }
 }
 
 extension DexInfoDataSource {
 
     var title: String {
-        switch dex.provider {
-        case .uniswap: return "Uniswap v.2"
-        case .pancake: return "PancakeSwap"
-        case .oneInch: return "1Inch"
-        }
+        dex.provider.title
     }
 
     var viewItems: [InfoViewModel.ViewItem] {
@@ -59,7 +44,7 @@ extension DexInfoDataSource {
             .header(title: "swap.dex_info.header_transaction_speed".localized),
             .text(string: "swap.dex_info.content_transaction_speed".localized),
             .margin(height: .margin12),
-            .button(title: "swap.dex_info.link_button".localized(dexName), url: dexUrl)
+            .button(title: "swap.dex_info.link_button".localized(dexName), url: dex.provider.infoUrl)
         ]
     }
 

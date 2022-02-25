@@ -68,15 +68,3 @@ extension SwapSelectProviderViewModel {
     }
 
 }
-
-extension SwapModule.Dex.Provider {
-
-    var icon: String {
-        switch self {
-        case .oneInch: return "1inch_24"
-        case .uniswap: return "uniswap_24"
-        case .pancake: return "pancake_24"
-        }
-    }
-
-}
