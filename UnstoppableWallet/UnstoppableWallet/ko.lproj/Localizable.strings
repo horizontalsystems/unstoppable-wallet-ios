@@ -919,6 +919,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.button.confirm" = "확인";
 "wallet_connect.sign.request_title" = "서명 요청";
 "wallet_connect.sign.domain" = "도메인";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "서명할 메시지";
 "wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 

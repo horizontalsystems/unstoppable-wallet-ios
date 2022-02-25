@@ -922,6 +922,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.button.confirm" = "Onayla";
 "wallet_connect.sign.request_title" = "İmza Talebi";
 "wallet_connect.sign.domain" = "Alan Adı";
+"wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "İmza için mesaj";
 "wallet_connect.sign.description" = "Lütfen doğrulamak için bir mesajı imzalayın";
 
