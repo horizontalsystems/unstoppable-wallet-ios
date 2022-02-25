@@ -37,7 +37,7 @@ struct MarketGlobalMetricModule {
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
-                chartType: .day
+                interval: .day1
         )
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
@@ -72,7 +72,7 @@ struct MarketGlobalMetricModule {
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
-                chartType: .day
+                interval: .day1
         )
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
@@ -101,7 +101,7 @@ struct MarketGlobalMetricModule {
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
-                chartType: .day
+                interval: .day1
         )
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)

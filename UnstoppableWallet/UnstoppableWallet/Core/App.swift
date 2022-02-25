@@ -17,7 +17,7 @@ class App {
 
     let appConfigProvider: AppConfigProvider
 
-    let localStorage: ILocalStorage & IChartTypeStorage
+    let localStorage: ILocalStorage & IChartIntervalStorage
     let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage& IWalletConnectV2SessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
 
     let themeManager: ThemeManager

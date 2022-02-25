@@ -7,7 +7,7 @@ class LocalStorage {
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let keySendInputType = "amount-type-switch-service-amount-type"
-    private let keyChartType = "chart_type_key"
+    private let keyChartInterval = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
     private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
@@ -105,17 +105,17 @@ extension LocalStorage: ILocalStorage {
 
 }
 
-extension LocalStorage: IChartTypeStorage {
+extension LocalStorage: IChartIntervalStorage {
 
-    var chartType: ChartType? {
+    var interval: HsTimePeriod? {
         get {
-            if let rawValue: Int = storage.value(for: keyChartType), let type = ChartType(rawValue: rawValue) {
-                return type
+            if let rawValue: String = storage.value(for: keyChartInterval), let interval = HsTimePeriod(rawValue: rawValue) {
+                return interval
             }
             return nil
         }
         set {
-            storage.set(value: newValue?.rawValue, for: keyChartType)
+            storage.set(value: newValue?.rawValue, for: keyChartInterval)
         }
     }
 

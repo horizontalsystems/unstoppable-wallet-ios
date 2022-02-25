@@ -8,21 +8,21 @@ class CoinChartService {
     private var disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
-    private let chartTypeStorage: IChartTypeStorage
+    private let intervalStorage: IChartIntervalStorage
     private let currencyKit: CurrencyKit.Kit
     private let coinUid: String
 
-    private let chartTypeRelay = PublishRelay<ChartType>()
-    var chartType: ChartType {
+    private let intervalRelay = PublishRelay<HsTimePeriod>()
+    var interval: HsTimePeriod {
         get {
-            chartTypeStorage.chartType ?? .today
+            intervalStorage.interval ?? .day1
         }
         set {
-            guard chartTypeStorage.chartType != newValue else {
+            guard intervalStorage.interval != newValue else {
                 return
             }
-            chartTypeStorage.chartType = newValue
-            chartTypeRelay.accept(newValue)
+            intervalStorage.interval = newValue
+            intervalRelay.accept(newValue)
             fetchChartData()
         }
     }
@@ -43,9 +43,9 @@ class CoinChartService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, chartTypeStorage: IChartTypeStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
+    init(marketKit: MarketKit.Kit, chartIntervalStorage: IChartIntervalStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
-        self.chartTypeStorage = chartTypeStorage
+        self.intervalStorage = chartIntervalStorage
         self.currencyKit = currencyKit
         self.coinUid = coinUid
     }
@@ -55,7 +55,7 @@ class CoinChartService {
         state = .loading
 
         coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
-        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, chartType: chartType)
+        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, interval: interval)
 
         marketKit
                 .coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
@@ -69,7 +69,7 @@ class CoinChartService {
                 .disposed(by: disposeBag)
 
         marketKit
-                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, chartType: chartType)
+                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, interval: interval)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] chartInfo in
                     self?.chartInfo = chartInfo
@@ -102,8 +102,8 @@ class CoinChartService {
 
 extension CoinChartService {
 
-    var chartTypeObservable: Observable<ChartType> {
-        chartTypeRelay.asObservable()
+    var intervalObservable: Observable<HsTimePeriod> {
+        intervalRelay.asObservable()
     }
 
     var stateObservable: Observable<DataStatus<Item>> {

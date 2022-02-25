@@ -15,7 +15,7 @@ struct CoinOverviewModule {
 
         let chartService = CoinChartService(
                 marketKit: App.shared.marketKit,
-                chartTypeStorage: App.shared.localStorage,
+                chartIntervalStorage: App.shared.localStorage,
                 currencyKit: App.shared.currencyKit,
                 coinUid: fullCoin.coin.uid)
 

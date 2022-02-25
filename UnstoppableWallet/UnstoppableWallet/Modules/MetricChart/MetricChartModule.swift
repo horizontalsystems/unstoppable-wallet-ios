@@ -12,15 +12,15 @@ protocol IMetricChartConfiguration {
 }
 
 protocol IMetricChartFetcher {
-    var chartTypes: [ChartType] { get }
+    var intervals: [HsTimePeriod] { get }
     var needUpdateObservable: Observable<()> { get }
-    func fetchSingle(currencyCode: String, chartType: ChartType) -> Single<[MetricChartModule.Item]>
+    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> Single<[MetricChartModule.Item]>
 }
 
 extension IMetricChartFetcher {
 
-    var chartTypes: [ChartType] {
-        [.day, .week, .week2, .month, .month3, .halfYear, .year]
+    var intervals: [HsTimePeriod] {
+        HsTimePeriod.allCases
     }
 
     var needUpdateObservable: Observable<()> {
