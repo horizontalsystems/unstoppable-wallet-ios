@@ -24,6 +24,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         case .ethereum, .binanceSmartChain: return TransactionTag.evmCoin
         case .erc20(let address): return address
         case .bep20(let address): return address
+        case .polygonPos(let address): return address == "0x0000000000000000000000000000000000001010" ? TransactionTag.evmCoin : address
         default: return ""
         }
     }
@@ -32,12 +33,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         var coinFilter = [[String]]()
 
         if let coin = coin {
-            switch coin.coinType {
-            case .ethereum, .binanceSmartChain: coinFilter.append([TransactionTag.evmCoin])
-            case .erc20(let address): coinFilter.append([address])
-            case .bep20(let address): coinFilter.append([address])
-            default: ()
-            }
+            coinFilter.append([coinTagName(coin: coin)])
         }
 
         switch filter {
