@@ -78,6 +78,7 @@ class CoinOverviewViewItemFactory {
             switch coinType {
             case .erc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "ethereum_24", reference: address, explorerUrl: "https://etherscan.io/token/\(address)")
             case .bep20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_smart_chain_24", reference: address, explorerUrl: "https://bscscan.com/token/\(address)")
+            case .mrc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "polygon_24", reference: address, explorerUrl: "https://polygonscan.com/token/\(address)")
             case .bep2(let symbol): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_chain_24", reference: symbol, explorerUrl: "https://explorer.binance.org/asset/\(symbol)")
             case .arbitrumOne(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_24", reference: address, explorerUrl: "https://arbiscan.io/token/\(address)")
             case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "avalanche_24", reference: address, explorerUrl: "https://avascan.info/blockchain/c/token/\(address)")
@@ -87,7 +88,6 @@ class CoinOverviewViewItemFactory {
             case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "iotex_24", reference: address, explorerUrl: "https://iotexscan.io/token/\(address)")
             case .moonriver(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "moonriver_24", reference: address, explorerUrl: "https://blockscout.moonriver.moonbeam.network/address/\(address)")
             case .okexChain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "okex_24", reference: address, explorerUrl: "https://www.oklink.com/oec/address/\(address)")
-            case .polygonPos(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "polygon_24", reference: address, explorerUrl: "https://polygonscan.com/token/\(address)")
             case .solana(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "solana_24", reference: address, explorerUrl: "https://explorer.solana.com/address/\(address)")
             case .sora(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "sora_24", reference: address, explorerUrl: "https://sorascan.com/sora-mainnet/asset/\(address)")
             case .tomochain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "tomochain_24", reference: address, explorerUrl: "https://scan.tomochain.com/tokens/\(address)")

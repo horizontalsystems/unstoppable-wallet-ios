@@ -15,7 +15,7 @@ class EnableCoinsEip20Provider {
 
     private func baseUrl(syncSource: EvmSyncSource) -> String {
         switch syncSource.transactionSource.type {
-        case .etherscan(let baseUrl, _): return baseUrl
+        case .etherscan(let baseUrl, _, _): return baseUrl
         }
     }
 
@@ -25,7 +25,7 @@ class EnableCoinsEip20Provider {
 
     private func apiKey(syncSource: EvmSyncSource) -> String {
         switch syncSource.transactionSource.type {
-        case .etherscan(_, let apiKey): return apiKey
+        case .etherscan(_, _, let apiKey): return apiKey
         }
     }
 

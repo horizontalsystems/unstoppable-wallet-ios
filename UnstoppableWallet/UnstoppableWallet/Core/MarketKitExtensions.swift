@@ -7,7 +7,7 @@ extension MarketKit.CoinType {
         switch self {
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
-        case .polygonPos: return "MRC20"
+        case .mrc20: return "MRC20"
         case .bep2: return "BEP2"
         default: ()
         }
@@ -19,7 +19,7 @@ extension MarketKit.CoinType {
         switch self {
         case .ethereum, .erc20: return "Ethereum"
         case .binanceSmartChain, .bep20: return "Binance Smart Chain"
-        case .polygonPos: return "Polygon"
+        case .polygon, .mrc20: return "Polygon"
         case .bep2: return "Binance"
         default: return ""
         }
@@ -27,10 +27,10 @@ extension MarketKit.CoinType {
 
     var platformCoinType: String {
         switch self {
-        case .ethereum, .binanceSmartChain: return "coin_platforms.native".localized
+        case .ethereum, .binanceSmartChain, .polygon: return "coin_platforms.native".localized
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
-        case .polygonPos: return "MRC20"
+        case .mrc20: return "MRC20"
         case .bep2: return "BEP2"
         default: return ""
         }
@@ -77,7 +77,7 @@ extension MarketKit.CoinType {
 
     var isSupported: Bool {
         switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .erc20, .bep20, .bep2, .polygonPos: return true
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .polygon, .erc20, .bep20, .bep2, .mrc20: return true
         default: return false
         }
     }
@@ -90,12 +90,12 @@ extension MarketKit.CoinType {
         switch self {
         case .erc20: return 1
         case .bep20: return 2
-        case .bep2: return 3
-        case .solana: return 4
-        case .avalanche: return 5
-        case .fantom: return 6
-        case .arbitrumOne: return 7
-        case .polygonPos: return 8
+        case .mrc20: return 3
+        case .bep2: return 4
+        case .solana: return 5
+        case .avalanche: return 6
+        case .fantom: return 7
+        case .arbitrumOne: return 8
         case .huobiToken: return 9
         case .harmonyShard0: return 10
         case .xdai: return 11

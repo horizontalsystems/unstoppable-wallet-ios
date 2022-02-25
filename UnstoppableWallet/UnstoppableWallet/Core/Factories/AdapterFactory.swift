@@ -83,13 +83,13 @@ extension AdapterFactory {
             if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account), let feePlatformCoin = try? coinManager.platformCoin(coinType: .bep2(symbol: "BNB")) {
                 return BinanceAdapter(binanceKit: binanceKit, symbol: symbol, feeCoin: feePlatformCoin, wallet: wallet)
             }
-        case .ethereum, .binanceSmartChain:
+        case .ethereum, .binanceSmartChain, .polygon:
             return evmAdapter(wallet: wallet)
         case let .erc20(address):
             return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
         case let .bep20(address):
             return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
-        case let .polygonPos(address):
+        case let .mrc20(address):
             return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
         default: ()
         }

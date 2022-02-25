@@ -4,39 +4,30 @@ import MarketKit
 import EthereumKit
 
 class EvmCoinServiceFactory {
-    private let basePlatformCoin: PlatformCoin
+    private let evmBlockchain: EvmBlockchain
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     let baseCoinService: CoinService
 
-    init(basePlatformCoin: PlatformCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
-        self.basePlatformCoin = basePlatformCoin
+    init?(evmBlockchain: EvmBlockchain, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.evmBlockchain = evmBlockchain
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+
+        guard let basePlatformCoin = try? marketKit.platformCoin(coinType: evmBlockchain.baseCoinType) else {
+            return nil
+        }
 
         baseCoinService = CoinService(platformCoin: basePlatformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
     func coinService(contractAddress: EthereumKit.Address) -> CoinService? {
-        guard let platformCoin = platformCoin(contractAddress: contractAddress) else {
+        guard let platformCoin = try? marketKit.platformCoin(coinType: evmBlockchain.evm20CoinType(address: contractAddress.hex)) else {
             return nil
         }
 
         return CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
-    }
-
-    private func platformCoin(contractAddress: EthereumKit.Address) -> PlatformCoin? {
-        switch basePlatformCoin.coinType {
-        case .ethereum:
-            return try? marketKit.platformCoin(coinType: .erc20(address: contractAddress.hex))
-        case .binanceSmartChain:
-            return try? marketKit.platformCoin(coinType: .bep20(address: contractAddress.hex))
-        case .polygonPos:
-            return try? marketKit.platformCoin(coinType: .polygonPos(address: contractAddress.hex))
-        default:
-            return nil
-        }
     }
 
 }

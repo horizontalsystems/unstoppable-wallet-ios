@@ -10,7 +10,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
-        case .polygon: return .polygonPos(address: "0x0000000000000000000000000000000000001010")
+        case .polygon: return .polygon
         }
     }
 
@@ -18,7 +18,7 @@ enum EvmBlockchain: String {
         switch self {
         case .ethereum: return .erc20(address: address)
         case .binanceSmartChain: return .bep20(address: address)
-        case .polygon: return .polygonPos(address: address)
+        case .polygon: return .mrc20(address: address)
         }
     }
 
@@ -26,7 +26,7 @@ enum EvmBlockchain: String {
         switch (coinType, self) {
         case (.ethereum, .ethereum), (.erc20, .ethereum): return true
         case (.binanceSmartChain, .binanceSmartChain), (.bep20, .binanceSmartChain): return true
-        case (.polygonPos, .polygon): return true
+        case (.polygon, .polygon), (.mrc20, .polygon): return true
         default: return false
         }
     }
