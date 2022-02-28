@@ -6,7 +6,7 @@ struct WatchAddressModule {
     static func viewController() -> UIViewController {
         let addressParserChain = AddressParserChain()
         addressParserChain.append(handler: EvmAddressParser())
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "ETH", chain: nil))
+        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "ETH", platformCoinCode: nil, chain: nil))
 
         let addressUriParser = AddressParserFactory.parser(coinType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
