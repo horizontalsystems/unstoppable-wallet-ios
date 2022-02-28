@@ -306,7 +306,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - UnstoppableDomainsResolution (4.0.0):
+  - UnstoppableDomainsResolution (3.0.0):
     - BigInt
     - CryptoSwift
   - WalletConnect (0.1.0):
@@ -361,7 +361,7 @@ DEPENDENCIES:
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
-  - UnstoppableDomainsResolution
+  - UnstoppableDomainsResolution (~> 3.0.0)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.6`)
 
@@ -663,11 +663,11 @@ SPEC CHECKSUMS:
   ThemeKit.swift: 26260ac44437a1ae8ceecaf03e55e4a61bb9ddac
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: 8a61c5a0e01bce030ba367848c2a75b6291cd647
-  UnstoppableDomainsResolution: c3c67f4d0a5e2437cb00d4bd50c2e00d6e743841
+  UnstoppableDomainsResolution: 9f8bfe2dbbf2ede192bf75f8b23be8215b6e06d4
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: e6d2d19781f0fab725ed4b9b8796c54a72d3de1d
 
-PODFILE CHECKSUM: 472a3a96fb83d0bc2cbe1bb863af01f81d64bac8
+PODFILE CHECKSUM: a3a3a417b752af001e8bcbb6e43578dba4b3dd66
 
 COCOAPODS: 1.11.2

@@ -21,14 +21,14 @@ class AddressResolutionProvider {
         }
     }
 
-    func resolveSingle(domain: String, ticker: String, chain: String? = nil) -> Single<String> {
-        Single<String>.create { [weak self] observer in
+    func resolveSingle(domain: String, ticker: String, chain: String? = nil) -> Single<Result<String, Error>> {
+        Single<Result<String, Error>>.create { [weak self] observer in
             let completionBlock: StringResultConsumer = { result in
                 switch result {
                 case .success(let returnValue):
-                    observer(.success(returnValue))
+                    observer(.success(.success(returnValue)))
                 case .failure(let error):
-                    observer(.error(error))
+                    observer(.success(.failure(error)))
                 }
             }
             if let chain = chain {

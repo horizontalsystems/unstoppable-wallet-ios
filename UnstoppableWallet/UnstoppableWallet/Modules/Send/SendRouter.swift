@@ -76,7 +76,7 @@ extension SendRouter {
         let addressParserChain = AddressParserChain()
         let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
         addressParserChain.append(handler: bitcoinParserItem)
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "BTC", chain: nil))
+        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "BTC", platformCoinCode: nil, chain: nil))
 
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         views.append(addressView)
