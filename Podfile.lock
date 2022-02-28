@@ -6,8 +6,6 @@ PODS:
     - SnapKit (~> 5.0)
     - UIExtensions.swift (~> 1.1.1)
   - Alamofire (5.5.0)
-  - Base58Swift (2.1.10):
-    - BigInt (~> 5.0.0)
   - BigInt (5.0.0)
   - BinanceChainKit.swift (0.5.0):
     - GRDB.swift (~> 5.0)
@@ -308,7 +306,7 @@ PODS:
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
-  - UnstoppableDomainsResolution (2.0.1):
+  - UnstoppableDomainsResolution (4.0.0):
     - BigInt
     - CryptoSwift
   - WalletConnect (0.1.0):
@@ -323,7 +321,6 @@ PODS:
 DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - Alamofire
-  - Base58Swift (~> 2.1.10)
   - BigInt
   - BinanceChainKit.swift (from `https://github.com/horizontalsystems/binance-chain-kit-ios`)
   - BitcoinCashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
@@ -364,7 +361,7 @@ DEPENDENCIES:
   - ThemeKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - UIExtensions.swift (from `https://github.com/horizontalsystems/gui-kit/`)
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
-  - UnstoppableDomainsResolution (~> 2.0.1)
+  - UnstoppableDomainsResolution
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
   - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.12.0-beta.6`)
 
@@ -372,7 +369,6 @@ SPEC REPOS:
   trunk:
     - _NIODataStructures
     - Alamofire
-    - Base58Swift
     - BigInt
     - BlsKit.swift
     - BlueSocket
@@ -590,7 +586,6 @@ SPEC CHECKSUMS:
   _NIODataStructures: e2077c7dc7c1d6c93e698c85fe04d663a17f53a4
   ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  Base58Swift: 53d551f0b33d9478fa63b3445e453a772d6b31a7
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   BinanceChainKit.swift: 5c282784ee82eb95117b584858f640e9769d4562
   BitcoinCashKit.swift: 9572927e82c0c846d64bb1a8c7c96d6edf1beb39
@@ -668,11 +663,11 @@ SPEC CHECKSUMS:
   ThemeKit.swift: 26260ac44437a1ae8ceecaf03e55e4a61bb9ddac
   UIExtensions.swift: 3ed084c0343ddd0f86c7c558d37759e1fd7d5778
   UniswapKit.swift: 8a61c5a0e01bce030ba367848c2a75b6291cd647
-  UnstoppableDomainsResolution: 856ba43f08b31f3f34157c7257092bd0c6e31cf8
+  UnstoppableDomainsResolution: c3c67f4d0a5e2437cb00d4bd50c2e00d6e743841
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: e6d2d19781f0fab725ed4b9b8796c54a72d3de1d
 
-PODFILE CHECKSUM: e72f47de21f7d60405df85bfe2979c17ad6300bf
+PODFILE CHECKSUM: 472a3a96fb83d0bc2cbe1bb863af01f81d64bac8
 
 COCOAPODS: 1.11.2
