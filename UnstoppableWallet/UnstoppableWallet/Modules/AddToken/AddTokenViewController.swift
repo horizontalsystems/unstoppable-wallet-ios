@@ -50,7 +50,7 @@ class AddTokenViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         inputCell.isEditable = false
-        inputCell.inputPlaceholder = "ERC20 / BEP20 / BEP2"
+        inputCell.inputPlaceholder = "add_token.input_placeholder".localized
         inputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         inputCell.onChangeText = { [weak self] in self?.viewModel.onEnter(reference: $0) }
         inputCell.onFetchText = { [weak self] in
