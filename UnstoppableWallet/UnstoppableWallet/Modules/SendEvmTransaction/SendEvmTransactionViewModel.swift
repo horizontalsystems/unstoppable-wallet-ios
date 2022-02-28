@@ -423,9 +423,10 @@ class SendEvmTransactionViewModel {
 
     private func coinService(platformCoin: PlatformCoin) -> CoinService? {
         switch platformCoin.coinType {
-        case .ethereum, .binanceSmartChain: return coinServiceFactory.baseCoinService
+        case .ethereum, .binanceSmartChain, .polygon: return coinServiceFactory.baseCoinService
         case .erc20(let address): return (try? EthereumKit.Address(hex: address)).flatMap { coinServiceFactory.coinService(contractAddress: $0) }
         case .bep20(let address): return (try? EthereumKit.Address(hex: address)).flatMap { coinServiceFactory.coinService(contractAddress: $0) }
+        case .mrc20(let address): return (try? EthereumKit.Address(hex: address)).flatMap { coinServiceFactory.coinService(contractAddress: $0) }
         default: return nil
         }
     }
