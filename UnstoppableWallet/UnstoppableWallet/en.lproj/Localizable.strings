@@ -652,6 +652,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
+"manage_wallets.search_placeholder" = "Token Name";
 
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
@@ -900,6 +901,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
 "add_token.success_add" = "Added";
+"add_token.input_placeholder" = "Address or symbol...";
 
 // Wallet Connect
 
