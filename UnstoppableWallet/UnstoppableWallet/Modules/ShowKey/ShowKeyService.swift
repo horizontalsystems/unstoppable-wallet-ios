@@ -34,8 +34,4 @@ extension ShowKeyService {
         try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchain: .ethereum)).raw.hex
     }
 
-    var binanceSmartChainPrivateKey: String? {
-        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchain: .binanceSmartChain)).raw.hex
-    }
-
 }

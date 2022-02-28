@@ -90,8 +90,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "show_key.description" = "The recovery phrases that will be shown next is the only way to restore your funds if your phone is ever lost, stolen, broken, etc. \n\nMake sure no one is watching your screen.";
 "show_key.button_show" = "Show";
 "show_key.tab.recovery_phrase" = "Recovery Phrase";
-"show_key.tab.private_keys" = "Private Keys";
+"show_key.tab.private_key" = "Private Key";
 "show_key.passphrase" = "Passphrase";
+"show_key.private_key.description" = "This key is for all EVM-compatible blockchains.";
 
 "private_key_copying.title" = "Warning";
 "private_key_copying.subtitle" = "Risk of Private Key copy";

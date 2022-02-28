@@ -55,7 +55,7 @@ class ShowKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: DCell.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
         tableView.registerCell(forClass: C9Cell.self)
@@ -145,29 +145,31 @@ class ShowKeyViewController: ThemeViewController {
         Row<EmptyCell>(id: id, height: height)
     }
 
-    private func rows(privateKey: ShowKeyViewModel.PrivateKey) -> [RowProtocol] {
-        let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: { privateKey.value })
+    private func rows(privateKey: String) -> [RowProtocol] {
+        let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: { privateKey })
+        let text = "show_key.private_key.description".localized
 
         return [
-            marginRow(
-                    id: "\(privateKey.blockchain)-margin",
-                    height: .margin12
-            ),
-            Row<DCell>(
-                    id: "\(privateKey.blockchain)-title",
-                    height: .heightCell48,
+            Row<HighlightedDescriptionCell>(
+                    id: "private-key-description",
+                    dynamicHeight: { containerWidth in
+                        HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                    },
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.title = privateKey.blockchain
+                        cell.descriptionText = text
                     }
             ),
+            marginRow(
+                    id: "private-key-margin",
+                    height: .margin4
+            ),
             Row<Cell9>(
-                    id: "\(privateKey.blockchain)-value",
+                    id: "private-key-value",
                     dynamicHeight: { width in
-                        Cell9.height(containerWidth: width, backgroundStyle: .lawrence, viewItem: viewItem)
+                        Cell9.height(containerWidth: width, backgroundStyle: .transparent, viewItem: viewItem)
                     },
                     bind: { [weak self] cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
+                        cell.set(backgroundStyle: .transparent, isFirst: true)
                         cell.viewItem = viewItem
                         cell.handler = { self?.handleTap(viewItem: $0) }
                     }
@@ -213,8 +215,8 @@ extension ShowKeyViewController: SectionsDataSource {
                 rows.append(marginRow(id: "passphrase-margin", height: .margin32))
                 rows.append(passphraseRow)
             }
-        case .privateKeys:
-            for privateKey in viewModel.privateKeys {
+        case .privateKey:
+            if let privateKey = viewModel.evmPrivateKey {
                 rows.append(contentsOf: self.rows(privateKey: privateKey))
             }
         }
@@ -246,12 +248,12 @@ extension ShowKeyViewController {
 
     enum Tab: Int, CaseIterable {
         case mnemonicPhrase
-        case privateKeys
+        case privateKey
 
         var title: String {
             switch self {
             case .mnemonicPhrase: return "show_key.tab.recovery_phrase".localized
-            case .privateKeys: return "show_key.tab.private_keys".localized
+            case .privateKey: return "show_key.tab.private_key".localized
             }
         }
     }

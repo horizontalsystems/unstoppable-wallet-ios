@@ -33,18 +33,8 @@ extension ShowKeyViewModel {
         service.salt.isEmpty ? nil : service.salt
     }
 
-    var privateKeys: [PrivateKey] {
-        var keys = [PrivateKey]()
-
-        if let value = service.ethereumPrivateKey {
-            keys.append(PrivateKey(blockchain: "Ethereum", value: value))
-        }
-
-        if let value = service.binanceSmartChainPrivateKey {
-            keys.append(PrivateKey(blockchain: "Binance Smart Chain", value: value))
-        }
-
-        return keys
+    var evmPrivateKey: String? {
+        service.ethereumPrivateKey
     }
 
     func onTapShow() {
@@ -57,15 +47,6 @@ extension ShowKeyViewModel {
 
     func onUnlock() {
         showKeyRelay.accept(())
-    }
-
-}
-
-extension ShowKeyViewModel {
-
-    struct PrivateKey {
-        let blockchain: String
-        let value: String
     }
 
 }
