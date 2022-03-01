@@ -86,7 +86,6 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.top.equalTo(lastView.snp.bottom)
         }
 
-        tableView.registerCell(forClass: F11Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
@@ -147,16 +146,29 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                         let isFirst = index == 0
                         let isLast = index == config.viewItems.count - 1
 
-                        return Row<F11Cell>(
+                        return CellBuilder.row(
+                                elements: [.multiText, .switch],
+                                tableView: tableView,
                                 id: "item_\(index)",
                                 hash: "\(selected)",
                                 height: .heightDoubleLineCell,
-                                bind: { cell, _ in
+                                bind: { cell in
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-                                    cell.title = viewItem.title
-                                    cell.subtitle = viewItem.subtitle
-                                    cell.isOn = selected
-                                    cell.onToggle = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+
+                                    cell.bind(index: 0) { (component: MultiTextComponent) in
+                                        component.set(style: .m1)
+                                        component.title.set(style: .b2)
+                                        component.subtitle.set(style: .d1)
+
+                                        component.title.text = viewItem.title
+                                        component.subtitle.text = viewItem.subtitle
+                                        component.subtitle.lineBreakMode = .byTruncatingMiddle
+                                    }
+
+                                    cell.bind(index: 1) { (component: SwitchComponent) in
+                                        component.switchView.isOn = selected
+                                        component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+                                    }
                                 }
                         )
                     }

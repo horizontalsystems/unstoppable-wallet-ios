@@ -70,7 +70,7 @@ class CoinOverviewViewItemFactory {
     }
 
     private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let coinTypes = info.coinTypes.sorted { $0.order < $1.order }
+        let coinTypes = info.coinTypes.sorted
 
         let contracts: [CoinOverviewViewModel.ContractViewItem] = coinTypes.compactMap { coinType in
             switch coinType {

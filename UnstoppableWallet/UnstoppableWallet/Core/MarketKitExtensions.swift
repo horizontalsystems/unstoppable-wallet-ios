@@ -15,10 +15,12 @@ extension MarketKit.CoinType {
 
     var platformType: String {
         switch self {
-        case .ethereum, .erc20: return "Ethereum"
-        case .binanceSmartChain, .bep20: return "Binance Smart Chain"
+        case .ethereum: return "Ethereum"
+        case .erc20: return "ERC20"
+        case .binanceSmartChain: return "Binance Smart Chain"
+        case .bep20: return "BEP20"
         case .polygon, .mrc20: return "Polygon"
-        case .bep2: return "Binance"
+        case .bep2: return "BEP2"
         default: return ""
         }
     }
@@ -26,10 +28,10 @@ extension MarketKit.CoinType {
     var platformCoinType: String {
         switch self {
         case .ethereum, .binanceSmartChain, .polygon: return "coin_platforms.native".localized
-        case .erc20: return "ERC20"
-        case .bep20: return "BEP20"
-        case .mrc20: return "Polygon"
-        case .bep2: return "BEP2"
+        case .erc20(let address): return address.shortenedAddress
+        case .bep20(let address): return address.shortenedAddress
+        case .mrc20(let address): return address.shortenedAddress
+        case .bep2(let symbol): return symbol
         default: return ""
         }
     }
@@ -86,22 +88,30 @@ extension MarketKit.CoinType {
 
     var order: Int {
         switch self {
-        case .erc20: return 1
-        case .bep20: return 2
-        case .mrc20: return 3
-        case .bep2: return 4
-        case .solana: return 5
-        case .avalanche: return 6
-        case .fantom: return 7
-        case .arbitrumOne: return 8
-        case .huobiToken: return 9
-        case .harmonyShard0: return 10
-        case .xdai: return 11
-        case .moonriver: return 12
-        case .okexChain: return 13
-        case .sora: return 14
-        case .tomochain: return 15
-        case .iotex: return 16
+        case .bitcoin: return 1
+        case .bitcoinCash: return 2
+        case .litecoin: return 3
+        case .dash: return 4
+        case .zcash: return 5
+        case .ethereum: return 6
+        case .binanceSmartChain: return 7
+        case .polygon: return 8
+        case .erc20: return 9
+        case .bep20: return 10
+        case .mrc20: return 11
+        case .bep2: return 12
+        case .solana: return 13
+        case .avalanche: return 14
+        case .fantom: return 15
+        case .arbitrumOne: return 16
+        case .huobiToken: return 17
+        case .harmonyShard0: return 18
+        case .xdai: return 19
+        case .moonriver: return 20
+        case .okexChain: return 21
+        case .sora: return 22
+        case .tomochain: return 23
+        case .iotex: return 24
         default: return Int.max
         }
     }
@@ -202,6 +212,14 @@ extension Array where Element == FullCoin {
 
             return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
         }
+    }
+
+}
+
+extension Array where Element == CoinType {
+
+    var sorted: [CoinType] {
+        sorted { $0.order < $1.order }
     }
 
 }
