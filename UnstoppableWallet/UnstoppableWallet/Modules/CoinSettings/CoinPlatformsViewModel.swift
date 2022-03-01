@@ -27,6 +27,7 @@ class CoinPlatformsViewModel {
                 selectedIndexes: request.currentPlatforms.compactMap { fullCoin.platforms.firstIndex(of: $0) },
                 viewItems: fullCoin.platforms.map { $0.coinType }.sorted.map { coinType in
                     BottomMultiSelectorViewController.ViewItem(
+                            iconName: coinType.platformIcon,
                             title: coinType.platformType,
                             subtitle: coinType.platformCoinType
                     )

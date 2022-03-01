@@ -36,6 +36,16 @@ extension MarketKit.CoinType {
         }
     }
 
+    var platformIcon: String? {
+        switch self {
+        case .ethereum, .erc20: return "ethereum_24"
+        case .binanceSmartChain, .bep20: return "binance_smart_chain_24"
+        case .polygon, .mrc20: return "polygon_24"
+        case .bep2: return "binance_chain_24"
+        default: return nil
+        }
+    }
+
     var swappable: Bool {
         switch self {
         case .ethereum, .erc20, .binanceSmartChain, .bep20, .polygon, .mrc20: return true
