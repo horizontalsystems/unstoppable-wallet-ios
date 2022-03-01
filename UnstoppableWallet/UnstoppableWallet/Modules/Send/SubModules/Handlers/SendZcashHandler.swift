@@ -40,6 +40,7 @@ class SendZcashHandler {
                 let addressType = try zCashAddressParser.validate(address: address.raw)
                 memoModule.set(hidden: addressType == .transparent)
             } else {
+                addressError = SendAddressPresenter.ValidationError.emptyValue
                 memoModule.set(hidden: true)
             }
         } catch {
