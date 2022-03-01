@@ -88,8 +88,9 @@
 "show_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
 "show_key.button_show" = "Mostrar";
 "show_key.tab.recovery_phrase" = "Frase de Recuperación";
-"show_key.tab.private_keys" = "Claves privadas";
+"show_key.tab.private_key" = "Clave privada";
 "show_key.passphrase" = "Frase de contraseña";
+"show_key.private_key.description" = "Esta clave es para todos los blockchains compatibles con EVM.";
 
 "private_key_copying.title" = "Aviso";
 "private_key_copying.subtitle" = "Riesgo de copia de la clave privada";

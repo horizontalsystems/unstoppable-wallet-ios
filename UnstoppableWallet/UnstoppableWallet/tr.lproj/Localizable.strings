@@ -91,8 +91,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "show_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
 "show_key.button_show" = "Göster";
 "show_key.tab.recovery_phrase" = "Kurtarma cümlesi";
-"show_key.tab.private_keys" = "Özel Anahtar";
+"show_key.tab.private_key" = "Gizli Anahtar";
 "show_key.passphrase" = "Parola";
+"show_key.private_key.description" = "Bu anahtar, tüm EVM uyumlu blok zincirleri içindir.";
 
 "private_key_copying.title" = "Uyarı";
 "private_key_copying.subtitle" = "Özel Anahtar kopyalama riski";

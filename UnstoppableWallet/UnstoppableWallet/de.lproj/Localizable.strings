@@ -88,8 +88,9 @@
 "show_key.description" = "Die Wiederherstellungsphrasen, die als nächstes gezeigt werden, sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, falls Ihr Mobiltelefon jemals verloren geht, gestohlen wird, kaputt geht usw.\n\nStellen Sie sicher, dass niemand Ihren Bildschirm beobachtet.";
 "show_key.button_show" = "Anzeigen";
 "show_key.tab.recovery_phrase" = "Wiederherstellungsphrase";
-"show_key.tab.private_keys" = "Private Schlüssel";
+"show_key.tab.private_key" = "Privater Schlüssel";
 "show_key.passphrase" = "Passphrase";
+"show_key.private_key.description" = "Dieser Schlüssel ist für alle EVM-kompatiblen Blockchains.";
 
 "private_key_copying.title" = "Warnung";
 "private_key_copying.subtitle" = "Risiko einer Private Key Kopie";

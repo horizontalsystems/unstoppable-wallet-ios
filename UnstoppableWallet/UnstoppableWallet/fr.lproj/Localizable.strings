@@ -88,8 +88,9 @@
 "show_key.description" = "Les phrases de réinitialisation qui vont suivre sont le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.\n\nVeuillez vous assurer que personne ne regarde votre écran.";
 "show_key.button_show" = "Afficher";
 "show_key.tab.recovery_phrase" = "Phrase de réinitialisation";
-"show_key.tab.private_keys" = "Clés privées";
+"show_key.tab.private_key" = "Clé privée";
 "show_key.passphrase" = "Phrase d'authentification";
+"show_key.private_key.description" = "Cette clé est pour toutes les blockchains compatibles EVM.";
 
 "private_key_copying.title" = "Attention";
 "private_key_copying.subtitle" = "Risque de copie de clé privée";

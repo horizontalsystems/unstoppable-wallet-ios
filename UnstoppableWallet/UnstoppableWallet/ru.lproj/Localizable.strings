@@ -90,8 +90,9 @@
 "show_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "show_key.button_show" = "Показать";
 "show_key.tab.recovery_phrase" = "Фраза для восстановления";
-"show_key.tab.private_keys" = "Приватные Ключи";
+"show_key.tab.private_key" = "Приватный Ключ";
 "show_key.passphrase" = "Кодовая Фраза";
+"show_key.private_key.description" = "Этот ключ для всех EVM-совместимых блокчейнов.";
 
 "private_key_copying.title" = "Внимание";
 "private_key_copying.subtitle" = "Риск копирования Секретного ключа";
@@ -593,7 +594,7 @@
 
 // Transaction Info
 
-"tx_info.title" = "Информация о Транзакции";
+"tx_info.title" = "Детали Транзакции";
 "tx_info.date" = "Дата";
 "tx_info.title_approval" = "Разрешение Обмена";
 "tx_info.status.pending" = "В обработке";
@@ -604,7 +605,7 @@
 "tx_info.to_hash" = "Кому";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
-"tx_info.options.speed_up" = "Ускорение";
+"tx_info.options.speed_up" = "Ускорить";
 "tx_info.options.cancel" = "Отменить";
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
@@ -973,7 +974,7 @@
 "onboarding.balance.description" = "Пока нет кошельков";
 "onboarding.balance.create" = "Создать";
 "onboarding.balance.restore" = "Восстановить";
-"onboarding.balance.watch" = "Посмотреть адрес";
+"onboarding.balance.watch" = "Посмотреть Адрес";
 "onboarding.balance.password_hint" = "Совет: восстановление существующего кошелька при помощи другой кодовой фразы приведет к созданию нового кошелька. Это очень удобно, когда вы хотите использовать одну мнемоническую восстановительную фразу длиной от 12 до 24 слов для нескольких кошельков.";
 
 // Manage Accounts
