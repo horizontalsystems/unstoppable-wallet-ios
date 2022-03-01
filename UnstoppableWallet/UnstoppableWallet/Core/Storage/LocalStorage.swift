@@ -93,13 +93,13 @@ extension LocalStorage: ILocalStorage {
     }
 
     func defaultProvider(blockchain: EvmBlockchain) -> SwapModule.Dex.Provider {
-        let key = [keyDefaultProvider, blockchain.rawValue, blockchain.isMainNet.description].joined(separator: "|")
+        let key = [keyDefaultProvider, blockchain.rawValue].joined(separator: "|")
         let raw: String? = storage.value(for: key)
         return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchain.allowedProviders[0]
     }
 
     func setDefaultProvider(blockchain: EvmBlockchain, provider: SwapModule.Dex.Provider) {
-        let key = [keyDefaultProvider, blockchain.rawValue, blockchain.isMainNet.description].joined(separator: "|")
+        let key = [keyDefaultProvider, blockchain.rawValue].joined(separator: "|")
         storage.set(value: provider.rawValue, for: key)
     }
 
