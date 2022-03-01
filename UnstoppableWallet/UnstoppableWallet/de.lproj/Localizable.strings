@@ -650,7 +650,7 @@
 
 "manage_wallets.title" = "Kryptowährung";
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, den Token manuell hinzuzufügen, wenn Sie die Adresse des Smart Contracts kennen.";
-"manage_wallets.search_placeholder" = "Token code or name";
+"manage_wallets.search_placeholder" = "Token-Code oder Name";
 
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
@@ -899,7 +899,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.token_not_found" = "Token nicht gefunden";
 "add_token.success_add" = "Hinzugefügt";
-"add_token.input_placeholder" = "Contract Address";
+"add_token.input_placeholder" = "Vertragsadresse";
 
 // Wallet Connect
 
