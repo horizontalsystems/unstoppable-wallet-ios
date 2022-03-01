@@ -119,9 +119,9 @@ extension EvmBlockchain {
 
     var allowedProviders: [SwapModule.Dex.Provider] {
         switch self {
-        case .ethereum: return isMainNet ? [.oneInch, .uniswap] : [.uniswap]
-        case .binanceSmartChain: return isMainNet ? [.oneInch, .pancake] : [.pancake]
-        case .polygon: return isMainNet ? [.oneInch, .quickSwap] : [.quickSwap]
+        case .ethereum: return [.oneInch, .uniswap]
+        case .binanceSmartChain: return [.oneInch, .pancake]
+        case .polygon: return [.oneInch, .quickSwap]
         }
     }
 

@@ -70,12 +70,4 @@ enum EvmBlockchain: String {
         }
     }
 
-    var isMainNet: Bool {
-        switch self {
-        case .ethereum: return true
-        case .binanceSmartChain: return true
-        case .polygon: return true
-        }
-    }
-
 }
