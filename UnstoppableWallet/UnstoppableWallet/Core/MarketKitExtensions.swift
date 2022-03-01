@@ -141,6 +141,14 @@ extension MarketKit.Coin {
 
 }
 
+extension MarketKit.FullCoin {
+
+    var supportedPlatforms: [Platform] {
+        platforms.filter { $0.coinType.isSupported }
+    }
+
+}
+
 extension MarketKit.CoinCategory {
 
     var imageUrl: String {

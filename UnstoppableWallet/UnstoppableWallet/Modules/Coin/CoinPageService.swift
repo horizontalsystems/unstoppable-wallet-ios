@@ -48,12 +48,8 @@ class CoinPageService {
         favorite = favoritesManager.isFavorite(coinUid: fullCoin.coin.uid)
     }
 
-    private var supportedPlatforms: [Platform] {
-        fullCoin.platforms.filter { $0.coinType.isSupported }
-    }
-
     private var enabledWallets: [Wallet] {
-        let platforms = supportedPlatforms
+        let platforms = fullCoin.supportedPlatforms
         return walletManager.activeWallets.filter { platforms.contains($0.platform) }
     }
 
@@ -65,7 +61,7 @@ class CoinPageService {
 
         if activeAccount.watchAccount {
             walletState = .watchAccount
-        } else if supportedPlatforms.isEmpty {
+        } else if fullCoin.supportedPlatforms.isEmpty {
             walletState = .unsupported
         } else {
             walletState = .supported(added: !enabledWallets.isEmpty)

@@ -24,8 +24,10 @@ extension CoinPlatformsService {
     }
 
     func approvePlatforms(fullCoin: FullCoin, currentPlatforms: [Platform] = []) {
-        guard fullCoin.platforms.count > 1 else {
-            approvePlatformsRelay.accept(CoinWithPlatforms(coin: fullCoin.coin, platforms: fullCoin.platforms))
+        let supportedPlatforms = fullCoin.supportedPlatforms
+
+        guard supportedPlatforms.count > 1 else {
+            approvePlatformsRelay.accept(CoinWithPlatforms(coin: fullCoin.coin, platforms: supportedPlatforms))
             return
         }
 
