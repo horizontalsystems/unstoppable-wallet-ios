@@ -24,8 +24,8 @@ class CoinPlatformsViewModel {
                 title: "coin_platforms.title".localized,
                 subtitle: fullCoin.coin.name,
                 description: "coin_platforms.description".localized,
-                selectedIndexes: request.currentPlatforms.compactMap { fullCoin.platforms.firstIndex(of: $0) },
-                viewItems: fullCoin.platforms.map { $0.coinType }.sorted.map { coinType in
+                selectedIndexes: request.currentPlatforms.compactMap { fullCoin.supportedPlatforms.firstIndex(of: $0) },
+                viewItems: fullCoin.supportedPlatforms.map { $0.coinType }.sorted.map { coinType in
                     BottomMultiSelectorViewController.ViewItem(
                             iconName: coinType.platformIcon,
                             title: coinType.platformType,
@@ -51,9 +51,9 @@ extension CoinPlatformsViewModel {
             return
         }
 
-        let platforms = request.fullCoin.platforms
+        let supportedPlatforms = request.fullCoin.supportedPlatforms
 
-        service.select(platforms: indexes.map { platforms[$0] }, coin: request.fullCoin.coin)
+        service.select(platforms: indexes.map { supportedPlatforms[$0] }, coin: request.fullCoin.coin)
     }
 
     func onCancelSelect() {

@@ -113,7 +113,7 @@ class RestoreSelectService {
     }
 
     private func handleCancelEnable(fullCoin: FullCoin) {
-        guard let internalItem = internalItems.first(where: { fullCoin.platforms.contains($0.platformCoin.platform) }) else {
+        guard let internalItem = internalItems.first(where: { fullCoin.supportedPlatforms.contains($0.platformCoin.platform) }) else {
             return
         }
 

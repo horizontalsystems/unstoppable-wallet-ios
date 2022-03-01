@@ -75,8 +75,10 @@ extension EnableCoinService {
     }
 
     func enable(fullCoin: FullCoin, account: Account? = nil) {
-        if fullCoin.platforms.count == 1 {
-            let platformCoin = PlatformCoin(coin: fullCoin.coin, platform: fullCoin.platforms[0])
+        let supportedPlatforms = fullCoin.supportedPlatforms
+
+        if supportedPlatforms.count == 1 {
+            let platformCoin = PlatformCoin(coin: fullCoin.coin, platform: supportedPlatforms[0])
 
             if !platformCoin.coinType.restoreSettingTypes.isEmpty {
                 restoreSettingsService.approveSettings(platformCoin: platformCoin, account: account)
@@ -91,8 +93,10 @@ extension EnableCoinService {
     }
 
     func configure(fullCoin: FullCoin, configuredPlatformCoins: [ConfiguredPlatformCoin]) {
-        if fullCoin.platforms.count == 1 {
-            let platform = fullCoin.platforms[0]
+        let supportedPlatforms = fullCoin.supportedPlatforms
+
+        if supportedPlatforms.count == 1 {
+            let platform = supportedPlatforms[0]
 
             if !platform.coinType.coinSettingTypes.isEmpty {
                 let settingsArray = configuredPlatformCoins.map { $0.coinSettings }

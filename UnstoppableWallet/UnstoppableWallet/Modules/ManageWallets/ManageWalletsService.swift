@@ -78,9 +78,9 @@ class ManageWalletsService {
         self.wallets = Set(wallets)
     }
 
-    private func hasSettingsOrPlatforms(fullCoin: FullCoin) -> Bool {
-        if fullCoin.platforms.count == 1 {
-            let platform = fullCoin.platforms[0]
+    private func hasSettingsOrPlatforms(supportedPlatforms: [Platform]) -> Bool {
+        if supportedPlatforms.count == 1 {
+            let platform = supportedPlatforms[0]
             return !platform.coinType.coinSettingTypes.isEmpty
         } else {
             return true
@@ -88,17 +88,16 @@ class ManageWalletsService {
     }
 
     private func item(fullCoin: FullCoin) -> Item {
-        let supportedPlatforms = fullCoin.platforms.filter { $0.coinType.isSupported }
-
+        let supportedPlatforms = fullCoin.supportedPlatforms
         let fullCoin = FullCoin(coin: fullCoin.coin, platforms: supportedPlatforms)
 
         let itemState: ItemState
 
-        if fullCoin.platforms.isEmpty {
+        if supportedPlatforms.isEmpty {
             itemState = .unsupported
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(fullCoin: fullCoin))
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(supportedPlatforms: supportedPlatforms))
         }
 
         return Item(fullCoin: fullCoin, state: itemState)

@@ -71,7 +71,7 @@ extension CoinDetailsService {
     }
 
     var auditAddresses: [String] {
-        fullCoin.platforms.compactMap { platform in
+        fullCoin.supportedPlatforms.compactMap { platform in
             switch platform.coinType {
             case .erc20(let address): return address
             case .bep20(let address): return address
@@ -81,7 +81,7 @@ extension CoinDetailsService {
     }
 
     var hasMajorHolders: Bool {
-        for platform in fullCoin.platforms {
+        for platform in fullCoin.supportedPlatforms {
             switch platform.coinType {
             case .erc20: return true
             default: ()
