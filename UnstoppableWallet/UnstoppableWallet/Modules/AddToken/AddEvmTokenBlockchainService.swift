@@ -9,19 +9,12 @@ import MarketKit
 class AddEvmTokenBlockchainService {
     private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
 
-    private let blockchain: Blockchain
+    private let blockchain: EvmBlockchain
     private let networkManager: NetworkManager
 
-    init(blockchain: Blockchain, networkManager: NetworkManager) {
+    init(blockchain: EvmBlockchain, networkManager: NetworkManager) {
         self.blockchain = blockchain
         self.networkManager = networkManager
-    }
-
-    func coinType(address: String) -> CoinType {
-        switch blockchain {
-        case .ethereum: return .erc20(address: address)
-        case .binanceSmartChain: return .bep20(address: address)
-        }
     }
 
 }
@@ -38,7 +31,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
     }
 
     func coinType(reference: String) -> CoinType {
-        coinType(address: reference.lowercased())
+        blockchain.evm20CoinType(address: reference.lowercased())
     }
 
     func customTokenSingle(reference: String) -> Single<CustomToken> {
@@ -50,7 +43,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
         let url = "\(apiUrl)/v1/token_info/\(blockchain.apiPath)"
         let request = networkManager.session.request(url, parameters: parameters)
-        let coinType = self.coinType(address: reference)
+        let coinType = coinType(reference: reference)
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
             CustomToken(
@@ -78,15 +71,15 @@ extension AddEvmTokenBlockchainService {
         }
     }
 
-    enum Blockchain {
-        case ethereum
-        case binanceSmartChain
+}
 
-        var apiPath: String {
-            switch self {
-            case .ethereum: return "erc20"
-            case .binanceSmartChain: return "bep20"
-            }
+extension EvmBlockchain {
+
+    var apiPath: String {
+        switch self {
+        case .ethereum: return "erc20"
+        case .binanceSmartChain: return "bep20"
+        case .polygon: return "mrc20"
         }
     }
 
