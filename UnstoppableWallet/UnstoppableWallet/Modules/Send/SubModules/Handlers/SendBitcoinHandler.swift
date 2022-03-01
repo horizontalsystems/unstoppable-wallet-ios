@@ -30,6 +30,7 @@ class SendBitcoinHandler {
 
     private func syncValidation() {
         var amountError: Error?
+        var addressError: Error?
 
         do {
             _ = try amountModule.validAmount()
@@ -37,7 +38,13 @@ class SendBitcoinHandler {
             amountError = error
         }
 
-        delegate?.onChange(isValid: amountError == nil, amountError: amountError, addressError: nil)
+        do {
+            _ = try addressModule.validAddress()
+        } catch {
+            addressError = error
+        }
+
+        delegate?.onChange(isValid: amountError == nil && addressError == nil, amountError: amountError, addressError: addressError)
     }
 
     private func syncMaximumAmount() {
