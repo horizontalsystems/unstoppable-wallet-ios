@@ -652,6 +652,7 @@
 
 "manage_wallets.title" = "钱包";
 "manage_wallets.not_found" = "找不到结果。如果您知道智能合同地址，请尝试手动添加代币。";
+"manage_wallets.search_placeholder" = "Token Name";
 
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
@@ -900,6 +901,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "找不到代币";
 "add_token.success_add" = "已添加";
+"add_token.input_placeholder" = "Address or symbol...";
 
 // Wallet Connect
 
