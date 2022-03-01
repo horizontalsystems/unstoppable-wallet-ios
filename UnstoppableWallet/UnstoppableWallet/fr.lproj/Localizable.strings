@@ -650,6 +650,7 @@
 
 "manage_wallets.title" = "Portefeuilles";
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement si vous connaissez son adresse de contrat intelligent.";
+"manage_wallets.search_placeholder" = "Code ou nom du jeton";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
@@ -898,6 +899,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
 "add_token.token_not_found" = "Token non trouvé";
 "add_token.success_add" = "Ajouté";
+"add_token.input_placeholder" = "Adresse du contrat";
 
 // Wallet Connect
 
@@ -929,7 +931,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.list.empty_view_button_text" = "Nouvelle connexion";
 
 "wallet_connect.list.pending_requests" = "Demandes en attente";
-"wallet_connect.list.version_text" = "version %@";
+"wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";
