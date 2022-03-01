@@ -25,10 +25,10 @@ class CoinPlatformsViewModel {
                 subtitle: fullCoin.coin.name,
                 description: "coin_platforms.description".localized,
                 selectedIndexes: request.currentPlatforms.compactMap { fullCoin.platforms.firstIndex(of: $0) },
-                viewItems: fullCoin.platforms.map { platform in
+                viewItems: fullCoin.platforms.map { $0.coinType }.sorted.map { coinType in
                     BottomMultiSelectorViewController.ViewItem(
-                            title: platform.coinType.platformType,
-                            subtitle: platform.coinType.platformCoinType
+                            title: coinType.platformType,
+                            subtitle: coinType.platformCoinType
                     )
                 }
         )
