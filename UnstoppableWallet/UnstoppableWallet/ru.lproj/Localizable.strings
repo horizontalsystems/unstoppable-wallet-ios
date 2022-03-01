@@ -90,8 +90,9 @@
 "show_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
 "show_key.button_show" = "Показать";
 "show_key.tab.recovery_phrase" = "Фраза для восстановления";
-"show_key.tab.private_keys" = "Приватные Ключи";
+"show_key.tab.private_key" = "Private Key";
 "show_key.passphrase" = "Кодовая Фраза";
+"show_key.private_key.description" = "This key is for all EVM-compatible blockchains.";
 
 "private_key_copying.title" = "Внимание";
 "private_key_copying.subtitle" = "Риск копирования Секретного ключа";
