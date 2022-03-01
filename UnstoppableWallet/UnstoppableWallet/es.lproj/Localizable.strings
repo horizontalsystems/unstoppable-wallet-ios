@@ -650,7 +650,7 @@
 
 "manage_wallets.title" = "Monederos";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir un token manualmente si conoce su dirección de contrato inteligente.";
-"manage_wallets.search_placeholder" = "Token code or name";
+"manage_wallets.search_placeholder" = "Código o nombre del token";
 
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
@@ -900,7 +900,7 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
 "add_token.success_add" = "Añadido";
-"add_token.input_placeholder" = "Contract Address";
+"add_token.input_placeholder" = "Dirección del contrato";
 
 // Wallet Connect
 
@@ -932,7 +932,7 @@ poner en peligro la seguridad de mis fondos.";
 "wallet_connect.list.empty_view_button_text" = "Nueva Conexión";
 
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
-"wallet_connect.list.version_text" = "Version %@";
+"wallet_connect.list.version_text" = "Versión %@";
 "wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, usted debe entrar en las sesiones para ver y confirmar la solicitud";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
