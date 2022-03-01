@@ -653,7 +653,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "manage_wallets.title" = "Cüzdanlar";
 "manage_wallets.not_found" = "Hiçbir sonuç bulunamadı. Akıllı sözleşme adresini biliyorsanız tokeni manüel olarak eklemeyi deneyin.";
-"manage_wallets.search_placeholder" = "Token code or name";
+"manage_wallets.search_placeholder" = "Jeton kodu veya adı";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
@@ -902,7 +902,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.success_add" = "Eklendi";
-"add_token.input_placeholder" = "Contract Address";
+"add_token.input_placeholder" = "Sözleşme Adresi";
 
 // Wallet Connect
 
@@ -934,7 +934,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.list.empty_view_button_text" = "Yeni bağlantı";
 
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
-"wallet_connect.list.version_text" = "Version %@";
+"wallet_connect.list.version_text" = "Sürüm %@";
 "wallet_connect.list.v1_bottom_text" = "WalletConnect'in ilk sürümünde, talebi görmek ve onaylamak için oturumlara gitmeniz gerekir";
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
