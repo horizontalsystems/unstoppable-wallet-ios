@@ -8,13 +8,12 @@ struct AddTokenModule {
             return nil
         }
 
-        let ethereumService = AddEvmTokenBlockchainService(blockchain: .ethereum, networkManager: App.shared.networkManager)
-        let binanceSmartChainService = AddEvmTokenBlockchainService(blockchain: .binanceSmartChain, networkManager: App.shared.networkManager)
-        let binanceService = AddBep2TokenBlockchainService(networkManager: App.shared.networkManager)
+        var addTokenServices: [IAddTokenBlockchainService] = App.shared.evmBlockchainManager.allBlockchains.map {
+            AddEvmTokenBlockchainService(blockchain: $0, networkManager: App.shared.networkManager)
+        }
+        addTokenServices.append(AddBep2TokenBlockchainService(networkManager: App.shared.networkManager))
 
-        let services: [IAddTokenBlockchainService] = [ethereumService, binanceSmartChainService, binanceService]
-
-        let service = AddTokenService(account: account, blockchainServices: services, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
+        let service = AddTokenService(account: account, blockchainServices: addTokenServices, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
 
