@@ -650,6 +650,7 @@
 
 "manage_wallets.title" = "지갑";
 "manage_wallets.not_found" = "검색 결과가 없습니다. 스마트 계약 주소를 알고 있는 경우 토큰을 수동으로 추가해 보십시오.";
+"manage_wallets.search_placeholder" = "Token Name";
 
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
@@ -898,6 +899,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
 "add_token.success_add" = "추가됨";
+"add_token.input_placeholder" = "Address or symbol...";
 
 // Wallet Connect
 
