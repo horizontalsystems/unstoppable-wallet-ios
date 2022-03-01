@@ -25,10 +25,10 @@ extension MarketKit.CoinType {
 
     var platformCoinType: String {
         switch self {
-        case .ethereum, .binanceSmartChain: return "coin_platforms.native".localized
+        case .ethereum, .binanceSmartChain, .polygon: return "coin_platforms.native".localized
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
-        case .polygon, .mrc20: return "POLYGON"
+        case .mrc20: return "Polygon"
         case .bep2: return "BEP2"
         default: return ""
         }
