@@ -241,3 +241,11 @@ extension Array where Element == CoinType {
     }
 
 }
+
+extension Array where Element == Platform {
+
+    var sorted: [Platform] {
+        sorted { $0.coinType.order < $1.coinType.order }
+    }
+
+}
