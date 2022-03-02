@@ -31,7 +31,7 @@ class TransactionRecord {
             if confirmations >= threshold {
                 return .completed
             } else {
-                return .processing(progress: Double(confirmations) / Double(threshold))
+                return .processing(progress: Double(max(0, confirmations)) / Double(threshold))
             }
         }
 
