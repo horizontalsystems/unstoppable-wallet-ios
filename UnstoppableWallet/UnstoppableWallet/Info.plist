@@ -49,8 +49,6 @@
 	<string>${infura_project_id}</string>
 	<key>InfuraProjectSecret</key>
 	<string>${infura_project_secret}</string>
-	<key>WallectConnectV2ProjectKey</key>
-	<string>${wallet_connect_v2_project_key}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tg</string>
@@ -95,5 +93,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>WallectConnectV2ProjectKey</key>
+	<string>${wallet_connect_v2_project_key}</string>
 </dict>
 </plist>
