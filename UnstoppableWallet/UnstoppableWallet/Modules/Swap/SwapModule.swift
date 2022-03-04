@@ -122,6 +122,8 @@ extension EvmBlockchain {
         case .ethereum: return [.oneInch, .uniswap]
         case .binanceSmartChain: return [.oneInch, .pancake]
         case .polygon: return [.oneInch, .quickSwap]
+        case .optimism: return [.oneInch]
+        case .arbitrumOne: return [.oneInch]
         }
     }
 
@@ -138,7 +140,7 @@ extension SwapModule.Dex {
         var allowedBlockchains: [EvmBlockchain] {
             switch self {
             case .uniswap: return [.ethereum]
-            case .oneInch: return [.ethereum, .binanceSmartChain, .polygon]
+            case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .optimism, .arbitrumOne]
             case .pancake: return [.binanceSmartChain]
             case .quickSwap: return [.polygon]
             }

@@ -90,10 +90,12 @@ class OneInchSendEvmTransactionService {
 
     private func swapToken(platformCoin: PlatformCoin) -> OneInchMethodDecoration.Token? {
         switch platformCoin.coinType {
-        case .ethereum, .binanceSmartChain, .polygon: return .evmCoin
+        case .ethereum, .binanceSmartChain, .polygon, .ethereumOptimism, .ethereumArbitrumOne: return .evmCoin
         case .erc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
         case .bep20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
         case .mrc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
+        case .optimismErc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
+        case .arbitrumOneErc20(let address): return (try? EthereumKit.Address(hex: address)).map { .eip20Coin(address: $0) }
         default: return nil
         }
     }

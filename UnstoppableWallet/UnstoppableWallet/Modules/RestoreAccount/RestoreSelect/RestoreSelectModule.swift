@@ -43,6 +43,8 @@ extension RestoreSelectModule {
                 .evm(evmBlockchain: .ethereum),
                 .evm(evmBlockchain: .binanceSmartChain),
                 .evm(evmBlockchain: .polygon),
+                .evm(evmBlockchain: .optimism),
+                .evm(evmBlockchain: .arbitrumOne),
                 .zcash,
                 .dash,
                 .bitcoinCash,

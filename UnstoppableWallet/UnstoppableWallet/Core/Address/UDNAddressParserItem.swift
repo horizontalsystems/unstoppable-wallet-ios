@@ -70,7 +70,11 @@ extension UDNAddressParserItem {
 
     static func chainCoinCode(coinType: CoinType) -> String? {
         switch coinType {
-        case .ethereum, .erc20, .binanceSmartChain, .bep20, .polygon, .mrc20: return "ETH"
+        case .ethereum, .erc20: return "ETH"
+        case .binanceSmartChain, .bep20: return "ETH"
+        case .polygon, .mrc20: return "ETH"
+        case .ethereumOptimism, .optimismErc20: return "ETH"
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return "ETH"
         default: return nil
         }
     }
