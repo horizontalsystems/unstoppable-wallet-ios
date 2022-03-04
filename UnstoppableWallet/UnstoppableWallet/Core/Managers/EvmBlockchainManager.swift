@@ -27,6 +27,8 @@ class EvmBlockchainManager {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
         case .polygon: return .polygon
+        case .optimism: return .optimism
+        case .arbitrumOne: return .arbitrumOne
         }
     }
 
@@ -38,7 +40,9 @@ extension EvmBlockchainManager {
         [
             .ethereum,
             .binanceSmartChain,
-            .polygon
+            .polygon,
+            .optimism,
+            .arbitrumOne
         ]
 
         // todo: load custom blockchains here

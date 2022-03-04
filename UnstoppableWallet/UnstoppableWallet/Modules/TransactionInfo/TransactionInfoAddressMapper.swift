@@ -17,6 +17,9 @@ class TransactionInfoAddressMapper {
 
         // Polygon
         "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff": "QuickSwap",
+
+        // Optimism
+        "0x1111111254760f7ab3f16433eea9304126dcd199": "1Inch V4",
     ]
 
     static func map(_ address: String) -> String {

@@ -80,6 +80,8 @@ extension EvmBlockchain {
         case .ethereum: return "erc20"
         case .binanceSmartChain: return "bep20"
         case .polygon: return "mrc20"
+        case .optimism: return "optimism"
+        case .arbitrumOne: return "arbitrum-one"
         }
     }
 

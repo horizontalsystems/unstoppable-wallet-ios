@@ -8,6 +8,8 @@ extension MarketKit.CoinType {
         case .erc20: return "ERC20"
         case .bep20: return "BEP20"
         case .polygon, .mrc20: return "POLYGON"
+        case .ethereumOptimism, .optimismErc20: return "OPTIMISM"
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return "ARBITRUM"
         case .bep2: return "BEP2"
         default: return nil
         }
@@ -20,6 +22,8 @@ extension MarketKit.CoinType {
         case .binanceSmartChain: return "Binance Smart Chain"
         case .bep20: return "BEP20"
         case .polygon, .mrc20: return "Polygon"
+        case .ethereumOptimism, .optimismErc20: return "Optimism"
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return "Arbitrum One"
         case .bep2: return "BEP2"
         default: return ""
         }
@@ -27,10 +31,12 @@ extension MarketKit.CoinType {
 
     var platformCoinType: String {
         switch self {
-        case .ethereum, .binanceSmartChain, .polygon: return "coin_platforms.native".localized
+        case .ethereum, .binanceSmartChain, .polygon, .ethereumOptimism, .ethereumArbitrumOne: return "coin_platforms.native".localized
         case .erc20(let address): return address.shortenedAddress
         case .bep20(let address): return address.shortenedAddress
         case .mrc20(let address): return address.shortenedAddress
+        case .optimismErc20(let address): return address.shortenedAddress
+        case .arbitrumOneErc20(let address): return address.shortenedAddress
         case .bep2(let symbol): return symbol
         default: return ""
         }
@@ -41,6 +47,8 @@ extension MarketKit.CoinType {
         case .ethereum, .erc20: return "ethereum_24"
         case .binanceSmartChain, .bep20: return "binance_smart_chain_24"
         case .polygon, .mrc20: return "polygon_24"
+        case .ethereumOptimism, .optimismErc20: return "optimism_24"
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return "arbitrum_one_24"
         case .bep2: return "binance_chain_24"
         default: return nil
         }
@@ -48,7 +56,11 @@ extension MarketKit.CoinType {
 
     var swappable: Bool {
         switch self {
-        case .ethereum, .erc20, .binanceSmartChain, .bep20, .polygon, .mrc20: return true
+        case .ethereum, .erc20: return true
+        case .binanceSmartChain, .bep20: return true
+        case .polygon, .mrc20: return true
+        case .ethereumOptimism, .optimismErc20: return true
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
         default: return false
         }
     }
@@ -87,7 +99,13 @@ extension MarketKit.CoinType {
 
     var isSupported: Bool {
         switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .ethereum, .zcash, .binanceSmartChain, .polygon, .erc20, .bep20, .bep2, .mrc20: return true
+        case .bitcoin, .litecoin, .bitcoinCash, .dash, .zcash: return true
+        case .ethereum, .erc20: return true
+        case .binanceSmartChain, .bep20: return true
+        case .polygon, .mrc20: return true
+        case .ethereumOptimism, .optimismErc20: return true
+        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
+        case .bep2: return true
         default: return false
         }
     }
@@ -106,22 +124,25 @@ extension MarketKit.CoinType {
         case .ethereum: return 6
         case .binanceSmartChain: return 7
         case .polygon: return 8
-        case .erc20: return 9
-        case .bep20: return 10
-        case .mrc20: return 11
-        case .bep2: return 12
-        case .solana: return 13
-        case .avalanche: return 14
-        case .fantom: return 15
-        case .arbitrumOne: return 16
-        case .huobiToken: return 17
-        case .harmonyShard0: return 18
-        case .xdai: return 19
-        case .moonriver: return 20
-        case .okexChain: return 21
-        case .sora: return 22
-        case .tomochain: return 23
-        case .iotex: return 24
+        case .ethereumOptimism: return 9
+        case .ethereumArbitrumOne: return 10
+        case .erc20: return 11
+        case .bep20: return 12
+        case .mrc20: return 13
+        case .optimismErc20: return 14
+        case .arbitrumOneErc20: return 15
+        case .bep2: return 16
+        case .solana: return 17
+        case .avalanche: return 18
+        case .fantom: return 19
+        case .huobiToken: return 20
+        case .harmonyShard0: return 21
+        case .xdai: return 22
+        case .moonriver: return 23
+        case .okexChain: return 24
+        case .sora: return 25
+        case .tomochain: return 26
+        case .iotex: return 27
         default: return Int.max
         }
     }

@@ -58,7 +58,7 @@ extension WatchAddressService {
         accountManager.save(account: account)
 
         do {
-            let platformCoins = try coinManager.platformCoins(coinTypes: [.ethereum, .binanceSmartChain, .polygon])
+            let platformCoins = try coinManager.platformCoins(coinTypes: [.ethereum, .binanceSmartChain, .polygon, .ethereumOptimism, .ethereumArbitrumOne])
             let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
 
             walletManager.save(wallets: wallets)

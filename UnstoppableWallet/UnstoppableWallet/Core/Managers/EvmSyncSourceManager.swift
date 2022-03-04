@@ -49,6 +49,22 @@ class EvmSyncSourceManager {
                         transactionSource: .polygonscan(apiKey: appConfigProvider.polygonscanKey)
                 )
             ]
+        case .optimism:
+            return [
+                EvmSyncSource(
+                        name: "Optimism.io HTTP",
+                        rpcSource: .optimismRpcHttp(),
+                        transactionSource: .optimisticEtherscan(apiKey: "")
+                )
+            ]
+        case .arbitrumOne:
+            return [
+                EvmSyncSource(
+                        name: "Arbitrum.io HTTP",
+                        rpcSource: .arbitrumOneRpcHttp(),
+                        transactionSource: .arbiscan(apiKey: "")
+                )
+            ]
         }
     }
 
