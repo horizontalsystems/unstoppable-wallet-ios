@@ -41,8 +41,8 @@ extension EvmBlockchainManager {
             .ethereum,
             .binanceSmartChain,
             .polygon,
-            .optimism,
-            .arbitrumOne
+//            .optimism,
+//            .arbitrumOne
         ]
 
         // todo: load custom blockchains here
