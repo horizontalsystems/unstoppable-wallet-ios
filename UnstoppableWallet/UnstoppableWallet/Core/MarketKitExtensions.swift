@@ -103,8 +103,8 @@ extension MarketKit.CoinType {
         case .ethereum, .erc20: return true
         case .binanceSmartChain, .bep20: return true
         case .polygon, .mrc20: return true
-        case .ethereumOptimism, .optimismErc20: return true
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
+//        case .ethereumOptimism, .optimismErc20: return true
+//        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
         case .bep2: return true
         default: return false
         }
