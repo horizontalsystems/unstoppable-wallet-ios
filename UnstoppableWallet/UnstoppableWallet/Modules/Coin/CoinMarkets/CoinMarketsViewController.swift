@@ -11,7 +11,7 @@ class CoinMarketsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let infoLabel = UILabel()
+    private let infoView = PlaceholderView()
     private let errorView = PlaceholderView()
     private let headerView: MarketSingleSortHeaderView
 
@@ -68,16 +68,12 @@ class CoinMarketsViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: G14Cell.self)
 
-        wrapperView.addSubview(infoLabel)
-        infoLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.centerY.equalToSuperview()
+        wrapperView.addSubview(infoView)
+        infoView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        infoLabel.textAlignment = .center
-        infoLabel.numberOfLines = 0
-        infoLabel.font = .subhead2
-        infoLabel.textColor = .themeGray
+        infoView.image = UIImage(named: "no_data_48")
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -85,10 +81,10 @@ class CoinMarketsViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.infoDriver) { [weak self] info in
             if let info = info {
-                self?.infoLabel.text = info
-                self?.infoLabel.isHidden = false
+                self?.infoView.text = info
+                self?.infoView.isHidden = false
             } else {
-                self?.infoLabel.isHidden = true
+                self?.infoView.isHidden = true
             }
         }
 
