@@ -45,6 +45,8 @@
 
 "n/a" = "N/A";
 
+"sync_error" = "Sync error. Try again.";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
@@ -333,7 +335,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.sync_error" = "Sync Error";
 "market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
 "market.top.section.header.see_all" = "See All";

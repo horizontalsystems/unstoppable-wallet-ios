@@ -9,11 +9,11 @@ class MarketWatchlistViewController: MarketListViewController {
     private let viewModel: MarketWatchlistViewModel
 
     private let multiSortHeaderView: MarketMultiSortHeaderView
-    private let cautionView = CautionView()
+    private let placeholderView = PlaceholderView()
 
     override var viewController: UIViewController? { parentNavigationController }
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
-    override var emptyView: UIView? { cautionView }
+    override var emptyView: UIView? { placeholderView }
 
     init(viewModel: MarketWatchlistViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
@@ -31,8 +31,8 @@ class MarketWatchlistViewController: MarketListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        cautionView.image = UIImage(named: "rate_48")
-        cautionView.text = "market_watchlist.empty.caption".localized
+        placeholderView.image = UIImage(named: "rate_48")
+        placeholderView.text = "market_watchlist.empty.caption".localized
     }
 
 }

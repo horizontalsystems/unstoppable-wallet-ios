@@ -14,7 +14,7 @@ class CoinDetailsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
 
     weak var parentNavigationController: UINavigationController?
 
@@ -53,7 +53,7 @@ class CoinDetailsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.onTapRetry = { [weak self] in self?.viewModel.onTapRetry() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -78,13 +78,8 @@ class CoinDetailsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
 
         viewModel.onLoad()
@@ -92,6 +87,10 @@ class CoinDetailsViewController: ThemeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    @objc private func onRetry() {
+        viewModel.onTapRetry()
     }
 
     private func sync(viewItem: CoinDetailsViewModel.ViewItem?) {

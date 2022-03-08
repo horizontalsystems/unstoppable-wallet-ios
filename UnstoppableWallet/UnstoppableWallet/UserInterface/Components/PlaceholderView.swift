@@ -93,6 +93,18 @@ class PlaceholderView: UIView {
         stackView.setCustomSpacing(.margin16, after: button)
     }
 
+    func configureSyncError(target: Any, action: Selector) {
+        image = UIImage(named: "sync_error_48")
+        text = "sync_error".localized
+
+        addButton(
+                style: .primaryYellow,
+                title: "button.retry".localized,
+                target: target,
+                action: action
+        )
+    }
+
 }
 
 extension PlaceholderView {

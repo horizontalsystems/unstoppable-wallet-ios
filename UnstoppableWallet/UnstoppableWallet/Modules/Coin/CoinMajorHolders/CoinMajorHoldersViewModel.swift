@@ -9,7 +9,7 @@ class CoinMajorHoldersViewModel {
 
     private let stateViewItemRelay = BehaviorRelay<StateViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: CoinMajorHoldersService) {
         self.service = service
@@ -24,15 +24,15 @@ class CoinMajorHoldersViewModel {
         case .loading:
             stateViewItemRelay.accept(nil)
             loadingRelay.accept(true)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .completed(let holders):
             stateViewItemRelay.accept(stateViewItem(holders: holders))
             loadingRelay.accept(false)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .failed:
             stateViewItemRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -62,11 +62,11 @@ extension CoinMajorHoldersViewModel {
         loadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
-    func refresh() {
+    func onTapRetry() {
         service.refresh()
     }
 

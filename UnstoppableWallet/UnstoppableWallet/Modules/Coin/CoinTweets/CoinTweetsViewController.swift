@@ -13,7 +13,7 @@ class CoinTweetsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let infoLabel = UILabel()
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController?
@@ -69,7 +69,7 @@ class CoinTweetsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.onTapRetry = { [weak self] in self?.refresh() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -95,15 +95,9 @@ class CoinTweetsViewController: ThemeViewController {
                 self?.infoLabel.isHidden = true
             }
         }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
-
         viewModel.viewDidLoad()
     }
 
@@ -113,8 +107,8 @@ class CoinTweetsViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
     }
 
-    private func refresh() {
-        viewModel.refresh()
+    @objc private func onRetry() {
+        refresh()
     }
 
     @objc private func onRefresh() {
@@ -123,6 +117,10 @@ class CoinTweetsViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+
+    private func refresh() {
+        viewModel.refresh()
     }
 
     private func sync(viewItems: [CoinTweetsViewModel.ViewItem]?) {

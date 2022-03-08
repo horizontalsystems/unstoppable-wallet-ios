@@ -11,7 +11,7 @@ class CoinMarketsViewModel {
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let infoRelay = BehaviorRelay<String?>(value: nil)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let scrollToTopRelay = PublishRelay<()>()
 
     private var volumeType: VolumeType = .coin {
@@ -34,12 +34,12 @@ class CoinMarketsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
             infoRelay.accept(nil)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .loaded(let tickers, let reorder):
             viewItemsRelay.accept(viewItems(tickers: tickers))
             loadingRelay.accept(false)
             infoRelay.accept(tickers.isEmpty ? "coin_page.markets.empty".localized : nil)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
 
             if reorder {
                 scrollToTopRelay.accept(())
@@ -48,7 +48,7 @@ class CoinMarketsViewModel {
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
             infoRelay.accept(nil)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -130,15 +130,15 @@ extension CoinMarketsViewModel {
         infoRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
     func onLoad() {
         service.sync()
     }
 
-    func onRefresh() {
+    func onTapRetry() {
         service.sync()
     }
 
