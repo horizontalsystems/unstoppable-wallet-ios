@@ -1044,6 +1044,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_collections.average_7d" = "Average 7D";
 "nft_collections.average_30d" = "Average 30D";
 "nft_collections.on_sale" = "On Sale";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
 // Nft Asset
 

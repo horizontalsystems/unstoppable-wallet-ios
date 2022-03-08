@@ -16,6 +16,7 @@ class NftCollectionsViewController: ThemeViewController {
     private var expandedUids = Set<String>()
 
     private let tableView = SectionsTableView(style: .plain)
+    private let emptyView = PlaceholderView()
 
     private var loaded = false
 
@@ -51,6 +52,14 @@ class NftCollectionsViewController: ThemeViewController {
         tableView.registerCell(forClass: NftCollectionsDoubleCell.self)
         tableView.sectionDataSource = self
 
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        emptyView.image = UIImage(named: "image_empty_48")
+        emptyView.text = "nft_collections.empty".localized
+
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.expandedUidsDriver) { [weak self] in self?.sync(expandedUids: $0) }
 
@@ -60,6 +69,8 @@ class NftCollectionsViewController: ThemeViewController {
 
     private func sync(viewItems: [NftCollectionsViewModel.ViewItem]) {
         self.viewItems = viewItems
+
+        emptyView.isHidden = !viewItems.isEmpty
 
         if loaded {
             tableView.reload(animated: true)
@@ -177,7 +188,7 @@ extension NftCollectionsViewController: SectionsDataSource {
         [
             Section(
                     id: "main",
-                    headerState: .static(view: headerView, height: .heightCell48),
+                    headerState: viewItems.isEmpty ? .margin(height: 0) : .static(view: headerView, height: .heightCell48),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: rows(viewItems: viewItems)
             )

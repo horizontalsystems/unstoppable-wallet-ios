@@ -13,7 +13,7 @@ class CoinAuditsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let emptyLabel = UILabel()
+    private let emptyView = PlaceholderView()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
 
@@ -47,17 +47,13 @@ class CoinAuditsViewController: ThemeViewController {
 
         tableView.registerCell(forClass: BrandFooterCell.self)
 
-        view.addSubview(emptyLabel)
-        emptyLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.centerY.equalToSuperview()
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        emptyLabel.numberOfLines = 0
-        emptyLabel.textAlignment = .center
-        emptyLabel.font = .subhead2
-        emptyLabel.textColor = .themeGray
-        emptyLabel.text = "coin_page.audits.no_reports".localized
+        emptyView.image = UIImage(named: "not_available_48")
+        emptyView.text = "coin_page.audits.no_reports".localized
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -91,10 +87,10 @@ class CoinAuditsViewController: ThemeViewController {
 
         if let viewItems = viewItems {
             tableView.bounces = true
-            emptyLabel.isHidden = !viewItems.isEmpty
+            emptyView.isHidden = !viewItems.isEmpty
         } else {
             tableView.bounces = false
-            emptyLabel.isHidden = true
+            emptyView.isHidden = true
         }
 
         tableView.reload()
