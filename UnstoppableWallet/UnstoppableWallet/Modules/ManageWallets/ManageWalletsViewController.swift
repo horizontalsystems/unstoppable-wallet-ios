@@ -38,7 +38,7 @@ class ManageWalletsViewController: CoinToggleViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        notFoundPlaceholder.image = UIImage(named: "no_internet_48")
+        notFoundPlaceholder.image = UIImage(named: "not_available_48")
         notFoundPlaceholder.text = "manage_wallets.not_found".localized
 
         enableCoinView.onOpenController = { [weak self] controller in

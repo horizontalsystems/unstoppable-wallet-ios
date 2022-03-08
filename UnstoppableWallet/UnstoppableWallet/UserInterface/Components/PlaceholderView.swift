@@ -116,7 +116,7 @@ extension PlaceholderView {
 
         var multiplier: CGFloat {
             switch self {
-            case .upperMiddle, .keyboard: return 1.4
+            case .upperMiddle, .keyboard: return 1.6
             case .bottom: return 0.4
             }
         }
