@@ -17,8 +17,8 @@ class WalletViewController: ThemeViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let refreshControl = UIRefreshControl()
 
-    private let emptyView = UIView()
-    private let watchEmptyView = UIView()
+    private let emptyView = PlaceholderView()
+    private let watchEmptyView = PlaceholderView()
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
@@ -72,50 +72,25 @@ class WalletViewController: ThemeViewController {
 
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.centerY.equalToSuperview()
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        let cautionView = CircleCautionView()
-
-        emptyView.addSubview(cautionView)
-        cautionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.top.equalToSuperview()
-        }
-
-        cautionView.image = UIImage(named: "add_to_wallet_2_48")
-        cautionView.text = "balance.empty.description".localized
-
-        let addCoinButton = ThemeButton()
-
-        emptyView.addSubview(addCoinButton)
-        addCoinButton.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(cautionView.snp.bottom).offset(CGFloat.margin32)
-            maker.bottom.equalToSuperview()
-        }
-
-        addCoinButton.apply(style: .secondaryDefault)
-        addCoinButton.setTitle("balance.empty.add_coins".localized, for: .normal)
-        addCoinButton.addTarget(self, action: #selector(onTapAddCoin), for: .touchUpInside)
+        emptyView.image = UIImage(named: "add_to_wallet_2_48")
+        emptyView.text = "balance.empty.description".localized
+        emptyView.addButton(
+                style: .primaryYellow,
+                title: "balance.empty.add_coins".localized,
+                target: self,
+                action: #selector(onTapAddCoin)
+        )
 
         view.addSubview(watchEmptyView)
         watchEmptyView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.centerY.equalToSuperview()
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        let watchCautionView = CircleCautionView()
-
-        watchEmptyView.addSubview(watchCautionView)
-        watchCautionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.top.bottom.equalToSuperview()
-        }
-
-        watchCautionView.image = UIImage(named: "empty_wallet_48")
-        watchCautionView.text = "balance.watch_empty.description".localized
+        watchEmptyView.image = UIImage(named: "empty_wallet_48")
+        watchEmptyView.text = "balance.watch_empty.description".localized
 
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }

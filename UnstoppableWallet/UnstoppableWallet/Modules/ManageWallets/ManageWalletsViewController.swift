@@ -9,7 +9,7 @@ class ManageWalletsViewController: CoinToggleViewController {
     private let viewModel: ManageWalletsViewModel
     private let enableCoinView: EnableCoinView
 
-    private let notFoundLabel = UILabel()
+    private let notFoundPlaceholder = PlaceholderView(layoutType: .keyboard)
 
     init(viewModel: ManageWalletsViewModel, enableCoinView: EnableCoinView) {
         self.viewModel = viewModel
@@ -33,17 +33,13 @@ class ManageWalletsViewController: CoinToggleViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onTapAddTokenButton))
 
-        view.addSubview(notFoundLabel)
-        notFoundLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.top.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin48)
+        view.addSubview(notFoundPlaceholder)
+        notFoundPlaceholder.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        notFoundLabel.numberOfLines = 0
-        notFoundLabel.textAlignment = .center
-        notFoundLabel.text = "manage_wallets.not_found".localized
-        notFoundLabel.font = .subhead2
-        notFoundLabel.textColor = .themeGray
+        notFoundPlaceholder.image = UIImage(named: "no_internet_48")
+        notFoundPlaceholder.text = "manage_wallets.not_found".localized
 
         enableCoinView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)
@@ -71,7 +67,7 @@ class ManageWalletsViewController: CoinToggleViewController {
     }
 
     private func setNotFound(visible: Bool) {
-        notFoundLabel.isHidden = !visible
+        notFoundPlaceholder.isHidden = !visible
     }
 
 }

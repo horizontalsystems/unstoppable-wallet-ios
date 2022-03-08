@@ -18,66 +18,36 @@ class OnboardingBalanceViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "balance.title".localized
+        let placeholderView = PlaceholderView(layoutType: .bottom)
 
-        let cautionWrapper = UIView()
-
-        view.addSubview(cautionWrapper)
-        cautionWrapper.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(view.safeAreaLayoutGuide)
+        view.addSubview(placeholderView)
+        placeholderView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        let cautionView = CircleCautionView()
+        placeholderView.image = UIImage(named: "wallet_48")
+        placeholderView.text = "onboarding.balance.description".localized
 
-        cautionWrapper.addSubview(cautionView)
-        cautionView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-            maker.centerY.equalToSuperview()
-        }
+        placeholderView.addButton(
+                style: .primaryYellow,
+                title: "onboarding.balance.create".localized,
+                target: self,
+                action: #selector(didTapCreate)
+        )
 
-        cautionView.image = UIImage(named: "wallet_48")
-        cautionView.text = "onboarding.balance.description".localized
+        placeholderView.addButton(
+                style: .primaryGray,
+                title: "onboarding.balance.restore".localized,
+                target: self,
+                action: #selector(didTapRestore)
+        )
 
-        let createButton = ThemeButton()
-
-        view.addSubview(createButton)
-        createButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(cautionWrapper.snp.bottom)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        createButton.apply(style: .primaryYellow)
-        createButton.setTitle("onboarding.balance.create".localized, for: .normal)
-        createButton.addTarget(self, action: #selector(didTapCreate), for: .touchUpInside)
-
-        let restoreButton = ThemeButton()
-
-        view.addSubview(restoreButton)
-        restoreButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        restoreButton.apply(style: .primaryGray)
-        restoreButton.setTitle("onboarding.balance.restore".localized, for: .normal)
-        restoreButton.addTarget(self, action: #selector(didTapRestore), for: .touchUpInside)
-
-        let watchButton = ThemeButton()
-
-        view.addSubview(watchButton)
-        watchButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(restoreButton.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        watchButton.apply(style: .primaryGray)
-        watchButton.setTitle("onboarding.balance.watch".localized, for: .normal)
-        watchButton.addTarget(self, action: #selector(didTapWatch), for: .touchUpInside)
+        placeholderView.addButton(
+                style: .primaryTransparent,
+                title: "onboarding.balance.watch".localized,
+                target: self,
+                action: #selector(didTapWatch)
+        )
     }
 
     @objc func didTapCreate() {

@@ -973,7 +973,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Onboarding
 
-"onboarding.balance.description" = "No wallets yet";
+"onboarding.balance.description" = "You don’t have any installed wallets yet.\nCreate new wallet or restore an existing one.";
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
 "onboarding.balance.watch" = "Watch Address";
