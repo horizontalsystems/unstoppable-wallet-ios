@@ -12,7 +12,7 @@ class MarketOverviewViewModel {
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: MarketOverviewService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
@@ -28,15 +28,15 @@ class MarketOverviewViewModel {
         case .loading:
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .loaded(let listItems, let globalMarketData):
             viewItemRelay.accept(viewItem(listItems: listItems, globalMarketData: globalMarketData))
             loadingRelay.accept(false)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .failed:
             viewItemRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -128,8 +128,8 @@ extension MarketOverviewViewModel {
         loadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
     var marketTops: [String] {

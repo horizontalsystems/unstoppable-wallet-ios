@@ -12,7 +12,7 @@ class MarketPostViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController?
@@ -57,22 +57,17 @@ class MarketPostViewController: ThemeViewController {
 
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.onTapRetry = { [weak self] in self?.refresh() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
     }
 
@@ -82,8 +77,8 @@ class MarketPostViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
     }
 
-    private func refresh() {
-        viewModel.refresh()
+    @objc private func onRetry() {
+        refresh()
     }
 
     @objc private func onRefresh() {
@@ -92,6 +87,10 @@ class MarketPostViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+
+    private func refresh() {
+        viewModel.refresh()
     }
 
     private func sync(viewItems: [MarketPostViewModel.ViewItem]?) {

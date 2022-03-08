@@ -20,7 +20,7 @@ class CoinOverviewViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let coinInfoCell = A7Cell()
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
 
     /* Chart section */
     private let currentRateCell: CoinChartRateCell
@@ -120,7 +120,7 @@ class CoinOverviewViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.onTapRetry = { [weak self] in self?.viewModel.onTapRetry() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -147,13 +147,8 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
 
         subscribeViewModels()
@@ -164,6 +159,10 @@ class CoinOverviewViewController: ThemeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    @objc private func onRetry() {
+        viewModel.onTapRetry()
     }
 
     private func subscribeViewModels() {

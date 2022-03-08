@@ -12,7 +12,7 @@ class CoinMarketsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let infoLabel = UILabel()
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
     private let headerView: MarketSingleSortHeaderView
 
     private var viewItems: [CoinMarketsViewModel.ViewItem]?
@@ -51,7 +51,7 @@ class CoinMarketsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.onTapRetry = { [weak self] in self?.viewModel.onRefresh() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -92,17 +92,16 @@ class CoinMarketsViewController: ThemeViewController {
             }
         }
 
-        subscribe(disposeBag, viewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
         subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
         viewModel.onLoad()
+    }
+
+    @objc private func onRetry() {
+        viewModel.onTapRetry()
     }
 
     private func sync(viewItems: [CoinMarketsViewModel.ViewItem]?) {

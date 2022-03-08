@@ -9,7 +9,7 @@ class CoinTreasuriesViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let scrollToTopRelay = PublishRelay<()>()
 
     private let dropdownValueRelay = BehaviorRelay<String>(value: "")
@@ -32,11 +32,11 @@ class CoinTreasuriesViewModel {
         case .loading:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .loaded(let treasuries, let reorder):
             viewItemsRelay.accept(treasuries.map { viewItem(treasury: $0) })
             loadingRelay.accept(false)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
 
             if reorder {
                 scrollToTopRelay.accept(())
@@ -44,7 +44,7 @@ class CoinTreasuriesViewModel {
         case .failed:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -116,15 +116,15 @@ extension CoinTreasuriesViewModel {
         loadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
     var scrollToTopSignal: Signal<()> {
         scrollToTopRelay.asSignal()
     }
 
-    func refresh() {
+    func onTapRetry() {
         service.refresh()
     }
 

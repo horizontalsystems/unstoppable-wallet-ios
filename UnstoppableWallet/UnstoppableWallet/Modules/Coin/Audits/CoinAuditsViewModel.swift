@@ -9,7 +9,7 @@ class CoinAuditsViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: CoinAuditsService) {
         self.service = service
@@ -24,15 +24,15 @@ class CoinAuditsViewModel {
         case .loading:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(true)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .completed(let items):
             viewItemsRelay.accept(items.map { viewItem(item: $0) })
             loadingRelay.accept(false)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .failed:
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -65,11 +65,11 @@ extension CoinAuditsViewModel {
         loadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
-    func refresh() {
+    func onTapRetry() {
         service.refresh()
     }
 

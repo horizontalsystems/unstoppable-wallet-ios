@@ -43,7 +43,7 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
 
     private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let scrollToTopRelay = PublishRelay<()>()
 
     init(service: Service, watchlistToggleService: MarketWatchlistToggleService, decorator: Decorator) {
@@ -61,12 +61,12 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
         case .loading:
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(true)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
         case .loaded(let items, let softUpdate, let reorder):
             let data = MarketModule.ListViewItemData(viewItems: viewItems(items: items), softUpdate: softUpdate)
             viewItemDataRelay.accept(data)
             loadingRelay.accept(false)
-            errorRelay.accept(nil)
+            syncErrorRelay.accept(false)
 
             if reorder {
                 scrollToTopRelay.accept(())
@@ -74,7 +74,7 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
         case .failed:
             viewItemDataRelay.accept(nil)
             loadingRelay.accept(false)
-            errorRelay.accept("market.sync_error".localized)
+            syncErrorRelay.accept(true)
         }
     }
 
@@ -100,8 +100,8 @@ extension MarketListViewModel: IMarketListViewModel {
         loadingRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
-        errorRelay.asDriver()
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
     var scrollToTopSignal: Signal<()> {

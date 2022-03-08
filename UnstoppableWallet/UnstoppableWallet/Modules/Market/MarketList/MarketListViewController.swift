@@ -9,7 +9,7 @@ import HUD
 protocol IMarketListViewModel {
     var viewItemDataDriver: Driver<MarketModule.ListViewItemData?> { get }
     var loadingDriver: Driver<Bool> { get }
-    var errorDriver: Driver<String?> { get }
+    var syncErrorDriver: Driver<Bool> { get }
     var scrollToTopSignal: Signal<()> { get }
     func isFavorite(index: Int) -> Bool?
     func favorite(index: Int)
@@ -23,7 +23,7 @@ class MarketListViewController: ThemeViewController {
 
     let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = MarketListErrorView()
+    private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
     private var viewItems: [MarketModule.ListViewItem]?
@@ -68,8 +68,7 @@ class MarketListViewController: ThemeViewController {
         if let emptyView = emptyView {
             view.addSubview(emptyView)
             emptyView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin48)
-                maker.centerY.equalToSuperview()
+                maker.edges.equalTo(view.safeAreaLayoutGuide)
             }
         }
 
@@ -82,22 +81,17 @@ class MarketListViewController: ThemeViewController {
 
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.onTapRetry = { [weak self] in self?.refresh() }
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         subscribe(disposeBag, listViewModel.viewItemDataDriver) { [weak self] in self?.sync(viewItemData: $0) }
         subscribe(disposeBag, listViewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
-        subscribe(disposeBag, listViewModel.errorDriver) { [weak self] error in
-            if let error = error {
-                self?.errorView.text = error
-                self?.errorView.isHidden = false
-            } else {
-                self?.errorView.isHidden = true
-            }
+        subscribe(disposeBag, listViewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
         }
         subscribe(disposeBag, listViewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
     }
@@ -110,8 +104,8 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    func refresh() {
-        listViewModel.refresh()
+    @objc private func onRetry() {
+        refresh()
     }
 
     @objc private func onRefresh() {
@@ -120,6 +114,10 @@ class MarketListViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+
+    private func refresh() {
+        listViewModel.refresh()
     }
 
     private func sync(viewItemData: MarketModule.ListViewItemData?) {
