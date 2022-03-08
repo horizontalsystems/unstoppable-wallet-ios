@@ -12,6 +12,8 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let tableView = SectionsTableView(style: .grouped)
 
+    private let notFoundPlaceholder = PlaceholderView(layoutType: .keyboard)
+
     private var discoveryViewItems = [MarketDiscoveryViewModel.DiscoveryViewItem]()
     private var searchViewItems = [MarketDiscoveryViewModel.SearchViewItem]()
 
@@ -59,6 +61,14 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .interactive
 
+        view.addSubview(notFoundPlaceholder)
+        notFoundPlaceholder.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        notFoundPlaceholder.image = UIImage(named: "not_found_48")
+        notFoundPlaceholder.text = "market_discovery.not_found".localized
+
         subscribe(disposeBag, viewModel.discoveryViewItemsDriver) { [weak self] in self?.sync(discoveryViewItems: $0) }
         subscribe(disposeBag, viewModel.searchViewItemsDriver) { [weak self] in self?.sync(searchViewItems: $0) }
 
@@ -85,8 +95,10 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
             self.searchViewItems = searchViewItems
             reloadTable()
             tableView.isHidden = false
+            notFoundPlaceholder.isHidden = !searchViewItems.isEmpty
         } else {
             tableView.isHidden = true
+            notFoundPlaceholder.isHidden = true
         }
     }
 
