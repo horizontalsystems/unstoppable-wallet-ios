@@ -3,37 +3,6 @@ import RxRelay
 import MarketKit
 
 class CoinManager {
-    private let featuredCoinUids: [String] = [
-        "bitcoin",
-        "ethereum",
-        "binancecoin",
-        "matic-network",
-        "zcash",
-        "dash",
-        "litecoin",
-        "bitcoin-cash",
-        "uniswap",
-        "sushi",
-        "pancakeswap-token",
-        "havven",
-        "1inch",
-        "curve-dao-token",
-        "0x",
-        "bancor",
-        "balancer",
-        "republic-protocol",
-        "tether",
-        "usd-coin",
-        "binance-usd",
-        "dai",
-        "aave",
-        "maker",
-        "compound-governance-token",
-        "yearn-finance",
-        "badger-dao",
-        "chainlink"
-    ]
-
     private let marketKit: Kit
     private let storage: ICustomTokenStorage
 
@@ -86,9 +55,9 @@ class CoinManager {
 
 extension CoinManager {
 
-    func featuredFullCoins(enabledPlatformCoins: [PlatformCoin]) throws -> [FullCoin] {
-        let appFullCoins = try customFullCoins(coinTypes: enabledPlatformCoins.map { $0.coinType })
-        let kitFullCoins = try marketKit.fullCoins(coinUids: featuredCoinUids + enabledPlatformCoins.map { $0.coin.uid })
+    func fullCoins(platformCoins: [PlatformCoin]) throws -> [FullCoin] {
+        let appFullCoins = try customFullCoins(coinTypes: platformCoins.map { $0.coinType })
+        let kitFullCoins = try marketKit.fullCoins(coinUids: platformCoins.map { $0.coin.uid })
 
         return appFullCoins + kitFullCoins
     }
@@ -102,10 +71,6 @@ extension CoinManager {
         let kitFullCoins = try marketKit.fullCoins(filter: filter, limit: limit)
 
         return appFullCoins + kitFullCoins
-    }
-
-    func fullCoins(coinUids: [String]) throws -> [FullCoin] {
-        try marketKit.fullCoins(coinUids: coinUids)
     }
 
     func platformCoin(coinType: CoinType) throws -> PlatformCoin? {

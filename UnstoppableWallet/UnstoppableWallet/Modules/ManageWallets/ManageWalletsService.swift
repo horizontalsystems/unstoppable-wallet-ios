@@ -53,7 +53,10 @@ class ManageWalletsService {
     private func fetchFullCoins() -> [FullCoin] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                return try coinManager.featuredFullCoins(enabledPlatformCoins: wallets.map { $0.platformCoin })
+                let featuredFullCoins = try coinManager.fullCoins(filter: "", limit: 100).filter { !$0.supportedPlatforms.isEmpty }
+                let featuredCoins = featuredFullCoins.map { $0.coin }
+                let enabledFullCoins = try coinManager.fullCoins(platformCoins: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.platformCoin })
+                return featuredFullCoins + enabledFullCoins
             } else {
                 return try coinManager.fullCoins(filter: filter, limit: 20)
             }
