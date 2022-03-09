@@ -12,7 +12,7 @@ class WalletConnectListViewController: ThemeViewController {
     private let listViewV1: WalletConnectV1ListView
     private let listViewV2: WalletConnectV2ListView
 
-    private let emptyView = ErrorMessageView()
+    private let emptyView = PlaceholderView()
 
     let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectScanQrViewController?
@@ -54,13 +54,17 @@ class WalletConnectListViewController: ThemeViewController {
 
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        emptyView.text = "wallet_connect.list.empty_view_text".localized
-        emptyView.setButton(title: "wallet_connect.list.empty_view_button_text".localized)
         emptyView.image = UIImage(named: "wallet_connect_48")
-        emptyView.onTapButton = { [weak self] in self?.startNewConnection() }
+        emptyView.text = "wallet_connect.list.empty_view_text".localized
+        emptyView.addButton(
+                style: .primaryYellow,
+                title: "wallet_connect.list.empty_view_button_text".localized,
+                target: self,
+                action: #selector(startNewConnection)
+        )
 
         subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
         subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }

@@ -8,7 +8,7 @@ protocol IWalletConnectErrorDelegate: AnyObject {
 class WalletConnectErrorViewController: ThemeViewController {
     private let error: String
 
-    private let errorView = RequestErrorViewNew()
+    private let errorView = PlaceholderView()
     private let closeButton = ThemeButton()
 
     weak var delegate: IWalletConnectErrorDelegate?
@@ -30,16 +30,17 @@ class WalletConnectErrorViewController: ThemeViewController {
 
         view.addSubview(errorView)
         errorView.snp.makeConstraints { maker in
-            maker.top.bottom.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
+            maker.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.bind(image: UIImage(named: "close_48"), text: error)
+        errorView.text = error
+        errorView.image = UIImage(named: "not_available_48")
 
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin6x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(errorView.snp.bottom)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
