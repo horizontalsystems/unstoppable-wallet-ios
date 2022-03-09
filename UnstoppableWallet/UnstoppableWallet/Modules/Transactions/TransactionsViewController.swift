@@ -12,7 +12,7 @@ class TransactionsViewController: ThemeViewController {
     private let viewModel: TransactionsViewModel
 
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let emptyLabel = UILabel()
+    private let emptyView = PlaceholderView()
     private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
     private let coinFiltersView = MarketDiscoveryFilterHeaderView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
@@ -75,18 +75,11 @@ class TransactionsViewController: ThemeViewController {
             self?.viewModel.coinFilterSelected(index: index)
         }
 
-        view.addSubview(emptyLabel)
-        emptyLabel.snp.makeConstraints { maker in
-            maker.centerY.equalToSuperview()
-            maker.leading.equalToSuperview().offset(50)
-            maker.trailing.equalToSuperview().offset(-50)
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-
-        emptyLabel.text = "transactions.empty_text".localized
-        emptyLabel.numberOfLines = 0
-        emptyLabel.font = .systemFont(ofSize: 14)
-        emptyLabel.textColor = .themeGray
-        emptyLabel.textAlignment = .center
 
         let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         holder.addSubview(syncSpinner)
@@ -200,13 +193,27 @@ class TransactionsViewController: ThemeViewController {
 
     private func show(status: TransactionsModule.ViewStatus) {
         syncSpinner.isHidden = !status.showProgress
+
         if status.showProgress {
             syncSpinner.startAnimating()
         } else {
             syncSpinner.stopAnimating()
         }
 
-        emptyLabel.isHidden = !status.showMessage
+        if let messageType = status.messageType {
+            switch messageType {
+            case .syncing:
+                emptyView.image = UIImage(named: "clock_48")
+                emptyView.text = "transactions.syncing_text".localized
+            case .empty:
+                emptyView.image = UIImage(named: "outgoing_raw_48")
+                emptyView.text = "transactions.empty_text".localized
+            }
+
+            emptyView.isHidden = false
+        } else {
+            emptyView.isHidden = true
+        }
     }
 
     private func show(typeFilters: (filters: [FilterHeaderView.ViewItem], selected: Int)) {

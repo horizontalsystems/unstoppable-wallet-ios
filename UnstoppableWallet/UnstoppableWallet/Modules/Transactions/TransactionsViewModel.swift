@@ -14,7 +14,7 @@ class TransactionsViewModel {
     private var coinFiltersRelay = BehaviorRelay<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)>(value: (filters: [], selected: nil))
     private var viewItemsRelay = BehaviorRelay<[TransactionsViewController.Section]>(value: [])
     private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)>()
-    private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
+    private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, messageType: nil))
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
 
@@ -83,15 +83,9 @@ class TransactionsViewModel {
 
         switch syncState {
         case .syncing, .searchingTxs:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, showMessage: false))
-        case .notSynced:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
-        case .synced:
-            if sections.isEmpty {
-                viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: true))
-            } else {
-                viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, showMessage: false))
-            }
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, messageType: sections.isEmpty ? .syncing : nil))
+        case .synced, .notSynced:
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, messageType: sections.isEmpty ? .empty : nil))
         }
     }
 

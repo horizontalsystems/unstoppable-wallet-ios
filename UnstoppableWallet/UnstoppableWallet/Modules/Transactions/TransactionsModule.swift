@@ -20,7 +20,12 @@ struct TransactionsModule {
 
     struct ViewStatus {
         let showProgress: Bool
-        let showMessage: Bool
+        let messageType: MessageType?
+    }
+
+    enum MessageType {
+        case syncing
+        case empty
     }
 
 }
