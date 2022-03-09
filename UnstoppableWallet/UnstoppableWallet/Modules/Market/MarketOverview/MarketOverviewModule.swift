@@ -6,7 +6,9 @@ struct MarketOverviewModule {
         let decorator = MarketListMarketFieldDecorator(service: service)
         let viewModel = MarketOverviewViewModel(service: service, decorator: decorator)
 
-        return MarketOverviewViewController(viewModel: viewModel)
+        let marketOverviewDataSource = MarketOverviewDataSource(viewModel: viewModel)
+
+        return MarketOverviewViewController(dataSources: [marketOverviewDataSource])
     }
 
 }

@@ -54,10 +54,10 @@ enum DataStatus<T> {
         return .loading
     }
 
-    func map<R>(_ transform: (T) -> R) -> DataStatus<R> {
+    func map<R>(_ transform: (T) -> R, transformError: ((Error) -> Error)? = nil) -> DataStatus<R> {
         switch self {
         case .loading: return .loading
-        case .failed(let error): return .failed(error)
+        case .failed(let error): return .failed(transformError?(error) ?? error)
         case .completed(let data): return .completed(transform(data))
         }
     }
