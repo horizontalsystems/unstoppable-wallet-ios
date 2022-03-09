@@ -23,6 +23,7 @@ class MainViewModel {
         self.deepLinkService = deepLinkService
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
+        subscribe(disposeBag, service.hasWalletsObservable) { [weak self] in self?.sync(hasWallets: $0) }
         subscribe(disposeBag, service.showSessionRequestObservable) { [weak self] in self?.showSession(request: $0) }
 
         sync(hasAccounts: service.hasAccounts)
@@ -30,7 +31,11 @@ class MainViewModel {
 
     private func sync(hasAccounts: Bool) {
         balanceTabStateRelay.accept(hasAccounts ? .balance : .onboarding)
-        transactionsTabEnabledRelay.accept(hasAccounts)
+        transactionsTabEnabledRelay.accept(hasAccounts && service.hasWallets)
+    }
+
+    private func sync(hasWallets: Bool) {
+        transactionsTabEnabledRelay.accept(service.hasAccounts && hasWallets)
     }
 
     private func showSession(request: WalletConnectRequest) {

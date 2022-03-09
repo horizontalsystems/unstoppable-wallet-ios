@@ -14,6 +14,7 @@ struct MainModule {
                 storage: StorageKit.LocalStorage.default,
                 launchScreenManager: App.shared.launchScreenManager,
                 accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager,
                 walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
                 presetTab: presetTab
         )
