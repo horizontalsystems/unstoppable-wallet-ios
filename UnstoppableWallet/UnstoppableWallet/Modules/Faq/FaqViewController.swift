@@ -14,7 +14,7 @@ class FaqViewController: ThemeViewController {
 
     private let spinner = HUDActivityView.create(with: .large48)
 
-    private let errorLabel = UILabel()
+    private let errorView = PlaceholderView()
 
     private var currentSection = 0
     private var sectionItems = [FaqService.SectionItem]()
@@ -62,13 +62,12 @@ class FaqViewController: ThemeViewController {
             maker.center.equalToSuperview()
         }
 
-        view.addSubview(errorLabel)
-        errorLabel.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorLabel.font = .subhead2
-        errorLabel.textColor = .themeGray
+        errorView.image = UIImage(named: "not_available_48")
 
         viewModel.sectionItemsDriver
                 .drive(onNext: { [weak self] in self?.sync(sectionItems: $0) })
@@ -82,7 +81,8 @@ class FaqViewController: ThemeViewController {
 
         viewModel.errorDriver
                 .drive(onNext: { [weak self] error in
-                    self?.errorLabel.text = error?.smartDescription
+                    self?.errorView.isHidden = error == nil
+                    self?.errorView.text = error?.smartDescription
                 })
                 .disposed(by: disposeBag)
 
