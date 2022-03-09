@@ -1417,6 +1417,7 @@
 		1A5642F433D0D20B8D041BBB /* TransactionDataSortModeSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648F319DD6F10DDA8C617 /* TransactionDataSortModeSettingManager.swift */; };
 		1A5642FAA4C4473DC4595C46 /* ThemeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641157E25B15500E1B29F /* ThemeSettingsViewModel.swift */; };
 		1A564326C51940CC30439BC6 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
+		1A564331DCF5273B55FA87E9 /* MarketOverviewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B02ECDEA4D568AA89D /* MarketOverviewDataSource.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsService.swift */; };
 		1A5643651979E1907BE1B12C /* BlockchainSettingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C46FB773A67E29D9D32 /* BlockchainSettingRecord.swift */; };
 		1A56436892D79FAA1DE2EC21 /* BalanceErrorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B109096C8B0FE5EF8AE /* BalanceErrorRouter.swift */; };
@@ -1633,6 +1634,7 @@
 		1A564DDF7DB43EE160025A3F /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
 		1A564DE8329028CCD6E54467 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564565F8D170461624126B /* PrivacyViewController.swift */; };
 		1A564DEEA0E56D2F0EF76FCC /* FilterCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2CD07DBA5B054590A2 /* FilterCard.swift */; };
+		1A564DFA94961CCAC7ABCD6D /* MarketOverviewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B02ECDEA4D568AA89D /* MarketOverviewDataSource.swift */; };
 		1A564E08DAD395267796C506 /* PrivacyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640CF11E6CF38BE9C488E /* PrivacyRouter.swift */; };
 		1A564E09FB049006167E033B /* PerformanceSideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B73ABBEFC58A13D501E /* PerformanceSideCollectionViewCell.swift */; };
 		1A564E0B7DB0060B9600FCB1 /* BalanceErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */; };
@@ -1667,6 +1669,7 @@
 		1A564F707048DC88C8183D77 /* AppStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56420928E5E0E9BC27E67B /* AppStatusViewController.swift */; };
 		1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
 		1A564F84F5005211BEDB4DE3 /* FullCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B24B847D08C09CF9A00 /* FullCoin.swift */; };
+		1A564FBB2C5472B30C1305A7 /* MarketOverviewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B02ECDEA4D568AA89D /* MarketOverviewDataSource.swift */; };
 		1A564FC623000FF50AC9064E /* WalletConnectSignMessageRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C60EABE355B1F395D97 /* WalletConnectSignMessageRequestViewController.swift */; };
 		1A564FCCB854DFAABD108931 /* PrivacyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B295DF9E48FF142E311 /* PrivacyModule.swift */; };
 		1A564FD0B7FCD6A4800C64D8 /* WalletConnectSignMessageRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1A792FA6EECFE52906 /* WalletConnectSignMessageRequestViewModel.swift */; };
@@ -3370,6 +3373,7 @@
 		1A56458F031D6E76252DF283 /* PrivacySyncItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacySyncItem.swift; sourceTree = "<group>"; };
 		1A5646483957D74946973BEE /* PerformanceContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A56469A2F3EAAEDECFB4034 /* JailbreakService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JailbreakService.swift; sourceTree = "<group>"; };
+		1A5646B02ECDEA4D568AA89D /* MarketOverviewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewDataSource.swift; sourceTree = "<group>"; };
 		1A5646B5D68A302515565030 /* BalanceErrorInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorInteractor.swift; sourceTree = "<group>"; };
 		1A5646B6231F2C52F27526F7 /* InitialSyncSettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSyncSettingsManager.swift; sourceTree = "<group>"; };
 		1A5646B7EB871D0599CE332F /* WalletConnectShowSigningMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectShowSigningMessageViewController.swift; sourceTree = "<group>"; };
@@ -5822,6 +5826,7 @@
 				58AAAFB549AE163AD4F920DD /* MarketOverviewViewController.swift */,
 				58AAA2521E8F8845D96AB865 /* MarketOverviewHeaderCell.swift */,
 				11B35DCCC2D8CD00EF6A9A77 /* MarketOverviewMetricsCell.swift */,
+				1A5646B02ECDEA4D568AA89D /* MarketOverviewDataSource.swift */,
 			);
 			path = MarketOverview;
 			sourceTree = "<group>";
@@ -7795,6 +7800,7 @@
 				ABC9AC26853BD29F34AC6859 /* WalletConnectModule.swift in Sources */,
 				ABC9A8E32AD5F54C98E3E9E7 /* WalletConnectV2RequestMapper.swift in Sources */,
 				11B35E157A6ACB3F390660E8 /* PlaceholderView.swift in Sources */,
+				1A564331DCF5273B55FA87E9 /* MarketOverviewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8741,6 +8747,7 @@
 				ABC9A9E3191338CD0D1DE8AE /* WalletConnectModule.swift in Sources */,
 				ABC9A2FF431ACFA812F58AD1 /* WalletConnectV2RequestMapper.swift in Sources */,
 				11B3535EC036CB89C0391567 /* PlaceholderView.swift in Sources */,
+				1A564FBB2C5472B30C1305A7 /* MarketOverviewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9679,6 +9686,7 @@
 				ABC9AA27A709AC5F85176A53 /* WalletConnectModule.swift in Sources */,
 				ABC9A736DDFBF98473C065F7 /* WalletConnectV2RequestMapper.swift in Sources */,
 				11B358ADC8EB47E5512180E8 /* PlaceholderView.swift in Sources */,
+				1A564DFA94961CCAC7ABCD6D /* MarketOverviewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,18 +12,13 @@ class MarketOverviewService {
     private var disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private var internalState: InternalState = .loading {
+    private var internalStatus: DataStatus<InternalState> = .loading {
         didSet {
             syncState()
         }
     }
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    private let statusRelay = BehaviorRelay<DataStatus<State>>(value: .loading)
 
     private var marketTopMap: [ListType: MarketModule.MarketTop] = [.topGainers: .top250, .topLosers: .top250]
 
@@ -40,8 +35,8 @@ class MarketOverviewService {
     private func syncInternalState() {
         syncDisposeBag = DisposeBag()
 
-        if case .failed = state {
-            internalState = .loading
+        if case .failed = statusRelay.value {
+            internalStatus = .loading
         }
 
         Single.zip(
@@ -49,22 +44,17 @@ class MarketOverviewService {
                         marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .day1)
                 )
                 .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
-                    self?.internalState = .loaded(marketInfos: marketInfos, globalMarketPoints: globalMarketPoints)
+                    self?.internalStatus = .completed(InternalState(marketInfos: marketInfos, globalMarketPoints: globalMarketPoints))
                 }, onError: { [weak self] error in
-                    self?.internalState = .failed(error: error)
+                    self?.internalStatus = .failed(error)
                 })
                 .disposed(by: syncDisposeBag)
     }
 
     private func syncState() {
-        switch internalState {
-        case .loading:
-            state = .loading
-        case .loaded(let marketInfos, let globalMarketPoints):
-            state = .loaded(listItems: listItems(marketInfos: marketInfos), globalMarketData: globalMarketData(globalMarketPoints: globalMarketPoints))
-        case .failed(let error):
-            state = .failed(error: error)
-        }
+        statusRelay.accept(internalStatus.map { internalState in
+            State(listItems: listItems(marketInfos: internalState.marketInfos), globalMarketData: globalMarketData(globalMarketPoints: internalState.globalMarketPoints))
+        })
     }
 
     private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
@@ -114,7 +104,7 @@ class MarketOverviewService {
     }
 
     private func syncIfPossible() {
-        guard case .loaded = internalState else {
+        guard case .completed = internalStatus else {
             return
         }
 
@@ -125,8 +115,8 @@ class MarketOverviewService {
 
 extension MarketOverviewService {
 
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+    var stateObservable: Observable<DataStatus<State>> {
+        statusRelay.asObservable()
     }
 
     func marketTop(listType: ListType) -> MarketModule.MarketTop {
@@ -159,8 +149,8 @@ extension MarketOverviewService: IMarketListDecoratorService {
     }
 
     func onUpdate(marketField: MarketModule.MarketField) {
-        if case .loaded(let listItems, let globalMarketData) = state {
-            stateRelay.accept(.loaded(listItems: listItems, globalMarketData: globalMarketData))
+        if case .completed = statusRelay.value {
+            statusRelay.accept(statusRelay.value)
         }
     }
 
@@ -168,16 +158,14 @@ extension MarketOverviewService: IMarketListDecoratorService {
 
 extension MarketOverviewService {
 
-    enum InternalState {
-        case loading
-        case loaded(marketInfos: [MarketInfo], globalMarketPoints: [GlobalMarketPoint])
-        case failed(error: Error)
+    struct InternalState {
+        let marketInfos: [MarketInfo]
+        let globalMarketPoints: [GlobalMarketPoint]
     }
 
-    enum State {
-        case loading
-        case loaded(listItems: [ListItem], globalMarketData: GlobalMarketData)
-        case failed(error: Error)
+    struct State {
+        let listItems: [ListItem]
+        let globalMarketData: GlobalMarketData
     }
 
     struct ListItem {

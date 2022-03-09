@@ -10,34 +10,21 @@ class MarketOverviewViewModel {
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
-    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
+    private let statusRelay = BehaviorRelay<DataStatus<ViewItem>>(value: .loading)
 
     init(service: MarketOverviewService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
         self.decorator = decorator
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-
-        sync(state: service.state)
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(state: MarketOverviewService.State) {
-        switch state {
-        case .loading:
-            viewItemRelay.accept(nil)
-            loadingRelay.accept(true)
-            syncErrorRelay.accept(false)
-        case .loaded(let listItems, let globalMarketData):
-            viewItemRelay.accept(viewItem(listItems: listItems, globalMarketData: globalMarketData))
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(false)
-        case .failed:
-            viewItemRelay.accept(nil)
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(true)
-        }
+    private func sync(status: DataStatus<MarketOverviewService.State>) {
+        statusRelay.accept(status.map({ state in
+            viewItem(listItems: state.listItems, globalMarketData: state.globalMarketData)
+        }, transformError: { error in
+            MarketOverviewError.syncError
+        }))
     }
 
     private func viewItem(listItems: [MarketOverviewService.ListItem], globalMarketData: MarketOverviewService.GlobalMarketData) -> ViewItem {
@@ -120,16 +107,8 @@ class MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    var viewItemDriver: Driver<ViewItem?> {
-        viewItemRelay.asDriver()
-    }
-
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
-    }
-
-    var syncErrorDriver: Driver<Bool> {
-        syncErrorRelay.asDriver()
+    var statusDriver: Driver<DataStatus<ViewItem>> {
+        statusRelay.asDriver()
     }
 
     var marketTops: [String] {
@@ -182,6 +161,14 @@ extension MarketOverviewViewModel {
         let imageName: String
         let title: String
         let listViewItems: [MarketModule.ListViewItem]
+    }
+
+    enum MarketOverviewError: Error, LocalizedError {
+        case syncError
+
+        var errorDescription: String? {
+            "market.sync_error".localized
+        }
     }
 
 }
