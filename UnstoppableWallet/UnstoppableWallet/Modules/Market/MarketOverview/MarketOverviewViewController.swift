@@ -7,35 +7,25 @@ import ComponentKit
 import HUD
 import Chart
 
-protocol IMarketOverviewDataSource {
-    var parentNavigationController: UINavigationController? { get set }
-    var status: DataStatus<[SectionProtocol]> { get }
-    var updateDriver: Driver<()> { get }
-
-    func refresh()
-}
-
 class MarketOverviewViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
-    private let dataSources: [IMarketOverviewDataSource]
+    private let viewModel: MarketOverviewViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
+    private var sections = [SectionProtocol]()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController? {
         didSet {
-            dataSources.forEach {
-                var dataSource = $0
-                dataSource.parentNavigationController = parentNavigationController
-            }
+            viewModel.parentNavigationController = parentNavigationController
         }
     }
 
-    init(dataSources: [IMarketOverviewDataSource]) {
-        self.dataSources = dataSources
+    init(viewModel: MarketOverviewViewModel) {
+        self.viewModel = viewModel
 
         super.init()
     }
@@ -78,12 +68,17 @@ class MarketOverviewViewController: ThemeViewController {
 
         errorView.configureSyncError(target: self, action: #selector(onRetry))
 
-        dataSources.forEach { dataSource in
-            subscribe(disposeBag, dataSource.updateDriver) { [weak self] in
-                self?.sync()
-            }
+        subscribe(disposeBag, viewModel.sectionsDriver) { [weak self] in
+            self?.sections = $0
+            self?.tableView.reload()
         }
-        sync()
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.tableView.bounces = !visible
+            self?.errorView.isHidden = !visible
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -92,51 +87,16 @@ class MarketOverviewViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
     }
 
-    private var isLoading: Bool {
-        dataSources.first { $0.status.isLoading } != nil
-    }
-
-    private var showError: Bool {
-        dataSources.first { $0.status.error != nil } != nil
-    }
-
-    private var sections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
-        dataSources.forEach { source in
-            sections.append(contentsOf: source.status.data ?? [])
-        }
-        return sections
-    }
-
-    private func sync() {
-        syncLoading()
-        syncError()
-
-        tableView.reload()
-    }
-
-    private func syncError() {
-        errorView.isHidden = !showError
-    }
-
-    private func syncLoading() {
-        spinner.isHidden = !isLoading
-    }
-
     @objc private func onRetry() {
-        refresh()
+        viewModel.refresh()
     }
 
     @objc func onRefresh() {
-        refresh()
+        viewModel.refresh()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
-    }
-
-    private func refresh() {
-        dataSources.forEach { $0.refresh() }
     }
 
 }
@@ -144,8 +104,7 @@ class MarketOverviewViewController: ThemeViewController {
 extension MarketOverviewViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        tableView.bounces = !showError && !sections.isEmpty
-        return showError ? [] : sections
+        sections
     }
 
 }

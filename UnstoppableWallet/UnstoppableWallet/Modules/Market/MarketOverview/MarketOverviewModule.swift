@@ -4,11 +4,12 @@ struct MarketOverviewModule {
         let service = MarketOverviewService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
 
         let decorator = MarketListMarketFieldDecorator(service: service)
-        let viewModel = MarketOverviewTopCoinsViewModel(service: service, decorator: decorator)
+        let topCoinsViewModel = MarketOverviewTopCoinsViewModel(service: service, decorator: decorator)
+        let marketOverviewDataSource = MarketOverviewTopCoinsDataSource(viewModel: topCoinsViewModel)
 
-        let marketOverviewDataSource = MarketOverviewTopCoinsDataSource(viewModel: viewModel)
+        let viewModel = MarketOverviewViewModel(dataSources: [marketOverviewDataSource])
 
-        return MarketOverviewViewController(dataSources: [marketOverviewDataSource])
+        return MarketOverviewViewController(viewModel: viewModel)
     }
 
 }
