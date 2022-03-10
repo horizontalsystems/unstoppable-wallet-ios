@@ -5,7 +5,7 @@ import SectionsTableView
 import Chart
 import ComponentKit
 
-class MarketOverviewDataSource {
+class MarketOverviewTopCoinsDataSource {
     private let disposeBag = DisposeBag()
 
     weak var parentNavigationController: UINavigationController? {
@@ -18,19 +18,19 @@ class MarketOverviewDataSource {
     }
     private let statusRelay = PublishRelay<()>()
 
-    private let viewModel: MarketOverviewViewModel
+    private let viewModel: MarketOverviewTopCoinsViewModel
 
-    private var topViewItems: [MarketOverviewViewModel.TopViewItem]?
+    private var topViewItems: [MarketOverviewTopCoinsViewModel.TopViewItem]?
 
     private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
-    init(viewModel: MarketOverviewViewModel) {
+    init(viewModel: MarketOverviewTopCoinsViewModel) {
         self.viewModel = viewModel
 
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewViewModel.ViewItem>) {
+    private func sync(status: DataStatus<MarketOverviewTopCoinsViewModel.ViewItem>) {
         self.status = status.map { [weak self] viewItem in
             self?.topViewItems = viewItem.topViewItems
             self?.marketMetricsCell.set(viewItem: viewItem.globalMarketViewItem)
@@ -160,7 +160,7 @@ class MarketOverviewDataSource {
 
 }
 
-extension MarketOverviewDataSource: IMarketOverviewDataSource {
+extension MarketOverviewTopCoinsDataSource: IMarketOverviewDataSource {
     var updateDriver: Driver<()> {
         statusRelay.asDriver(onErrorJustReturn: ())
     }
