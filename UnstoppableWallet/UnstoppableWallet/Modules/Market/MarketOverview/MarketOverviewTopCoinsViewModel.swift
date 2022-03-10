@@ -5,7 +5,7 @@ import CurrencyKit
 import MarketKit
 import Chart
 
-class MarketOverviewViewModel {
+class MarketOverviewTopCoinsViewModel {
     private let service: MarketOverviewService
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
@@ -22,8 +22,6 @@ class MarketOverviewViewModel {
     private func sync(status: DataStatus<MarketOverviewService.State>) {
         statusRelay.accept(status.map({ state in
             viewItem(listItems: state.listItems, globalMarketData: state.globalMarketData)
-        }, transformError: { error in
-            MarketOverviewError.syncError
         }))
     }
 
@@ -105,7 +103,7 @@ class MarketOverviewViewModel {
 
 }
 
-extension MarketOverviewViewModel {
+extension MarketOverviewTopCoinsViewModel {
 
     var statusDriver: Driver<DataStatus<ViewItem>> {
         statusRelay.asDriver()
@@ -135,7 +133,7 @@ extension MarketOverviewViewModel {
 
 }
 
-extension MarketOverviewViewModel {
+extension MarketOverviewTopCoinsViewModel {
 
     struct ViewItem {
         let globalMarketViewItem: GlobalMarketViewItem
@@ -161,14 +159,6 @@ extension MarketOverviewViewModel {
         let imageName: String
         let title: String
         let listViewItems: [MarketModule.ListViewItem]
-    }
-
-    enum MarketOverviewError: Error, LocalizedError {
-        case syncError
-
-        var errorDescription: String? {
-            "market.sync_error".localized
-        }
     }
 
 }

@@ -96,12 +96,8 @@ class MarketOverviewViewController: ThemeViewController {
         dataSources.first { $0.status.isLoading } != nil
     }
 
-    private var error: String? {
-        dataSources
-                .first { $0.status.error != nil }?
-                .status
-                .error?
-                .smartDescription
+    private var showError: Bool {
+        dataSources.first { $0.status.error != nil } != nil
     }
 
     private var sections: [SectionProtocol] {
@@ -120,11 +116,7 @@ class MarketOverviewViewController: ThemeViewController {
     }
 
     private func syncError() {
-        if let error = error {
-            errorView.isHidden = false
-        } else {
-            errorView.isHidden = true
-        }
+        errorView.isHidden = !showError
     }
 
     private func syncLoading() {
@@ -152,8 +144,8 @@ class MarketOverviewViewController: ThemeViewController {
 extension MarketOverviewViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        tableView.bounces = error == nil && !sections.isEmpty
-        return error == nil ? sections : []
+        tableView.bounces = !showError && !sections.isEmpty
+        return showError ? [] : sections
     }
 
 }
