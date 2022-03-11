@@ -341,7 +341,7 @@ extension HsNftProvider {
         let orders: [OrderResponse]
 
         init(map: Map) throws {
-            orders = try map.value("markets_data.orders")
+            orders = (try? map.value("markets_data.orders")) ?? []
         }
     }
 
