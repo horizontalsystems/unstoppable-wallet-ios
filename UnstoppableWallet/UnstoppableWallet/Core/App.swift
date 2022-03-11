@@ -143,7 +143,10 @@ class App {
 
         accountSettingManager = AccountSettingManager(storage: storage)
         evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, accountSettingManager: accountSettingManager)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, networkManager: networkManager, storage: storage)
+
+        let tokenBalanceProvider = HsTokenBalanceProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
+        let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, provider: tokenBalanceProvider, storage: storage)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, coinManager: coinManager, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 

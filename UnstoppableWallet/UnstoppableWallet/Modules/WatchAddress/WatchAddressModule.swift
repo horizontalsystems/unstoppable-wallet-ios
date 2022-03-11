@@ -16,6 +16,7 @@ struct WatchAddressModule {
                 accountManager: App.shared.accountManager,
                 coinManager: App.shared.coinManager,
                 walletManager: App.shared.walletManager,
+                evmBlockchainManager: App.shared.evmBlockchainManager,
                 addressService: addressService
         )
         let viewModel = WatchAddressViewModel(service: service)

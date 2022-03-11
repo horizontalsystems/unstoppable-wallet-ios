@@ -8,6 +8,7 @@ class RestoreSelectService {
     private let accountManager: IAccountManager
     private let walletManager: WalletManager
     private let coinManager: CoinManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -26,12 +27,13 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, enableCoinService: EnableCoinService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.coinManager = coinManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
@@ -70,12 +72,13 @@ class RestoreSelectService {
     }
 
     private func item(internalItem: InternalItem) -> Item {
-        let itemState: ItemState
-
         let enabled = isEnabled(internalItem: internalItem)
-        itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettings(platformCoin: internalItem.platformCoin))
 
-        return Item(blockchain: internalItem.blockchain, state: itemState)
+        return Item(
+                blockchain: internalItem.blockchain,
+                enabled: enabled,
+                hasSettings: enabled && hasSettings(platformCoin: internalItem.platformCoin)
+        )
     }
 
     private func syncState() {
@@ -173,6 +176,18 @@ extension RestoreSelectService {
             enableCoinService.save(restoreSettings: settings, account: account, coinType: platformCoin.coinType)
         }
 
+        for item in items {
+            guard item.enabled else {
+                continue
+            }
+
+            switch item.blockchain {
+            case .evm(let evmBlockchain):
+                evmBlockchainManager.evmAccountManager(blockchain: evmBlockchain).markAutoEnable(account: account)
+            default: ()
+            }
+        }
+
         guard !enabledCoins.isEmpty else {
             return
         }
@@ -192,12 +207,8 @@ extension RestoreSelectService {
 
     struct Item {
         let blockchain: RestoreSelectModule.Blockchain
-        let state: ItemState
-    }
-
-    enum ItemState {
-        case unsupported
-        case supported(enabled: Bool, hasSettings: Bool)
+        let enabled: Bool
+        let hasSettings: Bool
     }
 
 }

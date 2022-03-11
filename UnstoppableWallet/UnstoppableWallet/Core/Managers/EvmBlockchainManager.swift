@@ -4,22 +4,16 @@ import HsToolKit
 
 class EvmBlockchainManager {
     private let syncSourceManager: EvmSyncSourceManager
-    private let accountManager: IAccountManager
-    private let walletManager: WalletManager
     private let coinManager: CoinManager
-    private let networkManager: NetworkManager
-    private let storage: IEvmAccountSyncStateStorage
+    private let accountManagerFactory: EvmAccountManagerFactory
 
     private var evmKitManagerMap = [EvmBlockchain: EvmKitManager]()
     private var evmAccountManagerMap = [EvmBlockchain: EvmAccountManager]()
 
-    init(syncSourceManager: EvmSyncSourceManager, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, networkManager: NetworkManager, storage: IEvmAccountSyncStateStorage) {
+    init(syncSourceManager: EvmSyncSourceManager, coinManager: CoinManager, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
-        self.accountManager = accountManager
-        self.walletManager = walletManager
         self.coinManager = coinManager
-        self.networkManager = networkManager
-        self.storage = storage
+        self.accountManagerFactory = accountManagerFactory
     }
 
     private func _chain(blockchain: EvmBlockchain) -> Chain {
@@ -30,6 +24,20 @@ class EvmBlockchainManager {
         case .optimism: return .optimism
         case .arbitrumOne: return .arbitrumOne
         }
+    }
+
+    private func evmManagers(blockchain: EvmBlockchain) -> (EvmKitManager, EvmAccountManager) {
+        if let evmKitManager = evmKitManagerMap[blockchain], let evmAccountManager = evmAccountManagerMap[blockchain] {
+            return (evmKitManager, evmAccountManager)
+        }
+
+        let evmKitManager = EvmKitManager(chain: _chain(blockchain: blockchain), syncSourceManager: syncSourceManager)
+        let evmAccountManager = accountManagerFactory.evmAccountManager(blockchain: blockchain, evmKitManager: evmKitManager)
+
+        evmKitManagerMap[blockchain] = evmKitManager
+        evmAccountManagerMap[blockchain] = evmAccountManager
+
+        return (evmKitManager, evmAccountManager)
     }
 
 }
@@ -64,23 +72,16 @@ extension EvmBlockchainManager {
         evmKitManager(blockchain: blockchain).chain
     }
 
-    func evmKitManager(blockchain: EvmBlockchain) -> EvmKitManager {
-        if let manager = evmKitManagerMap[blockchain] {
-            return manager
-        }
-
-        let manager = EvmKitManager(chain: _chain(blockchain: blockchain), syncSourceManager: syncSourceManager)
-        let provider = EnableCoinsEip20Provider(networkManager: networkManager, blockchain: blockchain)
-        let evmAccountManager = EvmAccountManager(blockchain: blockchain, accountManager: accountManager, walletManager: walletManager, coinManager: coinManager, syncSourceManager: syncSourceManager, evmKitManager: manager, provider: provider, storage: storage)
-
-        evmKitManagerMap[blockchain] = manager
-        evmAccountManagerMap[blockchain] = evmAccountManager
-
-        return manager
-    }
-
     func basePlatformCoin(blockchain: EvmBlockchain) -> PlatformCoin? {
         try? coinManager.platformCoin(coinType: blockchain.baseCoinType)
+    }
+
+    func evmKitManager(blockchain: EvmBlockchain) -> EvmKitManager {
+        evmManagers(blockchain: blockchain).0
+    }
+
+    func evmAccountManager(blockchain: EvmBlockchain) -> EvmAccountManager {
+        evmManagers(blockchain: blockchain).1
     }
 
 }

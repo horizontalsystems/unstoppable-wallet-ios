@@ -21,20 +21,13 @@ class RestoreSelectViewModel {
     }
 
     private func viewItem(item: RestoreSelectService.Item) -> CoinToggleViewModel.ViewItem {
-        let viewItemState: CoinToggleViewModel.ViewItemState
-
-        switch item.state {
-        case let .supported(enabled, hasSettings): viewItemState = .toggleVisible(enabled: enabled, hasSettings: hasSettings)
-        case .unsupported: viewItemState = .toggleHidden
-        }
-
-        return CoinToggleViewModel.ViewItem(
+        CoinToggleViewModel.ViewItem(
                 uid: item.blockchain.uid,
                 imageUrl: "",
                 placeholderImageName: item.blockchain.imageName,
                 title: item.blockchain.title,
                 subtitle: item.blockchain.description,
-                state: viewItemState,
+                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings),
                 blockchainBadge: nil
         )
     }
