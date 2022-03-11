@@ -8,6 +8,7 @@ class WatchAddressService {
     private let accountManager: IAccountManager
     private let coinManager: CoinManager
     private let walletManager: WalletManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let addressService: AddressService
     private let disposeBag = DisposeBag()
 
@@ -18,11 +19,12 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: IAccountManager, coinManager: CoinManager, walletManager: WalletManager, addressService: AddressService) {
+    init(accountFactory: AccountFactory, accountManager: IAccountManager, coinManager: CoinManager, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.coinManager = coinManager
         self.walletManager = walletManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.addressService = addressService
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
@@ -58,7 +60,13 @@ extension WatchAddressService {
         accountManager.save(account: account)
 
         do {
-            let platformCoins = try coinManager.platformCoins(coinTypes: [.ethereum, .binanceSmartChain, .polygon, .ethereumOptimism, .ethereumArbitrumOne])
+            let evmBlockchains = evmBlockchainManager.allBlockchains
+
+            for evmBlockchain in evmBlockchains {
+                evmBlockchainManager.evmAccountManager(blockchain: evmBlockchain).markAutoEnable(account: account)
+            }
+
+            let platformCoins = try coinManager.platformCoins(coinTypes: evmBlockchains.map { $0.baseCoinType })
             let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
 
             walletManager.save(wallets: wallets)
