@@ -7,6 +7,7 @@ import ComponentKit
 struct FeeSliderViewItem {
     let initialValue: Int
     let range: ClosedRange<Int>
+    let description: String?
 }
 
 protocol IDynamicHeightCellDelegate: AnyObject {
@@ -38,7 +39,7 @@ class FeeSliderCell: BaseThemeCell {
 
         subscribe(disposeBag, sliderDriver) { [weak self] viewItem in
                     if let viewItem = viewItem {
-                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: "gwei")
+                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: viewItem.description)
                         self?.feeSliderWrapper.isHidden = false
                     } else {
                         self?.feeSliderWrapper.isHidden = true
@@ -48,6 +49,14 @@ class FeeSliderCell: BaseThemeCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension FeeSliderCell {
+
+    func height(containerWidth: CGFloat) -> CGFloat {
+        feeSliderWrapper.isHidden ? 0 : 29
     }
 
 }

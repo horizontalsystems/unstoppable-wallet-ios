@@ -28,13 +28,6 @@ class SendEvmService {
         }
     }
 
-    private let addressErrorRelay = PublishRelay<Error?>()
-    private var addressError: Error? {
-        didSet {
-            addressErrorRelay.accept(addressError)
-        }
-    }
-
     init(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter, addressService: AddressService) {
         sendPlatformCoin = platformCoin
         self.adapter = adapter
@@ -97,8 +90,12 @@ extension SendEvmService {
 
 extension SendEvmService: IAvailableBalanceService {
 
-    var availableBalance: Decimal {
-        adapter.balanceData.balance
+    var availableBalance: DataStatus<Decimal> {
+        .completed(adapter.balanceData.balance)
+    }
+
+    var availableBalanceObservable: Observable<DataStatus<Decimal>> {
+        Observable.just(availableBalance)
     }
 
 }
@@ -123,6 +120,10 @@ extension SendEvmService: IAmountInputService {
 
     var platformCoinObservable: Observable<PlatformCoin?> {
         .empty()
+    }
+
+    var balanceObservable: Observable<Decimal?> {
+        .just(adapter.balanceData.balance)
     }
 
     func onChange(amount: Decimal) {

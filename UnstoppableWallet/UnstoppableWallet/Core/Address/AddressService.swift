@@ -101,6 +101,21 @@ extension AddressService {
         case success(Address)
         case validationError
         case fetchError
+
+        var address: Address? {
+            if case let .success(address) = self {
+                return address
+            }
+            return nil
+        }
+
+        var isLoading: Bool {
+            if case .loading = self {
+                return true
+            }
+            return false
+        }
+
     }
 
     enum AddressError: Error {

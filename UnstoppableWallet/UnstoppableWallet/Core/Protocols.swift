@@ -231,6 +231,15 @@ protocol IFeeRateProvider {
     var defaultFeeRatePriority: FeeRatePriority { get }
     var recommendedFeeRate: Single<Int> { get }
     func feeRate(priority: FeeRatePriority) -> Single<Int>
+    var feeRateUpdatedObservable: Observable<()> { get }
+}
+
+extension IFeeRateProvider {
+
+    var feeRateUpdatedObservable: Observable<()> {
+        .just(())
+    }
+
 }
 
 protocol ICustomRangedFeeRateProvider: IFeeRateProvider {

@@ -34,7 +34,7 @@ extension SendRouter {
 
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
-            partialModule = module(platformCoin: platformCoin, adapter: adapter)
+            return SendXModule.viewController(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendDashAdapter:
             partialModule = module(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
