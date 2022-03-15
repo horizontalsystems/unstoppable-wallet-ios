@@ -45,6 +45,8 @@
 
 "n/a" = "해당 없음 ";
 
+"sync_error" = "Sync error. Try again.";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> Unstoppable으로 가서 카메라 접근을 허용해 주세요.";
@@ -331,7 +333,6 @@
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.sync_error" = "Sync Error";
 "market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
 
 "market.top.section.header.see_all" = "See All";
@@ -366,6 +367,7 @@
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -563,6 +565,7 @@
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
 "transactions.filter_all" = "모든";
+"transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
 "transactions.processing" = "처리 중";
@@ -1041,6 +1044,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collections.average_7d" = "평균 7일";
 "nft_collections.average_30d" = "평균 30일";
 "nft_collections.on_sale" = "판매 중";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
 // Nft Asset
 
