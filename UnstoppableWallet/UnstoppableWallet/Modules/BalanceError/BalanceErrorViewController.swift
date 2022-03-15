@@ -3,17 +3,22 @@ import ThemeKit
 import SnapKit
 import MessageUI
 import ComponentKit
+import RxSwift
 
 class BalanceErrorViewController: ThemeActionSheetController {
-    private let delegate: IBalanceErrorViewDelegate
+    private let viewModel: BalanceErrorViewModel
+    private let disposeBag = DisposeBag()
+
+    private weak var sourceViewController: UIViewController?
 
     private let titleView = BottomSheetTitleView()
     private let retryButton = ThemeButton()
     private let changeSourceButton = ThemeButton()
     private let reportButton = ThemeButton()
 
-    init(delegate: IBalanceErrorViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: BalanceErrorViewModel, sourceViewController: UIViewController?) {
+        self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         super.init()
     }
@@ -30,14 +35,21 @@ class BalanceErrorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
+        titleView.bind(
+                title: "balance_error.sync_error".localized,
+                subtitle: viewModel.coinTitle,
+                image: UIImage(named: "warning_2_24"),
+                tintColor: .themeLucian
+        )
+
         titleView.onTapClose = { [weak self] in
-            self?.delegate.onTapClose()
+            self?.dismiss(animated: true)
         }
 
         view.addSubview(retryButton)
         retryButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin3x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -45,11 +57,13 @@ class BalanceErrorViewController: ThemeActionSheetController {
         retryButton.apply(style: .primaryYellow)
         retryButton.setTitle("button.retry".localized, for: .normal)
 
+        let changeSourceVisible = viewModel.changeSourceVisible
+
         view.addSubview(changeSourceButton)
         changeSourceButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(retryButton.snp.bottom).offset(CGFloat.margin4x)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(retryButton.snp.bottom).offset(changeSourceVisible ? CGFloat.margin16 : 0)
+            maker.height.equalTo(changeSourceVisible ? CGFloat.heightButton : 0)
         }
 
         changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
@@ -58,63 +72,52 @@ class BalanceErrorViewController: ThemeActionSheetController {
 
         view.addSubview(reportButton)
         reportButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin4x)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin16)
             maker.height.equalTo(CGFloat.heightButton)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin4x)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
         }
 
         reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
         reportButton.apply(style: .primaryGray)
         reportButton.setTitle("button.report".localized, for: .normal)
 
-        delegate.onLoad()
+        subscribe(disposeBag, viewModel.openBtcBlockchainSignal) { [weak self] in self?.openBtc(blockchain: $0) }
+        subscribe(disposeBag, viewModel.openEvmBlockchainSignal) { [weak self] in self?.openEvm(blockchain: $0) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
     }
 
     @objc private func onTapRetry() {
-        delegate.onTapRetry()
+        viewModel.onTapRetry()
     }
 
     @objc private func onTapReport() {
-        delegate.onTapReport()
-    }
-
-    @objc private func onTapChangeSource() {
-        delegate.onTapChangeSource()
-    }
-
-}
-
-extension BalanceErrorViewController: IBalanceErrorView {
-
-    func set(coinTitle: String) {
-        titleView.bind(
-                title: "balance_error.sync_error".localized,
-                subtitle: coinTitle,
-                image: UIImage(named: "warning_2_24"),
-                tintColor: .themeLucian
-        )
-    }
-
-    func setChangeSourceButton(hidden: Bool) {
-        changeSourceButton.snp.remakeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4x)
-            maker.top.equalTo(retryButton.snp.bottom).offset(hidden ? 0 : CGFloat.margin4x)
-            maker.height.equalTo(hidden ? 0 : CGFloat.heightButton)
-        }
-    }
-
-    func openReport(email: String, error: String) {
         if MFMailComposeViewController.canSendMail() {
             let controller = MFMailComposeViewController()
-            controller.setToRecipients([email])
-            controller.setMessageBody(error, isHTML: false)
+            controller.setToRecipients([viewModel.email])
+            controller.setMessageBody(viewModel.errorString, isHTML: false)
             controller.mailComposeDelegate = self
 
             present(controller, animated: true)
         } else {
-            UIPasteboard.general.setValue(email, forPasteboardType: "public.plain-text")
+            UIPasteboard.general.setValue(viewModel.email, forPasteboardType: "public.plain-text")
             HudHelper.instance.showSuccess(title: "settings.about_app.email_copied".localized)
+        }
+    }
+
+    @objc private func onTapChangeSource() {
+        viewModel.onTapChangeSource()
+    }
+
+    private func openBtc(blockchain: BtcBlockchain) {
+        dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
+        }
+    }
+
+    private func openEvm(blockchain: EvmBlockchain) {
+        dismiss(animated: true) { [weak self] in
+            self?.sourceViewController?.present(EvmNetworkModule.viewController(blockchain: blockchain), animated: true)
         }
     }
 

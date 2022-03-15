@@ -299,7 +299,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
-        let viewController = BalanceErrorRouter.module(wallet: wallet, error: error, navigationController: navigationController)
+        let viewController = BalanceErrorModule.viewController(wallet: wallet, error: error, sourceViewController: navigationController)
         present(viewController, animated: true)
     }
 

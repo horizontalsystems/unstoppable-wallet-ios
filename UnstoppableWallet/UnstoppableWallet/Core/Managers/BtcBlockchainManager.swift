@@ -17,6 +17,10 @@ class BtcBlockchainManager {
 
 extension BtcBlockchainManager {
 
+    func blockchain(coinType: CoinType) -> BtcBlockchain? {
+        BtcBlockchain.allCases.first(where: { $0.supports(coinType: coinType) })
+    }
+
     var restoreModeUpdatedObservable: Observable<BtcBlockchain> {
         restoreModeUpdatedRelay.asObservable()
     }
