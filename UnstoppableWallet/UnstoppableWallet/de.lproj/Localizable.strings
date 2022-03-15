@@ -45,6 +45,8 @@
 
 "n/a" = "N/A";
 
+"sync_error" = "Sync error. Try again.";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable muss Zugriff auf Ihre Kamera haben, um den QR-Code zu scannen.\n\nGehen Sie auf „Einstellungen“, dann auf „Unstoppable“ und erlauben Sie dort den Zugriff auf die Kamera.";
@@ -331,7 +333,6 @@
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.sync_error" = "Sync Error";
 "market.coin_not_supported_yet" = "Diese Coin wird von Unstoppable noch nicht unterstützt";
 
 "market.top.section.header.see_all" = "See All";
@@ -366,6 +367,7 @@
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -563,6 +565,7 @@
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
+"transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
 "transactions.processing" = "Verarbeite";
@@ -1041,6 +1044,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collections.average_7d" = "Durchschnitt 7D";
 "nft_collections.average_30d" = "Durchschnitt 30D";
 "nft_collections.on_sale" = "Im Verkauf";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
 // Nft Asset
 
