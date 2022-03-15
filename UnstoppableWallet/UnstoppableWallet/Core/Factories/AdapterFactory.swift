@@ -9,22 +9,18 @@ class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let binanceKitManager: BinanceKitManager
-    private let initialSyncSettingsManager: InitialSyncSettingsManager
+    private let btcBlockchainManager: BtcBlockchainManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
 
-    init(appConfigProvider: AppConfigProvider, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager, initialSyncSettingsManager: InitialSyncSettingsManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager) {
+    init(appConfigProvider: AppConfigProvider, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager, btcBlockchainManager: BtcBlockchainManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager) {
         self.appConfigProvider = appConfigProvider
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.binanceKitManager = binanceKitManager
-        self.initialSyncSettingsManager = initialSyncSettingsManager
+        self.btcBlockchainManager = btcBlockchainManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
-    }
-
-    private func syncMode(wallet: Wallet) -> SyncMode {
-        initialSyncSettingsManager.setting(coinType: wallet.coinType, accountOrigin: wallet.account.origin)?.syncMode ?? .fast
     }
 
     private func evmAdapter(wallet: Wallet) -> IAdapter? {
@@ -59,7 +55,7 @@ extension AdapterFactory {
     func evmTransactionsAdapter(transactionSource: TransactionSource, blockchain: EvmBlockchain) -> ITransactionsAdapter? {
         if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper(account: transactionSource.account, blockchain: blockchain),
            let baseCoin = evmBlockchainManager.basePlatformCoin(blockchain: blockchain) {
-            let syncSource = evmSyncSourceManager.syncSource(account: transactionSource.account, blockchain: blockchain)
+            let syncSource = evmSyncSourceManager.syncSource(blockchain: blockchain)
             return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseCoin: baseCoin, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager)
         }
 
@@ -69,13 +65,17 @@ extension AdapterFactory {
     func adapter(wallet: Wallet) -> IAdapter? {
         switch wallet.coinType {
         case .bitcoin:
-            return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode(wallet: wallet), testMode: appConfigProvider.testMode)
+            let syncMode = btcBlockchainManager.syncMode(blockchain: .bitcoin, accountOrigin: wallet.account.origin)
+            return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .bitcoinCash:
-            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode(wallet: wallet), testMode: appConfigProvider.testMode)
+            let syncMode = btcBlockchainManager.syncMode(blockchain: .bitcoinCash, accountOrigin: wallet.account.origin)
+            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .litecoin:
-            return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode(wallet: wallet), testMode: appConfigProvider.testMode)
+            let syncMode = btcBlockchainManager.syncMode(blockchain: .litecoin, accountOrigin: wallet.account.origin)
+            return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .dash:
-            return try? DashAdapter(wallet: wallet, syncMode: syncMode(wallet: wallet), testMode: appConfigProvider.testMode)
+            let syncMode = btcBlockchainManager.syncMode(blockchain: .dash, accountOrigin: wallet.account.origin)
+            return try? DashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
         case .zcash:
             let restoreSettings = restoreSettingsManager.settings(account: wallet.account, coinType: wallet.coinType)
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings, testMode: appConfigProvider.testMode)

@@ -49,6 +49,10 @@ extension EvmNetworkViewModel {
         service.blockchain.name
     }
 
+    var icon: String {
+        service.blockchain.icon24
+    }
+
     func onSelectViewItem(index: Int) {
         let item = service.items[index]
         service.setCurrent(syncSource: item.syncSource)

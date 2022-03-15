@@ -189,7 +189,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "security-center",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
+                        self?.navigationController?.pushViewController(SecuritySettingsModule.viewController(), animated: true)
                     }
             )
         ]

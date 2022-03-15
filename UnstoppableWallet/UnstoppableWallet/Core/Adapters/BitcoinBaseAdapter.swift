@@ -140,14 +140,6 @@ class BitcoinBaseAdapter {
         }
     }
 
-    class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
-        switch syncMode {
-        case .fast: return .api
-        case .slow: return .full
-        case .new: return .newWallet
-        }
-    }
-
     class func bip(from derivation: MnemonicDerivation) -> Bip {
         switch derivation {
         case .bip44: return Bip.bip44

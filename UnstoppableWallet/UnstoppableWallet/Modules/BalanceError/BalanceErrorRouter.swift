@@ -17,15 +17,13 @@ extension BalanceErrorRouter: IBalanceErrorRouter {
     }
 
     func closeAndOpenPrivacySettings() {
-        viewController?.dismiss(animated: true) { [weak self] in
-            self?.navigationController?.pushViewController(PrivacyRouter.module(), animated: true)
-        }
+//        viewController?.dismiss(animated: true) { [weak self] in
+//        }
     }
 
     func closeAndEvmNetwork(blockchain: EvmBlockchain, account: Account) {
-        viewController?.dismiss(animated: true) { [weak self] in
-            self?.navigationController?.pushViewController(EvmNetworkModule.viewController(blockchain: blockchain, account: account), animated: true)
-        }
+//        viewController?.dismiss(animated: true) { [weak self] in
+//        }
     }
 
 }

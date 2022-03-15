@@ -4,7 +4,6 @@ import EthereumKit
 
 class EvmNetworkService {
     let blockchain: EvmBlockchain
-    private let account: Account
     private let evmSyncSourceManager: EvmSyncSourceManager
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -14,9 +13,8 @@ class EvmNetworkService {
         }
     }
 
-    init(blockchain: EvmBlockchain, account: Account, evmSyncSourceManager: EvmSyncSourceManager) {
+    init(blockchain: EvmBlockchain, evmSyncSourceManager: EvmSyncSourceManager) {
         self.blockchain = blockchain
-        self.account = account
         self.evmSyncSourceManager = evmSyncSourceManager
 
         syncItems()
@@ -34,7 +32,7 @@ class EvmNetworkService {
     }
 
     private var currentSyncSource: EvmSyncSource {
-        evmSyncSourceManager.syncSource(account: account, blockchain: blockchain)
+        evmSyncSourceManager.syncSource(blockchain: blockchain)
     }
 
 }
@@ -50,7 +48,7 @@ extension EvmNetworkService {
             return
         }
 
-        evmSyncSourceManager.save(syncSource: syncSource, account: account, blockchain: blockchain)
+        evmSyncSourceManager.save(syncSource: syncSource, blockchain: blockchain)
     }
 
 }

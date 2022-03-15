@@ -23,18 +23,18 @@ class EvmKitManager {
         self.chain = chain
         self.syncSourceManager = syncSourceManager
 
-        subscribe(disposeBag, syncSourceManager.syncSourceObservable) { [weak self] account, blockchain, _ in
-            self?.handleUpdatedSyncSource(account: account, blockchain: blockchain)
+        subscribe(disposeBag, syncSourceManager.syncSourceObservable) { [weak self] blockchain in
+            self?.handleUpdatedSyncSource(blockchain: blockchain)
         }
     }
 
-    private func handleUpdatedSyncSource(account: Account, blockchain: EvmBlockchain) {
+    private func handleUpdatedSyncSource(blockchain: EvmBlockchain) {
         queue.sync {
             guard let _evmKitWrapper = _evmKitWrapper else {
                 return
             }
 
-            guard account == currentAccount, _evmKitWrapper.blockchain == blockchain else {
+            guard _evmKitWrapper.blockchain == blockchain else {
                 return
             }
 
@@ -48,7 +48,7 @@ class EvmKitManager {
             return _evmKitWrapper
         }
 
-        let syncSource = syncSourceManager.syncSource(account: account, blockchain: blockchain)
+        let syncSource = syncSourceManager.syncSource(blockchain: blockchain)
 
         let address: EthereumKit.Address
         var signer: Signer?

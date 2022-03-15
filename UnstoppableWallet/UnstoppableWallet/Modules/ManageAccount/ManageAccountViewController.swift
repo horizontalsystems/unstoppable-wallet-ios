@@ -53,7 +53,7 @@ class ManageAccountViewController: ThemeViewController {
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
-        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
+        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         CellBuilder.build(cell: showRecoveryPhraseCell, elements: [.image20, .text, .image20])
         showRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
@@ -66,7 +66,7 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
         })
 
-        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true)
+        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
         CellBuilder.build(cell: backupRecoveryPhraseCell, elements: [.image20, .text, .image20, .margin12, .image20])
         backupRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
@@ -99,7 +99,6 @@ class ManageAccountViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
         subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
-        subscribe(disposeBag, viewModel.openNetworkSettingsSignal) { [weak self] in self?.openNetworkSettings(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
 
@@ -130,10 +129,6 @@ class ManageAccountViewController: ThemeViewController {
         }
 
         present(viewController, animated: true)
-    }
-
-    private func openNetworkSettings(account: Account) {
-        navigationController?.pushViewController(NetworkSettingsModule.viewController(account: account), animated: true)
     }
 
     private func onTapUnlink() {
@@ -193,34 +188,6 @@ extension ManageAccountViewController: SectionsDataSource {
             rows.append(row)
         default: ()
         }
-
-        let isFirst = rows.isEmpty
-        let isLast = viewModel.additionalViewItems.isEmpty
-
-        let networkSettingsRow = CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
-                tableView: tableView,
-                id: "network-settings",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "blocks_20")?.withTintColor(.themeGray)
-                    })
-                    cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
-                        component.text = "manage_account.network_settings".localized
-                    })
-                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    })
-                },
-                action: { [weak self] in
-                    self?.viewModel.onTapNetworkSettings()
-                }
-        )
-        rows.append(networkSettingsRow)
 
         let viewItems = viewModel.additionalViewItems
 
