@@ -45,6 +45,8 @@
 
 "n/a" = "Нет данных";
 
+"sync_error" = "Sync error. Try again.";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
@@ -333,7 +335,6 @@
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
-"market.sync_error" = "Ошибка Синхронизации";
 "market.coin_not_supported_yet" = "Unstoppable пока не поддерживает этот токен";
 
 "market.top.section.header.see_all" = "Посмотреть Всё";
@@ -368,6 +369,7 @@
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор Категорий";
 "market_discovery.top_coins" = "Лучшие токены";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
@@ -441,9 +443,9 @@
 
 "market.global.subtitle" = "График";
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
-"market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -565,6 +567,7 @@
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
+"transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В Процессе";
@@ -1043,6 +1046,7 @@
 "nft_collections.average_7d" = "Средн. 7Д";
 "nft_collections.average_30d" = "Средн. 30Д";
 "nft_collections.on_sale" = "В продаже";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
 // Nft Asset
 
