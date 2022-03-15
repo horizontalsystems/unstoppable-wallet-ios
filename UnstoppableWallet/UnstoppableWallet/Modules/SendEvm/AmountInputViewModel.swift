@@ -10,6 +10,7 @@ protocol IAmountInputService {
 
     var amountObservable: Observable<Decimal> { get }
     var platformCoinObservable: Observable<PlatformCoin?> { get }
+    var balanceObservable: Observable<Decimal?> { get }
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> { get }
 
     func onChange(amount: Decimal)
@@ -62,6 +63,7 @@ class AmountInputViewModel {
         switchEnabledRelay = BehaviorRelay(value: switchService.toggleAvailable)
 
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
+        subscribe(disposeBag, service.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, service.amountWarningObservable) { [weak self] in self?.sync(amountWarning: $0) }
         subscribe(disposeBag, service.platformCoinObservable) { [weak self] in self?.sync(platformCoin: $0) }
         subscribe(disposeBag, fiatService.coinAmountObservable) { [weak self] in self?.syncCoin(amount: $0) }
@@ -83,6 +85,10 @@ class AmountInputViewModel {
 
     private func sync(amount: Decimal) {
         fiatService.set(coinAmount: amount)
+    }
+
+    private func sync(balance: Decimal?) {
+        isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
 
     private func sync(platformCoin: PlatformCoin?) {

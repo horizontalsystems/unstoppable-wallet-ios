@@ -23,7 +23,7 @@ enum FeeRatePriority: Equatable {
         case (.medium, .medium): return true
         case (.recommended, .recommended): return true
         case (.high, .high): return true
-        case (.custom, .custom): return true
+        case (let .custom(v1, cr1), let .custom(v2, cr2)): return v1 == v2 && cr1 == cr2
         default: return false
         }
     }

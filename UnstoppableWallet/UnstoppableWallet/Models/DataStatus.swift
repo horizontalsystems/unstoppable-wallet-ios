@@ -101,6 +101,21 @@ extension DataStatus: Equatable {
 
 }
 
+extension DataStatus where T: Equatable {
+
+    func equalTo(_ rhs: DataStatus<T>) -> Bool  {
+        switch (self, rhs) {
+        case (.loading, .loading): return true
+        case (.failed(let lhsValue), .failed(let rhsValue)):
+            return lhsValue.smartDescription == rhsValue.smartDescription
+        case (.completed(let lhsValue), .completed(let rhsValue)):
+            return lhsValue == rhsValue
+        default: return false
+        }
+    }
+
+}
+
 struct FallibleData<T> {
     let data: T
     let errors: [Error]

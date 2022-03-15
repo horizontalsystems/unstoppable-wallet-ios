@@ -3,8 +3,9 @@ import RxCocoa
 import BigInt
 import CurrencyKit
 
-protocol IAvailableBalanceService {
-    var availableBalance: Decimal { get }
+protocol IAvailableBalanceService: AnyObject {
+    var availableBalance: DataStatus<Decimal> { get }
+    var availableBalanceObservable: Observable<DataStatus<Decimal>> { get }
 }
 
 class SendAvailableBalanceViewModel {
@@ -20,19 +21,38 @@ class SendAvailableBalanceViewModel {
         self.coinService = coinService
         self.switchService = switchService
 
-        subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
+        subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, service.availableBalanceObservable) { [weak self] _ in self?.sync() }
 
-        sync(amountType: switchService.amountType)
+        sync()
     }
 
-    private func sync(amountType: AmountTypeSwitchService.AmountType) {
+    private var hasPreviousValue: Bool {
+        if case .loaded = viewStateRelay.value {
+            return true
+        }
+        return false
+    }
+
+    private func sync() {
+        switch service.availableBalance {
+        case .loading:
+            if !hasPreviousValue {
+                viewStateRelay.accept(.loading)
+            }
+        case .failed: updateViewState(availableBalance: 0)
+        case .completed(let availableBalance): updateViewState(availableBalance: availableBalance)
+        }
+    }
+
+    private func updateViewState(availableBalance: Decimal) {
         let value: String?
 
-        if case .currency = amountType, let rate = coinService.rate {
-            let currencyValue = CurrencyValue(currency: rate.currency, value: service.availableBalance * rate.value)
+        if case .currency = switchService.amountType, let rate = coinService.rate {
+            let currencyValue = CurrencyValue(currency: rate.currency, value: availableBalance * rate.value)
             value = ValueFormatter.instance.format(currencyValue: currencyValue)
         } else {
-            let coinValue = CoinValue(kind: .platformCoin(platformCoin: coinService.platformCoin), value: service.availableBalance)
+            let coinValue = CoinValue(kind: .platformCoin(platformCoin: coinService.platformCoin), value: availableBalance)
             value = ValueFormatter.instance.format(coinValue: coinValue)!
         }
 

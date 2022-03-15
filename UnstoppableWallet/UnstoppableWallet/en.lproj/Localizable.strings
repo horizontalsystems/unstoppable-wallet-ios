@@ -217,6 +217,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "Send";
 "send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend_button" = "Resend";

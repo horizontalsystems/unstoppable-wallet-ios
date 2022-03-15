@@ -33,12 +33,24 @@ class Eip1559EvmFeeViewModel {
         sync(recommendedBaseFee: gasPriceService.recommendedBaseFee)
         sync(usingRecommended: gasPriceService.usingRecommended)
 
-        subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
-        subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
-        subscribe(disposeBag, gasPriceService.recommendedBaseFeeObservable) { [weak self] in self?.sync(recommendedBaseFee: $0) }
-        subscribe(disposeBag, gasPriceService.baseFeeRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
-        subscribe(disposeBag, gasPriceService.tipsRangeChangedObservable) { [weak self] in self?.sync(gasPriceStatus: nil) }
-        subscribe(disposeBag, gasPriceService.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
+        subscribe(disposeBag, feeService.statusObservable) { [weak self] in
+            self?.sync(transactionStatus: $0)
+        }
+        subscribe(disposeBag, gasPriceService.statusObservable) { [weak self] in
+            self?.sync(gasPriceStatus: $0)
+        }
+        subscribe(disposeBag, gasPriceService.recommendedBaseFeeObservable) { [weak self] in
+            self?.sync(recommendedBaseFee: $0)
+        }
+        subscribe(disposeBag, gasPriceService.baseFeeRangeChangedObservable) { [weak self] in
+            self?.sync(gasPriceStatus: nil)
+        }
+        subscribe(disposeBag, gasPriceService.tipsRangeChangedObservable) { [weak self] in
+            self?.sync(gasPriceStatus: nil)
+        }
+        subscribe(disposeBag, gasPriceService.usingRecommendedObservable) { [weak self] in
+            self?.sync(usingRecommended: $0)
+        }
     }
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
@@ -87,11 +99,23 @@ class Eip1559EvmFeeViewModel {
 
         let gweiBaseFee = gwei(wei: gasPriceService.baseFee)
         baseFeeRelay.accept("\(gweiBaseFee) gwei")
-        baseFeeSliderRelay.accept(FeeSliderViewItem(initialValue: gweiBaseFee, range: gwei(range: gasPriceService.baseFeeRange)))
+        baseFeeSliderRelay.accept(
+                FeeSliderViewItem(
+                        initialValue: gweiBaseFee,
+                        range: gwei(range: gasPriceService.baseFeeRange),
+                        description: "gwei"
+                )
+        )
 
         let gweiTips = gwei(wei: gasPriceService.tips)
         tipsRelay.accept("\(gweiTips) gwei")
-        tipsSliderRelay.accept(FeeSliderViewItem(initialValue: gweiTips, range: gwei(range: gasPriceService.tipsRange)))
+        tipsSliderRelay.accept(
+                FeeSliderViewItem(
+                        initialValue: gweiTips,
+                        range: gwei(range: gasPriceService.tipsRange),
+                        description: "gwei"
+                )
+        )
     }
 
     private func sync(recommendedBaseFee: Int) {
