@@ -45,6 +45,8 @@
 
 "n/a" = "不可用";
 
+"sync_error" = "Sync error. Try again.";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable需要使用相机扫描二维码。
@@ -333,7 +335,6 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
-"market.sync_error" = "同步出错";
 "market.coin_not_supported_yet" = "Unstoppable尚不支持此代币";
 
 "market.top.section.header.see_all" = "查看全部";
@@ -368,6 +369,7 @@
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
@@ -441,9 +443,9 @@
 
 "market.global.subtitle" = "图表";
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -565,6 +567,7 @@
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "全部";
+"transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
@@ -1043,6 +1046,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.average_7d" = "平均7天";
 "nft_collections.average_30d" = "平均30天";
 "nft_collections.on_sale" = "在售";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
 // Nft Asset
 
