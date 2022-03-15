@@ -18,7 +18,7 @@ class App {
     let appConfigProvider: AppConfigProvider
 
     let localStorage: ILocalStorage & IChartIntervalStorage
-    let storage: IEnabledWalletStorage & IAccountRecordStorage & IBlockchainSettingsRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage& IWalletConnectV2SessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IAccountSettingRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
+    let storage: IEnabledWalletStorage & IAccountRecordStorage & ILogRecordStorage & IFavoriteCoinRecordStorage & IWalletConnectSessionStorage& IWalletConnectV2SessionStorage & IActiveAccountStorage & IRestoreSettingsStorage & IAppVersionRecordStorage & IEnabledWalletCacheStorage & ICustomTokenStorage & IEvmAccountSyncStateStorage
 
     let themeManager: ThemeManager
     let systemInfoManager: ISystemInfoManager
@@ -48,7 +48,6 @@ class App {
     let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
 
-    let accountSettingManager: AccountSettingManager
     let evmSyncSourceManager: EvmSyncSourceManager
     let evmBlockchainManager: EvmBlockchainManager
 
@@ -64,7 +63,7 @@ class App {
     let appStatusManager: IAppStatusManager
     let appVersionManager: IAppVersionManager
 
-    let initialSyncSettingsManager: InitialSyncSettingsManager
+    let btcBlockchainManager: BtcBlockchainManager
 
     let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
 
@@ -141,8 +140,11 @@ class App {
         let walletStorage = WalletStorage(coinManager: coinManager, storage: storage)
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
 
-        accountSettingManager = AccountSettingManager(storage: storage)
-        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, accountSettingManager: accountSettingManager)
+        let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
+        let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
+        btcBlockchainManager = BtcBlockchainManager(storage: blockchainSettingsStorage)
+
+        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
 
         let tokenBalanceProvider = HsTokenBalanceProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, provider: tokenBalanceProvider, storage: storage)
@@ -152,15 +154,12 @@ class App {
 
         restoreSettingsManager = RestoreSettingsManager(storage: storage)
 
-        let settingsStorage: IBlockchainSettingsStorage = BlockchainSettingsStorage(storage: storage)
-        initialSyncSettingsManager = InitialSyncSettingsManager(marketKit: marketKit, storage: settingsStorage)
-
         let adapterFactory = AdapterFactory(
                 appConfigProvider: appConfigProvider,
                 evmBlockchainManager: evmBlockchainManager,
                 evmSyncSourceManager: evmSyncSourceManager,
                 binanceKitManager: binanceKitManager,
-                initialSyncSettingsManager: initialSyncSettingsManager,
+                btcBlockchainManager: btcBlockchainManager,
                 restoreSettingsManager: restoreSettingsManager,
                 coinManager: coinManager
         )
@@ -168,7 +167,7 @@ class App {
                 adapterFactory: adapterFactory,
                 walletManager: walletManager,
                 evmBlockchainManager: evmBlockchainManager,
-                initialSyncSettingsManager: initialSyncSettingsManager
+                btcBlockchainManager: btcBlockchainManager
         )
         transactionAdapterManager = TransactionAdapterManager(
                 adapterManager: adapterManager,
@@ -206,7 +205,7 @@ class App {
         guidesManager = GuidesManager(networkManager: networkManager)
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
-        walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager, accountSettingManager: accountSettingManager)
+        walletConnectSessionManager = WalletConnectSessionManager(storage: storage, accountManager: accountManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
         let walletClientInfo = WalletConnectClientInfo(

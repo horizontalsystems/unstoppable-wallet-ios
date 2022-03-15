@@ -58,7 +58,7 @@ class GrdbStorage {
 
             let uuid = authData.walletId
             let isBackedUp = UserDefaults.standard.bool(forKey: "is_backed_up")
-            let syncMode: SyncMode
+            let syncMode: SyncMode_v_0_24
             switch UserDefaults.standard.string(forKey: "sync_mode_key") ?? "" {
             case "fast": syncMode = .fast
             case "slow": syncMode = .slow
@@ -205,12 +205,12 @@ class GrdbStorage {
         }
 
         migrator.registerMigration("createBlockchainSettings") { db in
-            try db.create(table: BlockchainSettingRecord.databaseTableName) { t in
-                t.column(BlockchainSettingRecord.Columns.coinType.name, .text).notNull()
-                t.column(BlockchainSettingRecord.Columns.key.name, .text).notNull()
-                t.column(BlockchainSettingRecord.Columns.value.name, .text).notNull()
+            try db.create(table: BlockchainSettingRecord_v_0_24.databaseTableName) { t in
+                t.column(BlockchainSettingRecord_v_0_24.Columns.coinType.name, .text).notNull()
+                t.column(BlockchainSettingRecord_v_0_24.Columns.key.name, .text).notNull()
+                t.column(BlockchainSettingRecord_v_0_24.Columns.value.name, .text).notNull()
 
-                t.primaryKey([BlockchainSettingRecord.Columns.coinType.name, BlockchainSettingRecord.Columns.key.name], onConflict: .replace)
+                t.primaryKey([BlockchainSettingRecord_v_0_24.Columns.coinType.name, BlockchainSettingRecord_v_0_24.Columns.key.name], onConflict: .replace)
             }
         }
 
@@ -227,7 +227,7 @@ class GrdbStorage {
                 "DASH": "dash"
             ]
 
-            let derivationSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
+            let derivationSettings: [BlockchainSettingRecord_v_0_24] = wallets.compactMap { wallet in
                 guard
                         let coinTypeKey = coinTypeKeyMap[wallet.coinId],
                         let derivation = wallet.derivation
@@ -235,9 +235,9 @@ class GrdbStorage {
                     return nil
                 }
 
-                return BlockchainSettingRecord(coinType: coinTypeKey, key: "derivation", value: derivation)
+                return BlockchainSettingRecord_v_0_24(coinType: coinTypeKey, key: "derivation", value: derivation)
             }
-            let syncSettings: [BlockchainSettingRecord] = wallets.compactMap { wallet in
+            let syncSettings: [BlockchainSettingRecord_v_0_24] = wallets.compactMap { wallet in
                 guard
                         let coinTypeKey = coinTypeKeyMap[wallet.coinId],
                         let syncMode = wallet.syncMode
@@ -245,7 +245,7 @@ class GrdbStorage {
                     return nil
                 }
 
-                return BlockchainSettingRecord(coinType: coinTypeKey, key: "sync_mode", value: syncMode)
+                return BlockchainSettingRecord_v_0_24(coinType: coinTypeKey, key: "sync_mode", value: syncMode)
             }
 
             for setting in derivationSettings + syncSettings {
@@ -289,7 +289,7 @@ class GrdbStorage {
 
         migrator.registerMigration("addCoinTypeBlockchainSettingForBitcoinCash") { db in
             if try EnabledWallet_v_0_20.filter(EnabledWallet_v_0_20.Columns.coinId == "BCH").fetchOne(db) != nil {
-                let record = BlockchainSettingRecord(coinType: "bitcoinCash", key: "network_coin_type", value: "type0")
+                let record = BlockchainSettingRecord_v_0_24(coinType: "bitcoinCash", key: "network_coin_type", value: "type0")
                 try record.insert(db)
             }
         }
@@ -453,7 +453,7 @@ class GrdbStorage {
                 t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.coinSettingsId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
             }
 
-            let settingRecords = try BlockchainSettingRecord.fetchAll(db)
+            let settingRecords = try BlockchainSettingRecord_v_0_24.fetchAll(db)
 
             for oldWallet in oldWallets {
                 let coinId = oldWallet.coinId
@@ -521,16 +521,6 @@ class GrdbStorage {
             }
         }
 
-        migrator.registerMigration("createAccountSettings") { db in
-            try db.create(table: AccountSettingRecord.databaseTableName) { t in
-                t.column(AccountSettingRecord.Columns.accountId.name, .text).notNull()
-                t.column(AccountSettingRecord.Columns.key.name, .text).notNull()
-                t.column(AccountSettingRecord.Columns.value.name, .text).notNull()
-
-                t.primaryKey([AccountSettingRecord.Columns.accountId.name, AccountSettingRecord.Columns.key.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("createEnabledWalletCaches") { db in
             try db.create(table: EnabledWalletCache.databaseTableName) { t in
                 t.column(EnabledWalletCache.Columns.coinId.name, .text).notNull()
@@ -577,6 +567,33 @@ class GrdbStorage {
                 t.column(WalletConnectV2Session.Columns.topic.name, .text).notNull()
 
                 t.primaryKey([WalletConnectV2Session.Columns.accountId.name, WalletConnectV2Session.Columns.topic.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("migrateBlockchainSettings") { db in
+            let oldRecords = try BlockchainSettingRecord_v_0_24.fetchAll(db)
+
+            try db.drop(table: BlockchainSettingRecord_v_0_24.databaseTableName)
+
+            try db.create(table: BlockchainSettingRecord.databaseTableName) { t in
+                t.column(BlockchainSettingRecord.Columns.blockchainUid.name, .text).notNull()
+                t.column(BlockchainSettingRecord.Columns.key.name, .text).notNull()
+                t.column(BlockchainSettingRecord.Columns.value.name, .text).notNull()
+
+                t.primaryKey([BlockchainSettingRecord.Columns.blockchainUid.name, BlockchainSettingRecord.Columns.key.name], onConflict: .replace)
+            }
+
+            for oldRecord in oldRecords {
+                if oldRecord.key == "initial_sync", oldRecord.value == "slow" {
+                    try BlockchainSettingRecord(blockchainUid: oldRecord.coinType, key: "btc-restore", value: "blockchain").insert(db)
+                }
+
+                if let sortMode = UserDefaults.standard.string(forKey: "transaction_data_sort_mode"), sortMode == "bip69" {
+                    try BlockchainSettingRecord(blockchainUid: "bitcoin", key: "btc-transaction-sort", value: "bip69").insert(db)
+                    try BlockchainSettingRecord(blockchainUid: "bitcoinCash", key: "btc-transaction-sort", value: "bip69").insert(db)
+                    try BlockchainSettingRecord(blockchainUid: "litecoin", key: "btc-transaction-sort", value: "bip69").insert(db)
+                    try BlockchainSettingRecord(blockchainUid: "dash", key: "btc-transaction-sort", value: "bip69").insert(db)
+                }
             }
         }
 
@@ -660,28 +677,6 @@ extension GrdbStorage: IAppVersionRecordStorage {
             for record in appVersionRecords {
                 try record.insert(db)
             }
-        }
-    }
-
-}
-
-extension GrdbStorage: IBlockchainSettingsRecordStorage {
-
-    func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord? {
-        try? dbPool.read { db in
-            try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.coinType == coinTypeKey && BlockchainSettingRecord.Columns.key == settingKey).fetchOne(db)
-        }
-    }
-
-    func save(blockchainSetting: BlockchainSettingRecord) {
-        _ = try! dbPool.write { db in
-            try blockchainSetting.insert(db)
-        }
-    }
-
-    func deleteAll(settingKey: String) {
-        _ = try! dbPool.write { db in
-            try BlockchainSettingRecord.filter(BlockchainSettingRecord.Columns.key == settingKey).deleteAll(db)
         }
     }
 
@@ -883,28 +878,6 @@ extension GrdbStorage: IRestoreSettingsStorage {
     func deleteAllRestoreSettings(accountId: String) {
         _ = try! dbPool.write { db in
             try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId).deleteAll(db)
-        }
-    }
-
-}
-
-extension GrdbStorage: IAccountSettingRecordStorage {
-
-    func accountSetting(accountId: String, key: String) -> AccountSettingRecord? {
-        try! dbPool.read { db in
-            try AccountSettingRecord.filter(AccountSettingRecord.Columns.accountId == accountId && AccountSettingRecord.Columns.key == key).fetchOne(db)
-        }
-    }
-
-    func save(accountSetting: AccountSettingRecord) {
-        _ = try! dbPool.write { db in
-            try accountSetting.insert(db)
-        }
-    }
-
-    func deleteAllAccountSettings(accountId: String) {
-        _ = try! dbPool.write { db in
-            try AccountSettingRecord.filter(AccountSettingRecord.Columns.accountId == accountId).deleteAll(db)
         }
     }
 

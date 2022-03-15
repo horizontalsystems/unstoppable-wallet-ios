@@ -9,9 +9,10 @@ class EvmNetworkViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private var isLoaded = false
+    private let iconImageView = UIImageView()
 
     private var viewItems = [EvmNetworkViewModel.ViewItem]()
+    private var isLoaded = false
 
     init(viewModel: EvmNetworkViewModel) {
         self.viewModel = viewModel
@@ -30,6 +31,11 @@ class EvmNetworkViewController: ThemeViewController {
 
         title = viewModel.title
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+
+        iconImageView.image = UIImage(named: viewModel.icon)
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -38,9 +44,7 @@ class EvmNetworkViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: F4Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
@@ -48,7 +52,7 @@ class EvmNetworkViewController: ThemeViewController {
             self?.reloadTable()
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
+            self?.dismiss(animated: true)
         }
 
         tableView.buildSections()
@@ -56,12 +60,14 @@ class EvmNetworkViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func reloadTable() {
-        guard isLoaded else {
-            return
-        }
+    @objc private func onTapCancel() {
+        dismiss(animated: true)
+    }
 
-        tableView.reload(animated: true)
+    private func reloadTable() {
+        if isLoaded {
+            tableView.reload(animated: true)
+        }
     }
 
 }
@@ -77,18 +83,30 @@ extension EvmNetworkViewController: SectionsDataSource {
     }
 
     private func row(viewItem: EvmNetworkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<F4Cell>(
-                id: viewItem.name,
+        CellBuilder.selectableRow(
+                elements: [.multiText, .image20],
+                tableView: tableView,
+                id: "sync-node-\(index)",
                 hash: "\(viewItem.selected)",
                 height: .heightDoubleLineCell,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.title = viewItem.name
-                    cell.subtitle = viewItem.url
-                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                    cell.valueImageTintColor = .themeRemus
+
+                    cell.bind(index: 0, block: { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.name
+                        component.subtitle.text = viewItem.url
+                    })
+
+                    cell.bind(index: 1, block: { (component: ImageComponent) in
+                        component.isHidden = !viewItem.selected
+                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                    })
                 },
-                action: { [weak self] _ in
+                action: { [weak self] in
                     self?.viewModel.onSelectViewItem(index: index)
                 }
         )
@@ -97,8 +115,12 @@ extension EvmNetworkViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "main",
-                    headerState: .margin(height: .margin12),
+                    id: "top-margin",
+                    headerState: .margin(height: .margin12)
+            ),
+            Section(
+                    id: "sync-node",
+                    headerState: header(text: "evm_network.sync_node".localized),
                     footerState: .margin(height: .margin32),
                     rows: viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)

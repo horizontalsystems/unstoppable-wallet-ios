@@ -127,11 +127,6 @@ protocol IWordsManager {
     func generateWords(count: Int) throws -> [String]
 }
 
-protocol IAuthManager {
-    func login(withWords words: [String], syncMode: SyncMode) throws
-    func logout() throws
-}
-
 protocol IAccountManager {
     var activeAccount: Account? { get }
     func set(activeAccountId: String?)
@@ -185,17 +180,6 @@ protocol IAppVersionStorage {
 protocol IAppVersionRecordStorage {
     var appVersionRecords: [AppVersionRecord] { get }
     func save(appVersionRecords: [AppVersionRecord])
-}
-
-protocol IBlockchainSettingsRecordStorage {
-    func blockchainSettings(coinTypeKey: String, settingKey: String) -> BlockchainSettingRecord?
-    func save(blockchainSetting: BlockchainSettingRecord)
-    func deleteAll(settingKey: String)
-}
-
-protocol IBlockchainSettingsStorage: AnyObject {
-    func initialSyncSetting(coinType: MarketKit.CoinType) -> InitialSyncSetting?
-    func save(initialSyncSetting: InitialSyncSetting)
 }
 
 protocol IRestoreSettingsStorage {
@@ -345,12 +329,6 @@ protocol IWalletConnectV2SessionStorage {
 protocol IDeepLinkManager {
     func handle(url: URL) -> Bool
     var newSchemeObservable: Observable<DeepLinkManager.DeepLink?> { get }
-}
-
-protocol IAccountSettingRecordStorage {
-    func accountSetting(accountId: String, key: String) -> AccountSettingRecord?
-    func save(accountSetting: AccountSettingRecord)
-    func deleteAllAccountSettings(accountId: String)
 }
 
 protocol IEnabledWalletCacheStorage {

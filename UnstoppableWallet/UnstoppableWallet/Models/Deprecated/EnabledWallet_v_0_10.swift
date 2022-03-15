@@ -3,10 +3,10 @@ import GRDB
 class EnabledWallet_v_0_10: Record {
     let coinId: String
     let accountId: String
-    var syncMode: SyncMode?
+    var syncMode: SyncMode_v_0_24?
     let order: Int
 
-    init(coinId: String, accountId: String, syncMode: SyncMode?, order: Int) {
+    init(coinId: String, accountId: String, syncMode: SyncMode_v_0_24?, order: Int) {
         self.coinId = coinId
         self.accountId = accountId
         self.syncMode = syncMode
@@ -25,7 +25,7 @@ class EnabledWallet_v_0_10: Record {
         order = row[Columns.walletOrder]
 
         if let rawSyncMode: String = row[Columns.syncMode] {
-            syncMode = SyncMode(rawValue: rawSyncMode)
+            syncMode = SyncMode_v_0_24(rawValue: rawSyncMode)
         }
 
         super.init(row: row)
