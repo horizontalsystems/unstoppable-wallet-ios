@@ -6,12 +6,12 @@ class SendBitcoinInteractor {
     weak var delegate: ISendBitcoinInteractorDelegate?
 
     private let adapter: ISendBitcoinAdapter
-    private let transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager
+    private let btcBlockchainManager: BtcBlockchainManager
     private let localStorage: ILocalStorage
 
-    init(adapter: ISendBitcoinAdapter, transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager, localStorage: ILocalStorage) {
+    init(adapter: ISendBitcoinAdapter, btcBlockchainManager: BtcBlockchainManager, localStorage: ILocalStorage) {
         self.adapter = adapter
-        self.transactionDataSortModeSettingsManager = transactionDataSortModeSettingsManager
+        self.btcBlockchainManager = btcBlockchainManager
         self.localStorage = localStorage
     }
 
@@ -68,7 +68,8 @@ extension SendBitcoinInteractor: ISendBitcoinInteractor {
     }
 
     func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], logger: Logger) -> Single<Void> {
-        adapter.sendSingle(amount: amount, address: address, feeRate: feeRate, pluginData: pluginData, sortMode: transactionDataSortModeSettingsManager.setting, logger: logger)
+        let transactionSortMode = btcBlockchainManager.transactionSortMode(blockchain: adapter.blockchain)
+        return adapter.sendSingle(amount: amount, address: address, feeRate: feeRate, pluginData: pluginData, sortMode: transactionSortMode, logger: logger)
     }
 
 }

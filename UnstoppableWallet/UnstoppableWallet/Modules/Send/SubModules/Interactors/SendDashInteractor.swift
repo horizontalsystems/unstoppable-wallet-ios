@@ -5,11 +5,11 @@ class SendDashInteractor {
     weak var delegate: ISendDashInteractorDelegate?
 
     private let adapter: ISendDashAdapter
-    private let transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager
+    private let btcBlockchainManager: BtcBlockchainManager
 
-    init(adapter: ISendDashAdapter, transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager) {
+    init(adapter: ISendDashAdapter, btcBlockchainManager: BtcBlockchainManager) {
         self.adapter = adapter
-        self.transactionDataSortModeSettingsManager = transactionDataSortModeSettingsManager
+        self.btcBlockchainManager = btcBlockchainManager
     }
 
 }
@@ -47,7 +47,8 @@ extension SendDashInteractor: ISendDashInteractor {
     }
 
     func sendSingle(amount: Decimal, address: String, logger: Logger) -> Single<Void> {
-        adapter.sendSingle(amount: amount, address: address, sortMode: transactionDataSortModeSettingsManager.setting, logger: logger)
+        let transactionSortMode = btcBlockchainManager.transactionSortMode(blockchain: .dash)
+        return adapter.sendSingle(amount: amount, address: address, sortMode: transactionSortMode, logger: logger)
     }
 
 }

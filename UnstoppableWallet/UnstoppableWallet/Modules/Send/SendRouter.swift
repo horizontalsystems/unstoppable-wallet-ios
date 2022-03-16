@@ -65,7 +65,7 @@ extension SendRouter {
     }
 
     private static func module(platformCoin: PlatformCoin, adapter: ISendBitcoinAdapter) -> (ISendHandler, [UIView], [ISendSubRouter])? {
-        let interactor = SendBitcoinInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager, localStorage: App.shared.localStorage)
+        let interactor = SendBitcoinInteractor(adapter: adapter, btcBlockchainManager: App.shared.btcBlockchainManager, localStorage: App.shared.localStorage)
 
         var views = [UIView]()
         var routers = [ISendSubRouter]()
@@ -132,7 +132,7 @@ extension SendRouter {
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         let (feeView, feeModule) = SendFeeRouter.module(platformCoin: platformCoin)
 
-        let interactor = SendDashInteractor(adapter: adapter, transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager)
+        let interactor = SendDashInteractor(adapter: adapter, btcBlockchainManager: App.shared.btcBlockchainManager)
         let presenter = SendDashHandler(interactor: interactor, amountModule: amountModule, addressModule: addressModule, feeModule: feeModule)
 
         interactor.delegate = presenter
