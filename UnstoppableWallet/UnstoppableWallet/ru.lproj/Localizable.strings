@@ -217,6 +217,8 @@
 "send.confirmation.account" = "Aккаунт";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Всего";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "Отправить";
 "send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend_button" = "Отправить Повторно";
@@ -706,20 +708,25 @@
 
 "settings_security.title" = "Центр Безопасности";
 "settings_security.passcode" = "Код Доступа";
-"settings_security.privacy" = "Приватность";
 "settings_security.change_pin" = "Изменить Код";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "security_settings.delete_alert_button" = "Удалить с Телефона";
-"settings_privacy.title" = "Приватность";
-"settings_privacy.header_description" = "Это приложение не передает ваши данные, но, поскольку оно связывается с блокчейнами, возможна потенциальная утечка некоторых общедоступных данных, таких как IP-адрес. Используйте кнопку \"Информация\" в правом верхнем углу для получения более подробной информации о каждом разделе.";
-"settings_privacy.sorting_title" = "Входы/Выходы";
-"settings_privacy.sorting.section_header" = "Tранзакции Блокчейна";
-"settings_privacy.sorting.section_footer" = "Поменяйте способ структурирования транзакций, чтобы затруднить отслеживание ваших операций с BTC, LTC, BCH.";
-"settings_privacy.connection.section_header" = "Синхронизация Блокчейна";
-"settings_privacy.connection.section_footer" = "Некоторые блокчейны всё еще не разработали инфраструктуру для работы мобильных приложений в пиринговом режиме (P2P). Работа с блокчейнами BTC, BCH, LTC, DASH проходит полностью в режиме P2P.";
-"settings_privacy.sync.section_header" = "Восстановить Блокчейн";
-"settings_privacy.sync.section_footer" = "Выберите источник данных для восстановления кошелька с транзакциями.";
+
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
+
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "settings_privacy_info.title" = "Настройки Приватности";
 "settings_privacy_info.description" = "Ниже вы найдете подробное описание доступных в приложении настроек конфиденциальности. Эти настройки предназначены для тех, кому нужна полная конфиденциальность.";
@@ -729,22 +736,6 @@
 "settings_privacy_info.content_blockchain_connection" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 "settings_privacy_info.header_blockchain_restore" = "Восстановить Блокчейн";
 "settings_privacy_info.content_blockchain_restore" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
-
-"settings_privacy.alert_sync.title" = "Источник Восстановления";
-"settings_privacy.alert_sync.description" = "После вступления данного изменения в силу кошелек должен будет повторно синхронизироваться с блокчейном %@.";
-"settings_privacy.alert_sync.recommended" = "Рекомендовано";
-"settings_privacy.alert_sync.more_private" = "Более Приватно";
-
-"settings_privacy.alert_connection.title" = "Синхронизация Блокчейна";
-
-"settings_privacy.alert_sort.title" = "Tранзакции Блокчейна";
-"settings_privacy.alert_sort.subtitle" = "Входы/Выходы";
-"settings_privacy.sorting_default" = "По умолчанию";
-"settings_privacy.sorting_default.description" = "Без настроек";
-"settings_privacy.sorting_shuffle" = "Перемешать";
-"settings_privacy.sorting_shuffle.description" = "Случайное Индексирование";
-"settings_privacy.sorting_bip69" = "Детерминированный BIP69";
-"settings_privacy.sorting_bip69.description" = "Лексикографическая Индексация";
 
 // Manage Keys
 
@@ -992,7 +983,6 @@
 "manage_account.name" = "Имя";
 "manage_account.show_recovery_phrase" = "Показать Фразу";
 "manage_account.backup_recovery_phrase" = "Резервная Фраза";
-"manage_account.network_settings" = "Настройки Сети";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -1002,14 +992,10 @@
 "birthday_input.input_placeholder" = "%@ (опционально)";
 "restore_setting.birthday_height" = "%@ Блок Создания";
 
-// Network Settings
-
-"network_settings.title" = "Настройки Сети";
-
 // EVM Network
 
+"evm_network.sync_node" = "Sync Node";
 "evm_network.switches_automatically" = "переходит автоматически";
-"evm_network.description" = "Провайдер MainNet использует ряд приведенных ниже источников и автоматически переключается между ними.";
 
 // Fee Settings
 
