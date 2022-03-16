@@ -1,9 +1,16 @@
 import Foundation
 import RxSwift
+import RxRelay
 
 class BitcoinAddressParserItem {
     private let adapter: ISendBitcoinAdapter
-    var pluginData = [UInt8: IBitcoinPluginData]()
+    var pluginData = [UInt8: IBitcoinPluginData]() {
+        didSet {
+            itemUpdatedRelay.accept(())
+        }
+    }
+
+    var itemUpdatedRelay = PublishRelay<()>()
 
     init(adapter: ISendBitcoinAdapter) {
         self.adapter = adapter
@@ -12,6 +19,10 @@ class BitcoinAddressParserItem {
 }
 
 extension BitcoinAddressParserItem: IAddressParserItem {
+
+    var itemUpdatedObservable: Observable<()> {
+        itemUpdatedRelay.asObservable()
+    }
 
     func handle(address: String) -> Single<Address> {
         do {

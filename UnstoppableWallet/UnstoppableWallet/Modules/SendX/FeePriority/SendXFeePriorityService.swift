@@ -5,13 +5,12 @@ import RxCocoa
 class SendXFeePriorityService {
     private var disposeBag = DisposeBag()
     private let provider: IFeeRateProvider
+    weak var feeRateService: SendXFeeRateService?
 
     private let priorityRelay = BehaviorRelay<FeeRatePriority>(value: .recommended)
     var priority: FeeRatePriority {
         didSet {
-            if oldValue != priority {
-                priorityRelay.accept(priority)
-            }
+            update(priority: priority, old: oldValue)
         }
     }
 
@@ -21,8 +20,19 @@ class SendXFeePriorityService {
         priority = provider.defaultFeeRatePriority
     }
 
-    deinit {
-        print("Deinit \(self)")
+    private func update(priority: FeeRatePriority, old: FeeRatePriority) {
+        guard old != priority else {
+            return
+        }
+
+        // when change to custom fee priority we need set position by last feeRate for slider
+        if !old.isCustom,
+           case let .custom(value, range) = priority {
+
+            self.priority = .custom(value: feeRateService?.feeRate.data ?? value, range: range)
+        }
+
+        priorityRelay.accept(self.priority)
     }
 
 }

@@ -62,10 +62,6 @@ class SendBitcoinService {
         }
     }
 
-    deinit {
-        print("Deinit \(self)")
-    }
-
 }
 
 extension SendBitcoinService {

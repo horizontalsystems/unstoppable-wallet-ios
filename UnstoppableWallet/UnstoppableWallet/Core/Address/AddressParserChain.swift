@@ -5,12 +5,24 @@ import RxCocoa
 import EthereumKit
 
 protocol IAddressParserItem: AnyObject {
+    var itemUpdatedObservable: Observable<()> { get }
     func handle(address: String) -> Single<Address>
     func isValid(address: String) -> Single<Bool>
 }
 
+extension IAddressParserItem {
+
+    var itemUpdatedObservable: Observable<()> {
+        .just(())
+    }
+
+}
+
 class AddressParserChain {
+    private let disposeBag = DisposeBag()
     private var handlers = [IAddressParserItem]()
+
+    private var itemUpdatedRelay = PublishRelay<()>()
 
     private static func process(address: String, validHandlers: [IAddressParserItem]) -> Single<Address?> {
         guard !validHandlers.isEmpty else {
@@ -39,12 +51,22 @@ class AddressParserChain {
             }
     }
 
+    private func register(handler: IAddressParserItem) {
+        handlers.append(handler)
+
+        subscribe(disposeBag, handler.itemUpdatedObservable) { [weak self] in self?.itemUpdatedRelay.accept(()) }
+    }
+
 }
 
 extension AddressParserChain {
 
+    var itemUpdatedObservable: Observable<()> {
+        itemUpdatedRelay.asObservable()
+    }
+
     @discardableResult func append(handler: IAddressParserItem) -> Self {
-        handlers.append(handler)
+        register(handler: handler)
         return self
     }
 

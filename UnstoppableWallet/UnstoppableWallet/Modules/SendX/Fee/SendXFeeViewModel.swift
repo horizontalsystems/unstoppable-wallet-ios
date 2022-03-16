@@ -21,8 +21,6 @@ class SendXFeeViewModel {
     }
 
     private func sync(state: DataStatus<SendFeeService.State>) {
-        print(state.isLoading)
-        print(state.data?.primaryInfo.formattedString ?? "N/A")
         switch state {
         case .loading:
             guard firstLoaded else {

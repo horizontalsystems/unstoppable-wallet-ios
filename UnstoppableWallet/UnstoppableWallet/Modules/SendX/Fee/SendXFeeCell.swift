@@ -22,7 +22,6 @@ class SendXFeeCell: BaseThemeCell {
         }
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
-            print(Thread.current)
             self?.bind(index: 1) { (component: TextComponent) in
                 if let value = value {
                     component.isHidden = false

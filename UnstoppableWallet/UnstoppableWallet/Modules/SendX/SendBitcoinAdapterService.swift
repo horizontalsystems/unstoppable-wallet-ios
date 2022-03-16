@@ -27,18 +27,13 @@ class SendBitcoinAdapterService {
     private let feeRateService: SendXFeeRateService
     private let amountInputService: IAmountInputService
     private let addressService: AddressService
-    private let transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager
+    private let timeLockService: SendXTimeLockService
+    private let btcBlockchainManager: BtcBlockchainManager
+    private let bitcoinAddressParserItem: BitcoinAddressParserItem
 
     private let adapter: ISendBitcoinAdapter
 
-// Inputs
-    var pluginData = [UInt8: IBitcoinPluginData]() {
-        didSet {
-            sync(updatedFrom: .pluginData)
-        }
-    }
-
-// Outputs
+    // Outputs
     let feeStateRelay = BehaviorRelay<DataStatus<Decimal>>(value: .loading)
     var feeState: DataStatus<Decimal> = .loading {
         didSet {
@@ -75,12 +70,14 @@ class SendBitcoinAdapterService {
         }
     }
 
-    init(feeRateService: SendXFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, transactionDataSortModeSettingsManager: ITransactionDataSortModeSettingManager, adapter: ISendBitcoinAdapter) {
+    init(feeRateService: SendXFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendXTimeLockService, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter, bitcoinAddressParserItem: BitcoinAddressParserItem) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService
-        self.transactionDataSortModeSettingsManager = transactionDataSortModeSettingsManager
+        self.timeLockService = timeLockService
+        self.btcBlockchainManager = btcBlockchainManager
         self.adapter = adapter
+        self.bitcoinAddressParserItem = bitcoinAddressParserItem
 
         subscribe(disposeBag, amountInputService.amountObservable) { [weak self] _ in
             self?.sync(updatedFrom: .amount)
@@ -88,12 +85,16 @@ class SendBitcoinAdapterService {
         subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in
             self?.sync(updatedFrom: .address)
         }
-
+        subscribe(disposeBag, timeLockService.pluginDataObservable) { [weak self] in
+            self?.bitcoinAddressParserItem.pluginData = $0
+            self?.sync(updatedFrom: .pluginData)
+        }
         subscribe(disposeBag, feeRateService.feeRateObservable) { [weak self] in
             self?.sync(feeRate: $0)
         }
+
         minimumSendAmount = adapter.minimumSendAmount(address: addressService.state.address?.raw)
-        maximumSendAmount = adapter.maximumSendAmount(pluginData: pluginData)
+        maximumSendAmount = adapter.maximumSendAmount(pluginData: timeLockService.pluginData)
     }
 
     private func sync(feeRate: DataStatus<Int>? = nil, updatedFrom: UpdatedField = .feeRate) {
@@ -111,7 +112,7 @@ class SendBitcoinAdapterService {
         case .failed(let error):
             feeState = .failed(error)
         case .completed(let feeRate):
-            update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: pluginData, updatedFrom: updatedFrom)
+            update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: timeLockService.pluginData, updatedFrom: updatedFrom)
         }
     }
 
@@ -131,10 +132,6 @@ class SendBitcoinAdapterService {
                 self?.minimumSendAmount = self?.adapter.minimumSendAmount(address: address) ?? 0
             }
         }
-    }
-
-    deinit {
-        print("Deinit \(self)")
     }
 
 }
@@ -158,8 +155,9 @@ extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceSer
     }
 
     func validate(address: String) throws {
-        try adapter.validate(address: address, pluginData: pluginData)
+        try adapter.validate(address: address, pluginData: timeLockService.pluginData)
     }
+
 }
 
 extension SendBitcoinAdapterService: ISendService {
@@ -170,7 +168,8 @@ extension SendBitcoinAdapterService: ISendService {
             return Single.error(AppError.addressInvalid)
         }
 
-        return adapter.sendSingle(amount: amountInputService.amount, address: address, feeRate: feeRate, pluginData: pluginData, sortMode: transactionDataSortModeSettingsManager.setting, logger: logger)
+        let sortMode = btcBlockchainManager.transactionSortMode(blockchain: adapter.blockchain)
+        return adapter.sendSingle(amount: amountInputService.amount, address: address, feeRate: feeRate, pluginData: timeLockService.pluginData, sortMode: sortMode, logger: logger)
     }
 
 }

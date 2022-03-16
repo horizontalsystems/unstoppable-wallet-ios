@@ -7,7 +7,9 @@ protocol IAmountPublishService: AnyObject {
 }
 
 class AddressService {
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private var addressParserDisposeBag = DisposeBag()
+
     private let addressUriParser: IAddressUriParser
     private let addressParserChain: AddressParserChain
     private weak var amountPublishService: IAmountPublishService?
@@ -19,6 +21,8 @@ class AddressService {
         }
     }
 
+    private var text: String = ""
+
     init(addressUriParser: IAddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
         self.addressUriParser = addressUriParser
         self.addressParserChain = addressParserChain
@@ -29,6 +33,11 @@ class AddressService {
             state = .empty
         }
 
+        subscribe(disposeBag, addressParserChain.itemUpdatedObservable) { [weak self] in self?.sync() }
+    }
+
+    private func sync() {
+        set(text: text)
     }
 
     private func sync(address: Address?) {
@@ -61,13 +70,15 @@ extension AddressService {
     }
 
     func set(text: String) {
+        self.text = text
+
         guard !text.isEmpty else {
             state = .empty
             return
         }
 
         state = .loading
-        disposeBag = DisposeBag()
+        addressParserDisposeBag = DisposeBag()
 
         addressParserChain
             .handle(address: text)
@@ -76,7 +87,7 @@ extension AddressService {
                 onSuccess: { [weak self] in self?.sync(address: $0) },
                 onError: { [weak self] in self?.sync(error: $0) }
             )
-            .disposed(by: disposeBag)
+            .disposed(by: addressParserDisposeBag)
     }
 
     func handleFetched(text: String) -> String {
