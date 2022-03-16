@@ -215,6 +215,8 @@
 "send.confirmation.account" = "Konto";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Insgesamt";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "Senden";
 "send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.resend_button" = "Nochmal senden";
@@ -704,20 +706,25 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "settings_security.title" = "Sicherheit";
 "settings_security.passcode" = "Code";
-"settings_security.privacy" = "Privatsphäre";
 "settings_security.change_pin" = "Code bearbeiten";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "security_settings.delete_alert_button" = "Von Telefon löschen";
-"settings_privacy.title" = "Privatsphäre";
-"settings_privacy.header_description" = "Diese App gibt keine Ihrer Daten weiter. Da sie jedoch mit Blockchains kommuniziert, können einige öffentliche Daten wie z. B. die IP-Adresse möglicherweise durchsickern. Benutzen Sie den Info-Knopf oben rechts, um detaillierte Informationen über jeden Abschnitt zu erhalten.";
-"settings_privacy.sorting_title" = "Ein-/Ausgänge";
-"settings_privacy.sorting.section_header" = "Blockchain-Transaktionen";
-"settings_privacy.sorting.section_footer" = "Machen Sie Ihre BTC, LTC und BCH Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
-"settings_privacy.connection.section_header" = "Blockchain Sync";
-"settings_privacy.connection.section_footer" = "Manche Blockchains bieten noch keine Möglichkeit des Peer-to-Peer-Betriebs von mobilen Anwendungen. Die Kommunikation mit BTC-, BCH-, LTC- und DASH-Blockchains erfolgt vollständig über Peer-to-Peer.";
-"settings_privacy.sync.section_header" = "Blockchain-Wiederherstellung";
-"settings_privacy.sync.section_footer" = "Wählen Sie die Datenquelle für die Wiederherstellung des Wallets mit Transaktionen aus.";
+
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
+
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "settings_privacy_info.title" = "Privatsphäre-Einstellungen";
 "settings_privacy_info.description" = "Unten finden Sie eine detaillierte Erklärung der in der App verfügbaren Privatsphäre-Einstellungen. Sie können sie ohne Bedenken als Einstellungen für diejenigen betrachten, die eine umfangreiche Privatsphäre benötigen.";
@@ -727,22 +734,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum and Binance Smart Chain, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal Ethereum nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain-Wiederherstellung";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
-
-"settings_privacy.alert_sync.title" = "Parameter wiederherstellen";
-"settings_privacy.alert_sync.description" = "Nach dieser Änderung muss sich das Wallet mit der %@ Blockchain neu synchronisieren.";
-"settings_privacy.alert_sync.recommended" = "Empfohlen";
-"settings_privacy.alert_sync.more_private" = "Mehr Privat";
-
-"settings_privacy.alert_connection.title" = "Blockchain Sync";
-
-"settings_privacy.alert_sort.title" = "Blockchain-Transaktionen";
-"settings_privacy.alert_sort.subtitle" = "Ein-/Ausgänge";
-"settings_privacy.sorting_default" = "Standard";
-"settings_privacy.sorting_default.description" = "Ohne Einstellungen";
-"settings_privacy.sorting_shuffle" = "Zufällig";
-"settings_privacy.sorting_shuffle.description" = "Zufällige Indizierung";
-"settings_privacy.sorting_bip69" = "Deterministische Bip69";
-"settings_privacy.sorting_bip69.description" = "Lexikographische Indizierung";
 
 // Manage Keys
 
@@ -990,7 +981,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "manage_account.name" = "Name";
 "manage_account.show_recovery_phrase" = "Phrase anzeigen";
 "manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase";
-"manage_account.network_settings" = "Netzwerkeinstellungen";
 "manage_account.unlink" = "Verknüpfung trennen";
 
 // Birthday Input
@@ -1000,14 +990,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Geburtstagshöhe";
 
-// Network Settings
-
-"network_settings.title" = "Netzwerkeinstellungen";
-
 // EVM Network
 
+"evm_network.sync_node" = "Sync Node";
 "evm_network.switches_automatically" = "wechselt automatisch";
-"evm_network.description" = "Der MainNet HTTP-Anbieter verwendet eine Reihe von Quellen (siehe unten) und schaltet automatisch zwischen ihnen um.";
 
 // Fee Settings
 
