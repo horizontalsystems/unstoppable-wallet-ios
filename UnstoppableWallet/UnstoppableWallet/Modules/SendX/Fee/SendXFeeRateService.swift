@@ -54,10 +54,6 @@ class SendXFeeRateService {
         self.feeRate = .completed(feeRate)
     }
 
-    deinit {
-        print("Deinit \(self)")
-    }
-
 }
 
 extension SendXFeeRateService {

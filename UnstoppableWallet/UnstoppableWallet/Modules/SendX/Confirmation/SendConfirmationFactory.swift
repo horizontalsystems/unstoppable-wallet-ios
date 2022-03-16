@@ -25,6 +25,7 @@ class SendConfirmationFactory {
     }
 
 }
+
 extension SendConfirmationFactory {
 
     enum ConfirmationError: Error {
@@ -41,14 +42,16 @@ class SendBitcoinConfirmationFactory: SendConfirmationFactory {
     private let fiatService: FiatService
     private let feeFiatService: FiatService
     private let addressService: AddressService
+    private let timeLockService: SendXTimeLockService
     private let adapterService: SendBitcoinAdapterService
     private let logger: Logger
     private let platformCoin: PlatformCoin
 
-    init(fiatService: FiatService, addressService: AddressService, feeFiatService: FiatService, adapterService: SendBitcoinAdapterService, logger: Logger, platformCoin: PlatformCoin) {
+    init(fiatService: FiatService, addressService: AddressService, feeFiatService: FiatService, timeLockService: SendXTimeLockService, adapterService: SendBitcoinAdapterService, logger: Logger, platformCoin: PlatformCoin) {
         self.fiatService = fiatService
         self.feeFiatService = feeFiatService
         self.addressService = addressService
+        self.timeLockService = timeLockService
         self.adapterService = adapterService
         self.logger = logger
         self.platformCoin = platformCoin
@@ -73,6 +76,13 @@ class SendBitcoinConfirmationFactory: SendConfirmationFactory {
                         primaryInfo: try primaryInfo(fiatService: feeFiatService),
                         secondaryInfo: feeFiatService.secondaryAmountInfo)
         )
+        if timeLockService.lockTime != .none {
+            viewItems.append(
+                    SendConfirmationLockUntilViewItem(
+                            lockValue: timeLockService.lockTime.title
+                    )
+            )
+        }
 
         return viewItems
     }

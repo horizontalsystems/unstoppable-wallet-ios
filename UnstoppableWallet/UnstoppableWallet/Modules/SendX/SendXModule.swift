@@ -34,12 +34,17 @@ class SendXModule {
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeCoin: platformCoin)
 
+        // TimeLock
+        let timeLockService = SendXTimeLockService()
+
         let bitcoinAdapterService = SendBitcoinAdapterService(
                 feeRateService: feeRateService,
                 amountInputService: amountInputService,
                 addressService: addressService,
-                transactionDataSortModeSettingsManager: App.shared.transactionDataSortModeSettingManager,
-                adapter: adapter
+                timeLockService: timeLockService,
+                btcBlockchainManager: App.shared.btcBlockchainManager,
+                adapter: adapter,
+                bitcoinAddressParserItem: bitcoinParserItem
         )
         let service = SendBitcoinService(
                 amountService: amountInputService,
@@ -60,6 +65,7 @@ class SendXModule {
 
         bitcoinFeeRateProvider.availableBalanceService = bitcoinAdapterService
         feeService.feeValueService = bitcoinAdapterService
+        feePriorityService.feeRateService = feeRateService
 
         // ViewModels
         let viewModel = SendXViewModel(service: service)
@@ -77,6 +83,9 @@ class SendXModule {
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
+        let timeLockViewModel: SendXTimeLockViewModel? =
+                App.shared.localStorage.lockTimeEnabled ? SendXTimeLockViewModel(service: timeLockService) : nil
+
         // Fee
         let feeViewModel = SendXFeeViewModel(service: feeService)
         let feeSliderViewModel = SendXFeeSliderViewModel(service: feePriorityService)
@@ -88,6 +97,7 @@ class SendXModule {
                 fiatService: fiatService,
                 addressService: addressService,
                 feeFiatService: feeFiatService,
+                timeLockService: timeLockService,
                 adapterService: bitcoinAdapterService,
                 logger: App.shared.logger,
                 platformCoin: platformCoin
@@ -103,7 +113,8 @@ class SendXModule {
                 feeViewModel: feeViewModel,
                 feeSliderViewModel: feeSliderViewModel,
                 feePriorityViewModel: feePriorityViewModel,
-                feeWarningViewModel: feeWarningViewModel
+                feeWarningViewModel: feeWarningViewModel,
+                timeLockViewModel: timeLockViewModel
         )
 
         confirmationFactory.sourceViewController = viewController

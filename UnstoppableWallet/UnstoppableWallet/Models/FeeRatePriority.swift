@@ -17,6 +17,13 @@ enum FeeRatePriority: Equatable {
         }
     }
 
+    var isCustom: Bool {
+        if case .custom = self {
+            return true
+        }
+        return false
+    }
+
     static func ==(lhs: FeeRatePriority, rhs: FeeRatePriority) -> Bool {
         switch (lhs, rhs) {
         case (.low, .low): return true

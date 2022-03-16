@@ -47,10 +47,6 @@ class SendXFeeSliderViewModel {
         service.priority = .custom(value: feeRate, range: range)
     }
 
-    deinit {
-        print("deinit \(self)")
-    }
-
 }
 
 extension SendXFeeSliderViewModel {

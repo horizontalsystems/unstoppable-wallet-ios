@@ -34,21 +34,25 @@ class SendXViewController: ThemeViewController {
     private let feePriorityCell: SendXFeePriorityCell
     private let feeWarningCell: HighlightedDescriptionCell
 
+    private let timeLockCell: SendXTimeLockCell?
+
     private let buttonCell = ButtonCell()
 
     private var isLoaded = false
     private var keyboardShown = false
 
     init(confirmationFactory: ISendConfirmationFactory,
-            viewModel: SendXViewModel,
-            availableBalanceViewModel: SendAvailableBalanceViewModel,
-            amountInputViewModel: AmountInputViewModel,
-            amountCautionViewModel: AmountCautionViewModel,
-            recipientViewModel: RecipientAddressViewModel,
-            feeViewModel: SendXFeeViewModel,
-            feeSliderViewModel: SendXFeeSliderViewModel,
-            feePriorityViewModel: SendXFeePriorityViewModel,
-            feeWarningViewModel: SendXFeeWarningViewModel) {
+         viewModel: SendXViewModel,
+         availableBalanceViewModel: SendAvailableBalanceViewModel,
+         amountInputViewModel: AmountInputViewModel,
+         amountCautionViewModel: AmountCautionViewModel,
+         recipientViewModel: RecipientAddressViewModel,
+         feeViewModel: SendXFeeViewModel,
+         feeSliderViewModel: SendXFeeSliderViewModel,
+         feePriorityViewModel: SendXFeePriorityViewModel,
+         feeWarningViewModel: SendXFeeWarningViewModel,
+         timeLockViewModel: SendXTimeLockViewModel?
+    ) {
 
         self.confirmationFactory = confirmationFactory
         self.viewModel = viewModel
@@ -69,10 +73,14 @@ class SendXViewController: ThemeViewController {
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
 
+        timeLockCell = timeLockViewModel.map {
+            SendXTimeLockCell(viewModel: $0)
+        }
         super.init()
 
         feeSliderViewModel.subscribeTracking(cell: feeSliderCell)
         feePriorityCell.sourceViewController = self
+        timeLockCell?.sourceViewController = self
         feeSliderCell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
     }
 
@@ -102,12 +110,20 @@ class SendXViewController: ThemeViewController {
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionDataSource = self
 
-        amountCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        amountCautionCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
 
-        recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
+        recipientCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
+        recipientCell.onOpenViewController = { [weak self] in
+            self?.present($0, animated: true)
+        }
 
-        recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        recipientCautionCell.onChangeHeight = { [weak self] in
+            self?.reloadTable()
+        }
 
         buttonCell.bind(style: .primaryYellow, title: "send.next_button".localized) { [weak self] in
             self?.didTapProceed()
@@ -120,8 +136,12 @@ class SendXViewController: ThemeViewController {
             self?.amountCell.set(cautionType: caution?.type)
             self?.amountCautionCell.set(caution: caution)
         }
-        subscribe(disposeBag, feeSliderViewModel.isHiddenDriver) { [weak self] _ in self?.reloadTable() }
-        subscribe(disposeBag, feeWarningCell.hiddenStateDriver) { [weak self] _ in self?.reloadTable() }
+        subscribe(disposeBag, feeSliderViewModel.isHiddenDriver) { [weak self] _ in
+            self?.reloadTable()
+        }
+        subscribe(disposeBag, feeWarningCell.hiddenStateDriver) { [weak self] _ in
+            self?.reloadTable()
+        }
 
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in
             self?.openConfirm()
@@ -174,7 +194,7 @@ class SendXViewController: ThemeViewController {
 extension SendXViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections = [
             Section(
                     id: "available-balance",
                     headerState: .margin(height: .margin4),
@@ -253,19 +273,37 @@ extension SendXViewController: SectionsDataSource {
                                 }
                         ),
                     ]
-            ),
-            Section(
-                    id: "button",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "button",
-                                height: ButtonCell.height(style: .primaryYellow)
-                        )
-                    ]
             )
         ]
+        if let cell = timeLockCell {
+            sections.append(
+                    Section(
+                            id: "time-lock",
+                            rows: [
+                                StaticRow(
+                                        cell: cell,
+                                        id: "time_lock_cell",
+                                        height: .heightSingleLineCell
+                                )
+                            ]
+                    )
+            )
+        }
+        sections.append(
+                Section(
+                        id: "button",
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            StaticRow(
+                                    cell: buttonCell,
+                                    id: "button",
+                                    height: ButtonCell.height(style: .primaryYellow)
+                            )
+                        ]
+                )
+        )
+
+        return sections
     }
 
 }
