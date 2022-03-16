@@ -590,6 +590,9 @@
 "transactions.types.swap" = "Echanger";
 "transactions.types.approve" = "Approbations";
 
+"transactions.unknown_transaction.title" = "Transaction inconnue";
+"transactions.unknown_transaction.description" = "La transaction ne peut pas être traitée";
+
 // Transaction Info
 
 "tx_info.title" = "Informations sur la transaction";

@@ -592,6 +592,9 @@
 "transactions.types.swap" = "掉期交易";
 "transactions.types.approve" = "批准";
 
+"transactions.unknown_transaction.title" = "未知交易";
+"transactions.unknown_transaction.description" = "交易無法解析";
+
 // Transaction Info
 
 "tx_info.title" = "交易信息";

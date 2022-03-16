@@ -152,7 +152,9 @@ class TransactionsViewItemFactory {
             sentToSelf = bcOutgoing.sentToSelf
 
         default:
-            fatalError("Transaction must be convertible to TransactionsModule.ViewItem")
+            typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
+            title = "transactions.unknown_transaction.title".localized
+            subTitle = "transactions.unknown_transaction.description".localized()
         }
 
         switch item.record.status(lastBlockHeight: item.lastBlockInfo?.height) {
