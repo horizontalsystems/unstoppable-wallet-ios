@@ -5,7 +5,7 @@ import MarketKit
 class RestoreSelectService {
     private let accountType: AccountType
     private let accountFactory: AccountFactory
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let coinManager: CoinManager
     private let evmBlockchainManager: EvmBlockchainManager
@@ -27,7 +27,7 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: IAccountManager, walletManager: WalletManager, coinManager: CoinManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, coinManager: CoinManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager

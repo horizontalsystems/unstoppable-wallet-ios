@@ -25,7 +25,7 @@ class LocalStorage {
 
 }
 
-extension LocalStorage: ILocalStorage {
+extension LocalStorage {
 
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
@@ -90,11 +90,7 @@ extension LocalStorage: ILocalStorage {
         storage.set(value: provider.rawValue, for: key)
     }
 
-}
-
-extension LocalStorage: IChartIntervalStorage {
-
-    var interval: HsTimePeriod? {
+    var chartInterval: HsTimePeriod? {
         get {
             if let rawValue: String = storage.value(for: keyChartInterval), let interval = HsTimePeriod(rawValue: rawValue) {
                 return interval

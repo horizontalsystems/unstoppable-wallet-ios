@@ -4,12 +4,12 @@ import RxRelay
 
 class WalletConnectSessionManager {
     private let storage: WalletConnectSessionStorage
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let disposeBag = DisposeBag()
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSession]>(value: [])
 
-    init(storage: WalletConnectSessionStorage, accountManager: IAccountManager) {
+    init(storage: WalletConnectSessionStorage, accountManager: AccountManager) {
         self.storage = storage
         self.accountManager = accountManager
 

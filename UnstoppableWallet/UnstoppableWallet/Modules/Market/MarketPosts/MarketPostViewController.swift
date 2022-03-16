@@ -7,7 +7,7 @@ import HUD
 
 class MarketPostViewController: ThemeViewController {
     private let viewModel: MarketPostViewModel
-    private let urlManager: IUrlManager
+    private let urlManager: UrlManager
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -19,7 +19,7 @@ class MarketPostViewController: ThemeViewController {
 
     private var viewItems: [MarketPostViewModel.ViewItem]?
 
-    init(viewModel: MarketPostViewModel, urlManager: IUrlManager) {
+    init(viewModel: MarketPostViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 

@@ -14,7 +14,7 @@ class ZcashAdapter {
 
     private let coin: PlatformCoin
     private let transactionSource: TransactionSource
-    private let localStorage: ILocalStorage = App.shared.localStorage       //temporary decision. Will move to init
+    private let localStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool

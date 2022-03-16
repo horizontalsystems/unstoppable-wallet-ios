@@ -3,13 +3,13 @@ import ThemeKit
 import SnapKit
 
 class ReleaseNotesViewController: MarkdownViewController {
-    private let urlManager: IUrlManager
+    private let urlManager: UrlManager
     private let presented: Bool
     private let closeHandler: (() -> ())?
 
     let bottomHolder = UIView()
 
-    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: IUrlManager, presented: Bool, closeHandler: (() -> ())? = nil) {
+    init(viewModel: MarkdownViewModel, handleRelativeUrl: Bool, urlManager: UrlManager, presented: Bool, closeHandler: (() -> ())? = nil) {
         self.urlManager = urlManager
         self.presented = presented
         self.closeHandler = closeHandler

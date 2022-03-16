@@ -1,7 +1,7 @@
 import UIKit
 import SafariServices
 
-class UrlManager: IUrlManager {
+class UrlManager {
     private let inApp: Bool
 
     init(inApp: Bool) {

@@ -4,7 +4,7 @@ import Darwin
 
 class BackupConfirmKeyService {
     private let account: Account
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let words: [String]
     private let salt: String
     private let disposeBag = DisposeBag()
@@ -20,7 +20,7 @@ class BackupConfirmKeyService {
         }
     }
 
-    init?(account: Account, accountManager: IAccountManager, appManager: IAppManager) {
+    init?(account: Account, accountManager: AccountManager, appManager: IAppManager) {
         guard case let .mnemonic(words, salt) = account.type else {
             return nil
         }

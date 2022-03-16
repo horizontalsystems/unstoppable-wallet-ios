@@ -12,14 +12,14 @@ class TransactionInfoViewController: ThemeViewController {
 
     private let viewModel: TransactionInfoViewModel
     private let pageTitle: String
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
     private let adapter: ITransactionsAdapter
 
     private var viewItems = [[TransactionInfoModule.ViewItem]]()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(adapter: ITransactionsAdapter, viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: IUrlManager) {
+    init(adapter: ITransactionsAdapter, viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: UrlManager) {
         self.adapter = adapter
         self.viewModel = viewModel
         self.pageTitle = pageTitle

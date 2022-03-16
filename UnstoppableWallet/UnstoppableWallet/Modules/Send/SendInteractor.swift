@@ -8,11 +8,11 @@ class SendInteractor {
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
 
     private let disposeBag = DisposeBag()
 
-    init(reachabilityManager: IReachabilityManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, localStorage: ILocalStorage) {
+    init(reachabilityManager: IReachabilityManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, localStorage: LocalStorage) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.localStorage = localStorage

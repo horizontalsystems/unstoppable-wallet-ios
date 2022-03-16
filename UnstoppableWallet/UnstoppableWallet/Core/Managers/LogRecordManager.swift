@@ -1,6 +1,6 @@
 import HsToolKit
 
-class LogRecordManager: ILogRecordManager {
+class LogRecordManager {
     private let linesCountLimit: Int
     private let storage: LogRecordStorage
 

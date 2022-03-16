@@ -10,7 +10,7 @@ class AddressService {
     private let disposeBag = DisposeBag()
     private var addressParserDisposeBag = DisposeBag()
 
-    private let addressUriParser: IAddressUriParser
+    private let addressUriParser: AddressUriParser
     private let addressParserChain: AddressParserChain
     private weak var amountPublishService: IAmountPublishService?
 
@@ -23,7 +23,7 @@ class AddressService {
 
     private var text: String = ""
 
-    init(addressUriParser: IAddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
+    init(addressUriParser: AddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
         self.addressUriParser = addressUriParser
         self.addressParserChain = addressParserChain
 

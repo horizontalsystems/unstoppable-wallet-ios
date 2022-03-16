@@ -1,7 +1,9 @@
 import Foundation
 
-class CurrentDateProvider: ICurrentDateProvider {
+class CurrentDateProvider {
+
     var currentDate: Date {
-        return Date()
+        Date()
     }
+
 }

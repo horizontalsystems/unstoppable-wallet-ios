@@ -1,8 +1,8 @@
 class AppStatusInteractor {
-    private let appStatusManager: IAppStatusManager
-    private let pasteboardManager: IPasteboardManager
+    private let appStatusManager: AppStatusManager
+    private let pasteboardManager: PasteboardManager
 
-    init(appStatusManager: IAppStatusManager, pasteboardManager: IPasteboardManager) {
+    init(appStatusManager: AppStatusManager, pasteboardManager: PasteboardManager) {
         self.appStatusManager = appStatusManager
         self.pasteboardManager = pasteboardManager
     }

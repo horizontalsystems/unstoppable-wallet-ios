@@ -4,13 +4,13 @@ import ThemeKit
 import ComponentKit
 
 class InfoViewController: ThemeViewController {
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
     private let viewModel: InfoViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
 
-    init(viewModel: InfoViewModel, urlManager: IUrlManager) {
+    init(viewModel: InfoViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 

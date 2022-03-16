@@ -2,12 +2,12 @@ import StorageKit
 import PinKit
 
 class LaunchInteractor {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
 
-    init(accountManager: IAccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: ILocalStorage) {
+    init(accountManager: AccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: LocalStorage) {
         self.accountManager = accountManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit

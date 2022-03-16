@@ -26,7 +26,7 @@ class AccountManager {
 
 }
 
-extension AccountManager: IAccountManager {
+extension AccountManager {
 
     var activeAccountObservable: Observable<Account?> {
         activeAccountRelay.asObservable()

@@ -8,20 +8,20 @@ class CoinChartService {
     private var disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
-    private let intervalStorage: IChartIntervalStorage
+    private let localStorage: LocalStorage
     private let currencyKit: CurrencyKit.Kit
     private let coinUid: String
 
     private let intervalRelay = PublishRelay<HsTimePeriod>()
     var interval: HsTimePeriod {
         get {
-            intervalStorage.interval ?? .day1
+            localStorage.chartInterval ?? .day1
         }
         set {
-            guard intervalStorage.interval != newValue else {
+            guard localStorage.chartInterval != newValue else {
                 return
             }
-            intervalStorage.interval = newValue
+            localStorage.chartInterval = newValue
             intervalRelay.accept(newValue)
             fetchChartData()
         }
@@ -43,9 +43,9 @@ class CoinChartService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, chartIntervalStorage: IChartIntervalStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
+    init(marketKit: MarketKit.Kit, localStorage: LocalStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
-        self.intervalStorage = chartIntervalStorage
+        self.localStorage = localStorage
         self.currencyKit = currencyKit
         self.coinUid = coinUid
     }

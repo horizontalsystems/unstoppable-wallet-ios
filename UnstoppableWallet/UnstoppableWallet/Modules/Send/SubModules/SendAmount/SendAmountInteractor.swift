@@ -2,10 +2,10 @@ import Foundation
 import CurrencyKit
 
 class SendAmountInteractor {
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
     private let currencyKit: CurrencyKit.Kit
 
-    init(localStorage: ILocalStorage, currencyKit: CurrencyKit.Kit) {
+    init(localStorage: LocalStorage, currencyKit: CurrencyKit.Kit) {
         self.localStorage = localStorage
         self.currencyKit = currencyKit
     }

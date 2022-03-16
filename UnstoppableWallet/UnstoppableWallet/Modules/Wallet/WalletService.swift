@@ -12,10 +12,10 @@ class WalletService {
     private let adapterService: WalletAdapterService
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let localStorage: StorageKit.ILocalStorage
-    private let rateAppManager: IRateAppManager
+    private let rateAppManager: RateAppManager
     private let feeCoinProvider: FeeCoinProvider
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
@@ -69,7 +69,7 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: IRateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager

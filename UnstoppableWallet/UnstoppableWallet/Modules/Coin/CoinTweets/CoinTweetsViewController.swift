@@ -7,7 +7,7 @@ import HUD
 
 class CoinTweetsViewController: ThemeViewController {
     private let viewModel: CoinTweetsViewModel
-    private let urlManager: IUrlManager
+    private let urlManager: UrlManager
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -20,7 +20,7 @@ class CoinTweetsViewController: ThemeViewController {
 
     private var viewItems: [CoinTweetsViewModel.ViewItem]?
 
-    init(viewModel: CoinTweetsViewModel, urlManager: IUrlManager) {
+    init(viewModel: CoinTweetsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 
