@@ -42,6 +42,11 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
 }
 
 extension BitcoinCashAdapter: ISendBitcoinAdapter {
+
+    var blockchain: BtcBlockchain {
+        .bitcoinCash
+    }
+
 }
 
 extension BitcoinCashAdapter {

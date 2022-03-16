@@ -21,7 +21,6 @@ protocol ILocalStorage: AnyObject {
     var sendInputType: SendInputType? { get set }
     var mainShownOnce: Bool { get set }
     var jailbreakShownOnce: Bool { get set }
-    var transactionDataSortMode: TransactionDataSortMode? { get set }
     var lockTimeEnabled: Bool { get set }
     var appLaunchCount: Int { get set }
     var rateAppLastRequestDate: Date? { get set }
@@ -80,6 +79,7 @@ protocol ITransactionsAdapter {
 }
 
 protocol ISendBitcoinAdapter {
+    var blockchain: BtcBlockchain { get }
     var balanceData: BalanceData { get }
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
@@ -280,11 +280,6 @@ protocol IRateAppManager {
     func onBecomeActive()
     func onResignActive()
     func forceShow()
-}
-
-protocol ITransactionDataSortModeSettingManager {
-    var setting: TransactionDataSortMode { get }
-    func save(setting: TransactionDataSortMode)
 }
 
 protocol IGuidesManager {

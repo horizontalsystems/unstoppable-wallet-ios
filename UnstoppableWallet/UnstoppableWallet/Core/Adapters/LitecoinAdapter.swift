@@ -36,6 +36,11 @@ class LitecoinAdapter: BitcoinBaseAdapter {
 }
 
 extension LitecoinAdapter: ISendBitcoinAdapter {
+
+    var blockchain: BtcBlockchain {
+        .litecoin
+    }
+
 }
 
 extension LitecoinAdapter {

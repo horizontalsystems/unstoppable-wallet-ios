@@ -65,8 +65,6 @@ class App {
 
     let btcBlockchainManager: BtcBlockchainManager
 
-    let transactionDataSortModeSettingManager: ITransactionDataSortModeSettingManager
-
     let kitCleaner: IKitCleaner
 
     let keychainKitDelegate: KeychainKitDelegate
@@ -182,8 +180,6 @@ class App {
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
 
         favoritesManager = FavoritesManager(storage: storage)
-
-        transactionDataSortModeSettingManager = TransactionDataSortModeSettingManager(storage: localStorage)
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager = BlurManager(pinKit: pinKit)
