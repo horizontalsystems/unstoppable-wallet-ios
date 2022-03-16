@@ -597,6 +597,9 @@
 "transactions.types.swap" = "Обмены";
 "transactions.types.approve" = "Разрешения";
 
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+
 // Transaction Info
 
 "tx_info.title" = "Детали Транзакции";
