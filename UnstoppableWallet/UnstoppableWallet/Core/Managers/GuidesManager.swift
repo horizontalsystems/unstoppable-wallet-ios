@@ -12,7 +12,7 @@ class GuidesManager {
 
 }
 
-extension GuidesManager: IGuidesManager {
+extension GuidesManager {
 
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]> {
         let request = networkManager.session.request(url)

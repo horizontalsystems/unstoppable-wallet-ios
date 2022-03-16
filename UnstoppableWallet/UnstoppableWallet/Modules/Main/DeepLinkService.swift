@@ -1,9 +1,9 @@
 import RxSwift
 
 class DeepLinkService {
-    private let deepLinkManager: IDeepLinkManager
+    private let deepLinkManager: DeepLinkManager
 
-    init(deepLinkManager: IDeepLinkManager) {
+    init(deepLinkManager: DeepLinkManager) {
         self.deepLinkManager = deepLinkManager
     }
 

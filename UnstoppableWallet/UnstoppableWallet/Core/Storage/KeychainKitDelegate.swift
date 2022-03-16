@@ -2,10 +2,10 @@ import UIKit
 import StorageKit
 
 class KeychainKitDelegate {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
 
-    init(accountManager: IAccountManager, walletManager: WalletManager) {
+    init(accountManager: AccountManager, walletManager: WalletManager) {
         self.accountManager = accountManager
         self.walletManager = walletManager
     }

@@ -17,20 +17,20 @@ class App {
 
     let appConfigProvider: AppConfigProvider
 
-    let localStorage: ILocalStorage & IChartIntervalStorage
+    let localStorage: LocalStorage
 
     let themeManager: ThemeManager
-    let systemInfoManager: ISystemInfoManager
+    let systemInfoManager: SystemInfoManager
 
-    let pasteboardManager: IPasteboardManager
+    let pasteboardManager: PasteboardManager
     let reachabilityManager: IReachabilityManager
     let networkManager: NetworkManager
 
-    let wordsManager: IWordsManager
+    let wordsManager: WordsManager
 
-    let accountManager: IAccountManager
+    let accountManager: AccountManager
     let accountFactory: AccountFactory
-    let backupManager: IBackupManager
+    let backupManager: BackupManager
 
     let coinManager: CoinManager
 
@@ -54,24 +54,24 @@ class App {
 
     private let testModeIndicator: TestModeIndicator
 
-    let logRecordManager: ILogRecordManager & ILogStorage
+    let logRecordManager: LogRecordManager
 
-    var debugLogger: IDebugLogger?
+    var debugLogger: DebugLogger?
     let logger: Logger
 
-    let appStatusManager: IAppStatusManager
-    let appVersionManager: IAppVersionManager
+    let appStatusManager: AppStatusManager
+    let appVersionManager: AppVersionManager
 
     let btcBlockchainManager: BtcBlockchainManager
 
-    let kitCleaner: IKitCleaner
+    let kitCleaner: KitCleaner
 
     let keychainKitDelegate: KeychainKitDelegate
     let pinKitDelegate: PinKitDelegate
 
-    let rateAppManager: IRateAppManager
-    let guidesManager: IGuidesManager
-    let termsManager: ITermsManager
+    let rateAppManager: RateAppManager
+    let guidesManager: GuidesManager
+    let termsManager: TermsManager
 
     let walletConnectSessionManager: WalletConnectSessionManager
     let walletConnectV2SessionManager: WalletConnectV2SessionManager
@@ -79,7 +79,7 @@ class App {
 
     let activateCoinManager: ActivateCoinManager
 
-    let deepLinkManager: IDeepLinkManager
+    let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
 
     let nftManager: NftManager
@@ -196,7 +196,7 @@ class App {
         testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
-        let appVersionStorage: IAppVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
+        let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
         appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 

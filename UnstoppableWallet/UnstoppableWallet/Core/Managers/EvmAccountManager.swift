@@ -6,7 +6,7 @@ import Erc20Kit
 
 class EvmAccountManager {
     private let blockchain: EvmBlockchain
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
@@ -18,7 +18,7 @@ class EvmAccountManager {
 
     private var syncing = false
 
-    init(blockchain: EvmBlockchain, accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
+    init(blockchain: EvmBlockchain, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
         self.blockchain = blockchain
         self.accountManager = accountManager
         self.walletManager = walletManager

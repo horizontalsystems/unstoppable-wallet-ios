@@ -7,7 +7,7 @@ import SectionsTableView
 
 class NftAssetViewController: ThemeViewController {
     private let viewModel: NftAssetViewModel
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
     private var imageRatio: CGFloat
     private let disposeBag = DisposeBag()
 
@@ -20,7 +20,7 @@ class NftAssetViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: NftAssetViewModel, urlManager: IUrlManager, imageRatio: CGFloat) {
+    init(viewModel: NftAssetViewModel, urlManager: UrlManager, imageRatio: CGFloat) {
         self.viewModel = viewModel
         self.urlManager = urlManager
         self.imageRatio = imageRatio

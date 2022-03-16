@@ -1,7 +1,7 @@
 class SendConfirmationInteractor {
-    private let pasteboardManager: IPasteboardManager
+    private let pasteboardManager: PasteboardManager
 
-    init(pasteboardManager: IPasteboardManager) {
+    init(pasteboardManager: PasteboardManager) {
         self.pasteboardManager = pasteboardManager
     }
 

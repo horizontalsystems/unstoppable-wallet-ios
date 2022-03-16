@@ -8,7 +8,7 @@ class RateAppManager {
 
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
 
     private var isCountdownAllowed = false
     private var isCountdownPassed = false
@@ -17,7 +17,7 @@ class RateAppManager {
 
     private var timer: Timer?
 
-    init(walletManager: WalletManager, adapterManager: AdapterManager, localStorage: ILocalStorage) {
+    init(walletManager: WalletManager, adapterManager: AdapterManager, localStorage: LocalStorage) {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.localStorage = localStorage
@@ -58,7 +58,7 @@ class RateAppManager {
 
 }
 
-extension RateAppManager: IRateAppManager {
+extension RateAppManager {
 
     func onBalancePageAppear() {
         isOnBalancePage = true

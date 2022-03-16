@@ -10,7 +10,7 @@ class ManageAccountService {
         }
     }
 
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let disposeBag = DisposeBag()
@@ -26,7 +26,7 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: IAccountManager, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager) {
+    init?(accountId: String, accountManager: AccountManager, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }

@@ -8,14 +8,14 @@ class WalletConnectV2SessionManager {
 
     let service: WalletConnectV2Service
     private let storage: WalletConnectV2SessionStorage
-    private let accountManager: IAccountManager
-    private let currentDateProvider: ICurrentDateProvider
+    private let accountManager: AccountManager
+    private let currentDateProvider: CurrentDateProvider
 
     private let sessionsRelay = BehaviorRelay<[Session]>(value: [])
     private let pendingRequestsRelay = BehaviorRelay<[Request]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: IAccountManager, currentDateProvider: ICurrentDateProvider) {
+    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, currentDateProvider: CurrentDateProvider) {
         self.service = service
         self.storage = storage
         self.accountManager = accountManager

@@ -5,7 +5,7 @@ import EthereumKit
 
 class WatchAddressService {
     private let accountFactory: AccountFactory
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let coinManager: CoinManager
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
@@ -19,7 +19,7 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: IAccountManager, coinManager: CoinManager, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
+    init(accountFactory: AccountFactory, accountManager: AccountManager, coinManager: CoinManager, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.coinManager = coinManager

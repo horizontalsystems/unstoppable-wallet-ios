@@ -1,15 +1,15 @@
 import RxSwift
 
 class BackupManager {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
 
-    init(accountManager: IAccountManager) {
+    init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 
 }
 
-extension BackupManager: IBackupManager {
+extension BackupManager {
 
     var allBackedUp: Bool {
         accountManager.accounts.allSatisfy { $0.backedUp }

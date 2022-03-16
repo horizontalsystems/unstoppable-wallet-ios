@@ -1,9 +1,9 @@
 import RxSwift
 
 class BitcoinHodlingInteractor {
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
 
-    init(localStorage: ILocalStorage) {
+    init(localStorage: LocalStorage) {
         self.localStorage = localStorage
     }
 

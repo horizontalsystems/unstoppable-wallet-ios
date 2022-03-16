@@ -24,7 +24,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(coinManager: CoinManager, walletManager: WalletManager, accountManager: IAccountManager, enableCoinService: EnableCoinService) {
+    init?(coinManager: CoinManager, walletManager: WalletManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }

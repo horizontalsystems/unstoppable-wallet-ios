@@ -2,7 +2,7 @@ import MarketKit
 
 class AddressParserFactory {
 
-    static func parser(coinType: CoinType) -> IAddressUriParser {
+    static func parser(coinType: CoinType) -> AddressUriParser {
         switch coinType {
         case .bitcoin: return AddressUriParser(validScheme: "bitcoin", removeScheme: true)
         case .litecoin: return AddressUriParser(validScheme: "litecoin", removeScheme: true)

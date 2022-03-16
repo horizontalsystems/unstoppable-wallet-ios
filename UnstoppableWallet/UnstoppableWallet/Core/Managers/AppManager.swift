@@ -3,30 +3,30 @@ import StorageKit
 import PinKit
 
 class AppManager {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: BlurManager
-    private let kitCleaner: IKitCleaner
-    private let debugBackgroundLogger: IDebugLogger?
-    private let appVersionManager: IAppVersionManager
-    private let rateAppManager: IRateAppManager
-    private let logRecordManager: ILogRecordManager
-    private let deepLinkManager: IDeepLinkManager
+    private let kitCleaner: KitCleaner
+    private let debugBackgroundLogger: DebugLogger?
+    private let appVersionManager: AppVersionManager
+    private let rateAppManager: RateAppManager
+    private let logRecordManager: LogRecordManager
+    private let deepLinkManager: DeepLinkManager
     private let restoreCustomTokenWorker: RestoreCustomTokenWorker
     private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
+    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: BlurManager,
-         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
-         logRecordManager: ILogRecordManager,
-         deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+         kitCleaner: KitCleaner, debugLogger: DebugLogger?,
+         appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
+         logRecordManager: LogRecordManager,
+         deepLinkManager: DeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager

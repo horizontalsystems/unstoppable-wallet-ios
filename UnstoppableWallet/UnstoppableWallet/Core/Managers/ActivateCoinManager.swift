@@ -3,9 +3,9 @@ import MarketKit
 class ActivateCoinManager {
     private let marketKit: Kit
     private let walletManager: WalletManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
 
-    init(marketKit: Kit, walletManager: WalletManager, accountManager: IAccountManager) {
+    init(marketKit: Kit, walletManager: WalletManager, accountManager: AccountManager) {
         self.marketKit = marketKit
         self.walletManager = walletManager
         self.accountManager = accountManager

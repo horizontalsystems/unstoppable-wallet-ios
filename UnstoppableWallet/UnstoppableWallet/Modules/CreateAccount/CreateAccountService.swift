@@ -4,8 +4,8 @@ import MarketKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
-    private let wordsManager: IWordsManager
-    private let accountManager: IAccountManager
+    private let wordsManager: WordsManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let passphraseValidator: PassphraseValidator
     private let marketKit: Kit
@@ -16,7 +16,7 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: IWordsManager, accountManager: IAccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
+    init(accountFactory: AccountFactory, wordsManager: WordsManager, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
         self.wordsManager = wordsManager
         self.accountManager = accountManager

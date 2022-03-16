@@ -9,7 +9,7 @@ class AppVersionStorage {
 
 }
 
-extension AppVersionStorage: IAppVersionStorage {
+extension AppVersionStorage {
 
     var appVersions: [AppVersion] {
         storage.appVersionRecords.compactMap {

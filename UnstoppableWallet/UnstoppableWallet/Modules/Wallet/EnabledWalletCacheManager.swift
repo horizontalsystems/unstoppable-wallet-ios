@@ -4,7 +4,7 @@ class EnabledWalletCacheManager {
     private let storage: EnabledWalletCacheStorage
     private let disposeBag = DisposeBag()
 
-    init(storage: EnabledWalletCacheStorage, accountManager: IAccountManager) {
+    init(storage: EnabledWalletCacheStorage, accountManager: AccountManager) {
         self.storage = storage
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }

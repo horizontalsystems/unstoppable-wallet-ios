@@ -12,7 +12,7 @@ class CoinOverviewViewController: ThemeViewController {
     private let viewModel: CoinOverviewViewModel
     private let chartViewModel: CoinChartViewModel
     private let markdownParser: CoinPageMarkdownParser
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
     private let disposeBag = DisposeBag()
 
     private var viewItem: CoinOverviewViewModel.ViewItem?
@@ -38,7 +38,7 @@ class CoinOverviewViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: IUrlManager) {
+    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
         self.markdownParser = markdownParser

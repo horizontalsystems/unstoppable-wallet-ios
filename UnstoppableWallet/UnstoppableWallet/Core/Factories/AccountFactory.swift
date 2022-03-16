@@ -2,9 +2,9 @@ import Foundation
 import EthereumKit
 
 class AccountFactory {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
 
-    init(accountManager: IAccountManager) {
+    init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 

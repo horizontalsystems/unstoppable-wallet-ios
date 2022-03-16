@@ -7,9 +7,9 @@ class SendBitcoinInteractor {
 
     private let adapter: ISendBitcoinAdapter
     private let btcBlockchainManager: BtcBlockchainManager
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
 
-    init(adapter: ISendBitcoinAdapter, btcBlockchainManager: BtcBlockchainManager, localStorage: ILocalStorage) {
+    init(adapter: ISendBitcoinAdapter, btcBlockchainManager: BtcBlockchainManager, localStorage: LocalStorage) {
         self.adapter = adapter
         self.btcBlockchainManager = btcBlockchainManager
         self.localStorage = localStorage

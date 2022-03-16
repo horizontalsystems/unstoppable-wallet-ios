@@ -5,13 +5,13 @@ import PinKit
 class MainBadgeService {
     private let disposeBag = DisposeBag()
 
-    private let backupManager: IBackupManager
+    private let backupManager: BackupManager
     private let pinKit: IPinKit
-    private let termsManager: ITermsManager
+    private let termsManager: TermsManager
 
     private let settingsBadgeRelay = BehaviorRelay<Bool>(value: false)
 
-    init(backupManager: IBackupManager, pinKit: IPinKit, termsManager: ITermsManager) {
+    init(backupManager: BackupManager, pinKit: IPinKit, termsManager: TermsManager) {
         self.backupManager = backupManager
         self.pinKit = pinKit
         self.termsManager = termsManager

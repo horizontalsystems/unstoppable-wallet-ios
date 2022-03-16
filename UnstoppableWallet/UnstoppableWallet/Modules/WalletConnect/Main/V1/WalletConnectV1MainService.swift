@@ -12,7 +12,7 @@ class WalletConnectV1MainService {
     private let manager: WalletConnectManager
     private let sessionManager: WalletConnectSessionManager
     private let reachabilityManager: IReachabilityManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
 
     private var interactor: WalletConnectInteractor?
@@ -48,7 +48,7 @@ class WalletConnectV1MainService {
         return connectionState(state: interactor.state)
     }
 
-    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager) {
+    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) {
         self.manager = manager
         self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager

@@ -9,7 +9,7 @@ import ComponentKit
 
 class AboutViewController: ThemeViewController {
     private let viewModel: AboutViewModel
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
 
     private let disposeBag = DisposeBag()
 
@@ -18,7 +18,7 @@ class AboutViewController: ThemeViewController {
     private let headerCell = TermsHeaderCell()
     private let termsCell = A3Cell()
 
-    init(viewModel: AboutViewModel, urlManager: IUrlManager) {
+    init(viewModel: AboutViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 

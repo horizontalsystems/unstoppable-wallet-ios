@@ -11,7 +11,7 @@ protocol INftProvider {
 }
 
 class NftManager {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let storage: NftStorage
     private let provider: INftProvider
@@ -20,7 +20,7 @@ class NftManager {
 
     private let assetCollectionRelay = PublishRelay<NftAssetCollection>()
 
-    init(accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: INftProvider) {
+    init(accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: INftProvider) {
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
         self.storage = storage

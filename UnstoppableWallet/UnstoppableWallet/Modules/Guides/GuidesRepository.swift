@@ -6,12 +6,12 @@ class GuidesRepository {
     private let disposeBag = DisposeBag()
 
     private let appConfigProvider: AppConfigProvider
-    private let guidesManager: IGuidesManager
+    private let guidesManager: GuidesManager
     private let reachabilityManager: IReachabilityManager
 
     private let categoriesRelay = BehaviorRelay<DataState<[GuideCategory]>>(value: .loading)
 
-    init(appConfigProvider: AppConfigProvider, guidesManager: IGuidesManager, reachabilityManager: IReachabilityManager) {
+    init(appConfigProvider: AppConfigProvider, guidesManager: GuidesManager, reachabilityManager: IReachabilityManager) {
         self.appConfigProvider = appConfigProvider
         self.guidesManager = guidesManager
         self.reachabilityManager = reachabilityManager
