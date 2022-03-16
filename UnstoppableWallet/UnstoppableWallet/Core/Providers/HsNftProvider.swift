@@ -140,46 +140,49 @@ class HsNftProvider {
         }
     }
 
-    private func collectionsSingle(address: String, offset: Int) -> Single<[CollectionResponse]> {
+    private func collectionsSingle(address: String, page: Int) -> Single<[CollectionResponse]> {
         let parameters: Parameters = [
             "asset_owner": address,
             "limit": collectionLimit,
-            "offset": offset
+            "page": page
         ]
 
         let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, headers: headers)
         return networkManager.single(request: request)
     }
 
-    private func recursiveCollectionsSingle(address: String, offset: Int = 0, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
-        collectionsSingle(address: address, offset: offset).flatMap { [unowned self] collections in
+    private func recursiveCollectionsSingle(address: String, page: Int = 1, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
+        collectionsSingle(address: address, page: page).flatMap { [unowned self] collections in
             let allCollections = allCollections + collections
 
             if collections.count == collectionLimit {
-                return recursiveCollectionsSingle(address: address, offset: offset + collectionLimit, allCollections: allCollections)
+                return recursiveCollectionsSingle(address: address, page: page + 1, allCollections: allCollections)
             } else {
                 return Single.just(allCollections)
             }
         }
     }
 
-    private func assetsSingle(address: String, offset: Int) -> Single<[AssetResponse]> {
-        let parameters: Parameters = [
+    private func assetsSingle(address: String, cursor: String?) -> Single<AssetsResponse> {
+        var parameters: Parameters = [
             "owner": address,
-            "limit": assetLimit,
-            "offset": offset
+            "limit": assetLimit
         ]
+
+        if let cursor = cursor {
+            parameters["cursor"] = cursor
+        }
 
         let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, headers: headers)
         return networkManager.single(request: request)
     }
 
-    private func recursiveAssetsSingle(address: String, offset: Int = 0, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
-        assetsSingle(address: address, offset: offset).flatMap { [unowned self] assets in
-            let allAssets = allAssets + assets
+    private func recursiveAssetsSingle(address: String, cursor: String? = nil, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
+        assetsSingle(address: address, cursor: cursor).flatMap { [unowned self] response in
+            let allAssets = allAssets + response.assets
 
-            if assets.count == assetLimit {
-                return recursiveAssetsSingle(address: address, offset: offset + assetLimit, allAssets: allAssets)
+            if let cursor = response.cursor {
+                return recursiveAssetsSingle(address: address, cursor: cursor, allAssets: allAssets)
             } else {
                 return Single.just(allAssets)
             }
@@ -212,7 +215,11 @@ extension HsNftProvider: INftProvider {
     }
 
     func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", headers: headers)
+        let parameters: Parameters = [
+            "include_orders": true,
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", parameters: parameters, headers: headers)
         return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
             assetOrders(responses: response.orders)
         }
@@ -260,6 +267,16 @@ extension HsNftProvider {
         init(map: Map) throws {
             address = try map.value("address")
             type = try map.value("type")
+        }
+    }
+
+    private struct AssetsResponse: ImmutableMappable {
+        let cursor: String?
+        let assets: [AssetResponse]
+
+        init(map: Map) throws {
+            cursor = try? map.value("cursor.next")
+            assets = try map.value("assets")
         }
     }
 
