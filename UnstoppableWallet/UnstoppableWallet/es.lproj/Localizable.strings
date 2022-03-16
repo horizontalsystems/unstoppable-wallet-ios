@@ -215,6 +215,8 @@
 "send.confirmation.account" = "Account";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "Enviar";
 "send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.resend_button" = "Reenviar";
@@ -705,20 +707,25 @@ poner en peligro la seguridad de mis fondos.";
 
 "settings_security.title" = "Centro de seguridad";
 "settings_security.passcode" = "Código de acceso";
-"settings_security.privacy" = "Privacidad";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Identificación táctil";
 "settings_security.face_id" = "Identificación de caras";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
-"settings_privacy.title" = "Privacidad";
-"settings_privacy.header_description" = "Esta aplicación no comparte ninguno de tus datos. Sin embargo, ya que se comunica con blockchains, algunos datos públicos como la dirección IP pueden ser filtrados. Utilice el botón Info de la parte superior derecha para obtener información detallada sobre cada sección.";
-"settings_privacy.sorting_title" = "Entradas/Salidas";
-"settings_privacy.sorting.section_header" = "Transacciones de blockchain";
-"settings_privacy.sorting.section_footer" = "Haga que sus transacciones BTC, LTC, BCH sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
-"settings_privacy.connection.section_header" = "Sincronización de Blockchain";
-"settings_privacy.connection.section_footer" = "Algunos blockchains aún no brindan medios para poder usarse en aplicaciones móviles de modo peer-to-peer. Las comunicaciones con las blockchains BTC, BCH, LTC, DASH son completamente peer-to-peer.";
-"settings_privacy.sync.section_header" = "Restaurar blockchain";
-"settings_privacy.sync.section_footer" = "Seleccione la fuente de información para restaurar el monedero con las transacciones.";
+
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
+
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "settings_privacy_info.title" = "Ajustes de privacidad";
 "settings_privacy_info.description" = "A continuación encontrará una explicación detallada de los ajustes de privacidad que están disponibles en la aplicación. Es seguro considerarlos como ajustes para aquellos que requieren una amplia privacidad.";
@@ -728,22 +735,6 @@ poner en peligro la seguridad de mis fondos.";
 "settings_privacy_info.content_blockchain_connection" = "Esta configuración controla cómo esta aplicación interactúa con blockchains (enviar/recibir transacciones). En caso de Bitcoin, Bitcoin Cash, Litecoin y Dash es de igual a igual. La aplicación conecta muchos nodos y se comunica con ellos. Potencialmente estos nodos pueden grabar direcciónes de IP e información requerida pero como estas son elegidas de manera aleatoria, cada vez que la app se conecta a un nodo diferente.\n\nEn caso de Ethereum, no hay alternativa para que las billeteras móviles interactúen con blockchain excepto a través de proveedores terceros (i.e. Infura.io) o nodos personales de Ethereum. Los servicios de terceros pueden potencialmente registrar direcciones IP y las peticiones realizadas. Esa información puede revelar la ubicación, el saldo, las transacciones, etc. Además, la cartera tiene que confiar en que la información devuelta es correcta. Existe una alternativa conocida como Incubed que en esencia es una red de nodos especiales de Ethereum. Estos nodos también pueden registrar direcciones IP y peticiones realizadas, pero son elegidos al azar cada vez. Aunque sea ligeramente más lento que Infura, la forma en que trabaja Incubed garantiza que la información devuelta sea correcta (no falsa).\n\nCuando se trata de otras blockchains como EOSIO y Binance Chain, en este punto sólo proporcionan medios centralizados de conexión, sin alternativas viables. Potencialmente, pueden grabar direcciones IP y peticiones realizadas.";
 "settings_privacy_info.header_blockchain_restore" = "Restaurar Blockchain";
 "settings_privacy_info.content_blockchain_restore" = "Esta configuración sólo es relevante cuando se restablece un monedero existente. Es un proceso de obtener el historial de transacciones de una moneda determinada para que la aplicación de monedero pueda mostrar transacciones pasadas y calcular el saldo del usuario. Esto tiene que ocurrir sólo una vez, cuando el usuario restaura la cartera previamente creada. En este punto hay dos formas potenciales para un monedero móvil como Unstoppable para hacer esto:\n\n1. Desde un Servidor API : Hay un servidor predefinido de terceros que aloja toda la cadena de bloques y tiene todos los datos procesados y listos para proporcionarlo de una manera rápida. Este método es rápido, pero potencialmente puede llevar un seguimiento de las direcciones IP y los datos solicitados. Esta opción se recomienda debido a su velocidad de obtención de datos (5-10 minutos). Los riesgos son mínimos. Si el usuario restablecido desde su propio servidor no se arriesga en absoluto a la privacidad.\n\n2. de Blockchain : En este caso, la aplicación intenta restaurar directamente desde una red p2p de los nodos blockchain. La aplicación hace ping a muchos de esos nodos y solicita datos de ellos. Potencialmente estos nodos pueden hacer un seguimiento de la dirección de IPy requerimientos hechos por el usuario sin embargo durante la restauración de la aplicación se puede cambiar entre nodos. Hay cerca de 10.000 nodos de Bitcoin en la red en cualquier momento dado. Esta opción es lenta y puede tomar fácilmente 2-3 horas, la aplicación necesita estar abierta mientras la restauración está ocurriendo...";
-
-"settings_privacy.alert_sync.title" = "Restaurar Fuente";
-"settings_privacy.alert_sync.description" = "Después de este cambio, el monedero tendrá que resincronizarse con el blockchain %@.";
-"settings_privacy.alert_sync.recommended" = "Recomendado";
-"settings_privacy.alert_sync.more_private" = "Más Privado";
-
-"settings_privacy.alert_connection.title" = "Sincronización de Blockchain";
-
-"settings_privacy.alert_sort.title" = "Transacciones de blockchain";
-"settings_privacy.alert_sort.subtitle" = "Entradas/Salidas";
-"settings_privacy.sorting_default" = "Predefinido";
-"settings_privacy.sorting_default.description" = "Sin ninguna configuración";
-"settings_privacy.sorting_shuffle" = "Aleatoriamente";
-"settings_privacy.sorting_shuffle.description" = "Indexación aleatoria";
-"settings_privacy.sorting_bip69" = "Bip69 determinista";
-"settings_privacy.sorting_bip69.description" = "Indexación Lexicográfica";
 
 // Manage Keys
 
@@ -991,7 +982,6 @@ poner en peligro la seguridad de mis fondos.";
 "manage_account.name" = "Nombre";
 "manage_account.show_recovery_phrase" = "Mostrar Frase";
 "manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
-"manage_account.network_settings" = "Configuración de Red";
 "manage_account.unlink" = "Desenlazar";
 
 // Birthday Input
@@ -1001,14 +991,10 @@ poner en peligro la seguridad de mis fondos.";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 "restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
 
-// Network Settings
-
-"network_settings.title" = "Configuración de Red";
-
 // EVM Network
 
+"evm_network.sync_node" = "Sync Node";
 "evm_network.switches_automatically" = "cambiar automáticamente";
-"evm_network.description" = "El proveedor HTTP MainNet utiliza un número de fuentes (enumeradas a continuación) y cambia entre ellas automáticamente.";
 
 // Fee Settings
 
