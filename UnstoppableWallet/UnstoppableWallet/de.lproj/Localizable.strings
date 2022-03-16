@@ -595,6 +595,9 @@
 "transactions.types.swap" = "Wechsel";
 "transactions.types.approve" = "Genehmigungen";
 
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+
 // Transaction Info
 
 "tx_info.title" = "Transaktionsdaten";
