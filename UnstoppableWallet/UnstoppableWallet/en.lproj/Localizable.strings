@@ -597,6 +597,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Approvals";
 
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+
 // Transaction Info
 
 "tx_info.title" = "Transaction Info";

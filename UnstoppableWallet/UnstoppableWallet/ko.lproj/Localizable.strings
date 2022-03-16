@@ -590,6 +590,9 @@
 "transactions.types.swap" = "스왑";
 "transactions.types.approve" = "승인";
 
+"transactions.unknown_transaction.title" = "트랜잭션을 구문 분석할 수 없습니다.";
+"transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다.";
+
 // Transaction Info
 
 "tx_info.title" = "거래 정보";

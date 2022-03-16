@@ -590,6 +590,9 @@
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Aprobaciones";
 
+"transactions.unknown_transaction.title" = "Transacción Desconocida";
+"transactions.unknown_transaction.description" = "La transacción no se puede analizar";
+
 // Transaction Info
 
 "tx_info.title" = "Información de la transacción";
