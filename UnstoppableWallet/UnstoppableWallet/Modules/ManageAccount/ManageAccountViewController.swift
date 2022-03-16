@@ -224,7 +224,7 @@ extension ManageAccountViewController: SectionsDataSource {
 
         return Section(
                 id: "key-action",
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: rows.isEmpty ? 0 : .margin32),
                 rows: rows
         )
     }
