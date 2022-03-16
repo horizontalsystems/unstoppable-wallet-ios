@@ -302,8 +302,7 @@ class TransactionInfoViewController: ThemeViewController {
 
         if lockState.locked {
             return warningRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) { [weak self] in
-                let controller = InfoModule.viewController(dataSource: TimeLockInfoDataSource())
-                self?.present(ThemeNavigationController(rootViewController: controller), animated: true)
+                self?.present(InfoModule.timeLockInfo, animated: true)
             }
         } else {
             return noteRow(rowInfo: rowInfo, id: id, image: image, imageTintColor: .themeGray, text: "tx_info.unlocked_at".localized(formattedDate))

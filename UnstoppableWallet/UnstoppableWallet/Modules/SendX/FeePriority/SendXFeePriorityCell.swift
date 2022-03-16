@@ -50,8 +50,7 @@ class SendXFeePriorityCell: BaseSelectableThemeCell {
     }
 
     private func onTapInfo() {
-        let controller = InfoModule.viewController(dataSource: FeeInfoDataSource())
-        sourceViewController?.present(ThemeNavigationController(rootViewController: controller), animated: true)
+        sourceViewController?.present(InfoModule.feeInfo, animated: true)
     }
 
     private func onTapPriority() {

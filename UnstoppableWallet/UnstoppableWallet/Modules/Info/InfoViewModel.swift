@@ -1,15 +1,12 @@
 import UIKit
 
-protocol InfoDataSource {
-    var title: String { get }
-    var viewItems: [InfoViewModel.ViewItem] { get }
-}
-
 class InfoViewModel {
-    let dataSource: InfoDataSource
+    let title: String
+    let viewItems: [InfoViewModel.ViewItem]
 
-    init(dataSource: InfoDataSource) {
-        self.dataSource = dataSource
+    init(title: String, viewItems: [InfoViewModel.ViewItem]) {
+        self.title = title
+        self.viewItems = viewItems
     }
 
 }
