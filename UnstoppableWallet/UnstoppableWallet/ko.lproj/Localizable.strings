@@ -215,6 +215,8 @@
 "send.confirmation.account" = "계정";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "전송";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend_button" = "재전송";
@@ -704,20 +706,25 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "settings_security.title" = "보안 센터";
 "settings_security.passcode" = "비밀번호";
-"settings_security.privacy" = "개인정보";
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
-"settings_privacy.title" = "개인정보";
-"settings_privacy.header_description" = "이 앱은 귀하의 데이터를 공유하지 않습니다. 하지만 앱이 블록체인과 통신할 때 IP 주소와 같은 일부 공개 데이터가 유출 될 수도 있습니다. 각 섹션에 대한 자세한 정보를 확인하려면 오른쪽 상단의 정보 버튼을 누르십시오.";
-"settings_privacy.sorting_title" = "입력/출력";
-"settings_privacy.sorting.section_header" = "블록체인 매매거래";
-"settings_privacy.sorting.section_footer" = "매매거래 구성 방식을 변경하셔서 BTC, LTC, BCH 매매거래를 더 추적하기 어렵게 만들어 주세요.";
-"settings_privacy.connection.section_header" = "블록체인 동기화";
-"settings_privacy.connection.section_footer" = "몇몇의 블록체인은 아직 모바일 앱이 P2P 방식으로 작동하는 방법을 제공하지 않습니다. BTC, BCH, LTC, DASH 블록체인과의 통신은 전부 P2P 방식입니다.";
-"settings_privacy.sync.section_header" = "블록체인 복원";
-"settings_privacy.sync.section_footer" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
+
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
+
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "settings_privacy_info.title" = "개인 정보 설정";
 "settings_privacy_info.description" = "다음은 앱에서 사용할 수 있는 개인정보 설정에 관한 자세한 설명입니다. 강화된 개인정보 보호를 원하는 사용자를 위한 설정이라고 생각하시면 됩니다.";
@@ -727,22 +734,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings_privacy_info.content_blockchain_connection" = "his setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum and Binance Smart Chain, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal Ethereum nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
-
-"settings_privacy.alert_sync.title" = "매개 변수 복원";
-"settings_privacy.alert_sync.description" = "이 변경 후에 지갑은 %@ 블록체인과 다시 동기화 되어야합니다.";
-"settings_privacy.alert_sync.recommended" = "권장";
-"settings_privacy.alert_sync.more_private" = "더 개인";
-
-"settings_privacy.alert_connection.title" = "블록체인 동기화";
-
-"settings_privacy.alert_sort.title" = "블록체인 매매거래";
-"settings_privacy.alert_sort.subtitle" = "입력/출력";
-"settings_privacy.sorting_default" = "기본";
-"settings_privacy.sorting_default.description" = "설정없이";
-"settings_privacy.sorting_shuffle" = "셔플";
-"settings_privacy.sorting_shuffle.description" = "랜덤 인덱싱";
-"settings_privacy.sorting_bip69" = "결정론적 Bip69";
-"settings_privacy.sorting_bip69.description" = "사전식 인덱싱";
 
 // Manage Keys
 
@@ -990,7 +981,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "manage_account.name" = "이름";
 "manage_account.show_recovery_phrase" = "문구 표시";
 "manage_account.backup_recovery_phrase" = "백업 문구";
-"manage_account.network_settings" = "네트워크 설정";
 "manage_account.unlink" = "링크 해제";
 
 // Birthday Input
@@ -1000,14 +990,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "생일 높이 %@";
 
-// Network Settings
-
-"network_settings.title" = "네트워크 설정";
-
 // EVM Network
 
+"evm_network.sync_node" = "Sync Node";
 "evm_network.switches_automatically" = "자동으로 전환";
-"evm_network.description" = "메인넷 HTTP 공급자는 여러 소스(아래 나열)를 사용하고 자동으로 전환합니다.";
 
 // Fee Settings
 
