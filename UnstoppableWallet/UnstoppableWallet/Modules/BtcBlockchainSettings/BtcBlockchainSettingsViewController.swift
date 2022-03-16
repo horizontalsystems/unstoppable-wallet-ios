@@ -49,7 +49,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         view.addSubview(saveButtonHolder)
@@ -105,17 +104,17 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         }
     }
 
+    private func openRestoreModeInfo() {
+        present(InfoModule.restoreSourceInfo, animated: true)
+    }
+
+    private func openTransactionModeInfo() {
+        present(InfoModule.transactionInputsOutputsInfo, animated: true)
+    }
+
 }
 
 extension BtcBlockchainSettingsViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
         .cellType(
@@ -176,9 +175,12 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
             ),
             Section(
                     id: "restore-mode",
-                    headerState: header(text: "btc_blockchain_settings.restore_source".localized),
                     footerState: footer(text: "btc_blockchain_settings.restore_source.description".localized),
-                    rows: restoreModeViewItems.enumerated().map { index, viewItem in
+                    rows: [
+                        tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.restore_source".localized) { [weak self] in
+                            self?.openRestoreModeInfo()
+                        }
+                    ] + restoreModeViewItems.enumerated().map { index, viewItem in
                         row(id: "restore", viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == restoreModeViewItems.count - 1) { [weak self] in
                             self?.viewModel.onSelectRestoreMode(index: index)
                         }
@@ -186,9 +188,12 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
             ),
             Section(
                     id: "transaction-mode",
-                    headerState: header(text: "btc_blockchain_settings.transaction_inputs_outputs".localized),
                     footerState: footer(text: "btc_blockchain_settings.transaction_inputs_outputs.description".localized(viewModel.title)),
-                    rows: transactionModeViewItems.enumerated().map { index, viewItem in
+                    rows: [
+                        tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.transaction_inputs_outputs".localized) { [weak self] in
+                            self?.openTransactionModeInfo()
+                        }
+                    ] + transactionModeViewItems.enumerated().map { index, viewItem in
                         row(id: "transaction", viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == transactionModeViewItems.count - 1) { [weak self] in
                             self?.viewModel.onSelectTransactionMode(index: index)
                         }

@@ -44,7 +44,6 @@ class EvmNetworkViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
@@ -70,17 +69,13 @@ class EvmNetworkViewController: ThemeViewController {
         }
     }
 
+    private func openSyncModeInfo() {
+        present(InfoModule.syncModeInfo, animated: true)
+    }
+
 }
 
 extension EvmNetworkViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func row(viewItem: EvmNetworkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
@@ -115,14 +110,14 @@ extension EvmNetworkViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "top-margin",
-                    headerState: .margin(height: .margin12)
-            ),
-            Section(
                     id: "sync-node",
-                    headerState: header(text: "evm_network.sync_node".localized),
+                    headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
-                    rows: viewItems.enumerated().map { index, viewItem in
+                    rows: [
+                        tableView.subtitleWithInfoButtonRow(text: "evm_network.sync_node".localized) { [weak self] in
+                            self?.openSyncModeInfo()
+                        }
+                    ] + viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                     }
             )

@@ -24,7 +24,7 @@ class InfoViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.dataSource.title
+        title = viewModel.title
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
 
@@ -129,7 +129,7 @@ extension InfoViewController: SectionsDataSource {
             Section(
                     id: "section",
                     footerState: .margin(height: .margin32),
-                    rows: rows(rowItems: viewModel.dataSource.viewItems)
+                    rows: rows(rowItems: viewModel.viewItems)
             )
         ]
     }
