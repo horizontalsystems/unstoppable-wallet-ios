@@ -217,6 +217,8 @@
 "send.confirmation.account" = "账户";
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "发送​​";
 "send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend_button" = "重新发送";
@@ -706,20 +708,25 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "settings_security.title" = "安全中心";
 "settings_security.passcode" = "密码";
-"settings_security.privacy" = "隐私";
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
 "settings_security.face_id" = "面部识别";
+"settings_security.blockchain_settings" = "Blockchain Settings";
 "security_settings.delete_alert_button" = "从手机中删除";
-"settings_privacy.title" = "隐私";
-"settings_privacy.header_description" = "虽然此APP不会将您的个人数据提供给任何第三方，但您的某些个人数据（例如IP地址）在与区块链通信时可能会泄漏。单击右上角的“信息”按钮以获取更多详细信息。";
-"settings_privacy.sorting_title" = "输入/输出";
-"settings_privacy.sorting.section_header" = "区块链交易";
-"settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
-"settings_privacy.connection.section_header" = "同步区块链";
-"settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
-"settings_privacy.sync.section_header" = "区块链恢复";
-"settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
+
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
+
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "settings_privacy_info.title" = "隐私设置";
 "settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
@@ -729,22 +736,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum and Binance Smart Chain, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal Ethereum nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.";
 "settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
 "settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
-
-"settings_privacy.alert_sync.title" = "恢复参数";
-"settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
-"settings_privacy.alert_sync.recommended" = "推荐";
-"settings_privacy.alert_sync.more_private" = "更私密";
-
-"settings_privacy.alert_connection.title" = "同步区块链";
-
-"settings_privacy.alert_sort.title" = "区块链交易";
-"settings_privacy.alert_sort.subtitle" = "输入/输出";
-"settings_privacy.sorting_default" = "默认";
-"settings_privacy.sorting_default.description" = "无任何设置";
-"settings_privacy.sorting_shuffle" = "随机排序";
-"settings_privacy.sorting_shuffle.description" = "随机索引";
-"settings_privacy.sorting_bip69" = "BIP69";
-"settings_privacy.sorting_bip69.description" = "词典索引";
 
 // Manage Keys
 
@@ -992,7 +983,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "manage_account.name" = "名称";
 "manage_account.show_recovery_phrase" = "显示恢复码";
 "manage_account.backup_recovery_phrase" = "备份码";
-"manage_account.network_settings" = "网络设置";
 "manage_account.unlink" = "取消链接";
 
 // Birthday Input
@@ -1002,14 +992,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
 
-// Network Settings
-
-"network_settings.title" = "网络设置";
-
 // EVM Network
 
+"evm_network.sync_node" = "Sync Node";
 "evm_network.switches_automatically" = "自动切换";
-"evm_network.description" = "MainNet HTTP提供商使用了若干来源 (在下方列出)，并自动在它们之间切换。";
 
 // Fee Settings
 
