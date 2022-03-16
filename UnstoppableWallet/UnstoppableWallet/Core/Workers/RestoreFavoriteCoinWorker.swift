@@ -7,9 +7,9 @@ class RestoreFavoriteCoinWorker {
     private let coinManager: CoinManager
     private let favoritesManager: FavoritesManager
     private let localStorage: StorageKit.ILocalStorage
-    private let storage: IFavoriteCoinRecordStorage
+    private let storage: FavoriteCoinRecordStorage
 
-    init(coinManager: CoinManager, favoritesManager: FavoritesManager, localStorage: StorageKit.ILocalStorage, storage: IFavoriteCoinRecordStorage) {
+    init(coinManager: CoinManager, favoritesManager: FavoritesManager, localStorage: StorageKit.ILocalStorage, storage: FavoriteCoinRecordStorage) {
         self.coinManager = coinManager
         self.favoritesManager = favoritesManager
         self.localStorage = localStorage

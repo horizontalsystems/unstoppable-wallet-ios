@@ -35,13 +35,6 @@ protocol ILogRecordManager {
     func onBecomeActive()
 }
 
-protocol ILogRecordStorage {
-    func logs(context: String) -> [LogRecord]
-    func save(logRecord: LogRecord)
-    func logsCount() -> Int
-    func removeFirstLogs(count: Int)
-}
-
 protocol IBaseAdapter {
     var isMainNet: Bool { get }
 }
@@ -161,43 +154,13 @@ protocol ISystemInfoManager {
     var osVersion: String { get }
 }
 
-protocol IEnabledWalletStorage {
-    var enabledWallets: [EnabledWallet] { get }
-    func enabledWallets(accountId: String) -> [EnabledWallet]
-    func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet])
-    func clearEnabledWallets()
-}
-
-protocol IActiveAccountStorage: AnyObject {
-    var activeAccountId: String? { get set }
-}
-
 protocol IAppVersionStorage {
     var appVersions: [AppVersion] { get }
     func save(appVersions: [AppVersion])
 }
 
-protocol IAppVersionRecordStorage {
-    var appVersionRecords: [AppVersionRecord] { get }
-    func save(appVersionRecords: [AppVersionRecord])
-}
-
-protocol IRestoreSettingsStorage {
-    func restoreSettings(accountId: String, coinId: String) -> [RestoreSettingRecord]
-    func restoreSettings(accountId: String) -> [RestoreSettingRecord]
-    func save(restoreSettingRecords: [RestoreSettingRecord])
-    func deleteAllRestoreSettings(accountId: String)
-}
-
 protocol IKitCleaner {
     func clear()
-}
-
-protocol IAccountRecordStorage {
-    var allAccountRecords: [AccountRecord] { get }
-    func save(accountRecord: AccountRecord)
-    func deleteAccountRecord(by id: String)
-    func deleteAllAccountRecords()
 }
 
 protocol IPingManager {
@@ -295,16 +258,6 @@ protocol IGuidesManager {
     func guideCategoriesSingle(url: URL) -> Single<[GuideCategory]>
 }
 
-protocol IFavoriteCoinRecordStorage {
-    var favoriteCoinRecords: [FavoriteCoinRecord] { get }
-    func save(favoriteCoinRecord: FavoriteCoinRecord)
-    func save(favoriteCoinRecords: [FavoriteCoinRecord])
-    func deleteFavoriteCoinRecord(coinUid: String)
-    func favoriteCoinRecordExists(coinUid: String) -> Bool
-
-    var favoriteCoinRecords_v_0_22: [FavoriteCoinRecord_v_0_22] { get }
-}
-
 protocol ITermsManager {
     var terms: [Term] { get }
     var termsAccepted: Bool { get }
@@ -314,13 +267,6 @@ protocol ITermsManager {
 
 protocol IPresentDelegate: AnyObject {
     func show(viewController: UIViewController)
-}
-
-protocol IWalletConnectSessionStorage {
-    func sessions(accountId: String, chainIds: [Int]) -> [WalletConnectSession]
-    func save(session: WalletConnectSession)
-    func deleteSession(peerId: String)
-    func deleteSessions(accountId: String)
 }
 
 protocol IWalletConnectV2SessionStorage {
@@ -333,20 +279,6 @@ protocol IWalletConnectV2SessionStorage {
 protocol IDeepLinkManager {
     func handle(url: URL) -> Bool
     var newSchemeObservable: Observable<DeepLinkManager.DeepLink?> { get }
-}
-
-protocol IEnabledWalletCacheStorage {
-    func enabledWalletCaches(accountId: String) -> [EnabledWalletCache]
-    func save(enabledWalletCaches: [EnabledWalletCache])
-    func deleteEnabledWalletCaches(accountId: String)
-}
-
-protocol ICustomTokenStorage {
-    func customTokens(platformType: PlatformType, filter: String) -> [CustomToken]
-    func customTokens(filter: String) -> [CustomToken]
-    func customTokens(coinTypeIds: [String]) -> [CustomToken]
-    func customToken(coinType: MarketKit.CoinType) -> CustomToken?
-    func save(customTokens: [CustomToken])
 }
 
 protocol IChartIntervalStorage: AnyObject {
