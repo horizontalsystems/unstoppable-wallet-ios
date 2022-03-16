@@ -598,6 +598,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.types.swap" = "Swap";
 "transactions.types.approve" = "Onaylar";
 
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+
 // Transaction Info
 
 "tx_info.title" = "İşlem Bilgileri";
