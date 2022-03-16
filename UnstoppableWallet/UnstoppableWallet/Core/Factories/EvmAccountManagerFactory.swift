@@ -6,9 +6,9 @@ class EvmAccountManagerFactory {
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let provider: HsTokenBalanceProvider
-    private let storage: IEvmAccountSyncStateStorage
+    private let storage: EvmAccountSyncStateStorage
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, provider: HsTokenBalanceProvider, storage: IEvmAccountSyncStateStorage) {
+    init(accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.marketKit = marketKit

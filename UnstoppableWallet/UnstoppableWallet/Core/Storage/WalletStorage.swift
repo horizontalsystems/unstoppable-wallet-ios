@@ -3,9 +3,9 @@ import MarketKit
 
 class WalletStorage {
     private let coinManager: CoinManager
-    private let storage: IEnabledWalletStorage
+    private let storage: EnabledWalletStorage
 
-    init(coinManager: CoinManager, storage: IEnabledWalletStorage) {
+    init(coinManager: CoinManager, storage: EnabledWalletStorage) {
         self.coinManager = coinManager
         self.storage = storage
     }
@@ -45,7 +45,7 @@ extension WalletStorage {
     }
 
     func clearWallets() {
-        storage.clearEnabledWallets()
+        storage.clear()
     }
 
 }

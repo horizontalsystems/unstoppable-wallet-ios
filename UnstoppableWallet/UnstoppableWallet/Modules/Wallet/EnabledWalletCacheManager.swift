@@ -1,10 +1,10 @@
 import RxSwift
 
 class EnabledWalletCacheManager {
-    private let storage: IEnabledWalletCacheStorage
+    private let storage: EnabledWalletCacheStorage
     private let disposeBag = DisposeBag()
 
-    init(storage: IEnabledWalletCacheStorage, accountManager: IAccountManager) {
+    init(storage: EnabledWalletCacheStorage, accountManager: IAccountManager) {
         self.storage = storage
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }

@@ -2,9 +2,9 @@ import MarketKit
 import ZcashLightClientKit
 
 class RestoreSettingsManager {
-    private let storage: IRestoreSettingsStorage
+    private let storage: RestoreSettingsStorage
 
-    init(storage: IRestoreSettingsStorage) {
+    init(storage: RestoreSettingsStorage) {
         self.storage = storage
     }
 

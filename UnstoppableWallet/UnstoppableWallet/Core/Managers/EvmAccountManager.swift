@@ -11,14 +11,14 @@ class EvmAccountManager {
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
     private let provider: HsTokenBalanceProvider
-    private let storage: IEvmAccountSyncStateStorage
+    private let storage: EvmAccountSyncStateStorage
 
     private let disposeBag = DisposeBag()
     private var internalDisposeBag = DisposeBag()
 
     private var syncing = false
 
-    init(blockchain: EvmBlockchain, accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: IEvmAccountSyncStateStorage) {
+    init(blockchain: EvmBlockchain, accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
         self.blockchain = blockchain
         self.accountManager = accountManager
         self.walletManager = walletManager

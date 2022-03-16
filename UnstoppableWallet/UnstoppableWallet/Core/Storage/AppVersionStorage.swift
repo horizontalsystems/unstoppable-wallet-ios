@@ -1,9 +1,9 @@
 import RxSwift
 
 class AppVersionStorage {
-    private let storage: IAppVersionRecordStorage
+    private let storage: AppVersionRecordStorage
 
-    init(storage: IAppVersionRecordStorage) {
+    init(storage: AppVersionRecordStorage) {
         self.storage = storage
     }
 

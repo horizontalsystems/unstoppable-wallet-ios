@@ -4,9 +4,9 @@ import MarketKit
 
 class CoinManager {
     private let marketKit: Kit
-    private let storage: ICustomTokenStorage
+    private let storage: CustomTokenStorage
 
-    init(marketKit: Kit, storage: ICustomTokenStorage) {
+    init(marketKit: Kit, storage: CustomTokenStorage) {
         self.marketKit = marketKit
         self.storage = storage
     }
