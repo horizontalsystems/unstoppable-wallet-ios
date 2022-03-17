@@ -29,9 +29,6 @@ class WalletConnectSessionManager {
                 })
                 .disposed(by: disposeBag)
 
-//        subscribe(disposeBag, accountSettingManager.ethereumNetworkObservable) { [weak self] _, _ in self?.syncSessions() }
-//        subscribe(disposeBag, accountSettingManager.binanceSmartChainNetworkObservable) { [weak self] _, _ in self?.syncSessions() }
-
         syncSessions()
     }
 
@@ -57,10 +54,7 @@ extension WalletConnectSessionManager {
             return []
         }
 
-//        let ethereumChainId = accountSettingManager.ethereumNetwork(account: activeAccount).networkType.chainId
-//        let binanceSmartChainChainId = accountSettingManager.binanceSmartChainNetwork(account: activeAccount).networkType.chainId
-
-        return storage.sessions(accountId: activeAccount.id, chainIds: [1, 56])
+        return storage.sessions(accountId: activeAccount.id)
     }
 
     var sessionsObservable: Observable<[WalletConnectSession]> {
