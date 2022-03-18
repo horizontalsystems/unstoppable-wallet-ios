@@ -1059,3 +1059,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_asset.options.set_as_watch_face" = "Als Watch-Face festlegen";
 "nft_asset.save_to_photos.success" = "NFT-Bild wird in Ihrer Fotobibliothek gespeichert";
 "nft_asset.save_to_photos.failed" = "NFT-Bild konnte nicht gespeichert werden";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
