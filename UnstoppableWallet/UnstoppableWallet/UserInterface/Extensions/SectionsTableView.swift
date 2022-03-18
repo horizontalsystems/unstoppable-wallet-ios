@@ -9,14 +9,14 @@ extension SectionsTableView {
                 elements: [.text, .image20],
                 tableView: self,
                 id: "subtitle-\(text)",
-                height: .heightCell48,
+                height: .heightSingleLineCell,
                 autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: true)
 
                     cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.set(style: .b1)
-                        component.text = text
+                        component.set(style: .c1)
+                        component.text = text.uppercased()
                     })
 
                     cell.bind(index: 1, block: { (component: ImageComponent) in
