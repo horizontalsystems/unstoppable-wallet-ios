@@ -7,6 +7,10 @@ import HsToolKit
 import MarketKit
 
 class ZcashAdapter {
+    private let saplingDownloadRange: Double = 10
+    private let blockDownloadRange: Double = 50
+    private let blockScanningRange: Double = 40
+
     private let disposeBag = DisposeBag()
 
     private static let coinRate = Decimal(ZcashSDK.zatoshiPerZEC)
@@ -27,6 +31,8 @@ class ZcashAdapter {
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
     private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+
+    private let birthday: BlockHeight
 
     private var lastBlockHeight: Int? = 0
 
@@ -58,7 +64,6 @@ class ZcashAdapter {
         coin = wallet.platformCoin
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
-        let birthday: Int
         switch wallet.account.origin {
         case .created: birthday = Self.newBirthdayHeight(network: network)
         case .restored:
@@ -146,8 +151,14 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * 100), lastBlockDate: nil)
+            balanceState = .syncing(progress: Int(progress * saplingDownloadRange), lastBlockDate: nil)
         }
+    }
+
+    private func progress(p: BlockProgress) -> Double {
+        let overall = p.targetHeight - birthday
+
+        return Double(overall > 0 ? Float((p.progressHeight - birthday)) / Float(overall) : 0)
     }
 
     @objc private func statusUpdated(_ notification: Notification) {
@@ -161,7 +172,7 @@ class ZcashAdapter {
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
         case .downloading(let p):
-            newState = .syncing(progress: Int(p.progress * 50), lastBlockDate: blockDate)
+            newState = .syncing(progress: Int(saplingDownloadRange + progress(p: p) * blockDownloadRange), lastBlockDate: blockDate)
         case .enhancing(let p):
             newState = .syncing(progress: p.progress, lastBlockDate: blockDate)
         case .unprepared:
@@ -169,7 +180,7 @@ class ZcashAdapter {
         case .validating:
             newState = .syncing(progress: 0, lastBlockDate: blockDate)
         case .scanning(let scanProgress):
-            newState = .syncing(progress: Int(50 + scanProgress.progress * 50), lastBlockDate: blockDate)
+            newState = .syncing(progress: Int((saplingDownloadRange + blockDownloadRange) + progress(p: scanProgress) * blockScanningRange), lastBlockDate: blockDate)
         case .fetching:
             newState = .syncing(progress: 0, lastBlockDate: nil)
         case .error:
