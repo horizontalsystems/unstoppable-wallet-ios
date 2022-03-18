@@ -1061,3 +1061,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.options.set_as_watch_face" = "设为表盘";
 "nft_asset.save_to_photos.success" = "NFT 图像已保存到您的照片库";
 "nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
