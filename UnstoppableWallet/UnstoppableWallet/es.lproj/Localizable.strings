@@ -1060,3 +1060,9 @@ poner en peligro la seguridad de mis fondos.";
 "nft_asset.options.set_as_watch_face" = "Establecer como Watch Face";
 "nft_asset.save_to_photos.success" = "La imagen NFT se guardó en tu galería de fotos";
 "nft_asset.save_to_photos.failed" = "Error al guardar la imagen NFT";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
