@@ -17,7 +17,7 @@ extension DashAddressParserItem: IAddressParserItem {
             try adapter.validate(address: address)
             return Single.just(Address(raw: address, domain: nil))
         } catch {
-            return Single.error(AddressService.AddressError.invalidAddress)
+            return Single.error(error)
         }
     }
 

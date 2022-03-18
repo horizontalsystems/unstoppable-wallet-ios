@@ -17,6 +17,12 @@ func subscribe<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNex
             .disposed(by: disposeBag)
 }
 
+func subscribeSerial<T>(_ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
+    observable
+            .subscribe(onNext: onNext)
+            .disposed(by: disposeBag)
+}
+
 func subscribe<T>(_ scheduler: ImmediateSchedulerType, _ disposeBag: DisposeBag, _ observable: Observable<T>, _ onNext: ((T) -> Void)? = nil) {
     observable
             .observeOn(scheduler)

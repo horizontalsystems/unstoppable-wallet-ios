@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxCocoa
 
@@ -26,14 +27,25 @@ class RecipientAddressViewModel {
         self.service = service
         self.handlerDelegate = handlerDelegate
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] state in
+        subscribeSerial(disposeBag, service.stateObservable) { [weak self] state in
             self?.sync(state: state)
+        }
+
+        subscribeSerial(disposeBag, service.customErrorObservable) { [weak self] error in
+            self?.sync()
         }
 
         sync(state: service.state)
     }
 
-    private func sync(state: AddressService.State) {
+    private func sync(state: AddressService.State? = nil, customError: Error? = nil) {
+        var state = state ?? service.state
+
+        // force provide error if customError is exist
+        if let customError = customError ?? service.customError {
+           state = .fetchError(customError)
+        }
+
         switch state {
         case .empty:
             cautionRelay.accept(nil)
@@ -53,8 +65,8 @@ class RecipientAddressViewModel {
             isLoadingRelay.accept(false)
 
             handlerDelegate?.set(address: nil)
-        case .fetchError:
-            cautionRelay.accept(Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
+        case .fetchError(let error):
+            cautionRelay.accept(Caution(text: error.convertedError.smartDescription, type: .error))
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
 

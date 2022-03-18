@@ -6,8 +6,12 @@ import StorageKit
 class SendEvmModule {
 
     static func viewController(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter) -> UIViewController {
+        let evmAddressParserItem = EvmAddressParser()
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: platformCoin.code, coinType: platformCoin.coinType)
+
         let addressParserChain = AddressParserChain()
-        addressParserChain.append(handler: EvmAddressParser())
+                .append(handler: evmAddressParserItem)
+                .append(handler: udnAddressParserItem)
 
         let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
@@ -30,10 +34,6 @@ class SendEvmModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
-
-        let chainCoinCode = UDNAddressParserItem.chainCoinCode(coinType: platformCoin.platform.coinType)
-        let chain = UDNAddressParserItem.chain(coinType: platformCoin.platform.coinType)
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: platformCoin.code, platformCoinCode: chainCoinCode, chain: chain))
 
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 

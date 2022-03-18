@@ -85,8 +85,7 @@ class SendBitcoinAdapterService {
         subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in
             self?.sync(updatedFrom: .address)
         }
-        subscribe(disposeBag, timeLockService.pluginDataObservable) { [weak self] in
-            self?.bitcoinAddressParserItem.pluginData = $0
+        subscribe(disposeBag, timeLockService.pluginDataObservable) { [weak self] _ in
             self?.sync(updatedFrom: .pluginData)
         }
         subscribe(disposeBag, feeRateService.feeRateObservable) { [weak self] in
@@ -163,13 +162,30 @@ extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceSer
 extension SendBitcoinAdapterService: ISendService {
 
     func sendSingle(logger: Logger) -> Single<Void> {
-        guard let address = addressService.state.address?.raw, // todo: check errors
-              case let .completed(feeRate) = feeRateService.feeRate else {
-            return Single.error(AppError.addressInvalid)
+        let address: Address
+        switch addressService.state {
+        case .success(let sendAddress): address = sendAddress
+        case .fetchError(let error): return Single.error(error)
+        default: return Single.error(AppError.addressInvalid)
+        }
+
+        guard case let .completed(feeRate) = feeRateService.feeRate else {
+            return Single.error(SendTransactionError.noFee)
+        }
+
+        guard !amountInputService.amount.isZero else {
+            return Single.error(SendTransactionError.wrongAmount)
         }
 
         let sortMode = btcBlockchainManager.transactionSortMode(blockchain: adapter.blockchain)
-        return adapter.sendSingle(amount: amountInputService.amount, address: address, feeRate: feeRate, pluginData: timeLockService.pluginData, sortMode: sortMode, logger: logger)
+        return adapter.sendSingle(
+                amount: amountInputService.amount,
+                address: address.raw,
+                feeRate: feeRate,
+                pluginData: timeLockService.pluginData,
+                sortMode: sortMode,
+                logger: logger
+        )
     }
 
 }

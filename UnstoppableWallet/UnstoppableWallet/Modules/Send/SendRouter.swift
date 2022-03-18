@@ -59,7 +59,9 @@ extension SendRouter {
         handler.delegate = presenter
 
         router.viewController = viewController
-        subRouters.forEach { $0.viewController = viewController }
+        subRouters.forEach {
+            $0.viewController = viewController
+        }
 
         return ThemeNavigationController(rootViewController: viewController)
     }
@@ -73,10 +75,12 @@ extension SendRouter {
         let (amountView, amountModule) = SendAmountRouter.module(platformCoin: platformCoin)
         views.append(amountView)
 
-        let addressParserChain = AddressParserChain()
         let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
-        addressParserChain.append(handler: bitcoinParserItem)
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "BTC", platformCoinCode: nil, chain: nil))
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: platformCoin.code, coinType: platformCoin.coinType)
+
+        let addressParserChain = AddressParserChain()
+                .append(handler: bitcoinParserItem)
+                .append(handler: udnAddressParserItem)
 
         let (addressView, addressModule, addressRouter) = SendAddressRouter.module(platformCoin: platformCoin, addressParserChain: addressParserChain)
         views.append(addressView)

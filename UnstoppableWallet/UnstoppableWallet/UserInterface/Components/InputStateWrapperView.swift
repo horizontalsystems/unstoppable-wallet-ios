@@ -48,10 +48,10 @@ class InputStateWrapperView: UIView, ISizeAwareView {
         didSet {
             if isSpinnerVisible {
                 spinner.alpha = 1
-                spinner.stopAnimating()
+                spinner.startAnimating()
             } else {
                 spinner.alpha = 0
-                spinner.startAnimating()
+                spinner.stopAnimating()
             }
         }
     }
