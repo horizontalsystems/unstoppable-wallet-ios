@@ -1062,3 +1062,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
 "nft_asset.save_to_photos.success" = "NFT resmi fotoğraf kitaplığınıza kaydedildi";
 "nft_asset.save_to_photos.failed" = "NFT resmi kaydedilemedi";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
