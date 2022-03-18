@@ -196,7 +196,6 @@ extension SendBitcoinHandler: ISendHodlerDelegate {
         }
 
         pluginData = hodlerModule.pluginData
-        bitcoinAddressParser.pluginData = pluginData
 
         syncValidation()
         syncMaximumAmount()

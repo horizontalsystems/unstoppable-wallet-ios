@@ -4,6 +4,8 @@ import RxCocoa
 import MarketKit
 
 class SendFeeService {
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-fee-service")
+
     private let disposeBag = DisposeBag()
     private var feeRateDisposeBag = DisposeBag()
 
@@ -28,9 +30,9 @@ class SendFeeService {
         self.feeCoin = feeCoin
 
         fiatService.set(platformCoin: feeCoin)
-        subscribe(disposeBag, fiatService.amountAlreadyUpdatedObservable) { [weak self] in self?.sync() }
-        subscribe(disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
-        subscribe(disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.sync(secondaryInfo: $0) }
+        subscribe(scheduler, disposeBag, fiatService.amountAlreadyUpdatedObservable) { [weak self] in self?.sync() }
+        subscribe(scheduler, disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
+        subscribe(scheduler, disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.sync(secondaryInfo: $0) }
     }
 
     private func setFeeValueService() {

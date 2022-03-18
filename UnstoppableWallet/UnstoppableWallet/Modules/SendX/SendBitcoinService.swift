@@ -6,6 +6,7 @@ import HsToolKit
 
 class SendBitcoinService {
     private let disposeBag = DisposeBag()
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-bitcoin-service")
 
     let sendPlatformCoin: PlatformCoin
     private let amountService: IAmountInputService
@@ -13,6 +14,7 @@ class SendBitcoinService {
     private let addressService: AddressService
     private let adapterService: SendBitcoinAdapterService
     private let feeService: SendXFeeRateService
+    private let timeLockErrorService: SendXTimeLockErrorService
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady {
@@ -21,12 +23,13 @@ class SendBitcoinService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: AmountCautionService, addressService: AddressService, adapterService: SendBitcoinAdapterService, feeService: SendXFeeRateService, reachabilityManager: IReachabilityManager, platformCoin: PlatformCoin) {
+    init(amountService: IAmountInputService, amountCautionService: AmountCautionService, addressService: AddressService, adapterService: SendBitcoinAdapterService, feeService: SendXFeeRateService, timeLockErrorService: SendXTimeLockErrorService, reachabilityManager: IReachabilityManager, platformCoin: PlatformCoin) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
         self.adapterService = adapterService
         self.feeService = feeService
+        self.timeLockErrorService = timeLockErrorService
         sendPlatformCoin = platformCoin
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
@@ -35,16 +38,17 @@ class SendBitcoinService {
             }
         }
 
-        subscribe(disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
-        subscribe(disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
-        subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
-        subscribe(disposeBag, feeService.feeRateObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, feeService.feeRateObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, timeLockErrorService.errorObservable) { [weak self] _ in self?.syncState() }
     }
 
     private func syncState() {
-        let amount = amountService.amount
         guard amountCautionService.amountCaution == nil,
-           !amount.isZero else {
+           !amountService.amount.isZero else {
+
             state = .notReady
             return
         }
@@ -54,12 +58,21 @@ class SendBitcoinService {
             return
         }
 
-        if addressService.state.address != nil,
-           feeService.feeRate.data != nil {
-            state = .ready
-        } else {
+        guard addressService.state.address != nil else {
+            state = .notReady
+            return
+        }
+
+        if timeLockErrorService.error != nil {
+            state = .notReady
+            return
+        }
+
+        if feeService.feeRate.data == nil {
             state = .notReady
         }
+
+        state = .ready
     }
 
 }

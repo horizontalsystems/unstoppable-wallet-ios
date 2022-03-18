@@ -19,10 +19,11 @@ class SendXModule {
         let amountCautionService = AmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let addressParserChain = AddressParserChain()
         let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
-        addressParserChain.append(handler: bitcoinParserItem)
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "BTC", platformCoinCode: nil, chain: nil))
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: platformCoin.code, coinType: platformCoin.coinType)
+        let addressParserChain = AddressParserChain()
+                .append(handler: bitcoinParserItem)
+                .append(handler: udnAddressParserItem)
 
         let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
@@ -36,6 +37,7 @@ class SendXModule {
 
         // TimeLock
         let timeLockService = SendXTimeLockService()
+        let timeLockErrorService = SendXTimeLockErrorService(timeLockService: timeLockService, addressService: addressService, adapter: adapter)
 
         let bitcoinAdapterService = SendBitcoinAdapterService(
                 feeRateService: feeRateService,
@@ -52,6 +54,7 @@ class SendXModule {
                 addressService: addressService,
                 adapterService: bitcoinAdapterService,
                 feeService: feeRateService,
+                timeLockErrorService: timeLockErrorService,
                 reachabilityManager: App.shared.reachabilityManager,
                 platformCoin: platformCoin
         )
@@ -62,6 +65,8 @@ class SendXModule {
         amountInputService.availableBalanceService = bitcoinAdapterService
         amountCautionService.availableBalanceService = bitcoinAdapterService
         amountCautionService.sendAmountBoundsService = bitcoinAdapterService
+
+        addressService.customErrorService = timeLockErrorService
 
         bitcoinFeeRateProvider.availableBalanceService = bitcoinAdapterService
         feeService.feeValueService = bitcoinAdapterService
@@ -83,8 +88,7 @@ class SendXModule {
         )
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
-        let timeLockViewModel: SendXTimeLockViewModel? =
-                App.shared.localStorage.lockTimeEnabled ? SendXTimeLockViewModel(service: timeLockService) : nil
+        let timeLockViewModel: SendXTimeLockViewModel? = App.shared.localStorage.lockTimeEnabled ? SendXTimeLockViewModel(service: timeLockService) : nil
 
         // Fee
         let feeViewModel = SendXFeeViewModel(service: feeService)

@@ -4,11 +4,12 @@ import EthereumKit
 class EvmAddressParser: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
-        guard let address = try? EthereumKit.Address(hex: address) else {
-            return Single.error(AddressService.AddressError.invalidAddress)
+        do {
+            let address = try EthereumKit.Address(hex: address)
+            return Single.just(Address(raw: address.hex))
+        } catch {
+            return Single.error(error)
         }
-
-        return Single.just(Address(raw: address.hex))
     }
 
     func isValid(address: String) -> Single<Bool> {

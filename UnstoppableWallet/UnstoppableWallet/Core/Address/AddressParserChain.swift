@@ -5,24 +5,13 @@ import RxCocoa
 import EthereumKit
 
 protocol IAddressParserItem: AnyObject {
-    var itemUpdatedObservable: Observable<()> { get }
     func handle(address: String) -> Single<Address>
     func isValid(address: String) -> Single<Bool>
-}
-
-extension IAddressParserItem {
-
-    var itemUpdatedObservable: Observable<()> {
-        .just(())
-    }
-
 }
 
 class AddressParserChain {
     private let disposeBag = DisposeBag()
     private var handlers = [IAddressParserItem]()
-
-    private var itemUpdatedRelay = PublishRelay<()>()
 
     private static func process(address: String, validHandlers: [IAddressParserItem]) -> Single<Address?> {
         guard !validHandlers.isEmpty else {
@@ -43,30 +32,20 @@ class AddressParserChain {
                 if let address = handlerStates.first(where: { $0.address != nil })?.address {
                     return Single.just(address)
                 }
-                if let _ = handlerStates.first(where: { $0.error != nil })?.error {
-                    return Single.error(ParserError.fetchError)
+                if let error = handlerStates.first(where: { $0.error != nil })?.error {
+                    return Single.error(ParserError.fetchError(error))
                 }
 
                 return Single.just(nil)
             }
     }
 
-    private func register(handler: IAddressParserItem) {
-        handlers.append(handler)
-
-        subscribe(disposeBag, handler.itemUpdatedObservable) { [weak self] in self?.itemUpdatedRelay.accept(()) }
-    }
-
 }
 
 extension AddressParserChain {
 
-    var itemUpdatedObservable: Observable<()> {
-        itemUpdatedRelay.asObservable()
-    }
-
     @discardableResult func append(handler: IAddressParserItem) -> Self {
-        register(handler: handler)
+        handlers.append(handler)
         return self
     }
 
@@ -106,7 +85,7 @@ extension AddressParserChain {
 
     enum ParserError: Error {
         case validationError
-        case fetchError
+        case fetchError(Error)
     }
 
 }

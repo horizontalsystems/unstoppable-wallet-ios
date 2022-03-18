@@ -120,3 +120,8 @@ protocol IPresentDelegate: AnyObject {
 }
 
 protocol Warning {}
+
+protocol IErrorService: AnyObject {
+    var error: Error? { get }
+    var errorObservable: Observable<Error?> { get }
+}

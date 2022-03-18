@@ -7,12 +7,21 @@ protocol IAmountPublishService: AnyObject {
 }
 
 class AddressService {
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.address-service")
+
     private let disposeBag = DisposeBag()
     private var addressParserDisposeBag = DisposeBag()
+    private var customErrorDisposeBag = DisposeBag()
 
     private let addressUriParser: AddressUriParser
     private let addressParserChain: AddressParserChain
-    private weak var amountPublishService: IAmountPublishService?
+
+    weak var amountPublishService: IAmountPublishService?
+    weak var customErrorService: IErrorService? {
+        didSet {
+            register(customErrorService: customErrorService)
+        }
+    }
 
     private var stateRelay = PublishRelay<State>()
     private(set) var state: State {
@@ -21,7 +30,12 @@ class AddressService {
         }
     }
 
-    private var text: String = ""
+    private var customErrorRelay = PublishRelay<Error?>()
+    private(set) var customError: Error? {
+        didSet {
+            customErrorRelay.accept(customError)
+        }
+    }
 
     init(addressUriParser: AddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
         self.addressUriParser = addressUriParser
@@ -32,12 +46,20 @@ class AddressService {
         } else {
             state = .empty
         }
-
-        subscribe(disposeBag, addressParserChain.itemUpdatedObservable) { [weak self] in self?.sync() }
     }
 
-    private func sync() {
-        set(text: text)
+    private func register(customErrorService: IErrorService?) {
+        customErrorDisposeBag = DisposeBag()
+
+        if let customErrorService = customErrorService {
+            subscribe(disposeBag, customErrorService.errorObservable) { [weak self] in
+                self?.sync(customError: $0)
+            }
+        }
+    }
+
+    private func sync(customError: Error?) {
+        self.customError = customError
     }
 
     private func sync(address: Address?) {
@@ -51,13 +73,13 @@ class AddressService {
 
     private func sync(error: Error) {
         guard let error = error as? AddressParserChain.ParserError else {
-            state = .fetchError
+            state = .fetchError(error)
             return
         }
 
         switch error {
         case .validationError: state = .validationError
-        case .fetchError: state = .fetchError
+        case .fetchError(let error): state = .fetchError(error)
         }
     }
 
@@ -66,12 +88,14 @@ class AddressService {
 extension AddressService {
 
     var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+        stateRelay.asObservable().observeOn(scheduler)
+    }
+
+    var customErrorObservable: Observable<Error?> {
+        customErrorRelay.asObservable().observeOn(scheduler)
     }
 
     func set(text: String) {
-        self.text = text
-
         guard !text.isEmpty else {
             state = .empty
             return
@@ -111,7 +135,7 @@ extension AddressService {
         case empty
         case success(Address)
         case validationError
-        case fetchError
+        case fetchError(Error)
 
         var address: Address? {
             if case let .success(address) = self {
