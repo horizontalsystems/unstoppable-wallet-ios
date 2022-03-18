@@ -1065,5 +1065,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Nft Collection
 
 "nft_collection.tab.overview" = "Overview";
-"nft_collection.tab.items" = "Items";
+"nft_collection.tab.assets" = "Items";
 "nft_collection.tab.activity" = "Activity";
+
+"nft_collection.overview.description" = "Description";
+"nft_collection.overview.contracts" = "Contracts";
+"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links.website" = "Website";
