@@ -7,7 +7,7 @@ class AppStatusViewControllerNew: ThemeViewController {
     private let viewModel: AppStatusViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let headerCell = TermsHeaderCell()
+    private let headerCell = LogoHeaderCell()
 
     init(viewModel: AppStatusViewModel) {
         self.viewModel = viewModel
@@ -35,18 +35,16 @@ class AppStatusViewControllerNew: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: TermsHeaderCell.self)
+        tableView.registerCell(forClass: LogoHeaderCell.self)
         tableView.registerCell(forClass: D1Cell.self)
         tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D11Cell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
-        headerCell.bind(
-                image: .appIcon,
-                title: "Unstoppable",
-                subtitle: "version".localized(viewModel.version)
-        )
+        headerCell.image = .appIcon
+        headerCell.title = "Unstoppable"
+        headerCell.subtitle = "version".localized(viewModel.version)
 
         tableView.buildSections()
     }
@@ -77,7 +75,7 @@ extension AppStatusViewControllerNew: SectionsDataSource {
                     id: "main",
                     footerState: .margin(height: .margin4x),
                     rows: [
-                        StaticRow(cell: headerCell, id: "header", height: TermsHeaderCell.height)
+                        StaticRow(cell: headerCell, id: "header", height: LogoHeaderCell.height)
                     ]
             ),
             Section(

@@ -465,7 +465,7 @@
 		11B3555CA9B2F01358E055BE /* UnlinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35419B0C846238DDC50F3 /* UnlinkViewModel.swift */; };
 		11B3555EC4875304A73251B2 /* CoinRecord_v19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B2C6C103AFF4CCC6E91 /* CoinRecord_v19.swift */; };
 		11B3556209286FFC47FD7D21 /* EvmSyncSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3502637A858E6DDF9471B /* EvmSyncSource.swift */; };
-		11B355630081212FE517D874 /* TermsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */; };
+		11B355630081212FE517D874 /* LogoHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* LogoHeaderCell.swift */; };
 		11B3556B74AECC07910C6A57 /* TermsSeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FF998AD1FCC033A0ABE /* TermsSeparatorCell.swift */; };
 		11B3556C12B91FD86A72A193 /* LitecoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */; };
 		11B3556CA9A9CE0E2009FCA6 /* FaqViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C09B59EF5DEB6D7EB07 /* FaqViewModel.swift */; };
@@ -1093,7 +1093,7 @@
 		11B35C5A4B773BFC506A1F7F /* RestoreFavoriteCoinWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350C0B15137B0BCDB49D9 /* RestoreFavoriteCoinWorker.swift */; };
 		11B35C5D484BE7C9F656EAC0 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353BA87FDCB1BCBA92E61 /* InputStackView.swift */; };
 		11B35C5E7A90AA7B302EB0CD /* MarketListMarketFieldDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B060BDF272932D3522 /* MarketListMarketFieldDecorator.swift */; };
-		11B35C690AD2AFEE83BFA0C5 /* TermsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */; };
+		11B35C690AD2AFEE83BFA0C5 /* LogoHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* LogoHeaderCell.swift */; };
 		11B35C6E04CF9C6C29FA19C3 /* RateListHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B131175D6CB960076EA /* RateListHeaderFooterView.swift */; };
 		11B35C6F8101B3C6F26BB10A /* SwitchAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D884F1698E70F2536E /* SwitchAccountService.swift */; };
 		11B35C7571913301EA997727 /* BackupKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9CB53CC4A626C2F5B6 /* BackupKeyService.swift */; };
@@ -1330,7 +1330,7 @@
 		11B35EF9D9E8C1A814005CFD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35747FAD8381F2AD48276 /* MainViewModel.swift */; };
 		11B35EFAFFA1E30F7765FEB2 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B6D6FCA3745DE0750BD /* MainService.swift */; };
 		11B35F02D82BE302190CD22B /* CoinSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D9B7E135CF98F0F8259 /* CoinSettingsView.swift */; };
-		11B35F03EFFD7149C7CFD595 /* TermsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */; };
+		11B35F03EFFD7149C7CFD595 /* LogoHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35812D1F62D1839D5DCDC /* LogoHeaderCell.swift */; };
 		11B35F09210E8E5EAFABEEA4 /* TermsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC4FD741BE033D1956 /* TermsRouter.swift */; };
 		11B35F10612056106F42567E /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B4C04282FDBB1B6563 /* Guide.swift */; };
 		11B35F10D4AC048C6216548D /* CoinTvlRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35503ADE6CEAC8578C17F /* CoinTvlRankViewController.swift */; };
@@ -2504,7 +2504,7 @@
 		ABC9A30459A3D9922CCF2E26 /* WalletConnectV1ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2DC16F947607B1794E /* WalletConnectV1ListView.swift */; };
 		ABC9A3114AEA853305A33586 /* WalletConnectListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC09A586D88BAB3B9C67 /* WalletConnectListModule.swift */; };
 		ABC9A32176DC914BBB4E9BFF /* WalletConnectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A52AC277ED7563F2707F /* WalletConnectListViewModel.swift */; };
-		ABC9A33DBEE501491000A225 /* SendXTimeLockErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADF114FCFABEA148AF04 /* SendXTimeLockErrorService.swift */; };
+		ABC9A33DBEE501491000A225 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = ABC9ADF114FCFABEA148AF04 /* SendXTimeLockErrorService.swift */; };
 		ABC9A33DE7DEF89A5217B8FF /* WalletConnectV2PendingRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE15C187118DE6F0CE7B /* WalletConnectV2PendingRequestsViewModel.swift */; };
 		ABC9A3613C5477C07F37F48C /* WalletConnectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5FD79ECC4AC85B86FA /* WalletConnectListViewController.swift */; };
 		ABC9A36DFD6840D2034ADF65 /* SendXFeeSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1B9883A0426D5F46430 /* SendXFeeSliderViewModel.swift */; };
@@ -3158,7 +3158,7 @@
 		11B3580953728946194D1187 /* NftCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftCollectionViewController.swift; sourceTree = "<group>"; };
 		11B3580B3D1353962FB5AD45 /* SendMemoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMemoModule.swift; sourceTree = "<group>"; };
 		11B3580ECB328146E94D4359 /* CoinTreasuriesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTreasuriesService.swift; sourceTree = "<group>"; };
-		11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsHeaderCell.swift; sourceTree = "<group>"; };
+		11B35812D1F62D1839D5DCDC /* LogoHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoHeaderCell.swift; sourceTree = "<group>"; };
 		11B358145A0D9F93ACBC0301 /* CreateAccountModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountModule.swift; sourceTree = "<group>"; };
 		11B35822E26E7298100CD69D /* LogRecordStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogRecordStorage.swift; sourceTree = "<group>"; };
 		11B3582303D9BC904086E159 /* WalletConnectSessionStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectSessionStorage.swift; sourceTree = "<group>"; };
@@ -4784,7 +4784,7 @@
 		11B3574888F9F86494FAEFBE /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				11B35812D1F62D1839D5DCDC /* TermsHeaderCell.swift */,
+				11B35812D1F62D1839D5DCDC /* LogoHeaderCell.swift */,
 				11B35994005EE82AE70CDA98 /* TermsFooterCell.swift */,
 				11B35FF998AD1FCC033A0ABE /* TermsSeparatorCell.swift */,
 			);
@@ -6754,7 +6754,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
@@ -7276,7 +7276,7 @@
 				11B35AFE607E4B25984A83B1 /* MarkdownBlockQuoteCell.swift in Sources */,
 				11B35767A4CBCFEF837C5E53 /* RateListHeaderFooterView.swift in Sources */,
 				3AF9F622253EF555000626A8 /* ZcashTransaction.swift in Sources */,
-				11B355630081212FE517D874 /* TermsHeaderCell.swift in Sources */,
+				11B355630081212FE517D874 /* LogoHeaderCell.swift in Sources */,
 				11B358643EDDDE22C8FECEE9 /* DescriptionCell.swift in Sources */,
 				11B356E03534507B25FF4097 /* TermsManager.swift in Sources */,
 				11B35554A3130D03E4F06589 /* Term.swift in Sources */,
@@ -7932,7 +7932,7 @@
 				11B35ABED9A41DF1B0C2CFF1 /* EnabledWalletCacheStorage.swift in Sources */,
 				11B35EE78DED44856E313723 /* CustomTokenStorage.swift in Sources */,
 				11B350676F27EC0BE1CF4300 /* EvmAccountSyncStateStorage.swift in Sources */,
-                ABC9ADE68C954241A7ED5708 /* SendXTimeLockErrorService.swift in Sources */,
+				ABC9ADE68C954241A7ED5708 /* SendXTimeLockErrorService.swift in Sources */,
 				11B35B10BF879154489CA619 /* NftCollectionViewController.swift in Sources */,
 				11B35B41F0EB6AD27CA54F2B /* NftCollectionService.swift in Sources */,
 				11B35E9946C553160F26F137 /* NftCollectionViewModel.swift in Sources */,
@@ -8239,7 +8239,7 @@
 				11B3587EF674C1E8EEE61DE7 /* MarkdownBlockQuoteCell.swift in Sources */,
 				11B353697B52C62D3BF12051 /* RateListHeaderFooterView.swift in Sources */,
 				3AF9F621253EF555000626A8 /* ZcashTransaction.swift in Sources */,
-				11B35C690AD2AFEE83BFA0C5 /* TermsHeaderCell.swift in Sources */,
+				11B35C690AD2AFEE83BFA0C5 /* LogoHeaderCell.swift in Sources */,
 				11B35BF725773F2C13275E53 /* DescriptionCell.swift in Sources */,
 				11B35C1154D256BDAEC61BFC /* TermsManager.swift in Sources */,
 				11B355156220BF3671537696 /* Term.swift in Sources */,
@@ -8897,7 +8897,7 @@
 				11B35DB339D0E7CF183760F4 /* EnabledWalletCacheStorage.swift in Sources */,
 				11B3508E8B386CDE95E3189B /* CustomTokenStorage.swift in Sources */,
 				11B353D537582C5C142BBEC8 /* EvmAccountSyncStateStorage.swift in Sources */,
-                ABC9A80BCDA72347C6619E6C /* SendXTimeLockErrorService.swift in Sources */,
+				ABC9A80BCDA72347C6619E6C /* SendXTimeLockErrorService.swift in Sources */,
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
 				11B35E4E9EA0B6F6A1157E17 /* NftCollectionService.swift in Sources */,
 				11B35AB1A8FB2E49C98FCBEB /* NftCollectionViewModel.swift in Sources */,
@@ -9197,7 +9197,7 @@
 				11B358B90E2D1A8832637F34 /* MarkdownBlockQuoteCell.swift in Sources */,
 				11B35C6E04CF9C6C29FA19C3 /* RateListHeaderFooterView.swift in Sources */,
 				3AF9F620253EF555000626A8 /* ZcashTransaction.swift in Sources */,
-				11B35F03EFFD7149C7CFD595 /* TermsHeaderCell.swift in Sources */,
+				11B35F03EFFD7149C7CFD595 /* LogoHeaderCell.swift in Sources */,
 				11B3539B3634BF7B3B1B9061 /* DescriptionCell.swift in Sources */,
 				11B3595CF65B69B3B04635E0 /* TermsManager.swift in Sources */,
 				11B3530FD35FA605B2C515C3 /* Term.swift in Sources */,
@@ -10276,7 +10276,7 @@
 				kind = branch;
 			};
 		};
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -10330,32 +10330,32 @@
 		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {

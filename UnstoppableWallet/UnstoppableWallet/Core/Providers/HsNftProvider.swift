@@ -14,6 +14,7 @@ class HsNftProvider {
     private let marketKit: MarketKit.Kit
     private let apiUrl: String
     private let headers: HTTPHeaders?
+    private let encoding: ParameterEncoding = URLEncoding(boolEncoding: .literal)
 
     init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
@@ -69,21 +70,25 @@ class HsNftProvider {
         let ethereumPlatformCoin = try? marketKit.platformCoin(coinType: .ethereum)
 
         return responses.map { response in
-            NftCollection(
-                    contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.type) },
-                    uid: response.uid,
-                    name: response.name,
-                    description: response.description,
-                    imageUrl: response.imageUrl,
-                    featuredImageUrl: response.featuredImageUrl,
-                    externalUrl: response.externalUrl,
-                    discordUrl: response.discordUrl,
-                    twitterUsername: response.twitterUsername,
-                    averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
-                    averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
-                    totalSupply: response.totalSupply
-            )
+            collection(response: response, ethereumPlatformCoin: ethereumPlatformCoin)
         }
+    }
+
+    private func collection(response: CollectionResponse, ethereumPlatformCoin: PlatformCoin? = nil) -> NftCollection {
+        let ethereumPlatformCoin = ethereumPlatformCoin ?? (try? marketKit.platformCoin(coinType: .ethereum))
+
+        return NftCollection(
+                contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.type) },
+                uid: response.uid,
+                name: response.name,
+                description: response.description,
+                imageUrl: response.imageUrl,
+                featuredImageUrl: response.featuredImageUrl,
+                externalUrl: response.externalUrl,
+                discordUrl: response.discordUrl,
+                twitterUsername: response.twitterUsername,
+                stats: collectionStats(response: response.stats, ethereumPlatformCoin: ethereumPlatformCoin)
+        )
     }
 
     private func assets(responses: [AssetResponse]) -> [NftAsset] {
@@ -115,10 +120,11 @@ class HsNftProvider {
         }
     }
 
-    private func collectionStats(response: CollectionStatsResponse) -> NftCollectionStats {
-        let ethereumPlatformCoin = try? marketKit.platformCoin(coinType: .ethereum)
+    private func collectionStats(response: CollectionStatsResponse, ethereumPlatformCoin: PlatformCoin? = nil) -> NftCollectionStats {
+        let ethereumPlatformCoin = ethereumPlatformCoin ?? (try? marketKit.platformCoin(coinType: .ethereum))
 
         return NftCollectionStats(
+                totalSupply: response.totalSupply,
                 averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
                 averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
                 floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false)
@@ -147,7 +153,7 @@ class HsNftProvider {
             "page": page
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request)
     }
 
@@ -173,7 +179,7 @@ class HsNftProvider {
             parameters["cursor"] = cursor
         }
 
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request)
     }
 
@@ -207,8 +213,19 @@ extension HsNftProvider: INftProvider {
         }
     }
 
+    func collectionSingle(uid: String) -> Single<NftCollection> {
+        let parameters: Parameters = [
+            "include_stats_chart": true,
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request).map { [unowned self] response in
+            collection(response: response)
+        }
+    }
+
     func collectionStatsSingle(uid: String) -> Single<NftCollectionStats> {
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)/stats", headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)/stats", encoding: encoding, headers: headers)
         return networkManager.single(request: request).map { [unowned self] response in
             collectionStats(response: response)
         }
@@ -219,7 +236,7 @@ extension HsNftProvider: INftProvider {
             "include_orders": true,
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
             assetOrders(responses: response.orders)
         }
@@ -239,10 +256,7 @@ extension HsNftProvider {
         let externalUrl: String?
         let discordUrl: String?
         let twitterUsername: String?
-
-        let averagePrice7d: Decimal
-        let averagePrice30d: Decimal
-        let totalSupply: Int
+        let stats: CollectionStatsResponse
 
         init(map: Map) throws {
             contracts = try map.value("asset_contracts")
@@ -254,9 +268,7 @@ extension HsNftProvider {
             externalUrl = try? map.value("links.external_url")
             discordUrl = try? map.value("links.discord_url")
             twitterUsername = try? map.value("links.twitter_username")
-            averagePrice7d = try map.value("stats.seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
-            averagePrice30d = try map.value("stats.thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
-            totalSupply = try map.value("stats.total_supply")
+            stats = try map.value("stats")
         }
     }
 
@@ -343,11 +355,13 @@ extension HsNftProvider {
     }
 
     private struct CollectionStatsResponse: ImmutableMappable {
+        let totalSupply: Int
         let averagePrice7d: Decimal
         let averagePrice30d: Decimal
         let floorPrice: Decimal?
 
         init(map: Map) throws {
+            totalSupply = try map.value("total_supply")
             averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)

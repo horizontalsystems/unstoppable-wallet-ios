@@ -28,9 +28,9 @@ class NftCollectionRecord: Record {
         externalUrl = collection.externalUrl
         discordUrl = collection.discordUrl
         twitterUsername = collection.twitterUsername
-        averagePrice7d = collection.averagePrice7d.map { NftPriceRecord(price: $0) }
-        averagePrice30d = collection.averagePrice30d.map { NftPriceRecord(price: $0) }
-        totalSupply = collection.totalSupply
+        averagePrice7d = collection.stats.averagePrice7d.map { NftPriceRecord(price: $0) }
+        averagePrice30d = collection.stats.averagePrice30d.map { NftPriceRecord(price: $0) }
+        totalSupply = collection.stats.totalSupply
 
         super.init()
     }

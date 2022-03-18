@@ -30,8 +30,8 @@ class NftAssetService {
 
         statsItem = StatsItem(
                 lastSale: asset.lastSalePrice.map { PriceItem(nftPrice: $0) },
-                average7d: collection.averagePrice7d.map { PriceItem(nftPrice: $0) },
-                average30d: collection.averagePrice30d.map { PriceItem(nftPrice: $0) }
+                average7d: collection.stats.averagePrice7d.map { PriceItem(nftPrice: $0) },
+                average30d: collection.stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
         )
 
         _syncCoinPrices()

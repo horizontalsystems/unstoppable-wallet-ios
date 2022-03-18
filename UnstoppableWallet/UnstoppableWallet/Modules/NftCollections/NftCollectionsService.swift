@@ -98,8 +98,8 @@ class NftCollectionsService {
 
                         switch mode {
                         case .lastSale: price = asset.lastSalePrice
-                        case .average7d: price = collection.averagePrice7d
-                        case .average30d: price = collection.averagePrice30d
+                        case .average7d: price = collection.stats.averagePrice7d
+                        case .average30d: price = collection.stats.averagePrice30d
                         }
 
                         return AssetItem(
