@@ -1061,3 +1061,9 @@
 "nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
 "nft_asset.save_to_photos.success" = "NFT-изображение сохранено в ваш фотоальбом";
 "nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
