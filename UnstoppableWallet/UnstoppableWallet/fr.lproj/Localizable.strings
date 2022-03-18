@@ -1059,3 +1059,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_asset.options.set_as_watch_face" = "Créer un cadran";
 "nft_asset.save_to_photos.success" = "L'image NFT est enregistrée dans Photos";
 "nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
