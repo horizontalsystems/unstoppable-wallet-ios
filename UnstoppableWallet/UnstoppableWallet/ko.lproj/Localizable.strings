@@ -1059,3 +1059,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_asset.options.set_as_watch_face" = "시계 모드로 설정";
 "nft_asset.save_to_photos.success" = "NFT 이미지가 사진 라이브러리에 저장됩니다";
 "nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.items" = "Items";
+"nft_collection.tab.activity" = "Activity";
