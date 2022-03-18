@@ -13,14 +13,14 @@ class NftCollectionViewController: ThemeViewController {
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: NftCollectionOverviewViewController
-    private let marketsController: NftCollectionAssetsViewController
-    private let detailsController: NftCollectionActivityViewController
+    private let assetsController: NftCollectionAssetsViewController
+    private let activityController: NftCollectionActivityViewController
 
-    init(viewModel: NftCollectionViewModel, overviewController: NftCollectionOverviewViewController, marketsController: NftCollectionAssetsViewController, detailsController: NftCollectionActivityViewController) {
+    init(viewModel: NftCollectionViewModel, overviewController: NftCollectionOverviewViewController, assetsController: NftCollectionAssetsViewController, activityController: NftCollectionActivityViewController) {
         self.viewModel = viewModel
         self.overviewController = overviewController
-        self.marketsController = marketsController
-        self.detailsController = detailsController
+        self.assetsController = assetsController
+        self.activityController = activityController
 
         super.init()
     }
@@ -57,7 +57,8 @@ class NftCollectionViewController: ThemeViewController {
         }
 
         overviewController.parentNavigationController = navigationController
-        detailsController.parentNavigationController = navigationController
+        assetsController.parentNavigationController = navigationController
+        activityController.parentNavigationController = navigationController
 
         onSelectTab(index: 0)
     }
@@ -82,8 +83,8 @@ class NftCollectionViewController: ThemeViewController {
     private func viewController(tab: NftCollectionModule.Tab) -> UIViewController {
         switch tab {
         case .overview: return overviewController
-        case .items: return marketsController
-        case .activity: return detailsController
+        case .assets: return assetsController
+        case .activity: return activityController
         }
     }
 

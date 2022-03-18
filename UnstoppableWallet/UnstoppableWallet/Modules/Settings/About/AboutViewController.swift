@@ -15,7 +15,7 @@ class AboutViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let headerCell = TermsHeaderCell()
+    private let headerCell = LogoHeaderCell()
     private let termsCell = A3Cell()
 
     init(viewModel: AboutViewModel, urlManager: UrlManager) {
@@ -48,11 +48,9 @@ class AboutViewController: ThemeViewController {
 
         tableView.registerCell(forClass: A1Cell.self)
 
-        headerCell.bind(
-                image: .appIcon,
-                title: "settings.about_app.app_name".localized,
-                subtitle: "version".localized(viewModel.appVersion)
-        )
+        headerCell.image = .appIcon
+        headerCell.title = "settings.about_app.app_name".localized
+        headerCell.subtitle = "version".localized(viewModel.appVersion)
 
         termsCell.set(backgroundStyle: .lawrence, isLast: true)
         termsCell.titleImage = UIImage(named: "unordered_20")
@@ -102,13 +100,11 @@ extension AboutViewController: SectionsDataSource {
         [
             Section(
                     id: "header",
-                    headerState: .margin(height: .margin8),
-                    footerState: .margin(height: .margin16),
                     rows: [
                         StaticRow(
                                 cell: headerCell,
                                 id: "header",
-                                height: TermsHeaderCell.height
+                                height: LogoHeaderCell.height
                         )
                     ]
             ),

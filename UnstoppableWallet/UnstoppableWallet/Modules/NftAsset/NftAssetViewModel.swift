@@ -28,7 +28,7 @@ class NftAssetViewModel {
                 imageUrl: asset.imageUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
                 collectionName: collection.name,
-                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
+                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.stats.totalSupply) },
                 description: asset.description,
                 contractAddress: asset.contract.address,
                 tokenId: asset.tokenId,

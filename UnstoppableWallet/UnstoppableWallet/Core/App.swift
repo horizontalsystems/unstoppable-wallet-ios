@@ -82,6 +82,7 @@ class App {
     let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
 
+    let hsNftProvider: HsNftProvider
     let nftManager: NftManager
 
     let appManager: AppManager
@@ -236,8 +237,8 @@ class App {
 
         let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        let nftProvider = HsNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
-        nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, provider: nftProvider)
+        hsNftProvider = HsNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
+        nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, provider: hsNftProvider)
 
         let restoreCustomTokenWorker = RestoreCustomTokenWorker(
                 coinManager: coinManager,

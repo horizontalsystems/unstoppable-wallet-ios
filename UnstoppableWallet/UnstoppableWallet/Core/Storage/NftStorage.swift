@@ -55,9 +55,12 @@ class NftStorage {
                 externalUrl: record.externalUrl,
                 discordUrl: record.discordUrl,
                 twitterUsername: record.twitterUsername,
-                averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
-                averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
-                totalSupply: record.totalSupply
+                stats: NftCollectionStats(
+                        totalSupply: record.totalSupply,
+                        averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
+                        averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
+                        floorPrice: nil
+                )
         )
     }
 

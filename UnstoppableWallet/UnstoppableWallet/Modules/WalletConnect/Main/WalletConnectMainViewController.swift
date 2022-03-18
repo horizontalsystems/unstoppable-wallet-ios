@@ -70,7 +70,7 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: TermsHeaderCell.self)
+        tableView.registerCell(forClass: LogoHeaderCell.self)
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(spinner)
@@ -261,12 +261,13 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
-        Row<TermsHeaderCell>(
+        Row<LogoHeaderCell>(
                 id: "header",
                 hash: "\(title)-\(imageUrl ?? "N/A")",
-                height: TermsHeaderCell.height,
+                height: LogoHeaderCell.height,
                 bind: { cell, _ in
-                    cell.bind(imageUrl: imageUrl, title: title, subtitle: nil)
+                    cell.title = title
+                    cell.set(imageUrl: imageUrl)
                 }
         )
     }
