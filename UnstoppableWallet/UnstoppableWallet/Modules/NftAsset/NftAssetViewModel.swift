@@ -27,6 +27,7 @@ class NftAssetViewModel {
         let viewItem = ViewItem(
                 imageUrl: asset.imageUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
+                collectionUid: collection.uid,
                 collectionName: collection.name,
                 traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.stats.totalSupply) },
                 description: asset.description,
@@ -179,6 +180,7 @@ extension NftAssetViewModel {
     struct ViewItem {
         let imageUrl: String?
         let name: String
+        let collectionUid: String
         let collectionName: String
         let traits: [TraitViewItem]
         let description: String?
