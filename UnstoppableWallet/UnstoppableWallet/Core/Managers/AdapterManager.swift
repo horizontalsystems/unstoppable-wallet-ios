@@ -153,7 +153,11 @@ extension AdapterManager {
 
     func refresh(wallet: Wallet) {
         queue.async {
-            self._adapterMap[wallet]?.refresh()
+            if let blockchain = self.evmBlockchainManager.blockchain(coinType: wallet.coinType) {
+                self.evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper?.evmKit.refresh()
+            } else {
+                self._adapterMap[wallet]?.refresh()
+            }
         }
     }
 
