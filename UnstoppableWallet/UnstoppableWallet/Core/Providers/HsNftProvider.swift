@@ -169,11 +169,19 @@ class HsNftProvider {
         }
     }
 
-    private func assetsSingle(address: String, cursor: String?) -> Single<AssetsResponse> {
+    private func _assetsSingle(address: String? = nil, collectionUid: String? = nil, cursor: String?) -> Single<AssetsResponse> {
         var parameters: Parameters = [
-            "owner": address,
+            "include_orders": true,
             "limit": assetLimit
         ]
+
+        if let address = address {
+            parameters["owner"] = address
+        }
+
+        if let collectionUid = collectionUid {
+            parameters["collection_uid"] = collectionUid
+        }
 
         if let cursor = cursor {
             parameters["cursor"] = cursor
@@ -184,7 +192,7 @@ class HsNftProvider {
     }
 
     private func recursiveAssetsSingle(address: String, cursor: String? = nil, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
-        assetsSingle(address: address, cursor: cursor).flatMap { [unowned self] response in
+        _assetsSingle(address: address, cursor: cursor).flatMap { [unowned self] response in
             let allAssets = allAssets + response.assets
 
             if let cursor = response.cursor {
@@ -239,6 +247,15 @@ extension HsNftProvider: INftProvider {
         let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
             assetOrders(responses: response.orders)
+        }
+    }
+
+    func assetsSingle(collectionUid: String, cursor: String? = nil) -> Single<PagedNftAssets> {
+        _assetsSingle(collectionUid: collectionUid, cursor: cursor).map { [unowned self] response in
+            PagedNftAssets(
+                    assets: assets(responses: response.assets),
+                    cursor: response.cursor
+            )
         }
     }
 
