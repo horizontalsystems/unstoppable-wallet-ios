@@ -26,7 +26,7 @@ class NftCollectionOverviewService {
         state = .loading
 
         provider.collectionSingle(uid: collectionUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collection in
                     let item = Item(collection: collection)
                     self?.state = .completed(item)

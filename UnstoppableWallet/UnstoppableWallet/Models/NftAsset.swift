@@ -38,3 +38,8 @@ struct NftAsset {
         }
     }
 }
+
+struct PagedNftAssets {
+    let assets: [NftAsset]
+    let cursor: String?
+}
