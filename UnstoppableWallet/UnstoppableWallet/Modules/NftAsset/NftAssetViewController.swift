@@ -52,6 +52,7 @@ class NftAssetViewController: ThemeViewController {
 
         tableView.registerCell(forClass: NftAssetImageCell.self)
         tableView.registerCell(forClass: NftAssetTitleCell.self)
+        tableView.registerCell(forClass: NftAssetButtonCell.self)
         tableView.registerCell(forClass: TextCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: TraitsCell.self)
@@ -197,6 +198,11 @@ class NftAssetViewController: ThemeViewController {
         }
     }
 
+    private func openCollection(uid: String) {
+        let module = NftCollectionModule.viewController(collectionUid: uid)
+        present(module, animated: true)
+    }
+
 }
 
 extension NftAssetViewController: SectionsDataSource {
@@ -235,21 +241,57 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func titleSection(title: String, subtitle: String) -> SectionProtocol {
+    private func titleSection(assetName: String, collectionUid: String, collectionName: String) -> SectionProtocol {
         Section(
                 id: "title",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin24),
+                footerState: .margin(height: .margin12),
                 rows: [
                     Row<NftAssetTitleCell>(
                             id: "title",
                             dynamicHeight: { width in
-                                NftAssetTitleCell.height(containerWidth: width, title: title, subtitle: subtitle)
+                                NftAssetTitleCell.height(containerWidth: width, text: assetName)
                             },
                             bind: { cell, _ in
+                                cell.text = assetName
+                            }
+                    ),
+                    CellBuilder.selectableRow(
+                            elements: [.text, .image20],
+                            tableView: tableView,
+                            id: "collection",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .transparent, isFirst: true)
+
+                                cell.bind(index: 0) { (component: TextComponent) in
+                                    component.set(style: .c3)
+                                    component.text = collectionName
+                                }
+
+                                cell.bind(index: 1) { (component: ImageComponent) in
+                                    component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                                }
+                            },
+                            action: { [weak self] in
+                                self?.openCollection(uid: collectionUid)
+                            }
+                    )
+                ]
+        )
+    }
+
+    private func buttonsSection() -> SectionProtocol {
+        Section(
+                id: "buttons",
+                footerState: .margin(height: .margin24),
+                rows: [
+                    Row<NftAssetButtonCell>(
+                            id: "buttons",
+                            height: .heightButton,
+                            bind: { cell, _ in
                                 cell.bind(
-                                        title: title,
-                                        subtitle: subtitle,
                                         onTapOpenSea: { [weak self] in
                                             if let url = self?.openSeaUrl {
                                                 self?.openLink(url: url)
@@ -625,7 +667,8 @@ extension NftAssetViewController: SectionsDataSource {
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 
-            sections.append(titleSection(title: viewItem.name, subtitle: viewItem.collectionName))
+            sections.append(titleSection(assetName: viewItem.name, collectionUid: viewItem.collectionUid, collectionName: viewItem.collectionName))
+            sections.append(buttonsSection())
 
             if let statsViewItem = statsViewItem {
                 if let section = statsSection(viewItem: statsViewItem) {
