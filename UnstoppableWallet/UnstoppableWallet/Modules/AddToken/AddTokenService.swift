@@ -6,7 +6,7 @@ import MarketKit
 protocol IAddTokenBlockchainService {
     func isValid(reference: String) -> Bool
     func coinType(reference: String) -> CoinType
-    func customTokenSingle(reference: String) -> Single<CustomToken>
+    func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin>
 }
 
 class AddTokenService {
@@ -31,35 +31,16 @@ class AddTokenService {
         self.walletManager = walletManager
     }
 
-    private func joinedCustomTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[CustomToken]> {
-        let singles: [Single<CustomToken?>] = services.map { service in
-            service.customTokenSingle(reference: reference)
-                    .map { customToken -> CustomToken? in customToken}
+    private func joinedCustomCoinsSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[AddTokenModule.CustomCoin]> {
+        let singles: [Single<AddTokenModule.CustomCoin?>] = services.map { service in
+            service.customCoinSingle(reference: reference)
+                    .map { customCoin -> AddTokenModule.CustomCoin? in customCoin}
                     .catchErrorJustReturn(nil)
         }
 
-        return Single.zip(singles) { customTokens in
-            customTokens.compactMap { $0 }
+        return Single.zip(singles) { customCoins in
+            customCoins.compactMap { $0 }
         }
-    }
-
-    private func adjusted(customTokens: [CustomToken]) -> [CustomToken] {
-        var customTokens = customTokens
-        let firstToken = customTokens.removeFirst()
-
-        var result: [CustomToken] = [firstToken]
-
-        for token in customTokens {
-            let adjustedCustomToken = CustomToken(
-                    coinName: firstToken.coinName,
-                    coinCode: firstToken.coinCode,
-                    coinType: token.coinType,
-                    decimals: firstToken.decimals
-            )
-            result.append(adjustedCustomToken)
-        }
-
-        return result
     }
 
 }
@@ -102,28 +83,34 @@ extension AddTokenService {
 
         state = .loading
 
-        joinedCustomTokensSingle(services: validServices, reference: reference)
+        joinedCustomCoinsSingle(services: validServices, reference: reference)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] customTokens in
-                    if customTokens.isEmpty {
+                .subscribe(onSuccess: { [weak self] customCoins in
+                    if customCoins.isEmpty {
                         self?.state = .failed(error: TokenError.notFound)
                     } else {
-                        self?.state = .fetched(customTokens: customTokens)
+                        self?.state = .fetched(customCoins: customCoins)
                     }
                 })
                 .disposed(by: disposeBag)
     }
 
     func save() {
-        guard case .fetched(let customTokens) = state else {
+        guard case .fetched(let customCoins) = state else {
             return
         }
 
-        let adjustedCustomTokens = adjusted(customTokens: customTokens)
+        let platformCoins = customCoins.map { customCoin -> PlatformCoin in
+            let coinType = customCoin.type
+            let coinUid = coinType.customCoinUid
 
-        coinManager.save(customTokens: adjustedCustomTokens)
+            return PlatformCoin(
+                    coin: Coin(uid: coinUid, name: customCoin.name, code: customCoin.code),
+                    platform: Platform(coinType: coinType, decimals: customCoin.decimals, coinUid: coinUid)
+            )
+        }
 
-        let wallets = adjustedCustomTokens.map { Wallet(platformCoin: $0.platformCoin, account: account) }
+        let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
 
@@ -135,7 +122,7 @@ extension AddTokenService {
         case idle
         case loading
         case alreadyExists(platformCoins: [PlatformCoin])
-        case fetched(customTokens: [CustomToken])
+        case fetched(customCoins: [AddTokenModule.CustomCoin])
         case failed(error: Error)
     }
 

@@ -137,12 +137,11 @@ class App {
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
-        let customTokenStorage = CustomTokenStorage(dbPool: dbPool)
-        coinManager = CoinManager(marketKit: marketKit, storage: customTokenStorage)
-
         let enabledWalletStorage = EnabledWalletStorage(dbPool: dbPool)
-        let walletStorage = WalletStorage(coinManager: coinManager, storage: enabledWalletStorage)
+        let walletStorage = WalletStorage(marketKit: marketKit, storage: enabledWalletStorage)
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
+
+        coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
 
         let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
@@ -153,7 +152,7 @@ class App {
         let tokenBalanceProvider = HsTokenBalanceProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         let evmAccountSyncStateStorage = EvmAccountSyncStateStorage(dbPool: dbPool)
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, provider: tokenBalanceProvider, storage: evmAccountSyncStateStorage)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, coinManager: coinManager, accountManagerFactory: evmAccountManagerFactory)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
@@ -240,16 +239,8 @@ class App {
         hsNftProvider = HsNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, provider: hsNftProvider)
 
-        let restoreCustomTokenWorker = RestoreCustomTokenWorker(
-                coinManager: coinManager,
-                walletManager: walletManager,
-                storage: enabledWalletStorage,
-                localStorage: StorageKit.LocalStorage.default,
-                networkManager: networkManager
-        )
-
         let restoreFavoriteCoinWorker = RestoreFavoriteCoinWorker(
-                coinManager: coinManager,
+                marketKit: marketKit,
                 favoritesManager: favoritesManager,
                 localStorage: StorageKit.LocalStorage.default,
                 storage: favoriteCoinRecordStorage
@@ -268,7 +259,6 @@ class App {
                 rateAppManager: rateAppManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
-                restoreCustomTokenWorker: restoreCustomTokenWorker,
                 restoreFavoriteCoinWorker: restoreFavoriteCoinWorker
         )
     }

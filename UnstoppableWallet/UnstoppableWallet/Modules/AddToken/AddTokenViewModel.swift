@@ -35,8 +35,8 @@ class AddTokenViewModel {
         switch state {
         case .alreadyExists(let platformCoins):
             viewItemRelay.accept(viewItem(platformCoins: platformCoins))
-        case .fetched(let customTokens):
-            viewItemRelay.accept(viewItem(customTokens: customTokens))
+        case .fetched(let customCoins):
+            viewItemRelay.accept(viewItem(customCoins: customCoins))
         default:
             viewItemRelay.accept(nil)
         }
@@ -65,12 +65,12 @@ class AddTokenViewModel {
         )
     }
 
-    private func viewItem(customTokens: [CustomToken]) -> ViewItem {
+    private func viewItem(customCoins: [AddTokenModule.CustomCoin]) -> ViewItem {
         ViewItem(
-                coinType: customTokens.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
-                coinName: customTokens.first?.coinName,
-                coinCode: customTokens.first?.coinCode,
-                decimals: customTokens.first?.decimals
+                coinType: customCoins.compactMap { $0.type.blockchainType }.joined(separator: " / "),
+                coinName: customCoins.first?.name,
+                coinCode: customCoins.first?.code,
+                decimals: customCoins.first?.decimals
         )
     }
 

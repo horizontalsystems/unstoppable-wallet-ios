@@ -2,11 +2,12 @@ import Foundation
 import RxSwift
 import RxRelay
 import EthereumKit
+import MarketKit
 
 class WatchAddressService {
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
-    private let coinManager: CoinManager
+    private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let addressService: AddressService
@@ -19,10 +20,10 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: AccountManager, coinManager: CoinManager, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
+    init(accountFactory: AccountFactory, accountManager: AccountManager, marketKit: MarketKit.Kit, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
-        self.coinManager = coinManager
+        self.marketKit = marketKit
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
         self.addressService = addressService
@@ -66,7 +67,7 @@ extension WatchAddressService {
                 evmBlockchainManager.evmAccountManager(blockchain: evmBlockchain).markAutoEnable(account: account)
             }
 
-            let platformCoins = try coinManager.platformCoins(coinTypes: evmBlockchains.map { $0.baseCoinType })
+            let platformCoins = try marketKit.platformCoins(coinTypes: evmBlockchains.map { $0.baseCoinType })
             let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
 
             walletManager.save(wallets: wallets)

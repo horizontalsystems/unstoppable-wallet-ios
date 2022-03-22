@@ -11,20 +11,20 @@ class EnabledWalletStorage {
 
 extension EnabledWalletStorage {
 
-    var enabledWallets: [EnabledWallet] {
-        try! dbPool.read { db in
+    func enabledWallets() throws -> [EnabledWallet] {
+        try dbPool.read { db in
             try EnabledWallet.fetchAll(db)
         }
     }
 
-    func enabledWallets(accountId: String) -> [EnabledWallet] {
-        try! dbPool.read { db in
+    func enabledWallets(accountId: String) throws -> [EnabledWallet] {
+        try dbPool.read { db in
             try EnabledWallet.filter(EnabledWallet.Columns.accountId == accountId).fetchAll(db)
         }
     }
 
-    func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet]) {
-        _ = try! dbPool.write { db in
+    func handle(newEnabledWallets: [EnabledWallet], deletedEnabledWallets: [EnabledWallet]) throws {
+        _ = try dbPool.write { db in
             for enabledWallet in newEnabledWallets {
                 try enabledWallet.insert(db)
             }
@@ -35,8 +35,8 @@ extension EnabledWalletStorage {
 
     }
 
-    func clear() {
-        _ = try! dbPool.write { db in
+    func clear() throws {
+        _ = try dbPool.write { db in
             try EnabledWallet.deleteAll(db)
         }
     }

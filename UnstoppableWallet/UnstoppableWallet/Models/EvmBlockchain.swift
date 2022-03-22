@@ -39,6 +39,16 @@ enum EvmBlockchain: String {
         }
     }
 
+    var platformType: PlatformType {
+        switch self {
+        case .ethereum: return .ethereum
+        case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygon
+        case .optimism: return .optimism
+        case .arbitrumOne: return .arbitrumOne
+        }
+    }
+
     var uid: String {
         switch self {
         case .ethereum: return "ethereum"

@@ -7,7 +7,7 @@ class RestoreSelectService {
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
-    private let coinManager: CoinManager
+    private let marketKit: MarketKit.Kit
     private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
@@ -27,12 +27,12 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, coinManager: CoinManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
-        self.coinManager = coinManager
+        self.marketKit = marketKit
         self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
@@ -49,7 +49,7 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let platformCoins = try coinManager.platformCoins(coinTypes: RestoreSelectModule.Blockchain.all.map { $0.coinType })
+            let platformCoins = try marketKit.platformCoins(coinTypes: RestoreSelectModule.Blockchain.all.map { $0.coinType })
 
             internalItems = RestoreSelectModule.Blockchain.all.compactMap { blockchain in
                 guard let platformCoin = platformCoins.first(where: { $0.coinType == blockchain.coinType }) else {
