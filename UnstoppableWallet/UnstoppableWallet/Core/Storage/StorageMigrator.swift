@@ -590,6 +590,32 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("migrateCustomTokensToEnabledWallets") { db in
+            try db.alter(table: EnabledWallet.databaseTableName) { t in
+                t.add(column: EnabledWallet.Columns.coinName.name, .text)
+                t.add(column: EnabledWallet.Columns.coinCode.name, .text)
+                t.add(column: EnabledWallet.Columns.coinDecimals.name, .integer)
+            }
+
+            let customTokens = try CustomToken.fetchAll(db)
+            try db.drop(table: CustomToken.databaseTableName)
+
+            for customToken in customTokens {
+                if let enabledWallet = try EnabledWallet.filter(EnabledWallet.Columns.coinId == customToken.coinType.id).fetchOne(db) {
+                    let newEnabledWallet = EnabledWallet(
+                            coinId: enabledWallet.coinId,
+                            coinSettingsId: enabledWallet.coinSettingsId,
+                            accountId: enabledWallet.accountId,
+                            coinName: customToken.coinName,
+                            coinCode: customToken.coinCode,
+                            coinDecimals: customToken.decimals
+                    )
+
+                    try newEnabledWallet.insert(db)
+                }
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

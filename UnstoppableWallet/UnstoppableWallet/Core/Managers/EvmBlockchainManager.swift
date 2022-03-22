@@ -4,15 +4,15 @@ import HsToolKit
 
 class EvmBlockchainManager {
     private let syncSourceManager: EvmSyncSourceManager
-    private let coinManager: CoinManager
+    private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
     private var evmKitManagerMap = [EvmBlockchain: EvmKitManager]()
     private var evmAccountManagerMap = [EvmBlockchain: EvmAccountManager]()
 
-    init(syncSourceManager: EvmSyncSourceManager, coinManager: CoinManager, accountManagerFactory: EvmAccountManagerFactory) {
+    init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
-        self.coinManager = coinManager
+        self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
     }
 
@@ -73,7 +73,7 @@ extension EvmBlockchainManager {
     }
 
     func basePlatformCoin(blockchain: EvmBlockchain) -> PlatformCoin? {
-        try? coinManager.platformCoin(coinType: blockchain.baseCoinType)
+        try? marketKit.platformCoin(coinType: blockchain.baseCoinType)
     }
 
     func evmKitManager(blockchain: EvmBlockchain) -> EvmKitManager {

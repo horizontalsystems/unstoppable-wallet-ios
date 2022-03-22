@@ -147,6 +147,18 @@ extension MarketKit.CoinType {
         }
     }
 
+    var customCoinUid: String {
+        "custom-\(id)"
+    }
+
+}
+
+extension MarketKit.PlatformCoin {
+
+    var isCustom: Bool {
+        coin.uid == coinType.customCoinUid
+    }
+
 }
 
 extension MarketKit.Coin {

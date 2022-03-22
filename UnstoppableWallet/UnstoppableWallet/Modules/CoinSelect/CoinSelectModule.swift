@@ -11,10 +11,9 @@ struct CoinSelectModule {
     static func viewController(dex: SwapModule.Dex, delegate: ICoinSelectDelegate) -> UIViewController {
         let service = CoinSelectService(
                 dex: dex,
-                coinManager: App.shared.coinManager,
+                marketKit: App.shared.marketKit,
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.adapterManager,
-                marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit
         )
         let viewModel = CoinSelectViewModel(service: service)
