@@ -1,14 +1,14 @@
 import UIKit
 import SnapKit
 
-class NftCollectionsDoubleCell: UITableViewCell {
+class NftDoubleCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
     private static let topMargin: CGFloat = .margin8
     private static let bottomMarginRegular: CGFloat = .margin4
     private static let bottomMarginLast: CGFloat = .margin32
 
-    private let leftView = NftCollectionsTokenView()
-    private let rightView = NftCollectionsTokenView()
+    private let leftView = NftAssetView()
+    private let rightView = NftAssetView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,7 +36,7 @@ class NftCollectionsDoubleCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    private func bind(view: NftCollectionsTokenView, viewItem: NftCollectionsViewModel.AssetViewItem, onTap: @escaping (NftCollectionsViewModel.AssetViewItem, CGFloat) -> ()) {
+    private func bind(view: NftAssetView, viewItem: ViewItem, onTap: @escaping (ViewItem, CGFloat) -> ()) {
         view.imagePlaceholder = viewItem.name
         view.name = viewItem.name
         view.coinPrice = viewItem.coinPrice
@@ -48,9 +48,9 @@ class NftCollectionsDoubleCell: UITableViewCell {
 
 }
 
-extension NftCollectionsDoubleCell {
+extension NftDoubleCell {
 
-    func bind(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, onTap: @escaping (NftCollectionsViewModel.AssetViewItem, CGFloat) -> ()) {
+    func bind(leftViewItem: ViewItem, rightViewItem: ViewItem?, onTap: @escaping (ViewItem, CGFloat) -> ()) {
         bind(view: leftView, viewItem: leftViewItem, onTap: onTap)
 
         if let rightViewItem = rightViewItem {
@@ -63,13 +63,35 @@ extension NftCollectionsDoubleCell {
 
 }
 
-extension NftCollectionsDoubleCell {
+extension NftDoubleCell {
 
     static func height(containerWidth: CGFloat, isLast: Bool) -> CGFloat {
         let itemWidth = (containerWidth - horizontalMargin * 3) / 2
-        let itemHeight = NftCollectionsTokenView.height(containerWidth: itemWidth)
+        let itemHeight = NftAssetView.height(containerWidth: itemWidth)
         let bottomMargin = isLast ? bottomMarginLast : bottomMarginRegular
         return topMargin + itemHeight + bottomMargin
+    }
+
+}
+
+extension NftDoubleCell {
+
+    struct ViewItem {
+        let collectionUid: String
+        let tokenId: String
+        let imageUrl: String?
+        let name: String
+        let onSale: Bool
+        let coinPrice: String
+        let fiatPrice: String?
+
+        var uid: String {
+            "\(collectionUid)-\(tokenId)"
+        }
+
+        var hash: String {
+            "\(onSale)-\(coinPrice)-\(fiatPrice ?? "nil")"
+        }
     }
 
 }

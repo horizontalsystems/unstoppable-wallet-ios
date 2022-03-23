@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 import Kingfisher
 
-class NftCollectionsTokenView: UIView {
+class NftAssetView: UIView {
     private static let imageMargin: CGFloat = .margin4
     private static let bottomHeight: CGFloat = 52
 
@@ -160,7 +160,7 @@ class NftCollectionsTokenView: UIView {
 
 }
 
-extension NftCollectionsTokenView {
+extension NftAssetView {
 
     static func height(containerWidth: CGFloat) -> CGFloat {
         let imageSize = containerWidth - imageMargin * 2

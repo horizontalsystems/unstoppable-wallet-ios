@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
 
 class NftCollectionAssetsViewModel {
     private let service: NftCollectionAssetsService
@@ -14,7 +15,6 @@ class NftCollectionAssetsViewModel {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.newAssetsObservable) { [weak self] in self?.handle(newAssets: $0) }
 
         sync(state: service.state)
     }
@@ -25,10 +25,10 @@ class NftCollectionAssetsViewModel {
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .initialLoaded:
+        case .loaded(let items, let allLoaded):
             let viewItem = ViewItem(
-                    assetViewItems: assetViewItems(assets: service.assets),
-                    allLoaded: service.allLoaded
+                    assetViewItems: items.map { assetViewItem(item: $0) },
+                    allLoaded: allLoaded
             )
 
             viewItemRelay.accept(viewItem)
@@ -41,24 +41,33 @@ class NftCollectionAssetsViewModel {
         }
     }
 
-    private func handle(newAssets: [NftAsset]) {
-        let newAssetViewItems = assetViewItems(assets: newAssets)
-        let currentViewItems: [AssetViewItem] = viewItemRelay.value?.assetViewItems ?? []
+    private func assetViewItem(item: NftCollectionAssetsService.Item) -> NftDoubleCell.ViewItem {
+        let asset = item.asset
 
-        let viewItem = ViewItem(
-                assetViewItems: currentViewItems + newAssetViewItems,
-                allLoaded: service.allLoaded
+        var coinPrice = "---"
+        var fiatPrice: String?
+
+        if let price = item.price {
+            let coinValue = CoinValue(kind: .platformCoin(platformCoin: price.platformCoin), value: price.value)
+            if let value = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) {
+                coinPrice = value
+            }
+
+            if let priceItem = item.priceItem {
+                let currencyValue = CurrencyValue(currency: priceItem.price.currency, value: price.value * priceItem.price.value)
+                fiatPrice = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01))
+            }
+        }
+
+        return NftDoubleCell.ViewItem(
+                collectionUid: asset.collectionUid,
+                tokenId: asset.tokenId,
+                imageUrl: asset.imagePreviewUrl,
+                name: asset.name ?? "#\(asset.tokenId)",
+                onSale: asset.onSale,
+                coinPrice: coinPrice,
+                fiatPrice: fiatPrice
         )
-
-        viewItemRelay.accept(viewItem)
-    }
-
-    private func assetViewItems(assets: [NftAsset]) -> [AssetViewItem] {
-        assets.map { assetViewItem(asset: $0) }
-    }
-
-    private func assetViewItem(asset: NftAsset) -> AssetViewItem {
-        AssetViewItem()
     }
 
 }
@@ -90,12 +99,8 @@ extension NftCollectionAssetsViewModel {
 extension NftCollectionAssetsViewModel {
 
     struct ViewItem {
-        let assetViewItems: [AssetViewItem]
+        let assetViewItems: [NftDoubleCell.ViewItem]
         let allLoaded: Bool
-    }
-
-    struct AssetViewItem {
-
     }
 
 }
