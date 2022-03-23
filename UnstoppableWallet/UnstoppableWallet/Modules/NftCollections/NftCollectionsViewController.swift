@@ -86,11 +86,12 @@ class NftCollectionsViewController: ThemeViewController {
     }
 
     private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
-        guard let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
+        guard let collection = viewModel.collection(uid: viewItem.collectionUid), let asset = viewModel.asset(collectionUid: viewItem.collectionUid, tokenId: viewItem.tokenId) else {
             return
         }
 
-        present(module, animated: true)
+        let module = NftAssetModule.viewController(collection: collection, asset: asset, imageRatio: imageRatio)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
 }

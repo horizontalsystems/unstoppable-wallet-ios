@@ -1,26 +1,23 @@
 import UIKit
 import LanguageKit
-import ThemeKit
 import MarketKit
 
 struct NftCollectionModule {
 
-    static func viewController(collectionUid: String) -> UIViewController {
+    static func viewController(collection: NftCollection) -> UIViewController {
         let service = NftCollectionService()
         let viewModel = NftCollectionViewModel(service: service)
 
-        let overviewController = NftCollectionOverviewModule.viewController(collectionUid: collectionUid)
-        let assetsController = NftCollectionAssetsModule.viewController(collectionUid: collectionUid)
-        let activityController = NftCollectionActivityModule.viewController(collectionUid: collectionUid)
+        let overviewController = NftCollectionOverviewModule.viewController(collection: collection)
+        let assetsController = NftCollectionAssetsModule.viewController(collection: collection)
+        let activityController = NftCollectionActivityModule.viewController(collection: collection)
 
-        let viewController = NftCollectionViewController(
+        return NftCollectionViewController(
                 viewModel: viewModel,
                 overviewController: overviewController,
                 assetsController: assetsController,
                 activityController: activityController
         )
-
-        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

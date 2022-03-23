@@ -90,6 +90,14 @@ extension NftCollectionsViewModel {
         expandedUidsRelay.accept(expandedUids)
     }
 
+    func collection(uid: String) -> NftCollection? {
+        service.collection(uid: uid)
+    }
+
+    func asset(collectionUid: String, tokenId: String) -> NftAsset? {
+        service.asset(collectionUid: collectionUid, tokenId: tokenId)
+    }
+
 }
 
 extension NftCollectionsViewModel {

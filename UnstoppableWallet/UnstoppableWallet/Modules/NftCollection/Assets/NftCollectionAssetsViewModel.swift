@@ -86,6 +86,14 @@ extension NftCollectionAssetsViewModel {
         syncErrorRelay.asDriver()
     }
 
+    var collection: NftCollection {
+        service.collection
+    }
+
+    func asset(tokenId: String) -> NftAsset? {
+        service.asset(tokenId: tokenId)
+    }
+
     func onTapRetry() {
         service.reload()
     }

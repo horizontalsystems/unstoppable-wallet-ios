@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 
 class NftCollectionAssetsService {
-    private let collectionUid: String
+    let collection: NftCollection
     private let provider: HsNftProvider
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
@@ -19,8 +19,8 @@ class NftCollectionAssetsService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-assets-service", qos: .userInitiated)
 
-    init(collectionUid: String, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
-        self.collectionUid = collectionUid
+    init(collection: NftCollection, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
+        self.collection = collection
         self.provider = provider
         self.coinPriceService = coinPriceService
 
@@ -32,7 +32,7 @@ class NftCollectionAssetsService {
 
         state = .loading
 
-        provider.assetsSingle(collectionUid: collectionUid)
+        provider.assetsSingle(collectionUid: collection.uid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedAssets in
                     self?.handle(pagedAssets: pagedAssets)
@@ -53,7 +53,7 @@ class NftCollectionAssetsService {
 
         loadingMore = true
 
-        provider.assetsSingle(collectionUid: collectionUid, cursor: cursor)
+        provider.assetsSingle(collectionUid: collection.uid, cursor: cursor)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedAssets in
                     self?.handleMore(pagedAssets: pagedAssets)
@@ -160,6 +160,14 @@ extension NftCollectionAssetsService {
         queue.async {
             self._loadMore()
         }
+    }
+
+    func asset(tokenId: String) -> NftAsset? {
+        guard case .loaded(let items, _) = state else {
+            return nil
+        }
+
+        return items.first { $0.asset.tokenId == tokenId }?.asset
     }
 
 }
