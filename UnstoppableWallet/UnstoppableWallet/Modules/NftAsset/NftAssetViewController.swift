@@ -198,9 +198,9 @@ class NftAssetViewController: ThemeViewController {
         }
     }
 
-    private func openCollection(uid: String) {
-        let module = NftCollectionModule.viewController(collectionUid: uid)
-        present(module, animated: true)
+    private func openCollection() {
+        let module = NftCollectionModule.viewController(collection: viewModel.collection)
+        navigationController?.pushViewController(module, animated: true)
     }
 
 }
@@ -241,7 +241,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func titleSection(assetName: String, collectionUid: String, collectionName: String) -> SectionProtocol {
+    private func titleSection(assetName: String, collectionName: String) -> SectionProtocol {
         Section(
                 id: "title",
                 headerState: .margin(height: .margin12),
@@ -275,7 +275,7 @@ extension NftAssetViewController: SectionsDataSource {
                                 }
                             },
                             action: { [weak self] in
-                                self?.openCollection(uid: collectionUid)
+                                self?.openCollection()
                             }
                     )
                 ]
@@ -667,7 +667,7 @@ extension NftAssetViewController: SectionsDataSource {
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 
-            sections.append(titleSection(assetName: viewItem.name, collectionUid: viewItem.collectionUid, collectionName: viewItem.collectionName))
+            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName))
             sections.append(buttonsSection())
 
             if let statsViewItem = statsViewItem {

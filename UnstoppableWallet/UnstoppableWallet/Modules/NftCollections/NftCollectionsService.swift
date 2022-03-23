@@ -172,6 +172,14 @@ extension NftCollectionsService {
         totalItemRelay.asObservable()
     }
 
+    func collection(uid: String) -> NftCollection? {
+        assetCollection.collections.first { $0.uid == uid }
+    }
+
+    func asset(collectionUid: String, tokenId: String) -> NftAsset? {
+        assetCollection.assets.first { $0.collectionUid == collectionUid && $0.tokenId == tokenId }
+    }
+
 }
 
 extension NftCollectionsService {

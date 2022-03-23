@@ -156,6 +156,10 @@ extension NftAssetViewModel {
         openTraitRelay.asSignal()
     }
 
+    var collection: NftCollection {
+        service.collection
+    }
+
     func onSelectTrait(index: Int) {
         guard index < service.asset.traits.count else {
             return

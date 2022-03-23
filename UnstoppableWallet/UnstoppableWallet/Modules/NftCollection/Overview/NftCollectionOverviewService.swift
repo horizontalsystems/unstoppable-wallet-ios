@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 
 class NftCollectionOverviewService {
-    private let collectionUid: String
+    private let collection: NftCollection
     private let provider: HsNftProvider
     private var disposeBag = DisposeBag()
 
@@ -13,8 +13,8 @@ class NftCollectionOverviewService {
         }
     }
 
-    init(collectionUid: String, provider: HsNftProvider) {
-        self.collectionUid = collectionUid
+    init(collection: NftCollection, provider: HsNftProvider) {
+        self.collection = collection
         self.provider = provider
 
         sync()
@@ -25,7 +25,7 @@ class NftCollectionOverviewService {
 
         state = .loading
 
-        provider.collectionSingle(uid: collectionUid)
+        provider.collectionSingle(uid: collection.uid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collection in
                     let item = Item(collection: collection)

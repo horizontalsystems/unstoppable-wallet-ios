@@ -17,13 +17,9 @@ class NftAssetService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init?(collectionUid: String, tokenId: String, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
+    init(collection: NftCollection, asset: NftAsset, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
         self.nftManager = nftManager
         self.coinPriceService = coinPriceService
-
-        guard let collection = nftManager.collection(uid: collectionUid), let asset = nftManager.asset(collectionUid: collectionUid, tokenId: tokenId) else {
-            return nil
-        }
 
         self.collection = collection
         self.asset = asset
