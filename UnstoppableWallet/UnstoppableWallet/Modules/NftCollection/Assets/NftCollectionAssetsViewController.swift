@@ -11,11 +11,13 @@ class NftCollectionAssetsViewController: ThemeViewController {
     private let viewModel: NftCollectionAssetsViewModel
     private let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
 
     weak var parentNavigationController: UINavigationController?
+
+    private var viewItem: NftCollectionAssetsViewModel.ViewItem?
 
     init(viewModel: NftCollectionAssetsViewModel) {
         self.viewModel = viewModel
@@ -61,10 +63,10 @@ class NftCollectionAssetsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: NftDoubleCell.self)
+        tableView.registerCell(forClass: SpinnerCell.self)
 
-        tableView.showsVerticalScrollIndicator = false
-
-//        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -77,17 +79,17 @@ class NftCollectionAssetsViewController: ThemeViewController {
         viewModel.onTapRetry()
     }
 
-//    private func sync(viewItem: NftCollectionAssetsViewModel.ViewItem?) {
-//        self.viewItem = viewItem
-//
-//        if viewItem != nil {
-//            tableView.isHidden = false
-//        } else {
-//            tableView.isHidden = true
-//        }
-//
-//        tableView.reload()
-//    }
+    private func sync(viewItem: NftCollectionAssetsViewModel.ViewItem?) {
+        self.viewItem = viewItem
+
+        if viewItem != nil {
+            tableView.isHidden = false
+        } else {
+            tableView.isHidden = true
+        }
+
+        tableView.reload()
+    }
 
     private func reloadTable() {
         tableView.buildSections()
@@ -96,12 +98,94 @@ class NftCollectionAssetsViewController: ThemeViewController {
         tableView.endUpdates()
     }
 
+    private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
+        guard let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
+            return
+        }
+
+        parentNavigationController?.present(module, animated: true)
+    }
+
 }
 
 extension NftCollectionAssetsViewController: SectionsDataSource {
 
-    public func buildSections() -> [SectionProtocol] {
+    private func row(leftViewItem: NftDoubleCell.ViewItem, rightViewItem: NftDoubleCell.ViewItem?, isLast: Bool) -> RowProtocol {
+        Row<NftDoubleCell>(
+                id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
+                hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
+                dynamicHeight: { width in
+                    NftDoubleCell.height(containerWidth: width, isLast: isLast)
+                },
+                bind: { [weak self] cell, _ in
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
+                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
+                    }
+
+                    if isLast {
+                        self?.viewModel.onReachBottom()
+                    }
+                }
+        )
+    }
+
+    private func rows(assetViewItems: [NftDoubleCell.ViewItem]) -> [RowProtocol] {
+        var rows = [RowProtocol]()
+
+        let doubleRowCount = assetViewItems.count / 2
+        let hasSingleRow = assetViewItems.count % 2 == 1
+
+        for i in 0..<doubleRowCount {
+            let row = row(
+                    leftViewItem: assetViewItems[i * 2],
+                    rightViewItem: assetViewItems[(i * 2) + 1],
+                    isLast: i == doubleRowCount - 1 && !hasSingleRow
+            )
+            rows.append(row)
+        }
+
+        if let assetViewItem = assetViewItems.last, hasSingleRow {
+            let row = row(
+                    leftViewItem: assetViewItem,
+                    rightViewItem: nil,
+                    isLast: true
+            )
+            rows.append(row)
+        }
+
+        return rows
+    }
+
+    private func spinnerRow() -> RowProtocol {
+        Row<SpinnerCell>(
+                id: "spinner",
+                height: 24
+        )
+    }
+
+    func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
+
+        if let viewItem = viewItem {
+            let assetsSection = Section(
+                    id: "main",
+                    rows: rows(assetViewItems: viewItem.assetViewItems)
+            )
+
+            sections.append(assetsSection)
+
+            if !viewItem.allLoaded {
+                let spinnerSection = Section(
+                        id: "spinner",
+                        footerState: .marginColor(height: .margin32, color: .clear),
+                        rows: [
+                            spinnerRow()
+                        ]
+                )
+
+                sections.append(spinnerSection)
+            }
+        }
 
         return sections
     }
