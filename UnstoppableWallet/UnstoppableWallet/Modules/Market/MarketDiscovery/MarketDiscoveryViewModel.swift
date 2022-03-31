@@ -36,13 +36,27 @@ class MarketDiscoveryViewModel {
             return DiscoveryViewItem(
                     type: .topCoins,
                     imageType: .local(name: "Categories - Top Coins"),
-                    name: "market_discovery.top_coins".localized
+                    name: "market_discovery.top_coins".localized,
+                    marketCap: nil,
+                    diff: nil,
+                    diffType: .up
             )
         case .category(let category):
+            var marketCap: String?
+            if let amount = category.marketCap {
+                marketCap = CurrencyCompactFormatter.instance.format(currency: service.currency, value: amount)
+            } else {
+                marketCap = "----"
+            }
+            let diffString: String? = category.diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
+
             return DiscoveryViewItem(
                     type: .category(uid: category.uid),
                     imageType: .remote(url: category.imageUrl),
-                    name: category.name
+                    name: category.name,
+                    marketCap: marketCap,
+                    diff: diffString,
+                    diffType: (category.diff?.isSignMinus ?? true) ? .down : .up
             )
         }
     }
@@ -94,6 +108,9 @@ extension MarketDiscoveryViewModel {
         let type: Type
         let imageType: ImageType
         let name: String
+        let marketCap: String?
+        let diff: String?
+        let diffType: DiffType
 
         enum `Type` {
             case topCoins
@@ -104,6 +121,19 @@ extension MarketDiscoveryViewModel {
             case local(name: String)
             case remote(url: String)
         }
+
+        enum DiffType {
+            case down
+            case up
+
+            var textColor: UIColor {
+                switch self {
+                case .up: return .themeRemus
+                case .down: return .themeLucian
+                }
+            }
+        }
+
     }
 
     struct SearchViewItem {

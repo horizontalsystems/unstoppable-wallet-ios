@@ -3,6 +3,9 @@ import UIKit
 class MarketDiscoveryCell: UICollectionViewCell {
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
+    private let stackView = UIStackView()
+    private let marketCapLabel = UILabel()
+    private let diffLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,9 +18,25 @@ class MarketDiscoveryCell: UICollectionViewCell {
             maker.top.trailing.equalToSuperview()
         }
 
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.leading.bottom.equalToSuperview().inset(CGFloat.margin12)
+        }
+
+        stackView.axis = .horizontal
+        stackView.spacing = .margin6
+
+        stackView.addArrangedSubview(marketCapLabel)
+        marketCapLabel.font = .caption
+        marketCapLabel.textColor = .themeGray
+
+        stackView.addArrangedSubview(diffLabel)
+        diffLabel.font = .caption
+
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            maker.bottom.equalTo(stackView.snp.top).offset(-CGFloat.margin8)
         }
 
         nameLabel.numberOfLines = 0
@@ -38,6 +57,14 @@ class MarketDiscoveryCell: UICollectionViewCell {
         }
 
         nameLabel.text = viewItem.name
+
+        marketCapLabel.text = viewItem.marketCap
+        diffLabel.text = viewItem.diff
+        diffLabel.textColor = viewItem.diffType.textColor
+
+        nameLabel.snp.updateConstraints { maker in
+            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.diff == nil ? 0 : -CGFloat.margin8)
+        }
     }
 
 }

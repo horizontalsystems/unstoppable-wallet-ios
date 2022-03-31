@@ -13,6 +13,8 @@ class App {
     let keychainKit: IKeychainKit
     let pinKit: IPinKit
 
+    let currencyKit: CurrencyKit.Kit
+
     let marketKit: MarketKit.Kit
 
     let appConfigProvider: AppConfigProvider
@@ -39,8 +41,6 @@ class App {
     let transactionAdapterManager: TransactionAdapterManager
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
-
-    let currencyKit: CurrencyKit.Kit
 
     let favoritesManager: FavoritesManager
 
@@ -101,6 +101,8 @@ class App {
 
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
+
+        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
         marketKit = try! MarketKit.Kit.instance(
                 hsApiBaseUrl: appConfigProvider.marketApiUrl,
@@ -181,8 +183,6 @@ class App {
 
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: enabledWalletCacheStorage, accountManager: accountManager)
-
-        currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
