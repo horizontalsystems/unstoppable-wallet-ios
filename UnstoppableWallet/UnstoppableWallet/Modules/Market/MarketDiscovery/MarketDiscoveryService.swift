@@ -1,9 +1,14 @@
+import Foundation
 import RxSwift
 import RxRelay
 import MarketKit
+import CurrencyKit
 
 class MarketDiscoveryService {
-    private let marketKit: Kit
+    private let disposeBag = DisposeBag()
+
+    private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
     private let favoritesManager: FavoritesManager
 
     private var discoveryItems = [DiscoveryItem]()
@@ -15,11 +20,30 @@ class MarketDiscoveryService {
         }
     }
 
-    init(marketKit: Kit, favoritesManager: FavoritesManager) {
+    public var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    public var diffTimeframe: DiffTimeframe = .day {
+        didSet {
+            syncDiscoveryItems()
+
+            if case .discovery = state {
+                state = .discovery(items: discoveryItems)
+            }
+        }
+    }
+
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, favoritesManager: FavoritesManager) {
         self.marketKit = marketKit
+        self.currencyKit = currencyKit
         self.favoritesManager = favoritesManager
 
+        subscribe(disposeBag, marketKit.coinCategoriesObservable) { [weak self] _ in self?.syncDiscoveryItems() }
+
         syncDiscoveryItems()
+        syncDiscoveryMarketData()
+
         state = .discovery(items: discoveryItems)
     }
 
@@ -27,8 +51,8 @@ class MarketDiscoveryService {
         var discoveryItems: [DiscoveryItem] = [.topCoins]
 
         do {
-            for category in try marketKit.coinCategories() {
-                discoveryItems.append(.category(category: category))
+            for coinCategory in try marketKit.coinCategories() {
+                discoveryItems.append(.category(category: Category(coinCategory: coinCategory)))
             }
         } catch {
             // do nothing
@@ -43,6 +67,32 @@ class MarketDiscoveryService {
         }
 
         return fullCoins[index].coin.uid
+    }
+
+    private func syncDiscoveryMarketData() {
+        marketKit.categoriesMarketDataSingle(currencyCode: currencyKit.baseCurrency.code)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] categoriesMarketData in
+                    self?.processMarketData(discoveryMarketData: categoriesMarketData)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func processMarketData(discoveryMarketData: [CoinCategoryMarketData]) {
+        var discoveryItems: [DiscoveryItem] = [.topCoins]
+
+        for item in self.discoveryItems {
+            if case let .category(category) = item, let marketData = (discoveryMarketData.first { $0.uid == category.uid }) {
+                discoveryItems.append(.category(category: Category(category: category, marketData: marketData, diffTimeframe: diffTimeframe)))
+            }
+        }
+
+        self.discoveryItems = discoveryItems
+
+        if case .discovery = state {
+            state = .discovery(items: discoveryItems)
+        }
     }
 
 }
@@ -100,7 +150,54 @@ extension MarketDiscoveryService {
 
     enum DiscoveryItem {
         case topCoins
-        case category(category: CoinCategory)
+        case category(category: Category)
+    }
+
+    struct Category {
+        let uid: String
+        let name: String
+        let imageUrl: String
+        let descriptions: [String: String]
+        let order: Int
+        let marketCap: Decimal?
+        let diff: Decimal?
+
+        init(coinCategory: CoinCategory) {
+            uid = coinCategory.uid
+            name = coinCategory.name
+            imageUrl = coinCategory.imageUrl
+            descriptions = coinCategory.descriptions
+            order = coinCategory.order
+            marketCap = nil
+            diff = nil
+        }
+
+        init(category: Category, marketData: CoinCategoryMarketData, diffTimeframe: DiffTimeframe) {
+            uid = category.uid
+            name = category.name
+            imageUrl = category.imageUrl
+            descriptions = category.descriptions
+            order = category.order
+
+            marketCap = marketData.marketCap
+            diff = diffTimeframe.diff(coinCategory: marketData)
+        }
+
+    }
+
+    enum DiffTimeframe {
+        case day
+        case week
+        case month
+
+        func diff(coinCategory: CoinCategoryMarketData) -> Decimal? {
+            switch self {
+            case .day: return coinCategory.diff24H
+            case .week: return coinCategory.diff1W
+            case .month: return coinCategory.diff1M
+            }
+        }
+
     }
 
 }
