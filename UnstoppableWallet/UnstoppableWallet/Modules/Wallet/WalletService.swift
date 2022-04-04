@@ -154,7 +154,7 @@ class WalletService {
         allItems = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
-        let coinUids = Set(wallets.filter { !$0.coin.isCustom }.map { $0.coin.uid })
+        let coinUids = Set(wallets.filter { !$0.platformCoin.isCustom }.map { $0.coin.uid })
         let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeCoin(coinType: $0.coinType)?.coin.uid })
         coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
     }

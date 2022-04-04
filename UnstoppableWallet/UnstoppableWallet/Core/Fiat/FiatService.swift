@@ -150,7 +150,7 @@ extension FiatService {
         if let platformCoin = platformCoin {
             sync(coinPrice: marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currency.code))
 
-            if !platformCoin.coin.isCustom {
+            if !platformCoin.isCustom {
                 marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                         .subscribe(onNext: { [weak self] coinPrice in
