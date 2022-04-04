@@ -46,7 +46,7 @@ extension SendPresenter: ISendViewDelegate {
         view?.set(coin: platformCoin.coin, coinType: platformCoin.coinType)
         handler.onViewDidLoad()
 
-        if !platformCoin.coin.isCustom {
+        if !platformCoin.isCustom {
             interactor.subscribeToCoinPrice(coinUid: platformCoin.coin.uid, currencyCode: interactor.baseCurrency.code)
         }
 
