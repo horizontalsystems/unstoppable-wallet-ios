@@ -42,13 +42,7 @@ class MarketDiscoveryViewModel {
                     diffType: .up
             )
         case .category(let category):
-            var marketCap: String?
-            if let amount = category.marketCap {
-                marketCap = CurrencyCompactFormatter.instance.format(currency: service.currency, value: amount)
-            } else {
-                marketCap = "----"
-            }
-            let diffString: String? = category.diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
+            let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, currency: service.currency)
 
             return DiscoveryViewItem(
                     type: .category(uid: category.uid),
@@ -56,7 +50,7 @@ class MarketDiscoveryViewModel {
                     name: category.name,
                     marketCap: marketCap,
                     diff: diffString,
-                    diffType: (category.diff?.isSignMinus ?? true) ? .down : .up
+                    diffType: diffType
             )
         }
     }
@@ -110,7 +104,7 @@ extension MarketDiscoveryViewModel {
         let name: String
         let marketCap: String?
         let diff: String?
-        let diffType: DiffType
+        let diffType: MarketDiscoveryModule.DiffType
 
         enum `Type` {
             case topCoins
@@ -120,18 +114,6 @@ extension MarketDiscoveryViewModel {
         enum ImageType {
             case local(name: String)
             case remote(url: String)
-        }
-
-        enum DiffType {
-            case down
-            case up
-
-            var textColor: UIColor {
-                switch self {
-                case .up: return .themeRemus
-                case .down: return .themeLucian
-                }
-            }
         }
 
     }
