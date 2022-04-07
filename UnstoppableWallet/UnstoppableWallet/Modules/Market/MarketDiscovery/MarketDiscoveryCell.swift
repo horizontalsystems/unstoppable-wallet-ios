@@ -1,6 +1,8 @@
 import UIKit
 
 class MarketDiscoveryCell: UICollectionViewCell {
+    static let cellHeight: CGFloat = 140
+
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
     private let stackView = UIStackView()
@@ -55,6 +57,20 @@ class MarketDiscoveryCell: UICollectionViewCell {
         case .remote(let url):
             imageView.setImage(withUrlString: url, placeholder: nil)
         }
+
+        nameLabel.text = viewItem.name
+
+        marketCapLabel.text = viewItem.marketCap
+        diffLabel.text = viewItem.diff
+        diffLabel.textColor = viewItem.diffType.textColor
+
+        nameLabel.snp.updateConstraints { maker in
+            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.diff == nil ? 0 : -CGFloat.margin8)
+        }
+    }
+
+    func set(viewItem: MarketOverviewCategoryViewModel.ViewItem) {
+        imageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
 
         nameLabel.text = viewItem.name
 
