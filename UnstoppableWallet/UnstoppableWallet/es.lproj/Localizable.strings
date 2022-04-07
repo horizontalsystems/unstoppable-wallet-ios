@@ -340,6 +340,7 @@
 "market.top.section.header.see_all" = "Ver Todos";
 "market.top.section.header.top_gainers" = "Máximos Ganadores";
 "market.top.section.header.top_losers" = "Máximos Perdedores";
+"market.top.section.header.top_sectors" = "Top Sectors";
 "market.top.section.header.news" = "Noticias";
 "market.top.volume.title" = "Volumen";
 "market.top.market_cap.title" = "Capitalización de Mercado";
