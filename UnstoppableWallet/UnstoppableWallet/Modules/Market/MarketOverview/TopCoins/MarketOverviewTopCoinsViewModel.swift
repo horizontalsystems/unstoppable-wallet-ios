@@ -6,33 +6,33 @@ import MarketKit
 import Chart
 
 class MarketOverviewTopCoinsViewModel {
-    private let service: MarketOverviewService
+    private let service: MarketOverviewTopCoinsService
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
     private let statusRelay = BehaviorRelay<DataStatus<ViewItem>>(value: .loading)
 
-    init(service: MarketOverviewService, decorator: MarketListMarketFieldDecorator) {
+    init(service: MarketOverviewTopCoinsService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
         self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewService.State>) {
+    private func sync(status: DataStatus<MarketOverviewTopCoinsService.State>) {
         statusRelay.accept(status.map({ state in
             viewItem(listItems: state.listItems, globalMarketData: state.globalMarketData)
         }))
     }
 
-    private func viewItem(listItems: [MarketOverviewService.ListItem], globalMarketData: MarketOverviewService.GlobalMarketData) -> ViewItem {
+    private func viewItem(listItems: [MarketOverviewTopCoinsService.ListItem], globalMarketData: MarketOverviewTopCoinsService.GlobalMarketData) -> ViewItem {
         ViewItem(
                 globalMarketViewItem: globalMarketViewItem(globalMarketData: globalMarketData),
                 topViewItems: listItems.map { topViewItem(item: $0) }
         )
     }
 
-    private func globalMarketViewItem(globalMarketData: MarketOverviewService.GlobalMarketData) -> GlobalMarketViewItem {
+    private func globalMarketViewItem(globalMarketData: MarketOverviewTopCoinsService.GlobalMarketData) -> GlobalMarketViewItem {
         GlobalMarketViewItem(
                 totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
                 volume24h: chartViewItem(item: globalMarketData.volume24h),
@@ -41,7 +41,7 @@ class MarketOverviewTopCoinsViewModel {
         )
     }
 
-    private func chartViewItem(item: MarketOverviewService.GlobalMarketItem) -> ChartViewItem {
+    private func chartViewItem(item: MarketOverviewTopCoinsService.GlobalMarketItem) -> ChartViewItem {
         let value = item.amount.flatMap { CurrencyCompactFormatter.instance.format(currency: $0.currency, value: $0.value) }
 
         var chartData: ChartData?
@@ -77,7 +77,7 @@ class MarketOverviewTopCoinsViewModel {
         )
     }
 
-    private func topViewItem(item: MarketOverviewService.ListItem) -> TopViewItem {
+    private func topViewItem(item: MarketOverviewTopCoinsService.ListItem) -> TopViewItem {
         TopViewItem(
                 listType: item.listType,
                 imageName: imageName(listType: item.listType),
@@ -86,14 +86,14 @@ class MarketOverviewTopCoinsViewModel {
         )
     }
 
-    private func imageName(listType: MarketOverviewService.ListType) -> String {
+    private func imageName(listType: MarketOverviewTopCoinsService.ListType) -> String {
         switch listType {
         case .topGainers: return "circle_up_20"
         case .topLosers: return "circle_down_20"
         }
     }
 
-    private func title(listType: MarketOverviewService.ListType) -> String {
+    private func title(listType: MarketOverviewTopCoinsService.ListType) -> String {
         switch listType {
         case .topGainers: return "market.top.section.header.top_gainers".localized
         case .topLosers: return "market.top.section.header.top_losers".localized
@@ -113,16 +113,16 @@ extension MarketOverviewTopCoinsViewModel {
         MarketModule.MarketTop.allCases.map { $0.title }
     }
 
-    func marketTop(listType: MarketOverviewService.ListType) -> MarketModule.MarketTop {
+    func marketTop(listType: MarketOverviewTopCoinsService.ListType) -> MarketModule.MarketTop {
         service.marketTop(listType: listType)
     }
 
-    func marketTopIndex(listType: MarketOverviewService.ListType) -> Int {
+    func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int {
         let marketTop = service.marketTop(listType: listType)
         return MarketModule.MarketTop.allCases.firstIndex(of: marketTop) ?? 0
     }
 
-    func onSelect(marketTopIndex: Int, listType: MarketOverviewService.ListType) {
+    func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType) {
         let marketTop = MarketModule.MarketTop.allCases[marketTopIndex]
         service.set(marketTop: marketTop, listType: listType)
     }
@@ -155,7 +155,7 @@ extension MarketOverviewTopCoinsViewModel {
     }
 
     struct TopViewItem {
-        let listType: MarketOverviewService.ListType
+        let listType: MarketOverviewTopCoinsService.ListType
         let imageName: String
         let title: String
         let listViewItems: [MarketModule.ListViewItem]
