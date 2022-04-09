@@ -4,7 +4,7 @@ import RxRelay
 import CurrencyKit
 import MarketKit
 
-class MarketOverviewService {
+class MarketOverviewTopCoinsService {
     private let listCount = 5
 
     private let marketKit: MarketKit.Kit
@@ -113,7 +113,7 @@ class MarketOverviewService {
 
 }
 
-extension MarketOverviewService {
+extension MarketOverviewTopCoinsService {
 
     var stateObservable: Observable<DataStatus<State>> {
         statusRelay.asObservable()
@@ -134,7 +134,7 @@ extension MarketOverviewService {
 
 }
 
-extension MarketOverviewService: IMarketListDecoratorService {
+extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
 
     var initialMarketField: MarketModule.MarketField {
         .price
@@ -156,7 +156,7 @@ extension MarketOverviewService: IMarketListDecoratorService {
 
 }
 
-extension MarketOverviewService {
+extension MarketOverviewTopCoinsService {
 
     struct InternalState {
         let marketInfos: [MarketInfo]

@@ -10,7 +10,6 @@ class MarketOverviewCategoryCell: UITableViewCell {
 
     var viewItems = [MarketOverviewCategoryViewModel.ViewItem]() {
         didSet {
-            print("viewItems count: \(viewItems.count)")
             collectionView.reloadData()
         }
     }

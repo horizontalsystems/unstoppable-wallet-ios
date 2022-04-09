@@ -74,7 +74,7 @@ class MarketOverviewTopCoinsDataSource {
         )
     }
 
-    private func didTapSeeAll(listType: MarketOverviewService.ListType) {
+    private func didTapSeeAll(listType: MarketOverviewTopCoinsService.ListType) {
         let module = MarketTopModule.viewController(
                 marketTop: viewModel.marketTop(listType: listType),
                 sortingField: listType.sortingField,
