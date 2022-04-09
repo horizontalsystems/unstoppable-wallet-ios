@@ -20,7 +20,7 @@ class MarketOverviewTopCoinsDataSource {
 
     private let viewModel: MarketOverviewTopCoinsViewModel
 
-    private var topViewItems: [MarketOverviewTopCoinsViewModel.TopViewItem]?
+    private var topViewItems: [MarketOverviewTopCoinsViewModel.TopViewItem] = []
 
     private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
@@ -30,10 +30,9 @@ class MarketOverviewTopCoinsDataSource {
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewTopCoinsViewModel.ViewItem>) {
-        self.status = status.map { [weak self] viewItem in
-            self?.topViewItems = viewItem.topViewItems
-            self?.marketMetricsCell.set(viewItem: viewItem.globalMarketViewItem)
+    private func sync(status: DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>) {
+        self.status = status.map { [weak self] viewItems in
+            self?.topViewItems = viewItems
 
             return sections
         }
@@ -94,65 +93,50 @@ class MarketOverviewTopCoinsDataSource {
     private var sections: [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if let viewItems = topViewItems {
-            let metricsSection = Section(
-                    id: "market_metrics",
+        let marketTops = viewModel.marketTops
+
+        for viewItem in topViewItems {
+            let listType = viewItem.listType
+            let currentMarketTopIndex = viewModel.marketTopIndex(listType: listType)
+
+            let headerSection = Section(
+                    id: "header_\(listType.rawValue)",
+                    footerState: .margin(height: .margin12),
                     rows: [
-                        StaticRow(
-                                cell: marketMetricsCell,
-                                id: "metrics",
-                                height: MarketOverviewMetricsCell.cellHeight
+                        Row<MarketOverviewHeaderCell>(
+                                id: "header_\(listType.rawValue)",
+                                height: .heightCell48,
+                                bind: { [weak self] cell, _ in
+                                    cell.set(backgroundStyle: .transparent)
+
+                                    cell.set(values: marketTops)
+                                    cell.setSelected(index: currentMarketTopIndex)
+                                    cell.onSelect = { index in
+                                        self?.viewModel.onSelect(marketTopIndex: index, listType: listType)
+                                    }
+
+                                    cell.titleImage = UIImage(named: viewItem.imageName)
+                                    cell.title = viewItem.title
+                                }
                         )
                     ]
             )
 
-            sections.append(metricsSection)
+            let listSection = Section(
+                    id: viewItem.listType.rawValue,
+                    footerState: .margin(height: .margin24),
+                    rows: rows(listViewItems: viewItem.listViewItems) + [
+                        seeAllRow(
+                                id: "\(viewItem.listType.rawValue)-see-all",
+                                action: { [weak self] in
+                                    self?.didTapSeeAll(listType: viewItem.listType)
+                                }
+                        )
+                    ]
+            )
 
-            let marketTops = viewModel.marketTops
-
-            for viewItem in viewItems {
-                let listType = viewItem.listType
-                let currentMarketTopIndex = viewModel.marketTopIndex(listType: listType)
-
-                let headerSection = Section(
-                        id: "header_\(listType.rawValue)",
-                        footerState: .margin(height: .margin12),
-                        rows: [
-                            Row<MarketOverviewHeaderCell>(
-                                    id: "header_\(listType.rawValue)",
-                                    height: .heightCell48,
-                                    bind: { [weak self] cell, _ in
-                                        cell.set(backgroundStyle: .transparent)
-
-                                        cell.set(values: marketTops)
-                                        cell.setSelected(index: currentMarketTopIndex)
-                                        cell.onSelect = { index in
-                                            self?.viewModel.onSelect(marketTopIndex: index, listType: listType)
-                                        }
-
-                                        cell.titleImage = UIImage(named: viewItem.imageName)
-                                        cell.title = viewItem.title
-                                    }
-                            )
-                        ]
-                )
-
-                let listSection = Section(
-                        id: viewItem.listType.rawValue,
-                        footerState: .margin(height: .margin24),
-                        rows: rows(listViewItems: viewItem.listViewItems) + [
-                            seeAllRow(
-                                    id: "\(viewItem.listType.rawValue)-see-all",
-                                    action: { [weak self] in
-                                        self?.didTapSeeAll(listType: viewItem.listType)
-                                    }
-                            )
-                        ]
-                )
-
-                sections.append(headerSection)
-                sections.append(listSection)
-            }
+            sections.append(headerSection)
+            sections.append(listSection)
         }
 
         return sections

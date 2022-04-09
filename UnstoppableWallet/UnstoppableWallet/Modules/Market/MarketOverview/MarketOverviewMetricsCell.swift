@@ -82,7 +82,7 @@ class MarketOverviewMetricsCell: UITableViewCell {
 
 extension MarketOverviewMetricsCell {
 
-    func set(viewItem: MarketOverviewTopCoinsViewModel.GlobalMarketViewItem) {
+    func set(viewItem: MarketOverviewGlobalViewModel.GlobalMarketViewItem) {
         totalMarketCapView.set(
                 value: viewItem.totalMarketCap.value,
                 diff: viewItem.totalMarketCap.diff,

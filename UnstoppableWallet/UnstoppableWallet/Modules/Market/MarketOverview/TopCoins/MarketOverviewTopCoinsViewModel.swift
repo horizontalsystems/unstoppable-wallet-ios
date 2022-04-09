@@ -10,7 +10,7 @@ class MarketOverviewTopCoinsViewModel {
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<ViewItem>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<[TopViewItem]>>(value: .loading)
 
     init(service: MarketOverviewTopCoinsService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
@@ -19,71 +19,21 @@ class MarketOverviewTopCoinsViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewTopCoinsService.State>) {
-        statusRelay.accept(status.map({ state in
-            viewItem(listItems: state.listItems, globalMarketData: state.globalMarketData)
+    private func sync(status: DataStatus<[MarketOverviewTopCoinsService.ListItem]>) {
+        statusRelay.accept(status.map({ listItems in
+            viewItems(listItems: listItems)
         }))
     }
 
-    private func viewItem(listItems: [MarketOverviewTopCoinsService.ListItem], globalMarketData: MarketOverviewTopCoinsService.GlobalMarketData) -> ViewItem {
-        ViewItem(
-                globalMarketViewItem: globalMarketViewItem(globalMarketData: globalMarketData),
-                topViewItems: listItems.map { topViewItem(item: $0) }
-        )
-    }
-
-    private func globalMarketViewItem(globalMarketData: MarketOverviewTopCoinsService.GlobalMarketData) -> GlobalMarketViewItem {
-        GlobalMarketViewItem(
-                totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
-                volume24h: chartViewItem(item: globalMarketData.volume24h),
-                defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
-                defiTvl: chartViewItem(item: globalMarketData.defiTvl)
-        )
-    }
-
-    private func chartViewItem(item: MarketOverviewTopCoinsService.GlobalMarketItem) -> ChartViewItem {
-        let value = item.amount.flatMap { CurrencyCompactFormatter.instance.format(currency: $0.currency, value: $0.value) }
-
-        var chartData: ChartData?
-        var trend: MovementTrend = .neutral
-
-        let pointItems = item.pointItems
-
-        if let firstPointItem = pointItems.first, let lastPointItem = pointItems.last {
-            let chartItems: [ChartItem] = pointItems.map {
-                let item = ChartItem(timestamp: $0.timestamp)
-                item.added(name: .rate, value: $0.amount)
-                return item
-            }
-
-            if firstPointItem.amount > lastPointItem.amount {
-                trend = .down
-            } else if firstPointItem.amount < lastPointItem.amount {
-                trend = .up
-            }
-
-            chartData = ChartData(
-                    items: chartItems,
-                    startTimestamp: firstPointItem.timestamp,
-                    endTimestamp: lastPointItem.timestamp
+    private func viewItems(listItems: [MarketOverviewTopCoinsService.ListItem]) -> [TopViewItem] {
+        listItems.map { item in
+            TopViewItem(
+                    listType: item.listType,
+                    imageName: imageName(listType: item.listType),
+                    title: title(listType: item.listType),
+                    listViewItems: item.marketInfos.map { decorator.listViewItem(item: $0) }
             )
         }
-
-        return ChartViewItem(
-                value: value,
-                diff: item.diff,
-                chartData: chartData,
-                chartTrend: trend
-        )
-    }
-
-    private func topViewItem(item: MarketOverviewTopCoinsService.ListItem) -> TopViewItem {
-        TopViewItem(
-                listType: item.listType,
-                imageName: imageName(listType: item.listType),
-                title: title(listType: item.listType),
-                listViewItems: item.marketInfos.map { decorator.listViewItem(item: $0) }
-        )
     }
 
     private func imageName(listType: MarketOverviewTopCoinsService.ListType) -> String {
@@ -105,7 +55,7 @@ class MarketOverviewTopCoinsViewModel {
 
 extension MarketOverviewTopCoinsViewModel {
 
-    var statusDriver: Driver<DataStatus<ViewItem>> {
+    var statusDriver: Driver<DataStatus<[TopViewItem]>> {
         statusRelay.asDriver()
     }
 
@@ -134,25 +84,6 @@ extension MarketOverviewTopCoinsViewModel {
 }
 
 extension MarketOverviewTopCoinsViewModel {
-
-    struct ViewItem {
-        let globalMarketViewItem: GlobalMarketViewItem
-        let topViewItems: [TopViewItem]
-    }
-
-    struct GlobalMarketViewItem {
-        let totalMarketCap: ChartViewItem
-        let volume24h: ChartViewItem
-        let defiCap: ChartViewItem
-        let defiTvl: ChartViewItem
-    }
-
-    struct ChartViewItem {
-        let value: String?
-        let diff: Decimal?
-        let chartData: ChartData?
-        let chartTrend: MovementTrend
-    }
 
     struct TopViewItem {
         let listType: MarketOverviewTopCoinsService.ListType

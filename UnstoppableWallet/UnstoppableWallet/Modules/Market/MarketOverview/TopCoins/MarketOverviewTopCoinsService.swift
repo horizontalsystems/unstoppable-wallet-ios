@@ -12,13 +12,13 @@ class MarketOverviewTopCoinsService {
     private var disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private var internalStatus: DataStatus<InternalState> = .loading {
+    private var internalStatus: DataStatus<[MarketInfo]> = .loading {
         didSet {
             syncState()
         }
     }
 
-    private let statusRelay = BehaviorRelay<DataStatus<State>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<[ListItem]>>(value: .loading)
 
     private var marketTopMap: [ListType: MarketModule.MarketTop] = [.topGainers: .top250, .topLosers: .top250]
 
@@ -39,12 +39,9 @@ class MarketOverviewTopCoinsService {
             internalStatus = .loading
         }
 
-        Single.zip(
-                        marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code),
-                        marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .day1)
-                )
-                .subscribe(onSuccess: { [weak self] marketInfos, globalMarketPoints in
-                    self?.internalStatus = .completed(InternalState(marketInfos: marketInfos, globalMarketPoints: globalMarketPoints))
+        marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code)
+                .subscribe(onSuccess: { [weak self] marketInfos in
+                    self?.internalStatus = .completed(marketInfos)
                 }, onError: { [weak self] error in
                     self?.internalStatus = .failed(error)
                 })
@@ -52,8 +49,8 @@ class MarketOverviewTopCoinsService {
     }
 
     private func syncState() {
-        statusRelay.accept(internalStatus.map { internalState in
-            State(listItems: listItems(marketInfos: internalState.marketInfos), globalMarketData: globalMarketData(globalMarketPoints: internalState.globalMarketPoints))
+        statusRelay.accept(internalStatus.map { marketInfos in
+            listItems(marketInfos: marketInfos)
         })
     }
 
@@ -63,44 +60,6 @@ class MarketOverviewTopCoinsService {
             let marketInfos = Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
             return ListItem(listType: listType, marketInfos: marketInfos)
         }
-    }
-
-    private func globalMarketData(globalMarketPoints: [GlobalMarketPoint]) -> GlobalMarketData {
-        let marketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.marketCap) }
-        let volume24hPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.volume24h) }
-        let defiMarketCapPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.defiMarketCap) }
-        let tvlPointItems = globalMarketPoints.map { GlobalMarketPointItem(timestamp: $0.timestamp, amount: $0.tvl) }
-
-        return GlobalMarketData(
-                marketCap: globalMarketItem(pointItems: marketCapPointItems),
-                volume24h: globalMarketItem(pointItems: volume24hPointItems),
-                defiMarketCap: globalMarketItem(pointItems: defiMarketCapPointItems),
-                defiTvl: globalMarketItem(pointItems: tvlPointItems)
-        )
-    }
-
-    private func globalMarketItem(pointItems: [GlobalMarketPointItem]) -> GlobalMarketItem {
-        GlobalMarketItem(
-                amount: amount(pointItems: pointItems),
-                diff: diff(pointItems: pointItems),
-                pointItems: pointItems
-        )
-    }
-
-    private func amount(pointItems: [GlobalMarketPointItem]) -> CurrencyValue? {
-        guard let lastAmount = pointItems.last?.amount else {
-            return nil
-        }
-
-        return CurrencyValue(currency: currency, value: lastAmount)
-    }
-
-    private func diff(pointItems: [GlobalMarketPointItem]) -> Decimal? {
-        guard let firstAmount = pointItems.first?.amount, let lastAmount = pointItems.last?.amount, firstAmount != 0 else {
-            return nil
-        }
-
-        return (lastAmount - firstAmount) * 100 / firstAmount
     }
 
     private func syncIfPossible() {
@@ -115,7 +74,7 @@ class MarketOverviewTopCoinsService {
 
 extension MarketOverviewTopCoinsService {
 
-    var stateObservable: Observable<DataStatus<State>> {
+    var stateObservable: Observable<DataStatus<[ListItem]>> {
         statusRelay.asObservable()
     }
 
@@ -158,16 +117,6 @@ extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
 
 extension MarketOverviewTopCoinsService {
 
-    struct InternalState {
-        let marketInfos: [MarketInfo]
-        let globalMarketPoints: [GlobalMarketPoint]
-    }
-
-    struct State {
-        let listItems: [ListItem]
-        let globalMarketData: GlobalMarketData
-    }
-
     struct ListItem {
         let listType: ListType
         let marketInfos: [MarketInfo]
@@ -189,24 +138,6 @@ extension MarketOverviewTopCoinsService {
             case .topGainers, .topLosers: return .price
             }
         }
-    }
-
-    struct GlobalMarketData {
-        let marketCap: GlobalMarketItem
-        let volume24h: GlobalMarketItem
-        let defiMarketCap: GlobalMarketItem
-        let defiTvl: GlobalMarketItem
-    }
-
-    struct GlobalMarketItem {
-        let amount: CurrencyValue?
-        let diff: Decimal?
-        let pointItems: [GlobalMarketPointItem]
-    }
-
-    struct GlobalMarketPointItem {
-        let timestamp: TimeInterval
-        let amount: Decimal
     }
 
 }
