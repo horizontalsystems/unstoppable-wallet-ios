@@ -110,6 +110,7 @@ extension MarketModule {
         case lowestVolume
         case topGainers
         case topLosers
+        case topCollections
 
         var title: String {
             switch self {
@@ -119,6 +120,7 @@ extension MarketModule {
             case .lowestVolume: return "market.top.lowest_volume".localized
             case .topGainers: return "market.top.top_gainers".localized
             case .topLosers: return "market.top.top_losers".localized
+            case .topCollections: return "market.top.top_collections".localized
             }
         }
     }
@@ -238,7 +240,7 @@ extension Array where Element == MarketKit.MarketInfo {
             case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
             case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
             case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
-            case .topGainers, .topLosers:
+            case .topGainers, .topLosers, .topCollections:
                 guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return true
                 }
