@@ -1471,6 +1471,7 @@
 		1A5642FAA4C4473DC4595C46 /* ThemeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641157E25B15500E1B29F /* ThemeSettingsViewModel.swift */; };
 		1A564326C51940CC30439BC6 /* ReadMoreTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56485B094980B68B0A86AE /* ReadMoreTextCell.swift */; };
 		1A564335057D41EECDC8021B /* MarketOverviewTopCoinsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D661F3AE561D7FE9FAA /* MarketOverviewTopCoinsService.swift */; };
+		1A564357F7A2F3FC45BDC19B /* MarketOverviewNftCollectionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F8D82ED865825985F88 /* MarketOverviewNftCollectionsService.swift */; };
 		1A56435EB26CCED1DB73B057 /* MainSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D73251DBFA0CFE34D12 /* MainSettingsService.swift */; };
 		1A5643651979E1907BE1B12C /* BlockchainSettingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C46FB773A67E29D9D32 /* BlockchainSettingRecord.swift */; };
 		1A5643813B0713460096F6D1 /* AppVersionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446CCB15D32581396A59 /* AppVersionRecord.swift */; };
@@ -1639,6 +1640,7 @@
 		1A564BCC3839AD4C94EF8DA0 /* ThemeSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56487501D0D9AF28807C73 /* ThemeSettingsService.swift */; };
 		1A564BE7A540E7427795B8A8 /* WalletConnectSignMessageRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C60EABE355B1F395D97 /* WalletConnectSignMessageRequestViewController.swift */; };
 		1A564BF54F433692F3F9D610 /* MarketDiscoveryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564704A6BC210A672F59BC /* MarketDiscoveryFilter.swift */; };
+		1A564C09A6DBECEAFACF1BA6 /* MarketOverviewNftCollectionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F8D82ED865825985F88 /* MarketOverviewNftCollectionsService.swift */; };
 		1A564C10B9782D53375736C8 /* ReleaseNotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644074A3ACB1DFB63FF92 /* ReleaseNotesService.swift */; };
 		1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */; };
 		1A564C1ED93BC9A50A72FE66 /* FeeRatePriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643953F416DA3DA5DFBC3 /* FeeRatePriority.swift */; };
@@ -1676,14 +1678,17 @@
 		1A564DC4E55C1BE1C4D4CDA9 /* HighlightedDescriptionBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BCC9DD29DB5455669A5 /* HighlightedDescriptionBaseView.swift */; };
 		1A564DDF7DB43EE160025A3F /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
 		1A564DEEA0E56D2F0EF76FCC /* FilterCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F2CD07DBA5B054590A2 /* FilterCard.swift */; };
+		1A564DF353BE656CA6C6437B /* MarketOverviewNftCollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */; };
 		1A564E09FB049006167E033B /* PerformanceSideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B73ABBEFC58A13D501E /* PerformanceSideCollectionViewCell.swift */; };
 		1A564E0B7DB0060B9600FCB1 /* BalanceErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */; };
 		1A564E1912184BFC886548D9 /* MarketOverviewCategoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A6D161EAD22626332C1 /* MarketOverviewCategoryDataSource.swift */; };
 		1A564E2897197EB14584A62E /* MarketOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564206FEC56546760B9BEA /* MarketOverviewViewModel.swift */; };
 		1A564E3D155C35DFB0972233 /* EnabledWallet_v_0_13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A55E5866D6081EA6F69 /* EnabledWallet_v_0_13.swift */; };
 		1A564E3D1BD7610D43898DB6 /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
+		1A564E49B354B27E7DE636A6 /* MarketOverviewNftCollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */; };
 		1A564E49B65B5396F2CB47FB /* AppStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C8BA986A5635B1222FB /* AppStatusManager.swift */; };
 		1A564E4ABDEAB8664887CA16 /* MarketDiscoveryFilterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E7A01B2DD08CB174C10 /* MarketDiscoveryFilterHeaderView.swift */; };
+		1A564E768845395731A5B580 /* MarketOverviewNftCollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */; };
 		1A564E8CA0CFBE8B1E232B60 /* PerformanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641E505FE004F601943C4 /* PerformanceTableViewCell.swift */; };
 		1A564E9FD962ADDE60C7BC4A /* ZcashAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5642E923141415CCFC9167 /* ZcashAddressParserItem.swift */; };
 		1A564EA3DE50E38AFF843490 /* TextDropDownAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E853158F581F8C3777F /* TextDropDownAndSettingsView.swift */; };
@@ -1697,6 +1702,7 @@
 		1A564EFC5EE4D83BC6243E0E /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647728CD8738D6BD4D79C /* InfoViewModel.swift */; };
 		1A564F06F8B2F6C186157E18 /* WalletConnectSignMessageRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C60EABE355B1F395D97 /* WalletConnectSignMessageRequestViewController.swift */; };
 		1A564F12DDB161E6DC7B6195 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645834A105D3D90B7184E /* InfoHeaderView.swift */; };
+		1A564F1E941A0C7F307B17F9 /* MarketOverviewNftCollectionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F8D82ED865825985F88 /* MarketOverviewNftCollectionsService.swift */; };
 		1A564F382602A283C370E7FB /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56489DE231CDDCA75CAEB3 /* AppError.swift */; };
 		1A564F3C50FC28F2AF4AF4ED /* MarketOverviewGlobalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C48B3AABC56D2512ED /* MarketOverviewGlobalViewModel.swift */; };
 		1A564F3FFA9A1586F0182BCD /* ThemeSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56448C7FE52502CC690271 /* ThemeSettingsModule.swift */; };
@@ -3477,6 +3483,7 @@
 		1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsViewController.swift; sourceTree = "<group>"; };
 		1A5648911028181BB1462CFE /* TraitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitCell.swift; sourceTree = "<group>"; };
 		1A56489DE231CDDCA75CAEB3 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewNftCollectionsViewModel.swift; sourceTree = "<group>"; };
 		1A5648DA32EA5FC27E4CEF64 /* DepositService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositService.swift; sourceTree = "<group>"; };
 		1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		1A564920282E84A6E7EE05EB /* SendEthereumErrorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEthereumErrorCell.swift; sourceTree = "<group>"; };
@@ -3524,6 +3531,7 @@
 		1A564EDF0FD6A1D1575D1EFB /* MarketOverviewGlobalService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewGlobalService.swift; sourceTree = "<group>"; };
 		1A564F2CD07DBA5B054590A2 /* FilterCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCard.swift; sourceTree = "<group>"; };
 		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
+		1A564F8D82ED865825985F88 /* MarketOverviewNftCollectionsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewNftCollectionsService.swift; sourceTree = "<group>"; };
 		1A564FF31C5E879781A2D5E0 /* TraitsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitsCell.swift; sourceTree = "<group>"; };
 		25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Tests.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
@@ -5432,6 +5440,15 @@
 			path = Send;
 			sourceTree = "<group>";
 		};
+		1A5647449ACDA125F93116C2 /* TopNftCollections */ = {
+			isa = PBXGroup;
+			children = (
+				1A564F8D82ED865825985F88 /* MarketOverviewNftCollectionsService.swift */,
+				1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */,
+			);
+			path = TopNftCollections;
+			sourceTree = "<group>";
+		};
 		1A5647792BF6E777F087999A /* Sign */ = {
 			isa = PBXGroup;
 			children = (
@@ -5905,6 +5922,7 @@
 				1A5646DA41E1060F8643C9C0 /* GlobalMarket */,
 				1A5645A040DB85EC7ED82369 /* TopCoins */,
 				1A56441B781D474BC4F6FA85 /* Category */,
+				1A5647449ACDA125F93116C2 /* TopNftCollections */,
 				3AB682BC25BADD97002197A5 /* MarketOverviewModule.swift */,
 				58AAAFB549AE163AD4F920DD /* MarketOverviewViewController.swift */,
 				58AAA2521E8F8845D96AB865 /* MarketOverviewHeaderCell.swift */,
@@ -6802,7 +6820,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
@@ -8002,6 +8020,8 @@
 				1A564C4C0723A5C4FF645635 /* MarketOverviewGlobalService.swift in Sources */,
 				1A564F74C74906B87B1DF44B /* MarketOverviewGlobalViewModel.swift in Sources */,
 				1A5640E77A48AFC5048A94BC /* MarketOverviewGlobalDataSource.swift in Sources */,
+				1A564F1E941A0C7F307B17F9 /* MarketOverviewNftCollectionsService.swift in Sources */,
+				1A564E49B354B27E7DE636A6 /* MarketOverviewNftCollectionsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8972,6 +8992,8 @@
 				1A5648AB801E8DAA9B3D288E /* MarketOverviewGlobalService.swift in Sources */,
 				1A5645CA87E32639CEE6681F /* MarketOverviewGlobalViewModel.swift in Sources */,
 				1A5642348A701CF7CF5CD805 /* MarketOverviewGlobalDataSource.swift in Sources */,
+				1A564357F7A2F3FC45BDC19B /* MarketOverviewNftCollectionsService.swift in Sources */,
+				1A564DF353BE656CA6C6437B /* MarketOverviewNftCollectionsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9933,6 +9955,8 @@
 				1A564A4CF522A7A959482AA6 /* MarketOverviewGlobalService.swift in Sources */,
 				1A564F3C50FC28F2AF4AF4ED /* MarketOverviewGlobalViewModel.swift in Sources */,
 				1A5643CB57594E84707686A3 /* MarketOverviewGlobalDataSource.swift in Sources */,
+				1A564C09A6DBECEAFACF1BA6 /* MarketOverviewNftCollectionsService.swift in Sources */,
+				1A564E768845395731A5B580 /* MarketOverviewNftCollectionsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10339,7 +10363,7 @@
 				kind = branch;
 			};
 		};
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -10393,32 +10417,32 @@
 		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {

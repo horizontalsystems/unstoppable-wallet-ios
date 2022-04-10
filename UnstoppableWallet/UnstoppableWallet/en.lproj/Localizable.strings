@@ -367,6 +367,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.top.lowest_volume" = "Lowest Volume";
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_losers" = "Top Losers";
+"market.top.top_collections" = "Top NFT Collections";
+"market.top.floor_price" = "Floor:";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";

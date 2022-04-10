@@ -8,6 +8,7 @@ protocol INftProvider {
     func assetCollectionSingle(address: String) -> Single<NftAssetCollection>
     func collectionStatsSingle(uid: String) -> Single<NftCollectionStats>
     func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]>
+    func collectionsSingle(currencyCode: String) -> Single<[NftCollection]>
 }
 
 class NftManager {

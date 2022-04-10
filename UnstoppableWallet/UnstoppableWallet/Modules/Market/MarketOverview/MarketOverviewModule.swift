@@ -15,10 +15,15 @@ struct MarketOverviewModule {
         let categoryViewModel = MarketOverviewCategoryViewModel(service: marketDiscoveryService)
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel)
 
+        let nftCollectionsService = MarketOverviewNftCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
+        let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService)
+        let nftCollectionsDataSource = MarketOverviewTopCoinsDataSource(viewModel: nftCollectionsViewModel)
+
         let viewModel = MarketOverviewViewModel(dataSources: [
             marketOverviewDataSource,
             topCoinsDataSource,
-            categoryDataSource
+            categoryDataSource,
+            nftCollectionsDataSource
         ])
 
         return MarketOverviewViewController(viewModel: viewModel)

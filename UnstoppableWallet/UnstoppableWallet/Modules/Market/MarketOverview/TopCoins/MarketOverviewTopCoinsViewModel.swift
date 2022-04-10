@@ -40,6 +40,7 @@ class MarketOverviewTopCoinsViewModel {
         switch listType {
         case .topGainers: return "circle_up_20"
         case .topLosers: return "circle_down_20"
+        default: return ""
         }
     }
 
@@ -47,13 +48,13 @@ class MarketOverviewTopCoinsViewModel {
         switch listType {
         case .topGainers: return "market.top.section.header.top_gainers".localized
         case .topLosers: return "market.top.section.header.top_losers".localized
-
+        default: return ""
         }
     }
 
 }
 
-extension MarketOverviewTopCoinsViewModel {
+extension MarketOverviewTopCoinsViewModel: IMarketOverviewTopCoinsViewModel {
 
     var statusDriver: Driver<DataStatus<[TopViewItem]>> {
         statusRelay.asDriver()
@@ -79,6 +80,10 @@ extension MarketOverviewTopCoinsViewModel {
 
     func refresh() {
         service.refresh()
+    }
+
+    func collection(uid: String) -> NftCollection? {
+        nil
     }
 
 }

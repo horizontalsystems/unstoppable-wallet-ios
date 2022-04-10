@@ -55,7 +55,8 @@ class MarketOverviewTopCoinsService {
     }
 
     private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
-        ListType.allCases.map { listType -> ListItem in
+        let listTypes: [ListType] = [.topGainers, .topLosers]
+        return listTypes.map { listType -> ListItem in
             let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
             let marketInfos = Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
             return ListItem(listType: listType, marketInfos: marketInfos)
@@ -125,17 +126,19 @@ extension MarketOverviewTopCoinsService {
     enum ListType: String, CaseIterable {
         case topGainers
         case topLosers
+        case topCollections
 
         var sortingField: MarketModule.SortingField {
             switch self {
             case .topGainers: return .topGainers
             case .topLosers: return .topLosers
+            case .topCollections: return .topCollections
             }
         }
 
         var marketField: MarketModule.MarketField {
             switch self {
-            case .topGainers, .topLosers: return .price
+            case .topGainers, .topLosers, .topCollections: return .price
             }
         }
     }
