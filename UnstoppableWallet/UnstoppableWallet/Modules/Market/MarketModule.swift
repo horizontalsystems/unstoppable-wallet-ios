@@ -255,6 +255,30 @@ extension Array where Element == MarketKit.MarketInfo {
 
 }
 
+extension Array where Element == NftCollection {
+
+    func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [NftCollection] {
+        sorted { lhsCollection, rhsCollection in
+            switch sortingField {
+            case .highestCap: return lhsCollection.stats.marketCap ?? 0 > rhsCollection.stats.marketCap ?? 0
+            case .lowestCap: return lhsCollection.stats.marketCap ?? 0 < rhsCollection.stats.marketCap ?? 0
+            case .highestVolume: return lhsCollection.stats.totalVolume ?? 0 > rhsCollection.stats.totalVolume ?? 0
+            case .lowestVolume: return lhsCollection.stats.totalVolume ?? 0 < rhsCollection.stats.totalVolume ?? 0
+            case .topGainers, .topLosers, .topCollections:
+                guard let rhsPriceChange = rhsCollection.stats.priceChange else {
+                    return true
+                }
+                guard let lhsPriceChange = lhsCollection.stats.priceChange else {
+                    return false
+                }
+
+                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
+            }
+        }
+    }
+
+}
+
 extension MarketModule {  // ViewModel Items
 
     enum MarketDataValue {

@@ -74,7 +74,7 @@ class MarketOverviewHeaderCell: BaseThemeCell {
         onSeeAll?()
     }
 
-    var buttonMode: ButtonMode? {
+    var buttonMode: ButtonMode = .seeAll {
         didSet {
             rightButton.isHidden = true
             seeAllButton.isHidden = true
@@ -88,8 +88,7 @@ class MarketOverviewHeaderCell: BaseThemeCell {
             case .seeAll:
                 seeAllButton.isHidden = false
                 seeAllButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-            default:
-                print("there is nothing interesting here")
+            case .none: return
             }
         }
     }
@@ -101,6 +100,7 @@ extension MarketOverviewHeaderCell {
     enum ButtonMode {
         case selector
         case seeAll
+        case none
     }
 
 }

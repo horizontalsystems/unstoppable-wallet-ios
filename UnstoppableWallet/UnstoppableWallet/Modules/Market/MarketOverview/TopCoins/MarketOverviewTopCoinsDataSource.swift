@@ -5,6 +5,17 @@ import SectionsTableView
 import Chart
 import ComponentKit
 
+protocol IMarketOverviewTopCoinsViewModel {
+    var statusDriver: Driver<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>> { get }
+    var marketTops: [String] { get }
+    func marketTop(listType: MarketOverviewTopCoinsService.ListType) -> MarketModule.MarketTop
+    func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int
+    func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType)
+    func refresh()
+
+    func collection(uid: String) -> NftCollection?
+}
+
 class MarketOverviewTopCoinsDataSource {
     private let disposeBag = DisposeBag()
 
@@ -18,13 +29,13 @@ class MarketOverviewTopCoinsDataSource {
     }
     private let statusRelay = PublishRelay<()>()
 
-    private let viewModel: MarketOverviewTopCoinsViewModel
+    private let viewModel: IMarketOverviewTopCoinsViewModel
 
     private var topViewItems: [MarketOverviewTopCoinsViewModel.TopViewItem] = []
 
     private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
-    init(viewModel: MarketOverviewTopCoinsViewModel) {
+    init(viewModel: IMarketOverviewTopCoinsViewModel) {
         self.viewModel = viewModel
 
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
@@ -38,7 +49,7 @@ class MarketOverviewTopCoinsDataSource {
         }
     }
 
-    private func row(listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
+    private func row(listType: MarketOverviewTopCoinsService.ListType, listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
         Row<G14Cell>(
                 id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
                 height: .heightDoubleLineCell,
@@ -48,13 +59,13 @@ class MarketOverviewTopCoinsDataSource {
                     MarketModule.bind(cell: cell, viewItem: listViewItem)
                 },
                 action: { [weak self] _ in
-                    self?.onSelect(listViewItem: listViewItem)
+                    self?.onSelect(listType: listType, listViewItem: listViewItem)
                 })
     }
 
-    private func rows(listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
+    private func rows(listType: MarketOverviewTopCoinsService.ListType, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
         listViewItems.enumerated().map { index, listViewItem in
-            row(listViewItem: listViewItem, isFirst: index == 0)
+            row(listType: listType, listViewItem: listViewItem, isFirst: index == 0)
         }
     }
 
@@ -74,20 +85,25 @@ class MarketOverviewTopCoinsDataSource {
     }
 
     private func didTapSeeAll(listType: MarketOverviewTopCoinsService.ListType) {
-        let module = MarketTopModule.viewController(
-                marketTop: viewModel.marketTop(listType: listType),
-                sortingField: listType.sortingField,
-                marketField: listType.marketField
-        )
-        parentNavigationController?.present(module, animated: true)
+        if case .topCollections = listType {
+            parentNavigationController?.pushViewController(NftCollectionsModule.viewController(), animated: true)
+        } else {
+            let module = MarketTopModule.viewController(
+                    marketTop: viewModel.marketTop(listType: listType),
+                    sortingField: listType.sortingField,
+                    marketField: listType.marketField
+            )
+            parentNavigationController?.present(module, animated: true)
+        }
     }
 
-    private func onSelect(listViewItem: MarketModule.ListViewItem) {
-        guard let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
-            return
+    private func onSelect(listType: MarketOverviewTopCoinsService.ListType, listViewItem: MarketModule.ListViewItem) {
+        if case .topCollections = listType, let uid = listViewItem.uid, let collection = viewModel.collection(uid: uid) {
+            let module = NftCollectionModule.viewController(collection: collection)
+            parentNavigationController?.pushViewController(module, animated: true)
+        } else if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) {
+            parentNavigationController?.present(module, animated: true)
         }
-
-        parentNavigationController?.present(module, animated: true)
     }
 
     private var sections: [SectionProtocol] {
@@ -109,6 +125,7 @@ class MarketOverviewTopCoinsDataSource {
                                 bind: { [weak self] cell, _ in
                                     cell.set(backgroundStyle: .transparent)
 
+                                    cell.buttonMode = viewItem.listType == .topCollections ? .none : .selector
                                     cell.set(values: marketTops)
                                     cell.setSelected(index: currentMarketTopIndex)
                                     cell.onSelect = { index in
@@ -125,7 +142,7 @@ class MarketOverviewTopCoinsDataSource {
             let listSection = Section(
                     id: viewItem.listType.rawValue,
                     footerState: .margin(height: .margin24),
-                    rows: rows(listViewItems: viewItem.listViewItems) + [
+                    rows: rows(listType: viewItem.listType, listViewItems: viewItem.listViewItems) + [
                         seeAllRow(
                                 id: "\(viewItem.listType.rawValue)-see-all",
                                 action: { [weak self] in

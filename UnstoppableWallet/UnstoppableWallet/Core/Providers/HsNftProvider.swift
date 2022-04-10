@@ -127,7 +127,10 @@ class HsNftProvider {
                 totalSupply: response.totalSupply,
                 averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
                 averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
-                floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false)
+                floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
+                totalVolume: response.totalVolume,
+                priceChange: response.oneDayChange,
+                marketCap: response.marketCap
         )
     }
 
@@ -259,6 +262,18 @@ extension HsNftProvider: INftProvider {
         }
     }
 
+    func collectionsSingle(currencyCode: String) -> Single<[NftCollection]> {
+        let parameters: Parameters = [
+            "limit": collectionLimit,
+//            "currency": currencyCode.lowercased()
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request).map { [unowned self] responses in
+            collections(responses: responses)
+        }
+    }
+
 }
 
 extension HsNftProvider {
@@ -276,7 +291,7 @@ extension HsNftProvider {
         let stats: CollectionStatsResponse
 
         init(map: Map) throws {
-            contracts = try map.value("asset_contracts")
+            contracts = (try? map.value("asset_contracts")) ?? []
             uid = try map.value("uid")
             name = try map.value("name")
             description = try? map.value("description")
@@ -373,12 +388,18 @@ extension HsNftProvider {
 
     private struct CollectionStatsResponse: ImmutableMappable {
         let totalSupply: Int
+        let oneDayChange: Decimal
         let averagePrice7d: Decimal
         let averagePrice30d: Decimal
         let floorPrice: Decimal?
+        let totalVolume: Decimal?
+        let marketCap: Decimal
 
         init(map: Map) throws {
             totalSupply = try map.value("total_supply")
+            totalVolume = try map.value("total_volume", using: HsNftProvider.doubleToDecimalTransform)
+            marketCap = try map.value("market_cap", using: HsNftProvider.doubleToDecimalTransform)
+            oneDayChange = try map.value("one_day_change", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)
