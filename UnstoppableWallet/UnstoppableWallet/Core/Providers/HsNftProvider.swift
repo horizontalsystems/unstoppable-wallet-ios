@@ -130,7 +130,7 @@ class HsNftProvider {
                 floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
                 totalVolume: response.totalVolume,
                 priceChange: response.oneDayChange,
-                marketCap: response.marketCap
+                marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false)
         )
     }
 
@@ -264,13 +264,12 @@ extension HsNftProvider: INftProvider {
 
     func collectionsSingle(currencyCode: String) -> Single<[NftCollection]> {
         let parameters: Parameters = [
-            "limit": collectionLimit,
-//            "currency": currencyCode.lowercased()
+            "limit": collectionLimit
         ]
 
         let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, encoding: encoding, headers: headers)
-        return networkManager.single(request: request).map { [unowned self] responses in
-            collections(responses: responses)
+        return networkManager.single(request: request).map { [weak self] responses in
+            self?.collections(responses: responses) ?? []
         }
     }
 

@@ -260,8 +260,8 @@ extension Array where Element == NftCollection {
     func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [NftCollection] {
         sorted { lhsCollection, rhsCollection in
             switch sortingField {
-            case .highestCap: return lhsCollection.stats.marketCap ?? 0 > rhsCollection.stats.marketCap ?? 0
-            case .lowestCap: return lhsCollection.stats.marketCap ?? 0 < rhsCollection.stats.marketCap ?? 0
+            case .highestCap: return lhsCollection.stats.marketCap?.value ?? 0 > rhsCollection.stats.marketCap?.value ?? 0
+            case .lowestCap: return lhsCollection.stats.marketCap?.value ?? 0 < rhsCollection.stats.marketCap?.value ?? 0
             case .highestVolume: return lhsCollection.stats.totalVolume ?? 0 > rhsCollection.stats.totalVolume ?? 0
             case .lowestVolume: return lhsCollection.stats.totalVolume ?? 0 < rhsCollection.stats.totalVolume ?? 0
             case .topGainers, .topLosers, .topCollections:

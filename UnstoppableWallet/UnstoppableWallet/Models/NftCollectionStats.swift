@@ -7,5 +7,5 @@ struct NftCollectionStats {
     let floorPrice: NftPrice?
     let totalVolume: Decimal?
     let priceChange: Decimal?
-    let marketCap: Decimal?
+    let marketCap: NftPrice?
 }
