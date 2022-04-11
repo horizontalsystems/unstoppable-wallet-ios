@@ -367,6 +367,8 @@
 "market.top.lowest_volume" = "Наименьшему Объему";
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
+"market.top.top_collections" = "Top NFT Collections";
+"market.top.floor_price" = "Floor:";
 
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
