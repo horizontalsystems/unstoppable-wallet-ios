@@ -365,6 +365,8 @@
 "market.top.lowest_volume" = "Volume le plus bas";
 "market.top.top_gainers" = "Les grands gagnants";
 "market.top.top_losers" = "Les gros perdants";
+"market.top.top_collections" = "Top NFT Collections";
+"market.top.floor_price" = "Floor:";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
