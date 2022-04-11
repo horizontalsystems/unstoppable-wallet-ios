@@ -50,11 +50,8 @@ class MarketOverviewNftCollectionsViewModel {
 
 
         var marketCapString = "n/a".localized
-        if let marketCap = collection.stats.marketCap {
-            let currency = service.currency
-            if let value = ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: currency, value: marketCap), fractionPolicy: .threshold(high: 1000, low: 0.000001), trimmable: false) {
-                marketCapString = value
-            }
+        if let marketCap = collection.stats.marketCap, let value = CurrencyCompactFormatter.instance.format(symbol: marketCap.platformCoin.code, value: marketCap.value) {
+            marketCapString = value
         }
 
         let dataValue: MarketModule.MarketDataValue = .diff(collection.stats.priceChange)
