@@ -56,8 +56,8 @@
 
 "restore.title" = "Choisissez le portefeuille";
 "restore.enter_key" = "Entrez la clé";
-"restore.mnemonic.description" = "Saisissez votre mnémonique qui consiste en 12 ou 24 mots. Les mots doivent être saisis dans l'ordre correct et séparés par des espaces";
-"restore_error.mnemonic_word_count" = "Le nombre de mots est incorrect. Il doit être compris entre 12 et 24 mots. Vous avez saisi : %@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
