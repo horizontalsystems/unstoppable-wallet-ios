@@ -59,8 +59,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "restore.title" = "Cüzdan Seçin";
 "restore.enter_key" = "Anahtarı girin";
-"restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir";
-"restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
