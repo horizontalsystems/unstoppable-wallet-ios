@@ -130,7 +130,10 @@ class HsNftProvider {
                 floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
                 totalVolume: response.totalVolume,
                 priceChange: response.oneDayChange,
-                marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false)
+                marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false),
+                oneDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.oneDayVolume, shift: false),
+                sevenDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.sevenDayVolume, shift: false),
+                thirtyDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.thirtyDayVolume, shift: false)
         )
     }
 
@@ -393,6 +396,9 @@ extension HsNftProvider {
         let floorPrice: Decimal?
         let totalVolume: Decimal?
         let marketCap: Decimal
+        let oneDayVolume: Decimal
+        let sevenDayVolume: Decimal
+        let thirtyDayVolume: Decimal
 
         init(map: Map) throws {
             totalSupply = try map.value("total_supply")
@@ -402,6 +408,9 @@ extension HsNftProvider {
             averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)
+            oneDayVolume = try map.value("one_day_volume", using: HsNftProvider.doubleToDecimalTransform)
+            sevenDayVolume = try map.value("seven_day_volume", using: HsNftProvider.doubleToDecimalTransform)
+            thirtyDayVolume = try map.value("thirty_day_volume", using: HsNftProvider.doubleToDecimalTransform)
         }
     }
 

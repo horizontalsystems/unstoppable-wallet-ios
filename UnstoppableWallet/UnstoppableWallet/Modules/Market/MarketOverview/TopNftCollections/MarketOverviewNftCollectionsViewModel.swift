@@ -44,14 +44,14 @@ class MarketOverviewNftCollectionsViewModel {
 
             let coinValue = CoinValue(kind: .platformCoin(platformCoin: floorPrice.platformCoin), value: floorPrice.value)
             if let value = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) {
-                floorPriceString = "".localized + " " + value
+                floorPriceString = "market.top.floor_price".localized + " " + value
             }
         }
 
 
-        var marketCapString = "n/a".localized
-        if let marketCap = collection.stats.marketCap, let value = CurrencyCompactFormatter.instance.format(symbol: marketCap.platformCoin.code, value: marketCap.value) {
-            marketCapString = value
+        var volumeString = "n/a".localized
+        if let volume = collection.stats.sevenDayVolume, let value = CurrencyCompactFormatter.instance.format(symbol: volume.platformCoin.code, value: volume.value) {
+            volumeString = value
         }
 
         let dataValue: MarketModule.MarketDataValue = .diff(collection.stats.priceChange)
@@ -63,7 +63,7 @@ class MarketOverviewNftCollectionsViewModel {
                 name: collection.name,
                 code: floorPriceString,
                 rank: "\(index)",
-                price: marketCapString,
+                price: volumeString,
                 dataValue: dataValue
         )
     }

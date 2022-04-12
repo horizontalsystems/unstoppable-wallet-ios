@@ -32,7 +32,7 @@ class MarketOverviewNftCollectionsService {
         provider.collectionsSingle(currencyCode: currency.code)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collections in
-                    let sortedCollections = Array(collections.sorted(sortingField: .highestCap, priceChangeType: .day).prefix(listCount))
+                    let sortedCollections = Array(collections.sorted(sortingField: .highestVolume, priceChangeType: .day).prefix(listCount))
                     self?.state = .completed(sortedCollections)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
