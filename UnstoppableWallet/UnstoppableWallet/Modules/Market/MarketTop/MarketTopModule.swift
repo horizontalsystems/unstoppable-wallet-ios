@@ -17,11 +17,10 @@ struct MarketTopModule {
         )
 
         let decorator = MarketListMarketFieldDecorator(service: service)
-        let viewModel = MarketTopViewModel(service: service)
         let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
 
-        let viewController = MarketTopViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
+        let viewController = MarketTopViewController(listViewModel: listViewModel, headerViewModel: headerViewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

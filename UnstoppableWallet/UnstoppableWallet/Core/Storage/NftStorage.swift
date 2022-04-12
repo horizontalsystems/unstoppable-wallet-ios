@@ -62,7 +62,10 @@ class NftStorage {
                         floorPrice: nil,
                         totalVolume: nil,
                         priceChange: nil,
-                        marketCap: nil
+                        marketCap: nil,
+                        oneDayVolume: nil,
+                        sevenDayVolume: nil,
+                        thirtyDayVolume: nil
                 )
         )
     }
