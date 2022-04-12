@@ -74,7 +74,7 @@ extension MarketOverviewCategoryCell: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: .margin12, left: .margin16, bottom: .margin32, right: .margin16)
+        UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

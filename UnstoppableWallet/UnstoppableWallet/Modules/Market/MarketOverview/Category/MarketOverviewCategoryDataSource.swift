@@ -51,6 +51,7 @@ class MarketOverviewCategoryDataSource {
         if let viewItem = viewItem {
             let headerSection = Section(
                     id: "categories_header",
+                    footerState: .margin(height: .margin12),
                     rows: [
                         Row<MarketOverviewHeaderCell>(
                                 id: "categories_header_cell",
