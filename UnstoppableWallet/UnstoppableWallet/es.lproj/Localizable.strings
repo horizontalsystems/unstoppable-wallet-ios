@@ -751,7 +751,8 @@ poner en peligro la seguridad de mis fondos.";
 "settings_manage_keys.delete.title" = "Eliminar Monedero";
 "settings_manage_keys.delete.confirmation_remove" = "Esta acción eliminará los monederos de este dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Si usted no respaldó la clave privada para este monedero, perderá el acceso a sus fondos.";
-"settings_manage_keys.delete.confirmation_watch" = "¿Estás seguro que deseas borrar este monedero?";
+"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
