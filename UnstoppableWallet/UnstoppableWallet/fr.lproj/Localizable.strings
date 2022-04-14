@@ -267,6 +267,7 @@
 "swap.minimum_got" = "Montant minimum reçu";
 "swap.estimate_short" = "(est)";
 "swap.minimum_short" = "(min)";
+"swap.maximum_short" = "(max)";
 
 // Swap Advanced Settings
 
