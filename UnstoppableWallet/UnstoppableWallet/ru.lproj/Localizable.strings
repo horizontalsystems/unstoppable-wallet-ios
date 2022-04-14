@@ -752,7 +752,8 @@
 "settings_manage_keys.delete.title" = "Удалить Кошелек";
 "settings_manage_keys.delete.confirmation_remove" = "Действие удалит этот кошелек с устройства.";
 "settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
-"settings_manage_keys.delete.confirmation_watch" = "Вы точно хотите удалить этот кошелёк?";
+"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
