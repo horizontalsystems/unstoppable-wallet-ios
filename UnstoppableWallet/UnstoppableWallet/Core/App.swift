@@ -77,8 +77,6 @@ class App {
     let walletConnectV2SessionManager: WalletConnectV2SessionManager
     let walletConnectManager: WalletConnectManager
 
-    let activateCoinManager: ActivateCoinManager
-
     let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
 
@@ -228,8 +226,6 @@ class App {
         let walletConnectV2Service = WalletConnectV2Service(info: walletClientInfo)
         let walletConnectV2SessionStorage = WalletConnectV2SessionStorage(dbPool: dbPool)
         walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
-
-        activateCoinManager = ActivateCoinManager(marketKit: marketKit, walletManager: walletManager, accountManager: accountManager)
 
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)

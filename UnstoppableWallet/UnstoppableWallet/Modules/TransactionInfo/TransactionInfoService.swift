@@ -41,16 +41,16 @@ class TransactionInfoService {
             if !tx.value.zeroValue {
                 coins.append(tx.value.coin)
             }
-            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.internalTransactionEvents.map({ $0.value.coin }))
             coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
             coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            if !tx.value.zeroValue {
-                coins.append(tx.value.coin)
+            if let value = tx.value, !value.zeroValue {
+                coins.append(value.coin)
             }
-            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.internalTransactionEvents.map({ $0.value.coin }))
             coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
             coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
 
@@ -67,8 +67,8 @@ class TransactionInfoService {
         default: ()
         }
 
-        if let evmTransaction = transactionRecord as? EvmTransactionRecord, !evmTransaction.foreignTransaction {
-            coins.append(evmTransaction.fee.coin)
+        if let evmTransaction = transactionRecord as? EvmTransactionRecord, !evmTransaction.foreignTransaction, let fee = evmTransaction.fee {
+            coins.append(fee.coin)
         }
 
         return Array(Set(coins.compactMap({ $0 })))

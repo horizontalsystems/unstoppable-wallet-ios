@@ -3,6 +3,8 @@ import MarketKit
 import HsToolKit
 import EthereumKit
 import Erc20Kit
+import UniswapKit
+import OneInchKit
 
 class EvmAccountManager {
     private let blockchain: EvmBlockchain
@@ -132,30 +134,52 @@ class EvmAccountManager {
         var maxBlockNumber = 0
 
         for fullTransaction in fullTransactions {
-            guard let blockNumber = fullTransaction.receiptWithLogs?.receipt.blockNumber, let lastBlockNumber = lastBlockNumber, blockNumber > lastBlockNumber else {
+            guard let blockNumber = fullTransaction.transaction.blockNumber, let lastBlockNumber = lastBlockNumber, blockNumber > lastBlockNumber else {
                 continue
             }
 
             maxBlockNumber = max(maxBlockNumber, blockNumber)
 
-            if fullTransaction.transaction.to == address {
+            switch fullTransaction.decoration {
+            case is IncomingDecoration:
                 coinTypes.append(blockchain.baseCoinType)
-                continue
-            }
 
-            if fullTransaction.internalTransactions.contains(where: { $0.to == address }) {
-                coinTypes.append(blockchain.baseCoinType)
-                continue
-            }
-
-            for decoration in fullTransaction.eventDecorations {
-                guard let decoration = decoration as? TransferEventDecoration else {
-                    continue
+            case let decoration as SwapDecoration:
+                switch decoration.tokenOut {
+                case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                default: ()
                 }
 
-                if decoration.to == address {
-                    coinTypes.append(blockchain.evm20CoinType(address: decoration.contractAddress.hex))
+            case let decoration as OneInchSwapDecoration:
+                switch decoration.tokenOut {
+                case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                default: ()
                 }
+
+            case let decoration as OneInchUnoswapDecoration:
+                if let tokenOut = decoration.tokenOut {
+                    switch tokenOut {
+                    case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                    default: ()
+                    }
+                }
+
+            case let decoration as UnknownTransactionDecoration:
+                if decoration.internalTransactions.contains(where: { $0.to == address }) {
+                    coinTypes.append(blockchain.baseCoinType)
+                }
+
+                for eventInstance in decoration.eventInstances {
+                    guard let transferEventInstance = eventInstance as? TransferEventInstance else {
+                        continue
+                    }
+
+                    if fullTransaction.transaction.to == address {
+                        coinTypes.append(blockchain.evm20CoinType(address: transferEventInstance.contractAddress.hex))
+                    }
+                }
+
+            default: ()
             }
         }
 

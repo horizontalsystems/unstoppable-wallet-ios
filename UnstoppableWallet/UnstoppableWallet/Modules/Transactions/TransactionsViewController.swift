@@ -101,7 +101,7 @@ class TransactionsViewController: ThemeViewController {
 
     private func itemClicked(item: TransactionViewItem) {
         if let item = viewModel.transactionItem(uid: item.uid) {
-            guard let module = TransactionInfoModule.instance(transactionItem: item) else {
+            guard let module = TransactionInfoModule.instance(transactionRecord: item.record) else {
                 return
             }
 

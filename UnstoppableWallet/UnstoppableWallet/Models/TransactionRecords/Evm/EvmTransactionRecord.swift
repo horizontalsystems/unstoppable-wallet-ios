@@ -3,35 +3,41 @@ import EthereumKit
 import MarketKit
 
 class EvmTransactionRecord: TransactionRecord {
+    let transaction: Transaction
     let foreignTransaction: Bool
-    let fee: TransactionValue
+    let fee: TransactionValue?
 
-    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, foreignTransaction: Bool = false) {
-        let transaction = fullTransaction.transaction
-        let receipt = fullTransaction.receiptWithLogs?.receipt
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, foreignTransaction: Bool = false) {
+        self.transaction = transaction
         let txHash = transaction.hash.toHexString()
         self.foreignTransaction = foreignTransaction
 
-        let feeAmount: Int
-        if let receipt = fullTransaction.receiptWithLogs?.receipt {
-            feeAmount = receipt.gasUsed
+        if let feeAmount = transaction.gasUsed ?? transaction.gasLimit, let gasPrice = transaction.gasPrice {
+            let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount) * Decimal(gasPrice))
+            fee = .coinValue(platformCoin: baseCoin, value: feeDecimal)
         } else {
-            feeAmount = fullTransaction.transaction.gasLimit
+            fee = nil
         }
-
-        let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount) * Decimal(transaction.gasPrice))
-        fee = .coinValue(platformCoin: baseCoin, value: feeDecimal)
 
         super.init(
                 source: source,
                 uid: txHash,
                 transactionHash: txHash,
-                transactionIndex: receipt?.transactionIndex ?? 0,
-                blockHeight: receipt?.blockNumber,
+                transactionIndex: transaction.transactionIndex ?? 0,
+                blockHeight: transaction.blockNumber,
                 confirmationsThreshold: BaseEvmAdapter.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                failed: fullTransaction.failed
+                failed: transaction.isFailed
         )
+    }
+
+}
+
+extension EvmTransactionRecord {
+
+    struct TransferEvent {
+        let address: String
+        let value: TransactionValue
     }
 
 }

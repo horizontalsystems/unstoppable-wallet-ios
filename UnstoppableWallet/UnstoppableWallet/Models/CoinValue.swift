@@ -2,16 +2,12 @@ import Foundation
 import MarketKit
 import BigInt
 
-fileprivate let max256ByteNumber = BigUInt(Data(hex: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
-
 struct CoinValue {
     let kind: Kind
     let value: Decimal
 
     var isMaxValue: Bool {
-        let maxInDecimal = Decimal(sign: .plus, exponent: -kind.decimals, significand: Decimal(string: max256ByteNumber.description)!)
-
-        return maxInDecimal == value
+        value.isMaxValue(decimals: kind.decimals)
     }
 
     var abs: CoinValue {

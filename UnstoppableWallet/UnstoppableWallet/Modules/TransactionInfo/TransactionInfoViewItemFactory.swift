@@ -10,14 +10,8 @@ class TransactionInfoViewItemFactory {
             currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * value)
         }
 
-        let subTitle: String
-        switch transactionValue {
-        case .coinValue(let platformCoin, _): subTitle = platformCoin.coin.name
-        case .rawValue(let coinType, _): subTitle = coinType.title
-        }
-
         return [
-            .actionTitle(title: title, subTitle: subTitle),
+            .actionTitle(title: title, subTitle: transactionValue.coinName),
             .amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: incoming)
         ]
     }
@@ -137,7 +131,9 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: evmIncoming.value, rate: coinRate, incoming: true))
 
         case let evmOutgoing as EvmOutgoingTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: evmOutgoing.fee, rate: _rate(evmOutgoing.value), status: status))
+            if let fee = evmOutgoing.fee {
+                middleSectionItems.append(evmFeeItem(transactionValue: fee, rate: _rate(evmOutgoing.value), status: status))
+            }
 
             let coinRate = _rate(evmOutgoing.value)
             if let coin = evmOutgoing.value.coin, let rate = coinRate {
@@ -150,7 +146,9 @@ class TransactionInfoViewItemFactory {
             sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: evmOutgoing.value, rate: coinRate, incoming: false))
 
         case let swap as SwapTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
+            if let fee = swap.fee {
+                middleSectionItems.append(evmFeeItem(transactionValue: fee, rate: _rate(fee), status: status))
+            }
 
             if let valueOut = swap.valueOut {
                 if case .failed = status {} else {
@@ -187,14 +185,14 @@ class TransactionInfoViewItemFactory {
                 sections.append(youPaySection)
             }
 
-            if swap.incomingEip20Events.count > 0 || swap.incomingInternalETHs.count > 0 {
+            if swap.incomingEip20Events.count > 0 || swap.internalTransactionEvents.count > 0 {
                 var youGetSection: [TransactionInfoModule.ViewItem] = [
                     .actionTitle(title: youGetString(status: status), subTitle: nil)
                 ]
 
-                if let incomingInternalTx = swap.incomingInternalETHs.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
+                if let incomingInternalTx = swap.internalTransactionEvents.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
                     var ethValue: Decimal = 0
-                    for tx in swap.incomingInternalETHs {
+                    for tx in swap.internalTransactionEvents {
                         ethValue += tx.value.decimalValue ?? 0
                     }
 
@@ -212,11 +210,15 @@ class TransactionInfoViewItemFactory {
                 sections.append(youGetSection)
             }
 
-            middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
+            if let fee = swap.fee {
+                middleSectionItems.append(evmFeeItem(transactionValue: fee, rate: _rate(fee), status: status))
+            }
             middleSectionItems.append(.id(value: swap.transactionHash))
 
         case let approve as ApproveTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: approve.fee, rate: _rate(approve.fee), status: status))
+            if let fee = approve.fee {
+                middleSectionItems.append(evmFeeItem(transactionValue: fee, rate: _rate(fee), status: status))
+            }
 
             let coinRate = _rate(approve.value)
             if let rate = coinRate, let coin = approve.value.coin {
@@ -238,37 +240,35 @@ class TransactionInfoViewItemFactory {
 
         case let contractCall as ContractCallTransactionRecord:
             sections.append(
-                [.actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: TransactionInfoAddressMapper.map(contractCall.contractAddress))]
+                [.actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: contractCall.contractAddress.map { TransactionInfoAddressMapper.map($0) })]
             )
 
+            var youPayViewItems = [TransactionInfoModule.ViewItem]()
             let transactionValue = contractCall.value
 
-            if contractCall.outgoingEip20Events.count > 0 || (!transactionValue.zeroValue && !contractCall.foreignTransaction) {
-                var youPaySection: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(title: youPayString(status: status), subTitle: nil)
-                ]
-
-                if !transactionValue.zeroValue && !contractCall.foreignTransaction {
-                    let currencyValue = _currencyValue(transactionValue)
-                    youPaySection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                for event in contractCall.outgoingEip20Events {
-                    let currencyValue = _currencyValue(event.value)
-                    youPaySection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                sections.append(youPaySection)
+            if let transactionValue = contractCall.value, !transactionValue.zeroValue, !contractCall.foreignTransaction {
+                let currencyValue = _currencyValue(transactionValue)
+                youPayViewItems.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
             }
 
-            if contractCall.incomingEip20Events.count > 0 || contractCall.incomingInternalETHs.count > 0 {
+            for event in contractCall.outgoingEip20Events {
+                let currencyValue = _currencyValue(event.value)
+                youPayViewItems.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
+            }
+
+
+            if !youPayViewItems.isEmpty {
+                sections.append([.actionTitle(title: youPayString(status: status), subTitle: nil)] + youPayViewItems)
+            }
+
+            if contractCall.incomingEip20Events.count > 0 || contractCall.internalTransactionEvents.count > 0 {
                 var youGetSection: [TransactionInfoModule.ViewItem] = [
                     .actionTitle(title: youGetString(status: status), subTitle: nil)
                 ]
 
-                if let incomingInternalTx = contractCall.incomingInternalETHs.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
+                if let incomingInternalTx = contractCall.internalTransactionEvents.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
                     var ethValue: Decimal = 0
-                    for tx in contractCall.incomingInternalETHs {
+                    for tx in contractCall.internalTransactionEvents {
                         ethValue += tx.value.decimalValue ?? 0
                     }
 
@@ -286,7 +286,9 @@ class TransactionInfoViewItemFactory {
                 sections.append(youGetSection)
             }
 
-            middleSectionItems.append(evmFeeItem(transactionValue: contractCall.fee, rate: _rate(contractCall.fee), status: status))
+            if let fee = contractCall.fee {
+                middleSectionItems.append(evmFeeItem(transactionValue: fee, rate: _rate(fee), status: status))
+            }
             middleSectionItems.append(.id(value: contractCall.transactionHash))
 
         case let btcIncoming as BitcoinIncomingTransactionRecord:

@@ -27,7 +27,6 @@ class SendEvmTransactionService {
     private let sendData: SendEvmData
     private let evmKitWrapper: EvmKitWrapper
     private let feeService: EvmFeeService
-    private let activateCoinManager: ActivateCoinManager
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: [], warnings: []) {
@@ -45,11 +44,10 @@ class SendEvmTransactionService {
         }
     }
 
-    init(sendData: SendEvmData, evmKitWrapper: EvmKitWrapper, feeService: EvmFeeService, activateCoinManager: ActivateCoinManager) {
+    init(sendData: SendEvmData, evmKitWrapper: EvmKitWrapper, feeService: EvmFeeService) {
         self.sendData = sendData
         self.evmKitWrapper = evmKitWrapper
         self.feeService = feeService
-        self.activateCoinManager = activateCoinManager
 
         dataState = DataState(
                 transactionData: sendData.transactionData,
@@ -98,41 +96,6 @@ class SendEvmTransactionService {
         )
     }
 
-    private func handlePostSendActions() {
-        if let decoration = dataState.decoration as? SwapMethodDecoration {
-            activateUniswap(token: decoration.tokenIn)
-            activateUniswap(token: decoration.tokenOut)
-        }
-
-        if let decoration = dataState.decoration as? OneInchMethodDecoration {
-            var tokens = [OneInchMethodDecoration.Token]()
-
-            switch decoration {
-            case let method as OneInchUnoswapMethodDecoration:
-                tokens = [method.tokenIn, method.tokenOut].compactMap { $0 }
-            case let method as OneInchSwapMethodDecoration:
-                tokens = [method.tokenIn, method.tokenOut].compactMap { $0 }
-            default: ()
-            }
-
-            tokens.forEach { activateOneInch(token: $0) }
-        }
-    }
-
-    private func activateUniswap(token: SwapMethodDecoration.Token) {
-        switch token {
-        case .evmCoin: activateCoinManager.activateBaseCoin(blockchain: evmKitWrapper.blockchain)
-        case .eip20Coin(let address): activateCoinManager.activateEvm20Coin(address: address.hex, blockchain: evmKitWrapper.blockchain)
-        }
-    }
-
-    private func activateOneInch(token: OneInchMethodDecoration.Token) {
-        switch token {
-        case .evmCoin: activateCoinManager.activateBaseCoin(blockchain: evmKitWrapper.blockchain)
-        case .eip20Coin(let address): activateCoinManager.activateEvm20Coin(address: address.hex, blockchain: evmKitWrapper.blockchain)
-        }
-    }
-
 }
 
 extension SendEvmTransactionService: ISendEvmTransactionService {
@@ -165,7 +128,6 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in
-                    self?.handlePostSendActions()
                     self?.sendState = .sent(transactionHash: fullTransaction.transaction.hash)
                 }, onError: { error in
                     self.sendState = .failed(error: error)
@@ -185,7 +147,7 @@ extension SendEvmTransactionService {
     struct DataState {
         let transactionData: TransactionData?
         let additionalInfo: SendEvmData.AdditionInfo?
-        var decoration: ContractMethodDecoration?
+        var decoration: TransactionDecoration?
     }
 
     enum SendState {

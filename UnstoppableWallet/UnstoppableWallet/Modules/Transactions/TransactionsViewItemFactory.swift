@@ -90,7 +90,7 @@ class TransactionsViewItemFactory {
         case let contractCall as ContractCallTransactionRecord:
             typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
             title = contractCall.method ?? "\(contractCall.source.blockchain.title) \("transactions.contract_call".localized)"
-            subTitle = TransactionInfoAddressMapper.map(contractCall.contractAddress)
+            subTitle = contractCall.contractAddress.map { TransactionInfoAddressMapper.map($0) } ?? "---"
 
         case is ContractCreationTransactionRecord:
             typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
