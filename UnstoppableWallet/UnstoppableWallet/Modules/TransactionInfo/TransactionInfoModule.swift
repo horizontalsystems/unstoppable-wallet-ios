@@ -4,12 +4,12 @@ import MarketKit
 
 struct TransactionInfoModule {
 
-    static func instance(transactionItem: TransactionItem) -> UIViewController? {
-        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionItem.record.source) else {
+    static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
+        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
 
-        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let factory = TransactionInfoViewItemFactory()
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))

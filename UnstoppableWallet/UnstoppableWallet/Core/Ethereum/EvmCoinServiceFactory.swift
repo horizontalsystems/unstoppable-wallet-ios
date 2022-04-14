@@ -27,7 +27,11 @@ class EvmCoinServiceFactory {
             return nil
         }
 
-        return CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
+        return coinService(platformCoin: platformCoin)
+    }
+
+    func coinService(platformCoin: PlatformCoin) -> CoinService {
+        CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
     }
 
 }

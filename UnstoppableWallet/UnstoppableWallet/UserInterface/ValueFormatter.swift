@@ -35,8 +35,10 @@ class ValueFormatter {
 
     func format(transactionValue: TransactionValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
         switch transactionValue {
-        case .coinValue(let platformCoin, let value):
+        case let .coinValue(platformCoin, value):
             return format(value: value, decimalCount: platformCoin.decimals, symbol: showCode ? platformCoin.coin.code : nil, fractionPolicy: fractionPolicy)
+        case let .tokenValue(_, tokenCode, tokenDecimals, value):
+            return format(value: value, decimalCount: tokenDecimals, symbol: showCode ? tokenCode : nil, fractionPolicy: fractionPolicy)
         case .rawValue:
             return nil
         }

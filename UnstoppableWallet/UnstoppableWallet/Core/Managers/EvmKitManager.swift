@@ -73,14 +73,12 @@ class EvmKitManager {
                 minLogLevel: .error
         )
 
-        Erc20Kit.Kit.addDecorator(to: evmKit)
+        Erc20Kit.Kit.addDecorators(to: evmKit)
         Erc20Kit.Kit.addTransactionSyncer(to: evmKit)
 
-        UniswapKit.Kit.addDecorator(to: evmKit)
-        UniswapKit.Kit.addTransactionWatcher(to: evmKit)
+        UniswapKit.Kit.addDecorators(to: evmKit)
 
-        OneInchKit.Kit.addDecorator(to: evmKit)
-        OneInchKit.Kit.addTransactionWatcher(to: evmKit)
+        OneInchKit.Kit.addDecorators(to: evmKit)
 
         evmKit.start()
 
