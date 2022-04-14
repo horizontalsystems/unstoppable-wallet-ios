@@ -269,6 +269,7 @@
 "swap.minimum_got" = "Минимальная Выплата";
 "swap.estimate_short" = "(прим.)";
 "swap.minimum_short" = "(мин)";
+"swap.maximum_short" = "(max)";
 
 // Swap Advanced Settings
 
