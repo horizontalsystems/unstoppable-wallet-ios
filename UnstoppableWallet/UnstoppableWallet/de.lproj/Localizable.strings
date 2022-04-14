@@ -750,7 +750,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_manage_keys.delete.title" = "Wallet löschen";
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das Wallet von diesem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
-"settings_manage_keys.delete.confirmation_watch" = "Möchten Sie dieses Wallet wirklich löschen?";
+"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
