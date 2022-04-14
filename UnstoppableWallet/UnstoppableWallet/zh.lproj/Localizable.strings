@@ -269,6 +269,7 @@
 "swap.minimum_got" = "最小获取金额";
 "swap.estimate_short" = "（美国东部时间）";
 "swap.minimum_short" = "(分钟)";
+"swap.maximum_short" = "(max)";
 
 // Swap Advanced Settings
 
