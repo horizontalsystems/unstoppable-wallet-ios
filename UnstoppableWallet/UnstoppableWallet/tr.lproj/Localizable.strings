@@ -270,6 +270,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.minimum_got" = "Minimum Kazanılan";
 "swap.estimate_short" = "(tah)";
 "swap.minimum_short" = "(dk)";
+"swap.maximum_short" = "(max)";
 
 // Swap Advanced Settings
 
