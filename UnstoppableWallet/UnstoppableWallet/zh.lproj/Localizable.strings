@@ -182,7 +182,7 @@
 "send.network_fee" = "网络费";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
-"send.tx_speed" = "交易费用";
+"send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "低";
 "send.tx_speed_recommended" = "推荐";
 "send.tx_speed_high" = "高";
@@ -231,6 +231,13 @@
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
+
+"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
+"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+
+"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
+"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+
 "send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
@@ -1007,6 +1014,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
+"fee_settings.fee" = "Fee";
+"fee_settings.fee.info" = "The expected total fee for the given transaction.";
+"fee_settings.fee_priority" = "Speed";
+"fee_settings.fee_rate" = "Fee Rate";
 "fee_settings.max_fee" = "最大手续费";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
 "fee_settings.gas_limit" = "燃料限制";
