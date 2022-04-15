@@ -1,3 +1,4 @@
+import Foundation
 import CurrencyKit
 import RxSwift
 import RxRelay

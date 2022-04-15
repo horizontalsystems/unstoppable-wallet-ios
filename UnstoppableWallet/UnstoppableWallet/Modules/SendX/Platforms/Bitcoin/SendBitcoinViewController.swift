@@ -4,10 +4,9 @@ import SnapKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
-import EthereumKit
 import ComponentKit
 
-class SendXViewController: ThemeViewController {
+class SendBitcoinViewController: ThemeViewController {
     private let viewModel: SendXViewModel
     private let disposeBag = DisposeBag()
 
@@ -15,9 +14,8 @@ class SendXViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let confirmationFactory: ISendConfirmationFactory
+    private let feeSettingsFactory: ISendFeeSettingsFactory
 
-    private let feeViewModel: SendXFeeViewModel
-    private let feeSliderViewModel: SendXFeeSliderViewModel
     private let amountCautionViewModel: AmountCautionViewModel
     private let feeWarningViewModel: SendXFeeWarningViewModel
 
@@ -29,10 +27,8 @@ class SendXViewController: ThemeViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let feeCell: SendXFeeCell
-    private let feeSliderCell: FeeSliderCell
-    private let feePriorityCell: SendXFeePriorityCell
-    private let feeWarningCell: HighlightedDescriptionCell
+    private let feeCell: EditableFeeCell
+    private let feeCautionCell = TitledHighlightedDescriptionCell()
 
     private let timeLockCell: SendXTimeLockCell?
 
@@ -42,46 +38,39 @@ class SendXViewController: ThemeViewController {
     private var keyboardShown = false
 
     init(confirmationFactory: ISendConfirmationFactory,
+         feeSettingsFactory: ISendFeeSettingsFactory,
          viewModel: SendXViewModel,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: AmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
          feeViewModel: SendXFeeViewModel,
-         feeSliderViewModel: SendXFeeSliderViewModel,
-         feePriorityViewModel: SendXFeePriorityViewModel,
          feeWarningViewModel: SendXFeeWarningViewModel,
          timeLockViewModel: SendXTimeLockViewModel?
     ) {
 
         self.confirmationFactory = confirmationFactory
+        self.feeSettingsFactory = feeSettingsFactory
         self.viewModel = viewModel
         self.amountCautionViewModel = amountCautionViewModel
-        self.feeViewModel = feeViewModel
-        self.feeSliderViewModel = feeSliderViewModel
         self.feeWarningViewModel = feeWarningViewModel
 
         availableBalanceCell = SendAvailableBalanceCell(viewModel: availableBalanceViewModel)
 
         amountCell = AmountInputCell(viewModel: amountInputViewModel)
 
-        feeCell = SendXFeeCell(viewModel: feeViewModel)
-        feeSliderCell = FeeSliderCell(sliderDriver: feeSliderViewModel.sliderDriver)
-        feePriorityCell = SendXFeePriorityCell(viewModel: feePriorityViewModel)
-        feeWarningCell = HighlightedDescriptionCell(driver: feeWarningViewModel.warningDriver)
-
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
 
+        feeCell = EditableFeeCell(viewModel: feeViewModel, isLast: timeLockViewModel == nil)
         timeLockCell = timeLockViewModel.map {
             SendXTimeLockCell(viewModel: $0)
         }
+
         super.init()
 
-        feeSliderViewModel.subscribeTracking(cell: feeSliderCell)
-        feePriorityCell.sourceViewController = self
         timeLockCell?.sourceViewController = self
-        feeSliderCell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
+        timeLockCell?.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,7 +95,6 @@ class SendXViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionDataSource = self
 
@@ -136,11 +124,9 @@ class SendXViewController: ThemeViewController {
             self?.amountCell.set(cautionType: caution?.type)
             self?.amountCautionCell.set(caution: caution)
         }
-        subscribe(disposeBag, feeSliderViewModel.isHiddenDriver) { [weak self] _ in
-            self?.reloadTable()
-        }
-        subscribe(disposeBag, feeWarningCell.hiddenStateDriver) { [weak self] _ in
-            self?.reloadTable()
+
+        subscribe(disposeBag, feeWarningViewModel.cautionDriver) { [weak self] in
+            self?.handle(caution: $0)
         }
 
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in
@@ -158,6 +144,22 @@ class SendXViewController: ThemeViewController {
             keyboardShown = true
             _ = amountCell.becomeFirstResponder()
         }
+    }
+
+    private func handle(caution: TitledCaution?) {
+        feeCautionCell.isVisible = caution != nil
+
+        if let caution = caution {
+            feeCautionCell.bind(caution: caution)
+        }
+
+        reloadTable()
+    }
+
+    private func openFeeSettings() {
+        let viewController = feeSettingsFactory.feeSettingsViewController
+
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     @objc private func didTapProceed() {
@@ -181,7 +183,7 @@ class SendXViewController: ThemeViewController {
 
     private func openConfirm() {
         do {
-            let viewController = try confirmationFactory.viewController()
+            let viewController = try confirmationFactory.confirmationViewController()
 
             navigationController?.pushViewController(viewController, animated: true)
         } catch {
@@ -191,7 +193,7 @@ class SendXViewController: ThemeViewController {
 
 }
 
-extension SendXViewController: SectionsDataSource {
+extension SendBitcoinViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [
@@ -226,7 +228,7 @@ extension SendXViewController: SectionsDataSource {
             ),
             Section(
                     id: "recipient",
-                    headerState: .margin(height: .margin16),
+                    headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
                                 cell: recipientCell,
@@ -246,35 +248,21 @@ extension SendXViewController: SectionsDataSource {
             ),
             Section(
                     id: "fee",
-                    headerState: .margin(height: .margin16),
+                    headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
                                 cell: feeCell,
-                                id: "fee_cell",
-                                height: 33
-                        ),
-                        StaticRow(
-                                cell: feeSliderCell,
-                                id: "fee_slider_cell",
-                                dynamicHeight: { [weak self] width in
-                                    self?.feeSliderCell.height(containerWidth: width) ?? 0
+                                id: "fee",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openFeeSettings()
                                 }
-                        ),
-                        StaticRow(
-                                cell: feePriorityCell,
-                                id: "fee_priority_cell",
-                                height: .heightSingleLineCell
-                        ),
-                        StaticRow(
-                                cell: feeWarningCell,
-                                id: "fee_warning_cell",
-                                dynamicHeight: { [weak self] width in
-                                    self?.feeWarningCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
+                        )
                     ]
             )
         ]
+
         if let cell = timeLockCell {
             sections.append(
                     Section(
@@ -289,19 +277,34 @@ extension SendXViewController: SectionsDataSource {
                     )
             )
         }
-        sections.append(
-                Section(
-                        id: "button",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            StaticRow(
-                                    cell: buttonCell,
-                                    id: "button",
-                                    height: ButtonCell.height(style: .primaryYellow)
-                            )
-                        ]
-                )
-        )
+
+        sections.append(contentsOf:
+        [
+            Section(
+                    id: "fee-warning",
+                    headerState: .margin(height: .margin12),
+                    rows: [
+                        StaticRow(
+                                cell: feeCautionCell,
+                                id: "fee-warning",
+                                dynamicHeight: { [weak self] containerWidth in
+                                    self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "button",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: buttonCell,
+                                id: "button",
+                                height: ButtonCell.height(style: .primaryYellow)
+                        )
+                    ]
+            )
+        ])
 
         return sections
     }

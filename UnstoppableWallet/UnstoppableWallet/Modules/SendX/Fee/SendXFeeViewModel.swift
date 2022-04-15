@@ -9,6 +9,8 @@ class SendXFeeViewModel {
 
     private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let editButtonVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let editButtonHighlightedRelay = BehaviorRelay<Bool>(value: false)
 
     private var firstLoaded = false
 
@@ -17,6 +19,14 @@ class SendXFeeViewModel {
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in
             self?.sync(state: $0)
+        }
+
+        subscribe(disposeBag, service.editableObservable) { [weak self] in
+            self?.editButtonVisibleRelay.accept($0)
+        }
+
+        subscribe(disposeBag, service.defaultFeeObservable) { [weak self] in
+            self?.editButtonHighlightedRelay.accept(!$0)
         }
     }
 
@@ -38,6 +48,11 @@ class SendXFeeViewModel {
             spinnerVisibleRelay.accept(false)
             firstLoaded = true
 
+            guard !state.primaryInfo.value.isZero else {
+                valueRelay.accept(FeeCell.Value(text: "n/a".localized, type: .disabled))
+                return
+            }
+
             let text = [state.primaryInfo, state.secondaryInfo]
                     .compactMap {
                         $0?.formattedString
@@ -48,9 +63,17 @@ class SendXFeeViewModel {
         }
     }
 
+    deinit {
+        print("deinit \(self)")
+    }
+
 }
 
-extension SendXFeeViewModel: IFeeViewModel {
+extension SendXFeeViewModel: IEditableFeeViewModel {
+
+    var title: String {
+        "fee_settings.fee".localized
+    }
 
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
@@ -58,6 +81,14 @@ extension SendXFeeViewModel: IFeeViewModel {
 
     var spinnerVisibleDriver: Driver<Bool> {
         spinnerVisibleRelay.asDriver()
+    }
+
+    var editButtonVisibleDriver: Driver<Bool> {
+        editButtonVisibleRelay.asDriver()
+    }
+
+    var editButtonHighlightedDriver: Driver<Bool> {
+        editButtonHighlightedRelay.asDriver()
     }
 
 }

@@ -132,7 +132,7 @@ extension SendFeePriorityPresenter: ISendFeePriorityViewDelegate {
 extension SendFeePriorityPresenter: ISendFeePriorityInteractorDelegate {
 
     func didUpdate(feeRate: Int) {
-        if feeRatePriority == .recommended || feeRatePriority == .medium {
+        if feeRatePriority == .recommended {
             recommendedFeeRate = feeRate
         }
 

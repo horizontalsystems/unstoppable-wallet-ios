@@ -28,7 +28,7 @@ extension SendXFeePriorityViewModel {
 
     var priorityItems: [AlertViewItem] {
         service.feeRatePriorityList.map { priority in
-            AlertViewItem(text: priority.title, selected: priority == service.priority)
+            AlertViewItem(text: priority.title, selected: priority.equalTypes(service.priority))
         }
     }
 

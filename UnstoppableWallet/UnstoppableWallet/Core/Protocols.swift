@@ -94,8 +94,8 @@ protocol IFeeRateProvider {
     var feeRatePriorityList: [FeeRatePriority] { get }
     var defaultFeeRatePriority: FeeRatePriority { get }
     var recommendedFeeRate: Single<Int> { get }
-    func feeRate(priority: FeeRatePriority) -> Single<Int>
     var feeRateUpdatedObservable: Observable<()> { get }
+    func feeRate(priority: FeeRatePriority) -> Single<Int>
 }
 
 extension IFeeRateProvider {
