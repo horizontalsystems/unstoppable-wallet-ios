@@ -180,7 +180,7 @@
 "send.network_fee" = "Cuota de transferencia";
 "send.estimated_fee" = "Tasa Estimada";
 "send.max_fee" = "Comisión Máx.";
-"send.tx_speed" = "Tarifa de Transacción";
+"send.tx_speed" = "Transaction Speed";
 "send.tx_speed_low" = "Bajo";
 "send.tx_speed_recommended" = "Recomendado";
 "send.tx_speed_high" = "Alto";
@@ -229,6 +229,13 @@
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
+
+"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
+"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+
+"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
+"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+
 "send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
 "send.lock_time" = "TimeLock";
@@ -1006,6 +1013,10 @@ poner en peligro la seguridad de mis fondos.";
 // Fee Settings
 
 "fee_settings" = "Configuración de tarifas";
+"fee_settings.fee" = "Fee";
+"fee_settings.fee.info" = "The expected total fee for the given transaction.";
+"fee_settings.fee_priority" = "Speed";
+"fee_settings.fee_rate" = "Fee Rate";
 "fee_settings.max_fee" = "Comisión Máx.";
 "fee_settings.max_fee.info" = "La tarifa máxima total esperada para la transacción dada. Por lo general, la tarifa real de transacción va a ser menor.";
 "fee_settings.gas_limit" = "Gas Limit";
