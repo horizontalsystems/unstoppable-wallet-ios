@@ -6,7 +6,8 @@ import StorageKit
 class SendXModule {
 
     static func viewController(platformCoin: PlatformCoin, adapter: ISendBitcoinAdapter) -> UIViewController? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) else {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType),
+              let customRangedFeeRateProvider = feeRateProvider as? ICustomRangedFeeRateProvider else {
             return nil
         }
 
@@ -29,11 +30,10 @@ class SendXModule {
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         // Fee
-        let bitcoinFeeRateProvider = SendXBitcoinFeeRateAdjustmentService(amountInputService: amountInputService, coinService: coinService, feeRateProvider: feeRateProvider)
-        let feePriorityService = SendXFeePriorityService(provider: bitcoinFeeRateProvider)
-        let feeRateService = SendXFeeRateService(priorityService: feePriorityService, provider: bitcoinFeeRateProvider)
+        let feePriorityService = SendXFeePriorityService(provider: feeRateProvider)
+        let feeRateService = SendXFeeRateService(priorityService: feePriorityService, provider: feeRateProvider)
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let feeService = SendFeeService(fiatService: feeFiatService, feeCoin: platformCoin)
+        let feeService = SendFeeService(fiatService: feeFiatService, feePriorityService: feePriorityService, feeCoin: platformCoin)
 
         // TimeLock
         let timeLockService = SendXTimeLockService()
@@ -68,7 +68,6 @@ class SendXModule {
 
         addressService.customErrorService = timeLockErrorService
 
-        bitcoinFeeRateProvider.availableBalanceService = bitcoinAdapterService
         feeService.feeValueService = bitcoinAdapterService
         feePriorityService.feeRateService = feeRateService
 
@@ -92,36 +91,38 @@ class SendXModule {
 
         // Fee
         let feeViewModel = SendXFeeViewModel(service: feeService)
-        let feeSliderViewModel = SendXFeeSliderViewModel(service: feePriorityService)
-        let feePriorityViewModel = SendXFeePriorityViewModel(service: feePriorityService)
         let feeWarningViewModel = SendXFeeWarningViewModel(service: feeRateService)
 
-        // Confirmation
-        let confirmationFactory = SendBitcoinConfirmationFactory(
+        // Confirmation and Settings
+        let sendFactory = SendBitcoinFactory(
                 fiatService: fiatService,
+                amountCautionService: amountCautionService,
                 addressService: addressService,
                 feeFiatService: feeFiatService,
+                feeService: feeService,
+                feeRateService: feeRateService,
+                feePriorityService: feePriorityService,
                 timeLockService: timeLockService,
                 adapterService: bitcoinAdapterService,
+                customFeeRateProvider: customRangedFeeRateProvider,
                 logger: App.shared.logger,
                 platformCoin: platformCoin
         )
 
-        let viewController = SendXViewController(
-                confirmationFactory: confirmationFactory,
+        let viewController = SendBitcoinViewController(
+                confirmationFactory: sendFactory,
+                feeSettingsFactory: sendFactory,
                 viewModel: viewModel,
                 availableBalanceViewModel: availableBalanceViewModel,
                 amountInputViewModel: amountInputViewModel,
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel,
                 feeViewModel: feeViewModel,
-                feeSliderViewModel: feeSliderViewModel,
-                feePriorityViewModel: feePriorityViewModel,
                 feeWarningViewModel: feeWarningViewModel,
                 timeLockViewModel: timeLockViewModel
         )
 
-        confirmationFactory.sourceViewController = viewController
+        sendFactory.sourceViewController = viewController
 
         return ThemeNavigationController(rootViewController: viewController)
     }

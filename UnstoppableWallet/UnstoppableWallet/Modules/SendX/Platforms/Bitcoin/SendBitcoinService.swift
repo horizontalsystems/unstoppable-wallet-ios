@@ -8,7 +8,7 @@ class SendBitcoinService {
     private let disposeBag = DisposeBag()
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-bitcoin-service")
 
-    let sendPlatformCoin: PlatformCoin
+    let platformCoin: PlatformCoin
     private let amountService: IAmountInputService
     private let amountCautionService: AmountCautionService
     private let addressService: AddressService
@@ -16,8 +16,8 @@ class SendBitcoinService {
     private let feeService: SendXFeeRateService
     private let timeLockErrorService: SendXTimeLockErrorService
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .notReady {
+    private let stateRelay = PublishRelay<SendBaseService.State>()
+    private(set) var state: SendBaseService.State = .notReady {
         didSet {
             stateRelay.accept(state)
         }
@@ -30,7 +30,7 @@ class SendBitcoinService {
         self.adapterService = adapterService
         self.feeService = feeService
         self.timeLockErrorService = timeLockErrorService
-        sendPlatformCoin = platformCoin
+        self.platformCoin = platformCoin
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
             if isReachable {
@@ -77,19 +77,21 @@ class SendBitcoinService {
 
 }
 
-extension SendBitcoinService {
+extension SendBitcoinService: ISendBaseService {
 
-    var stateObservable: Observable<State> {
+    var stateObservable: Observable<SendBaseService.State> {
         stateRelay.asObservable()
     }
 
 }
 
-extension SendBitcoinService {
+struct SendBaseService {}
+
+extension SendBaseService {
 
     enum State {
         case loading
-        case ready //SendXData
+        case ready
         case notReady
     }
 

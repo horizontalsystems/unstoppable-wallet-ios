@@ -4,7 +4,7 @@ import RxCocoa
 
 class SendXFeeSliderViewModel {
     private let disposeBag = DisposeBag()
-    private let service: SendXFeePriorityService
+    private let service: SendXFeeSliderService
 
     private let sliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
     private var slider: FeeSliderViewItem? {
@@ -13,47 +13,20 @@ class SendXFeeSliderViewModel {
         }
     }
 
-    private let isHiddenRelay = BehaviorRelay<Bool>(value: false)
-    private var isHidden: Bool = false {
-        didSet {
-            if isHidden != oldValue {
-                isHiddenRelay.accept(isHidden)
-            }
-        }
-    }
-
-    init(service: SendXFeePriorityService) {
+    init(service: SendXFeeSliderService) {
         self.service = service
 
-        subscribe(disposeBag, service.priorityObservable) { [weak self] in self?.sync(priority: $0) }
+        subscribe(disposeBag, service.itemObservable) { [weak self] in self?.sync(item: $0) }
+        sync(item: service.item)
     }
 
-    private func sync(priority: FeeRatePriority) {
-        guard case let .custom(value, range) = priority else {
-            slider = nil
-            isHidden = true
-            return
-        }
-
-        slider = FeeSliderViewItem(initialValue: value, range: range, description: "sat/byte")
-        isHidden = false
-    }
-
-    private func sync(feeRate: Int) {
-        guard case let .custom(_, range) = service.priority else {
-            return
-        }
-
-        service.priority = .custom(value: feeRate, range: range)
+    private func sync(item: SendXFeeSliderService.Item) {
+        slider = FeeSliderViewItem(initialValue: item.value, range: item.range, description: "sat/byte")
     }
 
 }
 
 extension SendXFeeSliderViewModel {
-
-    var isHiddenDriver: Driver<Bool> {
-        isHiddenRelay.asDriver()
-    }
 
     var sliderDriver: Driver<FeeSliderViewItem?> {
         sliderRelay.asDriver()
@@ -61,7 +34,7 @@ extension SendXFeeSliderViewModel {
 
     func subscribeTracking(cell: FeeSliderCell) {
         cell.onFinishTracking = { [weak self] feeRate in
-            self?.sync(feeRate: feeRate)
+            self?.service.set(feeRate: feeRate)
         }
     }
 

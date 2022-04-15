@@ -6,7 +6,7 @@ struct Caution {
     let type: CautionType
 }
 
-enum CautionType {
+enum CautionType: Equatable {
     case error
     case warning
 
@@ -24,9 +24,16 @@ enum CautionType {
         }
     }
 
+    static func ==(lhs: CautionType, rhs: CautionType) -> Bool {
+        switch (lhs, rhs) {
+        case (.error, .error), (.warning, .warning): return true
+        default: return false
+        }
+    }
+
 }
 
-struct TitledCaution {
+struct TitledCaution: Equatable {
     let title: String
     let text: String
     let type: CautionType

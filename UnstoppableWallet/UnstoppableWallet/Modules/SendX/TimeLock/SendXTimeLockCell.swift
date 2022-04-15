@@ -17,7 +17,6 @@ class SendXTimeLockCell: BaseThemeCell {
 
         backgroundColor = .clear
         clipsToBounds = true
-        set(backgroundStyle: .transparent)
 
         CellBuilder.build(cell: self, elements: [.text, .secondaryButton])
 

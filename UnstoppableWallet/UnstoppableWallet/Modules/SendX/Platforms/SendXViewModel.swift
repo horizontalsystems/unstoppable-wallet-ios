@@ -3,8 +3,14 @@ import RxCocoa
 import EthereumKit
 import MarketKit
 
+protocol ISendBaseService {
+    var platformCoin: PlatformCoin { get }
+    var state: SendBaseService.State { get }
+    var stateObservable: Observable<SendBaseService.State> { get }
+}
+
 class SendXViewModel {
-    private let service: SendBitcoinService
+    private let service: ISendBaseService
     private let disposeBag = DisposeBag()
 
     private let proceedEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -12,7 +18,7 @@ class SendXViewModel {
 
     private var firstLoaded: Bool = false
 
-    init(service: SendBitcoinService) {
+    init(service: ISendBaseService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -20,7 +26,7 @@ class SendXViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: SendBitcoinService.State) {
+    private func sync(state: SendBaseService.State) {
         switch state {
         case .loading:
             if !firstLoaded {
@@ -47,7 +53,7 @@ extension SendXViewModel {
     }
 
     var platformCoin: PlatformCoin {
-        service.sendPlatformCoin
+        service.platformCoin
     }
 
     func didTapProceed() {

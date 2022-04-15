@@ -3,10 +3,14 @@ import MarketKit
 import HsToolKit
 
 protocol ISendConfirmationFactory {
-    func viewController() throws -> UIViewController
+    func confirmationViewController() throws -> UIViewController
 }
 
-class SendConfirmationFactory {
+protocol ISendFeeSettingsFactory {
+    var feeSettingsViewController: UIViewController { get }
+}
+
+class BaseSendFactory {
 
     func primaryInfo(fiatService: FiatService) throws -> AmountInfo {
         guard let platformCoin = fiatService.platformCoin else {
@@ -26,7 +30,7 @@ class SendConfirmationFactory {
 
 }
 
-extension SendConfirmationFactory {
+extension BaseSendFactory {
 
     enum ConfirmationError: Error {
         case noCoin
@@ -36,23 +40,33 @@ extension SendConfirmationFactory {
 
 }
 
-class SendBitcoinConfirmationFactory: SendConfirmationFactory {
+class SendBitcoinFactory: BaseSendFactory {
     weak var sourceViewController: UIViewController?
 
     private let fiatService: FiatService
+    private let amountCautionService: AmountCautionService
     private let feeFiatService: FiatService
+    private let feeService: SendFeeService
+    private let feeRateService: SendXFeeRateService
+    private let feePriorityService: SendXFeePriorityService
     private let addressService: AddressService
     private let timeLockService: SendXTimeLockService
     private let adapterService: SendBitcoinAdapterService
+    private let customFeeRateProvider: ICustomRangedFeeRateProvider
     private let logger: Logger
     private let platformCoin: PlatformCoin
 
-    init(fiatService: FiatService, addressService: AddressService, feeFiatService: FiatService, timeLockService: SendXTimeLockService, adapterService: SendBitcoinAdapterService, logger: Logger, platformCoin: PlatformCoin) {
+    init(fiatService: FiatService, amountCautionService: AmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendXFeeRateService, feePriorityService: SendXFeePriorityService, timeLockService: SendXTimeLockService, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider, logger: Logger, platformCoin: PlatformCoin) {
         self.fiatService = fiatService
+        self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
+        self.feeService = feeService
+        self.feeRateService = feeRateService
+        self.feePriorityService = feePriorityService
         self.addressService = addressService
         self.timeLockService = timeLockService
         self.adapterService = adapterService
+        self.customFeeRateProvider = customFeeRateProvider
         self.logger = logger
         self.platformCoin = platformCoin
     }
@@ -89,14 +103,48 @@ class SendBitcoinConfirmationFactory: SendConfirmationFactory {
 
 }
 
-extension SendBitcoinConfirmationFactory: ISendConfirmationFactory {
+extension SendBitcoinFactory: ISendConfirmationFactory {
 
-    func viewController() throws -> UIViewController {
+    func confirmationViewController() throws -> UIViewController {
         let items = try items()
 
         let service = SendConfirmationService(sendService: adapterService, logger: logger, platformCoin: platformCoin, items: items)
         let viewModel = SendXConfirmationViewModel(service: service)
         let viewController = SendXConfirmationViewController(viewModel: viewModel)
+
+        return viewController
+    }
+
+}
+
+extension SendBitcoinFactory: ISendFeeSettingsFactory {
+
+    var feeSettingsViewController: UIViewController {
+        let feeViewModel = SendXFeeViewModel(service: feeService)
+        let feeSliderService = SendXFeeSliderService(
+                service: feePriorityService,
+                feeRateService: feeRateService,
+                customRangedFeeRateProvider: customFeeRateProvider
+        )
+        let feeSliderViewModel = SendXFeeSliderViewModel(service: feeSliderService)
+        let feePriorityViewModel = SendXFeePriorityViewModel(service: feePriorityService)
+        let feeCautionViewModel = SendXFeeWarningViewModel(service: feeRateService)
+        let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
+                service: amountCautionService,
+                feeCoin: platformCoin
+        )
+
+        let service = SendXFeeSettingsService(feeService: feeService, feeRateService: feeRateService, feePriorityService: feePriorityService)
+        let viewModel = SendXFeeSettingsViewModel(service: service)
+
+        let viewController = SendXFeeSettingsViewController(
+                viewModel: viewModel,
+                feeViewModel: feeViewModel,
+                feeSliderViewModel: feeSliderViewModel,
+                feePriorityViewModel: feePriorityViewModel,
+                feeCautionViewModel: feeCautionViewModel,
+                amountCautionViewModel: amountCautionViewModel
+        )
 
         return viewController
     }

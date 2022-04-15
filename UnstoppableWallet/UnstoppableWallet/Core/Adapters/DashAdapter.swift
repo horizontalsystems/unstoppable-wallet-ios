@@ -1,3 +1,4 @@
+import Foundation
 import DashKit
 import RxSwift
 import HsToolKit

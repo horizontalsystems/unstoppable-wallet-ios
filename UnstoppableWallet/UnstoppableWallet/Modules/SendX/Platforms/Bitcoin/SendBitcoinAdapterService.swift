@@ -5,6 +5,7 @@ import RxRelay
 import HsToolKit
 
 protocol ISendXFeeValueService: AnyObject {
+    var editable: Bool { get }
     var feeState: DataStatus<Decimal> { get }
     var feeStateObservable: Observable<DataStatus<Decimal>> { get }
 }
@@ -136,6 +137,10 @@ class SendBitcoinAdapterService {
 }
 
 extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
+
+    var editable: Bool {
+        true
+    }
 
     var feeStateObservable: Observable<DataStatus<Decimal>> {
         feeStateRelay.asObservable()

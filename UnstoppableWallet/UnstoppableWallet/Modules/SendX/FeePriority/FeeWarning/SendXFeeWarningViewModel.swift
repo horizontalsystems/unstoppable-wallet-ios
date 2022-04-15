@@ -3,22 +3,25 @@ import RxRelay
 import RxCocoa
 
 class SendXFeeWarningViewModel {
-    static private let stuckWarningString = "send.stuck_warning".localized
 
     private let disposeBag = DisposeBag()
     private let service: SendXFeeRateService
+    private let cautionTitle: String
+    private let cautionText: String
 
-    private let warningRelay = BehaviorRelay<String?>(value: nil)
-    private var warning: String? {
+    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
+    private var caution: TitledCaution? {
         didSet {
-            if oldValue != warning {
-                warningRelay.accept(warning)
+            if oldValue != caution {
+                cautionRelay.accept(caution)
             }
         }
     }
 
-    init(service: SendXFeeRateService) {
+    init(service: SendXFeeRateService, cautionTitle: String = "send.fee_settings.stuck_warning.title".localized, cautionText: String = "send.fee_settings.stuck_warning".localized) {
         self.service = service
+        self.cautionTitle = cautionTitle
+        self.cautionText = cautionText
 
         subscribe(disposeBag, service.recommendedFeeRateObservable) { [weak self] _ in self?.sync() }
         subscribe(disposeBag, service.feeRateObservable) { [weak self] _ in self?.sync() }
@@ -28,9 +31,9 @@ class SendXFeeWarningViewModel {
         if case let .completed(feeRate) = service.feeRate,
            let recommendedFeeRate = service.recommendedFeeRate,
            recommendedFeeRate > feeRate {
-            warning = Self.stuckWarningString
+            caution = TitledCaution(title: cautionTitle, text: cautionText, type: .warning)
         } else {
-            warning = nil
+            caution = nil
         }
     }
 
@@ -38,8 +41,8 @@ class SendXFeeWarningViewModel {
 
 extension SendXFeeWarningViewModel {
 
-    var warningDriver: Driver<String?> {
-        warningRelay.asDriver()
+    var cautionDriver: Driver<TitledCaution?> {
+        cautionRelay.asDriver()
     }
 
 }

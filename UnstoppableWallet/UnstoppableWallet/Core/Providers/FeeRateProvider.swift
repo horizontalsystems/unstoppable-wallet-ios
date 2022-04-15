@@ -45,7 +45,8 @@ class FeeRateProvider {
 }
 
 class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
-    let customFeeRange: ClosedRange<Int> = 1...200
+    static let defaultFeeRange: ClosedRange<Int> = 1...200
+    let customFeeRange: ClosedRange<Int> = BitcoinFeeRateProvider.defaultFeeRange
 
     private let feeRateProvider: FeeRateProvider
     private let lowPriorityBlockCount = 40
@@ -59,7 +60,7 @@ class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     var feeRatePriorityList: [FeeRatePriority] {
         [
             .low,
-            .medium,
+            .recommended,
             .high,
             .custom(value: customFeeRange.lowerBound, range: customFeeRange)
         ]
@@ -67,15 +68,13 @@ class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     var recommendedFeeRate: Single<Int> { feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount) }
 
     var defaultFeeRatePriority: FeeRatePriority {
-        .medium
+        .recommended
     }
 
     func feeRate(priority: FeeRatePriority) -> Single<Int> {
         switch priority {
         case .low:
             return feeRateProvider.bitcoinFeeRate(blockCount: lowPriorityBlockCount)
-        case .medium:
-            return feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount)
         case .high:
             return feeRateProvider.bitcoinFeeRate(blockCount: highPriorityBlockCount)
         case .recommended:
