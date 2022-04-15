@@ -4,20 +4,15 @@ import MarketKit
 
 class UnknownSwapTransactionRecord: EvmTransactionRecord {
     let exchangeAddress: String
-    let value: TransactionValue
-    let internalTransactionEvents: [TransferEvent]
-    let incomingEip20Events: [TransferEvent]
-    let outgoingEip20Events: [TransferEvent]
+    let valueIn: TransactionValue?
+    let valueOut: TransactionValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String,
-         value: TransactionValue, internalTransactionEvents: [TransferEvent], incomingEip20Events: [TransferEvent], outgoingEip20Events: [TransferEvent]) {
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String, valueIn: TransactionValue?, valueOut: TransactionValue?) {
         self.exchangeAddress = exchangeAddress
-        self.value = value
-        self.internalTransactionEvents = internalTransactionEvents
-        self.incomingEip20Events = incomingEip20Events
-        self.outgoingEip20Events = outgoingEip20Events
+        self.valueIn = valueIn
+        self.valueOut = valueOut
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
     }
 
 }

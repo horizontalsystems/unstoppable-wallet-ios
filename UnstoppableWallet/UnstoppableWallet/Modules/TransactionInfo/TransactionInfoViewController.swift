@@ -200,6 +200,10 @@ class TransactionInfoViewController: ThemeViewController {
         fromToRow(rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value)
     }
 
+    private func spenderRow(rowInfo: RowInfo, value: String) -> RowProtocol {
+        fromToRow(rowInfo: rowInfo, title: "tx_info.spender".localized, value: value)
+    }
+
     private func recipientRow(rowInfo: RowInfo, value: String) -> RowProtocol {
         fromToRow(rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value)
     }
@@ -437,6 +441,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
         case let .from(value): return fromRow(rowInfo: rowInfo, value: value)
         case let .to(value): return toRow(rowInfo: rowInfo, value: value)
+        case let .spender(value): return spenderRow(rowInfo: rowInfo, value: value)
         case let .recipient(value): return recipientRow(rowInfo: rowInfo, value: value)
         case let .id(value): return idRow(rowInfo: rowInfo, value: value)
         case let .rate(value): return valueRow(rowInfo: rowInfo, title: "tx_info.rate".localized, value: value)
@@ -461,6 +466,7 @@ extension TransactionInfoViewController: SectionsDataSource {
             Section(
                     id: "section_\(index)",
                     headerState: .margin(height: .margin12),
+                    footerState: .margin(height: index == viewItems.count - 1 ? .margin32 : 0),
                     rows: sectionViewItems.enumerated().map { (index, viewItem) in
                         row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItems.count - 1))
                     }

@@ -61,6 +61,7 @@ extension TransactionInfoModule {
         case date(date: Date)
         case from(value: String)
         case to(value: String)
+        case spender(value: String)
         case recipient(value: String)
         case id(value: String)
         case rate(value: String)

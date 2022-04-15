@@ -2,6 +2,8 @@ class TransactionInfoAddressMapper {
     private static let map = [
         // Ethereum Mainnet
         "0x7a250d5630b4cf539739df2c5dacb4c659f2488d": "Uniswap v.2",
+        "0xe592427a0aece92de3edee1f18e0157c05861564": "Uniswap v.3",
+        "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45": "Uniswap v.3",
         "0x11111112542d85b3ef69ae05771c2dccff4faa26": "1Inch V3",
         "0x881d40237659c251811cec9c364ef91dc08d300c": "Metamask: Swap Router",
         "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd": "SushiSwap",

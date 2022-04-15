@@ -4,13 +4,13 @@ import MarketKit
 
 class EvmTransactionRecord: TransactionRecord {
     let transaction: Transaction
-    let foreignTransaction: Bool
+    let ownTransaction: Bool
     let fee: TransactionValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, foreignTransaction: Bool = false) {
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, ownTransaction: Bool) {
         self.transaction = transaction
         let txHash = transaction.hash.toHexString()
-        self.foreignTransaction = foreignTransaction
+        self.ownTransaction = ownTransaction
 
         if let feeAmount = transaction.gasUsed ?? transaction.gasLimit, let gasPrice = transaction.gasPrice {
             let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount) * Decimal(gasPrice))

@@ -146,20 +146,20 @@ class EvmAccountManager {
 
             case let decoration as SwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
                 default: ()
                 }
 
             case let decoration as OneInchSwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
                 default: ()
                 }
 
             case let decoration as OneInchUnoswapDecoration:
                 if let tokenOut = decoration.tokenOut {
                     switch tokenOut {
-                    case .eip20Coin(let address): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                    case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
                     default: ()
                     }
                 }

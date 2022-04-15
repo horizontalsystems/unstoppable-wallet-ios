@@ -10,7 +10,7 @@ class ApproveTransactionRecord: EvmTransactionRecord {
         self.spender = spender
         self.value = value
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
     }
 
     override var mainValue: TransactionValue? {

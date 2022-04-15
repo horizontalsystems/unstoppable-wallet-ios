@@ -433,14 +433,14 @@ class SendEvmTransactionViewModel {
     private func coinService(token: SwapDecoration.Token) -> CoinService? {
         switch token {
         case .evmCoin: return coinServiceFactory.baseCoinService
-        case .eip20Coin(let address): return coinServiceFactory.coinService(contractAddress: address)
+        case .eip20Coin(let address, _): return coinServiceFactory.coinService(contractAddress: address)
         }
     }
 
     private func coinService(token: OneInchDecoration.Token) -> CoinService? {
         switch token {
         case .evmCoin: return coinServiceFactory.baseCoinService
-        case .eip20Coin(let address): return coinServiceFactory.coinService(contractAddress: address)
+        case .eip20Coin(let address, _): return coinServiceFactory.coinService(contractAddress: address)
         }
     }
 
