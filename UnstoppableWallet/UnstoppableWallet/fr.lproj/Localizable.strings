@@ -595,6 +595,8 @@
 "transactions.to" = "A %@";
 "transactions.from" = "De %@";
 
+"transactions.multiple" = "Multiple";
+
 "transactions.value.unlimited" = "%@ illimité";
 
 "transactions.today" = "Aujourd'hui";
@@ -620,6 +622,7 @@
 "tx_info.from_hash" = "De";
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
+"tx_info.spender" = "Spender";
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.options.speed_up" = "Accélérer";
