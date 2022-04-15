@@ -597,6 +597,8 @@
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
 
+"transactions.multiple" = "Multiple";
+
 "transactions.value.unlimited" = "неограниченно %@";
 
 "transactions.today" = "Сегодня";
@@ -622,6 +624,7 @@
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
+"tx_info.spender" = "Spender";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.options.speed_up" = "Ускорить";
