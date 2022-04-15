@@ -12,7 +12,7 @@ class EvmOutgoingTransactionRecord: EvmTransactionRecord {
         self.value = value
         self.sentToSelf = sentToSelf
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
     }
 
     override var mainValue: TransactionValue? {

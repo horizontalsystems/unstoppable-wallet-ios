@@ -38,21 +38,22 @@ class TransactionInfoService {
             tx.valueOut.flatMap { coins.append($0.coin) }
 
         case let tx as UnknownSwapTransactionRecord:
-            if !tx.value.zeroValue {
-                coins.append(tx.value.coin)
-            }
-            coins.append(contentsOf: tx.internalTransactionEvents.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+            tx.valueIn.flatMap { coins.append($0.coin) }
+            tx.valueOut.flatMap { coins.append($0.coin) }
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            if let value = tx.value, !value.zeroValue {
-                coins.append(value.coin)
+            if !tx.totalValue.zeroValue {
+                coins.append(tx.totalValue.coin)
             }
-            coins.append(contentsOf: tx.internalTransactionEvents.map({ $0.value.coin }))
             coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
             coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+
+        case let tx as ContractCallIncomingTransactionRecord:
+            if let baseCoinValue = tx.baseCoinValue {
+                coins.append(baseCoinValue.coin)
+            }
+            coins.append(contentsOf: tx.events.map({ $0.value.coin }))
 
         case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
         case let tx as BitcoinOutgoingTransactionRecord:
@@ -67,7 +68,7 @@ class TransactionInfoService {
         default: ()
         }
 
-        if let evmTransaction = transactionRecord as? EvmTransactionRecord, !evmTransaction.foreignTransaction, let fee = evmTransaction.fee {
+        if let evmTransaction = transactionRecord as? EvmTransactionRecord, evmTransaction.ownTransaction, let fee = evmTransaction.fee {
             coins.append(fee.coin)
         }
 

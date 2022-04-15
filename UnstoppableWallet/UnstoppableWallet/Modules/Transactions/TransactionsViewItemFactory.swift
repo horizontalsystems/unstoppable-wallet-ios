@@ -62,20 +62,20 @@ class TransactionsViewItemFactory {
             subTitle = TransactionInfoAddressMapper.map(swap.exchangeAddress)
 
             primaryValue = ColoredValue(value: coinString(from: swap.valueIn), color: .themeJacob)
-            secondaryValue = swap.valueOut.flatMap { ColoredValue(value: coinString(from: $0), color: swap.foreignRecipient ? .themeGray : .themeRemus) }
+            secondaryValue = swap.valueOut.flatMap { ColoredValue(value: coinString(from: $0), color: swap.recipient != nil ? .themeGray : .themeRemus) }
 
         case let swap as UnknownSwapTransactionRecord:
             typeImage = ColoredImage(imageName: "swap_2_20", color: .themeLeah)
             title = "transactions.swap".localized
             subTitle = TransactionInfoAddressMapper.map(swap.exchangeAddress)
 
-            primaryValue = nil
-            secondaryValue = nil
+            primaryValue = swap.valueIn.flatMap { ColoredValue(value: coinString(from: $0), color: .themeJacob) }
+            secondaryValue = swap.valueOut.flatMap { ColoredValue(value: coinString(from: $0), color: .themeRemus) }
 
         case let approve as ApproveTransactionRecord:
             typeImage = ColoredImage(imageName: "check_2_20", color: .themeLeah)
             title = "transactions.approve".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(approve.spender))
+            subTitle = TransactionInfoAddressMapper.map(approve.spender)
 
             if approve.value.isMaxValue {
                 primaryValue = ColoredValue(value: "∞", color: .themeJacob)
@@ -87,10 +87,87 @@ class TransactionsViewItemFactory {
                 secondaryValue = ColoredValue(value: coinString(from: approve.value), color: .themeGray)
             }
 
-        case let contractCall as ContractCallTransactionRecord:
+        case let record as ContractCallTransactionRecord:
             typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
-            title = contractCall.method ?? "\(contractCall.source.blockchain.title) \("transactions.contract_call".localized)"
-            subTitle = contractCall.contractAddress.map { TransactionInfoAddressMapper.map($0) } ?? "---"
+            title = record.method ?? "\(record.source.blockchain.title) \("transactions.contract_call".localized)"
+            subTitle = TransactionInfoAddressMapper.map(record.contractAddress)
+
+            var incomingValues = [TransactionValue]()
+            var outgoingValues = [TransactionValue]()
+
+            if let decimalValue = record.totalValue.decimalValue, decimalValue != 0 {
+                if decimalValue > 0 {
+                    incomingValues.append(record.totalValue)
+                } else {
+                    outgoingValues.append(record.totalValue)
+                }
+            }
+
+            for event in record.incomingEip20Events {
+                incomingValues.append(event.value)
+            }
+            for event in record.outgoingEip20Events {
+                outgoingValues.append(event.value)
+            }
+
+            if incomingValues.count == 1, outgoingValues.isEmpty {
+                if let currencyValue = item.currencyValue {
+                    primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                }
+                secondaryValue = ColoredValue(value: coinString(from: incomingValues[0]), color: .themeGray)
+            } else if incomingValues.isEmpty, outgoingValues.count == 1 {
+                if let currencyValue = item.currencyValue {
+                    primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
+                }
+                secondaryValue = ColoredValue(value: coinString(from: outgoingValues[0]), color: .themeGray)
+            } else if incomingValues.count == 1, outgoingValues.count == 1 {
+                primaryValue = ColoredValue(value: coinString(from: outgoingValues[0]), color: .themeJacob)
+                secondaryValue = ColoredValue(value: coinString(from: incomingValues[0]), color: .themeRemus)
+            } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
+                let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+                primaryValue = ColoredValue(value: "transactions.multiple".localized, color: .themeRemus)
+                secondaryValue = ColoredValue(value: coinCodes, color: .themeGray)
+            } else if incomingValues.isEmpty, !outgoingValues.isEmpty {
+                let coinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+                primaryValue = ColoredValue(value: "transactions.multiple".localized, color: .themeJacob)
+                secondaryValue = ColoredValue(value: coinCodes, color: .themeGray)
+            } else {
+                let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+                let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+                primaryValue = ColoredValue(value: outgoingCoinCodes, color: .themeJacob)
+                secondaryValue = ColoredValue(value: incomingCoinCodes, color: .themeRemus)
+            }
+
+        case let record as ContractCallIncomingTransactionRecord:
+            typeImage = ColoredImage(imageName: "arrow_medium_main_down_left_20", color: .themeRemus)
+            title = "transactions.receive".localized
+
+            if let baseCoinValue = record.baseCoinValue, record.events.isEmpty {
+                subTitle = "---"
+                if let currencyValue = item.currencyValue {
+                    primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                }
+                secondaryValue = ColoredValue(value: coinString(from: baseCoinValue), color: .themeGray)
+            } else if record.baseCoinValue == nil, record.events.count == 1 {
+                subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(record.events[0].address))
+                if let currencyValue = item.currencyValue {
+                    primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                }
+                secondaryValue = ColoredValue(value: coinString(from: record.events[0].value), color: .themeGray)
+            } else {
+                var coinCodes = [String]()
+
+                if let baseCoinValue = record.baseCoinValue {
+                    coinCodes.append(baseCoinValue.coinCode)
+                }
+                for event in record.events {
+                    coinCodes.append(event.value.coinCode)
+                }
+
+                subTitle = "transactions.multiple".localized
+                primaryValue = ColoredValue(value: "transactions.multiple".localized, color: .themeRemus)
+                secondaryValue = ColoredValue(value: Array(Set(coinCodes)).joined(separator: ", "), color: .themeGray)
+            }
 
         case is ContractCreationTransactionRecord:
             typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)

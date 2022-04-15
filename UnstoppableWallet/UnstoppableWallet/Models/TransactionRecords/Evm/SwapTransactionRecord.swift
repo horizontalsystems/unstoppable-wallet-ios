@@ -6,16 +6,16 @@ class SwapTransactionRecord: EvmTransactionRecord {
     let exchangeAddress: String
     let amountIn: Amount
     let amountOut: Amount?
-    let foreignRecipient: Bool
+    let recipient: String?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String, amountIn: Amount, amountOut: Amount?, foreignRecipient: Bool) {
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String, amountIn: Amount, amountOut: Amount?, recipient: String?) {
         self.exchangeAddress = exchangeAddress
         self.amountIn = amountIn
         self.amountOut = amountOut
 
-        self.foreignRecipient = foreignRecipient
+        self.recipient = recipient
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
     }
 
     var valueIn: TransactionValue {
