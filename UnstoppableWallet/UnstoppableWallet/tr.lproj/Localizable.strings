@@ -598,6 +598,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.to" = "%@ kişisine";
 "transactions.from" = "%@ kişisinden";
 
+"transactions.multiple" = "Multiple";
+
 "transactions.value.unlimited" = "sınırsız %@";
 
 "transactions.today" = "Bugün";
@@ -623,6 +625,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
+"tx_info.spender" = "Spender";
 "tx_info.button_explorer" = "%@ ile görüntüle";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.options.speed_up" = "Hızlandır";
