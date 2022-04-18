@@ -23,6 +23,8 @@ class NftCollectionViewController: ThemeViewController {
         self.activityController = activityController
 
         super.init()
+
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
