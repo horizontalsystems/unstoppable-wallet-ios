@@ -28,9 +28,8 @@ class SendBitcoinAdapterService {
     private let feeRateService: SendXFeeRateService
     private let amountInputService: IAmountInputService
     private let addressService: AddressService
-    private let timeLockService: SendXTimeLockService
+    private let timeLockService: SendXTimeLockService?
     private let btcBlockchainManager: BtcBlockchainManager
-    private let bitcoinAddressParserItem: BitcoinAddressParserItem
 
     private let adapter: ISendBitcoinAdapter
 
@@ -71,14 +70,13 @@ class SendBitcoinAdapterService {
         }
     }
 
-    init(feeRateService: SendXFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendXTimeLockService, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter, bitcoinAddressParserItem: BitcoinAddressParserItem) {
+    init(feeRateService: SendXFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendXTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService
         self.timeLockService = timeLockService
         self.btcBlockchainManager = btcBlockchainManager
         self.adapter = adapter
-        self.bitcoinAddressParserItem = bitcoinAddressParserItem
 
         subscribe(disposeBag, amountInputService.amountObservable) { [weak self] _ in
             self?.sync(updatedFrom: .amount)
@@ -86,15 +84,19 @@ class SendBitcoinAdapterService {
         subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in
             self?.sync(updatedFrom: .address)
         }
-        subscribe(disposeBag, timeLockService.pluginDataObservable) { [weak self] _ in
-            self?.sync(updatedFrom: .pluginData)
+
+        if let timeLockService = timeLockService {
+            subscribe(disposeBag, timeLockService.pluginDataObservable) { [weak self] _ in
+                self?.sync(updatedFrom: .pluginData)
+            }
         }
+
         subscribe(disposeBag, feeRateService.feeRateObservable) { [weak self] in
             self?.sync(feeRate: $0)
         }
 
         minimumSendAmount = adapter.minimumSendAmount(address: addressService.state.address?.raw)
-        maximumSendAmount = adapter.maximumSendAmount(pluginData: timeLockService.pluginData)
+        maximumSendAmount = adapter.maximumSendAmount(pluginData: pluginData)
     }
 
     private func sync(feeRate: DataStatus<Int>? = nil, updatedFrom: UpdatedField = .feeRate) {
@@ -112,7 +114,7 @@ class SendBitcoinAdapterService {
         case .failed(let error):
             feeState = .failed(error)
         case .completed(let feeRate):
-            update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: timeLockService.pluginData, updatedFrom: updatedFrom)
+            update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: pluginData, updatedFrom: updatedFrom)
         }
     }
 
@@ -134,12 +136,16 @@ class SendBitcoinAdapterService {
         }
     }
 
+    private var pluginData: [UInt8: IBitcoinPluginData] {
+        timeLockService?.pluginData ?? [:]
+    }
+
 }
 
 extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
 
     var editable: Bool {
-        true
+        !feeRateService.staticFeeRate
     }
 
     var feeStateObservable: Observable<DataStatus<Decimal>> {
@@ -159,7 +165,7 @@ extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceSer
     }
 
     func validate(address: String) throws {
-        try adapter.validate(address: address, pluginData: timeLockService.pluginData)
+        try adapter.validate(address: address, pluginData: pluginData)
     }
 
 }
@@ -187,7 +193,7 @@ extension SendBitcoinAdapterService: ISendService {
                 amount: amountInputService.amount,
                 address: address.raw,
                 feeRate: feeRate,
-                pluginData: timeLockService.pluginData,
+                pluginData: pluginData,
                 sortMode: sortMode,
                 logger: logger
         )

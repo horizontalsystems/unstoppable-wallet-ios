@@ -58,6 +58,10 @@ class SendXFeeRateService {
 
 extension SendXFeeRateService {
 
+    var staticFeeRate: Bool {
+        priorityService.feeRatePriorityList.isEmpty
+    }
+
     var feeRateObservable: Observable<DataStatus<Int>> {
         feeRateRelay.asObservable()
     }

@@ -57,6 +57,7 @@ protocol ISendBitcoinAdapter {
 }
 
 protocol ISendDashAdapter {
+    var blockchain: BtcBlockchain { get }
     func availableBalance(address: String?) -> Decimal
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws

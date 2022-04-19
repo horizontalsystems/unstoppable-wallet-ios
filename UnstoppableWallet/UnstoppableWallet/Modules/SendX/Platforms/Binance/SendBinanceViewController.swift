@@ -6,7 +6,7 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-class SendBitcoinViewController: ThemeViewController {
+class SendBinanceViewController: ThemeViewController {
     private let viewModel: SendXViewModel
     private let disposeBag = DisposeBag()
 
@@ -14,7 +14,6 @@ class SendBitcoinViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let confirmationFactory: ISendConfirmationFactory
-    private let feeSettingsFactory: ISendFeeSettingsFactory
 
     private let amountCautionViewModel: AmountCautionViewModel
     private let feeWarningViewModel: ITitledCautionViewModel
@@ -27,10 +26,10 @@ class SendBitcoinViewController: ThemeViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let feeCell: EditableFeeCell
-    private let feeCautionCell = TitledHighlightedDescriptionCell()
+    private let memoCell: MemoInputCell
 
-    private let timeLockCell: SendXTimeLockCell?
+    private let feeCell: FeeCell
+    private let feeCautionCell = TitledHighlightedDescriptionCell()
 
     private let buttonCell = ButtonCell()
 
@@ -38,19 +37,16 @@ class SendBitcoinViewController: ThemeViewController {
     private var keyboardShown = false
 
     init(confirmationFactory: ISendConfirmationFactory,
-         feeSettingsFactory: ISendFeeSettingsFactory,
          viewModel: SendXViewModel,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
          amountCautionViewModel: AmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
+         memoViewModel: MemoInputViewModel,
          feeViewModel: SendXFeeViewModel,
-         feeWarningViewModel: ITitledCautionViewModel,
-         timeLockViewModel: SendXTimeLockViewModel?
+         feeWarningViewModel: ITitledCautionViewModel
     ) {
-
         self.confirmationFactory = confirmationFactory
-        self.feeSettingsFactory = feeSettingsFactory
         self.viewModel = viewModel
         self.amountCautionViewModel = amountCautionViewModel
         self.feeWarningViewModel = feeWarningViewModel
@@ -62,16 +58,12 @@ class SendBitcoinViewController: ThemeViewController {
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
 
-        feeCell = EditableFeeCell(viewModel: feeViewModel, isLast: timeLockViewModel == nil)
+        memoCell = MemoInputCell(viewModel: memoViewModel)
 
-        timeLockCell = timeLockViewModel.map {
-            SendXTimeLockCell(viewModel: $0)
-        }
+        feeCell = FeeCell(viewModel: feeViewModel)
 
         super.init()
 
-        timeLockCell?.sourceViewController = self
-        timeLockCell?.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -109,7 +101,6 @@ class SendBitcoinViewController: ThemeViewController {
         recipientCell.onOpenViewController = { [weak self] in
             self?.present($0, animated: true)
         }
-
         recipientCautionCell.onChangeHeight = { [weak self] in
             self?.reloadTable()
         }
@@ -157,14 +148,6 @@ class SendBitcoinViewController: ThemeViewController {
         reloadTable()
     }
 
-    private func openFeeSettings() {
-        guard let viewController = try? feeSettingsFactory.feeSettingsViewController() else {
-            return
-        }
-
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
-    }
-
     @objc private func didTapProceed() {
         viewModel.didTapProceed()
     }
@@ -196,7 +179,7 @@ class SendBitcoinViewController: ThemeViewController {
 
 }
 
-extension SendBitcoinViewController: SectionsDataSource {
+extension SendBinanceViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [
@@ -250,36 +233,28 @@ extension SendBitcoinViewController: SectionsDataSource {
                     ]
             ),
             Section(
+                    id: "memo",
+                    headerState: .margin(height: .margin12),
+                    rows: [
+                        StaticRow(
+                                cell: memoCell,
+                                id: "memo-input",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            ),
+            Section(
                     id: "fee",
                     headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
                                 cell: feeCell,
                                 id: "fee",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.openFeeSettings()
-                                }
+                                height: .heightCell48
                         )
                     ]
             )
         ]
-
-        if let cell = timeLockCell {
-            sections.append(
-                    Section(
-                            id: "time-lock",
-                            rows: [
-                                StaticRow(
-                                        cell: cell,
-                                        id: "time_lock_cell",
-                                        height: .heightSingleLineCell
-                                )
-                            ]
-                    )
-            )
-        }
 
         sections.append(contentsOf:
         [

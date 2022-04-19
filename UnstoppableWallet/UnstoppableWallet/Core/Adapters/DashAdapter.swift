@@ -51,22 +51,10 @@ extension DashAdapter: DashKitDelegate {
 
 }
 
-extension DashAdapter: ISendDashAdapter {
+extension DashAdapter: ISendBitcoinAdapter {
 
-    func availableBalance(address: String?) -> Decimal {
-        availableBalance(feeRate: feeRate, address: address)
-    }
-
-    func validate(address: String) throws {
-        try validate(address: address, pluginData: [:])
-    }
-
-    func fee(amount: Decimal, address: String?) -> Decimal {
-        fee(amount: amount, feeRate: feeRate, address: address)
-    }
-
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
-        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: sortMode, logger: logger)
+    var blockchain: BtcBlockchain {
+        .dash
     }
 
 }

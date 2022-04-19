@@ -4,13 +4,14 @@ import SnapKit
 
 class InputView: UIView {
     private let formValidatedView: FormValidatedView
-    private let inputStackView = InputStackView()
+    private let inputStackView: InputStackView
 
     private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
 
     var onChangeText: ((String?) -> ())?
 
-    init() {
+    init(singleLine: Bool = false) {
+        inputStackView = InputStackView(singleLine: singleLine)
         formValidatedView = FormValidatedView(contentView: inputStackView)
 
         super.init(frame: .zero)
@@ -75,6 +76,11 @@ extension InputView {
             inputStackView.text = newValue
             syncButtonStates()
         }
+    }
+
+    var font: UIFont? {
+        get { inputStackView.font }
+        set { inputStackView.font = newValue }
     }
 
     var keyboardType: UIKeyboardType {

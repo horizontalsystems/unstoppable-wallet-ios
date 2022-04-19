@@ -3,9 +3,10 @@ import ThemeKit
 import SnapKit
 
 class InputCell: UITableViewCell {
-    private let anInputView = InputView()
+    private let anInputView: InputView
 
-    init() {
+    init(singleLine: Bool = false) {
+        anInputView = InputView(singleLine: singleLine)
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -33,6 +34,11 @@ extension InputCell {
     var inputText: String? {
         get { anInputView.inputText }
         set { anInputView.inputText = newValue }
+    }
+
+    var font: UIFont? {
+        get { anInputView.font }
+        set { anInputView.font = newValue }
     }
 
     var keyboardType: UIKeyboardType {

@@ -46,6 +46,7 @@ class EditableFeeCell: BaseSelectableThemeCell {
         }
 
         subscribe(disposeBag, viewModel.editButtonVisibleDriver) { [weak self] visible in
+            self?.selectionStyle = visible ? .default : .none
             self?.bind(index: 2) { (component: ImageComponent) in
                 component.isHidden = !visible
             }

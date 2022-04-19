@@ -14,6 +14,7 @@ class SendXFeeSettingsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
+    private let feeViewModel: SendXFeeViewModel
     private let feeSliderViewModel: SendXFeeSliderViewModel
     private let feeCautionViewModel: SendXFeeWarningViewModel
     private let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
@@ -31,11 +32,14 @@ class SendXFeeSettingsViewController: ThemeViewController {
 
     init(viewModel: SendXFeeSettingsViewModel, feeViewModel: SendXFeeViewModel, feeSliderViewModel: SendXFeeSliderViewModel, feePriorityViewModel: SendXFeePriorityViewModel, feeCautionViewModel: SendXFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
         self.viewModel = viewModel
+        self.feeViewModel = feeViewModel
         self.feeSliderViewModel = feeSliderViewModel
         self.feeCautionViewModel = feeCautionViewModel
         self.amountCautionViewModel = amountCautionViewModel
 
         feeCell = FeeCell(viewModel: feeViewModel)
+        feeCell.selectionStyle = feeViewModel.hasInformation ? .default : .none
+
         feePriorityCell = SendXFeePriorityCell(viewModel: feePriorityViewModel)
         feeSliderCell = FeeSliderCell(sliderDriver: feeSliderViewModel.sliderDriver)
 
@@ -155,6 +159,10 @@ class SendXFeeSettingsViewController: ThemeViewController {
     }
 
     private func openInfo(title: String, description: String) {
+        guard feeViewModel.hasInformation else {
+            return
+        }
+
         let viewController = EvmGasDataInfoViewController(title: title, description: description)
         present(viewController.toBottomSheet, animated: true)
     }

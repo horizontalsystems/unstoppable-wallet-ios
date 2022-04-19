@@ -5,7 +5,7 @@ import RxCocoa
 class SendXFeeViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SendFeeService
+    private let service: ISendFeeService
 
     private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
@@ -14,7 +14,7 @@ class SendXFeeViewModel {
 
     private var firstLoaded = false
 
-    init(service: SendFeeService) {
+    init(service: ISendFeeService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in
@@ -63,13 +63,13 @@ class SendXFeeViewModel {
         }
     }
 
-    deinit {
-        print("deinit \(self)")
-    }
-
 }
 
 extension SendXFeeViewModel: IEditableFeeViewModel {
+
+    var hasInformation: Bool {
+        false
+    }
 
     var title: String {
         "fee_settings.fee".localized

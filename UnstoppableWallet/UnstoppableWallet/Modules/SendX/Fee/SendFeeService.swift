@@ -4,7 +4,13 @@ import RxRelay
 import RxCocoa
 import MarketKit
 
-class SendFeeService {
+protocol ISendFeeService {
+    var editableObservable: Observable<Bool> { get }
+    var defaultFeeObservable: Observable<Bool> { get }
+    var stateObservable: Observable<DataStatus<SendFeeService.State>> { get }
+}
+
+class SendFeeService: ISendFeeService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-fee-service")
 
     private let disposeBag = DisposeBag()
@@ -17,7 +23,6 @@ class SendFeeService {
     }
 
     private let fiatService: FiatService
-    private let feePriorityService: SendXFeePriorityService
     private let feeCoin: PlatformCoin
 
     private let stateRelay = BehaviorRelay<DataStatus<State>>(value: .loading)
@@ -34,9 +39,8 @@ class SendFeeService {
         }
     }
 
-    init(fiatService: FiatService, feePriorityService: SendXFeePriorityService, feeCoin: PlatformCoin) {
+    init(fiatService: FiatService, feeCoin: PlatformCoin) {
         self.fiatService = fiatService
-        self.feePriorityService = feePriorityService
         self.feeCoin = feeCoin
 
         fiatService.set(platformCoin: feeCoin)
@@ -49,7 +53,7 @@ class SendFeeService {
     private func setFeeValueService() {
         feeRateDisposeBag = DisposeBag()
         if let feeValueService = feeValueService {
-            editableRelay.accept(feeValueService.editable)
+            editable = feeValueService.editable
             subscribe(feeRateDisposeBag, feeValueService.feeStateObservable) { [weak self] in
                 self?.sync(feeState: $0)
             }
@@ -83,16 +87,12 @@ class SendFeeService {
         }
     }
 
-}
-
-extension SendFeeService {
-
     var editableObservable: Observable<Bool> {
         editableRelay.asObservable()
     }
 
     var defaultFeeObservable: Observable<Bool> {
-        feePriorityService.defaultPriorityObservable
+        .just(true)
     }
 
     var stateObservable: Observable<DataStatus<State>> {
