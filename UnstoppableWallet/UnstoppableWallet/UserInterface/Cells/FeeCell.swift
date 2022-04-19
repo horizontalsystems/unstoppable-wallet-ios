@@ -5,12 +5,17 @@ import ComponentKit
 import ThemeKit
 
 protocol IFeeViewModel {
+    var hasInformation: Bool { get }
     var title: String { get }
     var valueDriver: Driver<FeeCell.Value?> { get }
     var spinnerVisibleDriver: Driver<Bool> { get }
 }
 
 extension IFeeViewModel {
+
+    var hasInformation: Bool {
+        true
+    }
 
     var title: String {
         "fee_settings.max_fee".localized
@@ -31,11 +36,13 @@ class FeeCell: BaseSelectableThemeCell {
         backgroundColor = .clear
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        selectionStyle = viewModel.hasInformation ? .default : .none
 
         CellBuilder.build(cell: self, elements: [.image20, .text, .text, .spinner20])
 
         bind(index: 0, block: { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "circle_information_20")
+            component.isHidden = !viewModel.hasInformation
         })
 
         bind(index: 1) { (component: TextComponent) in

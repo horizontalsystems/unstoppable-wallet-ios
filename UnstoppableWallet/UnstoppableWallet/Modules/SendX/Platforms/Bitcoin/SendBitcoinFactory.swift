@@ -7,7 +7,7 @@ protocol ISendConfirmationFactory {
 }
 
 protocol ISendFeeSettingsFactory {
-    var feeSettingsViewController: UIViewController { get }
+    func feeSettingsViewController() throws -> UIViewController
 }
 
 class BaseSendFactory {
@@ -41,8 +41,6 @@ extension BaseSendFactory {
 }
 
 class SendBitcoinFactory: BaseSendFactory {
-    weak var sourceViewController: UIViewController?
-
     private let fiatService: FiatService
     private let amountCautionService: AmountCautionService
     private let feeFiatService: FiatService
@@ -50,13 +48,13 @@ class SendBitcoinFactory: BaseSendFactory {
     private let feeRateService: SendXFeeRateService
     private let feePriorityService: SendXFeePriorityService
     private let addressService: AddressService
-    private let timeLockService: SendXTimeLockService
+    private let timeLockService: SendXTimeLockService?
     private let adapterService: SendBitcoinAdapterService
-    private let customFeeRateProvider: ICustomRangedFeeRateProvider
+    private let customFeeRateProvider: ICustomRangedFeeRateProvider?
     private let logger: Logger
     private let platformCoin: PlatformCoin
 
-    init(fiatService: FiatService, amountCautionService: AmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendXFeeRateService, feePriorityService: SendXFeePriorityService, timeLockService: SendXTimeLockService, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider, logger: Logger, platformCoin: PlatformCoin) {
+    init(fiatService: FiatService, amountCautionService: AmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendXFeeRateService, feePriorityService: SendXFeePriorityService, timeLockService: SendXTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, platformCoin: PlatformCoin) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
@@ -90,10 +88,11 @@ class SendBitcoinFactory: BaseSendFactory {
                         primaryInfo: try primaryInfo(fiatService: feeFiatService),
                         secondaryInfo: feeFiatService.secondaryAmountInfo)
         )
-        if timeLockService.lockTime != .none {
+
+        if timeLockService?.lockTime != .none {
             viewItems.append(
                     SendConfirmationLockUntilViewItem(
-                            lockValue: timeLockService.lockTime.title
+                            lockValue: timeLockService?.lockTime.title ?? "n/a".localized
                     )
             )
         }
@@ -119,12 +118,16 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
 
 extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
-    var feeSettingsViewController: UIViewController {
+    func feeSettingsViewController() throws -> UIViewController {
+        guard let customRangedFeeRateProvider = customFeeRateProvider else {
+            throw AppError.unknownError
+        }
+
         let feeViewModel = SendXFeeViewModel(service: feeService)
         let feeSliderService = SendXFeeSliderService(
                 service: feePriorityService,
                 feeRateService: feeRateService,
-                customRangedFeeRateProvider: customFeeRateProvider
+                customRangedFeeRateProvider: customRangedFeeRateProvider
         )
         let feeSliderViewModel = SendXFeeSliderViewModel(service: feeSliderService)
         let feePriorityViewModel = SendXFeePriorityViewModel(service: feePriorityService)

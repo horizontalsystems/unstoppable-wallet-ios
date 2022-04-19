@@ -39,7 +39,7 @@ class SendXFeeWarningViewModel {
 
 }
 
-extension SendXFeeWarningViewModel {
+extension SendXFeeWarningViewModel: ITitledCautionViewModel {
 
     var cautionDriver: Driver<TitledCaution?> {
         cautionRelay.asDriver()

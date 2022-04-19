@@ -4,7 +4,7 @@ import RxSwift
 import RxRelay
 import HsToolKit
 
-class SendBitcoinService {
+class SendBinanceService {
     private let disposeBag = DisposeBag()
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-bitcoin-service")
 
@@ -12,9 +12,8 @@ class SendBitcoinService {
     private let amountService: IAmountInputService
     private let amountCautionService: AmountCautionService
     private let addressService: AddressService
-    private let adapterService: SendBitcoinAdapterService
-    private let feeService: SendXFeeRateService
-    private let timeLockErrorService: SendXTimeLockErrorService?
+    private let memoService: MemoInputService
+    private let adapter: ISendBinanceAdapter
 
     private let stateRelay = PublishRelay<SendBaseService.State>()
     private(set) var state: SendBaseService.State = .notReady {
@@ -23,13 +22,12 @@ class SendBitcoinService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: AmountCautionService, addressService: AddressService, adapterService: SendBitcoinAdapterService, feeService: SendXFeeRateService, timeLockErrorService: SendXTimeLockErrorService?, reachabilityManager: IReachabilityManager, platformCoin: PlatformCoin) {
+    init(amountService: IAmountInputService, amountCautionService: AmountCautionService, addressService: AddressService, memoService: MemoInputService, adapter: ISendBinanceAdapter, reachabilityManager: IReachabilityManager, platformCoin: PlatformCoin) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
-        self.adapterService = adapterService
-        self.feeService = feeService
-        self.timeLockErrorService = timeLockErrorService
+        self.memoService = memoService
+        self.adapter = adapter
         self.platformCoin = platformCoin
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
@@ -41,13 +39,6 @@ class SendBitcoinService {
         subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
-        subscribe(scheduler, disposeBag, feeService.feeRateObservable) { [weak self] _ in self?.syncState() }
-
-        if let timeLockErrorService = timeLockErrorService {
-            subscribe(scheduler, disposeBag, timeLockErrorService.errorObservable) { [weak self] _ in
-                self?.syncState()
-            }
-        }
     }
 
     private func syncState() {
@@ -58,7 +49,7 @@ class SendBitcoinService {
             return
         }
 
-        if addressService.state.isLoading || feeService.feeRate.isLoading {
+        if addressService.state.isLoading {
             state = .loading
             return
         }
@@ -68,12 +59,7 @@ class SendBitcoinService {
             return
         }
 
-        if timeLockErrorService?.error != nil {
-            state = .notReady
-            return
-        }
-
-        if feeService.feeRate.data == nil {
+        if adapter.fee > adapter.availableBinanceBalance {
             state = .notReady
             return
         }
@@ -83,10 +69,65 @@ class SendBitcoinService {
 
 }
 
-extension SendBitcoinService: ISendBaseService {
+extension SendBinanceService: ISendBaseService {
 
     var stateObservable: Observable<SendBaseService.State> {
         stateRelay.asObservable()
+    }
+
+}
+
+extension SendBinanceService: ISendService {
+
+    func sendSingle(logger: Logger) -> Single<Void> {
+        let address: Address
+        switch addressService.state {
+        case .success(let sendAddress): address = sendAddress
+        case .fetchError(let error): return Single.error(error)
+        default: return Single.error(AppError.addressInvalid)
+        }
+
+        guard adapter.fee <= adapter.availableBinanceBalance else {
+            return Single.error(SendTransactionError.noFee)
+        }
+
+        guard !amountService.amount.isZero else {
+            return Single.error(SendTransactionError.wrongAmount)
+        }
+
+        return adapter.sendSingle(
+                amount: amountService.amount,
+                address: address.raw,
+                memo: memoService.memo
+        )
+    }
+
+}
+
+extension SendBinanceService: ISendXFeeValueService {
+
+    var editable: Bool {
+        false
+    }
+
+    var feeState: DataStatus<Decimal> {
+        .completed(adapter.fee)
+    }
+
+    var feeStateObservable: Observable<DataStatus<Decimal>> {
+        .just(feeState)
+    }
+
+}
+
+extension SendBinanceService: IAvailableBalanceService {
+
+    var availableBalance: DataStatus<Decimal> {
+        .completed(adapter.availableBalance)
+    }
+
+    var availableBalanceObservable: Observable<DataStatus<Decimal>> {
+        .just(availableBalance)
     }
 
 }

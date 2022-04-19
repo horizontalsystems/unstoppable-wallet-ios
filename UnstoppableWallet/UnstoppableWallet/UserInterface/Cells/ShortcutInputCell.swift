@@ -4,7 +4,7 @@ import SnapKit
 
 class ShortcutInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
-    private let inputStackView = InputStackView()
+    private let inputStackView = InputStackView(singleLine: true)
 
     private var shortcutViews = [InputButtonWrapperView]()
     private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
@@ -80,11 +80,6 @@ extension ShortcutInputCell {
     var isEditable: Bool {
         get { inputStackView.isUserInteractionEnabled }
         set { inputStackView.isUserInteractionEnabled = newValue }
-    }
-
-    var maximumNumberOfLines: Int {
-        get { inputStackView.maximumNumberOfLines }
-        set { inputStackView.maximumNumberOfLines = newValue }
     }
 
     var keyboardType: UIKeyboardType {

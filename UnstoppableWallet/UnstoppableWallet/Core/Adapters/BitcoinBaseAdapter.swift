@@ -1,3 +1,4 @@
+import Foundation
 import BitcoinCore
 import Hodler
 import RxSwift
