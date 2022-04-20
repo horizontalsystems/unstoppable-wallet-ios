@@ -275,7 +275,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSend(wallet: Wallet) {
-        if let module = SendRouter.module(wallet: wallet) {
+        if let module = SendModule.controller(wallet: wallet) {
             present(module, animated: true)
         }
     }

@@ -1,5 +1,9 @@
 import Foundation
 
+protocol IAmountDecimalParser {
+    func parseAnyDecimal(from string: String?) -> Decimal?
+}
+
 class AmountDecimalParser {
 
     private let formatter: NumberFormatter = {

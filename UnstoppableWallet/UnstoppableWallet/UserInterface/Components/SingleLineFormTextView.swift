@@ -60,7 +60,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
     }
 
     private func height(text: String, width: CGFloat) -> CGFloat {
-        ceil(textViewFont.lineHeight) + textFieldInset.height
+         round(textViewFont.lineHeight) + textFieldInset.height
     }
 
     private func syncPlaceholder() {
