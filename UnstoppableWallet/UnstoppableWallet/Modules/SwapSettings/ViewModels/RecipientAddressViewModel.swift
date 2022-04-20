@@ -12,6 +12,8 @@ protocol IRecipientAddressService {
 }
 
 class RecipientAddressViewModel {
+    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.resipient-view-model", qos: .userInitiated)
+
     private let disposeBag = DisposeBag()
     private let service: AddressService
     private let handlerDelegate: IRecipientAddressService? // for legacy handlers
@@ -28,14 +30,20 @@ class RecipientAddressViewModel {
         self.handlerDelegate = handlerDelegate
 
         subscribeSerial(disposeBag, service.stateObservable) { [weak self] state in
-            self?.sync(state: state)
+            self?.serialSync(state: state)
         }
 
         subscribeSerial(disposeBag, service.customErrorObservable) { [weak self] error in
-            self?.sync()
+            self?.serialSync()
         }
 
-        sync(state: service.state)
+        serialSync(state: service.state)
+    }
+
+    private func serialSync(state: AddressService.State? = nil, customError: Error? = nil) {
+        queue.async { [weak self] in
+            self?.sync(state: state, customError: customError)
+        }
     }
 
     private func sync(state: AddressService.State? = nil, customError: Error? = nil) {
@@ -113,7 +121,7 @@ extension RecipientAddressViewModel {
 
     func onChange(editing: Bool) {
         self.editing = editing
-        sync(state: service.state)
+        serialSync(state: service.state)
     }
 
 }

@@ -13,7 +13,7 @@ class SendXBinanceFeeWarningViewModel {
 
         if adapter.fee > adapter.availableBinanceBalance {
             let fee = CoinValue(kind: .platformCoin(platformCoin: feeCoin), value: adapter.fee)
-            let text = "send.token.insufficient_fee_alert".localized(coinCode, coinProtocol, feeCoin.name, fee.formattedString ?? "")
+            let text = "send.token.insufficient_fee_alert".localized(coinCode, coinProtocol, feeCoin.name, fee.formattedString)
 
             cautionRelay.accept(TitledCaution(title: "fee_settings.errors.insufficient_balance".localized, text: text, type: .error))
         }

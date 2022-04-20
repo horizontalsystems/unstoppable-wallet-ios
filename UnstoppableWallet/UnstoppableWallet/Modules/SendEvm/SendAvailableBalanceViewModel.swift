@@ -10,6 +10,8 @@ protocol IAvailableBalanceService: AnyObject {
 }
 
 class SendAvailableBalanceViewModel {
+    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.available-balance-view-model", qos: .userInitiated)
+
     private let service: IAvailableBalanceService
     private let coinService: CoinService
     private let switchService: AmountTypeSwitchService
@@ -36,13 +38,19 @@ class SendAvailableBalanceViewModel {
     }
 
     private func sync() {
-        switch service.availableBalance {
-        case .loading:
-            if !hasPreviousValue {
-                viewStateRelay.accept(.loading)
+        queue.async { [weak self] in
+            guard let weakSelf = self else {
+                return
             }
-        case .failed: updateViewState(availableBalance: 0)
-        case .completed(let availableBalance): updateViewState(availableBalance: availableBalance)
+
+            switch weakSelf.service.availableBalance {
+            case .loading:
+                if !weakSelf.hasPreviousValue {
+                    weakSelf.viewStateRelay.accept(.loading)
+                }
+            case .failed: weakSelf.updateViewState(availableBalance: 0)
+            case .completed(let availableBalance): weakSelf.updateViewState(availableBalance: availableBalance)
+            }
         }
     }
 
