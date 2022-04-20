@@ -28,7 +28,7 @@ extension SendRouter {
 
         let router = SendRouter()
 
-        var partialModule: (ISendHandler, [UIView], [ISendSubRouter])?
+        let partialModule: (ISendHandler, [UIView], [ISendSubRouter])? = nil
 
         let platformCoin = wallet.platformCoin
 
@@ -40,7 +40,7 @@ extension SendRouter {
         case let adapter as ISendEthereumAdapter:
             return SendEvmModule.viewController(platformCoin: platformCoin, adapter: adapter)
         case let adapter as ISendZcashAdapter:
-            partialModule = module(platformCoin: platformCoin, adapter: adapter)
+            return SendXModule.viewController(platformCoin: platformCoin, adapter: adapter)
         default: ()
         }
 

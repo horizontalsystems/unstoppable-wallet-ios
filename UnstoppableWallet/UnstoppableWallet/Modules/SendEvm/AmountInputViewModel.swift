@@ -26,6 +26,8 @@ extension IAmountInputService {
 }
 
 class AmountInputViewModel {
+    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
+
     private static let maxCoinDecimals = 8
 
     private let disposeBag = DisposeBag()
@@ -85,19 +87,28 @@ class AmountInputViewModel {
     }
 
     private func sync(amount: Decimal) {
-        fiatService.set(coinAmount: amount)
+        queue.async { [weak self] in
+            self?.fiatService.set(coinAmount: amount)
+        }
     }
 
     private func sync(balance: Decimal?) {
-        isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
+        queue.async { [weak self] in
+            self?.updateMaxEnabled()
+        }
     }
 
     private func sync(platformCoin: PlatformCoin?) {
-        let max = AmountInputViewModel.maxCoinDecimals
-        coinDecimals = min(max, (platformCoin?.decimals ?? max))
+        queue.async { [weak self] in
+            let max = AmountInputViewModel.maxCoinDecimals
+            self?.coinDecimals = min(max, (platformCoin?.decimals ?? max))
 
-        fiatService.set(platformCoin: platformCoin)
+            self?.fiatService.set(platformCoin: platformCoin)
+            self?.updateMaxEnabled()
+        }
+    }
 
+    private func updateMaxEnabled() {
         isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
 

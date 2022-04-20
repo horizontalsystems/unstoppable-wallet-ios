@@ -24,9 +24,11 @@ class SingleLineFormTextView: UIView, IFormTextView {
             maker.edges.equalToSuperview()
         }
 
+        wrapperView.clipsToBounds = true
+
         wrapperView.addSubview(textField)
         textField.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.leading.trailing.equalToSuperview()
         }
 
         textField.delegate = self
@@ -42,7 +44,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
 
         wrapperView.addSubview(placeholderLabel)
         placeholderLabel.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.edges.equalTo(textField)
         }
 
         placeholderLabel.font = textViewFont
@@ -58,7 +60,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
     }
 
     private func height(text: String, width: CGFloat) -> CGFloat {
-        ceil(textViewFont.lineHeight)
+        ceil(textViewFont.lineHeight) + textFieldInset.height
     }
 
     private func syncPlaceholder() {
@@ -124,10 +126,12 @@ extension SingleLineFormTextView {
             textFieldInset = newValue
 
             textField.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview().inset(textViewInset)
+                maker.top.equalToSuperview().inset(textViewInset.top)
+                maker.leading.equalToSuperview().inset(textFieldInset.left)
+                maker.trailing.equalToSuperview().inset(textFieldInset.right)
             }
             placeholderLabel.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview().inset(textViewInset)
+                maker.edges.equalTo(textField)
             }
         }
     }

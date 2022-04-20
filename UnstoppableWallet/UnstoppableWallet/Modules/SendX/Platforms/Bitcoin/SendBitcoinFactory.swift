@@ -89,7 +89,7 @@ class SendBitcoinFactory: BaseSendFactory {
                         secondaryInfo: feeFiatService.secondaryAmountInfo)
         )
 
-        if timeLockService?.lockTime != .none {
+        if (timeLockService?.lockTime ?? .none) != SendXTimeLockService.Item.none {
             viewItems.append(
                     SendConfirmationLockUntilViewItem(
                             lockValue: timeLockService?.lockTime.title ?? "n/a".localized

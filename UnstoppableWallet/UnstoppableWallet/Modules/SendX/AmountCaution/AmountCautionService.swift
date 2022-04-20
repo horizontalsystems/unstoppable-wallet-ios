@@ -25,7 +25,6 @@ class AmountCautionService {
         self.amountInputService = amountInputService
 
         subscribe(disposeBag, amountInputService.amountObservable) { [weak self] _ in self?.sync() }
-
     }
 
     private func setAvailableBalanceService() {

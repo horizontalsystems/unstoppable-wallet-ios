@@ -62,6 +62,11 @@ class SendXConfirmationViewController: ThemeViewController, SectionsDataSource {
 
         subscribe(disposeBag, viewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItems: $0) }
+
+        subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.showSpinner() }
+        subscribe(disposeBag, viewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess() }
+        subscribe(disposeBag, viewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
+
     }
 
     private func sync(viewItems: [[SendXConfirmationViewModel.ViewItem]]) {
@@ -75,6 +80,16 @@ class SendXConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     @objc private func onTapSend() {
         viewModel.send()
+    }
+
+    func handleSendSuccess() {
+        HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+
+        dismiss(animated: true)
+    }
+
+    private func handleSendFailed(error: String) {
+        HudHelper.instance.showError(title: error)
     }
 
     private func textRow(primary: String, primaryStyle: TextComponent.Style, secondary: String?, secondaryStyle: TextComponent.Style?, index: Int, count: Int) -> RowProtocol {
