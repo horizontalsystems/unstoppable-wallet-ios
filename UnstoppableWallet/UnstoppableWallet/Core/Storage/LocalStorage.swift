@@ -37,18 +37,6 @@ extension LocalStorage {
         set { storage.set(value: newValue, for: agreementAcceptedKey) }
     }
 
-    var sendInputType: SendInputType? {
-        get {
-            if let rawValue: String = storage.value(for: keySendInputType), let value = SendInputType(rawValue: rawValue) {
-                return value
-            }
-            return nil
-        }
-        set {
-            storage.set(value: newValue?.rawValue, for: keySendInputType)
-        }
-    }
-
     var mainShownOnce: Bool {
         get { storage.value(for: mainShownOnceKey) ?? false }
         set { storage.set(value: newValue, for: mainShownOnceKey) }
