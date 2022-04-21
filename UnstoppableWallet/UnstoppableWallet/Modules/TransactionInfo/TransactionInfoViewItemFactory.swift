@@ -250,28 +250,20 @@ class TransactionInfoViewItemFactory {
                 .actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: TransactionInfoAddressMapper.map(contractCall.contractAddress) )
             ])
 
-            if let decimalValue = contractCall.totalValue.decimalValue, decimalValue < 0 {
-                sections.append(sendSection(transactionValue: contractCall.totalValue, to: nil, rates: item.rates))
-            }
-
-            for event in contractCall.outgoingEip20Events {
+            for event in contractCall.outgoingEvents {
                 sections.append(sendSection(transactionValue: event.value, to: event.address, rates: item.rates))
             }
 
-            if let decimalValue = contractCall.totalValue.decimalValue, decimalValue > 0 {
-                sections.append(receiveSection(transactionValue: contractCall.totalValue, from: nil, rates: item.rates))
-            }
-
-            for event in contractCall.incomingEip20Events {
+            for event in contractCall.incomingEvents {
                 sections.append(receiveSection(transactionValue: event.value, from: event.address, rates: item.rates))
             }
 
-        case let record as ContractCallIncomingTransactionRecord:
-            if let baseCoinValue = record.baseCoinValue {
-                sections.append(receiveSection(transactionValue: baseCoinValue, from: nil, rates: item.rates))
+        case let record as ExternalContractCallTransactionRecord:
+            for event in record.outgoingEvents {
+                sections.append(sendSection(transactionValue: event.value, to: event.address, rates: item.rates))
             }
 
-            for event in record.events {
+            for event in record.incomingEvents {
                 sections.append(receiveSection(transactionValue: event.value, from: event.address, rates: item.rates))
             }
 

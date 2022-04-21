@@ -2,20 +2,15 @@ import Foundation
 import EthereumKit
 import MarketKit
 
-class ContractCallTransactionRecord: EvmTransactionRecord {
-    let contractAddress: String
-    let method: String?
+class ExternalContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin,
-         contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
-        self.contractAddress = contractAddress
-        self.method = method
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: false)
     }
 
     override var mainValue: TransactionValue? {

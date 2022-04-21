@@ -96,6 +96,28 @@ class EvmTransactionConverter {
         }
     }
 
+    private func transferEvents(internalTransactions: [InternalTransaction]) -> [ContractCallTransactionRecord.TransferEvent] {
+        internalTransactions.map { internalTransaction in
+            ContractCallTransactionRecord.TransferEvent(
+                    address: internalTransaction.from.eip55,
+                    value: baseCoinValue(value: internalTransaction.value, sign: .plus)
+            )
+        }
+    }
+
+    private func transferEvents(contractAddress: EthereumKit.Address, value: BigUInt) -> [ContractCallTransactionRecord.TransferEvent] {
+        guard value != 0 else {
+            return []
+        }
+
+        let event = ContractCallTransactionRecord.TransferEvent(
+                address: contractAddress.eip55,
+                value: baseCoinValue(value: value, sign: .minus)
+        )
+
+        return [event]
+    }
+
 }
 
 extension EvmTransactionConverter {
@@ -201,33 +223,23 @@ extension EvmTransactionConverter {
             let incomingTransfers = transferEventInstances.filter { $0.to == address && $0.from != address }
             let outgoingTransfers = transferEventInstances.filter { $0.from == address }
 
-            var totalInternal: BigUInt = 0
-            for internalTransaction in internalTransactions {
-                totalInternal += internalTransaction.value
-            }
-
-            let totalInternalAmount = convertAmount(amount: totalInternal, decimals: baseCoin.decimals, sign: .plus)
-
             if transaction.from == address, let contractAddress = transaction.to, let value = transaction.value {
-                let valueAmount = convertAmount(amount: value, decimals: baseCoin.decimals, sign: .minus)
-
                 return ContractCallTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseCoin: baseCoin,
                         contractAddress: contractAddress.eip55,
                         method: nil,
-                        totalValue: .coinValue(platformCoin: baseCoin, value: totalInternalAmount + valueAmount),
-                        incomingEip20Events: transferEvents(incomingTransfers: incomingTransfers),
-                        outgoingEip20Events: transferEvents(outgoingTransfers: outgoingTransfers)
+                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
+                        outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTransfers: outgoingTransfers)
                 )
-            } else if transaction.from != address && outgoingTransfers.isEmpty && (!incomingTransfers.isEmpty || totalInternalAmount != 0) {
-                return ContractCallIncomingTransactionRecord(
+            } else if transaction.from != address {
+                return ExternalContractCallTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseCoin: baseCoin,
-                        baseCoinValue: totalInternalAmount != 0 ? .coinValue(platformCoin: baseCoin, value: totalInternalAmount) : nil,
-                        events: transferEvents(incomingTransfers: incomingTransfers)
+                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
+                        outgoingEvents: transferEvents(outgoingTransfers: outgoingTransfers)
                 )
             }
 

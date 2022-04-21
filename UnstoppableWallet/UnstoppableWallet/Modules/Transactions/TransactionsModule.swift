@@ -34,35 +34,6 @@ enum TransactionTypeFilter: String, CaseIterable {
     case all, incoming, outgoing, swap, approve
 }
 
-struct TransactionItem {
-    let record: TransactionRecord
-    var lastBlockInfo: LastBlockInfo?
-    var currencyValue: CurrencyValue?
-}
-
-struct TransactionViewItem {
-    let uid: String
-    let date: Date
-    let typeImage: ColoredImage
-    let progress: Float?
-    let title: String
-    let subTitle: String
-    let primaryValue: ColoredValue?
-    let secondaryValue: ColoredValue?
-    let sentToSelf: Bool
-    let locked: Bool?
-}
-
-struct ColoredValue {
-    let value: String
-    let color: UIColor
-}
-
-struct ColoredImage {
-    let imageName: String
-    let color: UIColor
-}
-
 struct TransactionWallet: Hashable {
     let coin: PlatformCoin?
     let source: TransactionSource
@@ -105,6 +76,22 @@ struct TransactionSource: Hashable {
             }
         }
 
+        var image: String? {
+            switch self {
+            case .bep2: return "binance_chain_24"
+            case .evm(let blockchain): return blockchain.icon24
+            default: return nil
+            }
+        }
+
+        var coinPlaceholderImage: String {
+            switch self {
+            case .bep2: return "Coin Icon Placeholder - BEP2"
+            case .evm(let blockchain): return "Coin Icon Placeholder - \(blockchain.eip20Type)"
+            default: return "icon_placeholder_24"
+            }
+        }
+
         func hash(into hasher: inout Hasher) {
             switch self {
             case .bitcoin: hasher.combine(0)
@@ -140,4 +127,5 @@ struct TransactionSource: Hashable {
     static func ==(lhs: TransactionSource, rhs: TransactionSource) -> Bool {
         lhs.blockchain == rhs.blockchain && lhs.account == rhs.account && lhs.coinSettings == rhs.coinSettings
     }
+
 }

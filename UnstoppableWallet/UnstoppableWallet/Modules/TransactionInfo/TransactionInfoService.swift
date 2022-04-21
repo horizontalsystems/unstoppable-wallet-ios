@@ -43,17 +43,12 @@ class TransactionInfoService {
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            if !tx.totalValue.zeroValue {
-                coins.append(tx.totalValue.coin)
-            }
-            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
 
-        case let tx as ContractCallIncomingTransactionRecord:
-            if let baseCoinValue = tx.baseCoinValue {
-                coins.append(baseCoinValue.coin)
-            }
-            coins.append(contentsOf: tx.events.map({ $0.value.coin }))
+        case let tx as ExternalContractCallTransactionRecord:
+            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
 
         case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
         case let tx as BitcoinOutgoingTransactionRecord:
