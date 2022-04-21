@@ -602,8 +602,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.value.unlimited" = "unlimited %@";
 
-"transactions.today" = "Today";
-"transactions.yesterday" = "Yesterday";
+"transactions.today" = "Сьогодні";
+"transactions.yesterday" = "Вчора";
 
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Received";
@@ -656,7 +656,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.experimental_features" = "Experimental";
 "settings.base_currency" = "Base Currency";
-"settings.language" = "Language";
+"settings.language" = "Мова";
 "settings.faq" = "FAQ";
 "settings.theme" = "Theme";
 "settings.info_title" = "UNSTOPPABLE";
@@ -726,7 +726,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "settings_security.title" = "Security Center";
 "settings_security.passcode" = "Код доступу";
-"settings_security.change_pin" = "Edit Passcode";
+"settings_security.change_pin" = "Змінити код доступу";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "settings_security.blockchain_settings" = "Blockchain Settings";
@@ -797,14 +797,14 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Set PIN
 
 "set_pin.title" = "Код доступу";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
+"set_pin.info" = "Ваш код доступу буде використовуватися для розблокування гаманця";
 "set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
+"edit_pin.title" = "Змінити код доступу";
+"edit_pin.unlock_info" = "Введіть поточний код допуску";
+"edit_pin.new_pin_info" = "Новий код доступу";
 
 // Unlock PIN
 
