@@ -86,7 +86,8 @@ class MarketOverviewTopCoinsDataSource {
 
     private func didTapSeeAll(listType: MarketOverviewTopCoinsService.ListType) {
         if case .topCollections = listType {
-            parentNavigationController?.pushViewController(NftCollectionsModule.viewController(), animated: true)
+            let module = MarketNftTopCollectionsModule.viewController()
+            parentNavigationController?.present(module, animated: true)
         } else {
             let module = MarketTopModule.viewController(
                     marketTop: viewModel.marketTop(listType: listType),

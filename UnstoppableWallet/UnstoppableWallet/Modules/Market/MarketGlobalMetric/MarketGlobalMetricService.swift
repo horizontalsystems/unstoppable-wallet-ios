@@ -24,13 +24,13 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     }
     var metricsType: MarketGlobalModule.MetricsType
 
-    let initialMarketField: MarketModule.MarketField
+    let initialMarketFieldIndex: Int
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.metricsType = metricsType
-        initialMarketField = metricsType.marketField
+        initialMarketFieldIndex = metricsType.marketField.rawValue
 
         syncMarketInfos()
     }
@@ -107,7 +107,7 @@ extension MarketGlobalMetricService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketField: MarketModule.MarketField) {
+    func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }

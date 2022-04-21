@@ -131,12 +131,8 @@ extension MarketWatchlistService: IMarketListCoinUidService {
 
 extension MarketWatchlistService: IMarketListDecoratorService {
 
-    var initialMarketField: MarketModule.MarketField {
-        if let rawValue: Int = storage.value(for: keyMarketField), let marketField = MarketModule.MarketField(rawValue: rawValue) {
-            return marketField
-        }
-
-        return .price
+    var initialMarketFieldIndex: Int {
+        storage.value(for: keyMarketField) ?? 0
     }
 
     var currency: Currency {
@@ -147,12 +143,12 @@ extension MarketWatchlistService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketField: MarketModule.MarketField) {
+    func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }
 
-        storage.set(value: marketField.rawValue, for: keyMarketField)
+        storage.set(value: marketFieldIndex, for: keyMarketField)
     }
 
 }

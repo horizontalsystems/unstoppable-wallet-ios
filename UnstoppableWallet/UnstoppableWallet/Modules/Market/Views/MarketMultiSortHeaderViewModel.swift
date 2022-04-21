@@ -24,7 +24,7 @@ class MarketMultiSortHeaderViewModel {
 
 }
 
-extension MarketMultiSortHeaderViewModel {
+extension MarketMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel {
 
     var marketTops: [String] {
         MarketModule.MarketTop.allCases.map { $0.title }

@@ -61,8 +61,10 @@ class NftStorage {
                         averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
                         floorPrice: nil,
                         totalVolume: nil,
-                        priceChange: nil,
                         marketCap: nil,
+                        oneDayChange: nil,
+                        sevenDayChange: nil,
+                        thirtyDayChange: nil,
                         oneDayVolume: nil,
                         sevenDayVolume: nil,
                         thirtyDayVolume: nil

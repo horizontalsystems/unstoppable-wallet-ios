@@ -7,8 +7,8 @@ struct MarketOverviewModule {
         let marketOverviewDataSource = MarketOverviewGlobalDataSource(viewModel: globalViewModel)
 
         let topCoinsService = MarketOverviewTopCoinsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
-        let decorator = MarketListMarketFieldDecorator(service: topCoinsService)
-        let topCoinsViewModel = MarketOverviewTopCoinsViewModel(service: topCoinsService, decorator: decorator)
+        let topCoinsDecorator = MarketListMarketFieldDecorator(service: topCoinsService)
+        let topCoinsViewModel = MarketOverviewTopCoinsViewModel(service: topCoinsService, decorator: topCoinsDecorator)
         let topCoinsDataSource = MarketOverviewTopCoinsDataSource(viewModel: topCoinsViewModel)
 
         let marketDiscoveryService = MarketDiscoveryService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, favoritesManager: App.shared.favoritesManager)
@@ -16,7 +16,8 @@ struct MarketOverviewModule {
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel)
 
         let nftCollectionsService = MarketOverviewNftCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
-        let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService)
+        let nftCollectionsDecorator = MarketListNftCollectionDecorator(service: nftCollectionsService)
+        let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService, decorator: nftCollectionsDecorator)
         let nftCollectionsDataSource = MarketOverviewTopCoinsDataSource(viewModel: nftCollectionsViewModel)
 
         let viewModel = MarketOverviewViewModel(dataSources: [

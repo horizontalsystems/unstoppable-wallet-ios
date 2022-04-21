@@ -126,8 +126,8 @@ extension MarketOverviewGlobalService {
 
 extension MarketOverviewGlobalService: IMarketListDecoratorService {
 
-    var initialMarketField: MarketModule.MarketField {
-        .price
+    var initialMarketFieldIndex: Int {
+        0
     }
 
     var currency: Currency {
@@ -138,7 +138,7 @@ extension MarketOverviewGlobalService: IMarketListDecoratorService {
         .day
     }
 
-    func onUpdate(marketField: MarketModule.MarketField) {
+    func onUpdate(marketFieldIndex: Int) {
         if case .completed = statusRelay.value {
             statusRelay.accept(statusRelay.value)
         }

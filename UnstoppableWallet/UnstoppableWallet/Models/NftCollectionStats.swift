@@ -6,8 +6,12 @@ struct NftCollectionStats {
     let averagePrice30d: NftPrice?
     let floorPrice: NftPrice?
     let totalVolume: Decimal?
-    let priceChange: Decimal?
     let marketCap: NftPrice?
+
+    let oneDayChange: Decimal?
+    let sevenDayChange: Decimal?
+    let thirtyDayChange: Decimal?
+
     let oneDayVolume: NftPrice?
     let sevenDayVolume: NftPrice?
     let thirtyDayVolume: NftPrice?

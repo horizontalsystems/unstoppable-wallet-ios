@@ -4,15 +4,28 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
+protocol IMarketMultiSortHeaderViewModel {
+    var marketTops: [String] { get }
+    var sortingFields: [String] { get }
+    var marketFields: [String] { get }
+    var marketTopIndex: Int { get }
+    var sortingFieldIndex: Int { get }
+    var marketFieldIndex: Int { get }
+
+    func onSelectMarketTop(index: Int)
+    func onSelectSortingField(index: Int)
+    func onSelectMarketField(index: Int)
+}
+
 class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
-    private let viewModel: MarketMultiSortHeaderViewModel
+    private let viewModel: IMarketMultiSortHeaderViewModel
     weak var viewController: UIViewController?
 
     private let sortButton = ThemeButton()
 
-    init(viewModel: MarketMultiSortHeaderViewModel, hasTopSelector: Bool = false, hasTopSeparator: Bool = true) {
+    init(viewModel: IMarketMultiSortHeaderViewModel, hasTopSelector: Bool = false, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
 
         super.init(reuseIdentifier: nil)
