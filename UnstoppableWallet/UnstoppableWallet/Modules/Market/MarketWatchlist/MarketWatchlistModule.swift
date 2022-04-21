@@ -19,7 +19,7 @@ struct MarketWatchlistModule {
         let decorator = MarketListMarketFieldDecorator(service: service)
         let viewModel = MarketWatchlistViewModel(service: service)
         let headerViewModel = MarketMultiSortHeaderViewModel(service: service, decorator: decorator)
-        let listViewModel = MarketListViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
+        let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
 
         return MarketWatchlistViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
     }

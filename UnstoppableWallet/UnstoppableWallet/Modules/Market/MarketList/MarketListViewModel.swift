@@ -17,10 +17,10 @@ protocol IMarketListCoinUidService {
 }
 
 protocol IMarketListDecoratorService {
-    var initialMarketField: MarketModule.MarketField { get }
+    var initialMarketFieldIndex: Int { get }
     var currency: Currency { get }
     var priceChangeType: MarketModule.PriceChangeType { get }
-    func onUpdate(marketField: MarketModule.MarketField)
+    func onUpdate(marketFieldIndex: Int)
 }
 
 protocol IMarketListDecorator {
@@ -37,7 +37,6 @@ enum MarketListServiceState<T> {
 
 class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDecorator> {
     private let service: Service
-    private let watchlistToggleService: MarketWatchlistToggleService
     private let decorator: Decorator
     private let disposeBag = DisposeBag()
 
@@ -46,9 +45,8 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let scrollToTopRelay = PublishRelay<()>()
 
-    init(service: Service, watchlistToggleService: MarketWatchlistToggleService, decorator: Decorator) {
+    init(service: Service, decorator: Decorator) {
         self.service = service
-        self.watchlistToggleService = watchlistToggleService
         self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -106,18 +104,6 @@ extension MarketListViewModel: IMarketListViewModel {
 
     var scrollToTopSignal: Signal<()> {
         scrollToTopRelay.asSignal()
-    }
-
-    func isFavorite(index: Int) -> Bool? {
-        watchlistToggleService.isFavorite(index: index)
-    }
-
-    func favorite(index: Int) {
-        watchlistToggleService.favorite(index: index)
-    }
-
-    func unfavorite(index: Int) {
-        watchlistToggleService.unfavorite(index: index)
     }
 
     func refresh() {

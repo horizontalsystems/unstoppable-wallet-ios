@@ -110,7 +110,6 @@ extension MarketModule {
         case lowestVolume
         case topGainers
         case topLosers
-        case topCollections
 
         var title: String {
             switch self {
@@ -120,7 +119,6 @@ extension MarketModule {
             case .lowestVolume: return "market.top.lowest_volume".localized
             case .topGainers: return "market.top.top_gainers".localized
             case .topLosers: return "market.top.top_losers".localized
-            case .topCollections: return "market.top.top_collections".localized
             }
         }
     }
@@ -135,6 +133,20 @@ extension MarketModule {
             case .price: return "price".localized
             case .marketCap: return "market.market_field.mcap".localized
             case .volume: return "market.market_field.vol".localized
+            }
+        }
+    }
+
+    enum NftMarketField: Int, CaseIterable {
+        case day
+        case week
+        case month
+
+        var title: String {
+            switch self {
+            case .day: return "chart.time_duration.day".localized
+            case .week: return "chart.time_duration.week".localized
+            case .month: return "chart.time_duration.month".localized
             }
         }
     }
@@ -240,7 +252,7 @@ extension Array where Element == MarketKit.MarketInfo {
             case .lowestCap: return lhsMarketInfo.marketCap ?? 0 < rhsMarketInfo.marketCap ?? 0
             case .highestVolume: return lhsMarketInfo.totalVolume ?? 0 > rhsMarketInfo.totalVolume ?? 0
             case .lowestVolume: return lhsMarketInfo.totalVolume ?? 0 < rhsMarketInfo.totalVolume ?? 0
-            case .topGainers, .topLosers, .topCollections:
+            case .topGainers, .topLosers:
                 guard let rhsPriceChange = rhsMarketInfo.priceChangeValue(type: priceChangeType) else {
                     return true
                 }
@@ -264,11 +276,11 @@ extension Array where Element == NftCollection {
             case .lowestCap: return lhsCollection.stats.marketCap?.value ?? 0 < rhsCollection.stats.marketCap?.value ?? 0
             case .highestVolume: return lhsCollection.stats.totalVolume ?? 0 > rhsCollection.stats.totalVolume ?? 0
             case .lowestVolume: return lhsCollection.stats.totalVolume ?? 0 < rhsCollection.stats.totalVolume ?? 0
-            case .topGainers, .topLosers, .topCollections:
-                guard let rhsPriceChange = rhsCollection.stats.priceChange else {
+            case .topGainers, .topLosers:
+                guard let rhsPriceChange = rhsCollection.stats.oneDayChange else {
                     return true
                 }
-                guard let lhsPriceChange = lhsCollection.stats.priceChange else {
+                guard let lhsPriceChange = lhsCollection.stats.oneDayChange else {
                     return false
                 }
 

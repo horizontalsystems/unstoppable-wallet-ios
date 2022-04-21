@@ -2,6 +2,11 @@ import RxSwift
 import RxRelay
 import CurrencyKit
 
+struct NftCollectionItem {
+    let index: Int
+    let collection: NftCollection
+}
+
 class MarketOverviewNftCollectionsService {
     private let listCount = 5
 
@@ -9,8 +14,8 @@ class MarketOverviewNftCollectionsService {
     private let currencyKit: CurrencyKit.Kit
     private var disposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<DataStatus<[NftCollection]>>()
-    private(set) var state: DataStatus<[NftCollection]> = .loading {
+    private let stateRelay = PublishRelay<DataStatus<[NftCollectionItem]>>()
+    private(set) var state: DataStatus<[NftCollectionItem]> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -29,11 +34,11 @@ class MarketOverviewNftCollectionsService {
         state = .loading
 
         let listCount = listCount
-        provider.collectionsSingle(currencyCode: currency.code)
+        provider.collectionsSingle()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collections in
                     let sortedCollections = Array(collections.sorted(sortingField: .highestVolume, priceChangeType: .day).prefix(listCount))
-                    self?.state = .completed(sortedCollections)
+                    self?.state = .completed(sortedCollections.enumerated().map { NftCollectionItem(index: $0 + 1, collection: $1)})
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -44,23 +49,37 @@ class MarketOverviewNftCollectionsService {
 
 extension MarketOverviewNftCollectionsService {
 
-    var stateObservable: Observable<DataStatus<[NftCollection]>> {
+    var stateObservable: Observable<DataStatus<[NftCollectionItem]>> {
         stateRelay.asObservable()
-    }
-
-    var currency: Currency {
-        currencyKit.baseCurrency
     }
 
     func refresh() {
         sync()
     }
 
-    func collection(uid: String) -> NftCollection? {
+    func collection(uid: String) -> NftCollectionItem? {
         if case let .completed(collections) = state {
-            return collections.first { $0.uid == uid }
+            return collections.first { $0.collection.uid == uid }
         }
         return nil
+    }
+
+}
+
+extension MarketOverviewNftCollectionsService: IMarketListDecoratorService {
+    var initialMarketFieldIndex: Int {
+        0
+    }
+
+    var currency: Currency {
+        currencyKit.baseCurrency
+    }
+
+    var priceChangeType: MarketModule.PriceChangeType {
+        .day
+    }
+
+    func onUpdate(marketFieldIndex: Int) {
     }
 
 }

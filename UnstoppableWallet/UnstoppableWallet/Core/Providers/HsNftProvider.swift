@@ -129,8 +129,10 @@ class HsNftProvider {
                 averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
                 floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
                 totalVolume: response.totalVolume,
-                priceChange: response.oneDayChange,
                 marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false),
+                oneDayChange: response.oneDayChange,
+                sevenDayChange: response.sevenDayChange,
+                thirtyDayChange: response.thirtyDayChange,
                 oneDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.oneDayVolume, shift: false),
                 sevenDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.sevenDayVolume, shift: false),
                 thirtyDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.thirtyDayVolume, shift: false)
@@ -265,7 +267,7 @@ extension HsNftProvider: INftProvider {
         }
     }
 
-    func collectionsSingle(currencyCode: String) -> Single<[NftCollection]> {
+    func collectionsSingle() -> Single<[NftCollection]> {
         let parameters: Parameters = [
             "limit": collectionLimit
         ]
@@ -391,6 +393,8 @@ extension HsNftProvider {
     private struct CollectionStatsResponse: ImmutableMappable {
         let totalSupply: Int
         let oneDayChange: Decimal
+        let sevenDayChange: Decimal
+        let thirtyDayChange: Decimal
         let averagePrice7d: Decimal
         let averagePrice30d: Decimal
         let floorPrice: Decimal?
@@ -405,6 +409,8 @@ extension HsNftProvider {
             totalVolume = try map.value("total_volume", using: HsNftProvider.doubleToDecimalTransform)
             marketCap = try map.value("market_cap", using: HsNftProvider.doubleToDecimalTransform)
             oneDayChange = try map.value("one_day_change", using: HsNftProvider.doubleToDecimalTransform)
+            sevenDayChange = try map.value("seven_day_change", using: HsNftProvider.doubleToDecimalTransform)
+            thirtyDayChange = try map.value("thirty_day_change", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)

@@ -48,4 +48,10 @@ class MarketTopHeaderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func set(title: String, description: String, imageName: String) {
+        nameLabel.text = title
+        descriptionLabel.text = description
+        topImageView.image = UIImage(named: imageName)
+    }
+
 }
