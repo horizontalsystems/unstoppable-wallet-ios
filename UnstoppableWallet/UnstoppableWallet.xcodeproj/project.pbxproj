@@ -2352,6 +2352,7 @@
 		ABC9A19612AEEC7999C3FE28 /* SendFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A145789ED6E74B2FF1A5 /* SendFeeSettingsViewModel.swift */; };
 		ABC9A1D021B4E9ACCE3DE0BA /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */; };
 		ABC9A1D0F389231634D66A3C /* WalletConnectScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB68CEA6F8AD05C5C893 /* WalletConnectScanQrViewController.swift */; };
+		ABC9A1D42EED3235129D810B /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
 		ABC9A1EFE3E5382056C54A47 /* SendConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3AB799024C8FC2C7DD8 /* SendConfirmationViewModel.swift */; };
 		ABC9A1FEB4D3DFF74EB11EF7 /* SendFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A145789ED6E74B2FF1A5 /* SendFeeSettingsViewModel.swift */; };
 		ABC9A200DECDF6F3E0CB52C4 /* SendFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF68C8C40699DD58F7A6 /* SendFeeWarningViewModel.swift */; };
@@ -2364,6 +2365,7 @@
 		ABC9A259866F038A79CDF794 /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */; };
 		ABC9A25C4149CC1DC03B853E /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF2ADD900F32D87C7BE /* SendViewModel.swift */; };
 		ABC9A26FB2CD0D7A732F7564 /* WalletConnectV1MainRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A413A1015882E90F7675 /* WalletConnectV1MainRequestView.swift */; };
+		ABC9A273A21A9F1E1B1B3A63 /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
 		ABC9A274B01ACCE172CD2566 /* SendFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A145789ED6E74B2FF1A5 /* SendFeeSettingsViewModel.swift */; };
 		ABC9A28DF6386CAA127791D4 /* WalletConnectScanQrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DBB89D0AE0C127742B /* WalletConnectScanQrViewModel.swift */; };
 		ABC9A296099CB8D0BAC83A2E /* SendBinanceFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2C2D1331E91D666AB3E /* SendBinanceFeeWarningViewModel.swift */; };
@@ -2397,6 +2399,7 @@
 		ABC9A4A205606D30EA7E71AB /* WalletConnectV2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1136889E6976E17B347 /* WalletConnectV2Service.swift */; };
 		ABC9A4B643D98FB95F431401 /* SendBitcoinAmountInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1F55164BDFD049793 /* SendBitcoinAmountInputService.swift */; };
 		ABC9A4B952E9BBE453DC3270 /* SendFeeSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B485B37CF253113118 /* SendFeeSettingsService.swift */; };
+		ABC9A4BD4CA7A7872CE6167E /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
 		ABC9A4F4B7F17169DC240A98 /* WalletConnectUriHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1C31F5343EB2BEA4540 /* WalletConnectUriHandler.swift */; };
 		ABC9A506478A295F78F2A63B /* WalletConnectV1MainRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A413A1015882E90F7675 /* WalletConnectV1MainRequestView.swift */; };
 		ABC9A50A13F425EA403C81D8 /* SendBitcoinFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8A4A879501AA5582E8 /* SendBitcoinFeeService.swift */; };
@@ -3713,6 +3716,7 @@
 		ABC9AB4136050D856D1E681F /* SendTimeLockService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTimeLockService.swift; sourceTree = "<group>"; };
 		ABC9AB68CEA6F8AD05C5C893 /* WalletConnectScanQrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectScanQrViewController.swift; sourceTree = "<group>"; };
 		ABC9AB69D8053840476C26FA /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSendViewController.swift; sourceTree = "<group>"; };
 		ABC9AC09A586D88BAB3B9C67 /* WalletConnectListModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListModule.swift; sourceTree = "<group>"; };
 		ABC9AC0B5943DF3B61B20BF6 /* WalletConnectV2SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2SessionManager.swift; sourceTree = "<group>"; };
 		ABC9ACDC36D6A08F29744695 /* WalletConnectV2PingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PingService.swift; sourceTree = "<group>"; };
@@ -6214,6 +6218,7 @@
 				ABC9ADC8373B45DF33E35DCA /* Binance */,
 				ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */,
 				ABC9A6E3A891AD336A1A5326 /* Zcash */,
+				ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */,
 			);
 			path = Platforms;
 			sourceTree = "<group>";
@@ -7771,6 +7776,7 @@
 				ABC9A89AC0862911B648C3AA /* SendZcashViewController.swift in Sources */,
 				ABC9AE2A9E184381AFEDFF30 /* AmountData.swift in Sources */,
 				ABC9AEB96AF6ECD1DBA8B228 /* SendConfirmationModule.swift in Sources */,
+				ABC9A273A21A9F1E1B1B3A63 /* BaseSendViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8707,6 +8713,7 @@
 				ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */,
 				ABC9A55886C64CD9D2F29960 /* AmountData.swift in Sources */,
 				ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */,
+				ABC9A4BD4CA7A7872CE6167E /* BaseSendViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9635,6 +9642,7 @@
 				ABC9AA85AC9DC60A08211D16 /* SendZcashViewController.swift in Sources */,
 				ABC9AFAB4E58875090F60014 /* AmountData.swift in Sources */,
 				ABC9A78D3A4267CAC0F5D0E8 /* SendConfirmationModule.swift in Sources */,
+				ABC9A1D42EED3235129D810B /* BaseSendViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

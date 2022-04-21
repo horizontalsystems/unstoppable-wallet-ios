@@ -169,9 +169,9 @@ class SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let bitcoinParserItem = BinanceAddressParserItem(adapter: adapter)
+        let binanceParserItem = BinanceAddressParserItem(adapter: adapter)
         let addressParserChain = AddressParserChain()
-                .append(handler: bitcoinParserItem)
+                .append(handler: binanceParserItem)
 
         let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
