@@ -3,17 +3,17 @@ import RxSwift
 import RxCocoa
 
 class TransactionsViewModel {
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
-    let service: TransactionsService
-    let factory: TransactionsViewItemFactory
+    private let service: TransactionsService
+    private let factory: TransactionsViewItemFactory
 
-    private var sections = [TransactionsViewController.Section]()
+    private var sectionViewItems = [SectionViewItem]()
 
     private var typeFiltersRelay = BehaviorRelay<(filters: [FilterHeaderView.ViewItem], selected: Int)>(value: (filters: [], selected: 0))
     private var coinFiltersRelay = BehaviorRelay<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)>(value: (filters: [], selected: nil))
-    private var viewItemsRelay = BehaviorRelay<[TransactionsViewController.Section]>(value: [])
-    private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)>()
+    private var sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
+    private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: ViewItem)>()
     private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, messageType: nil))
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
@@ -52,25 +52,25 @@ class TransactionsViewModel {
         coinFiltersRelay.accept((filters: coinFilters, selected: walletFilters.selected))
     }
 
-    private func handle(items: [TransactionItem]) {
+    private func handle(items: [TransactionsService.Item]) {
         let viewItems = items.map { factory.viewItem(item: $0) }
-        let sections = sections(viewItems: viewItems)
-        let showEmptyMessage = sections.isEmpty != self.sections.isEmpty
+        let sectionViewItems = sectionViewItems(viewItems: viewItems)
+        let showEmptyMessage = sectionViewItems.isEmpty != self.sectionViewItems.isEmpty
 
-        self.sections = sections
-        viewItemsRelay.accept(sections)
+        self.sectionViewItems = sectionViewItems
+        sectionViewItemsRelay.accept(sectionViewItems)
 
         if showEmptyMessage {
             handle(syncState: service.syncState)
         }
     }
 
-    private func handle(updatedItem: TransactionItem) {
-        for (sectionIndex, section) in sections.enumerated() {
+    private func handle(updatedItem: TransactionsService.Item) {
+        for (sectionIndex, section) in sectionViewItems.enumerated() {
             if let rowIndex = section.viewItems.firstIndex(where: { item in item.uid == updatedItem.record.uid }) {
                 let viewItem = factory.viewItem(item: updatedItem)
 
-                sections[sectionIndex].viewItems[rowIndex] = viewItem
+                sectionViewItems[sectionIndex].viewItems[rowIndex] = viewItem
                 updatedViewItemRelay.accept((sectionIndex: sectionIndex, rowIndex: rowIndex, item: viewItem))
             }
         }
@@ -83,29 +83,29 @@ class TransactionsViewModel {
 
         switch syncState {
         case .syncing, .searchingTxs:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, messageType: sections.isEmpty ? .syncing : nil))
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, messageType: sectionViewItems.isEmpty ? .syncing : nil))
         case .synced, .notSynced:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, messageType: sections.isEmpty ? .empty : nil))
+            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, messageType: sectionViewItems.isEmpty ? .empty : nil))
         }
     }
 
-    private func sections(viewItems: [TransactionViewItem]) -> [TransactionsViewController.Section] {
-        var sections = [TransactionsViewController.Section]()
+    private func sectionViewItems(viewItems: [ViewItem]) -> [SectionViewItem] {
+        var sectionViewItems = [SectionViewItem]()
         var lastDaysAgo = -1
 
         for viewItem in viewItems {
             let daysAgo = daysFrom(date: viewItem.date)
 
             if daysAgo != lastDaysAgo {
-                sections.append(TransactionsViewController.Section(title: dateHeaderTitle(daysAgo: daysAgo).uppercased(), viewItems: [viewItem]))
+                sectionViewItems.append(SectionViewItem(title: dateHeaderTitle(daysAgo: daysAgo).uppercased(), viewItems: [viewItem]))
             } else {
-                sections[sections.count - 1].viewItems.append(viewItem)
+                sectionViewItems[sectionViewItems.count - 1].viewItems.append(viewItem)
             }
 
             lastDaysAgo = daysAgo
         }
 
-        return sections
+        return sectionViewItems
     }
 
     private func daysFrom(date: Date) -> Int {
@@ -140,11 +140,11 @@ extension TransactionsViewModel {
         coinFiltersRelay.asDriver()
     }
 
-    var viewItemsDriver: Driver<[TransactionsViewController.Section]> {
-        viewItemsRelay.asDriver()
+    var sectionViewItemsDriver: Driver<[SectionViewItem]> {
+        sectionViewItemsRelay.asDriver()
     }
 
-    var updatedViewItemSignal: Signal<(sectionIndex: Int, rowIndex: Int, item: TransactionViewItem)> {
+    var updatedViewItemSignal: Signal<(sectionIndex: Int, rowIndex: Int, item: TransactionsViewModel.ViewItem)> {
         updatedViewItemRelay.asSignal()
     }
 
@@ -165,12 +165,54 @@ extension TransactionsViewModel {
     }
 
     func bottomReached() {
-        let count = sections.reduce(0) { $0 + $1.viewItems.count }
+        let count = sectionViewItems.reduce(0) { $0 + $1.viewItems.count }
         service.load(count: count + TransactionsModule.pageLimit)
     }
 
-    func transactionItem(uid: String) -> TransactionItem? {
+    func transactionItem(uid: String) -> TransactionsService.Item? {
         service.item(uid: uid)
+    }
+
+}
+
+extension TransactionsViewModel {
+
+    struct SectionViewItem {
+        let title: String
+        var viewItems: [ViewItem]
+    }
+
+    struct ViewItem {
+        let uid: String
+        let date: Date
+        let iconType: IconType
+        let progress: Float?
+        let blockchainImageName: String?
+        let title: String
+        let subTitle: String
+        let primaryValue: Value?
+        let secondaryValue: Value?
+        let sentToSelf: Bool
+        let locked: Bool?
+    }
+
+    enum IconType {
+        case icon(imageUrl: String?, placeholderImageName: String)
+        case doubleIcon(frontImageUrl: String?, frontPlaceholderImageName: String, backImageUrl: String?, backPlaceholderImageName: String)
+        case localIcon(imageName: String?)
+        case failedIcon
+    }
+
+    struct Value {
+        let text: String
+        let type: ValueType
+    }
+
+    enum ValueType {
+        case incoming
+        case outgoing
+        case neutral
+        case secondary
     }
 
 }

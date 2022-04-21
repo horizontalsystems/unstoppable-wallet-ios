@@ -96,4 +96,14 @@ enum EvmBlockchain: String {
         }
     }
 
+    var eip20Type: String {
+        switch self {
+        case .ethereum: return "ERC20"
+        case .binanceSmartChain: return "BEP20"
+        case .polygon: return "POLYGON"
+        case .optimism: return "OPTIMISM"
+        case .arbitrumOne: return "ARBITRUM"
+        }
+    }
+
 }
