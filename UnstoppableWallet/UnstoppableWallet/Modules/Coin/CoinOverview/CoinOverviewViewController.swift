@@ -163,6 +163,7 @@ class CoinOverviewViewController: ThemeViewController {
 
     @objc private func onRetry() {
         viewModel.onTapRetry()
+        chartViewModel.retry()
     }
 
     private func subscribeViewModels() {
