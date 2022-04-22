@@ -152,7 +152,7 @@ class TransactionsViewController: ThemeViewController {
                         placeholder: UIImage(named: placeholderImageName)
                 )
             case .localIcon(let imageName):
-                component.set(image: imageName.flatMap { UIImage(named: $0) })
+                component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
             case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
                 component.setDoubleImage(
                         frontUrlString: frontImageUrl,

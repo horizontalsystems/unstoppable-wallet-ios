@@ -78,8 +78,8 @@ struct TransactionSource: Hashable {
 
         var image: String? {
             switch self {
-            case .bep2: return "binance_chain_24"
-            case .evm(let blockchain): return blockchain.icon24
+            case .bep2: return "binance_chain_trx_24"
+            case .evm(let blockchain): return blockchain.iconPlain24
             default: return nil
             }
         }
