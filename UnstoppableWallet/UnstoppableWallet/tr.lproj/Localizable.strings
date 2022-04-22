@@ -48,6 +48,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
@@ -829,10 +834,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market kap.";
-"chart.market_cap.thousand" = "%@ bin";
-"chart.market_cap.million" = "%@ M-n";
-"chart.market_cap.billion" = "%@ M-r";
-"chart.market_cap.trillion" = "%@ T";
 "chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "Dolaşan Arz	";
 "chart.selected.volume" = "Birim";
