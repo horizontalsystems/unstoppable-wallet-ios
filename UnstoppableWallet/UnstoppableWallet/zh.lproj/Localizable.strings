@@ -47,6 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable需要使用相机扫描二维码。
@@ -828,10 +833,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.time_duration.year2" = "2年";
 
 "chart.market_cap" = "市场价值";
-"chart.market_cap.thousand" = "%@千";
-"chart.market_cap.million" = "%@百万";
-"chart.market_cap.billion" = "%@十亿";
-"chart.market_cap.trillion" = "%@万亿";
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
 "chart.selected.volume" = "交易量";
