@@ -47,6 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> Unstoppable으로 가서 카메라 접근을 허용해 주세요.";
@@ -826,10 +831,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "chart.time_duration.year2" = "2년";
 
 "chart.market_cap" = "시가총액";
-"chart.market_cap.thousand" = "%@ 천";
-"chart.market_cap.million" = "%@ 백만";
-"chart.market_cap.billion" = "%@ 십억";
-"chart.market_cap.trillion" = "%@ 조";
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "유통";
 "chart.selected.volume" = "음량";
