@@ -47,6 +47,11 @@
 
 "sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
@@ -828,10 +833,6 @@
 "chart.time_duration.year2" = "2Г";
 
 "chart.market_cap" = "Рын. Капитализация";
-"chart.market_cap.thousand" = "%@ к";
-"chart.market_cap.million" = "%@ млн.";
-"chart.market_cap.billion" = "%@ млр.";
-"chart.market_cap.trillion" = "%@ трил.";
 "chart.volume" = "Объём (за 24 ч)";
 "chart.circulation" = "В обороте";
 "chart.selected.volume" = "Объём";
