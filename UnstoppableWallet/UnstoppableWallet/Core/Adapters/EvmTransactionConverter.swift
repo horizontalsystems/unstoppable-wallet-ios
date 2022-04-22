@@ -9,6 +9,7 @@ import BigInt
 class EvmTransactionConverter {
     private let coinManager: CoinManager
     private let evmKitWrapper: EvmKitWrapper
+    private let contractMethodParser = EvmContractMethodParser()
     private let source: TransactionSource
     private let baseCoin: PlatformCoin
 
@@ -229,7 +230,7 @@ extension EvmTransactionConverter {
                         transaction: transaction,
                         baseCoin: baseCoin,
                         contractAddress: contractAddress.eip55,
-                        method: nil,
+                        method: transaction.input.flatMap { contractMethodParser.parse(input: $0) },
                         incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
                         outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTransfers: outgoingTransfers)
                 )

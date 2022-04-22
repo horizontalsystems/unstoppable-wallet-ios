@@ -101,6 +101,10 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         evmKit.receiveAddress
     }
 
+    func methodName(input: Data) -> String? {
+        nil
+    }
+
     func send() {
         guard case .ready = state, case .completed(let fallibleTransaction) = transactionFeeService.status else {
             return
