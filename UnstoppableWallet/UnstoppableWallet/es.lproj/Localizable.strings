@@ -224,6 +224,7 @@
 "send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.cancel_button" = "Cancelar la transacción";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Saldo insuficiente";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
@@ -592,13 +593,14 @@
 "transactions.swap" = "Permutar";
 "transactions.contract_call" = "Llamada de Contrato";
 "transactions.contract_creation" = "Creación de Contrato";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "A %@";
 "transactions.from" = "Desde %@";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "%@ ilimitado";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Hoy";
 "transactions.yesterday" = "Ayer";
