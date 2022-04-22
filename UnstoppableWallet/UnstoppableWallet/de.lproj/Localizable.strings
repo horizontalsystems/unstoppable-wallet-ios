@@ -224,6 +224,7 @@
 "send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.cancel_button" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
@@ -592,13 +593,14 @@
 "transactions.swap" = "Tauschen";
 "transactions.contract_call" = "Vertragsaufruf";
 "transactions.contract_creation" = "Vertragserstellung";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "An %@";
 "transactions.from" = "Von %@";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unbegrenzt %@";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Heute";
 "transactions.yesterday" = "Gestern";
