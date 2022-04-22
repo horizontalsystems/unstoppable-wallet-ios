@@ -15,7 +15,7 @@ class TransactionsViewItemFactory {
     }
 
     private func coinString(from transactionValue: TransactionValue, incoming: Bool? = nil) -> String {
-        var value = ValueFormatter.instance.format(transactionValue: transactionValue.abs, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? ""
+        var value = ValueFormatter.instance.formatNew(transactionValue: transactionValue) ?? ""
 
         if let incoming = incoming {
             value = "\(incoming ? "+" : "-")\(value)"
@@ -177,8 +177,8 @@ class TransactionsViewItemFactory {
             subTitle = TransactionInfoAddressMapper.map(record.spender)
 
             if record.value.isMaxValue {
-                primaryValue = TransactionsViewModel.Value(text: "∞", type: .neutral)
-                secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized(record.value.coinCode), type: .secondary)
+                primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
+                secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
                 primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .neutral)
 

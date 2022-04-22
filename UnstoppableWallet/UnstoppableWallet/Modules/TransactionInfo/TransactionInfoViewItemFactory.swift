@@ -6,7 +6,7 @@ class TransactionInfoViewItemFactory {
 
     private func amount(transactionValue: TransactionValue, rate: CurrencyValue?, incoming: Bool? = nil) -> TransactionInfoModule.ViewItem {
         if transactionValue.isMaxValue {
-            return .amount(coinAmount: "transactions.value.unlimited".localized(transactionValue.coinCode), currencyAmount: "∞", incoming: incoming)
+            return .amount(coinAmount: "∞ \(transactionValue.coinCode)", currencyAmount: "transactions.value.unlimited".localized, incoming: incoming)
         } else {
             var currencyValue: CurrencyValue?
 

@@ -602,7 +602,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
