@@ -227,6 +227,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.cancel_button" = "İşlemi İptal Et";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Yetersiz bakiye";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
@@ -595,13 +596,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.swap" = "Swap";
 "transactions.contract_call" = "Sözleşme Çağrısı";
 "transactions.contract_creation" = "Sözleşme Oluşturma";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "%@ kişisine";
 "transactions.from" = "%@ kişisinden";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "sınırsız %@";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Bugün";
 "transactions.yesterday" = "Dün";
