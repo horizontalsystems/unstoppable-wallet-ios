@@ -29,6 +29,22 @@ class ValueFormatter {
         return formatter
     }()
 
+    private func digitsAndValue(value: Decimal, basePow: Int) -> (Int, Decimal) {
+        let digits: Int
+
+        switch value {
+        case pow(10, basePow)..<pow(10, basePow + 1): digits = 2
+        case pow(10, basePow + 1)..<pow(10, basePow + 2): digits = 1
+        default: digits = 0
+        }
+
+        return (digits, value / pow(10, basePow))
+    }
+
+}
+
+extension ValueFormatter {
+
     func format(coinValue: CoinValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
         format(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
@@ -42,6 +58,73 @@ class ValueFormatter {
         case .rawValue:
             return nil
         }
+    }
+
+    func formatNew(transactionValue: TransactionValue) -> String? {
+        switch transactionValue {
+        case let .coinValue(platformCoin, value):
+            return formatNew(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code)
+        case let .tokenValue(_, tokenCode, tokenDecimals, value):
+            return formatNew(value: value, decimalCount: tokenDecimals, symbol: tokenCode)
+        case .rawValue:
+            return nil
+        }
+    }
+    
+    func formatNew(value: Decimal, decimalCount: Int, symbol: String?) -> String? {
+        var value = abs(value)
+        var postfix: String?
+        let digits: Int
+
+        switch value {
+        case 0:
+            digits = 0
+
+        case 0..<0.0000_0001:
+            digits = 8
+            value = 0.0000_0001
+
+        case 0.0000_0001..<0.0001:
+            digits = min(decimalCount, 8)
+
+        case 0.0001..<1:
+            digits = 4
+
+        case 1..<10:
+            digits = 2
+
+        case 10..<100:
+            digits = 1
+
+        case 100..<10_000:
+            digits = 0
+
+        case 10_000..<pow(10, 6):
+            (digits, value) = digitsAndValue(value: value, basePow: 3)
+            postfix = "K"
+
+        case pow(10, 6)..<pow(10, 9):
+            (digits, value) = digitsAndValue(value: value, basePow: 6)
+            postfix = "M"
+
+        case pow(10, 9)..<pow(10, 12):
+            (digits, value) = digitsAndValue(value: value, basePow: 9)
+            postfix = "B"
+
+        default:
+            (digits, value) = digitsAndValue(value: value, basePow: 12)
+            postfix = "T"
+        }
+
+        let formatter = coinFormatter
+        formatter.roundingMode = .halfUp
+        formatter.maximumFractionDigits = digits
+
+        guard let formattedValue = formatter.string(from: value as NSNumber) else {
+            return nil
+        }
+
+        return "\(formattedValue)\(postfix ?? "") \(symbol ?? "")"
     }
 
     func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
