@@ -226,6 +226,7 @@
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel_button" = "Отменить Транзакцию";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Недостаточно Средств";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
@@ -594,13 +595,14 @@
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
 "transactions.contract_creation" = "Создание Контракта";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "неограниченно %@";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
