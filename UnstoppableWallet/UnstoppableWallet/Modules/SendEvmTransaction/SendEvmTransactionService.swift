@@ -18,6 +18,7 @@ protocol ISendEvmTransactionService {
 
     var ownAddress: EthereumKit.Address { get }
 
+    func methodName(input: Data) -> String?
     func send()
 }
 
@@ -27,6 +28,7 @@ class SendEvmTransactionService {
     private let sendData: SendEvmData
     private let evmKitWrapper: EvmKitWrapper
     private let feeService: EvmFeeService
+    private let contractMethodParser = EvmContractMethodParser()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: [], warnings: []) {
@@ -110,6 +112,10 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 
     var ownAddress: EthereumKit.Address {
         evmKit.receiveAddress
+    }
+
+    func methodName(input: Data) -> String? {
+        contractMethodParser.parse(input: input)
     }
 
     func send() {

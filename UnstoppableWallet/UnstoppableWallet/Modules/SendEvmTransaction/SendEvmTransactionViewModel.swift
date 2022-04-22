@@ -403,6 +403,10 @@ class SendEvmTransactionViewModel {
 
         viewItems.append(.input(value: transactionData.input.toHexString()))
 
+        if let methodName = service.methodName(input: transactionData.input) {
+            viewItems.append(.value(title: "send.confirmation.method".localized, value: methodName, type: .regular))
+        }
+
         if let dAppName = dAppInfo?.name {
             viewItems.append(.value(title: "wallet_connect.sign.dapp_name".localized, value: dAppName, type: .regular))
         }
