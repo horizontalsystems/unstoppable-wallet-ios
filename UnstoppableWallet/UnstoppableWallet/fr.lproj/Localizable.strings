@@ -224,6 +224,7 @@
 "send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.cancel_button" = "Annuler la transaction";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Solde insuffisant";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
@@ -592,13 +593,14 @@
 "transactions.swap" = "Echanger";
 "transactions.contract_call" = "Appel de contrat";
 "transactions.contract_creation" = "Création du contrat";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "A %@";
 "transactions.from" = "De %@";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "%@ illimité";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Aujourd'hui";
 "transactions.yesterday" = "Hier";
