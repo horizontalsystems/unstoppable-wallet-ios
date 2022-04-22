@@ -47,6 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
@@ -827,10 +832,6 @@ poner en peligro la seguridad de mis fondos.";
 "chart.time_duration.year2" = "2 Años";
 
 "chart.market_cap" = "Cap. de Mercado";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En circulación";
 "chart.selected.volume" = "Volumen";
