@@ -34,12 +34,12 @@ class TransactionsViewModel {
                 self?.handle(updatedItem: item)
             }
         }
-        subscribe(disposeBag, service.syncStateSignal) { [weak self] syncState in self?.handle(syncState: syncState) }
+        subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.handle(syncing: $0) }
 
         handle(typesFilters: service.typeFilters)
         handle(walletFilters: service.walletFilters)
         handle(items: service.allItems)
-        handle(syncState: service.syncState)
+        handle(syncing: service.syncing)
     }
 
     private func handle(typesFilters: (types: [TransactionTypeFilter], selected: Int)) {
@@ -61,7 +61,7 @@ class TransactionsViewModel {
         sectionViewItemsRelay.accept(sectionViewItems)
 
         if showEmptyMessage {
-            handle(syncState: service.syncState)
+            handle(syncing: service.syncing)
         }
     }
 
@@ -76,17 +76,8 @@ class TransactionsViewModel {
         }
     }
 
-    private func handle(syncState: AdapterState?) {
-        guard let syncState = syncState else {
-            return
-        }
-
-        switch syncState {
-        case .syncing, .searchingTxs:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: true, messageType: sectionViewItems.isEmpty ? .syncing : nil))
-        case .synced, .notSynced:
-            viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: false, messageType: sectionViewItems.isEmpty ? .empty : nil))
-        }
+    private func handle(syncing: Bool) {
+        viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: syncing, messageType: sectionViewItems.isEmpty ? (syncing ? .syncing : .empty) : nil))
     }
 
     private func sectionViewItems(viewItems: [ViewItem]) -> [SectionViewItem] {

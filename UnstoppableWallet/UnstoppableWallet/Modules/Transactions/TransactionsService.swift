@@ -14,7 +14,6 @@ class TransactionsService {
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
     private var itemsSubject = PublishSubject<[Item]>()
     private var updatedItemSubject = PublishSubject<Item>()
-    private var syncStateSubject = PublishSubject<AdapterState?>()
 
     private var items = [Item]()
 
@@ -34,10 +33,6 @@ class TransactionsService {
 
         syncStateService.lastBlockInfoObservable
                 .subscribe(onNext: { [weak self] (source, lastBlockInfo) in self?.queue.async { self?.handle(source: source, lastBlockInfo: lastBlockInfo) }})
-                .disposed(by: disposeBag)
-
-        syncStateService.syncStateObservable
-                .subscribe(onNext: { [weak self] syncState in self?.syncStateSubject.onNext(syncState) })
                 .disposed(by: disposeBag)
 
         rateService.ratesChangedObservable
@@ -172,10 +167,6 @@ extension TransactionsService {
         filterHelper.walletFilters
     }
 
-    var syncState: AdapterState? {
-        syncStateService.syncState
-    }
-
     var walletFiltersObservable: Observable<(wallets: [TransactionWallet], selected: Int?)> {
         walletFiltersSubject.asObservable()
     }
@@ -192,8 +183,12 @@ extension TransactionsService {
         updatedItemSubject.asObservable()
     }
 
-    var syncStateSignal: Observable<AdapterState?> {
-        syncStateSubject.asObservable()
+    var syncing: Bool {
+        syncStateService.syncing
+    }
+
+    var syncingObservable: Observable<Bool> {
+        syncStateService.syncingObservable
     }
 
     func set(selectedWalletIndex: Int?) {
