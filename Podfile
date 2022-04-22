@@ -37,6 +37,9 @@ def appPods
   pod 'HdWalletKit.swift', git: 'https://github.com/horizontalsystems/hd-wallet-kit-ios'
   # pod 'HdWalletKit.swift', path: '../hd-wallet-kit-ios/'
 
+  pod 'OpenSslKit.swift', git: 'https://github.com/horizontalsystems/open-ssl-kit-ios'
+  # pod 'HdWalletKit.swift', path: '../open-ssl-kit-ios/'
+
   pod 'MarketKit.swift', git: 'https://github.com/horizontalsystems/market-kit-ios/'
   # pod 'MarketKit.swift', path: '../market-kit-ios/'
   pod 'FeeRateKit.swift', git: 'https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios'
