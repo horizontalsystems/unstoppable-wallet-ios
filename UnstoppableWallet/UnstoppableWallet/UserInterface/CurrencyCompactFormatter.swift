@@ -2,7 +2,7 @@ import Foundation
 import CurrencyKit
 
 class CurrencyCompactFormatter {
-    private static let postfixes = ["chart.market_cap.thousand", "chart.market_cap.million", "chart.market_cap.billion", "chart.market_cap.trillion"]
+    private static let postfixes = ["number.thousand", "number.million", "number.billion", "number.trillion"]
     public static let instance = CurrencyCompactFormatter()
 
     private let currencyFormatter: NumberFormatter = {

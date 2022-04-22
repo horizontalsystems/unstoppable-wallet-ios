@@ -47,6 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
@@ -828,10 +833,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "chart.time_duration.year2" = "2Y";
 
 "chart.market_cap" = "Market Cap";
-"chart.market_cap.thousand" = "%@ k";
-"chart.market_cap.million" = "%@ M";
-"chart.market_cap.billion" = "%@ B";
-"chart.market_cap.trillion" = "%@ T";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Vol";

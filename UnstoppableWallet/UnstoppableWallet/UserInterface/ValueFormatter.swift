@@ -101,19 +101,19 @@ extension ValueFormatter {
 
         case 10_000..<pow(10, 6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
-            postfix = "K"
+            postfix = "number.thousand"
 
         case pow(10, 6)..<pow(10, 9):
             (digits, value) = digitsAndValue(value: value, basePow: 6)
-            postfix = "M"
+            postfix = "number.million"
 
         case pow(10, 9)..<pow(10, 12):
             (digits, value) = digitsAndValue(value: value, basePow: 9)
-            postfix = "B"
+            postfix = "number.billion"
 
         default:
             (digits, value) = digitsAndValue(value: value, basePow: 12)
-            postfix = "T"
+            postfix = "number.trillion"
         }
 
         let formatter = coinFormatter
@@ -124,7 +124,8 @@ extension ValueFormatter {
             return nil
         }
 
-        return "\(formattedValue)\(postfix ?? "") \(symbol ?? "")"
+        let valueWithPostfix = postfix.map { $0.localized(formattedValue) } ?? formattedValue
+        return "\(valueWithPostfix)\(symbol.map { " \($0)" } ?? "")"
     }
 
     func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
