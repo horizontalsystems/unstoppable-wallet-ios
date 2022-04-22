@@ -351,6 +351,7 @@ DEPENDENCIES:
   - Nimble
   - ObjectMapper
   - OneInchKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - OpenSslKit.swift (from `https://github.com/horizontalsystems/open-ssl-kit-ios`)
   - PinKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Quick
   - RxCocoa
@@ -394,7 +395,6 @@ SPEC REPOS:
     - Logging
     - Nimble
     - ObjectMapper
-    - OpenSslKit.swift
     - PromiseKit
     - Quick
     - RxCocoa
@@ -469,6 +469,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   OneInchKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  OpenSslKit.swift:
+    :git: https://github.com/horizontalsystems/open-ssl-kit-ios
   PinKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
@@ -556,6 +558,9 @@ CHECKOUT OPTIONS:
   OneInchKit.swift:
     :commit: 263a2fca99f97512ddaa328bd37eb8aa32083611
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
+  OpenSslKit.swift:
+    :commit: c912734ed3a89af24a6779c6cd1f694075af55fd
+    :git: https://github.com/horizontalsystems/open-ssl-kit-ios
   PinKit.swift:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
     :git: https://github.com/horizontalsystems/component-kit-ios/
@@ -671,6 +676,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ac11c62951bc8130abbce780705956fb7fb54fd9
 
-PODFILE CHECKSUM: 06d7c369ad9ff04942267af9abf7f37e82ccd786
+PODFILE CHECKSUM: 64489bbbcc987ca5069a2e815f2901071ba5dbbc
 
 COCOAPODS: 1.11.2
