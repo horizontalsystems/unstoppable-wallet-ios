@@ -47,6 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
+"number.thousand" = "%@k";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable muss Zugriff auf Ihre Kamera haben, um den QR-Code zu scannen.\n\nGehen Sie auf „Einstellungen“, dann auf „Unstoppable“ und erlauben Sie dort den Zugriff auf die Kamera.";
@@ -826,10 +831,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "chart.time_duration.year2" = "2J";
 
 "chart.market_cap" = "Market Cap";
-"chart.market_cap.thousand" = "%@ tsd.";
-"chart.market_cap.million" = "%@ mill.";
-"chart.market_cap.billion" = "%@ mrd.";
-"chart.market_cap.trillion" = "%@ trill.";
 "chart.volume" = "Lautstärke(24 St.)";
 "chart.circulation" = "Umlaufversorgung	";
 "chart.selected.volume" = "Lautstärke";
