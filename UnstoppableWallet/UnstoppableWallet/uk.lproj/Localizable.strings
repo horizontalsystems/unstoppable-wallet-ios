@@ -226,6 +226,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.cancel_button" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Not Enough Balance";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
@@ -594,13 +595,14 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "transactions.swap" = "Swap";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unlimited %@";
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "Сьогодні";
 "transactions.yesterday" = "Вчора";
