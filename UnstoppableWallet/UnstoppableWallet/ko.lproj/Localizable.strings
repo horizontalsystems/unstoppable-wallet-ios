@@ -1057,6 +1057,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collections.on_sale" = "판매 중";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
+"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.description" = "Some top digital art";
+
 // Nft Asset
 
 "nft_asset.last_sale" = "마지막 판매";
