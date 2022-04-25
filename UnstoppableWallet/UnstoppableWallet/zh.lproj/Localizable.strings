@@ -1059,6 +1059,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.on_sale" = "在售";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
+"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.description" = "Some top digital art";
+
 // Nft Asset
 
 "nft_asset.last_sale" = "收盘价";
