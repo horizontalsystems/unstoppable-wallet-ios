@@ -137,20 +137,6 @@ extension MarketModule {
         }
     }
 
-    enum NftMarketField: Int, CaseIterable {
-        case day
-        case week
-        case month
-
-        var title: String {
-            switch self {
-            case .day: return "chart.time_duration.day".localized
-            case .week: return "chart.time_duration.week".localized
-            case .month: return "chart.time_duration.month".localized
-            }
-        }
-    }
-
     enum MarketTop: Int, CaseIterable {
         case top250 = 250
         case top500 = 500
@@ -257,30 +243,6 @@ extension Array where Element == MarketKit.MarketInfo {
                     return true
                 }
                 guard let lhsPriceChange = lhsMarketInfo.priceChangeValue(type: priceChangeType) else {
-                    return false
-                }
-
-                return sortingField == .topGainers ? lhsPriceChange > rhsPriceChange : lhsPriceChange < rhsPriceChange
-            }
-        }
-    }
-
-}
-
-extension Array where Element == NftCollection {
-
-    func sorted(sortingField: MarketModule.SortingField, priceChangeType: MarketModule.PriceChangeType) -> [NftCollection] {
-        sorted { lhsCollection, rhsCollection in
-            switch sortingField {
-            case .highestCap: return lhsCollection.stats.marketCap?.value ?? 0 > rhsCollection.stats.marketCap?.value ?? 0
-            case .lowestCap: return lhsCollection.stats.marketCap?.value ?? 0 < rhsCollection.stats.marketCap?.value ?? 0
-            case .highestVolume: return lhsCollection.stats.totalVolume ?? 0 > rhsCollection.stats.totalVolume ?? 0
-            case .lowestVolume: return lhsCollection.stats.totalVolume ?? 0 < rhsCollection.stats.totalVolume ?? 0
-            case .topGainers, .topLosers:
-                guard let rhsPriceChange = rhsCollection.stats.oneDayChange else {
-                    return true
-                }
-                guard let lhsPriceChange = lhsCollection.stats.oneDayChange else {
                     return false
                 }
 

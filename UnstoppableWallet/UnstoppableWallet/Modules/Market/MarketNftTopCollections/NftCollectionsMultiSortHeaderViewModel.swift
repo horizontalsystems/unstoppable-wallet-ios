@@ -1,8 +1,8 @@
 class NftCollectionsMultiSortHeaderViewModel {
-    private let service: IMarketMultiSortHeaderService
+    private let service: MarketNftTopCollectionsService
     private let decorator: MarketListNftCollectionDecorator
 
-    init(service: IMarketMultiSortHeaderService, decorator: MarketListNftCollectionDecorator) {
+    init(service: MarketNftTopCollectionsService, decorator: MarketListNftCollectionDecorator) {
         self.service = service
         self.decorator = decorator
     }
@@ -11,39 +11,39 @@ class NftCollectionsMultiSortHeaderViewModel {
 
 extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel {
 
-    var marketTops: [String] {
+    var sortItems: [String] {
+        MarketNftTopCollectionsModule.SortType.allCases.map { $0.title }
+    }
+    var sortIndex: Int {
+        MarketNftTopCollectionsModule.SortType.allCases.firstIndex(of: service.sortType) ?? 0
+    }
+
+    var leftSelectorItems: [String] {
         []
     }
-
-    var sortingFields: [String] {
-        MarketModule.SortingField.allCases.map { $0.title }
-    }
-
-    var marketFields: [String] {
-        MarketModule.NftMarketField.allCases.map { $0.title }
-    }
-
-    var marketTopIndex: Int {
+    var leftSelectorIndex: Int {
         0
     }
 
-    var sortingFieldIndex: Int {
-        MarketModule.SortingField.allCases.firstIndex(of: service.sortingField) ?? 0
+    var rightSelectorItems: [String] {
+        MarketNftTopCollectionsModule.VolumeRange.allCases.map { $0.title }
+    }
+    var rightSelectorIndex: Int {
+        MarketNftTopCollectionsModule.VolumeRange.allCases.firstIndex(of: service.volumeRange) ?? 0
     }
 
-    var marketFieldIndex: Int {
-        MarketModule.NftMarketField.allCases.firstIndex(of: decorator.marketField) ?? 0
+    func onSelectSort(index: Int) {
+        service.sortType = MarketNftTopCollectionsModule.SortType.allCases[index]
     }
 
-    func onSelectMarketTop(index: Int) {
+    func onSelectLeft(index: Int) {
     }
 
-    func onSelectSortingField(index: Int) {
-        service.sortingField = MarketModule.SortingField.allCases[index]
-    }
+    func onSelectRight(index: Int) {
+        let volumeRange = MarketNftTopCollectionsModule.VolumeRange.allCases[index]
 
-    func onSelectMarketField(index: Int) {
-        decorator.marketField = MarketModule.NftMarketField.allCases[index]
+        decorator.volumeRange = volumeRange
+        service.volumeRange = volumeRange
     }
 
 }

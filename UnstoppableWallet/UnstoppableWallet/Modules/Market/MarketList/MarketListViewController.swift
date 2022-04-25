@@ -139,7 +139,7 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    private func onSelect(viewItem: MarketModule.ListViewItem) {
+    func onSelect(viewItem: MarketModule.ListViewItem) {
         guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
             HudHelper.instance.showAttention(title: "market.coin_not_supported_yet".localized)
             return

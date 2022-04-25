@@ -5,16 +5,18 @@ import SnapKit
 import ComponentKit
 
 protocol IMarketMultiSortHeaderViewModel {
-    var marketTops: [String] { get }
-    var sortingFields: [String] { get }
-    var marketFields: [String] { get }
-    var marketTopIndex: Int { get }
-    var sortingFieldIndex: Int { get }
-    var marketFieldIndex: Int { get }
+    var sortItems: [String] { get }
+    var sortIndex: Int { get }
 
-    func onSelectMarketTop(index: Int)
-    func onSelectSortingField(index: Int)
-    func onSelectMarketField(index: Int)
+    var leftSelectorItems: [String] { get }
+    var leftSelectorIndex: Int { get }
+
+    var rightSelectorItems: [String] { get }
+    var rightSelectorIndex: Int { get }
+
+    func onSelectSort(index: Int)
+    func onSelectLeft(index: Int)
+    func onSelectRight(index: Int)
 }
 
 class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
@@ -25,7 +27,7 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
 
     private let sortButton = ThemeButton()
 
-    init(viewModel: IMarketMultiSortHeaderViewModel, hasTopSelector: Bool = false, hasTopSeparator: Bool = true) {
+    init(viewModel: IMarketMultiSortHeaderViewModel, hasLeftSelector: Bool = false, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
 
         super.init(reuseIdentifier: nil)
@@ -60,35 +62,35 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
         syncSortButtonTitle()
         sortButton.addTarget(self, action: #selector(tapSortButton), for: .touchUpInside)
 
-        let marketFieldSelector = SelectorButton()
+        let rightSelector = SelectorButton()
 
-        contentView.addSubview(marketFieldSelector)
-        marketFieldSelector.snp.makeConstraints { maker in
+        contentView.addSubview(rightSelector)
+        rightSelector.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
             maker.height.equalTo(28)
         }
 
-        marketFieldSelector.set(items: viewModel.marketFields)
-        marketFieldSelector.setSelected(index: viewModel.marketFieldIndex)
-        marketFieldSelector.onSelect = { [weak self] index in
-            self?.viewModel.onSelectMarketField(index: index)
+        rightSelector.set(items: viewModel.rightSelectorItems)
+        rightSelector.setSelected(index: viewModel.rightSelectorIndex)
+        rightSelector.onSelect = { [weak self] index in
+            self?.viewModel.onSelectRight(index: index)
         }
 
-        if hasTopSelector {
-            let marketTopSelector = SelectorButton()
+        if hasLeftSelector {
+            let leftSelector = SelectorButton()
 
-            contentView.addSubview(marketTopSelector)
-            marketTopSelector.snp.makeConstraints { maker in
-                maker.trailing.equalTo(marketFieldSelector.snp.leading).offset(-CGFloat.margin8)
+            contentView.addSubview(leftSelector)
+            leftSelector.snp.makeConstraints { maker in
+                maker.trailing.equalTo(rightSelector.snp.leading).offset(-CGFloat.margin8)
                 maker.centerY.equalToSuperview()
                 maker.height.equalTo(28)
             }
 
-            marketTopSelector.set(items: viewModel.marketTops)
-            marketTopSelector.setSelected(index: viewModel.marketTopIndex)
-            marketTopSelector.onSelect = { [weak self] index in
-                self?.viewModel.onSelectMarketTop(index: index)
+            leftSelector.set(items: viewModel.leftSelectorItems)
+            leftSelector.setSelected(index: viewModel.leftSelectorIndex)
+            leftSelector.onSelect = { [weak self] index in
+                self?.viewModel.onSelectLeft(index: index)
             }
         }
     }
@@ -100,11 +102,11 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     @objc private func tapSortButton() {
         let alertController = AlertRouter.module(
                 title: "market.sort_by".localized,
-                viewItems: viewModel.sortingFields.enumerated().map { (index, sortingField) in
-                    AlertViewItem(text: sortingField, selected: index == viewModel.sortingFieldIndex)
+                viewItems: viewModel.sortItems.enumerated().map { (index, sortingField) in
+                    AlertViewItem(text: sortingField, selected: index == viewModel.sortIndex)
                 }
         ) { [weak self] index in
-            self?.viewModel.onSelectSortingField(index: index)
+            self?.viewModel.onSelectSort(index: index)
             self?.syncSortButtonTitle()
         }
 
@@ -112,7 +114,7 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     }
 
     private func syncSortButtonTitle() {
-        sortButton.setTitle(viewModel.sortingFields[viewModel.sortingFieldIndex], for: .normal)
+        sortButton.setTitle(viewModel.sortItems[viewModel.sortIndex], for: .normal)
     }
 
 }

@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 import CurrencyKit
 
-class MarketNftTopCollectionsService: IMarketMultiSortHeaderService {
+class MarketNftTopCollectionsService {
     typealias Item = NftCollectionItem
 
     private let disposeBag = DisposeBag()
@@ -20,11 +20,8 @@ class MarketNftTopCollectionsService: IMarketMultiSortHeaderService {
         }
     }
 
-    var sortingField: MarketModule.SortingField = .highestCap {
-        didSet {
-            syncIfPossible()
-        }
-    }
+    var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
+    var volumeRange: MarketNftTopCollectionsModule.VolumeRange = .day { didSet { syncIfPossible() } }
 
     init(provider: HsNftProvider, currencyKit: CurrencyKit.Kit) {
         self.provider = provider
@@ -53,7 +50,7 @@ class MarketNftTopCollectionsService: IMarketMultiSortHeaderService {
     }
 
     private func sync(collections: [NftCollection], reorder: Bool = false) {
-        let sortedCollections = collections.sorted(sortingField: sortingField, priceChangeType: priceChangeType)
+        let sortedCollections = collections.sorted(sortType: sortType, volumeRange: volumeRange)
         let items = sortedCollections.enumerated().map { NftCollectionItem(index: $0 + 1, collection: $1) }
         state = .loaded(items: items, softUpdate: false, reorder: reorder)
     }
@@ -64,6 +61,13 @@ class MarketNftTopCollectionsService: IMarketMultiSortHeaderService {
         }
 
         sync(collections: collections, reorder: true)
+    }
+
+    func collection(uid: String) -> NftCollection? {
+        if case let .loaded(collections, _, _) = internalState {
+            return collections.first { $0.uid == uid }
+        }
+        return nil
     }
 
 }
