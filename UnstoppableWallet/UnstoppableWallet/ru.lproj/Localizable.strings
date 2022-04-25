@@ -1059,6 +1059,9 @@
 "nft_collections.on_sale" = "В продаже";
 "nft_collections.empty" = "В вашем кошельке нет NFT";
 
+"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.description" = "Some top digital art";
+
 // Nft Asset
 
 "nft_asset.last_sale" = "Последняя Продажа";
