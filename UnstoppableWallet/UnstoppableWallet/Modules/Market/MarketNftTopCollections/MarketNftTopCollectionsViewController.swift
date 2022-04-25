@@ -55,4 +55,11 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
         ]
     }
 
+    override func onSelect(viewItem: MarketModule.ListViewItem) {
+        if let uid = viewItem.uid, let collection = viewModel.collection(uid: uid) {
+            let module = NftCollectionModule.viewController(collection: collection)
+            navigationController?.pushViewController(module, animated: true)
+        }
+    }
+
 }

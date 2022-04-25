@@ -3,34 +3,7 @@ import Foundation
 class MarketListNftCollectionDecorator {
     typealias Item = NftCollectionItem
 
-    private let service: IMarketListDecoratorService
-
-    var marketField: MarketModule.NftMarketField {
-        didSet {
-            service.onUpdate(marketFieldIndex: marketField.rawValue)
-        }
-    }
-
-    init(service: IMarketListDecoratorService) {
-        self.service = service
-        marketField = MarketModule.NftMarketField.allCases[service.initialMarketFieldIndex]
-    }
-
-}
-
-extension MarketListNftCollectionDecorator: IMarketSingleSortHeaderDecorator {
-
-    var allFields: [String] {
-        MarketModule.NftMarketField.allCases.map { $0.title }
-    }
-
-    var currentFieldIndex: Int {
-        MarketModule.NftMarketField.allCases.firstIndex(of: marketField) ?? 0
-    }
-
-    func setCurrentField(index: Int) {
-        marketField = MarketModule.NftMarketField.allCases[index]
-    }
+    var volumeRange: MarketNftTopCollectionsModule.VolumeRange = .day
 
 }
 
@@ -55,7 +28,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
         let volume: NftPrice?
         let diff: Decimal?
 
-        switch marketField {
+        switch volumeRange {
         case .day:
             volume = collection.stats.oneDayVolume
             diff = collection.stats.oneDayChange
@@ -66,10 +39,10 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
             volume = collection.stats.thirtyDayVolume
             diff = collection.stats.thirtyDayChange
         }
+
         if let volume = volume, let value = CurrencyCompactFormatter.instance.format(symbol: volume.platformCoin.code, value: volume.value) {
             volumeString = value
         }
-
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
 
         return MarketModule.ListViewItem(
