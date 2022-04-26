@@ -187,7 +187,7 @@
 "send.network_fee" = "Комиссия Cети";
 "send.estimated_fee" = "Предполагаемая Комиссия";
 "send.max_fee" = "Макс. Комиссия";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "Скорость Транзакции";
 "send.tx_speed_low" = "Низкая";
 "send.tx_speed_recommended" = "Рекомендовано";
 "send.tx_speed_high" = "Высокая";
