@@ -45,7 +45,7 @@
 
 "n/a" = "S. O.";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "Erreur de synchronisation. Réessayez.";
 
 "number.thousand" = "%@k";
 "number.million" = "%@M";
@@ -61,8 +61,8 @@
 
 "restore.title" = "Choisissez le portefeuille";
 "restore.enter_key" = "Entrez la clé";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
+"restore.mnemonic.description" = "Saisissez votre mnémonique qui consiste en 12 ou 24 mots. Les mots doivent être saisis dans l'ordre correct et séparés par des espaces.";
+"restore_error.mnemonic_word_count" = "Le nombre de mots est incorrect. Il doit être compris entre 12 et 24 mots. Vous avez saisi : %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
@@ -185,7 +185,7 @@
 "send.network_fee" = "Frais de réseau";
 "send.estimated_fee" = "Frais estimés";
 "send.max_fee" = "Frais Max";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "Vitesse de transaction";
 "send.tx_speed_low" = "Faible";
 "send.tx_speed_recommended" = "Recommandé";
 "send.tx_speed_high" = "Élevée";
@@ -204,7 +204,7 @@
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Vitesse de transaction";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.description" = "Les blockchains Bitcoin et Ethereum exigent que les utilisateurs paient des frais de réseau lors de l'envoi de transactions. Les frais sont plus élevés lorsque de nombreuses transactions sont effectuées sur le réseau et inférieurs lorsque la blockchain est moins occupée.";
 "send.fee_info.header_slow" = "Lent";
 "send.fee_info.content_slow" = "La sélection d'une valeur dans cette fourchette peut entraîner une transaction en attente pendant des heures ou un rejet total. Plus la valeur est faible, plus il faudra de temps pour que la transaction soit confirmée.";
 "send.fee_info.header_average" = "Recommandé";
@@ -221,15 +221,15 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
-"send.confirmation.fee" = "Fee";
-"send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.fee" = "Frais";
+"send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "Envoyer";
 "send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.resend_button" = "Réenvoyer";
 "send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
 "send.confirmation.cancel_button" = "Annuler la transaction";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "Méthode";
 "send.amount_error.balance" = "Solde insuffisant";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
@@ -237,11 +237,11 @@
 "send.amount_warning.coin_needed_for_fee" = "Pensez à laisser quelques %@ sur le solde pour payer de futures transactions.";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "Solde insuffisant";
+"send.fee_settings.amount_error.balance" = "Le solde actuel des %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "Risque de blocage";
+"send.fee_settings.stuck_warning" = "La transaction risque d'être bloquée ou d'échouer.";
 
 "send.stuck_warning" = "Attention ! Risque de blocage";
 
@@ -461,9 +461,9 @@
 
 "market.global.subtitle" = "Graphique";
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume des dernières 24h";
+"market.global.defi_cap.title" = "Cap DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -748,12 +748,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
-"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
-"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
+"btc_transaction_sort_mode.bip69" = "BIP69";
+"btc_transaction_sort_mode.bip69.description" = "Indexation lexicographique";
 
-"blockchain_settings.info.title" = "Info";
-"blockchain_settings.info.restore_source" = "Restore Source";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.title" = "Infos";
+"blockchain_settings.info.restore_source" = "Restorer la source";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "blockchain_settings.info.sync_mode" = "Sync Mode";
