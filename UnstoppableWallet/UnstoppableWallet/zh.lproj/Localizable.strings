@@ -45,7 +45,7 @@
 
 "n/a" = "不可用";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "同步错误。请再试一次.";
 
 "number.thousand" = "%@千";
 "number.million" = "%@百万";
@@ -63,8 +63,8 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
+"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
@@ -187,7 +187,7 @@
 "send.network_fee" = "网络费";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "交易速度";
 "send.tx_speed_low" = "低";
 "send.tx_speed_recommended" = "推荐";
 "send.tx_speed_high" = "高";
@@ -206,7 +206,7 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "交易速度";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.description" = "比特币和Etherum区块链都要求用户在发送交易时支付网络费用。当区块链上发生大量交易时费用较高；而区块链空闲时费用较低。";
 "send.fee_info.header_slow" = "慢";
 "send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
 "send.fee_info.header_average" = "平均";
@@ -223,7 +223,7 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "发送​​";
 "send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
@@ -231,7 +231,7 @@
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.cancel_button" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
@@ -239,11 +239,11 @@
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "可用额度不足";
+"send.fee_settings.amount_error.balance" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "有被卡的风险";
+"send.fee_settings.stuck_warning" = "交易可能被卡或失败。";
 
 "send.stuck_warning" = "警告！有被骗的风险";
 
@@ -283,7 +283,7 @@
 "swap.minimum_got" = "最小获取金额";
 "swap.estimate_short" = "（美国东部时间）";
 "swap.minimum_short" = "(分钟)";
-"swap.maximum_short" = "(max)";
+"swap.maximum_short" = "(最大金额)";
 
 // Swap Advanced Settings
 
@@ -736,25 +736,25 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
 "settings_security.face_id" = "面部识别";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "区块链设置";
 "security_settings.delete_alert_button" = "从手机中删除";
 
-"btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source" = "恢复参数";
+"btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 "btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
 
-"btc_restore_mode.recommended" = "Recommended";
-"btc_restore_mode.more_private" = "More Private";
+"btc_restore_mode.recommended" = "推荐";
+"btc_restore_mode.more_private" = "更私密";
 
-"btc_transaction_sort_mode.shuffle" = "Shuffle";
-"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
-"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
-"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
+"btc_transaction_sort_mode.shuffle" = "随机排序";
+"btc_transaction_sort_mode.shuffle.description" = "随机索引";
+"btc_transaction_sort_mode.bip69" = "Bip69";
+"btc_transaction_sort_mode.bip69.description" = "词典索引";
 
-"blockchain_settings.info.title" = "Info";
-"blockchain_settings.info.restore_source" = "Restore Source";
+"blockchain_settings.info.title" = "信息";
+"blockchain_settings.info.restore_source" = "恢复参数";
 "blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
@@ -948,7 +948,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.list.empty_view_button_text" = "新连接";
 
 "wallet_connect.list.pending_requests" = "待处理请求";
-"wallet_connect.list.version_text" = "Version %@";
+"wallet_connect.list.version_text" = "版本%@";
 "wallet_connect.list.v1_bottom_text" = "在WalletConnect的第一个版本中，您必须进入会话以查看和确认请求";
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
