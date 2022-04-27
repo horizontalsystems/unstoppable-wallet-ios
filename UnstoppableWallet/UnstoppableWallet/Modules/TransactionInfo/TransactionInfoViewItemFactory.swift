@@ -3,6 +3,11 @@ import CurrencyKit
 import EthereumKit
 
 class TransactionInfoViewItemFactory {
+    private let evmLabelManager: EvmLabelManager
+
+    init(evmLabelManager: EvmLabelManager) {
+        self.evmLabelManager = evmLabelManager
+    }
 
     private func amount(transactionValue: TransactionValue, rate: CurrencyValue?, incoming: Bool? = nil) -> TransactionInfoModule.ViewItem {
         if transactionValue.isMaxValue {
@@ -92,7 +97,7 @@ class TransactionInfoViewItemFactory {
         ]
 
         if let to = to {
-            viewItems.append(.to(value: to))
+            viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
         }
 
         if let rate = rate, let coin = transactionValue.coin {
@@ -111,7 +116,7 @@ class TransactionInfoViewItemFactory {
         ]
 
         if let from = from {
-            viewItems.append(.from(value: from))
+            viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
         }
 
         if let rate = rate, let coin = transactionValue.coin {
@@ -166,7 +171,7 @@ class TransactionInfoViewItemFactory {
             var viewItems: [TransactionInfoModule.ViewItem] = [
                 .actionTitle(title: "transactions.approve".localized, subTitle: transactionValue.coinName),
                 amount(transactionValue: transactionValue, rate: rate),
-                .spender(value: approve.spender)
+                .spender(value: approve.spender, valueTitle: evmLabelManager.addressLabel(address: approve.spender))
             ]
 
             if let rate = rate, let coin = transactionValue.coin {
@@ -188,18 +193,18 @@ class TransactionInfoViewItemFactory {
                 ]
 
                 if let recipient = swap.recipient {
-                    viewItems.append(.recipient(value: recipient))
+                    viewItems.append(.recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient)))
                 }
 
                 sections.append(viewItems)
             } else if let recipient = swap.recipient {
                 sections.append([
-                    .recipient(value: recipient)
+                    .recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient))
                 ])
             }
 
             var viewItems: [TransactionInfoModule.ViewItem] = [
-                .service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress))
+                .service(value: evmLabelManager.mapped(address: swap.exchangeAddress))
             ]
 
             if let valueOut = swap.valueOut {
@@ -230,7 +235,7 @@ class TransactionInfoViewItemFactory {
             }
 
             var viewItems: [TransactionInfoModule.ViewItem] = [
-                .service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress))
+                .service(value: evmLabelManager.mapped(address: swap.exchangeAddress))
             ]
 
             if let valueIn = swap.valueIn, let valueOut = swap.valueOut {
@@ -247,7 +252,7 @@ class TransactionInfoViewItemFactory {
 
         case let contractCall as ContractCallTransactionRecord:
             sections.append([
-                .actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: TransactionInfoAddressMapper.map(contractCall.contractAddress) )
+                .actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: contractCall.contractAddress) )
             ])
 
             for event in contractCall.outgoingEvents {

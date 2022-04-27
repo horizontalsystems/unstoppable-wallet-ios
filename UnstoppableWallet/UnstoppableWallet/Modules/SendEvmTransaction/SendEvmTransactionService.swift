@@ -28,7 +28,7 @@ class SendEvmTransactionService {
     private let sendData: SendEvmData
     private let evmKitWrapper: EvmKitWrapper
     private let feeService: EvmFeeService
-    private let contractMethodParser = EvmContractMethodParser()
+    private let evmLabelManager: EvmLabelManager
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .notReady(errors: [], warnings: []) {
@@ -46,10 +46,11 @@ class SendEvmTransactionService {
         }
     }
 
-    init(sendData: SendEvmData, evmKitWrapper: EvmKitWrapper, feeService: EvmFeeService) {
+    init(sendData: SendEvmData, evmKitWrapper: EvmKitWrapper, feeService: EvmFeeService, evmLabelManager: EvmLabelManager) {
         self.sendData = sendData
         self.evmKitWrapper = evmKitWrapper
         self.feeService = feeService
+        self.evmLabelManager = evmLabelManager
 
         dataState = DataState(
                 transactionData: sendData.transactionData,
@@ -115,7 +116,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func methodName(input: Data) -> String? {
-        contractMethodParser.parse(input: input)
+        evmLabelManager.methodLabel(input: input)
     }
 
     func send() {

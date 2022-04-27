@@ -10,7 +10,7 @@ struct TransactionInfoModule {
         }
 
         let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let factory = TransactionInfoViewItemFactory()
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
@@ -59,10 +59,10 @@ extension TransactionInfoModule {
         case status(status: TransactionStatus)
         case options(actions: [OptionViewItem])
         case date(date: Date)
-        case from(value: String)
-        case to(value: String)
-        case spender(value: String)
-        case recipient(value: String)
+        case from(value: String, valueTitle: String?)
+        case to(value: String, valueTitle: String?)
+        case spender(value: String, valueTitle: String?)
+        case recipient(value: String, valueTitle: String?)
         case id(value: String)
         case rate(value: String)
         case fee(title: String, value: String)
