@@ -15,6 +15,7 @@ class AppManager {
     private let rateAppManager: RateAppManager
     private let logRecordManager: LogRecordManager
     private let deepLinkManager: DeepLinkManager
+    private let evmLabelManager: EvmLabelManager
     private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
@@ -25,7 +26,7 @@ class AppManager {
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
-         deepLinkManager: DeepLinkManager, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -39,6 +40,7 @@ class AppManager {
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
+        self.evmLabelManager = evmLabelManager
         self.restoreFavoriteCoinWorker = restoreFavoriteCoinWorker
     }
 
@@ -57,6 +59,8 @@ extension AppManager {
 
         appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
+
+        evmLabelManager.sync()
 
         try? restoreFavoriteCoinWorker.run()
     }

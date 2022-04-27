@@ -11,12 +11,12 @@ class Evm20Adapter: BaseEvmAdapter {
     private let contractAddress: EthereumKit.Address
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseCoin: PlatformCoin, coinManager: CoinManager) throws {
+    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseCoin: PlatformCoin, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
 
-        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKitWrapper: evmKitWrapper)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }

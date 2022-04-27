@@ -14,6 +14,7 @@ class SendEvmTransactionViewModel {
     private let service: ISendEvmTransactionService
     private let coinServiceFactory: EvmCoinServiceFactory
     private let cautionsFactory: SendEvmCautionsFactory
+    private let evmLabelManager: EvmLabelManager
 
     private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
 
@@ -24,10 +25,11 @@ class SendEvmTransactionViewModel {
     private let sendSuccessRelay = PublishRelay<Data>()
     private let sendFailedRelay = PublishRelay<String>()
 
-    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory, cautionsFactory: SendEvmCautionsFactory) {
+    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory, cautionsFactory: SendEvmCautionsFactory, evmLabelManager: EvmLabelManager) {
         self.service = service
         self.coinServiceFactory = coinServiceFactory
         self.cautionsFactory = cautionsFactory
+        self.evmLabelManager = evmLabelManager
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
@@ -167,7 +169,7 @@ class SendEvmTransactionViewModel {
                 ),
                 .address(
                         title: "send.confirmation.to".localized,
-                        valueTitle: sendInfo?.domain ?? TransactionInfoAddressMapper.map(toValue),
+                        valueTitle: sendInfo?.domain ?? evmLabelManager.mapped(address: toValue),
                         value: toValue
                 ),
             ])
@@ -185,7 +187,7 @@ class SendEvmTransactionViewModel {
         ]
 
         let addressValue = to.eip55
-        let addressTitle = sendInfo?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+        let addressTitle = sendInfo?.domain ?? evmLabelManager.mapped(address: addressValue)
         viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
@@ -200,7 +202,7 @@ class SendEvmTransactionViewModel {
         }
 
         let addressValue = spender.eip55
-        let addressTitle = TransactionInfoAddressMapper.map(addressValue)
+        let addressTitle = evmLabelManager.mapped(address: addressValue)
 
         var viewItems: [ViewItem] = [
             .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.platformCoin.coin.name),
@@ -267,7 +269,7 @@ class SendEvmTransactionViewModel {
 
         if let recipient = recipient {
             let addressValue = recipient.eip55
-            let addressTitle = swapInfo?.recipientDomain ?? TransactionInfoAddressMapper.map(addressValue)
+            let addressTitle = swapInfo?.recipientDomain ?? evmLabelManager.mapped(address: addressValue)
             otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
         }
 
@@ -371,7 +373,7 @@ class SendEvmTransactionViewModel {
 
         if let recipient = recipient {
             let addressValue = recipient.eip55
-            let addressTitle = oneInchSwapInfo?.recipient?.domain ?? TransactionInfoAddressMapper.map(addressValue)
+            let addressTitle = oneInchSwapInfo?.recipient?.domain ?? evmLabelManager.mapped(address: addressValue)
             viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
         }
 
@@ -392,7 +394,7 @@ class SendEvmTransactionViewModel {
             ),
             .address(
                     title: "send.confirmation.to".localized,
-                    valueTitle: TransactionInfoAddressMapper.map(toValue),
+                    valueTitle: evmLabelManager.mapped(address: toValue),
                     value: toValue
             )
         ]

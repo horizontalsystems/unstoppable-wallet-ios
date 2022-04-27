@@ -9,13 +9,14 @@ import BigInt
 class EvmTransactionConverter {
     private let coinManager: CoinManager
     private let evmKitWrapper: EvmKitWrapper
-    private let contractMethodParser = EvmContractMethodParser()
+    private let evmLabelManager: EvmLabelManager
     private let source: TransactionSource
     private let baseCoin: PlatformCoin
 
-    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager, evmKitWrapper: EvmKitWrapper) {
+    init(source: TransactionSource, baseCoin: PlatformCoin, coinManager: CoinManager, evmKitWrapper: EvmKitWrapper, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
         self.evmKitWrapper = evmKitWrapper
+        self.evmLabelManager = evmLabelManager
         self.source = source
         self.baseCoin = baseCoin
     }
@@ -230,7 +231,7 @@ extension EvmTransactionConverter {
                         transaction: transaction,
                         baseCoin: baseCoin,
                         contractAddress: contractAddress.eip55,
-                        method: transaction.input.flatMap { contractMethodParser.parse(input: $0) },
+                        method: transaction.input.flatMap { evmLabelManager.methodLabel(input: $0) },
                         incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
                         outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTransfers: outgoingTransfers)
                 )

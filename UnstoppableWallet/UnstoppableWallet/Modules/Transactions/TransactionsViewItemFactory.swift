@@ -3,6 +3,11 @@ import CurrencyKit
 import MarketKit
 
 class TransactionsViewItemFactory {
+    private let evmLabelManager: EvmLabelManager
+
+    init(evmLabelManager: EvmLabelManager) {
+        self.evmLabelManager = evmLabelManager
+    }
 
     func typeFilterItems(types: [TransactionTypeFilter]) -> [FilterHeaderView.ViewItem] {
         types.map {
@@ -111,7 +116,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(record.from))
+            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
 
@@ -125,7 +130,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(TransactionInfoAddressMapper.map(record.to))
+            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
 
@@ -143,7 +148,7 @@ class TransactionsViewItemFactory {
                     backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.swap".localized
-            subTitle = TransactionInfoAddressMapper.map(record.exchangeAddress)
+            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
             if let valueOut = record.valueOut {
                 primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: record.recipient != nil ? .secondary : .incoming)
@@ -159,7 +164,7 @@ class TransactionsViewItemFactory {
                     backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.swap".localized
-            subTitle = TransactionInfoAddressMapper.map(record.exchangeAddress)
+            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
             if let valueOut = record.valueOut {
                 primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: .incoming)
@@ -174,7 +179,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.approve".localized
-            subTitle = TransactionInfoAddressMapper.map(record.spender)
+            subTitle = evmLabelManager.mapped(address: record.spender)
 
             if record.value.isMaxValue {
                 primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
@@ -190,7 +195,7 @@ class TransactionsViewItemFactory {
         case let record as ContractCallTransactionRecord:
             iconType = .localIcon(imageName: record.source.blockchain.image)
             title = record.method ?? "transactions.contract_call".localized
-            subTitle = TransactionInfoAddressMapper.map(record.contractAddress)
+            subTitle = evmLabelManager.mapped(address: record.contractAddress)
 
             let incomingValues = combined(values: record.incomingEvents.map { $0.value })
             let outgoingValues = combined(values: record.outgoingEvents.map { $0.value })
@@ -214,7 +219,7 @@ class TransactionsViewItemFactory {
                 title = "transactions.receive".localized
                 let addresses = Array(Set(record.incomingEvents.map { $0.address }))
                 if addresses.count == 1 {
-                    subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(addresses[0]))
+                    subTitle = "transactions.from".localized(evmLabelManager.mapped(address: addresses[0]))
                 } else {
                     subTitle = "transactions.multiple".localized
                 }
@@ -236,7 +241,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: "icon_placeholder_24"
             )
             title = "transactions.receive".localized
-            subTitle = record.from.flatMap { "transactions.from".localized(TransactionInfoAddressMapper.map($0)) } ?? "---"
+            subTitle = record.from.flatMap { "transactions.from".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
             if let currencyValue = item.currencyValue {
@@ -253,7 +258,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: "icon_placeholder_24"
             )
             title = "transactions.send".localized
-            subTitle =  record.to.flatMap { "transactions.to".localized(TransactionInfoAddressMapper.map($0)) } ?? "---"
+            subTitle =  record.to.flatMap { "transactions.to".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
             if let currencyValue = item.currencyValue {
@@ -271,7 +276,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(record.from))
+            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
             if let currencyValue = item.currencyValue {
@@ -284,7 +289,7 @@ class TransactionsViewItemFactory {
                     placeholderImageName: record.source.blockchain.coinPlaceholderImage
             )
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(TransactionInfoAddressMapper.map(record.to))
+            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
             if let currencyValue = item.currencyValue {

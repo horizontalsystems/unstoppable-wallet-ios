@@ -616,6 +616,27 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create SyncerState") { db in
+            try db.create(table: SyncerState.databaseTableName) { t in
+                t.column(SyncerState.Columns.key.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SyncerState.Columns.value.name, .text).notNull()
+            }
+        }
+
+        migrator.registerMigration("Create EvmMethodLabel") { db in
+            try db.create(table: EvmMethodLabel.databaseTableName) { t in
+                t.column(EvmMethodLabel.Columns.methodId.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(EvmMethodLabel.Columns.label.name, .text).notNull()
+            }
+        }
+
+        migrator.registerMigration("Create EvmAddressLabel") { db in
+            try db.create(table: EvmAddressLabel.databaseTableName) { t in
+                t.column(EvmAddressLabel.Columns.address.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(EvmAddressLabel.Columns.label.name, .text).notNull()
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

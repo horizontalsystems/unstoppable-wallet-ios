@@ -36,6 +36,8 @@ class App {
 
     let coinManager: CoinManager
 
+    let evmLabelManager: EvmLabelManager
+
     let walletManager: WalletManager
     let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
@@ -159,6 +161,11 @@ class App {
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
 
+        let hsLabelProvider = HsLabelProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
+        let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
+        evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
+
         let adapterFactory = AdapterFactory(
                 appConfigProvider: appConfigProvider,
                 evmBlockchainManager: evmBlockchainManager,
@@ -166,7 +173,8 @@ class App {
                 binanceKitManager: binanceKitManager,
                 btcBlockchainManager: btcBlockchainManager,
                 restoreSettingsManager: restoreSettingsManager,
-                coinManager: coinManager
+                coinManager: coinManager,
+                evmLabelManager: evmLabelManager
         )
         adapterManager = AdapterManager(
                 adapterFactory: adapterFactory,
@@ -255,6 +263,7 @@ class App {
                 rateAppManager: rateAppManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
+                evmLabelManager: evmLabelManager,
                 restoreFavoriteCoinWorker: restoreFavoriteCoinWorker
         )
     }

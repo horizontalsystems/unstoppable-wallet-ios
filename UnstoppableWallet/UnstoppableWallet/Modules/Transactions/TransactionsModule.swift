@@ -12,7 +12,8 @@ struct TransactionsModule {
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.transactionAdapterManager
         )
-        let viewModel = TransactionsViewModel(service: service, factory: TransactionsViewItemFactory())
+        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager)
+        let viewModel = TransactionsViewModel(service: service, factory: viewItemFactory)
         let viewController = TransactionsViewController(viewModel: viewModel)
 
         return viewController

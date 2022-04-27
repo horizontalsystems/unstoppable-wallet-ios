@@ -175,7 +175,7 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func fromToRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
+    private func fromToRow(rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
         Row<D9Cell>(
                 id: title,
                 hash: value,
@@ -183,8 +183,8 @@ class TransactionInfoViewController: ThemeViewController {
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                     cell.title = title
-                    if let title = TransactionInfoAddressMapper.title(value: value) {
-                        cell.viewItem = .init(type: .title(text: title), value: { value })
+                    if let valueTitle = valueTitle {
+                        cell.viewItem = .init(type: .title(text: valueTitle), value: { value })
                     } else {
                         cell.viewItem = .init(type: .raw, value: { value })
                     }
@@ -192,20 +192,20 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func fromRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value)
+    private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
+        fromToRow(rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
     }
 
-    private func toRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value)
+    private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
+        fromToRow(rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
     }
 
-    private func spenderRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.spender".localized, value: value)
+    private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
+        fromToRow(rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
     }
 
-    private func recipientRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value)
+    private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
+        fromToRow(rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
@@ -439,10 +439,10 @@ class TransactionInfoViewController: ThemeViewController {
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems): return optionsRow(viewItems: viewItems)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
-        case let .from(value): return fromRow(rowInfo: rowInfo, value: value)
-        case let .to(value): return toRow(rowInfo: rowInfo, value: value)
-        case let .spender(value): return spenderRow(rowInfo: rowInfo, value: value)
-        case let .recipient(value): return recipientRow(rowInfo: rowInfo, value: value)
+        case let .from(value, valueTitle): return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .to(value, valueTitle): return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .spender(value, valueTitle): return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .recipient(value, valueTitle): return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .id(value): return idRow(rowInfo: rowInfo, value: value)
         case let .rate(value): return valueRow(rowInfo: rowInfo, title: "tx_info.rate".localized, value: value)
         case let .fee(title, value): return feeRow(rowInfo: rowInfo, title: title, value: value)
