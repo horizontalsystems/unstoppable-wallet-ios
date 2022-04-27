@@ -32,38 +32,6 @@ class TransactionsViewItemFactory {
     private func currencyString(from currencyValue: CurrencyValue) -> String {
         ValueFormatter.instance.format(currencyValue: currencyValue.abs, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? ""
     }
-    
-    private func sameType(_ value: TransactionValue, _ value2: TransactionValue) -> Bool {
-        switch (value, value2) {
-        case let (.coinValue(platformCoin, _), .coinValue(platformCoin2, _)): return platformCoin == platformCoin2
-        case let (.tokenValue(tokenName, tokenCode, tokenDecimals, _), .tokenValue(tokenName2, tokenCode2, tokenDecimals2, _)): return tokenName == tokenName2 && tokenCode == tokenCode2 && tokenDecimals == tokenDecimals2
-        default: return false
-        }
-    }
-
-    private func combined(values: [TransactionValue]) -> [TransactionValue] {
-        var result = [TransactionValue]()
-
-        for value in values {
-            if result.contains(where: { sameType(value, $0) }) {
-                continue
-            }
-
-            let sameTypeValues = values.filter { sameType(value, $0) }
-            let totalValue = sameTypeValues.map { $0.decimalValue ?? 0 }.reduce(0, +)
-            let resultValue: TransactionValue
-
-            switch value {
-            case let .coinValue(platformCoin, _): resultValue = .coinValue(platformCoin: platformCoin, value: totalValue)
-            case let .tokenValue(tokenName, tokenCode, tokenDecimals, _): resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
-            case let .rawValue(value): resultValue = .rawValue(value: value)
-            }
-
-            result.append(resultValue)
-        }
-
-        return result
-    }
 
     private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
         var primaryValue: TransactionsViewModel.Value?
@@ -197,14 +165,11 @@ class TransactionsViewItemFactory {
             title = record.method ?? "transactions.contract_call".localized
             subTitle = evmLabelManager.mapped(address: record.contractAddress)
 
-            let incomingValues = combined(values: record.incomingEvents.map { $0.value })
-            let outgoingValues = combined(values: record.outgoingEvents.map { $0.value })
-
+            let (incomingValues, outgoingValues) = record.combinedValues
             (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
 
         case let record as ExternalContractCallTransactionRecord:
-            let incomingValues = combined(values: record.incomingEvents.map { $0.value })
-            let outgoingValues = combined(values: record.outgoingEvents.map { $0.value })
+            let (incomingValues, outgoingValues) = record.combinedValues
 
             if outgoingValues.isEmpty && incomingValues.count == 1 {
                 iconType = .icon(
