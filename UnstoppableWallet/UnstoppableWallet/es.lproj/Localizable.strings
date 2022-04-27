@@ -496,7 +496,14 @@
 "coin_page.markets.empty" = "No data available";
 
 "coin_page.token_liquidity" = "Token Liquidity";
+"coin_page.dex_volume" = "DEX Volume";
+"coin_page.dex_liquidity" = "DEX Liquidity";
+"coin_page.chart.locked" = "Locked";
+
 "coin_page.token_distribution" = "Token Distribution";
+"coin_page.tx_count" = "Tx Count";
+"coin_page.tx_volume" = "Tx Volume";
+"coin_page.active_addresses" = "Active Addresses";
 
 "coin_page.chart_tvl" = "Token TVL";
 "coin_page.chart_volumes" = "Total Volume";
@@ -579,6 +586,19 @@
 "coin_page.tweets.no_tweets_yet" = "No tweets yet";
 "coin_page.tweets.not_available" = "No twitter available";
 "coin_page.tweets.see_on_twitter" = "See on Twitter";
+
+// Pro Features
+
+"pro_features.lock_info.go_to_mint" = "Coming So Soon";
+
+"pro_features.lock_info.title" = "Unstoppable Pass";
+"pro_features.lock_info.subtitle" = "NFT";
+"pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
+"pro_features.lock_info.coin_details.volume" = "DEX Volume";
+"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
+"pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
+"pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
+"pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
 
 // Transactions
 
