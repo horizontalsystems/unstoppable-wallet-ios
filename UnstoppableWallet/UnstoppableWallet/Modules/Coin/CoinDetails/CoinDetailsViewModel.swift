@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -47,27 +47,51 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(values: [ChartPoint]?, badge: String? = nil) -> ChartViewItem? {
-        guard let values = values, let first = values.first, let last = values.last else {
-            return nil
+    private func chart(item: CoinDetailsService.ProData) -> ChartViewItem? {
+        switch item {
+        case .empty: return nil
+        case .forbidden: return ChartViewItem(value: "coin_page.chart.locked".localized, diff: "***", diffColor: .themeGray, chartData: ChartData.placeholder, chartTrend: .neutral)
+        case .completed(let values):
+            guard let first = values.first, let last = values.last else {
+                return nil
+            }
+
+            let chartItems = values.map {
+                ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
+            }
+
+            let diffValue = (last.value / first.value - 1) * 100
+            let diff = DiffLabel.formatted(value: diffValue)
+            let diffColor = DiffLabel.color(value: diffValue)
+
+            let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
+            let value = CurrencyCompactFormatter.instance.format(currency: service.currency, value: last.value)
+
+            return ChartViewItem(value: value, diff: diff ?? "n/a".localized, diffColor: DiffLabel.color(value: diffValue), chartData: chartData, chartTrend: diffValue.isSignMinus ? .down : .up)
         }
+    }
 
-        let chartItems = values.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-        }
+    private func tokenLiquidity(proFeatures: CoinDetailsService.ProFeatures) -> TokenLiquidityViewItem {
+        TokenLiquidityViewItem(
+                volume: chart(item: proFeatures.dexVolumes),
+                liquidity: chart(item: proFeatures.dexLiquidity)
+        )
+    }
 
-        let diff = (last.value / first.value - 1) * 100
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-        let value = CurrencyCompactFormatter.instance.format(currency: service.currency, value: last.value)
-
-        return ChartViewItem(badge: badge, value: value, diff: diff, chartData: chartData, chartTrend: diff.isSignMinus ? .down : .up)
+    private func tokenDistribution(proFeatures: CoinDetailsService.ProFeatures) -> TokenDistributionViewItem {
+        TokenDistributionViewItem(
+                txCount: chart(item: proFeatures.txCount),
+                txVolume: chart(item: proFeatures.txVolume),
+                activeAddresses: chart(item: proFeatures.activeAddresses)
+        )
     }
 
     private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
+                tokenLiquidity: tokenLiquidity(proFeatures: item.proFeatures),
+                tokenDistribution: tokenDistribution(proFeatures: item.proFeatures),
                 hasMajorHolders: service.hasMajorHolders,
-                volumeChart: chart(values: item.totalVolumes, badge: service.coin.marketCapRank.map { "#\($0)" }),
-                tvlChart: chart(values: item.tvls),
+                tvlChart: chart(item: item.tvls.flatMap { .completed($0) } ?? .empty),
                 tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
                 treasuries: item.marketInfoDetails.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
@@ -164,8 +188,9 @@ extension CoinDetailsViewModel {
 extension CoinDetailsViewModel {
 
     struct ViewItem {
+        let tokenLiquidity: TokenLiquidityViewItem
+        let tokenDistribution: TokenDistributionViewItem
         let hasMajorHolders: Bool
-        let volumeChart: ChartViewItem?
         let tvlChart: ChartViewItem?
         let tvlRank: String?
         let tvlRatio: String?
@@ -174,6 +199,17 @@ extension CoinDetailsViewModel {
         let reportsCount: String?
         let securityViewItems: [SecurityViewItem]
         let auditAddresses: [String]
+    }
+
+    struct TokenLiquidityViewItem {
+        let volume: ChartViewItem?
+        let liquidity: ChartViewItem?
+    }
+
+    struct TokenDistributionViewItem {
+        let txCount: ChartViewItem?
+        let txVolume: ChartViewItem?
+        let activeAddresses: ChartViewItem?
     }
 
     struct SecurityViewItem {
@@ -261,11 +297,27 @@ extension CoinDetailsViewModel {
     }
 
     struct ChartViewItem {
-        let badge: String?
         let value: String?
-        let diff: Decimal?
+        let diff: String
+        let diffColor: UIColor
         let chartData: ChartData?
         let chartTrend: MovementTrend
+    }
+
+}
+
+extension ChartData {
+
+    static var placeholder: ChartData {
+        let chartItems = [
+            ChartItem(timestamp: 100).added(name: .rate, value: 2),
+            ChartItem(timestamp: 200).added(name: .rate, value: 2),
+            ChartItem(timestamp: 300).added(name: .rate, value: 1),
+            ChartItem(timestamp: 400).added(name: .rate, value: 3),
+            ChartItem(timestamp: 500).added(name: .rate, value: 2),
+            ChartItem(timestamp: 600).added(name: .rate, value: 2)
+        ]
+        return ChartData(items: chartItems, startTimestamp: 100, endTimestamp: 600)
     }
 
 }

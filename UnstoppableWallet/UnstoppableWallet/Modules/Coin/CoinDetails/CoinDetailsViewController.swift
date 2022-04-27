@@ -74,7 +74,9 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: CoinDetailsMetricCell.self)
 
-        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
+            self?.sync(viewItem: $0)
+        }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -145,9 +147,19 @@ class CoinDetailsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openTradingVolume() {
-        let viewController = CoinTradingVolumeModule.viewController(coinUid: viewModel.coin.uid, coinTitle: viewModel.coin.name)
+    private func openProDataNotify() {
+        let viewController = ProFeaturesLockInfoViewController(config: .coinDetails, delegate: self).toBottomSheet
         parentNavigationController?.present(viewController, animated: true)
+    }
+
+}
+
+extension CoinDetailsViewController: IProFeaturesLockDelegate {
+
+    func onGoToMint(viewController: UIViewController) {
+        viewController.dismiss(animated: true) {
+            print("Can open main mint controller!")
+        }
     }
 
 }
@@ -167,20 +179,21 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func liquiditySections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
-        guard let volumeChart = viewItem.volumeChart else {
-            return nil
-        }
-
-        let volumeRow = Row<CoinDetailsMetricCell>(
-                id: "volume_chart",
+    private func liquiditySections(viewItem: CoinDetailsViewModel.TokenLiquidityViewItem) -> [SectionProtocol]? {
+        let liquidityRow = Row<CoinDetailsMetricCell>(
+                id: "liquidity_chart",
                 height: CoinDetailsMetricCell.cellHeight,
                 bind: { [weak self] cell, _ in
-                    cell.title = "coin_page.chart_volumes".localized
+                    cell.leftTitle = "coin_page.dex_volume".localized
+                    cell.rightTitle = "coin_page.dex_liquidity".localized
                     cell.set(configuration: .smallChart)
-                    cell.set(viewItem: volumeChart)
-                    cell.onTap = {
-                        self?.openTradingVolume()
+
+                    cell.set(leftViewItem: viewItem.volume, rightViewItem: viewItem.liquidity)
+                    cell.onTapLeft = {
+                        self?.openProDataNotify()
+                    }
+                    cell.onTapRight = {
+                        self?.openProDataNotify()
                     }
                 }
         )
@@ -197,14 +210,72 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "liquidity",
                     footerState: .margin(height: .margin24),
                     rows: [
-                        volumeRow
+                        liquidityRow
                     ]
             )
         ]
     }
 
+    private func hasCharts(items: [CoinDetailsViewModel.ChartViewItem?]) -> Bool {
+        !items.compactMap { $0 }.isEmpty
+    }
+
+    private func distributionCharts(viewItem: CoinDetailsViewModel.TokenDistributionViewItem) -> [RowProtocol] {
+        let hasTxCharts = hasCharts(items: [viewItem.txCount, viewItem.txVolume])
+        let hasAddresses = hasCharts(items: [viewItem.activeAddresses])
+
+        var rows = [RowProtocol]()
+        guard (hasTxCharts || hasAddresses) else {
+            return rows
+        }
+
+        if hasTxCharts {
+            rows.append(
+                    Row<CoinDetailsMetricCell>(
+                            id: "transaction-charts",
+                            height: CoinDetailsMetricCell.cellHeight + .margin8,
+                            bind: { [weak self] cell, _ in
+                                cell.leftTitle = "coin_page.tx_count".localized
+                                cell.rightTitle = "coin_page.tx_volume".localized
+                                cell.set(configuration: .smallChart)
+
+                                cell.set(leftViewItem: viewItem.txCount, rightViewItem: viewItem.txVolume)
+                                cell.onTapLeft = {
+                                    self?.openProDataNotify()
+                                }
+                                cell.onTapRight = {
+                                    self?.openProDataNotify()
+                                }
+                            }
+                    )
+            )
+        }
+
+        if hasAddresses {
+            rows.append(
+                    Row<CoinDetailsMetricCell>(
+                            id: "addresses-charts",
+                            height: CoinDetailsMetricCell.cellHeight + .margin8,
+                            bind: { [weak self] cell, _ in
+                                cell.leftTitle = "coin_page.active_addresses".localized
+                                cell.set(configuration: .smallChart)
+
+                                cell.set(leftViewItem: viewItem.activeAddresses)
+                                cell.onTapLeft = {
+                                    self?.openProDataNotify()
+                                }
+                            }
+                    )
+            )
+        }
+
+        return rows
+    }
+
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
-        guard viewItem.hasMajorHolders else {
+        let chartRows = distributionCharts(viewItem: viewItem.tokenDistribution)
+
+        guard viewItem.hasMajorHolders || !chartRows.isEmpty else {
             return nil
         }
 
@@ -219,7 +290,7 @@ extension CoinDetailsViewController: SectionsDataSource {
             Section(
                     id: "distribution",
                     footerState: .margin(height: .margin24),
-                    rows: [
+                    rows: chartRows + [
                         Row<D1Cell>(
                                 id: "major-holders",
                                 height: .heightCell48,
@@ -245,10 +316,10 @@ extension CoinDetailsViewController: SectionsDataSource {
                 id: "tvl_chart",
                 height: CoinDetailsMetricCell.cellHeight,
                 bind: { [weak self] cell, _ in
-                    cell.title = "coin_page.chart_tvl".localized
+                    cell.leftTitle = "coin_page.chart_tvl".localized
                     cell.set(configuration: .smallChart)
-                    cell.set(viewItem: tvlChart)
-                    cell.onTap = {
+                    cell.set(leftViewItem: tvlChart)
+                    cell.onTapLeft = {
                         self?.openTvl()
                     }
                 }
@@ -471,7 +542,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let liquiditySections = liquiditySections(viewItem: viewItem) {
+            if let liquiditySections = liquiditySections(viewItem: viewItem.tokenLiquidity) {
                 sections.append(contentsOf: liquiditySections)
             }
 

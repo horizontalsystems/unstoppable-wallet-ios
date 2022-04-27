@@ -10,7 +10,7 @@ class MarketMetricView: UIView {
     private let titleLabel = UILabel()
     private let badgeView = BadgeView()
     private let valueLabel = UILabel()
-    private let diffLabel = RateDiffLabel()
+    private let diffLabel = DiffLabel()
     private let chartView = RateChartView()
     private let button = ThemeButton()
 
@@ -149,6 +149,29 @@ extension MarketMetricView {
         let diff = diffValue
 
         diffLabel.set(value: diff)
+
+        let colorType: ChartColorType
+        switch trend {
+        case .neutral: colorType = .neutral
+        case .up: colorType = .up
+        case .down: colorType = .down
+        }
+
+        chartView.setCurve(colorType: colorType)
+        if let chartData = chartData {
+            chartView.set(chartData: chartData, animated: alreadyHasData)
+            alreadyHasData = true
+        } else {
+            alreadyHasData = false
+            // clear
+        }
+    }
+
+    func set(value: String?, diff: String, diffColor: UIColor, chartData: ChartData?, trend: MovementTrend) {
+        valueLabel.textColor = value == nil ? .themeGray50 : .themeBran
+        valueLabel.text = value ?? "n/a".localized
+
+        diffLabel.set(text: diff, color: diffColor)
 
         let colorType: ChartColorType
         switch trend {
