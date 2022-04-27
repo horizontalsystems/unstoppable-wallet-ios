@@ -24,7 +24,7 @@ class CoinDetailsService {
         self.currencyKit = currencyKit
     }
 
-    private func fetchCharts(details: MarketInfoDetails) -> Single<Item> {
+    private func fetchCharts(details: MarketInfoDetails, proFeatures: ProFeatures) -> Single<Item> {
         let tvlSingle: Single<[ChartPoint]>
         if details.tvl != nil {
             tvlSingle = marketKit.marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .month1)
@@ -32,21 +32,14 @@ class CoinDetailsService {
             tvlSingle = Single.just([])
         }
 
-        let volumeSingle = marketKit
-                .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, interval: .month1)
-                .map {
-                    $0.points
-                    .compactMap { point in
-                        point.extra[ChartPoint.volume].map { ChartPoint(timestamp: point.timestamp, value: $0) }
-                    }
+        return tvlSingle.catchErrorJustReturn([])
+                .map { tvls -> Item in
+                    Item(marketInfoDetails: details, proFeatures: proFeatures, tvls: tvls)
                 }
+    }
 
-        return Single.zip(
-                tvlSingle.catchErrorJustReturn([]),
-                volumeSingle.catchErrorJustReturn([])
-            ).map { tvls, totalVolumes -> Item in
-                Item(marketInfoDetails: details, tvls: tvls, totalVolumes: totalVolumes)
-        }
+    private func proFeatures(coinUid: String, currencyCode: String) -> Single<ProFeatures> {
+        Single.just(ProFeatures.forbidden)
     }
 
 }
@@ -63,7 +56,9 @@ extension CoinDetailsService {
 
     var usdCurrency: Currency {
         let currencies = currencyKit.currencies
-        return currencies.first { $0.code == "USD" } ?? currencies[0]
+        return currencies.first {
+            $0.code == "USD"
+        } ?? currencies[0]
     }
 
     var coin: Coin {
@@ -96,10 +91,12 @@ extension CoinDetailsService {
 
         state = .loading
 
-        marketKit.marketInfoDetailsSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
+        return Single.zip(
+                        marketKit.marketInfoDetailsSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code),
+                        proFeatures(coinUid: fullCoin.coin.uid, currencyCode: currency.code))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .flatMap { [weak self] details -> Single<Item> in
-                    self?.fetchCharts(details: details) ?? Single.just(Item(marketInfoDetails: details))
+                .flatMap { [weak self] (details, proFeatures) -> Single<Item> in
+                    self?.fetchCharts(details: details, proFeatures: proFeatures) ?? Single.just(Item(marketInfoDetails: details, proFeatures: .forbidden, tvls: nil))
                 }
                 .subscribe(onSuccess: { [weak self] info in
                     self?.state = .completed(info)
@@ -118,17 +115,28 @@ extension CoinDetailsService {
         let chartTrend: MovementTrend
     }
 
-    struct Item {
-        let marketInfoDetails: MarketInfoDetails
-        let tvls: [ChartPoint]?
-        let totalVolumes: [ChartPoint]?
+    enum ProData {
+        case empty
+        case forbidden
+        case completed([ChartPoint])
+    }
 
-        init(marketInfoDetails: MarketInfoDetails, tvls: [ChartPoint]? = nil, totalVolumes: [ChartPoint]? = nil) {
-            self.marketInfoDetails = marketInfoDetails
-            self.tvls = tvls
-            self.totalVolumes = totalVolumes
+    struct ProFeatures {
+        static var forbidden: ProFeatures {
+            ProFeatures(dexVolumes: .forbidden, dexLiquidity: .forbidden, txCount: .forbidden, txVolume: .forbidden, activeAddresses: .forbidden)
         }
 
+        let dexVolumes: ProData
+        let dexLiquidity: ProData
+        let txCount: ProData
+        let txVolume: ProData
+        let activeAddresses: ProData
+    }
+
+    struct Item {
+        let marketInfoDetails: MarketInfoDetails
+        let proFeatures: ProFeatures
+        let tvls: [ChartPoint]?
     }
 
 }

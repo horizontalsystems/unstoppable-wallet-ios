@@ -2,7 +2,7 @@ import UIKit
 
 class PerformanceContentCollectionViewCell: BasePerformanceCollectionViewCell {
 
-    private let label = RateDiffLabel()
+    private let label = DiffLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
