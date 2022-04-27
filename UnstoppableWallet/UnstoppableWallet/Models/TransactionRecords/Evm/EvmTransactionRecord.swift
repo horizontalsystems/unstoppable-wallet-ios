@@ -31,6 +31,44 @@ class EvmTransactionRecord: TransactionRecord {
         )
     }
 
+    private func sameType(_ value: TransactionValue, _ value2: TransactionValue) -> Bool {
+        switch (value, value2) {
+        case let (.coinValue(platformCoin, _), .coinValue(platformCoin2, _)): return platformCoin == platformCoin2
+        case let (.tokenValue(tokenName, tokenCode, tokenDecimals, _), .tokenValue(tokenName2, tokenCode2, tokenDecimals2, _)): return tokenName == tokenName2 && tokenCode == tokenCode2 && tokenDecimals == tokenDecimals2
+        default: return false
+        }
+    }
+
+    func combined(incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) -> ([TransactionValue], [TransactionValue]) {
+        let values = (incomingEvents + outgoingEvents).map { $0.value }
+        var resultIncoming = [TransactionValue]()
+        var resultOutgoing = [TransactionValue]()
+
+        for value in values {
+            if (resultIncoming + resultOutgoing).contains(where: { sameType(value, $0) }) {
+                continue
+            }
+
+            let sameTypeValues = values.filter { sameType(value, $0) }
+            let totalValue = sameTypeValues.map { $0.decimalValue ?? 0 }.reduce(0, +)
+            let resultValue: TransactionValue
+
+            switch value {
+            case let .coinValue(platformCoin, _): resultValue = .coinValue(platformCoin: platformCoin, value: totalValue)
+            case let .tokenValue(tokenName, tokenCode, tokenDecimals, _): resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
+            case let .rawValue(value): resultValue = .rawValue(value: value)
+            }
+
+            if totalValue > 0 {
+                resultIncoming.append(resultValue)
+            } else {
+                resultOutgoing.append(resultValue)
+            }
+        }
+
+        return (resultIncoming, resultOutgoing)
+    }
+
 }
 
 extension EvmTransactionRecord {
