@@ -1036,7 +1036,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "switches automatically";
 
 // Fee Settings
 
