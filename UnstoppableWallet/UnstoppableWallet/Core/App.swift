@@ -250,6 +250,13 @@ class App {
                 storage: favoriteCoinRecordStorage
         )
 
+        let fillWalletInfoWorker = FillWalletInfoWorker(
+                marketKit: marketKit,
+                walletManager: walletManager,
+                storage: enabledWalletStorage,
+                localStorage: StorageKit.LocalStorage.default
+        )
+
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
@@ -264,7 +271,8 @@ class App {
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 evmLabelManager: evmLabelManager,
-                restoreFavoriteCoinWorker: restoreFavoriteCoinWorker
+                restoreFavoriteCoinWorker: restoreFavoriteCoinWorker,
+                fillWalletInfoWorker: fillWalletInfoWorker
         )
     }
 
