@@ -17,6 +17,7 @@ class AppManager {
     private let deepLinkManager: DeepLinkManager
     private let evmLabelManager: EvmLabelManager
     private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+    private let fillWalletInfoWorker: FillWalletInfoWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -26,7 +27,8 @@ class AppManager {
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
-         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager,
+         restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker, fillWalletInfoWorker: FillWalletInfoWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -42,6 +44,7 @@ class AppManager {
         self.deepLinkManager = deepLinkManager
         self.evmLabelManager = evmLabelManager
         self.restoreFavoriteCoinWorker = restoreFavoriteCoinWorker
+        self.fillWalletInfoWorker = fillWalletInfoWorker
     }
 
 }
@@ -63,6 +66,7 @@ extension AppManager {
         evmLabelManager.sync()
 
         try? restoreFavoriteCoinWorker.run()
+        try? fillWalletInfoWorker.run()
     }
 
     func willResignActive() {
