@@ -93,7 +93,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
     func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
         amountButton.setTitle(viewItem.amount, for: .normal)
-        amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
+        amountButton.setTitleColor(viewItem.amountExpired ? .themeGray50 : .themeLeah, for: .normal)
 
         sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
 

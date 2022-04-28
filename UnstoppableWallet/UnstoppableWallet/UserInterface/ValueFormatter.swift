@@ -117,7 +117,7 @@ extension ValueFormatter {
         }
 
         let formatter = coinFormatter
-        formatter.roundingMode = .halfUp
+        formatter.roundingMode = .halfEven
         formatter.maximumFractionDigits = digits
 
         guard let formattedValue = formatter.string(from: value as NSNumber) else {
@@ -126,6 +126,128 @@ extension ValueFormatter {
 
         let valueWithPostfix = postfix.map { $0.localized(formattedValue) } ?? formattedValue
         return "\(valueWithPostfix)\(symbol.map { " \($0)" } ?? "")"
+    }
+
+    func formatFullNew(value: Decimal, decimalCount: Int, symbol: String?) -> String? {
+        var value = abs(value)
+        let digits: Int
+
+        switch value {
+        case 0:
+            digits = 0
+
+        case 0..<0.0000_0001:
+            digits = 8
+            value = 0.0000_0001
+
+        default:
+            digits = min(decimalCount, 8)
+        }
+
+        let formatter = coinFormatter
+        formatter.roundingMode = .halfEven
+        formatter.maximumFractionDigits = digits
+
+        guard let formattedValue = formatter.string(from: value as NSNumber) else {
+            return nil
+        }
+
+        return "\(formattedValue)\(symbol.map { " \($0)" } ?? "")"
+    }
+
+    func formatNew(currencyValue: CurrencyValue) -> String? {
+        var value = abs(currencyValue.value)
+        var showSmallerSign = false
+        var postfix: String?
+        let digits: Int
+
+        switch value {
+        case 0:
+            digits = 0
+
+        case 0..<0.01:
+            digits = 2
+            value = 0.01
+            showSmallerSign = true
+
+        case 0.01..<10:
+            digits = min(currencyValue.currency.decimal, 2)
+
+        case 10..<100:
+            digits = 1
+
+        case 100..<10_000:
+            digits = 0
+
+        case 10_000..<pow(10, 6):
+            (digits, value) = digitsAndValue(value: value, basePow: 3)
+            postfix = "number.thousand"
+
+        case pow(10, 6)..<pow(10, 9):
+            (digits, value) = digitsAndValue(value: value, basePow: 6)
+            postfix = "number.million"
+
+        case pow(10, 9)..<pow(10, 12):
+            (digits, value) = digitsAndValue(value: value, basePow: 9)
+            postfix = "number.billion"
+
+        default:
+            (digits, value) = digitsAndValue(value: value, basePow: 12)
+            postfix = "number.trillion"
+        }
+
+        let formatter = currencyFormatter
+        formatter.roundingMode = .halfEven
+        formatter.currencyCode = currencyValue.currency.code
+        formatter.currencySymbol = currencyValue.currency.symbol
+        formatter.maximumFractionDigits = digits
+
+        guard let formattedValue = formatter.string(from: value as NSNumber) else {
+            return nil
+        }
+
+        var result = postfix.map { $0.localized(formattedValue) } ?? formattedValue
+
+        if showSmallerSign {
+            result = "< \(result)"
+        }
+
+        return result
+    }
+
+    func formatFullNew(currencyValue: CurrencyValue) -> String? {
+        var value = abs(currencyValue.value)
+        var showSmallerSign = false
+        let digits: Int
+
+        switch value {
+        case 0:
+            digits = 0
+
+        case 0..<0.01:
+            digits = 2
+            value = 0.01
+            showSmallerSign = true
+
+        default:
+            digits = currencyValue.currency.decimal
+        }
+
+        let formatter = currencyFormatter
+        formatter.roundingMode = .halfEven
+        formatter.currencyCode = currencyValue.currency.code
+        formatter.currencySymbol = currencyValue.currency.symbol
+        formatter.maximumFractionDigits = digits
+
+        guard var result = formatter.string(from: value as NSNumber) else {
+            return nil
+        }
+
+        if showSmallerSign {
+            result = "< \(result)"
+        }
+
+        return result
     }
 
     func format(value: Decimal, decimalCount: Int, symbol: String?, fractionPolicy: FractionPolicy = .full) -> String? {
