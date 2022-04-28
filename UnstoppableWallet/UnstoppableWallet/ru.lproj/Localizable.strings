@@ -1036,7 +1036,6 @@
 // EVM Network
 
 "evm_network.sync_node" = "Синхронизировать Нод";
-"evm_network.switches_automatically" = "переходит автоматически";
 
 // Fee Settings
 
