@@ -126,7 +126,7 @@ class TransactionsViewController: ThemeViewController {
     private func primaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
         switch valueType {
         case .incoming: return .b4
-        case .outgoing: return .b3
+        case .outgoing: return .b5
         case .neutral: return .b2
         case .secondary: return .b1
         }
@@ -135,7 +135,7 @@ class TransactionsViewController: ThemeViewController {
     private func secondaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
         switch valueType {
         case .incoming: return .d4
-        case .outgoing: return .d3
+        case .outgoing: return .d5
         case .neutral: return .d2
         case .secondary: return .d1
         }

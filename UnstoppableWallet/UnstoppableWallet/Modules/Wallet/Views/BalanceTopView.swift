@@ -12,7 +12,7 @@ class BalanceTopView: UIView {
     private let nameLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
 
-    private let currencyValueLabel = UILabel()
+    private let coinValueLabel = UILabel()
 
     private let bottomLeftLabel = UILabel()
     private let diffLabel = UILabel()
@@ -54,13 +54,13 @@ class BalanceTopView: UIView {
 
         blockchainBadgeView.set(style: .small)
 
-        addSubview(currencyValueLabel)
-        currencyValueLabel.snp.makeConstraints { maker in
+        addSubview(coinValueLabel)
+        coinValueLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(14)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        currencyValueLabel.font = .headline2
+        coinValueLabel.font = .headline2
 
         addSubview(bottomLeftLabel)
         bottomLeftLabel.snp.makeConstraints { maker in
@@ -113,11 +113,11 @@ class BalanceTopView: UIView {
             blockchainBadgeView.isHidden = true
         }
 
-        if let currencyValue = viewItem.currencyValue {
-            currencyValueLabel.text = currencyValue.text
-            currencyValueLabel.textColor = currencyValue.dimmed ? .themeYellow50 : .themeJacob
+        if let coinValue = viewItem.coinValue {
+            coinValueLabel.text = coinValue.text
+            coinValueLabel.textColor = coinValue.dimmed ? .themeGray50 : .themeLeah
         } else {
-            currencyValueLabel.text = nil
+            coinValueLabel.text = nil
         }
 
         switch viewItem.secondaryInfo {
@@ -136,9 +136,9 @@ class BalanceTopView: UIView {
                 diffLabel.text = nil
             }
 
-            if let coinValue = viewItem.coinValue {
-                bottomRightLabel.text = coinValue.text
-                bottomRightLabel.textColor = coinValue.dimmed ? .themeGray50 : .themeLeah
+            if let currencyValue = viewItem.currencyValue {
+                bottomRightLabel.text = currencyValue.text
+                bottomRightLabel.textColor = currencyValue.dimmed ? .themeGray50 : .themeGray
             } else {
                 bottomRightLabel.text = nil
             }

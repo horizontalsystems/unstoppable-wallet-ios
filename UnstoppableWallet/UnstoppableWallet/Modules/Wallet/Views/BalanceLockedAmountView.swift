@@ -73,7 +73,7 @@ class BalanceLockedAmountView: UIView {
 
         if let currencyValue = viewItem.currencyValue {
             currencyValueLabel.text = currencyValue.text
-            currencyValueLabel.textColor = currencyValue.dimmed ? .themeYellow50 : .themeJacob
+            currencyValueLabel.textColor = currencyValue.dimmed ? .themeGray50 : .themeLeah
         } else {
             currencyValueLabel.text = nil
         }

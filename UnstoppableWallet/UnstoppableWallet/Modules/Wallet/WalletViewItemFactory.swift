@@ -13,7 +13,6 @@ class WalletViewItemFactory {
     private func topViewItem(item: WalletService.Item, balanceHidden: Bool, expanded: Bool) -> BalanceTopViewItem {
         let coin = item.wallet.coin
         let state = item.state
-        let priceItem = item.priceItem
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
@@ -24,7 +23,7 @@ class WalletViewItemFactory {
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
-                currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: priceItem),
+                coinValue: balanceHidden ? nil : coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceTotal, state: item.state, expanded: expanded),
                 secondaryInfo: secondaryInfo(item: item, balanceHidden: balanceHidden, expanded: expanded)
         )
     }
@@ -37,7 +36,7 @@ class WalletViewItemFactory {
             return .searchingTx(count: count)
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                    coinValue: balanceHidden ? nil : coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceTotal, state: item.state),
+                    currencyValue: balanceHidden ? nil : currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem, expanded: expanded),
                     rateValue: rateValue(rateItem: item.priceItem),
                     diff: diff(rateItem: item.priceItem)
             ))
@@ -50,8 +49,8 @@ class WalletViewItemFactory {
         }
 
         return BalanceLockedAmountViewItem(
-            coinValue: coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceLocked, state: item.state),
-                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, priceItem: item.priceItem)
+                coinValue: coinValue(platformCoin: item.wallet.platformCoin, value: item.balanceData.balanceLocked, state: item.state, expanded: true),
+                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, priceItem: item.priceItem, expanded: true)
         )
     }
 
@@ -127,22 +126,23 @@ class WalletViewItemFactory {
         return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value < 0 ? .negative : .positive))
     }
 
-    private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState) -> (text: String?, dimmed: Bool) {
+    private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState, expanded: Bool) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.format(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value), showCode: false, fractionPolicy: .threshold(high: 0.01, low: 0)),
+                text: expanded ? ValueFormatter.instance.formatFullNew(value: value, decimalCount: platformCoin.decimals, symbol: nil) : ValueFormatter.instance.formatNew(value: value, decimalCount: platformCoin.decimals, symbol: nil),
                 dimmed: state != .synced
         )
     }
 
-    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?) -> (text: String?, dimmed: Bool) {
+    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded: Bool) -> (text: String?, dimmed: Bool) {
         guard let priceItem = priceItem else {
             return (text: "---", dimmed: true)
         }
 
         let price = priceItem.price
+        let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-                text: ValueFormatter.instance.format(currencyValue: CurrencyValue(currency: price.currency, value: value * price.value), fractionPolicy: .threshold(high: 1000, low: 0.01)),
+                text: expanded ? ValueFormatter.instance.formatFullNew(currencyValue: currencyValue) : ValueFormatter.instance.formatNew(currencyValue: currencyValue),
                 dimmed: state != .synced || priceItem.expired
         )
     }
@@ -162,7 +162,7 @@ extension WalletViewItemFactory {
 
     func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, watchAccount: Bool, watchAccountAddress: EthereumKit.Address?) -> WalletViewModel.HeaderViewItem {
         let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
-        let amount = balanceHidden ? "*****" : ValueFormatter.instance.format(currencyValue: currencyValue)
+        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatNew(currencyValue: currencyValue)
 
         return WalletViewModel.HeaderViewItem(
                 amount: amount,

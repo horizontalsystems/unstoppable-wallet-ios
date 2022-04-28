@@ -21,7 +21,7 @@ struct BalanceTopViewItem {
     let indefiniteSearchCircle: Bool
     let failedImageViewVisible: Bool
 
-    let currencyValue: (text: String?, dimmed: Bool)?
+    let coinValue: (text: String?, dimmed: Bool)?
     let secondaryInfo: BalanceSecondaryInfoViewItem
 }
 
@@ -32,7 +32,7 @@ enum BalanceSecondaryInfoViewItem {
 }
 
 struct BalanceSecondaryAmountViewItem {
-    let coinValue: (text: String?, dimmed: Bool)?
+    let currencyValue: (text: String?, dimmed: Bool)?
     let rateValue: (text: String?, dimmed: Bool)
     let diff: (text: String, type: BalanceDiffType)?
 }
@@ -65,8 +65,8 @@ extension BalanceTopViewItem: Equatable {
                 lhs.syncSpinnerProgress == rhs.syncSpinnerProgress &&
                 lhs.indefiniteSearchCircle == rhs.indefiniteSearchCircle &&
                 lhs.failedImageViewVisible == rhs.failedImageViewVisible &&
-                lhs.currencyValue?.text == rhs.currencyValue?.text &&
-                lhs.currencyValue?.dimmed == rhs.currencyValue?.dimmed &&
+                lhs.coinValue?.text == rhs.coinValue?.text &&
+                lhs.coinValue?.dimmed == rhs.coinValue?.dimmed &&
                 lhs.secondaryInfo == rhs.secondaryInfo
     }
 
@@ -92,8 +92,8 @@ extension BalanceSecondaryInfoViewItem: Equatable {
 extension BalanceSecondaryAmountViewItem: Equatable {
 
     static func ==(lhs: BalanceSecondaryAmountViewItem, rhs: BalanceSecondaryAmountViewItem) -> Bool {
-        lhs.coinValue?.text == rhs.coinValue?.text &&
-                lhs.coinValue?.dimmed == rhs.coinValue?.dimmed &&
+        lhs.currencyValue?.text == rhs.currencyValue?.text &&
+                lhs.currencyValue?.dimmed == rhs.currencyValue?.dimmed &&
                 lhs.rateValue.text == rhs.rateValue.text &&
                 lhs.rateValue.dimmed == rhs.rateValue.dimmed &&
                 lhs.diff?.text == rhs.diff?.text &&
@@ -149,7 +149,7 @@ extension BalanceViewItem: CustomStringConvertible {
 extension BalanceTopViewItem: CustomStringConvertible {
 
     var description: String {
-        "[iconUrlString: \(iconUrlString ?? "nil"); coinCode: \(coinCode); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); currencyValue: \(currencyValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
+        "[iconUrlString: \(iconUrlString ?? "nil"); coinCode: \(coinCode); blockchainBadge: \(blockchainBadge ?? "nil"); syncSpinnerProgress: \(syncSpinnerProgress.map { "\($0)" } ?? "nil"); indefiniteSearchCircle: \(indefiniteSearchCircle); failedImageViewVisible: \(failedImageViewVisible); coinValue: \(coinValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); secondaryInfo: \(secondaryInfo)]"
     }
 
 }
@@ -169,7 +169,7 @@ extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
 extension BalanceSecondaryAmountViewItem: CustomStringConvertible {
 
     var description: String {
-        "[coinValue: \(coinValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); rateValue: \("[text: \(rateValue.text ?? "nil"); dimmed: \(rateValue.dimmed)]"); diff: \(diff.map { "[text: \($0.text); type: \($0.type)]" } ?? "nil")]"
+        "[currencyValue: \(currencyValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); rateValue: \("[text: \(rateValue.text ?? "nil"); dimmed: \(rateValue.dimmed)]"); diff: \(diff.map { "[text: \($0.text); type: \($0.type)]" } ?? "nil")]"
     }
 
 }

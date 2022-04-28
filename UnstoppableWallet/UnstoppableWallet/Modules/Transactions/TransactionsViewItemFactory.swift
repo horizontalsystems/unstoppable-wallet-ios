@@ -30,7 +30,7 @@ class TransactionsViewItemFactory {
     }
 
     private func currencyString(from currencyValue: CurrencyValue) -> String {
-        ValueFormatter.instance.format(currencyValue: currencyValue.abs, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? ""
+        ValueFormatter.instance.formatNew(currencyValue: currencyValue.abs) ?? ""
     }
 
     private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
