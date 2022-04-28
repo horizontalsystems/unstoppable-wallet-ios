@@ -1035,7 +1035,6 @@ poner en peligro la seguridad de mis fondos.";
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "cambiar automáticamente";
 
 // Fee Settings
 
