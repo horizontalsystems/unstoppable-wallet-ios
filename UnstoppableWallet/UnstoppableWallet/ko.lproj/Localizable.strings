@@ -1034,7 +1034,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "자동으로 전환";
 
 // Fee Settings
 
