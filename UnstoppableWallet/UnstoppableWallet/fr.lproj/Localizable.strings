@@ -1034,7 +1034,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "bacsule automatiquement";
 
 // Fee Settings
 
