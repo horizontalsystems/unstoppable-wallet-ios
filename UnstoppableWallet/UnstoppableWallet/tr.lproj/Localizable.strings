@@ -1037,7 +1037,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "otomatik olarak değişir";
 
 // Fee Settings
 
