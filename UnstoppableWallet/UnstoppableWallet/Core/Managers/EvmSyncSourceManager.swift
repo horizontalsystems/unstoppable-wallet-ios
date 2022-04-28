@@ -31,6 +31,11 @@ class EvmSyncSourceManager {
         case .binanceSmartChain:
             return [
                 EvmSyncSource(
+                        name: "BSC-RPC HTTP",
+                        rpcSource: .bscRpcHttp(),
+                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
+                ),
+                EvmSyncSource(
                         name: "Default HTTP",
                         rpcSource: .binanceSmartChainHttp(),
                         transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)

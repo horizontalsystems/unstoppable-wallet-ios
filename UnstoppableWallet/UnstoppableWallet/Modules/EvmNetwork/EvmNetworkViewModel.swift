@@ -24,11 +24,9 @@ class EvmNetworkViewModel {
     }
 
     private func viewItem(item: EvmNetworkService.Item) -> ViewItem {
-        let urls = item.syncSource.rpcSource.urls
-
-        return ViewItem(
+        ViewItem(
                 name: item.syncSource.name,
-                url: urls.count == 1 ? urls[0].absoluteString : "evm_network.switches_automatically".localized,
+                url: item.syncSource.rpcSource.url.absoluteString,
                 selected: item.selected
         )
     }
@@ -73,10 +71,10 @@ extension EvmNetworkViewModel {
 
 extension RpcSource {
 
-    var urls: [URL] {
+    var url: URL {
         switch self {
-        case .http(let urls, _): return urls
-        case .webSocket(let url, _): return [url]
+        case .http(let url, _): return url
+        case .webSocket(let url, _): return url
         }
     }
 
