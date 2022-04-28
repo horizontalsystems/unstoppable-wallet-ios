@@ -1036,7 +1036,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // EVM Network
 
 "evm_network.sync_node" = "Sync Node";
-"evm_network.switches_automatically" = "自动切换";
 
 // Fee Settings
 
