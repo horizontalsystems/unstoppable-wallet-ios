@@ -963,7 +963,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
-"wallet_connect.list.empty_view_button_text" = "Nouvelle connexion";
 
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.list.version_text" = "Version %@";
