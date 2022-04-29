@@ -963,7 +963,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
-"wallet_connect.list.empty_view_button_text" = "새로운 연결";
 
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.list.version_text" = "버전 %@";
