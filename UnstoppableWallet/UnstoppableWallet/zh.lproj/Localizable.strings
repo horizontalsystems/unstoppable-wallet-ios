@@ -965,7 +965,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
-"wallet_connect.list.empty_view_button_text" = "新连接";
 
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.list.version_text" = "版本%@";
