@@ -964,7 +964,6 @@ poner en peligro la seguridad de mis fondos.";
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
-"wallet_connect.list.empty_view_button_text" = "Nueva Conexión";
 
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.list.version_text" = "Versión %@";
