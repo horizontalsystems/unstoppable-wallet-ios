@@ -966,7 +966,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
-"wallet_connect.list.empty_view_button_text" = "Yeni bağlantı";
 
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.list.version_text" = "Sürüm %@";
