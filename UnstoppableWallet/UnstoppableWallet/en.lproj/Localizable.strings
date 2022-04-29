@@ -965,7 +965,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
-"wallet_connect.list.empty_view_button_text" = "New Connection";
 
 "wallet_connect.list.pending_requests" = "Pending Requests";
 "wallet_connect.list.version_text" = "Version %@";
