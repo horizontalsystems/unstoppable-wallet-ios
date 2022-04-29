@@ -965,7 +965,6 @@
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
-"wallet_connect.list.empty_view_button_text" = "Новое Подключение";
 
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.list.version_text" = "Версия %@";
