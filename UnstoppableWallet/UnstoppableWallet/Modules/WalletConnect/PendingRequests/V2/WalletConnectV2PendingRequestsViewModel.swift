@@ -43,6 +43,7 @@ class WalletConnectV2PendingRequestsViewModel {
 
     private func title(method: String) -> String {
         switch method {
+        case "eth_sign": return "Sign Request"
         case "personal_sign": return "Personal Sign Request"
         case "eth_signTypedData": return "Typed Sign Request"
         case "eth_sendTransaction": return "Approve Transaction"
