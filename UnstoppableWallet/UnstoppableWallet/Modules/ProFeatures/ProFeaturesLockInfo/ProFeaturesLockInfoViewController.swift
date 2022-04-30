@@ -44,29 +44,12 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
             self?.dismiss(animated: true)
         }
 
-        var lastView: UIView = titleView
-
-        if let description = config.description {
-            highlightedDescriptionCell.descriptionText = description
-
-//            let separatorView = UIView()
-//
-//            view.addSubview(separatorView)
-//            separatorView.snp.makeConstraints { maker in
-//                maker.leading.trailing.equalToSuperview()
-//                maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
-//                maker.height.equalTo(CGFloat.heightOneDp)
-//            }
-//
-//            separatorView.backgroundColor = .themeSteel10
-
-//            lastView = separatorView
-        }
+        highlightedDescriptionCell.descriptionText = config.description
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(lastView.snp.bottom)
+            maker.top.equalTo(titleView.snp.bottom)
         }
 
         tableView.sectionDataSource = self
@@ -149,7 +132,8 @@ extension ProFeaturesLockInfoViewController: SectionsDataSource {
                                     }
 
                                     cell.bind(index: 1) { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "check_1_20")
+                                        component.imageView.image = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
+                                        component.imageView.tintColor = .themeJacob
                                     }
                                 }
                         )
