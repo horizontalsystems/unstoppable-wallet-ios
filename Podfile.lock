@@ -335,7 +335,7 @@ DEPENDENCIES:
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
-  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
+  - EthereumKit.swift (from `../ethereum-kit-ios/`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -448,7 +448,7 @@ EXTERNAL SOURCES:
   EthereumABI:
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :git: https://github.com/horizontalsystems/ethereum-kit-ios
+    :path: "../ethereum-kit-ios/"
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
@@ -525,9 +525,6 @@ CHECKOUT OPTIONS:
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
-  EthereumKit.swift:
-    :commit: 9b2b1cd53a0971ba1da4bc80e2aa03a09753cc8f
-    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -676,6 +673,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ac11c62951bc8130abbce780705956fb7fb54fd9
 
-PODFILE CHECKSUM: 64489bbbcc987ca5069a2e815f2901071ba5dbbc
+PODFILE CHECKSUM: 61184b08beb6ced1d40910cfa13540a7041c58d8
 
 COCOAPODS: 1.11.2
