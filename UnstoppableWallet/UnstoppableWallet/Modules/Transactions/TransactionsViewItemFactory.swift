@@ -100,7 +100,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -225,7 +225,8 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle =  record.to.flatMap { "transactions.to".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
+
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
@@ -256,7 +257,8 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: false), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
+
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
