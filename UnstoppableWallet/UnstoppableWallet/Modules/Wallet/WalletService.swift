@@ -6,6 +6,7 @@ import StorageKit
 import EthereumKit
 
 class WalletService {
+    private let bitcoinUid = "bitcoin"
     private let keyBalanceHidden = "wallet-balance-hidden"
     private let keySortType = "wallet-sort-type"
 
@@ -156,7 +157,7 @@ class WalletService {
 
         let coinUids = Set(wallets.filter { !$0.platformCoin.isCustom }.map { $0.coin.uid })
         let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeCoin(coinType: $0.coinType)?.coin.uid })
-        coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
+        coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union([bitcoinUid]))
     }
 
     private func items(coinUid: String) -> [Item] {
@@ -183,7 +184,15 @@ class WalletService {
             }
         }
 
-        totalItem = TotalItem(amount: total, currency: coinPriceService.currency, expired: expired)
+        let btcItem = coinPriceService.itemMap(coinUids: [bitcoinUid])[bitcoinUid]
+
+        totalItem = TotalItem(
+                amount: total,
+                currency: coinPriceService.currency,
+                expired: expired,
+                btcAmount: btcItem.map { total / $0.price.value },
+                btcAmountExpired: expired || (btcItem?.expired ?? false)
+        )
     }
 
     private func _item(wallet: Wallet) -> Item? {
@@ -401,6 +410,8 @@ extension WalletService {
         let amount: Decimal
         let currency: Currency
         let expired: Bool
+        let btcAmount: Decimal?
+        let btcAmountExpired: Bool
     }
 
 }

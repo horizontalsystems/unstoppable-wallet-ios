@@ -265,6 +265,8 @@ extension WalletViewModel {
     struct HeaderViewItem {
         let amount: String?
         let amountExpired: Bool
+        let btcAmount: String?
+        let btcAmountExpired: Bool
         let manageWalletsHidden: Bool
         let address: String?
     }
