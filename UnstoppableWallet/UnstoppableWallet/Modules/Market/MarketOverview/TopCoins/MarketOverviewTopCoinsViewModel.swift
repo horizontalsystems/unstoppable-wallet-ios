@@ -10,7 +10,7 @@ class MarketOverviewTopCoinsViewModel {
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<[TopViewItem]>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
 
     init(service: MarketOverviewTopCoinsService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
@@ -19,28 +19,25 @@ class MarketOverviewTopCoinsViewModel {
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<[MarketOverviewTopCoinsService.ListItem]>) {
+    private func sync(status: DataStatus<[MarketInfo]>) {
         statusRelay.accept(status.map({ listItems in
-            viewItems(listItems: listItems)
+            viewItem(listItems: listItems)
         }))
     }
 
-    private func viewItems(listItems: [MarketOverviewTopCoinsService.ListItem]) -> [TopViewItem] {
-        listItems.map { item in
-            TopViewItem(
-                    listType: item.listType,
-                    imageName: imageName(listType: item.listType),
-                    title: title(listType: item.listType),
-                    listViewItems: item.marketInfos.map { decorator.listViewItem(item: $0) }
-            )
-        }
+    private func viewItem(listItems: [MarketInfo]) -> BaseMarketOverviewTopListDataSource.ViewItem {
+        BaseMarketOverviewTopListDataSource.ViewItem(
+                rightSelectorMode: .selector,
+                imageName: imageName(listType: service.listType),
+                title: title(listType: service.listType),
+                listViewItems: listItems.map { decorator.listViewItem(item: $0) }
+        )
     }
 
     private func imageName(listType: MarketOverviewTopCoinsService.ListType) -> String {
         switch listType {
         case .topGainers: return "circle_up_20"
         case .topLosers: return "circle_down_20"
-        default: return ""
         }
     }
 
@@ -48,34 +45,28 @@ class MarketOverviewTopCoinsViewModel {
         switch listType {
         case .topGainers: return "market.top.section.header.top_gainers".localized
         case .topLosers: return "market.top.section.header.top_losers".localized
-        default: return ""
         }
     }
 
 }
 
-extension MarketOverviewTopCoinsViewModel: IMarketOverviewTopCoinsViewModel {
+extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var statusDriver: Driver<DataStatus<[TopViewItem]>> {
+    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
         statusRelay.asDriver()
     }
 
-    var marketTops: [String] {
+    var selectorValues: [String] {
         MarketModule.MarketTop.allCases.map { $0.title }
     }
 
-    func marketTop(listType: MarketOverviewTopCoinsService.ListType) -> MarketModule.MarketTop {
-        service.marketTop(listType: listType)
+    var selectorIndex: Int {
+        MarketModule.MarketTop.allCases.firstIndex(of: service.marketTop) ?? 0
     }
 
-    func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int {
-        let marketTop = service.marketTop(listType: listType)
-        return MarketModule.MarketTop.allCases.firstIndex(of: marketTop) ?? 0
-    }
-
-    func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType) {
-        let marketTop = MarketModule.MarketTop.allCases[marketTopIndex]
-        service.set(marketTop: marketTop, listType: listType)
+    func onSelect(selectorIndex: Int) {
+        let marketTop = MarketModule.MarketTop.allCases[selectorIndex]
+        service.set(marketTop: marketTop)
     }
 
     func refresh() {
@@ -84,13 +75,14 @@ extension MarketOverviewTopCoinsViewModel: IMarketOverviewTopCoinsViewModel {
 
 }
 
-extension MarketOverviewTopCoinsViewModel {
+extension MarketOverviewTopCoinsViewModel: IMarketOverviewTopCoinsViewModel {
 
-    struct TopViewItem {
-        let listType: MarketOverviewTopCoinsService.ListType
-        let imageName: String
-        let title: String
-        let listViewItems: [MarketModule.ListViewItem]
+    var marketTop: MarketModule.MarketTop {
+        service.marketTop
+    }
+
+    var listType: MarketOverviewTopCoinsService.ListType {
+        service.listType
     }
 
 }

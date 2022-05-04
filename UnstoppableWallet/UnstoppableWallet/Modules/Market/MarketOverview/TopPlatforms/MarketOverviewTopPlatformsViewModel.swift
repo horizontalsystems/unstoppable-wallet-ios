@@ -8,7 +8,7 @@ class MarketOverviewTopPlatformsViewModel {
     private let decorator: MarketListTopPlatformDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
 
     init(service: MarketOverviewTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
         self.service = service
@@ -19,55 +19,45 @@ class MarketOverviewTopPlatformsViewModel {
 
     private func sync(status: DataStatus<[MarketKit.TopPlatform]>) {
         statusRelay.accept(status.map({ listItems in
-            viewItems(listItems: listItems)
+            viewItem(listItems: listItems)
         }))
     }
 
-    private func viewItems(listItems: [MarketKit.TopPlatform]) -> [MarketOverviewTopCoinsViewModel.TopViewItem] {
-        [
-            MarketOverviewTopCoinsViewModel.TopViewItem(
-                    listType: .topPlatforms,
-                    imageName: "blocks_20",
-                    title: "market.top.top_platforms".localized,
-                    listViewItems: listItems.map {
-                        decorator.listViewItem(item: $0)
-                    }
-            )
-        ]
+    private func viewItem(listItems: [MarketKit.TopPlatform]) -> BaseMarketOverviewTopListDataSource.ViewItem {
+        BaseMarketOverviewTopListDataSource.ViewItem(
+                rightSelectorMode: .selector,
+                imageName: "blocks_20",
+                title: "market.top.top_platforms".localized,
+                listViewItems: listItems.map {
+                    decorator.listViewItem(item: $0)
+                }
+        )
     }
 
 }
 
-extension MarketOverviewTopPlatformsViewModel: IMarketOverviewTopCoinsViewModel {
+extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var statusDriver: Driver<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>> {
+    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
         statusRelay.asDriver()
     }
 
-    var marketTops: [String] {
+    var selectorValues: [String] {
         MarketOverviewTopPlatformsService.TimePeriod.allCases.map { $0.title }
     }
 
-    func marketTop(listType: MarketOverviewTopCoinsService.ListType) -> MarketModule.MarketTop {
-        .top250
+    var selectorIndex: Int {
+        MarketOverviewTopPlatformsService.TimePeriod.allCases.firstIndex(of: service.timePeriod) ?? 0
     }
 
-    func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int {
-        MarketOverviewTopPlatformsService.TimePeriod.allCases.index(of: service.timePeriod) ?? 0
-    }
-
-    func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType) {
-        let timePeriod = MarketOverviewTopPlatformsService.TimePeriod.allCases[marketTopIndex]
+    func onSelect(selectorIndex: Int) {
+        let timePeriod = MarketOverviewTopPlatformsService.TimePeriod.allCases[selectorIndex]
         decorator.timePeriod = timePeriod
         service.timePeriod = timePeriod
     }
 
     func refresh() {
         service.refresh()
-    }
-
-    func collection(uid: String) -> NftCollection? {
-        nil
     }
 
 }

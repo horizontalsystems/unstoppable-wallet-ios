@@ -18,13 +18,15 @@ class MarketOverviewTopCoinsService {
         }
     }
 
-    private let statusRelay = BehaviorRelay<DataStatus<[ListItem]>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<[MarketInfo]>>(value: .loading)
 
-    private var marketTopMap: [ListType: MarketModule.MarketTop] = [.topGainers: .top250, .topLosers: .top250]
+    var marketTop: MarketModule.MarketTop = .top250
+    let listType: ListType
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
+    init(listType: ListType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.listType = listType
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncInternalState() }
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncInternalState() }
@@ -54,13 +56,9 @@ class MarketOverviewTopCoinsService {
         })
     }
 
-    private func listItems(marketInfos: [MarketInfo]) -> [ListItem] {
-        let listTypes: [ListType] = [.topGainers, .topLosers]
-        return listTypes.map { listType -> ListItem in
-            let source = Array(marketInfos.prefix(marketTop(listType: listType).rawValue))
-            let marketInfos = Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
-            return ListItem(listType: listType, marketInfos: marketInfos)
-        }
+    private func listItems(marketInfos: [MarketInfo]) -> [MarketInfo] {
+        let source = Array(marketInfos.prefix(marketTop.rawValue))
+        return Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
     }
 
     private func syncIfPossible() {
@@ -75,16 +73,12 @@ class MarketOverviewTopCoinsService {
 
 extension MarketOverviewTopCoinsService {
 
-    var stateObservable: Observable<DataStatus<[ListItem]>> {
+    var stateObservable: Observable<DataStatus<[MarketInfo]>> {
         statusRelay.asObservable()
     }
 
-    func marketTop(listType: ListType) -> MarketModule.MarketTop {
-        marketTopMap[listType] ?? .top250
-    }
-
-    func set(marketTop: MarketModule.MarketTop, listType: ListType) {
-        marketTopMap[listType] = marketTop
+    func set(marketTop: MarketModule.MarketTop) {
+        self.marketTop = marketTop
         syncIfPossible()
     }
 
@@ -118,28 +112,20 @@ extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
 
 extension MarketOverviewTopCoinsService {
 
-    struct ListItem {
-        let listType: ListType
-        let marketInfos: [MarketInfo]
-    }
-
     enum ListType: String, CaseIterable {
         case topGainers
         case topLosers
-        case topCollections
-        case topPlatforms
 
         var sortingField: MarketModule.SortingField {
             switch self {
             case .topGainers: return .topGainers
             case .topLosers: return .topLosers
-            case .topCollections, .topPlatforms: return .topGainers
             }
         }
 
         var marketField: MarketModule.MarketField {
             switch self {
-            case .topGainers, .topLosers, .topCollections, .topPlatforms: return .price
+            case .topGainers, .topLosers: return .price
             }
         }
     }
