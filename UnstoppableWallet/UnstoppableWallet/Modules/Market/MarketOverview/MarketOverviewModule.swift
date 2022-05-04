@@ -20,11 +20,17 @@ struct MarketOverviewModule {
         let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService, decorator: nftCollectionsDecorator)
         let nftCollectionsDataSource = MarketOverviewTopCoinsDataSource(viewModel: nftCollectionsViewModel)
 
+        let topPlatformsService = MarketOverviewTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let topPlatformsDecorator = MarketListTopPlatformDecorator(service: topPlatformsService)
+        let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
+        let topPlatformsDataSource = MarketOverviewTopCoinsDataSource(viewModel: topPlatformsViewModel)
+
         let viewModel = MarketOverviewViewModel(dataSources: [
             marketOverviewDataSource,
             topCoinsDataSource,
             categoryDataSource,
-            nftCollectionsDataSource
+            nftCollectionsDataSource,
+            topPlatformsDataSource
         ])
 
         return MarketOverviewViewController(viewModel: viewModel)

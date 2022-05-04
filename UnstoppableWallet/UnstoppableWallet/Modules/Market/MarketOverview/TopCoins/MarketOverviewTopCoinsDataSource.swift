@@ -87,6 +87,8 @@ class MarketOverviewTopCoinsDataSource {
         if case .topCollections = listType {
             let module = MarketNftTopCollectionsModule.viewController()
             parentNavigationController?.present(module, animated: true)
+        } else if case .topPlatforms = listType {
+            print("open top platforms")
         } else {
             let module = MarketTopModule.viewController(
                     marketTop: viewModel.marketTop(listType: listType),
@@ -101,6 +103,8 @@ class MarketOverviewTopCoinsDataSource {
         if case .topCollections = listType, let uid = listViewItem.uid {
             let module = NftCollectionModule.viewController(collectionUid: uid)
             parentNavigationController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+        } else if case .topPlatforms = listType {
+            print("open top platform")
         } else if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) {
             parentNavigationController?.present(module, animated: true)
         }
