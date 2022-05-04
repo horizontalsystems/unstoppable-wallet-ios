@@ -8,7 +8,7 @@ class MarketOverviewNftCollectionsViewModel {
     private let decorator: MarketListNftCollectionDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>>(value: .loading)
+    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
 
     init(service: MarketOverviewNftCollectionsService, decorator: MarketListNftCollectionDecorator) {
         self.service = service
@@ -21,43 +21,38 @@ class MarketOverviewNftCollectionsViewModel {
 
     private func sync(status: DataStatus<[NftCollectionItem]>) {
         statusRelay.accept(status.map({ listItems in
-            viewItems(listItems: listItems)
+            viewItem(listItems: listItems)
         }))
     }
 
-    private func viewItems(listItems: [NftCollectionItem]) -> [MarketOverviewTopCoinsViewModel.TopViewItem] {
-        [
-            MarketOverviewTopCoinsViewModel.TopViewItem(
-                    listType: .topCollections,
-                    imageName: "image_2_20",
-                    title: "market.top.top_collections".localized,
-                    listViewItems: listItems.map {
-                        decorator.listViewItem(item: $0)
-                    }
-            )
-        ]
+    private func viewItem(listItems: [NftCollectionItem]) -> BaseMarketOverviewTopListDataSource.ViewItem {
+        BaseMarketOverviewTopListDataSource.ViewItem(
+                rightSelectorMode: .none,
+                imageName: "image_2_20",
+                title: "market.top.top_collections".localized,
+                listViewItems: listItems.map {
+                    decorator.listViewItem(item: $0)
+                }
+        )
     }
 
 }
 
-extension MarketOverviewNftCollectionsViewModel: IMarketOverviewTopCoinsViewModel {
+extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var statusDriver: Driver<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>> {
+    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
         statusRelay.asDriver()
     }
-    var marketTops: [String] {
+
+    var selectorValues: [String] {
         []
     }
 
-    func marketTop(listType: MarketOverviewTopCoinsService.ListType) -> MarketModule.MarketTop {
-        .top250
-    }
-
-    func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int {
+    var selectorIndex: Int {
         0
     }
 
-    func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType) {
+    func onSelect(selectorIndex: Int) {
     }
 
     func refresh() {

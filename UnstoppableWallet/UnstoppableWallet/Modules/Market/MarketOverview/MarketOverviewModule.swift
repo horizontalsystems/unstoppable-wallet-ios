@@ -6,10 +6,15 @@ struct MarketOverviewModule {
         let globalViewModel = MarketOverviewGlobalViewModel(service: globalService)
         let marketOverviewDataSource = MarketOverviewGlobalDataSource(viewModel: globalViewModel)
 
-        let topCoinsService = MarketOverviewTopCoinsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
-        let topCoinsDecorator = MarketListMarketFieldDecorator(service: topCoinsService)
-        let topCoinsViewModel = MarketOverviewTopCoinsViewModel(service: topCoinsService, decorator: topCoinsDecorator)
-        let topCoinsDataSource = MarketOverviewTopCoinsDataSource(viewModel: topCoinsViewModel)
+        let topGainersService = MarketOverviewTopCoinsService(listType: .topGainers, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let topGainersDecorator = MarketListMarketFieldDecorator(service: topGainersService)
+        let topGainersViewModel = MarketOverviewTopCoinsViewModel(service: topGainersService, decorator: topGainersDecorator)
+        let topGainersDataSource = MarketOverviewTopCoinsDataSource(viewModel: topGainersViewModel)
+
+        let topLosersService = MarketOverviewTopCoinsService(listType: .topLosers, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+        let topLosersDecorator = MarketListMarketFieldDecorator(service: topLosersService)
+        let topLosersViewModel = MarketOverviewTopCoinsViewModel(service: topLosersService, decorator: topLosersDecorator)
+        let topLosersDataSource = MarketOverviewTopCoinsDataSource(viewModel: topLosersViewModel)
 
         let marketDiscoveryService = MarketDiscoveryService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, favoritesManager: App.shared.favoritesManager)
         let categoryViewModel = MarketOverviewCategoryViewModel(service: marketDiscoveryService)
@@ -18,16 +23,17 @@ struct MarketOverviewModule {
         let nftCollectionsService = MarketOverviewNftCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
         let nftCollectionsDecorator = MarketListNftCollectionDecorator()
         let nftCollectionsViewModel = MarketOverviewNftCollectionsViewModel(service: nftCollectionsService, decorator: nftCollectionsDecorator)
-        let nftCollectionsDataSource = MarketOverviewTopCoinsDataSource(viewModel: nftCollectionsViewModel)
+        let nftCollectionsDataSource = MarketOverviewNftCollectionsDataSource(viewModel: nftCollectionsViewModel)
 
         let topPlatformsService = MarketOverviewTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
         let topPlatformsDecorator = MarketListTopPlatformDecorator(service: topPlatformsService)
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
-        let topPlatformsDataSource = MarketOverviewTopCoinsDataSource(viewModel: topPlatformsViewModel)
+        let topPlatformsDataSource = MarketOverviewTopPlatformsDataSource(viewModel: topPlatformsViewModel)
 
         let viewModel = MarketOverviewViewModel(dataSources: [
             marketOverviewDataSource,
-            topCoinsDataSource,
+            topGainersDataSource,
+            topLosersDataSource,
             categoryDataSource,
             nftCollectionsDataSource,
             topPlatformsDataSource
