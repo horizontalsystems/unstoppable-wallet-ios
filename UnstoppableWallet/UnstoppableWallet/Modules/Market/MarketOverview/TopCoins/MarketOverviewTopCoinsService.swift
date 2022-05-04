@@ -127,18 +127,19 @@ extension MarketOverviewTopCoinsService {
         case topGainers
         case topLosers
         case topCollections
+        case topPlatforms
 
         var sortingField: MarketModule.SortingField {
             switch self {
             case .topGainers: return .topGainers
             case .topLosers: return .topLosers
-            case .topCollections: return .topGainers
+            case .topCollections, .topPlatforms: return .topGainers
             }
         }
 
         var marketField: MarketModule.MarketField {
             switch self {
-            case .topGainers, .topLosers, .topCollections: return .price
+            case .topGainers, .topLosers, .topCollections, .topPlatforms: return .price
             }
         }
     }
