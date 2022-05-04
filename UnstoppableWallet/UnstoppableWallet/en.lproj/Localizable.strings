@@ -1117,3 +1117,10 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Website";
 
+"nft_collection.activity.event_types" = "Event Types";
+"nft_collection.activity.event_type.all" = "All Events";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.list" = "List";
+"nft_collection.activity.event_type.bid" = "Bid";
+"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.transfer" = "Transfer";
