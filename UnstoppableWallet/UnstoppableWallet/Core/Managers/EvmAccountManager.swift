@@ -174,7 +174,7 @@ class EvmAccountManager {
                         continue
                     }
 
-                    if fullTransaction.transaction.to == address {
+                    if transferEventInstance.to == address {
                         coinTypes.append(blockchain.evm20CoinType(address: transferEventInstance.contractAddress.hex))
                     }
                 }

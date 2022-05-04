@@ -103,21 +103,25 @@ class HsNftProvider {
         let platformCoinMap = platformCoinMap(addresses: addresses)
 
         return responses.map { response in
-            NftAsset(
-                    contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.type),
-                    collectionUid: response.collectionUid,
-                    tokenId: response.tokenId,
-                    name: response.name,
-                    imageUrl: response.imageUrl,
-                    imagePreviewUrl: response.imagePreviewUrl,
-                    description: response.description,
-                    externalLink: response.externalLink,
-                    permalink: response.permalink,
-                    traits: response.traits.map { NftAsset.Trait(type: $0.type, value: $0.value, count: $0.count) },
-                    lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: platformCoinMap[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) },
-                    onSale: !response.sellOrders.isEmpty
-            )
+            asset(response: response, platformCoinMap: platformCoinMap)
         }
+    }
+
+    private func asset(response: AssetResponse, platformCoinMap: [String: PlatformCoin] = [:]) -> NftAsset {
+        NftAsset(
+                contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.type),
+                collectionUid: response.collectionUid,
+                tokenId: response.tokenId,
+                name: response.name,
+                imageUrl: response.imageUrl,
+                imagePreviewUrl: response.imagePreviewUrl,
+                description: response.description,
+                externalLink: response.externalLink,
+                permalink: response.permalink,
+                traits: response.traits.map { NftAsset.Trait(type: $0.type, value: $0.value, count: $0.count) },
+                lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: platformCoinMap[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) },
+                onSale: !response.sellOrders.isEmpty
+        )
     }
 
     private func collectionStats(response: CollectionStatsResponse, ethereumPlatformCoin: PlatformCoin? = nil) -> NftCollectionStats {
@@ -150,6 +154,37 @@ class HsNftProvider {
                     side: response.side,
                     v: response.v,
                     ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) / response.paymentToken.ethPrice
+            )
+        }
+    }
+
+    private func events(responses: [EventResponse]) -> [NftEvent] {
+        var addresses = [String]()
+
+        for response in responses {
+            if let paymentToken = response.paymentToken {
+                addresses.append(paymentToken.address)
+            }
+        }
+
+        let platformCoinMap = platformCoinMap(addresses: addresses)
+
+        return responses.compactMap { response in
+            guard let eventType = NftEvent.EventType(rawValue: response.type) else {
+                return nil
+            }
+
+            var amount: NftPrice?
+
+            if let paymentToken = response.paymentToken, let value = response.amount {
+                amount = nftPrice(platformCoin: platformCoinMap[paymentToken.address], value: value, shift: true)
+            }
+
+            return NftEvent(
+                    asset: asset(response: response.asset),
+                    type: eventType,
+                    date: response.date,
+                    amount: amount
             )
         }
     }
@@ -211,6 +246,25 @@ class HsNftProvider {
         }
     }
 
+    private func _eventsSingle(collectionUid: String?, eventType: NftEvent.EventType?, cursor: String?) -> Single<EventsResponse> {
+        var parameters: Parameters = [:]
+
+        if let collectionUid = collectionUid {
+            parameters["collection_uid"] = collectionUid
+        }
+
+        if let eventType = eventType {
+            parameters["event_type"] = eventType.rawValue
+        }
+
+        if let cursor = cursor {
+            parameters["cursor"] = cursor
+        }
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/events", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request)
+    }
+
 }
 
 extension HsNftProvider: INftProvider {
@@ -262,6 +316,15 @@ extension HsNftProvider: INftProvider {
         _assetsSingle(collectionUid: collectionUid, cursor: cursor).map { [unowned self] response in
             PagedNftAssets(
                     assets: assets(responses: response.assets),
+                    cursor: response.cursor
+            )
+        }
+    }
+
+    func eventsSingle(collectionUid: String, eventType: NftEvent.EventType?, cursor: String? = nil) -> Single<PagedNftEvents> {
+        _eventsSingle(collectionUid: collectionUid, eventType: eventType, cursor: cursor).map { [unowned self] response in
+            PagedNftEvents(
+                    events: events(responses: response.events),
                     cursor: response.cursor
             )
         }
@@ -352,7 +415,7 @@ extension HsNftProvider {
             description = try? map.value("description")
             externalLink = try? map.value("links.external_link")
             permalink = try? map.value("links.permalink")
-            traits = try map.value("attributes")
+            traits = (try? map.value("attributes")) ?? []
             lastSale = try? map.value("markets_data.last_sale")
             sellOrders = (try? map.value("markets_data.sell_orders")) ?? []
         }
@@ -461,6 +524,38 @@ extension HsNftProvider {
             address = try map.value("address")
             decimals = try map.value("decimals")
             ethPrice = try map.value("eth_price", using: HsNftProvider.stringToDecimalTransform)
+        }
+    }
+
+    private struct EventsResponse: ImmutableMappable {
+        let cursor: String?
+        let events: [EventResponse]
+
+        init(map: Map) throws {
+            cursor = try? map.value("cursor.next")
+            events = try map.value("events")
+        }
+    }
+
+    private struct EventResponse: ImmutableMappable {
+        private static let reusableDateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+
+        let asset: AssetResponse
+        let type: String
+        let date: Date
+        let amount: Decimal?
+        let paymentToken: PaymentTokenResponse?
+
+        init(map: Map) throws {
+            asset = try map.value("asset")
+            date = try map.value("date", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))
+            type = try map.value("type")
+            amount = try? map.value("amount", using: HsNftProvider.stringToDecimalTransform)
+            paymentToken = try? map.value("markets_data.payment_token")
         }
     }
 

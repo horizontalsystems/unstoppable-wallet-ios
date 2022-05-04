@@ -49,6 +49,10 @@ extension ValueFormatter {
         format(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil, fractionPolicy: fractionPolicy)
     }
 
+    func formatNew(coinValue: CoinValue, showCode: Bool = true) -> String? {
+        formatNew(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil)
+    }
+
     func format(transactionValue: TransactionValue, showCode: Bool = true, fractionPolicy: FractionPolicy = .full) -> String? {
         switch transactionValue {
         case let .coinValue(platformCoin, value):

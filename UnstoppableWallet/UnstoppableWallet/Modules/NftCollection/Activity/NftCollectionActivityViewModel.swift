@@ -1,21 +1,129 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import CurrencyKit
 
 class NftCollectionActivityViewModel {
     private let service: NftCollectionActivityService
     private let disposeBag = DisposeBag()
 
+    private let eventTypeRelay = BehaviorRelay<String>(value: "")
+
+    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: NftCollectionActivityService) {
         self.service = service
+
+        subscribe(disposeBag, service.eventTypeObservable) { [weak self] in self?.sync(eventType: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+
+        sync(eventType: service.eventType)
+        sync(state: service.state)
+    }
+
+    private func sync(eventType: NftEvent.EventType?) {
+        eventTypeRelay.accept(title(eventType: eventType))
+    }
+
+    private func sync(state: NftCollectionActivityService.State) {
+        switch state {
+        case .loading:
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(true)
+            syncErrorRelay.accept(false)
+        case .loaded(let items, let allLoaded):
+            let viewItem = ViewItem(
+                    eventViewItems: items.map { eventViewItem(item: $0) },
+                    allLoaded: allLoaded
+            )
+
+            viewItemRelay.accept(viewItem)
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(false)
+        case .failed:
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(true)
+        }
+    }
+
+    private func eventViewItem(item: NftCollectionActivityService.Item) -> EventViewItem {
+        let event = item.event
+
+        var coinPrice = ""
+        var fiatPrice: String?
+
+        if let amount = event.amount {
+            let coinValue = CoinValue(kind: .platformCoin(platformCoin: amount.platformCoin), value: amount.value)
+            if let value = ValueFormatter.instance.formatNew(coinValue: coinValue) {
+                coinPrice = value
+            }
+
+            if let priceItem = item.priceItem {
+                let currencyValue = CurrencyValue(currency: priceItem.price.currency, value: amount.value * priceItem.price.value)
+                fiatPrice = ValueFormatter.instance.formatNew(currencyValue: currencyValue)
+            }
+        }
+
+        return EventViewItem(
+                tokenId: event.asset.tokenId,
+                type: "nft_collection.activity.event_type.\(event.type.rawValue)".localized,
+                date: DateHelper.instance.formatFullTime(from: event.date),
+                imageUrl: event.asset.imagePreviewUrl,
+                coinPrice: coinPrice,
+                fiatPrice: fiatPrice
+        )
+    }
+
+    private func title(eventType: NftEvent.EventType?) -> String {
+        guard let eventType = eventType else {
+            return "nft_collection.activity.event_type.all".localized
+        }
+
+        return "nft_collection.activity.event_type.\(eventType.rawValue)".localized
+    }
+
+}
+
+extension NftCollectionActivityViewModel: IDropdownFilterHeaderViewModel {
+
+    var dropdownTitle: String {
+        "nft_collection.activity.event_types".localized
+    }
+
+    var dropdownViewItems: [AlertViewItem] {
+        var items = [AlertViewItem]()
+
+        items.append(AlertViewItem(text: title(eventType: nil), selected: service.eventType == nil))
+
+        for eventType in NftEvent.EventType.allCases {
+            items.append(AlertViewItem(text: title(eventType: eventType), selected: service.eventType == eventType))
+        }
+
+        return items
+    }
+
+    var dropdownValueDriver: Driver<String> {
+        eventTypeRelay.asDriver()
+    }
+
+    func onSelectDropdown(index: Int) {
+        if index == 0 {
+            service.eventType = nil
+        } else {
+            service.eventType = NftEvent.EventType.allCases[index - 1]
+        }
     }
 
 }
 
 extension NftCollectionActivityViewModel {
+
+    var viewItemDriver: Driver<ViewItem?> {
+        viewItemRelay.asDriver()
+    }
 
     var loadingDriver: Driver<Bool> {
         loadingRelay.asDriver()
@@ -25,7 +133,38 @@ extension NftCollectionActivityViewModel {
         syncErrorRelay.asDriver()
     }
 
+    var collection: NftCollection {
+        service.collection
+    }
+
+    func asset(tokenId: String) -> NftAsset? {
+        service.asset(tokenId: tokenId)
+    }
+
     func onTapRetry() {
+        service.reload()
+    }
+
+    func onReachBottom() {
+        service.loadMore()
+    }
+
+}
+
+extension NftCollectionActivityViewModel {
+
+    struct ViewItem {
+        let eventViewItems: [EventViewItem]
+        let allLoaded: Bool
+    }
+
+    struct EventViewItem {
+        let tokenId: String
+        let type: String
+        let date: String
+        let imageUrl: String?
+        let coinPrice: String
+        let fiatPrice: String?
     }
 
 }
