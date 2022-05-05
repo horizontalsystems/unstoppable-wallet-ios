@@ -385,6 +385,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.top.top_losers" = "Top Losers";
 "market.top.top_collections" = "Top NFT Collections";
 "market.top.floor_price" = "Floor:";
+"market.top.top_platforms" = "Top Platforms";
+"market.top.protocols" = "Protocols";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
