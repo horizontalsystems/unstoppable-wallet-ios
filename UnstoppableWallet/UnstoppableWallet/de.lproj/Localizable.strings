@@ -221,7 +221,7 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Insgesamt";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.fee" = "Gebühr";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "Senden";
 "send.confirmation.resend_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch erneutes Senden mit einer höheren Gebühr ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
@@ -344,7 +344,7 @@
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
+"market.category.watchlist" = "Merkliste";
 "market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24h Volume";
 "market.defi_cap" = "DeFi Cap";
@@ -352,7 +352,7 @@
 
 "market.coin_not_supported_yet" = "Diese Coin wird von Unstoppable noch nicht unterstützt";
 
-"market.top.section.header.see_all" = "See All";
+"market.top.section.header.see_all" = "Alle anzeigen";
 "market.top.section.header.top_gainers" = "Top Gainers";
 "market.top.section.header.top_losers" = "Top Losers";
 "market.top.section.header.top_sectors" = "Top Sectors";
@@ -374,10 +374,10 @@
 "market.top.title" = "Top Coins";
 "market.top.description" = "Top Coins by market cap rank";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
+"market.top.highest_cap" = "Höchste Obergrenze";
+"market.top.lowest_cap" = "Niedrigste Obergrenze";
+"market.top.highest_volume" = "Höchste Lautstärke";
+"market.top.lowest_volume" = "Geringste Lautstärke";
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_losers" = "Top Losers";
 "market.top.top_collections" = "Top NFT Collections";
@@ -391,11 +391,11 @@
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
-"market.search.title" = "Search";
+"market.search.title" = "Suchen";
 "market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Filters";
-"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.show_results" = "Ergebnisse anzeigen";
 "market.advanced_search.empty_results" = "Empty Results";
 "market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
