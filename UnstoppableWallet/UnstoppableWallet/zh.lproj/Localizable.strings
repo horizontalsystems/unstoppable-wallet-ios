@@ -384,6 +384,8 @@
 "market.top.top_losers" = "跌幅榜";
 "market.top.top_collections" = "Top NFT Collections";
 "market.top.floor_price" = "Floor:";
+"market.top.top_platforms" = "Top Platforms";
+"market.top.protocols" = "Protocols";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "过滤器";
