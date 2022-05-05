@@ -411,16 +411,16 @@
 "market.advanced_search.price_period" = "Price Period";
 "market.advanced_search.price_change" = "Price Change";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
-"market.advanced_search.outperformed_eth" = "Outperformed ETH";
-"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.outperformed_btc" = "Übertraf BTC";
+"market.advanced_search.outperformed_eth" = "Übertraf ETH";
+"market.advanced_search.outperformed_bnb" = "Übertraf BNB";
 "market.advanced_search.price_close_to_ath" = "Price Close To ATH";
 "market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.reset_all" = "Zurücksetzen";
 
-"market.advanced_search.any" = "Any";
+"market.advanced_search.any" = "Beliebig";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
 "market.advanced_search.less_50_m" = "< 50M";
