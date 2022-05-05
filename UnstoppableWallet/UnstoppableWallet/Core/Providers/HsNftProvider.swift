@@ -167,7 +167,7 @@ class HsNftProvider {
                     emptyTaker: response.takerAddress == zeroAddress,
                     side: response.side,
                     v: response.v,
-                    ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) / response.paymentToken.ethPrice
+                    ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) * response.paymentToken.ethPrice
             )
         }
     }
