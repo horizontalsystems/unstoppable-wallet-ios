@@ -32,30 +32,30 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
             )
         } ?? "n/a".localized
 
-        let rank: Int?
+        let rankDiff: Int?
         let diff: Decimal?
 
         switch timePeriod {
         case .day:
             diff = item.oneDayChange
-            rank = item.oneDayRank
+            rankDiff = item.oneDayRank
         case .week:
             diff = item.sevenDayChange
-            rank = item.sevenDaysRank
+            rankDiff = item.sevenDaysRank
         case .month:
             diff = item.thirtyDayChange
-            rank = item.thirtyDaysRank
+            rankDiff = item.thirtyDaysRank
         }
 
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
 
         return MarketModule.ListViewItem(
-                uid: item.fullCoin.coin.uid,
-                iconUrl: item.fullCoin.coin.imageUrl,
-                iconPlaceholderName: item.fullCoin.placeholderImageName,
-                name: item.fullCoin.coin.name,
+                uid: item.uid,
+                iconUrl: item.fullCoin?.coin.imageUrl ?? "",
+                iconPlaceholderName: item.fullCoin?.placeholderImageName ?? "",
+                name: item.name,
                 code: protocols,
-                rank: rank.map { "\($0)" },
+                rank: item.rank.map { "\($0)" },
                 price: marketCap,
                 dataValue: dataValue
         )
