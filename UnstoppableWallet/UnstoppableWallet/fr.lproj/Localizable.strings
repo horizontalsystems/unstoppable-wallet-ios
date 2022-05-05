@@ -594,8 +594,8 @@
 "pro_features.lock_info.title" = "Unstoppable Pass";
 "pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
-"pro_features.lock_info.coin_details.volume" = "DEX Volume";
-"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
+"pro_features.lock_info.coin_details.volume" = "Volume DEX";
+"pro_features.lock_info.coin_details.liquidity" = "Liquidité DEX";
 "pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
 "pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
 "pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
@@ -605,7 +605,7 @@
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "Tout";
-"transactions.syncing_text" = "Please wait for the sync to finish";
+"transactions.syncing_text" = "Veuillez attendre la fin de la synchronisation";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
 "transactions.processing" = "Traitement en cours";
@@ -625,7 +625,7 @@
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = " illimité";
 
 "transactions.today" = "Aujourd'hui";
 "transactions.yesterday" = "Hier";
@@ -650,7 +650,7 @@
 "tx_info.from_hash" = "De";
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "Dépendant";
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.options.speed_up" = "Accélérer";
@@ -1037,10 +1037,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Fee Settings
 
 "fee_settings" = "Paramètres des frais";
-"fee_settings.fee" = "Fee";
+"fee_settings.fee" = "Frais";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";
 "fee_settings.fee_priority" = "Speed";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "Taux de frais";
 "fee_settings.max_fee" = "Frais Max";
 "fee_settings.max_fee.info" = "Les frais totaux maximums escomptés pour la transaction donnée. En règle générale, les frais réels de la transaction sont inférieurs à ce montant.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -1073,9 +1073,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collections.average_7d" = "Moyenne sur 7 j";
 "nft_collections.average_30d" = "Moyenne sur 30 j";
 "nft_collections.on_sale" = "En Vente";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.empty" = "Vous n'avez pas de NFT dans votre portefeuille";
 
-"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.title" = "Top des collections NFT";
 "top_nft_collections.description" = "Some top digital art";
 
 // Nft Asset
@@ -1091,7 +1091,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_asset.minimum_bid" = "Enchère minimale";
 "nft_asset.best_offer" = "Meilleure offre";
 "nft_asset.properties" = "Propriétés";
-"nft_asset.description" = "Description";
+"nft_asset.description" = "Libellé";
 "nft_asset.details" = "Détailles";
 "nft_asset.details.contract_address" = "Adresse du contrat";
 "nft_asset.details.token_id" = "Identifiant du token";
@@ -1106,14 +1106,14 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "Synthèse";
 "nft_collection.tab.assets" = "Items";
-"nft_collection.tab.activity" = "Activity";
+"nft_collection.tab.activity" = "Activité";
 
-"nft_collection.overview.description" = "Description";
+"nft_collection.overview.description" = "Libellé";
 "nft_collection.overview.contracts" = "Contracts";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links" = "Liens";
+"nft_collection.overview.links.website" = "Site Web";
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
