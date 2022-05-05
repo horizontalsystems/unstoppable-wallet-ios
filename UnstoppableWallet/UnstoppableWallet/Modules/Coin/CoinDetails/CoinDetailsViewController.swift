@@ -153,8 +153,14 @@ class CoinDetailsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openProDataNotify() {
-        let viewController = ProFeaturesLockInfoViewController(config: .coinDetails, delegate: self).toBottomSheet
+    private func openProDataChart(proFeaturesActivated: Bool, type: ProFeaturesType) {
+        guard proFeaturesActivated else {
+            proFeaturesViewModel.authorize()
+            return
+        }
+
+        // todo: Route pro charts.
+        let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coin.uid)
         parentNavigationController?.present(viewController, animated: true)
     }
 
@@ -189,6 +195,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         guard !viewItem.proFeaturesActivated else {
             return nil
         }
+
         return Section(
                 id: "pro-features-passes-section",
                 headerState: .margin(height: .margin12),
@@ -203,7 +210,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func liquiditySections(viewItem: CoinDetailsViewModel.TokenLiquidityViewItem, isFirst: Bool) -> [SectionProtocol]? {
+    private func liquiditySections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         let liquidityRow = Row<CoinDetailsMetricCell>(
                 id: "liquidity_chart",
                 height: CoinDetailsMetricCell.cellHeight,
@@ -212,12 +219,12 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.rightTitle = "coin_page.dex_liquidity".localized
                     cell.set(configuration: .smallChart)
 
-                    cell.set(leftViewItem: viewItem.volume, rightViewItem: viewItem.liquidity)
+                    cell.set(leftViewItem: viewItem.tokenLiquidity.volume, rightViewItem: viewItem.tokenLiquidity.liquidity)
                     cell.onTapLeft = {
-                        self?.openProDataNotify()
+                        self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .volume)
                     }
                     cell.onTapRight = {
-                        self?.openProDataNotify()
+                        self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .liquidity)
                     }
                 }
         )
@@ -247,9 +254,9 @@ extension CoinDetailsViewController: SectionsDataSource {
                 .isEmpty
     }
 
-    private func distributionCharts(viewItem: CoinDetailsViewModel.TokenDistributionViewItem) -> [RowProtocol] {
-        let hasTxCharts = hasCharts(items: [viewItem.txCount, viewItem.txVolume])
-        let hasAddresses = hasCharts(items: [viewItem.activeAddresses])
+    private func distributionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> [RowProtocol] {
+        let hasTxCharts = hasCharts(items: [viewItem.tokenDistribution.txCount, viewItem.tokenDistribution.txVolume])
+        let hasAddresses = hasCharts(items: [viewItem.tokenDistribution.activeAddresses])
 
         var rows = [RowProtocol]()
         guard (hasTxCharts || hasAddresses) else {
@@ -266,12 +273,12 @@ extension CoinDetailsViewController: SectionsDataSource {
                                 cell.rightTitle = "coin_page.tx_volume".localized
                                 cell.set(configuration: .smallChart)
 
-                                cell.set(leftViewItem: viewItem.txCount, rightViewItem: viewItem.txVolume)
+                                cell.set(leftViewItem: viewItem.tokenDistribution.txCount, rightViewItem: viewItem.tokenDistribution.txVolume)
                                 cell.onTapLeft = {
-                                    self?.openProDataNotify()
+                                    self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txCount)
                                 }
                                 cell.onTapRight = {
-                                    self?.openProDataNotify()
+                                    self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txVolume)
                                 }
                             }
                     )
@@ -287,9 +294,9 @@ extension CoinDetailsViewController: SectionsDataSource {
                                 cell.leftTitle = "coin_page.active_addresses".localized
                                 cell.set(configuration: .smallChart)
 
-                                cell.set(leftViewItem: viewItem.activeAddresses)
+                                cell.set(leftViewItem: viewItem.tokenDistribution.activeAddresses)
                                 cell.onTapLeft = {
-                                    self?.openProDataNotify()
+                                    self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .activeAddresses)
                                 }
                             }
                     )
@@ -300,7 +307,7 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
-        let chartRows = distributionCharts(viewItem: viewItem.tokenDistribution)
+        let chartRows = distributionCharts(viewItem: viewItem)
 
         guard viewItem.hasMajorHolders || !chartRows.isEmpty else {
             return nil
@@ -575,7 +582,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                 isFirst = false
             }
 
-            if let liquiditySections = liquiditySections(viewItem: viewItem.tokenLiquidity, isFirst: isFirst) {
+            if let liquiditySections = liquiditySections(viewItem: viewItem, isFirst: isFirst) {
                 sections.append(contentsOf: liquiditySections)
                 isFirst = false
             }
@@ -599,6 +606,18 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         return sections
+    }
+
+}
+
+extension CoinDetailsViewController {
+
+    enum ProFeaturesType {
+        case volume
+        case liquidity
+        case txCount
+        case txVolume
+        case activeAddresses
     }
 
 }

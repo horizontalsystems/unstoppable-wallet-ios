@@ -5,14 +5,11 @@ import RxSwift
 import EthereumKit
 import BigInt
 
-//val contractAddress = Address("0x9940bb667F64fcA06fc4127861855696DeF7c69d")
-//val tokenId = BigInteger("5391")
-//val owner = Address("0xbf02ab1a188967505ab98101be083ffce9124dfe")
-
 class ProFeaturesAuthorizationManager {
-    static let contractAddress = try! EthereumKit.Address(hex: "0x9940bb667F64fcA06fc4127861855696DeF7c69d")
-    static let owner = try! EthereumKit.Address(hex: "0xbf02ab1a188967505ab98101be083ffce9124dfe")
-    static let tokenId = BigUInt(5391)
+    static let contractAddress = try! EthereumKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")
+    static let tokenId = BigUInt("77929411300911548602579223184347481465604416464327802926072149574722519040001", radix: 10)!
+
+    private let disposeBag = DisposeBag()
 
     private let accountManager: AccountManager
     private let storage: ProFeaturesStorage
@@ -22,6 +19,12 @@ class ProFeaturesAuthorizationManager {
     init(storage: ProFeaturesStorage, accountManager: AccountManager) {
         self.storage = storage
         self.accountManager = accountManager
+
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.sync(deletedAccount: $0) }
+    }
+
+    private func sync(deletedAccount: Account) {
+        storage.delete(accountId: deletedAccount.id)
     }
 
     private func sortedAccountData() -> [AccountData] {
@@ -42,13 +45,7 @@ class ProFeaturesAuthorizationManager {
                 .sorted { account, account2 in
                     account.id == active.id
                 }
-                .enumerated()
-                .compactMap { index, account in
-                    //todo: Add temporary accountData
-                    if accounts.count == index + 1 {
-                        return AccountData(accountId: account.id, address: Self.owner)
-                    }
-
+                .compactMap { account in
                     if let seed = account.type.mnemonicSeed,
                        let address = try? Signer.address(seed: seed, chain: .ethereum) {
                         return AccountData(accountId: account.id, address: address)
@@ -88,16 +85,16 @@ extension ProFeaturesAuthorizationManager {
         sessionKeyRelay.asObservable()
     }
 
-    func sessionKey(type: ProFeaturesStorage.NFTType) -> String? {
+    func sessionKey(type: NFTType) -> String? {
         storage.get(type: type)?.sessionKey
     }
 
-    func set(accountId: String, address: String, sessionKey: String, type: ProFeaturesStorage.NFTType) {
+    func set(accountId: String, address: String, sessionKey: String, type: NFTType) {
         storage.save(type: type, key: ProFeaturesStorage.SessionKey(accountId: accountId, address: address, sessionKey: sessionKey))
         sessionKeyRelay.accept(SessionKey(type: type, key: sessionKey))
     }
 
-    func nftHolder(type: ProFeaturesStorage.NFTType) -> Single<AccountData?> {
+    func nftHolder(type: NFTType) -> Single<AccountData?> {
         let accountData = sortedAccountData()
 
 
@@ -120,9 +117,17 @@ extension ProFeaturesAuthorizationManager {
         return signatureData.map { "0x\($0.hex)" }
     }
 
+    func clearSessionKey(type: NFTType?) {
+        storage.clear(type: type)
+    }
+
 }
 
 extension ProFeaturesAuthorizationManager {
+
+    enum NFTType: String, CaseIterable {
+        case mountainYak
+    }
 
     struct AccountData {
         let accountId: String
@@ -130,7 +135,7 @@ extension ProFeaturesAuthorizationManager {
     }
 
     struct SessionKey {
-        let type: ProFeaturesStorage.NFTType
+        let type: NFTType
         let key: String
     }
 
