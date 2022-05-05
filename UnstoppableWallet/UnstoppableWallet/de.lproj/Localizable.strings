@@ -45,7 +45,7 @@
 
 "n/a" = "N/A";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "Sync-Fehler. Versuchen Sie es erneut.";
 
 "number.thousand" = "%@k";
 "number.million" = "%@M";
@@ -61,8 +61,8 @@
 
 "restore.title" = "Wallet auswählen";
 "restore.enter_key" = "Schlüssel Eingeben";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
+"restore.mnemonic.description" = "Geben Sie Ihre Eselsbrücke ein, die aus 12 oder 24 Wörtern besteht. Die Wörter müssen in der richtigen Reihenfolge und durch Leerzeichen getrennt eingegeben werden.";
+"restore_error.mnemonic_word_count" = "Falsche Wortzahl. Sie muss zwischen 12 und 24 Wörtern liegen. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
@@ -185,7 +185,7 @@
 "send.network_fee" = "Netzwerkgebühr";
 "send.estimated_fee" = "Geschätzte Gebühren";
 "send.max_fee" = "Max Gebühr";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "Transaktionsgeschwindigkeit";
 "send.tx_speed_low" = "Niedrig";
 "send.tx_speed_recommended" = "Empfohlen";
 "send.tx_speed_high" = "Hoch";
@@ -229,7 +229,7 @@
 "send.confirmation.cancel_description" = "Mit dieser Aktion wird versucht, die vorherige Transaktion durch eine neue Transaktion mit einem Betrag von 0 an sich selbst ungültig zu machen. Wenn die ursprüngliche Transaktion noch aussteht, während eine neue Transaktion gesendet wird, besteht eine hohe Wahrscheinlichkeit (nicht garantiert), dass sie für ungültig erklärt und ersetzt wird. Nur eine dieser beiden Transaktionen wird in die Blockchain aufgenommen.";
 "send.confirmation.cancel_button" = "Transaktion abbrechen";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "Methode";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
@@ -237,11 +237,11 @@
 "send.amount_warning.coin_needed_for_fee" = "Überlegen Sie, ob Sie einige %@ auf dem Guthaben belassen wollen, um für zukünftige Transaktionen bezahlen zu können.";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "Unzureichendes Guthaben";
+"send.fee_settings.amount_error.balance" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "Gefahr des Festklemmens";
+"send.fee_settings.stuck_warning" = "Die Transaktion kann festklemmen oder fehlschlagen.";
 
 "send.stuck_warning" = "Warnung! Gefahr des Festklemmens";
 
