@@ -13,8 +13,8 @@ class ReferencedTweetView: UIView {
     init() {
         super.init(frame: .zero)
 
-        cornerRadius = .cornerRadius4
-        backgroundColor = .themeSteel20
+        cornerRadius = .cornerRadius8
+        backgroundColor = .themeSteel10
 
         addSubview(titleView)
         titleView.snp.makeConstraints { maker in

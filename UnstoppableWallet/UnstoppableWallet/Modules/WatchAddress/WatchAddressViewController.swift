@@ -10,6 +10,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let watchButton = ThemeButton()
 
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
@@ -33,6 +34,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
         super.viewDidLoad()
 
         title = "watch_address.title".localized
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "watch_address.watch".localized, style: .done, target: self, action: #selector(onTapWatch))
 
         view.addSubview(tableView)
@@ -45,6 +47,17 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
+        view.addSubview(watchButton)
+        watchButton.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        watchButton.apply(style: .primaryYellow)
+        watchButton.setTitle("watch_address.watch".localized, for: .normal)
+        watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
+
         addressCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         addressCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
@@ -52,6 +65,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+            self?.watchButton.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             self?.dismiss(animated: true)
@@ -59,6 +73,10 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         tableView.buildSections()
         isLoaded = true
+    }
+
+    @objc private func onTapCancel() {
+        dismiss(animated: true)
     }
 
     @objc private func onTapWatch() {

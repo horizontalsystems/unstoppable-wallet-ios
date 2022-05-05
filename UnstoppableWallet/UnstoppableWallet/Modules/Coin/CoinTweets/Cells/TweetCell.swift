@@ -96,7 +96,7 @@ class TweetCell: BaseSelectableThemeCell {
         
         for entity in TwitterText.entities(in: viewItem.text) {
             switch entity.type {
-                case .url, .hashtag, .screenName, .listname: attributedString.addAttribute(.foregroundColor, value: UIColor.themeIssykBlue, range: entity.range)
+                case .url, .hashtag, .screenName, .listname: attributedString.addAttribute(.foregroundColor, value: UIColor.themeLaguna, range: entity.range)
             default: ()
             }
         }
