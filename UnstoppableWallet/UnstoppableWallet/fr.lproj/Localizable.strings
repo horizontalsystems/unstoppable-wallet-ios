@@ -382,6 +382,8 @@
 "market.top.top_losers" = "Les gros perdants";
 "market.top.top_collections" = "Top NFT Collections";
 "market.top.floor_price" = "Floor:";
+"market.top.top_platforms" = "Top Platforms";
+"market.top.protocols" = "Protocols";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
