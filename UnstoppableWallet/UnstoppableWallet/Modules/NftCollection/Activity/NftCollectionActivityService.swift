@@ -2,7 +2,7 @@ import RxSwift
 import RxRelay
 
 class NftCollectionActivityService {
-    let collection: NftCollection
+    private let collectionUid: String
     private let provider: HsNftProvider
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
@@ -29,8 +29,8 @@ class NftCollectionActivityService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-activity-service", qos: .userInitiated)
 
-    init(collection: NftCollection, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
-        self.collection = collection
+    init(collectionUid: String, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
+        self.collectionUid = collectionUid
         self.provider = provider
         self.coinPriceService = coinPriceService
 
@@ -42,7 +42,7 @@ class NftCollectionActivityService {
 
         state = .loading
 
-        provider.eventsSingle(collectionUid: collection.uid, eventType: eventType)
+        provider.eventsSingle(collectionUid: collectionUid, eventType: eventType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedEvents in
                     self?.handle(pagedEvents: pagedEvents)
@@ -63,7 +63,7 @@ class NftCollectionActivityService {
 
         loadingMore = true
 
-        provider.eventsSingle(collectionUid: collection.uid, eventType: eventType, cursor: cursor)
+        provider.eventsSingle(collectionUid: collectionUid, eventType: eventType, cursor: cursor)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedEvents in
                     self?.handleMore(pagedEvents: pagedEvents)

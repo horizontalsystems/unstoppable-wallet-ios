@@ -1,9 +1,11 @@
 import UIKit
+import SnapKit
 import RxSwift
 import RxCocoa
 import ThemeKit
 import ComponentKit
 import SectionsTableView
+import HUD
 
 class NftAssetViewController: ThemeViewController {
     private let viewModel: NftAssetViewModel
@@ -12,9 +14,11 @@ class NftAssetViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private var viewItem: NftAssetViewModel.ViewItem?
-    private var statsViewItem: NftAssetViewModel.StatsViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = PlaceholderView()
+
     private let imageCell = NftAssetImageCell()
     private let descriptionTextCell = ReadMoreTextCell()
 
@@ -38,6 +42,28 @@ class NftAssetViewController: ThemeViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+
+        let wrapperView = UIView()
+
+        view.addSubview(wrapperView)
+        wrapperView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        wrapperView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        wrapperView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -64,10 +90,19 @@ class NftAssetViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
-        subscribe(disposeBag, viewModel.statsViewItemDriver) { [weak self] in self?.sync(statsViewItem: $0) }
+        subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+        }
+        subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
+            self?.errorView.isHidden = !visible
+        }
         subscribe(disposeBag, viewModel.openTraitSignal) { [weak self] in self?.openTrait(url: $0) }
 
         loaded = true
+    }
+
+    @objc private func onRetry() {
+        viewModel.onTapRetry()
     }
 
     @objc private func onTapClose() {
@@ -78,17 +113,7 @@ class NftAssetViewController: ThemeViewController {
         self.viewItem = viewItem
 
         if loaded {
-            tableView.reload(animated: true)
-        } else {
-            tableView.buildSections()
-        }
-    }
-
-    private func sync(statsViewItem: NftAssetViewModel.StatsViewItem?) {
-        self.statsViewItem = statsViewItem
-
-        if loaded {
-            tableView.reload(animated: true)
+            tableView.reload()
         } else {
             tableView.buildSections()
         }
@@ -198,8 +223,8 @@ class NftAssetViewController: ThemeViewController {
         }
     }
 
-    private func openCollection() {
-        let module = NftCollectionModule.viewController(collection: viewModel.collection)
+    private func openCollection(uid: String) {
+        let module = NftCollectionModule.viewController(collectionUid: uid)
         navigationController?.pushViewController(module, animated: true)
     }
 
@@ -241,7 +266,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func titleSection(assetName: String, collectionName: String) -> SectionProtocol {
+    private func titleSection(assetName: String, collectionName: String, collectionUid: String) -> SectionProtocol {
         Section(
                 id: "title",
                 headerState: .margin(height: .margin12),
@@ -275,7 +300,7 @@ extension NftAssetViewController: SectionsDataSource {
                                 }
                             },
                             action: { [weak self] in
-                                self?.openCollection()
+                                self?.openCollection(uid: collectionUid)
                             }
                     )
                 ]
@@ -339,7 +364,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func statsSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+    private func statsSection(viewItem: NftAssetViewModel.ViewItem) -> SectionProtocol? {
         var rows = [(String, NftAssetViewModel.PriceViewItem)]()
 
         if let priceViewItem = viewItem.lastSale {
@@ -395,7 +420,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func saleSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+    private func saleSection(viewItem: NftAssetViewModel.ViewItem) -> SectionProtocol? {
         guard let saleViewItem = viewItem.sale else {
             return nil
         }
@@ -415,7 +440,7 @@ extension NftAssetViewController: SectionsDataSource {
         )
     }
 
-    private func bestOfferSection(viewItem: NftAssetViewModel.StatsViewItem) -> SectionProtocol? {
+    private func bestOfferSection(viewItem: NftAssetViewModel.ViewItem) -> SectionProtocol? {
         guard let priceViewItem = viewItem.bestOffer else {
             return nil
         }
@@ -667,21 +692,19 @@ extension NftAssetViewController: SectionsDataSource {
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 
-            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName))
+            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, collectionUid: viewItem.collectionUid))
             sections.append(buttonsSection())
 
-            if let statsViewItem = statsViewItem {
-                if let section = statsSection(viewItem: statsViewItem) {
-                    sections.append(section)
-                }
+            if let section = statsSection(viewItem: viewItem) {
+                sections.append(section)
+            }
 
-                if let section = saleSection(viewItem: statsViewItem) {
-                    sections.append(section)
-                }
+            if let section = saleSection(viewItem: viewItem) {
+                sections.append(section)
+            }
 
-                if let section = bestOfferSection(viewItem: statsViewItem) {
-                    sections.append(section)
-                }
+            if let section = bestOfferSection(viewItem: viewItem) {
+                sections.append(section)
             }
 
             if !viewItem.traits.isEmpty {

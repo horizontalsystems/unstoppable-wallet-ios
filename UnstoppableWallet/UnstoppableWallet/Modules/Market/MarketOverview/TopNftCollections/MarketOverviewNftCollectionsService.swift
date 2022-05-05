@@ -57,11 +57,4 @@ extension MarketOverviewNftCollectionsService {
         sync()
     }
 
-    func collection(uid: String) -> NftCollectionItem? {
-        if case let .completed(collections) = state {
-            return collections.first { $0.collection.uid == uid }
-        }
-        return nil
-    }
-
 }

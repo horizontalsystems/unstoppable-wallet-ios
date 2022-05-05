@@ -63,13 +63,6 @@ class MarketNftTopCollectionsService {
         sync(collections: collections, reorder: true)
     }
 
-    func collection(uid: String) -> NftCollection? {
-        if case let .loaded(collections, _, _) = internalState {
-            return collections.first { $0.uid == uid }
-        }
-        return nil
-    }
-
 }
 
 extension MarketNftTopCollectionsService: IMarketListService {

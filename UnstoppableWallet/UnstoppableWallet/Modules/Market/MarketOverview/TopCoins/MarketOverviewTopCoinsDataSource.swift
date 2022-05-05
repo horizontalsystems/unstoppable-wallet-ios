@@ -4,6 +4,7 @@ import RxCocoa
 import SectionsTableView
 import Chart
 import ComponentKit
+import ThemeKit
 
 protocol IMarketOverviewTopCoinsViewModel {
     var statusDriver: Driver<DataStatus<[MarketOverviewTopCoinsViewModel.TopViewItem]>> { get }
@@ -12,8 +13,6 @@ protocol IMarketOverviewTopCoinsViewModel {
     func marketTopIndex(listType: MarketOverviewTopCoinsService.ListType) -> Int
     func onSelect(marketTopIndex: Int, listType: MarketOverviewTopCoinsService.ListType)
     func refresh()
-
-    func collection(uid: String) -> NftCollection?
 }
 
 class MarketOverviewTopCoinsDataSource {
@@ -99,9 +98,9 @@ class MarketOverviewTopCoinsDataSource {
     }
 
     private func onSelect(listType: MarketOverviewTopCoinsService.ListType, listViewItem: MarketModule.ListViewItem) {
-        if case .topCollections = listType, let uid = listViewItem.uid, let collection = viewModel.collection(uid: uid) {
-            let module = NftCollectionModule.viewController(collection: collection)
-            parentNavigationController?.pushViewController(module, animated: true)
+        if case .topCollections = listType, let uid = listViewItem.uid {
+            let module = NftCollectionModule.viewController(collectionUid: uid)
+            parentNavigationController?.present(ThemeNavigationController(rootViewController: module), animated: true)
         } else if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) {
             parentNavigationController?.present(module, animated: true)
         }

@@ -4,24 +4,17 @@ import RxRelay
 import EthereumKit
 import HdWalletKit
 
-protocol INftProvider {
-    func assetCollectionSingle(address: String) -> Single<NftAssetCollection>
-    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats>
-    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]>
-    func collectionsSingle() -> Single<[NftCollection]>
-}
-
 class NftManager {
     private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let storage: NftStorage
-    private let provider: INftProvider
+    private let provider: HsNftProvider
     private let disposeBag = DisposeBag()
     private var providerDisposeBag = DisposeBag()
 
     private let assetCollectionRelay = PublishRelay<NftAssetCollection>()
 
-    init(accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: INftProvider) {
+    init(accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: HsNftProvider) {
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
         self.storage = storage
@@ -119,14 +112,6 @@ extension NftManager {
         } catch {
             return nil
         }
-    }
-
-    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats> {
-        provider.collectionStatsSingle(uid: uid)
-    }
-
-    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
-        provider.assetOrdersSingle(contractAddress: contractAddress, tokenId: tokenId)
     }
 
 }

@@ -13,6 +13,7 @@ struct NftAsset {
     let traits: [Trait]
     let lastSalePrice: NftPrice?
     let onSale: Bool
+    let orders: [NftAssetOrder]
 
     struct Trait: ImmutableMappable {
         let type: String

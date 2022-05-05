@@ -104,6 +104,7 @@ class NftCollectionsService {
 
                         return AssetItem(
                                 collectionUid: asset.collectionUid,
+                                contractAddress: asset.contract.address,
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
@@ -172,14 +173,6 @@ extension NftCollectionsService {
         totalItemRelay.asObservable()
     }
 
-    func collection(uid: String) -> NftCollection? {
-        assetCollection.collections.first { $0.uid == uid }
-    }
-
-    func asset(collectionUid: String, tokenId: String) -> NftAsset? {
-        assetCollection.assets.first { $0.collectionUid == collectionUid && $0.tokenId == tokenId }
-    }
-
 }
 
 extension NftCollectionsService {
@@ -200,6 +193,7 @@ extension NftCollectionsService {
 
     class AssetItem {
         let collectionUid: String
+        let contractAddress: String
         let tokenId: String
         let imageUrl: String?
         let name: String?
@@ -207,8 +201,9 @@ extension NftCollectionsService {
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(collectionUid: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
+        init(collectionUid: String, contractAddress: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
             self.collectionUid = collectionUid
+            self.contractAddress = contractAddress
             self.tokenId = tokenId
             self.imageUrl = imageUrl
             self.name = name
