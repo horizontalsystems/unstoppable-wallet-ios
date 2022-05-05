@@ -18,11 +18,7 @@ protocol IBaseMarketOverviewTopListViewModel {
 class BaseMarketOverviewTopListDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var parentNavigationController: UINavigationController? {
-        didSet {
-            marketMetricsCell.viewController = parentNavigationController
-        }
-    }
+    weak var parentNavigationController: UINavigationController?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
     }
@@ -31,8 +27,6 @@ class BaseMarketOverviewTopListDataSource {
     private let viewModel: IBaseMarketOverviewTopListViewModel
 
     private var topViewItem: ViewItem?
-
-    private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
 
     init(viewModel: IBaseMarketOverviewTopListViewModel) {
         self.viewModel = viewModel
@@ -69,6 +63,24 @@ class BaseMarketOverviewTopListDataSource {
     }
 
     private func seeAllRow(id: String, action: @escaping () -> ()) -> RowProtocol {
+//        return CellBuilder.selectableRow(
+//                elements: [.text, .image20],
+//                tableView: tableView,
+//                id: fundViewItem.uid,
+//                height: .heightCell48,
+//                autoDeselect: true,
+//                bind: { [weak self] cell in
+//                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+//                    self?.bind(cell: cell, fundViewItem: fundViewItem)
+//
+//                    cell.bind(index: 3) { (component: ImageComponent) in
+//                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+//                    }
+//                },
+//                action: { [weak self] in
+//                    self?.urlManager.open(url: fundViewItem.url, from: self)
+//                }
+//        )
         Row<B1Cell>(
                 id: id,
                 height: .heightCell48,
