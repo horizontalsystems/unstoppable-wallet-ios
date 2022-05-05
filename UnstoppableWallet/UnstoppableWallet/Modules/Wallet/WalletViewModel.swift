@@ -177,6 +177,11 @@ extension WalletViewModel {
         playHapticRelay.accept(())
     }
 
+    func onTapConvertedTotalAmount() {
+        service.toggleConversionCoin()
+        playHapticRelay.accept(())
+    }
+
     func onTap(wallet: Wallet) {
         if service.watchAccount {
             onTapChart(wallet: wallet)
@@ -265,8 +270,8 @@ extension WalletViewModel {
     struct HeaderViewItem {
         let amount: String?
         let amountExpired: Bool
-        let btcAmount: String?
-        let btcAmountExpired: Bool
+        let convertedValue: String?
+        let convertedValueExpired: Bool
         let manageWalletsHidden: Bool
         let address: String?
     }

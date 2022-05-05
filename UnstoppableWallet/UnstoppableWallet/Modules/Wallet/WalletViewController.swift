@@ -252,6 +252,7 @@ class WalletViewController: ThemeViewController {
             headerView.bind(viewItem: viewItem, sortBy: sortBy)
 
             headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
+            headerView.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
             headerView.onTapSortBy = { [weak self] in self?.openSortType() }
             headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
         }
