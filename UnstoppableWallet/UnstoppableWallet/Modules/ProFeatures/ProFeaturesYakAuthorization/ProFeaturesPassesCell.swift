@@ -64,7 +64,8 @@ class ProFeaturesPassesCell: BaseThemeCell {
             }
         }
         subscribe(disposeBag, viewModel.showLockInfoSignal) { [weak self] in self?.showLockInfo() }
-        subscribe(disposeBag, viewModel.showSignMessageSignal) { [weak self] in self?.showSignMessage(message: $0) }
+        subscribe(disposeBag, viewModel.showSignMessageSignal) { [weak self] in self?.showSignMessage() }
+        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in HudHelper.instance.showError(title: $0) }
     }
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -80,15 +81,15 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     private func showLockInfo() {
-        let viewController = ProFeaturesLockInfoViewController(config: .coinDetails, delegate: self)
+        let viewController = ProFeaturesLockInfoViewController(config: .mountainYak, delegate: self).toBottomSheet
         parentViewController?.present(viewController, animated: true)
     }
 
-    private func showSignMessage(message: String) {
+    private func showSignMessage() {
         let viewController = ProFeaturesActivateViewController(
                 config: .mountainYak,
-                onSuccess: { [weak self] in self?.viewModel.activate(message: message) },
-                onCancel: { print("Cancelled!") }
+                onSuccess: { [weak self] in self?.viewModel.activate() },
+                onCancel: {  [weak self] in self?.viewModel.dismissSign() }
         )
         let navigationViewController = ThemeNavigationController(rootViewController: viewController)
 

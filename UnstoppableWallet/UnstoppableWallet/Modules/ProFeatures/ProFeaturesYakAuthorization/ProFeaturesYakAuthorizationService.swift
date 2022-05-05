@@ -16,6 +16,13 @@ class ProFeaturesYakAuthorizationService {
         }
     }
 
+    private let activationErrorRelay = BehaviorRelay<Error?>(value: nil)
+    private var activationError: Error? = nil {
+        didSet {
+            activationErrorRelay.accept(activationError)
+        }
+    }
+
     init(manager: ProFeaturesAuthorizationManager, adapter: ProFeaturesAuthorizationAdapter) {
         self.manager = manager
         self.adapter = adapter
@@ -37,7 +44,7 @@ class ProFeaturesYakAuthorizationService {
 
     private func didReceiveNtfHolder(accountData: ProFeaturesAuthorizationManager.AccountData?) {
         guard let accountData = accountData else {
-            state = .failed(StateError.noYakNFT)
+            state = .noYakNft
             return
         }
 
@@ -53,9 +60,7 @@ class ProFeaturesYakAuthorizationService {
     }
 
     private func authenticate(accountData: ProFeaturesAuthorizationManager.AccountData, signature: String) {
-        guard case let .receivedMessage(accountData, _) = state else {
-            return
-        }
+        let lastState = state
 
         state = .loading
         disposeBag = DisposeBag()
@@ -65,7 +70,7 @@ class ProFeaturesYakAuthorizationService {
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(
                         onSuccess: { [weak self] in self?.didReceive(accountData: accountData, sessionKey: $0) },
-                        onError: { [weak self] in self?.didReceiveOnAuthenticate(error: $0) }
+                        onError: { [weak self] in self?.didReceiveOnAuthenticate(error: $0, lastState: lastState) }
                 )
                 .disposed(by: disposeBag)
     }
@@ -75,8 +80,8 @@ class ProFeaturesYakAuthorizationService {
     }
 
     private func didReceiveOnCheckAddress(error: Error) {
-        print("Reject checking by \(error)")
-        state = .failed(StateError.noYakNFT)
+        state = .failure(error: error)
+
     }
 
     private func didReceive(accountData: ProFeaturesAuthorizationManager.AccountData, sessionKey: String) {
@@ -84,9 +89,9 @@ class ProFeaturesYakAuthorizationService {
         state = .receivedSessionKey(sessionKey)
     }
 
-    private func didReceiveOnAuthenticate(error: Error) {
-        print("Reject sign by \(error.smartDescription)")
-        state = .failed(StateError.rejectSign)
+    private func didReceiveOnAuthenticate(error: Error, lastState: State) {
+        activationError = error
+        state = lastState
     }
 
 }
@@ -97,10 +102,14 @@ extension ProFeaturesYakAuthorizationService {
         stateRelay.asObservable()
     }
 
+    var activationErrorObservable: Observable<Error?> {
+        activationErrorRelay.asObservable()
+    }
+
     func authenticate() {
-//        guard manager.sessionKey(type: .mountainYak) == nil else {
-//            return
-//        }
+        guard manager.sessionKey(type: .mountainYak) == nil else {
+            return
+        }
 
         auth()
     }
@@ -112,28 +121,30 @@ extension ProFeaturesYakAuthorizationService {
             return
         }
 
-        print("message: \(message) - \(String(data: data, encoding: .utf8))")
-        print("address: \(accountData.address)")
-        print("signature: \(signature)")
+//        print("message: \(message) - \(String(data: data, encoding: .utf8))")
+//        print("address: \(accountData.address)")
+//        print("signature: \(signature)")
 
         authenticate(accountData: accountData, signature: signature)
+    }
+
+    func reset() {
+        disposeBag = DisposeBag()
+        state = .idle
+        activationError = nil
     }
 
 }
 
 extension ProFeaturesYakAuthorizationService {
 
-    enum StateError: Error {
-        case noYakNFT
-        case rejectSign
-    }
-
     enum State {
         case idle
         case loading
         case receivedMessage(ProFeaturesAuthorizationManager.AccountData, String)
+        case noYakNft
         case receivedSessionKey(String)
-        case failed(Error)
+        case failure(error: Error)
     }
 
 }

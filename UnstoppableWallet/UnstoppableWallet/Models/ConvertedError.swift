@@ -1,3 +1,4 @@
+import Foundation
 import BitcoinCore
 import BinanceChainKit
 import Erc20Kit
@@ -32,6 +33,17 @@ extension NetworkManager.RequestError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .noResponse: return AppError.noConnection
+        case .invalidResponse(let statusCode, let data):
+            let description: String?
+            switch data {
+            case let data as Data: description = String(data: data, encoding: .utf8)
+            case let data as String: description = data
+            case let data as CustomStringConvertible: description = data.description
+            default: description = nil
+            }
+
+            let descriptionResponse = [statusCode.description, description].compactMap { $0 }.joined(separator: ": ")
+            return AppError.invalidResponse(reason: descriptionResponse)
         default: return self
         }
     }

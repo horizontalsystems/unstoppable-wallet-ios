@@ -63,6 +63,7 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
 
         goToMintButton.apply(style: .primaryYellow)
         goToMintButton.setTitle("pro_features.lock_info.go_to_mint".localized, for: .normal)
+        goToMintButton.isEnabled = false
         goToMintButton.addTarget(self, action: #selector(onTapGoToMint), for: .touchUpInside)
 
         view.addSubview(cancelButton)
@@ -153,7 +154,7 @@ extension ProFeaturesLockInfoViewController {
         let description: String?
         let viewItems: [String]
 
-        static var coinDetails: Config {
+        static var mountainYak: Config {
             Config(
                     icon: UIImage(named: "lock_24"),
                     title: "pro_features.lock_info.title".localized,
