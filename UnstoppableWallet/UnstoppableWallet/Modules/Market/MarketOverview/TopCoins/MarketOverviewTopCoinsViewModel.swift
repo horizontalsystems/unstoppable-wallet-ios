@@ -82,10 +82,6 @@ extension MarketOverviewTopCoinsViewModel: IMarketOverviewTopCoinsViewModel {
         service.refresh()
     }
 
-    func collection(uid: String) -> NftCollection? {
-        nil
-    }
-
 }
 
 extension MarketOverviewTopCoinsViewModel {

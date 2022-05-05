@@ -9,8 +9,4 @@ class MarketNftTopCollectionsViewModel {
         self.service = service
     }
 
-    func collection(uid: String) -> NftCollection? {
-        service.collection(uid: uid)
-    }
-
 }

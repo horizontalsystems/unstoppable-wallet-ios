@@ -68,6 +68,8 @@ class NftCollectionActivityViewModel {
         }
 
         return EventViewItem(
+                collectionUid: event.asset.collectionUid,
+                contractAddress: event.asset.contract.address,
                 tokenId: event.asset.tokenId,
                 type: "nft_collection.activity.event_type.\(event.type.rawValue)".localized,
                 date: DateHelper.instance.formatFullTime(from: event.date),
@@ -133,10 +135,6 @@ extension NftCollectionActivityViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var collection: NftCollection {
-        service.collection
-    }
-
     func asset(tokenId: String) -> NftAsset? {
         service.asset(tokenId: tokenId)
     }
@@ -159,6 +157,8 @@ extension NftCollectionActivityViewModel {
     }
 
     struct EventViewItem {
+        let collectionUid: String
+        let contractAddress: String
         let tokenId: String
         let type: String
         let date: String

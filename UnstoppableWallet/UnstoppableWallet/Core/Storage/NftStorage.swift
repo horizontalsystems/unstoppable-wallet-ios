@@ -40,7 +40,8 @@ class NftStorage {
                 permalink: record.permalink,
                 traits: record.traits,
                 lastSalePrice: nftPrice(record: record.lastSalePrice, platformCoins: platformCoins),
-                onSale: record.onSale
+                onSale: record.onSale,
+                orders: []
         )
     }
 

@@ -57,6 +57,7 @@ class NftCollectionsViewModel {
 
         return NftDoubleCell.ViewItem(
                 collectionUid: assetItem.collectionUid,
+                contractAddress: assetItem.contractAddress,
                 tokenId: assetItem.tokenId,
                 imageUrl: assetItem.imageUrl,
                 name: assetItem.name ?? "#\(assetItem.tokenId)",
@@ -88,14 +89,6 @@ extension NftCollectionsViewModel {
         }
 
         expandedUidsRelay.accept(expandedUids)
-    }
-
-    func collection(uid: String) -> NftCollection? {
-        service.collection(uid: uid)
-    }
-
-    func asset(collectionUid: String, tokenId: String) -> NftAsset? {
-        service.asset(collectionUid: collectionUid, tokenId: tokenId)
     }
 
 }

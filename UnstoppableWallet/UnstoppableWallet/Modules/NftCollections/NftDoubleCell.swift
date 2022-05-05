@@ -78,6 +78,7 @@ extension NftDoubleCell {
 
     struct ViewItem {
         let collectionUid: String
+        let contractAddress: String
         let tokenId: String
         let imageUrl: String?
         let name: String

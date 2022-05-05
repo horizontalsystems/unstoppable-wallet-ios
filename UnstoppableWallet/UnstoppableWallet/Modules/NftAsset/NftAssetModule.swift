@@ -2,9 +2,9 @@ import UIKit
 
 struct NftAssetModule {
 
-    static func viewController(collection: NftCollection, asset: NftAsset, imageRatio: CGFloat) -> UIViewController {
+    static func viewController(collectionUid: String, contractAddress: String, tokenId: String, imageRatio: CGFloat) -> UIViewController {
         let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let service = NftAssetService(collection: collection, asset: asset, nftManager: App.shared.nftManager, coinPriceService: coinPriceService)
+        let service = NftAssetService(collectionUid: collectionUid, contractAddress: contractAddress, tokenId: tokenId, provider: App.shared.hsNftProvider, coinPriceService: coinPriceService)
 
         coinPriceService.delegate = service
 

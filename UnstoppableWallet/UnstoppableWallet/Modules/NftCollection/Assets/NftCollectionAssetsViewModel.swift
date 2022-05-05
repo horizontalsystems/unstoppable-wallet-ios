@@ -61,6 +61,7 @@ class NftCollectionAssetsViewModel {
 
         return NftDoubleCell.ViewItem(
                 collectionUid: asset.collectionUid,
+                contractAddress: asset.contract.address,
                 tokenId: asset.tokenId,
                 imageUrl: asset.imagePreviewUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
@@ -84,10 +85,6 @@ extension NftCollectionAssetsViewModel {
 
     var syncErrorDriver: Driver<Bool> {
         syncErrorRelay.asDriver()
-    }
-
-    var collection: NftCollection {
-        service.collection
     }
 
     func asset(tokenId: String) -> NftAsset? {
