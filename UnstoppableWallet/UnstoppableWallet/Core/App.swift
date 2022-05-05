@@ -85,6 +85,9 @@ class App {
     let hsNftProvider: HsNftProvider
     let nftManager: NftManager
 
+    let proFeaturesAuthorizationAdapter: ProFeaturesAuthorizationAdapter
+    let proFeaturesAuthorizationManager: ProFeaturesAuthorizationManager
+
     let appManager: AppManager
 
     init() {
@@ -112,7 +115,7 @@ class App {
         )
         marketKit.sync()
 
-        logger = Logger(minLogLevel: .error, storage: logRecordManager)
+        logger = Logger(minLogLevel: .debug, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")
@@ -242,6 +245,10 @@ class App {
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
         hsNftProvider = HsNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, provider: hsNftProvider)
+
+        let proFeaturesStorage = ProFeaturesStorage(secureStorage: keychainKit.secureStorage)
+        proFeaturesAuthorizationAdapter = ProFeaturesAuthorizationAdapter(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        proFeaturesAuthorizationManager = ProFeaturesAuthorizationManager(storage: proFeaturesStorage, accountManager: accountManager)
 
         let restoreFavoriteCoinWorker = RestoreFavoriteCoinWorker(
                 marketKit: marketKit,

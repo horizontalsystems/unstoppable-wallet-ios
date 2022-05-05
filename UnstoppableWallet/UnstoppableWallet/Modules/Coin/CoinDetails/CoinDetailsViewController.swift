@@ -9,20 +9,24 @@ import MarketKit
 
 class CoinDetailsViewController: ThemeViewController {
     private let viewModel: CoinDetailsViewModel
+    private let proFeaturesViewModel: ProFeaturesYakAuthorizationViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
+    private let proFeaturesCell: ProFeaturesPassesCell
 
     weak var parentNavigationController: UINavigationController?
 
     private var viewItem: CoinDetailsViewModel.ViewItem?
 
-    init(viewModel: CoinDetailsViewModel) {
+    init(viewModel: CoinDetailsViewModel, proFeaturesViewModel: ProFeaturesYakAuthorizationViewModel) {
         self.viewModel = viewModel
+        self.proFeaturesViewModel = proFeaturesViewModel
 
+        proFeaturesCell = ProFeaturesPassesCell(viewModel: proFeaturesViewModel)
         super.init()
     }
 
@@ -73,6 +77,8 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D6Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: CoinDetailsMetricCell.self)
+
+        proFeaturesCell.parentViewController = parentNavigationController
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
             self?.sync(viewItem: $0)
@@ -179,7 +185,25 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func liquiditySections(viewItem: CoinDetailsViewModel.TokenLiquidityViewItem) -> [SectionProtocol]? {
+    private func proFeaturesPassesSection(viewItem: CoinDetailsViewModel.ViewItem) -> SectionProtocol? {
+        guard !viewItem.proFeaturesActivated else {
+            return nil
+        }
+        return Section(
+                id: "pro-features-passes-section",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                            cell: proFeaturesCell,
+                            id: "pro-features-passes",
+                            height: ProFeaturesPassesCell.height
+                    )
+                ]
+        )
+    }
+
+    private func liquiditySections(viewItem: CoinDetailsViewModel.TokenLiquidityViewItem, isFirst: Bool) -> [SectionProtocol]? {
         let liquidityRow = Row<CoinDetailsMetricCell>(
                 id: "liquidity_chart",
                 height: CoinDetailsMetricCell.cellHeight,
@@ -203,7 +227,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "liquidity-header",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        headerRow(title: "coin_page.token_liquidity".localized, topSeparator: false),
+                        headerRow(title: "coin_page.token_liquidity".localized, topSeparator: !isFirst),
                     ]
             ),
             Section(
@@ -217,7 +241,10 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func hasCharts(items: [CoinDetailsViewModel.ChartViewItem?]) -> Bool {
-        !items.compactMap { $0 }.isEmpty
+        !items.compactMap {
+                    $0
+                }
+                .isEmpty
     }
 
     private func distributionCharts(viewItem: CoinDetailsViewModel.TokenDistributionViewItem) -> [RowProtocol] {
@@ -272,7 +299,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         return rows
     }
 
-    private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+    private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         let chartRows = distributionCharts(viewItem: viewItem.tokenDistribution)
 
         guard viewItem.hasMajorHolders || !chartRows.isEmpty else {
@@ -284,7 +311,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "distribution-header",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        headerRow(title: "coin_page.token_distribution".localized)
+                        headerRow(title: "coin_page.token_distribution".localized, topSeparator: !isFirst)
                     ]
             ),
             Section(
@@ -542,12 +569,20 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let liquiditySections = liquiditySections(viewItem: viewItem.tokenLiquidity) {
-                sections.append(contentsOf: liquiditySections)
+            var isFirst = true
+            if let proFeaturesSection = proFeaturesPassesSection(viewItem: viewItem) {
+                sections.append(proFeaturesSection)
+                isFirst = false
             }
 
-            if let distributionSections = distributionSections(viewItem: viewItem) {
+            if let liquiditySections = liquiditySections(viewItem: viewItem.tokenLiquidity, isFirst: isFirst) {
+                sections.append(contentsOf: liquiditySections)
+                isFirst = false
+            }
+
+            if let distributionSections = distributionSections(viewItem: viewItem, isFirst: isFirst) {
                 sections.append(contentsOf: distributionSections)
+                isFirst = false
             }
 
             if let tvlSections = tvlSections(viewItem: viewItem) {

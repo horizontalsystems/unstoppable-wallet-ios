@@ -2,17 +2,18 @@ import Foundation
 import HsToolKit
 import RxSwift
 import Alamofire
+import ObjectMapper
 
 class ProFeaturesAuthorizationAdapter {
-    private let baseUrl: String
+    private let apiUrl: String
     private let networkManager: NetworkManager
     private let headers: HTTPHeaders?
 
-    init(baseUrl: String, networkManager: NetworkManager, apiKey: String?) {
-        self.baseUrl = baseUrl
+    init(networkManager: NetworkManager,appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
+        apiUrl = appConfigProvider.marketApiUrl
 
-        headers = apiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
+        headers = appConfigProvider.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }
 
 }
@@ -25,7 +26,9 @@ extension ProFeaturesAuthorizationAdapter {
         let parameters: Parameters = [
             "address": address
         ]
-        networkManager.single(url: "\(baseUrl)/v1/auth/get-key", method: .get, parameters: parameters, headers: headers)
+        return networkManager.single(url: "\(apiUrl)/v1/auth/get-key", method: .get, parameters: parameters, headers: headers).map { (response: AuthorizeResponse) in
+            response.key
+        }
     }
 
     // Authenticate
@@ -36,7 +39,31 @@ extension ProFeaturesAuthorizationAdapter {
             "signature": signature
         ]
 
-        return networkManager.single(url: "\(baseUrl)/v1/auth/authenticate", method: .post, parameters: parameters, headers: headers)
+        return networkManager.single(url: "\(apiUrl)/v1/auth/authenticate", method: .post, parameters: parameters, headers: headers).map { (response: AuthenticateResponse) in
+            response.key
+        }
+    }
+
+}
+
+extension ProFeaturesAuthorizationAdapter {
+
+    private class AuthorizeResponse: ImmutableMappable {
+        public let key: String
+
+        required public init(map: Map) throws {
+            key = try map.value("key")
+        }
+
+    }
+
+    private class AuthenticateResponse: ImmutableMappable {
+        public let key: String
+
+        required public init(map: Map) throws {
+            key = try map.value("token")
+        }
+
     }
 
 }

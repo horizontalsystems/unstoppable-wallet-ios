@@ -1,9 +1,7 @@
 import UIKit
 
 class XXXView {
-    weak var parentViewController: UIViewController
-
-    init()
+    weak var parentViewController: UIViewController?
 
     private func showSign(message: String) {
 

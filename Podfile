@@ -22,8 +22,8 @@ def appPods
   pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.13.0-beta.2'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
 
-  # pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
-  pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
+  pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
   pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
