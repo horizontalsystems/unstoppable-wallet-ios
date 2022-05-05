@@ -335,7 +335,7 @@ DEPENDENCIES:
   - DashKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Erc20Kit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - EthereumABI (from `https://github.com/horizontalsystems/EthereumABI`)
-  - EthereumKit.swift (from `../ethereum-kit-ios/`)
+  - EthereumKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - FeeRateKit.swift (from `https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios`)
   - GRDB.swift
   - HdWalletKit.swift (from `https://github.com/horizontalsystems/hd-wallet-kit-ios`)
@@ -448,7 +448,7 @@ EXTERNAL SOURCES:
   EthereumABI:
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :path: "../ethereum-kit-ios/"
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
@@ -525,6 +525,9 @@ CHECKOUT OPTIONS:
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
+  EthereumKit.swift:
+    :commit: 77311b1c49bf956c3d205cff490af88a426dea23
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
@@ -535,7 +538,7 @@ CHECKOUT OPTIONS:
     :commit: c3e55cf6635d4451010feb4e4a7291443cdd8aeb
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: 6f9a747e67919f5ce09a7816f3cbe0471e10e608
+    :commit: c8d68eb8d8f48f7430efaa7dc628f29137a1c9b3
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: 18d8c807021f613b1032c7b4da8801f563177228
@@ -673,6 +676,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ac11c62951bc8130abbce780705956fb7fb54fd9
 
-PODFILE CHECKSUM: 61184b08beb6ced1d40910cfa13540a7041c58d8
+PODFILE CHECKSUM: 64489bbbcc987ca5069a2e815f2901071ba5dbbc
 
 COCOAPODS: 1.11.2

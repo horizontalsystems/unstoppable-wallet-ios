@@ -14,7 +14,9 @@ class ProFeaturesYakAuthorizationViewModel {
     init(service: ProFeaturesYakAuthorizationService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in
+            self?.sync(state: $0)
+        }
     }
 
     private func sync(state: ProFeaturesYakAuthorizationService.State) {
@@ -23,11 +25,12 @@ class ProFeaturesYakAuthorizationViewModel {
             showHudRelay.accept(true)
         case .idle:
             showHudRelay.accept(false)
-        case .failed(let error):
+        case .failed:
             showHudRelay.accept(false)
-        case .receivedMessage(let message):
+        case .receivedMessage:
             showHudRelay.accept(false)
-        case .receivedSessionKey(let sessionKey):
+            showSignMessageRelay.accept("dfsdkjfh")
+        case .receivedSessionKey:
             showHudRelay.accept(false)
         }
     }
@@ -36,16 +39,32 @@ class ProFeaturesYakAuthorizationViewModel {
 
 extension ProFeaturesYakAuthorizationViewModel {
 
-        var showHudDriver: Driver<Bool> {
-            showHudRelay.asDriver()
-        }
+    var title: String {
+        "pro_features.authorize.wallet_passes.title".localized
+    }
 
-        var showSignMessageDriver: Driver<String> {
-            showSignMessageRelay.asDriver()
-        }
+    var subtitle: String {
+        "pro_features.authorize.wallet_passes.subtitle".localized
+    }
 
-        var showLockInfoDriver: Driver<()> {
-            showLockInfoRelay.asDriver()
-        }
+    var showHudSignal: Signal<Bool> {
+        showHudRelay.asSignal()
+    }
+
+    var showSignMessageSignal: Signal<String> {
+        showSignMessageRelay.asSignal()
+    }
+
+    var showLockInfoSignal: Signal<()> {
+        showLockInfoRelay.asSignal()
+    }
+
+    func authorize() {
+        service.authenticate()
+    }
+
+    func activate(message: String) {
+        service.activate()
+    }
 
 }

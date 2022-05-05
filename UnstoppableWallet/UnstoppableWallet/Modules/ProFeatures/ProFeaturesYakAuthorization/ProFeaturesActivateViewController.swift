@@ -4,21 +4,21 @@ import ThemeKit
 import SectionsTableView
 import ComponentKit
 
-protocol IProFeaturesActivateDelegate: AnyObject {
-    func onActivate()
-    func onCancel()
-}
-
 class ProFeaturesActivateViewController: ThemeViewController {
     private let config: Config
-    private weak var delegate: IProFeaturesActivateDelegate?
 
     private let tableView = SectionsTableView(style: .grouped)
+
+    private let backupButtonHolder = BottomGradientHolder()
     private let activateButton = ThemeButton()
 
-    init(config: Config, delegate: IProFeaturesActivateDelegate) {
+    private let onSuccess: (() -> ())?
+    private let onCancel: (() -> ())?
+
+    init(config: Config, onSuccess: (() -> ())?, onCancel: (() -> ())?) {
         self.config = config
-        self.delegate = delegate
+        self.onSuccess = onSuccess
+        self.onCancel = onCancel
 
         super.init()
     }
@@ -39,13 +39,25 @@ class ProFeaturesActivateViewController: ThemeViewController {
         }
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: ImageCell.self)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
 
-        view.addSubview(activateButton)
+        tableView.registerCell(forClass: ImageCell.self)
+        tableView.registerCell(forClass: MarkdownHeader1Cell.self)
+        tableView.registerCell(forClass: MarkdownHeader3Cell.self)
+        tableView.registerCell(forClass: MarkdownTextCell.self)
+        tableView.registerCell(forClass: MarkdownListItemCell.self)
+
+        view.addSubview(backupButtonHolder)
+        backupButtonHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        backupButtonHolder.addSubview(activateButton)
         activateButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -57,17 +69,17 @@ class ProFeaturesActivateViewController: ThemeViewController {
     }
 
     @objc private func onActivate() {
-        delegate?.onActivate()
+        onSuccess?()
     }
 
     @objc private func onTapCancel() {
         dismiss(animated: true)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
 
-        delegate?.onCancel()
+        onCancel?()
     }
 
     private var topSections: [SectionProtocol] {
@@ -93,7 +105,33 @@ class ProFeaturesActivateViewController: ThemeViewController {
             )
         }
 
+        var infoRows = [RowProtocol]()
+
+        let subtitleString = NSAttributedString(string: config.subtitle, attributes: [.font: UIFont.title3, .foregroundColor: UIColor.themeJacob])
+        infoRows.append(MarkdownViewController.header1Row(id: "subtitle-cell", attributedString: subtitleString))
+
+        if let description = config.description {
+            let descriptionString = NSAttributedString(string: description, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran])
+            infoRows.append(MarkdownViewController.textRow(id: "description-cell", attributedString: descriptionString, delegate: nil))
+        }
+
+        if let features = config.features {
+            let featuresString = NSAttributedString(string: features, attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeJacob])
+            infoRows.append(MarkdownViewController.header3Row(id: "features-cell", attributedString: featuresString))
+        }
+
+        for viewItem in config.viewItems {
+            let viewItemString = NSAttributedString(string: viewItem, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran])
+            infoRows.append(MarkdownViewController.listItemRow(id: "\(viewItem)-cell", attributedString: viewItemString, prefix: "•", tightTop: false, tightBottom: false))
+        }
         
+        sections.append(
+                Section(
+                        id: "info-section",
+                        footerState: .margin(height: .margin32),
+                        rows: infoRows
+                )
+        )
 
         return sections
     }
@@ -103,45 +141,10 @@ class ProFeaturesActivateViewController: ThemeViewController {
 extension ProFeaturesActivateViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let isFirst = config.description == nil
-        return [
-            Section(
-                    id: "description",
-                    rows: [descriptionRow].flatMap {
-                        $0
-                    }
-            ),
-            Section(
-                    id: "main",
-                    rows: config.viewItems.enumerated().map { index, viewItem in
-                        let isLast = index == config.viewItems.count - 1
-
-                        return CellBuilder.row(
-                                elements: [.text, .image20],
-                                tableView: tableView,
-                                id: "item_\(index)",
-                                height: .heightCell48,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-
-                                    cell.bind(index: 0) { (component: TextComponent) in
-                                        component.set(style: .d1)
-                                        component.text = viewItem
-                                    }
-
-                                    cell.bind(index: 1) { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
-                                        component.imageView.tintColor = .themeJacob
-                                    }
-                                }
-                        )
-                    }
-            )
-        ]
+        topSections
     }
 
 }
-
 extension ProFeaturesActivateViewController {
 
     struct Config {
@@ -149,7 +152,7 @@ extension ProFeaturesActivateViewController {
         let title: String
         let subtitle: String
         let description: String?
-        let features: String
+        let features: String?
         let viewItems: [String]
 
         static var mountainYak: Config {

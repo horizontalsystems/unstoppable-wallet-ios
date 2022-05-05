@@ -88,6 +88,7 @@ class CoinDetailsViewModel {
 
     private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
+                proFeaturesActivated: item.proFeatures.activated,
                 tokenLiquidity: tokenLiquidity(proFeatures: item.proFeatures),
                 tokenDistribution: tokenDistribution(proFeatures: item.proFeatures),
                 hasMajorHolders: service.hasMajorHolders,
@@ -188,6 +189,7 @@ extension CoinDetailsViewModel {
 extension CoinDetailsViewModel {
 
     struct ViewItem {
+        let proFeaturesActivated: Bool
         let tokenLiquidity: TokenLiquidityViewItem
         let tokenDistribution: TokenDistributionViewItem
         let hasMajorHolders: Bool

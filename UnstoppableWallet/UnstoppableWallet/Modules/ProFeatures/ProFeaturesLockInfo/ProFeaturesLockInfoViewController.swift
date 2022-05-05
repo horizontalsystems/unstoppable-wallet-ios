@@ -111,7 +111,7 @@ extension ProFeaturesLockInfoViewController: SectionsDataSource {
         return [
             Section(
                     id: "description",
-                    rows: [descriptionRow].flatMap { $0 }
+                    rows: [descriptionRow].compactMap { $0 }
             ),
             Section(
                     id: "main",

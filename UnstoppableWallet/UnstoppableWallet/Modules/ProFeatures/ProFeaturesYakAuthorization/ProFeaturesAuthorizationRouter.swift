@@ -15,7 +15,7 @@ class ProFeaturesAuthorizationRouter {
     }
 
     private func showLockInfo(type: ProFeaturesStorage.NFTType) {
-        let lockInfoViewController = ProFeaturesLockInfoViewController(config: .coinDetails) // Yak
+        let lockInfoViewController = ProFeaturesLockInfoViewController(config: .coinDetails, delegate: self) // Yak
         visibleViewController.present(lockInfoViewController, animated: true)
     }
 
@@ -26,10 +26,14 @@ class ProFeaturesAuthorizationRouter {
 
 }
 
-extension ProFeaturesAuthorizationRouter: IProFeaturesSignDelegate {
+extension ProFeaturesAuthorizationRouter: IProFeaturesLockDelegate {
 
-    func onSign(sessionKey: String) {
-        service.onReceive(sessionKey: sessionKey)
+    func onGoToMint(viewController: UIViewController) {
+
     }
+
+//    func onSign(sessionKey: String) {
+//        service.onR(sessionKey: sessionKey)
+//    }
 
 }

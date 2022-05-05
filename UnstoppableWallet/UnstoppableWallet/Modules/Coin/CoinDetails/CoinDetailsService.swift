@@ -5,11 +5,13 @@ import CurrencyKit
 import Chart
 
 class CoinDetailsService {
+    private let proFeaturesUpdateDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
 
     private let fullCoin: FullCoin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let proFeaturesManager: ProFeaturesAuthorizationManager
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
@@ -18,10 +20,13 @@ class CoinDetailsService {
         }
     }
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, proFeaturesManager: ProFeaturesAuthorizationManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.proFeaturesManager = proFeaturesManager
+
+        subscribe(proFeaturesUpdateDisposeBag, proFeaturesManager.sessionKeyObservable) { [weak self] _ in self?.sync() }
     }
 
     private func fetchCharts(details: MarketInfoDetails, proFeatures: ProFeatures) -> Single<Item> {
@@ -39,7 +44,12 @@ class CoinDetailsService {
     }
 
     private func proFeatures(coinUid: String, currencyCode: String) -> Single<ProFeatures> {
-        Single.just(ProFeatures.forbidden)
+        if proFeaturesManager.sessionKey(type: .mountainYak) != nil {
+            //request needed charts for pro state
+            return Single.just(ProFeatures.empty)
+        } else {
+            return Single.just(ProFeatures.forbidden)
+        }
     }
 
 }
@@ -123,9 +133,14 @@ extension CoinDetailsService {
 
     struct ProFeatures {
         static var forbidden: ProFeatures {
-            ProFeatures(dexVolumes: .forbidden, dexLiquidity: .forbidden, txCount: .forbidden, txVolume: .forbidden, activeAddresses: .forbidden)
+            ProFeatures(activated: false, dexVolumes: .forbidden, dexLiquidity: .forbidden, txCount: .forbidden, txVolume: .forbidden, activeAddresses: .forbidden)
         }
 
+        static var empty: ProFeatures {
+            ProFeatures(activated: true, dexVolumes: .empty, dexLiquidity: .empty, txCount: .empty, txVolume: .empty, activeAddresses: .empty)
+        }
+
+        let activated: Bool
         let dexVolumes: ProData
         let dexLiquidity: ProData
         let txCount: ProData

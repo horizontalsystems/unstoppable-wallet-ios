@@ -84,7 +84,57 @@ class MarkdownViewController: ThemeViewController {
         }
     }
 
-    private func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
+    private func row(index: Int, viewItem: MarkdownBlockViewItem) -> RowProtocol {
+        switch viewItem {
+        case let .header(attributedString, level):
+            return Self.headerRow(
+                    id: "header_\(index)",
+                    attributedString: attributedString,
+                    level: level
+            )
+        case let .text(attributedString):
+            return Self.textRow(
+                    id: "text_\(index)",
+                    attributedString: attributedString,
+                    delegate: self
+            )
+        case let .listItem(attributedString, prefix, tightTop, tightBottom):
+            return Self.listItemRow(
+                    id: "listItem_\(index)",
+                    attributedString: attributedString,
+                    prefix: prefix,
+                    tightTop: tightTop,
+                    tightBottom: tightBottom,
+                    delegate: self
+            )
+        case let .blockQuote(attributedString, tightTop, tightBottom):
+            return Self.blockQuoteRow(
+                    id: "blockQuote_\(index)",
+                    attributedString: attributedString,
+                    tightTop: tightTop,
+                    tightBottom: tightBottom,
+                    delegate: self
+            )
+        case let .image(url, type, tight):
+            return Self.imageRow(
+                    id: "image_\(index)",
+                    url: url,
+                    type: type,
+                    tight: tight
+            )
+        case let .imageTitle(text):
+            return Self.imageTitleRow(
+                    id: "imageTitle_\(index)",
+                    text: text
+            )
+        }
+    }
+
+}
+
+extension MarkdownViewController {
+
+    static func headerRow(id: String, attributedString: NSAttributedString, level: Int) -> RowProtocol {
         if level == 1 || level == 2 {
             return header1Row(id: id, attributedString: attributedString)
         } else {
@@ -92,7 +142,7 @@ class MarkdownViewController: ThemeViewController {
         }
     }
 
-    private func header1Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
+    static func header1Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<MarkdownHeader1Cell>(
                 id: id,
                 dynamicHeight: { containerWidth in
@@ -104,7 +154,7 @@ class MarkdownViewController: ThemeViewController {
         )
     }
 
-    private func header3Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
+    static func header3Row(id: String, attributedString: NSAttributedString) -> RowProtocol {
         Row<MarkdownHeader3Cell>(
                 id: id,
                 dynamicHeight: { containerWidth in
@@ -116,43 +166,43 @@ class MarkdownViewController: ThemeViewController {
         )
     }
 
-    private func textRow(id: String, attributedString: NSAttributedString) -> RowProtocol {
+    static func textRow(id: String, attributedString: NSAttributedString, delegate: UITextViewDelegate? = nil) -> RowProtocol {
         Row<MarkdownTextCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
                     MarkdownTextCell.height(containerWidth: containerWidth, attributedString: attributedString)
                 },
-                bind: { [weak self] cell, _ in
-                    cell.bind(attributedString: attributedString, delegate: self)
+                bind: { [weak delegate] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: delegate)
                 }
         )
     }
 
-    private func listItemRow(id: String, attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
+    static func listItemRow(id: String, attributedString: NSAttributedString, prefix: String?, tightTop: Bool, tightBottom: Bool, delegate: UITextViewDelegate? = nil) -> RowProtocol {
         Row<MarkdownListItemCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
                     MarkdownListItemCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
-                bind: { [weak self] cell, _ in
-                    cell.bind(attributedString: attributedString, delegate: self, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
+                bind: { [weak delegate] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: delegate, prefix: prefix, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
 
-    private func blockQuoteRow(id: String, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool) -> RowProtocol {
+    static func blockQuoteRow(id: String, attributedString: NSAttributedString, tightTop: Bool, tightBottom: Bool, delegate: UITextViewDelegate? = nil) -> RowProtocol {
         Row<MarkdownBlockQuoteCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
                     MarkdownBlockQuoteCell.height(containerWidth: containerWidth, attributedString: attributedString, tightTop: tightTop, tightBottom: tightBottom)
                 },
-                bind: { [weak self] cell, _ in
-                    cell.bind(attributedString: attributedString, delegate: self, tightTop: tightTop, tightBottom: tightBottom)
+                bind: { [weak delegate] cell, _ in
+                    cell.bind(attributedString: attributedString, delegate: delegate, tightTop: tightTop, tightBottom: tightBottom)
                 }
         )
     }
 
-    private func imageRow(id: String, url: URL, type: MarkdownImageType, tight: Bool) -> RowProtocol {
+    static func imageRow(id: String, url: URL, type: MarkdownImageType, tight: Bool) -> RowProtocol {
         Row<MarkdownImageCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
@@ -164,7 +214,7 @@ class MarkdownViewController: ThemeViewController {
         )
     }
 
-    private func imageTitleRow(id: String, text: String) -> RowProtocol {
+    static func imageTitleRow(id: String, text: String) -> RowProtocol {
         Row<MarkdownImageTitleCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
@@ -174,49 +224,6 @@ class MarkdownViewController: ThemeViewController {
                     cell.bind(text: text)
                 }
         )
-    }
-
-    private func row(index: Int, viewItem: MarkdownBlockViewItem) -> RowProtocol {
-        switch viewItem {
-        case let .header(attributedString, level):
-            return headerRow(
-                    id: "header_\(index)",
-                    attributedString: attributedString,
-                    level: level
-            )
-        case let .text(attributedString):
-            return textRow(
-                    id: "text_\(index)",
-                    attributedString: attributedString
-            )
-        case let .listItem(attributedString, prefix, tightTop, tightBottom):
-            return listItemRow(
-                    id: "listItem_\(index)",
-                    attributedString: attributedString,
-                    prefix: prefix,
-                    tightTop: tightTop,
-                    tightBottom: tightBottom
-            )
-        case let .blockQuote(attributedString, tightTop, tightBottom):
-            return blockQuoteRow(
-                    id: "blockQuote_\(index)",
-                    attributedString: attributedString,
-                    tightTop: tightTop,
-                    tightBottom: tightBottom
-            )
-        case let .image(url, type, tight):
-            return imageRow(
-                    id: "image_\(index)",
-                    url: url,
-                    type: type,
-                    tight: tight
-            )
-        case let .imageTitle(text):
-            return imageTitleRow(
-                    id: "imageTitle_\(index)",
-                    text: text
-            )
-        }
     }
 
 }

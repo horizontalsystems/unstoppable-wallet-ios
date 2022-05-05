@@ -36,7 +36,7 @@ extension ImageCell {
 
     static func height(containerWidth: CGFloat, imageSize: CGSize? = nil) -> CGFloat {
         guard let imageSize = imageSize else {
-            return containerWidth - 2 * Self.horizontalPadding
+            return max(0, containerWidth - 2 * Self.horizontalPadding)
         }
 
         return imageSize.height

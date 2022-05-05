@@ -15,7 +15,7 @@ extension ProFeaturesStorage {
     func getAll() -> [NFTType: SessionKey] {
         var keys = [NFTType: SessionKey]()
         for type in NFTType.allCases {
-            if let raw: String = secureStorage.value(for: type),
+            if let raw: String = secureStorage.value(for: type.rawValue),
                let sessionKey = SessionKey(raw: raw) {
                 keys[type] = sessionKey
             }
@@ -25,26 +25,26 @@ extension ProFeaturesStorage {
     }
 
     func get(type: NFTType) -> SessionKey? {
-        let raw: String? = secureStorage.value(for: type)
-        return raw.map { SessionKey(raw: $0) }
+        let raw: String? = secureStorage.value(for: type.rawValue)
+        return raw.flatMap { SessionKey(raw: $0) }
     }
 
     func save(type: NFTType, key: SessionKey) {
-        secureStorage.set(value: key.rawValue, for: type)
+        try? secureStorage.set(value: key.rawValue, for: type.rawValue)
     }
 
     func delete(accountId: String) {
         let keys = getAll()
         for key in keys {
             if key.value.accountId == accountId {
-                try? secureStorage.removeValue(for: key.key)
+                try? secureStorage.removeValue(for: key.key.rawValue)
             }
         }
     }
 
     func clear() {
-        for type in NFTType {
-            try? secureStorage.removeValue(for: type)
+        for type in NFTType.allCases {
+            try? secureStorage.removeValue(for: type.rawValue)
         }
     }
 
@@ -53,14 +53,20 @@ extension ProFeaturesStorage {
 extension ProFeaturesStorage {
 
     struct SessionKey: CustomStringConvertible {
-        private static let separator = "_"
+        private static let separator: Character = "_"
 
         let accountId: String
         let address: String
         let sessionKey: String
 
+        init(accountId: String, address: String, sessionKey: String) {
+            self.accountId = accountId
+            self.address = address
+            self.sessionKey = sessionKey
+        }
+
         init?(raw: String) {
-            let values = raw.split(separator: SessionKey.separator)
+            let values = raw.split(separator: SessionKey.separator).map { String($0) }
             guard values.count == 3 else {
                 return nil
             }
@@ -71,7 +77,7 @@ extension ProFeaturesStorage {
         }
 
         var rawValue: String {
-            [accountId, address, sessionKey].joined(separator: SessionKey.separator)
+            [accountId, address, sessionKey].joined(separator: String(SessionKey.separator))
         }
 
     }
