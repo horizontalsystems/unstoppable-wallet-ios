@@ -389,7 +389,7 @@
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
@@ -463,9 +463,9 @@
 
 "market.global.subtitle" = "图表";
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -498,9 +498,9 @@
 "coin_page.markets.empty" = "没有可用数据";
 
 "coin_page.token_liquidity" = "代币流动性";
-"coin_page.dex_volume" = "DEX Volume";
-"coin_page.dex_liquidity" = "DEX Liquidity";
-"coin_page.chart.locked" = "Locked";
+"coin_page.dex_volume" = "DEX交易量";
+"coin_page.dex_liquidity" = "DEX流动性";
+"coin_page.chart.locked" = "锁住";
 
 "coin_page.token_distribution" = "代币分布";
 "coin_page.tx_count" = "Tx Count";
