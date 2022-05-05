@@ -164,20 +164,20 @@ extension WalletViewItemFactory {
         let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
         let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatNew(currencyValue: currencyValue)
 
-        let btcAmount: String
+        let convertedValue: String
         if balanceHidden {
-            btcAmount = "*****"
-        } else if let amount = totalItem.btcAmount, let formattedValue = ValueFormatter.instance.formatNew(value: amount, decimalCount: 8, symbol: "BTC") {
-            btcAmount = "~ \(formattedValue)"
+            convertedValue = "*****"
+        } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatNew(coinValue: value) {
+            convertedValue = "≈ \(formattedValue)"
         } else {
-            btcAmount = "---"
+            convertedValue = "---"
         }
 
         return WalletViewModel.HeaderViewItem(
                 amount: amount,
                 amountExpired: balanceHidden ? false : totalItem.expired,
-                btcAmount: btcAmount,
-                btcAmountExpired: balanceHidden ? false : totalItem.btcAmountExpired,
+                convertedValue: convertedValue,
+                convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired,
                 manageWalletsHidden: watchAccount,
                 address: watchAccount ? watchAccountAddress?.eip55 : nil
         )
