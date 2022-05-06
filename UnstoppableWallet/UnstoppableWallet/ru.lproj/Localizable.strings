@@ -239,11 +239,11 @@
 "send.amount_warning.coin_needed_for_fee" = "Вы можете оставить некоторую сумму в размере %@ на балансе, чтобы оплачивать будущие транзакции.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "Недостаточный Баланс";
+"send.fee_settings.amount_error.balance" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "Внимание! Транзакция может застрять в сети";
+"send.fee_settings.stuck_warning" = "Транзакция может застрять в сети или будет отклонена.";
 
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
