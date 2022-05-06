@@ -371,33 +371,65 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func actionTitleRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
-        Row<B7Cell>(
-                id: "action_\(rowInfo.index)",
-                hash: "action_\(value)",
+    private func actionTitleRow(rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image24, .text, .text],
+                tableView: tableView,
+                id: "action-\(rowInfo.index)",
+                hash: "action-\(value)",
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = title
-                    cell.value = value
-                    cell.valueColor = .themeGray
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        if let iconName = iconName {
+                            component.isHidden = false
+                            component.imageView.image = UIImage(named: iconName)?.withTintColor(iconDimmed ? .themeGray : .themeLeah)
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 2) { (component: TextComponent) in
+                        component.set(style: .c1)
+                        component.text = value
+                    }
                 }
         )
     }
 
-    private func amountRow(rowInfo: RowInfo, coinAmount: String, currencyAmount: String?, incoming: Bool?) -> RowProtocol {
-        Row<D7Cell>(
-                id: "amount_\(rowInfo.index)",
-                hash: "amount_\(coinAmount)",
+    private func amountRow(rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: TransactionInfoModule.AmountType) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image24, .text, .text],
+                tableView: tableView,
+                id: "amount-\(rowInfo.index)",
+                hash: "amount-\(coinAmount)-\(currencyAmount)",
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = coinAmount
-                    cell.value = currencyAmount
-                    cell.valueColor = .themeLeah
-                    cell.valueItalic = false
-                    incoming.flatMap {
-                        cell.valueColor = $0 ? .themeGreenD : .themeYellowD
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        switch type {
+                        case .incoming: component.set(style: .d4)
+                        case .outgoing: component.set(style: .d5)
+                        case .neutral: component.set(style: .d2)
+                        }
+
+                        component.text = coinAmount
+                    }
+
+                    cell.bind(index: 2) { (component: TextComponent) in
+                        component.set(style: .c1)
+                        component.text = currencyAmount
                     }
                 }
         )
@@ -434,8 +466,8 @@ class TransactionInfoViewController: ThemeViewController {
     }
     private func row(viewItem: TransactionInfoModule.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-        case let .actionTitle(title, subTitle): return actionTitleRow(rowInfo: rowInfo, title: title, value: subTitle ?? "")
-        case let .amount(coinAmount, currencyAmount, incoming): return amountRow(rowInfo: rowInfo, coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: incoming)
+        case let .actionTitle(iconName, iconDimmed, title, subTitle): return actionTitleRow(rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type): return amountRow(rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems): return optionsRow(viewItems: viewItems)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
