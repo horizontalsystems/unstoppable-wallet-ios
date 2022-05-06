@@ -766,11 +766,11 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings_security.change_pin" = "비밀번호 변경";
 "settings_security.touch_id" = "터치 아이디";
 "settings_security.face_id" = "얼굴인식 아이디";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.blockchain_settings" = "블록 체인 설정";
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
 
-"btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source" = "매개 변수 복원";
+"btc_blockchain_settings.restore_source.description" = "매매거래로 지갑을 복원 할 데이터 소스를 선택하세요.";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 "btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
@@ -1122,7 +1122,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collection.tab.assets" = "Items";
 "nft_collection.tab.activity" = "Activity";
 
-"nft_collection.overview.description" = "Description";
+"nft_collection.overview.description" = "설명";
 "nft_collection.overview.contracts" = "Contracts";
 "nft_collection.overview.links" = "링크";
 "nft_collection.overview.links.website" = "웹사이트";
