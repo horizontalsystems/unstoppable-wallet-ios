@@ -594,7 +594,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Pro Features
 
-"pro_features.lock_info.go_to_mint" = "Coming So Soon";
+"pro_features.authorize.wallet_passes.title" = "Unstoppable Wallet Passes";
+"pro_features.authorize.wallet_passes.subtitle" = "Get advanced features\nby holding our NFTs";
+
+"pro_features.lock_info.go_to_mint" = "Coming Soon";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
 "pro_features.lock_info.subtitle" = "NFT";
@@ -604,6 +607,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
 "pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
 "pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
+
+"pro_features.activate" = "Activate";
+"pro_features.mountain_yak.activate.title" = "Activate the Pass";
+"pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
+"pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
+"pro_features.mountain_yak.activate.features" = "After Activation You Get:";
+"pro_features.activate.invalid_sign" = "Could not Activate ...";
 
 // Transactions
 
