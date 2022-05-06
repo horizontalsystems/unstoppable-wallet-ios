@@ -87,73 +87,85 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
-
-    private func pendingStatusCell(rowInfo: RowInfo, progress: Double, label: String) -> RowProtocol {
-        Row<C24Cell>(
-                id: "status",
-                hash: "pending-\(progress)-\(label)",
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = UIImage(named: "circle_information_20")?.withTintColor(.themeJacob)
-                    cell.titleImageAction = { [weak self] in
-                        self?.openStatusInfo()
-                    }
-                    cell.title = "status".localized
-                    cell.value = label
-                    cell.valueColor = .themeLeah
-                    cell.set(progress: progress)
-                }
-        )
-    }
-
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
-        let statusText: String
+        let hash: String
+        var hasButton = true
+        let value: String
+        var icon: UIImage?
+        var spinnerProgress: Double?
+
         switch status {
-        case .pending: statusText = "transactions.pending".localized
-        case .processing: statusText = "transactions.processing".localized
-        case .completed: statusText = "transactions.completed".localized
-        case .failed: statusText = "transactions.failed".localized
+        case .pending:
+            hash = "pending"
+            value = "transactions.pending".localized
+            spinnerProgress = 0.2
+        case .processing(let progress):
+            hash = "processing-\(progress)"
+            value = "transactions.processing".localized
+            spinnerProgress = progress * 0.8 + 0.2
+        case .completed:
+            hash = "completed"
+            hasButton = false
+            value = "transactions.completed".localized
+            icon = UIImage(named: "check_1_20")?.withTintColor(.themeRemus)
+        case .failed:
+            hash = "failed"
+            value = "transactions.failed".localized
+            icon = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
         }
 
-        switch status {
-        case .completed:
-            return Row<D6Cell>(
-                    id: "status",
-                    hash: "completed",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                        cell.title = "status".localized
-                        cell.value = statusText
-                        cell.valueImage = UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate)
-                        cell.valueImageTintColor = .themeRemus
-                        cell.selectionStyle = .none
-                    }
-            )
-        case .failed:
-            return Row<C6Cell>(
-                    id: "status",
-                    hash: "failed",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                        cell.title = "status".localized
-                        cell.titleImage = UIImage(named: "circle_information_20")?.withTintColor(.themeJacob)
-                        cell.value = statusText
-                        cell.valueImage = UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate)
-                        cell.valueImageTintColor = .themeLucian
-                        cell.titleImageAction = { [weak self] in
-                            self?.openStatusInfo()
+        return CellBuilder.row(
+                elements: [.transparentIconButton, .margin4, .text, .text, .margin8, .image20, .determiniteSpinner20],
+                layoutMargins: UIEdgeInsets(top: 0, left: hasButton ? .margin4 : CellBuilder.defaultMargin, bottom: 0, right: CellBuilder.defaultMargin),
+                tableView: tableView,
+                id: "status",
+                hash: hash,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+
+                    cell.bind(index: 0) { (component: TransparentIconButtonComponent) in
+                        if hasButton {
+                            component.isHidden = false
+                            component.button.isSelected = true
+                            component.button.set(image: UIImage(named: "circle_information_20"))
+                            component.onTap = { [weak self] in
+                                self?.openStatusInfo()
+                            }
+                        } else {
+                            component.isHidden = true
                         }
                     }
-            )
 
-        case .pending:
-            return pendingStatusCell(rowInfo: rowInfo, progress: 0.2, label: statusText)
-        case .processing(let progress):
-            return pendingStatusCell(rowInfo: rowInfo, progress: progress * 0.8 + 0.2, label: statusText)
-        }
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = "status".localized
+                    }
+
+                    cell.bind(index: 2) { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = value
+                    }
+
+                    cell.bind(index: 3) { (component: ImageComponent) in
+                        if let icon = icon {
+                            component.isHidden = false
+                            component.imageView.image = icon
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+
+                    cell.bind(index: 4) { (component: DeterminiteSpinnerComponent) in
+                        if let progress = spinnerProgress {
+                            component.isHidden = false
+                            component.set(progress: progress)
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                }
+        )
     }
 
     private func optionsRow(viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
