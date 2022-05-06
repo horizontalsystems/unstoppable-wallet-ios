@@ -1051,10 +1051,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Fee Settings
 
 "fee_settings" = "费用设置";
-"fee_settings.fee" = "Fee";
+"fee_settings.fee" = "费用";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";
 "fee_settings.fee_priority" = "Speed";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "费率";
 "fee_settings.max_fee" = "最大手续费";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
 "fee_settings.gas_limit" = "燃料限制";
@@ -1124,10 +1124,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collection.tab.assets" = "Items";
 "nft_collection.tab.activity" = "Activity";
 
-"nft_collection.overview.description" = "Description";
-"nft_collection.overview.contracts" = "Contracts";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.description" = "描述";
+"nft_collection.overview.contracts" = "合约";
+"nft_collection.overview.links" = "链接";
+"nft_collection.overview.links.website" = "网站";
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
