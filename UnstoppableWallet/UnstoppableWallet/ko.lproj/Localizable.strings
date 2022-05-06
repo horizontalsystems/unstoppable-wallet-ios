@@ -45,7 +45,7 @@
 
 "n/a" = "해당 없음 ";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "동기화 오류입니다. 다시 시도하십시오.";
 
 "number.thousand" = "%@k";
 "number.million" = "%@M";
@@ -61,8 +61,8 @@
 
 "restore.title" = "지갑 선택";
 "restore.enter_key" = "암호를 입력하세요";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
+"restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다.";
+"restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
@@ -185,7 +185,7 @@
 "send.network_fee" = "네트워크 수수료";
 "send.estimated_fee" = "예상 수수료";
 "send.max_fee" = "최대 수수료";
-"send.tx_speed" = "Transaction Speed";
+"send.tx_speed" = "거래 속도";
 "send.tx_speed_low" = "낮음";
 "send.tx_speed_recommended" = "권장";
 "send.tx_speed_high" = "높음";
@@ -221,7 +221,7 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "전송";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
@@ -229,7 +229,7 @@
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.cancel_button" = "트랜잭션 취소";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "메소드";
 "send.amount_error.balance" = "잔고 부족";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
@@ -237,11 +237,11 @@
 "send.amount_warning.coin_needed_for_fee" = "향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "잔액 부족";
+"send.fee_settings.amount_error.balance" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "갇힐 위험";
+"send.fee_settings.stuck_warning" = "트랜잭션이 중단되거나 실패할 수 있습니다.";
 
 "send.stuck_warning" = "경고! 갇힐 위험";
 
@@ -279,9 +279,9 @@
 "swap.price_impact" = "가격 영향";
 "swap.maximum_paid" = "최대 지불액";
 "swap.minimum_got" = "최대 지급액";
-"swap.estimate_short" = "(est)";
+"swap.estimate_short" = "(추정)";
 "swap.minimum_short" = "(분)";
-"swap.maximum_short" = "(max)";
+"swap.maximum_short" = "(최대)";
 
 // Swap Advanced Settings
 
@@ -775,16 +775,16 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
 
-"btc_restore_mode.recommended" = "Recommended";
-"btc_restore_mode.more_private" = "More Private";
+"btc_restore_mode.recommended" = "권장";
+"btc_restore_mode.more_private" = "더 개인";
 
-"btc_transaction_sort_mode.shuffle" = "Shuffle";
-"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
-"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
-"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
+"btc_transaction_sort_mode.shuffle" = "셔플";
+"btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
+"btc_transaction_sort_mode.bip69" = "BIP69";
+"btc_transaction_sort_mode.bip69.description" = "사전 색인 작성";
 
 "blockchain_settings.info.title" = "Info";
-"blockchain_settings.info.restore_source" = "Restore Source";
+"blockchain_settings.info.restore_source" = "매개 변수 복원";
 "blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
@@ -1049,10 +1049,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Fee Settings
 
 "fee_settings" = "수수료 설정";
-"fee_settings.fee" = "Fee";
+"fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";
 "fee_settings.fee_priority" = "Speed";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "수수료율";
 "fee_settings.max_fee" = "최대 수수료";
 "fee_settings.max_fee.info" = "주어진 거래에 대한 최대 예상 총 수수료입니다. 일반적으로 실제 거래 수수료는 더 낮습니다.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -1085,9 +1085,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collections.average_7d" = "평균 7일";
 "nft_collections.average_30d" = "평균 30일";
 "nft_collections.on_sale" = "판매 중";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.empty" = "지갑에 NFT가 없습니다.";
 
-"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.title" = "Top NFT Collections";
 "top_nft_collections.description" = "Some top digital art";
 
 // Nft Asset
@@ -1124,8 +1124,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "nft_collection.overview.description" = "Description";
 "nft_collection.overview.contracts" = "Contracts";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links" = "링크";
+"nft_collection.overview.links.website" = "웹사이트";
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
