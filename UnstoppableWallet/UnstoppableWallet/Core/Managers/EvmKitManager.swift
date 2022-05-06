@@ -92,18 +92,6 @@ class EvmKitManager {
         return wrapper
     }
 
-    static func temporaryEvmKit() throws -> EthereumKit.Kit {
-        let syncSource = App.shared.evmSyncSourceManager.infuraHttpSyncSource
-        return try EthereumKit.Kit.instance(
-                address: try! EthereumKit.Address(hex: "0x0000000000000000000000000000000000000000"),
-                chain: .ethereum,
-                rpcSource: syncSource.rpcSource,
-                transactionSource: syncSource.transactionSource,
-                walletId: "temporary.account.id",
-                minLogLevel: .error
-        )
-    }
-
 }
 
 extension EvmKitManager {

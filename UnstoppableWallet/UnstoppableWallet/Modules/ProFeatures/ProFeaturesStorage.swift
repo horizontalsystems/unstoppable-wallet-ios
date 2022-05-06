@@ -12,9 +12,9 @@ class ProFeaturesStorage {
 
 extension ProFeaturesStorage {
 
-    func getAll() -> [ProFeaturesAuthorizationManager.NFTType: SessionKey] {
-        var keys = [ProFeaturesAuthorizationManager.NFTType: SessionKey]()
-        for type in ProFeaturesAuthorizationManager.NFTType.allCases {
+    func getAll() -> [ProFeaturesAuthorizationManager.NftType: SessionKey] {
+        var keys = [ProFeaturesAuthorizationManager.NftType: SessionKey]()
+        for type in ProFeaturesAuthorizationManager.NftType.allCases {
             if let raw: String = secureStorage.value(for: type.rawValue),
                let sessionKey = SessionKey(raw: raw) {
                 keys[type] = sessionKey
@@ -24,12 +24,12 @@ extension ProFeaturesStorage {
         return keys
     }
 
-    func get(type: ProFeaturesAuthorizationManager.NFTType) -> SessionKey? {
+    func get(type: ProFeaturesAuthorizationManager.NftType) -> SessionKey? {
         let raw: String? = secureStorage.value(for: type.rawValue)
         return raw.flatMap { SessionKey(raw: $0) }
     }
 
-    func save(type: ProFeaturesAuthorizationManager.NFTType, key: SessionKey) {
+    func save(type: ProFeaturesAuthorizationManager.NftType, key: SessionKey) {
         try? secureStorage.set(value: key.rawValue, for: type.rawValue)
     }
 
@@ -42,13 +42,13 @@ extension ProFeaturesStorage {
         }
     }
 
-    func clear(type: ProFeaturesAuthorizationManager.NFTType?) {
+    func clear(type: ProFeaturesAuthorizationManager.NftType?) {
         if let type = type {
             try? secureStorage.removeValue(for: type.rawValue)
             return
         }
 
-        for type in ProFeaturesAuthorizationManager.NFTType.allCases {
+        for type in ProFeaturesAuthorizationManager.NftType.allCases {
             try? secureStorage.removeValue(for: type.rawValue)
         }
     }

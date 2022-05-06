@@ -13,12 +13,14 @@ class ProFeaturesAuthorizationManager {
 
     private let accountManager: AccountManager
     private let storage: ProFeaturesStorage
+    private let evmSyncSourceManager: EvmSyncSourceManager
 
     private let sessionKeyRelay = PublishRelay<SessionKey>()
 
-    init(storage: ProFeaturesStorage, accountManager: AccountManager) {
+    init(storage: ProFeaturesStorage, accountManager: AccountManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.storage = storage
         self.accountManager = accountManager
+        self.evmSyncSourceManager = evmSyncSourceManager
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.sync(deletedAccount: $0) }
     }
@@ -54,14 +56,6 @@ class ProFeaturesAuthorizationManager {
                 }
     }
 
-    private var balanceProvider: Eip1155Provider? {
-        let evmKit = try? EvmKitManager.temporaryEvmKit()
-
-        return evmKit.map {
-            Eip1155Provider(evmKit: $0)
-        }
-    }
-
     private func tokenHolder(provider: Eip1155Provider, contractAddress: EthereumKit.Address, tokenId: BigUInt, accountData: [AccountData], index: Int = 0) -> Single<AccountData?> {
         guard accountData.count > index else {
             return Single.just(nil)
@@ -85,21 +79,20 @@ extension ProFeaturesAuthorizationManager {
         sessionKeyRelay.asObservable()
     }
 
-    func sessionKey(type: NFTType) -> String? {
+    func sessionKey(type: NftType) -> String? {
         storage.get(type: type)?.sessionKey
     }
 
-    func set(accountId: String, address: String, sessionKey: String, type: NFTType) {
+    func set(accountId: String, address: String, sessionKey: String, type: NftType) {
         storage.save(type: type, key: ProFeaturesStorage.SessionKey(accountId: accountId, address: address, sessionKey: sessionKey))
         sessionKeyRelay.accept(SessionKey(type: type, key: sessionKey))
     }
 
-    func nftHolder(type: NFTType) -> Single<AccountData?> {
+    func nftHolder(type: NftType) -> Single<AccountData?> {
         let accountData = sortedAccountData()
 
-
         guard !accountData.isEmpty,
-              let provider = balanceProvider else {
+              let provider = try? Eip1155Provider.instance(rpcSource: evmSyncSourceManager.infuraRpcSource) else {
 
             return Single.just(nil)
         }
@@ -117,7 +110,7 @@ extension ProFeaturesAuthorizationManager {
         return signatureData.map { "0x\($0.hex)" }
     }
 
-    func clearSessionKey(type: NFTType?) {
+    func clearSessionKey(type: NftType?) {
         storage.clear(type: type)
     }
 
@@ -125,7 +118,7 @@ extension ProFeaturesAuthorizationManager {
 
 extension ProFeaturesAuthorizationManager {
 
-    enum NFTType: String, CaseIterable {
+    enum NftType: String, CaseIterable {
         case mountainYak
     }
 
@@ -135,7 +128,7 @@ extension ProFeaturesAuthorizationManager {
     }
 
     struct SessionKey {
-        let type: NFTType
+        let type: NftType
         let key: String
     }
 
