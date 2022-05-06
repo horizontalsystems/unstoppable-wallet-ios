@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(item: CoinDetailsService.ProData) -> ChartViewItem? {
+    private func chart(item: CoinDetailsService.ProData, fractionMaximumFractionDigits: Int = 1, isCurrencyValue: Bool = true) -> ChartViewItem? {
         switch item {
         case .empty: return nil
         case .forbidden: return ChartViewItem(value: "coin_page.chart.locked".localized, diff: "***", diffColor: .themeGray, chartData: ChartData.placeholder, chartTrend: .neutral)
@@ -65,7 +65,7 @@ class CoinDetailsViewModel {
             let diffColor = DiffLabel.color(value: diffValue)
 
             let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-            let value = CurrencyCompactFormatter.instance.format(currency: service.currency, value: last.value)
+            let value = CurrencyCompactFormatter.instance.format(currency: isCurrencyValue ? service.currency : nil, value: last.value, fractionMaximumFractionDigits: fractionMaximumFractionDigits)
 
             return ChartViewItem(value: value, diff: diff ?? "n/a".localized, diffColor: DiffLabel.color(value: diffValue), chartData: chartData, chartTrend: diffValue.isSignMinus ? .down : .up)
         }
@@ -80,7 +80,7 @@ class CoinDetailsViewModel {
 
     private func tokenDistribution(proFeatures: CoinDetailsService.ProFeatures) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
-                txCount: chart(item: proFeatures.txCount),
+                txCount: chart(item: proFeatures.txCount, fractionMaximumFractionDigits: 0, isCurrencyValue: false),
                 txVolume: chart(item: proFeatures.txVolume),
                 activeAddresses: chart(item: proFeatures.activeAddresses)
         )

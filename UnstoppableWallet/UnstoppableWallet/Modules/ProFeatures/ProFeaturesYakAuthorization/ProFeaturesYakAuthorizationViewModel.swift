@@ -11,6 +11,7 @@ class ProFeaturesYakAuthorizationViewModel {
     private let showSignMessageRelay = PublishRelay<()>()
     private let showLockInfoRelay = PublishRelay<()>()
     private let showErrorRelay = PublishRelay<String>()
+    private let showSuccessSignedRelay = PublishRelay<()>()
 
     init(service: ProFeaturesYakAuthorizationService) {
         self.service = service
@@ -39,7 +40,8 @@ class ProFeaturesYakAuthorizationViewModel {
             showHudRelay.accept(false)
             showSignMessageRelay.accept(())
         case .receivedSessionKey:
-            showHudRelay.accept(false)
+            service.reset()
+            showSuccessSignedRelay.accept(())
         }
     }
 
@@ -78,6 +80,10 @@ extension ProFeaturesYakAuthorizationViewModel {
 
     var showErrorSignal: Signal<String> {
         showErrorRelay.asSignal()
+    }
+
+    var showSuccessSignedSignal: Signal<()> {
+        showSuccessSignedRelay.asSignal()
     }
 
     func authorize() {

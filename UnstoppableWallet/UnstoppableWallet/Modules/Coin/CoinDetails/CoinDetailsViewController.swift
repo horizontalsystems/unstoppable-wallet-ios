@@ -210,7 +210,15 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
+    private func hasCharts(items: [CoinDetailsViewModel.ChartViewItem?]) -> Bool {
+        !items.compactMap { $0 } .isEmpty
+    }
+
     private func liquiditySections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
+        guard hasCharts(items: [viewItem.tokenLiquidity.liquidity, viewItem.tokenLiquidity.volume]) else {
+            return nil
+        }
+
         let liquidityRow = Row<CoinDetailsMetricCell>(
                 id: "liquidity_chart",
                 height: CoinDetailsMetricCell.cellHeight,
@@ -245,13 +253,6 @@ extension CoinDetailsViewController: SectionsDataSource {
                     ]
             )
         ]
-    }
-
-    private func hasCharts(items: [CoinDetailsViewModel.ChartViewItem?]) -> Bool {
-        !items.compactMap {
-                    $0
-                }
-                .isEmpty
     }
 
     private func distributionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> [RowProtocol] {
