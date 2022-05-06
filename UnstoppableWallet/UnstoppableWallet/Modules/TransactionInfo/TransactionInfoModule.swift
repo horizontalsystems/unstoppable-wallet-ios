@@ -54,8 +54,8 @@ extension TransactionInfoModule {
     }
 
     enum ViewItem {
-        case actionTitle(title: String, subTitle: String?)
-        case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
+        case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
+        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case status(status: TransactionStatus)
         case options(actions: [OptionViewItem])
         case date(date: Date)
@@ -74,6 +74,20 @@ extension TransactionInfoModule {
         case memo(text: String)
         case service(value: String)
         case explorer(title: String, url: String?)
+    }
+
+    enum AmountType {
+        case incoming
+        case outgoing
+        case neutral
+
+        var prefix: String {
+            switch self {
+            case .incoming: return "+"
+            case .outgoing: return "-"
+            case .neutral: return ""
+            }
+        }
     }
 
 }
