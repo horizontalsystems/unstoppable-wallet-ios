@@ -686,6 +686,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.you_paid" = "You Paid";
 "tx_info.you_got" = "You Got";
 "tx_info.price" = "Price";
+"tx_info.options" = "Options";
 
 // Settings
 
