@@ -7,17 +7,13 @@ class EvmSyncSourceManager {
     private let storage: BlockchainSettingsStorage
 
     private let syncSourceRelay = PublishRelay<EvmBlockchain>()
-    let infuraHttpSyncSource: EvmSyncSource
+    let infuraRpcSource: RpcSource
 
     init(appConfigProvider: AppConfigProvider, storage: BlockchainSettingsStorage) {
         self.appConfigProvider = appConfigProvider
         self.storage = storage
 
-        infuraHttpSyncSource = EvmSyncSource(
-                name: "Infura HTTP",
-                rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
-        )
+        infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
     }
 
     private func defaultSyncSources(blockchain: EvmBlockchain) -> [EvmSyncSource] {
@@ -29,7 +25,11 @@ class EvmSyncSourceManager {
                         rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
                 ),
-                infuraHttpSyncSource
+                EvmSyncSource(
+                        name: "Infura HTTP",
+                        rpcSource: infuraRpcSource,
+                        transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
+                )
             ]
         case .binanceSmartChain:
             return [
