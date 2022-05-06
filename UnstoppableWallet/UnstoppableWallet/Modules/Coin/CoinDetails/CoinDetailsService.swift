@@ -44,9 +44,40 @@ class CoinDetailsService {
     }
 
     private func proFeatures(coinUid: String, currencyCode: String) -> Single<ProFeatures> {
-        if proFeaturesManager.sessionKey(type: .mountainYak) != nil {
+        if let sessionKey = proFeaturesManager.sessionKey(type: .mountainYak) {
             //request needed charts for pro state
-            return Single.just(ProFeatures.empty)
+            let dexVolumeSingle = marketKit
+                    .dexVolumesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let dexLiquiditySingle = marketKit
+                    .dexLiquiditySingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let transactionDataSingle = marketKit
+                    .transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, platform: nil, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let activeAddressesSingle = marketKit
+                    .activeAddressesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn([])
+
+            return Single.zip(dexVolumeSingle, dexLiquiditySingle, transactionDataSingle, activeAddressesSingle) { dexVolumeResponse, dexLiquidityResponse, transactionDataResponse, activeAddressesResponse in
+                let dexVolumeChartPoints = dexVolumeResponse.volumePoints
+                let dexLiquidityChartPoints = dexLiquidityResponse.volumePoints
+                let txCountChartPoints = transactionDataResponse.countPoints
+                let txVolumeChartPoints = transactionDataResponse.volumePoints
+                let activeAddresses = activeAddressesResponse.countPoints
+
+                return ProFeatures(
+                        activated: true,
+                        dexVolumes: .value(dexVolumeChartPoints),
+                        dexLiquidity: .value(dexLiquidityChartPoints),
+                        txCount: .value(txCountChartPoints),
+                        txVolume: .value(txVolumeChartPoints),
+                        activeAddresses: .value(activeAddresses)
+                )
+            }
         } else {
             return Single.just(ProFeatures.forbidden)
         }
@@ -129,6 +160,10 @@ extension CoinDetailsService {
         case empty
         case forbidden
         case completed([ChartPoint])
+
+        static func value(_ points: [ChartPoint]) -> Self {
+            points.isEmpty ? .empty : .completed(points)
+        }
     }
 
     struct ProFeatures {

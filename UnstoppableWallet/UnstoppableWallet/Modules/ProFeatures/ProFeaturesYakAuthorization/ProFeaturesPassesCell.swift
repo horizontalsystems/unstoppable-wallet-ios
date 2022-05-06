@@ -16,6 +16,7 @@ class ProFeaturesPassesCell: BaseThemeCell {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
+    private weak var proFeaturesActivateViewController: ProFeaturesActivateViewController?
 
     init(viewModel: ProFeaturesYakAuthorizationViewModel) {
         self.viewModel = viewModel
@@ -66,6 +67,7 @@ class ProFeaturesPassesCell: BaseThemeCell {
         subscribe(disposeBag, viewModel.showLockInfoSignal) { [weak self] in self?.showLockInfo() }
         subscribe(disposeBag, viewModel.showSignMessageSignal) { [weak self] in self?.showSignMessage() }
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in HudHelper.instance.showError(title: $0) }
+        subscribe(disposeBag, viewModel.showSuccessSignedSignal) { [weak self] in self?.showSuccessSigned() }
     }
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -91,9 +93,15 @@ class ProFeaturesPassesCell: BaseThemeCell {
                 onSuccess: { [weak self] in self?.viewModel.activate() },
                 onCancel: {  [weak self] in self?.viewModel.dismissSign() }
         )
+        proFeaturesActivateViewController = viewController
         let navigationViewController = ThemeNavigationController(rootViewController: viewController)
 
         parentViewController?.present(navigationViewController, animated: true)
+    }
+
+    private func showSuccessSigned() {
+        HudHelper.instance.showSuccess()
+        proFeaturesActivateViewController?.dismiss(animated: true)
     }
 
 }

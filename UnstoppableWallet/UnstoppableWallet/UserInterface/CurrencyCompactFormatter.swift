@@ -28,14 +28,14 @@ class CurrencyCompactFormatter {
         return (value: value / pow(ten, (index - 1) * 3), postfix: postfix)
     }
 
-    public func format(currency: Currency, value: Decimal?, fractionMaximumFractionDigits: Int = 1, alwaysSigned: Bool = false) -> String? {
+    public func format(currency: Currency?, value: Decimal?, fractionMaximumFractionDigits: Int = 1, alwaysSigned: Bool = false) -> String? {
         guard let value = value else {
             return nil
         }
         let data = CurrencyCompactFormatter.compactData(value: value)
 
-        currencyFormatter.currencyCode = currency.code
-        currencyFormatter.currencySymbol = currency.symbol
+        currencyFormatter.currencyCode = currency?.code ?? ""
+        currencyFormatter.currencySymbol = currency?.symbol ?? ""
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
         let universalValue = alwaysSigned ? abs(data.value) : data.value
