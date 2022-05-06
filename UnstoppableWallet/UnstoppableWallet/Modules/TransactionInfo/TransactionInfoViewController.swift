@@ -168,19 +168,37 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func optionsRow(viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
-        Row<D10SecondaryCell>(
+    private func optionsRow(rowInfo: RowInfo, viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
+        var elements: [CellBuilder.CellElement] = [.text]
+
+        for (index, _) in viewItems.enumerated() {
+            elements.append(.secondaryButton)
+            if index < viewItems.count - 1 {
+                elements.append(.margin8)
+            }
+        }
+
+        return CellBuilder.row(
+                elements: elements,
+                tableView: tableView,
                 id: "options",
-                hash: "options",
                 height: .heightCell48,
-                autoDeselect: true,
-                bind: { [weak self] cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-                    cell.title = "Options"
-                    cell.set(viewItems: viewItems.map { D10SecondaryCell.ViewItem(title: $0.title, enabled: $0.active) })
-                    cell.onTapButton = { index in
-                        if viewItems.count > index {
-                            self?.openResend(action: viewItems[index].option)
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = "tx_info.options".localized
+                    }
+
+                    for (index, viewItem) in viewItems.enumerated() {
+                        cell.bind(index: index + 1) { (component: SecondaryButtonComponent) in
+                            component.button.set(style: .default)
+                            component.button.setTitle(viewItem.title, for: .normal)
+                            component.button.isEnabled = viewItem.active
+                            component.onTap = { [weak self] in
+                                self?.openResend(action: viewItem.option)
+                            }
                         }
                     }
                 }
@@ -481,7 +499,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .actionTitle(iconName, iconDimmed, title, subTitle): return actionTitleRow(rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type): return amountRow(rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
-        case let .options(actions: viewItems): return optionsRow(viewItems: viewItems)
+        case let .options(actions: viewItems): return optionsRow(rowInfo: rowInfo, viewItems: viewItems)
         case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
         case let .from(value, valueTitle): return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .to(value, valueTitle): return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
