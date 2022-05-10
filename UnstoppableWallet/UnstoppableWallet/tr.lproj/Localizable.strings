@@ -687,6 +687,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tx_info.you_paid" = "Ödediğiniz Tutar";
 "tx_info.you_got" = "Aldığınız Tutar";
 "tx_info.price" = "Fiyat";
+"tx_info.options" = "Options";
 
 // Settings
 
