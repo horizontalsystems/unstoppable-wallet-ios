@@ -91,12 +91,12 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue]) -> [TransactionInfoModule.ViewItem] {
+    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], sentToSelf: Bool = false) -> [TransactionInfoModule.ViewItem] {
         let rate = transactionValue.coin.flatMap { rates[$0] }
 
         var viewItems: [TransactionInfoModule.ViewItem] = [
             .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: "transactions.send".localized, subTitle: transactionValue.coinName),
-            amount(source: source, transactionValue: transactionValue, rate: rate, type: .outgoing)
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: sentToSelf ? .neutral : .outgoing)
         ]
 
         if let to = to {
@@ -161,7 +161,7 @@ class TransactionInfoViewItemFactory {
 
         switch record {
         case let record as EvmOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
             if record.sentToSelf {
                 sections.append([.sentToSelf])
@@ -287,7 +287,7 @@ class TransactionInfoViewItemFactory {
             }
 
         case let record as BitcoinOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
             var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
 
@@ -311,7 +311,7 @@ class TransactionInfoViewItemFactory {
             }
 
         case let record as BinanceChainOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
             var additionalViewItems = [TransactionInfoModule.ViewItem]()
 

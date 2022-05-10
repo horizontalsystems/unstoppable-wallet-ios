@@ -204,7 +204,9 @@ extension ValueFormatter {
         formatter.roundingMode = .halfEven
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
+        formatter.internationalCurrencySymbol = currencyValue.currency.symbol
         formatter.maximumFractionDigits = digits
+        formatter.minimumFractionDigits = 0
 
         guard let formattedValue = formatter.string(from: value as NSNumber) else {
             return nil
@@ -241,7 +243,9 @@ extension ValueFormatter {
         formatter.roundingMode = .halfEven
         formatter.currencyCode = currencyValue.currency.code
         formatter.currencySymbol = currencyValue.currency.symbol
+        formatter.internationalCurrencySymbol = currencyValue.currency.symbol
         formatter.maximumFractionDigits = digits
+        formatter.minimumFractionDigits = 0
 
         guard var result = formatter.string(from: value as NSNumber) else {
             return nil
