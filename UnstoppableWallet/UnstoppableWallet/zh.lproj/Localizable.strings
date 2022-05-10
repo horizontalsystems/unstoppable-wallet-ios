@@ -672,7 +672,7 @@
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
-"tx_info.to_self_note" = "交易已发送至自有地址";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.unlocked_at" = "在 %@ 解锁了";
