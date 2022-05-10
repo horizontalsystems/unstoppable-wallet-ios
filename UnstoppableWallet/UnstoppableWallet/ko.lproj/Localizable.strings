@@ -670,7 +670,7 @@
 "tx_info.transaction.already_in_block" = "이미 차단된 거래";
 "tx_info.fee" = "수수료";
 "tx_info.fee.estimated" = "수수료 (추정)";
-"tx_info.to_self_note" = "이 거래는 귀하의 주소로 전송이 되었습니다";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "이중 지출 위험!";
 "tx_info.locked_until" = "까지 잠그기 %@";
 "tx_info.unlocked_at" = "%@에서 잠금 해제됨";
