@@ -466,16 +466,24 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func dateRow(rowInfo: RowInfo, date: Date) -> RowProtocol {
-        Row<D7Cell>(
+        CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
                 id: "date",
-                hash: "date_\(date.description)",
+                hash: date.description,
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = "tx_info.date".localized
-                    cell.value = DateHelper.instance.formatFullTime(from: date)
-                    cell.valueColor = .themeLeah
-                    cell.valueItalic = false
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = "tx_info.date".localized
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = DateHelper.instance.formatFullTime(from: date)
+                    }
                 }
         )
     }
