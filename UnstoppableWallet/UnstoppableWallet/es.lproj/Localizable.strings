@@ -684,6 +684,7 @@
 "tx_info.you_paid" = "Has pagado";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
+"tx_info.options" = "Options";
 
 // Settings
 
