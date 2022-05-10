@@ -42,6 +42,12 @@ class MetricChartFactory {
             return ValueFormatter.instance.format(percentValue: value, signed: false)
         case .currencyValue:
             return CurrencyCompactFormatter.instance.format(currency: currency, value: value)
+        case .counter:
+            if exactlyValue {
+                return value.description
+            } else {
+                return CurrencyCompactFormatter.instance.format(currency: nil, value: value)
+            }
         case .compactCurrencyValue:                   // others in compact forms
             if exactlyValue {
                 let currencyValue = CurrencyValue(currency: currency, value: value)

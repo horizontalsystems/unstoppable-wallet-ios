@@ -33,6 +33,7 @@ class MetricChartModule {
 
     enum ValueType {
         case percent
+        case counter
         case compactCurrencyValue
         case currencyValue
     }

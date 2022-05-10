@@ -80,7 +80,7 @@ class CoinDetailsViewModel {
 
     private func tokenDistribution(proFeatures: CoinDetailsService.ProFeatures) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
-                txCount: chart(item: proFeatures.txCount, fractionMaximumFractionDigits: 0, isCurrencyValue: false),
+                txCount: chart(item: proFeatures.txCount, isCurrencyValue: false),
                 txVolume: chart(item: proFeatures.txVolume),
                 activeAddresses: chart(item: proFeatures.activeAddresses)
         )

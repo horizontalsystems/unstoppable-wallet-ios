@@ -36,6 +36,7 @@ class CurrencyCompactFormatter {
 
         currencyFormatter.currencyCode = currency?.code ?? ""
         currencyFormatter.currencySymbol = currency?.symbol ?? ""
+        currencyFormatter.minimumFractionDigits = 0
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
         let universalValue = alwaysSigned ? abs(data.value) : data.value

@@ -121,10 +121,6 @@ extension ProFeaturesYakAuthorizationService {
             return
         }
 
-//        print("message: \(message) - \(String(data: data, encoding: .utf8))")
-//        print("address: \(accountData.address)")
-//        print("signature: \(signature)")
-
         authenticate(accountData: accountData, signature: signature)
     }
 
