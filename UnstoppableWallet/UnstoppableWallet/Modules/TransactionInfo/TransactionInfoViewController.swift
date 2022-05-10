@@ -283,17 +283,25 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func valueRow(rowInfo: RowInfo, title: String, value: String?, valueItalic: Bool = false) -> RowProtocol {
-        Row<D7Cell>(
-                id: title,
-                hash: value ?? "",
+    private func valueRow(rowInfo: RowInfo, id: String, title: String, value: String) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
+                id: id,
+                hash: value,
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = title
-                    cell.value = value
-                    cell.valueColor = .themeLeah
-                    cell.valueItalic = valueItalic
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = value
+                    }
                 }
         )
     }
@@ -312,14 +320,6 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.valueColor = .themeLeah
                     cell.valueItalic = valueItalic
                 }
-        )
-    }
-
-    private func feeRow(rowInfo: RowInfo, title: String, value: String) -> RowProtocol {
-        valueRow(
-                rowInfo: rowInfo,
-                title: title,
-                value: value
         )
     }
 
@@ -492,64 +492,27 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func dateRow(rowInfo: RowInfo, date: Date) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .text],
-                tableView: tableView,
-                id: "date",
-                hash: date.description,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
-                        component.text = "tx_info.date".localized
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .c2)
-                        component.text = DateHelper.instance.formatFullTime(from: date)
-                    }
-                }
-        )
-    }
-
-    private func priceRow(rowInfo: RowInfo, price: String) -> RowProtocol {
-        Row<D7Cell>(
-                id: "price",
-                hash: "\(price)",
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = "tx_info.price".localized
-                    cell.value = price
-                    cell.valueColor = .themeLeah
-                    cell.valueItalic = false
-                }
-        )
-    }
     private func row(viewItem: TransactionInfoModule.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .actionTitle(iconName, iconDimmed, title, subTitle): return actionTitleRow(rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type): return amountRow(rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems): return optionsRow(rowInfo: rowInfo, viewItems: viewItems)
-        case let .date(date): return dateRow(rowInfo: rowInfo, date: date)
+        case let .date(date): return valueRow(rowInfo: rowInfo, id: "date", title: "tx_info.date".localized, value: DateHelper.instance.formatFullTime(from: date))
         case let .from(value, valueTitle): return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .to(value, valueTitle): return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .spender(value, valueTitle): return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .recipient(value, valueTitle): return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
         case let .id(value): return idRow(rowInfo: rowInfo, value: value)
-        case let .rate(value): return valueRow(rowInfo: rowInfo, title: "tx_info.rate".localized, value: value)
-        case let .fee(title, value): return feeRow(rowInfo: rowInfo, title: title, value: value)
-        case let .price(price): return priceRow(rowInfo: rowInfo, price: price)
+        case let .rate(value): return valueRow(rowInfo: rowInfo, id: "rate", title: "tx_info.rate".localized, value: value)
+        case let .fee(title, value): return valueRow(rowInfo: rowInfo, id: "fee", title: title, value: value)
+        case let .price(price): return valueRow(rowInfo: rowInfo, id: "price", title: "tx_info.price".localized, value: price)
         case let .doubleSpend(txHash, conflictingTxHash): return doubleSpendRow(rowInfo: rowInfo, txHash: txHash, conflictingTxHash: conflictingTxHash)
         case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
         case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)
         case .rawTransaction: return rawTransactionRow(rowInfo: rowInfo)
         case let .memo(value): return multiLineValueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: value, valueItalic: true)
-        case let .service(value): return valueRow(rowInfo: rowInfo, title: "tx_info.service".localized, value: value)
+        case let .service(value): return valueRow(rowInfo: rowInfo, id: "service", title: "tx_info.service".localized, value: value)
         case let .explorer(title, url): return explorerRow(rowInfo: rowInfo, title: title, url: url)
         }
     }
