@@ -673,7 +673,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tx_info.transaction.already_in_block" = "İşlem zaten blokta";
 "tx_info.fee" = "Ücret";
 "tx_info.fee.estimated" = "Ücret (tahmini)";
-"tx_info.to_self_note" = "Bu işlem kendi adresine gönderildi";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "Çifte Harcama Riski Var!";
 "tx_info.locked_until" = "Şu zamana kadar kitlendi %@";
 "tx_info.unlocked_at" = "Kilid açıldı %@";
