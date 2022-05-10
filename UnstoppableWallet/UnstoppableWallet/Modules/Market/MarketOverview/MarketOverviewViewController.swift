@@ -26,6 +26,7 @@ class MarketOverviewViewController: ThemeViewController {
 
     init(viewModel: MarketOverviewViewModel) {
         self.viewModel = viewModel
+        viewModel.tableView = tableView
 
         super.init()
     }

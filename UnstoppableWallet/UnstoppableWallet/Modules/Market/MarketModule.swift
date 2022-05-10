@@ -47,7 +47,7 @@ struct MarketModule {
         cell.secondaryValueTextColor = marketFieldData.color
     }
 
-    private static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
+    static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
         let title: String?
         let value: String?
         let color: UIColor
@@ -265,6 +265,7 @@ extension MarketModule {  // ViewModel Items
     struct ListViewItem {
         let uid: String?
         let iconUrl: String
+        let iconShape: IconShape
         let iconPlaceholderName: String
         let name: String
         let code: String
@@ -283,6 +284,10 @@ extension MarketModule {  // ViewModel Items
             self.softUpdate = softUpdate
             self.scrollToTop = scrollToTop
         }
+    }
+
+    enum IconShape {
+        case square, round
     }
 
 }

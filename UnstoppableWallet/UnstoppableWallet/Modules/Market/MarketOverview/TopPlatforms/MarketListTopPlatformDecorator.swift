@@ -52,6 +52,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         return MarketModule.ListViewItem(
                 uid: item.uid,
                 iconUrl: item.fullCoin?.coin.imageUrl ?? "",
+                iconShape: .square,
                 iconPlaceholderName: item.fullCoin?.placeholderImageName ?? "",
                 name: item.name,
                 code: protocols,
