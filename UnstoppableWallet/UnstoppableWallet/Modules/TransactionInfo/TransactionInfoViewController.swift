@@ -205,37 +205,47 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func fromToRow(rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
-        Row<D9Cell>(
-                id: title,
+    private func fromToRow(rowInfo: RowInfo, id: String, title: String, value: String, valueTitle: String?) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .secondaryButton],
+                tableView: tableView,
+                id: id,
                 hash: value,
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = title
-                    if let valueTitle = valueTitle {
-                        cell.viewItem = .init(type: .title(text: valueTitle), value: { value })
-                    } else {
-                        cell.viewItem = .init(type: .raw, value: { value })
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 1) { (component: SecondaryButtonComponent) in
+                        component.button.set(style: .default)
+                        component.button.setTitle(valueTitle ?? value, for: .normal)
+                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: value)
+                        }
                     }
                 }
         )
     }
 
     private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
+        fromToRow(rowInfo: rowInfo, id: "from", title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
+        fromToRow(rowInfo: rowInfo, id: "to", title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
+        fromToRow(rowInfo: rowInfo, id: "spender", title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
     }
 
     private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
+        fromToRow(rowInfo: rowInfo, id: "recipient", title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
