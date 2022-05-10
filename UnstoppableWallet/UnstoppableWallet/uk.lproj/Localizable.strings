@@ -672,7 +672,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Fee";
 "tx_info.fee.estimated" = "Fee (est.)";
-"tx_info.to_self_note" = "This transaction sent to own address";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "Double Spend Risk!";
 "tx_info.locked_until" = "Locked until %@";
 "tx_info.unlocked_at" = "Unlocked at %@";
