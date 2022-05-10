@@ -686,6 +686,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
+"tx_info.options" = "Options";
 
 // Settings
 
