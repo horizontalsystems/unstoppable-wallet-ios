@@ -686,6 +686,7 @@
 "tx_info.you_paid" = "Вы Заплатили";
 "tx_info.you_got" = "Вы Получили";
 "tx_info.price" = "Цена";
+"tx_info.options" = "Options";
 
 // Settings
 
