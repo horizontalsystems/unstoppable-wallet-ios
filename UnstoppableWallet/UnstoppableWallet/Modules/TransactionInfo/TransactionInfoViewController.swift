@@ -45,9 +45,6 @@ class TransactionInfoViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: D7MultiLineCell.self)
-        tableView.registerCell(forClass: CMultiLineCell.self)
-        tableView.registerCell(forClass: C4MultiLineCell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -297,40 +294,80 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func multiLineValueRow(rowInfo: RowInfo, title: String, value: String?, valueItalic: Bool = false) -> RowProtocol {
-        Row<D7MultiLineCell>(
-                id: title,
-                hash: value ?? "",
-                dynamicHeight: { width in
-                    D7MultiLineCell.height(containerWidth: width, backgroundStyle: .lawrence, title: title, value: value, valueItalic: valueItalic)
+    private func multiLineValueRow(rowInfo: RowInfo, id: String, title: String, value: String) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let titleStyle: TextComponent.Style = .d1
+        let valueStyle: TextComponent.Style = .g2
+
+        return CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
+                id: id,
+                dynamicHeight: { containerWidth in
+                    CellBuilder.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: value,
+                            textStyle: valueStyle,
+                            elements: [.fixed(width: TextComponent.width(style: titleStyle, text: title)), .multiline]
+                    )
                 },
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = title
-                    cell.value = value
-                    cell.valueColor = .themeLeah
-                    cell.valueItalic = valueItalic
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: titleStyle)
+                        component.text = title
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: valueStyle)
+                        component.text = value
+                        component.textAlignment = .right
+                        component.numberOfLines = 0
+                    }
                 }
         )
     }
 
-    private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTapButton: @escaping () -> ()) -> RowProtocol {
-        Row<C4MultiLineCell>(
+    private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTap: @escaping () -> ()) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let textStyle: TextComponent.Style = .d1
+
+        return CellBuilder.selectableRow(
+                elements: [.image20, .text, .image20],
+                tableView: tableView,
                 id: id,
-                hash: text,
                 autoDeselect: true,
                 dynamicHeight: { containerWidth in
-                    C4MultiLineCell.height(containerWidth: containerWidth, backgroundStyle: .lawrence, title: text)
+                    CellBuilder.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: text,
+                            textStyle: textStyle,
+                            elements: [.fixed(width: .iconSize20), .multiline, .fixed(width: .iconSize20)]
+                    )
                 },
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = image?.withTintColor(.themeGray)
-                    cell.title = text
-                    cell.valueImage = UIImage(named: "circle_information_20")?.withRenderingMode(.alwaysTemplate)
-                    cell.valueImageTintColor = .themeGray
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.imageView.image = image?.withTintColor(.themeGray)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: textStyle)
+                        component.text = text
+                        component.numberOfLines = 0
+                    }
+
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                    }
                 },
-                action: { _ in
-                    onTapButton()
+                action: {
+                    onTap()
                 }
         )
     }
@@ -357,21 +394,39 @@ class TransactionInfoViewController: ThemeViewController {
                 self?.present(InfoModule.timeLockInfo, animated: true)
             }
         } else {
-            return noteRow(rowInfo: rowInfo, id: id, image: image, imageTintColor: .themeGray, text: "tx_info.unlocked_at".localized(formattedDate))
+            return noteRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.unlocked_at".localized(formattedDate))
         }
     }
 
-    private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, imageTintColor: UIColor, text: String) -> RowProtocol {
-        Row<CMultiLineCell>(
+    private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let textStyle: TextComponent.Style = .d1
+
+        return CellBuilder.row(
+                elements: [.image20, .text],
+                tableView: tableView,
                 id: id,
-                hash: text,
                 dynamicHeight: { containerWidth in
-                    CMultiLineCell.height(containerWidth: containerWidth, backgroundStyle: .lawrence, title: text)
+                    CellBuilder.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: text,
+                            textStyle: textStyle,
+                            elements: [.fixed(width: .iconSize20), .multiline]
+                    )
                 },
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.titleImage = image?.withTintColor(imageTintColor)
-                    cell.title = text
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.imageView.image = image?.withTintColor(.themeGray)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: textStyle)
+                        component.text = text
+                        component.numberOfLines = 0
+                    }
                 }
         )
     }
@@ -380,8 +435,7 @@ class TransactionInfoViewController: ThemeViewController {
         noteRow(
                 rowInfo: rowInfo,
                 id: "sent_to_self",
-                image: UIImage(named: "arrow_medium_main_down_left_20")?.withRenderingMode(.alwaysTemplate),
-                imageTintColor: .themeRemus,
+                image: UIImage(named: "arrow_return_20"),
                 text: "tx_info.to_self_note".localized
         )
     }
@@ -525,7 +579,7 @@ class TransactionInfoViewController: ThemeViewController {
         case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
         case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)
         case .rawTransaction: return rawTransactionRow(rowInfo: rowInfo)
-        case let .memo(value): return multiLineValueRow(rowInfo: rowInfo, title: "tx_info.memo".localized, value: value, valueItalic: true)
+        case let .memo(value): return multiLineValueRow(rowInfo: rowInfo, id: "memo", title: "tx_info.memo".localized, value: value)
         case let .service(value): return valueRow(rowInfo: rowInfo, id: "service", title: "tx_info.service".localized, value: value)
         case let .explorer(title, url): return explorerRow(rowInfo: rowInfo, title: title, url: url)
         }
