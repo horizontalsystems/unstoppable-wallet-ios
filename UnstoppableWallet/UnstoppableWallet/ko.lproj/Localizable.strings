@@ -684,6 +684,7 @@
 "tx_info.you_paid" = "지불한 금액";
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "가격";
+"tx_info.options" = "Options";
 
 // Settings
 
