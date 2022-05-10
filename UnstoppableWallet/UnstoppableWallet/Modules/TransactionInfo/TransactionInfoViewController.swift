@@ -249,18 +249,35 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
-        Row<D10Cell>(
+        CellBuilder.row(
+                elements: [.text, .secondaryButton, .margin8, .secondaryCircleButton],
+                tableView: tableView,
                 id: "transaction_id",
                 hash: value,
                 height: .heightCell48,
-                bind: { [weak self] cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = "tx_info.transaction_id".localized
-                    cell.viewItem = .init(type: .raw, value: { value })
-                    cell.set(iconButtonImage: UIImage(named: "share_1_20"))
-                    cell.onTapIconButton = { [weak self] in
-                        let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
-                        self?.present(activityViewController, animated: true)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = "tx_info.transaction_id".localized
+                    }
+
+                    cell.bind(index: 1) { (component: SecondaryButtonComponent) in
+                        component.button.set(style: .default)
+                        component.button.setTitle(value, for: .normal)
+                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: value)
+                        }
+                    }
+
+                    cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "share_1_20"))
+                        component.onTap = { [weak self] in
+                            let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
+                            self?.present(activityViewController, animated: true)
+                        }
                     }
                 }
         )
