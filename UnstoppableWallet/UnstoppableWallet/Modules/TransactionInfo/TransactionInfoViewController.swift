@@ -396,13 +396,27 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func rawTransactionRow(rowInfo: RowInfo) -> RowProtocol {
-        Row<D9Cell>(
+        CellBuilder.row(
+                elements: [.text, .secondaryCircleButton],
+                tableView: tableView,
                 id: "raw_transaction",
                 height: .heightCell48,
-                bind: { [weak self] cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = "tx_info.raw_transaction".localized
-                    cell.viewItem = .init(type: .image, value: { [weak self] in self?.viewModel.rawTransaction ?? "" })
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = "tx_info.raw_transaction".localized
+                    }
+
+                    cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "copy_20"))
+                        component.onTap = { [weak self] in
+                            if let value = self?.viewModel.rawTransaction {
+                                CopyHelper.copyAndNotify(value: value)
+                            }
+                        }
+                    }
                 }
         )
     }
