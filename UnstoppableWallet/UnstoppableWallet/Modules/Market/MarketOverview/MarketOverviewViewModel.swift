@@ -5,6 +5,7 @@ import RxCocoa
 
 protocol IMarketOverviewDataSource {
     var parentNavigationController: UINavigationController? { get set }
+    var tableView: UITableView? { get set }
     var status: DataStatus<[SectionProtocol]> { get }
     var updateDriver: Driver<()> { get }
 
@@ -25,6 +26,14 @@ class MarketOverviewViewModel {
             dataSources.forEach {
                 var dataSource = $0
                 dataSource.parentNavigationController = parentNavigationController
+            }
+        }
+    }
+    weak var tableView: UITableView? {
+        didSet {
+            dataSources.forEach {
+                var dataSource = $0
+                dataSource.tableView = tableView
             }
         }
     }

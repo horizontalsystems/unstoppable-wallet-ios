@@ -13,6 +13,7 @@ class MarketOverviewGlobalDataSource {
             marketMetricsCell.viewController = parentNavigationController
         }
     }
+    weak var tableView: UITableView?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
     }

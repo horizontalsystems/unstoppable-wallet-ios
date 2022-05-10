@@ -19,6 +19,7 @@ class BaseMarketOverviewTopListDataSource {
     private let disposeBag = DisposeBag()
 
     weak var parentNavigationController: UINavigationController?
+    weak var tableView: UITableView?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
     }
@@ -43,17 +44,52 @@ class BaseMarketOverviewTopListDataSource {
     }
 
     private func row(listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
-        Row<G14Cell>(
+        guard let tableView = tableView else {
+            fatalError("I need tableView :(")
+        }
+
+        return CellBuilder.selectableRow(
+                elements: [.image24, .multiText, .multiText],
+                tableView: tableView,
                 id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst)
-                    MarketModule.bind(cell: cell, viewItem: listViewItem)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.imageView.clipsToBounds = true
+                        component.imageView.cornerRadius = listViewItem.iconShape == .square ? .cornerRadius4 : .cornerRadius12
+                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
+                    }
+                    cell.bind(index: 1) { (component: MultiTextComponent) in
+                        component.set(style: .m3)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = listViewItem.name
+                        component.subtitle.text = listViewItem.code
+                        component.subtitleBadge.text = listViewItem.rank
+                    }
+                    cell.bind(index: 2) { (component: MultiTextComponent) in
+                        component.titleSpacingView.isHidden = true
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.textAlignment = .right
+                        component.title.text = listViewItem.price
+
+                        let marketFieldData = MarketModule.marketFieldPreference(dataValue: listViewItem.dataValue)
+                        component.subtitle.textAlignment = .right
+                        component.subtitle.textColor = marketFieldData.color
+                        component.subtitle.text = marketFieldData.value
+                    }
                 },
-                action: { [weak self] _ in
+                action: {[weak self] in
                     self?.onSelect(listViewItem: listViewItem)
-                })
+                }
+        )
     }
 
     private func rows(listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
@@ -63,33 +99,28 @@ class BaseMarketOverviewTopListDataSource {
     }
 
     private func seeAllRow(id: String, action: @escaping () -> ()) -> RowProtocol {
-//        return CellBuilder.selectableRow(
-//                elements: [.text, .image20],
-//                tableView: tableView,
-//                id: fundViewItem.uid,
-//                height: .heightCell48,
-//                autoDeselect: true,
-//                bind: { [weak self] cell in
-//                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-//                    self?.bind(cell: cell, fundViewItem: fundViewItem)
-//
-//                    cell.bind(index: 3) { (component: ImageComponent) in
-//                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-//                    }
-//                },
-//                action: { [weak self] in
-//                    self?.urlManager.open(url: fundViewItem.url, from: self)
-//                }
-//        )
-        Row<B1Cell>(
+        guard let tableView = tableView else {
+            fatalError("I need tableView")
+        }
+
+        return CellBuilder.selectableRow(
+                elements: [.text, .image20],
+                tableView: tableView,
                 id: id,
                 height: .heightCell48,
                 autoDeselect: true,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isLast: true)
-                    cell.title = "market.top.section.header.see_all".localized
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = "market.top.section.header.see_all".localized
+                    }
+                    cell.bind(index: 1) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                    }
                 },
-                action: { _ in
+                action: {
                     action()
                 }
         )

@@ -48,6 +48,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
         return MarketModule.ListViewItem(
                 uid: collection.uid,
                 iconUrl: collection.imageUrl ?? "",
+                iconShape: .square,
                 iconPlaceholderName: iconPlaceholderName,
                 name: collection.name,
                 code: floorPriceString,

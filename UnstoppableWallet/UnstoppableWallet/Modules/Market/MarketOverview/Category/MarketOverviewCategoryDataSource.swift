@@ -6,6 +6,7 @@ class MarketOverviewCategoryDataSource {
     private let disposeBag = DisposeBag()
 
     weak var parentNavigationController: UINavigationController?
+    weak var tableView: UITableView?
 
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
