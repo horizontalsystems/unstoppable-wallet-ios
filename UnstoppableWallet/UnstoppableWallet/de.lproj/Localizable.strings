@@ -670,7 +670,7 @@
 "tx_info.transaction.already_in_block" = "Transaktion bereits im Block";
 "tx_info.fee" = "Gebühr";
 "tx_info.fee.estimated" = "Gebühr (est.)";
-"tx_info.to_self_note" = "Diese Transaktion wurde an die eigene Adresse gesendet";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "Double-Spend-Risiko!";
 "tx_info.locked_until" = "Gesperrt bis %@";
 "tx_info.unlocked_at" = "Freigegeben am %@";
