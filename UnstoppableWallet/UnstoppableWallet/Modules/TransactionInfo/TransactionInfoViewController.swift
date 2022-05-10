@@ -45,18 +45,9 @@ class TransactionInfoViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: A1Cell.self)
-        tableView.registerCell(forClass: B7Cell.self)
-        tableView.registerCell(forClass: D6Cell.self)
-        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D7MultiLineCell.self)
-        tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerCell(forClass: D10Cell.self)
-        tableView.registerCell(forClass: D10SecondaryCell.self)
         tableView.registerCell(forClass: CMultiLineCell.self)
         tableView.registerCell(forClass: C4MultiLineCell.self)
-        tableView.registerCell(forClass: C6Cell.self)
-        tableView.registerCell(forClass: C24Cell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -422,22 +413,31 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func explorerRow(rowInfo: RowInfo, title: String, url: String?) -> RowProtocol {
-        Row<A1Cell>(
-                id: "explorer_row",
-                hash: "explorer_row",
+        CellBuilder.selectableRow(
+                elements: [.image20, .text, .image20],
+                tableView: tableView,
+                id: "explorer",
                 height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                    cell.title = title
-                    cell.titleImage = UIImage(named: "globe_20")
-                },
-                action: { [weak self] _ in
-                    guard let url = url else {
-                        return
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "globe_20")?.withTintColor(.themeGray)
                     }
 
-                    self?.urlManager.open(url: url, from: self)
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                    }
+                },
+                action: { [weak self] in
+                    if let url = url {
+                        self?.urlManager.open(url: url, from: self)
+                    }
                 }
         )
     }
