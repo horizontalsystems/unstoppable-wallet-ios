@@ -82,7 +82,7 @@ class CoinDetailsViewModel {
         TokenDistributionViewItem(
                 txCount: chart(item: proFeatures.txCount, isCurrencyValue: false),
                 txVolume: chart(item: proFeatures.txVolume),
-                activeAddresses: chart(item: proFeatures.activeAddresses)
+                activeAddresses: chart(item: proFeatures.activeAddresses, isCurrencyValue: false)
         )
     }
 
