@@ -123,12 +123,12 @@ class CoinDetailsViewModel {
         }
 
         if let kitResistant = info.confiscationResistant {
-            let resistance: SecurityResistance = kitResistant ? .yes : .no
+            let resistance: SecurityConfiscationResistance = kitResistant ? .yes : .no
             viewItems.append(SecurityViewItem(type: .confiscationResistance, value: resistance.title, valueGrade: resistance.grade))
         }
 
         if let kitResistant = info.censorshipResistant {
-            let resistance: SecurityResistance = kitResistant ? .yes : .no
+            let resistance: SecurityCensorshipResistance = kitResistant ? .yes : .no
             viewItems.append(SecurityViewItem(type: .censorshipResistance, value: resistance.title, valueGrade: resistance.grade))
         }
 
@@ -161,27 +161,6 @@ extension CoinDetailsViewModel {
 
     func onTapRetry() {
         service.sync()
-    }
-
-    func securityInfoViewItems(type: SecurityType) -> [SecurityInfoViewItem] {
-        switch type {
-        case .privacy:
-            return SecurityLevel.allCases.map { level in
-                SecurityInfoViewItem(grade: level.grade, title: level.title, text: "coin_page.security_parameters.privacy.description.\(level.rawValue)".localized)
-            }
-        case .issuance:
-            return SecurityIssuance.allCases.map { issuance in
-                SecurityInfoViewItem(grade: issuance.grade, title: issuance.title, text: "coin_page.security_parameters.issuance.description.\(issuance.rawValue)".localized)
-            }
-        case .confiscationResistance:
-            return SecurityResistance.allCases.map { resistance in
-                SecurityInfoViewItem(grade: resistance.grade, title: resistance.title, text: "coin_page.security_parameters.confiscation_resistance.description.\(resistance.rawValue)".localized)
-            }
-        case .censorshipResistance:
-            return SecurityResistance.allCases.map { resistance in
-                SecurityInfoViewItem(grade: resistance.grade, title: resistance.title, text: "coin_page.security_parameters.censorship_resistance.description.\(resistance.rawValue)".localized)
-            }
-        }
     }
 
 }
@@ -235,6 +214,10 @@ extension CoinDetailsViewModel {
             "coin_page.security_parameters.level.\(rawValue)".localized
         }
 
+        var description: String {
+            "coin_page.security_parameters.privacy.description.\(rawValue)".localized
+        }
+
         var grade: SecurityGrade {
             switch self {
             case .low: return .low
@@ -252,6 +235,10 @@ extension CoinDetailsViewModel {
             "coin_page.security_parameters.issuance.\(rawValue)".localized
         }
 
+        var description: String {
+            "coin_page.security_parameters.issuance.description.\(rawValue)".localized
+        }
+
         var grade: SecurityGrade {
             switch self {
             case .decentralized: return .high
@@ -260,12 +247,36 @@ extension CoinDetailsViewModel {
         }
     }
 
-    enum SecurityResistance: String, CaseIterable {
+    enum SecurityConfiscationResistance: String, CaseIterable {
         case yes
         case no
 
         var title: String {
             "coin_page.security_parameters.resistance.\(rawValue)".localized
+        }
+
+        var description: String {
+            "coin_page.security_parameters.confiscation_resistance.description.\(rawValue)".localized
+        }
+
+        var grade: SecurityGrade {
+            switch self {
+            case .yes: return .high
+            case .no: return .low
+            }
+        }
+    }
+
+    enum SecurityCensorshipResistance: String, CaseIterable {
+        case yes
+        case no
+
+        var title: String {
+            "coin_page.security_parameters.resistance.\(rawValue)".localized
+        }
+
+        var description: String {
+            "coin_page.security_parameters.censorship_resistance.description.\(rawValue)".localized
         }
 
         var grade: SecurityGrade {

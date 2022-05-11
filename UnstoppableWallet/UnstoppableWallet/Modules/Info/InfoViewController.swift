@@ -36,6 +36,7 @@ class InfoViewController: ThemeViewController {
         tableView.registerCell(forClass: ButtonCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
         tableView.registerCell(forClass: InfoHeader2Cell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
 
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
@@ -55,14 +56,14 @@ class InfoViewController: ThemeViewController {
 
     private func separatorRow(index: Int) -> RowProtocol {
         Row<InfoSeparatorHeaderCell>(
-                id: "\(index)",
+                id: "separator-\(index)",
                 height: InfoSeparatorHeaderCell.height
         )
     }
 
-    private func headerRow(text: String) -> RowProtocol {
+    private func headerRow(index: Int, text: String) -> RowProtocol {
         Row<InfoHeaderCell>(
-                id: text,
+                id: "header-\(index)",
                 dynamicHeight: { containerWidth in
                     InfoHeaderCell.height(containerWidth: containerWidth, text: text)
                 },
@@ -72,9 +73,9 @@ class InfoViewController: ThemeViewController {
         )
     }
 
-    private func header2Row(text: String) -> RowProtocol {
+    private func header2Row(index: Int, text: String) -> RowProtocol {
         Row<InfoHeader2Cell>(
-                id: text,
+                id: "header2-index",
                 dynamicHeight: { containerWidth in
                     InfoHeader2Cell.height(containerWidth: containerWidth, string: text)
                 },
@@ -84,9 +85,9 @@ class InfoViewController: ThemeViewController {
         )
     }
 
-    private func textRow(text: String) -> RowProtocol {
+    private func textRow(index: Int, text: String) -> RowProtocol {
         Row<DescriptionCell>(
-                id: text,
+                id: "text-\(index)",
                 dynamicHeight: { width in
                     DescriptionCell.height(containerWidth: width, text: text)
                 },
@@ -96,9 +97,9 @@ class InfoViewController: ThemeViewController {
         )
     }
 
-    private func linkButtonRow(text: String, url: String) -> RowProtocol {
+    private func linkButtonRow(index: Int, text: String, url: String) -> RowProtocol {
         Row<ButtonCell>(
-                id: text,
+                id: "link-button-\(index)",
                 height: ButtonCell.height(style: .secondaryDefault),
                 bind: { [weak self] cell, _ in
                     cell.bind(style: .secondaryDefault, title: text, compact: true) { [weak self] in
@@ -109,12 +110,9 @@ class InfoViewController: ThemeViewController {
     }
 
     private func marginRow(index: Int, height: CGFloat) -> RowProtocol {
-        Row<UITableViewCell>(
-                id: "\(index)",
-                height: height,
-                bind: { cell, _ in
-                    cell.backgroundColor = .clear
-                }
+        Row<EmptyCell>(
+                id: "margin-\(index)",
+                height: height
         )
     }
 
@@ -137,10 +135,10 @@ extension InfoViewController: SectionsDataSource {
             switch viewItem {
             case .separator: return separatorRow(index: index)
             case .margin(let height): return marginRow(index: index, height: height)
-            case .header(let text): return headerRow(text: text)
-            case .text(let text): return textRow(text: text)
-            case .header2(let text): return header2Row(text: text)
-            case .button(let text, let url): return linkButtonRow(text: text, url: url)
+            case .header(let text): return headerRow(index: index, text: text)
+            case .text(let text): return textRow(index: index, text: text)
+            case .header2(let text): return header2Row(index: index, text: text)
+            case .button(let text, let url): return linkButtonRow(index: index, text: text, url: url)
             }
         }
     }

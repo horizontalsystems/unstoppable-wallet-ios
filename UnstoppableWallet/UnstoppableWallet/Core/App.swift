@@ -111,7 +111,8 @@ class App {
                 hsApiBaseUrl: appConfigProvider.marketApiUrl,
                 cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
                 defiYieldApiKey: appConfigProvider.defiYieldApiKey,
-                hsProviderApiKey: appConfigProvider.hsProviderApiKey
+                hsProviderApiKey: appConfigProvider.hsProviderApiKey,
+                minLogLevel: .error
         )
         marketKit.sync()
 
