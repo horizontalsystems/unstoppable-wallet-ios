@@ -62,8 +62,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openStatusInfo() {
-        let viewController = TransactionStatusInfoViewController()
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        present(InfoModule.transactionStatusInfo, animated: true)
     }
 
     private func openResend(action: TransactionInfoModule.Option) {
