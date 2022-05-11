@@ -272,7 +272,7 @@ extension OneInchDataSource: ISwapDataSource {
 
 extension OneInchDataSource: IPresentDelegate {
 
-    func show(viewController: UIViewController) {
+    func present(viewController: UIViewController) {
         onOpen?(viewController, false)
     }
 

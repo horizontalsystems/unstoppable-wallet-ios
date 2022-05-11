@@ -18,12 +18,6 @@ class MarketOverviewViewController: ThemeViewController {
     private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
-    weak var parentNavigationController: UINavigationController? {
-        didSet {
-            viewModel.parentNavigationController = parentNavigationController
-        }
-    }
-
     init(viewModel: MarketOverviewViewModel) {
         self.viewModel = viewModel
         viewModel.tableView = tableView

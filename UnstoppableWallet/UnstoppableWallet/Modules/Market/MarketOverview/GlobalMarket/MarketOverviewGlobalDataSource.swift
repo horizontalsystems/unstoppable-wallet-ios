@@ -8,11 +8,6 @@ import ComponentKit
 class MarketOverviewGlobalDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var parentNavigationController: UINavigationController? {
-        didSet {
-            marketMetricsCell.viewController = parentNavigationController
-        }
-    }
     weak var tableView: UITableView?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
@@ -20,11 +15,14 @@ class MarketOverviewGlobalDataSource {
     private let statusRelay = PublishRelay<()>()
 
     private let viewModel: MarketOverviewGlobalViewModel
+    var presentDelegate: IPresentDelegate
 
-    private let marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart)
+    private let marketMetricsCell: MarketOverviewMetricsCell
 
-    init(viewModel: MarketOverviewGlobalViewModel) {
+    init(viewModel: MarketOverviewGlobalViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
+        self.presentDelegate = presentDelegate
+        marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart, presentDelegate: presentDelegate)
 
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }

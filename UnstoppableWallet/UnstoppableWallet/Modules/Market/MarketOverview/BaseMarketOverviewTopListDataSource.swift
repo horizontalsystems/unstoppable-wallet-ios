@@ -18,7 +18,8 @@ protocol IBaseMarketOverviewTopListViewModel {
 class BaseMarketOverviewTopListDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var parentNavigationController: UINavigationController?
+    var presentDelegate: IPresentDelegate
+
     weak var tableView: UITableView?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
@@ -29,8 +30,9 @@ class BaseMarketOverviewTopListDataSource {
 
     private var topViewItem: ViewItem?
 
-    init(viewModel: IBaseMarketOverviewTopListViewModel) {
+    init(viewModel: IBaseMarketOverviewTopListViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
+        self.presentDelegate = presentDelegate
 
         subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }

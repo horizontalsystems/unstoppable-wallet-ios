@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import RxSwift
 import GRDB
 import UniswapKit
@@ -117,7 +117,16 @@ protocol IAppManager {
 }
 
 protocol IPresentDelegate: AnyObject {
-    func show(viewController: UIViewController)
+    func present(viewController: UIViewController)
+    func push(viewController: UIViewController)
+}
+
+extension IPresentDelegate {
+
+    func push(viewController: UIViewController) {
+        //might be implemented by delegate
+    }
+
 }
 
 protocol Warning {}
