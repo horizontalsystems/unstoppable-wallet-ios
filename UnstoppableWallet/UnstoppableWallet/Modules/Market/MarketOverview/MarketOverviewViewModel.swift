@@ -1,10 +1,11 @@
+import UIKit
 import SectionsTableView
 import RxSwift
 import RxRelay
 import RxCocoa
 
 protocol IMarketOverviewDataSource {
-    var parentNavigationController: UINavigationController? { get set }
+    var presentDelegate: IPresentDelegate { get set }
     var tableView: UITableView? { get set }
     var status: DataStatus<[SectionProtocol]> { get }
     var updateDriver: Driver<()> { get }
@@ -21,14 +22,6 @@ class MarketOverviewViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    weak var parentNavigationController: UINavigationController? {
-        didSet {
-            dataSources.forEach {
-                var dataSource = $0
-                dataSource.parentNavigationController = parentNavigationController
-            }
-        }
-    }
     weak var tableView: UITableView? {
         didSet {
             dataSources.forEach {

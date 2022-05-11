@@ -8,10 +8,10 @@ protocol IMarketOverviewTopCoinsViewModel {
 class MarketOverviewTopCoinsDataSource: BaseMarketOverviewTopListDataSource {
     private let topCoinsViewModel: IMarketOverviewTopCoinsViewModel
 
-    init(viewModel: IMarketOverviewTopCoinsViewModel & IBaseMarketOverviewTopListViewModel) {
+    init(viewModel: IMarketOverviewTopCoinsViewModel & IBaseMarketOverviewTopListViewModel, presentDelegate: IPresentDelegate) {
         topCoinsViewModel = viewModel
 
-        super.init(viewModel: viewModel)
+        super.init(viewModel: viewModel, presentDelegate: presentDelegate)
     }
 
     override func didTapSeeAll() {
@@ -20,12 +20,12 @@ class MarketOverviewTopCoinsDataSource: BaseMarketOverviewTopListDataSource {
                 sortingField: topCoinsViewModel.listType.sortingField,
                 marketField: topCoinsViewModel.listType.marketField
         )
-        parentNavigationController?.present(module, animated: true)
+        presentDelegate.present(viewController: module)
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
         if let uid = listViewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) {
-            parentNavigationController?.present(module, animated: true)
+            presentDelegate.present(viewController: module)
         }
     }
 

@@ -5,13 +5,13 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
 
     override func didTapSeeAll() {
         let module = MarketNftTopCollectionsModule.viewController()
-        parentNavigationController?.present(module, animated: true)
+        presentDelegate.present(viewController: module)
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
         if let uid = listViewItem.uid {
             let module = NftCollectionModule.viewController(collectionUid: uid)
-            parentNavigationController?.present(ThemeNavigationController(rootViewController: module), animated: true)
+            presentDelegate.present(viewController: ThemeNavigationController(rootViewController: module))
         }
     }
 

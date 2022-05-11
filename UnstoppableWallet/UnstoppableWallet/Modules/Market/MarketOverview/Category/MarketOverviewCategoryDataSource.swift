@@ -1,3 +1,4 @@
+import UIKit
 import RxSwift
 import RxCocoa
 import SectionsTableView
@@ -5,7 +6,6 @@ import SectionsTableView
 class MarketOverviewCategoryDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var parentNavigationController: UINavigationController?
     weak var tableView: UITableView?
 
     var status: DataStatus<[SectionProtocol]> = .loading {
@@ -14,20 +14,22 @@ class MarketOverviewCategoryDataSource {
     private let statusRelay = PublishRelay<()>()
 
     private let viewModel: MarketOverviewCategoryViewModel
+    var presentDelegate: IPresentDelegate
 
     private var viewItem: MarketOverviewCategoryViewModel.CategoryViewItem?
 
     private let categoryCell = MarketOverviewCategoryCell()
 
-    init(viewModel: MarketOverviewCategoryViewModel) {
+    init(viewModel: MarketOverviewCategoryViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
+        self.presentDelegate = presentDelegate
 
         subscribe(disposeBag, viewModel.categoryViewItemsDriver) { [weak self] in self?.sync(viewItem: $0) }
         categoryCell.onSelect = { [weak self] index in
             guard let viewItem = self?.viewItem?.viewItems[index], let viewController = MarketCategoryModule.viewController(categoryUid: viewItem.uid) else {
                 return
             }
-            self?.parentNavigationController?.present(viewController, animated: true)
+            self?.presentDelegate.present(viewController: viewController)
         }
     }
 
@@ -43,7 +45,7 @@ class MarketOverviewCategoryDataSource {
             return
         }
 
-        parentNavigationController?.present(module, animated: true)
+        presentDelegate.present(viewController: module)
     }
 
     private var sections: [SectionProtocol] {
@@ -62,7 +64,7 @@ class MarketOverviewCategoryDataSource {
 
                                     cell.buttonMode = .seeAll
                                     cell.onSeeAll = {
-                                        self?.parentNavigationController?.pushViewController(MarketDiscoveryModule.viewController(), animated: true)
+                                        self?.presentDelegate.push(viewController: MarketDiscoveryModule.viewController())
                                     }
 
                                     cell.titleImage = UIImage(named: viewItem.imageName)

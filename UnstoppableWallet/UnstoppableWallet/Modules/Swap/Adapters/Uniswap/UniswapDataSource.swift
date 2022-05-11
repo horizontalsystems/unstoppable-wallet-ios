@@ -369,7 +369,7 @@ extension UniswapDataSource: ISwapDataSource {
 
 extension UniswapDataSource: IPresentDelegate {
 
-    func show(viewController: UIViewController) {
+    func present(viewController: UIViewController) {
         onOpen?(viewController, false)
     }
 

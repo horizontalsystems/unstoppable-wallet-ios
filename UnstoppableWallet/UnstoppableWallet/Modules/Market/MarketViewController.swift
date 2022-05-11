@@ -1,3 +1,4 @@
+import UIKit
 import ThemeKit
 import SnapKit
 import RxSwift
@@ -10,14 +11,12 @@ class MarketViewController: ThemeViewController {
     private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-    private let overviewController: MarketOverviewViewController
     private let postViewController: MarketPostViewController
     private let watchlistViewController: MarketWatchlistViewController
 
     init(viewModel: MarketViewModel) {
         self.viewModel = viewModel
 
-        overviewController = MarketOverviewModule.viewController()
         postViewController = MarketPostModule.viewController()
         watchlistViewController = MarketWatchlistModule.viewController()
 
@@ -61,7 +60,6 @@ class MarketViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_discovery_24"), style: .plain, target: self, action: #selector(onTapDiscovery))
 
-        overviewController.parentNavigationController = navigationController
         postViewController.parentNavigationController = navigationController
         watchlistViewController.parentNavigationController = navigationController
 
@@ -87,7 +85,7 @@ class MarketViewController: ThemeViewController {
 
     private func viewController(tab: MarketModule.Tab) -> UIViewController {
         switch tab {
-        case .overview: return overviewController
+        case .overview: return MarketOverviewModule.viewController(presentDelegate: self)
         case .posts: return postViewController
         case .watchlist: return watchlistViewController
         }
@@ -95,6 +93,18 @@ class MarketViewController: ThemeViewController {
 
     @objc private func onTapDiscovery() {
         navigationController?.pushViewController(MarketDiscoveryModule.viewController(), animated: true)
+    }
+
+}
+
+extension MarketViewController: IPresentDelegate {
+
+    func present(viewController: UIViewController) {
+        navigationController?.present(viewController, animated: true)
+    }
+
+    func push(viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
