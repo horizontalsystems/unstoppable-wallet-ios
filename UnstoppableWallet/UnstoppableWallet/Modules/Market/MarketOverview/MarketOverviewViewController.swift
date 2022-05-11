@@ -12,7 +12,7 @@ class MarketOverviewViewController: ThemeViewController {
 
     private let viewModel: MarketOverviewViewModel
 
-    private let tableView = SectionsTableView(style: .grouped)
+    let tableView = SectionsTableView(style: .grouped)
     private var sections = [SectionProtocol]()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
@@ -20,7 +20,6 @@ class MarketOverviewViewController: ThemeViewController {
 
     init(viewModel: MarketOverviewViewModel) {
         self.viewModel = viewModel
-        viewModel.tableView = tableView
 
         super.init()
     }
