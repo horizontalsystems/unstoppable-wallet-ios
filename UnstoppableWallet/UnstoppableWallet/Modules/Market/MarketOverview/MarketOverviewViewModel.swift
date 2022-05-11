@@ -22,15 +22,6 @@ class MarketOverviewViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    weak var tableView: UITableView? {
-        didSet {
-            dataSources.forEach {
-                var dataSource = $0
-                dataSource.tableView = tableView
-            }
-        }
-    }
-
     init(dataSources: [IMarketOverviewDataSource]) {
         self.dataSources = dataSources
 

@@ -30,16 +30,23 @@ struct MarketOverviewModule {
         let topPlatformsViewModel = MarketOverviewTopPlatformsViewModel(service: topPlatformsService, decorator: topPlatformsDecorator)
         let topPlatformsDataSource = MarketOverviewTopPlatformsDataSource(viewModel: topPlatformsViewModel, presentDelegate: presentDelegate)
 
-        let viewModel = MarketOverviewViewModel(dataSources: [
+        let dataSources: [IMarketOverviewDataSource] = [
             marketOverviewDataSource,
             topGainersDataSource,
             topLosersDataSource,
             categoryDataSource,
             nftCollectionsDataSource,
             topPlatformsDataSource
-        ])
+        ]
+        let viewModel = MarketOverviewViewModel(dataSources: dataSources)
 
-        return MarketOverviewViewController(viewModel: viewModel)
+        let viewController = MarketOverviewViewController(viewModel: viewModel)
+        dataSources.forEach {
+            var dataSource = $0
+            dataSource.tableView = viewController.tableView
+        }
+
+        return viewController
     }
 
 }
