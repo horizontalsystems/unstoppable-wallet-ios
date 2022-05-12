@@ -9,10 +9,6 @@ class MarketOverviewGlobalDataSource {
     private let disposeBag = DisposeBag()
 
     weak var tableView: UITableView?
-    var status: DataStatus<[SectionProtocol]> = .loading {
-        didSet { statusRelay.accept(()) }
-    }
-    private let statusRelay = PublishRelay<()>()
 
     private let viewModel: MarketOverviewGlobalViewModel
     var presentDelegate: IPresentDelegate
@@ -23,19 +19,19 @@ class MarketOverviewGlobalDataSource {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
         marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart, presentDelegate: presentDelegate)
-
-        subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewGlobalViewModel.GlobalMarketViewItem>) {
-        self.status = status.map { [weak self] globalMarketViewItem in
-            self?.marketMetricsCell.set(viewItem: globalMarketViewItem)
+}
 
-            return sections
+extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
+
+    func sections(tableView: UITableView) -> [SectionProtocol] {
+        guard let viewItem = viewModel.viewItem else {
+            return []
         }
-    }
 
-    private var sections: [SectionProtocol] {
+        marketMetricsCell.set(viewItem: viewItem)
+
         var sections = [SectionProtocol]()
 
         let metricsSection = Section(
@@ -52,17 +48,6 @@ class MarketOverviewGlobalDataSource {
         sections.append(metricsSection)
 
         return sections
-    }
-
-}
-
-extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
-    var updateDriver: Driver<()> {
-        statusRelay.asDriver(onErrorJustReturn: ())
-    }
-
-    func refresh() {
-        viewModel.refresh()
     }
 
 }
