@@ -5,7 +5,7 @@ import RxCocoa
 import BigInt
 
 class LegacyGasPriceService {
-    private static let gasPriceSafeRangeBounds = RangeBounds(lower: .distance(1), upper: .distance(1))
+    private static let gasPriceSafeRangeBounds = RangeBounds(lower: .distance(1_000_000_000), upper: .distance(1_000_000_000))
     private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.6), upper: .factor(3))
 
     private var disposeBag = DisposeBag()
@@ -36,11 +36,7 @@ class LegacyGasPriceService {
         gasPriceProvider = LegacyGasPriceProvider(evmKit: evmKit)
         self.minRecommendedGasPrice = minRecommendedGasPrice
 
-        if let gasPrice = initialGasPrice {
-            legacyGasPrice = gasPrice
-        } else {
-            setRecommendedGasPrice()
-        }
+        setRecommendedGasPrice(initialGasPrice: initialGasPrice)
     }
 
     private func sync() {
@@ -86,7 +82,7 @@ extension LegacyGasPriceService {
         usingRecommended = false
     }
 
-    func setRecommendedGasPrice() {
+    func setRecommendedGasPrice(initialGasPrice: Int? = nil) {
         disposeBag = DisposeBag()
 
         status = .loading
@@ -98,7 +94,7 @@ extension LegacyGasPriceService {
                             if let minRecommendedGasPrice = self?.minRecommendedGasPrice {
                                 self?.recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
                             }
-                            self?.legacyGasPrice = gasPrice
+                            self?.legacyGasPrice = initialGasPrice ?? gasPrice
                             self?.usingRecommended = true
                         },
                         onError: { [weak self] error in
