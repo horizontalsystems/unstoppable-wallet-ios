@@ -8,15 +8,8 @@ class MarketOverviewCategoryDataSource {
 
     weak var tableView: UITableView?
 
-    var status: DataStatus<[SectionProtocol]> = .loading {
-        didSet { statusRelay.accept(()) }
-    }
-    private let statusRelay = PublishRelay<()>()
-
     private let viewModel: MarketOverviewCategoryViewModel
     var presentDelegate: IPresentDelegate
-
-    private var viewItem: MarketOverviewCategoryViewModel.CategoryViewItem?
 
     private let categoryCell = MarketOverviewCategoryCell()
 
@@ -24,20 +17,12 @@ class MarketOverviewCategoryDataSource {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
 
-        subscribe(disposeBag, viewModel.categoryViewItemsDriver) { [weak self] in self?.sync(viewItem: $0) }
         categoryCell.onSelect = { [weak self] index in
-            guard let viewItem = self?.viewItem?.viewItems[index], let viewController = MarketCategoryModule.viewController(categoryUid: viewItem.uid) else {
+            guard let viewItem = self?.viewModel.viewItem?.viewItems[index], let viewController = MarketCategoryModule.viewController(categoryUid: viewItem.uid) else {
                 return
             }
             self?.presentDelegate.present(viewController: viewController)
         }
-    }
-
-    private func sync(viewItem: MarketOverviewCategoryViewModel.CategoryViewItem?) {
-        self.viewItem = viewItem
-        categoryCell.viewItems = viewItem?.viewItems ?? []
-
-        status = .completed(sections)
     }
 
     private func onSelect(listViewItem: MarketModule.ListViewItem) {
@@ -48,10 +33,15 @@ class MarketOverviewCategoryDataSource {
         presentDelegate.present(viewController: module)
     }
 
-    private var sections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
+}
 
-        if let viewItem = viewItem {
+extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
+
+    func sections(tableView: UITableView) -> [SectionProtocol] {
+        categoryCell.viewItems = viewModel.viewItem?.viewItems ?? []
+
+        var sections = [SectionProtocol]()
+        if let viewItem = viewModel.viewItem {
             let headerSection = Section(
                     id: "categories_header",
                     footerState: .margin(height: .margin12),
@@ -90,17 +80,6 @@ class MarketOverviewCategoryDataSource {
         }
 
         return sections
-    }
-
-}
-
-extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
-    var updateDriver: Driver<()> {
-        statusRelay.asDriver(onErrorJustReturn: ())
-    }
-
-    func refresh() {
-        //categories has no refresh
     }
 
 }

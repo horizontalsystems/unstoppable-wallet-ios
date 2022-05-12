@@ -7,10 +7,17 @@ import ComponentKit
 import HUD
 import Chart
 
+protocol IMarketOverviewDataSource {
+    var presentDelegate: IPresentDelegate { get set }
+
+    func sections(tableView: UITableView) -> [SectionProtocol]
+}
+
 class MarketOverviewViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: MarketOverviewViewModel
+    private let dataSources: [IMarketOverviewDataSource]
 
     let tableView = SectionsTableView(style: .grouped)
     private var sections = [SectionProtocol]()
@@ -18,8 +25,9 @@ class MarketOverviewViewController: ThemeViewController {
     private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
 
-    init(viewModel: MarketOverviewViewModel) {
+    init(viewModel: MarketOverviewViewModel, dataSources: [IMarketOverviewDataSource]) {
         self.viewModel = viewModel
+        self.dataSources = dataSources
 
         super.init()
     }
@@ -62,9 +70,8 @@ class MarketOverviewViewController: ThemeViewController {
 
         errorView.configureSyncError(target: self, action: #selector(onRetry))
 
-        subscribe(disposeBag, viewModel.sectionsDriver) { [weak self] in
-            self?.sections = $0
-            self?.tableView.reload()
+        subscribe(disposeBag, viewModel.successDriver) { [weak self] in
+            self?.sync()
         }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
@@ -91,6 +98,11 @@ class MarketOverviewViewController: ThemeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.refreshControl.endRefreshing()
         }
+    }
+
+    func sync() {
+        sections = dataSources.compactMap { $0.sections(tableView: tableView) }.flatMap { $0 }
+        tableView.reload()
     }
 
 }

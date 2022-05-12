@@ -8,7 +8,9 @@ class MarketOverviewNftCollectionsViewModel {
     private let decorator: MarketListNftCollectionDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
+    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
+
+    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem?
 
     init(service: MarketOverviewNftCollectionsService, decorator: MarketListNftCollectionDecorator) {
         self.service = service
@@ -20,13 +22,15 @@ class MarketOverviewNftCollectionsViewModel {
     }
 
     private func sync(status: DataStatus<[NftCollectionItem]>) {
-        statusRelay.accept(status.map({ listItems in
-            viewItem(listItems: listItems)
+        stateRelay.accept(status.map({ [weak self] listItems in
+            self?.createViewItem(listItems: listItems)
+
+            return ()
         }))
     }
 
-    private func viewItem(listItems: [NftCollectionItem]) -> BaseMarketOverviewTopListDataSource.ViewItem {
-        BaseMarketOverviewTopListDataSource.ViewItem(
+    private func createViewItem(listItems: [NftCollectionItem]) {
+        viewItem = .init(
                 rightSelectorMode: .none,
                 imageName: "image_2_20",
                 title: "market.top.top_collections".localized,
@@ -38,11 +42,19 @@ class MarketOverviewNftCollectionsViewModel {
 
 }
 
-extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
+extension MarketOverviewNftCollectionsViewModel: IMarketOverviewSectionViewModel {
 
-    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
-        statusRelay.asDriver()
+    var stateDriver: Driver<DataStatus<()>> {
+        stateRelay.asDriver()
     }
+
+    func refresh() {
+        service.refresh()
+    }
+
+}
+
+extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
 
     var selectorValues: [String] {
         []
@@ -53,10 +65,6 @@ extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewM
     }
 
     func onSelect(selectorIndex: Int) {
-    }
-
-    func refresh() {
-        service.refresh()
     }
 
 }

@@ -6,7 +6,9 @@ class MarketOverviewCategoryViewModel {
     private let service: MarketDiscoveryService
     private let disposeBag = DisposeBag()
 
-    private let categoryViewItemsRelay = BehaviorRelay<CategoryViewItem?>(value: nil)
+    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
+
+    var viewItem: CategoryViewItem?
 
     init(service: MarketDiscoveryService) {
         self.service = service
@@ -16,7 +18,11 @@ class MarketOverviewCategoryViewModel {
 
     private func sync(state: MarketDiscoveryService.State) {
         if case let .discovery(items) = state {
-            categoryViewItemsRelay.accept(CategoryViewItem(viewItems: items.prefix(5).compactMap { viewItem(item: $0) }))
+            viewItem = CategoryViewItem(viewItems: items.prefix(5).compactMap {
+                viewItem(item: $0)
+            })
+
+            stateRelay.accept(.completed(()))
         }
     }
 
@@ -39,10 +45,13 @@ class MarketOverviewCategoryViewModel {
 
 }
 
-extension MarketOverviewCategoryViewModel {
+extension MarketOverviewCategoryViewModel: IMarketOverviewSectionViewModel {
 
-    var categoryViewItemsDriver: Driver<CategoryViewItem?> {
-        categoryViewItemsRelay.asDriver()
+    var stateDriver: Driver<DataStatus<()>> {
+        stateRelay.asDriver()
+    }
+
+    func refresh() {
     }
 
 }

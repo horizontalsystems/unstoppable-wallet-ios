@@ -10,7 +10,9 @@ class MarketOverviewTopCoinsViewModel {
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
+    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
+
+    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem?
 
     init(service: MarketOverviewTopCoinsService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
@@ -20,13 +22,15 @@ class MarketOverviewTopCoinsViewModel {
     }
 
     private func sync(status: DataStatus<[MarketInfo]>) {
-        statusRelay.accept(status.map({ listItems in
-            viewItem(listItems: listItems)
+        stateRelay.accept(status.map({ [weak self] listItems in
+            self?.createViewItem(listItems: listItems)
+
+            return ()
         }))
     }
 
-    private func viewItem(listItems: [MarketInfo]) -> BaseMarketOverviewTopListDataSource.ViewItem {
-        BaseMarketOverviewTopListDataSource.ViewItem(
+    private func createViewItem(listItems: [MarketInfo]) {
+        viewItem = .init(
                 rightSelectorMode: .selector,
                 imageName: imageName(listType: service.listType),
                 title: title(listType: service.listType),
@@ -50,11 +54,19 @@ class MarketOverviewTopCoinsViewModel {
 
 }
 
-extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
+extension MarketOverviewTopCoinsViewModel: IMarketOverviewSectionViewModel {
 
-    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
-        statusRelay.asDriver()
+    var stateDriver: Driver<DataStatus<()>> {
+        stateRelay.asDriver()
     }
+
+    func refresh() {
+        service.refresh()
+    }
+
+}
+
+extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
 
     var selectorValues: [String] {
         MarketModule.MarketTop.allCases.map { $0.title }
@@ -67,10 +79,6 @@ extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
     func onSelect(selectorIndex: Int) {
         let marketTop = MarketModule.MarketTop.allCases[selectorIndex]
         service.set(marketTop: marketTop)
-    }
-
-    func refresh() {
-        service.refresh()
     }
 
 }

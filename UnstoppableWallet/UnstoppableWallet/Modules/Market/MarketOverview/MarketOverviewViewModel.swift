@@ -4,72 +4,50 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-protocol IMarketOverviewDataSource {
-    var presentDelegate: IPresentDelegate { get set }
-    var tableView: UITableView? { get set }
-    var status: DataStatus<[SectionProtocol]> { get }
-    var updateDriver: Driver<()> { get }
-
+protocol IMarketOverviewSectionViewModel {
+    var stateDriver: Driver<DataStatus<()>> { get }
     func refresh()
 }
 
 class MarketOverviewViewModel {
     private let disposeBag = DisposeBag()
 
-    private let dataSources: [IMarketOverviewDataSource]
+    private let viewModels: [IMarketOverviewSectionViewModel]
 
-    private let sectionsRelay = BehaviorRelay<[SectionProtocol]>(value: [])
+    private let successRelay = PublishRelay<()>()
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(dataSources: [IMarketOverviewDataSource]) {
-        self.dataSources = dataSources
+    init(viewModels: [IMarketOverviewSectionViewModel]) {
+        self.viewModels = viewModels
 
-        dataSources.forEach { dataSource in
-            subscribe(disposeBag, dataSource.updateDriver) { [weak self] in
-                self?.sync()
+        viewModels.forEach { viewModel in
+            subscribe(disposeBag, viewModel.stateDriver) { [weak self] in
+                self?.sync(status: $0)
             }
         }
     }
 
-    private func sync() {
-        if showError {
-            sectionsRelay.accept([])
+    private func sync(status: DataStatus<()>) {
+        if status.error != nil {
             loadingRelay.accept(false)
             syncErrorRelay.accept(true)
-        } else if isLoading {
-            sectionsRelay.accept([])
+        } else if status.isLoading {
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
         } else {
-            sectionsRelay.accept(sections)
+            successRelay.accept(())
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
         }
-    }
-
-    private var isLoading: Bool {
-        dataSources.first { $0.status.isLoading } != nil
-    }
-
-    private var showError: Bool {
-        dataSources.first { $0.status.error != nil } != nil
-    }
-
-    private var sections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
-        dataSources.forEach { source in
-            sections.append(contentsOf: source.status.data ?? [])
-        }
-        return sections
     }
 
 }
 
 extension MarketOverviewViewModel {
 
-    var sectionsDriver: Driver<[SectionProtocol]> {
-        sectionsRelay.asDriver()
+    var successDriver: Driver<()> {
+        successRelay.asDriver(onErrorJustReturn: ())
     }
 
     var loadingDriver: Driver<Bool> {
@@ -81,7 +59,7 @@ extension MarketOverviewViewModel {
     }
 
     func refresh() {
-        dataSources.forEach { $0.refresh() }
+        viewModels.forEach { $0.refresh() }
     }
 
 }

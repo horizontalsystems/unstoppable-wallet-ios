@@ -8,7 +8,9 @@ class MarketOverviewTopPlatformsViewModel {
     private let decorator: MarketListTopPlatformDecorator
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
+    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
+
+    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem?
 
     init(service: MarketOverviewTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
         self.service = service
@@ -18,13 +20,15 @@ class MarketOverviewTopPlatformsViewModel {
     }
 
     private func sync(status: DataStatus<[MarketKit.TopPlatform]>) {
-        statusRelay.accept(status.map({ listItems in
-            viewItem(listItems: listItems)
+        stateRelay.accept(status.map({ [weak self] listItems in
+            self?.createViewItem(listItems: listItems)
+
+            return ()
         }))
     }
 
-    private func viewItem(listItems: [MarketKit.TopPlatform]) -> BaseMarketOverviewTopListDataSource.ViewItem {
-        BaseMarketOverviewTopListDataSource.ViewItem(
+    private func createViewItem(listItems: [MarketKit.TopPlatform]) {
+        viewItem = .init(
                 rightSelectorMode: .selector,
                 imageName: "blocks_20",
                 title: "market.top.top_platforms".localized,
@@ -36,11 +40,19 @@ class MarketOverviewTopPlatformsViewModel {
 
 }
 
-extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
+extension MarketOverviewTopPlatformsViewModel: IMarketOverviewSectionViewModel {
 
-    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> {
-        statusRelay.asDriver()
+    var stateDriver: Driver<DataStatus<()>> {
+        stateRelay.asDriver()
     }
+
+    func refresh() {
+        service.refresh()
+    }
+
+}
+
+extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
 
     var selectorValues: [String] {
         MarketOverviewTopPlatformsService.TimePeriod.allCases.map { $0.title }
@@ -54,10 +66,6 @@ extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewMod
         let timePeriod = MarketOverviewTopPlatformsService.TimePeriod.allCases[selectorIndex]
         decorator.timePeriod = timePeriod
         service.timePeriod = timePeriod
-    }
-
-    func refresh() {
-        service.refresh()
     }
 
 }

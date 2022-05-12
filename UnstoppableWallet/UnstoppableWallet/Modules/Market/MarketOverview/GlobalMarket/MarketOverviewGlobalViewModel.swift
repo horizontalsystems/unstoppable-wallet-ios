@@ -9,7 +9,9 @@ class MarketOverviewGlobalViewModel {
     private let service: MarketOverviewGlobalService
     private let disposeBag = DisposeBag()
 
-    private let statusRelay = BehaviorRelay<DataStatus<GlobalMarketViewItem>>(value: .loading)
+    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
+
+    var viewItem: GlobalMarketViewItem?
 
     init(service: MarketOverviewGlobalService) {
         self.service = service
@@ -18,13 +20,15 @@ class MarketOverviewGlobalViewModel {
     }
 
     private func sync(status: DataStatus<MarketOverviewGlobalService.GlobalMarketData>) {
-        statusRelay.accept(status.map({ globalMarketData in
-            viewItem(globalMarketData: globalMarketData)
+        stateRelay.accept(status.map({ [weak self] globalMarketData in
+            self?.createViewItem(globalMarketData: globalMarketData)
+
+            return ()
         }))
     }
 
-    private func viewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) -> GlobalMarketViewItem {
-        GlobalMarketViewItem(
+    private func createViewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) {
+        viewItem = .init(
                 totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
                 volume24h: chartViewItem(item: globalMarketData.volume24h),
                 defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
@@ -70,10 +74,10 @@ class MarketOverviewGlobalViewModel {
 
 }
 
-extension MarketOverviewGlobalViewModel {
+extension MarketOverviewGlobalViewModel: IMarketOverviewSectionViewModel {
 
-    var statusDriver: Driver<DataStatus<GlobalMarketViewItem>> {
-        statusRelay.asDriver()
+    var stateDriver: Driver<DataStatus<()>> {
+        stateRelay.asDriver()
     }
 
     func refresh() {

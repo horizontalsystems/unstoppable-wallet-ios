@@ -6,7 +6,7 @@ import Chart
 import ComponentKit
 
 protocol IBaseMarketOverviewTopListViewModel {
-    var statusDriver: Driver<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>> { get }
+    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? { get }
     var selectorValues: [String] { get }
 
     var selectorIndex: Int { get }
@@ -20,7 +20,6 @@ class BaseMarketOverviewTopListDataSource {
 
     var presentDelegate: IPresentDelegate
 
-    weak var tableView: UITableView?
     var status: DataStatus<[SectionProtocol]> = .loading {
         didSet { statusRelay.accept(()) }
     }
@@ -28,29 +27,13 @@ class BaseMarketOverviewTopListDataSource {
 
     private let viewModel: IBaseMarketOverviewTopListViewModel
 
-    private var topViewItem: ViewItem?
-
     init(viewModel: IBaseMarketOverviewTopListViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
-
-        subscribe(disposeBag, viewModel.statusDriver) { [weak self] in self?.sync(status: $0) }
     }
 
-    private func sync(status: DataStatus<ViewItem>) {
-        self.status = status.map { [weak self] viewItem in
-            self?.topViewItem = viewItem
-
-            return sections
-        }
-    }
-
-    private func row(listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
-        guard let tableView = tableView else {
-            fatalError("I need tableView :(")
-        }
-
-        return CellBuilder.selectableRow(
+    private func row(tableView: UITableView, listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
+        CellBuilder.selectableRow(
                 elements: [.image24, .multiText, .multiText],
                 tableView: tableView,
                 id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
@@ -94,18 +77,14 @@ class BaseMarketOverviewTopListDataSource {
         )
     }
 
-    private func rows(listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
+    private func rows(tableView: UITableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
         listViewItems.enumerated().map { index, listViewItem in
-            row(listViewItem: listViewItem, isFirst: index == 0)
+            row(tableView: tableView, listViewItem: listViewItem, isFirst: index == 0)
         }
     }
 
-    private func seeAllRow(id: String, action: @escaping () -> ()) -> RowProtocol {
-        guard let tableView = tableView else {
-            fatalError("I need tableView")
-        }
-
-        return CellBuilder.selectableRow(
+    private func seeAllRow(tableView: UITableView, id: String, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilder.selectableRow(
                 elements: [.text, .image20],
                 tableView: tableView,
                 id: id,
@@ -134,8 +113,12 @@ class BaseMarketOverviewTopListDataSource {
     func onSelect(listViewItem: MarketModule.ListViewItem) {
     }
 
-    private var sections: [SectionProtocol] {
-        guard let topViewItem = topViewItem else {
+}
+
+extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
+
+    func sections(tableView: UITableView) -> [SectionProtocol] {
+        guard let topViewItem = viewModel.viewItem else {
             return []
         }
 
@@ -172,8 +155,9 @@ class BaseMarketOverviewTopListDataSource {
         let listSection = Section(
                 id: topViewItem.title,
                 footerState: .margin(height: .margin24),
-                rows: rows(listViewItems: topViewItem.listViewItems) + [
+                rows: rows(tableView: tableView, listViewItems: topViewItem.listViewItems) + [
                     seeAllRow(
+                            tableView: tableView,
                             id: "\(topViewItem.title)-see-all",
                             action: { [weak self] in
                                 self?.didTapSeeAll()
@@ -186,17 +170,6 @@ class BaseMarketOverviewTopListDataSource {
         sections.append(listSection)
 
         return sections
-    }
-
-}
-extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
-
-    var updateDriver: Driver<()> {
-        statusRelay.asDriver(onErrorJustReturn: ())
-    }
-
-    func refresh() {
-        viewModel.refresh()
     }
 
 }
