@@ -6,8 +6,6 @@ import SectionsTableView
 class MarketOverviewCategoryDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var tableView: UITableView?
-
     private let viewModel: MarketOverviewCategoryViewModel
     var presentDelegate: IPresentDelegate
 

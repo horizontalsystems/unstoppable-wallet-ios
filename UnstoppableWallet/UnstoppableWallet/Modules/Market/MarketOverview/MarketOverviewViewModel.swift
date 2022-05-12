@@ -1,5 +1,3 @@
-import UIKit
-import SectionsTableView
 import RxSwift
 import RxRelay
 import RxCocoa

@@ -3,7 +3,6 @@ import RxRelay
 import RxCocoa
 import CurrencyKit
 import MarketKit
-import Chart
 
 class MarketOverviewTopCoinsViewModel {
     private let service: MarketOverviewTopCoinsService

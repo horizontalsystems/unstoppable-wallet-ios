@@ -8,8 +8,6 @@ import ComponentKit
 class MarketOverviewGlobalDataSource {
     private let disposeBag = DisposeBag()
 
-    weak var tableView: UITableView?
-
     private let viewModel: MarketOverviewGlobalViewModel
     var presentDelegate: IPresentDelegate
 
