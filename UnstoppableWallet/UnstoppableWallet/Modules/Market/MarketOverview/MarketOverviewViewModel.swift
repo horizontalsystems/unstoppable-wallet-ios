@@ -19,14 +19,24 @@ class MarketOverviewViewModel {
     init(viewModels: [IMarketOverviewSectionViewModel]) {
         self.viewModels = viewModels
 
-        viewModels.forEach { viewModel in
-            subscribe(disposeBag, viewModel.stateDriver) { [weak self] in
-                self?.sync(status: $0)
-            }
+        subscribe(disposeBag, Driver.zip(viewModels.map { $0.stateDriver })) { [weak self] in
+            self?.sync(statuses: $0)
         }
     }
 
-    private func sync(status: DataStatus<()>) {
+    private func sync(statuses: [DataStatus<()>]) {
+        var status = DataStatus<()>.completed(())
+        statuses.forEach {
+            if case .failed = $0 {
+                status = $0
+                return
+            }
+            if case .loading = $0 {
+                status = $0
+                return
+            }
+        }
+
         if status.error != nil {
             loadingRelay.accept(false)
             syncErrorRelay.accept(true)
