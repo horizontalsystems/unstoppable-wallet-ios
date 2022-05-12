@@ -160,6 +160,11 @@ class TransactionInfoViewItemFactory {
         var sections = [[TransactionInfoModule.ViewItem]]()
 
         switch record {
+        case let record as ContractCreationTransactionRecord:
+            sections.append([
+                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
+            ])
+
         case let record as EvmOutgoingTransactionRecord:
             sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
@@ -258,7 +263,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ContractCallTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress) )
+                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
             ])
 
             for event in record.outgoingEvents {
