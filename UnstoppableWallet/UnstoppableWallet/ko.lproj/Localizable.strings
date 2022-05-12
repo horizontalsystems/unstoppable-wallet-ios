@@ -320,7 +320,7 @@
 
 "swap.dex_info.header_dex_related" = "%@ 관련됨";
 "swap.dex_info.header_allowance" = "허용량";
-"swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 서비스에서 사용자를 대신하여 사용할 수 있는 일부 통화의 양입니다. 스왑 작업을 수행하려면 충분한 허용량이 필요합니다.";
+"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
 "swap.dex_info.header_price_impact" = "가격 영향";
 "swap.dex_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
 "swap.dex_info.header_swap_fee" = "스왑 비용";
@@ -578,8 +578,8 @@
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
 "coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The amount of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The amount of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
+"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
+"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can't be confiscated when kept in a non-custodial wallet.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "The tokens can be confiscated or tampered with by an issuing entity.";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
