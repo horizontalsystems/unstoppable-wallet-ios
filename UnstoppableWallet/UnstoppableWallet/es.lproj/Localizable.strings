@@ -320,7 +320,7 @@
 
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
-"swap.dex_info.content_allowance" = "La cantidad de alguna moneda que el servicio puede gastar en su nombre cuando al ejecutar un intercambio de token. Se requiere una asignación suficiente antes de que se pueda realizar la acción de intercambio.";
+"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
 "swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
@@ -578,8 +578,8 @@
 "coin_page.security_parameters.privacy.description.low" = "Las transacciones con este token son completamente públicas, permitiendo que servicios de terceros vinculen diferentes transacciones a la misma entidad, ver montos de transacciones pasadas y saldos de usuarios.";
 "coin_page.security_parameters.privacy.description.medium" = "Las transacciones con este token son semianónimas. Un servicio de terceros puede ver las cantidades transaccionadas y parcialmente conectar las diferentes transacciones con la misma entidad.";
 "coin_page.security_parameters.privacy.description.high" = "Las transacciones con este token son anónimas por defecto o proporcionan dichas capacidades. Ninguna entidad es capaz de vincular diferentes transacciones con el mismo individuo o ver las transacciones realizadas previamente.";
-"coin_page.security_parameters.issuance.description.decentralized" = "La cantidad de fichas en circulación controladas por un algoritmo y trabaja de manera determinista fuera de la influencia centralizada.";
-"coin_page.security_parameters.issuance.description.centralized" = "La cantidad de fichas en circulación puede ser potencialmente incrementada o disminuida por una entidad centralizada a su voluntad.";
+"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
+"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "Las fichas no pueden ser confiscadas cuando se mantienen en un monedero no custodiado.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "Las fichas pueden ser confiscadas o manipuladas por una entidad emisora.";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "El poseedor del token puede ser censurado de hacer transacciones.";
