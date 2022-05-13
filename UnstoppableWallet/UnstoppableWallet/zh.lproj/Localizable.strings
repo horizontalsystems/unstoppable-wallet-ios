@@ -45,6 +45,13 @@
 
 "n/a" = "不可用";
 
+"sync_error" = "同步错误。请再试一次.";
+
+"number.thousand" = "%@千";
+"number.million" = "%@百万";
+"number.billion" = "%@十亿";
+"number.trillion" = "%@万亿";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable需要使用相机扫描二维码。
@@ -56,8 +63,8 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
-"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔";
-"restore_error.mnemonic_word_count" = "字数有误。必须为12到24个单词。您输入了：%@";
+"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
+"restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
@@ -180,7 +187,7 @@
 "send.network_fee" = "网络费";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
-"send.tx_speed" = "交易费用";
+"send.tx_speed" = "交易速度";
 "send.tx_speed_low" = "低";
 "send.tx_speed_recommended" = "推荐";
 "send.tx_speed_high" = "高";
@@ -199,7 +206,7 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "交易速度";
-"send.fee_info.description" = "比特币和 Etherum区块链都要求用户在发送交易时支付网络费用。 当网络上发生大量交易时，费用较高，而区块链不那么繁忙时，费用较低。";
+"send.fee_info.description" = "比特币和Etherum区块链都要求用户在发送交易时支付网络费用。当区块链上发生大量交易时费用较高；而区块链空闲时费用较低。";
 "send.fee_info.header_slow" = "慢";
 "send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
 "send.fee_info.header_average" = "平均";
@@ -213,20 +220,31 @@
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
+"send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
+"send.confirmation.fee" = "费用";
+"send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.send_button" = "发送​​";
 "send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend_button" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.cancel_button" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
+"send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
+
+"send.fee_settings.amount_error.balance.title" = "可用额度不足";
+"send.fee_settings.amount_error.balance" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
+
+"send.fee_settings.stuck_warning.title" = "有被卡的风险";
+"send.fee_settings.stuck_warning" = "交易可能被卡或失败。";
+
 "send.stuck_warning" = "警告！有被骗的风险";
 
 "send.lock_time" = "TimeLock";
@@ -265,6 +283,7 @@
 "swap.minimum_got" = "最小获取金额";
 "swap.estimate_short" = "（美国东部时间）";
 "swap.minimum_short" = "(分钟)";
+"swap.maximum_short" = "(最大金额)";
 
 // Swap Advanced Settings
 
@@ -303,7 +322,7 @@
 
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "执行代币互兑时，该服务可以代表您支出某种货币的金额。执行互兑操作之前要求具备足够的限额。";
+"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -333,12 +352,12 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
-"market.sync_error" = "同步出错";
 "market.coin_not_supported_yet" = "Unstoppable尚不支持此代币";
 
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
+"market.top.section.header.top_sectors" = "Top Sectors";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -363,11 +382,16 @@
 "market.top.lowest_volume" = "成交量由低到高";
 "market.top.top_gainers" = "涨幅榜";
 "market.top.top_losers" = "跌幅榜";
+"market.top.top_collections" = "Top NFT Collections";
+"market.top.floor_price" = "Floor:";
+"market.top.top_platforms" = "Top Platforms";
+"market.top.protocols" = "Protocols";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
+"market_discovery.not_found" = "未发现结果";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
@@ -476,14 +500,31 @@
 "coin_page.markets.empty" = "没有可用数据";
 
 "coin_page.token_liquidity" = "代币流动性";
+"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
+"coin_page.dex_volume" = "DEX交易量";
+"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
+"coin_page.dex_liquidity" = "DEX流动性";
+"coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
+"coin_page.chart.locked" = "锁住";
+
 "coin_page.token_distribution" = "代币分布";
+"coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
+"coin_page.tx_count" = "Tx Count";
+"coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
+"coin_page.tx_volume" = "Tx Volume";
+"coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
+"coin_page.active_addresses" = "Active Addresses";
+"coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";
 
 "coin_page.chart_tvl" = "代币锁仓量";
 "coin_page.chart_volumes" = "成交量";
 "coin_page.token_tvl" = "代币锁仓量";
+"coin_page.token_tvl.description" = "Total Value Locked (TVL) is a metric that shows the total value of crypto assets under automated management by the smart contracts powering the given protocol.";
 "coin_page.tvl" = "总锁定";
-"coin_page.market_cap_tvl_ratio" = "稀释市值/锁定 比例";
 "coin_page.tvl_rank" = "锁仓排名";
+"coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
+"coin_page.market_cap_tvl_ratio" = "稀释市值/锁定 比例";
+"coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
 "coin_page.tvl.description" = "以贷款抵押品或流动性池的形式存入平台的资本。";
 
 "coin_page.investor_data" = "投资数据";
@@ -515,10 +556,9 @@
 "coin_page.already_added_to_wallet" = "已经加入钱包";
 
 "coin_page.major_holders" = "主要持有者";
+"coin_page.major_holders.description" = "The number of tokens held by the top 10 wallets. Quality projects typically have a widely distributed token.";
 "coin_page.major_holders.chart.description" = "前10名地址";
 "coin_page.major_holders.top_ethereum_wallets" = "最好的以太坊钱包";
-"coin_page.major_holders.description" = "上方图表显示了前10个钱包所持有的所有代币的百分比。 百分比越低，代币的分布越广。";
-
 
 "coin_page.tvl_rank.multi_chain" = "多链";
 "coin_page.tvl_rank.filter_by_chain" = "通过区块链过滤";
@@ -540,8 +580,8 @@
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "使用此代币的交易是半匿名的。第三方服务能够查看交易金额，并将不同的交易部分链接到同一实体。";
 "coin_page.security_parameters.privacy.description.high" = "默认情况下，使用此代币的交易是匿名的，或者提供此类功能。任何实体都无法将不同的交易链接到同一个人或查看交易金额.";
-"coin_page.security_parameters.issuance.description.decentralized" = "流通中的代币数量由算法控制，以确定的方式工作，不受中心化机构影响。";
-"coin_page.security_parameters.issuance.description.centralized" = "流通中的代币数量可以由一个中心化的实体随意增加或减少。";
+"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
+"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "代币存放在非保管钱包内时不得没收。";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "代币可以被发行实体没收或篡改。";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "无法对代币持有人进行交易审查。";
@@ -560,11 +600,35 @@
 "coin_page.tweets.not_available" = "没有twitter";
 "coin_page.tweets.see_on_twitter" = "打开Twitter";
 
+// Pro Features
+
+"pro_features.authorize.wallet_passes.title" = "Unstoppable Wallet Passes";
+"pro_features.authorize.wallet_passes.subtitle" = "Get advanced features\nby holding our NFTs";
+
+"pro_features.lock_info.go_to_mint" = "Coming Soon";
+
+"pro_features.lock_info.title" = "Unstoppable Pass";
+"pro_features.lock_info.subtitle" = "NFT";
+"pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
+"pro_features.lock_info.coin_details.volume" = "DEX Volume";
+"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
+"pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
+"pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
+"pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
+
+"pro_features.activate" = "Activate";
+"pro_features.mountain_yak.activate.title" = "Activate the Pass";
+"pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
+"pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
+"pro_features.mountain_yak.activate.features" = "After Activation You Get:";
+"pro_features.activate.invalid_sign" = "Could not Activate ...";
+
 // Transactions
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "全部";
+"transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
@@ -577,11 +641,14 @@
 "transactions.swap" = "掉期交易";
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
+"transactions.external_call" = "External Call";
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
 
-"transactions.value.unlimited" = "无限%@";
+"transactions.multiple" = "Multiple";
+
+"transactions.value.unlimited" = "unlimited";
 
 "transactions.today" = "今天";
 "transactions.yesterday" = "昨天";
@@ -591,6 +658,7 @@
 "transactions.types.outgoing" = "已发送";
 "transactions.types.swap" = "掉期交易";
 "transactions.types.approve" = "批准";
+
 
 "transactions.unknown_transaction.title" = "未知交易";
 "transactions.unknown_transaction.description" = "交易無法解析";
@@ -606,6 +674,7 @@
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
+"tx_info.spender" = "Spender";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
@@ -613,7 +682,7 @@
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
-"tx_info.to_self_note" = "交易已发送至自有地址";
+"tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.unlocked_at" = "在 %@ 解锁了";
@@ -627,6 +696,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
+"tx_info.options" = "Options";
 
 // Settings
 
@@ -706,45 +776,32 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "settings_security.title" = "安全中心";
 "settings_security.passcode" = "密码";
-"settings_security.privacy" = "隐私";
 "settings_security.change_pin" = "编辑密码";
 "settings_security.touch_id" = "指纹识别";
 "settings_security.face_id" = "面部识别";
+"settings_security.blockchain_settings" = "区块链设置";
 "security_settings.delete_alert_button" = "从手机中删除";
-"settings_privacy.title" = "隐私";
-"settings_privacy.header_description" = "虽然此APP不会将您的个人数据提供给任何第三方，但您的某些个人数据（例如IP地址）在与区块链通信时可能会泄漏。单击右上角的“信息”按钮以获取更多详细信息。";
-"settings_privacy.sorting_title" = "输入/输出";
-"settings_privacy.sorting.section_header" = "区块链交易";
-"settings_privacy.sorting.section_footer" = "通过改变交易结构的方式使您的BTC、LTC、BCH交易更难被追踪。";
-"settings_privacy.connection.section_header" = "同步区块链";
-"settings_privacy.connection.section_footer" = "部分区块链未为手机应用提供以点对点运行的方法。与BTC、BCH、LTC、DASH 区块链的通信属于完全点对点。";
-"settings_privacy.sync.section_header" = "区块链恢复";
-"settings_privacy.sync.section_footer" = "通过交易为恢复钱包选择数据源。";
 
-"settings_privacy_info.title" = "隐私设置";
-"settings_privacy_info.description" = "Below you will find detailed explanation of the privacy settings that are available in the app. It's safe to consider them as settings for those that require extensive privacy.";
-"settings_privacy_info.header_blockchain_transactions" = "Blockchain Transactions";
-"settings_privacy_info.content_blockchain_transactions" = "The blockchain transactions setting controls the privacy tweaks for users' transactions when sending transactions on Bitcoin, Bitcoin Cash and Litecoin blockchains.\n\nMost Bitcoin transactions generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent. \n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where. \n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs are randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option. \n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
-"settings_privacy_info.header_blockchain_connection" = "Blockchain Sync";
-"settings_privacy_info.content_blockchain_connection" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum and Binance Smart Chain, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal Ethereum nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.";
-"settings_privacy_info.header_blockchain_restore" = "Blockchain Restore";
-"settings_privacy_info.content_blockchain_restore" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"btc_blockchain_settings.restore_source" = "恢复参数";
+"btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
 
-"settings_privacy.alert_sync.title" = "恢复参数";
-"settings_privacy.alert_sync.description" = "此更改后，钱包将必须与 %@ 区块链重新同步。";
-"settings_privacy.alert_sync.recommended" = "推荐";
-"settings_privacy.alert_sync.more_private" = "更私密";
+"btc_restore_mode.recommended" = "推荐";
+"btc_restore_mode.more_private" = "更私密";
 
-"settings_privacy.alert_connection.title" = "同步区块链";
+"btc_transaction_sort_mode.shuffle" = "随机排序";
+"btc_transaction_sort_mode.shuffle.description" = "随机索引";
+"btc_transaction_sort_mode.bip69" = "Bip69";
+"btc_transaction_sort_mode.bip69.description" = "词典索引";
 
-"settings_privacy.alert_sort.title" = "区块链交易";
-"settings_privacy.alert_sort.subtitle" = "输入/输出";
-"settings_privacy.sorting_default" = "默认";
-"settings_privacy.sorting_default.description" = "无任何设置";
-"settings_privacy.sorting_shuffle" = "随机排序";
-"settings_privacy.sorting_shuffle.description" = "随机索引";
-"settings_privacy.sorting_bip69" = "BIP69";
-"settings_privacy.sorting_bip69.description" = "词典索引";
+"blockchain_settings.info.restore_source" = "恢复参数";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"blockchain_settings.info.sync_mode" = "Sync Mode";
+"blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Keys
 
@@ -756,7 +813,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除钱包。";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"settings_manage_keys.delete.confirmation_watch" = "您确定要删除此钱包吗？";
+"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
@@ -817,10 +875,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "chart.time_duration.year2" = "2年";
 
 "chart.market_cap" = "市场价值";
-"chart.market_cap.thousand" = "%@千";
-"chart.market_cap.million" = "%@百万";
-"chart.market_cap.billion" = "%@十亿";
-"chart.market_cap.trillion" = "%@万亿";
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
 "chart.selected.volume" = "交易量";
@@ -933,10 +987,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
-"wallet_connect.list.empty_view_button_text" = "新连接";
 
 "wallet_connect.list.pending_requests" = "待处理请求";
-"wallet_connect.list.version_text" = "Version %@";
+"wallet_connect.list.version_text" = "版本%@";
 "wallet_connect.list.v1_bottom_text" = "在WalletConnect的第一个版本中，您必须进入会话以查看和确认请求";
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
@@ -992,7 +1045,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "manage_account.name" = "名称";
 "manage_account.show_recovery_phrase" = "显示恢复码";
 "manage_account.backup_recovery_phrase" = "备份码";
-"manage_account.network_settings" = "网络设置";
 "manage_account.unlink" = "取消链接";
 
 // Birthday Input
@@ -1002,18 +1054,17 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
 
-// Network Settings
-
-"network_settings.title" = "网络设置";
-
 // EVM Network
 
-"evm_network.switches_automatically" = "自动切换";
-"evm_network.description" = "MainNet HTTP提供商使用了若干来源 (在下方列出)，并自动在它们之间切换。";
+"evm_network.sync_node" = "Sync Node";
 
 // Fee Settings
 
 "fee_settings" = "费用设置";
+"fee_settings.fee" = "费用";
+"fee_settings.fee.info" = "The expected total fee for the given transaction.";
+"fee_settings.fee_priority" = "Speed";
+"fee_settings.fee_rate" = "费率";
 "fee_settings.max_fee" = "最大手续费";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
 "fee_settings.gas_limit" = "燃料限制";
@@ -1046,6 +1097,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.average_7d" = "平均7天";
 "nft_collections.average_30d" = "平均30天";
 "nft_collections.on_sale" = "在售";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+
+"top_nft_collections.title" = "Top NFT collections";
+"top_nft_collections.description" = "Some top digital art";
 
 // Nft Asset
 
@@ -1072,3 +1127,22 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.options.set_as_watch_face" = "设为表盘";
 "nft_asset.save_to_photos.success" = "NFT 图像已保存到您的照片库";
 "nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
+
+// Nft Collection
+
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.assets" = "Items";
+"nft_collection.tab.activity" = "Activity";
+
+"nft_collection.overview.description" = "描述";
+"nft_collection.overview.contracts" = "合约";
+"nft_collection.overview.links" = "链接";
+"nft_collection.overview.links.website" = "网站";
+
+"nft_collection.activity.event_types" = "Event Types";
+"nft_collection.activity.event_type.all" = "All Events";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.list" = "List";
+"nft_collection.activity.event_type.bid" = "Bid";
+"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.transfer" = "Transfer";
