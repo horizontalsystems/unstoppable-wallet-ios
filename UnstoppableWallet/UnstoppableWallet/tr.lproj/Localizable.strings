@@ -46,7 +46,7 @@
 
 "n/a" = "N/A";
 
-"sync_error" = "Sync error. Try again.";
+"sync_error" = "Senkronizasyon hatası. Tekrar deneyin.";
 
 "number.thousand" = "%@k";
 "number.million" = "%@M";
