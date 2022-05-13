@@ -4,11 +4,15 @@ import ThemeKit
 import SnapKit
 import SectionsTableView
 import ComponentKit
+import HUD
 
 class MarketDiscoveryViewController: ThemeSearchViewController {
     private let viewModel: MarketDiscoveryViewModel
     private let disposeBag = DisposeBag()
 
+    private let headerView: MarketSingleSortHeaderView
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let errorView = PlaceholderView()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -19,8 +23,9 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
     private var isLoaded = false
 
-    init(viewModel: MarketDiscoveryViewModel) {
+    init(viewModel: MarketDiscoveryViewModel, sortHeaderViewModel: MarketSingleSortHeaderViewModel) {
         self.viewModel = viewModel
+        headerView = MarketSingleSortHeaderView(viewModel: sortHeaderViewModel)
 
         super.init(scrollViews: [collectionView, tableView])
 
@@ -37,9 +42,17 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         title = "market_discovery.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market_discovery.filters".localized, style: .plain, target: self, action: #selector(onTapFilters))
 
+        view.addSubview(headerView)
+        headerView.snp.makeConstraints { maker in
+            maker.top.equalTo(view.safeAreaLayoutGuide)
+            maker.leading.trailing.equalToSuperview()
+            maker.height.equalTo(MarketSingleSortHeaderView.height)
+        }
+
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
         collectionView.backgroundColor = .clear
@@ -48,6 +61,19 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         collectionView.delegate = self
         collectionView.register(MarketDiscoveryCell.self, forCellWithReuseIdentifier: String(describing: MarketDiscoveryCell.self))
         collectionView.register(MarketDiscoveryTitleCell.self, forCellWithReuseIdentifier: String(describing: MarketDiscoveryTitleCell.self))
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+        spinner.startAnimating()
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        errorView.configureSyncError(target: self, action: #selector(onRetry))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -71,6 +97,15 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.discoveryViewItemsDriver) { [weak self] in self?.sync(discoveryViewItems: $0) }
         subscribe(disposeBag, viewModel.searchViewItemsDriver) { [weak self] in self?.sync(searchViewItems: $0) }
+        subscribe(disposeBag, viewModel.discoveryLoadingDriver) { [weak self] loading in
+            self?.spinner.isHidden = !loading
+            if loading {
+                self?.spinner.startAnimating()
+            } else {
+                self?.spinner.stopAnimating()
+            }
+        }
+        subscribe(disposeBag, viewModel.discoveryErrorDriver) { [weak self] in self?.errorView.isHidden = $0 == nil }
 
         isLoaded = true
     }
@@ -85,8 +120,10 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
             self.discoveryViewItems = discoveryViewItems
             collectionView.reloadData()
             collectionView.isHidden = false
+            headerView.isHidden = false
         } else {
             collectionView.isHidden = true
+            headerView.isHidden = true
         }
     }
 
@@ -100,6 +137,10 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
             tableView.isHidden = true
             notFoundPlaceholder.isHidden = true
         }
+    }
+
+    @objc private func onRetry() {
+        viewModel.refresh()
     }
 
     override func onUpdate(filter: String?) {

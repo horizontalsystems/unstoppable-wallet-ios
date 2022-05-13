@@ -14,6 +14,7 @@ class MarketDiscoveryViewModel {
 
     private let discoveryViewItemsRelay = BehaviorRelay<[DiscoveryViewItem]?>(value: nil)
     private let discoveryLoadingRelay = BehaviorRelay<Bool>(value: false)
+    private let discoveryErrorRelay = BehaviorRelay<String?>(value: nil)
     private let searchViewItemsRelay = BehaviorRelay<[SearchViewItem]?>(value: nil)
 
     init(categoryService: MarketDiscoveryCategoryService, filterService: MarketDiscoveryFilterService) {
@@ -42,17 +43,22 @@ class MarketDiscoveryViewModel {
         case .searchResults(let fullCoins):
             searchViewItemsRelay.accept(fullCoins.map { searchViewItem(fullCoin: $0) })
             discoveryLoadingRelay.accept(false)
+            discoveryErrorRelay.accept(nil)
             discoveryViewItemsRelay.accept(nil)
             return
         }
 
         switch categoryState {
-        case .loading: discoveryLoadingRelay.accept(true)
-        case .items(let items), .fallbackItems(let items):
+        case .loading:
+            discoveryErrorRelay.accept(nil)
+            discoveryLoadingRelay.accept(true)
+            discoveryViewItemsRelay.accept(nil)
+        case .items(let items):
+            discoveryErrorRelay.accept(nil)
             discoveryLoadingRelay.accept(false)
             discoveryViewItemsRelay.accept(items.map { discoveryViewItem(item: $0) })
-        case .failed:
-            // todo: show error
+        case .failed(let error):
+            discoveryErrorRelay.accept(error.localizedDescription)
             discoveryLoadingRelay.accept(false)
             discoveryViewItemsRelay.accept(nil)
         }
@@ -106,8 +112,16 @@ extension MarketDiscoveryViewModel {
         discoveryLoadingRelay.asDriver()
     }
 
+    var discoveryErrorDriver: Driver<String?> {
+        discoveryErrorRelay.asDriver()
+    }
+
     var searchViewItemsDriver: Driver<[SearchViewItem]?> {
         searchViewItemsRelay.asDriver()
+    }
+
+    func refresh() {
+        categoryService.refresh()
     }
 
     func onUpdate(filter: String) {
