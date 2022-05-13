@@ -20,7 +20,7 @@ class MarketOverviewCategoryViewModel {
         let items: MarketDiscoveryCategoryService.DiscoveryItem
         switch state {
         case .loading: stateRelay.accept(.loading)
-        case .fallbackItems(let items), .items(let items):
+        case .items(let items):
             viewItem = CategoryViewItem(viewItems: items.prefix(5).compactMap {
                 viewItem(item: $0)
             })

@@ -65,7 +65,7 @@ class MarketDiscoveryCell: UICollectionViewCell {
         diffLabel.textColor = viewItem.diffType.textColor
 
         nameLabel.snp.updateConstraints { maker in
-            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.diff == nil ? 0 : -CGFloat.margin8)
+            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.marketCap == nil ? 0 : -CGFloat.margin8)
         }
     }
 
@@ -79,7 +79,7 @@ class MarketDiscoveryCell: UICollectionViewCell {
         diffLabel.textColor = viewItem.diffType.textColor
 
         nameLabel.snp.updateConstraints { maker in
-            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.diff == nil ? 0 : -CGFloat.margin8)
+            maker.bottom.equalTo(stackView.snp.top).offset(viewItem.marketCap == nil ? 0 : -CGFloat.margin8)
         }
     }
 
