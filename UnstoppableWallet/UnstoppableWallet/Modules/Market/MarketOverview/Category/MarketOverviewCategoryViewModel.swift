@@ -3,30 +3,34 @@ import RxRelay
 import RxCocoa
 
 class MarketOverviewCategoryViewModel {
-    private let service: MarketDiscoveryService
+    private let service: MarketDiscoveryCategoryService
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
 
     var viewItem: CategoryViewItem?
 
-    init(service: MarketDiscoveryService) {
+    init(service: MarketDiscoveryCategoryService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: MarketDiscoveryService.State) {
-        if case let .discovery(items) = state {
+    private func sync(state: MarketDiscoveryCategoryService.State) {
+        let items: MarketDiscoveryCategoryService.DiscoveryItem
+        switch state {
+        case .loading: stateRelay.accept(.loading)
+        case .fallbackItems(let items), .items(let items):
             viewItem = CategoryViewItem(viewItems: items.prefix(5).compactMap {
                 viewItem(item: $0)
             })
 
             stateRelay.accept(.completed(()))
+        case .failed(let error): stateRelay.accept(.failed(error))
         }
     }
 
-    private func viewItem(item: MarketDiscoveryService.DiscoveryItem) -> ViewItem? {
+    private func viewItem(item: MarketDiscoveryCategoryService.DiscoveryItem) -> ViewItem? {
         if case let .category(category) = item {
             let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, currency: service.currency)
 

@@ -16,7 +16,7 @@ struct MarketOverviewModule {
         let topLosersViewModel = MarketOverviewTopCoinsViewModel(service: topLosersService, decorator: topLosersDecorator)
         let topLosersDataSource = MarketOverviewTopCoinsDataSource(viewModel: topLosersViewModel, presentDelegate: presentDelegate)
 
-        let marketDiscoveryService = MarketDiscoveryService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, favoritesManager: App.shared.favoritesManager)
+        let marketDiscoveryService = MarketDiscoveryCategoryService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let categoryViewModel = MarketOverviewCategoryViewModel(service: marketDiscoveryService)
         let categoryDataSource = MarketOverviewCategoryDataSource(viewModel: categoryViewModel, presentDelegate: presentDelegate)
 
