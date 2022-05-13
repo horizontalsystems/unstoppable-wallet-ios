@@ -4,14 +4,13 @@ import ThemeKit
 import ComponentKit
 
 class InfoViewController: ThemeViewController {
-    private var urlManager: IUrlManager
-    private let viewModel: InfoViewModel
+    private let viewItems: [InfoModule.ViewItem]
+    private var urlManager: UrlManager
 
     private let tableView = SectionsTableView(style: .grouped)
 
-
-    init(viewModel: InfoViewModel, urlManager: IUrlManager) {
-        self.viewModel = viewModel
+    init(viewItems: [InfoModule.ViewItem], urlManager: UrlManager) {
+        self.viewItems = viewItems
         self.urlManager = urlManager
 
         super.init()
@@ -24,9 +23,8 @@ class InfoViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.dataSource.title
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
+        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -37,7 +35,8 @@ class InfoViewController: ThemeViewController {
         tableView.registerCell(forClass: InfoHeaderCell.self)
         tableView.registerCell(forClass: ButtonCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
-        tableView.registerCell(forClass: InfoHeader3Cell.self)
+        tableView.registerCell(forClass: InfoHeader2Cell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
 
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
@@ -55,40 +54,40 @@ class InfoViewController: ThemeViewController {
         urlManager.open(url: url, from: self)
     }
 
-    private func headerSeparator(index: Int) -> RowProtocol {
+    private func separatorRow(index: Int) -> RowProtocol {
         Row<InfoSeparatorHeaderCell>(
-                id: "\(index)",
+                id: "separator-\(index)",
                 height: InfoSeparatorHeaderCell.height
         )
     }
 
-    private func header(string: String) -> RowProtocol {
+    private func headerRow(index: Int, text: String) -> RowProtocol {
         Row<InfoHeaderCell>(
-                id: string,
+                id: "header-\(index)",
                 dynamicHeight: { containerWidth in
-                    InfoHeaderCell.height(containerWidth: containerWidth, text: string)
+                    InfoHeaderCell.height(containerWidth: containerWidth, text: text)
                 },
                 bind: { cell, _ in
-                    cell.bind(string: string)
+                    cell.bind(string: text)
                 }
         )
     }
 
-    private func header3Row(string: String) -> RowProtocol {
-        Row<InfoHeader3Cell>(
-                id: string,
+    private func header2Row(index: Int, text: String) -> RowProtocol {
+        Row<InfoHeader2Cell>(
+                id: "header2-index",
                 dynamicHeight: { containerWidth in
-                    InfoHeader3Cell.height(containerWidth: containerWidth, string: string)
+                    InfoHeader2Cell.height(containerWidth: containerWidth, string: text)
                 },
                 bind: { cell, _ in
-                    cell.bind(string: string)
+                    cell.bind(string: text)
                 }
         )
     }
 
-    private func row(text: String) -> RowProtocol {
+    private func textRow(index: Int, text: String) -> RowProtocol {
         Row<DescriptionCell>(
-                id: text,
+                id: "text-\(index)",
                 dynamicHeight: { width in
                     DescriptionCell.height(containerWidth: width, text: text)
                 },
@@ -98,25 +97,22 @@ class InfoViewController: ThemeViewController {
         )
     }
 
-    private func linkButtonRow(title: String, url: String) -> RowProtocol {
+    private func linkButtonRow(index: Int, text: String, url: String) -> RowProtocol {
         Row<ButtonCell>(
-                id: title,
+                id: "link-button-\(index)",
                 height: ButtonCell.height(style: .secondaryDefault),
                 bind: { [weak self] cell, _ in
-                    cell.bind(style: .secondaryDefault, title: title, compact: true) { [weak self] in
+                    cell.bind(style: .secondaryDefault, title: text, compact: true) { [weak self] in
                         self?.onTapLink(url: url)
                     }
                 }
         )
     }
 
-    private func margin(index: Int, height: CGFloat) -> RowProtocol {
-        Row<UITableViewCell>(
-                id: "\(index)",
-                height: height,
-                bind: { cell, _ in
-                    cell.backgroundColor = .clear
-                }
+    private func marginRow(index: Int, height: CGFloat) -> RowProtocol {
+        Row<EmptyCell>(
+                id: "margin-\(index)",
+                height: height
         )
     }
 
@@ -129,26 +125,20 @@ extension InfoViewController: SectionsDataSource {
             Section(
                     id: "section",
                     footerState: .margin(height: .margin32),
-                    rows: rows(rowItems: viewModel.dataSource.viewItems)
+                    rows: rows()
             )
         ]
     }
 
-    private func rows(rowItems: [InfoViewModel.ViewItem]) -> [RowProtocol] {
-        rowItems.enumerated().map { index, viewItem in
+    private func rows() -> [RowProtocol] {
+        viewItems.enumerated().map { index, viewItem in
             switch viewItem {
-            case .separator:
-                return headerSeparator(index: index)
-            case let .margin(height):
-                return margin(index: index, height: height)
-            case let .header(title):
-                return header(string: title)
-            case let .text(string):
-                return row(text: string)
-            case let .header3Cell(string: string):
-                return header3Row(string: string)
-            case let .button(title, url):
-                return linkButtonRow(title: title, url: url)
+            case .separator: return separatorRow(index: index)
+            case .margin(let height): return marginRow(index: index, height: height)
+            case .header(let text): return headerRow(index: index, text: text)
+            case .text(let text): return textRow(index: index, text: text)
+            case .header2(let text): return header2Row(index: index, text: text)
+            case .button(let text, let url): return linkButtonRow(index: index, text: text, url: url)
             }
         }
     }

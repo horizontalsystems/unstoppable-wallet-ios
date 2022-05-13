@@ -4,16 +4,14 @@ import ThemeKit
 import SectionsTableView
 
 class MarketTopViewController: MarketListViewController {
-    private let viewModel: MarketTopViewModel
     private let multiSortHeaderView: MarketMultiSortHeaderView
 
     override var viewController: UIViewController? { self }
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var refreshEnabled: Bool { false }
 
-    init(viewModel: MarketTopViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
-        self.viewModel = viewModel
-        multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasTopSelector: true)
+    init(listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+        multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel, hasLeftSelector: true)
 
         super.init(listViewModel: listViewModel)
 

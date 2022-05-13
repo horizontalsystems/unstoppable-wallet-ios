@@ -40,7 +40,8 @@ class NftStorage {
                 permalink: record.permalink,
                 traits: record.traits,
                 lastSalePrice: nftPrice(record: record.lastSalePrice, platformCoins: platformCoins),
-                onSale: record.onSale
+                onSale: record.onSale,
+                orders: []
         )
     }
 
@@ -55,9 +56,20 @@ class NftStorage {
                 externalUrl: record.externalUrl,
                 discordUrl: record.discordUrl,
                 twitterUsername: record.twitterUsername,
-                averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
-                averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
-                totalSupply: record.totalSupply
+                stats: NftCollectionStats(
+                        totalSupply: record.totalSupply,
+                        averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
+                        averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
+                        floorPrice: nil,
+                        totalVolume: nil,
+                        marketCap: nil,
+                        oneDayChange: nil,
+                        sevenDayChange: nil,
+                        thirtyDayChange: nil,
+                        oneDayVolume: nil,
+                        sevenDayVolume: nil,
+                        thirtyDayVolume: nil
+                )
         )
     }
 

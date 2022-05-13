@@ -116,6 +116,10 @@ extension CoinChartViewModel {
         service.fetchChartData()
     }
 
+    func retry() {
+        service.fetchChartData()
+    }
+
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {

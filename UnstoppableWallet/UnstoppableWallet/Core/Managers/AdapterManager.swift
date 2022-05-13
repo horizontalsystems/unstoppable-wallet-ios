@@ -8,18 +8,16 @@ class AdapterManager {
     private let adapterFactory: AdapterFactory
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
-    private let initialSyncSettingsManager: InitialSyncSettingsManager
 
     private let adaptersReadyRelay = PublishRelay<[Wallet: IAdapter]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var _adapterMap = [Wallet: IAdapter]()
 
-    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, initialSyncSettingsManager: InitialSyncSettingsManager) {
+    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, btcBlockchainManager: BtcBlockchainManager) {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
-        self.initialSyncSettingsManager = initialSyncSettingsManager
 
         walletManager.activeWalletsUpdatedObservable
                 .observeOn(SerialDispatchQueueScheduler(qos: .utility))
@@ -31,7 +29,7 @@ class AdapterManager {
         for blockchain in evmBlockchainManager.allBlockchains {
             subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
         }
-        subscribe(disposeBag, initialSyncSettingsManager.settingUpdatedObservable) { [weak self] in self?.handleUpdated(setting: $0) }
+        subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchain: $0) }
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -75,11 +73,11 @@ class AdapterManager {
         })
     }
 
-    private func handleUpdated(setting: InitialSyncSetting) {
+    private func handleUpdatedRestoreMode(blockchain: BtcBlockchain) {
         let wallets = queue.sync { _adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
-            setting.coinType == $0.coinType && $0.account.origin == .restored
+            blockchain.supports(coinType: $0.coinType) && $0.account.origin == .restored
         })
     }
 
@@ -155,7 +153,11 @@ extension AdapterManager {
 
     func refresh(wallet: Wallet) {
         queue.async {
-            self._adapterMap[wallet]?.refresh()
+            if let blockchain = self.evmBlockchainManager.blockchain(coinType: wallet.coinType) {
+                self.evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper?.evmKit.refresh()
+            } else {
+                self._adapterMap[wallet]?.refresh()
+            }
         }
     }
 

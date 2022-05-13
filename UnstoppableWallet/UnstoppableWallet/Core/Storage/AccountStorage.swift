@@ -3,9 +3,9 @@ import EthereumKit
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
-    private let storage: IAccountRecordStorage
+    private let storage: AccountRecordStorage
 
-    init(secureStorage: ISecureStorage, storage: IAccountRecordStorage) {
+    init(secureStorage: ISecureStorage, storage: AccountRecordStorage) {
         self.secureStorage = secureStorage
         self.storage = storage
     }
@@ -142,17 +142,17 @@ class AccountStorage {
 extension AccountStorage {
 
     var allAccounts: [Account] {
-        storage.allAccountRecords.compactMap { createAccount(record: $0) }
+        storage.all.compactMap { createAccount(record: $0) }
     }
 
     func save(account: Account) {
         if let record = try? createRecord(account: account) {
-            storage.save(accountRecord: record)
+            storage.save(record: record)
         }
     }
 
     var lostAccountIds: [String] {
-        storage.allAccountRecords.compactMap { accountRecord in
+        storage.all.compactMap { accountRecord in
             if createAccount(record: accountRecord) == nil {
                 return accountRecord.id
             }
@@ -162,16 +162,16 @@ extension AccountStorage {
     }
 
     func delete(account: Account) {
-        storage.deleteAccountRecord(by: account.id)
+        storage.delete(by: account.id)
         try? clearSecureStorage(account: account)
     }
 
     func delete(accountId: String) {
-        storage.deleteAccountRecord(by: accountId)
+        storage.delete(by: accountId)
     }
 
     func clear() {
-        storage.deleteAllAccountRecords()
+        storage.clear()
     }
 
 }

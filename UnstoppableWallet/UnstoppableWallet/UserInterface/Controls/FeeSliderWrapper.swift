@@ -1,10 +1,11 @@
 import UIKit
 import HUD
+import ComponentKit
 
 class FeeSliderWrapper: UIView {
     private let slider = FeeSlider()
-    private let minimumImage = UIImageView(image: UIImage(named: "minus_2_20"))
-    private let maximumImage = UIImageView(image: UIImage(named: "plus_2_20"))
+    private let decreaseButton = UIButton()
+    private let increaseButton = UIButton()
 
     private let feeRateView = FeeSliderValueView()
     private var sliderLastValue: Int?
@@ -23,13 +24,13 @@ class FeeSliderWrapper: UIView {
         super.init(frame: CGRect.zero)
 
         addSubview(slider)
-        addSubview(minimumImage)
-        addSubview(maximumImage)
+        addSubview(decreaseButton)
+        addSubview(increaseButton)
 
         slider.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
-            maker.leading.equalTo(minimumImage.snp.trailing).offset(CGFloat.margin2x)
-            maker.trailing.equalTo(maximumImage.snp.leading).offset(-CGFloat.margin2x)
+            maker.leading.equalTo(decreaseButton.snp.trailing).offset(CGFloat.margin2x)
+            maker.trailing.equalTo(increaseButton.snp.leading).offset(-CGFloat.margin2x)
         }
         slider.onTracking = { [weak self] value, position in
             self?.onTracking(value, position: position)
@@ -40,17 +41,40 @@ class FeeSliderWrapper: UIView {
         slider.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         slider.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        minimumImage.snp.makeConstraints { maker in
+        decreaseButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalTo(slider)
         }
-        minimumImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        decreaseButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        decreaseButton.setImage(UIImage(named: "minus_2_20"), for: .normal)
+        decreaseButton.addTarget(self, action: #selector(decrease), for: .touchUpInside)
 
-        maximumImage.snp.makeConstraints { maker in
+        increaseButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview()
             maker.centerY.equalTo(slider)
         }
-        maximumImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        increaseButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        increaseButton.setImage(UIImage(named: "plus_2_20"), for: .normal)
+        increaseButton.addTarget(self, action: #selector(increase), for: .touchUpInside)
+
+    }
+
+    @objc private func decrease() {
+        guard Int(slider.value) > Int(slider.minimumValue) else {
+            return
+        }
+        slider.value = slider.value - 1
+
+        finishTracking?(Int(slider.value))
+    }
+
+    @objc private func increase() {
+        guard Int(slider.value) < Int(slider.maximumValue) else {
+            return
+        }
+        slider.value = slider.value + 1
+
+        finishTracking?(Int(slider.value))
     }
 
     func set(value: Int, range: ClosedRange<Int>, description: String?) {

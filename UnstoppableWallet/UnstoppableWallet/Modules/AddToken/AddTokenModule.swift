@@ -1,5 +1,6 @@
 import ThemeKit
 import EthereumKit
+import MarketKit
 
 struct AddTokenModule {
 
@@ -18,6 +19,17 @@ struct AddTokenModule {
         let viewController = AddTokenViewController(viewModel: viewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+}
+
+extension AddTokenModule {
+
+    struct CustomCoin {
+        let type: CoinType
+        let name: String
+        let code: String
+        let decimals: Int
     }
 
 }

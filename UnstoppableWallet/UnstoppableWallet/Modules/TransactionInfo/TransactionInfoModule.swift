@@ -4,13 +4,13 @@ import MarketKit
 
 struct TransactionInfoModule {
 
-    static func instance(transactionItem: TransactionItem) -> UIViewController? {
-        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionItem.record.source) else {
+    static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
+        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
 
-        let service = TransactionInfoService(transactionRecord: transactionItem.record, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let factory = TransactionInfoViewItemFactory()
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
@@ -54,14 +54,15 @@ extension TransactionInfoModule {
     }
 
     enum ViewItem {
-        case actionTitle(title: String, subTitle: String?)
-        case amount(coinAmount: String, currencyAmount: String?, incoming: Bool?)
+        case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
+        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case status(status: TransactionStatus)
         case options(actions: [OptionViewItem])
         case date(date: Date)
-        case from(value: String)
-        case to(value: String)
-        case recipient(value: String)
+        case from(value: String, valueTitle: String?)
+        case to(value: String, valueTitle: String?)
+        case spender(value: String, valueTitle: String?)
+        case recipient(value: String, valueTitle: String?)
         case id(value: String)
         case rate(value: String)
         case fee(title: String, value: String)
@@ -73,6 +74,20 @@ extension TransactionInfoModule {
         case memo(text: String)
         case service(value: String)
         case explorer(title: String, url: String?)
+    }
+
+    enum AmountType {
+        case incoming
+        case outgoing
+        case neutral
+
+        var prefix: String {
+            switch self {
+            case .incoming: return "+"
+            case .outgoing: return "-"
+            case .neutral: return ""
+            }
+        }
     }
 
 }

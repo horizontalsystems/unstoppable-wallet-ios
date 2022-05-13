@@ -657,8 +657,9 @@
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Aprobaciones";
 
-"transactions.unknown_transaction.title" = "Unknown Transaction";
-"transactions.unknown_transaction.description" = "Transaction can not be parsed";
+
+"transactions.unknown_transaction.title" = "Transacción Desconocida";
+"transactions.unknown_transaction.description" = "La transacción no se puede analizar";
 
 // Transaction Info
 

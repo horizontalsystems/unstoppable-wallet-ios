@@ -10,6 +10,7 @@ protocol IAddressParserItem: AnyObject {
 }
 
 class AddressParserChain {
+    private let disposeBag = DisposeBag()
     private var handlers = [IAddressParserItem]()
 
     private static func process(address: String, validHandlers: [IAddressParserItem]) -> Single<Address?> {
@@ -31,8 +32,8 @@ class AddressParserChain {
                 if let address = handlerStates.first(where: { $0.address != nil })?.address {
                     return Single.just(address)
                 }
-                if let _ = handlerStates.first(where: { $0.error != nil })?.error {
-                    return Single.error(ParserError.fetchError)
+                if let error = handlerStates.first(where: { $0.error != nil })?.error {
+                    return Single.error(ParserError.fetchError(error))
                 }
 
                 return Single.just(nil)
@@ -84,7 +85,7 @@ extension AddressParserChain {
 
     enum ParserError: Error {
         case validationError
-        case fetchError
+        case fetchError(Error)
     }
 
 }

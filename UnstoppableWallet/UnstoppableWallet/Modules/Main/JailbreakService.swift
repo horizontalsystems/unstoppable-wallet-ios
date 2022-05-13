@@ -1,10 +1,10 @@
 import RxSwift
 
 class JailbreakService {
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
     private let jailbreakTestManager: JailbreakTestManager
 
-    init(localStorage: ILocalStorage, jailbreakTestManager: JailbreakTestManager) {
+    init(localStorage: LocalStorage, jailbreakTestManager: JailbreakTestManager) {
         self.localStorage = localStorage
         self.jailbreakTestManager = jailbreakTestManager
     }

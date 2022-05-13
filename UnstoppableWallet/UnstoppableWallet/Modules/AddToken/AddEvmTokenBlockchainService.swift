@@ -34,7 +34,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         blockchain.evm20CoinType(address: reference.lowercased())
     }
 
-    func customTokenSingle(reference: String) -> Single<CustomToken> {
+    func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin> {
         let reference = reference.lowercased()
 
         let parameters: Parameters = [
@@ -46,10 +46,10 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         let coinType = coinType(reference: reference)
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
-            CustomToken(
-                    coinName: tokenInfo.name,
-                    coinCode: tokenInfo.symbol,
-                    coinType: coinType,
+            AddTokenModule.CustomCoin(
+                    type: coinType,
+                    name: tokenInfo.name,
+                    code: tokenInfo.symbol,
                     decimals: tokenInfo.decimals
             )
         }

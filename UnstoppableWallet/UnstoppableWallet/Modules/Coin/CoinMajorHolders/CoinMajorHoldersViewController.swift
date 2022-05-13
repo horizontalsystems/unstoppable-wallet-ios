@@ -46,7 +46,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
         tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: CoinMajorHolderCell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -124,18 +123,6 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
         )
     }
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         guard let stateViewItem = stateViewItem else {
             return []
@@ -144,7 +131,6 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
         return [
             Section(
                     id: "chart",
-                    footerState: footer(text: "coin_page.major_holders.description".localized),
                     rows: [
                         StaticRow(
                                 cell: chartCell,

@@ -4,7 +4,7 @@ import MarketKit
 
 class ManageWalletsService {
     private let account: Account
-    private let coinManager: CoinManager
+    private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
@@ -24,13 +24,13 @@ class ManageWalletsService {
         }
     }
 
-    init?(coinManager: CoinManager, walletManager: WalletManager, accountManager: IAccountManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
 
         self.account = account
-        self.coinManager = coinManager
+        self.marketKit = marketKit
         self.walletManager = walletManager
         self.enableCoinService = enableCoinService
 
@@ -53,12 +53,16 @@ class ManageWalletsService {
     private func fetchFullCoins() -> [FullCoin] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let featuredFullCoins = try coinManager.fullCoins(filter: "", limit: 100).filter { !$0.supportedPlatforms.isEmpty }
+                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { !$0.supportedPlatforms.isEmpty }
+
                 let featuredCoins = featuredFullCoins.map { $0.coin }
-                let enabledFullCoins = try coinManager.fullCoins(platformCoins: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.platformCoin })
-                return featuredFullCoins + enabledFullCoins
+                let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })
+
+                let customFullCoins = wallets.map { $0.platformCoin }.filter { $0.isCustom }.map { $0.fullCoin }
+
+                return featuredFullCoins + enabledFullCoins + customFullCoins
             } else {
-                return try coinManager.fullCoins(filter: filter, limit: 20)
+                return try marketKit.fullCoins(filter: filter, limit: 20)
             }
         } catch {
             return []

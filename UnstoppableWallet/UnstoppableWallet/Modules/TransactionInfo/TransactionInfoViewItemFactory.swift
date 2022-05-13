@@ -3,45 +3,39 @@ import CurrencyKit
 import EthereumKit
 
 class TransactionInfoViewItemFactory {
+    private let evmLabelManager: EvmLabelManager
 
-    private func actionSectionItems(title: String, transactionValue: TransactionValue, rate: CurrencyValue?, incoming: Bool?) -> [TransactionInfoModule.ViewItem] {
-        var currencyValue: CurrencyValue? = nil
-        if let rate = rate, case .coinValue(_, let value) = transactionValue {
-            currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * value)
-        }
-
-        let subTitle: String
-        switch transactionValue {
-        case .coinValue(let platformCoin, _): subTitle = platformCoin.coin.name
-        case .rawValue(let coinType, _): subTitle = coinType.title
-        }
-
-        return [
-            .actionTitle(title: title, subTitle: subTitle),
-            .amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: incoming)
-        ]
+    init(evmLabelManager: EvmLabelManager) {
+        self.evmLabelManager = evmLabelManager
     }
 
-    private func evmResendItem(status: TransactionStatus) -> TransactionInfoModule.ViewItem? {
-        switch status {
-        case .pending:
-            return .options(actions: [
-                TransactionInfoModule.OptionViewItem(title: "tx_info.options.speed_up".localized, active: true, option: .speedUp),
-                TransactionInfoModule.OptionViewItem(title: "tx_info.options.cancel".localized, active: true, option: .cancel)
-            ])
-        default: return nil
-        }
-    }
+    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: TransactionInfoModule.AmountType) -> TransactionInfoModule.ViewItem {
+        let iconUrl = transactionValue.coin?.imageUrl
+        let iconPlaceholderImageName = source.blockchain.coinPlaceholderImage
 
-    private func evmFeeItem(transactionValue: TransactionValue, rate: CurrencyValue?, status: TransactionStatus) -> TransactionInfoModule.ViewItem {
-        let value = feeString(transactionValue: transactionValue, rate: rate)
-        let title: String
-        switch status {
-        case .pending: title = "tx_info.fee.estimated".localized
-        case .processing, .failed, .completed: title = "tx_info.fee".localized
-        }
+        if transactionValue.isMaxValue {
+            return .amount(
+                    iconUrl: iconUrl,
+                    iconPlaceholderImageName: iconPlaceholderImageName,
+                    coinAmount: "∞ \(transactionValue.coinCode)",
+                    currencyAmount: "transactions.value.unlimited".localized,
+                    type: type
+            )
+        } else {
+            var currencyValue: CurrencyValue?
 
-        return .fee(title: title, value: value)
+            if let rate = rate, let value = transactionValue.decimalValue {
+                currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * value)
+            }
+
+            return .amount(
+                    iconUrl: iconUrl,
+                    iconPlaceholderImageName: iconPlaceholderImageName,
+                    coinAmount: "\(type.prefix)\(transactionValue.abs.formattedString)",
+                    currencyAmount: currencyValue?.abs.formattedString,
+                    type: type
+            )
+        }
     }
 
     private func feeString(transactionValue: TransactionValue, rate: CurrencyValue?) -> String {
@@ -61,10 +55,10 @@ class TransactionInfoViewItemFactory {
         return parts.joined(separator: " | ")
     }
 
-    private func priceString(valueIn: TransactionValue, valueOut: TransactionValue, coinPriceIn: CurrencyValue?) -> String {
+    private func priceString(valueIn: TransactionValue, valueOut: TransactionValue, coinPriceIn: CurrencyValue?) -> String? {
         guard case .coinValue(let valueInPlatformCoin, let valueInDecimal) = valueIn,
               case .coinValue(let valueOutPlatformCoin, let valueOutDecimal) = valueOut else {
-            return "n/a"
+            return nil
         }
 
         let priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
@@ -97,271 +91,292 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    func items(item: TransactionInfoItem) -> [[TransactionInfoModule.ViewItem]] {
-        let transaction = item.record
-        let status = transaction.status(lastBlockHeight: item.lastBlockInfo?.height)
+    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], sentToSelf: Bool = false) -> [TransactionInfoModule.ViewItem] {
+        let rate = transactionValue.coin.flatMap { rates[$0] }
 
+        var viewItems: [TransactionInfoModule.ViewItem] = [
+            .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: "transactions.send".localized, subTitle: transactionValue.coinName),
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: sentToSelf ? .neutral : .outgoing)
+        ]
+
+        if let to = to {
+            viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
+        }
+
+        if let rate = rate, let coin = transactionValue.coin {
+            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+        }
+
+        return viewItems
+    }
+
+    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue]) -> [TransactionInfoModule.ViewItem] {
+        let rate = transactionValue.coin.flatMap { rates[$0] }
+
+        var viewItems: [TransactionInfoModule.ViewItem] = [
+            .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: "transactions.receive".localized, subTitle: transactionValue.coinName),
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: .incoming)
+        ]
+
+        if let from = from {
+            viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
+        }
+
+        if let rate = rate, let coin = transactionValue.coin {
+            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+        }
+
+        return viewItems
+    }
+
+    private func bitcoinViewItems(record: BitcoinTransactionRecord, lastBlockInfo: LastBlockInfo?) -> [TransactionInfoModule.ViewItem] {
+        var viewItems = [TransactionInfoModule.ViewItem]()
+
+        if record.showRawTransaction {
+            viewItems.append(.rawTransaction)
+        }
+        if let conflictingHash = record.conflictingHash {
+            viewItems.append(.doubleSpend(txHash: record.transactionHash, conflictingTxHash: conflictingHash))
+        }
+        if let lockState = record.lockState(lastBlockTimestamp: lastBlockInfo?.timestamp) {
+            viewItems.append(.lockInfo(lockState: lockState))
+        }
+        if let memo = record.memo {
+            viewItems.append(.memo(text: memo))
+        }
+
+        return viewItems
+    }
+
+    func items(item: TransactionInfoItem) -> [[TransactionInfoModule.ViewItem]] {
         func _rate(_ value: TransactionValue) -> CurrencyValue? {
             value.coin.flatMap { item.rates[$0] }
         }
 
-        func _currencyValue(_ value: TransactionValue) -> CurrencyValue? {
-            if let rate = _rate(value), let value = value.decimalValue {
-                return CurrencyValue(currency: rate.currency, value: rate.value * value)
-            } else {
-                return nil
-            }
-        }
+        let record = item.record
+        var feeViewItem: TransactionInfoModule.ViewItem?
+        let status = record.status(lastBlockHeight: item.lastBlockInfo?.height)
 
         var sections = [[TransactionInfoModule.ViewItem]]()
-        var middleSectionItems: [TransactionInfoModule.ViewItem] = [
-            .date(date: transaction.date),
-            .status(status: status)
-        ]
 
-        if let evmTransaction = transaction as? EvmTransactionRecord, !evmTransaction.foreignTransaction,
-           let resendItem = evmResendItem(status: status) {
-            middleSectionItems.append(resendItem)
-        }
-
-        switch transaction {
-        case let evmIncoming as EvmIncomingTransactionRecord:
-            let coinRate = _rate(evmIncoming.value)
-            if let coin = evmIncoming.value.coin, let rate = coinRate {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-            }
-
-            middleSectionItems.append(.from(value: evmIncoming.from))
-            middleSectionItems.append(.id(value: evmIncoming.transactionHash))
-
-            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: evmIncoming.value, rate: coinRate, incoming: true))
-
-        case let evmOutgoing as EvmOutgoingTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: evmOutgoing.fee, rate: _rate(evmOutgoing.value), status: status))
-
-            let coinRate = _rate(evmOutgoing.value)
-            if let coin = evmOutgoing.value.coin, let rate = coinRate {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-            }
-
-            middleSectionItems.append(.to(value: evmOutgoing.to))
-            middleSectionItems.append(.id(value: evmOutgoing.transactionHash))
-
-            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: evmOutgoing.value, rate: coinRate, incoming: false))
-
-        case let swap as SwapTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
-
-            if let valueOut = swap.valueOut {
-                if case .failed = status {} else {
-                    middleSectionItems.append(.price(price: priceString(valueIn: swap.valueIn, valueOut: valueOut, coinPriceIn: _rate(swap.valueIn))))
-                }
-            }
-            middleSectionItems.append(.service(value: TransactionInfoAddressMapper.map(swap.exchangeAddress)))
-            middleSectionItems.append(.id(value: swap.transactionHash))
-
-            sections.append(actionSectionItems(title: youPayString(status: status), transactionValue: swap.valueIn, rate: _rate(swap.valueIn), incoming: false))
-
-            if let valueOut = swap.valueOut, !swap.foreignRecipient {
-                sections.append(actionSectionItems(title: youGetString(status: status), transactionValue: valueOut, rate: _rate(valueOut), incoming: true))
-            }
-
-        case let swap as UnknownSwapTransactionRecord:
-            let transactionValue = swap.value
-
-            if swap.outgoingEip20Events.count > 0 || (!transactionValue.zeroValue && !swap.foreignTransaction) {
-                var youPaySection: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(title: youPayString(status: status), subTitle: nil)
-                ]
-
-                if !transactionValue.zeroValue && !swap.foreignTransaction {
-                    let currencyValue = _currencyValue(transactionValue)
-                    youPaySection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                for event in swap.outgoingEip20Events {
-                    let currencyValue = _currencyValue(event.value)
-                    youPaySection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                sections.append(youPaySection)
-            }
-
-            if swap.incomingEip20Events.count > 0 || swap.incomingInternalETHs.count > 0 {
-                var youGetSection: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(title: youGetString(status: status), subTitle: nil)
-                ]
-
-                if let incomingInternalTx = swap.incomingInternalETHs.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
-                    var ethValue: Decimal = 0
-                    for tx in swap.incomingInternalETHs {
-                        ethValue += tx.value.decimalValue ?? 0
-                    }
-
-                    let transactionValue = TransactionValue.coinValue(platformCoin: platformCoin, value: ethValue)
-
-                    let currencyValue = _currencyValue(transactionValue)
-                    youGetSection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
-                }
-
-                for event in swap.incomingEip20Events {
-                    let currencyValue = _currencyValue(event.value)
-                    youGetSection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
-                }
-
-                sections.append(youGetSection)
-            }
-
-            middleSectionItems.append(evmFeeItem(transactionValue: swap.fee, rate: _rate(swap.fee), status: status))
-            middleSectionItems.append(.id(value: swap.transactionHash))
-
-        case let approve as ApproveTransactionRecord:
-            middleSectionItems.append(evmFeeItem(transactionValue: approve.fee, rate: _rate(approve.fee), status: status))
-
-            let coinRate = _rate(approve.value)
-            if let rate = coinRate, let coin = approve.value.coin {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-            }
-
-            middleSectionItems.append(.to(value: approve.spender))
-            middleSectionItems.append(.id(value: approve.transactionHash))
-
-            let currencyValue = _currencyValue(approve.value)
-            let isMaxValue = approve.value.isMaxValue
-            let coinAmount = isMaxValue ? "transactions.value.unlimited".localized(approve.value.coinCode) : currencyValue?.formattedString ?? ""
-            let currencyAmount = isMaxValue ? "∞" : approve.value.formattedString
-
+        switch record {
+        case let record as ContractCreationTransactionRecord:
             sections.append([
-                .actionTitle(title: "transactions.approve".localized, subTitle: approve.value.coinName),
-                .amount(coinAmount: coinAmount, currencyAmount: currencyAmount, incoming: nil)
+                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
             ])
 
-        case let contractCall as ContractCallTransactionRecord:
-            sections.append(
-                [.actionTitle(title: contractCall.method ?? "transactions.contract_call".localized, subTitle: TransactionInfoAddressMapper.map(contractCall.contractAddress))]
-            )
+        case let record as EvmOutgoingTransactionRecord:
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
-            let transactionValue = contractCall.value
-
-            if contractCall.outgoingEip20Events.count > 0 || (!transactionValue.zeroValue && !contractCall.foreignTransaction) {
-                var youPaySection: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(title: youPayString(status: status), subTitle: nil)
-                ]
-
-                if !transactionValue.zeroValue && !contractCall.foreignTransaction {
-                    let currencyValue = _currencyValue(transactionValue)
-                    youPaySection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                for event in contractCall.outgoingEip20Events {
-                    let currencyValue = _currencyValue(event.value)
-                    youPaySection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: false))
-                }
-
-                sections.append(youPaySection)
+            if record.sentToSelf {
+                sections.append([.sentToSelf])
             }
 
-            if contractCall.incomingEip20Events.count > 0 || contractCall.incomingInternalETHs.count > 0 {
-                var youGetSection: [TransactionInfoModule.ViewItem] = [
-                    .actionTitle(title: youGetString(status: status), subTitle: nil)
+        case let record as EvmIncomingTransactionRecord:
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+
+        case let record as ApproveTransactionRecord:
+            let transactionValue = record.value
+            let rate = _rate(transactionValue)
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.coinName),
+                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral),
+                .spender(value: record.spender, valueTitle: evmLabelManager.addressLabel(address: record.spender))
+            ]
+
+            if let rate = rate, let coin = transactionValue.coin {
+                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+            }
+
+            sections.append(viewItems)
+
+        case let record as SwapTransactionRecord:
+            sections.append([
+                .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: record.valueIn.coinName),
+                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: .outgoing)
+            ])
+
+            if let valueOut = record.valueOut {
+                var viewItems: [TransactionInfoModule.ViewItem] = [
+                    .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: record.recipient == nil ? .incoming : .neutral)
                 ]
 
-                if let incomingInternalTx = contractCall.incomingInternalETHs.first?.value, case .coinValue(let platformCoin, _) = incomingInternalTx {
-                    var ethValue: Decimal = 0
-                    for tx in contractCall.incomingInternalETHs {
-                        ethValue += tx.value.decimalValue ?? 0
+                if let recipient = record.recipient {
+                    viewItems.append(.recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient)))
+                }
+
+                sections.append(viewItems)
+            } else if let recipient = record.recipient {
+                sections.append([
+                    .recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient))
+                ])
+            }
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                .service(value: evmLabelManager.mapped(address: record.exchangeAddress))
+            ]
+
+            if let valueOut = record.valueOut {
+                switch status {
+                case .pending, .processing, .completed:
+                    if let priceString = priceString(valueIn: record.valueIn, valueOut: valueOut, coinPriceIn: _rate(record.valueIn)) {
+                        viewItems.append(.price(price: priceString))
                     }
-
-                    let transactionValue = TransactionValue.coinValue(platformCoin: platformCoin, value: ethValue)
-
-                    let currencyValue = _currencyValue(transactionValue)
-                    youGetSection.append(.amount(coinAmount: transactionValue.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
+                default: ()
                 }
+            }
 
-                for event in contractCall.incomingEip20Events {
-                    let currencyValue = _currencyValue(event.value)
-                    youGetSection.append(.amount(coinAmount: event.value.abs.formattedString, currencyAmount: currencyValue?.abs.formattedString, incoming: true))
+            sections.append(viewItems)
+
+        case let record as UnknownSwapTransactionRecord:
+            if let valueIn = record.valueIn {
+                sections.append([
+                    .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: valueIn.coinName),
+                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: .outgoing)
+                ])
+            }
+
+            if let valueOut = record.valueOut {
+                sections.append([
+                    .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: .incoming)
+                ])
+            }
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                .service(value: evmLabelManager.mapped(address: record.exchangeAddress))
+            ]
+
+            if let valueIn = record.valueIn, let valueOut = record.valueOut {
+                switch status {
+                case .pending, .processing, .completed:
+                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
+                        viewItems.append(.price(price: priceString))
+                    }
+                default: ()
                 }
-
-                sections.append(youGetSection)
             }
 
-            middleSectionItems.append(evmFeeItem(transactionValue: contractCall.fee, rate: _rate(contractCall.fee), status: status))
-            middleSectionItems.append(.id(value: contractCall.transactionHash))
+            sections.append(viewItems)
 
-        case let btcIncoming as BitcoinIncomingTransactionRecord:
-            let coinRate = _rate(btcIncoming.value)
-            if let rate = coinRate, let coin = btcIncoming.value.coin {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+        case let record as ContractCallTransactionRecord:
+            sections.append([
+                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
+            ])
+
+            for event in record.outgoingEvents {
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates))
             }
 
-            btcIncoming.from.flatMap { middleSectionItems.append(.from(value: $0)) }
-            middleSectionItems.append(.id(value: btcIncoming.transactionHash))
-            if let conflictingHash = btcIncoming.conflictingHash {
-                middleSectionItems.append(.doubleSpend(txHash: btcIncoming.transactionHash, conflictingTxHash: conflictingHash))
-            }
-            if btcIncoming.showRawTransaction {
-                middleSectionItems.append(.rawTransaction)
-            }
-            btcIncoming.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
-            btcIncoming.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
-
-            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: btcIncoming.value, rate: coinRate, incoming: true))
-
-        case let btcOutgoing as BitcoinOutgoingTransactionRecord:
-            if let fee = btcOutgoing.fee {
-                middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(transactionValue: fee, rate: _rate(fee))))
+            for event in record.incomingEvents {
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates))
             }
 
-            let coinRate = _rate(btcOutgoing.value)
-            if let rate = coinRate, let coin = btcOutgoing.value.coin {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+        case let record as ExternalContractCallTransactionRecord:
+            for event in record.outgoingEvents {
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates))
             }
 
-            btcOutgoing.to.flatMap { middleSectionItems.append(.to(value: $0)) }
-            middleSectionItems.append(.id(value: btcOutgoing.transactionHash))
-            if let conflictingHash = btcOutgoing.conflictingHash {
-                middleSectionItems.append(.doubleSpend(txHash: btcOutgoing.transactionHash, conflictingTxHash: conflictingHash))
-            }
-            if btcOutgoing.showRawTransaction {
-                middleSectionItems.append(.rawTransaction)
-            }
-            btcOutgoing.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp).flatMap { middleSectionItems.append(.lockInfo(lockState: $0)) }
-            btcOutgoing.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
-
-            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: btcOutgoing.value, rate: coinRate, incoming: false))
-
-        case let tx as BinanceChainIncomingTransactionRecord:
-            let coinRate = _rate(tx.value)
-            if let rate = coinRate, let coin = tx.value.coin {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+            for event in record.incomingEvents {
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates))
             }
 
-            middleSectionItems.append(.from(value: tx.from))
-            middleSectionItems.append(.id(value: tx.transactionHash))
-            tx.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
+        case let record as BitcoinIncomingTransactionRecord:
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
 
-            sections.append(actionSectionItems(title: "transactions.receive".localized, transactionValue: tx.value, rate: coinRate, incoming: true))
-
-        case let tx as BinanceChainOutgoingTransactionRecord:
-            middleSectionItems.append(.fee(title: "tx_info.fee".localized, value: feeString(transactionValue: tx.fee, rate: _rate(tx.fee))))
-
-            let coinRate = _rate(tx.value)
-            if let rate = coinRate, let coin = tx.value.coin {
-                middleSectionItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
+            let additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
+            if !additionalViewItems.isEmpty {
+                sections.append(additionalViewItems)
             }
 
-            middleSectionItems.append(.to(value: tx.to))
-            middleSectionItems.append(.id(value: tx.transactionHash))
-            tx.memo.flatMap { middleSectionItems.append(.memo(text: $0)) }
+        case let record as BitcoinOutgoingTransactionRecord:
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
 
-            sections.append(actionSectionItems(title: "transactions.send".localized, transactionValue: tx.value, rate: coinRate, incoming: false))
+            var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
+
+            if record.sentToSelf {
+                additionalViewItems.insert(.sentToSelf, at: 0)
+            }
+
+            if !additionalViewItems.isEmpty {
+                sections.append(additionalViewItems)
+            }
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: fee, rate: _rate(fee)))
+            }
+
+        case let record as BinanceChainIncomingTransactionRecord:
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+
+            if let memo = record.memo, !memo.isEmpty {
+                sections.append([.memo(text: memo)])
+            }
+
+        case let record as BinanceChainOutgoingTransactionRecord:
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
+
+            var additionalViewItems = [TransactionInfoModule.ViewItem]()
+
+            if record.sentToSelf {
+                additionalViewItems.append(.sentToSelf)
+            }
+
+            if let memo = record.memo, !memo.isEmpty {
+                sections.append([.memo(text: memo)])
+            }
+
+            if !additionalViewItems.isEmpty {
+                sections.append(additionalViewItems)
+            }
+
+            feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(transactionValue: record.fee, rate: _rate(record.fee)))
 
         default: ()
         }
 
-        sections.append(middleSectionItems)
-        sections.append([.explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl)])
+        var transactionViewItems: [TransactionInfoModule.ViewItem] = [
+            .date(date: record.date),
+            .status(status: status)
+        ]
+
+        if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
+            switch status {
+            case .pending:
+                transactionViewItems.append(.options(actions: [
+                    TransactionInfoModule.OptionViewItem(title: "tx_info.options.speed_up".localized, active: true, option: .speedUp),
+                    TransactionInfoModule.OptionViewItem(title: "tx_info.options.cancel".localized, active: true, option: .cancel)
+                ]))
+            default: ()
+            }
+
+            if let transactionValue = evmRecord.fee {
+                let title: String
+                switch status {
+                case .pending: title = "tx_info.fee.estimated".localized
+                case .processing, .failed, .completed: title = "tx_info.fee".localized
+                }
+
+                feeViewItem = .fee(
+                        title: title,
+                        value: feeString(transactionValue: transactionValue, rate: _rate(transactionValue))
+                )
+            }
+        }
+
+        if let feeViewItem = feeViewItem {
+            transactionViewItems.append(feeViewItem)
+        }
+
+        transactionViewItems.append(.id(value: record.transactionHash))
+
+        sections.append(transactionViewItems)
+
+        sections.append([
+            .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl)
+        ])
 
         return sections
     }

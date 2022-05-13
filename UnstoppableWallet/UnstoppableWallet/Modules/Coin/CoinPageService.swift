@@ -6,7 +6,7 @@ import MarketKit
 class CoinPageService {
     let fullCoin: FullCoin
     private let favoritesManager: FavoritesManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
@@ -27,7 +27,7 @@ class CoinPageService {
         }
     }
 
-    init(fullCoin: FullCoin, favoritesManager: FavoritesManager, accountManager: IAccountManager, walletManager: WalletManager, enableCoinService: EnableCoinService) {
+    init(fullCoin: FullCoin, favoritesManager: FavoritesManager, accountManager: AccountManager, walletManager: WalletManager, enableCoinService: EnableCoinService) {
         self.fullCoin = fullCoin
         self.favoritesManager = favoritesManager
         self.accountManager = accountManager

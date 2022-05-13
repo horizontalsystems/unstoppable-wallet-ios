@@ -1,3 +1,4 @@
+import Foundation
 import BitcoinCore
 import Hodler
 import RxSwift
@@ -137,14 +138,6 @@ class BitcoinBaseAdapter {
         switch sort {
         case .shuffle: return .shuffle
         case .bip69: return .bip69
-        }
-    }
-
-    class func kitMode(from syncMode: SyncMode) -> BitcoinCore.SyncMode {
-        switch syncMode {
-        case .fast: return .api
-        case .slow: return .full
-        case .new: return .newWallet
         }
     }
 

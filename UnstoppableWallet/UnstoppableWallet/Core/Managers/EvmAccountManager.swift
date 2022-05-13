@@ -3,22 +3,24 @@ import MarketKit
 import HsToolKit
 import EthereumKit
 import Erc20Kit
+import UniswapKit
+import OneInchKit
 
 class EvmAccountManager {
     private let blockchain: EvmBlockchain
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
     private let provider: HsTokenBalanceProvider
-    private let storage: IEvmAccountSyncStateStorage
+    private let storage: EvmAccountSyncStateStorage
 
     private let disposeBag = DisposeBag()
     private var internalDisposeBag = DisposeBag()
 
     private var syncing = false
 
-    init(blockchain: EvmBlockchain, accountManager: IAccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: IEvmAccountSyncStateStorage) {
+    init(blockchain: EvmBlockchain, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
         self.blockchain = blockchain
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -132,30 +134,52 @@ class EvmAccountManager {
         var maxBlockNumber = 0
 
         for fullTransaction in fullTransactions {
-            guard let blockNumber = fullTransaction.receiptWithLogs?.receipt.blockNumber, let lastBlockNumber = lastBlockNumber, blockNumber > lastBlockNumber else {
+            guard let blockNumber = fullTransaction.transaction.blockNumber, let lastBlockNumber = lastBlockNumber, blockNumber > lastBlockNumber else {
                 continue
             }
 
             maxBlockNumber = max(maxBlockNumber, blockNumber)
 
-            if fullTransaction.transaction.to == address {
+            switch fullTransaction.decoration {
+            case is IncomingDecoration:
                 coinTypes.append(blockchain.baseCoinType)
-                continue
-            }
 
-            if fullTransaction.internalTransactions.contains(where: { $0.to == address }) {
-                coinTypes.append(blockchain.baseCoinType)
-                continue
-            }
-
-            for decoration in fullTransaction.eventDecorations {
-                guard let decoration = decoration as? TransferEventDecoration else {
-                    continue
+            case let decoration as SwapDecoration:
+                switch decoration.tokenOut {
+                case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                default: ()
                 }
 
-                if decoration.to == address {
-                    coinTypes.append(blockchain.evm20CoinType(address: decoration.contractAddress.hex))
+            case let decoration as OneInchSwapDecoration:
+                switch decoration.tokenOut {
+                case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                default: ()
                 }
+
+            case let decoration as OneInchUnoswapDecoration:
+                if let tokenOut = decoration.tokenOut {
+                    switch tokenOut {
+                    case .eip20Coin(let address, _): coinTypes.append(blockchain.evm20CoinType(address: address.hex))
+                    default: ()
+                    }
+                }
+
+            case let decoration as UnknownTransactionDecoration:
+                if decoration.internalTransactions.contains(where: { $0.to == address }) {
+                    coinTypes.append(blockchain.baseCoinType)
+                }
+
+                for eventInstance in decoration.eventInstances {
+                    guard let transferEventInstance = eventInstance as? TransferEventInstance else {
+                        continue
+                    }
+
+                    if transferEventInstance.to == address {
+                        coinTypes.append(blockchain.evm20CoinType(address: transferEventInstance.contractAddress.hex))
+                    }
+                }
+
+            default: ()
             }
         }
 

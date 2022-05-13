@@ -7,8 +7,10 @@ class UDNAddressParserItem {
     private let coinCode: String
     private let platformCoinCode: String?
     private let chain: String?
+    private let rawAddressParserItem: IAddressParserItem
 
-    init(coinCode: String, platformCoinCode: String?, chain: String?) {
+    init(rawAddressParserItem: IAddressParserItem, coinCode: String, platformCoinCode: String?, chain: String?) {
+        self.rawAddressParserItem = rawAddressParserItem
         self.coinCode = coinCode
         self.platformCoinCode = platformCoinCode
         self.chain = chain
@@ -31,6 +33,14 @@ class UDNAddressParserItem {
         }
     }
 
+    private func rawAddressHandle(address: Address) -> Single<Address> {
+        rawAddressParserItem
+                .handle(address: address.raw)
+                .map { rawAddress in
+                    Address(raw: rawAddress.raw, domain: address.domain)
+                }
+    }
+
 }
 
 extension UDNAddressParserItem: IAddressParserItem {
@@ -46,10 +56,11 @@ extension UDNAddressParserItem: IAddressParserItem {
         }
 
         return resolve(singles: singles)
-                .flatMap { result in
+                .flatMap { [weak self] result in
                     switch result {
                     case .success(let resolvedAddress):
-                        return Single.just(Address(raw: resolvedAddress, domain: address))
+                        let address = Address(raw: resolvedAddress, domain: address)
+                        return self?.rawAddressHandle(address: address) ?? Single.just(address)
                     case .failure(let error):
                         return Single.error(error)
                     }
@@ -86,6 +97,19 @@ extension UDNAddressParserItem {
         case .polygon, .mrc20: return "MATIC"
         default: return nil
         }
+    }
+
+}
+
+extension UDNAddressParserItem {
+
+    static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, coinType: CoinType?) -> UDNAddressParserItem {
+        UDNAddressParserItem(
+                rawAddressParserItem: rawAddressParserItem,
+                coinCode: coinCode,
+                platformCoinCode: coinType.flatMap { chainCoinCode(coinType: $0) },
+                chain: coinType.flatMap { chain(coinType: $0) }
+        )
     }
 
 }

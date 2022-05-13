@@ -1,15 +1,15 @@
 import RxSwift
 
 class AppVersionStorage {
-    private let storage: IAppVersionRecordStorage
+    private let storage: AppVersionRecordStorage
 
-    init(storage: IAppVersionRecordStorage) {
+    init(storage: AppVersionRecordStorage) {
         self.storage = storage
     }
 
 }
 
-extension AppVersionStorage: IAppVersionStorage {
+extension AppVersionStorage {
 
     var appVersions: [AppVersion] {
         storage.appVersionRecords.compactMap {

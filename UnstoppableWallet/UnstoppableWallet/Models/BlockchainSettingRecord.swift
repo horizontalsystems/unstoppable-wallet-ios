@@ -2,14 +2,12 @@ import GRDB
 import MarketKit
 
 class BlockchainSettingRecord: Record {
-    let coinType: String
+    let blockchainUid: String
+    let key: String
+    let value: String
 
-    var key: String
-    var value: String
-
-    init(coinType: String, key: String, value: String) {
-        self.coinType = coinType
-
+    init(blockchainUid: String, key: String, value: String) {
+        self.blockchainUid = blockchainUid
         self.key = key
         self.value = value
 
@@ -21,11 +19,11 @@ class BlockchainSettingRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinType, key, value
+        case blockchainUid, key, value
     }
 
     required init(row: Row) {
-        coinType = row[Columns.coinType]
+        blockchainUid = row[Columns.blockchainUid]
         key = row[Columns.key]
         value = row[Columns.value]
 
@@ -33,19 +31,9 @@ class BlockchainSettingRecord: Record {
     }
 
     override func encode(to container: inout PersistenceContainer) {
-        container[Columns.coinType] = coinType
+        container[Columns.blockchainUid] = blockchainUid
         container[Columns.key] = key
         container[Columns.value] = value
-    }
-
-    static func key(for coinType: CoinType) -> String? {
-        switch coinType {
-        case .bitcoin: return "bitcoin"
-        case .litecoin: return "litecoin"
-        case .bitcoinCash: return "bitcoinCash"
-        case .dash: return "dash"
-        default: return nil
-        }
     }
 
 }

@@ -4,15 +4,23 @@ import RxCocoa
 import ComponentKit
 import ThemeKit
 
+protocol IEditableFeeViewModel: IFeeViewModel {
+    var editButtonVisibleDriver: Driver<Bool> { get }
+    var editButtonHighlightedDriver: Driver<Bool> { get }
+}
+
 class EditableFeeCell: BaseSelectableThemeCell {
     private let disposeBag = DisposeBag()
 
-    init(viewModel: EvmFeeViewModel) {
+    private let viewModel: IEditableFeeViewModel
+
+    init(viewModel: IEditableFeeViewModel, isFirst: Bool = true, isLast: Bool = true) {
+        self.viewModel = viewModel
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         clipsToBounds = true
-        set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
         CellBuilder.build(cell: self, elements: [.text, .text, .margin8, .image20, .spinner20])
 
@@ -38,6 +46,7 @@ class EditableFeeCell: BaseSelectableThemeCell {
         }
 
         subscribe(disposeBag, viewModel.editButtonVisibleDriver) { [weak self] visible in
+            self?.selectionStyle = visible ? .default : .none
             self?.bind(index: 2) { (component: ImageComponent) in
                 component.isHidden = !visible
             }
@@ -57,7 +66,7 @@ class EditableFeeCell: BaseSelectableThemeCell {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
 }

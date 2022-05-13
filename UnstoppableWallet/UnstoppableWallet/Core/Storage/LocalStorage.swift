@@ -11,7 +11,6 @@ class LocalStorage {
     private let mainShownOnceKey = "main_shown_once_key"
     private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
-    private let keyTransactionDataSortMode = "transaction_data_sort_mode"
     private let keyLockTimeEnabled = "lock_time_enabled"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
@@ -26,7 +25,7 @@ class LocalStorage {
 
 }
 
-extension LocalStorage: ILocalStorage {
+extension LocalStorage {
 
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
@@ -38,18 +37,6 @@ extension LocalStorage: ILocalStorage {
         set { storage.set(value: newValue, for: agreementAcceptedKey) }
     }
 
-    var sendInputType: SendInputType? {
-        get {
-            if let rawValue: String = storage.value(for: keySendInputType), let value = SendInputType(rawValue: rawValue) {
-                return value
-            }
-            return nil
-        }
-        set {
-            storage.set(value: newValue?.rawValue, for: keySendInputType)
-        }
-    }
-
     var mainShownOnce: Bool {
         get { storage.value(for: mainShownOnceKey) ?? false }
         set { storage.set(value: newValue, for: mainShownOnceKey) }
@@ -58,18 +45,6 @@ extension LocalStorage: ILocalStorage {
     var jailbreakShownOnce: Bool {
         get { storage.value(for: jailbreakShownOnceKey) ?? false }
         set { storage.set(value: newValue, for: jailbreakShownOnceKey) }
-    }
-
-    var transactionDataSortMode: TransactionDataSortMode? {
-        get {
-            if let rawValue: String = storage.value(for: keyTransactionDataSortMode), let value = TransactionDataSortMode(rawValue: rawValue) {
-                return value
-            }
-            return nil
-        }
-        set {
-            storage.set(value: newValue?.rawValue, for: keyTransactionDataSortMode)
-        }
     }
 
     var lockTimeEnabled: Bool {
@@ -103,11 +78,7 @@ extension LocalStorage: ILocalStorage {
         storage.set(value: provider.rawValue, for: key)
     }
 
-}
-
-extension LocalStorage: IChartIntervalStorage {
-
-    var interval: HsTimePeriod? {
+    var chartInterval: HsTimePeriod? {
         get {
             if let rawValue: String = storage.value(for: keyChartInterval), let interval = HsTimePeriod(rawValue: rawValue) {
                 return interval

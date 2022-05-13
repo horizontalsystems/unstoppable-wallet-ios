@@ -4,7 +4,7 @@ class ChartCurrentRateCell: UITableViewCell {
     static let cellHeight: CGFloat = 40
 
     private let rateLabel = UILabel()
-    private let diffLabel = RateDiffLabel()
+    private let diffLabel = DiffLabel()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

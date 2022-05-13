@@ -4,13 +4,16 @@ import EthereumKit
 
 class EvmSyncSourceManager {
     private let appConfigProvider: AppConfigProvider
-    private let accountSettingManager: AccountSettingManager
+    private let storage: BlockchainSettingsStorage
 
-    private let syncSourceRelay = PublishRelay<(Account, EvmBlockchain, EvmSyncSource)>()
+    private let syncSourceRelay = PublishRelay<EvmBlockchain>()
+    let infuraRpcSource: RpcSource
 
-    init(appConfigProvider: AppConfigProvider, accountSettingManager: AccountSettingManager) {
+    init(appConfigProvider: AppConfigProvider, storage: BlockchainSettingsStorage) {
         self.appConfigProvider = appConfigProvider
-        self.accountSettingManager = accountSettingManager
+        self.storage = storage
+
+        infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
     }
 
     private func defaultSyncSources(blockchain: EvmBlockchain) -> [EvmSyncSource] {
@@ -24,12 +27,17 @@ class EvmSyncSourceManager {
                 ),
                 EvmSyncSource(
                         name: "Infura HTTP",
-                        rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                        rpcSource: infuraRpcSource,
                         transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
                 )
             ]
         case .binanceSmartChain:
             return [
+                EvmSyncSource(
+                        name: "BSC-RPC HTTP",
+                        rpcSource: .bscRpcHttp(),
+                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
+                ),
                 EvmSyncSource(
                         name: "Default HTTP",
                         rpcSource: .binanceSmartChainHttp(),
@@ -72,7 +80,7 @@ class EvmSyncSourceManager {
 
 extension EvmSyncSourceManager {
 
-    var syncSourceObservable: Observable<(Account, EvmBlockchain, EvmSyncSource)> {
+    var syncSourceObservable: Observable<EvmBlockchain> {
         syncSourceRelay.asObservable()
     }
 
@@ -82,19 +90,19 @@ extension EvmSyncSourceManager {
         // todo: load custom network from DB
     }
 
-    func syncSource(account: Account, blockchain: EvmBlockchain) -> EvmSyncSource {
+    func syncSource(blockchain: EvmBlockchain) -> EvmSyncSource {
         let syncSources = allSyncSources(blockchain: blockchain)
 
-        if let name = accountSettingManager.evmSyncSourceName(account: account, blockchain: blockchain), let syncSource = syncSources.first(where: { $0.name == name }) {
+        if let name = storage.evmSyncSourceName(evmBlockchain: blockchain), let syncSource = syncSources.first(where: { $0.name == name }) {
             return syncSource
         }
 
         return syncSources[0]
     }
 
-    func save(syncSource: EvmSyncSource, account: Account, blockchain: EvmBlockchain) {
-        accountSettingManager.save(evmSyncSourceName: syncSource.name, account: account, blockchain: blockchain)
-        syncSourceRelay.accept((account, blockchain, syncSource))
+    func save(syncSource: EvmSyncSource, blockchain: EvmBlockchain) {
+        storage.save(evmSyncSourceName: syncSource.name, evmBlockchain: blockchain)
+        syncSourceRelay.accept(blockchain)
     }
 
 }

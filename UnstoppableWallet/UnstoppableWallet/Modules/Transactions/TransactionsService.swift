@@ -12,11 +12,10 @@ class TransactionsService {
 
     private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
-    private var itemsSubject = PublishSubject<[TransactionItem]>()
-    private var updatedItemSubject = PublishSubject<TransactionItem>()
-    private var syncStateSubject = PublishSubject<AdapterState?>()
+    private var itemsSubject = PublishSubject<[Item]>()
+    private var updatedItemSubject = PublishSubject<Item>()
 
-    private var items = [TransactionItem]()
+    private var items = [Item]()
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
@@ -34,10 +33,6 @@ class TransactionsService {
 
         syncStateService.lastBlockInfoObservable
                 .subscribe(onNext: { [weak self] (source, lastBlockInfo) in self?.queue.async { self?.handle(source: source, lastBlockInfo: lastBlockInfo) }})
-                .disposed(by: disposeBag)
-
-        syncStateService.syncStateObservable
-                .subscribe(onNext: { [weak self] syncState in self?.syncStateSubject.onNext(syncState) })
                 .disposed(by: disposeBag)
 
         rateService.ratesChangedObservable
@@ -125,17 +120,17 @@ class TransactionsService {
         }
     }
 
-    private func update(item: TransactionItem, index: Int, record: TransactionRecord? = nil, lastBlockInfo: LastBlockInfo? = nil, currencyValue: CurrencyValue? = nil) {
+    private func update(item: Item, index: Int, record: TransactionRecord? = nil, lastBlockInfo: LastBlockInfo? = nil, currencyValue: CurrencyValue? = nil) {
         let record = record ?? item.record
         let lastBlockInfo = lastBlockInfo ?? item.lastBlockInfo
         let currencyValue = currencyValue ?? item.currencyValue
 
-        let item = TransactionItem(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
+        let item = Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
         items[index] = item
         updatedItemSubject.onNext(item)
     }
 
-    private func createItem(from record: TransactionRecord) -> TransactionItem {
+    private func createItem(from record: TransactionRecord) -> Item {
         let lastBlockInfo = syncStateService.lastBlockInfo(source: record.source)
 
         var currencyValue: CurrencyValue? = nil
@@ -143,7 +138,7 @@ class TransactionsService {
             currencyValue = _currencyValue(transactionValue: transactionValue, rate: rateService.rate(key: RateKey(coin: platformCoin.coin, date: record.date)))
         }
 
-        return TransactionItem(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
+        return Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
     }
 
     private func _currencyValue(transactionValue: TransactionValue, rate: CurrencyValue?) -> CurrencyValue? {
@@ -158,7 +153,7 @@ class TransactionsService {
 
 extension TransactionsService {
 
-    var allItems: [TransactionItem] {
+    var allItems: [Item] {
         queue.sync {
             items
         }
@@ -172,10 +167,6 @@ extension TransactionsService {
         filterHelper.walletFilters
     }
 
-    var syncState: AdapterState? {
-        syncStateService.syncState
-    }
-
     var walletFiltersObservable: Observable<(wallets: [TransactionWallet], selected: Int?)> {
         walletFiltersSubject.asObservable()
     }
@@ -184,16 +175,20 @@ extension TransactionsService {
         typeFiltersSubject.asObservable()
     }
 
-    var itemsObservable: Observable<[TransactionItem]> {
+    var itemsObservable: Observable<[Item]> {
         itemsSubject.asObservable()
     }
 
-    var updatedItemObservable: Observable<TransactionItem> {
+    var updatedItemObservable: Observable<Item> {
         updatedItemSubject.asObservable()
     }
 
-    var syncStateSignal: Observable<AdapterState?> {
-        syncStateSubject.asObservable()
+    var syncing: Bool {
+        syncStateService.syncing
+    }
+
+    var syncingObservable: Observable<Bool> {
+        syncStateService.syncingObservable
     }
 
     func set(selectedWalletIndex: Int?) {
@@ -217,10 +212,20 @@ extension TransactionsService {
         }
     }
 
-    func item(uid: String) -> TransactionItem? {
+    func item(uid: String) -> Item? {
         queue.sync {
             items.first(where: { $0.record.uid == uid })
         }
+    }
+
+}
+
+extension TransactionsService {
+
+    struct Item {
+        let record: TransactionRecord
+        var lastBlockInfo: LastBlockInfo?
+        var currencyValue: CurrencyValue?
     }
 
 }

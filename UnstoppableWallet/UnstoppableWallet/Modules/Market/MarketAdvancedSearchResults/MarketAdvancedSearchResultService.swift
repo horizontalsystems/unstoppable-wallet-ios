@@ -62,15 +62,15 @@ extension MarketAdvancedSearchResultService: IMarketListCoinUidService {
 
 extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
 
-    var initialMarketField: MarketModule.MarketField {
-        .price
+    var initialMarketFieldIndex: Int {
+        0
     }
 
     var currency: Currency {
         currencyKit.baseCurrency
     }
 
-    func onUpdate(marketField: MarketModule.MarketField) {
+    func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let marketInfos, _, _) = state {
             stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
         }

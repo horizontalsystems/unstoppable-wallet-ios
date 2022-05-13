@@ -5,10 +5,9 @@ import CurrencyKit
 
 class CoinSelectService {
     private let dex: SwapModule.Dex
-    private let coinManager: CoinManager
+    private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
 
@@ -21,12 +20,11 @@ class CoinSelectService {
 
     private var filter: String = ""
 
-    init(dex: SwapModule.Dex, coinManager: CoinManager, walletManager: WalletManager, adapterManager: AdapterManager, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(dex: SwapModule.Dex, marketKit: MarketKit.Kit, walletManager: WalletManager, adapterManager: AdapterManager, currencyKit: CurrencyKit.Kit) {
         self.dex = dex
-        self.coinManager = coinManager
+        self.marketKit = marketKit
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.marketKit = marketKit
         self.currencyKit = currencyKit
 
         syncItems()
@@ -34,16 +32,6 @@ class CoinSelectService {
 
     private func dexSupports(platformCoin: PlatformCoin) -> Bool {
         dex.blockchain.supports(coinType: platformCoin.coinType)
-    }
-
-    private func platformType() -> PlatformType {
-        switch dex.blockchain {
-        case .ethereum: return .ethereum
-        case .binanceSmartChain: return .binanceSmartChain
-        case .polygon: return .polygon
-        case .optimism: return .optimism
-        case .arbitrumOne: return .arbitrumOne
-        }
     }
 
     private func walletItems() -> [Item] {
@@ -75,7 +63,7 @@ class CoinSelectService {
 
     private func coinItems() -> [Item] {
         do {
-            let platformCoins = try coinManager.platformCoins(platformType: platformType(), filter: filter)
+            let platformCoins = try marketKit.platformCoins(platformType: dex.blockchain.platformType, filter: filter)
 
             return platformCoins.map { platformCoin in
                 Item(platformCoin: platformCoin, balance: nil, rate: nil)

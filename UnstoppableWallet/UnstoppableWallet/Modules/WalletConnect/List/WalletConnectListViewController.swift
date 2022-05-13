@@ -13,6 +13,8 @@ class WalletConnectListViewController: ThemeViewController {
     private let listViewV2: WalletConnectV2ListView
 
     private let emptyView = PlaceholderView()
+    private let bottomButtonHolder = BottomGradientHolder()
+    private let bottomButton = ThemeButton()
 
     let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectScanQrViewController?
@@ -40,7 +42,7 @@ class WalletConnectListViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.top.trailing.equalToSuperview()
         }
 
         tableView.backgroundColor = .clear
@@ -59,12 +61,22 @@ class WalletConnectListViewController: ThemeViewController {
 
         emptyView.image = UIImage(named: "wallet_connect_48")
         emptyView.text = "wallet_connect.list.empty_view_text".localized
-        emptyView.addButton(
-                style: .primaryYellow,
-                title: "wallet_connect.list.empty_view_button_text".localized,
-                target: self,
-                action: #selector(startNewConnection)
-        )
+
+        view.addSubview(bottomButtonHolder)
+        bottomButtonHolder.snp.makeConstraints { maker in
+            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        bottomButtonHolder.addSubview(bottomButton)
+        bottomButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview().inset(CGFloat.margin24)
+            maker.height.equalTo(CGFloat.heightButton)
+        }
+
+        bottomButton.apply(style: .primaryYellow)
+        bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)
+        bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
         subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }

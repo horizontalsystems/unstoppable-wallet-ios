@@ -107,6 +107,7 @@ class ShowKeyViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.showKeySignal) { [weak self] in self?.showKey() }
+        subscribe(disposeBag, viewModel.copySignal) { [weak self] in self?.copy(text: $0) }
 
         tableView.buildSections()
     }
@@ -117,6 +118,10 @@ class ShowKeyViewController: ThemeViewController {
 
     @objc private func onTapShowButton() {
         viewModel.onTapShow()
+    }
+
+    private func copy(text: String) {
+        CopyHelper.copyAndNotify(value: text)
     }
 
     private func openUnlock() {
@@ -181,6 +186,67 @@ class ShowKeyViewController: ThemeViewController {
 
 extension ShowKeyViewController: SectionsDataSource {
 
+    private func headerRow(id: String, text: String) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text],
+                tableView: tableView,
+                id: id,
+                height: .heightSingleLineCell,
+                bind: { cell in
+                    cell.set(backgroundStyle: .transparent, isFirst: true)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .c1)
+                        component.text = text.uppercased()
+                    }
+                }
+        )
+    }
+
+    private func copyRow(id: String, title: String, isFirst: Bool, isLast: Bool, onCopy: @escaping () -> ()) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .secondaryCircleButton],
+                tableView: tableView,
+                id: id,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "copy_20"))
+                        component.onTap = onCopy
+                    }
+                }
+        )
+    }
+
+    private func publicKeyRows() -> [RowProtocol] {
+        [
+            marginRow(id: "top-margin-bitcoin", height: .margin12),
+            headerRow(id: "header-bitcoin", text: "Bitcoin"),
+            copyRow(id: "bitcoin-bip-44", title: MnemonicDerivation.bip44.description, isFirst: true, isLast: false) { [weak self] in self?.viewModel.onCopyBitcoin(derivation: .bip44) },
+            copyRow(id: "bitcoin-bip-49", title: MnemonicDerivation.bip49.description, isFirst: false, isLast: false) { [weak self] in self?.viewModel.onCopyBitcoin(derivation: .bip49) },
+            copyRow(id: "bitcoin-bip-84", title: MnemonicDerivation.bip84.description, isFirst: false, isLast: true) { [weak self] in self?.viewModel.onCopyBitcoin(derivation: .bip84) },
+            marginRow(id: "top-margin-bitcoin-cash", height: .margin24),
+            headerRow(id: "header-bitcoin-cash", text: "Bitcoin Cash"),
+            copyRow(id: "bitcoin-cash-legacy", title: BitcoinCashCoinType.type0.title, isFirst: true, isLast: false) { [weak self] in self?.viewModel.onCopyBitcoinCash(coinType: .type0) },
+            copyRow(id: "bitcoin-cash-new", title: BitcoinCashCoinType.type145.title, isFirst: false, isLast: true) { [weak self] in self?.viewModel.onCopyBitcoinCash(coinType: .type145) },
+            marginRow(id: "top-margin-litecoin", height: .margin24),
+            headerRow(id: "header-litecoin", text: "Litecoin"),
+            copyRow(id: "litecoin-bip-44", title: MnemonicDerivation.bip44.description, isFirst: true, isLast: false) { [weak self] in self?.viewModel.onCopyLitecoin(derivation: .bip44) },
+            copyRow(id: "litecoin-bip-49", title: MnemonicDerivation.bip49.description, isFirst: false, isLast: false) { [weak self] in self?.viewModel.onCopyLitecoin(derivation: .bip49) },
+            copyRow(id: "litecoin-bip-84", title: MnemonicDerivation.bip84.description, isFirst: false, isLast: true) { [weak self] in self?.viewModel.onCopyLitecoin(derivation: .bip84) },
+            marginRow(id: "top-margin-dash", height: .margin24),
+            headerRow(id: "header-dash", text: "Dash"),
+            copyRow(id: "dash-public-keys", title: "Public Keys", isFirst: true, isLast: true) { [weak self] in self?.viewModel.onCopyDash() }
+        ]
+    }
+
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
@@ -219,6 +285,8 @@ extension ShowKeyViewController: SectionsDataSource {
             if let privateKey = viewModel.evmPrivateKey {
                 rows.append(contentsOf: self.rows(privateKey: privateKey))
             }
+        case .publicKeys:
+            rows.append(contentsOf: publicKeyRows())
         }
 
         return [
@@ -249,11 +317,13 @@ extension ShowKeyViewController {
     enum Tab: Int, CaseIterable {
         case mnemonicPhrase
         case privateKey
+        case publicKeys
 
         var title: String {
             switch self {
             case .mnemonicPhrase: return "show_key.tab.recovery_phrase".localized
             case .privateKey: return "show_key.tab.private_key".localized
+            case .publicKeys: return "Public Keys" // todo: localize this
             }
         }
     }

@@ -38,7 +38,13 @@ class LegacyEvmFeeViewModel {
         if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data {
             let gweiGasPrice = gwei(wei: gasPrice)
             gasPriceRelay.accept("\(gweiGasPrice) gwei")
-            gasPriceSliderRelay.accept(FeeSliderViewItem(initialValue: gweiGasPrice, range: gwei(range: gasPriceService.gasPriceRange)))
+            gasPriceSliderRelay.accept(
+                    FeeSliderViewItem(
+                            initialValue: gweiGasPrice,
+                            range: gwei(range: gasPriceService.gasPriceRange),
+                            description: "gwei"
+                    )
+            )
         } else {
             gasPriceRelay.accept("n/a".localized)
             gasPriceSliderRelay.accept(nil)

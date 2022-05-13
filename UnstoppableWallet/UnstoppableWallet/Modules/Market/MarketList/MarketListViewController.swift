@@ -11,9 +11,6 @@ protocol IMarketListViewModel {
     var loadingDriver: Driver<Bool> { get }
     var syncErrorDriver: Driver<Bool> { get }
     var scrollToTopSignal: Signal<()> { get }
-    func isFavorite(index: Int) -> Bool?
-    func favorite(index: Int)
-    func unfavorite(index: Int)
     func refresh()
 }
 
@@ -142,7 +139,7 @@ class MarketListViewController: ThemeViewController {
         }
     }
 
-    private func onSelect(viewItem: MarketModule.ListViewItem) {
+    func onSelect(viewItem: MarketModule.ListViewItem) {
         guard let uid = viewItem.uid, let module = CoinPageModule.viewController(coinUid: uid) else {
             HudHelper.instance.showAttention(title: "market.coin_not_supported_yet".localized)
             return
@@ -152,7 +149,11 @@ class MarketListViewController: ThemeViewController {
     }
 
     private func rowActions(index: Int) -> [RowAction] {
-        guard let isFavorite = listViewModel.isFavorite(index: index) else {
+        guard let watchListViewModel = listViewModel as? IMarketListWatchViewModel else {
+            return []
+        }
+
+        guard let isFavorite = watchListViewModel.isFavorite(index: index) else {
             return []
         }
 
@@ -163,14 +164,14 @@ class MarketListViewController: ThemeViewController {
         if isFavorite {
             type = .destructive
             iconName = "star_off_24"
-            action = { [weak self] _ in
-                self?.listViewModel.unfavorite(index: index)
+            action = { _ in
+                watchListViewModel.unfavorite(index: index)
             }
         } else {
             type = .additive
             iconName = "star_24"
-            action = { [weak self] _ in
-                self?.listViewModel.favorite(index: index)
+            action = { _ in
+                watchListViewModel.favorite(index: index)
             }
         }
 

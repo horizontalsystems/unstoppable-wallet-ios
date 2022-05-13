@@ -19,6 +19,7 @@ struct WalletModule {
                 cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                marketKit: App.shared.marketKit,
                 localStorage: StorageKit.LocalStorage.default,
                 rateAppManager: App.shared.rateAppManager,
                 appManager: App.shared.appManager,

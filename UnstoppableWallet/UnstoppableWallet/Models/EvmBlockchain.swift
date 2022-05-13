@@ -39,6 +39,16 @@ enum EvmBlockchain: String {
         }
     }
 
+    var platformType: PlatformType {
+        switch self {
+        case .ethereum: return .ethereum
+        case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygon
+        case .optimism: return .optimism
+        case .arbitrumOne: return .arbitrumOne
+        }
+    }
+
     var uid: String {
         switch self {
         case .ethereum: return "ethereum"
@@ -83,6 +93,26 @@ enum EvmBlockchain: String {
         case .polygon: return "polygon_24"
         case .optimism: return "optimism_24"
         case .arbitrumOne: return "arbitrum_one_24"
+        }
+    }
+
+    var iconPlain24: String {
+        switch self {
+        case .ethereum: return "ethereum_trx_24"
+        case .binanceSmartChain: return "binance_smart_chain_trx_24"
+        case .polygon: return "polygon_trx_24"
+        case .optimism: return "optimism_trx_24"
+        case .arbitrumOne: return "arbitrum_one_trx_24"
+        }
+    }
+
+    var eip20Type: String {
+        switch self {
+        case .ethereum: return "ERC20"
+        case .binanceSmartChain: return "BEP20"
+        case .polygon: return "POLYGON"
+        case .optimism: return "OPTIMISM"
+        case .arbitrumOne: return "ARBITRUM"
         }
     }
 

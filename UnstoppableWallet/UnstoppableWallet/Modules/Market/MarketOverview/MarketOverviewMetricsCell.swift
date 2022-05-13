@@ -8,14 +8,16 @@ import ComponentKit
 class MarketOverviewMetricsCell: UITableViewCell {
     static let cellHeight: CGFloat = 240
 
-    weak var viewController: UIViewController?
+    private var presentDelegate: IPresentDelegate
 
     private let totalMarketCapView: MarketMetricView
     private let volume24hView: MarketMetricView
     private let deFiCapView: MarketMetricView
     private let deFiTvlView: MarketMetricView
 
-    init(chartConfiguration: ChartConfiguration) {
+    init(chartConfiguration: ChartConfiguration, presentDelegate: IPresentDelegate) {
+        self.presentDelegate = presentDelegate
+
         totalMarketCapView = MarketMetricView(configuration: chartConfiguration)
         volume24hView = MarketMetricView(configuration: chartConfiguration)
         deFiCapView = MarketMetricView(configuration: chartConfiguration)
@@ -75,14 +77,14 @@ class MarketOverviewMetricsCell: UITableViewCell {
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
         let viewController = MarketGlobalMetricModule.viewController(type: metricType)
-        self.viewController?.present(viewController, animated: true)
+        presentDelegate.present(viewController: viewController)
     }
 
 }
 
 extension MarketOverviewMetricsCell {
 
-    func set(viewItem: MarketOverviewTopCoinsViewModel.GlobalMarketViewItem) {
+    func set(viewItem: MarketOverviewGlobalViewModel.GlobalMarketViewItem) {
         totalMarketCapView.set(
                 value: viewItem.totalMarketCap.value,
                 diff: viewItem.totalMarketCap.diff,

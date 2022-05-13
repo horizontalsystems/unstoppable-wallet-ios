@@ -8,27 +8,52 @@ class NftAssetViewModel {
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let statsViewItemRelay = BehaviorRelay<StatsViewItem?>(value: nil)
+    private let loadingRelay = BehaviorRelay<Bool>(value: false)
+    private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
+
     private let openTraitRelay = PublishRelay<String>()
 
     init(service: NftAssetService) {
         self.service = service
 
-        subscribe(disposeBag, service.statsItemObservable) { [weak self] in self?.sync(statsItem: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        syncState()
-        sync(statsItem: service.statsItem)
+        sync(state: service.state)
     }
 
-    private func syncState() {
-        let asset = service.asset
-        let collection = service.collection
+    private func sync(state: DataStatus<NftAssetService.Item>) {
+        switch state {
+        case .loading:
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(true)
+            syncErrorRelay.accept(false)
+        case .completed(let item):
+            viewItemRelay.accept(viewItem(item: item))
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(false)
+        case .failed:
+            viewItemRelay.accept(nil)
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(true)
+        }
+    }
 
-        let viewItem = ViewItem(
+    private func viewItem(item: NftAssetService.Item) -> ViewItem {
+        let asset = item.asset
+        let collection = item.collection
+
+        return ViewItem(
                 imageUrl: asset.imageUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
+                collectionUid: collection.uid,
                 collectionName: collection.name,
-                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
+                lastSale: priceViewItem(priceItem: item.lastSale),
+                average7d: priceViewItem(priceItem: item.average7d),
+                average30d: priceViewItem(priceItem: item.average30d),
+                collectionFloor: priceViewItem(priceItem: item.collectionFloor),
+                bestOffer: priceViewItem(priceItem: item.bestOffer),
+                sale: saleViewItem(saleItem: item.sale),
+                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.stats.totalSupply) },
                 description: asset.description,
                 contractAddress: asset.contract.address,
                 tokenId: asset.tokenId,
@@ -36,21 +61,6 @@ class NftAssetViewModel {
                 blockchain: "Ethereum",
                 links: linkViewItems(collection: collection, asset: asset)
         )
-
-        viewItemRelay.accept(viewItem)
-    }
-
-    private func sync(statsItem: NftAssetService.StatsItem) {
-        let viewItem = StatsViewItem(
-                lastSale: priceViewItem(priceItem: statsItem.lastSale),
-                average7d: priceViewItem(priceItem: statsItem.average7d),
-                average30d: priceViewItem(priceItem: statsItem.average30d),
-                collectionFloor: priceViewItem(priceItem: statsItem.collectionFloor),
-                bestOffer: priceViewItem(priceItem: statsItem.bestOffer),
-                sale: saleViewItem(saleItem: statsItem.sale)
-        )
-
-        statsViewItemRelay.accept(viewItem)
     }
 
     private func saleViewItem(saleItem: NftAssetService.SaleItem?) -> SaleViewItem? {
@@ -82,7 +92,7 @@ class NftAssetViewModel {
     private func coinValue(priceItem: NftAssetService.PriceItem) -> String {
         let price = priceItem.nftPrice
         let coinValue = CoinValue(kind: .platformCoin(platformCoin: price.platformCoin), value: price.value)
-        return ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? "---"
+        return ValueFormatter.instance.formatNew(coinValue: coinValue) ?? "---"
     }
 
     private func fiatValue(priceItem: NftAssetService.PriceItem) -> String {
@@ -91,7 +101,7 @@ class NftAssetViewModel {
         }
 
         let currencyValue = CurrencyValue(currency: coinPrice.price.currency, value: priceItem.nftPrice.value * coinPrice.price.value)
-        return ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? "---"
+        return ValueFormatter.instance.formatNew(currencyValue: currencyValue) ?? "---"
     }
 
     private func traitViewItem(index: Int, trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {
@@ -147,26 +157,38 @@ extension NftAssetViewModel {
         viewItemRelay.asDriver()
     }
 
-    var statsViewItemDriver: Driver<StatsViewItem?> {
-        statsViewItemRelay.asDriver()
+    var loadingDriver: Driver<Bool> {
+        loadingRelay.asDriver()
+    }
+
+    var syncErrorDriver: Driver<Bool> {
+        syncErrorRelay.asDriver()
     }
 
     var openTraitSignal: Signal<String> {
         openTraitRelay.asSignal()
     }
 
+    func onTapRetry() {
+        service.resync()
+    }
+
     func onSelectTrait(index: Int) {
-        guard index < service.asset.traits.count else {
+        guard case .completed(let item) = service.state else {
             return
         }
 
-        let trait = service.asset.traits[index]
+        guard index < item.asset.traits.count else {
+            return
+        }
+
+        let trait = item.asset.traits[index]
 
         guard let traitName = trait.type.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let traitValue = trait.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
         }
 
-        let slug = service.collection.uid
+        let slug = item.collection.uid
 
         let url = "https://opensea.io/assets/\(slug)?search[stringTraits][0][name]=\(traitName)&search[stringTraits][0][values][0]=\(traitValue)&search[sortAscending]=true&search[sortBy]=PRICE"
         openTraitRelay.accept(url)
@@ -179,7 +201,14 @@ extension NftAssetViewModel {
     struct ViewItem {
         let imageUrl: String?
         let name: String
+        let collectionUid: String
         let collectionName: String
+        let lastSale: PriceViewItem?
+        let average7d: PriceViewItem?
+        let average30d: PriceViewItem?
+        let collectionFloor: PriceViewItem?
+        let bestOffer: PriceViewItem?
+        let sale: SaleViewItem?
         let traits: [TraitViewItem]
         let description: String?
         let contractAddress: String
@@ -187,15 +216,6 @@ extension NftAssetViewModel {
         let schemaName: String
         let blockchain: String
         let links: [LinkViewItem]
-    }
-
-    struct StatsViewItem {
-        let lastSale: PriceViewItem?
-        let average7d: PriceViewItem?
-        let average30d: PriceViewItem?
-        let collectionFloor: PriceViewItem?
-        let bestOffer: PriceViewItem?
-        let sale: SaleViewItem?
     }
 
     struct SaleViewItem {

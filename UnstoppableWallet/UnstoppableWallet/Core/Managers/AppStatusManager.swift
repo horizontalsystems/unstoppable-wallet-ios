@@ -2,16 +2,16 @@ import Foundation
 import MarketKit
 
 class AppStatusManager {
-    private let systemInfoManager: ISystemInfoManager
-    private let storage: IAppVersionStorage
-    private let logRecordManager: ILogRecordManager
-    private let accountManager: IAccountManager
+    private let systemInfoManager: SystemInfoManager
+    private let storage: AppVersionStorage
+    private let logRecordManager: LogRecordManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
     private let restoreSettingsManager: RestoreSettingsManager
 
-    init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage, accountManager: IAccountManager,
-         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: ILogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
+    init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage, accountManager: AccountManager,
+         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
@@ -95,7 +95,7 @@ class AppStatusManager {
 
 }
 
-extension AppStatusManager: IAppStatusManager {
+extension AppStatusManager {
 
     var status: [(String, Any)] {
         [

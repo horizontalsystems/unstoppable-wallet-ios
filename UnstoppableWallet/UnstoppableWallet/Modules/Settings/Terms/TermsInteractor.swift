@@ -1,7 +1,7 @@
 class TermsInteractor {
-    private let termsManager: ITermsManager
+    private let termsManager: TermsManager
 
-    init(termsManager: ITermsManager) {
+    init(termsManager: TermsManager) {
         self.termsManager = termsManager
     }
 

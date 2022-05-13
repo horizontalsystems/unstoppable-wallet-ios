@@ -5,9 +5,9 @@ import RxRelay
 class ReleaseNotesService {
     static private let releaseUrl = "https://api.github.com/repos/horizontalsystems/unstoppable-wallet-ios/releases/tags/"
 
-    private let appVersionManager: IAppVersionManager
+    private let appVersionManager: AppVersionManager
 
-    init(appVersionManager: IAppVersionManager) {
+    init(appVersionManager: AppVersionManager) {
         self.appVersionManager = appVersionManager
     }
 

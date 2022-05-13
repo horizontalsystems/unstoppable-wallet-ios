@@ -4,9 +4,12 @@ import ThemeKit
 struct WatchAddressModule {
 
     static func viewController() -> UIViewController {
+        let evmAddressParserItem = EvmAddressParser()
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: "ETH", coinType: .ethereum)
         let addressParserChain = AddressParserChain()
-        addressParserChain.append(handler: EvmAddressParser())
-        addressParserChain.append(handler: UDNAddressParserItem(coinCode: "ETH", platformCoinCode: nil, chain: nil))
+                .append(handler: evmAddressParserItem)
+                .append(handler: udnAddressParserItem)
+
 
         let addressUriParser = AddressParserFactory.parser(coinType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
@@ -14,7 +17,7 @@ struct WatchAddressModule {
         let service = WatchAddressService(
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
-                coinManager: App.shared.coinManager,
+                marketKit: App.shared.marketKit,
                 walletManager: App.shared.walletManager,
                 evmBlockchainManager: App.shared.evmBlockchainManager,
                 addressService: addressService

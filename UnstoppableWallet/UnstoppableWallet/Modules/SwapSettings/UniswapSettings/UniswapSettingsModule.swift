@@ -10,12 +10,12 @@ struct UniswapSettingsModule {
         let platformCoin = tradeService.platformCoinIn
 
         let coinCode = platformCoin?.code ?? ethereumPlatformCoin.code
-        let chainCoinCode = platformCoin.flatMap { UDNAddressParserItem.chainCoinCode(coinType: $0.platform.coinType) }
-        let chain = platformCoin.flatMap { UDNAddressParserItem.chain(coinType: $0.platform.coinType) }
 
+        let evmAddressParserItem = EvmAddressParser()
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, coinType: platformCoin?.coinType)
         let addressParserChain = AddressParserChain()
-                .append(handler: EvmAddressParser())
-                .append(handler: UDNAddressParserItem(coinCode: coinCode, platformCoinCode: chainCoinCode, chain: chain))
+                .append(handler: evmAddressParserItem)
+                .append(handler: udnAddressParserItem)
 
         let addressUriParser = AddressParserFactory.parser(coinType: ethereumPlatformCoin.coinType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain, initialAddress: tradeService.settings.recipient)

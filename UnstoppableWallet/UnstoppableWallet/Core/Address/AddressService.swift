@@ -7,10 +7,21 @@ protocol IAmountPublishService: AnyObject {
 }
 
 class AddressService {
-    private var disposeBag = DisposeBag()
-    private let addressUriParser: IAddressUriParser
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.address-service")
+
+    private let disposeBag = DisposeBag()
+    private var addressParserDisposeBag = DisposeBag()
+    private var customErrorDisposeBag = DisposeBag()
+
+    private let addressUriParser: AddressUriParser
     private let addressParserChain: AddressParserChain
-    private weak var amountPublishService: IAmountPublishService?
+
+    weak var amountPublishService: IAmountPublishService?
+    weak var customErrorService: IErrorService? {
+        didSet {
+            register(customErrorService: customErrorService)
+        }
+    }
 
     private var stateRelay = PublishRelay<State>()
     private(set) var state: State {
@@ -19,7 +30,14 @@ class AddressService {
         }
     }
 
-    init(addressUriParser: IAddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
+    private var customErrorRelay = PublishRelay<Error?>()
+    private(set) var customError: Error? {
+        didSet {
+            customErrorRelay.accept(customError)
+        }
+    }
+
+    init(addressUriParser: AddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
         self.addressUriParser = addressUriParser
         self.addressParserChain = addressParserChain
 
@@ -28,7 +46,20 @@ class AddressService {
         } else {
             state = .empty
         }
+    }
 
+    private func register(customErrorService: IErrorService?) {
+        customErrorDisposeBag = DisposeBag()
+
+        if let customErrorService = customErrorService {
+            subscribe(disposeBag, customErrorService.errorObservable) { [weak self] in
+                self?.sync(customError: $0)
+            }
+        }
+    }
+
+    private func sync(customError: Error?) {
+        self.customError = customError
     }
 
     private func sync(address: Address?) {
@@ -42,13 +73,13 @@ class AddressService {
 
     private func sync(error: Error) {
         guard let error = error as? AddressParserChain.ParserError else {
-            state = .fetchError
+            state = .fetchError(error)
             return
         }
 
         switch error {
         case .validationError: state = .validationError
-        case .fetchError: state = .fetchError
+        case .fetchError(let error): state = .fetchError(error)
         }
     }
 
@@ -57,7 +88,11 @@ class AddressService {
 extension AddressService {
 
     var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+        stateRelay.asObservable().observeOn(scheduler)
+    }
+
+    var customErrorObservable: Observable<Error?> {
+        customErrorRelay.asObservable().observeOn(scheduler)
     }
 
     func set(text: String) {
@@ -67,7 +102,7 @@ extension AddressService {
         }
 
         state = .loading
-        disposeBag = DisposeBag()
+        addressParserDisposeBag = DisposeBag()
 
         addressParserChain
             .handle(address: text)
@@ -76,7 +111,7 @@ extension AddressService {
                 onSuccess: { [weak self] in self?.sync(address: $0) },
                 onError: { [weak self] in self?.sync(error: $0) }
             )
-            .disposed(by: disposeBag)
+            .disposed(by: addressParserDisposeBag)
     }
 
     func handleFetched(text: String) -> String {
@@ -100,7 +135,22 @@ extension AddressService {
         case empty
         case success(Address)
         case validationError
-        case fetchError
+        case fetchError(Error)
+
+        var address: Address? {
+            if case let .success(address) = self {
+                return address
+            }
+            return nil
+        }
+
+        var isLoading: Bool {
+            if case .loading = self {
+                return true
+            }
+            return false
+        }
+
     }
 
     enum AddressError: Error {

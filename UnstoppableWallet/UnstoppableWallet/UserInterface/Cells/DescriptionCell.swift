@@ -1,8 +1,8 @@
 import UIKit
 
 class DescriptionCell: UITableViewCell {
-    private static let horizontalPadding: CGFloat = .margin6x
-    private static let verticalPadding: CGFloat = .margin3x
+    private static let horizontalPadding: CGFloat = .margin24
+    private static let verticalPadding: CGFloat = .margin12
     private static let font: UIFont = .body
 
     private let label = UILabel()

@@ -3,11 +3,11 @@ enum TransactionDataSortMode: String, CaseIterable {
     case bip69
 
     var title: String {
-        "settings_privacy.sorting_\(self)".localized
+        "btc_transaction_sort_mode.\(self)".localized
     }
 
     var description: String {
-        "settings_privacy.sorting_\(self).description".localized
+        "btc_transaction_sort_mode.\(self).description".localized
     }
 
 }

@@ -2,12 +2,12 @@ import RxSwift
 import RxRelay
 
 class AppVersionManager {
-    private let systemInfoManager: ISystemInfoManager
-    private let storage: IAppVersionStorage
+    private let systemInfoManager: SystemInfoManager
+    private let storage: AppVersionStorage
 
     private let newVersionRelay = BehaviorRelay<AppVersion?>(value: nil)
 
-    init(systemInfoManager: ISystemInfoManager, storage: IAppVersionStorage) {
+    init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
     }
@@ -30,7 +30,7 @@ class AppVersionManager {
 
 }
 
-extension AppVersionManager: IAppVersionManager {
+extension AppVersionManager {
 
     func checkLatestVersion() {
         DispatchQueue.global(qos: .background).async {

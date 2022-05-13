@@ -69,7 +69,7 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         }
 
         deleteButton.apply(style: .primaryRed)
-        deleteButton.setTitle("security_settings.delete_alert_button".localized, for: .normal)
+        deleteButton.setTitle("settings_manage_keys.delete.confirmation_watch.button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in

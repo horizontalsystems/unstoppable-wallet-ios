@@ -55,8 +55,10 @@ class SendAvailableBalanceCell: UITableViewCell {
     private func sync(viewState: SendAvailableBalanceViewModel.ViewState) {
         if case .loading = viewState {
             spinner.isHidden = false
+            spinner.startAnimating()
         } else {
             spinner.isHidden = true
+            spinner.stopAnimating()
         }
 
         if case .loaded(let value) = viewState {

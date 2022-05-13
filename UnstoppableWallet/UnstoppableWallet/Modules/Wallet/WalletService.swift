@@ -6,16 +6,19 @@ import StorageKit
 import EthereumKit
 
 class WalletService {
+    private let conversionCoinTypes: [CoinType] = [.bitcoin, .ethereum]
     private let keyBalanceHidden = "wallet-balance-hidden"
     private let keySortType = "wallet-sort-type"
+    private let keyConversionCoinTypeIndex = "wallet-conversion-coin-type-index"
 
     private let adapterService: WalletAdapterService
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let marketKit: MarketKit.Kit
     private let localStorage: StorageKit.ILocalStorage
-    private let rateAppManager: IRateAppManager
+    private let rateAppManager: RateAppManager
     private let feeCoinProvider: FeeCoinProvider
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
@@ -67,14 +70,21 @@ class WalletService {
         }
     }
 
+    private var conversionCoin: PlatformCoin? {
+        didSet {
+            syncTotalItem()
+        }
+    }
+
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: IAccountManager, walletManager: WalletManager, localStorage: StorageKit.ILocalStorage, rateAppManager: IRateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.marketKit = marketKit
         self.localStorage = localStorage
         self.rateAppManager = rateAppManager
         self.feeCoinProvider = feeCoinProvider
@@ -96,6 +106,14 @@ class WalletService {
         } else {
             balanceHidden = false
         }
+
+        let conversionCoinTypeIndex: Int
+        if let index: Int = localStorage.value(for: keyConversionCoinTypeIndex), index < conversionCoinTypes.count {
+            conversionCoinTypeIndex = index
+        } else {
+            conversionCoinTypeIndex = 0
+        }
+        conversionCoin = try? marketKit.platformCoin(coinType: conversionCoinTypes[conversionCoinTypeIndex])
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
             self?.activeAccountRelay.accept($0)
@@ -154,9 +172,13 @@ class WalletService {
         allItems = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
-        let coinUids = Set(wallets.filter { !$0.coin.isCustom }.map { $0.coin.uid })
+        let coinUids = Set(wallets.filter { !$0.platformCoin.isCustom }.map { $0.coin.uid })
         let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeCoin(coinType: $0.coinType)?.coin.uid })
-        coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
+
+        let conversionCoins = try? marketKit.platformCoins(coinTypes: conversionCoinTypes)
+        let conversionCoinUids = (conversionCoins ?? []).map { $0.coin.uid }
+
+        coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(conversionCoinUids))
     }
 
     private func items(coinUid: String) -> [Item] {
@@ -183,7 +205,21 @@ class WalletService {
             }
         }
 
-        totalItem = TotalItem(amount: total, currency: coinPriceService.currency, expired: expired)
+        var convertedValue: CoinValue?
+        var convertedValueExpired = false
+
+        if let conversionCoin = conversionCoin, let priceItem = coinPriceService.itemMap(coinUids: [conversionCoin.coin.uid])[conversionCoin.coin.uid] {
+            convertedValue = CoinValue(kind: .platformCoin(platformCoin: conversionCoin), value: total / priceItem.price.value)
+            convertedValueExpired = priceItem.expired
+        }
+
+        totalItem = TotalItem(
+                amount: total,
+                currency: coinPriceService.currency,
+                expired: expired,
+                convertedValue: convertedValue,
+                convertedValueExpired: expired || convertedValueExpired
+        )
     }
 
     private func _item(wallet: Wallet) -> Item? {
@@ -377,6 +413,13 @@ extension WalletService {
         walletManager.delete(wallets: [wallet])
     }
 
+    func toggleConversionCoin() {
+        let currentIndex: Int = localStorage.value(for: keyConversionCoinTypeIndex) ?? 0
+        let newIndex = (currentIndex + 1) % conversionCoinTypes.count
+        conversionCoin = try? marketKit.platformCoin(coinType: conversionCoinTypes[newIndex])
+        localStorage.set(value: newIndex, for: keyConversionCoinTypeIndex)
+    }
+
 }
 
 extension WalletService {
@@ -401,6 +444,8 @@ extension WalletService {
         let amount: Decimal
         let currency: Currency
         let expired: Bool
+        let convertedValue: CoinValue?
+        let convertedValueExpired: Bool
     }
 
 }

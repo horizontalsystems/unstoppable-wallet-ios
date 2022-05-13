@@ -252,6 +252,7 @@ class WalletViewController: ThemeViewController {
             headerView.bind(viewItem: viewItem, sortBy: sortBy)
 
             headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
+            headerView.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
             headerView.onTapSortBy = { [weak self] in self?.openSortType() }
             headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
         }
@@ -275,7 +276,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSend(wallet: Wallet) {
-        if let module = SendRouter.module(wallet: wallet) {
+        if let module = SendModule.controller(wallet: wallet) {
             present(module, animated: true)
         }
     }
@@ -299,7 +300,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
-        let viewController = BalanceErrorRouter.module(wallet: wallet, error: error, navigationController: navigationController)
+        let viewController = BalanceErrorModule.viewController(wallet: wallet, error: error, sourceViewController: navigationController)
         present(viewController, animated: true)
     }
 

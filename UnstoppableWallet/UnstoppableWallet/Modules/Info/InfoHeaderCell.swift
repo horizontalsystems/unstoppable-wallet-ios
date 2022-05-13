@@ -1,9 +1,9 @@
 import UIKit
 
 class InfoHeaderCell: UITableViewCell {
-    private static let topPadding = CGFloat.margin6x
-    private static let bottomPadding = CGFloat.margin3x
-    private static let horizontalPadding = CGFloat.margin6x
+    private static let topPadding = CGFloat.margin16
+    private static let bottomPadding = CGFloat.margin4
+    private static let horizontalPadding = CGFloat.margin24
     private static let font: UIFont = .headline2
 
     private let label = UILabel()

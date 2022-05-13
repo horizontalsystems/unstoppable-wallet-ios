@@ -1,28 +1,20 @@
-protocol IBalanceErrorView: AnyObject {
-    func set(coinTitle: String)
-    func setChangeSourceButton(hidden: Bool)
-    func openReport(email: String, error: String)
-}
+import UIKit
 
-protocol IBalanceErrorViewDelegate {
-    func onLoad()
-    func onTapRetry()
-    func onTapChangeSource()
-    func onTapReport()
+struct BalanceErrorModule {
 
-    func onTapClose()
-}
+    static func viewController(wallet: Wallet, error: Error, sourceViewController: UIViewController?) -> UIViewController {
+        let service = BalanceErrorService(
+                wallet: wallet,
+                error: error,
+                adapterManager: App.shared.adapterManager,
+                appConfigProvider: App.shared.appConfigProvider,
+                btcBlockchainManager: App.shared.btcBlockchainManager,
+                evmBlockchainManager: App.shared.evmBlockchainManager
+        )
+        let viewModel = BalanceErrorViewModel(service: service)
+        let viewController = BalanceErrorViewController(viewModel: viewModel, sourceViewController: sourceViewController)
 
-protocol IBalanceErrorInteractor {
-    var contactEmail: String { get }
-    func refresh(wallet: Wallet)
-}
+        return viewController.toBottomSheet
+    }
 
-protocol IBalanceErrorInteractorDelegate: AnyObject {
-}
-
-protocol IBalanceErrorRouter {
-    func close()
-    func closeAndOpenPrivacySettings()
-    func closeAndEvmNetwork(blockchain: EvmBlockchain, account: Account)
 }

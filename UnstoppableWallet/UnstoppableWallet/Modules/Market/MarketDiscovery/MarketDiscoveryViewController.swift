@@ -195,7 +195,7 @@ extension MarketDiscoveryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         indexPath.section == 0 ?
                 CGSize(width: collectionView.width, height: .heightSingleLineCell) :
-                CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: 128)
+                CGSize(width: (collectionView.width - .margin16 * 2 - .margin12) / 2, height: MarketDiscoveryCell.cellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

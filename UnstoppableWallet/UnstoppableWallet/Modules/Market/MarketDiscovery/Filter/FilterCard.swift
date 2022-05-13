@@ -23,6 +23,7 @@ class FilterCard: UICollectionViewCell {
         contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { maker in
             maker.leading.top.equalToSuperview().inset(FilterCard.sideMargin)
+            maker.size.equalTo(CGFloat.iconSize24)
         }
 
         contentView.addSubview(blockchainBadgeView)

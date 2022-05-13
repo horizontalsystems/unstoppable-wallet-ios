@@ -3,6 +3,11 @@ import CurrencyKit
 import MarketKit
 
 class TransactionsViewItemFactory {
+    private let evmLabelManager: EvmLabelManager
+
+    init(evmLabelManager: EvmLabelManager) {
+        self.evmLabelManager = evmLabelManager
+    }
 
     func typeFilterItems(types: [TransactionTypeFilter]) -> [FilterHeaderView.ViewItem] {
         types.map {
@@ -14,146 +19,259 @@ class TransactionsViewItemFactory {
         }
     }
 
-    private func coinString(from transactionValue: TransactionValue) -> String {
-        ValueFormatter.instance.format(transactionValue: transactionValue.abs, fractionPolicy: .threshold(high: 0.01, low: 0)) ?? ""
+    private func coinString(from transactionValue: TransactionValue, incoming: Bool? = nil) -> String {
+        var value = ValueFormatter.instance.formatNew(transactionValue: transactionValue) ?? ""
+
+        if let incoming = incoming {
+            value = "\(incoming ? "+" : "-")\(value)"
+        }
+
+        return value
     }
 
     private func currencyString(from currencyValue: CurrencyValue) -> String {
-        ValueFormatter.instance.format(currencyValue: currencyValue.abs, fractionPolicy: .threshold(high: 1000, low: 0.01)) ?? ""
+        ValueFormatter.instance.formatNew(currencyValue: currencyValue.abs) ?? ""
     }
 
-    func viewItem(item: TransactionItem) -> TransactionViewItem {
-        var typeImage: ColoredImage
-        var progress: Float?
-        var title: String
-        var subTitle: String
-        var primaryValue: ColoredValue? = nil
-        var secondaryValue: ColoredValue? = nil
-        var sentToSelf: Bool = false
-        var locked: Bool? = nil
+    private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
+        var primaryValue: TransactionsViewModel.Value?
+        var secondaryValue: TransactionsViewModel.Value?
+
+        if incomingValues.count == 1, outgoingValues.isEmpty {
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0], incoming: true), type: .incoming)
+            if let currencyValue = currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+        } else if incomingValues.isEmpty, outgoingValues.count == 1 {
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0], incoming: false), type: .outgoing)
+            if let currencyValue = currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+        } else if incomingValues.count == 1, outgoingValues.count == 1 {
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0], incoming: true), type: .incoming)
+            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0], incoming: false), type: .outgoing)
+        } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
+            let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+            primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
+            secondaryValue = TransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
+        } else if incomingValues.isEmpty, !outgoingValues.isEmpty {
+            let coinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+            primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .outgoing)
+            secondaryValue = TransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
+        } else {
+            let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+            let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+            primaryValue = TransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
+            secondaryValue = TransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
+        }
+
+        return (primaryValue, secondaryValue)
+    }
+
+    func viewItem(item: TransactionsService.Item) -> TransactionsViewModel.ViewItem {
+        var iconType: TransactionsViewModel.IconType
+        let title: String
+        let subTitle: String
+        var primaryValue: TransactionsViewModel.Value?
+        var secondaryValue: TransactionsViewModel.Value?
+        var sentToSelf = false
+        var locked: Bool?
 
         switch item.record {
-        case let evmIncoming as EvmIncomingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_down_left_20", color: .themeRemus)
+        case let record as EvmIncomingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(evmIncoming.from))
+            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
 
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: evmIncoming.value), color: .themeGray)
-
-        case let evmOutgoing as EvmOutgoingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_up_right_20", color: .themeJacob)
+        case let record as EvmOutgoingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(TransactionInfoAddressMapper.map(evmOutgoing.to))
+            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: evmOutgoing.value), color: .themeGray)
-            sentToSelf = evmOutgoing.sentToSelf
+            sentToSelf = record.sentToSelf
 
-        case let swap as SwapTransactionRecord:
-            typeImage = ColoredImage(imageName: "swap_2_20", color: .themeLeah)
+        case let record as SwapTransactionRecord:
+            iconType = .doubleIcon(
+                    frontImageUrl: record.valueOut?.coin?.imageUrl,
+                    frontPlaceholderImageName: record.source.blockchain.coinPlaceholderImage,
+                    backImageUrl: record.valueIn.coin?.imageUrl,
+                    backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.swap".localized
-            subTitle = TransactionInfoAddressMapper.map(swap.exchangeAddress)
+            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
-            primaryValue = ColoredValue(value: coinString(from: swap.valueIn), color: .themeJacob)
-            secondaryValue = swap.valueOut.flatMap { ColoredValue(value: coinString(from: $0), color: swap.foreignRecipient ? .themeGray : .themeRemus) }
+            if let valueOut = record.valueOut {
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: record.recipient != nil ? .secondary : .incoming)
+            }
 
-        case let swap as UnknownSwapTransactionRecord:
-            typeImage = ColoredImage(imageName: "swap_2_20", color: .themeLeah)
+            secondaryValue = TransactionsViewModel.Value(text: coinString(from: record.valueIn, incoming: false), type: .outgoing)
+
+        case let record as UnknownSwapTransactionRecord:
+            iconType = .doubleIcon(
+                    frontImageUrl: record.valueOut?.coin?.imageUrl,
+                    frontPlaceholderImageName: record.source.blockchain.coinPlaceholderImage,
+                    backImageUrl: record.valueIn?.coin?.imageUrl,
+                    backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.swap".localized
-            subTitle = TransactionInfoAddressMapper.map(swap.exchangeAddress)
+            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
-            primaryValue = nil
-            secondaryValue = nil
+            if let valueOut = record.valueOut {
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: .incoming)
+            }
+            if let valueIn = record.valueIn {
+                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn, incoming: false), type: .outgoing)
+            }
 
-        case let approve as ApproveTransactionRecord:
-            typeImage = ColoredImage(imageName: "check_2_20", color: .themeLeah)
+        case let record as ApproveTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.approve".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(approve.spender))
+            subTitle = evmLabelManager.mapped(address: record.spender)
 
-            if approve.value.isMaxValue {
-                primaryValue = ColoredValue(value: "∞", color: .themeJacob)
-                secondaryValue = ColoredValue(value: "transactions.value.unlimited".localized(approve.value.coinCode), color: .themeGray)
+            if record.value.isMaxValue {
+                primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
+                secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .neutral)
+
                 if let currencyValue = item.currencyValue {
-                    primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
+                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
-                secondaryValue = ColoredValue(value: coinString(from: approve.value), color: .themeGray)
             }
 
-        case let contractCall as ContractCallTransactionRecord:
-            typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
-            title = contractCall.method ?? "\(contractCall.source.blockchain.title) \("transactions.contract_call".localized)"
-            subTitle = TransactionInfoAddressMapper.map(contractCall.contractAddress)
+        case let record as ContractCallTransactionRecord:
+            iconType = .localIcon(imageName: record.source.blockchain.image)
+            title = record.method ?? "transactions.contract_call".localized
+            subTitle = evmLabelManager.mapped(address: record.contractAddress)
 
-        case is ContractCreationTransactionRecord:
-            typeImage = ColoredImage(imageName: "unordered_20", color: .themeLeah)
+            let (incomingValues, outgoingValues) = record.combinedValues
+            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
+
+        case let record as ExternalContractCallTransactionRecord:
+            let (incomingValues, outgoingValues) = record.combinedValues
+
+            if outgoingValues.isEmpty && incomingValues.count == 1 {
+                iconType = .icon(
+                        imageUrl: incomingValues[0].coin?.imageUrl,
+                        placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                )
+            } else {
+                iconType = .localIcon(imageName: record.source.blockchain.image)
+            }
+
+            if record.outgoingEvents.isEmpty {
+                title = "transactions.receive".localized
+                let addresses = Array(Set(record.incomingEvents.map { $0.address }))
+                if addresses.count == 1 {
+                    subTitle = "transactions.from".localized(evmLabelManager.mapped(address: addresses[0]))
+                } else {
+                    subTitle = "transactions.multiple".localized
+                }
+            } else {
+                title = "transactions.external_call".localized
+                subTitle = "---"
+            }
+
+            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
+
+        case let record as ContractCreationTransactionRecord:
+            iconType = .localIcon(imageName: record.source.blockchain.image)
             title = "transactions.contract_creation".localized
             subTitle = "---"
 
-        case let btcIncoming as BitcoinIncomingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_down_left_20", color: .themeRemus)
+        case let record as BitcoinIncomingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: "icon_placeholder_24"
+            )
             title = "transactions.receive".localized
-            subTitle = btcIncoming.from.flatMap { "transactions.from".localized(TransactionInfoAddressMapper.map($0)) } ?? "---"
+            subTitle = record.from.flatMap { "transactions.from".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: btcIncoming.value), color: .themeGray)
-
-            if let lockState = btcIncoming.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp) {
+            if let lockState = record.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp) {
                 locked = lockState.locked
             }
 
-        case let btcOutgoing as BitcoinOutgoingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_up_right_20", color: .themeJacob)
+        case let record as BitcoinOutgoingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: "icon_placeholder_24"
+            )
             title = "transactions.send".localized
-            subTitle =  btcOutgoing.to.flatMap { "transactions.to".localized(TransactionInfoAddressMapper.map($0)) } ?? "---"
+            subTitle =  record.to.flatMap { "transactions.to".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: btcOutgoing.value), color: .themeGray)
-
-            sentToSelf = btcOutgoing.sentToSelf
-            if let lockState = btcOutgoing.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp) {
+            sentToSelf = record.sentToSelf
+            if let lockState = record.lockState(lastBlockTimestamp: item.lastBlockInfo?.timestamp) {
                 locked = lockState.locked
             }
 
-        case let bcIncoming as BinanceChainIncomingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_down_left_20", color: .themeRemus)
+        case let record as BinanceChainIncomingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(TransactionInfoAddressMapper.map(bcIncoming.from))
+            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
 
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeRemus)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: bcIncoming.value), color: .themeGray)
-
-        case let bcOutgoing as BinanceChainOutgoingTransactionRecord:
-            typeImage = ColoredImage(imageName: "arrow_medium_main_up_right_20", color: .themeJacob)
+        case let record as BinanceChainOutgoingTransactionRecord:
+            iconType = .icon(
+                    imageUrl: record.value.coin?.imageUrl,
+                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+            )
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(TransactionInfoAddressMapper.map(bcOutgoing.to))
+            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
-                primaryValue = ColoredValue(value: currencyString(from: currencyValue), color: .themeJacob)
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
 
-            secondaryValue = ColoredValue(value: coinString(from: bcOutgoing.value), color: .themeGray)
-            sentToSelf = bcOutgoing.sentToSelf
+            sentToSelf = record.sentToSelf
 
         default:
-            fatalError("Transaction must be convertible to TransactionsModule.ViewItem")
+            iconType = .localIcon(imageName: item.record.source.blockchain.image)
+            title = "transactions.unknown_transaction.title".localized
+            subTitle = "transactions.unknown_transaction.description".localized()
         }
+
+        let progress: Float?
 
         switch item.record.status(lastBlockHeight: item.lastBlockInfo?.height) {
         case .pending:
@@ -164,17 +282,18 @@ class TransactionsViewItemFactory {
 
         case .failed:
             progress = nil
-            typeImage = ColoredImage(imageName: "warning_2_20", color: .themeLucian)
+            iconType = .failedIcon
 
         case .completed:
             progress = nil
         }
 
-        return TransactionViewItem(
+        return TransactionsViewModel.ViewItem(
                 uid: item.record.uid,
                 date: item.record.date,
-                typeImage: typeImage,
+                iconType: iconType,
                 progress: progress,
+                blockchainImageName: nil,
                 title: title,
                 subTitle: subTitle,
                 primaryValue: primaryValue,

@@ -147,13 +147,21 @@ extension MarketKit.CoinType {
         }
     }
 
+    var customCoinUid: String {
+        "custom-\(id)"
+    }
+
+}
+
+extension MarketKit.PlatformCoin {
+
+    var isCustom: Bool {
+        coin.uid == coinType.customCoinUid
+    }
+
 }
 
 extension MarketKit.Coin {
-
-    var isCustom: Bool {
-        uid.starts(with: CustomToken.uidPrefix)
-    }
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)

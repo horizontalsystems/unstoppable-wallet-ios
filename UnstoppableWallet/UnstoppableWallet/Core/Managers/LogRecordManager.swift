@@ -1,10 +1,10 @@
 import HsToolKit
 
-class LogRecordManager: ILogRecordManager {
+class LogRecordManager {
     private let linesCountLimit: Int
-    private let storage: ILogRecordStorage
+    private let storage: LogRecordStorage
 
-    init(storage: ILogRecordStorage, linesCountLimit: Int = 1000) {
+    init(storage: LogRecordStorage, linesCountLimit: Int = 1000) {
         self.storage = storage
         self.linesCountLimit = linesCountLimit
     }

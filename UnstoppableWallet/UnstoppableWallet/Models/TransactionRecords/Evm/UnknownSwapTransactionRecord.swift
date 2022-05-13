@@ -3,23 +3,16 @@ import EthereumKit
 import MarketKit
 
 class UnknownSwapTransactionRecord: EvmTransactionRecord {
-    typealias AddressTransactionValue = (address: String, value: TransactionValue)
-
     let exchangeAddress: String
-    let value: TransactionValue
-    let incomingInternalETHs: [AddressTransactionValue]
-    let incomingEip20Events: [AddressTransactionValue]
-    let outgoingEip20Events: [AddressTransactionValue]
+    let valueIn: TransactionValue?
+    let valueOut: TransactionValue?
 
-    init(source: TransactionSource, fullTransaction: FullTransaction, baseCoin: PlatformCoin, exchangeAddress: String,
-         value: Decimal, incomingInternalETHs: [AddressTransactionValue], incomingEip20Events: [AddressTransactionValue], outgoingEip20Events: [AddressTransactionValue]) {
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String, valueIn: TransactionValue?, valueOut: TransactionValue?) {
         self.exchangeAddress = exchangeAddress
-        self.value = .coinValue(platformCoin: baseCoin, value: value)
-        self.incomingInternalETHs = incomingInternalETHs
-        self.incomingEip20Events = incomingEip20Events
-        self.outgoingEip20Events = outgoingEip20Events
+        self.valueIn = valueIn
+        self.valueOut = valueOut
 
-        super.init(source: source, fullTransaction: fullTransaction, baseCoin: baseCoin)
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
     }
 
 }

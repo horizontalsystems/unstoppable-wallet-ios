@@ -39,7 +39,7 @@ class NftCollectionsViewModel {
         )
     }
 
-    private func assetViewItem(assetItem: NftCollectionsService.AssetItem) -> AssetViewItem {
+    private func assetViewItem(assetItem: NftCollectionsService.AssetItem) -> NftDoubleCell.ViewItem {
         var coinPrice = "---"
         var fiatPrice: String?
 
@@ -55,8 +55,9 @@ class NftCollectionsViewModel {
             }
         }
 
-        return AssetViewItem(
+        return NftDoubleCell.ViewItem(
                 collectionUid: assetItem.collectionUid,
+                contractAddress: assetItem.contractAddress,
                 tokenId: assetItem.tokenId,
                 imageUrl: assetItem.imageUrl,
                 name: assetItem.name ?? "#\(assetItem.tokenId)",
@@ -99,25 +100,7 @@ extension NftCollectionsViewModel {
         let imageUrl: String?
         let name: String
         let count: String
-        let assetViewItems: [AssetViewItem]
-    }
-
-    struct AssetViewItem {
-        let collectionUid: String
-        let tokenId: String
-        let imageUrl: String?
-        let name: String
-        let onSale: Bool
-        let coinPrice: String
-        let fiatPrice: String?
-
-        var uid: String {
-            "\(collectionUid)-\(tokenId)"
-        }
-
-        var hash: String {
-            "\(onSale)-\(coinPrice)-\(fiatPrice ?? "nil")"
-        }
+        let assetViewItems: [NftDoubleCell.ViewItem]
     }
 
 }

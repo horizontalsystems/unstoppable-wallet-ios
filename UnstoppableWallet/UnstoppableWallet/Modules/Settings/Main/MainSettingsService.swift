@@ -7,20 +7,20 @@ import WalletConnectV1
 import ThemeKit
 
 class MainSettingsService {
-    private let backupManager: IBackupManager
-    private let accountManager: IAccountManager
+    private let backupManager: BackupManager
+    private let accountManager: AccountManager
     private let pinKit: IPinKit
-    private let termsManager: ITermsManager
+    private let termsManager: TermsManager
     private let themeManager: ThemeManager
-    private let systemInfoManager: ISystemInfoManager
+    private let systemInfoManager: SystemInfoManager
     private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: AppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
     private let launchScreenManager: LaunchScreenManager
 
-    init(backupManager: IBackupManager, accountManager: IAccountManager, pinKit: IPinKit, termsManager: ITermsManager, themeManager: ThemeManager,
-         systemInfoManager: ISystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
+    init(backupManager: BackupManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager, themeManager: ThemeManager,
+         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, launchScreenManager: LaunchScreenManager) {
         self.backupManager = backupManager
         self.accountManager = accountManager

@@ -5,141 +5,81 @@ import MarketKit
 import CurrencyKit
 
 class NftAssetService {
-    private let nftManager: NftManager
+    private let collectionUid: String
+    private let contractAddress: String
+    private let tokenId: String
+    private let provider: HsNftProvider
     private let coinPriceService: WalletCoinPriceService
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
-    let collection: NftCollection
-    let asset: NftAsset
-
-    private let statsItemRelay = PublishRelay<StatsItem>()
-    private(set) var statsItem: StatsItem
+    private let stateRelay = PublishRelay<DataStatus<Item>>()
+    private(set) var state: DataStatus<Item> = .loading {
+        didSet {
+            stateRelay.accept(state)
+        }
+    }
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init?(collectionUid: String, tokenId: String, nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
-        self.nftManager = nftManager
+    init(collectionUid: String, contractAddress: String, tokenId: String, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
+        self.collectionUid = collectionUid
+        self.contractAddress = contractAddress
+        self.tokenId = tokenId
+        self.provider = provider
         self.coinPriceService = coinPriceService
 
-        guard let collection = nftManager.collection(uid: collectionUid), let asset = nftManager.asset(collectionUid: collectionUid, tokenId: tokenId) else {
-            return nil
-        }
-
-        self.collection = collection
-        self.asset = asset
-
-        statsItem = StatsItem(
-                lastSale: asset.lastSalePrice.map { PriceItem(nftPrice: $0) },
-                average7d: collection.averagePrice7d.map { PriceItem(nftPrice: $0) },
-                average30d: collection.averagePrice30d.map { PriceItem(nftPrice: $0) }
-        )
-
-        _syncCoinPrices()
-        syncCollectionStatsAndOrders()
+        sync()
     }
 
-    private func syncCollectionStatsAndOrders() {
-        Single.zip(nftManager.collectionStatsSingle(uid: collection.uid), nftManager.assetOrdersSingle(contractAddress: asset.contract.address, tokenId: asset.tokenId))
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] stats, orders in
-                    self?.handle(stats: stats, orders: orders)
+    private func sync() {
+        disposeBag = DisposeBag()
+
+        state = .loading
+
+        Single.zip(provider.collectionSingle(uid: collectionUid), provider.assetSingle(contractAddress: contractAddress, tokenId: tokenId))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] collection, asset in
+                    self?.handle(item: Item(collection: collection, asset: asset))
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func handle(stats: NftCollectionStats, orders: [NftAssetOrder]) {
+    private func handle(item: Item) {
         queue.async {
-            self.handle(stats: stats)
-            self.handle(orders: orders)
+            let coinUids = self._allCoinUids(item: item)
+            self._fillCoinPrices(item: item, coinUids: coinUids)
+            self.coinPriceService.set(coinUids: coinUids)
 
-            self._syncCoinPrices()
-            self.handleStatsItemChange()
+            self.state = .completed(item)
         }
     }
 
-    private func handle(stats: NftCollectionStats) {
-        statsItem.average7d = stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
-        statsItem.average30d = stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
-        statsItem.collectionFloor = stats.floorPrice.map { PriceItem(nftPrice: $0) }
-    }
-
-    private func handle(orders: [NftAssetOrder]) {
-        var hasTopBid = false
-        let auctionOrders = orders.filter { $0.side == 1 && $0.v == nil }.sorted { $0.ethValue < $1.ethValue }
-
-        if let order = auctionOrders.first {
-            let bidOrders = orders.filter { $0.side == 0 && !$0.emptyTaker }.sorted { $0.ethValue > $1.ethValue }
-
-            let type: SalePriceType
-            var nftPrice: NftPrice?
-
-            if let bidOrder = bidOrders.first {
-                type = .topBid
-                nftPrice = bidOrder.price
-                hasTopBid = true
-            } else {
-                type = .minimumBid
-                nftPrice = order.price
-            }
-
-            statsItem.sale = SaleItem(untilDate: order.closingDate, type: type, price: nftPrice.map { PriceItem(nftPrice: $0) })
-        } else {
-            let buyNowOrders = orders.filter { $0.side == 1 && $0.v != nil }.sorted { $0.ethValue < $1.ethValue }
-
-            if let order = buyNowOrders.first {
-                statsItem.sale = SaleItem(untilDate: order.closingDate, type: .buyNow, price: order.price.map { PriceItem(nftPrice: $0) })
-            }
-        }
-
-        if !hasTopBid {
-            let offerOrders = orders.filter { $0.side == 0 }.sorted { $0.ethValue > $1.ethValue }
-
-            if let order = offerOrders.first {
-                statsItem.bestOffer = order.price.map { PriceItem(nftPrice: $0) }
-            }
-        }
-    }
-
-    private func syncCoinPrices() {
-        queue.async {
-            self._syncCoinPrices()
-        }
-    }
-
-    private func _syncCoinPrices() {
-        let coinUids = allCoinUids()
-        fillCoinPrices(coinUids: coinUids)
-        coinPriceService.set(coinUids: coinUids)
-    }
-
-    private func allCoinUids() -> Set<String> {
-        let priceItems = [statsItem.lastSale, statsItem.average7d, statsItem.average30d, statsItem.collectionFloor, statsItem.bestOffer, statsItem.sale?.price]
+    private func _allCoinUids(item: Item) -> Set<String> {
+        let priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor, item.bestOffer, item.sale?.price]
         return Set(priceItems.compactMap { $0?.nftPrice.platformCoin.coin.uid })
     }
 
-    private func fillCoinPrices(coinUids: Set<String>) {
-        fillCoinPrices(map: coinPriceService.itemMap(coinUids: Array(coinUids)))
+    private func _fillCoinPrices(item: Item, coinUids: Set<String>) {
+        _fillCoinPrices(item: item, map: coinPriceService.itemMap(coinUids: Array(coinUids)))
     }
 
-    private func fillCoinPrices(map: [String: WalletCoinPriceService.Item]) {
-        fill(priceItem: statsItem.lastSale, map: map)
-        fill(priceItem: statsItem.average7d, map: map)
-        fill(priceItem: statsItem.average30d, map: map)
-        fill(priceItem: statsItem.collectionFloor, map: map)
-        fill(priceItem: statsItem.bestOffer, map: map)
-        fill(priceItem: statsItem.sale?.price, map: map)
+    private func _fillCoinPrices(item: Item, map: [String: WalletCoinPriceService.Item]) {
+        _fill(priceItem: item.lastSale, map: map)
+        _fill(priceItem: item.average7d, map: map)
+        _fill(priceItem: item.average30d, map: map)
+        _fill(priceItem: item.collectionFloor, map: map)
+        _fill(priceItem: item.bestOffer, map: map)
+        _fill(priceItem: item.sale?.price, map: map)
     }
 
-    private func fill(priceItem: PriceItem?, map: [String: WalletCoinPriceService.Item]) {
+    private func _fill(priceItem: PriceItem?, map: [String: WalletCoinPriceService.Item]) {
         guard let coinUid = priceItem?.nftPrice.platformCoin.coin.uid else {
             return
         }
 
         priceItem?.coinPrice = map[coinUid]
-    }
-
-    private func handleStatsItemChange() {
-        statsItemRelay.accept(statsItem)
     }
 
 }
@@ -148,15 +88,23 @@ extension NftAssetService: IWalletRateServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
-            self.fillCoinPrices(coinUids: self.allCoinUids())
-            self.handleStatsItemChange()
+            guard case .completed(let item) = self.state else {
+                return
+            }
+
+            self._fillCoinPrices(item: item, coinUids: self._allCoinUids(item: item))
+            self.state = .completed(item)
         }
     }
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            self.fillCoinPrices(map: itemsMap)
-            self.handleStatsItemChange()
+            guard case .completed(let item) = self.state else {
+                return
+            }
+
+            self._fillCoinPrices(item: item, map: itemsMap)
+            self.state = .completed(item)
         }
     }
 
@@ -164,15 +112,22 @@ extension NftAssetService: IWalletRateServiceDelegate {
 
 extension NftAssetService {
 
-    var statsItemObservable: Observable<StatsItem> {
-        statsItemRelay.asObservable()
+    var stateObservable: Observable<DataStatus<Item>> {
+        stateRelay.asObservable()
+    }
+
+    func resync() {
+        sync()
     }
 
 }
 
 extension NftAssetService {
 
-    class StatsItem {
+    class Item {
+        let collection: NftCollection
+        let asset: NftAsset
+
         var lastSale: PriceItem?
         var average7d: PriceItem?
         var average30d: PriceItem?
@@ -180,10 +135,50 @@ extension NftAssetService {
         var bestOffer: PriceItem?
         var sale: SaleItem?
 
-        init(lastSale: PriceItem?, average7d: PriceItem?, average30d: PriceItem?) {
-            self.lastSale = lastSale
-            self.average7d = average7d
-            self.average30d = average30d
+        init(collection: NftCollection, asset: NftAsset) {
+            self.collection = collection
+            self.asset = asset
+
+            lastSale = asset.lastSalePrice.map { PriceItem(nftPrice: $0) }
+            average7d = collection.stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
+            average30d = collection.stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
+            collectionFloor = collection.stats.floorPrice.map { PriceItem(nftPrice: $0) }
+
+            let orders = asset.orders
+            var hasTopBid = false
+            let auctionOrders = orders.filter { $0.side == 1 && $0.v == nil }.sorted { $0.ethValue < $1.ethValue }
+
+            if let order = auctionOrders.first {
+                let bidOrders = orders.filter { $0.side == 0 && !$0.emptyTaker }.sorted { $0.ethValue > $1.ethValue }
+
+                let type: SalePriceType
+                var nftPrice: NftPrice?
+
+                if let bidOrder = bidOrders.first {
+                    type = .topBid
+                    nftPrice = bidOrder.price
+                    hasTopBid = true
+                } else {
+                    type = .minimumBid
+                    nftPrice = order.price
+                }
+
+                sale = SaleItem(untilDate: order.closingDate, type: type, price: nftPrice.map { PriceItem(nftPrice: $0) })
+            } else {
+                let buyNowOrders = orders.filter { $0.side == 1 && $0.v != nil }.sorted { $0.ethValue < $1.ethValue }
+
+                if let order = buyNowOrders.first {
+                    sale = SaleItem(untilDate: order.closingDate, type: .buyNow, price: order.price.map { PriceItem(nftPrice: $0) })
+                }
+            }
+
+            if !hasTopBid {
+                let offerOrders = orders.filter { $0.side == 0 }.sorted { $0.ethValue > $1.ethValue }
+
+                if let order = offerOrders.first {
+                    bestOffer = order.price.map { PriceItem(nftPrice: $0) }
+                }
+            }
         }
     }
 

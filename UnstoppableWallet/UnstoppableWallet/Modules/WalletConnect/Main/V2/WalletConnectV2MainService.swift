@@ -12,7 +12,7 @@ class WalletConnectV2MainService {
     private let pingService: WalletConnectV2PingService
     private let manager: WalletConnectManager
     private let reachabilityManager: IReachabilityManager
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmChainParser: WalletConnectEvmChainParser
 
@@ -33,7 +33,7 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: IAccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
         self.pingService = pingService

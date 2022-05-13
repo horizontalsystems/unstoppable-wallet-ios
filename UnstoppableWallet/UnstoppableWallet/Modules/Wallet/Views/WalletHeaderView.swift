@@ -5,16 +5,18 @@ import ComponentKit
 import HUD
 
 class WalletHeaderView: UITableViewHeaderFooterView {
-    private static let amountHeight: CGFloat = 40
+    private static let amountHeight: CGFloat = 100
     private static let bottomMargin: CGFloat = .margin4
 
     private let amountButton = UIButton()
+    private let convertedAmountButton = UIButton()
     private let sortAddCoinView = TextDropDownAndSettingsView()
     private let addressButton = ThemeButton()
 
     private var currentAddress: String?
 
     var onTapAmount: (() -> ())?
+    var onTapConvertedAmount: (() -> ())?
     var onTapSortBy: (() -> ())?
     var onTapAddCoin: (() -> ())?
 
@@ -33,23 +35,39 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
         wrapperView.backgroundColor = .themeNavigationBarBackground
 
-        wrapperView.addSubview(amountButton)
-        amountButton.snp.makeConstraints { maker in
+        let amountWrapperView = UIView()
+
+        wrapperView.addSubview(amountWrapperView)
+        amountWrapperView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(Self.amountHeight)
         }
 
-        amountButton.contentHorizontalAlignment = .leading
-        amountButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
-        amountButton.titleLabel?.font = .title3
+        amountWrapperView.addSubview(amountButton)
+        amountButton.snp.makeConstraints { maker in
+            maker.leading.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.height.equalTo(41)
+        }
+
+        amountButton.titleLabel?.font = .title2R
         amountButton.addTarget(self, action: #selector(onTapAmountButton), for: .touchUpInside)
+
+        amountWrapperView.addSubview(convertedAmountButton)
+        convertedAmountButton.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(amountButton.snp.bottom).offset(CGFloat.margin6)
+            maker.height.equalTo(20)
+        }
+
+        convertedAmountButton.titleLabel?.font = .body
+        convertedAmountButton.addTarget(self, action: #selector(onTapConvertedAmountButton), for: .touchUpInside)
 
         let separatorView = UIView()
 
         wrapperView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountButton.snp.bottom)
+            maker.top.equalTo(amountWrapperView.snp.bottom)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
@@ -58,7 +76,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         wrapperView.addSubview(sortAddCoinView)
         sortAddCoinView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountButton.snp.bottom)
+            maker.top.equalTo(amountWrapperView.snp.bottom)
             maker.height.equalTo(TextDropDownAndSettingsView.height)
         }
 
@@ -83,6 +101,10 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         onTapAmount?()
     }
 
+    @objc private func onTapConvertedAmountButton() {
+        onTapConvertedAmount?()
+    }
+
     @objc private func onTapAddressButton() {
         guard let address = currentAddress else {
             return
@@ -93,7 +115,9 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
     func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
         amountButton.setTitle(viewItem.amount, for: .normal)
-        amountButton.setTitleColor(viewItem.amountExpired ? .themeYellow50 : .themeJacob, for: .normal)
+        amountButton.setTitleColor(viewItem.amountExpired ? .themeGray50 : .themeLeah, for: .normal)
+        convertedAmountButton.setTitle(viewItem.convertedValue, for: .normal)
+        convertedAmountButton.setTitleColor(viewItem.convertedValueExpired ? .themeGray50 : .themeGray, for: .normal)
 
         sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
 

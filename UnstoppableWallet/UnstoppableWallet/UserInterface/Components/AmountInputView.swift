@@ -6,7 +6,7 @@ import ComponentKit
 class AmountInputView: UIView {
     let viewHeight: CGFloat = 85
 
-    private let inputStackView = InputStackView()
+    private let inputStackView: InputStackView
     private let separatorView = UIView()
     private let secondaryButton = UIButton()
 
@@ -31,7 +31,8 @@ class AmountInputView: UIView {
     var onTapMax: (() -> ())?
     var onTapSecondary: (() -> ())?
 
-    init() {
+    init(singleLine: Bool = false) {
+        inputStackView = InputStackView(singleLine: singleLine)
         super.init(frame: .zero)
 
         backgroundColor = .clear
@@ -94,7 +95,6 @@ class AmountInputView: UIView {
 
         inputStackView.placeholder = "0"
         inputStackView.keyboardType = .decimalPad
-        inputStackView.maximumNumberOfLines = 1
         inputStackView.onChangeText = { [weak self] text in
             self?.handleChange(text: text)
         }
@@ -149,6 +149,11 @@ extension AmountInputView {
     var textColor: UIColor? {
         get { inputStackView.textColor }
         set { inputStackView.textColor = newValue }
+    }
+
+    var font: UIFont? {
+        get { inputStackView.font }
+        set { inputStackView.font = newValue }
     }
 
     var prefix: String? {

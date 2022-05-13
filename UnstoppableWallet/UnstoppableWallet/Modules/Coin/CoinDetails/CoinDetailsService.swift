@@ -5,11 +5,13 @@ import CurrencyKit
 import Chart
 
 class CoinDetailsService {
+    private let proFeaturesUpdateDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
 
     private let fullCoin: FullCoin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let proFeaturesManager: ProFeaturesAuthorizationManager
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
@@ -18,13 +20,16 @@ class CoinDetailsService {
         }
     }
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, proFeaturesManager: ProFeaturesAuthorizationManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.proFeaturesManager = proFeaturesManager
+
+        subscribe(proFeaturesUpdateDisposeBag, proFeaturesManager.sessionKeyObservable) { [weak self] _ in self?.sync() }
     }
 
-    private func fetchCharts(details: MarketInfoDetails) -> Single<Item> {
+    private func fetchCharts(details: MarketInfoDetails, proFeatures: ProFeatures) -> Single<Item> {
         let tvlSingle: Single<[ChartPoint]>
         if details.tvl != nil {
             tvlSingle = marketKit.marketInfoTvlSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, timePeriod: .month1)
@@ -32,20 +37,49 @@ class CoinDetailsService {
             tvlSingle = Single.just([])
         }
 
-        let volumeSingle = marketKit
-                .chartInfoSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code, interval: .month1)
-                .map {
-                    $0.points
-                    .compactMap { point in
-                        point.extra[ChartPoint.volume].map { ChartPoint(timestamp: point.timestamp, value: $0) }
-                    }
+        return tvlSingle.catchErrorJustReturn([])
+                .map { tvls -> Item in
+                    Item(marketInfoDetails: details, proFeatures: proFeatures, tvls: tvls)
                 }
+    }
 
-        return Single.zip(
-                tvlSingle.catchErrorJustReturn([]),
-                volumeSingle.catchErrorJustReturn([])
-            ).map { tvls, totalVolumes -> Item in
-                Item(marketInfoDetails: details, tvls: tvls, totalVolumes: totalVolumes)
+    private func proFeatures(coinUid: String, currencyCode: String) -> Single<ProFeatures> {
+        if let sessionKey = proFeaturesManager.sessionKey(type: .mountainYak) {
+            //request needed charts for pro state
+            let dexVolumeSingle = marketKit
+                    .dexVolumesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let dexLiquiditySingle = marketKit
+                    .dexLiquiditySingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let transactionDataSingle = marketKit
+                    .transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, platform: nil, sessionKey: sessionKey)
+                    .catchErrorJustReturn(.empty)
+
+            let activeAddressesSingle = marketKit
+                    .activeAddressesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: .month1, sessionKey: sessionKey)
+                    .catchErrorJustReturn([])
+
+            return Single.zip(dexVolumeSingle, dexLiquiditySingle, transactionDataSingle, activeAddressesSingle) { dexVolumeResponse, dexLiquidityResponse, transactionDataResponse, activeAddressesResponse in
+                let dexVolumeChartPoints = dexVolumeResponse.volumePoints
+                let dexLiquidityChartPoints = dexLiquidityResponse.volumePoints
+                let txCountChartPoints = transactionDataResponse.countPoints
+                let txVolumeChartPoints = transactionDataResponse.volumePoints
+                let activeAddresses = activeAddressesResponse.countPoints
+
+                return ProFeatures(
+                        activated: true,
+                        dexVolumes: .value(dexVolumeChartPoints),
+                        dexLiquidity: .value(dexLiquidityChartPoints),
+                        txCount: .value(txCountChartPoints),
+                        txVolume: .value(txVolumeChartPoints),
+                        activeAddresses: .value(activeAddresses)
+                )
+            }
+        } else {
+            return Single.just(ProFeatures.forbidden)
         }
     }
 
@@ -63,7 +97,9 @@ extension CoinDetailsService {
 
     var usdCurrency: Currency {
         let currencies = currencyKit.currencies
-        return currencies.first { $0.code == "USD" } ?? currencies[0]
+        return currencies.first {
+            $0.code == "USD"
+        } ?? currencies[0]
     }
 
     var coin: Coin {
@@ -96,10 +132,12 @@ extension CoinDetailsService {
 
         state = .loading
 
-        marketKit.marketInfoDetailsSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
+        return Single.zip(
+                        marketKit.marketInfoDetailsSingle(coinUid: fullCoin.coin.uid, currencyCode: currency.code),
+                        proFeatures(coinUid: fullCoin.coin.uid, currencyCode: currency.code))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .flatMap { [weak self] details -> Single<Item> in
-                    self?.fetchCharts(details: details) ?? Single.just(Item(marketInfoDetails: details))
+                .flatMap { [weak self] (details, proFeatures) -> Single<Item> in
+                    self?.fetchCharts(details: details, proFeatures: proFeatures) ?? Single.just(Item(marketInfoDetails: details, proFeatures: .forbidden, tvls: nil))
                 }
                 .subscribe(onSuccess: { [weak self] info in
                     self?.state = .completed(info)
@@ -118,17 +156,37 @@ extension CoinDetailsService {
         let chartTrend: MovementTrend
     }
 
-    struct Item {
-        let marketInfoDetails: MarketInfoDetails
-        let tvls: [ChartPoint]?
-        let totalVolumes: [ChartPoint]?
+    enum ProData {
+        case empty
+        case forbidden
+        case completed([ChartPoint])
 
-        init(marketInfoDetails: MarketInfoDetails, tvls: [ChartPoint]? = nil, totalVolumes: [ChartPoint]? = nil) {
-            self.marketInfoDetails = marketInfoDetails
-            self.tvls = tvls
-            self.totalVolumes = totalVolumes
+        static func value(_ points: [ChartPoint]) -> Self {
+            points.isEmpty ? .empty : .completed(points)
+        }
+    }
+
+    struct ProFeatures {
+        static var forbidden: ProFeatures {
+            ProFeatures(activated: false, dexVolumes: .forbidden, dexLiquidity: .forbidden, txCount: .forbidden, txVolume: .forbidden, activeAddresses: .forbidden)
         }
 
+        static var empty: ProFeatures {
+            ProFeatures(activated: true, dexVolumes: .empty, dexLiquidity: .empty, txCount: .empty, txVolume: .empty, activeAddresses: .empty)
+        }
+
+        let activated: Bool
+        let dexVolumes: ProData
+        let dexLiquidity: ProData
+        let txCount: ProData
+        let txVolume: ProData
+        let activeAddresses: ProData
+    }
+
+    struct Item {
+        let marketInfoDetails: MarketInfoDetails
+        let proFeatures: ProFeatures
+        let tvls: [ChartPoint]?
     }
 
 }

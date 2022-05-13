@@ -13,7 +13,7 @@ class MarketMetricLargeView: UIView {
     private let titleLabel = UILabel()
     private let gradientCircle = GradientPercentCircle()
     private let valueLabel = UILabel()
-    private let diffLabel = RateDiffLabel()
+    private let diffLabel = DiffLabel()
 
     init() {
         super.init(frame: .zero)

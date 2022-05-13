@@ -1,10 +1,10 @@
 import UIKit
 import ComponentKit
 
-class PasteboardManager: IPasteboardManager {
+class PasteboardManager {
 
     var value: String? {
-        return UIPasteboard.general.string
+        UIPasteboard.general.string
     }
 
     func set(value: String) {

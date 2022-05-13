@@ -49,7 +49,7 @@ class NftCollectionsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: NftCollectionsDoubleCell.self)
+        tableView.registerCell(forClass: NftDoubleCell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(emptyView)
@@ -85,24 +85,21 @@ class NftCollectionsViewController: ThemeViewController {
         }
     }
 
-    private func openAsset(viewItem: NftCollectionsViewModel.AssetViewItem, imageRatio: CGFloat) {
-        guard let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, tokenId: viewItem.tokenId, imageRatio: imageRatio) else {
-            return
-        }
-
-        present(module, animated: true)
+    private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
+        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
 }
 
 extension NftCollectionsViewController: SectionsDataSource {
 
-    private func row(leftViewItem: NftCollectionsViewModel.AssetViewItem, rightViewItem: NftCollectionsViewModel.AssetViewItem?, isLast: Bool) -> RowProtocol {
-        Row<NftCollectionsDoubleCell>(
+    private func row(leftViewItem: NftDoubleCell.ViewItem, rightViewItem: NftDoubleCell.ViewItem?, isLast: Bool) -> RowProtocol {
+        Row<NftDoubleCell>(
                 id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
                 hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
                 dynamicHeight: { width in
-                    NftCollectionsDoubleCell.height(containerWidth: width, isLast: isLast)
+                    NftDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { cell, _ in
                     cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in

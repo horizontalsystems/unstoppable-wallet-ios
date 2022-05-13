@@ -38,21 +38,17 @@ class TransactionInfoService {
             tx.valueOut.flatMap { coins.append($0.coin) }
 
         case let tx as UnknownSwapTransactionRecord:
-            if !tx.value.zeroValue {
-                coins.append(tx.value.coin)
-            }
-            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+            tx.valueIn.flatMap { coins.append($0.coin) }
+            tx.valueOut.flatMap { coins.append($0.coin) }
 
         case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
         case let tx as ContractCallTransactionRecord:
-            if !tx.value.zeroValue {
-                coins.append(tx.value.coin)
-            }
-            coins.append(contentsOf: tx.incomingInternalETHs.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.incomingEip20Events.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEip20Events.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
+
+        case let tx as ExternalContractCallTransactionRecord:
+            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
+            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
 
         case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
         case let tx as BitcoinOutgoingTransactionRecord:
@@ -67,8 +63,8 @@ class TransactionInfoService {
         default: ()
         }
 
-        if let evmTransaction = transactionRecord as? EvmTransactionRecord, !evmTransaction.foreignTransaction {
-            coins.append(evmTransaction.fee.coin)
+        if let evmTransaction = transactionRecord as? EvmTransactionRecord, evmTransaction.ownTransaction, let fee = evmTransaction.fee {
+            coins.append(fee.coin)
         }
 
         return Array(Set(coins.compactMap({ $0 })))

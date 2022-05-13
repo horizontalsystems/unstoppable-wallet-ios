@@ -8,13 +8,13 @@ class MarketListMarketFieldDecorator {
 
     var marketField: MarketModule.MarketField {
         didSet {
-            service.onUpdate(marketField: marketField)
+            service.onUpdate(marketFieldIndex: marketField.rawValue)
         }
     }
 
     init(service: IMarketListDecoratorService) {
         self.service = service
-        marketField = service.initialMarketField
+        marketField = MarketModule.MarketField.allCases[service.initialMarketFieldIndex]
     }
 
 }
@@ -59,6 +59,7 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
         return MarketModule.ListViewItem(
                 uid: marketInfo.fullCoin.coin.uid,
                 iconUrl: marketInfo.fullCoin.coin.imageUrl,
+                iconShape: .round,
                 iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
                 name: marketInfo.fullCoin.coin.name,
                 code: marketInfo.fullCoin.coin.code,

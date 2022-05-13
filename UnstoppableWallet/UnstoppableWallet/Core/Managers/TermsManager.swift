@@ -33,7 +33,7 @@ class TermsManager {
 
 }
 
-extension TermsManager: ITermsManager {
+extension TermsManager {
 
     var terms: [Term] {
         termIds.map { term(id: $0) }

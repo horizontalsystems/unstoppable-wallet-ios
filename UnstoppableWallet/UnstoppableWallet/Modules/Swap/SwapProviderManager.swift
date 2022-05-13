@@ -7,7 +7,7 @@ import UniswapKit
 import OneInchKit
 
 class SwapProviderManager {
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
     private let evmBlockchainManager: EvmBlockchainManager
 
     private let dataSourceUpdatedRelay = PublishRelay<()>()
@@ -24,7 +24,7 @@ class SwapProviderManager {
         }
     }
 
-    init(localStorage: ILocalStorage, evmBlockchainManager: EvmBlockchainManager, platformCoinFrom: PlatformCoin?) {
+    init(localStorage: LocalStorage, evmBlockchainManager: EvmBlockchainManager, platformCoinFrom: PlatformCoin?) {
         self.localStorage = localStorage
         self.evmBlockchainManager = evmBlockchainManager
 

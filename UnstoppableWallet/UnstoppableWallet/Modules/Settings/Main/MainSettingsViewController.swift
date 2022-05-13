@@ -11,7 +11,7 @@ import ComponentKit
 
 class MainSettingsViewController: ThemeViewController {
     private let viewModel: MainSettingsViewModel
-    private var urlManager: IUrlManager
+    private var urlManager: UrlManager
 
     private let disposeBag = DisposeBag()
 
@@ -29,7 +29,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private let titleStyle: TextComponent.Style = .b2
 
-    init(viewModel: MainSettingsViewModel, urlManager: IUrlManager) {
+    init(viewModel: MainSettingsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
 
@@ -189,7 +189,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "security-center",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(SecuritySettingsRouter.module(), animated: true)
+                        self?.navigationController?.pushViewController(SecuritySettingsModule.viewController(), animated: true)
                     }
             )
         ]

@@ -54,11 +54,6 @@ class TweetPollView: UIView {
                 maker.width.equalTo(width)
             }
 
-            if let mostVotesOption = mostVotesOption, mostVotesOption.position == option.position {
-                votesView.backgroundColor = .themeIssykBlue
-            } else {
-                votesView.backgroundColor = .themeSteel20
-            }
             votesView.cornerRadius = 4
 
             let label = UILabel()
@@ -70,7 +65,14 @@ class TweetPollView: UIView {
 
             label.text = option.label
             label.font = .captionSB
-            label.textColor = .themeLeah
+
+            if let mostVotesOption = mostVotesOption, mostVotesOption.position == option.position {
+                votesView.backgroundColor = .themeLaguna
+                label.textColor = .themeClaude
+            } else {
+                votesView.backgroundColor = .themeSteel20
+                label.textColor = .themeLeah
+            }
 
             let percentageLabel = UILabel()
             wrapperView.addSubview(percentageLabel)

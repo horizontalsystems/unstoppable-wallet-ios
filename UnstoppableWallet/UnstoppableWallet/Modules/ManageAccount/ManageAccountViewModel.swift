@@ -10,7 +10,6 @@ class ManageAccountViewModel {
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openShowKeyRelay = PublishRelay<Account>()
     private let openBackupKeyRelay = PublishRelay<Account>()
-    private let openNetworkSettingsRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
@@ -78,10 +77,6 @@ extension ManageAccountViewModel {
         openBackupKeyRelay.asSignal()
     }
 
-    var openNetworkSettingsSignal: Signal<Account> {
-        openNetworkSettingsRelay.asSignal()
-    }
-
     var openUnlinkSignal: Signal<Account> {
         openUnlinkRelay.asSignal()
     }
@@ -109,10 +104,6 @@ extension ManageAccountViewModel {
 
     func onTapBackupKey() {
         openBackupKeyRelay.accept(service.account)
-    }
-
-    func onTapNetworkSettings() {
-        openNetworkSettingsRelay.accept(service.account)
     }
 
     func onTapUnlink() {

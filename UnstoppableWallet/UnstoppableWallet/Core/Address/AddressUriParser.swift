@@ -1,6 +1,6 @@
 import Foundation
 
-class AddressUriParser: IAddressUriParser {
+class AddressUriParser {
     fileprivate static let parameterVersion = "version"
     fileprivate static let parameterAmount = "amount"
     fileprivate static let parameterLabel = "label"

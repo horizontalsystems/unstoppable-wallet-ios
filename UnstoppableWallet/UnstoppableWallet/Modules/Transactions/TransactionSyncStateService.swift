@@ -5,16 +5,16 @@ class TransactionSyncStateService {
 
     private var adapterManager: TransactionAdapterManager
     private var adapters = [TransactionSource: ITransactionsAdapter]()
-    private(set) var syncState: AdapterState? = nil {
+    private(set) var syncing: Bool = true {
         didSet {
-            if syncState != oldValue {
-                syncStateSubject.onNext(syncState)
+            if syncing != oldValue {
+                syncingSubject.onNext(syncing)
             }
         }
     }
 
     private var lastBlockInfoSubject = PublishSubject<(TransactionSource, LastBlockInfo)>()
-    private var syncStateSubject = PublishSubject<AdapterState?>()
+    private var syncingSubject = PublishSubject<Bool>()
 
     init(adapterManager: TransactionAdapterManager) {
         self.adapterManager = adapterManager
@@ -23,14 +23,14 @@ class TransactionSyncStateService {
     func stateUpdated() {
         for adapter in adapters.values {
             switch adapter.transactionState {
-            case .syncing, .notSynced, .searchingTxs:
-                syncState = adapter.transactionState
+            case .syncing, .searchingTxs:
+                syncing = true
                 return
-            case .synced: ()
+            default: ()
             }
         }
 
-        syncState = .synced
+        syncing = false
     }
 
 }
@@ -41,8 +41,8 @@ extension TransactionSyncStateService {
         lastBlockInfoSubject.asObservable()
     }
 
-    var syncStateObservable: Observable<AdapterState?> {
-        syncStateSubject.asObservable()
+    var syncingObservable: Observable<Bool> {
+        syncingSubject.asObservable()
     }
 
     func lastBlockInfo(source: TransactionSource) -> LastBlockInfo? {
@@ -52,6 +52,8 @@ extension TransactionSyncStateService {
     func set(sources: [TransactionSource]) {
         disposeBag = DisposeBag()
         adapters = [:]
+
+        stateUpdated()
 
         for source in sources {
             if let adapter = adapterManager.adapter(for: source) {

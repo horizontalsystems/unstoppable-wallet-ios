@@ -1,12 +1,12 @@
 import Foundation
 
 class DebugLogger {
-    private let localStorage: ILocalStorage
-    private let dateProvider: ICurrentDateProvider
+    private let localStorage: LocalStorage
+    private let dateProvider: CurrentDateProvider
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.debug_logger", qos: .background)
 
-    init(localStorage: ILocalStorage, dateProvider: ICurrentDateProvider) {
+    init(localStorage: LocalStorage, dateProvider: CurrentDateProvider) {
         self.localStorage = localStorage
         self.dateProvider = dateProvider
     }
@@ -23,7 +23,7 @@ class DebugLogger {
 
 }
 
-extension DebugLogger: IDebugLogger {
+extension DebugLogger {
 
     var logs: [String] {
         let fullLog = localStorage.debugLog ?? ""

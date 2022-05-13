@@ -5,10 +5,10 @@ class DebugInteractor {
 
     private let disposeBag = DisposeBag()
 
-    private let debugBackgroundManager: IDebugLogger?
-    private let pasteboardManager: IPasteboardManager
+    private let debugBackgroundManager: DebugLogger?
+    private let pasteboardManager: PasteboardManager
 
-    init(appManager: IAppManager, debugBackgroundManager: IDebugLogger?, pasteboardManager: IPasteboardManager) {
+    init(appManager: IAppManager, debugBackgroundManager: DebugLogger?, pasteboardManager: PasteboardManager) {
         self.debugBackgroundManager = debugBackgroundManager
         self.pasteboardManager = pasteboardManager
 

@@ -1,8 +1,8 @@
 class UnlinkService {
     let account: Account
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
 
-    init(account: Account, accountManager: IAccountManager) {
+    init(account: Account, accountManager: AccountManager) {
         self.account = account
         self.accountManager = accountManager
     }

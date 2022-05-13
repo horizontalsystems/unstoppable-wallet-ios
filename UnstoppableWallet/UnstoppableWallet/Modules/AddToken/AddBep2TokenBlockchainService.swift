@@ -29,7 +29,7 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         .bep2(symbol: reference.uppercased())
     }
 
-    func customTokenSingle(reference: String) -> Single<CustomToken> {
+    func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin> {
         let reference = reference.uppercased()
 
         let parameters: Parameters = [
@@ -40,10 +40,10 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         let request = networkManager.session.request(url, parameters: parameters)
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
-            CustomToken(
-                    coinName: tokenInfo.name,
-                    coinCode: tokenInfo.originalSymbol,
-                    coinType: .bep2(symbol: reference),
+            AddTokenModule.CustomCoin(
+                    type: .bep2(symbol: reference),
+                    name: tokenInfo.name,
+                    code: tokenInfo.originalSymbol,
                     decimals: tokenInfo.decimals
             )
         }

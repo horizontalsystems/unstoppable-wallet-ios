@@ -26,7 +26,7 @@ class AccountManager {
 
 }
 
-extension AccountManager: IAccountManager {
+extension AccountManager {
 
     var activeAccountObservable: Observable<Account?> {
         activeAccountRelay.asObservable()
@@ -137,12 +137,12 @@ extension AccountManager: IAccountManager {
 
 class AccountCachedStorage {
     private let accountStorage: AccountStorage
-    private let activeAccountStorage: IActiveAccountStorage
+    private let activeAccountStorage: ActiveAccountStorage
 
     private var _accounts: [String: Account]
     private var _activeAccount: Account?
 
-    init(accountStorage: AccountStorage, activeAccountStorage: IActiveAccountStorage) {
+    init(accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
         self.accountStorage = accountStorage
         self.activeAccountStorage = activeAccountStorage
 

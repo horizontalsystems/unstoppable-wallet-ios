@@ -11,9 +11,7 @@ struct NftCollection {
     let discordUrl: String?
     let twitterUsername: String?
 
-    let averagePrice7d: NftPrice?
-    let averagePrice30d: NftPrice?
-    let totalSupply: Int
+    let stats: NftCollectionStats
 
     struct Contract: ImmutableMappable {
         let address: String

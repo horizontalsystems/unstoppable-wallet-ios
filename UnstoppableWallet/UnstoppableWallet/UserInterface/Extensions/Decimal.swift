@@ -1,6 +1,8 @@
 import Foundation
 import BigInt
 
+fileprivate let max256ByteNumber = BigUInt(Data(hex: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"))
+
 extension Decimal {
 
     var decimalCount: Int {
@@ -22,6 +24,11 @@ extension Decimal {
         }
 
         self.init(sign: .plus, exponent: -decimals, significand: significand)
+    }
+
+    func isMaxValue(decimals: Int) -> Bool {
+        let maxInDecimal = Decimal(sign: .plus, exponent: -decimals, significand: Decimal(string: max256ByteNumber.description)!)
+        return maxInDecimal == self
     }
 
 }

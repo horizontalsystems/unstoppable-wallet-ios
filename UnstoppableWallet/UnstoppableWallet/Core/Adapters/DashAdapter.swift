@@ -1,13 +1,15 @@
+import Foundation
 import DashKit
 import RxSwift
 import HsToolKit
+import BitcoinCore
 
 class DashAdapter: BitcoinBaseAdapter {
     private let feeRate = 1
 
     private let dashKit: Kit
 
-    init(wallet: Wallet, syncMode: SyncMode, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
@@ -15,7 +17,7 @@ class DashAdapter: BitcoinBaseAdapter {
         let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
         let logger = App.shared.logger.scoped(with: "DashKit")
 
-        dashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: BitcoinBaseAdapter.kitMode(from: syncMode), networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        dashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: dashKit, wallet: wallet, testMode: testMode)
 
@@ -49,22 +51,10 @@ extension DashAdapter: DashKitDelegate {
 
 }
 
-extension DashAdapter: ISendDashAdapter {
+extension DashAdapter: ISendBitcoinAdapter {
 
-    func availableBalance(address: String?) -> Decimal {
-        availableBalance(feeRate: feeRate, address: address)
-    }
-
-    func validate(address: String) throws {
-        try validate(address: address, pluginData: [:])
-    }
-
-    func fee(amount: Decimal, address: String?) -> Decimal {
-        fee(amount: amount, feeRate: feeRate, address: address)
-    }
-
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
-        sendSingle(amount: amount, address: address, feeRate: feeRate, sortMode: sortMode, logger: logger)
+    var blockchain: BtcBlockchain {
+        .dash
     }
 
 }

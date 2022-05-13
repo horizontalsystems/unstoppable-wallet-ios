@@ -98,12 +98,13 @@ class NftCollectionsService {
 
                         switch mode {
                         case .lastSale: price = asset.lastSalePrice
-                        case .average7d: price = collection.averagePrice7d
-                        case .average30d: price = collection.averagePrice30d
+                        case .average7d: price = collection.stats.averagePrice7d
+                        case .average30d: price = collection.stats.averagePrice30d
                         }
 
                         return AssetItem(
                                 collectionUid: asset.collectionUid,
+                                contractAddress: asset.contract.address,
                                 tokenId: asset.tokenId,
                                 imageUrl: asset.imageUrl,
                                 name: asset.name,
@@ -192,6 +193,7 @@ extension NftCollectionsService {
 
     class AssetItem {
         let collectionUid: String
+        let contractAddress: String
         let tokenId: String
         let imageUrl: String?
         let name: String?
@@ -199,8 +201,9 @@ extension NftCollectionsService {
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(collectionUid: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
+        init(collectionUid: String, contractAddress: String, tokenId: String, imageUrl: String?, name: String?, onSale: Bool, price: NftPrice?) {
             self.collectionUid = collectionUid
+            self.contractAddress = contractAddress
             self.tokenId = tokenId
             self.imageUrl = imageUrl
             self.name = name

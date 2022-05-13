@@ -2,7 +2,7 @@ import Foundation
 import CurrencyKit
 
 class CurrencyCompactFormatter {
-    private static let postfixes = ["chart.market_cap.thousand", "chart.market_cap.million", "chart.market_cap.billion", "chart.market_cap.trillion"]
+    private static let postfixes = ["number.thousand", "number.million", "number.billion", "number.trillion"]
     public static let instance = CurrencyCompactFormatter()
 
     private let currencyFormatter: NumberFormatter = {
@@ -28,14 +28,15 @@ class CurrencyCompactFormatter {
         return (value: value / pow(ten, (index - 1) * 3), postfix: postfix)
     }
 
-    public func format(currency: Currency, value: Decimal?, fractionMaximumFractionDigits: Int = 1, alwaysSigned: Bool = false) -> String? {
+    public func format(currency: Currency?, value: Decimal?, fractionMaximumFractionDigits: Int = 1, alwaysSigned: Bool = false) -> String? {
         guard let value = value else {
             return nil
         }
         let data = CurrencyCompactFormatter.compactData(value: value)
 
-        currencyFormatter.currencyCode = currency.code
-        currencyFormatter.currencySymbol = currency.symbol
+        currencyFormatter.currencyCode = currency?.code ?? ""
+        currencyFormatter.currencySymbol = currency?.symbol ?? ""
+        currencyFormatter.minimumFractionDigits = 0
         currencyFormatter.maximumFractionDigits = fractionMaximumFractionDigits
 
         let universalValue = alwaysSigned ? abs(data.value) : data.value

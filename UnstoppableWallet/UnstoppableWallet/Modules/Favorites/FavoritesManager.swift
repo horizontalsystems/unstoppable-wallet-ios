@@ -2,11 +2,11 @@ import RxSwift
 import RxCocoa
 
 class FavoritesManager {
-    private let storage: IFavoriteCoinRecordStorage
+    private let storage: FavoriteCoinRecordStorage
 
     private let coinUidsUpdatedRelay = PublishRelay<()>()
 
-    init(storage: IFavoriteCoinRecordStorage) {
+    init(storage: FavoriteCoinRecordStorage) {
         self.storage = storage
     }
 

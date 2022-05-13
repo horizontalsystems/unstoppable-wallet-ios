@@ -3,30 +3,32 @@ import StorageKit
 import PinKit
 
 class AppManager {
-    private let accountManager: IAccountManager
+    private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
     private let pinKit: IPinKit
     private let keychainKit: IKeychainKit
     private let blurManager: BlurManager
-    private let kitCleaner: IKitCleaner
-    private let debugBackgroundLogger: IDebugLogger?
-    private let appVersionManager: IAppVersionManager
-    private let rateAppManager: IRateAppManager
-    private let logRecordManager: ILogRecordManager
-    private let deepLinkManager: IDeepLinkManager
-    private let restoreCustomTokenWorker: RestoreCustomTokenWorker
+    private let kitCleaner: KitCleaner
+    private let debugBackgroundLogger: DebugLogger?
+    private let appVersionManager: AppVersionManager
+    private let rateAppManager: RateAppManager
+    private let logRecordManager: LogRecordManager
+    private let deepLinkManager: DeepLinkManager
+    private let evmLabelManager: EvmLabelManager
     private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+    private let fillWalletInfoWorker: FillWalletInfoWorker
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: IAccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
+    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
          keychainKit: IKeychainKit, blurManager: BlurManager,
-         kitCleaner: IKitCleaner, debugLogger: IDebugLogger?,
-         appVersionManager: IAppVersionManager, rateAppManager: IRateAppManager,
-         logRecordManager: ILogRecordManager,
-         deepLinkManager: IDeepLinkManager, restoreCustomTokenWorker: RestoreCustomTokenWorker, restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
+         kitCleaner: KitCleaner, debugLogger: DebugLogger?,
+         appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
+         logRecordManager: LogRecordManager,
+         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager,
+         restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker, fillWalletInfoWorker: FillWalletInfoWorker
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -40,8 +42,9 @@ class AppManager {
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
-        self.restoreCustomTokenWorker = restoreCustomTokenWorker
+        self.evmLabelManager = evmLabelManager
         self.restoreFavoriteCoinWorker = restoreFavoriteCoinWorker
+        self.fillWalletInfoWorker = fillWalletInfoWorker
     }
 
 }
@@ -60,8 +63,10 @@ extension AppManager {
         appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
 
-        try? restoreCustomTokenWorker.run()
+        evmLabelManager.sync()
+
         try? restoreFavoriteCoinWorker.run()
+        try? fillWalletInfoWorker.run()
     }
 
     func willResignActive() {

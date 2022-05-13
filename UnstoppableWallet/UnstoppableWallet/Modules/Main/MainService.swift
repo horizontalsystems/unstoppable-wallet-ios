@@ -6,7 +6,7 @@ import StorageKit
 class MainService {
     private let keyTabIndex = "main-tab-index"
 
-    private let localStorage: ILocalStorage
+    private let localStorage: LocalStorage
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
     private let walletConnectV2Manager: WalletConnectV2SessionManager
@@ -31,7 +31,7 @@ class MainService {
         }
     }
 
-    init(localStorage: ILocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: IAccountManager, walletManager: WalletManager, walletConnectV2Manager: WalletConnectV2SessionManager, presetTab: MainModule.Tab?) {
+    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, walletConnectV2Manager: WalletConnectV2SessionManager, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager

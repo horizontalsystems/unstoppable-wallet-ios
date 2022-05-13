@@ -14,6 +14,7 @@ class HsNftProvider {
     private let marketKit: MarketKit.Kit
     private let apiUrl: String
     private let headers: HTTPHeaders?
+    private let encoding: ParameterEncoding = URLEncoding(boolEncoding: .literal)
 
     init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
@@ -69,21 +70,25 @@ class HsNftProvider {
         let ethereumPlatformCoin = try? marketKit.platformCoin(coinType: .ethereum)
 
         return responses.map { response in
-            NftCollection(
-                    contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.type) },
-                    uid: response.uid,
-                    name: response.name,
-                    description: response.description,
-                    imageUrl: response.imageUrl,
-                    featuredImageUrl: response.featuredImageUrl,
-                    externalUrl: response.externalUrl,
-                    discordUrl: response.discordUrl,
-                    twitterUsername: response.twitterUsername,
-                    averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
-                    averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
-                    totalSupply: response.totalSupply
-            )
+            collection(response: response, ethereumPlatformCoin: ethereumPlatformCoin)
         }
+    }
+
+    private func collection(response: CollectionResponse, ethereumPlatformCoin: PlatformCoin? = nil) -> NftCollection {
+        let ethereumPlatformCoin = ethereumPlatformCoin ?? (try? marketKit.platformCoin(coinType: .ethereum))
+
+        return NftCollection(
+                contracts: response.contracts.map { NftCollection.Contract(address: $0.address, schemaName: $0.type) },
+                uid: response.uid,
+                name: response.name,
+                description: response.description,
+                imageUrl: response.imageUrl,
+                featuredImageUrl: response.featuredImageUrl,
+                externalUrl: response.externalUrl,
+                discordUrl: response.discordUrl,
+                twitterUsername: response.twitterUsername,
+                stats: collectionStats(response: response.stats, ethereumPlatformCoin: ethereumPlatformCoin)
+        )
     }
 
     private func assets(responses: [AssetResponse]) -> [NftAsset] {
@@ -98,97 +103,185 @@ class HsNftProvider {
         let platformCoinMap = platformCoinMap(addresses: addresses)
 
         return responses.map { response in
-            NftAsset(
-                    contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.type),
-                    collectionUid: response.collectionUid,
-                    tokenId: response.tokenId,
-                    name: response.name,
-                    imageUrl: response.imageUrl,
-                    imagePreviewUrl: response.imagePreviewUrl,
-                    description: response.description,
-                    externalLink: response.externalLink,
-                    permalink: response.permalink,
-                    traits: response.traits.map { NftAsset.Trait(type: $0.type, value: $0.value, count: $0.count) },
-                    lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: platformCoinMap[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) },
-                    onSale: !response.sellOrders.isEmpty
-            )
+            asset(response: response, platformCoinMap: platformCoinMap)
         }
     }
 
-    private func collectionStats(response: CollectionStatsResponse) -> NftCollectionStats {
-        let ethereumPlatformCoin = try? marketKit.platformCoin(coinType: .ethereum)
+    private func asset(response: AssetResponse, platformCoinMap: [String: PlatformCoin]? = nil) -> NftAsset {
+        let map: [String: PlatformCoin]
 
-        return NftCollectionStats(
-                averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
-                averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
-                floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false)
+        if let platformCoinMap = platformCoinMap {
+            map = platformCoinMap
+        } else {
+            var addresses = [String]()
+
+            if let lastSale = response.lastSale {
+                addresses.append(lastSale.paymentTokenAddress)
+            }
+            for order in response.orders {
+                addresses.append(order.paymentToken.address)
+            }
+
+            map = self.platformCoinMap(addresses: addresses)
+        }
+
+        return NftAsset(
+                contract: NftCollection.Contract(address: response.contract.address, schemaName: response.contract.type),
+                collectionUid: response.collectionUid,
+                tokenId: response.tokenId,
+                name: response.name,
+                imageUrl: response.imageUrl,
+                imagePreviewUrl: response.imagePreviewUrl,
+                description: response.description,
+                externalLink: response.externalLink,
+                permalink: response.permalink,
+                traits: response.traits.map { NftAsset.Trait(type: $0.type, value: $0.value, count: $0.count) },
+                lastSalePrice: response.lastSale.flatMap { nftPrice(platformCoin: map[$0.paymentTokenAddress], value: $0.totalPrice, shift: true) },
+                onSale: !response.sellOrders.isEmpty,
+                orders: assetOrders(responses: response.orders, platformCoinMap: map)
         )
     }
 
-    private func assetOrders(responses: [OrderResponse]) -> [NftAssetOrder] {
-        let map = platformCoinMap(addresses: responses.map { $0.paymentToken.address })
+    private func collectionStats(response: CollectionStatsResponse, ethereumPlatformCoin: PlatformCoin?) -> NftCollectionStats {
+        NftCollectionStats(
+                totalSupply: response.totalSupply,
+                averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
+                averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
+                floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
+                totalVolume: response.totalVolume,
+                marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false),
+                oneDayChange: response.oneDayChange,
+                sevenDayChange: response.sevenDayChange,
+                thirtyDayChange: response.thirtyDayChange,
+                oneDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.oneDayVolume, shift: false),
+                sevenDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.sevenDayVolume, shift: false),
+                thirtyDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.thirtyDayVolume, shift: false)
+        )
+    }
 
-        return responses.map { response in
+    private func assetOrders(responses: [OrderResponse], platformCoinMap: [String: PlatformCoin]) -> [NftAssetOrder] {
+        responses.map { response in
             NftAssetOrder(
                     closingDate: response.closingDate,
-                    price: map[response.paymentToken.address].flatMap { nftPrice(platformCoin: $0, value: response.currentPrice, shift: true) },
+                    price: platformCoinMap[response.paymentToken.address].flatMap { nftPrice(platformCoin: $0, value: response.currentPrice, shift: true) },
                     emptyTaker: response.takerAddress == zeroAddress,
                     side: response.side,
                     v: response.v,
-                    ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) / response.paymentToken.ethPrice
+                    ethValue: Decimal(sign: .plus, exponent: -response.paymentToken.decimals, significand: response.currentPrice) * response.paymentToken.ethPrice
             )
         }
     }
 
-    private func collectionsSingle(address: String, offset: Int) -> Single<[CollectionResponse]> {
+    private func events(responses: [EventResponse]) -> [NftEvent] {
+        var addresses = [String]()
+
+        for response in responses {
+            if let paymentToken = response.paymentToken {
+                addresses.append(paymentToken.address)
+            }
+        }
+
+        let platformCoinMap = platformCoinMap(addresses: addresses)
+
+        return responses.compactMap { response in
+            guard let eventType = NftEvent.EventType(rawValue: response.type) else {
+                return nil
+            }
+
+            var amount: NftPrice?
+
+            if let paymentToken = response.paymentToken, let value = response.amount {
+                amount = nftPrice(platformCoin: platformCoinMap[paymentToken.address], value: value, shift: true)
+            }
+
+            return NftEvent(
+                    asset: asset(response: response.asset),
+                    type: eventType,
+                    date: response.date,
+                    amount: amount
+            )
+        }
+    }
+
+    private func collectionsSingle(address: String, page: Int) -> Single<[CollectionResponse]> {
         let parameters: Parameters = [
             "asset_owner": address,
             "limit": collectionLimit,
-            "offset": offset
+            "page": page
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request)
     }
 
-    private func recursiveCollectionsSingle(address: String, offset: Int = 0, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
-        collectionsSingle(address: address, offset: offset).flatMap { [unowned self] collections in
+    private func recursiveCollectionsSingle(address: String, page: Int = 1, allCollections: [CollectionResponse] = []) -> Single<[CollectionResponse]> {
+        collectionsSingle(address: address, page: page).flatMap { [unowned self] collections in
             let allCollections = allCollections + collections
 
             if collections.count == collectionLimit {
-                return recursiveCollectionsSingle(address: address, offset: offset + collectionLimit, allCollections: allCollections)
+                return recursiveCollectionsSingle(address: address, page: page + 1, allCollections: allCollections)
             } else {
                 return Single.just(allCollections)
             }
         }
     }
 
-    private func assetsSingle(address: String, offset: Int) -> Single<[AssetResponse]> {
-        let parameters: Parameters = [
-            "owner": address,
-            "limit": assetLimit,
-            "offset": offset
+    private func _assetsSingle(address: String? = nil, collectionUid: String? = nil, cursor: String?) -> Single<AssetsResponse> {
+        var parameters: Parameters = [
+            "include_orders": true,
+            "limit": assetLimit
         ]
 
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, headers: headers)
+        if let address = address {
+            parameters["owner"] = address
+        }
+
+        if let collectionUid = collectionUid {
+            parameters["collection_uid"] = collectionUid
+        }
+
+        if let cursor = cursor {
+            parameters["cursor"] = cursor
+        }
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/assets", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request)
     }
 
-    private func recursiveAssetsSingle(address: String, offset: Int = 0, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
-        assetsSingle(address: address, offset: offset).flatMap { [unowned self] assets in
-            let allAssets = allAssets + assets
+    private func recursiveAssetsSingle(address: String, cursor: String? = nil, allAssets: [AssetResponse] = []) -> Single<[AssetResponse]> {
+        _assetsSingle(address: address, cursor: cursor).flatMap { [unowned self] response in
+            let allAssets = allAssets + response.assets
 
-            if assets.count == assetLimit {
-                return recursiveAssetsSingle(address: address, offset: offset + assetLimit, allAssets: allAssets)
+            if let cursor = response.cursor {
+                return recursiveAssetsSingle(address: address, cursor: cursor, allAssets: allAssets)
             } else {
                 return Single.just(allAssets)
             }
         }
     }
 
+    private func _eventsSingle(collectionUid: String?, eventType: NftEvent.EventType?, cursor: String?) -> Single<EventsResponse> {
+        var parameters: Parameters = [:]
+
+        if let collectionUid = collectionUid {
+            parameters["collection_uid"] = collectionUid
+        }
+
+        if let eventType = eventType {
+            parameters["event_type"] = eventType.rawValue
+        }
+
+        if let cursor = cursor {
+            parameters["cursor"] = cursor
+        }
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/events", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request)
+    }
+
 }
 
-extension HsNftProvider: INftProvider {
+extension HsNftProvider {
 
     func assetCollectionSingle(address: String) -> Single<NftAssetCollection> {
         let collectionsSingle = recursiveCollectionsSingle(address: address).map { [weak self] responses in
@@ -204,17 +297,54 @@ extension HsNftProvider: INftProvider {
         }
     }
 
-    func collectionStatsSingle(uid: String) -> Single<NftCollectionStats> {
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)/stats", headers: headers)
+    func collectionSingle(uid: String) -> Single<NftCollection> {
+        let parameters: Parameters = [
+            "include_stats_chart": true,
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collection/\(uid)", parameters: parameters, encoding: encoding, headers: headers)
         return networkManager.single(request: request).map { [unowned self] response in
-            collectionStats(response: response)
+            collection(response: response)
         }
     }
 
-    func assetOrdersSingle(contractAddress: String, tokenId: String) -> Single<[NftAssetOrder]> {
-        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", headers: headers)
-        return networkManager.single(request: request).map { [unowned self] (response: SingleAssetResponse) in
-            assetOrders(responses: response.orders)
+    func assetSingle(contractAddress: String, tokenId: String) -> Single<NftAsset> {
+        let parameters: Parameters = [
+            "include_orders": true,
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/asset/\(contractAddress)/\(tokenId)", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request).map { [unowned self] (response: AssetResponse) in
+            asset(response: response)
+        }
+    }
+
+    func assetsSingle(collectionUid: String, cursor: String? = nil) -> Single<PagedNftAssets> {
+        _assetsSingle(collectionUid: collectionUid, cursor: cursor).map { [unowned self] response in
+            PagedNftAssets(
+                    assets: assets(responses: response.assets),
+                    cursor: response.cursor
+            )
+        }
+    }
+
+    func eventsSingle(collectionUid: String, eventType: NftEvent.EventType?, cursor: String? = nil) -> Single<PagedNftEvents> {
+        _eventsSingle(collectionUid: collectionUid, eventType: eventType, cursor: cursor).map { [unowned self] response in
+            PagedNftEvents(
+                    events: events(responses: response.events),
+                    cursor: response.cursor
+            )
+        }
+    }
+
+    func collectionsSingle() -> Single<[NftCollection]> {
+        let parameters: Parameters = [
+            "limit": collectionLimit
+        ]
+
+        let request = networkManager.session.request("\(apiUrl)/v1/nft/collections", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request).map { [weak self] responses in
+            self?.collections(responses: responses) ?? []
         }
     }
 
@@ -232,13 +362,10 @@ extension HsNftProvider {
         let externalUrl: String?
         let discordUrl: String?
         let twitterUsername: String?
-
-        let averagePrice7d: Decimal
-        let averagePrice30d: Decimal
-        let totalSupply: Int
+        let stats: CollectionStatsResponse
 
         init(map: Map) throws {
-            contracts = try map.value("asset_contracts")
+            contracts = (try? map.value("asset_contracts")) ?? []
             uid = try map.value("uid")
             name = try map.value("name")
             description = try? map.value("description")
@@ -247,9 +374,7 @@ extension HsNftProvider {
             externalUrl = try? map.value("links.external_url")
             discordUrl = try? map.value("links.discord_url")
             twitterUsername = try? map.value("links.twitter_username")
-            averagePrice7d = try map.value("stats.seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
-            averagePrice30d = try map.value("stats.thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
-            totalSupply = try map.value("stats.total_supply")
+            stats = try map.value("stats")
         }
     }
 
@@ -260,6 +385,16 @@ extension HsNftProvider {
         init(map: Map) throws {
             address = try map.value("address")
             type = try map.value("type")
+        }
+    }
+
+    private struct AssetsResponse: ImmutableMappable {
+        let cursor: String?
+        let assets: [AssetResponse]
+
+        init(map: Map) throws {
+            cursor = try? map.value("cursor.next")
+            assets = try map.value("assets")
         }
     }
 
@@ -276,6 +411,7 @@ extension HsNftProvider {
         let traits: [TraitResponse]
         let lastSale: SaleResponse?
         let sellOrders: [OrderResponse]
+        let orders: [OrderResponse]
 
         init(map: Map) throws {
             contract = try map.value("contract")
@@ -287,9 +423,10 @@ extension HsNftProvider {
             description = try? map.value("description")
             externalLink = try? map.value("links.external_link")
             permalink = try? map.value("links.permalink")
-            traits = try map.value("attributes")
+            traits = (try? map.value("attributes")) ?? []
             lastSale = try? map.value("markets_data.last_sale")
             sellOrders = (try? map.value("markets_data.sell_orders")) ?? []
+            orders = (try? map.value("markets_data.orders")) ?? []
         }
     }
 
@@ -326,22 +463,32 @@ extension HsNftProvider {
     }
 
     private struct CollectionStatsResponse: ImmutableMappable {
+        let totalSupply: Int
+        let oneDayChange: Decimal
+        let sevenDayChange: Decimal
+        let thirtyDayChange: Decimal
         let averagePrice7d: Decimal
         let averagePrice30d: Decimal
         let floorPrice: Decimal?
+        let totalVolume: Decimal?
+        let marketCap: Decimal
+        let oneDayVolume: Decimal
+        let sevenDayVolume: Decimal
+        let thirtyDayVolume: Decimal
 
         init(map: Map) throws {
+            totalSupply = try map.value("total_supply")
+            totalVolume = try map.value("total_volume", using: HsNftProvider.doubleToDecimalTransform)
+            marketCap = try map.value("market_cap", using: HsNftProvider.doubleToDecimalTransform)
+            oneDayChange = try map.value("one_day_change", using: HsNftProvider.doubleToDecimalTransform)
+            sevenDayChange = try map.value("seven_day_change", using: HsNftProvider.doubleToDecimalTransform)
+            thirtyDayChange = try map.value("thirty_day_change", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice7d = try map.value("seven_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             averagePrice30d = try map.value("thirty_day_average_price", using: HsNftProvider.doubleToDecimalTransform)
             floorPrice = try? map.value("floor_price", using: HsNftProvider.doubleToDecimalTransform)
-        }
-    }
-
-    private struct SingleAssetResponse: ImmutableMappable {
-        let orders: [OrderResponse]
-
-        init(map: Map) throws {
-            orders = (try? map.value("markets_data.orders")) ?? []
+            oneDayVolume = try map.value("one_day_volume", using: HsNftProvider.doubleToDecimalTransform)
+            sevenDayVolume = try map.value("seven_day_volume", using: HsNftProvider.doubleToDecimalTransform)
+            thirtyDayVolume = try map.value("thirty_day_volume", using: HsNftProvider.doubleToDecimalTransform)
         }
     }
 
@@ -378,6 +525,38 @@ extension HsNftProvider {
             address = try map.value("address")
             decimals = try map.value("decimals")
             ethPrice = try map.value("eth_price", using: HsNftProvider.stringToDecimalTransform)
+        }
+    }
+
+    private struct EventsResponse: ImmutableMappable {
+        let cursor: String?
+        let events: [EventResponse]
+
+        init(map: Map) throws {
+            cursor = try? map.value("cursor.next")
+            events = try map.value("events")
+        }
+    }
+
+    private struct EventResponse: ImmutableMappable {
+        private static let reusableDateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+
+        let asset: AssetResponse
+        let type: String
+        let date: Date
+        let amount: Decimal?
+        let paymentToken: PaymentTokenResponse?
+
+        init(map: Map) throws {
+            asset = try map.value("asset")
+            date = try map.value("date", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))
+            type = try map.value("type")
+            amount = try? map.value("amount", using: HsNftProvider.stringToDecimalTransform)
+            paymentToken = try? map.value("markets_data.payment_token")
         }
     }
 
