@@ -66,11 +66,19 @@ class NftCollectionActivityViewModel {
             }
         }
 
+        let type: String
+
+        if let eventType = event.type {
+            type = "nft_collection.activity.event_type.\(eventType.rawValue)".localized
+        } else {
+            type = "nft_collection.activity.event_type.unknown".localized
+        }
+
         return EventViewItem(
                 collectionUid: event.asset.collectionUid,
                 contractAddress: event.asset.contract.address,
                 tokenId: event.asset.tokenId,
-                type: "nft_collection.activity.event_type.\(event.type.rawValue)".localized,
+                type: type,
                 date: DateHelper.instance.formatFullTime(from: event.date),
                 imageUrl: event.asset.imagePreviewUrl,
                 coinPrice: coinPrice,
@@ -99,7 +107,7 @@ extension NftCollectionActivityViewModel: IDropdownFilterHeaderViewModel {
 
         items.append(AlertViewItem(text: title(eventType: nil), selected: service.eventType == nil))
 
-        for eventType in NftEvent.EventType.allCases {
+        for eventType in service.filterEventTypes {
             items.append(AlertViewItem(text: title(eventType: eventType), selected: service.eventType == eventType))
         }
 
@@ -114,7 +122,7 @@ extension NftCollectionActivityViewModel: IDropdownFilterHeaderViewModel {
         if index == 0 {
             service.eventType = nil
         } else {
-            service.eventType = NftEvent.EventType.allCases[index - 1]
+            service.eventType = service.filterEventTypes[index - 1]
         }
     }
 
