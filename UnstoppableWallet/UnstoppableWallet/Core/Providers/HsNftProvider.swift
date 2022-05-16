@@ -184,10 +184,6 @@ class HsNftProvider {
         let platformCoinMap = platformCoinMap(addresses: addresses)
 
         return responses.compactMap { response in
-            guard let eventType = NftEvent.EventType(rawValue: response.type) else {
-                return nil
-            }
-
             var amount: NftPrice?
 
             if let paymentToken = response.paymentToken, let value = response.amount {
@@ -196,7 +192,7 @@ class HsNftProvider {
 
             return NftEvent(
                     asset: asset(response: response.asset),
-                    type: eventType,
+                    type: NftEvent.EventType(rawValue: response.type),
                     date: response.date,
                     amount: amount
             )

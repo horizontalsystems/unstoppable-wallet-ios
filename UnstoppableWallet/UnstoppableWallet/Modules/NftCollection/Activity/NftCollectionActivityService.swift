@@ -7,6 +7,8 @@ class NftCollectionActivityService {
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
 
+    let filterEventTypes: [NftEvent.EventType] = [.sale, .list, .offer, .bid, .transfer]
+
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
         didSet {
