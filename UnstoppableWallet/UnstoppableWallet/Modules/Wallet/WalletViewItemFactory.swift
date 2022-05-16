@@ -118,7 +118,7 @@ class WalletViewItemFactory {
 
         let value = rateItem.diff
 
-        guard let formattedValue = ValueFormatter.instance.format(percentValue: value, signed: true) else {
+        guard let formattedValue = ValueFormatter.instance.format(percentValue: value, showSign: true) else {
             return nil
         }
 
@@ -127,7 +127,7 @@ class WalletViewItemFactory {
 
     private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState, expanded: Bool) -> (text: String?, dimmed: Bool) {
         (
-                text: expanded ? ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals, symbol: nil) : ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals, symbol: nil),
+                text: expanded ? ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals) : ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals),
                 dimmed: state != .synced
         )
     }

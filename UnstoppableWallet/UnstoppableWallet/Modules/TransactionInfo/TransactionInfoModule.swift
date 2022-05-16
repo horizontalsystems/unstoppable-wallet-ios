@@ -81,11 +81,10 @@ extension TransactionInfoModule {
         case outgoing
         case neutral
 
-        var prefix: String {
+        var showSign: Bool {
             switch self {
-            case .incoming: return "+"
-            case .outgoing: return "-"
-            case .neutral: return ""
+            case .incoming, .outgoing: return true
+            case .neutral: return false
             }
         }
     }

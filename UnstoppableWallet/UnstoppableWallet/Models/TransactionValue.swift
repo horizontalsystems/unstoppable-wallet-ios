@@ -55,23 +55,23 @@ enum TransactionValue {
         }
     }
 
-    var formattedFull: String? {
+    func formattedFull(showSign: Bool = false) -> String? {
         switch self {
         case let .coinValue(platformCoin, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code)
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code, showSign: showSign)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode)
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode, showSign: showSign)
         case .rawValue:
             return nil
         }
     }
 
-    var formattedShort: String? {
+    func formattedShort(showSign: Bool = false) -> String? {
         switch self {
         case let .coinValue(platformCoin, value):
-            return ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code)
+            return ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code, showSign: showSign)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
-            return ValueFormatter.instance.formatShort(value: value, decimalCount: tokenDecimals, symbol: tokenCode)
+            return ValueFormatter.instance.formatShort(value: value, decimalCount: tokenDecimals, symbol: tokenCode, showSign: showSign)
         case .rawValue:
             return nil
         }

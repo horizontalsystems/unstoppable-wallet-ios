@@ -31,7 +31,7 @@ class TransactionInfoViewItemFactory {
             return .amount(
                     iconUrl: iconUrl,
                     iconPlaceholderImageName: iconPlaceholderImageName,
-                    coinAmount: transactionValue.formattedFull.map { "\(type.prefix)\($0)" } ?? "n/a".localized,
+                    coinAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                     currencyAmount: currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     type: type
             )
@@ -41,7 +41,7 @@ class TransactionInfoViewItemFactory {
     private func feeString(transactionValue: TransactionValue, rate: CurrencyValue?) -> String {
         var parts = [String]()
 
-        if let formattedCoinValue = transactionValue.formattedFull {
+        if let formattedCoinValue = transactionValue.formattedFull() {
             parts.append(formattedCoinValue)
         }
 
