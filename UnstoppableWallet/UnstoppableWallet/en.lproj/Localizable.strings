@@ -387,6 +387,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
+"top_platforms.title" = "Platforms Rank";
+"top_platforms.description" = "Top ecosystem platforms by market cap";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";

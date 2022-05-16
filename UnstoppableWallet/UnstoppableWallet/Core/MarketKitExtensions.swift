@@ -174,7 +174,7 @@ extension MarketKit.TopPlatform {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/platform-icons/\(item.name.lowercased().replacingOccurrences(of: " ", with: "_"))@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/platform-icons/\(name.lowercased().replacingOccurrences(of: " ", with: "_"))@\(scale)x.png"
     }
 }
 

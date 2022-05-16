@@ -1,3 +1,4 @@
+import Foundation
 import CurrencyKit
 import MarketKit
 
@@ -10,7 +11,7 @@ class MarketListTopPlatformDecorator {
 
     private let service: IMarketListTopPlatformDecoratorService
 
-    var timePeriod: MarketOverviewTopPlatformsService.TimePeriod  = .day
+    var timePeriod: HsTimePeriod  = .day1
 
     init(service: IMarketListTopPlatformDecoratorService) {
         self.service = service
@@ -31,15 +32,18 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         let diff: Decimal?
 
         switch timePeriod {
-        case .day:
+        case .day1:
             diff = item.oneDayChange
             rankDiff = item.oneDayRank
-        case .week:
+        case .week1:
             diff = item.sevenDayChange
             rankDiff = item.sevenDaysRank
-        case .month:
+        case .month1:
             diff = item.thirtyDayChange
             rankDiff = item.thirtyDaysRank
+        default:
+            diff = 0
+            print("unreachable state")
         }
 
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
