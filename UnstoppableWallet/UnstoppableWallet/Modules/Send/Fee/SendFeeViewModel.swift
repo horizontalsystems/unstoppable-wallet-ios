@@ -55,7 +55,7 @@ class SendFeeViewModel {
 
             let text = [state.primaryInfo, state.secondaryInfo]
                     .compactMap {
-                        $0?.formattedString
+                        $0?.formattedFull
                     }
                     .joined(separator: " | ")
 

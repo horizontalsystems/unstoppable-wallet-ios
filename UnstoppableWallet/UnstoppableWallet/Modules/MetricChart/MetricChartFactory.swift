@@ -41,19 +41,18 @@ class MetricChartFactory {
         case .percent:         // values in percent
             return ValueFormatter.instance.format(percentValue: value, signed: false)
         case .currencyValue:
-            return CurrencyCompactFormatter.instance.format(currency: currency, value: value)
+            return ValueFormatter.instance.formatFull(currency: currency, value: value)
         case .counter:
             if exactlyValue {
                 return value.description
             } else {
-                return CurrencyCompactFormatter.instance.format(currency: nil, value: value)
+                return ValueFormatter.instance.formatShort(value: value)
             }
         case .compactCurrencyValue:                   // others in compact forms
             if exactlyValue {
-                let currencyValue = CurrencyValue(currency: currency, value: value)
-                return ValueFormatter.instance.format(currencyValue: currencyValue)
+                return ValueFormatter.instance.formatFull(currency: currency, value: value)
             } else {
-                return CurrencyCompactFormatter.instance.format(currency: currency, value: value)
+                return ValueFormatter.instance.formatShort(currency: currency, value: value)
             }
         }
     }

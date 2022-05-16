@@ -163,8 +163,8 @@ class SendEvmTransactionViewModel {
                         value: coinServiceFactory.baseCoinService.platformCoin.coin.name
                 ),
                 .value(
-                        title: amountData.secondary?.formattedRawString ?? "n/a".localized,
-                        value: amountData.primary.formattedString ?? "n/a".localized,
+                        title: amountData.secondary?.formattedFull ?? "n/a".localized,
+                        value: amountData.primary.formattedFull ?? "n/a".localized,
                         type: .outgoing
                 ),
                 .address(
@@ -183,7 +183,7 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(title: "send.confirmation.you_send".localized, value: coinService.platformCoin.coin.name),
-            .value(title: coinService.amountData(value: value).secondary?.formattedRawString ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedString ?? "n/a".localized), type: .outgoing)
+            .value(title: coinService.amountData(value: value).secondary?.formattedFull ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedFull ?? "n/a".localized), type: .outgoing)
         ]
 
         let addressValue = to.eip55
@@ -206,7 +206,7 @@ class SendEvmTransactionViewModel {
 
         var viewItems: [ViewItem] = [
             .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.platformCoin.coin.name),
-            .value(title: coinService.amountData(value: value).secondary?.formattedRawString ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedString ?? "n/a".localized), type: .regular),
+            .value(title: coinService.amountData(value: value).secondary?.formattedFull ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedFull ?? "n/a".localized), type: .regular),
             .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
         ]
 
@@ -419,8 +419,8 @@ class SendEvmTransactionViewModel {
     }
 
     private func value(amountData: AmountData, postfix: String? = nil, type: ValueType) -> ViewItem {
-        let title = amountData.secondary?.formattedRawString ?? "n/a".localized
-        let value = amountData.primary.formattedString ?? "n/a".localized
+        let title = amountData.secondary?.formattedFull ?? "n/a".localized
+        let value = amountData.primary.formattedFull ?? "n/a".localized
         return .value(title: title, value: "\(value)\(postfix.map { " \($0)" } ?? "")", type: type)
     }
 

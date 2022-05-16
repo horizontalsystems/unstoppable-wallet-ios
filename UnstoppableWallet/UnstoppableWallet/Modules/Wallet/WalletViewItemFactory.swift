@@ -107,7 +107,7 @@ class WalletViewItemFactory {
             return (text: "n/a".localized, dimmed: true)
         }
 
-        let formattedValue = ValueFormatter.instance.format(currencyValue: rateItem.price, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false)
+        let formattedValue = ValueFormatter.instance.formatFull(currencyValue: rateItem.price)
         return (text: formattedValue, dimmed: rateItem.expired)
     }
 
@@ -118,17 +118,16 @@ class WalletViewItemFactory {
 
         let value = rateItem.diff
 
-        guard let formattedValue = Self.diffFormatter.string(from: abs(value) as NSNumber) else {
+        guard let formattedValue = ValueFormatter.instance.format(percentValue: value, signed: true) else {
             return nil
         }
 
-        let sign = value.isSignMinus ? "-" : "+"
-        return (text: "\(sign)\(formattedValue)%", type: rateItem.expired ? .dimmed : (value < 0 ? .negative : .positive))
+        return (text: formattedValue, type: rateItem.expired ? .dimmed : (value < 0 ? .negative : .positive))
     }
 
     private func coinValue(platformCoin: PlatformCoin, value: Decimal, state: AdapterState, expanded: Bool) -> (text: String?, dimmed: Bool) {
         (
-                text: expanded ? ValueFormatter.instance.formatFullNew(value: value, decimalCount: platformCoin.decimals, symbol: nil) : ValueFormatter.instance.formatNew(value: value, decimalCount: platformCoin.decimals, symbol: nil),
+                text: expanded ? ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals, symbol: nil) : ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals, symbol: nil),
                 dimmed: state != .synced
         )
     }
@@ -142,7 +141,7 @@ class WalletViewItemFactory {
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-                text: expanded ? ValueFormatter.instance.formatFullNew(currencyValue: currencyValue) : ValueFormatter.instance.formatNew(currencyValue: currencyValue),
+                text: expanded ? ValueFormatter.instance.formatFull(currencyValue: currencyValue) : ValueFormatter.instance.formatShort(currencyValue: currencyValue),
                 dimmed: state != .synced || priceItem.expired
         )
     }
@@ -162,12 +161,12 @@ extension WalletViewItemFactory {
 
     func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, watchAccount: Bool, watchAccountAddress: EthereumKit.Address?) -> WalletViewModel.HeaderViewItem {
         let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
-        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatNew(currencyValue: currencyValue)
+        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: currencyValue)
 
         let convertedValue: String
         if balanceHidden {
             convertedValue = "*****"
-        } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatNew(coinValue: value) {
+        } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
             convertedValue = "≈ \(formattedValue)"
         } else {
             convertedValue = "---"
@@ -182,17 +181,5 @@ extension WalletViewItemFactory {
                 address: watchAccount ? watchAccountAddress?.eip55 : nil
         )
     }
-
-}
-
-extension WalletViewItemFactory {
-
-    private static let diffFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.groupingSeparator = ""
-        return formatter
-    }()
 
 }

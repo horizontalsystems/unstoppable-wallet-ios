@@ -69,7 +69,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
                 name: name,
                 code: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
                 rank: "\(defiCoin.tvlRank)",
-                price: CurrencyCompactFormatter.instance.format(currency: currency, value: tvl, alwaysSigned: false) ?? "n/a".localized,
+                price: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,
                 dataValue: diff
         )
     }

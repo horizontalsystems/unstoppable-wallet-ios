@@ -144,8 +144,8 @@ class UniswapViewModel {
 
     private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
-                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, platformCoinIn: tradeService.platformCoinOut, platformCoinOut: tradeService.platformCoinIn)?.formattedString,
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedFull,
+                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, platformCoinIn: tradeService.platformCoinOut, platformCoinOut: tradeService.platformCoinIn)?.formattedFull,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
                 guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)
         )
@@ -232,7 +232,7 @@ extension UniswapViewModel {
                 slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
                 deadline: viewItemHelper.deadline(tradeService.settings.ttl),
                 recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedString,
+                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedFull,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)
         )
 

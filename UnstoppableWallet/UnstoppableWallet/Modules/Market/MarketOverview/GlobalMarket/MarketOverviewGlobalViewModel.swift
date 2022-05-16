@@ -37,7 +37,7 @@ class MarketOverviewGlobalViewModel {
     }
 
     private func chartViewItem(item: MarketOverviewGlobalService.GlobalMarketItem) -> ChartViewItem {
-        let value = item.amount.flatMap { CurrencyCompactFormatter.instance.format(currency: $0.currency, value: $0.value) }
+        let value = item.amount.flatMap { ValueFormatter.instance.formatShort(currency: $0.currency, value: $0.value) }
 
         var chartData: ChartData?
         var trend: MovementTrend = .neutral

@@ -68,7 +68,7 @@ class SwapAllowanceViewModel {
         case .notReady:
             return "n/a".localized
         case .ready(let allowance):
-            return allowance.formattedString
+            return ValueFormatter.instance.formatFull(coinValue: allowance)
         }
     }
 

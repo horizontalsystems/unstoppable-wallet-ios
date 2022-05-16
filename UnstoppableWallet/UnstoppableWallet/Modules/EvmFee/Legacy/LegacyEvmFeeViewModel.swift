@@ -73,7 +73,7 @@ class LegacyEvmFeeViewModel {
 
             let gasData = fallibleTransaction.data.gasData
             let valueType: FeeCell.ValueType = fallibleTransaction.errors.isEmpty ? .regular : .error
-            maxFeeValue = FeeCell.Value(text: coinService.amountData(value: gasData.fee).formattedString, type: valueType)
+            maxFeeValue = FeeCell.Value(text: coinService.amountData(value: gasData.fee).formattedFull, type: valueType)
             gasLimit = gasData.gasLimit.description
             cautions = cautionsFactory.items(errors: fallibleTransaction.errors, warnings: fallibleTransaction.warnings, baseCoinService: coinService)
         }

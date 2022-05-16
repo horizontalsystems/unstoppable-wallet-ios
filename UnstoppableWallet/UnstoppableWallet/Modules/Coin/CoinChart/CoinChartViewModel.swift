@@ -52,7 +52,7 @@ class CoinChartViewModel {
         }
 
         let rateValue = state.data?.rate.map { CurrencyValue(currency: service.currency, value: $0) }
-        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.format(currencyValue: $0, fractionPolicy: .threshold(high: 1000, low: 0.01), trimmable: false) })
+        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) })
         rateDiffRelay.accept(state.data?.rateDiff24h)
 
         guard let item = state.data else {

@@ -92,7 +92,7 @@ class NftAssetViewModel {
     private func coinValue(priceItem: NftAssetService.PriceItem) -> String {
         let price = priceItem.nftPrice
         let coinValue = CoinValue(kind: .platformCoin(platformCoin: price.platformCoin), value: price.value)
-        return ValueFormatter.instance.formatNew(coinValue: coinValue) ?? "---"
+        return ValueFormatter.instance.formatShort(coinValue: coinValue) ?? "---"
     }
 
     private func fiatValue(priceItem: NftAssetService.PriceItem) -> String {
@@ -100,8 +100,7 @@ class NftAssetViewModel {
             return "---"
         }
 
-        let currencyValue = CurrencyValue(currency: coinPrice.price.currency, value: priceItem.nftPrice.value * coinPrice.price.value)
-        return ValueFormatter.instance.formatNew(currencyValue: currencyValue) ?? "---"
+        return ValueFormatter.instance.formatShort(currency: coinPrice.price.currency, value: priceItem.nftPrice.value * coinPrice.price.value) ?? "---"
     }
 
     private func traitViewItem(index: Int, trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {

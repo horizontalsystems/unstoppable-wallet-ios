@@ -90,7 +90,7 @@ extension UniswapModule {
 
     struct GuaranteedAmountViewItem {
         let title: String
-        let value: String
+        let value: String?
     }
 
     enum UniswapWarning: Warning {

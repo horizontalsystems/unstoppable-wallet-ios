@@ -22,12 +22,11 @@ class CoinSelectViewModel {
         let viewItems = items.map { item -> ViewItem in
             let formatted = item.balance
                     .flatMap { CoinValue(kind: .platformCoin(platformCoin: item.platformCoin), value: $0) }
-                    .flatMap { ValueFormatter.instance.format(coinValue: $0, fractionPolicy: .threshold(high: 0.01, low: 0)) }
+                    .flatMap { ValueFormatter.instance.formatShort(coinValue: $0) }
 
             let fiatFormatted = item.rate
                     .flatMap { rate in item.balance.map { $0 * rate } }
-                    .flatMap { CurrencyValue(currency: service.currency, value: $0) }
-                    .flatMap { ValueFormatter.instance.format(currencyValue: $0) }
+                    .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
 
             return ViewItem(platformCoin: item.platformCoin, balance: formatted, fiatBalance: fiatFormatted)
         }

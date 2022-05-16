@@ -17,7 +17,7 @@ class NftCollectionsHeaderViewModel {
     }
 
     private func sync(totalItem: NftCollectionsService.TotalItem?) {
-        let formattedValue = totalItem.flatMap { ValueFormatter.instance.format(currencyValue: $0.currencyValue) }
+        let formattedValue = totalItem.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0.currencyValue) }
         amountRelay.accept(formattedValue)
     }
 

@@ -25,12 +25,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         let protocols = item.protocolsCount.map { "market.top.protocols".localized + " \($0)" } ?? ""
 
-        let marketCap = item.marketCap.flatMap {
-            CurrencyCompactFormatter.instance.format(
-                    currency: currency,
-                    value: $0
-            )
-        } ?? "n/a".localized
+        let marketCap = item.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
 
         let rankDiff: Int?
         let diff: Decimal?
