@@ -17,12 +17,11 @@ class CoinChartFactory {
     }
 
     private func macdFormat(value: Decimal?) -> String? {
-        guard let value = value, let formattedValue = ValueFormatter.instance.formatShort(value: value, decimalCount: 2, symbol: nil) else {
+        guard let value = value, let formattedValue = ValueFormatter.instance.formatShort(value: value, decimalCount: 2, showSign: true) else {
             return nil
         }
 
-        let sign = value.isSignMinus ? "- " : ""
-        return "\(sign)\(formattedValue)"
+        return formattedValue
     }
 
     private func chartData(points: [ChartPoint], startTimestamp: TimeInterval, endTimestamp: TimeInterval) -> ChartData {

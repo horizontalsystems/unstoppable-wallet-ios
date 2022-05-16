@@ -87,7 +87,7 @@ class ValueFormatter {
         case 200..<20_000:
             digits = 0
 
-        case 10_000..<pow(10, 6):
+        case 20_000..<pow(10, 6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
             suffix = "number.thousand"
 
@@ -138,7 +138,30 @@ class ValueFormatter {
         return (value: value, digits: max(digits, minDigits))
     }
 
-    private func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String, suffix: String?) -> String? {
+    private func decorated(string: String, suffix: String? = nil, symbol: String? = nil, signValue: Decimal? = nil, tooSmall: Bool = false) -> String {
+        var string = string
+
+        if let suffix = suffix {
+            string = suffix.localized(string)
+        }
+
+        if let symbol = symbol {
+            string = "\(string) \(symbol)"
+        }
+
+        if let signValue = signValue {
+            let sign = signValue.isSignMinus ? "-" : "+"
+            string = "\(sign)\(string)"
+        }
+
+        if tooSmall {
+            string = "< \(string)"
+        }
+
+        return string
+    }
+
+    private func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String, suffix: String? = nil) -> String? {
         let currencyFormatter = currencyFormatter
         currencyFormatter.currencyCode = code
         currencyFormatter.currencySymbol = symbol
@@ -151,15 +174,11 @@ class ValueFormatter {
         let formatter = rawFormatter
         formatter.maximumFractionDigits = digits
 
-        guard var result = formatter.string(from: value as NSNumber) else {
+        guard let string = formatter.string(from: value as NSNumber) else {
             return nil
         }
 
-        if let suffix = suffix {
-            result = suffix.localized(result)
-        }
-
-        return pattern.replacingOccurrences(of: "1", with: result)
+        return pattern.replacingOccurrences(of: "1", with: decorated(string: string, suffix: suffix))
     }
 
 }
@@ -167,119 +186,86 @@ class ValueFormatter {
 extension ValueFormatter {
 
     func formatShort(value: Decimal) -> String? {
-        let (value, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
 
         let formatter = rawFormatter
         formatter.maximumFractionDigits = digits
 
-        guard var result = formatter.string(from: value as NSNumber) else {
+        guard let string = formatter.string(from: transformedValue as NSNumber) else {
             return nil
         }
 
-        if let suffix = suffix {
-            result = suffix.localized(result)
-        }
-
-        if tooSmall {
-            result = "< \(result)"
-        }
-
-        return result
+        return decorated(string: string, suffix: suffix, tooSmall: tooSmall)
     }
 
-    func formatShort(value: Decimal, decimalCount: Int, symbol: String?) -> String? {
-        let (value, digits, postfix, tooSmall) = transformedShort(value: value, maxDecimalCount: decimalCount)
+    func formatShort(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: decimalCount)
 
         let formatter = rawFormatter
         formatter.maximumFractionDigits = digits
 
-        guard var result = formatter.string(from: value as NSNumber) else {
+        guard let string = formatter.string(from: transformedValue as NSNumber) else {
             return nil
         }
 
-        if let postfix = postfix {
-            result = postfix.localized(result)
-        }
-
-        if let symbol = symbol {
-            result = "\(result) \(symbol)"
-        }
-
-        if tooSmall {
-            result = "< \(result)"
-        }
-
-        return result
+        return decorated(string: string, suffix: suffix, symbol: symbol, signValue: showSign ? value : nil, tooSmall: tooSmall)
     }
 
-    func formatFull(value: Decimal, decimalCount: Int, symbol: String?) -> String? {
-        let (value, digits) = transformedFull(value: value, maxDecimalCount: decimalCount, minDigits: min(decimalCount, 4))
+    func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
+        let (transformedValue, digits) = transformedFull(value: value, maxDecimalCount: decimalCount, minDigits: min(decimalCount, 4))
 
         let formatter = rawFormatter
         formatter.maximumFractionDigits = digits
 
-        guard var result = formatter.string(from: value as NSNumber) else {
+        guard let string = formatter.string(from: transformedValue as NSNumber) else {
             return nil
         }
 
-        if let symbol = symbol {
-            result = "\(result) \(symbol)"
+        return decorated(string: string, symbol: symbol, signValue: showSign ? value : nil)
+    }
+
+    func formatShort(coinValue: CoinValue, showCode: Bool = true, showSign: Bool = false) -> String? {
+        formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil, showSign: showSign)
+    }
+
+    func formatFull(coinValue: CoinValue, showCode: Bool = true, showSign: Bool = false) -> String? {
+        formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil, showSign: showSign)
+    }
+
+    func formatShort(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
+
+        guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol, suffix: suffix) else {
+            return nil
         }
 
-        return result
+        return decorated(string: string, signValue: showSign ? value : nil, tooSmall: tooSmall)
     }
 
-    func formatShort(coinValue: CoinValue, showCode: Bool = true) -> String? {
-        formatShort(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil)
+    func formatShort(currencyValue: CurrencyValue, showSign: Bool = false) -> String? {
+        formatShort(currency: currencyValue.currency, value: currencyValue.value, showSign: showSign)
     }
 
-    func formatFull(coinValue: CoinValue, showCode: Bool = true) -> String? {
-        formatFull(value: coinValue.value, decimalCount: coinValue.decimals, symbol: showCode ? coinValue.coin.code : nil)
-    }
+    func formatFull(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
+        let (transformedValue, digits) = transformedFull(value: value, maxDecimalCount: 8, minDigits: 0)
 
-    func formatShort(currency: Currency, value: Decimal) -> String? {
-        let (value, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
-
-        var result = formattedCurrency(
-                value: value,
-                digits: digits,
-                code: currency.code,
-                symbol: currency.symbol,
-                suffix: suffix
-        )
-
-        if tooSmall {
-            result = "< \(result)"
+        guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol) else {
+            return nil
         }
 
-        return result
+        return decorated(string: string, signValue: showSign ? value : nil)
     }
 
-    func formatShort(currencyValue: CurrencyValue) -> String? {
-        formatShort(currency: currencyValue.currency, value: currencyValue.value)
+    func formatFull(currencyValue: CurrencyValue, showSign: Bool = false) -> String? {
+        formatFull(currency: currencyValue.currency, value: currencyValue.value, showSign: showSign)
     }
 
-    func formatFull(currency: Currency, value: Decimal) -> String? {
-        let (value, digits) = transformedFull(value: value, maxDecimalCount: 8, minDigits: 0)
+    func format(percentValue: Decimal, showSign: Bool = true) -> String? {
+        guard let string = percentFormatter.string(from: abs(percentValue) as NSNumber) else {
+            return nil
+        }
 
-        return formattedCurrency(
-                value: value,
-                digits: digits,
-                code: currency.code,
-                symbol: currency.symbol,
-                suffix: nil
-        )
-    }
-
-    func formatFull(currencyValue: CurrencyValue) -> String? {
-        formatFull(currency: currencyValue.currency, value: currencyValue.value)
-    }
-
-    func format(percentValue: Decimal, signed: Bool = true) -> String? {
-        let plusSign = (percentValue >= 0 && signed) ? "+" : ""
-
-        let formattedDiff = percentFormatter.string(from: percentValue as NSNumber)
-        return formattedDiff.map { plusSign + $0 + "%" }
+        return decorated(string: string, signValue: showSign ? percentValue : nil) + "%"
     }
 
 }

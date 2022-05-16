@@ -19,13 +19,9 @@ class TransactionsViewItemFactory {
         }
     }
 
-    private func coinString(from transactionValue: TransactionValue, incoming: Bool? = nil) -> String {
-        guard var value = transactionValue.formattedShort else {
+    private func coinString(from transactionValue: TransactionValue, showSign: Bool = true) -> String {
+        guard var value = transactionValue.formattedShort(showSign: showSign) else {
             return "n/a".localized
-        }
-
-        if let incoming = incoming {
-            value = "\(incoming ? "+" : "-")\(value)"
         }
 
         return value
@@ -40,18 +36,18 @@ class TransactionsViewItemFactory {
         var secondaryValue: TransactionsViewModel.Value?
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0], incoming: true), type: .incoming)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: .incoming)
             if let currencyValue = currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0], incoming: false), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: .outgoing)
             if let currencyValue = currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
         } else if incomingValues.count == 1, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0], incoming: true), type: .incoming)
-            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0], incoming: false), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: .incoming)
+            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: .outgoing)
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
             let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
             primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
@@ -88,7 +84,7 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .incoming)
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -102,7 +98,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -121,10 +117,10 @@ class TransactionsViewItemFactory {
             subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
             if let valueOut = record.valueOut {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: record.recipient != nil ? .secondary : .incoming)
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: record.recipient != nil ? .secondary : .incoming)
             }
 
-            secondaryValue = TransactionsViewModel.Value(text: coinString(from: record.valueIn, incoming: false), type: .outgoing)
+            secondaryValue = TransactionsViewModel.Value(text: coinString(from: record.valueIn), type: .outgoing)
 
         case let record as UnknownSwapTransactionRecord:
             iconType = .doubleIcon(
@@ -137,10 +133,10 @@ class TransactionsViewItemFactory {
             subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
 
             if let valueOut = record.valueOut {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut, incoming: true), type: .incoming)
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: .incoming)
             }
             if let valueIn = record.valueIn {
-                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn, incoming: false), type: .outgoing)
+                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn), type: .outgoing)
             }
 
         case let record as ApproveTransactionRecord:
@@ -155,7 +151,7 @@ class TransactionsViewItemFactory {
                 primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
                 secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
             } else {
-                primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .neutral)
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: false), type: .neutral)
 
                 if let currencyValue = item.currencyValue {
                     secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -210,7 +206,7 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = record.from.flatMap { "transactions.from".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .incoming)
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
@@ -227,7 +223,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle =  record.to.flatMap { "transactions.to".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
@@ -246,7 +242,7 @@ class TransactionsViewItemFactory {
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: true), type: .incoming)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: .incoming)
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
@@ -259,7 +255,7 @@ class TransactionsViewItemFactory {
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
 
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, incoming: record.sentToSelf ? nil : false), type: record.sentToSelf ? .neutral : .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: record.sentToSelf ? .neutral : .outgoing)
 
             if let currencyValue = item.currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)

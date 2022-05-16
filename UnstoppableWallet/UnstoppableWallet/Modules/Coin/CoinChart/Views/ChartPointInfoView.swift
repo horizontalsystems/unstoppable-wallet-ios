@@ -69,7 +69,7 @@ class ChartPointInfoView: UIView {
             rightView.titleColor = .themeGray
             rightView.subtitleColor = .themeJacob
 
-            rightView.bind(title: "BTC Dominance", subtitle: value.flatMap { ValueFormatter.instance.format(percentValue: $0, signed: false) })
+            rightView.bind(title: "BTC Dominance", subtitle: value.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) })
         }
 
     }
