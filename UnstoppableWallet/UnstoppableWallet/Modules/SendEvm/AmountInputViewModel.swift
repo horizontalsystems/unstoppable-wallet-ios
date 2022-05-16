@@ -177,7 +177,7 @@ class AmountInputViewModel {
 
     private func syncSecondary(amountInfo: AmountInfo?) {
         secondaryTextTypeRelay.accept(InputType.inputType(amountInfo: amountInfo))
-        secondaryTextRelay.accept(amountInfo?.formattedString)
+        secondaryTextRelay.accept(amountInfo?.formattedFull)
     }
 
 }

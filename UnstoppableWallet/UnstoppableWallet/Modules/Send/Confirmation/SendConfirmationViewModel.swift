@@ -34,10 +34,10 @@ class SendConfirmationViewModel {
         service.items.forEach { item in
             switch item {
             case let item as SendConfirmationAmountViewItem:
-                if let primary = item.primaryInfo.formattedString {
+                if let primary = item.primaryInfo.formattedFull {
                     primaryViewItems.append(.amount(
                             primary: primary,
-                            secondary: item.secondaryInfo?.formattedString)
+                            secondary: item.secondaryInfo?.formattedFull)
                     )
                 }
                 let title = item.receiver.domain != nil ? "send.confirmation.domain" : "send.confirmation.address"
@@ -52,7 +52,7 @@ class SendConfirmationViewModel {
                         value: item.memo)
                 )
             case let item as SendConfirmationFeeViewItem:
-                let value = [item.primaryInfo.formattedString, item.secondaryInfo?.formattedString]
+                let value = [item.primaryInfo.formattedFull, item.secondaryInfo?.formattedFull]
                         .compactMap { $0 }
                         .joined(separator: " | ")
 

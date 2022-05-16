@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(item: CoinDetailsService.ProData, fractionMaximumFractionDigits: Int = 1, isCurrencyValue: Bool = true) -> ChartViewItem? {
+    private func chart(item: CoinDetailsService.ProData, isCurrencyValue: Bool = true) -> ChartViewItem? {
         switch item {
         case .empty: return nil
         case .forbidden: return ChartViewItem(value: "coin_page.chart.locked".localized, diff: "***", diffColor: .themeGray, chartData: ChartData.placeholder, chartTrend: .neutral)
@@ -65,7 +65,9 @@ class CoinDetailsViewModel {
             let diffColor = DiffLabel.color(value: diffValue)
 
             let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-            let value = CurrencyCompactFormatter.instance.format(currency: isCurrencyValue ? service.currency : nil, value: last.value, fractionMaximumFractionDigits: fractionMaximumFractionDigits)
+            let value = isCurrencyValue ?
+                    ValueFormatter.instance.formatShort(currency: service.currency, value: last.value) :
+                    ValueFormatter.instance.formatShort(value: last.value)
 
             return ChartViewItem(value: value, diff: diff ?? "n/a".localized, diffColor: DiffLabel.color(value: diffValue), chartData: chartData, chartTrend: diffValue.isSignMinus ? .down : .up)
         }
@@ -95,8 +97,8 @@ class CoinDetailsViewModel {
                 tvlChart: chart(item: item.tvls.flatMap { .completed($0) } ?? .empty),
                 tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
                 tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
-                treasuries: item.marketInfoDetails.totalTreasuries.flatMap { CurrencyCompactFormatter.instance.format(currency: service.currency, value: $0) },
-                fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { CurrencyCompactFormatter.instance.format(currency: service.usdCurrency, value: $0) },
+                treasuries: item.marketInfoDetails.totalTreasuries.flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) },
+                fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) },
                 reportsCount: item.marketInfoDetails.reportsCount == 0 ? nil : "\(item.marketInfoDetails.reportsCount)",
                 securityViewItems: securityViewItems(info: item.marketInfoDetails),
                 auditAddresses: service.auditAddresses

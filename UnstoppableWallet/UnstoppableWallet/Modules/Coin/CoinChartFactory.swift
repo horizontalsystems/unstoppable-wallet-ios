@@ -16,61 +16,14 @@ class CoinChartFactory {
         dateFormatter.locale = currentLocale
     }
 
-    private let coinFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfUp
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-
-    private let macdFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfUp
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }()
-
-    private let currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        return formatter
-    }()
-
-    private func roundedFormat(coinCode: String, value: Decimal?) -> String {
-        guard let value = value, !value.isZero, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
-            return "n/a".localized
-        }
-
-        return "\(formattedValue) \(coinCode)"
-    }
-
     private func macdFormat(value: Decimal?) -> String? {
-        guard let value = value, let formattedValue = macdFormatter.string(from: abs(value) as NSNumber) else {
+        guard let value = value, let formattedValue = ValueFormatter.instance.formatShort(value: value, decimalCount: 2, symbol: nil) else {
             return nil
         }
 
         let sign = value.isSignMinus ? "- " : ""
         return "\(sign)\(formattedValue)"
     }
-
-    private func scale(min: Decimal, max: Decimal) -> Int {
-        let maxIntegerDigits = max.integerDigitCount
-        var min = min / pow(10, maxIntegerDigits), max = max / pow(10, maxIntegerDigits)
-        var count = -maxIntegerDigits
-        while count < 8 {   // maxDigits = 8
-            if Int(truncating: (max - min) as NSNumber) >= 5 {  // digitDiff = 5
-                return count + (count == 0 && max < 10 ? 1 : 0)
-            } else {
-                count += 1
-                min *= 10
-                max *= 10
-            }
-        }
-        return 8
-    }
-
 
     private func chartData(points: [ChartPoint], startTimestamp: TimeInterval, endTimestamp: TimeInterval) -> ChartData {
         // fill items by points
@@ -198,16 +151,8 @@ class CoinChartFactory {
         var minRateString: String?, maxRateString: String?
 
         if let minRate = minRate, let maxRate = maxRate {
-            let currencyScale = scale(min: minRate, max: maxRate)
-
-            currencyFormatter.currencyCode = currency.code
-            currencyFormatter.currencySymbol = currency.symbol
-
-            currencyFormatter.minimumFractionDigits = 0
-            currencyFormatter.maximumFractionDigits = max(0, currencyScale)
-
-            minRateString = currencyFormatter.string(from: minRate as NSNumber)
-            maxRateString = currencyFormatter.string(from: maxRate as NSNumber)
+            minRateString = ValueFormatter.instance.formatFull(currency: currency, value: minRate)
+            maxRateString = ValueFormatter.instance.formatFull(currency: currency, value: maxRate)
         }
 
         // make timeline for chart
@@ -233,12 +178,7 @@ class CoinChartFactory {
 
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
-
-        currencyFormatter.currencyCode = currency.code
-        currencyFormatter.currencySymbol = currency.symbol
-        currencyFormatter.maximumFractionDigits = 8
-
-        let formattedValue = currencyFormatter.string(from: rate as NSNumber)
+        let formattedValue = ValueFormatter.instance.formatFull(currency: currency, value: rate)
 
         var rightSideMode: SelectedPointViewItem.RightSideMode
         if macdSelected {
@@ -250,7 +190,7 @@ class CoinChartFactory {
             rightSideMode = .macd(macdInfo: MacdInfo(macd: macd, signal: macdSignal, histogram: macdHistogram, histogramDown: histogramDown))
         } else {
 
-            rightSideMode = .volume(value: CurrencyCompactFormatter.instance.format(currency: currency, value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : $0 }))
+            rightSideMode = .volume(value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0) })
         }
 
         return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)

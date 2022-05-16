@@ -61,8 +61,8 @@ class CoinTreasuriesViewModel {
                 logoUrl: treasury.fundLogoUrl,
                 fund: treasury.fund,
                 country: treasury.country,
-                amount: CurrencyCompactFormatter.instance.format(symbol: service.coinCode, value: treasury.amount) ?? "---",
-                amountInCurrency: CurrencyCompactFormatter.instance.format(currency: service.currency, value: treasury.amountInCurrency) ?? "---"
+                amount: ValueFormatter.instance.formatShort(value: treasury.amount, decimalCount: 8, symbol: service.coinCode) ?? "---",
+                amountInCurrency: ValueFormatter.instance.formatShort(currency: service.currency, value: treasury.amountInCurrency) ?? "---"
         )
     }
 

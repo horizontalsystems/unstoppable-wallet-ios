@@ -3,20 +3,13 @@ import CurrencyKit
 import MarketKit
 
 class CoinOverviewViewItemFactory {
-    private let coinFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfUp
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
 
     private func roundedFormat(coinCode: String, value: Decimal?) -> String? {
-        guard let value = value, !value.isZero, let formattedValue = coinFormatter.string(from: value as NSNumber) else {
+        guard let value = value, !value.isZero, let formattedValue = ValueFormatter.instance.formatFull(value: value, decimalCount: 0, symbol: coinCode) else {
             return nil
         }
 
-        return "\(formattedValue) \(coinCode)"
+        return formattedValue
     }
 
     private func roiTitle(timePeriod: HsTimePeriod) -> String {
@@ -174,12 +167,12 @@ extension CoinOverviewViewItemFactory {
 
         return CoinOverviewViewModel.ViewItem(
                 marketCapRank: info.marketCapRank.map { "#\($0)" },
-                marketCap: info.marketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) },
+                marketCap: info.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 totalSupply: roundedFormat(coinCode: coinCode, value: info.totalSupply),
                 circulatingSupply: roundedFormat(coinCode: coinCode, value: info.circulatingSupply),
-                volume24h: info.volume24h.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) },
-                dilutedMarketCap: info.dilutedMarketCap.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) },
-                tvl: info.tvl.flatMap { CurrencyCompactFormatter.instance.format(currency: currency, value: $0) },
+                volume24h: info.volume24h.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
+                dilutedMarketCap: info.dilutedMarketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
+                tvl: info.tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 genesisDate: info.genesisDate.map { DateHelper.instance.formatFullDateOnly(from: $0) },
 
                 performance: performanceViewItems(info: info),

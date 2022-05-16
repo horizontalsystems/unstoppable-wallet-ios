@@ -20,7 +20,9 @@ class TransactionsViewItemFactory {
     }
 
     private func coinString(from transactionValue: TransactionValue, incoming: Bool? = nil) -> String {
-        var value = ValueFormatter.instance.formatNew(transactionValue: transactionValue) ?? ""
+        guard var value = transactionValue.formattedShort else {
+            return "n/a".localized
+        }
 
         if let incoming = incoming {
             value = "\(incoming ? "+" : "-")\(value)"
@@ -30,7 +32,7 @@ class TransactionsViewItemFactory {
     }
 
     private func currencyString(from currencyValue: CurrencyValue) -> String {
-        ValueFormatter.instance.formatNew(currencyValue: currencyValue.abs) ?? ""
+        ValueFormatter.instance.formatShort(currencyValue: currencyValue) ?? ""
     }
 
     private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {

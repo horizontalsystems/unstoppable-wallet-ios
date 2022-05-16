@@ -59,10 +59,10 @@ class SendAvailableBalanceViewModel {
 
         if case .currency = switchService.amountType, let rate = coinService.rate {
             let currencyValue = CurrencyValue(currency: rate.currency, value: availableBalance * rate.value)
-            value = ValueFormatter.instance.format(currencyValue: currencyValue)
+            value = ValueFormatter.instance.formatFull(currencyValue: currencyValue)
         } else {
             let coinValue = CoinValue(kind: .platformCoin(platformCoin: coinService.platformCoin), value: availableBalance)
-            value = ValueFormatter.instance.format(coinValue: coinValue)!
+            value = ValueFormatter.instance.formatFull(coinValue: coinValue)
         }
 
         viewStateRelay.accept(.loaded(value: value))

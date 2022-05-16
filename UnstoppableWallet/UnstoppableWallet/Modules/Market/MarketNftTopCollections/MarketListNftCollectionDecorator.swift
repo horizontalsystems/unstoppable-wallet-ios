@@ -18,7 +18,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
             iconPlaceholderName = floorPrice.platformCoin.fullCoin.placeholderImageName
 
             let coinValue = CoinValue(kind: .platformCoin(platformCoin: floorPrice.platformCoin), value: floorPrice.value)
-            if let value = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) {
+            if let value = ValueFormatter.instance.formatShort(coinValue: coinValue) {
                 floorPriceString = "market.top.floor_price".localized + " " + value
             }
         }
@@ -40,7 +40,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
             diff = collection.stats.thirtyDayChange
         }
 
-        if let volume = volume, let value = CurrencyCompactFormatter.instance.format(symbol: volume.platformCoin.code, value: volume.value) {
+        if let volume = volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .platformCoin(platformCoin: volume.platformCoin), value: volume.value)) {
             volumeString = value
         }
         let dataValue: MarketModule.MarketDataValue = .diff(diff)

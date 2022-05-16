@@ -51,9 +51,9 @@ class SendAmountCautionViewModel {
         case .insufficientBalance:
             self.amountCaution = Caution(text: "send.amount_error.balance".localized, type: .error)
         case .maximumAmountExceeded:
-            self.amountCaution = Caution(text: "send.amount_error.maximum_amount".localized(amountInfo?.formattedString ?? ""), type: .error)
+            self.amountCaution = Caution(text: "send.amount_error.maximum_amount".localized(amountInfo?.formattedFull ?? ""), type: .error)
         case .tooFewAmount:
-            self.amountCaution = Caution(text: "send.amount_error.minimum_amount".localized(amountInfo?.formattedString ?? ""), type: .error)
+            self.amountCaution = Caution(text: "send.amount_error.minimum_amount".localized(amountInfo?.formattedFull ?? ""), type: .error)
         }
     }
 

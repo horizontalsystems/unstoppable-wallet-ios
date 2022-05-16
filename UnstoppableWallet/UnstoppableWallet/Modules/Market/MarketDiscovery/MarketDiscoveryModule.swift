@@ -15,7 +15,7 @@ struct MarketDiscoveryModule {
     static func formatCategoryMarketData(category: MarketDiscoveryCategoryService.Item, currency: Currency) -> (String?, String?, DiffType) {
         var marketCap: String?
         if let amount = category.marketCap {
-            marketCap = CurrencyCompactFormatter.instance.format(currency: currency, value: amount)
+            marketCap = ValueFormatter.instance.formatShort(currency: currency, value: amount)
         } else {
             marketCap = "----"
         }

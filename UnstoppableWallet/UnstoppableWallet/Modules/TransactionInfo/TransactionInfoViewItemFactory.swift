@@ -31,8 +31,8 @@ class TransactionInfoViewItemFactory {
             return .amount(
                     iconUrl: iconUrl,
                     iconPlaceholderImageName: iconPlaceholderImageName,
-                    coinAmount: "\(type.prefix)\(transactionValue.abs.formattedString)",
-                    currencyAmount: currencyValue?.abs.formattedString,
+                    coinAmount: transactionValue.formattedFull.map { "\(type.prefix)\($0)" } ?? "n/a".localized,
+                    currencyAmount: currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     type: type
             )
         }
@@ -41,13 +41,12 @@ class TransactionInfoViewItemFactory {
     private func feeString(transactionValue: TransactionValue, rate: CurrencyValue?) -> String {
         var parts = [String]()
 
-        if let formattedCoinValue = ValueFormatter.instance.format(transactionValue: transactionValue) {
+        if let formattedCoinValue = transactionValue.formattedFull {
             parts.append(formattedCoinValue)
         }
 
         if let rate = rate, case .coinValue(_, let value) = transactionValue {
-            let currencyValue = CurrencyValue(currency: rate.currency, value: rate.value * value)
-            if let formattedCurrencyValue = ValueFormatter.instance.format(currencyValue: currencyValue) {
+            if let formattedCurrencyValue = ValueFormatter.instance.formatFull(currency: rate.currency, value: rate.value * value) {
                 parts.append(formattedCurrencyValue)
             }
         }
@@ -62,15 +61,15 @@ class TransactionInfoViewItemFactory {
         }
 
         let priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
-        let price = ValueFormatter.instance.format(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: nil) ?? ""
+        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInPlatformCoin.coin.code) ?? ""
         let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs(priceDecimal * $0.value)) }
-        let rateFormatted = rate.flatMap { ($0.formattedString.map { " (\($0))"}) } ?? ""
+        let rateFormatted = rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0).map { " (\($0))"} } ?? ""
 
-        return "\(valueOutPlatformCoin.coin.code) = \(price) \(valueInPlatformCoin.coin.code)" + rateFormatted
+        return "\(valueOutPlatformCoin.coin.code) = \(price)\(rateFormatted)"
     }
 
     private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {
-        let formattedValue = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.1), trimmable: false) ?? ""
+        let formattedValue = ValueFormatter.instance.formatFull(currencyValue: currencyValue) ?? ""
 
         return "balance.rate_per_coin".localized(formattedValue, coinCode)
     }

@@ -58,7 +58,7 @@ struct MarketModule {
 
             if let currencyValue = currencyValue, let diff = diff {
                 let valueDiff = diff * currencyValue.value / 100
-                value = CurrencyCompactFormatter.instance.format(currency: currencyValue.currency, value: valueDiff, alwaysSigned: true) ?? "----"
+                value = ValueFormatter.instance.formatShort(currency: currencyValue.currency, value: valueDiff) ?? "----"
                 color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
             } else {
                 value = "----"

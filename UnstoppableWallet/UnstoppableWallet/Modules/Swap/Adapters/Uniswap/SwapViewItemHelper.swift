@@ -33,7 +33,7 @@ class SwapViewItemHelper {
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.minimum_got".localized,
-                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
+                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
             )
         case .exactOut:
             guard let amount = tradeData.amountInMax, let platformCoin = platformCoinIn else {
@@ -42,7 +42,7 @@ class SwapViewItemHelper {
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.maximum_paid".localized,
-                    value: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount).formattedString
+                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
             )
         }
     }
@@ -64,8 +64,8 @@ extension SwapViewItemHelper {
         let baseCoin: Coin
         let quoteCoinValue: CoinValue
 
-        var formattedString: String {
-            ValueFormatter.instance.format(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+        var formattedFull: String {
+            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
 
     }

@@ -54,7 +54,7 @@ class SendEvmCautionsFactory {
         if case SendEvmTransactionService.TransactionError.insufficientBalance(let requiredBalance) = error {
             let amountData = baseCoinService.amountData(value: requiredBalance)
             title = "fee_settings.errors.insufficient_balance".localized
-            text = "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedString)
+            text = "ethereum_transaction.error.insufficient_balance".localized(amountData.formattedFull)
         }
 
         if case AppError.ethereum(let reason) = error.convertedError {

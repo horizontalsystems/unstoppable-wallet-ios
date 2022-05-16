@@ -8,21 +8,12 @@ enum AmountInfo {
     case coinValue(coinValue: CoinValue)
     case currencyValue(currencyValue: CurrencyValue)
 
-    var formattedString: String? {
+    var formattedFull: String? {
         switch self {
         case .coinValue(let coinValue):
-            return coinValue.formattedString
+            return ValueFormatter.instance.formatFull(coinValue: coinValue)
         case .currencyValue(let currencyValue):
-            return ValueFormatter.instance.format(currencyValue: currencyValue)
-        }
-    }
-
-    var formattedRawString: String? {
-        switch self {
-        case .coinValue(let coinValue):
-            return coinValue.formattedRawString
-        case .currencyValue(let currencyValue):
-            return ValueFormatter.instance.format(currencyValue: currencyValue)
+            return ValueFormatter.instance.formatFull(currencyValue: currencyValue)
         }
     }
 
@@ -46,28 +37,14 @@ struct AmountData {
     let primary: AmountInfo
     let secondary: AmountInfo?
 
-    var formattedString: String {
+    var formattedFull: String {
         var parts = [String]()
 
-        if let formatted = primary.formattedString {
+        if let formatted = primary.formattedFull {
             parts.append(formatted)
         }
 
-        if let formatted = secondary?.formattedString {
-            parts.append(formatted)
-        }
-
-        return parts.joined(separator: "  |  ")
-    }
-
-    var formattedRawString: String {
-        var parts = [String]()
-
-        if let formatted = primary.formattedRawString {
-            parts.append(formatted)
-        }
-
-        if let formatted = secondary?.formattedRawString {
+        if let formatted = secondary?.formattedFull {
             parts.append(formatted)
         }
 

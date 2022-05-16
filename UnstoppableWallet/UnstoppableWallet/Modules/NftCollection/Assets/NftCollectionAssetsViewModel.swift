@@ -49,13 +49,12 @@ class NftCollectionAssetsViewModel {
 
         if let price = item.price {
             let coinValue = CoinValue(kind: .platformCoin(platformCoin: price.platformCoin), value: price.value)
-            if let value = ValueFormatter.instance.format(coinValue: coinValue, fractionPolicy: .threshold(high: 0.01, low: 0)) {
+            if let value = ValueFormatter.instance.formatShort(coinValue: coinValue) {
                 coinPrice = value
             }
 
             if let priceItem = item.priceItem {
-                let currencyValue = CurrencyValue(currency: priceItem.price.currency, value: price.value * priceItem.price.value)
-                fiatPrice = ValueFormatter.instance.format(currencyValue: currencyValue, fractionPolicy: .threshold(high: 1000, low: 0.01))
+                fiatPrice = ValueFormatter.instance.formatShort(currency: priceItem.price.currency, value: price.value * priceItem.price.value)
             }
         }
 
