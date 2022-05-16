@@ -27,7 +27,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         let marketCap = item.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
 
-        let rankDiff: Int?
+        let rankDiff: Int?  //todo use to show rank change on top platforms module
         let diff: Decimal?
 
         switch timePeriod {
@@ -46,9 +46,9 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         return MarketModule.ListViewItem(
                 uid: item.uid,
-                iconUrl: item.fullCoin?.coin.imageUrl ?? "",
+                iconUrl: item.imageUrl,
                 iconShape: .square,
-                iconPlaceholderName: item.fullCoin?.placeholderImageName ?? "",
+                iconPlaceholderName: "placeholder_24",
                 name: item.name,
                 code: protocols,
                 rank: item.rank.map { "\($0)" },
