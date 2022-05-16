@@ -660,9 +660,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.types.swap" = "Swap";
 "transactions.types.approve" = "Onaylar";
 
-
-"transactions.unknown_transaction.title" = "Bilinmeyen İşlem";
-"transactions.unknown_transaction.description" = "İşlem çözümlenemiyor";
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 // Transaction Info
 
@@ -1142,8 +1141,15 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
 "nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.offer" = "Offer Entered";
+"nft_collection.activity.event_type.bid" = "Bid Entered";
+"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_type.approve" = "Approve";
+"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft_collection.activity.event_type.unknown" = "Unknown";
