@@ -7,7 +7,7 @@ struct MarketNftTopCollectionsModule {
         let service = MarketNftTopCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
 
         let decorator = MarketListNftCollectionDecorator()
-        let viewModel = MarketNftTopCollectionsViewModel(service: service)
+        let viewModel = MarketNftTopCollectionsViewModel()
         let listViewModel = MarketListViewModel(service: service, decorator: decorator)
         let headerViewModel = NftCollectionsMultiSortHeaderViewModel(service: service, decorator: decorator)
 
@@ -54,28 +54,26 @@ extension Array where Element == NftCollection {
         sorted { lhsCollection, rhsCollection in
             let lhsVolume: Decimal
             let rhsVolume: Decimal
+            let lhsChange: Decimal
+            let rhsChange: Decimal
+
             switch volumeRange {
             case .day:
                 lhsVolume = lhsCollection.stats.oneDayVolume?.value ?? 0
                 rhsVolume = rhsCollection.stats.oneDayVolume?.value ?? 0
-            case .week:
-                lhsVolume = lhsCollection.stats.sevenDayVolume?.value ?? 0
-                rhsVolume = rhsCollection.stats.sevenDayVolume?.value ?? 0
-            case .month:
-                lhsVolume = lhsCollection.stats.thirtyDayVolume?.value ?? 0
-                rhsVolume = rhsCollection.stats.thirtyDayVolume?.value ?? 0
-            }
 
-            let lhsChange: Decimal
-            let rhsChange: Decimal
-            switch volumeRange {
-            case .day:
                 lhsChange = lhsCollection.stats.oneDayChange ?? 0
                 rhsChange = rhsCollection.stats.oneDayChange ?? 0
             case .week:
+                lhsVolume = lhsCollection.stats.sevenDayVolume?.value ?? 0
+                rhsVolume = rhsCollection.stats.sevenDayVolume?.value ?? 0
+
                 lhsChange = lhsCollection.stats.sevenDayChange ?? 0
                 rhsChange = rhsCollection.stats.sevenDayChange ?? 0
             case .month:
+                lhsVolume = lhsCollection.stats.thirtyDayVolume?.value ?? 0
+                rhsVolume = rhsCollection.stats.thirtyDayVolume?.value ?? 0
+
                 lhsChange = lhsCollection.stats.thirtyDayChange ?? 0
                 rhsChange = rhsCollection.stats.thirtyDayChange ?? 0
             }
