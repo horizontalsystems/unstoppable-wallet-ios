@@ -320,7 +320,7 @@
 
 "swap.dex_info.header_dex_related" = "Relatif à %@";
 "swap.dex_info.header_allowance" = "Allocation";
-"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "Le montant de la devise que le service peut débourser en votre nom lors de l'exécution du token swap. Une provision suffisante est requise avant qu'une action de swap puisse avoir lieu.";
 "swap.dex_info.header_price_impact" = "Impact prix";
 "swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
 "swap.dex_info.header_swap_fee" = "Frais d'échange";
@@ -355,7 +355,7 @@
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
 "market.top.section.header.top_losers" = "Les gros perdants";
-"market.top.section.header.top_sectors" = "Top Sectors";
+"market.top.section.header.top_sectors" = "Meilleurs secteurs";
 "market.top.section.header.news" = "Infos";
 "market.top.volume.title" = "Vol";
 "market.top.market_cap.title" = "CapM";
@@ -380,19 +380,19 @@
 "market.top.lowest_volume" = "Volume le plus bas";
 "market.top.top_gainers" = "Les grands gagnants";
 "market.top.top_losers" = "Les gros perdants";
-"market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.top_collections" = "Meilleures collections NFT";
+"market.top.floor_price" = "Floor :";
+"market.top.top_platforms" = "Meilleures plateformes";
+"market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Top ecosystem platforms by market cap";
+"top_platforms.title" = "Classement des plateformes";
+"top_platforms.description" = "Meilleures plateformes d'écosystèmes par capitalisation boursière";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
 "market_discovery.browse_categories" = "Parcourir les catégories";
 "market_discovery.top_coins" = "TOP des coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Aucun résultat";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
 
@@ -501,26 +501,26 @@
 "coin_page.markets.empty" = "Aucune donnée disponible";
 
 "coin_page.token_liquidity" = "Liquidité du token";
-"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
-"coin_page.dex_volume" = "DEX Volume";
-"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
-"coin_page.dex_liquidity" = "DEX Liquidity";
-"coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
-"coin_page.chart.locked" = "Locked";
+"coin_page.token_liquidity.description" = "L'état de la liquidité pour l'actif donné sur les marchés d'échange décentralisés.";
+"coin_page.dex_volume" = "Volume DEX";
+"coin_page.dex_volume.description" = "Le volume de trading pour le token sur les échanges décentralisés.";
+"coin_page.dex_liquidity" = "Liquidité DEX";
+"coin_page.dex_liquidity.description" = "Le montant total des liquidités disponibles pour le token sur les échanges décentralisés.";
+"coin_page.chart.locked" = "Verrouillé";
 
 "coin_page.token_distribution" = "Distribution du token";
-"coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
-"coin_page.tx_count" = "Tx Count";
-"coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
-"coin_page.tx_volume" = "Tx Volume";
-"coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
-"coin_page.active_addresses" = "Active Addresses";
-"coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";
+"coin_page.token_distribution.description" = "Paramètres on-chain du token. En général, les projets sains ont une base d'utilisateurs on-chain active et un token bien distribué.";
+"coin_page.tx_count" = "Nombre de Tx";
+"coin_page.tx_count.description" = "Le nombre de transactions du token enregistrées on-chain sur différentes périodes.";
+"coin_page.tx_volume" = "Volume Tx";
+"coin_page.tx_volume.description" = "Le volume global des transactions de tokens est enregistré on-chain. Le volume est mesuré en tokens réels (pas en USD).";
+"coin_page.active_addresses" = "Adresses actives";
+"coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
 
 "coin_page.chart_tvl" = "Token TVL";
 "coin_page.chart_volumes" = "Total Volume";
 "coin_page.token_tvl" = "Token TVL";
-"coin_page.token_tvl.description" = "Total Value Locked (TVL) is a metric that shows the total value of crypto assets under automated management by the smart contracts powering the given protocol.";
+"coin_page.token_tvl.description" = "La valeur totale verrouillée (TVL) est une mesure qui indique la valeur totale des cryptomonnaies sous gestion automatisée par les contrats intelligents qui alimentent le protocole donné.";
 "coin_page.tvl" = "Valeur totale verrouillée";
 "coin_page.tvl_rank" = "Rang TVL";
 "coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
@@ -696,7 +696,7 @@
 "tx_info.you_paid" = "Vous avez payé";
 "tx_info.you_got" = "Vous avez reçu";
 "tx_info.price" = "Prix";
-"tx_info.options" = "Options";
+"tx_info.options" = "Be Unstoppable";
 
 // Settings
 
@@ -782,17 +782,17 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings_security.blockchain_settings" = "Paramètres de la Blockchain";
 "security_settings.delete_alert_button" = "Supprimer de l'appareil";
 
-"btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source" = "Restorer la source";
+"btc_blockchain_settings.restore_source.description" = "Sélectionnez la source de données pour restaurer le portefeuille avec les transactions.";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 "btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
 
-"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.recommended" = "Recommandé";
 "btc_restore_mode.more_private" = "More Private";
 
-"btc_transaction_sort_mode.shuffle" = "Shuffle";
-"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.shuffle" = "Mélanger";
+"btc_transaction_sort_mode.shuffle.description" = "Indexation aléatoire";
 "btc_transaction_sort_mode.bip69" = "BIP69";
 "btc_transaction_sort_mode.bip69.description" = "Indexation lexicographique";
 
@@ -1147,9 +1147,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.activity.event_type.bid" = "Bid Entered";
 "nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
-"nft_collection.activity.event_type.approve" = "Approve";
-"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.approve" = "Approuver";
+"nft_collection.activity.event_type.custom" = "Personnalisé";
 "nft_collection.activity.event_type.payout" = "Payout";
-"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.cancel" = "Annuler";
 "nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
 "nft_collection.activity.event_type.unknown" = "Unknown";
