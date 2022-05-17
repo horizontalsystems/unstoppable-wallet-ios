@@ -33,38 +33,56 @@ struct MarketTopPlatformsModule {
         }
     }
 
+    static var selectorValues: [HsTimePeriod] {
+        [HsTimePeriod.day1,
+         HsTimePeriod.week1,
+         HsTimePeriod.month1]
+    }
+
 }
 
 extension Array where Element == MarketKit.TopPlatform {
 
     func sorted(sortType: MarketTopPlatformsModule.SortType, timePeriod: HsTimePeriod) -> [TopPlatform] {
         sorted { lhsPlatform, rhsPlatform in
-            let lhsCap = lhsPlatform.marketCap ?? 0
-            let rhsCap = rhsPlatform.marketCap ?? 0
+            let lhsCap = lhsPlatform.marketCap
+            let rhsCap = rhsPlatform.marketCap
 
-            let lhsChange: Decimal
-            let rhsChange: Decimal
+            var lhsChange: Decimal? = nil
+            var rhsChange: Decimal? = nil
 
             switch timePeriod {
             case .day1:
-                lhsChange = lhsPlatform.oneDayChange ?? 0
-                rhsChange = rhsPlatform.oneDayChange ?? 0
+                lhsChange = lhsPlatform.oneDayChange
+                rhsChange = rhsPlatform.oneDayChange
             case .week1:
-                lhsChange = lhsPlatform.sevenDayChange ?? 0
-                rhsChange = rhsPlatform.sevenDayChange ?? 0
+                lhsChange = lhsPlatform.sevenDayChange
+                rhsChange = rhsPlatform.sevenDayChange
             case .month1:
-                lhsChange = lhsPlatform.thirtyDayChange ?? 0
-                rhsChange = rhsPlatform.thirtyDayChange ?? 0
+                lhsChange = lhsPlatform.thirtyDayChange
+                rhsChange = rhsPlatform.thirtyDayChange
             default:
-                lhsChange = 0
-                rhsChange = 0
-                print("unreachable state")
+                break
             }
 
             switch sortType {
             case .highestCap, .lowestCap:
+                guard let lhsCap = lhsCap else {
+                    return true
+                }
+                guard let rhsCap = rhsCap else {
+                    return false
+                }
+
                 return sortType == .highestCap ? lhsCap > rhsCap : lhsCap < rhsCap
             case .topGainers, .topLosers:
+                guard let lhsChange = lhsChange else {
+                    return true
+                }
+                guard let rhsChange = rhsChange else {
+                    return false
+                }
+
                 return sortType == .topGainers ? lhsChange > rhsChange : lhsChange < rhsChange
             }
         }

@@ -1,9 +1,12 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import MarketKit
 
 class MarketOverviewNftCollectionsViewModel {
-    private let service: MarketOverviewNftCollectionsService
+    private let listCount = 5
+
+    private let service: MarketNftTopCollectionsService
     private let decorator: MarketListNftCollectionDecorator
     private let disposeBag = DisposeBag()
 
@@ -11,7 +14,7 @@ class MarketOverviewNftCollectionsViewModel {
 
     var viewItem: BaseMarketOverviewTopListDataSource.ViewItem?
 
-    init(service: MarketOverviewNftCollectionsService, decorator: MarketListNftCollectionDecorator) {
+    init(service: MarketNftTopCollectionsService, decorator: MarketListNftCollectionDecorator) {
         self.service = service
         self.decorator = decorator
 
@@ -20,17 +23,24 @@ class MarketOverviewNftCollectionsViewModel {
         }
     }
 
-    private func sync(status: DataStatus<[NftCollectionItem]>) {
-        stateRelay.accept(status.map({ [weak self] listItems in
-            self?.createViewItem(listItems: listItems)
+    private func sync(status: MarketListServiceState<NftCollectionItem>) {
+        let listCount = listCount
 
-            return ()
-        }))
+        switch status {
+        case .loading:
+            stateRelay.accept(.loading)
+        case let .failed(error):
+            stateRelay.accept(.failed(error))
+        case let .loaded(items, _, _):
+            createViewItem(listItems: Array(items.prefix(listCount)))
+
+            stateRelay.accept(.completed(()))
+        }
     }
 
     private func createViewItem(listItems: [NftCollectionItem]) {
         viewItem = .init(
-                rightSelectorMode: .none,
+                rightSelectorMode: .selector,
                 imageName: "image_2_20",
                 title: "market.top.top_collections".localized,
                 listViewItems: listItems.map {
@@ -55,15 +65,16 @@ extension MarketOverviewNftCollectionsViewModel: IMarketOverviewSectionViewModel
 
 extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var selectorValues: [String] {
-        []
+    var selectorTitles: [String] {
+        MarketNftTopCollectionsModule.selectorValues.map { $0.title }
     }
 
     var selectorIndex: Int {
-        0
+        MarketNftTopCollectionsModule.selectorValues.firstIndex(of: service.timePeriod) ?? 0
     }
 
     func onSelect(selectorIndex: Int) {
+        service.timePeriod = MarketNftTopCollectionsModule.selectorValues[selectorIndex]
     }
 
 }

@@ -54,24 +54,16 @@ extension MarketOverviewTopPlatformsViewModel: IMarketOverviewSectionViewModel {
 
 extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var selectorValues: [String] {
-        [
-            HsTimePeriod.day1,
-            HsTimePeriod.week1,
-            HsTimePeriod.month1
-        ].map {
-            $0.title
-        }
+    var selectorTitles: [String] {
+        MarketTopPlatformsModule.selectorValues.map { $0.title }
     }
 
     var selectorIndex: Int {
-        HsTimePeriod.allCases.firstIndex(of: service.timePeriod) ?? 0
+        MarketTopPlatformsModule.selectorValues.firstIndex(of: service.timePeriod) ?? 0
     }
 
     func onSelect(selectorIndex: Int) {
-        let timePeriod = HsTimePeriod.allCases[selectorIndex]
-        decorator.timePeriod = timePeriod
-        service.timePeriod = timePeriod
+        service.timePeriod = MarketTopPlatformsModule.selectorValues[selectorIndex]
     }
 
 }

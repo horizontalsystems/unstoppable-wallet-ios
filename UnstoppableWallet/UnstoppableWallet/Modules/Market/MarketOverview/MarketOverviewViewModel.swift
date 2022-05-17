@@ -19,7 +19,7 @@ class MarketOverviewViewModel {
     init(viewModels: [IMarketOverviewSectionViewModel]) {
         self.viewModels = viewModels
 
-        subscribe(disposeBag, Driver.zip(viewModels.map { $0.stateDriver })) { [weak self] in
+        subscribe(disposeBag, Driver.combineLatest(viewModels.map { $0.stateDriver })) { [weak self] in
             self?.sync(statuses: $0)
         }
     }
