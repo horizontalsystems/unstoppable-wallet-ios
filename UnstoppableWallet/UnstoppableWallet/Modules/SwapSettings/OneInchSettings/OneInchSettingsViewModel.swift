@@ -6,14 +6,12 @@ class OneInchSettingsViewModel {
 
     private let service: OneInchSettingsService
     private let tradeService: OneInchTradeService
-    private let decimalParser: IAmountDecimalParser
 
     private let actionRelay = BehaviorRelay<ActionState>(value: .enabled)
 
-    init(service: OneInchSettingsService, tradeService: OneInchTradeService, decimalParser: IAmountDecimalParser) {
+    init(service: OneInchSettingsService, tradeService: OneInchTradeService) {
         self.service = service
         self.tradeService = tradeService
-        self.decimalParser = decimalParser
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
