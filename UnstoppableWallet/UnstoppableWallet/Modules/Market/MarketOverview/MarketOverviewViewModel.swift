@@ -27,11 +27,11 @@ class MarketOverviewViewModel {
     private func sync(statuses: [DataStatus<()>]) {
         var status = DataStatus<()>.completed(())
         statuses.forEach {
-            if case .failed = $0 {
+            if $0.error != nil {
                 status = $0
                 return
             }
-            if case .loading = $0 {
+            if $0.isLoading {
                 status = $0
                 return
             }
