@@ -617,7 +617,7 @@
 "pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
 "pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
 
-"pro_features.activate" = "Activate";
+"pro_features.activate" = "활성화";
 "pro_features.mountain_yak.activate.title" = "Activate the Pass";
 "pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
 "pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
@@ -1147,9 +1147,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collection.activity.event_type.bid" = "Bid Entered";
 "nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
-"nft_collection.activity.event_type.approve" = "Approve";
-"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.approve" = "승인";
+"nft_collection.activity.event_type.custom" = "사용자 지정";
 "nft_collection.activity.event_type.payout" = "Payout";
-"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.cancel" = "취소";
 "nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
 "nft_collection.activity.event_type.unknown" = "Unknown";
