@@ -28,20 +28,21 @@ extension IAmountInputService {
 class AmountInputViewModel {
     private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
 
-    private static let maxCoinDecimals = 8
+    private static let fallbackCoinDecimals = 8
 
     private let disposeBag = DisposeBag()
 
     private let service: IAmountInputService
     private let fiatService: FiatService
     private let switchService: AmountTypeSwitchService
-    private let decimalParser: IAmountDecimalParser
+    private let decimalParser: AmountDecimalParser
     private let isMaxSupported: Bool
 
     private let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
+        formatter.usesSignificantDigits = true
+        formatter.usesGroupingSeparator = false
         return formatter
     }()
 
@@ -55,9 +56,9 @@ class AmountInputViewModel {
     private var switchEnabledRelay: BehaviorRelay<Bool>
     private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
-    private var coinDecimals = AmountInputViewModel.maxCoinDecimals
+    private var coinDecimals = AmountInputViewModel.fallbackCoinDecimals
 
-    init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: IAmountDecimalParser, isMaxSupported: Bool = true) {
+    init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser, isMaxSupported: Bool = true) {
         self.service = service
         self.fiatService = fiatService
         self.switchService = switchService
@@ -100,8 +101,7 @@ class AmountInputViewModel {
 
     private func sync(platformCoin: PlatformCoin?) {
         queue.async { [weak self] in
-            let max = AmountInputViewModel.maxCoinDecimals
-            self?.coinDecimals = min(max, (platformCoin?.decimals ?? max))
+            self?.coinDecimals = platformCoin?.decimals ?? AmountInputViewModel.fallbackCoinDecimals
 
             self?.fiatService.set(platformCoin: platformCoin)
             self?.updateMaxEnabled()
@@ -147,8 +147,8 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = min(amountInfo.decimal, Self.maxCoinDecimals)
-            return decimalFormatter.string(from: amountInfo.value as NSNumber)
+            decimalFormatter.maximumSignificantDigits = amountInfo.value.significandDigits(fractionDigits: amountInfo.decimal)
+            return decimalFormatter.string(from: amountInfo.value as NSDecimalNumber)
         case .amount(let amount):
             amountTypeRelay.accept(.coin)
 
@@ -156,8 +156,8 @@ class AmountInputViewModel {
                 return nil
             }
 
-            decimalFormatter.maximumFractionDigits = Self.maxCoinDecimals
-            return decimalFormatter.string(from: amount as NSNumber)
+            decimalFormatter.maximumSignificantDigits = amount.significandDigits(fractionDigits: Self.fallbackCoinDecimals)
+            return decimalFormatter.string(from: amount as NSDecimalNumber)
         }
     }
 

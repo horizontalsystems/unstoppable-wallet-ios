@@ -16,9 +16,9 @@ class SwapApproveViewModel {
 
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
 
-    private let decimalParser: IAmountDecimalParser
+    private let decimalParser: AmountDecimalParser
 
-    init(service: SwapApproveService, coinService: CoinService, decimalParser: IAmountDecimalParser) {
+    init(service: SwapApproveService, coinService: CoinService, decimalParser: AmountDecimalParser) {
         self.service = service
         self.coinService = coinService
         self.decimalParser = decimalParser

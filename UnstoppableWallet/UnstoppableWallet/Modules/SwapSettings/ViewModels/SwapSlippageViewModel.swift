@@ -21,9 +21,9 @@ class SwapSlippageViewModel {
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
 
     private let service: ISlippageService
-    private let decimalParser: IAmountDecimalParser
+    private let decimalParser: AmountDecimalParser
 
-    public init(service: ISlippageService, decimalParser: IAmountDecimalParser) {
+    public init(service: ISlippageService, decimalParser: AmountDecimalParser) {
         self.service = service
         self.decimalParser = decimalParser
 

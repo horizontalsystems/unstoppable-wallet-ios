@@ -6,14 +6,12 @@ class UniswapSettingsViewModel {
 
     private let service: UniswapSettingsService
     private let tradeService: UniswapTradeService
-    private let decimalParser: IAmountDecimalParser
 
     private let actionRelay = BehaviorRelay<ActionState>(value: .enabled)
 
-    init(service: UniswapSettingsService, tradeService: UniswapTradeService, decimalParser: IAmountDecimalParser) {
+    init(service: UniswapSettingsService, tradeService: UniswapTradeService) {
         self.service = service
         self.tradeService = tradeService
-        self.decimalParser = decimalParser
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
