@@ -4,6 +4,9 @@ import CurrencyKit
 class ValueFormatter {
     static let instance = ValueFormatter()
 
+    private let rawFormatterQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.value-formatter.raw-formatter", qos: .utility)
+    private let currencyFormatterQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.value-formatter.currency-formatter", qos: .utility)
+
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -162,19 +165,23 @@ class ValueFormatter {
     }
 
     private func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String, suffix: String? = nil) -> String? {
-        let currencyFormatter = currencyFormatter
-        currencyFormatter.currencyCode = code
-        currencyFormatter.currencySymbol = symbol
-        currencyFormatter.internationalCurrencySymbol = symbol
+        let pattern: String? = currencyFormatterQueue.sync {
+            currencyFormatter.currencyCode = code
+            currencyFormatter.currencySymbol = symbol
+            currencyFormatter.internationalCurrencySymbol = symbol
+            return currencyFormatter.string(from: 1 as NSDecimalNumber)
+        }
 
-        guard let pattern = currencyFormatter.string(from: 1) else {
+        guard let pattern = pattern else {
             return nil
         }
 
-        let formatter = rawFormatter
-        formatter.maximumFractionDigits = digits
+        let string: String? = rawFormatterQueue.sync {
+            rawFormatter.maximumFractionDigits = digits
+            return rawFormatter.string(from: value as NSDecimalNumber)
+        }
 
-        guard let string = formatter.string(from: value as NSNumber) else {
+        guard let string = string else {
             return nil
         }
 
@@ -188,10 +195,12 @@ extension ValueFormatter {
     func formatShort(value: Decimal) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
 
-        let formatter = rawFormatter
-        formatter.maximumFractionDigits = digits
+        let string: String? = rawFormatterQueue.sync {
+            rawFormatter.maximumFractionDigits = digits
+            return rawFormatter.string(from: transformedValue as NSDecimalNumber)
+        }
 
-        guard let string = formatter.string(from: transformedValue as NSNumber) else {
+        guard let string = string else {
             return nil
         }
 
@@ -201,10 +210,12 @@ extension ValueFormatter {
     func formatShort(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: decimalCount)
 
-        let formatter = rawFormatter
-        formatter.maximumFractionDigits = digits
+        let string: String? = rawFormatterQueue.sync {
+            rawFormatter.maximumFractionDigits = digits
+            return rawFormatter.string(from: transformedValue as NSDecimalNumber)
+        }
 
-        guard let string = formatter.string(from: transformedValue as NSNumber) else {
+        guard let string = string else {
             return nil
         }
 
@@ -214,10 +225,12 @@ extension ValueFormatter {
     func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
         let (transformedValue, digits) = transformedFull(value: value, maxDecimalCount: decimalCount, minDigits: min(decimalCount, 4))
 
-        let formatter = rawFormatter
-        formatter.maximumFractionDigits = digits
+        let string: String? = rawFormatterQueue.sync {
+            rawFormatter.maximumFractionDigits = digits
+            return rawFormatter.string(from: transformedValue as NSDecimalNumber)
+        }
 
-        guard let string = formatter.string(from: transformedValue as NSNumber) else {
+        guard let string = string else {
             return nil
         }
 
