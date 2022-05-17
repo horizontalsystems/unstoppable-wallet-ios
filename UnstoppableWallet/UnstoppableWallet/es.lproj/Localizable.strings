@@ -385,6 +385,9 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocolos";
 
+"top_platforms.title" = "Platforms Rank";
+"top_platforms.description" = "Top ecosystem platforms by market cap";
+
 "market_discovery.title" = "Descubrimiento";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Browse Categories";
