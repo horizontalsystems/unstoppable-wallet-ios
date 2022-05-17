@@ -610,7 +610,7 @@
 
 "pro_features.lock_info.title" = "Passe Unstoppable";
 "pro_features.lock_info.subtitle" = "NFT";
-"pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Pass Unstoppable NFT sur votre balance\n\nVous aurez également accès aux données ci-dessous :";
+"pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Passe Unstoppable NFT sur votre balance\n\nVous aurez également accès aux données ci-dessous :";
 "pro_features.lock_info.coin_details.volume" = "Volume DEX";
 "pro_features.lock_info.coin_details.liquidity" = "Liquidité DEX";
 "pro_features.lock_info.coin_details.active_addresses" = "Adresses actives";
