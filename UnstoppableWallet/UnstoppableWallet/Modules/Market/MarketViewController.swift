@@ -11,6 +11,7 @@ class MarketViewController: ThemeViewController {
     private let tabsView = FilterHeaderView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
+    private var marketOverviewViewController: MarketOverviewViewController?
     private let postViewController: MarketPostViewController
     private let watchlistViewController: MarketWatchlistViewController
 
@@ -21,6 +22,8 @@ class MarketViewController: ThemeViewController {
         watchlistViewController = MarketWatchlistModule.viewController()
 
         super.init()
+
+        marketOverviewViewController = MarketOverviewModule.viewController(presentDelegate: self)
 
         tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
     }
@@ -85,7 +88,7 @@ class MarketViewController: ThemeViewController {
 
     private func viewController(tab: MarketModule.Tab) -> UIViewController {
         switch tab {
-        case .overview: return MarketOverviewModule.viewController(presentDelegate: self)
+        case .overview: return marketOverviewViewController ?? UIViewController()
         case .posts: return postViewController
         case .watchlist: return watchlistViewController
         }
