@@ -387,8 +387,8 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
-"top_platforms.title" = "平台排名";
-"top_platforms.description" = "按市场价值的前列生态系统平台";
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "过滤器";
@@ -1101,8 +1101,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.on_sale" = "在售";
 "nft_collections.empty" = "您的钱包中没有任何NFT";
 
-"top_nft_collections.title" = "前列 NFT 收藏";
-"top_nft_collections.description" = "部分前列数字艺术";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
