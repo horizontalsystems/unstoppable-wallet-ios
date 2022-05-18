@@ -18,7 +18,8 @@ class MetricChartViewModel {
 
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let chartInfoRelay = BehaviorRelay<MetricChartViewModel.ViewItem?>(value: nil)
+    private let valueRelay = BehaviorRelay<String?>(value: nil)
+    private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     var title: String { chartConfiguration.title }
@@ -45,6 +46,7 @@ class MetricChartViewModel {
         loadingRelay.accept(state.isLoading)
         errorRelay.accept(state.error?.smartDescription)
         if state.error != nil {
+            valueRelay.accept(nil)
             chartInfoRelay.accept(nil)
 
             return
@@ -55,12 +57,15 @@ class MetricChartViewModel {
             return
         }
 
-        chartInfoRelay.accept(factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType, currency: service.currency))
+        let viewItem = factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType, currency: service.currency)
+        valueRelay.accept(viewItem.currentValue)
+
+        chartInfoRelay.accept(viewItem)
     }
 
 }
 
-extension MetricChartViewModel {
+extension MetricChartViewModel: IChartViewModel {
 
     var pointSelectModeEnabledDriver: Driver<Bool> {
         pointSelectModeEnabledRelay.asDriver()
@@ -78,7 +83,7 @@ extension MetricChartViewModel {
         loadingRelay.asDriver()
     }
 
-    var chartInfoDriver: Driver<MetricChartViewModel.ViewItem?> {
+    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
         chartInfoRelay.asDriver()
     }
 
@@ -86,15 +91,31 @@ extension MetricChartViewModel {
         errorRelay.asDriver()
     }
 
-    var chartTypes: [String] { service.intervals.map { $0.title.uppercased() } }
+    var intervals: [String] { service.intervals.map { $0.title.uppercased() } }
 
-    func onSelectType(at index: Int) {
+    func onSelectInterval(at index: Int) {
         let chartTypes = service.intervals
         guard chartTypes.count > index else {
             return
         }
 
         service.interval = chartTypes[index]
+    }
+
+    var valueDriver: Driver<String?> {
+        valueRelay.asDriver()
+    }
+
+    func onTap(indicator: ChartIndicatorSet) {
+        // ignoring indicators
+    }
+
+    func viewDidLoad() {
+        service.fetchChartData()
+    }
+
+    func retry() {
+        service.fetchChartData()
     }
 
 }
@@ -118,18 +139,13 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
 extension MetricChartViewModel {
 
-    struct ViewItem {
-        let chartData: ChartData
-
-        let chartTrend: MovementTrend
-
+    class ViewItem: CoinChartViewModel.ViewItem {
         let currentValue: String?
-        let minValue: String?
-        let maxValue: String?
 
-        let chartDiff: Decimal?
-
-        let timeline: [ChartTimelineItem]
+        init(currentValue: String?, chartData: ChartData, chartTrend: MovementTrend, chartDiff: Decimal?, minValue: String?, maxValue: String?, timeline: [ChartTimelineItem], selectedIndicator: ChartIndicatorSet?) {
+            self.currentValue = currentValue
+            super.init(chartData: chartData, chartTrend: chartTrend, chartDiff: chartDiff, minValue: minValue, maxValue: maxValue, timeline: timeline, selectedIndicator: selectedIndicator)
+        }
     }
 
 }

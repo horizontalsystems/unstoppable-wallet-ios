@@ -103,6 +103,7 @@ struct MarketGlobalMetricModule {
                 chartFetcher: chartFetcher,
                 interval: .day1
         )
+        service.chartService = chartService
 
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)

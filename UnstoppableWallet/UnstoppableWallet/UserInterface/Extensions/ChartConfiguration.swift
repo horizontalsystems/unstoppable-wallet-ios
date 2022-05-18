@@ -7,12 +7,22 @@ import ThemeKit
 extension ChartConfiguration {
 
     static var fullChart: ChartConfiguration {
-        ChartConfiguration().applyColors()
+        let configuration = ChartConfiguration().applyColors()
+
+        configuration.mainHeight = ChartCell.chartHeight
+        configuration.indicatorHeight = ChartCell.indicatorHeight
+        configuration.timelineHeight = ChartCell.timelineHeight
+
+        return configuration
     }
 
     static var chartWithoutIndicators: ChartConfiguration {
         let configuration = ChartConfiguration().applyColors()
+
+        configuration.mainHeight = ChartCell.chartHeight
         configuration.showIndicators = false
+        configuration.indicatorHeight = 0
+        configuration.timelineHeight = ChartCell.timelineHeight
         configuration.timelineInsets = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
 
         return configuration

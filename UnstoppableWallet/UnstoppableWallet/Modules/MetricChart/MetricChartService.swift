@@ -34,11 +34,10 @@ class MetricChartService {
         self.chartFetcher = chartFetcher
         self.interval = interval
 
-        fetchChartData()
         subscribe(fetcherDisposeBag, chartFetcher.needUpdateObservable) { [weak self] in self?.fetchChartData() }
     }
 
-    private func fetchChartData() {
+    func fetchChartData() {
         disposeBag = DisposeBag()
         state = .loading
 

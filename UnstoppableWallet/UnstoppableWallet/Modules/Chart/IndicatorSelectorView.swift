@@ -1,22 +1,21 @@
 import UIKit
-import ThemeKit
 import ComponentKit
 
-class IndicatorSelectorCell: UITableViewCell {
+class IndicatorSelectorView: UIView {
+    static let cellHeight: CGFloat = 44
+
     private let bottomSeparatorView = UIView()
     private var indicatorViews = [ChartIndicatorSet : UIButton]()
 
     public var onTapIndicator: ((ChartIndicatorSet) -> ())?
 
-    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: nil)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        selectionStyle = .none
 
         let emaIndicatorView = ThemeButton().apply(style: .secondaryDefault)
-        contentView.addSubview(emaIndicatorView)
+        addSubview(emaIndicatorView)
         emaIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
@@ -29,7 +28,7 @@ class IndicatorSelectorCell: UITableViewCell {
         indicatorViews[.ema] = emaIndicatorView
 
         let macdIndicatorView = ThemeButton().apply(style: .secondaryDefault)
-        contentView.addSubview(macdIndicatorView)
+        addSubview(macdIndicatorView)
         macdIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(emaIndicatorView.snp.trailing).offset(CGFloat.margin8)
@@ -42,7 +41,7 @@ class IndicatorSelectorCell: UITableViewCell {
         indicatorViews[.macd] = macdIndicatorView
 
         let rsiIndicatorView = ThemeButton().apply(style: .secondaryDefault)
-        contentView.addSubview(rsiIndicatorView)
+        addSubview(rsiIndicatorView)
         rsiIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(macdIndicatorView.snp.trailing).offset(CGFloat.margin8)
@@ -54,7 +53,7 @@ class IndicatorSelectorCell: UITableViewCell {
         rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)
         indicatorViews[.rsi] = rsiIndicatorView
 
-        contentView.addSubview(bottomSeparatorView)
+        addSubview(bottomSeparatorView)
         bottomSeparatorView.snp.makeConstraints { maker in
             maker.leading.bottom.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
@@ -72,11 +71,15 @@ class IndicatorSelectorCell: UITableViewCell {
         onTapIndicator?(indicator)
     }
 
-    public func set(indicator: ChartIndicatorSet, selected: Bool) {
+}
+
+extension IndicatorSelectorView {
+
+    func set(indicator: ChartIndicatorSet, selected: Bool) {
         indicatorViews[indicator]?.isSelected = selected
     }
 
-    public func set(indicator: ChartIndicatorSet, disabled: Bool) {
+    func set(indicator: ChartIndicatorSet, disabled: Bool) {
         indicatorViews[indicator]?.isEnabled = !disabled
     }
 

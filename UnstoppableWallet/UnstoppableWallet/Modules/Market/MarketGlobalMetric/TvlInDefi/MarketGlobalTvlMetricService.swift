@@ -8,7 +8,15 @@ class MarketGlobalTvlMetricService {
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+
     private var syncDisposeBag = DisposeBag()
+    private var chartDisposeBag = DisposeBag()
+
+    weak var chartService: MetricChartService? {
+        didSet {
+            subscribeChart()
+        }
+    }
 
     private var internalState: State = .loading {
         didSet {
@@ -104,21 +112,21 @@ class MarketGlobalTvlMetricService {
         syncState(reorder: reorder)
     }
 
+    private func subscribeChart() {
+        chartDisposeBag = DisposeBag()
+        guard let chartService = chartService else {
+            return
+        }
+
+        subscribe(chartDisposeBag, chartService.intervalObservable) { [weak self] in self?.priceChangePeriod = $0 }
+    }
+
 }
 
 extension MarketGlobalTvlMetricService {
 
     var currency: Currency {
         currencyKit.baseCurrency
-    }
-
-    func setPriceChange(index: Int) {
-        let tvlChartCompatiblePeriods: [HsTimePeriod] = [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
-        if index < tvlChartCompatiblePeriods.count {
-            priceChangePeriod = tvlChartCompatiblePeriods[index]
-        } else {
-            priceChangePeriod = tvlChartCompatiblePeriods[0]
-        }
     }
 
 }
