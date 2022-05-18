@@ -32,54 +32,17 @@ class BaseMarketOverviewTopListDataSource {
         self.presentDelegate = presentDelegate
     }
 
-    private func row(tableView: UITableView, listViewItem: MarketModule.ListViewItem, isFirst: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .multiText],
-                tableView: tableView,
-                id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.clipsToBounds = true
-                        component.imageView.cornerRadius = listViewItem.iconShape == .square ? .cornerRadius4 : .cornerRadius12
-                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
-                    }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m3)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = listViewItem.name
-                        component.subtitle.text = listViewItem.code
-                        component.subtitleBadge.text = listViewItem.rank
-                    }
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.textAlignment = .right
-                        component.title.text = listViewItem.price
-
-                        let marketFieldData = MarketModule.marketFieldPreference(dataValue: listViewItem.dataValue)
-                        component.subtitle.textAlignment = .right
-                        component.subtitle.textColor = marketFieldData.color
-                        component.subtitle.text = marketFieldData.value
-                    }
-                },
-                action: {[weak self] in
-                    self?.onSelect(listViewItem: listViewItem)
-                }
-        )
-    }
-
     private func rows(tableView: UITableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
         listViewItems.enumerated().map { index, listViewItem in
-            row(tableView: tableView, listViewItem: listViewItem, isFirst: index == 0)
+            MarketModule.marketListCell(
+                    tableView: tableView,
+                    backgroundStyle: .lawrence,
+                    listViewItem: listViewItem,
+                    isFirst: index == 0,
+                    rowActionProvider: nil,
+                    action:  {[weak self] in
+                        self?.onSelect(listViewItem: listViewItem)
+                    })
         }
     }
 
