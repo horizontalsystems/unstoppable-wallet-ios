@@ -385,8 +385,8 @@
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Classement des plateformes";
-"top_platforms.description" = "Meilleures plateformes d'écosystèmes par capitalisation boursière";
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
@@ -1099,8 +1099,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collections.on_sale" = "En Vente";
 "nft_collections.empty" = "Vous n'avez pas de NFT dans votre portefeuille";
 
-"top_nft_collections.title" = "Top des collections NFT";
-"top_nft_collections.description" = "De l'art numérique de premier ordre";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
