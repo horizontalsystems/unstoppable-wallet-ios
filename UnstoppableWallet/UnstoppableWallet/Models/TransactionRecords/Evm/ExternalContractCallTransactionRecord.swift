@@ -10,7 +10,18 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: false)
+        var spam = true
+
+        for event in incomingEvents + outgoingEvents {
+            switch event.value {
+            case .coinValue:
+                spam = false
+                break
+            default: ()
+            }
+        }
+
+        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: false, spam: spam)
     }
 
     var combinedValues: ([TransactionValue], [TransactionValue]) {

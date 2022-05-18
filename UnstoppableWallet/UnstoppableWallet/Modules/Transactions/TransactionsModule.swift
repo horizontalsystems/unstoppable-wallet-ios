@@ -5,7 +5,7 @@ import MarketKit
 
 struct TransactionsModule {
 
-    static let pageLimit = 10
+    static let pageLimit = 20
 
     static func instance() -> UIViewController {
         let service = TransactionsService(

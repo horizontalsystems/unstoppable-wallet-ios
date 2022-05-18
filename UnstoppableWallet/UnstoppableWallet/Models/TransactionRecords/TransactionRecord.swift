@@ -9,8 +9,9 @@ class TransactionRecord {
     let confirmationsThreshold: Int?
     let date: Date
     let failed: Bool
+    let spam: Bool
 
-    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool) {
+    init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool, spam: Bool = false) {
         self.source = source
         self.uid = uid
         self.transactionHash = transactionHash
@@ -19,6 +20,7 @@ class TransactionRecord {
         self.confirmationsThreshold = confirmationsThreshold
         self.date = date
         self.failed = failed
+        self.spam = spam
     }
 
     func status(lastBlockHeight: Int?) -> TransactionStatus {
