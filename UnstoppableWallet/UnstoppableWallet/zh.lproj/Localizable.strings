@@ -322,7 +322,7 @@
 
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "执行代币互兑时，该服务可以代表您支出的某种货币的金额。执行互兑操作之前要求具备足够的批准限额。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -357,7 +357,7 @@
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.top_sectors" = "Top Sectors";
+"market.top.section.header.top_sectors" = "前列行业";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -373,7 +373,7 @@
 
 "market.sort_by" = "排序方式为";
 
-"market.top.title" = "Top Coins";
+"market.top.title" = "前列代币";
 "market.top.description" = "币种排名描述";
 
 "market.top.highest_cap" = "市值由高到低";
@@ -382,13 +382,13 @@
 "market.top.lowest_volume" = "成交量由低到高";
 "market.top.top_gainers" = "涨幅榜";
 "market.top.top_losers" = "跌幅榜";
-"market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.top_collections" = "前列 NFT 收藏";
+"market.top.floor_price" = "底部：";
+"market.top.top_platforms" = "前列平台";
+"market.top.protocols" = "协议";
 
-"top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Top ecosystem platforms by market cap";
+"top_platforms.title" = "平台排名";
+"top_platforms.description" = "按市场价值的前列生态系统平台";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "过滤器";
@@ -503,9 +503,9 @@
 "coin_page.markets.empty" = "没有可用数据";
 
 "coin_page.token_liquidity" = "代币流动性";
-"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
+"coin_page.token_liquidity.description" = "去中心化交易市场上特定资产的流动资金状况。";
 "coin_page.dex_volume" = "DEX交易量";
-"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
+"coin_page.dex_volume.description" = "去中心化交易所的代币交易量。";
 "coin_page.dex_liquidity" = "DEX流动性";
 "coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
 "coin_page.chart.locked" = "锁住";
