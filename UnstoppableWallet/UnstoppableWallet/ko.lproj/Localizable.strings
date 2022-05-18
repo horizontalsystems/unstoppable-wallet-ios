@@ -385,8 +385,8 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Top ecosystem platforms by market cap";
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -1100,7 +1100,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collections.empty" = "지갑에 NFT가 없습니다.";
 
 "top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
