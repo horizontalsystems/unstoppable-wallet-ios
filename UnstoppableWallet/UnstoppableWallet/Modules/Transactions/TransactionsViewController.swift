@@ -288,10 +288,8 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
             bind(item: item, cell: cell)
         }
 
-        if rowsBeforeBottom(indexPath: indexPath) <= 10 {
-            DispatchQueue.global(qos: .background).async { [weak self] in
-                self?.viewModel.bottomReached()
-            }
+        if rowsBeforeBottom(indexPath: indexPath) <= 5 {
+            viewModel.bottomReached()
         }
     }
 

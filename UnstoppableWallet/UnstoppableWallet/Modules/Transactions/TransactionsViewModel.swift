@@ -156,8 +156,7 @@ extension TransactionsViewModel {
     }
 
     func bottomReached() {
-        let count = sectionViewItems.reduce(0) { $0 + $1.viewItems.count }
-        service.load(count: count + TransactionsModule.pageLimit)
+        service.loadMore()
     }
 
     func transactionItem(uid: String) -> TransactionsService.Item? {

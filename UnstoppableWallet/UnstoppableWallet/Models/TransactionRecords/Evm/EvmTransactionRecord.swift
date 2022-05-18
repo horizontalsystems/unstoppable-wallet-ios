@@ -7,7 +7,7 @@ class EvmTransactionRecord: TransactionRecord {
     let ownTransaction: Bool
     let fee: TransactionValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, ownTransaction: Bool) {
+    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
         let txHash = transaction.hash.toHexString()
         self.ownTransaction = ownTransaction
@@ -27,7 +27,8 @@ class EvmTransactionRecord: TransactionRecord {
                 blockHeight: transaction.blockNumber,
                 confirmationsThreshold: BaseEvmAdapter.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                failed: transaction.isFailed
+                failed: transaction.isFailed,
+                spam: spam
         )
     }
 

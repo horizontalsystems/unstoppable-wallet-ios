@@ -8,14 +8,17 @@ class TransactionsService {
     private let syncStateService: TransactionSyncStateService
     private let rateService: HistoricalRateService
     private let filterHelper: TransactionFilterHelper
-    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .background)
+
+    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .utility)
 
     private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
     private var itemsSubject = PublishSubject<[Item]>()
     private var updatedItemSubject = PublishSubject<Item>()
 
+    private var records = [TransactionRecord]()
     private var items = [Item]()
+    private var loadingMore = false
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
@@ -79,43 +82,59 @@ class TransactionsService {
     }
 
     private func handle(records: [TransactionRecord]) {
-        items = records.map { record in
-            createItem(from: record)
-        }
+        queue.async {
+            self.records = records
 
-        itemsSubject.onNext(items)
+            let nonSpamRecords = records.filter { !$0.spam }
+
+            self.items = nonSpamRecords.map { record in
+                self.createItem(from: record)
+            }
+
+            self.itemsSubject.onNext(self.items)
+
+            self.loadingMore = false
+        }
     }
 
     private func handleRatesChanged() {
-        for (index, item) in items.enumerated() {
-            if item.record.mainValue != nil {
-                items[index] = createItem(from: item.record)
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if item.record.mainValue != nil {
+                    self.items[index] = self.createItem(from: item.record)
+                }
             }
-        }
 
-        itemsSubject.onNext(items)
+            self.itemsSubject.onNext(self.items)
+        }
     }
 
     private func handle(updatedRecord record: TransactionRecord) {
-        for (index, item) in items.enumerated() {
-            if item.record.uid == record.uid {
-                update(item: item, index: index, record: record)
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if item.record.uid == record.uid {
+                    self.update(item: item, index: index, record: record)
+                }
             }
         }
     }
 
     private func handle(source: TransactionSource, lastBlockInfo: LastBlockInfo) {
-        for (index, item) in items.enumerated() {
-            if item.record.source == source && item.record.changedBy(oldBlockInfo: item.lastBlockInfo, newBlockInfo: lastBlockInfo) {
-                update(item: item, index: index, lastBlockInfo: lastBlockInfo)
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if item.record.source == source && item.record.changedBy(oldBlockInfo: item.lastBlockInfo, newBlockInfo: lastBlockInfo) {
+                    self.update(item: item, index: index, lastBlockInfo: lastBlockInfo)
+                }
             }
         }
     }
 
     private func handle(rate: (RateKey, CurrencyValue)) {
-        for (index, item) in items.enumerated() {
-            if let transactionValue = item.record.mainValue, transactionValue.coin == rate.0.coin && item.record.date == rate.0.date {
-                update(item: item, index: index, currencyValue: _currencyValue(transactionValue: transactionValue, rate: rate.1))
+        queue.async {
+            for (index, item) in self.items.enumerated() {
+                if let transactionValue = item.record.mainValue, transactionValue.coin == rate.0.coin && item.record.date == rate.0.date {
+                    self.update(item: item, index: index, currencyValue: self._currencyValue(transactionValue: transactionValue, rate: rate.1))
+                }
             }
         }
     }
@@ -201,8 +220,16 @@ extension TransactionsService {
         recordsService.set(typeFilter: filterHelper.selectedType)
     }
 
-    func load(count: Int) {
-        recordsService.load(count: count)
+    func loadMore() {
+        queue.async {
+            guard !self.loadingMore else {
+                return
+            }
+
+            self.loadingMore = true
+
+            self.recordsService.load(count: self.records.count + TransactionsModule.pageLimit)
+        }
     }
 
     func fetchRate(for uid: String) {
