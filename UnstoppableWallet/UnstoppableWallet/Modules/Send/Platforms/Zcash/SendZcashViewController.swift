@@ -41,7 +41,7 @@ class SendZcashViewController: BaseSendViewController {
             self?.reloadTable()
         }
 
-        viewDidLoad()
+        didLoad()
     }
 
     var memoSection: SectionProtocol {

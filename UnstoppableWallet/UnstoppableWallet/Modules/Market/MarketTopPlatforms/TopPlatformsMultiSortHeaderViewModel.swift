@@ -28,16 +28,10 @@ extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel 
     }
 
     var rightSelectorItems: [String] {
-        [
-            HsTimePeriod.day1,
-            HsTimePeriod.week1,
-            HsTimePeriod.month1
-        ].map {
-            $0.title
-        }
+        MarketTopPlatformsModule.selectorValues.map { $0.title }
     }
     var rightSelectorIndex: Int {
-        HsTimePeriod.allCases.firstIndex(of: service.timePeriod) ?? 0
+        MarketTopPlatformsModule.selectorValues.firstIndex(of: service.timePeriod) ?? 0
     }
 
     func onSelectSort(index: Int) {
@@ -48,10 +42,7 @@ extension TopPlatformsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewModel 
     }
 
     func onSelectRight(index: Int) {
-        let timePeriod = HsTimePeriod.allCases[index]
-
-        decorator.timePeriod = timePeriod
-        service.timePeriod = timePeriod
+        service.timePeriod = MarketTopPlatformsModule.selectorValues[index]
     }
 
 }

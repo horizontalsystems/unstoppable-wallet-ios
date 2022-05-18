@@ -1,12 +1,13 @@
 import UIKit
 import ThemeKit
+import MarketKit
 
 struct MarketNftTopCollectionsModule {
 
     static func viewController() -> UIViewController {
         let service = MarketNftTopCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
 
-        let decorator = MarketListNftCollectionDecorator()
+        let decorator = MarketListNftCollectionDecorator(service: service)
         let viewModel = MarketNftTopCollectionsViewModel()
         let listViewModel = MarketListViewModel(service: service, decorator: decorator)
         let headerViewModel = NftCollectionsMultiSortHeaderViewModel(service: service, decorator: decorator)
@@ -32,56 +33,64 @@ struct MarketNftTopCollectionsModule {
         }
     }
 
-    enum VolumeRange: Int, CaseIterable {
-        case day
-        case week
-        case month
-
-        var title: String {
-            switch self {
-            case .day: return "chart.time_duration.day".localized
-            case .week: return "chart.time_duration.week".localized
-            case .month: return "chart.time_duration.month".localized
-            }
-        }
+    static var selectorValues: [HsTimePeriod] {
+        [HsTimePeriod.day1,
+         HsTimePeriod.week1,
+         HsTimePeriod.month1]
     }
 
 }
 
 extension Array where Element == NftCollection {
 
-    func sorted(sortType: MarketNftTopCollectionsModule.SortType, volumeRange: MarketNftTopCollectionsModule.VolumeRange) -> [NftCollection] {
+    func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftCollection] {
         sorted { lhsCollection, rhsCollection in
-            let lhsVolume: Decimal
-            let rhsVolume: Decimal
-            let lhsChange: Decimal
-            let rhsChange: Decimal
+            var lhsVolume: Decimal? = nil
+            var rhsVolume: Decimal? = nil
+            var lhsChange: Decimal? = nil
+            var rhsChange: Decimal? = nil
 
-            switch volumeRange {
-            case .day:
-                lhsVolume = lhsCollection.stats.oneDayVolume?.value ?? 0
-                rhsVolume = rhsCollection.stats.oneDayVolume?.value ?? 0
+            switch timePeriod {
+            case .day1:
+                lhsVolume = lhsCollection.stats.oneDayVolume?.value
+                rhsVolume = rhsCollection.stats.oneDayVolume?.value
 
-                lhsChange = lhsCollection.stats.oneDayChange ?? 0
-                rhsChange = rhsCollection.stats.oneDayChange ?? 0
-            case .week:
-                lhsVolume = lhsCollection.stats.sevenDayVolume?.value ?? 0
-                rhsVolume = rhsCollection.stats.sevenDayVolume?.value ?? 0
+                lhsChange = lhsCollection.stats.oneDayChange
+                rhsChange = rhsCollection.stats.oneDayChange
+            case .week1:
+                lhsVolume = lhsCollection.stats.sevenDayVolume?.value
+                rhsVolume = rhsCollection.stats.sevenDayVolume?.value
 
-                lhsChange = lhsCollection.stats.sevenDayChange ?? 0
-                rhsChange = rhsCollection.stats.sevenDayChange ?? 0
-            case .month:
-                lhsVolume = lhsCollection.stats.thirtyDayVolume?.value ?? 0
-                rhsVolume = rhsCollection.stats.thirtyDayVolume?.value ?? 0
+                lhsChange = lhsCollection.stats.sevenDayChange
+                rhsChange = rhsCollection.stats.sevenDayChange
+            case .month1:
+                lhsVolume = lhsCollection.stats.thirtyDayVolume?.value
+                rhsVolume = rhsCollection.stats.thirtyDayVolume?.value
 
-                lhsChange = lhsCollection.stats.thirtyDayChange ?? 0
-                rhsChange = rhsCollection.stats.thirtyDayChange ?? 0
+                lhsChange = lhsCollection.stats.thirtyDayChange
+                rhsChange = rhsCollection.stats.thirtyDayChange
+            default:
+                break
             }
 
             switch sortType {
             case .highestVolume, .lowestVolume:
+                guard let lhsVolume = lhsVolume else {
+                    return true
+                }
+                guard let rhsVolume = rhsVolume else {
+                    return false
+                }
+
                 return sortType == .highestVolume ? lhsVolume > rhsVolume : lhsVolume < rhsVolume
             case .topGainers, .topLosers:
+                guard let lhsChange = lhsChange else {
+                    return true
+                }
+                guard let rhsChange = rhsChange else {
+                    return false
+                }
+
                 return sortType == .topGainers ? lhsChange > rhsChange : lhsChange < rhsChange
             }
         }

@@ -67,7 +67,7 @@ extension MarketOverviewTopCoinsViewModel: IMarketOverviewSectionViewModel {
 
 extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var selectorValues: [String] {
+    var selectorTitles: [String] {
         MarketModule.MarketTop.allCases.map { $0.title }
     }
 

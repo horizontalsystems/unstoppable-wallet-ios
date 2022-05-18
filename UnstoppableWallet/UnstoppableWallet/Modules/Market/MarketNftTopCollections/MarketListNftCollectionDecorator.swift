@@ -1,9 +1,18 @@
 import Foundation
+import MarketKit
+
+protocol IMarketListNftTopCollectionDecoratorService {
+    var timePeriod: HsTimePeriod { get }
+}
 
 class MarketListNftCollectionDecorator {
     typealias Item = NftCollectionItem
 
-    var volumeRange: MarketNftTopCollectionsModule.VolumeRange = .day
+    private let service: IMarketListNftTopCollectionDecoratorService
+
+    init(service: IMarketListNftTopCollectionDecoratorService) {
+        self.service = service
+    }
 
 }
 
@@ -28,16 +37,19 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
         let volume: NftPrice?
         let diff: Decimal?
 
-        switch volumeRange {
-        case .day:
+        switch service.timePeriod {
+        case .day1:
             volume = collection.stats.oneDayVolume
             diff = collection.stats.oneDayChange
-        case .week:
+        case .week1:
             volume = collection.stats.sevenDayVolume
             diff = collection.stats.sevenDayChange
-        case .month:
+        case .month1:
             volume = collection.stats.thirtyDayVolume
             diff = collection.stats.thirtyDayChange
+        default:
+            volume = nil
+            diff = 0
         }
 
         if let volume = volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .platformCoin(platformCoin: volume.platformCoin), value: volume.value)) {
