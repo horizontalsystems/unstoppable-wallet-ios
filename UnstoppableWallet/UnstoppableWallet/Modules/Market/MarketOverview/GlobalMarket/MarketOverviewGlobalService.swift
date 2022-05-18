@@ -12,13 +12,13 @@ class MarketOverviewGlobalService {
     private var disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private var internalStatus: DataStatus<[GlobalMarketPoint]> = .loading {
+    private var internalState: DataStatus<[GlobalMarketPoint]> = .loading {
         didSet {
             syncState()
         }
     }
 
-    private let statusRelay = BehaviorRelay<DataStatus<GlobalMarketData>>(value: .loading)
+    private let stateRelay = BehaviorRelay<DataStatus<GlobalMarketData>>(value: .loading)
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
         self.marketKit = marketKit
@@ -37,21 +37,21 @@ class MarketOverviewGlobalService {
     private func syncInternalState() {
         syncDisposeBag = DisposeBag()
 
-        if case .failed = statusRelay.value {
-            internalStatus = .loading
+        if case .failed = stateRelay.value {
+            internalState = .loading
         }
 
         marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .day1)
                 .subscribe(onSuccess: { [weak self] globalMarketPoints in
-                    self?.internalStatus = .completed(globalMarketPoints)
+                    self?.internalState = .completed(globalMarketPoints)
                 }, onError: { [weak self] error in
-                    self?.internalStatus = .failed(error)
+                    self?.internalState = .failed(error)
                 })
                 .disposed(by: syncDisposeBag)
     }
 
     private func syncState() {
-        statusRelay.accept(internalStatus.map { internalState in
+        stateRelay.accept(internalState.map { internalState in
             globalMarketData(globalMarketPoints: internalState)
         })
     }
@@ -103,7 +103,7 @@ class MarketOverviewGlobalService {
     }
 
     private func syncIfPossible() {
-        guard case .completed = internalStatus else {
+        guard case .completed = internalState else {
             return
         }
 
@@ -115,7 +115,7 @@ class MarketOverviewGlobalService {
 extension MarketOverviewGlobalService {
 
     var stateObservable: Observable<DataStatus<GlobalMarketData>> {
-        statusRelay.asObservable()
+        stateRelay.asObservable()
     }
 
     func refresh() {
@@ -139,8 +139,8 @@ extension MarketOverviewGlobalService: IMarketListDecoratorService {
     }
 
     func onUpdate(marketFieldIndex: Int) {
-        if case .completed = statusRelay.value {
-            statusRelay.accept(statusRelay.value)
+        if case .completed = stateRelay.value {
+            stateRelay.accept(stateRelay.value)
         }
     }
 

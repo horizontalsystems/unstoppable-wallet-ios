@@ -3,7 +3,7 @@ import RxRelay
 import RxCocoa
 
 protocol IMarketOverviewSectionViewModel {
-    var stateDriver: Driver<DataStatus<()>> { get }
+    var stateObservable: Observable<DataStatus<()>> { get }
     func refresh()
 }
 
@@ -12,41 +12,45 @@ class MarketOverviewViewModel {
 
     private let viewModels: [IMarketOverviewSectionViewModel]
 
-    private let successRelay = PublishRelay<()>()
+    private let successRelay = BehaviorRelay<Bool>(value: false)
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(viewModels: [IMarketOverviewSectionViewModel]) {
         self.viewModels = viewModels
 
-        subscribe(disposeBag, Driver.combineLatest(viewModels.map { $0.stateDriver })) { [weak self] in
-            self?.sync(statuses: $0)
+        subscribe(disposeBag, Observable.combineLatest(viewModels.map { $0.stateObservable })) { [weak self] in
+            self?.sync(states: $0)
         }
     }
 
-    private func sync(statuses: [DataStatus<()>]) {
-        var status = DataStatus<()>.completed(())
-        statuses.forEach {
-            if $0.error != nil {
-                status = $0
-                return
+    private func sync(states: [DataStatus<()>]) {
+        var combinedState = DataStatus<()>.completed(())
+
+        for state in states {
+            if state.error != nil {
+                combinedState = state
+                break
             }
-            if $0.isLoading {
-                status = $0
-                return
+            if state.isLoading {
+                combinedState = state
+                break
             }
         }
 
-        if status.error != nil {
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(true)
-        } else if status.isLoading {
+        switch combinedState {
+        case .loading:
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        } else {
-            successRelay.accept(())
+            successRelay.accept(false)
+        case .completed:
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
+            successRelay.accept(true)
+        case .failed:
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(true)
+            successRelay.accept(false)
         }
     }
 
@@ -54,8 +58,8 @@ class MarketOverviewViewModel {
 
 extension MarketOverviewViewModel {
 
-    var successDriver: Driver<()> {
-        successRelay.asDriver(onErrorJustReturn: ())
+    var successDriver: Driver<Bool> {
+        successRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
