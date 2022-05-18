@@ -26,7 +26,7 @@ class EvmNetworkViewModel {
     private func viewItem(item: EvmNetworkService.Item) -> ViewItem {
         ViewItem(
                 name: item.syncSource.name,
-                url: item.syncSource.rpcSource.url.absoluteString,
+                url: item.syncSource.rpcSource.url?.absoluteString,
                 selected: item.selected
         )
     }
@@ -63,7 +63,7 @@ extension EvmNetworkViewModel {
 
     struct ViewItem {
         let name: String
-        let url: String
+        let url: String?
         let selected: Bool
     }
 
@@ -71,9 +71,9 @@ extension EvmNetworkViewModel {
 
 extension RpcSource {
 
-    var url: URL {
+    var url: URL? {
         switch self {
-        case .http(let url, _): return url
+        case .http(let urls, _): return urls.first
         case .webSocket(let url, _): return url
         }
     }
