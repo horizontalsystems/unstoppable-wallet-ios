@@ -4,14 +4,13 @@ import MarketKit
 
 protocol IMarketListTopPlatformDecoratorService {
     var currency: Currency { get }
+    var timePeriod: HsTimePeriod { get }
 }
 
 class MarketListTopPlatformDecorator {
     typealias Item = MarketKit.TopPlatform
 
     private let service: IMarketListTopPlatformDecoratorService
-
-    var timePeriod: HsTimePeriod  = .day1
 
     init(service: IMarketListTopPlatformDecoratorService) {
         self.service = service
@@ -31,7 +30,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         let rankDiff: Int?  //todo use to show rank change on top platforms module
         let diff: Decimal?
 
-        switch timePeriod {
+        switch service.timePeriod {
         case .day1:
             diff = item.oneDayChange
             rankDiff = item.oneDayRank
@@ -43,7 +42,6 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
             rankDiff = item.thirtyDaysRank
         default:
             diff = 0
-            print("unreachable state")
         }
 
         let dataValue: MarketModule.MarketDataValue = .diff(diff)

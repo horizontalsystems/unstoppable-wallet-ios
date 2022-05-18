@@ -1,6 +1,12 @@
 import RxSwift
 import RxRelay
 import CurrencyKit
+import MarketKit
+
+struct NftCollectionItem {
+    let index: Int
+    let collection: NftCollection
+}
 
 class MarketNftTopCollectionsService {
     typealias Item = NftCollectionItem
@@ -21,7 +27,7 @@ class MarketNftTopCollectionsService {
     }
 
     var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
-    var volumeRange: MarketNftTopCollectionsModule.VolumeRange = .day { didSet { syncIfPossible() } }
+    var timePeriod: HsTimePeriod = .week1 { didSet { syncIfPossible() } }
 
     init(provider: HsNftProvider, currencyKit: CurrencyKit.Kit) {
         self.provider = provider
@@ -50,7 +56,7 @@ class MarketNftTopCollectionsService {
     }
 
     private func sync(collections: [NftCollection], reorder: Bool = false) {
-        let sortedCollections = collections.sorted(sortType: sortType, volumeRange: volumeRange)
+        let sortedCollections = collections.sorted(sortType: sortType, timePeriod: timePeriod)
         let items = sortedCollections.enumerated().map { NftCollectionItem(index: $0 + 1, collection: $1) }
         state = .loaded(items: items, softUpdate: false, reorder: reorder)
     }
@@ -77,32 +83,5 @@ extension MarketNftTopCollectionsService: IMarketListService {
 
 }
 
-extension MarketNftTopCollectionsService: IMarketListCoinUidService {
-
-    func coinUid(index: Int) -> String? {
-        nil
-    }
-
-}
-
-extension MarketNftTopCollectionsService: IMarketListDecoratorService {
-
-    var initialMarketFieldIndex: Int {
-        0
-    }
-
-    var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
-    var priceChangeType: MarketModule.PriceChangeType {
-        .day
-    }
-
-    func onUpdate(marketFieldIndex: Int) {
-        if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
-        }
-    }
-
+extension MarketNftTopCollectionsService: IMarketListNftTopCollectionDecoratorService {
 }

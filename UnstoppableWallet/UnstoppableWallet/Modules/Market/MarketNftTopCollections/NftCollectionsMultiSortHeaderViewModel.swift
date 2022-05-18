@@ -1,3 +1,5 @@
+import MarketKit
+
 class NftCollectionsMultiSortHeaderViewModel {
     private let service: MarketNftTopCollectionsService
     private let decorator: MarketListNftCollectionDecorator
@@ -26,10 +28,11 @@ extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewMode
     }
 
     var rightSelectorItems: [String] {
-        MarketNftTopCollectionsModule.VolumeRange.allCases.map { $0.title }
+        MarketNftTopCollectionsModule.selectorValues.map { $0.title }
     }
+
     var rightSelectorIndex: Int {
-        MarketNftTopCollectionsModule.VolumeRange.allCases.firstIndex(of: service.volumeRange) ?? 0
+        MarketNftTopCollectionsModule.selectorValues.firstIndex(of: service.timePeriod) ?? 0
     }
 
     func onSelectSort(index: Int) {
@@ -40,10 +43,7 @@ extension NftCollectionsMultiSortHeaderViewModel: IMarketMultiSortHeaderViewMode
     }
 
     func onSelectRight(index: Int) {
-        let volumeRange = MarketNftTopCollectionsModule.VolumeRange.allCases[index]
-
-        decorator.volumeRange = volumeRange
-        service.volumeRange = volumeRange
+        service.timePeriod = MarketNftTopCollectionsModule.selectorValues[index]
     }
 
 }

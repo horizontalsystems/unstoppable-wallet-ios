@@ -7,7 +7,7 @@ import ComponentKit
 
 protocol IBaseMarketOverviewTopListViewModel {
     var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? { get }
-    var selectorValues: [String] { get }
+    var selectorTitles: [String] { get }
 
     var selectorIndex: Int { get }
 
@@ -124,7 +124,7 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
 
         var sections = [SectionProtocol]()
 
-        let marketTops = viewModel.selectorValues
+        let marketTops = viewModel.selectorTitles
 
         let currentMarketTopIndex = viewModel.selectorIndex
 
