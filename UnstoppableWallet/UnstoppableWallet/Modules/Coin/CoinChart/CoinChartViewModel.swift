@@ -7,6 +7,22 @@ import Chart
 import CurrencyKit
 import HUD
 
+protocol IChartViewModel {
+    var intervals: [String] { get }
+    var pointSelectModeEnabledDriver: Driver<Bool> { get }
+    var pointSelectedItemDriver: Driver<SelectedPointViewItem?> { get }
+    var intervalIndexDriver: Driver<Int> { get }
+    var loadingDriver: Driver<Bool> { get }
+    var valueDriver: Driver<String?> { get }
+    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> { get }
+    var errorDriver: Driver<String?> { get }
+
+    func onSelectInterval(at index: Int)
+    func onTap(indicator: ChartIndicatorSet)
+    func viewDidLoad()
+    func retry()
+}
+
 class CoinChartViewModel {
     private let service: CoinChartService
     private let factory: CoinChartFactory
@@ -16,14 +32,13 @@ class CoinChartViewModel {
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
 
-    private let chartTypeIndexRelay = BehaviorRelay<Int>(value: 0)
+    private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let rateRelay = BehaviorRelay<String?>(value: nil)
-    private let rateDiffRelay = BehaviorRelay<Decimal?>(value: nil)
+    private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    let chartTypes = HsTimePeriod.allCases.map { $0.title.uppercased() }
+    let intervals = HsTimePeriod.allCases.map { $0.title.uppercased() }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
@@ -37,23 +52,21 @@ class CoinChartViewModel {
     }
 
     private func sync(interval: HsTimePeriod) {
-        chartTypeIndexRelay.accept(HsTimePeriod.allCases.firstIndex(of: interval) ?? 0)
+        intervalIndexRelay.accept(HsTimePeriod.allCases.firstIndex(of: interval) ?? 0)
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
         loadingRelay.accept(state.isLoading)
         errorRelay.accept(state.error?.smartDescription)
         if state.error != nil {
-            rateRelay.accept(nil)
-            rateDiffRelay.accept(nil)
+            valueRelay.accept(nil)
             chartInfoRelay.accept(nil)
 
             return
         }
 
         let rateValue = state.data?.rate.map { CurrencyValue(currency: service.currency, value: $0) }
-        rateRelay.accept(rateValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) })
-        rateDiffRelay.accept(state.data?.rateDiff24h)
+        valueRelay.accept(rateValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) })
 
         guard let item = state.data else {
             chartInfoRelay.accept(nil)
@@ -65,7 +78,7 @@ class CoinChartViewModel {
 
 }
 
-extension CoinChartViewModel {
+extension CoinChartViewModel: IChartViewModel {
 
     var pointSelectModeEnabledDriver: Driver<Bool> {
         pointSelectModeEnabledRelay.asDriver()
@@ -75,20 +88,16 @@ extension CoinChartViewModel {
         pointSelectedItemRelay.asDriver()
     }
 
-    var chartTypeIndexDriver: Driver<Int> {
-        chartTypeIndexRelay.asDriver()
+    var intervalIndexDriver: Driver<Int> {
+        intervalIndexRelay.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
         loadingRelay.asDriver()
     }
 
-    var rateDriver: Driver<String?> {
-        rateRelay.asDriver()
-    }
-
-    var rateDiffDriver: Driver<Decimal?> {
-        rateDiffRelay.asDriver()
+    var valueDriver: Driver<String?> {
+        valueRelay.asDriver()
     }
 
     var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
@@ -141,13 +150,11 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
 extension CoinChartViewModel {
 
-    struct ViewItem {
+    class ViewItem {
         let chartData: ChartData
 
         let chartTrend: MovementTrend
         let chartDiff: Decimal?
-
-        let trends: [ChartIndicatorSet: MovementTrend]
 
         let minValue: String?
         let maxValue: String?
@@ -155,6 +162,17 @@ extension CoinChartViewModel {
         let timeline: [ChartTimelineItem]
 
         let selectedIndicator: ChartIndicatorSet?
+
+        init(chartData: ChartData, chartTrend: MovementTrend, chartDiff: Decimal?, minValue: String?, maxValue: String?, timeline: [ChartTimelineItem], selectedIndicator: ChartIndicatorSet?) {
+            self.chartData = chartData
+            self.chartTrend = chartTrend
+            self.chartDiff = chartDiff
+            self.minValue = minValue
+            self.maxValue = maxValue
+            self.timeline = timeline
+            self.selectedIndicator = selectedIndicator
+        }
+
     }
 
 }

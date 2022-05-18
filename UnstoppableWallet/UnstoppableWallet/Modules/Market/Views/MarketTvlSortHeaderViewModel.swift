@@ -75,8 +75,4 @@ extension MarketTvlSortHeaderViewModel {
         platformFieldRelay.accept(service.marketPlatformField.title)
     }
 
-    func onSelectPriceChangeField(index: Int) {
-        service.setPriceChange(index: index)
-    }
-
 }

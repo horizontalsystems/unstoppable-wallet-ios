@@ -166,8 +166,7 @@ class CoinChartFactory {
         // disable indicators if chart interval less than 7d
         let correctedIndicator: ChartIndicatorSet? = [HsTimePeriod.day1].contains(interval) ? nil : selectedIndicator
 
-        return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff,
-                trends: trends, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
+        return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
 
     func selectedPointViewItem(chartItem: ChartItem, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
