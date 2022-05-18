@@ -385,8 +385,8 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Top ecosystem platforms by market cap";
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -471,7 +471,7 @@
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.defi_cap.description" = "The historical change in the cumulative market value of tokens in the Decentralized Finance sector.";
 "market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
 
 // Coin Page
@@ -1099,8 +1099,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collections.on_sale" = "Im Verkauf";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Top NFT collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
