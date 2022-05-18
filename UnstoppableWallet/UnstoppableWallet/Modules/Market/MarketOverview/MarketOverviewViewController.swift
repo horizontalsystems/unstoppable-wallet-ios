@@ -51,8 +51,6 @@ class MarketOverviewViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: MarketOverviewHeaderCell.self)
-        tableView.registerCell(forClass: G14Cell.self)
-        tableView.registerCell(forClass: B1Cell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in

@@ -60,7 +60,6 @@ class MarketListViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: G14Cell.self)
 
         if let emptyView = emptyView {
             view.addSubview(emptyView)
@@ -191,24 +190,6 @@ class MarketListViewController: ThemeViewController {
 
 extension MarketListViewController: SectionsDataSource {
 
-    private func row(viewItem: MarketModule.ListViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        Row<G14Cell>(
-                id: "\(viewItem.uid ?? "")-\(viewItem.name)",
-                hash: "\(viewItem.dataValue)-\(viewItem.price)-\(isLast)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                rowActionProvider: { [weak self] in
-                    self?.rowActions(index: index) ?? []
-                },
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    MarketModule.bind(cell: cell, viewItem: viewItem)
-                },
-                action: { [weak self] _ in
-                    self?.onSelect(viewItem: viewItem)
-                })
-    }
-
     func buildSections() -> [SectionProtocol] {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
@@ -224,7 +205,20 @@ extension MarketListViewController: SectionsDataSource {
                     headerState: headerState,
                     footerState: .marginColor(height: .margin32, color: .clear) ,
                     rows: viewItems.map { viewItems in
-                        viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
+                        viewItems.enumerated().map { index, viewItem in
+                            MarketModule.marketListCell(
+                                    tableView: tableView,
+                                    backgroundStyle: .transparent,
+                                    listViewItem: viewItem,
+                                    isFirst: index == viewItems.count - 1,
+                                    rowActionProvider: { [weak self] in
+                                        self?.rowActions(index: index) ?? []
+                                    },
+                                    action: { [weak self] in
+                                        self?.onSelect(viewItem: viewItem)
+                                    }
+                            )
+                        }
                     } ?? []
             )
         ]
