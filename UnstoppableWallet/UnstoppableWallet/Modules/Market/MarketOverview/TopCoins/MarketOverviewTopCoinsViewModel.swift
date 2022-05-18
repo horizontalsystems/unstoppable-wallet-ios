@@ -9,27 +9,21 @@ class MarketOverviewTopCoinsViewModel {
     private let decorator: MarketListMarketFieldDecorator
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
-
-    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem?
+    private let stateRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
 
     init(service: MarketOverviewTopCoinsService, decorator: MarketListMarketFieldDecorator) {
         self.service = service
         self.decorator = decorator
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(status: DataStatus<[MarketInfo]>) {
-        stateRelay.accept(status.map({ [weak self] listItems in
-            self?.createViewItem(listItems: listItems)
-
-            return ()
-        }))
+    private func sync(state: DataStatus<[MarketInfo]>) {
+        stateRelay.accept(state.map { viewItem(listItems: $0) })
     }
 
-    private func createViewItem(listItems: [MarketInfo]) {
-        viewItem = .init(
+    private func viewItem(listItems: [MarketInfo]) -> BaseMarketOverviewTopListDataSource.ViewItem {
+        BaseMarketOverviewTopListDataSource.ViewItem(
                 rightSelectorMode: .selector,
                 imageName: imageName(listType: service.listType),
                 title: title(listType: service.listType),
@@ -55,8 +49,8 @@ class MarketOverviewTopCoinsViewModel {
 
 extension MarketOverviewTopCoinsViewModel: IMarketOverviewSectionViewModel {
 
-    var stateDriver: Driver<DataStatus<()>> {
-        stateRelay.asDriver()
+    var stateObservable: Observable<DataStatus<()>> {
+        stateRelay.map { $0.map { _ in () } }
     }
 
     func refresh() {
@@ -66,6 +60,10 @@ extension MarketOverviewTopCoinsViewModel: IMarketOverviewSectionViewModel {
 }
 
 extension MarketOverviewTopCoinsViewModel: IBaseMarketOverviewTopListViewModel {
+
+    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? {
+        stateRelay.value.data
+    }
 
     var selectorTitles: [String] {
         MarketModule.MarketTop.allCases.map { $0.title }

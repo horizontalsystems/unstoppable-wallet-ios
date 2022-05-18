@@ -9,7 +9,6 @@ import Chart
 
 protocol IMarketOverviewDataSource {
     var presentDelegate: IPresentDelegate { get set }
-
     func sections(tableView: UITableView) -> [SectionProtocol]
 }
 
@@ -19,8 +18,7 @@ class MarketOverviewViewController: ThemeViewController {
     private let viewModel: MarketOverviewViewModel
     private let dataSources: [IMarketOverviewDataSource]
 
-    let tableView = SectionsTableView(style: .grouped)
-    private var sections = [SectionProtocol]()
+    private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
     private let refreshControl = UIRefreshControl()
@@ -70,14 +68,11 @@ class MarketOverviewViewController: ThemeViewController {
 
         errorView.configureSyncError(target: self, action: #selector(onRetry))
 
-        subscribe(disposeBag, viewModel.successDriver) { [weak self] in
-            self?.sync()
-        }
+        subscribe(disposeBag, viewModel.successDriver) { [weak self] in self?.sync(success: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
-            self?.tableView.bounces = !visible
             self?.errorView.isHidden = !visible
         }
     }
@@ -100,9 +95,13 @@ class MarketOverviewViewController: ThemeViewController {
         }
     }
 
-    func sync() {
-        sections = dataSources.compactMap { $0.sections(tableView: tableView) }.flatMap { $0 }
-        tableView.reload()
+    private func sync(success: Bool) {
+        if success {
+            tableView.isHidden = false
+            tableView.reload()
+        } else {
+            tableView.isHidden = true
+        }
     }
 
 }
@@ -110,7 +109,7 @@ class MarketOverviewViewController: ThemeViewController {
 extension MarketOverviewViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        sections
+        dataSources.compactMap { $0.sections(tableView: tableView) }.flatMap { $0 }
     }
 
 }

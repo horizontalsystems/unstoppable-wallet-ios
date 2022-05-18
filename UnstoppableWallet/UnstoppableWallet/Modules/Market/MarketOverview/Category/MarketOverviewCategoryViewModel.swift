@@ -6,9 +6,7 @@ class MarketOverviewCategoryViewModel {
     private let service: MarketDiscoveryCategoryService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
-
-    var viewItem: CategoryViewItem?
+    private let stateRelay = BehaviorRelay<DataStatus<CategoryViewItem>>(value: .loading)
 
     init(service: MarketDiscoveryCategoryService) {
         self.service = service
@@ -19,14 +17,12 @@ class MarketOverviewCategoryViewModel {
     private func sync(state: MarketDiscoveryCategoryService.State) {
         let items: MarketDiscoveryCategoryService.DiscoveryItem
         switch state {
-        case .loading: stateRelay.accept(.loading)
+        case .loading:
+            stateRelay.accept(.loading)
         case .items(let items):
-            viewItem = CategoryViewItem(viewItems: items.prefix(5).compactMap {
-                viewItem(item: $0)
-            })
-
-            stateRelay.accept(.completed(()))
-        case .failed(let error): stateRelay.accept(.failed(error))
+            stateRelay.accept(.completed(CategoryViewItem(viewItems: items.prefix(5).compactMap { viewItem(item: $0) })))
+        case .failed(let error):
+            stateRelay.accept(.failed(error))
         }
     }
 
@@ -49,10 +45,18 @@ class MarketOverviewCategoryViewModel {
 
 }
 
+extension MarketOverviewCategoryViewModel {
+
+    var viewItem: CategoryViewItem? {
+        stateRelay.value.data
+    }
+
+}
+
 extension MarketOverviewCategoryViewModel: IMarketOverviewSectionViewModel {
 
-    var stateDriver: Driver<DataStatus<()>> {
-        stateRelay.asDriver()
+    var stateObservable: Observable<DataStatus<()>> {
+        stateRelay.map { $0.map { _ in () } }
     }
 
     func refresh() {

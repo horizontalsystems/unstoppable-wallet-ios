@@ -9,26 +9,20 @@ class MarketOverviewGlobalViewModel {
     private let service: MarketOverviewGlobalService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<()>>(value: .loading)
-
-    var viewItem: GlobalMarketViewItem?
+    private let stateRelay = BehaviorRelay<DataStatus<GlobalMarketViewItem>>(value: .loading)
 
     init(service: MarketOverviewGlobalService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(status: $0) }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(status: DataStatus<MarketOverviewGlobalService.GlobalMarketData>) {
-        stateRelay.accept(status.map({ [weak self] globalMarketData in
-            self?.createViewItem(globalMarketData: globalMarketData)
-
-            return ()
-        }))
+    private func sync(state: DataStatus<MarketOverviewGlobalService.GlobalMarketData>) {
+        stateRelay.accept(state.map { viewItem(globalMarketData: $0) })
     }
 
-    private func createViewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) {
-        viewItem = .init(
+    private func viewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) -> GlobalMarketViewItem {
+        GlobalMarketViewItem(
                 totalMarketCap: chartViewItem(item: globalMarketData.marketCap),
                 volume24h: chartViewItem(item: globalMarketData.volume24h),
                 defiCap: chartViewItem(item: globalMarketData.defiMarketCap),
@@ -74,10 +68,18 @@ class MarketOverviewGlobalViewModel {
 
 }
 
+extension MarketOverviewGlobalViewModel {
+
+    var viewItem: GlobalMarketViewItem? {
+        stateRelay.value.data
+    }
+
+}
+
 extension MarketOverviewGlobalViewModel: IMarketOverviewSectionViewModel {
 
-    var stateDriver: Driver<DataStatus<()>> {
-        stateRelay.asDriver()
+    var stateObservable: Observable<DataStatus<()>> {
+        stateRelay.map { $0.map { _ in () } }
     }
 
     func refresh() {
