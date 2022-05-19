@@ -9,6 +9,6 @@ struct NftCollectionStats {
     let totalVolume: Decimal?
     let marketCap: NftPrice?
 
-    let changes: [HsTimePeriod: Decimal]
     let volumes: [HsTimePeriod: NftPrice]
+    let changes: [HsTimePeriod: Decimal]
 }
