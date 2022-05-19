@@ -61,6 +61,8 @@
 
 "restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
@@ -1089,8 +1091,10 @@ poner en peligro la seguridad de mis fondos.";
 
 // Watch Address
 
-"watch_address.title" = "Dirección";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "Ver";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
