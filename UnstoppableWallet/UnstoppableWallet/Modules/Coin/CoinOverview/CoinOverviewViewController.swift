@@ -56,7 +56,7 @@ class CoinOverviewViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        coinInfoCell.set(backgroundStyle: .transparent, isFirst: true, isLast: true)
+        coinInfoCell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
         coinInfoCell.titleColor = .themeGray
         coinInfoCell.set(titleImageSize: .iconSize24)
         coinInfoCell.valueColor = .themeGray

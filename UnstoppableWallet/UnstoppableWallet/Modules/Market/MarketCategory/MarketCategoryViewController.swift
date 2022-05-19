@@ -11,9 +11,23 @@ class MarketCategoryViewController: MarketListViewController {
     override var headerView: UITableViewHeaderFooterView? { multiSortHeaderView }
     override var refreshEnabled: Bool { false }
 
-    init(viewModel: MarketCategoryViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    private let chartViewModel: MetricChartViewModel
+
+    /* Chart section */
+    private let chartCell: ChartCell
+    private let chartRow: StaticRow
+
+    init(viewModel: MarketCategoryViewModel, chartViewModel: MetricChartViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
+        self.chartViewModel = chartViewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
+
+        chartCell = ChartCell(viewModel: chartViewModel, touchDelegate: chartViewModel, viewOptions: ChartCell.metricChart, configuration: .chartWithoutIndicators)
+        chartRow = StaticRow(
+                cell: chartCell,
+                id: "chartView",
+                height: chartCell.cellHeight
+        )
 
         super.init(listViewModel: listViewModel)
 
@@ -31,6 +45,9 @@ class MarketCategoryViewController: MarketListViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         tableView.registerCell(forClass: MarketCategoryHeaderCell.self)
+
+        chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
+        chartViewModel.viewDidLoad()
     }
 
     @objc private func onTapClose() {
@@ -50,6 +67,10 @@ class MarketCategoryViewController: MarketListViewController {
                                 }
                         )
                     ]
+            ),
+            Section(
+                    id: "chart",
+                    rows: [chartRow]
             )
         ]
     }
