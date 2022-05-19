@@ -395,7 +395,7 @@
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "未发现结果";
-"market_discovery.category.chart.title" = "Total Cap";
+"market_discovery.category.chart.title" = "总市值";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
