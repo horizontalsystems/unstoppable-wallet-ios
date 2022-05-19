@@ -64,6 +64,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "restore.title" = "Cüzdan Seçin";
 "restore.enter_key" = "Anahtarı girin";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir.";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
@@ -1091,8 +1093,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Watch Address
 
-"watch_address.title" = "Adres";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "İzle";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
