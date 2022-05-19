@@ -87,10 +87,10 @@ class ValueFormatter {
         case 20..<200:
             digits = 1
 
-        case 200..<20_000:
+        case 200..<19_999:
             digits = 0
 
-        case 20_000..<pow(10, 6):
+        case 19_999..<pow(10, 6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
             suffix = "number.thousand"
 

@@ -112,7 +112,7 @@ extension CreateAccountService {
         }
 
         let accountType = try resolveAccountType()
-        let account = accountFactory.account(type: accountType, origin: .created)
+        let account = accountFactory.account(name: accountFactory.nextAccountName, type: accountType, origin: .created)
 
         accountManager.save(account: account)
         activateDefaultWallets(account: account)

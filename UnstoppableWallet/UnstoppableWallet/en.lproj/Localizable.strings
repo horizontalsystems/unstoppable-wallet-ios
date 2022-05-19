@@ -63,6 +63,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "restore.title" = "Choose Wallet";
 "restore.enter_key" = "Enter Key";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
@@ -1090,8 +1092,10 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 // Watch Address
 
-"watch_address.title" = "Address";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "Watch";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 

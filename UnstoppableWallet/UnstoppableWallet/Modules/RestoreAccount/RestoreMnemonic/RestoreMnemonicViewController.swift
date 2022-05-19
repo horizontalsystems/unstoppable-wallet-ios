@@ -10,7 +10,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+
+    private let nameCell = TextFieldCell()
+
     private let mnemonicInputCell = MnemonicInputCell()
+
     private let passphraseToggleCell = A11Cell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
@@ -46,7 +50,12 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+
+        nameCell.inputPlaceholder = viewModel.namePlaceholder
+        nameCell.autocapitalizationType = .words
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         mnemonicInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(text: $0, cursorOffset: $1) }
@@ -65,7 +74,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
 
         subscribe(disposeBag, viewModel.invalidRangesDriver) { [weak self] in self?.mnemonicInputCell.set(invalidRanges: $0) }
         subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.showError(title: $0) }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountType: $0) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
@@ -111,8 +120,8 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         mnemonicInputCell.set(text: text)
     }
 
-    private func openSelectCoins(accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountType: accountType)
+    private func openSelectCoins(accountName: String, accountType: AccountType) {
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -130,6 +139,14 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
 
 extension RestoreMnemonicViewController: SectionsDataSource {
 
+    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        .cellType(
+                hash: text,
+                binder: { $0.bind(text: text) },
+                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+        )
+    }
+
     private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
         .cellType(
                 hash: "bottom_description",
@@ -145,8 +162,20 @@ extension RestoreMnemonicViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
+                    id: "name",
+                    headerState: header(text: "restore.mnemonic.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            ),
+            Section(
                     id: "mnemonic-input",
-                    headerState: .margin(height: .margin12),
+                    headerState: header(text: "restore.mnemonic.key".localized),
                     footerState: footer(text: "restore.mnemonic.description".localized),
                     rows: [
                         StaticRow(

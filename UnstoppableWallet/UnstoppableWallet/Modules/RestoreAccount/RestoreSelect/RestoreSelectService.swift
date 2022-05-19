@@ -3,6 +3,7 @@ import RxRelay
 import MarketKit
 
 class RestoreSelectService {
+    private let accountName: String
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
@@ -27,7 +28,8 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+    init(accountName: String, accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+        self.accountName = accountName
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -169,7 +171,7 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored)
+        let account = accountFactory.account(name: accountName, type: accountType, origin: .restored)
         accountManager.save(account: account)
 
         for (platformCoin, settings) in restoreSettingsMap {

@@ -10,7 +10,6 @@ struct WatchAddressModule {
                 .append(handler: evmAddressParserItem)
                 .append(handler: udnAddressParserItem)
 
-
         let addressUriParser = AddressParserFactory.parser(coinType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
