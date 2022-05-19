@@ -393,6 +393,7 @@
 "market_discovery.browse_categories" = "Parcourir les catégories";
 "market_discovery.top_coins" = "TOP des coins";
 "market_discovery.not_found" = "Aucun résultat";
+"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
 
