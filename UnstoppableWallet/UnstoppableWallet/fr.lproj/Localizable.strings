@@ -385,15 +385,15 @@
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Top Blockchain Platforms";
-"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+"top_platforms.title" = "Meilleures plateformes blockchain";
+"top_platforms.description" = "Les meilleures plateformes blockchain en fonction du marché cumulé des projets bâtis sur celles-ci.";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
 "market_discovery.browse_categories" = "Parcourir les catégories";
 "market_discovery.top_coins" = "TOP des coins";
 "market_discovery.not_found" = "Aucun résultat";
-"market_discovery.category.chart.title" = "Total Cap";
+"market_discovery.category.chart.title" = "Cap Totale";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
 
@@ -611,7 +611,7 @@
 
 "pro_features.lock_info.title" = "Passe Unstoppable";
 "pro_features.lock_info.subtitle" = "NFT";
-"pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Passe Unstoppable NFT sur votre balance\n\nVous aurez également accès aux données ci-dessous :";
+"pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Passe Unstoppable NFT sur votre balance.\n\nVous aurez également accès aux données ci-dessous :";
 "pro_features.lock_info.coin_details.volume" = "Volume DEX";
 "pro_features.lock_info.coin_details.liquidity" = "Liquidité DEX";
 "pro_features.lock_info.coin_details.active_addresses" = "Adresses actives";
@@ -1100,8 +1100,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collections.on_sale" = "En Vente";
 "nft_collections.empty" = "Vous n'avez pas de NFT dans votre portefeuille";
 
-"top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
+"top_nft_collections.title" = "Meilleures collections NFT";
+"top_nft_collections.description" = "Meilleures collections NFT en termes de volume de trading.";
 
 // Nft Asset
 
