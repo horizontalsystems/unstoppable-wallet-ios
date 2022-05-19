@@ -45,11 +45,11 @@ extension Array where Element == NftCollection {
 
     func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftCollection] {
         sorted { lhsCollection, rhsCollection in
-            let lhsVolume = lhsCollection.stats.changes[timePeriod]
-            let rhsVolume = rhsCollection.stats.changes[timePeriod]
+            let lhsVolume = lhsCollection.stats.volumes[timePeriod]?.value
+            let rhsVolume = rhsCollection.stats.volumes[timePeriod]?.value
 
-            let lhsChange = lhsCollection.stats.volumes[timePeriod]?.value
-            let rhsChange = rhsCollection.stats.volumes[timePeriod]?.value
+            let lhsChange = lhsCollection.stats.changes[timePeriod]
+            let rhsChange = rhsCollection.stats.changes[timePeriod]
 
             switch sortType {
             case .highestVolume, .lowestVolume:
