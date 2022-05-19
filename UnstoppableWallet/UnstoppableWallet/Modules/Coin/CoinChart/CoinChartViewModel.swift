@@ -8,6 +8,7 @@ import CurrencyKit
 import HUD
 
 protocol IChartViewModel {
+    var chartTitle: String? { get }
     var intervals: [String] { get }
     var pointSelectModeEnabledDriver: Driver<Bool> { get }
     var pointSelectedItemDriver: Driver<SelectedPointViewItem?> { get }
@@ -79,6 +80,10 @@ class CoinChartViewModel {
 }
 
 extension CoinChartViewModel: IChartViewModel {
+
+    var chartTitle: String? {
+        nil
+    }
 
     var pointSelectModeEnabledDriver: Driver<Bool> {
         pointSelectModeEnabledRelay.asDriver()

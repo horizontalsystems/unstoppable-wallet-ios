@@ -64,6 +64,18 @@ class ChartCell: UITableViewCell {
                 maker.height.equalTo(ChartViewOptions.currentValue.elementHeight)
             }
 
+            currentValueView.title = viewModel.chartTitle
+
+            let topSeparator = UIView()
+            contentView.addSubview(topSeparator)
+            topSeparator.snp.makeConstraints { maker in
+                maker.top.equalTo(currentValueView.snp.top)
+                maker.leading.trailing.equalToSuperview()
+                maker.height.equalTo(CGFloat.heightOneDp)
+            }
+
+            topSeparator.backgroundColor = .themeSteel10
+
             lastView = currentValueView
         }
 
@@ -87,9 +99,18 @@ class ChartCell: UITableViewCell {
             intervalSelectView.backgroundView?.backgroundColor = .clear
             intervalSelectView.reload(filters: viewModel.intervals.map { .item(title: $0) })
 
+            let topSeparator = UIView()
+            contentView.addSubview(topSeparator)
+            topSeparator.snp.makeConstraints { maker in
+                maker.top.equalTo(intervalSelectView.snp.top)
+                maker.leading.trailing.equalToSuperview()
+                maker.height.equalTo(CGFloat.heightOneDp)
+            }
+
+            topSeparator.backgroundColor = .themeSteel10
+
             lastView = intervalSelectView
         }
-
 
         contentView.addSubview(chartView)
         chartView.snp.makeConstraints { maker in

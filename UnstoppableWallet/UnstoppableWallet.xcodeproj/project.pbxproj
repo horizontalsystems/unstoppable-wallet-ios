@@ -2367,6 +2367,7 @@
 		8BBFE08CEF9408FB9EBB41A2 /* libPods-Unstoppable Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A621352E8776A1F72915821F /* libPods-Unstoppable Tests.a */; };
 		ABC9A01492693DEEB3E069CB /* SendFeePriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1F23271F593313935CD /* SendFeePriorityCell.swift */; };
 		ABC9A01AE17801DE7100B10B /* WalletConnectSessionKiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1667330B8DBC1A8FE52 /* WalletConnectSessionKiller.swift */; };
+		ABC9A01D9D338CE31C268600 /* MarketCategoryMetricChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */; };
 		ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
 		ABC9A040EA0B56AF76D01855 /* WalletConnectV2PendingRequestsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2F6EDC8BB83ED7B75BA /* WalletConnectV2PendingRequestsModule.swift */; };
 		ABC9A05F721E9CFABF06EF89 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
@@ -2387,6 +2388,7 @@
 		ABC9A16BA04CEFCC52BB7455 /* ProFeaturesYakAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5151B44A8A21F5C8C01 /* ProFeaturesYakAuthorizationService.swift */; };
 		ABC9A17B9DE7187764A014AC /* WalletConnectV1ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7809A4A33BEBCFA3194 /* WalletConnectV1ListViewModel.swift */; };
 		ABC9A19612AEEC7999C3FE28 /* SendFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A145789ED6E74B2FF1A5 /* SendFeeSettingsViewModel.swift */; };
+		ABC9A19C64D9E479EBC8BE89 /* MarketCategoryMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */; };
 		ABC9A1D021B4E9ACCE3DE0BA /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */; };
 		ABC9A1D0F389231634D66A3C /* WalletConnectScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB68CEA6F8AD05C5C893 /* WalletConnectScanQrViewController.swift */; };
 		ABC9A1D42EED3235129D810B /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
@@ -2474,6 +2476,7 @@
 		ABC9A621D59D9DAE28A03865 /* SendBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */; };
 		ABC9A62209E284513C33DFE2 /* MarketDiscoveryCategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADFD9DA59BD2FB21C51B /* MarketDiscoveryCategoryService.swift */; };
 		ABC9A623CC22503C786003A9 /* SendFeeSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B485B37CF253113118 /* SendFeeSettingsService.swift */; };
+		ABC9A6258F79CFCB5DA6B34F /* MarketCategoryMetricChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */; };
 		ABC9A62D2279C6B954D3F75A /* SendFeeSliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0D80965514DBFFFC58 /* SendFeeSliderViewModel.swift */; };
 		ABC9A62EF59AF658C1DAD36F /* SendAmountCautionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A580220B9FD291A6496A /* SendAmountCautionService.swift */; };
 		ABC9A63A0D643295CB51D9CB /* SendAmountCautionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A580220B9FD291A6496A /* SendAmountCautionService.swift */; };
@@ -2506,6 +2509,7 @@
 		ABC9A7A99E539F660C255B41 /* ProFeaturesActivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A76EF84398C3288CD4B9 /* ProFeaturesActivateViewController.swift */; };
 		ABC9A7A9E27CC5F93BE5018B /* WalletConnectListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3BEB33F6DBE2395FD11 /* WalletConnectListService.swift */; };
 		ABC9A7AD7D3E85BA733B96F8 /* SendFeeSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B485B37CF253113118 /* SendFeeSettingsService.swift */; };
+		ABC9A7AF4EE29CDE045ADEF7 /* MarketCategoryMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */; };
 		ABC9A7C4B4C1160B89E8C2F5 /* SendBitcoinFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8A4A879501AA5582E8 /* SendBitcoinFeeService.swift */; };
 		ABC9A7E28714A9A19A2160D4 /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD1F2311CC6425CF9D90 /* SendModule.swift */; };
 		ABC9A7F5ECEC3311216A407F /* SendMemoInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A80143F95E28346C81FE /* SendMemoInputService.swift */; };
@@ -2513,6 +2517,7 @@
 		ABC9A82D771D920162551294 /* WalletConnectV2PendingRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE15C187118DE6F0CE7B /* WalletConnectV2PendingRequestsViewModel.swift */; };
 		ABC9A83233DA4C83AF83E483 /* WalletConnectV2PendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD3F677671FB57CCD886 /* WalletConnectV2PendingRequestsService.swift */; };
 		ABC9A8451CEF02EA0A94CEAA /* ProFeaturesAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */; };
+		ABC9A8486C14F586067D8BF3 /* MarketCategoryMetricChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */; };
 		ABC9A85215E0CCEFE2CB83C7 /* WalletConnectV2MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */; };
 		ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFF7119B9AC0E32B2060 /* SendConfirmationModule.swift */; };
 		ABC9A8538C9FE482B118C5A1 /* WalletConnectMainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8A193F58021C411311 /* WalletConnectMainModule.swift */; };
@@ -2586,6 +2591,7 @@
 		ABC9ACEE45E455BA098231EE /* SendMemoInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3C103C1DE359184D944 /* SendMemoInputCell.swift */; };
 		ABC9ACFEA2A1BFC97A863C28 /* ProFeaturesAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */; };
 		ABC9AD1C8D0CE88A604D5250 /* SendBinanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0DD32AB4B9BAB79F11 /* SendBinanceFactory.swift */; };
+		ABC9AD3276132B33F6045AFF /* MarketCategoryMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */; };
 		ABC9AD49CCD14F97CD912454 /* SendBitcoinAdapterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1BD3B1B53C72DDF923A /* SendBitcoinAdapterService.swift */; };
 		ABC9AD565E3BAB7074D02D40 /* ProFeaturesAuthorizationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8D3446ABE98F4D1C0CC /* ProFeaturesAuthorizationAdapter.swift */; };
 		ABC9AD79B8B5C4205E783673 /* SendFeePriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1F23271F593313935CD /* SendFeePriorityCell.swift */; };
@@ -3757,6 +3763,7 @@
 		ABC9A1667330B8DBC1A8FE52 /* WalletConnectSessionKiller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectSessionKiller.swift; sourceTree = "<group>"; };
 		ABC9A1BD3B1B53C72DDF923A /* SendBitcoinAdapterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinAdapterService.swift; sourceTree = "<group>"; };
 		ABC9A1C31F5343EB2BEA4540 /* WalletConnectUriHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectUriHandler.swift; sourceTree = "<group>"; };
+		ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCategoryMetricChartViewModel.swift; sourceTree = "<group>"; };
 		ABC9A1F23271F593313935CD /* SendFeePriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePriorityCell.swift; sourceTree = "<group>"; };
 		ABC9A281C0AE74836096178A /* SendFeeSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeSettingsViewController.swift; sourceTree = "<group>"; };
 		ABC9A2A92B8E2247097EA330 /* SendFeeSliderService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeSliderService.swift; sourceTree = "<group>"; };
@@ -3823,6 +3830,7 @@
 		ABC9AD300C58D1E75104DC38 /* ProFeaturesPassesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesPassesCell.swift; sourceTree = "<group>"; };
 		ABC9AD3F677671FB57CCD886 /* WalletConnectV2PendingRequestsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PendingRequestsService.swift; sourceTree = "<group>"; };
 		ABC9ADB77831DCB474B24C8A /* SendFeeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeService.swift; sourceTree = "<group>"; };
+		ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCategoryMarketCapFetcher.swift; sourceTree = "<group>"; };
 		ABC9ADF114FCFABEA148AF04 /* SendTimeLockErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTimeLockErrorService.swift; sourceTree = "<group>"; };
 		ABC9ADFD8A777EF8E910D9CB /* ProFeaturesYakAuthorizationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesYakAuthorizationViewModel.swift; sourceTree = "<group>"; };
 		ABC9ADFD9DA59BD2FB21C51B /* MarketDiscoveryCategoryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketDiscoveryCategoryService.swift; sourceTree = "<group>"; };
@@ -3992,6 +4000,8 @@
 				11B352AC4F5BE70D055293D7 /* MarketCategoryViewModel.swift */,
 				11B35DBA95DF4B224BC60616 /* MarketCategoryViewController.swift */,
 				11B35CBF3981EB1E7430EBB8 /* MarketCategoryHeaderCell.swift */,
+				ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */,
+				ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */,
 			);
 			path = MarketCategory;
 			sourceTree = "<group>";
@@ -7972,6 +7982,8 @@
 				ABC9A05F721E9CFABF06EF89 /* ChartCell.swift in Sources */,
 				ABC9A9A3231375E92F052BF3 /* ChartCurrentValueView.swift in Sources */,
 				ABC9A4908D99E966DF533805 /* IndicatorSelectorView.swift in Sources */,
+				ABC9A19C64D9E479EBC8BE89 /* MarketCategoryMarketCapFetcher.swift in Sources */,
+				ABC9A6258F79CFCB5DA6B34F /* MarketCategoryMetricChartViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8935,6 +8947,8 @@
 				ABC9AA8B7C29398895204651 /* ChartCell.swift in Sources */,
 				ABC9AFC0D8C8D20C1D4BE8BE /* ChartCurrentValueView.swift in Sources */,
 				ABC9AE1B85F56091AC817375 /* IndicatorSelectorView.swift in Sources */,
+				ABC9A7AF4EE29CDE045ADEF7 /* MarketCategoryMarketCapFetcher.swift in Sources */,
+				ABC9A8486C14F586067D8BF3 /* MarketCategoryMetricChartViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9890,6 +9904,8 @@
 				ABC9A59B465A9C59F93DFB96 /* ChartCell.swift in Sources */,
 				ABC9AC9C0872009622BB81B2 /* ChartCurrentValueView.swift in Sources */,
 				ABC9A9B73EDF93222B9B0F8B /* IndicatorSelectorView.swift in Sources */,
+				ABC9AD3276132B33F6045AFF /* MarketCategoryMarketCapFetcher.swift in Sources */,
+				ABC9A01D9D338CE31C268600 /* MarketCategoryMetricChartViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
