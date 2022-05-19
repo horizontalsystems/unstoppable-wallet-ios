@@ -4,21 +4,32 @@ import RxCocoa
 import MarketKit
 
 class MarketOverviewTopPlatformsViewModel {
-    private let service: MarketOverviewTopPlatformsService
+    private let listCount = 5
+
+    private let service: MarketTopPlatformsService
     private let decorator: MarketListTopPlatformDecorator
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
 
-    init(service: MarketOverviewTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
+    init(service: MarketTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
         self.service = service
         self.decorator = decorator
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
     }
 
-    private func sync(state: DataStatus<[TopPlatform]>) {
-        stateRelay.accept(state.map { viewItem(listItems: $0) })
+    private func sync(state: MarketListServiceState<TopPlatform>) {
+        let listCount = listCount
+
+        switch state {
+        case .loading:
+            stateRelay.accept(.loading)
+        case let .failed(error):
+            stateRelay.accept(.failed(error))
+        case let .loaded(items, _, _):
+            stateRelay.accept(.completed(viewItem(listItems: Array(items.prefix(listCount)))))
+        }
     }
 
     private func viewItem(listItems: [TopPlatform]) -> BaseMarketOverviewTopListDataSource.ViewItem {
