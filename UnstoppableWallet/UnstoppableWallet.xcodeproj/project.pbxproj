@@ -1648,8 +1648,6 @@
 		1A564CBB4708B7DAC6D6A2AD /* BlockchainSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56443BF752CB6537E45F5A /* BlockchainSettingsStorage.swift */; };
 		1A564CBCF88289030B38447D /* AppVersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641CDB00EF52E18BF70F3 /* AppVersionManager.swift */; };
 		1A564CC4790F0CED826C131F /* MarketOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564206FEC56546760B9BEA /* MarketOverviewViewModel.swift */; };
-		1A564CD95809AEE4957E2A55 /* MarketOverviewTopPlatformsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DCC45C94BEFB224D23 /* MarketOverviewTopPlatformsService.swift */; };
-		1A564CE0E448EBA33B3BB0E1 /* MarketOverviewTopPlatformsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DCC45C94BEFB224D23 /* MarketOverviewTopPlatformsService.swift */; };
 		1A564CF70EE8FF7965ECEBCC /* InfoHeader2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E04BCA7E9E76746A01A /* InfoHeader2Cell.swift */; };
 		1A564CFC1DF1681FA2094252 /* AccountDoubleLineCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5640FD34F5C897B1DEFAA0 /* AccountDoubleLineCellView.swift */; };
 		1A564CFD8F22A2F5FDB346EA /* JailbreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56469A2F3EAAEDECFB4034 /* JailbreakService.swift */; };
@@ -1709,7 +1707,6 @@
 		1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
 		1A564F74C74906B87B1DF44B /* MarketOverviewGlobalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5649C48B3AABC56D2512ED /* MarketOverviewGlobalViewModel.swift */; };
 		1A564F84F5005211BEDB4DE3 /* FullCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B24B847D08C09CF9A00 /* FullCoin.swift */; };
-		1A564FAD0A61B480F3BEABFB /* MarketOverviewTopPlatformsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647DCC45C94BEFB224D23 /* MarketOverviewTopPlatformsService.swift */; };
 		1A564FC623000FF50AC9064E /* WalletConnectSignMessageRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564C60EABE355B1F395D97 /* WalletConnectSignMessageRequestViewController.swift */; };
 		1A564FC84916FF6D6224FB33 /* MarketOverviewCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645B1C5FD344967B1F4B7 /* MarketOverviewCategoryCell.swift */; };
 		1A564FD0B7FCD6A4800C64D8 /* WalletConnectSignMessageRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1A792FA6EECFE52906 /* WalletConnectSignMessageRequestViewModel.swift */; };
@@ -3436,7 +3433,6 @@
 		1A5647ACB8A65C250F62E07D /* AdapterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterState.swift; sourceTree = "<group>"; };
 		1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsModule.swift; sourceTree = "<group>"; };
 		1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewController.swift; sourceTree = "<group>"; };
-		1A5647DCC45C94BEFB224D23 /* MarketOverviewTopPlatformsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewTopPlatformsService.swift; sourceTree = "<group>"; };
 		1A5647FA18CC69113ECB6581 /* MarketOverviewGlobalDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewGlobalDataSource.swift; sourceTree = "<group>"; };
 		1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusPresenter.swift; sourceTree = "<group>"; };
 		1A5648405736784435545BC4 /* InfoHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderCell.swift; sourceTree = "<group>"; };
@@ -5359,7 +5355,6 @@
 		1A5646D7F9188134B80B17F2 /* TopPlatforms */ = {
 			isa = PBXGroup;
 			children = (
-				1A5647DCC45C94BEFB224D23 /* MarketOverviewTopPlatformsService.swift */,
 				1A56477F6FC71270AD53A3AE /* MarketOverviewTopPlatformsViewModel.swift */,
 				1A564B44985D1169593F202C /* MarketOverviewTopPlatformsDataSource.swift */,
 			);
@@ -7955,7 +7950,6 @@
 				11B3585445A994135BE1E490 /* NftEvent.swift in Sources */,
 				11B35B2176FE2376BA5086EF /* DropdownFilterHeaderView.swift in Sources */,
 				1A5642F3758A33BD0A721D1F /* MarketOverviewTopPlatformsViewModel.swift in Sources */,
-				1A564FAD0A61B480F3BEABFB /* MarketOverviewTopPlatformsService.swift in Sources */,
 				1A56408C1F4EA3D39D3FCF93 /* BaseMarketOverviewTopListDataSource.swift in Sources */,
 				1A564089D93E2DC5E065CE79 /* MarketOverviewNftCollectionsDataSource.swift in Sources */,
 				ABC9AF40416561C8B6F82335 /* ProFeaturesPassesCell.swift in Sources */,
@@ -8918,7 +8912,6 @@
 				11B35A6C08D1748828FDCFF6 /* NftEvent.swift in Sources */,
 				11B35D8C82DF2AECD73CF755 /* DropdownFilterHeaderView.swift in Sources */,
 				1A564C2E1B66C2C508F8327D /* MarketOverviewTopPlatformsViewModel.swift in Sources */,
-				1A564CE0E448EBA33B3BB0E1 /* MarketOverviewTopPlatformsService.swift in Sources */,
 				1A564D4581F280245579C9DF /* BaseMarketOverviewTopListDataSource.swift in Sources */,
 				1A564D8A7261D9CE493C6765 /* MarketOverviewNftCollectionsDataSource.swift in Sources */,
 				ABC9AC275CAC4FA2BD49037C /* ProFeaturesPassesCell.swift in Sources */,
@@ -9873,7 +9866,6 @@
 				11B358834861C1EE0C608449 /* NftEvent.swift in Sources */,
 				11B35B68CA4256E23BEC8D7F /* DropdownFilterHeaderView.swift in Sources */,
 				1A5648701B55E09FD8E4585D /* MarketOverviewTopPlatformsViewModel.swift in Sources */,
-				1A564CD95809AEE4957E2A55 /* MarketOverviewTopPlatformsService.swift in Sources */,
 				1A5647BB75003E8292C8144B /* BaseMarketOverviewTopListDataSource.swift in Sources */,
 				1A56453915F43484D1D00C34 /* MarketOverviewNftCollectionsDataSource.swift in Sources */,
 				ABC9A0DBEE2E462EE0E2A22B /* ProFeaturesPassesCell.swift in Sources */,
