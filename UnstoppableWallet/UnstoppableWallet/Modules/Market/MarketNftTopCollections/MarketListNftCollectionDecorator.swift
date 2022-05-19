@@ -34,23 +34,8 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
 
 
         var volumeString = "n/a".localized
-        let volume: NftPrice?
-        let diff: Decimal?
-
-        switch service.timePeriod {
-        case .day1:
-            volume = collection.stats.oneDayVolume
-            diff = collection.stats.oneDayChange
-        case .week1:
-            volume = collection.stats.sevenDayVolume
-            diff = collection.stats.sevenDayChange
-        case .month1:
-            volume = collection.stats.thirtyDayVolume
-            diff = collection.stats.thirtyDayChange
-        default:
-            volume = nil
-            diff = 0
-        }
+        let volume = collection.stats.volumes[service.timePeriod]
+        let diff = collection.stats.changes[service.timePeriod]
 
         if let volume = volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .platformCoin(platformCoin: volume.platformCoin), value: volume.value)) {
             volumeString = value
