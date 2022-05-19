@@ -150,13 +150,27 @@ class HsNftProvider {
                 floorPrice: nftPrice(platformCoin: ethereumPlatformCoin, value: response.floorPrice, shift: false),
                 totalVolume: response.totalVolume,
                 marketCap: nftPrice(platformCoin: ethereumPlatformCoin, value: response.marketCap, shift: false),
-                oneDayChange: response.oneDayChange,
-                sevenDayChange: response.sevenDayChange,
-                thirtyDayChange: response.thirtyDayChange,
-                oneDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.oneDayVolume, shift: false),
-                sevenDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.sevenDayVolume, shift: false),
-                thirtyDayVolume: nftPrice(platformCoin: ethereumPlatformCoin, value: response.thirtyDayVolume, shift: false)
+                changes: [
+                    .day1: response.oneDayChange,
+                    .week1: response.sevenDayChange,
+                    .month1: response.thirtyDayChange
+                ],
+                volumes: createNftPrices(values: [
+                    .day1: response.oneDayVolume,
+                    .week1: response.sevenDayVolume,
+                    .month1: response.thirtyDayVolume
+                ], ethereumPlatformCoin: ethereumPlatformCoin)
         )
+    }
+
+    func createNftPrices(values: [HsTimePeriod: Decimal], ethereumPlatformCoin: PlatformCoin?) -> [HsTimePeriod: NftPrice] {
+        Dictionary<HsTimePeriod, NftPrice>(uniqueKeysWithValues: values.compactMap { key, value in
+            guard let nftPrice = nftPrice(platformCoin: ethereumPlatformCoin, value: value, shift: false) else {
+                return nil
+            }
+
+            return (key, nftPrice)
+        })
     }
 
     private func assetOrders(responses: [OrderResponse], platformCoinMap: [String: PlatformCoin]) -> [NftAssetOrder] {

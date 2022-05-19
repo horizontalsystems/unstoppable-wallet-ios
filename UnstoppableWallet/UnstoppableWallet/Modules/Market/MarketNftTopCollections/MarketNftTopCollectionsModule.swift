@@ -45,33 +45,11 @@ extension Array where Element == NftCollection {
 
     func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftCollection] {
         sorted { lhsCollection, rhsCollection in
-            var lhsVolume: Decimal? = nil
-            var rhsVolume: Decimal? = nil
-            var lhsChange: Decimal? = nil
-            var rhsChange: Decimal? = nil
+            let lhsVolume = lhsCollection.stats.changes[timePeriod]
+            let rhsVolume = rhsCollection.stats.changes[timePeriod]
 
-            switch timePeriod {
-            case .day1:
-                lhsVolume = lhsCollection.stats.oneDayVolume?.value
-                rhsVolume = rhsCollection.stats.oneDayVolume?.value
-
-                lhsChange = lhsCollection.stats.oneDayChange
-                rhsChange = rhsCollection.stats.oneDayChange
-            case .week1:
-                lhsVolume = lhsCollection.stats.sevenDayVolume?.value
-                rhsVolume = rhsCollection.stats.sevenDayVolume?.value
-
-                lhsChange = lhsCollection.stats.sevenDayChange
-                rhsChange = rhsCollection.stats.sevenDayChange
-            case .month1:
-                lhsVolume = lhsCollection.stats.thirtyDayVolume?.value
-                rhsVolume = rhsCollection.stats.thirtyDayVolume?.value
-
-                lhsChange = lhsCollection.stats.thirtyDayChange
-                rhsChange = rhsCollection.stats.thirtyDayChange
-            default:
-                break
-            }
+            let lhsChange = lhsCollection.stats.volumes[timePeriod]?.value
+            let rhsChange = rhsCollection.stats.volumes[timePeriod]?.value
 
             switch sortType {
             case .highestVolume, .lowestVolume:
