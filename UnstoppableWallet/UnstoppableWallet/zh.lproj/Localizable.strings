@@ -63,6 +63,8 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
 "restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
@@ -322,7 +324,7 @@
 
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "执行代币互兑时，该服务可以代表您支出的某种货币的金额。执行互兑操作之前要求具备足够的批准限额。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -357,7 +359,7 @@
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
 "market.top.section.header.top_losers" = "跌幅榜";
-"market.top.section.header.top_sectors" = "Top Sectors";
+"market.top.section.header.top_sectors" = "前列行业";
 "market.top.section.header.news" = "发现";
 "market.top.volume.title" = "成交量";
 "market.top.market_cap.title" = "市值";
@@ -373,7 +375,7 @@
 
 "market.sort_by" = "排序方式为";
 
-"market.top.title" = "Top Coins";
+"market.top.title" = "前列代币";
 "market.top.description" = "币种排名描述";
 
 "market.top.highest_cap" = "市值由高到低";
@@ -382,16 +384,20 @@
 "market.top.lowest_volume" = "成交量由低到高";
 "market.top.top_gainers" = "涨幅榜";
 "market.top.top_losers" = "跌幅榜";
-"market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.top_collections" = "前列 NFT 收藏";
+"market.top.floor_price" = "底部：";
+"market.top.top_platforms" = "前列平台";
+"market.top.protocols" = "协议";
+
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "未发现结果";
+"market_discovery.category.chart.title" = "总市值";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
@@ -500,31 +506,31 @@
 "coin_page.markets.empty" = "没有可用数据";
 
 "coin_page.token_liquidity" = "代币流动性";
-"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
+"coin_page.token_liquidity.description" = "去中心化交易市场上特定资产的流动资金状况。";
 "coin_page.dex_volume" = "DEX交易量";
-"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
+"coin_page.dex_volume.description" = "去中心化交易所的代币交易量。";
 "coin_page.dex_liquidity" = "DEX流动性";
-"coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
+"coin_page.dex_liquidity.description" = "去中心化交易所的可用流动资金总额。";
 "coin_page.chart.locked" = "锁住";
 
 "coin_page.token_distribution" = "代币分布";
-"coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
-"coin_page.tx_count" = "Tx Count";
-"coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
-"coin_page.tx_volume" = "Tx Volume";
-"coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
-"coin_page.active_addresses" = "Active Addresses";
-"coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";
+"coin_page.token_distribution.description" = "链上代币参数。通常，健康的项目都具有活跃的链上用户基础以及分布良好的代币。";
+"coin_page.tx_count" = "Tx计数";
+"coin_page.tx_count.description" = "在不同时期的链上记录的代币交易数量。";
+"coin_page.tx_volume" = "Tx交易量";
+"coin_page.tx_volume.description" = "总代币交易量记录在链上。交易量是以实际代币（而非美元）进行度量。";
+"coin_page.active_addresses" = "活跃地址";
+"coin_page.active_addresses.description" = "不同时期交易中唯一钱包地址的数量。";
 
 "coin_page.chart_tvl" = "代币锁仓量";
 "coin_page.chart_volumes" = "成交量";
 "coin_page.token_tvl" = "代币锁仓量";
-"coin_page.token_tvl.description" = "Total Value Locked (TVL) is a metric that shows the total value of crypto assets under automated management by the smart contracts powering the given protocol.";
+"coin_page.token_tvl.description" = "锁定总值 (TVL) 是一种尺度，它表示由为特定协议提供支持的智能合同自动管理下的加密资产的总值。";
 "coin_page.tvl" = "总锁定";
 "coin_page.tvl_rank" = "锁仓排名";
-"coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
+"coin_page.tvl_rank.description" = "其他协议中的排名是以美元计算的TVL值为基础。";
 "coin_page.market_cap_tvl_ratio" = "稀释市值/锁定 比例";
-"coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
+"coin_page.market_cap_tvl_ratio.description" = "项目代币的市场价值与其TVL的比率。";
 "coin_page.tvl.description" = "以贷款抵押品或流动性池的形式存入平台的资本。";
 
 "coin_page.investor_data" = "投资数据";
@@ -556,7 +562,7 @@
 "coin_page.already_added_to_wallet" = "已经加入钱包";
 
 "coin_page.major_holders" = "主要持有者";
-"coin_page.major_holders.description" = "The number of tokens held by the top 10 wallets. Quality projects typically have a widely distributed token.";
+"coin_page.major_holders.description" = "前10个钱包持有的代币数量。优质项目通常具有广泛分布的代币。";
 "coin_page.major_holders.chart.description" = "前10名地址";
 "coin_page.major_holders.top_ethereum_wallets" = "最好的以太坊钱包";
 
@@ -580,8 +586,8 @@
 "coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted and view user balances.";
 "coin_page.security_parameters.privacy.description.medium" = "使用此代币的交易是半匿名的。第三方服务能够查看交易金额，并将不同的交易部分链接到同一实体。";
 "coin_page.security_parameters.privacy.description.high" = "默认情况下，使用此代币的交易是匿名的，或者提供此类功能。任何实体都无法将不同的交易链接到同一个人或查看交易金额.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
+"coin_page.security_parameters.issuance.description.decentralized" = "流通中的代币数量由算法控制，以确定的方式工作，不受中心化机构影响。";
+"coin_page.security_parameters.issuance.description.centralized" = "流通中的代币数量可以由一个中心化的实体随意增加或减少。";
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "代币存放在非保管钱包内时不得没收。";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "代币可以被发行实体没收或篡改。";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "无法对代币持有人进行交易审查。";
@@ -602,33 +608,33 @@
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable Wallet Passes";
-"pro_features.authorize.wallet_passes.subtitle" = "Get advanced features\nby holding our NFTs";
+"pro_features.authorize.wallet_passes.title" = "Unstoppabl Wallet Pass";
+"pro_features.authorize.wallet_passes.subtitle" = "通过持有我们的NFT\n获取高级功能";
 
-"pro_features.lock_info.go_to_mint" = "Coming Soon";
+"pro_features.lock_info.go_to_mint" = "即将推出";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
 "pro_features.lock_info.subtitle" = "NFT";
-"pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
-"pro_features.lock_info.coin_details.volume" = "DEX Volume";
-"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
-"pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
-"pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
-"pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
+"pro_features.lock_info.coin_details.description" = "要启用此数据，您必须在您的余额上拥有Unstoppable Pass NFT\n\n同时您将能获得对以下数据的访问权：";
+"pro_features.lock_info.coin_details.volume" = "DEX交易量";
+"pro_features.lock_info.coin_details.liquidity" = "DEX流动性";
+"pro_features.lock_info.coin_details.active_addresses" = "活跃地址";
+"pro_features.lock_info.coin_details.transaction_count" = "交易数";
+"pro_features.lock_info.coin_details.transaction_volume" = "交易量";
 
-"pro_features.activate" = "Activate";
-"pro_features.mountain_yak.activate.title" = "Activate the Pass";
+"pro_features.activate" = "激活";
+"pro_features.mountain_yak.activate.title" = "激活Pass";
 "pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
-"pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
-"pro_features.mountain_yak.activate.features" = "After Activation You Get:";
-"pro_features.activate.invalid_sign" = "Could not Activate ...";
+"pro_features.mountain_yak.activate.description" = "Mountain Yak - 不受边界限制。 将为您提供重要的市场数据、分析工具、基于链式数据的有用图表，有助您清晰了解项目";
+"pro_features.mountain_yak.activate.features" = "激活后您将获得：";
+"pro_features.activate.invalid_sign" = "无法激活...";
 
 // Transactions
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "全部";
-"transactions.syncing_text" = "Please wait for the sync to finish";
+"transactions.syncing_text" = "请等待同步结束";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
@@ -641,14 +647,14 @@
 "transactions.swap" = "掉期交易";
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
-"transactions.external_call" = "External Call";
+"transactions.external_call" = "外部呼叫";
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
 
-"transactions.multiple" = "Multiple";
+"transactions.multiple" = "多种";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "无限";
 
 "transactions.today" = "今天";
 "transactions.yesterday" = "昨天";
@@ -659,9 +665,8 @@
 "transactions.types.swap" = "掉期交易";
 "transactions.types.approve" = "批准";
 
-
 "transactions.unknown_transaction.title" = "未知交易";
-"transactions.unknown_transaction.description" = "交易無法解析";
+"transactions.unknown_transaction.description" = "无法解析交易";
 
 // Transaction Info
 
@@ -674,7 +679,7 @@
 "tx_info.from_hash" = "发件人";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "消费人";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
@@ -682,7 +687,7 @@
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
-"tx_info.to_self_note" = "This transaction is sent to own address";
+"tx_info.to_self_note" = "交易已发送至自有地址";
 "tx_info.double_spent_note" = "双重支付风险！";
 "tx_info.locked_until" = "锁定至 %@";
 "tx_info.unlocked_at" = "在 %@ 解锁了";
@@ -696,7 +701,7 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
-"tx_info.options" = "Options";
+"tx_info.options" = "选项";
 
 // Settings
 
@@ -784,9 +789,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "btc_blockchain_settings.restore_source" = "恢复参数";
 "btc_blockchain_settings.restore_source.description" = "通过交易为恢复钱包选择数据源。";
-"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
-"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
-"btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";
+"btc_blockchain_settings.restore_source.alert" = "更改恢复源后，钱包必须将自身与 %@ 区块链重新同步。";
+"btc_blockchain_settings.transaction_inputs_outputs" = "交易输入 / 输出";
+"btc_blockchain_settings.transaction_inputs_outputs.description" = "通过改变交易结构的方式使您的 %@ 交易更难被追踪。";
 
 "btc_restore_mode.recommended" = "推荐";
 "btc_restore_mode.more_private" = "更私密";
@@ -798,9 +803,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "blockchain_settings.info.restore_source" = "恢复参数";
 "blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
-"blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
-"blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
-"blockchain_settings.info.sync_mode" = "Sync Mode";
+"blockchain_settings.info.transaction_inputs_outputs" = "交易输入 / 输出";
+"blockchain_settings.info.transaction_inputs_outputs.content" = "大多数比特币交易，以及比特币现金、Dash和莱特币等加密货币的交易，都会产生两种输出。一种输出是发送给接收者的数量，另一个是返回给发送者的找零输出。大多数钱包构造交易的方式使第三方很容易理解哪些输出发送给了接收方，哪些是返回给发送方的找零。当返回给发送方的输出稍后用于未来的交易时，这两个交易之间的连接就变得明显了。\n\nUnstoppable钱包实施了一些措施，让人们更难弄清楚哪些输出流向了哪里。\n\n对于Unstoppable用户有两种选项可用：\n\n1. 随机变换：每一交易的交易输出顺序均实现了随机化。有时候便令可能是第一个输出，有时可能是第二个。如果用户信任应用的开发者，那么可以考虑这一推荐选项。\n\n2. 确定性：有一个共同商定的交易输出顺序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用程序开发者如何实现输出顺序。由于这个标准非常新，还没有太多钱包对其进行了实现。因此，有可能可以看到在一个区块链上的一个交易是否是从使用或不使用该标准的钱包上发送。";
+"blockchain_settings.info.sync_mode" = "同步模式";
 "blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Keys
@@ -813,8 +818,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除钱包。";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
-"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
-"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
+"settings_manage_keys.delete.confirmation_watch" = "您要停止监视这个钱包地址吗？";
+"settings_manage_keys.delete.confirmation_watch.button" = "停止监视";
 
 // Settings -> About App
 
@@ -1056,14 +1061,14 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // EVM Network
 
-"evm_network.sync_node" = "Sync Node";
+"evm_network.sync_node" = "同步节点";
 
 // Fee Settings
 
 "fee_settings" = "费用设置";
 "fee_settings.fee" = "费用";
-"fee_settings.fee.info" = "The expected total fee for the given transaction.";
-"fee_settings.fee_priority" = "Speed";
+"fee_settings.fee.info" = "给定交易的预期总费用。";
+"fee_settings.fee_priority" = "速度";
 "fee_settings.fee_rate" = "费率";
 "fee_settings.max_fee" = "最大手续费";
 "fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
@@ -1087,8 +1092,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Watch Address
 
-"watch_address.title" = "地址";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "观察";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
@@ -1097,10 +1104,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collections.average_7d" = "平均7天";
 "nft_collections.average_30d" = "平均30天";
 "nft_collections.on_sale" = "在售";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.empty" = "您的钱包中没有任何NFT";
 
-"top_nft_collections.title" = "Top NFT collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -1130,19 +1137,26 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
-"nft_collection.tab.assets" = "Items";
-"nft_collection.tab.activity" = "Activity";
+"nft_collection.tab.overview" = "行情";
+"nft_collection.tab.assets" = "条目";
+"nft_collection.tab.activity" = "活动";
 
 "nft_collection.overview.description" = "描述";
 "nft_collection.overview.contracts" = "合约";
 "nft_collection.overview.links" = "链接";
 "nft_collection.overview.links.website" = "网站";
 
-"nft_collection.activity.event_types" = "Event Types";
-"nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
-"nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
-"nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_types" = "事件类型";
+"nft_collection.activity.event_type.all" = "全部事件";
+"nft_collection.activity.event_type.list" = "列表";
+"nft_collection.activity.event_type.sale" = "出售";
+"nft_collection.activity.event_type.offer" = "已输入报价";
+"nft_collection.activity.event_type.bid" = "已输入出价";
+"nft_collection.activity.event_type.bid_cancel" = "已撤回出价";
+"nft_collection.activity.event_type.transfer" = "转帐";
+"nft_collection.activity.event_type.approve" = "批准";
+"nft_collection.activity.event_type.custom" = "自定义";
+"nft_collection.activity.event_type.payout" = "支出";
+"nft_collection.activity.event_type.cancel" = "取消";
+"nft_collection.activity.event_type.bulkCancel" = "批量取消";
+"nft_collection.activity.event_type.unknown" = "未知";

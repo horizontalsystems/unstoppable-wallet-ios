@@ -61,6 +61,8 @@
 
 "restore.title" = "Wallet auswählen";
 "restore.enter_key" = "Schlüssel Eingeben";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Geben Sie Ihre Eselsbrücke ein, die aus 12 oder 24 Wörtern besteht. Die Wörter müssen in der richtigen Reihenfolge und durch Leerzeichen getrennt eingegeben werden.";
 "restore_error.mnemonic_word_count" = "Falsche Wortzahl. Sie muss zwischen 12 und 24 Wörtern liegen. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
@@ -385,11 +387,15 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "No results found";
+"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -468,7 +474,7 @@
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.defi_cap.description" = "The historical change in the cumulative market value of tokens in the Decentralized Finance sector.";
 "market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
 
 // Coin Page
@@ -657,9 +663,8 @@
 "transactions.types.swap" = "Wechsel";
 "transactions.types.approve" = "Genehmigungen";
 
-
-"transactions.unknown_transaction.title" = "Unbekannte Transaktion";
-"transactions.unknown_transaction.description" = "Transaktion kann nicht geparst werden";
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 // Transaction Info
 
@@ -1085,8 +1090,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 // Watch Address
 
-"watch_address.title" = "Adresse";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "Watch";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
@@ -1097,8 +1104,8 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collections.on_sale" = "Im Verkauf";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Top NFT collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -1139,8 +1146,15 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
 "nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.offer" = "Offer Entered";
+"nft_collection.activity.event_type.bid" = "Bid Entered";
+"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_type.approve" = "Approve";
+"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft_collection.activity.event_type.unknown" = "Unknown";

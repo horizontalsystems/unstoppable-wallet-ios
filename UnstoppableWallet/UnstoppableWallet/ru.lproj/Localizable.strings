@@ -63,6 +63,8 @@
 
 "restore.title" = "Выберите Кошелек";
 "restore.enter_key" = "Введите Ключ";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами.";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12 или 24 слова. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
@@ -387,11 +389,15 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор Категорий";
 "market_discovery.top_coins" = "Лучшие токены";
 "market_discovery.not_found" = "Ничего не найдено";
+"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
@@ -660,7 +666,7 @@
 "transactions.types.approve" = "Разрешения";
 
 "transactions.unknown_transaction.title" = "Неизвестная Транзакция";
-"transactions.unknown_transaction.description" = "Не удалось выполнить парсинг транзакции.";
+"transactions.unknown_transaction.description" = "Транзакция не может быть обработана";
 
 // Transaction Info
 
@@ -1086,8 +1092,10 @@
 
 // Watch Address
 
-"watch_address.title" = "Адрес";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "Смотреть";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
@@ -1098,8 +1106,8 @@
 "nft_collections.on_sale" = "В продаже";
 "nft_collections.empty" = "В вашем кошельке нет NFT";
 
-"top_nft_collections.title" = "Top NFT collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -1140,8 +1148,15 @@
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
 "nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.offer" = "Offer Entered";
+"nft_collection.activity.event_type.bid" = "Bid Entered";
+"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_type.approve" = "Approve";
+"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft_collection.activity.event_type.unknown" = "Unknown";

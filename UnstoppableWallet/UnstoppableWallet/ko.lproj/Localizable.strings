@@ -61,6 +61,8 @@
 
 "restore.title" = "지갑 선택";
 "restore.enter_key" = "암호를 입력하세요";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다.";
 "restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
@@ -385,11 +387,15 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "No results found";
+"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "Your watchlist is empty.";
 
@@ -614,7 +620,7 @@
 "pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
 "pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
 
-"pro_features.activate" = "Activate";
+"pro_features.activate" = "활성화";
 "pro_features.mountain_yak.activate.title" = "Activate the Pass";
 "pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
 "pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
@@ -657,9 +663,8 @@
 "transactions.types.swap" = "스왑";
 "transactions.types.approve" = "승인";
 
-
-"transactions.unknown_transaction.title" = "트랜잭션을 구문 분석할 수 없습니다.";
-"transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다.";
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 // Transaction Info
 
@@ -1085,8 +1090,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Watch Address
 
-"watch_address.title" = "주소";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "관찰";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
@@ -1098,7 +1105,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collections.empty" = "지갑에 NFT가 없습니다.";
 
 "top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -1139,8 +1146,15 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
 "nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.offer" = "Offer Entered";
+"nft_collection.activity.event_type.bid" = "Bid Entered";
+"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_type.approve" = "승인";
+"nft_collection.activity.event_type.custom" = "사용자 지정";
+"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.cancel" = "취소";
+"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft_collection.activity.event_type.unknown" = "Unknown";

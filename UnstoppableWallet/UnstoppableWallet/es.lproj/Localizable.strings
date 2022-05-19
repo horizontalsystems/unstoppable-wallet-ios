@@ -61,6 +61,8 @@
 
 "restore.title" = "Elegir Monedero";
 "restore.enter_key" = "Introduzca la clave";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
@@ -385,11 +387,15 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocolos";
 
+"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
 "market_discovery.title" = "Descubrimiento";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Browse Categories";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "No se han encontrado resultados";
+"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
 
@@ -657,9 +663,8 @@
 "transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Aprobaciones";
 
-
-"transactions.unknown_transaction.title" = "Transacción Desconocida";
-"transactions.unknown_transaction.description" = "La transacción no se puede analizar";
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 // Transaction Info
 
@@ -1086,8 +1091,10 @@ poner en peligro la seguridad de mis fondos.";
 
 // Watch Address
 
-"watch_address.title" = "Dirección";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "Ver";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
@@ -1098,8 +1105,8 @@ poner en peligro la seguridad de mis fondos.";
 "nft_collections.on_sale" = "En venta";
 "nft_collections.empty" = "No tiene un NFT en su cartera";
 
-"top_nft_collections.title" = "Top NFT collections";
-"top_nft_collections.description" = "Some top digital art";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -1140,8 +1147,15 @@ poner en peligro la seguridad de mis fondos.";
 
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.sale" = "Sale";
 "nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.bid" = "Bid";
-"nft_collection.activity.event_type.bid_cancel" = "Cancel Bid";
+"nft_collection.activity.event_type.sale" = "Sale";
+"nft_collection.activity.event_type.offer" = "Offer Entered";
+"nft_collection.activity.event_type.bid" = "Bid Entered";
+"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft_collection.activity.event_type.transfer" = "Transfer";
+"nft_collection.activity.event_type.approve" = "Approve";
+"nft_collection.activity.event_type.custom" = "Custom";
+"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.cancel" = "Cancel";
+"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft_collection.activity.event_type.unknown" = "Unknown";
