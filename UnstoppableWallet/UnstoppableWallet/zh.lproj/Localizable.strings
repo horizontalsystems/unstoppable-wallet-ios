@@ -63,6 +63,8 @@
 
 "restore.title" = "选择钱包";
 "restore.enter_key" = "输入密钥";
+"restore.mnemonic.name" = "Name (optional)";
+"restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
 "restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
 "restore.checksum_error" = "校验和无效";
@@ -1090,8 +1092,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Watch Address
 
-"watch_address.title" = "地址";
+"watch_address.title" = "Watch Address";
 "watch_address.watch" = "观察";
+"watch_address.name" = "Name (optional)";
+"watch_address.address" = "Address";
 
 // Nft Collections
 
