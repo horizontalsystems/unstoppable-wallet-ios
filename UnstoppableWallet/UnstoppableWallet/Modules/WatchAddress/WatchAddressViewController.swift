@@ -12,6 +12,8 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let watchButton = ThemeButton()
 
+    private let nameCell = TextFieldCell()
+
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
 
@@ -46,6 +48,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         view.addSubview(watchButton)
         watchButton.snp.makeConstraints { maker in
@@ -58,11 +61,17 @@ class WatchAddressViewController: KeyboardAwareViewController {
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
         watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
 
+        nameCell.inputPlaceholder = viewModel.namePlaceholder
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
+
         addressCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         addressCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         addressCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
+        subscribe(disposeBag, viewModel.nameDriver) { [weak self] name in
+            self?.nameCell.inputText = name
+        }
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
             self?.watchButton.isEnabled = enabled
@@ -97,11 +106,31 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
 extension WatchAddressViewController: SectionsDataSource {
 
+    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        .cellType(
+                hash: text,
+                binder: { $0.bind(text: text) },
+                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         [
             Section(
+                    id: "name",
+                    headerState: header(text: "watch_address.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            ),
+            Section(
                     id: "address",
-                    headerState: .margin(height: .margin16),
+                    headerState: header(text: "watch_address.address".localized),
                     rows: [
                         StaticRow(
                                 cell: addressCell,
@@ -118,7 +147,7 @@ extension WatchAddressViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            )
+            ),
         ]
     }
 

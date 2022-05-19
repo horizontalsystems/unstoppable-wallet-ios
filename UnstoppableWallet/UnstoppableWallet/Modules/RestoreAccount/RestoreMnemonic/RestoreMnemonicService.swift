@@ -11,10 +11,14 @@ class RestoreMnemonicService {
     private let passphraseValidator: PassphraseValidator
 
     var passphrase: String = ""
+    let defaultName: String
+    private var name: String = ""
 
-    init(wordsManager: WordsManager, passphraseValidator: PassphraseValidator) {
+    init(accountFactory: AccountFactory, wordsManager: WordsManager, passphraseValidator: PassphraseValidator) {
         self.wordsManager = wordsManager
         self.passphraseValidator = passphraseValidator
+
+        defaultName = accountFactory.nextAccountName
     }
 
 }
@@ -27,6 +31,14 @@ extension RestoreMnemonicService {
 
     var passphraseEnabledObservable: Observable<Bool> {
         passphraseEnabledRelay.asObservable()
+    }
+
+    var resolvedName: String {
+        name.trimmingCharacters(in: .whitespaces).isEmpty ? defaultName : name
+    }
+
+    func set(name: String) {
+        self.name = name
     }
 
     func set(passphraseEnabled: Bool) {

@@ -8,7 +8,7 @@ class RestoreMnemonicViewModel {
     private let disposeBag = DisposeBag()
 
     private let invalidRangesRelay = BehaviorRelay<[NSRange]>(value: [])
-    private let proceedRelay = PublishRelay<AccountType>()
+    private let proceedRelay = PublishRelay<(String, AccountType)>()
     private let showErrorRelay = PublishRelay<String>()
 
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
@@ -73,7 +73,7 @@ extension RestoreMnemonicViewModel {
         invalidRangesRelay.asDriver()
     }
 
-    var proceedSignal: Signal<AccountType> {
+    var proceedSignal: Signal<(String, AccountType)> {
         proceedRelay.asSignal()
     }
 
@@ -87,6 +87,14 @@ extension RestoreMnemonicViewModel {
 
     var clearInputsSignal: Signal<Void> {
         clearInputsRelay.asSignal()
+    }
+
+    var namePlaceholder: String {
+        service.defaultName
+    }
+
+    func onChange(name: String?) {
+        service.set(name: name ?? "")
     }
 
     func onChange(text: String, cursorOffset: Int) {
@@ -122,7 +130,7 @@ extension RestoreMnemonicViewModel {
         do {
             let accountType = try service.accountType(words: state.allItems.map { $0.word })
 
-            proceedRelay.accept(accountType)
+            proceedRelay.accept((service.resolvedName, accountType))
         } catch {
             if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
                 passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
