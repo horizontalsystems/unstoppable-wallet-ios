@@ -48,22 +48,8 @@ extension Array where Element == MarketKit.TopPlatform {
             let lhsCap = lhsPlatform.marketCap
             let rhsCap = rhsPlatform.marketCap
 
-            var lhsChange: Decimal? = nil
-            var rhsChange: Decimal? = nil
-
-            switch timePeriod {
-            case .day1:
-                lhsChange = lhsPlatform.oneDayChange
-                rhsChange = rhsPlatform.oneDayChange
-            case .week1:
-                lhsChange = lhsPlatform.sevenDayChange
-                rhsChange = rhsPlatform.sevenDayChange
-            case .month1:
-                lhsChange = lhsPlatform.thirtyDayChange
-                rhsChange = rhsPlatform.thirtyDayChange
-            default:
-                break
-            }
+            let lhsChange = lhsPlatform.changes[timePeriod]
+            var rhsChange = rhsPlatform.changes[timePeriod]
 
             switch sortType {
             case .highestCap, .lowestCap:
