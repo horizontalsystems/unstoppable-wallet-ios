@@ -48,10 +48,11 @@
 
 "sync_error" = "Senkronizasyon hatası. Tekrar deneyin.";
 
-"number.thousand" = "%@b";
+"number.thousand" = "%@K";
 "number.million" = "%@M";
 "number.billion" = "%@B";
-"number.trillion" = "%@T";
+"number.trillion" = "%@t";
+"number.quadrillion" = "%@q";
 
 // Access Camera
 
