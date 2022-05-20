@@ -47,10 +47,11 @@
 
 "sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
-"number.thousand" = "%@тыс";
+"number.thousand" = "%@K";
 "number.million" = "%@млн";
 "number.billion" = "%@млрд";
-"number.trillion" = "%@трл";
+"number.trillion" = "%@t";
+"number.quadrillion" = "%@q";
 
 // Access Camera
 
