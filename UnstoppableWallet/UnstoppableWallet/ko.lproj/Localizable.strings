@@ -47,10 +47,11 @@
 
 "sync_error" = "동기화 오류입니다. 다시 시도하십시오.";
 
-"number.thousand" = "%@k";
+"number.thousand" = "%@K";
 "number.million" = "%@M";
 "number.billion" = "%@B";
-"number.trillion" = "%@T";
+"number.trillion" = "%@t";
+"number.quadrillion" = "%@q";
 
 // Access Camera
 
