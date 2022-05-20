@@ -5,7 +5,7 @@ import MarketKit
 class CoinOverviewViewItemFactory {
 
     private func roundedFormat(coinCode: String, value: Decimal?) -> String? {
-        guard let value = value, !value.isZero, let formattedValue = ValueFormatter.instance.formatFull(value: value, decimalCount: 0, symbol: coinCode) else {
+        guard let value = value, !value.isZero, let formattedValue = ValueFormatter.instance.formatShort(value: value, decimalCount: 0, symbol: coinCode) else {
             return nil
         }
 

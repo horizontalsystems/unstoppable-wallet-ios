@@ -47,10 +47,11 @@
 
 "sync_error" = "Sync error. Try again.";
 
-"number.thousand" = "%@k";
+"number.thousand" = "%@K";
 "number.million" = "%@M";
 "number.billion" = "%@B";
-"number.trillion" = "%@T";
+"number.trillion" = "%@t";
+"number.quadrillion" = "%@q";
 
 // Access Camera
 

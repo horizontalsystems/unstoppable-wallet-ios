@@ -23,13 +23,6 @@ class ValueFormatter {
         return formatter
     }()
 
-    private let percentFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }()
-
     private func digitsAndValue(value: Decimal, basePow: Int) -> (Int, Decimal) {
         let digits: Int
 
@@ -56,7 +49,7 @@ class ValueFormatter {
         return maxCount
     }
 
-    private func transformedShort(value: Decimal, maxDecimalCount: Int) -> (value: Decimal, digits: Int, suffix: String?, tooSmall: Bool) {
+    private func transformedShort(value: Decimal, maxDigits: Int = Int.max) -> (value: Decimal, digits: Int, suffix: String?, tooSmall: Bool) {
         var value = abs(value)
         var suffix: String?
         let digits: Int
@@ -73,7 +66,7 @@ class ValueFormatter {
 
         case 0.0000_0001..<1:
             let zeroCount = fractionZeroCount(value: value, maxCount: 8)
-            digits = min(maxDecimalCount, zeroCount + 4, 8)
+            digits = min(maxDigits, zeroCount + 4, 8)
 
         case 1..<1.01:
             digits = 4
@@ -102,15 +95,19 @@ class ValueFormatter {
             (digits, value) = digitsAndValue(value: value, basePow: 9)
             suffix = "number.billion"
 
-        default:
+        case pow(10, 12)..<pow(10, 15):
             (digits, value) = digitsAndValue(value: value, basePow: 12)
             suffix = "number.trillion"
+
+        default:
+            (digits, value) = digitsAndValue(value: value, basePow: 15)
+            suffix = "number.quadrillion"
         }
 
         return (value: value, digits: digits, suffix: suffix, tooSmall: tooSmall)
     }
 
-    private func transformedFull(value: Decimal, maxDecimalCount: Int, minDigits: Int) -> (value: Decimal, digits: Int) {
+    private func transformedFull(value: Decimal, maxDigits: Int, minDigits: Int = 0) -> (value: Decimal, digits: Int) {
         var value = abs(value)
         let digits: Int
 
@@ -119,8 +116,8 @@ class ValueFormatter {
             digits = 0
 
         case 0..<1:
-            let zeroCount = fractionZeroCount(value: value, maxCount: maxDecimalCount - 1)
-            digits = min(maxDecimalCount, zeroCount + 4)
+            let zeroCount = fractionZeroCount(value: value, maxCount: maxDigits - 1)
+            digits = min(maxDigits, zeroCount + 4)
 
         case 1..<1.01:
             digits = 4
@@ -193,7 +190,7 @@ class ValueFormatter {
 extension ValueFormatter {
 
     func formatShort(value: Decimal) -> String? {
-        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 
         let string: String? = rawFormatterQueue.sync {
             rawFormatter.maximumFractionDigits = digits
@@ -208,7 +205,7 @@ extension ValueFormatter {
     }
 
     func formatShort(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
-        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: decimalCount)
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDigits: decimalCount)
 
         let string: String? = rawFormatterQueue.sync {
             rawFormatter.maximumFractionDigits = digits
@@ -223,7 +220,7 @@ extension ValueFormatter {
     }
 
     func formatFull(value: Decimal, decimalCount: Int, symbol: String? = nil, showSign: Bool = false) -> String? {
-        let (transformedValue, digits) = transformedFull(value: value, maxDecimalCount: decimalCount, minDigits: min(decimalCount, 4))
+        let (transformedValue, digits) = transformedFull(value: value, maxDigits: decimalCount, minDigits: min(decimalCount, 4))
 
         let string: String? = rawFormatterQueue.sync {
             rawFormatter.maximumFractionDigits = digits
@@ -246,7 +243,7 @@ extension ValueFormatter {
     }
 
     func formatShort(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
-        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDecimalCount: 8)
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol, suffix: suffix) else {
             return nil
@@ -260,7 +257,7 @@ extension ValueFormatter {
     }
 
     func formatFull(currency: Currency, value: Decimal, showSign: Bool = false) -> String? {
-        let (transformedValue, digits) = transformedFull(value: value, maxDecimalCount: 8, minDigits: 0)
+        let (transformedValue, digits) = transformedFull(value: value, maxDigits: 18)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol) else {
             return nil
@@ -274,7 +271,14 @@ extension ValueFormatter {
     }
 
     func format(percentValue: Decimal, showSign: Bool = true) -> String? {
-        guard let string = percentFormatter.string(from: abs(percentValue) as NSNumber) else {
+        let (transformedValue, digits) = transformedFull(value: percentValue, maxDigits: 2)
+
+        let string: String? = rawFormatterQueue.sync {
+            rawFormatter.maximumFractionDigits = digits
+            return rawFormatter.string(from: transformedValue as NSDecimalNumber)
+        }
+
+        guard let string = string else {
             return nil
         }
 
