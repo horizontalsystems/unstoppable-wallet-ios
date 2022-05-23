@@ -1094,10 +1094,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Watch Address
 
-"watch_address.title" = "Watch Address";
+"watch_address.title" = "Adresi İzle";
 "watch_address.watch" = "İzle";
 "watch_address.name" = "Name (optional)";
-"watch_address.address" = "Address";
+"watch_address.address" = "Adres";
 
 // Nft Collections
 
