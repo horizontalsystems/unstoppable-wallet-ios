@@ -16,7 +16,7 @@ class MarketOverviewGlobalDataSource {
     init(viewModel: MarketOverviewGlobalViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
-        marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallChart, presentDelegate: presentDelegate)
+        marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.chartPreview, presentDelegate: presentDelegate)
     }
 
 }

@@ -12,6 +12,7 @@ struct NftCollection {
     let twitterUsername: String?
 
     let stats: NftCollectionStats
+    let statCharts: NftCollectionStatCharts?
 
     struct Contract: ImmutableMappable {
         let address: String

@@ -2,6 +2,8 @@ import Foundation
 import MarketKit
 
 struct NftCollectionStats {
+    let count: Int?
+    let ownerCount: Int?
     let totalSupply: Int
     let averagePrice7d: NftPrice?
     let averagePrice30d: NftPrice?

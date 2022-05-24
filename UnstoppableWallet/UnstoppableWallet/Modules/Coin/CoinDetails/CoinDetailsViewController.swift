@@ -74,7 +74,7 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.registerCell(forClass: D1Cell.self)
         tableView.registerCell(forClass: D2Cell.self)
         tableView.registerCell(forClass: D7Cell.self)
-        tableView.registerCell(forClass: CoinDetailsMetricCell.self)
+        tableView.registerCell(forClass: ChartMarketCardCell<ChartMarketCardView>.self)
 
         proFeaturesCell.parentViewController = parentNavigationController
 
@@ -229,7 +229,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func hasCharts(items: [CoinDetailsViewModel.ChartViewItem?]) -> Bool {
+    private func hasCharts(items: [ChartMarketCardView.ViewItem?]) -> Bool {
         !items.compactMap { $0 } .isEmpty
     }
 
@@ -238,24 +238,22 @@ extension CoinDetailsViewController: SectionsDataSource {
             return nil
         }
 
-        let liquidityRow = Row<CoinDetailsMetricCell>(
+        let liquidityRow = Row<ChartMarketCardCell<ChartMarketCardView>>(
                 id: "liquidity_chart",
-                height: CoinDetailsMetricCell.cellHeight,
+                height: ChartMarketCardView.viewHeight(),
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .smallChart)
+                    cell.set(configuration: .chartPreview)
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
                         cell.append(viewItem: volumeViewItem) { [weak self] in
                             self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .volume)
                         }
-                        cell.set(title: CoinProChartModule.ProChartType.volume.title)
                     }
                     if let liquidityViewItem = viewItem.tokenLiquidity.liquidity {
                         cell.append(viewItem: liquidityViewItem) { [weak self] in
                             self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .liquidity)
                         }
-                        cell.set(title: CoinProChartModule.ProChartType.liquidity.title)
                     }
                 }
         )
@@ -280,66 +278,86 @@ extension CoinDetailsViewController: SectionsDataSource {
         ]
     }
 
-    private func distributionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> [RowProtocol] {
+    private func transactionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
+        Row<ChartMarketCardCell<ChartMarketCardView>>(
+                id: "transaction-charts",
+                height: ChartMarketCardView.viewHeight(),
+                bind: { [weak self] cell, _ in
+                    cell.clear()
+                    cell.set(configuration: .chartPreview)
+
+                    if let txCountViewItem = viewItem.tokenDistribution.txCount {
+                        cell.append(viewItem: txCountViewItem) { [weak self] in
+                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txCount)
+                        }
+                    }
+                    if let txVolumeViewItem = viewItem.tokenDistribution.txVolume {
+                        cell.append(viewItem: txVolumeViewItem) { [weak self] in
+                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txVolume)
+                        }
+                    }
+                }
+        )
+    }
+
+    private func addressChart(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
+        Row<ChartMarketCardCell<ChartMarketCardView>>(
+                id: "address-chart",
+                height: ChartMarketCardView.viewHeight(),
+                bind: { [weak self] cell, _ in
+                    cell.clear()
+                    cell.set(configuration: .chartPreview)
+
+                    if let activeAddressesViewItem = viewItem.tokenDistribution.activeAddresses {
+                        cell.append(viewItem: activeAddressesViewItem) { [weak self] in
+                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .activeAddresses)
+                        }
+                    }
+                }
+        )
+    }
+
+    private func distributionCharts(viewItem: CoinDetailsViewModel.ViewItem, isLast: Bool) -> [SectionProtocol] {
         let hasTxCharts = hasCharts(items: [viewItem.tokenDistribution.txCount, viewItem.tokenDistribution.txVolume])
         let hasAddresses = hasCharts(items: [viewItem.tokenDistribution.activeAddresses])
-        let tightMargin: CGFloat = hasAddresses ? .margin8 : .margin12
 
-        var rows = [RowProtocol]()
+        let addressMargin: CGFloat = isLast ? .margin24 : .margin12
+        let chartMargin: CGFloat = isLast ? .margin24 : hasAddresses ? .margin8 : .margin12
+
+        var sections = [SectionProtocol]()
         guard (hasTxCharts || hasAddresses) else {
-            return rows
+            return sections
         }
 
         if hasTxCharts {
-            rows.append(
-                    Row<CoinDetailsMetricCell>(
-                            id: "transaction-charts",
-                            height: CoinDetailsMetricCell.cellHeight + tightMargin,
-                            bind: { [weak self] cell, _ in
-                                cell.clear()
-                                cell.set(configuration: .smallChart)
-
-                                if let txCountViewItem = viewItem.tokenDistribution.txCount {
-                                    cell.append(viewItem: txCountViewItem) { [weak self] in
-                                        self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txCount)
-                                    }
-                                    cell.set(title: CoinProChartModule.ProChartType.txCount.title)
-                                }
-                                if let txVolumeViewItem = viewItem.tokenDistribution.txVolume {
-                                    cell.append(viewItem: txVolumeViewItem) { [weak self] in
-                                        self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txVolume)
-                                    }
-                                    cell.set(title: CoinProChartModule.ProChartType.txVolume.title)
-                                }
-
-                            }
+            sections.append(
+                    Section(
+                            id: "tx-chart-section",
+                            footerState: .margin(height: chartMargin),
+                            rows: [
+                                transactionCharts(viewItem: viewItem)
+                            ]
                     )
             )
         }
 
-        if let activeAddressesViewItem = viewItem.tokenDistribution.activeAddresses {
-            rows.append(
-                    Row<CoinDetailsMetricCell>(
-                            id: "addresses-charts",
-                            height: CoinDetailsMetricCell.cellHeight + .margin12,
-                            bind: { [weak self] cell, _ in
-                                cell.clear()
-                                cell.set(configuration: .smallChart)
-
-                                cell.append(viewItem: activeAddressesViewItem) { [weak self] in
-                                    self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .activeAddresses)
-                                }
-                                cell.set(title: CoinProChartModule.ProChartType.activeAddresses.title)
-                            }
+        if viewItem.tokenDistribution.activeAddresses != nil {
+            sections.append(
+                    Section(
+                            id: "address-section",
+                            footerState: .margin(height: addressMargin),
+                            rows: [
+                                transactionCharts(viewItem: viewItem)
+                            ]
                     )
             )
         }
 
-        return rows
+        return sections
     }
 
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
-        var rows = distributionCharts(viewItem: viewItem)
+        var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
 
         if viewItem.hasMajorHolders {
             let majorHoldersRow = Row<D1Cell>(
@@ -354,29 +372,34 @@ extension CoinDetailsViewController: SectionsDataSource {
                     }
             )
 
-            rows.append(majorHoldersRow)
+
+            sections.append(
+                    Section(
+                            id: "distribution",
+                            footerState: .margin(height: .margin24),
+                            rows: [majorHoldersRow]
+                    )
+            )
         }
 
-        guard !rows.isEmpty else {
+        guard !sections.isEmpty else {
             return nil
         }
 
-        return [
-            Section(
-                    id: "distribution-header",
-                    footerState: .margin(height: .margin12),
-                    rows: [
-                        infoHeaderRow(id: "header-distribution", title: "coin_page.token_distribution".localized, topSeparator: !isFirst) { [weak self] in
-                            self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
-                        }
-                    ]
-            ),
-            Section(
-                    id: "distribution",
-                    footerState: .margin(height: .margin24),
-                    rows: rows
-            )
-        ]
+        sections.insert(
+                Section(
+                        id: "distribution-header",
+                        footerState: .margin(height: .margin12),
+                        rows: [
+                            infoHeaderRow(id: "header-distribution", title: "coin_page.token_distribution".localized, topSeparator: !isFirst) { [weak self] in
+                                self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
+                            }
+                        ]
+                ),
+                at: 0
+        )
+
+        return sections
     }
 
     private func tvlSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
@@ -384,17 +407,16 @@ extension CoinDetailsViewController: SectionsDataSource {
             return nil
         }
 
-        let tvlRow = Row<CoinDetailsMetricCell>(
+        let tvlRow = Row<ChartMarketCardCell<ChartMarketCardView>>(
                 id: "tvl_chart",
-                height: CoinDetailsMetricCell.cellHeight,
+                height: ChartMarketCardView.viewHeight(),
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .smallChart)
+                    cell.set(configuration: .chartPreview)
 
                     cell.append(viewItem: tvlChart) { [weak self] in
                         self?.openTvl()
                     }
-                    cell.set(title: "coin_page.chart_tvl".localized)
                 }
         )
 
