@@ -87,7 +87,8 @@ class HsNftProvider {
                 externalUrl: response.externalUrl,
                 discordUrl: response.discordUrl,
                 twitterUsername: response.twitterUsername,
-                stats: collectionStats(response: response.stats, ethereumPlatformCoin: ethereumPlatformCoin)
+                stats: collectionStats(response: response.stats, ethereumPlatformCoin: ethereumPlatformCoin),
+                statCharts: statCharts(statChartPoints: response.statChartPoints, ethereumPlatformCoin: ethereumPlatformCoin)
         )
     }
 
@@ -144,6 +145,8 @@ class HsNftProvider {
 
     private func collectionStats(response: CollectionStatsResponse, ethereumPlatformCoin: PlatformCoin?) -> NftCollectionStats {
         NftCollectionStats(
+                count: response.count,
+                ownerCount: response.ownerCount,
                 totalSupply: response.totalSupply,
                 averagePrice7d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice7d, shift: false),
                 averagePrice30d: nftPrice(platformCoin: ethereumPlatformCoin, value: response.averagePrice30d, shift: false),
@@ -171,6 +174,28 @@ class HsNftProvider {
 
             return (key, nftPrice)
         })
+    }
+
+    private func statCharts(statChartPoints: [CollectionStatChartPointResponse]?, ethereumPlatformCoin: PlatformCoin?) -> NftCollectionStatCharts? {
+        guard let statChartPoints = statChartPoints else {
+            return nil
+        }
+
+        let oneDayVolumePoints = statChartPoints.compactMap { point in point.oneDayVolume.map { NftCollectionStatCharts.PricePoint(timestamp: point.timestamp, value: $0, coin: ethereumPlatformCoin) } }
+        let averagePricePoints = statChartPoints.compactMap { point in point.averagePrice.map { NftCollectionStatCharts.PricePoint(timestamp: point.timestamp, value: $0, coin: ethereumPlatformCoin) } }
+        let floorPricePoints = statChartPoints.compactMap { point in point.floorPrice.map { NftCollectionStatCharts.PricePoint(timestamp: point.timestamp, value: $0, coin: ethereumPlatformCoin) } }
+        let oneDaySalesPoints = statChartPoints.compactMap { point in point.oneDaySales.map { NftCollectionStatCharts.Point(timestamp: point.timestamp, value: $0) } }
+
+        if oneDayVolumePoints.isEmpty && averagePricePoints.isEmpty && floorPricePoints.isEmpty && oneDayVolumePoints.isEmpty {
+            return nil
+        }
+
+        return NftCollectionStatCharts(
+                oneDayVolumePoints: oneDayVolumePoints,
+                averagePricePoints: averagePricePoints,
+                floorPricePoints: floorPricePoints,
+                oneDaySalesPoints: oneDaySalesPoints
+        )
     }
 
     private func assetOrders(responses: [OrderResponse], platformCoinMap: [String: PlatformCoin]) -> [NftAssetOrder] {
@@ -373,6 +398,7 @@ extension HsNftProvider {
         let discordUrl: String?
         let twitterUsername: String?
         let stats: CollectionStatsResponse
+        let statChartPoints: [CollectionStatChartPointResponse]?
 
         init(map: Map) throws {
             contracts = (try? map.value("asset_contracts")) ?? []
@@ -385,6 +411,7 @@ extension HsNftProvider {
             discordUrl = try? map.value("links.discord_url")
             twitterUsername = try? map.value("links.twitter_username")
             stats = try map.value("stats")
+            statChartPoints = try? map.value("stats_chart")
         }
     }
 
@@ -395,6 +422,22 @@ extension HsNftProvider {
         init(map: Map) throws {
             address = try map.value("address")
             type = try map.value("type")
+        }
+    }
+
+    private struct CollectionStatChartPointResponse: ImmutableMappable {
+        let timestamp: TimeInterval
+        let oneDayVolume: Decimal?
+        let averagePrice: Decimal?
+        let floorPrice: Decimal?
+        let oneDaySales: Decimal?
+
+        init(map: Map) throws {
+            timestamp = try map.value("timestamp")
+            oneDayVolume = try? map.value("one_day_volume", using: HsNftProvider.stringToDecimalTransform)
+            averagePrice = try? map.value("average_price", using: HsNftProvider.stringToDecimalTransform)
+            floorPrice = try? map.value("floor_price", using: HsNftProvider.stringToDecimalTransform)
+            oneDaySales = try? map.value("one_day_sales", using: HsNftProvider.stringToDecimalTransform)
         }
     }
 
@@ -473,6 +516,8 @@ extension HsNftProvider {
     }
 
     private struct CollectionStatsResponse: ImmutableMappable {
+        let count: Int?
+        let ownerCount: Int?
         let totalSupply: Int
         let oneDayChange: Decimal
         let sevenDayChange: Decimal
@@ -487,6 +532,8 @@ extension HsNftProvider {
         let thirtyDayVolume: Decimal
 
         init(map: Map) throws {
+            count = try? map.value("count")
+            ownerCount = try? map.value("num_owners")
             totalSupply = try map.value("total_supply")
             totalVolume = try map.value("total_volume", using: HsNftProvider.doubleToDecimalTransform)
             marketCap = try map.value("market_cap", using: HsNftProvider.doubleToDecimalTransform)

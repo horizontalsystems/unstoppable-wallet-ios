@@ -35,10 +35,10 @@ extension ChartConfiguration {
         return configuration
     }
 
-    static var smallChart: ChartConfiguration {
+    static var chartPreview: ChartConfiguration {
         let config = ChartConfiguration().applyColors()
 
-        config.mainHeight = .margin32 + .margin2
+        config.mainHeight = 32
         config.indicatorHeight = 0
         config.timelineHeight = 0
         config.curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)

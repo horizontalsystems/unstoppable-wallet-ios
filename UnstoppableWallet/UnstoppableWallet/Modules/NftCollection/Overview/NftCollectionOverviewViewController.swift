@@ -68,6 +68,8 @@ class NftCollectionOverviewViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: LogoHeaderCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
+        tableView.registerCell(forClass: ChartMarketCardCell<NftChartMarketCardView>.self)
+        tableView.registerCell(forClass: MarketCardCell<MarketCardView>.self)
 
         tableView.showsVerticalScrollIndicator = false
 
@@ -169,6 +171,98 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                     }
                 }
         )
+    }
+
+    private func chartSection(statCharts: NftCollectionOverviewViewModel.StatChartViewItem) -> [SectionProtocol] {
+        var sections = [SectionProtocol]()
+
+        var counters = [
+            statCharts.ownerCount.map { (title: "nft_collection.overview.owners".localized, value: $0) },
+            statCharts.itemCount.map { (title: "nft_collection.overview.items".localized, value: $0) }
+        ].compactMap { $0 }
+
+        var charts = [
+            statCharts.oneDayVolumeItems,
+            statCharts.oneDaySalesItems,
+            statCharts.floorPriceItems,
+            statCharts.averagePriceItems
+        ].compactMap { $0 }
+
+        if !counters.isEmpty {
+            let row = Row<MarketCardCell<MarketCardView>>(
+                    id: "count_row",
+                    height: MarketCardView.viewHeight(),
+                    bind: { [weak self] cell, _ in
+                        cell.clear()
+                        if let viewItem = counters.at(index: 0) {
+                            cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
+                        }
+                        if let viewItem = charts.at(index: 1) {
+                            cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
+                        }
+                    }
+            )
+            sections.append(
+                    Section(
+                            id: "count_section",
+                            footerState: .margin(height: charts.isEmpty ? .margin24 : .margin8),
+                            rows: [row]
+                    )
+            )
+        }
+
+        guard !charts.isEmpty else {
+            return sections
+        }
+
+        let topChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
+                    id: "top_chart_row",
+                    height: NftChartMarketCardView.viewHeight(),
+                    bind: { [weak self] cell, _ in
+                        cell.clear()
+                        cell.set(configuration: .chartPreview)
+                        if let viewItem = charts.at(index: 0) {
+                            cell.append(viewItem: viewItem)
+                        }
+                        if let viewItem = charts.at(index: 1) {
+                            cell.append(viewItem: viewItem)
+                        }
+                    }
+        )
+        let hasBottomRow = charts.count > 2
+        sections.append(
+                Section(
+                        id: "top_chart_section",
+                        footerState: .margin(height: hasBottomRow ? .margin8 : .margin24),
+                        rows: [topChartRow]
+                )
+        )
+
+        if hasBottomRow {
+            let bottomChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
+                    id: "bottom_chart_row",
+                    height: NftChartMarketCardView.viewHeight(),
+                    bind: { [weak self] cell, _ in
+                        cell.clear()
+                        cell.set(configuration: .chartPreview)
+                        if let viewItem = charts.at(index: 2) {
+                            cell.append(viewItem: viewItem)
+                        }
+                        if let viewItem = charts.at(index: 3) {
+                            cell.append(viewItem: viewItem)
+                        }
+                    }
+            )
+            sections.append(
+                    Section(
+                            id: "bottom_chart_section",
+                            footerState: .margin(height: .margin24),
+                            rows: [bottomChartRow]
+                    )
+            )
+        }
+
+        return sections
     }
 
     private func descriptionSection(description: String) -> SectionProtocol {
@@ -319,6 +413,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
             )
 
             sections.append(logoHeaderSection)
+
+            sections.append(contentsOf: chartSection(statCharts: viewItem.statCharts))
 
             if let description = viewItem.description {
                 sections.append(descriptionSection(description: description))

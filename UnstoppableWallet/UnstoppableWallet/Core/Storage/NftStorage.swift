@@ -57,6 +57,8 @@ class NftStorage {
                 discordUrl: record.discordUrl,
                 twitterUsername: record.twitterUsername,
                 stats: NftCollectionStats(
+                        count: nil,
+                        ownerCount: nil,
                         totalSupply: record.totalSupply,
                         averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
                         averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
@@ -65,7 +67,8 @@ class NftStorage {
                         marketCap: nil,
                         volumes: [:],
                         changes: [:]
-                )
+                ),
+                statCharts: nil
         )
     }
 
