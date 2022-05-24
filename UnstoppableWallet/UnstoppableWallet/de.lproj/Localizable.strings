@@ -1068,7 +1068,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "fee_settings.fee" = "Gebühr";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";
 "fee_settings.fee_priority" = "Speed";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "Gebührenrate";
 "fee_settings.max_fee" = "Max Gebühr";
 "fee_settings.max_fee.info" = "Die maximal erwartete Gesamtgebühr für die jeweilige Transaktion. In der Regel ist die tatsächliche Transaktionsgebühr niedriger.";
 "fee_settings.gas_limit" = "Gaslimit";
@@ -1103,7 +1103,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collections.average_7d" = "Durchschnitt 7D";
 "nft_collections.average_30d" = "Durchschnitt 30D";
 "nft_collections.on_sale" = "Im Verkauf";
-"nft_collections.empty" = "You don’t have any NFTs in your wallet";
+"nft_collections.empty" = "Sie haben keinen NFT in Ihrer Brieftasche";
 
 "top_nft_collections.title" = "Top NFT Collections";
 "top_nft_collections.description" = "Leading NFT collections by trading volume.";
