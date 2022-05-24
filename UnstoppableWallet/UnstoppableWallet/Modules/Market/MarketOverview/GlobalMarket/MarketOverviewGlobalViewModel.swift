@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -9,16 +10,18 @@ class MarketOverviewGlobalViewModel {
     private let service: MarketOverviewGlobalService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<GlobalMarketViewItem>>(value: .loading)
+    private let viewItemRelay = BehaviorRelay<GlobalMarketViewItem?>(value: nil)
 
     init(service: MarketOverviewGlobalService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.globalMarketDataObservable) { [weak self] in self?.sync(globalMarketData: $0) }
+
+        sync(globalMarketData: service.globalMarketData)
     }
 
-    private func sync(state: DataStatus<MarketOverviewGlobalService.GlobalMarketData>) {
-        stateRelay.accept(state.map { viewItem(globalMarketData: $0) })
+    private func sync(globalMarketData: MarketOverviewGlobalService.GlobalMarketData?) {
+        viewItemRelay.accept(globalMarketData.map { viewItem(globalMarketData: $0) })
     }
 
     private func viewItem(globalMarketData: MarketOverviewGlobalService.GlobalMarketData) -> GlobalMarketViewItem {
@@ -70,20 +73,8 @@ class MarketOverviewGlobalViewModel {
 
 extension MarketOverviewGlobalViewModel {
 
-    var viewItem: GlobalMarketViewItem? {
-        stateRelay.value.data
-    }
-
-}
-
-extension MarketOverviewGlobalViewModel: IMarketOverviewSectionViewModel {
-
-    var stateObservable: Observable<DataStatus<()>> {
-        stateRelay.map { $0.map { _ in () } }
-    }
-
-    func refresh() {
-        service.refresh()
+    var viewItemDriver: Driver<GlobalMarketViewItem?> {
+        viewItemRelay.asDriver()
     }
 
 }

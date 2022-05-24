@@ -79,7 +79,7 @@ class MarketDiscoveryViewModel {
             let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, currency: categoryService.currency)
 
             return DiscoveryViewItem(
-                    type: .category(uid: category.uid),
+                    type: .category(category: category.category),
                     imageType: .remote(url: category.imageUrl),
                     name: category.name,
                     marketCap: marketCap,
@@ -154,7 +154,7 @@ extension MarketDiscoveryViewModel {
 
         enum `Type` {
             case topCoins
-            case category(uid: String)
+            case category(category: CoinCategory)
         }
 
         enum ImageType {

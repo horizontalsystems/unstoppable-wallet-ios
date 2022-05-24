@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import MarketKit
 
 class NftCollectionRecord: Record {
     let accountId: String

@@ -14,7 +14,7 @@ class MarketNftTopCollectionsService {
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
-    private let provider: HsNftProvider
+    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     private var internalState: MarketListServiceState<NftCollection> = .loading
@@ -29,8 +29,8 @@ class MarketNftTopCollectionsService {
     var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
     var timePeriod: HsTimePeriod = .week1 { didSet { syncIfPossible() } }
 
-    init(provider: HsNftProvider, currencyKit: CurrencyKit.Kit) {
-        self.provider = provider
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.marketKit = marketKit
         self.currencyKit = currencyKit
 
         sync()
@@ -43,7 +43,7 @@ class MarketNftTopCollectionsService {
             state = .loading
         }
 
-        provider.collectionsSingle()
+        marketKit.nftCollectionsSingle()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collections in
                     self?.internalState = .loaded(items: collections, softUpdate: false, reorder: false)

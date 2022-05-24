@@ -5,55 +5,30 @@ import CurrencyKit
 import MarketKit
 
 class MarketOverviewGlobalService {
-    private let listCount = 5
+    private let baseService: MarketOverviewService
+    private let disposeBag = DisposeBag()
 
-    private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
-
-    private var internalState: DataStatus<[GlobalMarketPoint]> = .loading {
+    private let globalMarketDataRelay = PublishRelay<GlobalMarketData?>()
+    private(set) var globalMarketData: GlobalMarketData? {
         didSet {
-            syncState()
+            globalMarketDataRelay.accept(globalMarketData)
         }
     }
 
-    private let stateRelay = BehaviorRelay<DataStatus<GlobalMarketData>>(value: .loading)
+    init(baseService: MarketOverviewService) {
+        self.baseService = baseService
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
-        self.marketKit = marketKit
-        self.currencyKit = currencyKit
+        subscribe(disposeBag, baseService.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in
-            self?.syncInternalState()
-        }
-        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
-            self?.syncInternalState()
-        }
-
-        syncInternalState()
+        sync()
     }
 
-    private func syncInternalState() {
-        syncDisposeBag = DisposeBag()
+    private func sync(state: DataStatus<MarketOverviewService.Item>? = nil) {
+        let state = state ?? baseService.state
 
-        if case .failed = stateRelay.value {
-            internalState = .loading
+        globalMarketData = state.data.map { item in
+            globalMarketData(globalMarketPoints: item.marketOverview.globalMarketPoints)
         }
-
-        marketKit.globalMarketPointsSingle(currencyCode: currency.code, timePeriod: .day1)
-                .subscribe(onSuccess: { [weak self] globalMarketPoints in
-                    self?.internalState = .completed(globalMarketPoints)
-                }, onError: { [weak self] error in
-                    self?.internalState = .failed(error)
-                })
-                .disposed(by: syncDisposeBag)
-    }
-
-    private func syncState() {
-        stateRelay.accept(internalState.map { internalState in
-            globalMarketData(globalMarketPoints: internalState)
-        })
     }
 
     private func globalMarketData(globalMarketPoints: [GlobalMarketPoint]) -> GlobalMarketData {
@@ -102,46 +77,16 @@ class MarketOverviewGlobalService {
         return (lastAmount - firstAmount) * 100 / firstAmount
     }
 
-    private func syncIfPossible() {
-        guard case .completed = internalState else {
-            return
-        }
-
-        syncState()
-    }
-
 }
 
 extension MarketOverviewGlobalService {
 
-    var stateObservable: Observable<DataStatus<GlobalMarketData>> {
-        stateRelay.asObservable()
-    }
-
-    func refresh() {
-        syncInternalState()
-    }
-
-}
-
-extension MarketOverviewGlobalService: IMarketListDecoratorService {
-
-    var initialMarketFieldIndex: Int {
-        0
+    var globalMarketDataObservable: Observable<GlobalMarketData?> {
+        globalMarketDataRelay.asObservable()
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
-    }
-
-    var priceChangeType: MarketModule.PriceChangeType {
-        .day
-    }
-
-    func onUpdate(marketFieldIndex: Int) {
-        if case .completed = stateRelay.value {
-            stateRelay.accept(stateRelay.value)
-        }
+        baseService.currency
     }
 
 }

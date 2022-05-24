@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import CurrencyKit
+import MarketKit
 
 class NftCollectionAssetsViewModel {
     private let service: NftCollectionAssetsService

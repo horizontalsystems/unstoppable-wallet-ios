@@ -27,11 +27,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         }
     }
 
-    init?(categoryUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager) {
-        guard let category = try? marketKit.coinCategory(uid: categoryUid) else {
-            return nil
-        }
-
+    init(category: CoinCategory, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager) {
         self.category = category
         self.marketKit = marketKit
         self.currencyKit = currencyKit

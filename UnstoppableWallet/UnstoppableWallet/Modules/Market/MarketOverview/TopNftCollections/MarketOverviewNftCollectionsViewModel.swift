@@ -4,63 +4,31 @@ import RxCocoa
 import MarketKit
 
 class MarketOverviewNftCollectionsViewModel {
-    private let listCount = 5
-
-    private let service: MarketNftTopCollectionsService
+    private let service: MarketOverviewNftCollectionsService
     private let decorator: MarketListNftCollectionDecorator
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
+    private let listViewItemsRelay = BehaviorRelay<[MarketModule.ListViewItem]?>(value: nil)
 
-    init(service: MarketNftTopCollectionsService, decorator: MarketListNftCollectionDecorator) {
+    init(service: MarketOverviewNftCollectionsService, decorator: MarketListNftCollectionDecorator) {
         self.service = service
         self.decorator = decorator
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.collectionsObservable) { [weak self] in self?.sync(collections: $0) }
+
+        sync(collections: service.collections)
     }
 
-    private func sync(state: MarketListServiceState<NftCollectionItem>) {
-        let listCount = listCount
-
-        switch state {
-        case .loading:
-            stateRelay.accept(.loading)
-        case let .failed(error):
-            stateRelay.accept(.failed(error))
-        case let .loaded(items, _, _):
-            stateRelay.accept(.completed(viewItem(listItems: Array(items.prefix(listCount)))))
-        }
-    }
-
-    private func viewItem(listItems: [NftCollectionItem]) -> BaseMarketOverviewTopListDataSource.ViewItem {
-        BaseMarketOverviewTopListDataSource.ViewItem(
-                rightSelectorMode: .selector,
-                imageName: "image_2_20",
-                title: "market.top.top_collections".localized,
-                listViewItems: listItems.map {
-                    decorator.listViewItem(item: $0)
-                }
-        )
-    }
-
-}
-
-extension MarketOverviewNftCollectionsViewModel: IMarketOverviewSectionViewModel {
-
-    var stateObservable: Observable<DataStatus<()>> {
-        stateRelay.map { $0.map { _ in () } }
-    }
-
-    func refresh() {
-        service.refresh()
+    private func sync(collections: [NftCollection]?) {
+        listViewItemsRelay.accept(collections.map { $0.enumerated().map { decorator.listViewItem(item: NftCollectionItem(index: $0, collection: $1)) } })
     }
 
 }
 
 extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? {
-        stateRelay.value.data
+    var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
+        listViewItemsRelay.asDriver()
     }
 
     var selectorTitles: [String] {

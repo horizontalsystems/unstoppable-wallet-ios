@@ -5,85 +5,58 @@ import CurrencyKit
 import MarketKit
 
 class MarketOverviewTopCoinsService {
-    private let listCount = 5
+    private let baseService: MarketOverviewService
+    private let disposeBag = DisposeBag()
 
-    private let marketKit: MarketKit.Kit
-    private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
-
-    private var internalStatus: DataStatus<[MarketInfo]> = .loading {
-        didSet {
-            syncState()
-        }
-    }
-
-    private let statusRelay = BehaviorRelay<DataStatus<[MarketInfo]>>(value: .loading)
-
-    var marketTop: MarketModule.MarketTop = .top250
+    private(set) var marketTop: MarketModule.MarketTop = .top100
     let listType: ListType
 
-    init(listType: ListType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
-        self.marketKit = marketKit
-        self.currencyKit = currencyKit
+    private let marketInfosRelay = PublishRelay<[MarketInfo]?>()
+    private(set) var marketInfos: [MarketInfo]? {
+        didSet {
+            marketInfosRelay.accept(marketInfos)
+        }
+    }
+
+    init(listType: ListType, baseService: MarketOverviewService) {
         self.listType = listType
+        self.baseService = baseService
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncInternalState() }
-        subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncInternalState() }
+        subscribe(disposeBag, baseService.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        syncInternalState()
+        sync(state: baseService.state)
     }
 
-    private func syncInternalState() {
-        syncDisposeBag = DisposeBag()
-
-        if case .failed = statusRelay.value {
-            internalStatus = .loading
+    private func sync(state: DataStatus<MarketOverviewService.Item>) {
+        marketInfos = state.data.map { item in
+            switch listType {
+            case .topGainers:
+                switch marketTop {
+                case .top100: return item.topMovers.gainers100
+                case .top200: return item.topMovers.gainers200
+                case .top300: return item.topMovers.gainers300
+                }
+            case .topLosers:
+                switch marketTop {
+                case .top100: return item.topMovers.losers100
+                case .top200: return item.topMovers.losers200
+                case .top300: return item.topMovers.losers300
+                }
+            }
         }
-
-        marketKit.marketInfosSingle(top: 1000, currencyCode: currency.code)
-                .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.internalStatus = .completed(marketInfos)
-                }, onError: { [weak self] error in
-                    self?.internalStatus = .failed(error)
-                })
-                .disposed(by: syncDisposeBag)
-    }
-
-    private func syncState() {
-        statusRelay.accept(internalStatus.map { marketInfos in
-            listItems(marketInfos: marketInfos)
-        })
-    }
-
-    private func listItems(marketInfos: [MarketInfo]) -> [MarketInfo] {
-        let source = Array(marketInfos.prefix(marketTop.rawValue))
-        return Array(source.sorted(sortingField: listType.sortingField, priceChangeType: priceChangeType).prefix(listCount))
-    }
-
-    private func syncIfPossible() {
-        guard case .completed = internalStatus else {
-            return
-        }
-
-        syncState()
     }
 
 }
 
 extension MarketOverviewTopCoinsService {
 
-    var stateObservable: Observable<DataStatus<[MarketInfo]>> {
-        statusRelay.asObservable()
+    var marketInfosObservable: Observable<[MarketInfo]?> {
+        marketInfosRelay.asObservable()
     }
 
     func set(marketTop: MarketModule.MarketTop) {
         self.marketTop = marketTop
-        syncIfPossible()
-    }
-
-    func refresh() {
-        syncInternalState()
+        sync(state: baseService.state)
     }
 
 }
@@ -95,7 +68,7 @@ extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
     }
 
     var currency: Currency {
-        currencyKit.baseCurrency
+        baseService.currency
     }
 
     var priceChangeType: MarketModule.PriceChangeType {
@@ -103,9 +76,6 @@ extension MarketOverviewTopCoinsService: IMarketListDecoratorService {
     }
 
     func onUpdate(marketFieldIndex: Int) {
-        if case .completed = statusRelay.value {
-            statusRelay.accept(statusRelay.value)
-        }
     }
 
 }
