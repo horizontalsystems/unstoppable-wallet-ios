@@ -1148,6 +1148,14 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Web sitesi";
 
+
+"nft_collection.overview.owners" = "Owners";
+"nft_collection.overview.items" = "Items";
+"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.today_sellers" = "Today's Sellers";
+"nft_collection.overview.floor_price" = "Floor Price";
+"nft_collection.overview.all_time_average" = "All time average";
+
 "nft_collection.activity.event_types" = "Etkinlik Türleri";
 "nft_collection.activity.event_type.all" = "Tüm Etkinlikler";
 "nft_collection.activity.event_type.list" = "Liste";
