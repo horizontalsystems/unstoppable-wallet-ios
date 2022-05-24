@@ -8,7 +8,7 @@ protocol IMarketMultiSortHeaderService: AnyObject {
 
 extension IMarketMultiSortHeaderService {
     var marketTop: MarketModule.MarketTop {
-        get { .top250 }
+        get { .top100 }
         set {}
     }
 }

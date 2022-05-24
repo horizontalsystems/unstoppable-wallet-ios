@@ -4,10 +4,11 @@ import RxCocoa
 import SectionsTableView
 
 class MarketOverviewCategoryDataSource {
+    private let viewModel: MarketOverviewCategoryViewModel
+    weak var presentDelegate: IPresentDelegate?
     private let disposeBag = DisposeBag()
 
-    private let viewModel: MarketOverviewCategoryViewModel
-    var presentDelegate: IPresentDelegate
+    private let viewItemsRelay = BehaviorRelay<[MarketOverviewCategoryViewModel.ViewItem]?>(value: nil)
 
     private let categoryCell = MarketOverviewCategoryCell()
 
@@ -15,11 +16,13 @@ class MarketOverviewCategoryDataSource {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
 
-        categoryCell.onSelect = { [weak self] index in
-            guard let viewItem = self?.viewModel.viewItem?.viewItems[index], let viewController = MarketCategoryModule.viewController(categoryUid: viewItem.uid) else {
-                return
-            }
-            self?.presentDelegate.present(viewController: viewController)
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
+            self?.viewItemsRelay.accept(viewItems)
+        }
+
+        categoryCell.onSelect = { [weak self] category in
+            let viewController = MarketCategoryModule.viewController(category: category)
+            self?.presentDelegate?.present(viewController: viewController)
         }
     }
 
@@ -28,19 +31,30 @@ class MarketOverviewCategoryDataSource {
             return
         }
 
-        presentDelegate.present(viewController: module)
+        presentDelegate?.present(viewController: module)
     }
 
 }
 
 extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
 
-    func sections(tableView: UITableView) -> [SectionProtocol] {
-        categoryCell.viewItems = viewModel.viewItem?.viewItems ?? []
+    var isReady: Bool {
+        viewItemsRelay.value != nil
+    }
 
-        var sections = [SectionProtocol]()
-        if let viewItem = viewModel.viewItem {
-            let headerSection = Section(
+    var updateObservable: Observable<()> {
+        viewItemsRelay.map { _ in () }
+    }
+
+    func sections(tableView: UITableView) -> [SectionProtocol] {
+        guard let viewItems = viewItemsRelay.value else {
+            return []
+        }
+
+        categoryCell.viewItems = viewItems
+
+        return [
+            Section(
                     id: "categories_header",
                     footerState: .margin(height: .margin12),
                     rows: [
@@ -52,17 +66,16 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
 
                                     cell.buttonMode = .seeAll
                                     cell.onSeeAll = {
-                                        self?.presentDelegate.push(viewController: MarketDiscoveryModule.viewController())
+                                        self?.presentDelegate?.push(viewController: MarketDiscoveryModule.viewController())
                                     }
 
-                                    cell.titleImage = UIImage(named: viewItem.imageName)
-                                    cell.title = viewItem.title
+                                    cell.titleImage = UIImage(named: "categories_20")
+                                    cell.title = "market.top.section.header.top_sectors".localized
                                 }
                         )
                     ]
-            )
-
-            let categorySection = Section(
+            ),
+            Section(
                     id: "categories",
                     rows: [
                         StaticRow(
@@ -72,12 +85,7 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
                         )
                     ]
             )
-
-            sections.append(headerSection)
-            sections.append(categorySection)
-        }
-
-        return sections
+        ]
     }
 
 }

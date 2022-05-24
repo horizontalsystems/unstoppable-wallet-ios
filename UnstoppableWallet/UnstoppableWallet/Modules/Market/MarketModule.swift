@@ -171,9 +171,9 @@ extension MarketModule {
     }
 
     enum MarketTop: Int, CaseIterable {
-        case top250 = 250
-        case top500 = 500
-        case top1000 = 1000
+        case top100 = 100
+        case top200 = 200
+        case top300 = 300
 
         var title: String {
             "\(self.rawValue)"

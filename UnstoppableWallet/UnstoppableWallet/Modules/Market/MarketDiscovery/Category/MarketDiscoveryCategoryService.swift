@@ -161,6 +161,7 @@ extension MarketDiscoveryCategoryService {
     }
 
     struct Item {
+        let category: CoinCategory
         let uid: String
         let name: String
         let imageUrl: String
@@ -169,6 +170,7 @@ extension MarketDiscoveryCategoryService {
         let diff: Decimal?
 
         init(category: CoinCategory, timePeriod: HsTimePeriod) {
+            self.category = category
             uid = category.uid
             name = category.name
             imageUrl = category.imageUrl

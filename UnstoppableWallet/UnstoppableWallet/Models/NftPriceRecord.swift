@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 struct NftPriceRecord {
     let coinTypeId: String

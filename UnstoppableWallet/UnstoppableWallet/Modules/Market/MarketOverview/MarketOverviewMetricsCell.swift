@@ -8,7 +8,7 @@ import ComponentKit
 class MarketOverviewMetricsCell: UITableViewCell {
     static let cellHeight: CGFloat = 240
 
-    private var presentDelegate: IPresentDelegate
+    private weak var presentDelegate: IPresentDelegate?
 
     private let totalMarketCapView: MarketMetricView
     private let volume24hView: MarketMetricView
@@ -77,7 +77,7 @@ class MarketOverviewMetricsCell: UITableViewCell {
 
     private func onTap(metricType: MarketGlobalModule.MetricsType) {
         let viewController = MarketGlobalMetricModule.viewController(type: metricType)
-        presentDelegate.present(viewController: viewController)
+        presentDelegate?.present(viewController: viewController)
     }
 
 }

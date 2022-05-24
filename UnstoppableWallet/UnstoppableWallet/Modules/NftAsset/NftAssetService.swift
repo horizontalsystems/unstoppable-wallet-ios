@@ -8,7 +8,7 @@ class NftAssetService {
     private let collectionUid: String
     private let contractAddress: String
     private let tokenId: String
-    private let provider: HsNftProvider
+    private let marketKit: MarketKit.Kit
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
 
@@ -21,11 +21,11 @@ class NftAssetService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init(collectionUid: String, contractAddress: String, tokenId: String, provider: HsNftProvider, coinPriceService: WalletCoinPriceService) {
+    init(collectionUid: String, contractAddress: String, tokenId: String, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
         self.collectionUid = collectionUid
         self.contractAddress = contractAddress
         self.tokenId = tokenId
-        self.provider = provider
+        self.marketKit = marketKit
         self.coinPriceService = coinPriceService
 
         sync()
@@ -36,7 +36,7 @@ class NftAssetService {
 
         state = .loading
 
-        Single.zip(provider.collectionSingle(uid: collectionUid), provider.assetSingle(contractAddress: contractAddress, tokenId: tokenId))
+        Single.zip(marketKit.nftCollectionSingle(uid: collectionUid), marketKit.nftAssetSingle(contractAddress: contractAddress, tokenId: tokenId))
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collection, asset in
                     self?.handle(item: Item(collection: collection, asset: asset))

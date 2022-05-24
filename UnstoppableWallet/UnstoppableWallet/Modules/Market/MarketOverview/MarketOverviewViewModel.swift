@@ -2,43 +2,24 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-protocol IMarketOverviewSectionViewModel {
-    var stateObservable: Observable<DataStatus<()>> { get }
-    func refresh()
-}
-
 class MarketOverviewViewModel {
+    private let service: MarketOverviewService
     private let disposeBag = DisposeBag()
-
-    private let viewModels: [IMarketOverviewSectionViewModel]
 
     private let successRelay = BehaviorRelay<Bool>(value: false)
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(viewModels: [IMarketOverviewSectionViewModel]) {
-        self.viewModels = viewModels
+    init(service: MarketOverviewService) {
+        self.service = service
 
-        subscribe(disposeBag, Observable.combineLatest(viewModels.map { $0.stateObservable })) { [weak self] in
-            self?.sync(states: $0)
-        }
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+
+        sync(state: service.state)
     }
 
-    private func sync(states: [DataStatus<()>]) {
-        var combinedState = DataStatus<()>.completed(())
-
-        for state in states {
-            if state.error != nil {
-                combinedState = state
-                break
-            }
-            if state.isLoading {
-                combinedState = state
-                break
-            }
-        }
-
-        switch combinedState {
+    private func sync(state: DataStatus<MarketOverviewService.Item>) {
+        switch state {
         case .loading:
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
@@ -71,7 +52,7 @@ extension MarketOverviewViewModel {
     }
 
     func refresh() {
-        viewModels.forEach { $0.refresh() }
+        service.refresh()
     }
 
 }

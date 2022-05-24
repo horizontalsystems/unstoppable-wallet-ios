@@ -221,10 +221,8 @@ extension MarketDiscoveryViewController: UICollectionViewDelegate {
         case .topCoins:
             let viewController = MarketTopModule.viewController()
             present(viewController, animated: true)
-        case .category(let uid):
-            guard let viewController = MarketCategoryModule.viewController(categoryUid: uid) else {
-                return
-            }
+        case .category(let category):
+            let viewController = MarketCategoryModule.viewController(category: category)
             present(viewController, animated: true)
         }
     }

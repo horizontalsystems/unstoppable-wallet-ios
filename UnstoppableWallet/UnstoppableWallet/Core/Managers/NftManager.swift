@@ -3,22 +3,23 @@ import RxSwift
 import RxRelay
 import EthereumKit
 import HdWalletKit
+import MarketKit
 
 class NftManager {
     private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let storage: NftStorage
-    private let provider: HsNftProvider
+    private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
-    private var providerDisposeBag = DisposeBag()
+    private var marketKitDisposeBag = DisposeBag()
 
     private let assetCollectionRelay = PublishRelay<NftAssetCollection>()
 
-    init(accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, provider: HsNftProvider) {
+    init(accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, storage: NftStorage, marketKit: MarketKit.Kit) {
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
         self.storage = storage
-        self.provider = provider
+        self.marketKit = marketKit
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
 
@@ -50,14 +51,14 @@ class NftManager {
     }
 
     private func update(account: Account, address: String) {
-        providerDisposeBag = DisposeBag()
+        marketKitDisposeBag = DisposeBag()
 
-        provider.assetCollectionSingle(address: address)
+        marketKit.nftAssetCollectionSingle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] assetCollection in
                     self?.handle(assetCollection: assetCollection, account: account)
                 })
-                .disposed(by: providerDisposeBag)
+                .disposed(by: marketKitDisposeBag)
     }
 
     private func handle(assetCollection: NftAssetCollection, account: Account) {

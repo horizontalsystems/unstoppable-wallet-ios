@@ -8,7 +8,8 @@ import HUD
 import Chart
 
 protocol IMarketOverviewDataSource {
-    var presentDelegate: IPresentDelegate { get set }
+    var isReady: Bool { get }
+    var updateObservable: Observable<()> { get }
     func sections(tableView: UITableView) -> [SectionProtocol]
 }
 
@@ -73,6 +74,10 @@ class MarketOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+
+        for dataSource in dataSources {
+            subscribe(MainScheduler.instance, disposeBag, dataSource.updateObservable) { [weak self] in self?.handleDataSourceUpdate() }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -96,10 +101,18 @@ class MarketOverviewViewController: ThemeViewController {
     private func sync(success: Bool) {
         if success {
             tableView.isHidden = false
-            tableView.reload()
+            buildSections()
         } else {
             tableView.isHidden = true
         }
+    }
+
+    func handleDataSourceUpdate() {
+        guard dataSources.allSatisfy({ $0.isReady }) else {
+            return
+        }
+
+        tableView.reload()
     }
 
 }

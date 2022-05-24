@@ -39,7 +39,7 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top250.rawValue, currencyCode: currency.code, defi: true)
+        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     let rankedItems = marketInfos.enumerated().map { index, info in

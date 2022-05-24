@@ -1,78 +1,54 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import MarketKit
 
 class MarketOverviewCategoryViewModel {
-    private let service: MarketDiscoveryCategoryService
+    private let service: MarketOverviewCategoryService
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<CategoryViewItem>>(value: .loading)
+    private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
 
-    init(service: MarketDiscoveryCategoryService) {
+    init(service: MarketOverviewCategoryService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+
+        sync(items: service.items)
     }
 
-    private func sync(state: MarketDiscoveryCategoryService.State) {
-        let items: MarketDiscoveryCategoryService.DiscoveryItem
-        switch state {
-        case .loading:
-            stateRelay.accept(.loading)
-        case .items(let items):
-            stateRelay.accept(.completed(CategoryViewItem(viewItems: items.prefix(5).compactMap { viewItem(item: $0) })))
-        case .failed(let error):
-            stateRelay.accept(.failed(error))
-        }
+    private func sync(items: [MarketDiscoveryCategoryService.Item]?) {
+        viewItemsRelay.accept(items.map { $0.map { viewItem(item: $0) } })
     }
 
-    private func viewItem(item: MarketDiscoveryCategoryService.DiscoveryItem) -> ViewItem? {
-        if case let .category(category) = item {
-            let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, currency: service.currency)
+    private func viewItem(item: MarketDiscoveryCategoryService.Item) -> ViewItem {
+        let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: item, currency: service.currency)
 
-            return ViewItem(
-                    uid: category.uid,
-                    imageUrl: category.imageUrl,
-                    name: category.name,
-                    marketCap: marketCap,
-                    diff: diffString,
-                    diffType: diffType
-            )
-        }
-
-        return nil
+        return ViewItem(
+                category: item.category,
+                uid: item.uid,
+                imageUrl: item.imageUrl,
+                name: item.name,
+                marketCap: marketCap,
+                diff: diffString,
+                diffType: diffType
+        )
     }
 
 }
 
 extension MarketOverviewCategoryViewModel {
 
-    var viewItem: CategoryViewItem? {
-        stateRelay.value.data
-    }
-
-}
-
-extension MarketOverviewCategoryViewModel: IMarketOverviewSectionViewModel {
-
-    var stateObservable: Observable<DataStatus<()>> {
-        stateRelay.map { $0.map { _ in () } }
-    }
-
-    func refresh() {
+    var viewItemsDriver: Driver<[ViewItem]?> {
+        viewItemsRelay.asDriver()
     }
 
 }
 
 extension MarketOverviewCategoryViewModel {
-
-    struct CategoryViewItem {
-        let title = "market.top.section.header.top_sectors".localized
-        let imageName = "categories_20"
-        let viewItems: [ViewItem]
-    }
 
     struct ViewItem {
+        let category: CoinCategory
         let uid: String
         let imageUrl: String
         let name: String

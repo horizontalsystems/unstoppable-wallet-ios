@@ -6,30 +6,32 @@ import Chart
 import ComponentKit
 
 protocol IBaseMarketOverviewTopListViewModel {
-    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? { get }
+    var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> { get }
     var selectorTitles: [String] { get }
-
     var selectorIndex: Int { get }
-
     func onSelect(selectorIndex: Int)
-    func refresh()
 }
 
 class BaseMarketOverviewTopListDataSource {
+    private let topListViewModel: IBaseMarketOverviewTopListViewModel
+    weak var presentDelegate: IPresentDelegate?
+    private let rightSelectorMode: MarketOverviewHeaderCell.ButtonMode
+    private let imageName: String
+    private let title: String
     private let disposeBag = DisposeBag()
 
-    var presentDelegate: IPresentDelegate
+    private let listViewItemsRelay = BehaviorRelay<[MarketModule.ListViewItem]?>(value: nil)
 
-    var status: DataStatus<[SectionProtocol]> = .loading {
-        didSet { statusRelay.accept(()) }
-    }
-    private let statusRelay = PublishRelay<()>()
-
-    private let viewModel: IBaseMarketOverviewTopListViewModel
-
-    init(viewModel: IBaseMarketOverviewTopListViewModel, presentDelegate: IPresentDelegate) {
-        self.viewModel = viewModel
+    init(topListViewModel: IBaseMarketOverviewTopListViewModel, presentDelegate: IPresentDelegate, rightSelectorMode: MarketOverviewHeaderCell.ButtonMode, imageName: String, title: String) {
+        self.topListViewModel = topListViewModel
         self.presentDelegate = presentDelegate
+        self.rightSelectorMode = rightSelectorMode
+        self.imageName = imageName
+        self.title = title
+
+        subscribe(disposeBag, topListViewModel.listViewItemsDriver) { [weak self] listViewItems in
+            self?.listViewItemsRelay.accept(listViewItems)
+        }
     }
 
     private func rows(tableView: UITableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
@@ -80,48 +82,56 @@ class BaseMarketOverviewTopListDataSource {
 
 extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
 
+    var isReady: Bool {
+        listViewItemsRelay.value != nil
+    }
+
+    var updateObservable: Observable<()> {
+        listViewItemsRelay.map { _ in () }
+    }
+
+    private func bind(cell: MarketOverviewHeaderCell) {
+        cell.set(backgroundStyle: .transparent)
+
+        cell.buttonMode = rightSelectorMode
+        cell.set(values: topListViewModel.selectorTitles)
+        cell.setSelected(index: topListViewModel.selectorIndex)
+        cell.onSelect = { [weak self] index in
+            self?.topListViewModel.onSelect(selectorIndex: index)
+        }
+
+        cell.titleImage = UIImage(named: imageName)
+        cell.title = title
+    }
+
     func sections(tableView: UITableView) -> [SectionProtocol] {
-        guard let topViewItem = viewModel.viewItem else {
+        guard let listViewItems = listViewItemsRelay.value else {
             return []
         }
 
         var sections = [SectionProtocol]()
 
-        let marketTops = viewModel.selectorTitles
-
-        let currentMarketTopIndex = viewModel.selectorIndex
-
         let headerSection = Section(
-                id: "header_\(topViewItem.title)",
+                id: "header_\(title)",
                 footerState: .margin(height: .margin12),
                 rows: [
                     Row<MarketOverviewHeaderCell>(
-                            id: "header_\(topViewItem.title)",
+                            id: "header_\(title)",
                             height: .heightCell48,
                             bind: { [weak self] cell, _ in
-                                cell.set(backgroundStyle: .transparent)
-
-                                cell.buttonMode = topViewItem.rightSelectorMode
-                                cell.set(values: marketTops)
-                                cell.setSelected(index: currentMarketTopIndex)
-                                cell.onSelect = { index in
-                                    self?.viewModel.onSelect(selectorIndex: index)
-                                }
-
-                                cell.titleImage = UIImage(named: topViewItem.imageName)
-                                cell.title = topViewItem.title
+                                self?.bind(cell: cell)
                             }
                     )
                 ]
         )
 
         let listSection = Section(
-                id: topViewItem.title,
+                id: title,
                 footerState: .margin(height: .margin24),
-                rows: rows(tableView: tableView, listViewItems: topViewItem.listViewItems) + [
+                rows: rows(tableView: tableView, listViewItems: listViewItems) + [
                     seeAllRow(
                             tableView: tableView,
-                            id: "\(topViewItem.title)-see-all",
+                            id: "\(title)-see-all",
                             action: { [weak self] in
                                 self?.didTapSeeAll()
                             }
@@ -133,18 +143,6 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
         sections.append(listSection)
 
         return sections
-    }
-
-}
-
-extension BaseMarketOverviewTopListDataSource {
-
-    struct ViewItem {
-        let rightSelectorMode: MarketOverviewHeaderCell.ButtonMode
-        let imageName: String
-        let title: String
-
-        let listViewItems: [MarketModule.ListViewItem]
     }
 
 }

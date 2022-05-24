@@ -4,63 +4,31 @@ import RxCocoa
 import MarketKit
 
 class MarketOverviewTopPlatformsViewModel {
-    private let listCount = 5
-
-    private let service: MarketTopPlatformsService
+    private let service: MarketOverviewTopPlatformsService
     private let decorator: MarketListTopPlatformDecorator
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<DataStatus<BaseMarketOverviewTopListDataSource.ViewItem>>(value: .loading)
+    private let listViewItemsRelay = BehaviorRelay<[MarketModule.ListViewItem]?>(value: nil)
 
-    init(service: MarketTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
+    init(service: MarketOverviewTopPlatformsService, decorator: MarketListTopPlatformDecorator) {
         self.service = service
         self.decorator = decorator
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.topPlatformsObservable) { [weak self] in self?.sync(topPlatforms: $0) }
+
+        sync(topPlatforms: service.topPlatforms)
     }
 
-    private func sync(state: MarketListServiceState<TopPlatform>) {
-        let listCount = listCount
-
-        switch state {
-        case .loading:
-            stateRelay.accept(.loading)
-        case let .failed(error):
-            stateRelay.accept(.failed(error))
-        case let .loaded(items, _, _):
-            stateRelay.accept(.completed(viewItem(listItems: Array(items.prefix(listCount)))))
-        }
-    }
-
-    private func viewItem(listItems: [TopPlatform]) -> BaseMarketOverviewTopListDataSource.ViewItem {
-        BaseMarketOverviewTopListDataSource.ViewItem(
-                rightSelectorMode: .selector,
-                imageName: "blocks_20",
-                title: "market.top.top_platforms".localized,
-                listViewItems: listItems.map {
-                    decorator.listViewItem(item: $0)
-                }
-        )
-    }
-
-}
-
-extension MarketOverviewTopPlatformsViewModel: IMarketOverviewSectionViewModel {
-
-    var stateObservable: Observable<DataStatus<()>> {
-        stateRelay.map { $0.map { _ in () } }
-    }
-
-    func refresh() {
-        service.refresh()
+    private func sync(topPlatforms: [TopPlatform]?) {
+        listViewItemsRelay.accept(topPlatforms.map { $0.map { decorator.listViewItem(item: $0) } })
     }
 
 }
 
 extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
 
-    var viewItem: BaseMarketOverviewTopListDataSource.ViewItem? {
-        stateRelay.value.data
+    var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
+        listViewItemsRelay.asDriver()
     }
 
     var selectorTitles: [String] {

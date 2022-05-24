@@ -5,7 +5,7 @@ import MarketKit
 struct MarketNftTopCollectionsModule {
 
     static func viewController() -> UIViewController {
-        let service = MarketNftTopCollectionsService(provider: App.shared.hsNftProvider, currencyKit: App.shared.currencyKit)
+        let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
 
         let decorator = MarketListNftCollectionDecorator(service: service)
         let viewModel = MarketNftTopCollectionsViewModel()

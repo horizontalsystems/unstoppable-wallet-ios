@@ -6,25 +6,38 @@ import Chart
 import ComponentKit
 
 class MarketOverviewGlobalDataSource {
+    private let viewModel: MarketOverviewGlobalViewModel
+    weak var presentDelegate: IPresentDelegate?
     private let disposeBag = DisposeBag()
 
-    private let viewModel: MarketOverviewGlobalViewModel
-    var presentDelegate: IPresentDelegate
-
     private let marketMetricsCell: MarketOverviewMetricsCell
+
+    private let viewItemRelay = BehaviorRelay<MarketOverviewGlobalViewModel.GlobalMarketViewItem?>(value: nil)
 
     init(viewModel: MarketOverviewGlobalViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
         marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.chartPreview, presentDelegate: presentDelegate)
+
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
+            self?.viewItemRelay.accept(viewItem)
+        }
     }
 
 }
 
 extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
 
+    var isReady: Bool {
+        viewItemRelay.value != nil
+    }
+
+    var updateObservable: Observable<()> {
+        viewItemRelay.map { _ in () }
+    }
+
     func sections(tableView: UITableView) -> [SectionProtocol] {
-        guard let viewItem = viewModel.viewItem else {
+        guard let viewItem = viewItemRelay.value else {
             return []
         }
 
