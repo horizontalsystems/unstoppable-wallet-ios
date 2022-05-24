@@ -1146,6 +1146,14 @@ poner en peligro la seguridad de mis fondos.";
 "nft_collection.overview.links" = "Enlaces";
 "nft_collection.overview.links.website" = "Sitio Web";
 
+
+"nft_collection.overview.owners" = "Owners";
+"nft_collection.overview.items" = "Items";
+"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.today_sellers" = "Today's Sellers";
+"nft_collection.overview.floor_price" = "Floor Price";
+"nft_collection.overview.all_time_average" = "All time average";
+
 "nft_collection.activity.event_types" = "Event Types";
 "nft_collection.activity.event_type.all" = "All Events";
 "nft_collection.activity.event_type.list" = "List";
