@@ -1145,6 +1145,14 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collection.overview.links" = "링크";
 "nft_collection.overview.links.website" = "웹사이트";
 
+
+"nft_collection.overview.owners" = "Owners";
+"nft_collection.overview.items" = "Items";
+"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.today_sellers" = "Today's Sellers";
+"nft_collection.overview.floor_price" = "Floor Price";
+"nft_collection.overview.all_time_average" = "All time average";
+
 "nft_collection.activity.event_types" = "이벤트 유형";
 "nft_collection.activity.event_type.all" = "모든 이벤트";
 "nft_collection.activity.event_type.list" = "목록";
