@@ -50,8 +50,8 @@
 "number.thousand" = "%@K";
 "number.million" = "%@млн";
 "number.billion" = "%@млрд";
-"number.trillion" = "%@t";
-"number.quadrillion" = "%@q";
+"number.trillion" = "%@T";
+"number.quadrillion" = "%@Q";
 
 // Access Camera
 
