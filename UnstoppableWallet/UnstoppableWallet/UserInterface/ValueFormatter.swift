@@ -10,7 +10,7 @@ class ValueFormatter {
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.roundingMode = .halfEven
+        formatter.roundingMode = .halfUp
         formatter.minimumFractionDigits = 0
         return formatter
     }()
@@ -49,6 +49,10 @@ class ValueFormatter {
         return maxCount
     }
 
+    private func edge(_ power: Int) -> Decimal {
+        pow(10, power) - (pow(10, power - 3) / 2)
+    }
+
     private func transformedShort(value: Decimal, maxDigits: Int = Int.max) -> (value: Decimal, digits: Int, suffix: String?, tooSmall: Bool) {
         var value = abs(value)
         var suffix: String?
@@ -80,22 +84,22 @@ class ValueFormatter {
         case 20..<200:
             digits = 1
 
-        case 200..<19_999:
+        case 200..<19_999.5:
             digits = 0
 
-        case 19_999..<pow(10, 6):
+        case 19_999.5..<edge(6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
             suffix = "number.thousand"
 
-        case pow(10, 6)..<pow(10, 9):
+        case edge(6)..<edge(9):
             (digits, value) = digitsAndValue(value: value, basePow: 6)
             suffix = "number.million"
 
-        case pow(10, 9)..<pow(10, 12):
+        case edge(9)..<edge(12):
             (digits, value) = digitsAndValue(value: value, basePow: 9)
             suffix = "number.billion"
 
-        case pow(10, 12)..<pow(10, 15):
+        case edge(12)..<edge(15):
             (digits, value) = digitsAndValue(value: value, basePow: 12)
             suffix = "number.trillion"
 
