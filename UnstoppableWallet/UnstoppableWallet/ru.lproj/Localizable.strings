@@ -47,10 +47,10 @@
 
 "sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
-"number.thousand" = "%@K";
+"number.thousand" = "%@ тыс";
 "number.million" = "%@млн";
 "number.billion" = "%@млрд";
-"number.trillion" = "%@T";
+"number.trillion" = "%@ трл";
 "number.quadrillion" = "%@Q";
 
 // Access Camera
@@ -234,7 +234,7 @@
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel_button" = "Отменить Транзакцию";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
+"send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно Средств";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
@@ -325,7 +325,7 @@
 
 "swap.dex_info.header_dex_related" = "o %@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "Сумма в некоторых валютах, которую сервис может потратить от вашего имени при выполнении обмена токенов. Может потребоваться разрешение на использование достаточной суммы перед обменом.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
@@ -398,7 +398,7 @@
 "market_discovery.browse_categories" = "Обзор Категорий";
 "market_discovery.top_coins" = "Лучшие токены";
 "market_discovery.not_found" = "Ничего не найдено";
-"market_discovery.category.chart.title" = "Total Cap";
+"market_discovery.category.chart.title" = "Общая Капитализация";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
@@ -507,11 +507,11 @@
 "coin_page.markets.empty" = "Данные отсутствуют";
 
 "coin_page.token_liquidity" = "Ликвидность Токена";
-"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
+"coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
 "coin_page.dex_volume" = "DEX Volume";
-"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
+"coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
 "coin_page.dex_liquidity" = "DEX Liquidity";
-"coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
+"coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
 "coin_page.chart.locked" = "Locked";
 
 "coin_page.token_distribution" = "Распределение Токенов";
@@ -587,8 +587,8 @@
 "coin_page.security_parameters.privacy.description.low" = "Транзакции с этим токеном полностью публичны и позволяют сторонним службам связывать различные транзакции с одной и той же сущностью, проверять суммы транзакций и просматривать пользовательские балансы.";
 "coin_page.security_parameters.privacy.description.medium" = "Транзакции с этим токеном являются полуанонимными. Сторонний сервис может видеть суммы транзакций и частично связывать различные сделки с той же самой сущностью.";
 "coin_page.security_parameters.privacy.description.high" = "Транзакции с этим токеном анонимны по умолчанию или предоставляют такие возможности. Ни одна сущность не может связать различные транзакции с одним и тем же лицом или увидеть суммы транзакций.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
+"coin_page.security_parameters.issuance.description.decentralized" = "Количество токенов в обороте, контролируемое алгоритмом и работающее детерминированным образом вне централизованного влияния.";
+"coin_page.security_parameters.issuance.description.centralized" = "Количество токенов в обороте может быть потенциально увеличено или уменьшено централизованной структурой по требованию.";
 "coin_page.security_parameters.confiscation_resistance.description.yes" = "Токены не могут быть конфискованы, если они хранятся в некастодиальном кошельке.";
 "coin_page.security_parameters.confiscation_resistance.description.no" = "Токены могут быть конфискованы или подделаны эмитентом.";
 "coin_page.security_parameters.censorship_resistance.description.yes" = "Владелец токена не подвергается цензуре во время транзакции.";
@@ -623,12 +623,12 @@
 "pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
 "pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
 
-"pro_features.activate" = "Activate";
+"pro_features.activate" = "Активировать";
 "pro_features.mountain_yak.activate.title" = "Activate the Pass";
 "pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
 "pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
 "pro_features.mountain_yak.activate.features" = "After Activation You Get:";
-"pro_features.activate.invalid_sign" = "Could not Activate ...";
+"pro_features.activate.invalid_sign" = "Не удалось активировать ...";
 
 // Transactions
 
@@ -655,7 +655,7 @@
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "безлимитный";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
@@ -680,7 +680,7 @@
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "Покупатель";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический Курс";
 "tx_info.options.speed_up" = "Ускорить";
@@ -702,7 +702,7 @@
 "tx_info.you_paid" = "Вы Заплатили";
 "tx_info.you_got" = "Вы Получили";
 "tx_info.price" = "Цена";
-"tx_info.options" = "Options";
+"tx_info.options" = "Параметры";
 
 // Settings
 
@@ -807,7 +807,7 @@
 "blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "blockchain_settings.info.sync_mode" = "Режим Синхронизации";
-"blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.sync_mode.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 
 // Manage Keys
 
@@ -1067,10 +1067,10 @@
 // Fee Settings
 
 "fee_settings" = "Настройки Комиссии";
-"fee_settings.fee" = "Fee";
+"fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";
 "fee_settings.fee_priority" = "Speed";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "Комиссия";
 "fee_settings.max_fee" = "Макс. Комиссия";
 "fee_settings.max_fee.info" = "Максимальная ожидаемая общая комиссия за данную транзакцию. Обычно, фактическая комиссия будет меньше.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -1096,7 +1096,7 @@
 "watch_address.title" = "Watch Address";
 "watch_address.watch" = "Смотреть";
 "watch_address.name" = "Name (optional)";
-"watch_address.address" = "Address";
+"watch_address.address" = "Адрес";
 
 // Nft Collections
 
