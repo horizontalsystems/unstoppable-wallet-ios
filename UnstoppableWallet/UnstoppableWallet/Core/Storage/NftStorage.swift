@@ -60,6 +60,7 @@ class NftStorage {
                         count: nil,
                         ownerCount: nil,
                         totalSupply: record.totalSupply,
+                        averagePrice1d: nil,
                         averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
                         averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
                         floorPrice: nil,

@@ -224,8 +224,9 @@ class NftAssetViewController: ThemeViewController {
     }
 
     private func openCollection(uid: String) {
-        let module = NftCollectionModule.viewController(collectionUid: uid)
-        navigationController?.pushViewController(module, animated: true)
+        if let module = NftCollectionModule.viewController(collectionUid: uid) {
+            navigationController?.pushViewController(module, animated: true)
+        }
     }
 
 }

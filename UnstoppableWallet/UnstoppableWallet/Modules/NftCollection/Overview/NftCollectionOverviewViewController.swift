@@ -197,7 +197,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                         if let viewItem = counters.at(index: 0) {
                             cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
                         }
-                        if let viewItem = charts.at(index: 1) {
+                        if let viewItem = counters.at(index: 1) {
                             cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
                         }
                     }
