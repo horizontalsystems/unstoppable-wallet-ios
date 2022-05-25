@@ -64,8 +64,8 @@
 
 "restore.title" = "Выберите Кошелек";
 "restore.enter_key" = "Введите Ключ";
-"restore.mnemonic.name" = "Name (optional)";
-"restore.mnemonic.key" = "Key";
+"restore.mnemonic.name" = "Имя (опционально)";
+"restore.mnemonic.key" = "Ключ";
 "restore.mnemonic.description" = "Введите мнемоническую фразу, которая состоит из 12 или 24 слов. Слова должны быть введены в правильном порядке и разделены пробелами.";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12 или 24 слова. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
@@ -209,7 +209,7 @@
 "send.hodler_locktime_off" = "Выкл.";
 "send.hodler_error.unsupported_address" = "Блокировка по времени работает только с адресами P2PKH (начиная с 1)";
 "send.fee_info.title" = "Скорость Транзакции";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network and lower when the blockchain is less busy.";
+"send.fee_info.description" = "Пользователи блокчейнов должны оплачивать сетевые комиссии при отправке транзакций. Комиссии обычно выше при обработке большего количества транзакций в сети и ниже при меньшей занятости блокчейна.";
 "send.fee_info.header_slow" = "Низкая";
 "send.fee_info.content_slow" = "Выбор значения из этого диапазона может привести к откладыванию обработки транзакции на некоторое время или ее полному отклонению. Чем меньше размер транзакции, тем дольше займет процесс ее подтверждения.";
 "send.fee_info.header_average" = "Рекомендовано";
@@ -386,12 +386,12 @@
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
 "market.top.top_collections" = "Лучшие NFT Коллекции";
-"market.top.floor_price" = "Floor:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.floor_price" = "Минимальная цена:";
+"market.top.top_platforms" = "Лучшие платформы";
+"market.top.protocols" = "Протоколы";
 
-"top_platforms.title" = "Top Blockchain Platforms";
-"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+"top_platforms.title" = "Лучшие блокчейн-платформы";
+"top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов.";
 
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
@@ -508,7 +508,7 @@
 
 "coin_page.token_liquidity" = "Ликвидность Токена";
 "coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
-"coin_page.dex_volume" = "DEX Volume";
+"coin_page.dex_volume" = "Объем торгов";
 "coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
 "coin_page.dex_liquidity" = "DEX Liquidity";
 "coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
