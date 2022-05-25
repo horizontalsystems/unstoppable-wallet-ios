@@ -28,14 +28,11 @@ class ChartMarketCardView: MarketCardView {
     private func commonInit() {
         stackView.addArrangedSubview(chartView)
 
-        chartView.snp.makeConstraints { maker in
-            if let mainHeight = configuration?.mainHeight {
-                maker.height.equalTo(mainHeight)
-            }
-        }
-
         if let configuration = configuration {
             chartView.apply(configuration: configuration)
+            chartView.snp.makeConstraints { maker in
+                maker.height.equalTo(configuration.mainHeight)
+            }
         }
 
         chartView.isUserInteractionEnabled = false

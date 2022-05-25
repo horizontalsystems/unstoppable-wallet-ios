@@ -17,12 +17,14 @@ extension ChartMarketCardCell {
     }
 
     func append(viewItem: ChartMarketCardView.ViewItem, onTap: (() -> ())? = nil) {
-        let marketCardView = PreviewView(configuration: configuration)
-        marketCardView.onTap = onTap
-
-        marketCardView.set(viewItem: viewItem)
-
+        let marketCardView = PreviewView()
         append(view: marketCardView)
+
+        marketCardView.onTap = onTap
+        if let configuration = configuration {
+            marketCardView.set(configuration: configuration)
+        }
+        marketCardView.set(viewItem: viewItem)
     }
 
 }
