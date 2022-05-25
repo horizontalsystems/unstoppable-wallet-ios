@@ -205,12 +205,13 @@ extension MarketListViewController: SectionsDataSource {
                     headerState: headerState,
                     footerState: .marginColor(height: .margin32, color: .clear) ,
                     rows: viewItems.map { viewItems in
-                        viewItems.enumerated().map { index, viewItem in
-                            MarketModule.marketListCell(
+                        return viewItems.enumerated().map { index, viewItem in
+                            return MarketModule.marketListCell(
                                     tableView: tableView,
                                     backgroundStyle: .transparent,
                                     listViewItem: viewItem,
-                                    isFirst: index == viewItems.count - 1,
+                                    isFirst: false,
+                                    isLast: index == viewItems.count - 1,
                                     rowActionProvider: { [weak self] in
                                         self?.rowActions(index: index) ?? []
                                     },

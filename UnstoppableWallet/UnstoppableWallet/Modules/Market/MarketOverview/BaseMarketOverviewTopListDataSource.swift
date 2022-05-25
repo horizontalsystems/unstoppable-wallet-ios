@@ -41,6 +41,7 @@ class BaseMarketOverviewTopListDataSource {
                     backgroundStyle: .lawrence,
                     listViewItem: listViewItem,
                     isFirst: index == 0,
+                    isLast: false,
                     rowActionProvider: nil,
                     action:  {[weak self] in
                         self?.onSelect(listViewItem: listViewItem)
