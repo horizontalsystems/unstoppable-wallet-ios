@@ -4,11 +4,14 @@ import MarketKit
 
 struct NftCollectionModule {
 
-    static func viewController(collectionUid: String) -> UIViewController {
+    static func viewController(collectionUid: String) -> UIViewController? {
         let service = NftCollectionService()
         let viewModel = NftCollectionViewModel(service: service)
 
-        let overviewController = NftCollectionOverviewModule.viewController(collectionUid: collectionUid)
+        guard let overviewController = NftCollectionOverviewModule.viewController(collectionUid: collectionUid) else {
+            return nil
+        }
+
         let assetsController = NftCollectionAssetsModule.viewController(collectionUid: collectionUid)
         let activityController = NftCollectionActivityModule.viewController(collectionUid: collectionUid)
 
