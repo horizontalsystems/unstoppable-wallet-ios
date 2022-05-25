@@ -15,8 +15,6 @@ class MarketPostService {
 
     init(marketKit: Kit) {
         self.marketKit = marketKit
-
-        fetch()
     }
 
     private func fetch() {
@@ -27,6 +25,7 @@ class MarketPostService {
         }
 
         marketKit.postsSingle()
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] posts in
                     self?.state = .loaded(posts: posts)
                 }, onError: { [weak self] error in
@@ -41,6 +40,10 @@ extension MarketPostService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+    func load() {
+        fetch()
     }
 
     func refresh() {

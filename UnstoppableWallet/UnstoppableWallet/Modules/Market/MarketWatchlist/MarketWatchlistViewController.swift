@@ -33,6 +33,8 @@ class MarketWatchlistViewController: MarketListViewController {
 
         placeholderView.image = UIImage(named: "rate_48")
         placeholderView.text = "market_watchlist.empty.caption".localized
+
+        viewModel.onLoad()
     }
 
 }

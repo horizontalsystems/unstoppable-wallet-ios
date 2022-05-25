@@ -6,3 +6,11 @@ class MarketWatchlistViewModel {
     }
 
 }
+
+extension MarketWatchlistViewModel {
+
+    func onLoad() {
+        service.load()
+    }
+
+}
