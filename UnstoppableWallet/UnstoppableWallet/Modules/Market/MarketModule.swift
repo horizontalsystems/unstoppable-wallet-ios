@@ -34,7 +34,7 @@ struct MarketModule {
         return MarketViewController(viewModel: viewModel)
     }
 
-    static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
+    static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image24, .multiText, .multiText],
                 tableView: tableView,
@@ -43,7 +43,7 @@ struct MarketModule {
                 autoDeselect: true,
                 rowActionProvider: rowActionProvider,
                 bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst)
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.imageView.clipsToBounds = true
