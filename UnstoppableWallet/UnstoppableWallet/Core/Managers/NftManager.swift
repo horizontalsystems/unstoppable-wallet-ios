@@ -54,7 +54,7 @@ class NftManager {
         marketKitDisposeBag = DisposeBag()
 
         marketKit.nftAssetCollectionSingle(address: address)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onSuccess: { [weak self] assetCollection in
                     self?.handle(assetCollection: assetCollection, account: account)
                 })

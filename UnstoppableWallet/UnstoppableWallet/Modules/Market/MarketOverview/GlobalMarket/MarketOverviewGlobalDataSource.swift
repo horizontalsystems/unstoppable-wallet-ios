@@ -11,13 +11,20 @@ class MarketOverviewGlobalDataSource {
     private let disposeBag = DisposeBag()
 
     private let marketMetricsCell: MarketOverviewMetricsCell
+    private let marketMetricsRow: StaticRow
 
     private let viewItemRelay = BehaviorRelay<MarketOverviewGlobalViewModel.GlobalMarketViewItem?>(value: nil)
 
     init(viewModel: MarketOverviewGlobalViewModel, presentDelegate: IPresentDelegate) {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
+
         marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.chartPreview, presentDelegate: presentDelegate)
+        marketMetricsRow = StaticRow(
+                cell: marketMetricsCell,
+                id: "metrics",
+                height: MarketOverviewMetricsCell.cellHeight
+        )
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
             self?.viewItemRelay.accept(viewItem)
@@ -41,24 +48,16 @@ extension MarketOverviewGlobalDataSource: IMarketOverviewDataSource {
             return []
         }
 
-        marketMetricsCell.set(viewItem: viewItem)
+        marketMetricsRow.onReady = { [weak self] in
+            self?.marketMetricsCell.set(viewItem: viewItem)
+        }
 
-        var sections = [SectionProtocol]()
-
-        let metricsSection = Section(
-                id: "market_metrics",
-                rows: [
-                    StaticRow(
-                            cell: marketMetricsCell,
-                            id: "metrics",
-                            height: MarketOverviewMetricsCell.cellHeight
-                    )
-                ]
-        )
-
-        sections.append(metricsSection)
-
-        return sections
+        return [
+            Section(
+                    id: "market_metrics",
+                    rows: [marketMetricsRow]
+            )
+        ]
     }
 
 }

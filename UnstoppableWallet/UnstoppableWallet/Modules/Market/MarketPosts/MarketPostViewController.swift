@@ -69,6 +69,8 @@ class MarketPostViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+
+        viewModel.onLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {

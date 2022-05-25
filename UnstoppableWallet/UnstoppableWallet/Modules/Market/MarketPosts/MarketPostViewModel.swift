@@ -81,6 +81,10 @@ extension MarketPostViewModel {
         syncErrorRelay.asDriver()
     }
 
+    func onLoad() {
+        service.load()
+    }
+
     func refresh() {
         service.refresh()
     }

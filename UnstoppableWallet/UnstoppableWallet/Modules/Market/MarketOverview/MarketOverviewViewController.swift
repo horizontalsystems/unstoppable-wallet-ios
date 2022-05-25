@@ -78,6 +78,8 @@ class MarketOverviewViewController: ThemeViewController {
         for dataSource in dataSources {
             subscribe(MainScheduler.instance, disposeBag, dataSource.updateObservable) { [weak self] in self?.handleDataSourceUpdate() }
         }
+
+        viewModel.onLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
