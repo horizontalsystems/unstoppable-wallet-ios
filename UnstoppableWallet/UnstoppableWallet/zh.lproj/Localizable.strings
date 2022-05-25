@@ -47,11 +47,11 @@
 
 "sync_error" = "同步错误。请再试一次.";
 
-"number.thousand" = "%@K";
+"number.thousand" = "%@千";
 "number.million" = "%@百万";
 "number.billion" = "%@十亿";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.trillion" = "%@万亿";
+"number.quadrillion" = "%@千萬億";
 
 // Access Camera
 
@@ -1148,12 +1148,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collection.overview.links.website" = "网站";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.owners" = "所有者";
+"nft_collection.overview.items" = "项目";
+"nft_collection.overview.24h_volume" = "24小时音量";
+"nft_collection.overview.today_sellers" = "今天的卖家";
+"nft_collection.overview.floor_price" = "底价";
+"nft_collection.overview.all_time_average" = "全部时间平均值";
 
 "nft_collection.activity.event_types" = "事件类型";
 "nft_collection.activity.event_type.all" = "全部事件";
