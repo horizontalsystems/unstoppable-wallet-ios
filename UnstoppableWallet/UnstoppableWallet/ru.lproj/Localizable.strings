@@ -508,30 +508,30 @@
 
 "coin_page.token_liquidity" = "Ликвидность Токена";
 "coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
-"coin_page.dex_volume" = "Объем торгов";
+"coin_page.dex_volume" = "Объем торгов DEX";
 "coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
-"coin_page.dex_liquidity" = "DEX Liquidity";
+"coin_page.dex_liquidity" = "Ликвидность DEX";
 "coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
-"coin_page.chart.locked" = "Locked";
+"coin_page.chart.locked" = "Заблокирован";
 
 "coin_page.token_distribution" = "Распределение Токенов";
-"coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
-"coin_page.tx_count" = "Tx Count";
-"coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
-"coin_page.tx_volume" = "Tx Volume";
-"coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
-"coin_page.active_addresses" = "Active Addresses";
-"coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";
+"coin_page.token_distribution.description" = "Параметры токена блокчейна. Обычно, нормальные проекты имеют активную базу пользователей и хорошо распределенный токен.";
+"coin_page.tx_count" = "Количество транзакций";
+"coin_page.tx_count.description" = "Количество транзакций токенов, зарегистрированных ончейн за различные периоды.";
+"coin_page.tx_volume" = "Объем торгов";
+"coin_page.tx_volume.description" = "Совокупный объем транзакций токенов регистрируется ончейн. Объем измеряется в токенах (а не в долларах США).";
+"coin_page.active_addresses" = "Активные адреса";
+"coin_page.active_addresses.description" = "Количество уникальных адресов кошельков, использованных для осуществления транзакций за различные периоды.";
 
 "coin_page.chart_tvl" = "Токен TVL";
 "coin_page.chart_volumes" = "Общий Объём";
 "coin_page.token_tvl" = "Токен TVL";
-"coin_page.token_tvl.description" = "Total Value Locked (TVL) is a metric that shows the total value of crypto assets under automated management by the smart contracts powering the given protocol.";
+"coin_page.token_tvl.description" = "Общее значение заблокированных активов (Total Value Locked или TVL) - это метрика, отражающая общую стоимость криптовалютных активов, подлежащих автоматическому управлению в рамках смарт-контрактов, поддерживающих данный протокол.";
 "coin_page.tvl" = "Всего Залоченных Активов";
 "coin_page.tvl_rank" = "Рейтинг TVL";
-"coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
+"coin_page.tvl_rank.description" = "Рейтинг по отношению к другим протоколам основан на значении TVL в долларах США.";
 "coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
-"coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
+"coin_page.market_cap_tvl_ratio.description" = "Соотношение рыночной капитализации токена проекта и его значения TVL.";
 "coin_page.tvl.description" = "Капитал, внесенный в платформу в виде кредитного обеспечения или пула ликвидности.";
 
 "coin_page.investor_data" = "Данные Инвестора";
@@ -563,7 +563,7 @@
 "coin_page.already_added_to_wallet" = "Уже добавлено в кошелек";
 
 "coin_page.major_holders" = "Крупные Держатели";
-"coin_page.major_holders.description" = "The number of tokens held by the top 10 wallets. Quality projects typically have a widely distributed token.";
+"coin_page.major_holders.description" = "Количество токенов в топ-10 кошельков. Качественные проекты обычно используют широко распространенный токен.";
 "coin_page.major_holders.chart.description" = "Топ-10 кошельков Ethereum";
 "coin_page.major_holders.top_ethereum_wallets" = "Лучшие Кошельки Ethereum";
 
@@ -609,25 +609,25 @@
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable Wallet Passes";
-"pro_features.authorize.wallet_passes.subtitle" = "Get advanced features\nby holding our NFTs";
+"pro_features.authorize.wallet_passes.title" = "Кодовые фразы для кошелька Unstoppable Wallet";
+"pro_features.authorize.wallet_passes.subtitle" = "Приобретайте наши NFT\nи пользуйтесь их продвинутыми возможностями";
 
-"pro_features.lock_info.go_to_mint" = "Coming Soon";
+"pro_features.lock_info.go_to_mint" = "Скоро в доступе";
 
-"pro_features.lock_info.title" = "Unstoppable Pass";
+"pro_features.lock_info.title" = "Кодовая фраза для Unstoppable";
 "pro_features.lock_info.subtitle" = "NFT";
-"pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
-"pro_features.lock_info.coin_details.volume" = "DEX Volume";
-"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
-"pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
-"pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
-"pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
+"pro_features.lock_info.coin_details.description" = "Для активации этих данных на балансе вашего кошелька Unstoppable должны быть токены NFT \n\n. Вы также получите доступ к данным ниже:";
+"pro_features.lock_info.coin_details.volume" = "Объем торгов DEX";
+"pro_features.lock_info.coin_details.liquidity" = "Ликвидность DEX";
+"pro_features.lock_info.coin_details.active_addresses" = "Активные адреса";
+"pro_features.lock_info.coin_details.transaction_count" = "Количество транзакций";
+"pro_features.lock_info.coin_details.transaction_volume" = "Объем транзакций";
 
 "pro_features.activate" = "Активировать";
-"pro_features.mountain_yak.activate.title" = "Activate the Pass";
+"pro_features.mountain_yak.activate.title" = "Активировать кодовую фразу";
 "pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
-"pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, useful charts based on on-chain data that will help give you a clear view of projects";
-"pro_features.mountain_yak.activate.features" = "After Activation You Get:";
+"pro_features.mountain_yak.activate.description" = "Mountain Yak - Безграничная свобода действий. Вам предоставят важные данные рынка, аналитические инструменты, полезные диаграммы, основанные на ончейн-данных, с помощью которых вы сможете составить себе четкое представление о проектах";
+"pro_features.mountain_yak.activate.features" = "После активации вы получите:";
 "pro_features.activate.invalid_sign" = "Не удалось активировать ...";
 
 // Transactions
@@ -648,12 +648,12 @@
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
 "transactions.contract_creation" = "Создание Контракта";
-"transactions.external_call" = "External Call";
+"transactions.external_call" = "Внешний звонок";
 
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
 
-"transactions.multiple" = "Multiple";
+"transactions.multiple" = "Несколько";
 
 "transactions.value.unlimited" = "безлимитный";
 
@@ -688,7 +688,7 @@
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
-"tx_info.to_self_note" = "This transaction is sent to own address";
+"tx_info.to_self_note" = "Данная транзакция отправлена на собственный адрес";
 "tx_info.double_spent_note" = "Риск Двойной Траты!";
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.unlocked_at" = "Разблокировано %@";
@@ -791,7 +791,7 @@
 "btc_blockchain_settings.restore_source" = "Источник Восстановления";
 "btc_blockchain_settings.restore_source.description" = "Выберите источник данных для восстановления кошелька с транзакциями.";
 "btc_blockchain_settings.restore_source.alert" = "После изменения источника восстановления, кошелек должен будет повторно синхронизироваться с блокчейном %@.";
-"btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"btc_blockchain_settings.transaction_inputs_outputs" = "Вводы / выводы транзакций";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Поменяйте способ структурирования транзакций, чтобы затруднить отслеживание ваших операций с %@.";
 
 "btc_restore_mode.recommended" = "Рекомендуется";
@@ -804,7 +804,7 @@
 
 "blockchain_settings.info.restore_source" = "Опции Восстановления";
 "blockchain_settings.info.restore_source.content" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
-"blockchain_settings.info.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
+"blockchain_settings.info.transaction_inputs_outputs" = "Вводы / выводы транзакций";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:\n\n1. Shuffle: The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.\n\n2. Deterministic: There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "blockchain_settings.info.sync_mode" = "Режим Синхронизации";
 "blockchain_settings.info.sync_mode.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
@@ -1068,8 +1068,8 @@
 
 "fee_settings" = "Настройки Комиссии";
 "fee_settings.fee" = "Комиссия";
-"fee_settings.fee.info" = "The expected total fee for the given transaction.";
-"fee_settings.fee_priority" = "Speed";
+"fee_settings.fee.info" = "Ожидаемая общая сумма комиссии за данную транзакцию.";
+"fee_settings.fee_priority" = "Скорость ";
 "fee_settings.fee_rate" = "Комиссия";
 "fee_settings.max_fee" = "Макс. Комиссия";
 "fee_settings.max_fee.info" = "Максимальная ожидаемая общая комиссия за данную транзакцию. Обычно, фактическая комиссия будет меньше.";
@@ -1093,9 +1093,9 @@
 
 // Watch Address
 
-"watch_address.title" = "Watch Address";
+"watch_address.title" = "Посмотреть Адрес";
 "watch_address.watch" = "Смотреть";
-"watch_address.name" = "Name (optional)";
+"watch_address.name" = "Имя (опционально)";
 "watch_address.address" = "Адрес";
 
 // Nft Collections
@@ -1107,8 +1107,8 @@
 "nft_collections.on_sale" = "В продаже";
 "nft_collections.empty" = "В вашем кошельке нет NFT";
 
-"top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
+"top_nft_collections.title" = "Лучшие коллекции NFT ";
+"top_nft_collections.description" = "Ведущие коллекции NFT по объему торгов.";
 
 // Nft Asset
 
@@ -1148,24 +1148,24 @@
 "nft_collection.overview.links.website" = "Веб-сайт";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.owners" = "Владельцы";
+"nft_collection.overview.items" = "Элементы";
+"nft_collection.overview.24h_volume" = "Объем торгов (24ч)";
+"nft_collection.overview.today_sellers" = "Продавцы сегодня";
+"nft_collection.overview.floor_price" = "Минимальная цена";
+"nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 
-"nft_collection.activity.event_types" = "Event Types";
-"nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.sale" = "Sale";
-"nft_collection.activity.event_type.offer" = "Offer Entered";
-"nft_collection.activity.event_type.bid" = "Bid Entered";
-"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
-"nft_collection.activity.event_type.transfer" = "Transfer";
-"nft_collection.activity.event_type.approve" = "Approve";
-"nft_collection.activity.event_type.custom" = "Custom";
-"nft_collection.activity.event_type.payout" = "Payout";
-"nft_collection.activity.event_type.cancel" = "Cancel";
-"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
-"nft_collection.activity.event_type.unknown" = "Unknown";
+"nft_collection.activity.event_types" = "Типы событий";
+"nft_collection.activity.event_type.all" = "Все события";
+"nft_collection.activity.event_type.list" = "Список";
+"nft_collection.activity.event_type.sale" = "Продажа";
+"nft_collection.activity.event_type.offer" = "Предложение сделано";
+"nft_collection.activity.event_type.bid" = "Ставка сделана";
+"nft_collection.activity.event_type.bid_cancel" = "Ставка отозвана";
+"nft_collection.activity.event_type.transfer" = "Перевод";
+"nft_collection.activity.event_type.approve" = "Разрешить";
+"nft_collection.activity.event_type.custom" = "Индивидуальная";
+"nft_collection.activity.event_type.payout" = "Выплата";
+"nft_collection.activity.event_type.cancel" = "Отмена";
+"nft_collection.activity.event_type.bulkCancel" = "Массовая отмена";
+"nft_collection.activity.event_type.unknown" = "Неизвестная";
