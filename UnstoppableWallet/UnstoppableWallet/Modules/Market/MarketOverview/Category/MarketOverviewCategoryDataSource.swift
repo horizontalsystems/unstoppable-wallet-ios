@@ -20,7 +20,11 @@ class MarketOverviewCategoryDataSource {
             self?.viewItemsRelay.accept(viewItems)
         }
 
-        categoryCell.onSelect = { [weak self] category in
+        categoryCell.onSelect = { [weak self] uid in
+            guard let category = viewModel.category(uid: uid) else {
+                return
+            }
+
             let viewController = MarketCategoryModule.viewController(category: category)
             self?.presentDelegate?.present(viewController: viewController)
         }

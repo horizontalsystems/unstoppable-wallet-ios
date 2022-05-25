@@ -76,10 +76,10 @@ class MarketDiscoveryViewModel {
                     diffType: .up
             )
         case .category(let category):
-            let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, currency: categoryService.currency)
+            let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, timePeriod: categoryService.timePeriod, currency: categoryService.currency)
 
             return DiscoveryViewItem(
-                    type: .category(category: category.category),
+                    type: .category(category: category),
                     imageType: .remote(url: category.imageUrl),
                     name: category.name,
                     marketCap: marketCap,
