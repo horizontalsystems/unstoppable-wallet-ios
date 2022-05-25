@@ -4,8 +4,8 @@ import MarketKit
 
 struct MarketNftTopCollectionsModule {
 
-    static func viewController() -> UIViewController {
-        let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+    static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
+        let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, timePeriod: timePeriod)
 
         let decorator = MarketListNftCollectionDecorator(service: service)
         let viewModel = MarketNftTopCollectionsViewModel()

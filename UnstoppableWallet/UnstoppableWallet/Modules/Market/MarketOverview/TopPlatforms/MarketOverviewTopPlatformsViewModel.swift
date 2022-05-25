@@ -25,6 +25,14 @@ class MarketOverviewTopPlatformsViewModel {
 
 }
 
+extension MarketOverviewTopPlatformsViewModel {
+
+    var timePeriod: HsTimePeriod {
+        service.timePeriod
+    }
+
+}
+
 extension MarketOverviewTopPlatformsViewModel: IBaseMarketOverviewTopListViewModel {
 
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {

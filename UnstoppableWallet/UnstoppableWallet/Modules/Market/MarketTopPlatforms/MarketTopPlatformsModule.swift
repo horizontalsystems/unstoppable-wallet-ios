@@ -4,8 +4,8 @@ import MarketKit
 
 struct MarketTopPlatformsModule {
 
-    static func viewController() -> UIViewController {
-        let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager)
+    static func viewController(timePeriod: HsTimePeriod) -> UIViewController {
+        let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, timePeriod: timePeriod)
 
         let decorator = MarketListTopPlatformDecorator(service: service)
         let viewModel = MarketTopPlatformsViewModel()

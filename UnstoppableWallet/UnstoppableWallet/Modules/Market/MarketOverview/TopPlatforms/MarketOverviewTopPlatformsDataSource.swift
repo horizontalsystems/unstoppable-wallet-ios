@@ -16,7 +16,7 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
     }
 
     override func didTapSeeAll() {
-        let module = MarketTopPlatformsModule.viewController()
+        let module = MarketTopPlatformsModule.viewController(timePeriod: viewModel.timePeriod)
         presentDelegate?.present(viewController: module)
     }
 

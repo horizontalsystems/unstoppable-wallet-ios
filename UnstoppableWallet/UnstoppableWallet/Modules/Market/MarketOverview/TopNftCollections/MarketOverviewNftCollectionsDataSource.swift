@@ -17,7 +17,7 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
     }
 
     override func didTapSeeAll() {
-        let module = MarketNftTopCollectionsModule.viewController()
+        let module = MarketNftTopCollectionsModule.viewController(timePeriod: viewModel.timePeriod)
         presentDelegate?.present(viewController: module)
     }
 
