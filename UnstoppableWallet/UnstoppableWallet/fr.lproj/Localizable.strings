@@ -1146,12 +1146,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.overview.links.website" = "Site Web";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.owners" = "Propriétaires";
+"nft_collection.overview.items" = "Éléments";
+"nft_collection.overview.24h_volume" = "Volume 24h";
+"nft_collection.overview.today_sellers" = "Vendeurs d'aujourd'hui";
+"nft_collection.overview.floor_price" = "Prix plancher";
+"nft_collection.overview.all_time_average" = "Moyenne du temps";
 
 "nft_collection.activity.event_types" = "Types d'évènement";
 "nft_collection.activity.event_type.all" = "Tous les événements";
