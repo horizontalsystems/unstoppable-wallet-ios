@@ -243,7 +243,6 @@ extension CoinDetailsViewController: SectionsDataSource {
                 height: ChartMarketCardView.viewHeight(),
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .chartPreview)
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
                         cell.append(viewItem: volumeViewItem) { [weak self] in
@@ -251,10 +250,12 @@ extension CoinDetailsViewController: SectionsDataSource {
                         }
                     }
                     if let liquidityViewItem = viewItem.tokenLiquidity.liquidity {
-                        cell.append(viewItem: liquidityViewItem) { [weak self] in
+                       cell.append(viewItem: liquidityViewItem) { [weak self] in
                             self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .liquidity)
                         }
                     }
+
+                    cell.set(configuration: .chartPreview)
                 }
         )
 
