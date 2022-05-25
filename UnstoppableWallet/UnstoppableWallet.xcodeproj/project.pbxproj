@@ -5329,10 +5329,10 @@
 		1A56441B781D474BC4F6FA85 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				11B35A0AF4D03160AF66D1D9 /* MarketOverviewCategoryService.swift */,
 				1A564ADD13E597F423249CA3 /* MarketOverviewCategoryViewModel.swift */,
 				1A564A6D161EAD22626332C1 /* MarketOverviewCategoryDataSource.swift */,
 				1A5645B1C5FD344967B1F4B7 /* MarketOverviewCategoryCell.swift */,
-				11B35A0AF4D03160AF66D1D9 /* MarketOverviewCategoryService.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -5388,9 +5388,9 @@
 		1A5646D7F9188134B80B17F2 /* TopPlatforms */ = {
 			isa = PBXGroup;
 			children = (
+				11B3582259AD3A0C55CF6D2C /* MarketOverviewTopPlatformsService.swift */,
 				1A56477F6FC71270AD53A3AE /* MarketOverviewTopPlatformsViewModel.swift */,
 				1A564B44985D1169593F202C /* MarketOverviewTopPlatformsDataSource.swift */,
-				11B3582259AD3A0C55CF6D2C /* MarketOverviewTopPlatformsService.swift */,
 			);
 			path = TopPlatforms;
 			sourceTree = "<group>";
@@ -5408,9 +5408,9 @@
 		1A5647449ACDA125F93116C2 /* TopNftCollections */ = {
 			isa = PBXGroup;
 			children = (
+				11B351CEB402BC8F806365D9 /* MarketOverviewNftCollectionsService.swift */,
 				1A5648C84CA034F0B8812F8F /* MarketOverviewNftCollectionsViewModel.swift */,
 				1A564F434F772A01B92379B5 /* MarketOverviewNftCollectionsDataSource.swift */,
-				11B351CEB402BC8F806365D9 /* MarketOverviewNftCollectionsService.swift */,
 			);
 			path = TopNftCollections;
 			sourceTree = "<group>";
@@ -6835,7 +6835,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
@@ -10376,7 +10376,7 @@
 				kind = branch;
 			};
 		};
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -10430,32 +10430,32 @@
 		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {

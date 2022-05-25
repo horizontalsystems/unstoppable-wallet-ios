@@ -8,10 +8,10 @@ class MarketOverviewCategoryService {
     private let baseService: MarketOverviewService
     private let disposeBag = DisposeBag()
 
-    private let itemsRelay = PublishRelay<[MarketDiscoveryCategoryService.Item]?>()
-    private(set) var items: [MarketDiscoveryCategoryService.Item]? {
+    private let categoriesRelay = PublishRelay<[CoinCategory]?>()
+    private(set) var categories: [CoinCategory]? {
         didSet {
-            itemsRelay.accept(items)
+            categoriesRelay.accept(categories)
         }
     }
 
@@ -26,8 +26,8 @@ class MarketOverviewCategoryService {
     private func sync(state: DataStatus<MarketOverviewService.Item>? = nil) {
         let state = state ?? baseService.state
 
-        items = state.data.map { item in
-            item.marketOverview.coinCategories.map { MarketDiscoveryCategoryService.Item(category: $0, timePeriod: .day1) }
+        categories = state.data.map { item in
+            item.marketOverview.coinCategories
         }
     }
 
@@ -35,12 +35,16 @@ class MarketOverviewCategoryService {
 
 extension MarketOverviewCategoryService {
 
-    var itemsObservable: Observable<[MarketDiscoveryCategoryService.Item]?> {
-        itemsRelay.asObservable()
+    var categoriesObservable: Observable<[CoinCategory]?> {
+        categoriesRelay.asObservable()
     }
 
     var currency: Currency {
         baseService.currency
+    }
+
+    func category(uid: String) -> CoinCategory? {
+        categories?.first { $0.uid == uid }
     }
 
 }

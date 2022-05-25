@@ -1,5 +1,6 @@
 import UIKit
 import CurrencyKit
+import MarketKit
 
 struct MarketDiscoveryModule {
 
@@ -12,17 +13,19 @@ struct MarketDiscoveryModule {
         return MarketDiscoveryViewController(viewModel: viewModel, sortHeaderViewModel: headerViewModel)
     }
 
-    static func formatCategoryMarketData(category: MarketDiscoveryCategoryService.Item, currency: Currency) -> (String?, String?, DiffType) {
+    static func formatCategoryMarketData(category: CoinCategory, timePeriod: HsTimePeriod, currency: Currency) -> (String?, String?, DiffType) {
         var marketCap: String?
         if let amount = category.marketCap {
             marketCap = ValueFormatter.instance.formatShort(currency: currency, value: amount)
         } else {
             marketCap = "----"
         }
-        let diffString: String? = category.diff.flatMap {
+
+        let diff = category.diff(timePeriod: timePeriod)
+        let diffString: String? = diff.flatMap {
             ValueFormatter.instance.format(percentValue: $0)
         }
-        let diffType: MarketDiscoveryModule.DiffType = (category.diff?.isSignMinus ?? true) ? .down : .up
+        let diffType: MarketDiscoveryModule.DiffType = (diff?.isSignMinus ?? true) ? .down : .up
 
         return (marketCap, diffString, diffType)
     }

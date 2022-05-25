@@ -12,23 +12,22 @@ class MarketOverviewCategoryViewModel {
     init(service: MarketOverviewCategoryService) {
         self.service = service
 
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.categoriesObservable) { [weak self] in self?.sync(categories: $0) }
 
-        sync(items: service.items)
+        sync(categories: service.categories)
     }
 
-    private func sync(items: [MarketDiscoveryCategoryService.Item]?) {
-        viewItemsRelay.accept(items.map { $0.map { viewItem(item: $0) } })
+    private func sync(categories: [CoinCategory]?) {
+        viewItemsRelay.accept(categories.map { $0.map { viewItem(category: $0) } })
     }
 
-    private func viewItem(item: MarketDiscoveryCategoryService.Item) -> ViewItem {
-        let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: item, currency: service.currency)
+    private func viewItem(category: CoinCategory) -> ViewItem {
+        let (marketCap, diffString, diffType) = MarketDiscoveryModule.formatCategoryMarketData(category: category, timePeriod: .day1, currency: service.currency)
 
         return ViewItem(
-                category: item.category,
-                uid: item.uid,
-                imageUrl: item.imageUrl,
-                name: item.name,
+                uid: category.uid,
+                imageUrl: category.imageUrl,
+                name: category.name,
                 marketCap: marketCap,
                 diff: diffString,
                 diffType: diffType
@@ -43,12 +42,15 @@ extension MarketOverviewCategoryViewModel {
         viewItemsRelay.asDriver()
     }
 
+    func category(uid: String) -> CoinCategory? {
+        service.category(uid: uid)
+    }
+
 }
 
 extension MarketOverviewCategoryViewModel {
 
     struct ViewItem {
-        let category: CoinCategory
         let uid: String
         let imageUrl: String
         let name: String

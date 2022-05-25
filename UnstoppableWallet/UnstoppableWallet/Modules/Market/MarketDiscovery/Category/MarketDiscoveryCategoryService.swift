@@ -54,7 +54,7 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
                     return sortDirectionAscending ? diff < diff2 : diff > diff2
                 }
                 .map { category in
-                    DiscoveryItem.category(category: Item(category: category, timePeriod: timePeriod))
+                    DiscoveryItem.category(category: category)
                 }
 
         return [.topCoins] + items
@@ -142,7 +142,7 @@ extension MarketDiscoveryCategoryService {
 
     enum DiscoveryItem {
         case topCoins
-        case category(category: Item)
+        case category(category: CoinCategory)
     }
 
     enum State {
@@ -160,27 +160,6 @@ extension MarketDiscoveryCategoryService {
 
     }
 
-    struct Item {
-        let category: CoinCategory
-        let uid: String
-        let name: String
-        let imageUrl: String
-        let descriptions: [String: String]
-        let marketCap: Decimal?
-        let diff: Decimal?
-
-        init(category: CoinCategory, timePeriod: HsTimePeriod) {
-            self.category = category
-            uid = category.uid
-            name = category.name
-            imageUrl = category.imageUrl
-            descriptions = category.descriptions
-            marketCap = category.marketCap
-            diff = category.diff(timePeriod: timePeriod)
-        }
-
-    }
-
 }
 
 extension MarketDiscoveryCategoryService: IMarketSingleSortHeaderDecorator {
@@ -190,7 +169,7 @@ extension MarketDiscoveryCategoryService: IMarketSingleSortHeaderDecorator {
     }
 
     var currentFieldIndex: Int {
-        Self.allowedTimePeriods.index(of: timePeriod) ?? 0
+        Self.allowedTimePeriods.firstIndex(of: timePeriod) ?? 0
     }
 
     func setCurrentField(index: Int) {

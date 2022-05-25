@@ -5,7 +5,7 @@ import MarketKit
 class MarketOverviewCategoryCell: UITableViewCell {
     static let cellHeight: CGFloat = 316
 
-    var onSelect: ((CoinCategory) -> ())?
+    var onSelect: ((String) -> ())?
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
@@ -63,7 +63,7 @@ extension MarketOverviewCategoryCell: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelect?(viewItems[indexPath.item].category)
+        onSelect?(viewItems[indexPath.item].uid)
     }
 
 }
