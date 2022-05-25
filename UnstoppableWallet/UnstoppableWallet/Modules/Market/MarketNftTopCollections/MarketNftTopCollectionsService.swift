@@ -27,11 +27,12 @@ class MarketNftTopCollectionsService {
     }
 
     var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
-    var timePeriod: HsTimePeriod = .week1 { didSet { syncIfPossible() } }
+    var timePeriod: HsTimePeriod { didSet { syncIfPossible() } }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.timePeriod = timePeriod
 
         sync()
     }

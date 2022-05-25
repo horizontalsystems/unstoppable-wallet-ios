@@ -13,7 +13,7 @@ class MarketTopPlatformsService {
     private var syncDisposeBag = DisposeBag()
 
     var sortType: MarketTopPlatformsModule.SortType = .highestCap { didSet { syncIfPossible() } }
-    var timePeriod: MarketKit.HsTimePeriod = .day1 { didSet { syncIfPossible() } }
+    var timePeriod: MarketKit.HsTimePeriod { didSet { syncIfPossible() } }
 
     private var internalState: MarketListServiceState<TopPlatform> = .loading
 
@@ -24,9 +24,10 @@ class MarketTopPlatformsService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.timePeriod = timePeriod
 
         subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.sync() }
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.sync() }

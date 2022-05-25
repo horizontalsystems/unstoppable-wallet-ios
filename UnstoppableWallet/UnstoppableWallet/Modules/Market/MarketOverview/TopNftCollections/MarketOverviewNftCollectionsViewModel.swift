@@ -25,6 +25,14 @@ class MarketOverviewNftCollectionsViewModel {
 
 }
 
+extension MarketOverviewNftCollectionsViewModel {
+
+    var timePeriod: HsTimePeriod {
+        service.timePeriod
+    }
+
+}
+
 extension MarketOverviewNftCollectionsViewModel: IBaseMarketOverviewTopListViewModel {
 
     var listViewItemsDriver: Driver<[MarketModule.ListViewItem]?> {
