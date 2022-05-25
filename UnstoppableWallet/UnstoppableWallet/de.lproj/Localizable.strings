@@ -384,7 +384,7 @@
 "market.top.top_gainers" = "Top Gainers";
 "market.top.top_losers" = "Top Losers";
 "market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor:";
+"market.top.floor_price" = "Stockwerk:";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
@@ -818,7 +818,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings_manage_keys.delete.confirmation_remove" = "Damit wird das Wallet von diesem Gerät gelöscht.";
 "settings_manage_keys.delete.confirmation_loose" = "Wenn Sie den Private Key für dieses Wallet nicht gesichert haben, verlieren Sie den Zugang zu Ihrem Guthaben.";
 "settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
-"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
+"settings_manage_keys.delete.confirmation_watch.button" = "Beobachten stoppen";
 
 // Settings -> About App
 
@@ -1092,7 +1092,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Watch Address
 
 "watch_address.title" = "Watch-Adresse";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "Beobachten";
 "watch_address.name" = "Name (optional)";
 "watch_address.address" = "Adresse";
 
@@ -1146,14 +1146,14 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collection.overview.links.website" = "Webseite";
 
 
-"nft_collection.overview.owners" = "Owners";
-"nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
-"nft_collection.overview.today_sellers" = "Today's Sellers";
-"nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.owners" = "Besitzer";
+"nft_collection.overview.items" = "Artikel";
+"nft_collection.overview.24h_volume" = "24h Lautstärke";
+"nft_collection.overview.today_sellers" = "Heutige Verkäufer";
+"nft_collection.overview.floor_price" = "Mindestpreis";
+"nft_collection.overview.all_time_average" = "Ganzzeitiger Durchschnitt";
 
-"nft_collection.activity.event_types" = "Event Types";
+"nft_collection.activity.event_types" = "Ereignistypen";
 "nft_collection.activity.event_type.all" = "Alle Ereignisse";
 "nft_collection.activity.event_type.list" = "Liste";
 "nft_collection.activity.event_type.sale" = "Kauf";
@@ -1163,7 +1163,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_collection.activity.event_type.transfer" = "Überweisung";
 "nft_collection.activity.event_type.approve" = "Bestätigen";
 "nft_collection.activity.event_type.custom" = "Eigene";
-"nft_collection.activity.event_type.payout" = "Payout";
+"nft_collection.activity.event_type.payout" = "Auszahlung";
 "nft_collection.activity.event_type.cancel" = "Abbrechen";
-"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
-"nft_collection.activity.event_type.unknown" = "Unknown";
+"nft_collection.activity.event_type.bulkCancel" = "Massenabbruch";
+"nft_collection.activity.event_type.unknown" = "Unbekannt";
