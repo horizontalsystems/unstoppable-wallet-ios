@@ -48,10 +48,11 @@
 
 "sync_error" = "Senkronizasyon hatası. Tekrar deneyin.";
 
-"number.thousand" = "%@b";
+"number.thousand" = "%@K";
 "number.million" = "%@M";
 "number.billion" = "%@B";
 "number.trillion" = "%@T";
+"number.quadrillion" = "%@Q";
 
 // Access Camera
 
@@ -64,8 +65,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "restore.title" = "Cüzdan Seçin";
 "restore.enter_key" = "Anahtarı girin";
-"restore.mnemonic.name" = "Name (optional)";
-"restore.mnemonic.key" = "Key";
+"restore.mnemonic.name" = "İsim(İsteğe bağlı)";
+"restore.mnemonic.key" = "Anahtar";
 "restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir.";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
@@ -1093,10 +1094,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Watch Address
 
-"watch_address.title" = "Watch Address";
+"watch_address.title" = "Adresi İzle";
 "watch_address.watch" = "İzle";
-"watch_address.name" = "Name (optional)";
-"watch_address.address" = "Address";
+"watch_address.name" = "İsim(İsteğe bağlı)";
+"watch_address.address" = "Adres";
 
 // Nft Collections
 
@@ -1146,6 +1147,14 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_collection.overview.contracts" = "Kişiler";
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Web sitesi";
+
+
+"nft_collection.overview.owners" = "Sahip";
+"nft_collection.overview.items" = "Eşyalar";
+"nft_collection.overview.24h_volume" = "24s hacim";
+"nft_collection.overview.today_sellers" = "Bugünün Satıcıları";
+"nft_collection.overview.floor_price" = "Taban Fiyatı";
+"nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 
 "nft_collection.activity.event_types" = "Etkinlik Türleri";
 "nft_collection.activity.event_type.all" = "Tüm Etkinlikler";

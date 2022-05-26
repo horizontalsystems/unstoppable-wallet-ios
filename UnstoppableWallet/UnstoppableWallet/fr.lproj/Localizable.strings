@@ -47,10 +47,11 @@
 
 "sync_error" = "Erreur de synchronisation. Réessayez.";
 
-"number.thousand" = "%@k";
+"number.thousand" = "%@K";
 "number.million" = "%@M";
 "number.billion" = "%@B";
 "number.trillion" = "%@T";
+"number.quadrillion" = "%@Q";
 
 // Access Camera
 
@@ -61,8 +62,8 @@
 
 "restore.title" = "Choisissez le portefeuille";
 "restore.enter_key" = "Entrez la clé";
-"restore.mnemonic.name" = "Name (optional)";
-"restore.mnemonic.key" = "Key";
+"restore.mnemonic.name" = "Nom (optionnel)";
+"restore.mnemonic.key" = "Clé";
 "restore.mnemonic.description" = "Saisissez votre mnémonique qui consiste en 12 ou 24 mots. Les mots doivent être saisis dans l'ordre correct et séparés par des espaces.";
 "restore_error.mnemonic_word_count" = "Le nombre de mots est incorrect. Il doit être compris entre 12 et 24 mots. Vous avez saisi : %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
@@ -1090,10 +1091,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Watch Address
 
-"watch_address.title" = "Watch Address";
+"watch_address.title" = "Adresse à suivre";
 "watch_address.watch" = "Suivi";
-"watch_address.name" = "Name (optional)";
-"watch_address.address" = "Address";
+"watch_address.name" = "Nom (optionnel)";
+"watch_address.address" = "Adresse";
 
 // Nft Collections
 
@@ -1143,6 +1144,14 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.overview.contracts" = "Contracts";
 "nft_collection.overview.links" = "Liens";
 "nft_collection.overview.links.website" = "Site Web";
+
+
+"nft_collection.overview.owners" = "Propriétaires";
+"nft_collection.overview.items" = "Éléments";
+"nft_collection.overview.24h_volume" = "Volume 24h";
+"nft_collection.overview.today_sellers" = "Vendeurs d'aujourd'hui";
+"nft_collection.overview.floor_price" = "Prix plancher";
+"nft_collection.overview.all_time_average" = "Moyenne du temps";
 
 "nft_collection.activity.event_types" = "Types d'évènement";
 "nft_collection.activity.event_type.all" = "Tous les événements";
