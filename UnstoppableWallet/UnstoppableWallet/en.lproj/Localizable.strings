@@ -833,21 +833,20 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings.about_app.tell_friends" = "Tell Friends";
 "settings.about_app.email_copied" = "Email address copied";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Theme";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dark";
-"settings_theme.light" = "Light";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "Launch Screen";
-
-"launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Balance";
-"launch_screen.market_overview" = "Market Overview";
-"launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
 // Set PIN
 

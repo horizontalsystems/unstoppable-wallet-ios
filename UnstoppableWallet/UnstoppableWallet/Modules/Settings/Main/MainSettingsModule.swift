@@ -8,13 +8,11 @@ struct MainSettingsModule {
                 accountManager: App.shared.accountManager,
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
-                themeManager: App.shared.themeManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyKit: App.shared.currencyKit,
                 appConfigProvider: App.shared.appConfigProvider,
                 walletConnectSessionManager: App.shared.walletConnectSessionManager,
-                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager,
-                launchScreenManager: App.shared.launchScreenManager
+                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager
         )
 
         let viewModel = MainSettingsViewModel(service: service)
