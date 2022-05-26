@@ -381,13 +381,13 @@
 
 "market.top.highest_cap" = "Наивысшей Кап.";
 "market.top.lowest_cap" = "Наименьшей Кап.";
-"market.top.highest_volume" = "Наивысшему Обьему";
+"market.top.highest_volume" = "Наивысшему Объему";
 "market.top.lowest_volume" = "Наименьшему Объему";
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
 "market.top.top_collections" = "Лучшие NFT Коллекции";
 "market.top.floor_price" = "Минимальная цена:";
-"market.top.top_platforms" = "Лучшие платформы";
+"market.top.top_platforms" = "Лучшие Платформы";
 "market.top.protocols" = "Протоколы";
 
 "top_platforms.title" = "Лучшие блокчейн-платформы";
@@ -609,8 +609,8 @@
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Кодовые фразы для кошелька Unstoppable Wallet";
-"pro_features.authorize.wallet_passes.subtitle" = "Приобретайте наши NFT\nи пользуйтесь их продвинутыми возможностями";
+"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
+"pro_features.authorize.wallet_passes.subtitle" = "Get access to advanced wallet features\nfeatures by holding Unstoppable NFTs.";
 
 "pro_features.lock_info.go_to_mint" = "Скоро в доступе";
 
