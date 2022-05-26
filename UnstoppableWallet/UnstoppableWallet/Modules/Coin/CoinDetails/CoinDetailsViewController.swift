@@ -147,14 +147,17 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openProDataChart(proFeaturesActivated: Bool, type: CoinProChartModule.ProChartType) {
-        guard proFeaturesActivated else {
-            proFeaturesViewModel.authorize()
-            return
-        }
-
-        // todo: Route pro charts.
-        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
+        let viewController = ProFeaturesLockInfoViewController(config: .mountainYak, delegate: self).toBottomSheet
         parentNavigationController?.present(viewController, animated: true)
+
+//        guard proFeaturesActivated else {
+//            proFeaturesViewModel.authorize()
+//            return
+//        }
+//
+//        // todo: Route pro charts.
+//        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
+//        parentNavigationController?.present(viewController, animated: true)
     }
 
 }
@@ -243,6 +246,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                 height: ChartMarketCardView.viewHeight(),
                 bind: { [weak self] cell, _ in
                     cell.clear()
+                    cell.set(configuration: .chartPreview)
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
                         cell.append(viewItem: volumeViewItem) { [weak self] in
@@ -254,8 +258,6 @@ extension CoinDetailsViewController: SectionsDataSource {
                             self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .liquidity)
                         }
                     }
-
-                    cell.set(configuration: .chartPreview)
                 }
         )
 
@@ -348,7 +350,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                             id: "address-section",
                             footerState: .margin(height: addressMargin),
                             rows: [
-                                transactionCharts(viewItem: viewItem)
+                                addressChart(viewItem: viewItem)
                             ]
                     )
             )
