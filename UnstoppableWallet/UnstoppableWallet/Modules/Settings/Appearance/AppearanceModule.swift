@@ -4,7 +4,12 @@ import ThemeKit
 struct AppearanceModule {
 
     static func viewController() -> UIViewController {
-        let service = AppearanceService(themeManager: App.shared.themeManager, launchScreenManager: App.shared.launchScreenManager)
+        let service = AppearanceService(
+                themeManager: App.shared.themeManager,
+                launchScreenManager: App.shared.launchScreenManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager
+        )
+
         let viewModel = AppearanceViewModel(service: service)
         return AppearanceViewController(viewModel: viewModel)
     }

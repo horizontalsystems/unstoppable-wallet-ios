@@ -12,6 +12,7 @@ class AppearanceViewController: ThemeViewController {
 
     private var themeModeViewItems = [AppearanceViewModel.ViewItem]()
     private var launchScreenViewItems = [AppearanceViewModel.ViewItem]()
+    private var balanceValueViewItems = [AppearanceViewModel.BalanceValueViewItem]()
 
     private var loaded = false
 
@@ -45,6 +46,7 @@ class AppearanceViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.themeModeViewItemsDriver) { [weak self] in self?.sync(themeModeViewItems: $0) }
         subscribe(disposeBag, viewModel.launchScreenViewItemsDriver) { [weak self] in self?.sync(launchScreenViewItems: $0) }
+        subscribe(disposeBag, viewModel.balanceValueViewItemsDriver) { [weak self] in self?.sync(balanceValueViewItems: $0) }
 
         tableView.buildSections()
         loaded = true
@@ -57,6 +59,11 @@ class AppearanceViewController: ThemeViewController {
 
     private func sync(launchScreenViewItems: [AppearanceViewModel.ViewItem]) {
         self.launchScreenViewItems = launchScreenViewItems
+        reloadTable()
+    }
+
+    private func sync(balanceValueViewItems: [AppearanceViewModel.BalanceValueViewItem]) {
+        self.balanceValueViewItems = balanceValueViewItems
         reloadTable()
     }
 
@@ -141,10 +148,51 @@ extension AppearanceViewController: SectionsDataSource {
         )
     }
 
+    private func balanceValueSection(viewItems: [AppearanceViewModel.BalanceValueViewItem]) -> SectionProtocol {
+        Section(
+                id: "balance-value",
+                headerState: header(text: "appearance.balance_value".localized),
+                footerState: .margin(height: .margin24),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isFirst = index == 0
+                    let isLast = index == viewItems.count - 1
+
+                    return CellBuilder.selectableRow(
+                            elements: [.multiText, .image20],
+                            tableView: tableView,
+                            id: "balance-value-\(index)",
+                            hash: "\(viewItem.selected)",
+                            height: .heightDoubleLineCell,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                                cell.bind(index: 0) { (component: MultiTextComponent) in
+                                    component.set(style: .m1)
+                                    component.title.set(style: .b2)
+                                    component.subtitle.set(style: .d1)
+
+                                    component.title.text = viewItem.title
+                                    component.subtitle.text = viewItem.subtitle
+                                }
+                                cell.bind(index: 1) { (component: ImageComponent) in
+                                    component.isHidden = !viewItem.selected
+                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                                }
+                            },
+                            action: { [weak self] in
+                                self?.viewModel.onSelectBalanceValue(index: index)
+                            }
+                    )
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         [
             themeModeSection(viewItems: themeModeViewItems),
-            launchScreenSection(viewItems: launchScreenViewItems)
+            launchScreenSection(viewItems: launchScreenViewItems),
+            balanceValueSection(viewItems: balanceValueViewItems)
         ]
     }
 

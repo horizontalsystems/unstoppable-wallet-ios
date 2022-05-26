@@ -12,7 +12,7 @@ class BalanceTopView: UIView {
     private let nameLabel = UILabel()
     private let blockchainBadgeView = BadgeView()
 
-    private let coinValueLabel = UILabel()
+    private let primaryValueLabel = UILabel()
 
     private let bottomLeftLabel = UILabel()
     private let diffLabel = UILabel()
@@ -54,13 +54,13 @@ class BalanceTopView: UIView {
 
         blockchainBadgeView.set(style: .small)
 
-        addSubview(coinValueLabel)
-        coinValueLabel.snp.makeConstraints { maker in
+        addSubview(primaryValueLabel)
+        primaryValueLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(14)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        coinValueLabel.font = .headline2
+        primaryValueLabel.font = .headline2
 
         addSubview(bottomLeftLabel)
         bottomLeftLabel.snp.makeConstraints { maker in
@@ -113,11 +113,11 @@ class BalanceTopView: UIView {
             blockchainBadgeView.isHidden = true
         }
 
-        if let coinValue = viewItem.coinValue {
-            coinValueLabel.text = coinValue.text
-            coinValueLabel.textColor = coinValue.dimmed ? .themeGray50 : .themeLeah
+        if let primaryValue = viewItem.primaryValue {
+            primaryValueLabel.text = primaryValue.text
+            primaryValueLabel.textColor = primaryValue.dimmed ? .themeGray50 : .themeLeah
         } else {
-            coinValueLabel.text = nil
+            primaryValueLabel.text = nil
         }
 
         switch viewItem.secondaryInfo {
@@ -136,9 +136,9 @@ class BalanceTopView: UIView {
                 diffLabel.text = nil
             }
 
-            if let currencyValue = viewItem.currencyValue {
-                bottomRightLabel.text = currencyValue.text
-                bottomRightLabel.textColor = currencyValue.dimmed ? .themeGray50 : .themeGray
+            if let secondaryValue = viewItem.secondaryValue {
+                bottomRightLabel.text = secondaryValue.text
+                bottomRightLabel.textColor = secondaryValue.dimmed ? .themeGray50 : .themeGray
             } else {
                 bottomRightLabel.text = nil
             }

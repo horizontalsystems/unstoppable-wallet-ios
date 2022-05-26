@@ -7,6 +7,7 @@ class AppearanceService {
 
     private let themeManager: ThemeManager
     private let launchScreenManager: LaunchScreenManager
+    private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let disposeBag = DisposeBag()
 
     private let themeModeItemsRelay = PublishRelay<[ThemeModeItem]>()
@@ -23,14 +24,24 @@ class AppearanceService {
         }
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager) {
+    private let balancePrimaryValueItemsRelay = PublishRelay<[BalancePrimaryValueItem]>()
+    private(set) var balancePrimaryValueItems: [BalancePrimaryValueItem] = [] {
+        didSet {
+            balancePrimaryValueItemsRelay.accept(balancePrimaryValueItems)
+        }
+    }
+
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, balancePrimaryValueManager: BalancePrimaryValueManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
+        self.balancePrimaryValueManager = balancePrimaryValueManager
 
         subscribe(disposeBag, launchScreenManager.launchScreenObservable) { [weak self] in self?.syncLaunchScreenItems(current: $0) }
+        subscribe(disposeBag, balancePrimaryValueManager.balancePrimaryValueObservable) { [weak self] in self?.syncBalancePrimaryValueItems(current: $0) }
 
         syncThemeModeItems()
         syncLaunchScreenItems(current: launchScreenManager.launchScreen)
+        syncBalancePrimaryValueItems(current: balancePrimaryValueManager.balancePrimaryValue)
     }
 
     private func syncThemeModeItems() {
@@ -42,6 +53,12 @@ class AppearanceService {
     private func syncLaunchScreenItems(current: LaunchScreen) {
         launchScreenItems = LaunchScreen.allCases.map { launchScreen in
             LaunchScreenItem(launchScreen: launchScreen, current: launchScreen == current)
+        }
+    }
+
+    private func syncBalancePrimaryValueItems(current: BalancePrimaryValue) {
+        balancePrimaryValueItems = BalancePrimaryValue.allCases.map { value in
+            BalancePrimaryValueItem(value: value, current: value == current)
         }
     }
 
@@ -57,6 +74,10 @@ extension AppearanceService {
         launchScreenItemsRelay.asObservable()
     }
 
+    var balancePrimaryValueItemsObservable: Observable<[BalancePrimaryValueItem]> {
+        balancePrimaryValueItemsRelay.asObservable()
+    }
+
     func setThemeMode(index: Int) {
         themeManager.themeMode = themeModes[index]
         syncThemeModeItems()
@@ -64,6 +85,10 @@ extension AppearanceService {
 
     func setLaunchScreen(index: Int) {
         launchScreenManager.launchScreen = LaunchScreen.allCases[index]
+    }
+
+    func setBalancePrimaryValue(index: Int) {
+        balancePrimaryValueManager.balancePrimaryValue = BalancePrimaryValue.allCases[index]
     }
 
 }
@@ -77,6 +102,11 @@ extension AppearanceService {
 
     struct LaunchScreenItem {
         let launchScreen: LaunchScreen
+        let current: Bool
+    }
+
+    struct BalancePrimaryValueItem {
+        let value: BalancePrimaryValue
         let current: Bool
     }
 

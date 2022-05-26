@@ -36,6 +36,7 @@ class WalletViewModel {
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
+        subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
@@ -50,6 +51,10 @@ class WalletViewModel {
     private func onUpdateBalanceHidden() {
         sync(items: service.items)
         sync(totalItem: service.totalItem)
+    }
+
+    private func onUpdateBalancePrimaryValue() {
+        sync(items: service.items)
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
@@ -88,7 +93,13 @@ class WalletViewModel {
     }
 
     private func viewItem(item: WalletService.Item) -> BalanceViewItem {
-        factory.viewItem(item: item, balanceHidden: service.balanceHidden, actionsHidden: service.watchAccount, expanded: item.wallet == expandedWallet)
+        factory.viewItem(
+                item: item,
+                balancePrimaryValue: service.balancePrimaryValue,
+                balanceHidden: service.balanceHidden,
+                actionsHidden: service.watchAccount,
+                expanded: item.wallet == expandedWallet
+        )
     }
 
     private func syncViewItem(wallet: Wallet) {
