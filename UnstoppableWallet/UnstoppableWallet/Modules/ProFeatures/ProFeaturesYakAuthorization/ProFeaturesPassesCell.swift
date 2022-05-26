@@ -79,7 +79,8 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     @objc private func onTapButton() {
-        viewModel.authorize()
+        showLockInfo()
+        //viewModel.authorize()
     }
 
     private func showLockInfo() {

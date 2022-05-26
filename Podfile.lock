@@ -150,7 +150,7 @@ PODS:
   - Kingfisher (7.2.1)
   - LanguageKit.swift (1.0):
     - UIExtensions.swift (~> 1.1)
-  - libzcashlc (0.0.2)
+  - libzcashlc (0.0.3)
   - LitecoinKit.swift (0.18):
     - BigInt (~> 5.0)
     - BitcoinCore.swift (~> 0.18)
@@ -348,9 +348,9 @@ PODS:
     - HsToolKit.swift
     - PromiseKit
   - X11Kit.swift (1.0)
-  - ZcashLightClientKit (0.13.1-beta):
+  - ZcashLightClientKit (0.14.0-beta):
     - gRPC-Swift (~> 1.0)
-    - libzcashlc (= 0.0.2)
+    - libzcashlc (= 0.0.3)
     - SQLite.swift (~> 0.12.2)
 
 DEPENDENCIES:
@@ -399,7 +399,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 3.0.0)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.13.1-beta`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.14.0-beta`)
 
 SPEC REPOS:
   trunk:
@@ -522,7 +522,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.13.1-beta
+    :tag: 0.14.0-beta
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -620,7 +620,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.13.1-beta
+    :tag: 0.14.0-beta
 
 SPEC CHECKSUMS:
   _NIODataStructures: d8175e5ca5a34ec19b7ff21de298dd2a4d30818d
@@ -662,7 +662,7 @@ SPEC CHECKSUMS:
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: 7c084bebf7d548c623ad41bcf765fb200efed369
   LanguageKit.swift: 8ca8b99dd6250a13cf481b637e0d9d16f7389a74
-  libzcashlc: d32ab47e7676905990610e999fc5d15d062061d5
+  libzcashlc: 1dfab6ecf157d60e58349906842f370bc65a5962
   LitecoinKit.swift: 69783a07fba32347020be4c277aa89c09c3a3eba
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   MarketKit.swift: f7c3f204005c0ed3beb3dd6ec2a631a31028a4a8
@@ -707,8 +707,8 @@ SPEC CHECKSUMS:
   UnstoppableDomainsResolution: 9f8bfe2dbbf2ede192bf75f8b23be8215b6e06d4
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  ZcashLightClientKit: fc4075feb3d83cfcb6e4bea35ee6ac6098a19672
+  ZcashLightClientKit: 82bfa46e9cf6667261912b0cf99510a61645131b
 
-PODFILE CHECKSUM: ec9962490defa6b0881dcf18f66ffdf947a2b63b
+PODFILE CHECKSUM: a8bc6650f09f6748f35a3c24415f58702fba1340
 
 COCOAPODS: 1.11.2
