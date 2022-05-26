@@ -53,7 +53,7 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
         return MarketModule.ListViewItem(
                 uid: marketInfo.fullCoin.coin.uid,
                 iconUrl: marketInfo.fullCoin.coin.imageUrl,
-                iconShape: .round,
+                iconShape: .full,
                 iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
                 name: marketInfo.fullCoin.coin.name,
                 code: marketInfo.fullCoin.coin.code,

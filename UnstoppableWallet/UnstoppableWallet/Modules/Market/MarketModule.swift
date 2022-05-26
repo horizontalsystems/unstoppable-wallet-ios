@@ -47,7 +47,7 @@ struct MarketModule {
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.imageView.clipsToBounds = true
-                        component.imageView.cornerRadius = listViewItem.iconShape == .square ? .cornerRadius4 : .cornerRadius12
+                        component.imageView.cornerRadius = listViewItem.iconShape.radius
                         component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
@@ -320,7 +320,16 @@ extension MarketModule {  // ViewModel Items
     }
 
     enum IconShape {
-        case square, round
+        case square, round, full
+
+        var radius: CGFloat {
+            switch self {
+            case .square: return .cornerRadius4
+            case .round: return .cornerRadius12
+            case .full: return 0
+            }
+        }
+
     }
 
 }
