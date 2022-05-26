@@ -8,6 +8,7 @@ class AppearanceViewModel {
 
     private let themeModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let launchScreenViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let conversionViewItemsRelay = BehaviorRelay<[ConversionViewItem]>(value: [])
     private let balanceValueViewItemsRelay = BehaviorRelay<[BalanceValueViewItem]>(value: [])
 
     init(service: AppearanceService) {
@@ -15,10 +16,12 @@ class AppearanceViewModel {
 
         subscribe(disposeBag, service.themeModeItemsObservable) { [weak self] in self?.sync(themeModeItems: $0) }
         subscribe(disposeBag, service.launchScreenItemsObservable) { [weak self] in self?.sync(launchScreenItems: $0) }
+        subscribe(disposeBag, service.conversionItemsObservable) { [weak self] in self?.sync(conversionItems: $0) }
         subscribe(disposeBag, service.balancePrimaryValueItemsObservable) { [weak self] in self?.sync(balancePrimaryValueItems: $0) }
 
         sync(themeModeItems: service.themeModeItems)
         sync(launchScreenItems: service.launchScreenItems)
+        sync(conversionItems: service.conversionItems)
         sync(balancePrimaryValueItems: service.balancePrimaryValueItems)
     }
 
@@ -44,6 +47,17 @@ class AppearanceViewModel {
         launchScreenViewItemsRelay.accept(viewItems)
     }
 
+    private func sync(conversionItems: [AppearanceService.ConversionItem]) {
+        let viewItems = conversionItems.map { item in
+            ConversionViewItem(
+                    urlString: item.platformCoin.coin.imageUrl,
+                    title: item.platformCoin.code,
+                    selected: item.current
+            )
+        }
+        conversionViewItemsRelay.accept(viewItems)
+    }
+
     private func sync(balancePrimaryValueItems: [AppearanceService.BalancePrimaryValueItem]) {
         let viewItems = balancePrimaryValueItems.map { item in
             BalanceValueViewItem(
@@ -67,6 +81,10 @@ extension AppearanceViewModel {
         launchScreenViewItemsRelay.asDriver()
     }
 
+    var conversionViewItemsDriver: Driver<[ConversionViewItem]> {
+        conversionViewItemsRelay.asDriver()
+    }
+
     var balanceValueViewItemsDriver: Driver<[BalanceValueViewItem]> {
         balanceValueViewItemsRelay.asDriver()
     }
@@ -79,6 +97,10 @@ extension AppearanceViewModel {
         service.setLaunchScreen(index: index)
     }
 
+    func onSelectConversionCoin(index: Int) {
+        service.setConversionCoin(index: index)
+    }
+
     func onSelectBalanceValue(index: Int) {
         service.setBalancePrimaryValue(index: index)
     }
@@ -89,6 +111,12 @@ extension AppearanceViewModel {
 
     struct ViewItem {
         let iconName: String
+        let title: String
+        let selected: Bool
+    }
+
+    struct ConversionViewItem {
+        let urlString: String
         let title: String
         let selected: Bool
     }

@@ -85,6 +85,7 @@ class App {
     let nftManager: NftManager
 
     let balancePrimaryValueManager: BalancePrimaryValueManager
+    let balanceConversionManager: BalanceConversionManager
 
     let proFeaturesAuthorizationAdapter: ProFeaturesAuthorizationAdapter
     let proFeaturesAuthorizationManager: ProFeaturesAuthorizationManager
@@ -248,6 +249,7 @@ class App {
         nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, marketKit: marketKit)
 
         balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
+        balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
         let proFeaturesStorage = ProFeaturesStorage(secureStorage: keychainKit.secureStorage)
         proFeaturesAuthorizationAdapter = ProFeaturesAuthorizationAdapter(networkManager: networkManager, appConfigProvider: appConfigProvider)
