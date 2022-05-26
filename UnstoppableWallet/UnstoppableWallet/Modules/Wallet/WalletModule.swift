@@ -22,6 +22,7 @@ struct WalletModule {
                 marketKit: App.shared.marketKit,
                 localStorage: StorageKit.LocalStorage.default,
                 rateAppManager: App.shared.rateAppManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
                 appManager: App.shared.appManager,
                 feeCoinProvider: App.shared.feeCoinProvider
         )

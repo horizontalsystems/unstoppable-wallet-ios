@@ -848,6 +848,10 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Watchlist";
 
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
+
 // Set PIN
 
 "set_pin.title" = "Passcode";

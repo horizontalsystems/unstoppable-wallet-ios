@@ -19,6 +19,7 @@ class WalletService {
     private let marketKit: MarketKit.Kit
     private let localStorage: StorageKit.ILocalStorage
     private let rateAppManager: RateAppManager
+    private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let feeCoinProvider: FeeCoinProvider
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
@@ -78,7 +79,7 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
@@ -87,6 +88,7 @@ class WalletService {
         self.marketKit = marketKit
         self.localStorage = localStorage
         self.rateAppManager = rateAppManager
+        self.balancePrimaryValueManager = balancePrimaryValueManager
         self.feeCoinProvider = feeCoinProvider
 
         if let rawValue: String = localStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
@@ -371,6 +373,14 @@ extension WalletService {
 
     var sortTypeObservable: Observable<WalletModule.SortType> {
         sortTypeRelay.asObservable()
+    }
+
+    var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
+        balancePrimaryValueManager.balancePrimaryValueObservable
+    }
+
+    var balancePrimaryValue: BalancePrimaryValue {
+        balancePrimaryValueManager.balancePrimaryValue
     }
 
     var watchAccount: Bool {
