@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import ThemeKit
+import MarketKit
 
 class AppearanceService {
     private let themeModes: [ThemeMode] = [.system, .dark, .light]
@@ -8,6 +9,7 @@ class AppearanceService {
     private let themeManager: ThemeManager
     private let launchScreenManager: LaunchScreenManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let balanceConversionManager: BalanceConversionManager
     private let disposeBag = DisposeBag()
 
     private let themeModeItemsRelay = PublishRelay<[ThemeModeItem]>()
@@ -24,6 +26,13 @@ class AppearanceService {
         }
     }
 
+    private let conversionItemsRelay = PublishRelay<[ConversionItem]>()
+    private(set) var conversionItems: [ConversionItem] = [] {
+        didSet {
+            conversionItemsRelay.accept(conversionItems)
+        }
+    }
+
     private let balancePrimaryValueItemsRelay = PublishRelay<[BalancePrimaryValueItem]>()
     private(set) var balancePrimaryValueItems: [BalancePrimaryValueItem] = [] {
         didSet {
@@ -31,16 +40,19 @@ class AppearanceService {
         }
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, balancePrimaryValueManager: BalancePrimaryValueManager) {
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.balanceConversionManager = balanceConversionManager
 
         subscribe(disposeBag, launchScreenManager.launchScreenObservable) { [weak self] in self?.syncLaunchScreenItems(current: $0) }
         subscribe(disposeBag, balancePrimaryValueManager.balancePrimaryValueObservable) { [weak self] in self?.syncBalancePrimaryValueItems(current: $0) }
+        subscribe(disposeBag, balanceConversionManager.conversionCoinObservable) { [weak self] in self?.syncConversionItems(current: $0) }
 
         syncThemeModeItems()
         syncLaunchScreenItems(current: launchScreenManager.launchScreen)
+        syncConversionItems(current: balanceConversionManager.conversionCoin)
         syncBalancePrimaryValueItems(current: balancePrimaryValueManager.balancePrimaryValue)
     }
 
@@ -56,7 +68,13 @@ class AppearanceService {
         }
     }
 
-    private func syncBalancePrimaryValueItems(current: BalancePrimaryValue) {
+    private func syncConversionItems(current: PlatformCoin?) {
+        conversionItems = balanceConversionManager.conversionPlatformCoins.map { platformCoin in
+            ConversionItem(platformCoin: platformCoin, current: platformCoin == current)
+        }
+    }
+
+    private func syncBalancePrimaryValueItems(current: BalancePrimaryValue?) {
         balancePrimaryValueItems = BalancePrimaryValue.allCases.map { value in
             BalancePrimaryValueItem(value: value, current: value == current)
         }
@@ -74,6 +92,10 @@ extension AppearanceService {
         launchScreenItemsRelay.asObservable()
     }
 
+    var conversionItemsObservable: Observable<[ConversionItem]> {
+        conversionItemsRelay.asObservable()
+    }
+
     var balancePrimaryValueItemsObservable: Observable<[BalancePrimaryValueItem]> {
         balancePrimaryValueItemsRelay.asObservable()
     }
@@ -85,6 +107,10 @@ extension AppearanceService {
 
     func setLaunchScreen(index: Int) {
         launchScreenManager.launchScreen = LaunchScreen.allCases[index]
+    }
+
+    func setConversionCoin(index: Int) {
+        balanceConversionManager.setConversionCoin(index: index)
     }
 
     func setBalancePrimaryValue(index: Int) {
@@ -102,6 +128,11 @@ extension AppearanceService {
 
     struct LaunchScreenItem {
         let launchScreen: LaunchScreen
+        let current: Bool
+    }
+
+    struct ConversionItem {
+        let platformCoin: PlatformCoin
         let current: Bool
     }
 
