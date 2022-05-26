@@ -49,9 +49,9 @@
 
 "number.thousand" = "%@K";
 "number.million" = "%@M";
-"number.billion" = "%@B";
+"number.billion" = "%@G";
 "number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.quadrillion" = "%@P";
 
 // Access Camera
 
