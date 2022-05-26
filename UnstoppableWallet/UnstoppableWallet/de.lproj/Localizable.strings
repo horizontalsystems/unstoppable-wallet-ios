@@ -607,8 +607,8 @@
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable Wallet Passes";
-"pro_features.authorize.wallet_passes.subtitle" = "Get advanced features\nby holding our NFTs";
+"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
+"pro_features.authorize.wallet_passes.subtitle" = "Get access to advanced wallet features\nfeatures by holding Unstoppable NFTs.";
 
 "pro_features.lock_info.go_to_mint" = "Coming Soon";
 
