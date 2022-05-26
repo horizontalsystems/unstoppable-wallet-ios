@@ -20,7 +20,7 @@ class MainSettingsViewController: ThemeViewController {
     private let manageAccountsCell = BaseSelectableThemeCell()
     private let securityCenterCell = BaseSelectableThemeCell()
     private let walletConnectCell = BaseSelectableThemeCell()
-    private let launchScreenCell = BaseSelectableThemeCell()
+    private let appearanceCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
     private let themeModeCell = BaseSelectableThemeCell()
@@ -69,8 +69,8 @@ class MainSettingsViewController: ThemeViewController {
         walletConnectCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         buildTitleValue(cell: walletConnectCell, image: UIImage(named: "wallet_connect_20"), title: "wallet_connect.title".localized)
 
-        launchScreenCell.set(backgroundStyle: .lawrence, isFirst: true)
-        buildTitleValue(cell: launchScreenCell, image: UIImage(named: "screen_20"), title: "settings.launch_screen.title".localized)
+        appearanceCell.set(backgroundStyle: .lawrence, isFirst: true)
+        buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_20"), title: "appearance.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: baseCurrencyCell, image: UIImage(named: "usd_20"), title: "settings.base_currency".localized)
@@ -80,9 +80,6 @@ class MainSettingsViewController: ThemeViewController {
         languageCell.bind(index: 2) { (component: TextComponent) in
             component.text = viewModel.currentLanguage
         }
-
-        themeModeCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: themeModeCell, image: UIImage(named: "light_20"), title: "settings.theme".localized)
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         buildTitleImage(cell: aboutCell, image: UIImage(named: "uw_20"), title: "settings.about_app.title".localized)
@@ -109,19 +106,9 @@ class MainSettingsViewController: ThemeViewController {
                 component.text = count
             }
         }
-        subscribe(disposeBag, viewModel.launchScreenDriver) { [weak self] launchScreen in
-            self?.launchScreenCell.bind(index: 2) { (component: TextComponent) in
-                component.text = launchScreen
-            }
-        }
         subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
             self?.baseCurrencyCell.bind(index: 2) { (component: TextComponent) in
                 component.text = baseCurrency
-            }
-        }
-        subscribe(disposeBag, viewModel.themeModeDriver) { [weak self] themeMode in
-            self?.themeModeCell.bind(index: 2) { (component: TextComponent) in
-                component.text = themeMode.description
             }
         }
         subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
@@ -212,11 +199,11 @@ class MainSettingsViewController: ThemeViewController {
     private var appearanceRows: [RowProtocol] {
         [
             StaticRow(
-                    cell: launchScreenCell,
+                    cell: appearanceCell,
                     id: "launch-screen",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(LaunchScreenModule.viewController(), animated: true)
+                        self?.navigationController?.pushViewController(AppearanceModule.viewController(), animated: true)
                     }
             ),
             StaticRow(
@@ -234,14 +221,6 @@ class MainSettingsViewController: ThemeViewController {
                     action: { [weak self] in
                         let module = LanguageSettingsRouter.module { MainModule.instance(presetTab: .settings) }
                         self?.navigationController?.pushViewController(module, animated: true)
-                    }
-            ),
-            StaticRow(
-                    cell: themeModeCell,
-                    id: "theme-mode",
-                    height: .heightCell48,
-                    action: { [weak self] in
-                        self?.navigationController?.pushViewController(ThemeSettingsModule.viewController(), animated: true)
                     }
             ),
             Row<A1Cell>(

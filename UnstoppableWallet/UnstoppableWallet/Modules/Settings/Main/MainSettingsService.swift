@@ -11,28 +11,24 @@ class MainSettingsService {
     private let accountManager: AccountManager
     private let pinKit: IPinKit
     private let termsManager: TermsManager
-    private let themeManager: ThemeManager
     private let systemInfoManager: SystemInfoManager
     private let currencyKit: CurrencyKit.Kit
     private let appConfigProvider: AppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
-    private let launchScreenManager: LaunchScreenManager
 
-    init(backupManager: BackupManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager, themeManager: ThemeManager,
+    init(backupManager: BackupManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
-         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, launchScreenManager: LaunchScreenManager) {
+         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
         self.accountManager = accountManager
         self.pinKit = pinKit
         self.termsManager = termsManager
-        self.themeManager = themeManager
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
         self.appConfigProvider = appConfigProvider
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
-        self.launchScreenManager = launchScreenManager
     }
 
 }
@@ -81,28 +77,12 @@ extension MainSettingsService {
         LanguageManager.shared.currentLanguageDisplayName
     }
 
-    var launchScreen: LaunchScreen {
-        launchScreenManager.launchScreen
-    }
-
-    var launchScreenObservable: Observable<LaunchScreen> {
-        launchScreenManager.launchScreenObservable
-    }
-
     var baseCurrency: Currency {
         currencyKit.baseCurrency
     }
 
     var baseCurrencyObservable: Observable<Currency> {
         currencyKit.baseCurrencyUpdatedObservable
-    }
-
-    var themeModeObservable: Observable<ThemeMode> {
-        themeManager.changeThemeSignal.asObservable()
-    }
-
-    var themeMode: ThemeMode {
-        themeManager.themeMode
     }
 
     var appVersion: String {
