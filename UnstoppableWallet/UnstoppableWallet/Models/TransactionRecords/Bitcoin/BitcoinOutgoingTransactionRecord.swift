@@ -9,7 +9,8 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
     init(coin: PlatformCoin, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
          amount: Decimal, to: String?, sentToSelf: Bool, memo: String? = nil) {
-        value = .coinValue(platformCoin: coin, value: amount)
+
+        value = .coinValue(platformCoin: coin, value: Decimal(sign: .minus, exponent: amount.exponent, significand: amount.significand))
         self.to = to
         self.sentToSelf = sentToSelf
 

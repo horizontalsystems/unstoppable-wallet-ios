@@ -20,7 +20,7 @@ class TransactionsViewItemFactory {
     }
 
     private func coinString(from transactionValue: TransactionValue, showSign: Bool = true) -> String {
-        guard var value = transactionValue.formattedShort(showSign: showSign) else {
+        guard let value = transactionValue.formattedShort(showSign: showSign) else {
             return "n/a".localized
         }
 
