@@ -610,7 +610,7 @@
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
-"pro_features.authorize.wallet_passes.subtitle" = "Get access to advanced wallet features\nby holding Unstoppable NFTs.";
+"pro_features.authorize.wallet_passes.subtitle" = "通过持有不可阻挡的 NFT 获取高级钱包功能。";
 
 "pro_features.lock_info.go_to_mint" = "即将推出";
 
