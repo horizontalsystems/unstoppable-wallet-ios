@@ -1,14 +1,16 @@
+import CurrencyKit
+
 protocol ISendConfirmationViewItemNew {}
 
 struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
-    let primaryInfo: AmountInfo
-    let secondaryInfo: AmountInfo?
+    let coinValue: CoinValue
+    let currencyValue: CurrencyValue?
     let receiver: Address
     let isAccount: Bool
 
-    init(primaryInfo: AmountInfo, secondaryInfo: AmountInfo?, receiver: Address, isAccount: Bool = false) {
-        self.primaryInfo = primaryInfo
-        self.secondaryInfo = secondaryInfo
+    init(coinValue: CoinValue, currencyValue: CurrencyValue?, receiver: Address, isAccount: Bool = false) {
+        self.coinValue = coinValue
+        self.currencyValue = currencyValue
         self.receiver = receiver
         self.isAccount = isAccount
     }
@@ -16,13 +18,8 @@ struct SendConfirmationAmountViewItem: ISendConfirmationViewItemNew {
 }
 
 struct SendConfirmationFeeViewItem: ISendConfirmationViewItemNew {
-    let primaryInfo: AmountInfo
-    var secondaryInfo: AmountInfo?
-}
-
-struct SendConfirmationTotalViewItem: ISendConfirmationViewItemNew {
-    let primaryInfo: AmountInfo
-    var secondaryInfo: AmountInfo?
+    let coinValue: CoinValue
+    let currencyValue: CurrencyValue?
 }
 
 struct SendConfirmationMemoViewItem: ISendConfirmationViewItemNew {

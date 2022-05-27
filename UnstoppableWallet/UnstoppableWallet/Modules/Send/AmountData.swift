@@ -34,17 +34,17 @@ enum AmountInfo {
 }
 
 struct AmountData {
-    let primary: AmountInfo
-    let secondary: AmountInfo?
+    let coinValue: CoinValue
+    let currencyValue: CurrencyValue?
 
     var formattedFull: String {
         var parts = [String]()
 
-        if let formatted = primary.formattedFull {
+        if let formatted = ValueFormatter.instance.formatFull(coinValue: coinValue) {
             parts.append(formatted)
         }
 
-        if let formatted = secondary?.formattedFull {
+        if let currencyValue = currencyValue, let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
             parts.append(formatted)
         }
 
