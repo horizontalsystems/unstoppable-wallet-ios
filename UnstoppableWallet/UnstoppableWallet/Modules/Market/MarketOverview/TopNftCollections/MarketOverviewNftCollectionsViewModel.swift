@@ -20,7 +20,7 @@ class MarketOverviewNftCollectionsViewModel {
     }
 
     private func sync(collections: [NftCollection]?) {
-        listViewItemsRelay.accept(collections.map { $0.enumerated().map { decorator.listViewItem(item: NftCollectionItem(index: $0, collection: $1)) } })
+        listViewItemsRelay.accept(collections.map { $0.enumerated().map { decorator.listViewItem(item: NftCollectionItem(index: $0 + 1, collection: $1)) } })
     }
 
 }
