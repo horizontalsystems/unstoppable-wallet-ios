@@ -69,7 +69,7 @@ class CoinDetailsViewModel {
                     ValueFormatter.instance.formatShort(currency: service.currency, value: last.value) :
                     ValueFormatter.instance.formatShort(value: last.value)
 
-            return ChartMarketCardView.ViewItem(title: title, value: value, diff: diff ?? "n/a".localized, diffColor: DiffLabel.color(value: diffValue), data: chartData, trend: diffValue.isSignMinus ? .down : .up)
+            return ChartMarketCardView.ViewItem(title: title, value: value, diff: diff ?? "n/a".localized, diffColor: diffColor, data: chartData, trend: diffValue.isSignMinus ? .down : .up)
         }
     }
 

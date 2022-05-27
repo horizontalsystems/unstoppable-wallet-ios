@@ -96,7 +96,7 @@ extension MetricChartFactory {
                     ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
                 }
 
-        return MetricChartViewModel.ViewItem(currentValue: value, chartData: data, chartTrend: chartTrend, chartDiff: valueDiff, minValue: minString, maxValue: maxString, timeline: timeline, selectedIndicator: .none)
+        return MetricChartViewModel.ViewItem(currentValue: value, chartData: data, chartTrend: chartTrend, chartDiff: valueDiff, minValue: minString, maxValue: maxString, timeline: timeline, selectedIndicator: ChartIndicatorSet.none)
     }
 
     func selectedPointViewItem(chartItem: ChartItem, valueType: MetricChartModule.ValueType, currency: Currency) -> SelectedPointViewItem? {

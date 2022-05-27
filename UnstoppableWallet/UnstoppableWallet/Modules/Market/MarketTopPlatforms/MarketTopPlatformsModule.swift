@@ -49,7 +49,7 @@ extension Array where Element == MarketKit.TopPlatform {
             let rhsCap = rhsPlatform.marketCap
 
             let lhsChange = lhsPlatform.changes[timePeriod]
-            var rhsChange = rhsPlatform.changes[timePeriod]
+            let rhsChange = rhsPlatform.changes[timePeriod]
 
             switch sortType {
             case .highestCap, .lowestCap:

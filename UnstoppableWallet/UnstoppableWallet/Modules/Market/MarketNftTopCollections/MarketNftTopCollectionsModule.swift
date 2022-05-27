@@ -9,7 +9,7 @@ struct MarketNftTopCollectionsModule {
 
         let decorator = MarketListNftCollectionDecorator(service: service)
         let viewModel = MarketNftTopCollectionsViewModel()
-        let listViewModel = MarketListViewModel(service: service, decorator: decorator)
+        let listViewModel = MarketListViewModel(service: service, decorator: decorator, itemLimit: 100)
         let headerViewModel = NftCollectionsMultiSortHeaderViewModel(service: service, decorator: decorator)
 
         let viewController = MarketNftTopCollectionsViewController(viewModel: viewModel, listViewModel: listViewModel, headerViewModel: headerViewModel)
