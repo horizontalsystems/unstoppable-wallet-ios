@@ -103,7 +103,6 @@ class MarketOverviewViewController: ThemeViewController {
     private func sync(success: Bool) {
         if success {
             tableView.isHidden = false
-            buildSections()
         } else {
             tableView.isHidden = true
         }

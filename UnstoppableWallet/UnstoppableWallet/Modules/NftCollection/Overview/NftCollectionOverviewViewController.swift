@@ -176,12 +176,12 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
     private func chartSection(statCharts: NftCollectionOverviewViewModel.StatChartViewItem) -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        var counters = [
+        let counters = [
             statCharts.ownerCount.map { (title: "nft_collection.overview.owners".localized, value: $0) },
             statCharts.itemCount.map { (title: "nft_collection.overview.items".localized, value: $0) }
         ].compactMap { $0 }
 
-        var charts = [
+        let charts = [
             statCharts.oneDayVolumeItems,
             statCharts.oneDaySalesItems,
             statCharts.floorPriceItems,
@@ -192,7 +192,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
             let row = Row<MarketCardCell<MarketCardView>>(
                     id: "count_row",
                     height: MarketCardView.viewHeight(),
-                    bind: { [weak self] cell, _ in
+                    bind: { cell, _ in
                         cell.clear()
                         if let viewItem = counters.at(index: 0) {
                             cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
@@ -218,7 +218,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
         let topChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
                     id: "top_chart_row",
                     height: NftChartMarketCardView.viewHeight(),
-                    bind: { [weak self] cell, _ in
+                    bind: { cell, _ in
                         cell.clear()
                         cell.set(configuration: .chartPreview)
                         if let viewItem = charts.at(index: 0) {
@@ -242,7 +242,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
             let bottomChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
                     id: "bottom_chart_row",
                     height: NftChartMarketCardView.viewHeight(),
-                    bind: { [weak self] cell, _ in
+                    bind: { cell, _ in
                         cell.clear()
                         cell.set(configuration: .chartPreview)
                         if let viewItem = charts.at(index: 2) {

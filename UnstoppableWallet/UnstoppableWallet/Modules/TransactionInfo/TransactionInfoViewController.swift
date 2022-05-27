@@ -532,7 +532,7 @@ class TransactionInfoViewController: ThemeViewController {
                 elements: [.image24, .text, .text],
                 tableView: tableView,
                 id: "amount-\(rowInfo.index)",
-                hash: "amount-\(coinAmount)-\(currencyAmount)",
+                hash: "amount-\(coinAmount)-\(currencyAmount ?? "N/A")",
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)

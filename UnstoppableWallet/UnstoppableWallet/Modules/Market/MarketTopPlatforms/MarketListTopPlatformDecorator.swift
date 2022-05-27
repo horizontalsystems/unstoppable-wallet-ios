@@ -27,7 +27,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         let marketCap = item.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
 
-        let rankDiff = item.ranks[service.timePeriod]  //todo use to show rank change on top platforms module
+//        let rankDiff = item.ranks[service.timePeriod]  //todo use to show rank change on top platforms module
         let diff = item.changes[service.timePeriod]
 
         let dataValue: MarketModule.MarketDataValue = .diff(diff)

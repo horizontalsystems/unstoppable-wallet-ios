@@ -112,7 +112,7 @@ class ValueFormatter {
     }
 
     private func transformedFull(value: Decimal, maxDigits: Int, minDigits: Int = 0) -> (value: Decimal, digits: Int) {
-        var value = abs(value)
+        let value = abs(value)
         let digits: Int
 
         switch value {

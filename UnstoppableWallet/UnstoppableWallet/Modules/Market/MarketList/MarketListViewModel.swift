@@ -38,6 +38,7 @@ enum MarketListServiceState<T> {
 class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDecorator> {
     private let service: Service
     private let decorator: Decorator
+    private let itemLimit: Int?
     private let disposeBag = DisposeBag()
 
     private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
@@ -45,9 +46,10 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let scrollToTopRelay = PublishRelay<()>()
 
-    init(service: Service, decorator: Decorator) {
+    init(service: Service, decorator: Decorator, itemLimit: Int? = nil) {
         self.service = service
         self.decorator = decorator
+        self.itemLimit = itemLimit
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
@@ -61,7 +63,8 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
         case .loaded(let items, let softUpdate, let reorder):
-            let data = MarketModule.ListViewItemData(viewItems: viewItems(items: items), softUpdate: softUpdate)
+            let limitedItems = itemLimit.map { Array(items.prefix(upTo: $0)) } ?? items
+            let data = MarketModule.ListViewItemData(viewItems: viewItems(items: Array(limitedItems)), softUpdate: softUpdate)
             viewItemDataRelay.accept(data)
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)

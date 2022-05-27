@@ -34,7 +34,7 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
     func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
                 .coinCategoryMarketCapChartSingle(category: category, currencyCode: currencyCode, timePeriod: interval)
-                .map { [weak self] points in
+                .map { points in
                     points.map { point -> MetricChartModule.Item in
                         return MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)
                     }
