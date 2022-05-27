@@ -192,47 +192,20 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func fromToRow(rowInfo: RowInfo, id: String, title: String, value: String, valueTitle: String?) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .secondaryButton],
-                tableView: tableView,
-                id: id,
-                hash: value,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
-                        component.text = title
-                    }
-
-                    cell.bind(index: 1) { (component: SecondaryButtonComponent) in
-                        component.button.set(style: .default)
-                        component.button.setTitle(valueTitle ?? value, for: .normal)
-                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: value)
-                        }
-                    }
-                }
-        )
-    }
-
     private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, id: "from", title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
+        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, id: "to", title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
+        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, id: "spender", title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
+        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
     }
 
     private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        fromToRow(rowInfo: rowInfo, id: "recipient", title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
+        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
@@ -265,29 +238,6 @@ class TransactionInfoViewController: ThemeViewController {
                             let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
                             self?.present(activityViewController, animated: true)
                         }
-                    }
-                }
-        )
-    }
-
-    private func valueRow(rowInfo: RowInfo, id: String, title: String, value: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .text],
-                tableView: tableView,
-                id: id,
-                hash: value,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
-                        component.text = title
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .c2)
-                        component.text = value
                     }
                 }
         )
@@ -495,92 +445,48 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func actionTitleRow(rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .text],
-                tableView: tableView,
-                id: "action-\(rowInfo.index)",
-                hash: "action-\(value)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        if let iconName = iconName {
-                            component.isHidden = false
-                            component.imageView.image = UIImage(named: iconName)?.withTintColor(iconDimmed ? .themeGray : .themeLeah)
-                        } else {
-                            component.isHidden = true
-                        }
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
-                        component.text = title
-                    }
-
-                    cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: .c1)
-                        component.text = value
-                    }
-                }
-        )
-    }
-
-    private func amountRow(rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: TransactionInfoModule.AmountType) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .text],
-                tableView: tableView,
-                id: "amount-\(rowInfo.index)",
-                hash: "amount-\(coinAmount)-\(currencyAmount ?? "N/A")",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        switch type {
-                        case .incoming: component.set(style: .d4)
-                        case .outgoing: component.set(style: .d5)
-                        case .neutral: component.set(style: .d2)
-                        }
-
-                        component.text = coinAmount
-                    }
-
-                    cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: .c1)
-                        component.text = currencyAmount
-                    }
-                }
-        )
-    }
-
     private func row(viewItem: TransactionInfoModule.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-        case let .actionTitle(iconName, iconDimmed, title, subTitle): return actionTitleRow(rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
-        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type): return amountRow(rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
-        case let .status(status): return statusRow(rowInfo: rowInfo, status: status)
-        case let .options(actions: viewItems): return optionsRow(rowInfo: rowInfo, viewItems: viewItems)
-        case let .date(date): return valueRow(rowInfo: rowInfo, id: "date", title: "tx_info.date".localized, value: DateHelper.instance.formatFullTime(from: date))
-        case let .from(value, valueTitle): return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .to(value, valueTitle): return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .spender(value, valueTitle): return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .recipient(value, valueTitle): return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .id(value): return idRow(rowInfo: rowInfo, value: value)
-        case let .rate(value): return valueRow(rowInfo: rowInfo, id: "rate", title: "tx_info.rate".localized, value: value)
-        case let .fee(title, value): return valueRow(rowInfo: rowInfo, id: "fee", title: title, value: value)
-        case let .price(price): return valueRow(rowInfo: rowInfo, id: "price", title: "tx_info.price".localized, value: price)
-        case let .doubleSpend(txHash, conflictingTxHash): return doubleSpendRow(rowInfo: rowInfo, txHash: txHash, conflictingTxHash: conflictingTxHash)
-        case let .lockInfo(lockState): return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
-        case .sentToSelf: return sentToSelfRow(rowInfo: rowInfo)
-        case .rawTransaction: return rawTransactionRow(rowInfo: rowInfo)
-        case let .memo(value): return multiLineValueRow(rowInfo: rowInfo, id: "memo", title: "tx_info.memo".localized, value: value)
-        case let .service(value): return valueRow(rowInfo: rowInfo, id: "service", title: "tx_info.service".localized, value: value)
-        case let .explorer(title, url): return explorerRow(rowInfo: rowInfo, title: title, url: url)
+        case let .actionTitle(iconName, iconDimmed, title, subTitle):
+            return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .status(status):
+            return statusRow(rowInfo: rowInfo, status: status)
+        case let .options(actions: viewItems):
+            return optionsRow(rowInfo: rowInfo, viewItems: viewItems)
+        case let .date(date):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.date".localized, value: DateHelper.instance.formatFullTime(from: date))
+        case let .from(value, valueTitle):
+            return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .to(value, valueTitle):
+            return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .spender(value, valueTitle):
+            return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .recipient(value, valueTitle):
+            return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .id(value):
+            return idRow(rowInfo: rowInfo, value: value)
+        case let .rate(value):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.rate".localized, value: value)
+        case let .fee(title, value):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value)
+        case let .price(price):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.price".localized, value: price)
+        case let .doubleSpend(txHash, conflictingTxHash):
+            return doubleSpendRow(rowInfo: rowInfo, txHash: txHash, conflictingTxHash: conflictingTxHash)
+        case let .lockInfo(lockState):
+            return lockInfoRow(rowInfo: rowInfo, lockState: lockState)
+        case .sentToSelf:
+            return sentToSelfRow(rowInfo: rowInfo)
+        case .rawTransaction:
+            return rawTransactionRow(rowInfo: rowInfo)
+        case let .memo(value):
+            return multiLineValueRow(rowInfo: rowInfo, id: "memo", title: "tx_info.memo".localized, value: value)
+        case let .service(value):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.service".localized, value: value)
+        case let .explorer(title, url):
+            return explorerRow(rowInfo: rowInfo, title: title, url: url)
         }
     }
 
@@ -601,10 +507,4 @@ extension TransactionInfoViewController: SectionsDataSource {
         }
     }
 
-}
-
-fileprivate struct RowInfo {
-    let index: Int
-    let isFirst: Bool
-    let isLast: Bool
 }

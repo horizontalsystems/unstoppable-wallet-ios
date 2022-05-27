@@ -30,38 +30,64 @@ class SendConfirmationViewModel {
         var primaryViewItems = [ViewItem]()
         var secondaryViewItems = [ViewItem]()
 
-        primaryViewItems.append(.header(title: "send.confirmation.you_send".localized, subtitle: service.coinName))
+        primaryViewItems.append(
+                .subhead(
+                        iconName: "arrow_medium_2_up_right_24",
+                        title: "send.confirmation.you_send".localized,
+                        value: service.platformCoin.name
+                )
+        )
+
         service.items.forEach { item in
             switch item {
             case let item as SendConfirmationAmountViewItem:
-                if let primary = item.primaryInfo.formattedFull {
-                    primaryViewItems.append(.amount(
-                            primary: primary,
-                            secondary: item.secondaryInfo?.formattedFull)
-                    )
-                }
-                let title = item.receiver.domain != nil ? "send.confirmation.domain" : "send.confirmation.address"
-                primaryViewItems.append(.recipient(
-                        title: title.localized,
-                        address: item.receiver.title,
-                        copyValue: item.receiver.raw)
+                primaryViewItems.append(
+                        .amount(
+                                iconUrl: service.platformCoin.coin.imageUrl,
+                                iconPlaceholderImageName: service.platformCoin.coinType.placeholderImageName,
+                                coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue, showSign: true) ?? "n/a".localized,
+                                currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                                type: .outgoing
+                        )
+                )
+
+                primaryViewItems.append(
+                        .address(
+                                title: "send.confirmation.to".localized,
+                                value: item.receiver.raw,
+                                valueTitle: item.receiver.title
+                        )
                 )
             case let item as SendConfirmationMemoViewItem:
-                primaryViewItems.append(.additional(
-                        title: "send.confirmation.memo".localized,
-                        value: item.memo)
+                primaryViewItems.append(
+                        .value(
+                                iconName: nil,
+                                title: "send.confirmation.memo".localized,
+                                value: item.memo,
+                                type: .regular
+                        )
                 )
             case let item as SendConfirmationFeeViewItem:
-                let value = [item.primaryInfo.formattedFull, item.secondaryInfo?.formattedFull]
+                let value = [ValueFormatter.instance.formatFull(coinValue: item.coinValue), item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }]
                         .compactMap { $0 }
                         .joined(separator: " | ")
 
-                secondaryViewItems.append(.fee(
-                        title: "send.confirmation.fee".localized, value: value))
+                secondaryViewItems.append(
+                        .value(
+                                iconName: nil,
+                                title: "send.confirmation.fee".localized,
+                                value: value,
+                                type: .regular
+                        )
+                )
             case let item as SendConfirmationLockUntilViewItem:
-                primaryViewItems.append(.additional(
-                        title: "send.confirmation.time_lock".localized,
-                        value: item.lockValue)
+                primaryViewItems.append(
+                        .value(
+                                iconName: "lock_20",
+                                title: "send.confirmation.time_lock".localized,
+                                value: item.lockValue,
+                                type: .regular
+                        )
                 )
 
             default: ()
@@ -119,11 +145,10 @@ extension SendConfirmationViewModel {
 extension SendConfirmationViewModel {
 
     enum ViewItem {
-        case header(title: String, subtitle: String)
-        case amount(primary: String, secondary: String?)
-        case recipient(title: String, address: String, copyValue: String)
-        case additional(title: String, value: String)
-        case fee(title: String, value: String)
+        case subhead(iconName: String, title: String, value: String)
+        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case address(title: String, value: String, valueTitle: String?)
+        case value(iconName: String?, title: String, value: String, type: ValueType)
     }
 
 }

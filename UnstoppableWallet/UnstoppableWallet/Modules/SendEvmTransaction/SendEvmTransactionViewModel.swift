@@ -152,25 +152,85 @@ class SendEvmTransactionViewModel {
         }
     }
 
+    private func amountViewItem(coinService: CoinService, value: BigUInt, type: AmountType) -> ViewItem {
+        amountViewItem(coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
+    }
+
+    private func amountViewItem(coinService: CoinService, value: Decimal, type: AmountType) -> ViewItem {
+        amountViewItem(coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
+    }
+
+    private func amountViewItem(coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
+        let platformCoin = coinService.platformCoin
+
+        return .amount(
+                iconUrl: platformCoin.coin.imageUrl,
+                iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue, showSign: type.showSign) ?? "n/a".localized,
+                currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                type: type
+        )
+    }
+
+    private func doubleAmountViewItem(coinService: CoinService, estimateValue: Decimal?, extremumValue: BigUInt, type: AmountType) -> ViewItem {
+        let platformCoin = coinService.platformCoin
+        let extremumAmountData = coinService.amountData(value: extremumValue, sign: type.sign)
+
+        let postfix: String
+        switch type {
+        case .outgoing: postfix = "swap.maximum_short".localized
+        case .incoming: postfix = "swap.minimum_short".localized
+        default: postfix = ""
+        }
+
+        var extremumCoinAmount = ValueFormatter.instance.formatFull(coinValue: extremumAmountData.coinValue, showSign: true) ?? "n/a".localized
+        extremumCoinAmount = "\(extremumCoinAmount) \(postfix)"
+
+        if let estimateValue = estimateValue {
+            let estimateAmountData = coinService.amountData(value: estimateValue, sign: type.sign)
+            var estimateCoinAmount = ValueFormatter.instance.formatFull(coinValue: estimateAmountData.coinValue, showSign: true) ?? "n/a".localized
+            estimateCoinAmount = "\(estimateCoinAmount) \("swap.estimate_short".localized)"
+
+            return .doubleAmount(
+                    iconUrl: platformCoin.coin.imageUrl,
+                    iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                    primaryCoinAmount: estimateCoinAmount,
+                    primaryCurrencyAmount: estimateAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                    primaryType: type,
+                    secondaryCoinAmount: extremumCoinAmount,
+                    secondaryCurrencyAmount: extremumAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                    secondaryType: .secondary
+            )
+        } else {
+            return .amount(
+                    iconUrl: platformCoin.coin.imageUrl,
+                    iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                    coinAmount: extremumCoinAmount,
+                    currencyAmount: extremumAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                    type: type
+            )
+        }
+    }
+
     private func sendBaseCoinItems(to: EthereumKit.Address, value: BigUInt, sendInfo: SendEvmData.SendInfo?) -> [SectionViewItem] {
         let toValue = to.eip55
-        let amountData = coinServiceFactory.baseCoinService.amountData(value: value)
 
         return [
             SectionViewItem(viewItems: [
                 .subhead(
+                        iconName: "arrow_medium_2_up_right_24",
                         title: "send.confirmation.you_send".localized,
                         value: coinServiceFactory.baseCoinService.platformCoin.coin.name
                 ),
-                .value(
-                        title: amountData.secondary?.formattedFull ?? "n/a".localized,
-                        value: amountData.primary.formattedFull ?? "n/a".localized,
+                amountViewItem(
+                        coinService: coinServiceFactory.baseCoinService,
+                        value: value,
                         type: .outgoing
                 ),
                 .address(
                         title: "send.confirmation.to".localized,
-                        valueTitle: sendInfo?.domain ?? evmLabelManager.mapped(address: toValue),
-                        value: toValue
+                        value: toValue,
+                        valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue)
                 ),
             ])
         ]
@@ -182,13 +242,21 @@ class SendEvmTransactionViewModel {
         }
 
         var viewItems: [ViewItem] = [
-            .subhead(title: "send.confirmation.you_send".localized, value: coinService.platformCoin.coin.name),
-            .value(title: coinService.amountData(value: value).secondary?.formattedFull ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedFull ?? "n/a".localized), type: .outgoing)
+            .subhead(
+                    iconName: "arrow_medium_2_up_right_24",
+                    title: "send.confirmation.you_send".localized,
+                    value: coinService.platformCoin.coin.name
+            ),
+            amountViewItem(
+                    coinService: coinService,
+                    value: value,
+                    type: .outgoing
+            )
         ]
 
         let addressValue = to.eip55
-        let addressTitle = sendInfo?.domain ?? evmLabelManager.mapped(address: addressValue)
-        viewItems.append(.address(title: "send.confirmation.to".localized, valueTitle: addressTitle, value: addressValue))
+        let addressTitle = sendInfo?.domain ?? evmLabelManager.addressLabel(address: addressValue)
+        viewItems.append(.address(title: "send.confirmation.to".localized, value: addressValue, valueTitle: addressTitle))
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
@@ -202,12 +270,24 @@ class SendEvmTransactionViewModel {
         }
 
         let addressValue = spender.eip55
-        let addressTitle = evmLabelManager.mapped(address: addressValue)
+        let addressTitle = evmLabelManager.addressLabel(address: addressValue)
 
         var viewItems: [ViewItem] = [
-            .subhead(title: "approve.confirmation.you_approve".localized, value: coinService.platformCoin.coin.name),
-            .value(title: coinService.amountData(value: value).secondary?.formattedFull ?? "n/a".localized, value: (coinService.amountData(value: value).primary.formattedFull ?? "n/a".localized), type: .regular),
-            .address(title: "approve.confirmation.spender".localized, valueTitle: addressTitle, value: addressValue)
+            .subhead(
+                    iconName: "check_2_24",
+                    title: "approve.confirmation.you_approve".localized,
+                    value: coinService.platformCoin.coin.name
+            ),
+            amountViewItem(
+                    coinService: coinService,
+                    value: value,
+                    type: .neutral
+            ),
+            .address(
+                    title: "approve.confirmation.spender".localized,
+                    value: addressValue,
+                    valueTitle: addressTitle
+            )
         ]
 
         if let nonce = nonce {
@@ -225,35 +305,27 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         var inViewItems: [ViewItem] = [
-            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name)
+            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name)
         ]
 
         switch amountIn {
         case .exact(let value):
-            inViewItems.append(self.value(amountData: coinServiceIn.amountData(value: value), type: .regular))
+            inViewItems.append(amountViewItem(coinService: coinServiceIn, value: value, type: .outgoing))
         case .extremum(let value):
-            if let estimatedIn = swapInfo?.estimatedIn {
-                inViewItems.append(estimatedSwapAmount(amountData: coinServiceIn.amountData(value: estimatedIn), type: .outgoing))
-            }
-
-            inViewItems.append(valueMax(amountData: coinServiceIn.amountData(value: value), type: .regular))
+            inViewItems.append(doubleAmountViewItem(coinService: coinServiceIn, estimateValue: swapInfo?.estimatedIn, extremumValue: value, type: .outgoing))
         }
 
         sections.append(SectionViewItem(viewItems: inViewItems))
 
         var outViewItems: [ViewItem] = [
-            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name)
         ]
 
         switch amountOut {
         case .exact(let value):
-            outViewItems.append(self.value(amountData: coinServiceOut.amountData(value: value), type: .regular))
+            outViewItems.append(amountViewItem(coinService: coinServiceOut, value: value, type: .incoming))
         case .extremum(let value):
-            if let estimatedOut = swapInfo?.estimatedOut {
-                outViewItems.append(estimatedSwapAmount(amountData: coinServiceOut.amountData(value: estimatedOut), type: .incoming))
-            }
-
-            outViewItems.append(valueMin(amountData: coinServiceOut.amountData(value: value), type: .regular))
+            outViewItems.append(doubleAmountViewItem(coinService: coinServiceOut, estimateValue: swapInfo?.estimatedOut, extremumValue: value, type: .incoming))
         }
 
         sections.append(SectionViewItem(viewItems: outViewItems))
@@ -269,8 +341,8 @@ class SendEvmTransactionViewModel {
 
         if let recipient = recipient {
             let addressValue = recipient.eip55
-            let addressTitle = swapInfo?.recipientDomain ?? evmLabelManager.mapped(address: addressValue)
-            otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
+            let addressTitle = swapInfo?.recipientDomain ?? evmLabelManager.addressLabel(address: addressValue)
+            otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: addressValue, valueTitle: addressTitle))
         }
 
         if let price = swapInfo?.price {
@@ -309,23 +381,19 @@ class SendEvmTransactionViewModel {
 
         sections.append(
                 SectionViewItem(viewItems: [
-                    .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
-                    value(amountData: coinServiceIn.amountData(value: amountIn), type: .outgoing)
+                    .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+                    amountViewItem(coinService: coinServiceIn, value: amountIn, type: .outgoing)
                 ])
         )
 
         var outViewItems: [ViewItem] = [
-            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code)
         ]
 
         switch amountOut {
         case .exact: () // not possible in send
         case .extremum(let value):
-            if let estimatedAmountTo = oneInchSwapInfo?.estimatedAmountTo {
-                outViewItems.append(estimatedSwapAmount(amountData: coinServiceOut.amountData(value: estimatedAmountTo), type: .incoming))
-            }
-
-            outViewItems.append(valueMin(amountData: coinServiceOut.amountData(value: value), type: .regular))
+            outViewItems.append(doubleAmountViewItem(coinService: coinServiceOut, estimateValue: oneInchSwapInfo?.estimatedAmountTo, extremumValue: value, type: .incoming))
         }
 
         sections.append(SectionViewItem(viewItems: outViewItems))
@@ -344,17 +412,16 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
-            value(amountData: coinServiceIn.amountData(value: oneInchSwapInfo.amountFrom), type: .outgoing)
+            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+            amountViewItem(coinService: coinServiceIn, value: oneInchSwapInfo.amountFrom, type: .outgoing)
         ]))
 
         let amountOutMinDecimal = oneInchSwapInfo.estimatedAmountTo * (1 - oneInchSwapInfo.slippage / 100)
         let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, oneInchSwapInfo.platformCoinTo.decimals)).roundedString(decimal: 0)) ?? 0
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code),
-            estimatedSwapAmount(amountData: coinServiceOut.amountData(value: oneInchSwapInfo.estimatedAmountTo), type: .incoming),
-            valueMin(amountData: coinServiceOut.amountData(value: toAmountMin), type: .regular)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code),
+            doubleAmountViewItem(coinService: coinServiceOut, estimateValue: oneInchSwapInfo.estimatedAmountTo, extremumValue: toAmountMin, type: .incoming)
         ]))
 
         if let section = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: oneInchSwapInfo.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }) {
@@ -373,8 +440,8 @@ class SendEvmTransactionViewModel {
 
         if let recipient = recipient {
             let addressValue = recipient.eip55
-            let addressTitle = oneInchSwapInfo?.recipient?.domain ?? evmLabelManager.mapped(address: addressValue)
-            viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, valueTitle: addressTitle, value: addressValue))
+            let addressTitle = oneInchSwapInfo?.recipient?.domain ?? evmLabelManager.addressLabel(address: addressValue)
+            viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: addressValue, valueTitle: addressTitle))
         }
 
         if !viewItems.isEmpty {
@@ -388,14 +455,15 @@ class SendEvmTransactionViewModel {
         let toValue = transactionData.to.eip55
 
         var viewItems: [ViewItem] = [
-            value(
-                    amountData: coinServiceFactory.baseCoinService.amountData(value: transactionData.value),
+            amountViewItem(
+                    coinService: coinServiceFactory.baseCoinService,
+                    value: transactionData.value,
                     type: .outgoing
             ),
             .address(
                     title: "send.confirmation.to".localized,
-                    valueTitle: evmLabelManager.mapped(address: toValue),
-                    value: toValue
+                    value: toValue,
+                    valueTitle: evmLabelManager.addressLabel(address: toValue)
             )
         ]
 
@@ -416,24 +484,6 @@ class SendEvmTransactionViewModel {
         return [
             SectionViewItem(viewItems: viewItems)
         ]
-    }
-
-    private func value(amountData: AmountData, postfix: String? = nil, type: ValueType) -> ViewItem {
-        let title = amountData.secondary?.formattedFull ?? "n/a".localized
-        let value = amountData.primary.formattedFull ?? "n/a".localized
-        return .value(title: title, value: "\(value)\(postfix.map { " \($0)" } ?? "")", type: type)
-    }
-
-    private func estimatedSwapAmount(amountData: AmountData, type: ValueType) -> ViewItem {
-        value(amountData: amountData, postfix: "swap.estimate_short".localized, type: type)
-    }
-
-    private func valueMin(amountData: AmountData, type: ValueType) -> ViewItem {
-        value(amountData: amountData, postfix: "swap.minimum_short".localized, type: type)
-    }
-
-    private func valueMax(amountData: AmountData, type: ValueType) -> ViewItem {
-        value(amountData: amountData, postfix: "swap.maximum_short".localized, type: type)
     }
 
     private func coinService(token: SwapDecoration.Token) -> CoinService? {
@@ -495,19 +545,12 @@ extension SendEvmTransactionViewModel {
     }
 
     enum ViewItem {
-        case subhead(title: String, value: String)
+        case subhead(iconName: String, title: String, value: String)
+        case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case doubleAmount(iconUrl: String?, iconPlaceholderImageName: String, primaryCoinAmount: String, primaryCurrencyAmount: String?, primaryType: AmountType, secondaryCoinAmount: String, secondaryCurrencyAmount: String?, secondaryType: AmountType)
+        case address(title: String, value: String, valueTitle: String?)
         case value(title: String, value: String, type: ValueType)
-        case address(title: String, valueTitle: String, value: String)
         case input(value: String)
-    }
-
-    enum ValueType {
-        case regular
-        case disabled
-        case outgoing
-        case incoming
-        case warning
-        case alert
     }
 
 }

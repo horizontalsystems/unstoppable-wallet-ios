@@ -76,19 +76,6 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
     }
 
-    enum AmountType {
-        case incoming
-        case outgoing
-        case neutral
-
-        var showSign: Bool {
-            switch self {
-            case .incoming, .outgoing: return true
-            case .neutral: return false
-            }
-        }
-    }
-
 }
 
 struct TransactionInfoItem {

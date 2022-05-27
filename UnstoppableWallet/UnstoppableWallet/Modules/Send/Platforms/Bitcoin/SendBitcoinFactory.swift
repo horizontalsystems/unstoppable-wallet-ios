@@ -1,6 +1,7 @@
 import UIKit
 import MarketKit
 import HsToolKit
+import CurrencyKit
 
 protocol ISendConfirmationFactory {
     func confirmationViewController() throws -> UIViewController
@@ -12,20 +13,42 @@ protocol ISendFeeSettingsFactory {
 
 class BaseSendFactory {
 
-    func primaryInfo(fiatService: FiatService) throws -> AmountInfo {
+    func values(fiatService: FiatService) throws -> (CoinValue, CurrencyValue?) {
         guard let platformCoin = fiatService.platformCoin else {
             throw ConfirmationError.noCoin
         }
+
+        var coinValue: CoinValue?
+        var currencyValue: CurrencyValue?
+
         switch fiatService.primaryInfo {
         case .amount(let value):
-            let coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
-            return AmountInfo.coinValue(coinValue: coinValue)
+            coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
         case .amountInfo(let info):
             guard let info = info else {
                 throw ConfirmationError.noAmount
             }
-            return info
+
+            switch info {
+            case .coinValue(let value): coinValue = value
+            case .currencyValue(let value): currencyValue = value
+            }
         }
+
+        if let info = fiatService.secondaryAmountInfo {
+            switch info {
+            case .coinValue(let value): coinValue = value
+            case .currencyValue(let value): currencyValue = value
+            }
+        }
+
+        guard let coinValue = coinValue else {
+            throw ConfirmationError.noAmount
+        }
+
+        let negativeCoinValue = CoinValue(kind: coinValue.kind, value: Decimal(sign: .minus, exponent: coinValue.value.exponent, significand: coinValue.value.significand))
+
+        return (negativeCoinValue, currencyValue)
     }
 
 }
@@ -76,25 +99,14 @@ class SendBitcoinFactory: BaseSendFactory {
             throw ConfirmationError.noAddress
         }
 
-        viewItems.append(
-                SendConfirmationAmountViewItem(
-                        primaryInfo: try primaryInfo(fiatService: fiatService),
-                        secondaryInfo: fiatService.secondaryAmountInfo,
-                        receiver: address)
-        )
+        let (coinValue, currencyValue) = try values(fiatService: fiatService)
+        let (feeCoinValue, feeCurrencyValue) = try values(fiatService: feeFiatService)
 
-        viewItems.append(
-                SendConfirmationFeeViewItem(
-                        primaryInfo: try primaryInfo(fiatService: feeFiatService),
-                        secondaryInfo: feeFiatService.secondaryAmountInfo)
-        )
+        viewItems.append(SendConfirmationAmountViewItem(coinValue: coinValue, currencyValue: currencyValue, receiver: address))
+        viewItems.append(SendConfirmationFeeViewItem(coinValue: feeCoinValue, currencyValue: feeCurrencyValue))
 
         if (timeLockService?.lockTime ?? .none) != SendTimeLockService.Item.none {
-            viewItems.append(
-                    SendConfirmationLockUntilViewItem(
-                            lockValue: timeLockService?.lockTime.title ?? "n/a".localized
-                    )
-            )
+            viewItems.append(SendConfirmationLockUntilViewItem(lockValue: timeLockService?.lockTime.title ?? "n/a".localized))
         }
 
         return viewItems

@@ -40,24 +40,17 @@ extension CoinService {
         BigUInt(value.roundedString(decimal: platformCoin.decimals)) ?? 0
     }
 
-    func amountData(value: Decimal) -> AmountData {
-        let primaryInfo: AmountInfo
-        var secondaryInfo: AmountInfo?
-
-        let coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
-
-        if let rate = rate {
-            primaryInfo = .coinValue(coinValue: coinValue)
-            secondaryInfo = .currencyValue(currencyValue: CurrencyValue(currency: rate.currency, value: rate.value * value))
-        } else {
-            primaryInfo = .coinValue(coinValue: coinValue)
-        }
-
-        return AmountData(primary: primaryInfo, secondary: secondaryInfo)
+    func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
+        AmountData(
+                coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
+                currencyValue: rate.map {
+                    CurrencyValue(currency: $0.currency, value: $0.value * value)
+                }
+        )
     }
 
-    func amountData(value: BigUInt) -> AmountData {
-        amountData(value: Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0)
+    func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {
+        amountData(value: Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0, sign: sign)
     }
 
 }

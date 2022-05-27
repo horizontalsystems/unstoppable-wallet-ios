@@ -9,7 +9,7 @@ class TransactionInfoViewItemFactory {
         self.evmLabelManager = evmLabelManager
     }
 
-    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: TransactionInfoModule.AmountType) -> TransactionInfoModule.ViewItem {
+    private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
         let iconPlaceholderImageName = source.blockchain.coinPlaceholderImage
 

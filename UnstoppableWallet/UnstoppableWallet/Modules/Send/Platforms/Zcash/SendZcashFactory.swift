@@ -28,22 +28,16 @@ class SendZcashFactory: BaseSendFactory {
             throw ConfirmationError.noAddress
         }
 
-        viewItems.append(
-                SendConfirmationAmountViewItem(
-                        primaryInfo: try primaryInfo(fiatService: fiatService),
-                        secondaryInfo: fiatService.secondaryAmountInfo,
-                        receiver: address)
-        )
+        let (coinValue, currencyValue) = try values(fiatService: fiatService)
+        let (feeCoinValue, feeCurrencyValue) = try values(fiatService: feeFiatService)
+
+        viewItems.append(SendConfirmationAmountViewItem(coinValue: coinValue, currencyValue: currencyValue, receiver: address))
 
         if memoService.isAvailable, let memo = memoService.memo, !memo.isEmpty {
             viewItems.append(SendConfirmationMemoViewItem(memo: memo))
         }
 
-        viewItems.append(
-                SendConfirmationFeeViewItem(
-                        primaryInfo: try primaryInfo(fiatService: feeFiatService),
-                        secondaryInfo: feeFiatService.secondaryAmountInfo)
-        )
+        viewItems.append(SendConfirmationFeeViewItem(coinValue: feeCoinValue, currencyValue: feeCurrencyValue))
 
         return viewItems
     }

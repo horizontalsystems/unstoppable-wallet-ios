@@ -8,7 +8,7 @@ class SendConfirmationService {
     private var sendDisposeBag = DisposeBag()
     private let sendService: ISendService
     private let logger: Logger
-    private let platformCoin: PlatformCoin
+    let platformCoin: PlatformCoin
     let items: [ISendConfirmationViewItemNew]
 
     private let stateRelay = BehaviorRelay<State>(value: .idle)
@@ -31,10 +31,6 @@ extension SendConfirmationService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
-    }
-
-    var coinName: String {
-        platformCoin.name
     }
 
     func send() {

@@ -92,70 +92,16 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         HudHelper.instance.showError(title: error)
     }
 
-    private func textRow(primary: String, primaryStyle: TextComponent.Style, secondary: String?, secondaryStyle: TextComponent.Style?, index: Int, count: Int) -> RowProtocol {
-        CellBuilder.row(
-                elements: secondaryStyle != nil ? [.text, .text] : [.text],
-                tableView: tableView,
-                id: "text-row-\(index)-\(count)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == count - 1)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: primaryStyle)
-                        component.text = primary
-                    }
-
-                    if let secondaryStyle = secondaryStyle {
-                        cell.bind(index: 1) { (component: TextComponent) in
-                            component.set(style: secondaryStyle)
-                            component.text = secondary
-                        }
-                    }
-                }
-        )
-    }
-
-    private func textButtonRow(primary: String, primaryStyle: TextComponent.Style, buttonText: String, buttonCopyValue: String, index: Int, count: Int) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .secondaryButton],
-                tableView: tableView,
-                id: "text-row-\(index)-\(count)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == count - 1)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: primaryStyle)
-                        component.text = primary
-                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    }
-
-                    cell.bind(index: 1, block: { (component: SecondaryButtonComponent) in
-                        component.button.set(style: .default)
-                        component.button.setTitle(buttonText, for: .normal)
-                        component.button.setContentHuggingPriority(.required, for: .horizontal)
-                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-                        component.onTap = {
-                            CopyHelper.copyAndNotify(value: buttonCopyValue)
-                        }
-                    })
-                }
-        )
-    }
-
-    private func row(viewItem: SendConfirmationViewModel.ViewItem, index: Int, count: Int) -> RowProtocol {
+    private func row(viewItem: SendConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
-        case .header(let title,let subtitle):
-            return textRow(primary: title, primaryStyle: .b2, secondary: subtitle, secondaryStyle: .c1, index: index, count: count)
-        case .amount(let primary, let secondary):
-            return textRow(primary: primary, primaryStyle: .d1, secondary: secondary, secondaryStyle: .c3, index: index, count: count)
-        case .recipient(let title, let address, let copyValue):
-            return textButtonRow(primary: title, primaryStyle: .d1, buttonText: address, buttonCopyValue: copyValue, index: index, count: count)
-        case .additional(let title, let value):
-            return textRow(primary: title, primaryStyle: .d1, secondary: value, secondaryStyle: .c2, index: index, count: count)
-        case .fee(let title, let value):
-            return textRow(primary: title, primaryStyle: .c1, secondary: value, secondaryStyle: .d1, index: index, count: count)
+        case let .subhead(iconName, title, value):
+            return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .address(title, value, valueTitle):
+            return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle)
+        case let .value(iconName, title, value, type):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, title: title, value: value, type: type)
         }
     }
 
@@ -165,13 +111,13 @@ extension SendConfirmationViewController {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-        viewItems.enumerated().forEach { index, items in
+        viewItems.enumerated().forEach { index, viewItems in
             sections.append(
                     Section(
                             id: "section-\(index)",
                             headerState: .margin(height: .margin12),
-                            rows: items.enumerated().map { index, viewItem in
-                                row(viewItem: viewItem, index: index, count: items.count)
+                            rows: viewItems.enumerated().map { index, viewItem in
+                                row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == viewItems.count - 1))
                             }))
         }
 
