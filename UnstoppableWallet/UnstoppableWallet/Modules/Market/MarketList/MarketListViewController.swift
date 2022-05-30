@@ -205,8 +205,8 @@ extension MarketListViewController: SectionsDataSource {
                     headerState: headerState,
                     footerState: .marginColor(height: .margin32, color: .clear) ,
                     rows: viewItems.map { viewItems in
-                        return viewItems.enumerated().map { index, viewItem in
-                            return MarketModule.marketListCell(
+                        viewItems.enumerated().map { index, viewItem in
+                            MarketModule.marketListCell(
                                     tableView: tableView,
                                     backgroundStyle: .transparent,
                                     listViewItem: viewItem,
