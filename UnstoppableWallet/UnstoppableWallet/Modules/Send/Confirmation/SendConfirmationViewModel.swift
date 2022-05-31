@@ -45,9 +45,9 @@ class SendConfirmationViewModel {
                         .amount(
                                 iconUrl: service.platformCoin.coin.imageUrl,
                                 iconPlaceholderImageName: service.platformCoin.coinType.placeholderImageName,
-                                coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue, showSign: true) ?? "n/a".localized,
+                                coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
                                 currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                                type: .outgoing
+                                type: .neutral
                         )
                 )
 
