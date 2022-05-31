@@ -4,7 +4,7 @@ import StorageKit
 import UIKit
 
 class AppIconManager {
-    let allAppIcons: [AppIcon] = [
+    static let allAppIcons: [AppIcon] = [
         .main,
         .alternate(name: "AppIconDark", title: "Dark"),
         .alternate(name: "AppIconMono", title: "Mono"),
@@ -13,7 +13,7 @@ class AppIconManager {
         .alternate(name: "AppIconYak", title: "Yak"),
         .alternate(name: "AppIconPunk", title: "Punk"),
         .alternate(name: "AppIconApe", title: "Ape"),
-        .alternate(name: "AppIconDoodle", title: "Doodle")
+        .alternate(name: "AppIcon1009", title: "#1009")
     ]
 
     private let appIconRelay = PublishRelay<AppIcon>()
@@ -25,11 +25,7 @@ class AppIconManager {
     }
 
     init() {
-        if let alternateIconName: String = UIApplication.shared.alternateIconName, let appIcon = allAppIcons.first(where: { $0.name == alternateIconName }) {
-            self.appIcon = appIcon
-        } else {
-            appIcon = .main
-        }
+        appIcon = Self.currentAppIcon
     }
 
 }
@@ -38,6 +34,14 @@ extension AppIconManager {
 
     var appIconObservable: Observable<AppIcon> {
         appIconRelay.asObservable()
+    }
+
+    static var currentAppIcon: AppIcon {
+        if let alternateIconName: String = UIApplication.shared.alternateIconName, let appIcon = allAppIcons.first(where: { $0.name == alternateIconName }) {
+            return appIcon
+        } else {
+            return .main
+        }
     }
 
 }
