@@ -53,7 +53,7 @@ extension HistoricalRateService {
     }
 
     func fetchRate(key: RateKey) {
-        if let rate = rates[key] {
+        if let rate = rate(key: key) {
             rateUpdatedSubject.onNext((key, rate))
             return
         }

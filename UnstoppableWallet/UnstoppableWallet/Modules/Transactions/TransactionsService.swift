@@ -9,7 +9,7 @@ class TransactionsService {
     private let rateService: HistoricalRateService
     private let filterHelper: TransactionFilterHelper
 
-    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .utility)
+    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .userInitiated)
 
     private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
     private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
@@ -26,28 +26,16 @@ class TransactionsService {
         rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         filterHelper = TransactionFilterHelper()
 
-        recordsService.recordsObservable
-                .subscribe(onNext: { [weak self] records in self?.queue.async { self?.handle(records: records) }})
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, recordsService.recordsObservable) { [weak self] in self?.handle(records: $0) }
+        subscribe(disposeBag, recordsService.updatedRecordObservable) { [weak self] in self?.handle(updatedRecord: $0) }
+        subscribe(disposeBag, syncStateService.lastBlockInfoObservable) { [weak self] in self?.handle(source: $0, lastBlockInfo: $1) }
+        subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
+        subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.handle(updatedWallets: walletManager.activeWallets) }
 
-        recordsService.updatedRecordObservable
-                .subscribe(onNext: { [weak self] record in self?.queue.async { self?.handle(updatedRecord: record) }})
-                .disposed(by: disposeBag)
-
-        syncStateService.lastBlockInfoObservable
-                .subscribe(onNext: { [weak self] (source, lastBlockInfo) in self?.queue.async { self?.handle(source: source, lastBlockInfo: lastBlockInfo) }})
-                .disposed(by: disposeBag)
-
-        rateService.ratesChangedObservable
-                .subscribe(onNext: { [weak self] in self?.queue.async { self?.handleRatesChanged() }})
-                .disposed(by: disposeBag)
-
-        rateService.rateUpdatedObservable
-                .subscribe(onNext: { [weak self] rate in self?.queue.async { self?.handle(rate: rate) }})
-                .disposed(by: disposeBag)
-
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] wallets in self?.handle(updatedWallets: walletManager.activeWallets) }
-        handle(updatedWallets: walletManager.activeWallets)
+        if !adapterManager.adapterMap.isEmpty {
+            handle(updatedWallets: walletManager.activeWallets)
+        }
     }
 
     private func groupWalletsBySource(transactionWallets: [TransactionWallet]) -> [TransactionWallet] {
@@ -67,15 +55,19 @@ class TransactionsService {
     }
 
     private func handle(updatedWallets: [Wallet]) {
+        queue.sync {
+            records = []
+            items = []
+            itemsSubject.onNext(items)
+        }
+
         filterHelper.set(wallets: updatedWallets)
 
         let wallets = filterHelper.wallets
         let walletsGroupedBySource = groupWalletsBySource(transactionWallets: wallets)
 
         syncStateService.set(sources: walletsGroupedBySource.map { $0.source })
-        recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource)
-        recordsService.set(selectedWallet: filterHelper.selectedWallet)
-        recordsService.set(typeFilter: filterHelper.selectedType)
+        recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource, selectedWallet: filterHelper.selectedWallet, typeFilter: filterHelper.selectedType)
 
         walletFiltersSubject.onNext(filterHelper.walletFilters)
         typeFiltersSubject.onNext(filterHelper.typeFilters)
@@ -83,9 +75,16 @@ class TransactionsService {
 
     private func handle(records: [TransactionRecord]) {
         queue.async {
+            let allLoaded = records.count < self.records.count + TransactionsModule.pageLimit
+
             self.records = records
 
             let nonSpamRecords = records.filter { !$0.spam }
+
+            if !allLoaded && nonSpamRecords.count < self.items.count + TransactionsModule.pageLimit {
+                self.recordsService.load(count: self.records.count + TransactionsModule.pageLimit)
+                return
+            }
 
             self.items = nonSpamRecords.map { record in
                 self.createItem(from: record)
@@ -221,21 +220,23 @@ extension TransactionsService {
     }
 
     func loadMore() {
+        guard !loadingMore else {
+            return
+        }
+
+        loadingMore = true
+
         queue.async {
-            guard !self.loadingMore else {
-                return
-            }
-
-            self.loadingMore = true
-
             self.recordsService.load(count: self.records.count + TransactionsModule.pageLimit)
         }
     }
 
     func fetchRate(for uid: String) {
-        if let item = item(uid: uid), item.currencyValue == nil,
-           let transactionValue = item.record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
-            rateService.fetchRate(key: RateKey(coin: platformCoin.coin, date: item.record.date))
+        queue.async {
+            if let item = self.items.first(where: { $0.record.uid == uid }), item.currencyValue == nil,
+               let transactionValue = item.record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
+                self.rateService.fetchRate(key: RateKey(coin: platformCoin.coin, date: item.record.date))
+            }
         }
     }
 

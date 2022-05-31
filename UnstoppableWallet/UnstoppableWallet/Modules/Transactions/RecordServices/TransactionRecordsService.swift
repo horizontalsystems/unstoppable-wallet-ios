@@ -12,8 +12,6 @@ class TransactionRecordsService {
     private var recordsSubject = PublishSubject<[TransactionRecord]>()
     private var updatedRecordSubject = PublishSubject<TransactionRecord>()
 
-    private var requestedCount: Int = 0
-
     init(adapterManager: TransactionAdapterManager) {
         self.adapterManager = adapterManager
 
@@ -42,35 +40,7 @@ class TransactionRecordsService {
         return dataSources
     }
 
-}
-
-extension TransactionRecordsService {
-
-    var recordsObservable: Observable<[TransactionRecord]> {
-        recordsSubject.asObservable()
-    }
-
-    var updatedRecordObservable: Observable<TransactionRecord> {
-        updatedRecordSubject.asObservable()
-    }
-
-    func set(wallets: [TransactionWallet], walletsGroupedBySource: [TransactionWallet]) {
-        let dataSources = generateDataSources(wallets: Array(Set(wallets + walletsGroupedBySource)))
-        var newGroups = [TransactionWallet: TransactionRecordDataSourceGroup]()
-
-        for wallet in wallets {
-            if let group = singleDataSourceGroups[wallet] {
-                newGroups[wallet] = group
-            } else if let dataSource = dataSources[wallet] {
-                newGroups[wallet] = TransactionRecordDataSourceGroup(dataSources: [dataSource])
-            }
-        }
-
-        allDataSourcesGroup = TransactionRecordDataSourceGroup(dataSources: walletsGroupedBySource.compactMap { dataSources[$0] })
-        singleDataSourceGroups = newGroups
-    }
-
-    func set(selectedWallet: TransactionWallet?) {
+    func _set(selectedWallet: TransactionWallet?) {
         let selectedGroup: TransactionRecordDataSourceGroup
 
         if let wallet = selectedWallet, let group = singleDataSourceGroups[wallet] {
@@ -93,16 +63,56 @@ extension TransactionRecordsService {
         activeGroup.recordsObservable
                 .subscribe(onNext: { [weak self] records in self?.recordsSubject.onNext(records) })
                 .disposed(by: recordsDisposeBag)
-
-        activeGroup.load(count: TransactionsModule.pageLimit, reload: true)
     }
 
-    func set(typeFilter: TransactionTypeFilter) {
+    func _set(typeFilter: TransactionTypeFilter) {
         for group in singleDataSourceGroups.values {
             group.set(typeFilter: typeFilter)
         }
 
         allDataSourcesGroup.set(typeFilter: typeFilter)
+    }
+
+}
+
+extension TransactionRecordsService {
+
+    var recordsObservable: Observable<[TransactionRecord]> {
+        recordsSubject.asObservable()
+    }
+
+    var updatedRecordObservable: Observable<TransactionRecord> {
+        updatedRecordSubject.asObservable()
+    }
+
+    func set(wallets: [TransactionWallet], walletsGroupedBySource: [TransactionWallet], selectedWallet: TransactionWallet?, typeFilter: TransactionTypeFilter) {
+        let dataSources = generateDataSources(wallets: Array(Set(wallets + walletsGroupedBySource)))
+        var newGroups = [TransactionWallet: TransactionRecordDataSourceGroup]()
+
+        for wallet in wallets {
+            if let group = singleDataSourceGroups[wallet] {
+                newGroups[wallet] = group
+            } else if let dataSource = dataSources[wallet] {
+                newGroups[wallet] = TransactionRecordDataSourceGroup(dataSources: [dataSource])
+            }
+        }
+
+        allDataSourcesGroup = TransactionRecordDataSourceGroup(dataSources: walletsGroupedBySource.compactMap { dataSources[$0] })
+        singleDataSourceGroups = newGroups
+
+        _set(selectedWallet: selectedWallet)
+        _set(typeFilter: typeFilter)
+
+        activeGroup.load(count: TransactionsModule.pageLimit, reload: true)
+    }
+
+    func set(selectedWallet: TransactionWallet?) {
+        _set(selectedWallet: selectedWallet)
+        activeGroup.load(count: TransactionsModule.pageLimit, reload: true)
+    }
+
+    func set(typeFilter: TransactionTypeFilter) {
+        _set(typeFilter: typeFilter)
         activeGroup.load(count: TransactionsModule.pageLimit, reload: true)
     }
 
