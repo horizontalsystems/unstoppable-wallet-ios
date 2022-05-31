@@ -66,7 +66,7 @@ class TraitCell: UICollectionViewCell {
     static func size(for viewItem: NftAssetViewModel.TraitViewItem, containerWidth: CGFloat) -> CGSize {
         let availableWidth = containerWidth - 2 * horizontalPadding
 
-        let badgeWidth = (viewItem.percent.map { BadgeView.width(for: $0, style: .small) }) ?? 0
+        let badgeWidth = (viewItem.percent.map { BadgeView.width(for: $0, change: nil, style: .small) }) ?? 0
         let availableValueWidth = availableWidth - (badgeWidth == 0 ? 0 : insidePadding) - badgeWidth
         let valueWidth = viewItem.value.size(containerWidth: availableValueWidth, font: valueFont).width
         let titleWidth = 2 * horizontalPadding + valueWidth + badgeWidth

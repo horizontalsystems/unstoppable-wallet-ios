@@ -79,7 +79,7 @@ class FilterCard: UICollectionViewCell {
         let titleWidth = item.title.size(containerWidth: .greatestFiniteMagnitude, font: FilterCard.titleFont).width
         var badgeWidth: CGFloat = 0
         if let badgeText = item.blockchainBadge {
-            badgeWidth = BadgeView.width(for: badgeText, style: .small)
+            badgeWidth = BadgeView.width(for: badgeText, change: nil, style: .small)
             badgeWidth += iconAndBadgeMargin
         }
         let greaterWidth = max(titleWidth + 2 * FilterCard.sideMargin, iconWidth + badgeWidth + 2 * FilterCard.sideMargin)

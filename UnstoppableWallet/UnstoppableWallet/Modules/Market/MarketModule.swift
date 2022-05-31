@@ -38,7 +38,7 @@ struct MarketModule {
         CellBuilder.selectableRow(
                 elements: [.image24, .multiText, .multiText],
                 tableView: tableView,
-                id: "\(listViewItem.uid ?? "")-\(listViewItem.name)",
+                id: "\(listViewItem.uid ?? "")-\(listViewItem.leftPrimaryValue)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 rowActionProvider: rowActionProvider,
@@ -55,9 +55,10 @@ struct MarketModule {
                         component.title.set(style: .b2)
                         component.subtitle.set(style: .d1)
 
-                        component.title.text = listViewItem.name
-                        component.subtitle.text = listViewItem.code
-                        component.subtitleBadge.text = listViewItem.rank
+                        component.title.text = listViewItem.leftPrimaryValue
+                        component.subtitle.text = listViewItem.leftSecondaryValue
+                        component.subtitleBadge.text = listViewItem.badge
+                        component.subtitleBadge.change = listViewItem.badgeSecondaryValue
                     }
                     cell.bind(index: 2) { (component: MultiTextComponent) in
                         component.titleSpacingView.isHidden = true
@@ -66,9 +67,9 @@ struct MarketModule {
                         component.subtitle.set(style: .d1)
 
                         component.title.textAlignment = .right
-                        component.title.text = listViewItem.price
+                        component.title.text = listViewItem.rightPrimaryValue
 
-                        let marketFieldData = marketFieldPreference(dataValue: listViewItem.dataValue)
+                        let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
                         component.subtitle.textAlignment = .right
                         component.subtitle.textColor = marketFieldData.color
                         component.subtitle.text = marketFieldData.value
@@ -300,11 +301,12 @@ extension MarketModule {  // ViewModel Items
         let iconUrl: String
         let iconShape: IconShape
         let iconPlaceholderName: String
-        let name: String
-        let code: String
-        let rank: String?
-        let price: String
-        let dataValue: MarketDataValue
+        let leftPrimaryValue: String
+        let leftSecondaryValue: String
+        let badge: String?
+        let badgeSecondaryValue: BadgeView.Change?
+        let rightPrimaryValue: String
+        let rightSecondaryValue: MarketDataValue
     }
 
     struct ListViewItemData {

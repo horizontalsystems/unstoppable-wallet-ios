@@ -55,11 +55,12 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
                 iconUrl: marketInfo.fullCoin.coin.imageUrl,
                 iconShape: .full,
                 iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
-                name: marketInfo.fullCoin.coin.name,
-                code: marketInfo.fullCoin.coin.code,
-                rank: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
-                price: price,
-                dataValue: dataValue
+                leftPrimaryValue: marketInfo.fullCoin.coin.name,
+                leftSecondaryValue: marketInfo.fullCoin.coin.code,
+                badge: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
+                badgeSecondaryValue: nil,
+                rightPrimaryValue: price,
+                rightSecondaryValue: dataValue
         )
     }
 
