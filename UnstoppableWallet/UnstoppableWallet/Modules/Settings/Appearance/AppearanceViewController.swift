@@ -12,6 +12,7 @@ class AppearanceViewController: ThemeViewController {
 
     private var themeModeViewItems = [AppearanceViewModel.ViewItem]()
     private var launchScreenViewItems = [AppearanceViewModel.ViewItem]()
+    private var appIconViewItems = [AppearanceViewModel.AppIconViewItem]()
     private var conversionViewItems = [AppearanceViewModel.ConversionViewItem]()
     private var balanceValueViewItems = [AppearanceViewModel.BalanceValueViewItem]()
 
@@ -47,6 +48,7 @@ class AppearanceViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.themeModeViewItemsDriver) { [weak self] in self?.sync(themeModeViewItems: $0) }
         subscribe(disposeBag, viewModel.launchScreenViewItemsDriver) { [weak self] in self?.sync(launchScreenViewItems: $0) }
+        subscribe(disposeBag, viewModel.appIconViewItemsDriver) { [weak self] in self?.sync(appIconViewItems: $0) }
         subscribe(disposeBag, viewModel.conversionViewItemsDriver) { [weak self] in self?.sync(conversionViewItems: $0) }
         subscribe(disposeBag, viewModel.balanceValueViewItemsDriver) { [weak self] in self?.sync(balanceValueViewItems: $0) }
 
@@ -61,6 +63,11 @@ class AppearanceViewController: ThemeViewController {
 
     private func sync(launchScreenViewItems: [AppearanceViewModel.ViewItem]) {
         self.launchScreenViewItems = launchScreenViewItems
+        reloadTable()
+    }
+
+    private func sync(appIconViewItems: [AppearanceViewModel.AppIconViewItem]) {
+        self.appIconViewItems = appIconViewItems
         reloadTable()
     }
 
@@ -155,6 +162,45 @@ extension AppearanceViewController: SectionsDataSource {
         )
     }
 
+    private func appIconSection(viewItems: [AppearanceViewModel.AppIconViewItem]) -> SectionProtocol {
+        Section(
+                id: "app-icon",
+                headerState: header(text: "appearance.app_icon".localized),
+                footerState: .margin(height: .margin24),
+                rows: viewItems.enumerated().map { index, viewItem in
+                    let isFirst = index == 0
+                    let isLast = index == viewItems.count - 1
+
+                    return CellBuilder.selectableRow(
+                            elements: [.image24, .text, .image20],
+                            tableView: tableView,
+                            id: "app-icon-\(index)",
+                            hash: "\(viewItem.selected)",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                                cell.bind(index: 0) { (component: ImageComponent) in
+                                    component.imageView.image = UIImage(named: viewItem.imageName)
+                                }
+                                cell.bind(index: 1) { (component: TextComponent) in
+                                    component.set(style: .b2)
+                                    component.text = viewItem.title
+                                }
+                                cell.bind(index: 2) { (component: ImageComponent) in
+                                    component.isHidden = !viewItem.selected
+                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                                }
+                            },
+                            action: { [weak self] in
+                                self?.viewModel.onSelectAppIcon(index: index)
+                            }
+                    )
+                }
+        )
+    }
+
     private func conversionSection(viewItems: [AppearanceViewModel.ConversionViewItem]) -> SectionProtocol {
         Section(
                 id: "balance-conversion",
@@ -198,7 +244,7 @@ extension AppearanceViewController: SectionsDataSource {
         Section(
                 id: "balance-value",
                 headerState: header(text: "appearance.balance_value".localized),
-                footerState: .margin(height: .margin24),
+                footerState: .margin(height: .margin32),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
@@ -238,6 +284,7 @@ extension AppearanceViewController: SectionsDataSource {
         [
             themeModeSection(viewItems: themeModeViewItems),
             launchScreenSection(viewItems: launchScreenViewItems),
+            appIconSection(viewItems: appIconViewItems),
             conversionSection(viewItems: conversionViewItems),
             balanceValueSection(viewItems: balanceValueViewItems)
         ]

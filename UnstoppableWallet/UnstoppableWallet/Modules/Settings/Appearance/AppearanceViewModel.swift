@@ -8,6 +8,7 @@ class AppearanceViewModel {
 
     private let themeModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let launchScreenViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let appIconViewItemsRelay = BehaviorRelay<[AppIconViewItem]>(value: [])
     private let conversionViewItemsRelay = BehaviorRelay<[ConversionViewItem]>(value: [])
     private let balanceValueViewItemsRelay = BehaviorRelay<[BalanceValueViewItem]>(value: [])
 
@@ -16,11 +17,13 @@ class AppearanceViewModel {
 
         subscribe(disposeBag, service.themeModeItemsObservable) { [weak self] in self?.sync(themeModeItems: $0) }
         subscribe(disposeBag, service.launchScreenItemsObservable) { [weak self] in self?.sync(launchScreenItems: $0) }
+        subscribe(disposeBag, service.appIconItemsObservable) { [weak self] in self?.sync(appIconItems: $0) }
         subscribe(disposeBag, service.conversionItemsObservable) { [weak self] in self?.sync(conversionItems: $0) }
         subscribe(disposeBag, service.balancePrimaryValueItemsObservable) { [weak self] in self?.sync(balancePrimaryValueItems: $0) }
 
         sync(themeModeItems: service.themeModeItems)
         sync(launchScreenItems: service.launchScreenItems)
+        sync(appIconItems: service.appIconItems)
         sync(conversionItems: service.conversionItems)
         sync(balancePrimaryValueItems: service.balancePrimaryValueItems)
     }
@@ -45,6 +48,17 @@ class AppearanceViewModel {
             )
         }
         launchScreenViewItemsRelay.accept(viewItems)
+    }
+
+    private func sync(appIconItems: [AppearanceService.AppIconItem]) {
+        let viewItems = appIconItems.map { item in
+            AppIconViewItem(
+                    imageName: item.appIcon.imageName,
+                    title: item.appIcon.title,
+                    selected: item.current
+            )
+        }
+        appIconViewItemsRelay.accept(viewItems)
     }
 
     private func sync(conversionItems: [AppearanceService.ConversionItem]) {
@@ -81,6 +95,10 @@ extension AppearanceViewModel {
         launchScreenViewItemsRelay.asDriver()
     }
 
+    var appIconViewItemsDriver: Driver<[AppIconViewItem]> {
+        appIconViewItemsRelay.asDriver()
+    }
+
     var conversionViewItemsDriver: Driver<[ConversionViewItem]> {
         conversionViewItemsRelay.asDriver()
     }
@@ -97,6 +115,10 @@ extension AppearanceViewModel {
         service.setLaunchScreen(index: index)
     }
 
+    func onSelectAppIcon(index: Int) {
+        service.setAppIcon(index: index)
+    }
+
     func onSelectConversionCoin(index: Int) {
         service.setConversionCoin(index: index)
     }
@@ -111,6 +133,12 @@ extension AppearanceViewModel {
 
     struct ViewItem {
         let iconName: String
+        let title: String
+        let selected: Bool
+    }
+
+    struct AppIconViewItem {
+        let imageName: String
         let title: String
         let selected: Bool
     }
