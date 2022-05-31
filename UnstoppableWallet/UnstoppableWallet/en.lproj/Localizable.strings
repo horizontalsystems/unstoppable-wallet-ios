@@ -848,6 +848,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Watchlist";
 
+"appearance.app_icon" = "App Icon";
+
 "appearance.balance_conversion" = "Balance Conversion";
 
 "appearance.balance_value" = "Balance Value";

@@ -87,6 +87,8 @@ class App {
     let balancePrimaryValueManager: BalancePrimaryValueManager
     let balanceConversionManager: BalanceConversionManager
 
+    let appIconManager = AppIconManager()
+
     let proFeaturesAuthorizationAdapter: ProFeaturesAuthorizationAdapter
     let proFeaturesAuthorizationManager: ProFeaturesAuthorizationManager
 

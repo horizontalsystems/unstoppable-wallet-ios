@@ -8,6 +8,7 @@ class AppearanceService {
 
     private let themeManager: ThemeManager
     private let launchScreenManager: LaunchScreenManager
+    private let appIconManager: AppIconManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceConversionManager: BalanceConversionManager
     private let disposeBag = DisposeBag()
@@ -26,6 +27,13 @@ class AppearanceService {
         }
     }
 
+    private let appIconItemsRelay = PublishRelay<[AppIconItem]>()
+    private(set) var appIconItems: [AppIconItem] = [] {
+        didSet {
+            appIconItemsRelay.accept(appIconItems)
+        }
+    }
+
     private let conversionItemsRelay = PublishRelay<[ConversionItem]>()
     private(set) var conversionItems: [ConversionItem] = [] {
         didSet {
@@ -40,18 +48,21 @@ class AppearanceService {
         }
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
+        self.appIconManager = appIconManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
         self.balanceConversionManager = balanceConversionManager
 
         subscribe(disposeBag, launchScreenManager.launchScreenObservable) { [weak self] in self?.syncLaunchScreenItems(current: $0) }
+        subscribe(disposeBag, appIconManager.appIconObservable) { [weak self] in self?.syncAppIconItems(current: $0) }
         subscribe(disposeBag, balancePrimaryValueManager.balancePrimaryValueObservable) { [weak self] in self?.syncBalancePrimaryValueItems(current: $0) }
         subscribe(disposeBag, balanceConversionManager.conversionCoinObservable) { [weak self] in self?.syncConversionItems(current: $0) }
 
         syncThemeModeItems()
         syncLaunchScreenItems(current: launchScreenManager.launchScreen)
+        syncAppIconItems(current: appIconManager.appIcon)
         syncConversionItems(current: balanceConversionManager.conversionCoin)
         syncBalancePrimaryValueItems(current: balancePrimaryValueManager.balancePrimaryValue)
     }
@@ -65,6 +76,12 @@ class AppearanceService {
     private func syncLaunchScreenItems(current: LaunchScreen) {
         launchScreenItems = LaunchScreen.allCases.map { launchScreen in
             LaunchScreenItem(launchScreen: launchScreen, current: launchScreen == current)
+        }
+    }
+
+    private func syncAppIconItems(current: AppIcon) {
+        appIconItems = appIconManager.allAppIcons.map { appIcon in
+            AppIconItem(appIcon: appIcon, current: appIcon == current)
         }
     }
 
@@ -92,6 +109,10 @@ extension AppearanceService {
         launchScreenItemsRelay.asObservable()
     }
 
+    var appIconItemsObservable: Observable<[AppIconItem]> {
+        appIconItemsRelay.asObservable()
+    }
+
     var conversionItemsObservable: Observable<[ConversionItem]> {
         conversionItemsRelay.asObservable()
     }
@@ -107,6 +128,10 @@ extension AppearanceService {
 
     func setLaunchScreen(index: Int) {
         launchScreenManager.launchScreen = LaunchScreen.allCases[index]
+    }
+
+    func setAppIcon(index: Int) {
+        appIconManager.appIcon = appIconManager.allAppIcons[index]
     }
 
     func setConversionCoin(index: Int) {
@@ -128,6 +153,11 @@ extension AppearanceService {
 
     struct LaunchScreenItem {
         let launchScreen: LaunchScreen
+        let current: Bool
+    }
+
+    struct AppIconItem {
+        let appIcon: AppIcon
         let current: Bool
     }
 

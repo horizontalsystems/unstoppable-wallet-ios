@@ -7,6 +7,7 @@ struct AppearanceModule {
         let service = AppearanceService(
                 themeManager: App.shared.themeManager,
                 launchScreenManager: App.shared.launchScreenManager,
+                appIconManager: App.shared.appIconManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
                 balanceConversionManager: App.shared.balanceConversionManager
         )
