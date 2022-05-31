@@ -42,7 +42,7 @@ class AppStatusViewControllerNew: ThemeViewController {
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
-        headerCell.image = .appIcon
+        headerCell.image = UIImage(named: AppIcon.main.imageName)
         headerCell.title = "Unstoppable"
         headerCell.subtitle = "version".localized(viewModel.version)
 

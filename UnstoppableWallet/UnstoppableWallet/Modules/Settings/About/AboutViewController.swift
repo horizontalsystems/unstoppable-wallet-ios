@@ -48,7 +48,7 @@ class AboutViewController: ThemeViewController {
 
         tableView.registerCell(forClass: A1Cell.self)
 
-        headerCell.image = .appIcon
+        headerCell.image = UIImage(named: AppIcon.main.imageName)
         headerCell.title = "settings.about_app.app_name".localized
         headerCell.subtitle = "version".localized(viewModel.appVersion)
 

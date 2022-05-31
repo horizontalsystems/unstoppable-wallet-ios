@@ -80,7 +80,7 @@ class AppearanceService {
     }
 
     private func syncAppIconItems(current: AppIcon) {
-        appIconItems = appIconManager.allAppIcons.map { appIcon in
+        appIconItems = AppIconManager.allAppIcons.map { appIcon in
             AppIconItem(appIcon: appIcon, current: appIcon == current)
         }
     }
@@ -131,7 +131,7 @@ extension AppearanceService {
     }
 
     func setAppIcon(index: Int) {
-        appIconManager.appIcon = appIconManager.allAppIcons[index]
+        appIconManager.appIcon = AppIconManager.allAppIcons[index]
     }
 
     func setConversionCoin(index: Int) {

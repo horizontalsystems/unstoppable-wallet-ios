@@ -43,6 +43,7 @@ class AppearanceViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
+        tableView.registerCell(forClass: AppearanceAppIconsCell.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -167,37 +168,20 @@ extension AppearanceViewController: SectionsDataSource {
                 id: "app-icon",
                 headerState: header(text: "appearance.app_icon".localized),
                 footerState: .margin(height: .margin24),
-                rows: viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == viewItems.count - 1
+                rows: [
+                    Row<AppearanceAppIconsCell>(
+                            id: "app-icon",
+                            hash: "\(viewItems.map { "\($0.selected)" }.joined(separator: "-"))",
+                            height: AppearanceAppIconsCell.height(viewItemsCount: viewItems.count),
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-                    return CellBuilder.selectableRow(
-                            elements: [.image24, .text, .image20],
-                            tableView: tableView,
-                            id: "app-icon-\(index)",
-                            hash: "\(viewItem.selected)",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                                cell.bind(index: 0) { (component: ImageComponent) in
-                                    component.imageView.image = UIImage(named: viewItem.imageName)
+                                cell.bind(viewItems: viewItems) { [weak self] index in
+                                    self?.viewModel.onSelectAppIcon(index: index)
                                 }
-                                cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .b2)
-                                    component.text = viewItem.title
-                                }
-                                cell.bind(index: 2) { (component: ImageComponent) in
-                                    component.isHidden = !viewItem.selected
-                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                                }
-                            },
-                            action: { [weak self] in
-                                self?.viewModel.onSelectAppIcon(index: index)
                             }
                     )
-                }
+                ]
         )
     }
 

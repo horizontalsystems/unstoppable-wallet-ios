@@ -18,8 +18,8 @@ enum AppIcon {
 
     var imageName: String {
         switch self {
-        case .main: return "AppIcon"
-        case .alternate(let name, _): return name
+        case .main: return "AppIcon60x60"
+        case .alternate(let name, _): return "\(name)60x60"
         }
     }
 
