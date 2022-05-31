@@ -47,11 +47,12 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
                 iconUrl: collection.imageUrl ?? "",
                 iconShape: .square,
                 iconPlaceholderName: iconPlaceholderName,
-                name: collection.name,
-                code: floorPriceString,
-                rank: "\(item.index)",
-                price: volumeString,
-                dataValue: dataValue
+                leftPrimaryValue: collection.name,
+                leftSecondaryValue: floorPriceString,
+                badge: "\(item.index)",
+                badgeSecondaryValue: nil,
+                rightPrimaryValue: volumeString,
+                rightSecondaryValue: dataValue
         )
     }
 

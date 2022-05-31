@@ -1,6 +1,7 @@
 import Foundation
 import CurrencyKit
 import MarketKit
+import ComponentKit
 
 protocol IMarketListTopPlatformDecoratorService {
     var currency: Currency { get }
@@ -27,9 +28,16 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         let marketCap = item.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized
 
-//        let rankDiff = item.ranks[service.timePeriod]  //todo use to show rank change on top platforms module
-        let diff = item.changes[service.timePeriod]
+        let rank = item.rank
+        let rankDiff: Int? = rank.flatMap { rank in
+            item.ranks[service.timePeriod].flatMap { pastRank in
+                let diff = rank - pastRank
+                return diff == 0 ? nil : diff
+            }
+        }
+        let rankChange: BadgeView.Change? = rankDiff.map { $0 < 0 ? .down("\(abs($0))") : .up("\($0)") }
 
+        let diff = item.changes[service.timePeriod]
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
 
         return MarketModule.ListViewItem(
@@ -37,11 +45,12 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
                 iconUrl: item.imageUrl,
                 iconShape: .square,
                 iconPlaceholderName: "placeholder_24",
-                name: item.name,
-                code: protocols,
-                rank: item.rank.map { "\($0)" },
-                price: marketCap,
-                dataValue: dataValue
+                leftPrimaryValue: item.name,
+                leftSecondaryValue: protocols,
+                badge: rank.map { "\($0)" },
+                badgeSecondaryValue: rankChange,
+                rightPrimaryValue: marketCap,
+                rightSecondaryValue: dataValue
         )
     }
 

@@ -56,11 +56,12 @@ extension MarketListDefiDecorator: IMarketListDecorator {
                 iconUrl: marketInfo.fullCoin.coin.imageUrl,
                 iconShape: .round,
                 iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
-                name: marketInfo.fullCoin.coin.name,
-                code: marketInfo.fullCoin.coin.code,
-                rank: "\(item.tvlRank)",
-                price: price,
-                dataValue: dataValue
+                leftPrimaryValue: marketInfo.fullCoin.coin.name,
+                leftSecondaryValue: marketInfo.fullCoin.coin.code,
+                badge: "\(item.tvlRank)",
+                badgeSecondaryValue: nil,
+                rightPrimaryValue: price,
+                rightSecondaryValue: dataValue
         )
     }
 

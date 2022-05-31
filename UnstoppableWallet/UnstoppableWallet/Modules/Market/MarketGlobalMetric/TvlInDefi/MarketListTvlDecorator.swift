@@ -66,11 +66,12 @@ extension MarketListTvlDecorator: IMarketListDecorator {
                 iconUrl: iconUrl,
                 iconShape: .round,
                 iconPlaceholderName: iconPlaceholderName,
-                name: name,
-                code: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
-                rank: "\(defiCoin.tvlRank)",
-                price: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,
-                dataValue: diff
+                leftPrimaryValue: name,
+                leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
+                badge: "\(defiCoin.tvlRank)",
+                badgeSecondaryValue: nil,
+                rightPrimaryValue: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,
+                rightSecondaryValue: diff
         )
     }
 
