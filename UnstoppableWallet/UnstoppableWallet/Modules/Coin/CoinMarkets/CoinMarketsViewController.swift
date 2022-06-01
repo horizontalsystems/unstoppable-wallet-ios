@@ -61,7 +61,6 @@ class CoinMarketsViewController: ThemeViewController {
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
-        tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -124,6 +123,7 @@ extension CoinMarketsViewController: SectionsDataSource {
         Row<G14Cell>(
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
+                autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                     cell.setTitleImage(urlString: viewItem.marketImageUrl, placeholder: nil)
@@ -134,6 +134,12 @@ extension CoinMarketsViewController: SectionsDataSource {
                     cell.primaryValueText = viewItem.rate
                     cell.secondaryTitleText = "market.market_field.vol".localized
                     cell.secondaryValueText = viewItem.volume
+                    cell.selectionStyle = viewItem.tradeUrl == nil ? .none : .default
+                },
+                action: { _ in
+                    if let appUrl = URL(string: viewItem.tradeUrl ?? ""), UIApplication.shared.canOpenURL(appUrl) {
+                        UIApplication.shared.open(appUrl)
+                    }
                 }
         )
     }

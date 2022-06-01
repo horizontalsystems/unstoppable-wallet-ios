@@ -44,6 +44,7 @@ struct MarketModule {
                 rowActionProvider: rowActionProvider,
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                    cell.selectionStyle = listViewItem.clickable ? .default : .none
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.imageView.clipsToBounds = true
@@ -307,6 +308,7 @@ extension MarketModule {  // ViewModel Items
         let badgeSecondaryValue: BadgeView.Change?
         let rightPrimaryValue: String
         let rightSecondaryValue: MarketDataValue
+        var clickable: Bool = true
     }
 
     struct ListViewItemData {

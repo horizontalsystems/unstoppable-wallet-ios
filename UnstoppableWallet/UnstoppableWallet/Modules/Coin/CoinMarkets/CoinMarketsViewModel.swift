@@ -71,7 +71,8 @@ class CoinMarketsViewModel {
                 marketImageUrl: ticker.marketImageUrl,
                 pair: "\(service.coinCode) / \(ticker.target)",
                 rate: ValueFormatter.instance.formatShort(value: ticker.rate, decimalCount: 8, symbol: ticker.target),
-                volume: volume(value: ticker.volume, price: price)
+                volume: volume(value: ticker.volume, price: price),
+                tradeUrl: ticker.tradeUrl
         )
     }
 
@@ -157,6 +158,7 @@ extension CoinMarketsViewModel {
         let pair: String
         let rate: String?
         let volume: String?
+        let tradeUrl: String?
     }
 
 }
