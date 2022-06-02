@@ -470,9 +470,9 @@
 
 "market.global.subtitle" = "Graphique";
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -831,21 +831,28 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings.about_app.tell_friends" = "Partager avec ami";
 "settings.about_app.email_copied" = "Adresse email copiée";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Thème";
-"settings_theme.system" = "Système";
-"settings_theme.dark" = "Sombre";
-"settings_theme.light" = "Classique";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "Écran de démarrage";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Solde";
-"launch_screen.market_overview" = "Vue d'ensemble du marché";
-"launch_screen.watchlist" = "Liste de suivi";
+"appearance.app_icon" = "App Icon";
+
+"appearance.balance_conversion" = "Balance Conversion";
+
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
 // Set PIN
 
