@@ -7,6 +7,7 @@ import HUD
 
 class CoinMarketsViewController: ThemeViewController {
     private let viewModel: CoinMarketsViewModel
+    private let urlManager: UrlManager
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
@@ -17,8 +18,9 @@ class CoinMarketsViewController: ThemeViewController {
 
     private var viewItems: [CoinMarketsViewModel.ViewItem]?
 
-    init(viewModel: CoinMarketsViewModel, headerViewModel: MarketSingleSortHeaderViewModel) {
+    init(viewModel: CoinMarketsViewModel, headerViewModel: MarketSingleSortHeaderViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
+        self.urlManager = urlManager
         headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
 
         super.init()
@@ -159,9 +161,9 @@ extension CoinMarketsViewController: SectionsDataSource {
                         component.subtitleRight.text = viewItem.volume
                     }
                 },
-                action: {
-                    if let appUrl = URL(string: viewItem.tradeUrl ?? ""), UIApplication.shared.canOpenURL(appUrl) {
-                        UIApplication.shared.open(appUrl)
+                action: { [weak self] in
+                    if let url = viewItem.tradeUrl {
+                        self?.urlManager.open(url: url, from: self)
                     }
                 }
         )
