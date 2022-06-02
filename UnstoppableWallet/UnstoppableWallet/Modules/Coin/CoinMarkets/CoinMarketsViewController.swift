@@ -120,23 +120,46 @@ class CoinMarketsViewController: ThemeViewController {
 extension CoinMarketsViewController: SectionsDataSource {
 
     private func row(viewItem: CoinMarketsViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        Row<G14Cell>(
+        CellBuilder.selectableRow(
+                elements: [.image24, .multiText, .multiText],
+                tableView: tableView,
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    cell.setTitleImage(urlString: viewItem.marketImageUrl, placeholder: nil)
-                    cell.titleImageCornerRadius = .cornerRadius4
-                    cell.titleImageBackgroundColor = .themeSteel10
-                    cell.topText = viewItem.market
-                    cell.bottomText = viewItem.pair
-                    cell.primaryValueText = viewItem.rate
-                    cell.secondaryTitleText = "market.market_field.vol".localized
-                    cell.secondaryValueText = viewItem.volume
                     cell.selectionStyle = viewItem.tradeUrl == nil ? .none : .default
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_24"))
+                        component.imageView.cornerRadius = .cornerRadius4
+                    }
+                    cell.bind(index: 1) { (component: MultiTextComponent) in
+                        component.set(style: .m1)
+                        component.title.set(style: .b2)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.text = viewItem.market
+                        component.subtitle.text = viewItem.pair
+                    }
+                    cell.bind(index: 2) { (component: MultiTextComponent) in
+                        component.titleSpacingView.isHidden = true
+                        component.set(style: .m2)
+                        component.title.set(style: .b2)
+                        component.subtitleLeft.set(style: .d3)
+                        component.subtitle.set(style: .d1)
+
+                        component.title.textAlignment = .right
+                        component.title.text = viewItem.rate
+
+                        component.subtitleLeft.textAlignment = .right
+                        component.subtitleLeft.text = "market.market_field.vol".localized
+
+                        component.subtitleRight.textAlignment = .right
+                        component.subtitleRight.text = viewItem.volume
+                    }
                 },
-                action: { _ in
+                action: {
                     if let appUrl = URL(string: viewItem.tradeUrl ?? ""), UIApplication.shared.canOpenURL(appUrl) {
                         UIApplication.shared.open(appUrl)
                     }
