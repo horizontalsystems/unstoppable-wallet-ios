@@ -472,9 +472,9 @@
 
 "market.global.subtitle" = "图表";
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -833,21 +833,28 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.tell_friends" = "分享给好友";
 "settings.about_app.email_copied" = "电子邮件地址已复制";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "主题";
-"settings_theme.system" = "系统";
-"settings_theme.dark" = "深色";
-"settings_theme.light" = "浅色";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "启动屏幕";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"launch_screen.auto" = "自动";
-"launch_screen.balance" = "余额";
-"launch_screen.market_overview" = "行情";
-"launch_screen.watchlist" = "观看列表";
+"appearance.app_icon" = "App Icon";
+
+"appearance.balance_conversion" = "Balance Conversion";
+
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
 // Set PIN
 
