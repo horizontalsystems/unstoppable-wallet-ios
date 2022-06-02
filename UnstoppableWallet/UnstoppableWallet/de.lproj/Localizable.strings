@@ -831,21 +831,28 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings.about_app.tell_friends" = "Freunden erzählen";
 "settings.about_app.email_copied" = "E-Mail-Adresse kopiert";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Design";
-"settings_theme.system" = "System";
-"settings_theme.dark" = "Dunkel";
-"settings_theme.light" = "Hell";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "Startbildschirm";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Guthaben";
-"launch_screen.market_overview" = "Marktübersicht";
-"launch_screen.watchlist" = "Beobachtungsliste";
+"appearance.app_icon" = "App Icon";
+
+"appearance.balance_conversion" = "Balance Conversion";
+
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
 // Set PIN
 
