@@ -831,21 +831,28 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings.about_app.tell_friends" = "친구에게 추천하기";
 "settings.about_app.email_copied" = "이메일 주소 복사됨";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "테마";
-"settings_theme.system" = "시스템";
-"settings_theme.dark" = "어두운";
-"settings_theme.light" = "밝은";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "시작 화면";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"launch_screen.auto" = "자동";
-"launch_screen.balance" = "잔액";
-"launch_screen.market_overview" = "시장 개요";
-"launch_screen.watchlist" = "Watchlist";
+"appearance.app_icon" = "App Icon";
+
+"appearance.balance_conversion" = "Balance Conversion";
+
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
 // Set PIN
 
