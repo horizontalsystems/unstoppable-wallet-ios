@@ -31,7 +31,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         let rank = item.rank
         let rankDiff: Int? = rank.flatMap { rank in
             item.ranks[service.timePeriod].flatMap { pastRank in
-                let diff = -(rank - pastRank)
+                let diff = pastRank - rank
                 return diff == 0 ? nil : diff
             }
         }
