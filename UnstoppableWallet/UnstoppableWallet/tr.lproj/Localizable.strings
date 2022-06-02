@@ -834,21 +834,28 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 "settings.about_app.email_copied" = "E-posta adresi kopyalandı";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Tema";
-"settings_theme.system" = "Sistem";
-"settings_theme.dark" = "Karanlık";
-"settings_theme.light" = "Açık";
+"appearance.title" = "Appearance";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"settings.launch_screen.title" = "Başlangıç Ekranı";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"launch_screen.auto" = "Oto";
-"launch_screen.balance" = "Bakiye";
-"launch_screen.market_overview" = "Piyasaya Genel Bakış";
-"launch_screen.watchlist" = "İzleme Listesi";
+"appearance.app_icon" = "App Icon";
+
+"appearance.balance_conversion" = "Balance Conversion";
+
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
 // Set PIN
 
