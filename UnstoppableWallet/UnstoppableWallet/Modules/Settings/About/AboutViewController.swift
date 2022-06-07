@@ -16,7 +16,8 @@ class AboutViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let headerCell = LogoHeaderCell()
-    private let termsCell = A3Cell()
+
+    private var showTermsAlert = false
 
     init(viewModel: AboutViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
@@ -52,13 +53,9 @@ class AboutViewController: ThemeViewController {
         headerCell.title = "settings.about_app.app_name".localized
         headerCell.subtitle = "version".localized(viewModel.appVersion)
 
-        termsCell.set(backgroundStyle: .lawrence, isLast: true)
-        termsCell.titleImage = UIImage(named: "unordered_20")
-        termsCell.title = "terms.title".localized
-        termsCell.valueImageTintColor = .themeLucian
-
         subscribe(disposeBag, viewModel.termsAlertDriver) { [weak self] alert in
-            self?.termsCell.valueImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+            self?.showTermsAlert = alert
+            self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
             self?.urlManager.open(url: url, from: self)
@@ -92,6 +89,36 @@ class AboutViewController: ThemeViewController {
         }
     }
 
+    private func row(viewItem: ViewItem, action: (() -> ())? = nil) -> RowProtocol {
+        CellBuilder.selectableRow(
+                elements: [.image20, .text, .image20, .margin8, .image20],
+                tableView: tableView,
+                id: viewItem.id,
+                height: .heightCell48,
+                bind: {cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: viewItem.isFirst, isLast: viewItem.isLast)
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: viewItem.image)
+                    })
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = viewItem.title.localized
+                    })
+                    cell.bind(index: 2, block: { (component: ImageComponent) in
+                        component.imageView.image = viewItem.alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+                        component.imageView.tintColor = .themeLucian
+                    })
+                    cell.bind(index: 3, block: { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                    })
+                },
+                action: {
+                    action?()
+                }
+        )
+    }
+
 }
 
 extension AboutViewController: SectionsDataSource {
@@ -113,33 +140,20 @@ extension AboutViewController: SectionsDataSource {
                     id: "release-notes",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        CellBuilder.selectableRow(
-                                elements: [.image20, .text, .image20],
-                                tableView: tableView,
+                        row(viewItem: ViewItem(
                                 id: "release-notes",
-                                height: .heightCell48,
-                                bind: {cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-
-                                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "circle_information_20")
-                                    })
-                                    cell.bind(index: 1, block: { (component: TextComponent) in
-                                        component.set(style: .b2)
-                                        component.text = "settings.about_app.whats_new".localized
-                                    })
-                                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                                    })
-                                },
+                                image: "circle_information_20",
+                                title: "settings.about_app.whats_new",
+                                alert: false,
+                                isFirst: true,
+                                isLast: true),
                                 action: { [weak self] in
                                     guard let url = self?.viewModel.releaseNotesUrl else {
                                         return
                                     }
 
                                     self?.navigationController?.pushViewController(MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: false), animated: true)
-                                }
-                        )
+                                })
                     ]
             ),
 
@@ -147,26 +161,36 @@ extension AboutViewController: SectionsDataSource {
                     id: "main",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<A1Cell>(
+                        row(viewItem: ViewItem(
                                 id: "app-status",
-                                height: .heightCell48,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                    cell.titleImage = UIImage(named: "app_status_20")
-                                    cell.title = "app_status.title".localized
-                                },
-                                action: { [weak self] _ in
+                                image: "app_status_20",
+                                title: "app_status.title",
+                                alert: false,
+                                isFirst: true,
+                                isLast: false),
+                                action: { [weak self] in
                                     self?.navigationController?.pushViewController(AppStatusRouter.module(), animated: true)
-                                }
-                        ),
-                        StaticRow(
-                                cell: termsCell,
+                                }),
+                        row(viewItem: ViewItem(
                                 id: "terms",
-                                height: .heightCell48,
+                                image: "unordered_20",
+                                title: "terms.title",
+                                alert: showTermsAlert,
+                                isFirst: false,
+                                isLast: false),
                                 action: { [weak self] in
                                     self?.navigationController?.pushViewController(TermsRouter.module(), animated: true)
-                                }
-                        )
+                                }),
+                        row(viewItem: ViewItem(
+                                id: "privacy",
+                                image: "user_20",
+                                title: "coin_page.security_parameters.privacy",
+                                alert: false,
+                                isFirst: false,
+                                isLast: true),
+                                action: { [weak self] in
+                                    self?.navigationController?.pushViewController(PrivacyPolicyViewController(config: .privacy), animated: true)
+                                }),
                     ]
             ),
 
@@ -174,83 +198,68 @@ extension AboutViewController: SectionsDataSource {
                     id: "web",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<A1Cell>(
+                        row(viewItem: ViewItem(
                                 id: "github",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                    cell.titleImage = UIImage(named: "github_20")
-                                    cell.title = "GitHub"
-                                },
-                                action: { [weak self] _ in
+                                image: "github_20",
+                                title: "GitHub",
+                                alert: false,
+                                isFirst: true,
+                                isLast: false),
+                                action: { [weak self] in
                                     self?.viewModel.onTapGithubLink()
-                                }
-                        ),
-                        Row<A1Cell>(
+                                }),
+                        row(viewItem: ViewItem(
                                 id: "website",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isLast: true)
-                                    cell.titleImage = UIImage(named: "globe_20")
-                                    cell.title = "settings.about_app.website".localized
-                                },
-                                action: { [weak self] _ in
+                                image: "globe_20",
+                                title: "settings.about_app.website",
+                                alert: false,
+                                isFirst: false,
+                                isLast: true),
+                                action: { [weak self] in
                                     self?.viewModel.onTapWebPageLink()
-                                }
-                        )
+                                })
                     ]
             ),
             Section(
                     id: "share",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<A1Cell>(
+                        row(viewItem: ViewItem(
                                 id: "rate-us",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                    cell.titleImage = UIImage(named: "rate_20")
-                                    cell.title = "settings.about_app.rate_us".localized
-                                },
-                                action: { [weak self] _ in
+                                image: "rate_20",
+                                title: "settings.about_app.rate_us",
+                                alert: false,
+                                isFirst: true,
+                                isLast: false),
+                                action: { [weak self] in
                                     self?.viewModel.onTapRateApp()
-                                }
-                        ),
-                        Row<A1Cell>(
+                                }),
+                        row(viewItem: ViewItem(
                                 id: "tell-friends",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isLast: true)
-                                    cell.titleImage = UIImage(named: "share_1_20")
-                                    cell.title = "settings.about_app.tell_friends".localized
-                                },
-                                action: { [weak self] _ in
+                                image: "share_1_20",
+                                title: "settings.about_app.tell_friends",
+                                alert: false,
+                                isFirst: false,
+                                isLast: true),
+                                action: { [weak self] in
                                     self?.openTellFriends()
-                                }
-                        )
+                                }),
                     ]
             ),
             Section(
                     id: "contact",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<A1Cell>(
+                        row(viewItem: ViewItem(
                                 id: "email",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.titleImage = UIImage(named: "at_20")
-                                    cell.title = "settings.about_app.contact".localized
-                                },
-                                action: { [weak self] _ in
+                                image: "at_20",
+                                title: "settings.about_app.contact",
+                                alert: false,
+                                isFirst: true,
+                                isLast: true),
+                                action: { [weak self] in
                                     self?.handleContact()
-                                }
-                        )
+                                })
                     ]
             )
         ]
@@ -262,6 +271,19 @@ extension AboutViewController: MFMailComposeViewControllerDelegate {
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
+    }
+
+}
+
+extension AboutViewController {
+
+    struct ViewItem {
+        let id: String
+        let image: String
+        let title: String
+        let alert: Bool
+        let isFirst: Bool
+        let isLast: Bool
     }
 
 }
