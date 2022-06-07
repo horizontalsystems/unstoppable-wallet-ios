@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 
 class BrandFooterCell: UITableViewCell {
-    static let brandText = "© Horizontal Systems 2021"
+    static let brandText = "© Horizontal Systems 2022"
 
     private let brandFooterView = BrandFooterView()
 
