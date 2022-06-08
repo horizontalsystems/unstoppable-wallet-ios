@@ -161,11 +161,11 @@ class SendEvmTransactionViewModel {
     }
 
     private func amountViewItem(coinService: CoinService, amountData: AmountData, type: AmountType) -> ViewItem {
-        let platformCoin = coinService.platformCoin
+        let token = coinService.token
 
         return .amount(
-                iconUrl: platformCoin.coin.imageUrl,
-                iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                iconUrl: token.coin.imageUrl,
+                iconPlaceholderImageName: token.placeholderImageName,
                 coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
                 currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                 type: type
@@ -173,7 +173,7 @@ class SendEvmTransactionViewModel {
     }
 
     private func doubleAmountViewItem(coinService: CoinService, estimateValue: Decimal?, extremumValue: BigUInt, type: AmountType) -> ViewItem {
-        let platformCoin = coinService.platformCoin
+        let token = coinService.token
         let extremumAmountData = coinService.amountData(value: extremumValue, sign: type.sign)
 
         let postfix: String
@@ -192,8 +192,8 @@ class SendEvmTransactionViewModel {
             estimateCoinAmount = "\(estimateCoinAmount) \("swap.estimate_short".localized)"
 
             return .doubleAmount(
-                    iconUrl: platformCoin.coin.imageUrl,
-                    iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                    iconUrl: token.coin.imageUrl,
+                    iconPlaceholderImageName: token.placeholderImageName,
                     primaryCoinAmount: estimateCoinAmount,
                     primaryCurrencyAmount: estimateAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     primaryType: type,
@@ -203,8 +203,8 @@ class SendEvmTransactionViewModel {
             )
         } else {
             return .amount(
-                    iconUrl: platformCoin.coin.imageUrl,
-                    iconPlaceholderImageName: platformCoin.coinType.placeholderImageName,
+                    iconUrl: token.coin.imageUrl,
+                    iconPlaceholderImageName: token.placeholderImageName,
                     coinAmount: extremumCoinAmount,
                     currencyAmount: extremumAmountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     type: type
@@ -220,7 +220,7 @@ class SendEvmTransactionViewModel {
                 .subhead(
                         iconName: "arrow_medium_2_up_right_24",
                         title: "send.confirmation.you_send".localized,
-                        value: coinServiceFactory.baseCoinService.platformCoin.coin.name
+                        value: coinServiceFactory.baseCoinService.token.coin.name
                 ),
                 amountViewItem(
                         coinService: coinServiceFactory.baseCoinService,
@@ -245,7 +245,7 @@ class SendEvmTransactionViewModel {
             .subhead(
                     iconName: "arrow_medium_2_up_right_24",
                     title: "send.confirmation.you_send".localized,
-                    value: coinService.platformCoin.coin.name
+                    value: coinService.token.coin.name
             ),
             amountViewItem(
                     coinService: coinService,
@@ -276,7 +276,7 @@ class SendEvmTransactionViewModel {
             .subhead(
                     iconName: "check_2_24",
                     title: "approve.confirmation.you_approve".localized,
-                    value: coinService.platformCoin.coin.name
+                    value: coinService.token.coin.name
             ),
             amountViewItem(
                     coinService: coinService,
@@ -305,7 +305,7 @@ class SendEvmTransactionViewModel {
         var sections = [SectionViewItem]()
 
         var inViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.name)
+            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.name)
         ]
 
         switch amountIn {
@@ -318,7 +318,7 @@ class SendEvmTransactionViewModel {
         sections.append(SectionViewItem(viewItems: inViewItems))
 
         var outViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.name)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.name)
         ]
 
         switch amountOut {
@@ -370,7 +370,7 @@ class SendEvmTransactionViewModel {
         var coinServiceOut = tokenOut.flatMap { coinService(token: $0) }
 
         if coinServiceOut == nil, let oneInchSwapInfo = oneInchSwapInfo {
-            coinServiceOut = coinService(platformCoin: oneInchSwapInfo.platformCoinTo)
+            coinServiceOut = coinService(token: oneInchSwapInfo.tokenTo)
         }
 
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinServiceOut else {
@@ -381,13 +381,13 @@ class SendEvmTransactionViewModel {
 
         sections.append(
                 SectionViewItem(viewItems: [
-                    .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+                    .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.code),
                     amountViewItem(coinService: coinServiceIn, value: amountIn, type: .neutral)
                 ])
         )
 
         var outViewItems: [ViewItem] = [
-            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code)
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code)
         ]
 
         switch amountOut {
@@ -406,21 +406,21 @@ class SendEvmTransactionViewModel {
     }
 
     private func oneInchItems(oneInchSwapInfo: SendEvmData.OneInchSwapInfo) -> [SectionViewItem] {
-        let coinServiceIn = coinService(platformCoin: oneInchSwapInfo.platformCoinFrom)
-        let coinServiceOut = coinService(platformCoin: oneInchSwapInfo.platformCoinTo)
+        let coinServiceIn = coinService(token: oneInchSwapInfo.tokenFrom)
+        let coinServiceOut = coinService(token: oneInchSwapInfo.tokenTo)
 
         var sections = [SectionViewItem]()
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.platformCoin.coin.code),
+            .subhead(iconName: "arrow_medium_2_up_right_24", title: "swap.you_pay".localized, value: coinServiceIn.token.coin.code),
             amountViewItem(coinService: coinServiceIn, value: oneInchSwapInfo.amountFrom, type: .neutral)
         ]))
 
         let amountOutMinDecimal = oneInchSwapInfo.estimatedAmountTo * (1 - oneInchSwapInfo.slippage / 100)
-        let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, oneInchSwapInfo.platformCoinTo.decimals)).roundedString(decimal: 0)) ?? 0
+        let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, oneInchSwapInfo.tokenTo.decimals)).roundedString(decimal: 0)) ?? 0
 
         sections.append(SectionViewItem(viewItems: [
-            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.platformCoin.coin.code),
+            .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code),
             doubleAmountViewItem(coinService: coinServiceOut, estimateValue: oneInchSwapInfo.estimatedAmountTo, extremumValue: toAmountMin, type: .incoming)
         ]))
 
@@ -500,8 +500,8 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func coinService(platformCoin: PlatformCoin) -> CoinService {
-        coinServiceFactory.coinService(platformCoin: platformCoin)
+    private func coinService(token: MarketKit.Token) -> CoinService {
+        coinServiceFactory.coinService(token: token)
     }
 
 }

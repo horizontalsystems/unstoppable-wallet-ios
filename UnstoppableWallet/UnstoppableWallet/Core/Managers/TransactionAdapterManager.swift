@@ -37,8 +37,8 @@ class TransactionAdapterManager {
             let transactionsAdapter: ITransactionsAdapter?
 
             switch source.blockchain {
-            case .evm(let blockchain):
-                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: wallet.transactionSource, blockchain: blockchain)
+            case .evm(let blockchainType):
+                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: wallet.transactionSource, blockchainType: blockchainType)
             default:
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

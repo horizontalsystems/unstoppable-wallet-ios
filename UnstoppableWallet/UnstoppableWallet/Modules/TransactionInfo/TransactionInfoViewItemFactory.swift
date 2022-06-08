@@ -55,17 +55,17 @@ class TransactionInfoViewItemFactory {
     }
 
     private func priceString(valueIn: TransactionValue, valueOut: TransactionValue, coinPriceIn: CurrencyValue?) -> String? {
-        guard case .coinValue(let valueInPlatformCoin, let valueInDecimal) = valueIn,
-              case .coinValue(let valueOutPlatformCoin, let valueOutDecimal) = valueOut else {
+        guard case .coinValue(let valueInToken, let valueInDecimal) = valueIn,
+              case .coinValue(let valueOutToken, let valueOutDecimal) = valueOut else {
             return nil
         }
 
         let priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
-        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInPlatformCoin.coin.code) ?? ""
+        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInToken.coin.code) ?? ""
         let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs(priceDecimal * $0.value)) }
         let rateFormatted = rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0).map { " (\($0))"} } ?? ""
 
-        return "\(valueOutPlatformCoin.coin.code) = \(price)\(rateFormatted)"
+        return "\(valueOutToken.coin.code) = \(price)\(rateFormatted)"
     }
 
     private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {

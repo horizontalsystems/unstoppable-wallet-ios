@@ -63,27 +63,20 @@ class CoinOverviewViewItemFactory {
     }
 
     private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let coinTypes = info.coinTypes.sorted
+        let tokens = info.fullCoin.tokens
 
-        let contracts: [CoinOverviewViewModel.ContractViewItem] = coinTypes.compactMap { coinType in
-            switch coinType {
-            case .erc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "ethereum_24", reference: address, explorerUrl: "https://etherscan.io/token/\(address)")
-            case .bep20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_smart_chain_24", reference: address, explorerUrl: "https://bscscan.com/token/\(address)")
-            case .mrc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "polygon_24", reference: address, explorerUrl: "https://polygonscan.com/token/\(address)")
-            case .optimismErc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "optimism_24", reference: address, explorerUrl: "https://optimistic.etherscan.io/token/\(address)")
-            case .arbitrumOneErc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_one_24", reference: address, explorerUrl: "https://arbiscan.io/token/\(address)")
-            case .bep2(let symbol): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_chain_24", reference: symbol, explorerUrl: "https://explorer.binance.org/asset/\(symbol)")
-            case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "avalanche_24", reference: address, explorerUrl: "https://avascan.info/blockchain/c/token/\(address)")
-            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "fantom_24", reference: address, explorerUrl: "https://ftmscan.com/token/\(address)")
-            case .harmonyShard0(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "harmony_24", reference: address, explorerUrl: "https://explorer.harmony.one/address/\(address)")
-            case .huobiToken(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "heco_24", reference: address, explorerUrl: "https://hecoinfo.com/token/\(address)")
-            case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "iotex_24", reference: address, explorerUrl: "https://iotexscan.io/token/\(address)")
-            case .moonriver(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "moonriver_24", reference: address, explorerUrl: "https://blockscout.moonriver.moonbeam.network/address/\(address)")
-            case .okexChain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "okex_24", reference: address, explorerUrl: "https://www.oklink.com/oec/address/\(address)")
-            case .solana(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "solana_24", reference: address, explorerUrl: "https://explorer.solana.com/address/\(address)")
-            case .sora(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "sora_24", reference: address, explorerUrl: "https://sorascan.com/sora-mainnet/asset/\(address)")
-            case .tomochain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "tomochain_24", reference: address, explorerUrl: "https://scan.tomochain.com/tokens/\(address)")
-            case .xdai(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "xdai_24", reference: address, explorerUrl: "https://blockscout.com/xdai/mainnet/address/\(address)")
+        let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
+            switch token.type {
+            case .eip20(let address):
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: address, explorerUrl: nil)
+            case .bep2(let symbol):
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: symbol, explorerUrl: nil)
+            case let .unsupported(_, reference):
+                if let reference = reference {
+                    return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: reference, explorerUrl: nil)
+                } else {
+                    return nil
+                }
             default: return nil
             }
         }

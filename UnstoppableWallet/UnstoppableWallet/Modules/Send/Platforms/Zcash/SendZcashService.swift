@@ -8,7 +8,7 @@ class SendZcashService {
     private let disposeBag = DisposeBag()
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-bitcoin-service")
 
-    let platformCoin: PlatformCoin
+    let token: Token
     private let amountService: IAmountInputService
     private let amountCautionService: SendAmountCautionService
     private let addressService: AddressService
@@ -29,13 +29,13 @@ class SendZcashService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendZcashAdapter, reachabilityManager: IReachabilityManager, platformCoin: PlatformCoin) {
+    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendZcashAdapter, reachabilityManager: IReachabilityManager, token: Token) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
         self.memoService = memoService
         self.adapter = adapter
-        self.platformCoin = platformCoin
+        self.token = token
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
             if isReachable {

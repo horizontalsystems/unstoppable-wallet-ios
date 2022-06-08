@@ -8,7 +8,7 @@ class SendConfirmationService {
     private var sendDisposeBag = DisposeBag()
     private let sendService: ISendService
     private let logger: Logger
-    let platformCoin: PlatformCoin
+    let token: Token
     let items: [ISendConfirmationViewItemNew]
 
     private let stateRelay = BehaviorRelay<State>(value: .idle)
@@ -18,10 +18,10 @@ class SendConfirmationService {
         }
     }
 
-    init(sendService: ISendService, logger: Logger, platformCoin: PlatformCoin, items: [ISendConfirmationViewItemNew]) {
+    init(sendService: ISendService, logger: Logger, token: Token, items: [ISendConfirmationViewItemNew]) {
         self.sendService = sendService
         self.logger = logger
-        self.platformCoin = platformCoin
+        self.token = token
         self.items = items
     }
 

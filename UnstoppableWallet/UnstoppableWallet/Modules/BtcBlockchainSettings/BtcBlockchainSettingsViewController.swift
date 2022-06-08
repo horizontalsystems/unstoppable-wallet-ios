@@ -37,7 +37,7 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
-        iconImageView.image = UIImage(named: viewModel.icon)
+        iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

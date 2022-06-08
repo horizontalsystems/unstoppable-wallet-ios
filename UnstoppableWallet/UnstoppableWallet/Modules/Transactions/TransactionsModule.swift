@@ -36,18 +36,18 @@ enum TransactionTypeFilter: String, CaseIterable {
 }
 
 struct TransactionWallet: Hashable {
-    let coin: PlatformCoin?
+    let token: Token?
     let source: TransactionSource
     let badge: String?
 
     func hash(into hasher: inout Hasher) {
-        coin?.hash(into: &hasher)
+        token?.hash(into: &hasher)
         source.hash(into: &hasher)
         badge.hash(into: &hasher)
     }
 
     static func ==(lhs: TransactionWallet, rhs: TransactionWallet) -> Bool {
-        lhs.coin == rhs.coin && lhs.source == rhs.source && lhs.badge == rhs.badge
+        lhs.token == rhs.token && lhs.source == rhs.source && lhs.badge == rhs.badge
     }
 }
 
@@ -62,8 +62,8 @@ struct TransactionSource: Hashable {
         case bitcoinCash
         case dash
         case zcash
-        case bep2(symbol: String)
-        case evm(blockchain: EvmBlockchain)
+        case bep2
+        case evm(blockchainType: BlockchainType)
 
         public var title: String {
             switch self {
@@ -73,14 +73,14 @@ struct TransactionSource: Hashable {
             case .dash: return "Dash"
             case .zcash: return "ZCash"
             case .bep2: return "Binance Chain"
-            case .evm(let blockchain): return blockchain.shortName
+            case .evm(let blockchainType): return blockchainType.uid // todo
             }
         }
 
         var image: String? {
             switch self {
             case .bep2: return "binance_chain_trx_24"
-            case .evm(let blockchain): return blockchain.iconPlain24
+            case .evm(let blockchainType): return ""
             default: return nil
             }
         }
@@ -88,7 +88,7 @@ struct TransactionSource: Hashable {
         var coinPlaceholderImage: String {
             switch self {
             case .bep2: return "Coin Icon Placeholder - BEP2"
-            case .evm(let blockchain): return "Coin Icon Placeholder - \(blockchain.eip20Type)"
+            case .evm(let blockchainType): return "Coin Icon Placeholder - " // todo
             default: return "icon_placeholder_24"
             }
         }
@@ -99,9 +99,9 @@ struct TransactionSource: Hashable {
             case .litecoin: hasher.combine(1)
             case .bitcoinCash: hasher.combine(2)
             case .dash: hasher.combine(3)
-            case .zcash: hasher.combine(5)
-            case .bep2(let symbol): hasher.combine(symbol)
-            case .evm(let blockchain): hasher.combine(blockchain.name)
+            case .zcash: hasher.combine(4)
+            case .bep2: hasher.combine(5)
+            case .evm(let blockchainType): hasher.combine(blockchainType.uid)
             }
         }
 
@@ -112,8 +112,8 @@ struct TransactionSource: Hashable {
             case (.bitcoinCash, .bitcoinCash): return true
             case (.dash, .dash): return true
             case (.zcash, .zcash): return true
-            case (.bep2(let symbol1), .bep2(let symbol2)): return symbol1 == symbol2
-            case (.evm(let lhsBlockchain), .evm(let rhsBlockchain)): return lhsBlockchain == rhsBlockchain
+            case (.bep2, .bep2): return true
+            case (.evm(let lhsBlockchainType), .evm(let rhsBlockchainType)): return lhsBlockchainType == rhsBlockchainType
             default: return false
             }
         }

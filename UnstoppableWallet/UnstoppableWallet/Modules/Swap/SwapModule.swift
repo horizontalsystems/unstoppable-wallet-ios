@@ -41,8 +41,8 @@ protocol ISwapDataSource: AnyObject {
 
 class SwapModule {
 
-    static func viewController(platformCoinFrom: PlatformCoin? = nil) -> UIViewController? {
-        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, evmBlockchainManager: App.shared.evmBlockchainManager, platformCoinFrom: platformCoinFrom)
+    static func viewController(tokenFrom: Token? = nil) -> UIViewController? {
+        let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, evmBlockchainManager: App.shared.evmBlockchainManager, tokenFrom: tokenFrom)
 
         let viewModel =  SwapViewModel(dexManager: swapDexManager)
         let viewController = SwapViewController(
@@ -62,15 +62,15 @@ extension SwapModule {
     }
 
     class DataSourceState {
-        var platformCoinFrom: PlatformCoin?
-        var platformCoinTo: PlatformCoin?
+        var tokenFrom: Token?
+        var tokenTo: Token?
         var amountFrom: Decimal?
         var amountTo: Decimal?
         var exactFrom: Bool
 
-        init(platformCoinFrom: PlatformCoin?, platformCoinTo: PlatformCoin? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
-            self.platformCoinFrom = platformCoinFrom
-            self.platformCoinTo = platformCoinTo
+        init(tokenFrom: Token?, tokenTo: Token? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
+            self.tokenFrom = tokenFrom
+            self.tokenTo = tokenTo
             self.amountFrom = amountFrom
             self.amountTo = amountTo
             self.exactFrom = exactFrom
@@ -79,9 +79,9 @@ extension SwapModule {
     }
 
     class Dex {
-        var blockchain: EvmBlockchain {
+        var blockchainType: BlockchainType {
             didSet {
-                let allowedProviders = blockchain.allowedProviders
+                let allowedProviders = blockchainType.allowedProviders
                 if !allowedProviders.contains(provider) {
                     provider = allowedProviders[0]
                 }
@@ -90,14 +90,14 @@ extension SwapModule {
 
         var provider: Provider {
             didSet {
-                if !provider.allowedBlockchains.contains(blockchain) {
-                    blockchain = provider.allowedBlockchains[0]
+                if !provider.allowedBlockchainTypes.contains(blockchainType) {
+                    blockchainType = provider.allowedBlockchainTypes[0]
                 }
             }
         }
 
-        init(blockchain: EvmBlockchain, provider: Provider) {
-            self.blockchain = blockchain
+        init(blockchainType: BlockchainType, provider: Provider) {
+            self.blockchainType = blockchainType
             self.provider = provider
         }
 
@@ -115,7 +115,7 @@ extension SwapModule {
 
 }
 
-extension EvmBlockchain {
+extension BlockchainType {
 
     var allowedProviders: [SwapModule.Dex.Provider] {
         switch self {
@@ -124,6 +124,7 @@ extension EvmBlockchain {
         case .polygon: return [.oneInch, .quickSwap]
         case .optimism: return [.oneInch]
         case .arbitrumOne: return [.oneInch]
+        default: return []
         }
     }
 
@@ -137,7 +138,7 @@ extension SwapModule.Dex {
         case pancake = "PancakeSwap"
         case quickSwap = "QuickSwap"
 
-        var allowedBlockchains: [EvmBlockchain] {
+        var allowedBlockchainTypes: [BlockchainType] {
             switch self {
             case .uniswap: return [.ethereum]
             case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .optimism, .arbitrumOne]

@@ -7,12 +7,12 @@ class UnknownSwapTransactionRecord: EvmTransactionRecord {
     let valueIn: TransactionValue?
     let valueOut: TransactionValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, exchangeAddress: String, valueIn: TransactionValue?, valueOut: TransactionValue?) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, exchangeAddress: String, valueIn: TransactionValue?, valueOut: TransactionValue?) {
         self.exchangeAddress = exchangeAddress
         self.valueIn = valueIn
         self.valueOut = valueOut
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
+        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
 
 }

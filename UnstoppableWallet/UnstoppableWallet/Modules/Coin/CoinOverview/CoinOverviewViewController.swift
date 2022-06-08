@@ -110,7 +110,6 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: DB7Cell.self)
-        tableView.registerCell(forClass: C85CellNew.self)
         tableView.registerCell(forClass: PerformanceTableViewCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.registerCell(forClass: TextCell.self)
@@ -333,35 +332,51 @@ extension CoinOverviewViewController {
         )
     }
 
+    private func contractRow(viewItem: CoinOverviewViewModel.ContractViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image24, .text, .secondaryCircleButton, .secondaryCircleButton],
+                tableView: tableView,
+                id: "contract-\(index)",
+                height: .heightCell48,
+                bind: { [weak self] cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.lineBreakMode = .byTruncatingMiddle
+                        component.text = viewItem.reference
+                    }
+
+                    cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "copy_20"))
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: viewItem.reference)
+                        }
+                    }
+
+                    cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
+                        component.button.set(image: UIImage(named: "globe_20"))
+                        component.onTap = { [weak self] in
+                            if let explorerUrl = viewItem.explorerUrl {
+                                self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
+                            }
+                        }
+                    }
+                }
+        )
+    }
+
     private func contractsSection(contracts: [CoinOverviewViewModel.ContractViewItem]) -> SectionProtocol {
         Section(
                 id: "contract-info",
                 headerState: .margin(height: .margin12),
                 rows: [headerRow(title: "coin_page.contracts".localized)] +
-                        contracts.enumerated().map { index, contractViewItem in
-                            Row<C85CellNew>(
-                                    id: "contract-info",
-                                    height: .heightCell48,
-                                    bind: { cell, _ in
-                                        cell.selectionStyle = .none
-                                        cell.set(backgroundStyle: .lawrence, isFirst: index <= 0, isLast: index >= contracts.count - 1)
-
-                                        cell.titleStyle = .subhead2Grey
-                                        cell.title = contractViewItem.reference
-                                        cell.titleImage = UIImage(named: contractViewItem.iconName)
-                                        cell.firstImage = UIImage(named: "copy_20")
-                                        cell.secondImage = UIImage(named: "globe_20")
-
-                                        cell.leftAction = {
-                                            UIPasteboard.general.setValue(contractViewItem.reference, forPasteboardType: "public.plain-text")
-                                            HudHelper.instance.showSuccess(title: "alert.copied".localized)
-                                        }
-
-                                        cell.rightAction = { [weak self] in
-                                            self?.urlManager.open(url: contractViewItem.explorerUrl, from: self?.parentNavigationController)
-                                        }
-                                    }
-                            )
+                        contracts.enumerated().map { index, viewItem in
+                            contractRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == contracts.count - 1)
                         }
         )
     }

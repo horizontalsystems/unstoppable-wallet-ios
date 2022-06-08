@@ -6,7 +6,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
@@ -21,7 +21,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
             }
         }
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: false, spam: spam)
+        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }
 
     var combinedValues: ([TransactionValue], [TransactionValue]) {

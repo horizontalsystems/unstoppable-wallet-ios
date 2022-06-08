@@ -5,13 +5,14 @@ import MarketKit
 
 protocol IAddTokenBlockchainService {
     func isValid(reference: String) -> Bool
-    func coinType(reference: String) -> CoinType
+    func tokenQuery(reference: String) -> TokenQuery
     func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin>
 }
 
 class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
+    private let marketKit: MarketKit.Kit
     private let coinManager: CoinManager
     private let walletManager: WalletManager
 
@@ -24,9 +25,10 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManager, walletManager: WalletManager) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], marketKit: MarketKit.Kit, coinManager: CoinManager, walletManager: WalletManager) {
         self.account = account
         self.blockchainServices = blockchainServices
+        self.marketKit = marketKit
         self.coinManager = coinManager
         self.walletManager = walletManager
     }
@@ -66,18 +68,18 @@ extension AddTokenService {
             return
         }
 
-        var existingPlatformCoins = [PlatformCoin]()
+        var existingTokens = [Token]()
 
         for service in validServices {
-            let coinType = service.coinType(reference: reference)
+            let tokenQuery = service.tokenQuery(reference: reference)
 
-            if let existingPlatformCoin = try? coinManager.platformCoin(coinType: coinType) {
-                existingPlatformCoins.append(existingPlatformCoin)
+            if let existingToken = try? coinManager.token(query: tokenQuery) {
+                existingTokens.append(existingToken)
             }
         }
 
-        if !existingPlatformCoins.isEmpty {
-            state = .alreadyExists(platformCoins: existingPlatformCoins)
+        if !existingTokens.isEmpty {
+            state = .alreadyExists(tokens: existingTokens)
             return
         }
 
@@ -95,22 +97,29 @@ extension AddTokenService {
                 .disposed(by: disposeBag)
     }
 
-    func save() {
+    func save() throws {
         guard case .fetched(let customCoins) = state else {
             return
         }
 
-        let platformCoins = customCoins.map { customCoin -> PlatformCoin in
-            let coinType = customCoin.type
-            let coinUid = coinType.customCoinUid
+        let blockchains = try marketKit.blockchains(uids: customCoins.map { $0.tokenQuery.blockchainType.uid })
 
-            return PlatformCoin(
+        let tokens = customCoins.compactMap { customCoin -> Token? in
+            guard let blockchain = blockchains.first(where: { $0.uid == customCoin.tokenQuery.blockchainType.uid }) else {
+                return nil
+            }
+
+            let coinUid = customCoin.tokenQuery.customCoinUid
+
+            return Token(
                     coin: Coin(uid: coinUid, name: customCoin.name, code: customCoin.code),
-                    platform: Platform(coinType: coinType, decimals: customCoin.decimals, coinUid: coinUid)
+                    blockchain: blockchain,
+                    type: customCoin.tokenQuery.tokenType,
+                    decimals: customCoin.decimals
             )
         }
 
-        let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
+        let wallets = tokens.map { Wallet(token: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
 
@@ -121,7 +130,7 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case alreadyExists(platformCoins: [PlatformCoin])
+        case alreadyExists(tokens: [Token])
         case fetched(customCoins: [AddTokenModule.CustomCoin])
         case failed(error: Error)
     }

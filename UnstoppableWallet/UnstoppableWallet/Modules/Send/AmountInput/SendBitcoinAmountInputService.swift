@@ -7,7 +7,7 @@ import MarketKit
 class SendBitcoinAmountInputService {
     weak var availableBalanceService: IAvailableBalanceService?
 
-    let platformCoin: PlatformCoin?
+    let token: Token?
 
     private var amountRelay = BehaviorRelay<Decimal>(value: 0)
     var amount: Decimal = 0 {
@@ -18,8 +18,8 @@ class SendBitcoinAmountInputService {
         }
     }
 
-    init(platformCoin: PlatformCoin) {
-        self.platformCoin = platformCoin
+    init(token: Token) {
+        self.token = token
     }
 
 }
@@ -44,8 +44,8 @@ extension SendBitcoinAmountInputService: IAmountInputService {
         }
     }
 
-    var platformCoinObservable: Observable<PlatformCoin?> {
-        Observable.just(platformCoin)
+    var tokenObservable: Observable<Token?> {
+        Observable.just(token)
     }
 
     func onChange(amount: Decimal) {

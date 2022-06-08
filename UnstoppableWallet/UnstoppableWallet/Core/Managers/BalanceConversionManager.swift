@@ -4,19 +4,19 @@ import StorageKit
 import MarketKit
 
 class BalanceConversionManager {
-    private let coinTypes: [CoinType] = [.bitcoin, .ethereum, .binanceSmartChain]
-    private let keyCoinTypeId = "conversion-coin-type-id"
+    private let blockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain]
+    private let keyBlockchainUid = "conversion-blockchain-uid"
 
     private let marketKit: MarketKit.Kit
     private let localStorage: StorageKit.ILocalStorage
 
-    let conversionPlatformCoins: [PlatformCoin]
+    let conversionTokens: [Token]
 
-    private let conversionCoinRelay = PublishRelay<PlatformCoin?>()
-    private(set) var conversionCoin: PlatformCoin? {
+    private let conversionTokenRelay = PublishRelay<Token?>()
+    private(set) var conversionToken: Token? {
         didSet {
-            conversionCoinRelay.accept(conversionCoin)
-            localStorage.set(value: conversionCoin?.coinType.id, for: keyCoinTypeId)
+            conversionTokenRelay.accept(conversionToken)
+            localStorage.set(value: conversionToken?.blockchain.uid, for: keyBlockchainUid)
         }
     }
 
@@ -25,20 +25,22 @@ class BalanceConversionManager {
         self.marketKit = marketKit
 
         do {
-            let platformCoins = try marketKit.platformCoins(coinTypes: coinTypes)
-            conversionPlatformCoins = coinTypes.compactMap { coinType in
-                platformCoins.first { $0.coinType == coinType }
+            let queries = blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) }
+            let tokens = try marketKit.tokens(queries: queries)
+            conversionTokens = blockchainTypes.compactMap { blockchainType in
+                tokens.first { $0.blockchainType == blockchainType }
             }
         } catch {
-            conversionPlatformCoins = []
+            conversionTokens = []
         }
 
-        let coinTypeId: String? = localStorage.value(for: keyCoinTypeId)
+        let blockchainUid: String? = localStorage.value(for: keyBlockchainUid)
+        let blockchainType = blockchainUid.map { BlockchainType(uid: $0) }
 
-        if let coinType = coinTypeId.map({ CoinType(id: $0) }), let platformCoin = conversionPlatformCoins.first(where: { $0.coinType == coinType }) {
-            conversionCoin = platformCoin
+        if let blockchainType = blockchainType, let token = conversionTokens.first(where: { $0.blockchainType == blockchainType }) {
+            conversionToken = token
         } else {
-            conversionCoin = conversionPlatformCoins.first
+            conversionToken = conversionTokens.first
         }
     }
 
@@ -46,26 +48,26 @@ class BalanceConversionManager {
 
 extension BalanceConversionManager {
 
-    var conversionCoinObservable: Observable<PlatformCoin?> {
-        conversionCoinRelay.asObservable()
+    var conversionTokenObservable: Observable<Token?> {
+        conversionTokenRelay.asObservable()
     }
 
-    func toggleConversionCoin() {
-        guard conversionPlatformCoins.count > 1, let conversionCoin = conversionCoin else {
+    func toggleConversionToken() {
+        guard conversionTokens.count > 1, let conversionToken = conversionToken else {
             return
         }
 
-        let currentIndex = conversionPlatformCoins.firstIndex(of: conversionCoin) ?? 0
-        let newIndex = (currentIndex + 1) % conversionPlatformCoins.count
-        self.conversionCoin = conversionPlatformCoins[newIndex]
+        let currentIndex = conversionTokens.firstIndex(of: conversionToken) ?? 0
+        let newIndex = (currentIndex + 1) % conversionTokens.count
+        self.conversionToken = conversionTokens[newIndex]
     }
 
-    func setConversionCoin(index: Int) {
-        guard index < conversionPlatformCoins.count else {
+    func setConversionToken(index: Int) {
+        guard index < conversionTokens.count else {
             return
         }
 
-        conversionCoin = conversionPlatformCoins[index]
+        conversionToken = conversionTokens[index]
     }
 
 }

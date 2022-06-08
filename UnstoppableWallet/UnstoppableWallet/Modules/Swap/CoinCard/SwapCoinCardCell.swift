@@ -174,8 +174,8 @@ extension SwapCoinCardCell {
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
 
-    func didSelect(platformCoin: PlatformCoin) {
-        viewModel.onSelect(platformCoin: platformCoin)
+    func didSelect(token: Token) {
+        viewModel.onSelect(token: token)
     }
 
 }

@@ -60,13 +60,13 @@ class UniswapService {
             self?.onUpdateTrade(state: state)
         }
 
-        subscribe(scheduler, disposeBag, tradeService.platformCoinInObservable) { [weak self] platformCoin in
-            self?.onUpdate(platformCoin: platformCoin)
+        subscribe(scheduler, disposeBag, tradeService.tokenInObservable) { [weak self] token in
+            self?.onUpdate(token: token)
         }
-        onUpdate(platformCoin: tradeService.platformCoinIn)
+        onUpdate(token: tradeService.tokenIn)
 
-        subscribe(scheduler, disposeBag, tradeService.platformCoinOutObservable) { [weak self] platformCoin in
-            self?.onUpdate(platformCoinOut: platformCoin)
+        subscribe(scheduler, disposeBag, tradeService.tokenOutObservable) { [weak self] token in
+            self?.onUpdate(tokenOut: token)
         }
 
         subscribe(scheduler, disposeBag, tradeService.amountInObservable) { [weak self] amount in
@@ -84,18 +84,18 @@ class UniswapService {
         syncState()
     }
 
-    private func onUpdate(platformCoin: PlatformCoin?) {
-        balanceIn = platformCoin.flatMap { balance(platformCoin: $0) }
-        allowanceService.set(platformCoin: platformCoin)
-        pendingAllowanceService.set(platformCoin: platformCoin)
+    private func onUpdate(token: MarketKit.Token?) {
+        balanceIn = token.flatMap { balance(token: $0) }
+        allowanceService.set(token: token)
+        pendingAllowanceService.set(token: token)
     }
 
     private func onUpdate(amountIn: Decimal?) {
         syncState()
     }
 
-    private func onUpdate(platformCoinOut: PlatformCoin?) {
-        balanceOut = platformCoinOut.flatMap { balance(platformCoin: $0) }
+    private func onUpdate(tokenOut: MarketKit.Token?) {
+        balanceOut = tokenOut.flatMap { balance(token: $0) }
     }
 
     private func onUpdatePendingAllowanceState() {
@@ -153,8 +153,8 @@ class UniswapService {
         }
     }
 
-    private func balance(platformCoin: PlatformCoin) -> Decimal? {
-        (adapterManager.adapter(for: platformCoin) as? IBalanceAdapter)?.balanceData.balance
+    private func balance(token: MarketKit.Token) -> Decimal? {
+        (adapterManager.adapter(for: token) as? IBalanceAdapter)?.balanceData.balance
     }
 
 }

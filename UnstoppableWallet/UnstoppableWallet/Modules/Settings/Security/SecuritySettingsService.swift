@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import PinKit
+import MarketKit
 
 class SecuritySettingsService {
     private let pinKit: IPinKit
@@ -44,14 +45,14 @@ class SecuritySettingsService {
     }
 
     private func syncBlockchainItems() {
-        let btcBlockchainItems: [BlockchainItem] = BtcBlockchain.allCases.map { blockchain in
-            let restoreMode = btcBlockchainManager.restoreMode(blockchain: blockchain)
-            let transactionMode = btcBlockchainManager.transactionSortMode(blockchain: blockchain)
+        let btcBlockchainItems: [BlockchainItem] = btcBlockchainManager.allBlockchains.map { blockchain in
+            let restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
+            let transactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
             return BlockchainItem.btc(blockchain: blockchain, restoreMode: restoreMode, transactionMode: transactionMode)
         }
 
         let evmBlockchainItems: [BlockchainItem] = evmBlockchainManager.allBlockchains.map { blockchain in
-            let syncSource = evmSyncSourceManager.syncSource(blockchain: blockchain)
+            let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
             return BlockchainItem.evm(blockchain: blockchain, syncSource: syncSource)
         }
 
@@ -89,25 +90,27 @@ extension SecuritySettingsService {
     }
 
     enum BlockchainItem {
-        case btc(blockchain: BtcBlockchain, restoreMode: BtcRestoreMode, transactionMode: TransactionDataSortMode)
-        case evm(blockchain: EvmBlockchain, syncSource: EvmSyncSource)
+        case btc(blockchain: Blockchain, restoreMode: BtcRestoreMode, transactionMode: TransactionDataSortMode)
+        case evm(blockchain: Blockchain, syncSource: EvmSyncSource)
 
         var order: Int {
             switch self {
             case .btc(let blockchain, _, _):
-                switch blockchain {
+                switch blockchain.type {
                 case .bitcoin: return 0
                 case .bitcoinCash: return 100
                 case .litecoin: return 101
                 case .dash: return 102
+                default: return Int.max
                 }
             case .evm(let blockchain, _):
-                switch blockchain {
+                switch blockchain.type {
                 case .ethereum: return 2
                 case .binanceSmartChain: return 3
                 case .polygon: return 4
                 case .optimism: return 5
                 case .arbitrumOne: return 6
+                default: return Int.max
                 }
             }
         }

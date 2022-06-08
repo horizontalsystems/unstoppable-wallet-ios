@@ -2,12 +2,13 @@ import UIKit
 import ThemeKit
 import RxSwift
 import WalletConnect
+import MarketKit
 
 protocol IWalletConnectMainService {
     var activeAccountName: String? { get }
     var appMetaItem: WalletConnectMainModule.AppMetaItem? { get }
-    var allowedBlockchains: [WalletConnectMainModule.Blockchain] { get }
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.Blockchain]> { get }
+    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] { get }
+    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> { get }
     var hint: String? { get }
     var state: WalletConnectMainModule.State { get }
     var connectionState: WalletConnectMainModule.ConnectionState { get }
@@ -89,9 +90,9 @@ extension WalletConnectMainModule {
         let icons: [String]
     }
 
-    struct Blockchain: Hashable {
+    struct BlockchainItem: Hashable {
         let chainId: Int
-        let evmBlockchain: EvmBlockchain
+        let blockchain: Blockchain
         let address: String
         let selected: Bool
 
@@ -99,7 +100,7 @@ extension WalletConnectMainModule {
             hasher.combine(chainId)
         }
 
-        static func ==(lhs: Blockchain, rhs: Blockchain) -> Bool {
+        static func ==(lhs: BlockchainItem, rhs: BlockchainItem) -> Bool {
             lhs.chainId == rhs.chainId
         }
 

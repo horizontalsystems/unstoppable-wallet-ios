@@ -40,13 +40,13 @@ protocol ITransactionsAdapter {
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var explorerTitle: String { get }
     func explorerUrl(transactionHash: String) -> String?
-    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]>
-    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]>
+    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]>
     func rawTransaction(hash: String) -> String?
 }
 
 protocol ISendBitcoinAdapter {
-    var blockchain: BtcBlockchain { get }
+    var blockchainType: BlockchainType { get }
     var balanceData: BalanceData { get }
     func availableBalance(feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
     func maximumSendAmount(pluginData: [UInt8: IBitcoinPluginData]) -> Decimal?
@@ -57,7 +57,6 @@ protocol ISendBitcoinAdapter {
 }
 
 protocol ISendDashAdapter {
-    var blockchain: BtcBlockchain { get }
     func availableBalance(address: String?) -> Decimal
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws

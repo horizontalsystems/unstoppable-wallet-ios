@@ -6,18 +6,18 @@ protocol ISwapCoinCardService: AnyObject {
     var dex: SwapModule.Dex { get }
     var readOnly: Bool { get }
     var isEstimated: Bool { get }
-    var platformCoin: PlatformCoin? { get }
+    var token: MarketKit.Token? { get }
     var balance: Decimal? { get }
     var amount: Decimal { get }
 
     var readOnlyObservable: Observable<Bool> { get }
     var isEstimatedObservable: Observable<Bool> { get }
-    var platformCoinObservable: Observable<PlatformCoin?> { get }
+    var tokenObservable: Observable<MarketKit.Token?> { get }
     var balanceObservable: Observable<Decimal?> { get }
     var errorObservable: Observable<Error?> { get }
     var amountObservable: Observable<Decimal> { get }
 
-    func onChange(platformCoin: PlatformCoin)
+    func onChange(token: MarketKit.Token)
 }
 
 extension ISwapCoinCardService {
@@ -118,12 +118,12 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactIn }
     var amount: Decimal { tradeService.amountIn }
-    var platformCoin: PlatformCoin? { tradeService.platformCoinIn }
+    var token: MarketKit.Token? { tradeService.tokenIn }
     var balance: Decimal? { service.balanceIn }
 
     var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactIn } }
     var amountObservable: Observable<Decimal> { tradeService.amountInObservable }
-    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinInObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenInObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
@@ -135,8 +135,8 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
         tradeService.set(amountIn: amount)
     }
 
-    func onChange(platformCoin: PlatformCoin) {
-        tradeService.set(platformCoinIn: platformCoin)
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenIn: token)
     }
 
 }
@@ -153,12 +153,12 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { tradeService.tradeType != .exactOut }
     var amount: Decimal { tradeService.amountOut }
-    var platformCoin: PlatformCoin? { tradeService.platformCoinOut }
+    var token: MarketKit.Token? { tradeService.tokenOut }
     var balance: Decimal? { service.balanceOut }
 
     var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactOut } }
     var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
-    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinOutObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenOutObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
@@ -181,8 +181,8 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
         tradeService.set(amountOut: amount)
     }
 
-    func onChange(platformCoin: PlatformCoin) {
-        tradeService.set(platformCoinOut: platformCoin)
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenOut: token)
     }
 
 }
@@ -199,12 +199,12 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
     var dex: SwapModule.Dex { service.dex }
     var isEstimated: Bool { false }
     var amount: Decimal { tradeService.amountIn }
-    var platformCoin: PlatformCoin? { tradeService.platformCoinIn }
+    var token: MarketKit.Token? { tradeService.tokenIn }
     var balance: Decimal? { service.balanceIn }
 
     var isEstimatedObservable: Observable<Bool> { Observable.just(true) }
     var amountObservable: Observable<Decimal> { tradeService.amountInObservable }
-    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinInObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenInObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
     var errorObservable: Observable<Error?> {
         service.errorsObservable.map {
@@ -216,8 +216,8 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
         tradeService.set(amountIn: amount)
     }
 
-    func onChange(platformCoin: PlatformCoin) {
-        tradeService.set(platformCoinIn: platformCoin)
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenIn: token)
     }
 
 }
@@ -235,13 +235,13 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     var readOnly: Bool { true }
     var isEstimated: Bool { true }
     var amount: Decimal { tradeService.amountOut }
-    var platformCoin: PlatformCoin? { tradeService.platformCoinOut }
+    var token: MarketKit.Token? { tradeService.tokenOut }
     var balance: Decimal? { service.balanceOut }
 
     var readOnlyObservable: Observable<Bool> { Observable.just(true) }
     var isEstimatedObservable: Observable<Bool> { Observable.just(false) }
     var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
-    var platformCoinObservable: Observable<PlatformCoin?> { tradeService.platformCoinOutObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenOutObservable }
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
@@ -251,8 +251,8 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
         // can't change to-card
     }
 
-    func onChange(platformCoin: PlatformCoin) {
-        tradeService.set(platformCoinOut: platformCoin)
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenOut: token)
     }
 
 }

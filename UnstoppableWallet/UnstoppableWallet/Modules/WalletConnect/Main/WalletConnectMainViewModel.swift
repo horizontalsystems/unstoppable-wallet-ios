@@ -57,7 +57,7 @@ class WalletConnectMainViewModel {
         )
     }
 
-    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.Blockchain]? = nil) {
+    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.BlockchainItem]? = nil) {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
         let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
@@ -87,12 +87,12 @@ class WalletConnectMainViewModel {
 
         blockchainViewItemRelay.accept(
                 allowedBlockchains
-                        .map { blockchain in
+                        .map { item in
                             BlockchainViewItem(
-                                    chainId: blockchain.chainId,
-                                    chainTitle: blockchain.evmBlockchain.name,
-                                    address: blockchain.address.shortenedAddress,
-                                    selected: blockchain.selected
+                                    chainId: item.chainId,
+                                    chainTitle: item.blockchain.name,
+                                    address: item.address.shortenedAddress,
+                                    selected: item.selected
                             )
                         }
         )

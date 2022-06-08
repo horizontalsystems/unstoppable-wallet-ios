@@ -62,16 +62,16 @@ class AppStatusManager {
                 continue
             }
 
-            switch wallet.coinType {
-            case .ethereum, .erc20:
+            switch wallet.token.blockchainType {
+            case .ethereum:
                 if ethereumStatus == nil {
                     ethereumStatus = adapter.statusInfo
                 }
-            case .binanceSmartChain, .bep20:
+            case .binanceSmartChain:
                 if binanceSmartChainStatus == nil {
                     binanceSmartChainStatus = adapter.statusInfo
                 }
-            case .bep2:
+            case .binanceChain:
                 if binanceStatus == nil {
                     binanceStatus = adapter.statusInfo
                 }

@@ -9,7 +9,7 @@ class SwapPendingAllowanceService {
     private let adapterManager: AdapterManager
     private let allowanceService: SwapAllowanceService
 
-    private var platformCoin: PlatformCoin?
+    private var token: Token?
     private var pendingAllowance: Decimal?
 
     private let disposeBag = DisposeBag()
@@ -61,15 +61,15 @@ extension SwapPendingAllowanceService {
         stateRelay.asObservable()
     }
 
-    func set(platformCoin: PlatformCoin?) {
-        self.platformCoin = platformCoin
+    func set(token: Token?) {
+        self.token = token
         pendingAllowance = nil
 
         syncAllowance()
     }
 
     func syncAllowance() {
-        guard let platformCoin = platformCoin, let adapter = adapterManager.adapter(for: platformCoin) as? IErc20Adapter else {
+        guard let token = token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
             return
         }
 

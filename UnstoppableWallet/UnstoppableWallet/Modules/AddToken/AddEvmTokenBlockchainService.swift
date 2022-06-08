@@ -9,11 +9,11 @@ import MarketKit
 class AddEvmTokenBlockchainService {
     private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
 
-    private let blockchain: EvmBlockchain
+    private let blockchainType: BlockchainType
     private let networkManager: NetworkManager
 
-    init(blockchain: EvmBlockchain, networkManager: NetworkManager) {
-        self.blockchain = blockchain
+    init(blockchainType: BlockchainType, networkManager: NetworkManager) {
+        self.blockchainType = blockchainType
         self.networkManager = networkManager
     }
 
@@ -30,8 +30,8 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         }
     }
 
-    func coinType(reference: String) -> CoinType {
-        blockchain.evm20CoinType(address: reference.lowercased())
+    func tokenQuery(reference: String) -> TokenQuery {
+        TokenQuery(blockchainType: blockchainType, tokenType: .eip20(address: reference.lowercased()))
     }
 
     func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin> {
@@ -41,13 +41,13 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
             "address": reference
         ]
 
-        let url = "\(apiUrl)/v1/token_info/\(blockchain.apiPath)"
+        let url = "\(apiUrl)/v1/token_info/\(blockchainType.apiPath)"
         let request = networkManager.session.request(url, parameters: parameters)
-        let coinType = coinType(reference: reference)
+        let tokenQuery = tokenQuery(reference: reference)
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
             AddTokenModule.CustomCoin(
-                    type: coinType,
+                    tokenQuery: tokenQuery,
                     name: tokenInfo.name,
                     code: tokenInfo.symbol,
                     decimals: tokenInfo.decimals
@@ -73,7 +73,7 @@ extension AddEvmTokenBlockchainService {
 
 }
 
-extension EvmBlockchain {
+extension BlockchainType {
 
     var apiPath: String {
         switch self {
@@ -82,6 +82,7 @@ extension EvmBlockchain {
         case .polygon: return "mrc20"
         case .optimism: return "optimism"
         case .arbitrumOne: return "arbitrum-one"
+        default: fatalError("Unsupported blockchain type")
         }
     }
 

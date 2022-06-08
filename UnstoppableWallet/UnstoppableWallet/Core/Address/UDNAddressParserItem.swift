@@ -79,22 +79,22 @@ extension UDNAddressParserItem: IAddressParserItem {
 
 extension UDNAddressParserItem {
 
-    static func chainCoinCode(coinType: CoinType) -> String? {
-        switch coinType {
-        case .ethereum, .erc20: return "ETH"
-        case .binanceSmartChain, .bep20: return "ETH"
-        case .polygon, .mrc20: return "ETH"
-        case .ethereumOptimism, .optimismErc20: return "ETH"
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return "ETH"
+    static func chainCoinCode(blockchainType: BlockchainType) -> String? {
+        switch blockchainType {
+        case .ethereum: return "ETH"
+        case .binanceSmartChain: return "ETH"
+        case .polygon: return "ETH"
+        case .optimism: return "ETH"
+        case .arbitrumOne: return "ETH"
         default: return nil
         }
     }
 
-    static func chain(coinType: CoinType) -> String? {
-        switch coinType {
-        case .erc20: return "ERC20"
-        case .bep20: return "BEP20"
-        case .polygon, .mrc20: return "MATIC"
+    static func chain(token: Token) -> String? {
+        switch (token.blockchainType, token.type) {
+        case (.ethereum, .eip20): return "ERC20"
+        case (.binanceSmartChain, .eip20): return "BEP20"
+        case (.polygon, .native), (.polygon, .eip20): return "MATIC"
         default: return nil
         }
     }
@@ -103,12 +103,12 @@ extension UDNAddressParserItem {
 
 extension UDNAddressParserItem {
 
-    static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, coinType: CoinType?) -> UDNAddressParserItem {
+    static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, token: Token?) -> UDNAddressParserItem {
         UDNAddressParserItem(
                 rawAddressParserItem: rawAddressParserItem,
                 coinCode: coinCode,
-                platformCoinCode: coinType.flatMap { chainCoinCode(coinType: $0) },
-                chain: coinType.flatMap { chain(coinType: $0) }
+                platformCoinCode: token.flatMap { chainCoinCode(blockchainType: $0.blockchainType) },
+                chain: token.flatMap { chain(token: $0) }
         )
     }
 

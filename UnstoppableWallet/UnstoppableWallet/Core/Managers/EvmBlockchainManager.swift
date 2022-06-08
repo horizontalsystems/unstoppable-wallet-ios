@@ -3,39 +3,45 @@ import MarketKit
 import HsToolKit
 
 class EvmBlockchainManager {
+    private let blockchainTypes: [BlockchainType] = [
+        .ethereum,
+        .binanceSmartChain,
+        .polygon,
+//        .optimism,
+//        .arbitrumOne,
+    ]
+
     private let syncSourceManager: EvmSyncSourceManager
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
-    private var evmKitManagerMap = [EvmBlockchain: EvmKitManager]()
-    private var evmAccountManagerMap = [EvmBlockchain: EvmAccountManager]()
+    private var evmKitManagerMap = [BlockchainType: EvmKitManager]()
+    private var evmAccountManagerMap = [BlockchainType: EvmAccountManager]()
+
+    let allBlockchains: [Blockchain]
 
     init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
-    }
 
-    private func _chain(blockchain: EvmBlockchain) -> Chain {
-        switch blockchain {
-        case .ethereum: return .ethereum
-        case .binanceSmartChain: return .binanceSmartChain
-        case .polygon: return .polygon
-        case .optimism: return .optimism
-        case .arbitrumOne: return .arbitrumOne
+        do {
+            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+        } catch {
+            allBlockchains = []
         }
     }
 
-    private func evmManagers(blockchain: EvmBlockchain) -> (EvmKitManager, EvmAccountManager) {
-        if let evmKitManager = evmKitManagerMap[blockchain], let evmAccountManager = evmAccountManagerMap[blockchain] {
+    private func evmManagers(blockchainType: BlockchainType) -> (EvmKitManager, EvmAccountManager) {
+        if let evmKitManager = evmKitManagerMap[blockchainType], let evmAccountManager = evmAccountManagerMap[blockchainType] {
             return (evmKitManager, evmAccountManager)
         }
 
-        let evmKitManager = EvmKitManager(chain: _chain(blockchain: blockchain), syncSourceManager: syncSourceManager)
-        let evmAccountManager = accountManagerFactory.evmAccountManager(blockchain: blockchain, evmKitManager: evmKitManager)
+        let evmKitManager = EvmKitManager(chain: chain(blockchainType: blockchainType), syncSourceManager: syncSourceManager)
+        let evmAccountManager = accountManagerFactory.evmAccountManager(blockchainType: blockchainType, evmKitManager: evmKitManager)
 
-        evmKitManagerMap[blockchain] = evmKitManager
-        evmAccountManagerMap[blockchain] = evmAccountManager
+        evmKitManagerMap[blockchainType] = evmKitManager
+        evmAccountManagerMap[blockchainType] = evmAccountManager
 
         return (evmKitManager, evmAccountManager)
     }
@@ -44,44 +50,44 @@ class EvmBlockchainManager {
 
 extension EvmBlockchainManager {
 
-    var allBlockchains: [EvmBlockchain] {
-        [
-            .ethereum,
-            .binanceSmartChain,
-            .polygon,
-//            .optimism,
-//            .arbitrumOne
-        ]
-
-        // todo: load custom blockchains here
+    func blockchain(chainId: Int) -> Blockchain? {
+        allBlockchains.first(where: { chain(blockchainType: $0.type).id == chainId })
     }
 
-    func blockchain(chainId: Int) -> EvmBlockchain? {
-        allBlockchains.first(where: { chain(blockchain: $0).id == chainId })
+    func blockchain(token: Token) -> Blockchain? {
+        allBlockchains.first(where: { token.blockchain == $0 })
     }
 
-    func blockchain(coinType: CoinType) -> EvmBlockchain? {
-        allBlockchains.first(where: { $0.supports(coinType: coinType) })
+    func blockchain(type: BlockchainType) -> Blockchain? {
+        allBlockchains.first(where: { $0.type == type })
     }
 
     func chain(chainId: Int) -> Chain? {
-        blockchain(chainId: chainId).map { chain(blockchain: $0) }
+        blockchain(chainId: chainId).map { chain(blockchainType: $0.type) }
     }
 
-    func chain(blockchain: EvmBlockchain) -> Chain {
-        evmKitManager(blockchain: blockchain).chain
+    func chain(blockchainType: BlockchainType) -> Chain {
+        switch blockchainType {
+        case .ethereum: return .ethereum
+        case .binanceSmartChain: return .binanceSmartChain
+        case .polygon: return .polygon
+        case .optimism: return .optimism
+        case .arbitrumOne: return .arbitrumOne
+        default: fatalError("Unsupported blockchain type")
+        }
     }
 
-    func basePlatformCoin(blockchain: EvmBlockchain) -> PlatformCoin? {
-        try? marketKit.platformCoin(coinType: blockchain.baseCoinType)
+    func baseToken(blockchainType: BlockchainType) -> Token? {
+        let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
+        return try? marketKit.token(query: query)
     }
 
-    func evmKitManager(blockchain: EvmBlockchain) -> EvmKitManager {
-        evmManagers(blockchain: blockchain).0
+    func evmKitManager(blockchainType: BlockchainType) -> EvmKitManager {
+        evmManagers(blockchainType: blockchainType).0
     }
 
-    func evmAccountManager(blockchain: EvmBlockchain) -> EvmAccountManager {
-        evmManagers(blockchain: blockchain).1
+    func evmAccountManager(blockchainType: BlockchainType) -> EvmAccountManager {
+        evmManagers(blockchainType: blockchainType).1
     }
 
 }

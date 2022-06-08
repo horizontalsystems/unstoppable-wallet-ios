@@ -226,40 +226,35 @@ class MarketAdvancedSearchService {
         return abs(value) < allTimeDeltaPercent
     }
 
-    private func inBlockchain(coinTypes: [CoinType]?) -> Bool {
+    private func inBlockchain(tokens: [Token]?) -> Bool {
         guard !blockchains.isEmpty else {
             return true
         }
 
-        guard let coinTypes = coinTypes else {
+        guard let tokens = tokens else {
             return false
         }
 
-        for coinType in coinTypes {
+        for token in tokens {
             for blockchain in blockchains {
-                switch (blockchain, coinType) {
+                switch (blockchain, token.blockchainType) {
                 case (.ethereum, .ethereum),
-                     (.ethereum, .erc20),
                      (.binanceSmartChain, .binanceSmartChain),
-                     (.binanceSmartChain, .bep20),
                      (.polygon, .polygon),
-                     (.polygon, .mrc20),
-                     (.optimism, .ethereumOptimism),
-                     (.optimism, .optimismErc20),
-                     (.arbitrumOne, .ethereumArbitrumOne),
-                     (.arbitrumOne, .arbitrumOneErc20),
-                     (.binance, .bep2),
-                     (.avalanche, .avalanche),
-                     (.fantom, .fantom),
-                     (.harmony, .harmonyShard0),
-                     (.huobi, .huobiToken),
-                     (.iotex, .iotex),
-                     (.moonriver, .moonriver),
-                     (.okex, .okexChain),
-                     (.solana, .solana),
-                     (.sora, .sora),
-                     (.tomochain, .tomochain),
-                     (.xdai, .xdai):
+                     (.optimism, .optimism),
+                     (.arbitrumOne, .arbitrumOne),
+                     (.binance, .binanceChain):
+//                     (.avalanche, .avalanche),
+//                     (.fantom, .fantom),
+//                     (.harmony, .harmonyShard0),
+//                     (.huobi, .huobiToken),
+//                     (.iotex, .iotex),
+//                     (.moonriver, .moonriver),
+//                     (.okex, .okexChain),
+//                     (.solana, .solana),
+//                     (.sora, .sora),
+//                     (.tomochain, .tomochain),
+//                     (.xdai, .xdai):
                     return true
                 default: ()
                 }
@@ -275,7 +270,7 @@ class MarketAdvancedSearchService {
 
             return inBounds(value: marketInfo.marketCap, lower: marketCap.lowerBound, upper: marketCap.upperBound) &&
                     inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
-                    inBlockchain(coinTypes: marketInfo.coinTypes) &&
+                    inBlockchain(tokens: marketInfo.fullCoin.tokens) &&
                     inBounds(value: priceChangeValue, lower: priceChange.lowerBound, upper: priceChange.upperBound) &&
                     (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                     (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&

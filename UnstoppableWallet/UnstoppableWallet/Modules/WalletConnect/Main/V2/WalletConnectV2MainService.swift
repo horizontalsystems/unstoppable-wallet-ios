@@ -23,8 +23,8 @@ class WalletConnectV2MainService {
     private let requestRelay = PublishRelay<Request>()
     private let errorRelay = PublishRelay<Error>()
 
-    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.Blockchain]>()
-    private var blockchains = Set<WalletConnectMainModule.Blockchain>()
+    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
+    private var blockchains = Set<WalletConnectMainModule.BlockchainItem>()
 
     private let stateRelay = PublishRelay<WalletConnectMainModule.State>()
     private(set) var state: WalletConnectMainModule.State = .idle {
@@ -108,7 +108,7 @@ class WalletConnectV2MainService {
         state = .killed
     }
 
-    private var initialBlockchains: Set<WalletConnectMainModule.Blockchain> {
+    private var initialBlockchains: Set<WalletConnectMainModule.BlockchainItem> {
         guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
             return Set()
         }
@@ -118,14 +118,14 @@ class WalletConnectV2MainService {
                 evmChainParser.parse(string: $0)
             }
 
-            var blockchains = Set<WalletConnectMainModule.Blockchain>()
+            var blockchains = Set<WalletConnectMainModule.BlockchainItem>()
             sessionAccountData.forEach { account in
-                guard let evmBlockchain = evmBlockchainManager.blockchain(chainId: account.chainId),
+                guard let blockchain = evmBlockchainManager.blockchain(chainId: account.chainId),
                       let address = account.address else {
                     return
                 }
 
-                blockchains.insert(WalletConnectMainModule.Blockchain(chainId: account.chainId, evmBlockchain: evmBlockchain, address: address, selected: true))
+                blockchains.insert(WalletConnectMainModule.BlockchainItem(chainId: account.chainId, blockchain: blockchain, address: address, selected: true))
             }
             return blockchains
         }
@@ -137,15 +137,15 @@ class WalletConnectV2MainService {
             }
 
             // get addresses
-            var blockchains = Set<WalletConnectMainModule.Blockchain>()
+            var blockchains = Set<WalletConnectMainModule.BlockchainItem>()
             chainIds.forEach { chainId in
-                guard let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId),
+                guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
                       let chain = evmBlockchainManager.chain(chainId: chainId),
                       let address = try? Signer.address(seed: seed, chain: chain) else {
                     return
                 }
 
-                blockchains.insert(WalletConnectMainModule.Blockchain(chainId: chainId, evmBlockchain: evmBlockchain, address: address.eip55, selected: true))
+                blockchains.insert(WalletConnectMainModule.BlockchainItem(chainId: chainId, blockchain: blockchain, address: address.eip55, selected: true))
             }
             return blockchains
         }
@@ -184,7 +184,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         return nil
     }
 
-    var allowedBlockchains: [WalletConnectMainModule.Blockchain] {
+    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] {
         blockchains.sorted { blockchain, blockchain2 in
             blockchain.chainId < blockchain2.chainId
         }
@@ -226,7 +226,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         errorRelay.asObservable()
     }
 
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.Blockchain]> {
+    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
         allowedBlockchainsRelay.asObservable()
     }
 
@@ -238,7 +238,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        let toggledBlockchain = WalletConnectMainModule.Blockchain(chainId: chainId, evmBlockchain: blockchain.evmBlockchain, address: blockchain.address, selected: !blockchain.selected)
+        let toggledBlockchain = WalletConnectMainModule.BlockchainItem(chainId: chainId, blockchain: blockchain.blockchain, address: blockchain.address, selected: !blockchain.selected)
         blockchains.update(with: toggledBlockchain)
         allowedBlockchainsRelay.accept(allowedBlockchains)
     }

@@ -53,7 +53,7 @@ class NftAssetRecord: Record {
         case externalLink
         case permalink
         case traits
-        case lastSalePriceCoinTypeId
+        case lastSalePriceTokenQueryId
         case lastSalePriceValue
         case onSale
     }
@@ -70,7 +70,7 @@ class NftAssetRecord: Record {
         externalLink = row[Columns.externalLink]
         permalink = row[Columns.permalink]
         traits = [NftAsset.Trait](JSONString: row[Columns.traits]) ?? []
-        lastSalePrice = NftPriceRecord(coinTypeId: row[Columns.lastSalePriceCoinTypeId], value: row[Columns.lastSalePriceValue])
+        lastSalePrice = NftPriceRecord(tokenQueryId: row[Columns.lastSalePriceTokenQueryId], value: row[Columns.lastSalePriceValue])
         onSale = row[Columns.onSale]
 
         super.init(row: row)
@@ -89,7 +89,7 @@ class NftAssetRecord: Record {
         container[Columns.externalLink] = externalLink
         container[Columns.permalink] = permalink
         container[Columns.traits] = traits.toJSONString()
-        container[Columns.lastSalePriceCoinTypeId] = lastSalePrice?.coinTypeId
+        container[Columns.lastSalePriceTokenQueryId] = lastSalePrice?.tokenQuery.id
         container[Columns.lastSalePriceValue] = lastSalePrice?.value
         container[Columns.onSale] = onSale
     }

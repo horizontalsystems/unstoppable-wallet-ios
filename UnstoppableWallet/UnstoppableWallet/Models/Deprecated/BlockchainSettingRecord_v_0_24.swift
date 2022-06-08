@@ -38,14 +38,4 @@ class BlockchainSettingRecord_v_0_24: Record {
         container[Columns.value] = value
     }
 
-    static func key(for coinType: CoinType) -> String? {
-        switch coinType {
-        case .bitcoin: return "bitcoin"
-        case .litecoin: return "litecoin"
-        case .bitcoinCash: return "bitcoinCash"
-        case .dash: return "dash"
-        default: return nil
-        }
-    }
-
 }

@@ -35,7 +35,7 @@ extension TransactionFilterHelper {
     func set(wallets: [Wallet]) {
         let newWallets = wallets
                 .sorted { wallet, wallet2 in wallet.coin.code < wallet2.coin.code }
-                .map { TransactionWallet(coin: $0.platformCoin, source: $0.transactionSource, badge: $0.badge) }
+                .map { TransactionWallet(token: $0.token, source: $0.transactionSource, badge: $0.badge) }
 
         if let selectedWallet = selectedWallet, let index = newWallets.firstIndex(of: selectedWallet) {
             selectedWalletIndex = index

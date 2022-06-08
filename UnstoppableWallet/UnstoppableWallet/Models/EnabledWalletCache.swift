@@ -2,14 +2,14 @@ import Foundation
 import GRDB
 
 class EnabledWalletCache: Record {
-    let coinId: String
+    let tokenQueryId: String
     let coinSettingsId: String
     let accountId: String
     let balance: Decimal
     let balanceLocked: Decimal
 
     init(wallet: Wallet, balanceData: BalanceData) {
-        coinId = wallet.coinType.id
+        tokenQueryId = wallet.token.tokenQuery.id
         coinSettingsId = wallet.coinSettings.id
         accountId = wallet.account.id
         balance = balanceData.balance
@@ -27,11 +27,11 @@ class EnabledWalletCache: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case coinId, coinSettingsId, accountId, balance, balanceLocked
+        case tokenQueryId, coinSettingsId, accountId, balance, balanceLocked
     }
 
     required init(row: Row) {
-        coinId = row[Columns.coinId]
+        tokenQueryId = row[Columns.tokenQueryId]
         coinSettingsId = row[Columns.coinSettingsId]
         accountId = row[Columns.accountId]
         balance = row[Columns.balance]
@@ -41,7 +41,7 @@ class EnabledWalletCache: Record {
     }
 
     override func encode(to container: inout PersistenceContainer) {
-        container[Columns.coinId] = coinId
+        container[Columns.tokenQueryId] = tokenQueryId
         container[Columns.coinSettingsId] = coinSettingsId
         container[Columns.accountId] = accountId
         container[Columns.balance] = balance

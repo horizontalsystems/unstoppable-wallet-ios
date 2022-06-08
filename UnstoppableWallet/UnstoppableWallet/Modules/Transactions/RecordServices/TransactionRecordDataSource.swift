@@ -11,7 +11,7 @@ class TransactionRecordDataSource {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tx_data_source", qos: .background)
 
     let wallet: TransactionWallet
-    private let coin: PlatformCoin?
+    private let token: Token?
     private var filter: TransactionTypeFilter = .all
     private let adapter: ITransactionsAdapter
     private var records = [TransactionRecord]()
@@ -22,7 +22,7 @@ class TransactionRecordDataSource {
     init(wallet: TransactionWallet, adapter: ITransactionsAdapter) {
         self.wallet = wallet
         self.adapter = adapter
-        coin = wallet.coin
+        token = wallet.token
 
         subscribe()
     }
@@ -31,7 +31,7 @@ class TransactionRecordDataSource {
         disposeBag = DisposeBag()
 
         adapter
-                .transactionsObservable(coin: coin, filter: filter)
+                .transactionsObservable(token: token, filter: filter)
                 .subscribe(onNext: { [weak self] records in
                     self?.queue.async { [weak self] in
                         self?.handle(records: records)
@@ -94,7 +94,7 @@ extension TransactionRecordDataSource {
             return Single.just(records(count: count))
         } else {
             return adapter
-                    .transactionsSingle(from: records.last, coin: coin, filter: filter, limit: neededRecordsCount)
+                    .transactionsSingle(from: records.last, token: token, filter: filter, limit: neededRecordsCount)
                     .map { [weak self] records in
                         self?.handle(loadedRecords: records, neededRecordsCount: neededRecordsCount)
                         return self?.records(count: count) ?? []

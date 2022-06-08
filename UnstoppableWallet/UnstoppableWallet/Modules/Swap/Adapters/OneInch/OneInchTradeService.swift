@@ -12,18 +12,18 @@ class OneInchTradeService {
     private let oneInchProvider: OneInchProvider
     private var quote: OneInchKit.Quote?
 
-    private(set) var platformCoinIn: PlatformCoin? {
+    private(set) var tokenIn: MarketKit.Token? {
         didSet {
-            if platformCoinIn != oldValue {
-                platformCoinInRelay.accept(platformCoinIn)
+            if tokenIn != oldValue {
+                tokenInRelay.accept(tokenIn)
             }
         }
     }
 
-    private(set) var platformCoinOut: PlatformCoin? {
+    private(set) var tokenOut: MarketKit.Token? {
         didSet {
-            if platformCoinOut != oldValue {
-                platformCoinOutRelay.accept(platformCoinOut)
+            if tokenOut != oldValue {
+                tokenOutRelay.accept(tokenOut)
             }
         }
     }
@@ -44,8 +44,8 @@ class OneInchTradeService {
         }
     }
 
-    private var platformCoinInRelay = PublishRelay<PlatformCoin?>()
-    private var platformCoinOutRelay = PublishRelay<PlatformCoin?>()
+    private var tokenInRelay = PublishRelay<MarketKit.Token?>()
+    private var tokenOutRelay = PublishRelay<MarketKit.Token?>()
 
     private var amountInRelay = PublishRelay<Decimal>()
     private var amountOutRelay = PublishRelay<Decimal>()
@@ -67,8 +67,8 @@ class OneInchTradeService {
 
     init(oneInchProvider: OneInchProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
         self.oneInchProvider = oneInchProvider
-        platformCoinIn = state.platformCoinFrom
-        platformCoinOut = state.platformCoinTo
+        tokenIn = state.tokenFrom
+        tokenOut = state.tokenTo
         amountIn = state.amountFrom ?? 0
 
         evmKit.lastBlockHeightObservable
@@ -82,7 +82,7 @@ class OneInchTradeService {
     }
 
     @discardableResult private func syncQuote() -> Bool {
-        guard let platformCoinIn = platformCoinIn, let platformCoinOut = platformCoinOut else {
+        guard let tokenIn = tokenIn, let tokenOut = tokenOut else {
             state = .notReady(errors: [])
             return false
         }
@@ -99,9 +99,9 @@ class OneInchTradeService {
             return false
         }
 
-        oneInchProvider.quoteSingle(platformCoinIn: platformCoinIn, platformCoinOut: platformCoinOut, amount: amountIn)
+        oneInchProvider.quoteSingle(tokenIn: tokenIn, tokenOut: tokenOut, amount: amountIn)
                 .subscribe(onSuccess: { [weak self] quote in
-                    self?.handle(quote: quote, platformCoinFrom: platformCoinIn, platformCoinTo: platformCoinOut, amountFrom: amountIn)
+                    self?.handle(quote: quote, tokenFrom: tokenIn, tokenTo: tokenOut, amountFrom: amountIn)
                 }, onError: { [weak self] error in
                     self?.state = .notReady(errors: [error.convertedError])
                 })
@@ -110,14 +110,14 @@ class OneInchTradeService {
         return true
     }
 
-    private func handle(quote: OneInchKit.Quote, platformCoinFrom: PlatformCoin, platformCoinTo: PlatformCoin, amountFrom: Decimal) {
+    private func handle(quote: OneInchKit.Quote, tokenFrom: MarketKit.Token, tokenTo: MarketKit.Token, amountFrom: Decimal) {
         self.quote = quote
 
         amountOut = quote.amountOut ?? 0
 
         let parameters = OneInchSwapParameters(
-            platformCoinFrom: platformCoinFrom,
-            platformCoinTo: platformCoinTo,
+            tokenFrom: tokenFrom,
+            tokenTo: tokenTo,
             amountFrom: amountFrom,
             amountTo: amountOut,
             slippage: settings.allowedSlippage,
@@ -135,12 +135,12 @@ extension OneInchTradeService {
         stateRelay.asObservable()
     }
 
-    var platformCoinInObservable: Observable<PlatformCoin?> {
-        platformCoinInRelay.asObservable()
+    var tokenInObservable: Observable<MarketKit.Token?> {
+        tokenInRelay.asObservable()
     }
 
-    var platformCoinOutObservable: Observable<PlatformCoin?> {
-        platformCoinOutRelay.asObservable()
+    var tokenOutObservable: Observable<MarketKit.Token?> {
+        tokenOutRelay.asObservable()
     }
 
     var amountInObservable: Observable<Decimal> {
@@ -155,32 +155,32 @@ extension OneInchTradeService {
         settingsRelay.asObservable()
     }
 
-    func set(platformCoinIn: PlatformCoin?) {
-        guard self.platformCoinIn != platformCoinIn else {
+    func set(tokenIn: MarketKit.Token?) {
+        guard self.tokenIn != tokenIn else {
             return
         }
 
-        self.platformCoinIn = platformCoinIn
+        self.tokenIn = tokenIn
         amountIn = 0
         amountOut = 0
-        if platformCoinOut == platformCoinIn {
-            platformCoinOut = nil
+        if tokenOut == tokenIn {
+            tokenOut = nil
         }
 
         quote = nil
         syncQuote()
     }
 
-    func set(platformCoinOut: PlatformCoin?) {
-        guard self.platformCoinOut != platformCoinOut else {
+    func set(tokenOut: MarketKit.Token?) {
+        guard self.tokenOut != tokenOut else {
             return
         }
 
-        self.platformCoinOut = platformCoinOut
+        self.tokenOut = tokenOut
         amountOut = 0
 
-        if platformCoinIn == platformCoinOut {
-            platformCoinIn = nil
+        if tokenIn == tokenOut {
+            tokenIn = nil
             amountIn = 0
         }
 
@@ -201,10 +201,10 @@ extension OneInchTradeService {
     }
 
     func switchCoins() {
-        let swapPlatformCoin = platformCoinOut
-        platformCoinOut = platformCoinIn
+        let swapToken = tokenOut
+        tokenOut = tokenIn
 
-        set(platformCoinIn: swapPlatformCoin)
+        set(tokenIn: swapToken)
     }
 
 }

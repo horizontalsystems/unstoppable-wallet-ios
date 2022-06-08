@@ -11,9 +11,9 @@ class RestoreSettingsStorage {
 
 extension RestoreSettingsStorage {
 
-    func restoreSettings(accountId: String, coinId: String) -> [RestoreSettingRecord] {
+    func restoreSettings(accountId: String, blockchainUid: String) -> [RestoreSettingRecord] {
         try! dbPool.read { db in
-            try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId && RestoreSettingRecord.Columns.coinId == coinId).fetchAll(db)
+            try RestoreSettingRecord.filter(RestoreSettingRecord.Columns.accountId == accountId && RestoreSettingRecord.Columns.blockchainUid == blockchainUid).fetchAll(db)
         }
     }
 

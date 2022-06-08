@@ -37,14 +37,14 @@ extension RestoreSelectModule {
         case litecoin
         case dash
         case binanceChain
-        case evm(evmBlockchain: EvmBlockchain)
+        case evm(blockchainType: BlockchainType)
 
         static var all: [Blockchain] {
             [
                 .bitcoin,
-                .evm(evmBlockchain: .ethereum),
-                .evm(evmBlockchain: .binanceSmartChain),
-                .evm(evmBlockchain: .polygon),
+                .evm(blockchainType: .ethereum),
+                .evm(blockchainType: .binanceSmartChain),
+                .evm(blockchainType: .polygon),
 //                .evm(evmBlockchain: .optimism),
 //                .evm(evmBlockchain: .arbitrumOne),
                 .zcash,
@@ -63,7 +63,7 @@ extension RestoreSelectModule {
             case .litecoin: return "litecoin"
             case .dash: return "dash"
             case .binanceChain: return "binance-chain"
-            case .evm(let evmBlockchain): return evmBlockchain.uid
+            case .evm(let blockchainType): return blockchainType.uid
             }
         }
 
@@ -75,7 +75,7 @@ extension RestoreSelectModule {
             case .litecoin: return "Litecoin"
             case .dash: return "Dash"
             case .binanceChain: return "Binance Chain"
-            case .evm(let evmBlockchain): return evmBlockchain.name
+            case .evm(let blockchainType): return blockchainType.uid
             }
         }
 
@@ -87,7 +87,7 @@ extension RestoreSelectModule {
             case .litecoin: return "LTC (BIP44, BIP49, BIP84)"
             case .dash: return "DASH"
             case .binanceChain: return "BNB, BEP2 tokens"
-            case .evm(let evmBlockchain): return evmBlockchain.description
+            case .evm(let blockchainType): return ""
             }
         }
 
@@ -99,19 +99,19 @@ extension RestoreSelectModule {
             case .litecoin: return "litecoin_24"
             case .dash: return "dash_24"
             case .binanceChain: return "binance_chain_24"
-            case .evm(let evmBlockchain): return evmBlockchain.icon24
+            case .evm(let blockchainType): return ""
             }
         }
 
-        var coinType: CoinType {
+        var tokenQuery: TokenQuery {
             switch self {
-            case .bitcoin: return .bitcoin
-            case .bitcoinCash: return .bitcoinCash
-            case .zcash: return .zcash
-            case .litecoin: return .litecoin
-            case .dash: return .dash
-            case .binanceChain: return .bep2(symbol: "BNB")
-            case .evm(let evmBlockchain): return evmBlockchain.baseCoinType
+            case .bitcoin: return TokenQuery(blockchainType: .bitcoin, tokenType: .native)
+            case .bitcoinCash: return TokenQuery(blockchainType: .bitcoinCash, tokenType: .native)
+            case .zcash: return TokenQuery(blockchainType: .zcash, tokenType: .native)
+            case .litecoin: return TokenQuery(blockchainType: .litecoin, tokenType: .native)
+            case .dash: return TokenQuery(blockchainType: .dash, tokenType: .native)
+            case .binanceChain: return TokenQuery(blockchainType: .binanceChain, tokenType: .native)
+            case .evm(let blockchainType): return TokenQuery(blockchainType: blockchainType, tokenType: .native)
             }
         }
     }

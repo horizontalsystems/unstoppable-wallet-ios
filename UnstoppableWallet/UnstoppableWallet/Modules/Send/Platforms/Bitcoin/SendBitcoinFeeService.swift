@@ -7,10 +7,10 @@ import MarketKit
 class SendBitcoinFeeService: SendFeeService {
     private let feePriorityService: SendFeePriorityService
 
-    init(fiatService: FiatService, feePriorityService: SendFeePriorityService, feeCoin: PlatformCoin) {
+    init(fiatService: FiatService, feePriorityService: SendFeePriorityService, feeToken: Token) {
         self.feePriorityService = feePriorityService
 
-        super.init(fiatService: fiatService, feeCoin: feeCoin)
+        super.init(fiatService: fiatService, feeToken: feeToken)
     }
 
     override var defaultFeeObservable: Observable<Bool> {

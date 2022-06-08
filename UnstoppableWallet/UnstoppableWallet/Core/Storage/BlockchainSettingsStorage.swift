@@ -15,36 +15,36 @@ class BlockchainSettingsStorage {
 
 extension BlockchainSettingsStorage {
 
-    func btcRestoreMode(btcBlockchain: BtcBlockchain) -> BtcRestoreMode? {
-        try? storage.record(blockchainUid: btcBlockchain.rawValue, key: keyBtcRestore)
+    func btcRestoreMode(blockchainType: BlockchainType) -> BtcRestoreMode? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyBtcRestore)
                 .flatMap { record in
                     BtcRestoreMode(rawValue: record.value)
                 }
     }
 
-    func save(btcRestoreMode: BtcRestoreMode, btcBlockchain: BtcBlockchain) {
-        let record = BlockchainSettingRecord(blockchainUid: btcBlockchain.rawValue, key: keyBtcRestore, value: btcRestoreMode.rawValue)
+    func save(btcRestoreMode: BtcRestoreMode, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyBtcRestore, value: btcRestoreMode.rawValue)
         try? storage.save(record: record)
     }
 
-    func btcTransactionSortMode(btcBlockchain: BtcBlockchain) -> TransactionDataSortMode? {
-        try? storage.record(blockchainUid: btcBlockchain.rawValue, key: keyBtcTransactionSort)
+    func btcTransactionSortMode(blockchainType: BlockchainType) -> TransactionDataSortMode? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyBtcTransactionSort)
                 .flatMap { record in
                     TransactionDataSortMode(rawValue: record.value)
                 }
     }
 
-    func save(btcTransactionSortMode: TransactionDataSortMode, btcBlockchain: BtcBlockchain) {
-        let record = BlockchainSettingRecord(blockchainUid: btcBlockchain.rawValue, key: keyBtcTransactionSort, value: btcTransactionSortMode.rawValue)
+    func save(btcTransactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyBtcTransactionSort, value: btcTransactionSortMode.rawValue)
         try? storage.save(record: record)
     }
 
-    func evmSyncSourceName(evmBlockchain: EvmBlockchain) -> String? {
-        try? storage.record(blockchainUid: evmBlockchain.rawValue, key: keyEvmSyncSource).flatMap { $0.value }
+    func evmSyncSourceName(blockchainType: BlockchainType) -> String? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyEvmSyncSource).flatMap { $0.value }
     }
 
-    func save(evmSyncSourceName: String, evmBlockchain: EvmBlockchain) {
-        let record = BlockchainSettingRecord(blockchainUid: evmBlockchain.rawValue, key: keyEvmSyncSource, value: evmSyncSourceName)
+    func save(evmSyncSourceName: String, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyEvmSyncSource, value: evmSyncSourceName)
         try? storage.save(record: record)
     }
 

@@ -40,23 +40,23 @@ class CreateAccountService {
     }
 
     private func activateDefaultWallets(account: Account) {
-        let defaultCoinTypes: [CoinType] = [.bitcoin, .ethereum, .binanceSmartChain, .polygon, .zcash]
+        let defaultBlockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain, .polygon, .zcash]
 
         var wallets = [Wallet]()
 
-        for coinType in defaultCoinTypes {
-            guard let platformCoin = try? marketKit.platformCoin(coinType: coinType) else {
+        for blockchainType in defaultBlockchainTypes {
+            guard let token = try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)) else {
                 continue
             }
 
-            let defaultSettingsArray = coinType.defaultSettingsArray
+            let defaultSettingsArray = blockchainType.defaultSettingsArray
 
             if defaultSettingsArray.isEmpty {
-                wallets.append(Wallet(platformCoin: platformCoin, account: account))
+                wallets.append(Wallet(token: token, account: account))
             } else {
                 for coinSettings in defaultSettingsArray {
-                    let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
-                    wallets.append(Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account))
+                    let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
+                    wallets.append(Wallet(configuredToken: configuredToken, account: account))
                 }
             }
         }

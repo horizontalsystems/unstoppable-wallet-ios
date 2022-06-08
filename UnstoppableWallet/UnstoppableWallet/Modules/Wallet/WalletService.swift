@@ -120,7 +120,7 @@ class WalletService {
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
         }
-        subscribe(disposeBag, balanceConversionManager.conversionCoinObservable) { [weak self] _ in
+        subscribe(disposeBag, balanceConversionManager.conversionTokenObservable) { [weak self] _ in
             self?.syncTotalItem()
         }
 
@@ -163,9 +163,9 @@ class WalletService {
         allItems = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
-        let coinUids = Set(wallets.filter { !$0.platformCoin.isCustom }.map { $0.coin.uid })
-        let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeCoin(coinType: $0.coinType)?.coin.uid })
-        let conversionCoinUids = balanceConversionManager.conversionPlatformCoins.map { $0.coin.uid }
+        let coinUids = Set(wallets.filter { !$0.token.isCustom }.map { $0.coin.uid })
+        let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token)?.coin.uid })
+        let conversionCoinUids = balanceConversionManager.conversionTokens.map { $0.coin.uid }
 
         coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(conversionCoinUids))
     }
@@ -197,8 +197,8 @@ class WalletService {
         var convertedValue: CoinValue?
         var convertedValueExpired = false
 
-        if let conversionCoin = balanceConversionManager.conversionCoin, let priceItem = coinPriceService.itemMap(coinUids: [conversionCoin.coin.uid])[conversionCoin.coin.uid] {
-            convertedValue = CoinValue(kind: .platformCoin(platformCoin: conversionCoin), value: total / priceItem.price.value)
+        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.itemMap(coinUids: [conversionToken.coin.uid])[conversionToken.coin.uid] {
+            convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
             convertedValueExpired = priceItem.expired
         }
 
@@ -411,7 +411,7 @@ extension WalletService {
     }
 
     func toggleConversionCoin() {
-        balanceConversionManager.toggleConversionCoin()
+        balanceConversionManager.toggleConversionToken()
     }
 
 }

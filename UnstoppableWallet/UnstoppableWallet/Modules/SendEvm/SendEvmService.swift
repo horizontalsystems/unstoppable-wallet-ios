@@ -6,7 +6,7 @@ import EthereumKit
 import BigInt
 
 class SendEvmService {
-    let sendPlatformCoin: PlatformCoin
+    let sendToken: Token
     private let disposeBag = DisposeBag()
     private let adapter: ISendEthereumAdapter
     private let addressService: AddressService
@@ -28,8 +28,8 @@ class SendEvmService {
         }
     }
 
-    init(platformCoin: PlatformCoin, adapter: ISendEthereumAdapter, addressService: AddressService) {
-        sendPlatformCoin = platformCoin
+    init(token: Token, adapter: ISendEthereumAdapter, addressService: AddressService) {
+        sendToken = token
         self.adapter = adapter
         self.addressService = addressService
 
@@ -63,7 +63,7 @@ class SendEvmService {
     }
 
     private func validEvmAmount(amount: Decimal) throws -> BigUInt {
-        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendPlatformCoin.decimals)) else {
+        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendToken.decimals)) else {
             throw AmountError.invalidDecimal
         }
 
@@ -106,8 +106,8 @@ extension SendEvmService: IAmountInputService {
         0
     }
 
-    var platformCoin: PlatformCoin? {
-        sendPlatformCoin
+    var token: Token? {
+        sendToken
     }
 
     var balance: Decimal? {
@@ -118,7 +118,7 @@ extension SendEvmService: IAmountInputService {
         .empty()
     }
 
-    var platformCoinObservable: Observable<PlatformCoin?> {
+    var tokenObservable: Observable<Token?> {
         .empty()
     }
 
@@ -133,8 +133,8 @@ extension SendEvmService: IAmountInputService {
 
                 var amountWarning: AmountWarning? = nil
                 if amount.isEqual(to: adapter.balanceData.balance) {
-                    switch sendPlatformCoin.coinType {
-                    case .binanceSmartChain, .ethereum: amountWarning = AmountWarning.coinNeededForFee
+                    switch sendToken.type {
+                    case .native: amountWarning = AmountWarning.coinNeededForFee
                     default: ()
                     }
                 }

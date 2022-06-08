@@ -32,7 +32,7 @@ class DepositViewController: ThemeViewController {
 
         imageView.kf.setImage(
                 with: URL(string: viewModel.coin.imageUrl),
-                placeholder: UIImage(named: viewModel.coinType.placeholderImageName),
+                placeholder: UIImage(named: viewModel.placeholderImageName),
                 options: [.scaleFactor(UIScreen.main.scale)]
         )
 

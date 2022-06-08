@@ -58,7 +58,7 @@ class NftAssetService {
 
     private func _allCoinUids(item: Item) -> Set<String> {
         let priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor, item.bestOffer, item.sale?.price]
-        return Set(priceItems.compactMap { $0?.nftPrice.platformCoin.coin.uid })
+        return Set(priceItems.compactMap { $0?.nftPrice.token.coin.uid })
     }
 
     private func _fillCoinPrices(item: Item, coinUids: Set<String>) {
@@ -75,7 +75,7 @@ class NftAssetService {
     }
 
     private func _fill(priceItem: PriceItem?, map: [String: WalletCoinPriceService.Item]) {
-        guard let coinUid = priceItem?.nftPrice.platformCoin.coin.uid else {
+        guard let coinUid = priceItem?.nftPrice.token.coin.uid else {
             return
         }
 

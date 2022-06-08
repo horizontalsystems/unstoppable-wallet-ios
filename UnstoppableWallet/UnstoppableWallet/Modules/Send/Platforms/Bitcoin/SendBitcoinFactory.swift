@@ -14,7 +14,7 @@ protocol ISendFeeSettingsFactory {
 class BaseSendFactory {
 
     func values(fiatService: FiatService) throws -> (CoinValue, CurrencyValue?) {
-        guard let platformCoin = fiatService.platformCoin else {
+        guard let token = fiatService.token else {
             throw ConfirmationError.noCoin
         }
 
@@ -23,7 +23,7 @@ class BaseSendFactory {
 
         switch fiatService.primaryInfo {
         case .amount(let value):
-            coinValue = CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: value)
+            coinValue = CoinValue(kind: .token(token: token), value: value)
         case .amountInfo(let info):
             guard let info = info else {
                 throw ConfirmationError.noAmount
@@ -75,9 +75,9 @@ class SendBitcoinFactory: BaseSendFactory {
     private let adapterService: SendBitcoinAdapterService
     private let customFeeRateProvider: ICustomRangedFeeRateProvider?
     private let logger: Logger
-    private let platformCoin: PlatformCoin
+    private let token: Token
 
-    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendFeeRateService, feePriorityService: SendFeePriorityService, timeLockService: SendTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, platformCoin: PlatformCoin) {
+    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendFeeRateService, feePriorityService: SendFeePriorityService, timeLockService: SendTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
@@ -89,7 +89,7 @@ class SendBitcoinFactory: BaseSendFactory {
         self.adapterService = adapterService
         self.customFeeRateProvider = customFeeRateProvider
         self.logger = logger
-        self.platformCoin = platformCoin
+        self.token = token
     }
 
     private func items() throws -> [ISendConfirmationViewItemNew] {
@@ -119,7 +119,7 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
     func confirmationViewController() throws -> UIViewController {
         let items = try items()
 
-        let service = SendConfirmationService(sendService: adapterService, logger: logger, platformCoin: platformCoin, items: items)
+        let service = SendConfirmationService(sendService: adapterService, logger: logger, token: token, items: items)
         let viewModel = SendConfirmationViewModel(service: service)
         let viewController = SendConfirmationViewController(viewModel: viewModel)
 
@@ -146,7 +146,7 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
         let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
                 service: amountCautionService,
-                feeCoin: platformCoin
+                feeToken: token
         )
 
         let service = SendFeeSettingsService(feeService: feeService, feeRateService: feeRateService, feePriorityService: feePriorityService)

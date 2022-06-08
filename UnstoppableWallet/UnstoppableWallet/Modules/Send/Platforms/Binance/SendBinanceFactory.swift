@@ -9,16 +9,16 @@ class SendBinanceFactory: BaseSendFactory {
     private let addressService: AddressService
     private let memoService: SendMemoInputService
     private let logger: Logger
-    private let platformCoin: PlatformCoin
+    private let token: Token
 
-    init(service: SendBinanceService, fiatService: FiatService, addressService: AddressService, memoService: SendMemoInputService, feeFiatService: FiatService, logger: Logger, platformCoin: PlatformCoin) {
+    init(service: SendBinanceService, fiatService: FiatService, addressService: AddressService, memoService: SendMemoInputService, feeFiatService: FiatService, logger: Logger, token: Token) {
         self.service = service
         self.fiatService = fiatService
         self.feeFiatService = feeFiatService
         self.addressService = addressService
         self.memoService = memoService
         self.logger = logger
-        self.platformCoin = platformCoin
+        self.token = token
     }
 
     private func items() throws -> [ISendConfirmationViewItemNew] {
@@ -49,7 +49,7 @@ extension SendBinanceFactory: ISendConfirmationFactory {
     func confirmationViewController() throws -> UIViewController {
         let items = try items()
 
-        let service = SendConfirmationService(sendService: service, logger: logger, platformCoin: platformCoin, items: items)
+        let service = SendConfirmationService(sendService: service, logger: logger, token: token, items: items)
         let viewModel = SendConfirmationViewModel(service: service)
         let viewController = SendConfirmationViewController(viewModel: viewModel)
 

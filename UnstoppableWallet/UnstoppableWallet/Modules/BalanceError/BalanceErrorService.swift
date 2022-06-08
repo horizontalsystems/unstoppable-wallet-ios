@@ -1,10 +1,12 @@
+import MarketKit
+
 class BalanceErrorService {
     private let wallet: Wallet
     private let error: Error
     private let adapterManager: AdapterManager
     private let appConfigProvider: AppConfigProvider
 
-    var blockchain: Blockchain?
+    var item: Item?
 
     init(wallet: Wallet, error: Error, adapterManager: AdapterManager, appConfigProvider: AppConfigProvider, btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager) {
         self.wallet = wallet
@@ -12,10 +14,10 @@ class BalanceErrorService {
         self.adapterManager = adapterManager
         self.appConfigProvider = appConfigProvider
 
-        if let btcBlockchain = btcBlockchainManager.blockchain(coinType: wallet.coinType) {
-            blockchain = .btc(blockchain: btcBlockchain)
-        } else if let evmBlockchain = evmBlockchainManager.blockchain(coinType: wallet.coinType) {
-            blockchain = .evm(blockchain: evmBlockchain)
+        if let blockchain = btcBlockchainManager.blockchain(token: wallet.token) {
+            item = .btc(blockchain: blockchain)
+        } else if let blockchain = evmBlockchainManager.blockchain(token: wallet.token) {
+            item = .evm(blockchain: blockchain)
         }
     }
 
@@ -32,7 +34,7 @@ extension BalanceErrorService {
     }
 
     var isSourceChangeable: Bool {
-        blockchain != nil
+        item != nil
     }
 
     var contactEmail: String {
@@ -47,9 +49,9 @@ extension BalanceErrorService {
 
 extension BalanceErrorService {
 
-    enum Blockchain {
-        case btc(blockchain: BtcBlockchain)
-        case evm(blockchain: EvmBlockchain)
+    enum Item {
+        case btc(blockchain: Blockchain)
+        case evm(blockchain: Blockchain)
     }
 
 }

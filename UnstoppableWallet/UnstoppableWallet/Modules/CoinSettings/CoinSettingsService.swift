@@ -3,19 +3,19 @@ import RxRelay
 import MarketKit
 
 class CoinSettingsService {
-    private let approveSettingsRelay = PublishRelay<CoinWithSettings>()
-    private let rejectApproveSettingsRelay = PublishRelay<PlatformCoin>()
+    private let approveSettingsRelay = PublishRelay<TokenWithSettings>()
+    private let rejectApproveSettingsRelay = PublishRelay<Token>()
 
     private let requestRelay = PublishRelay<Request>()
 }
 
 extension CoinSettingsService {
 
-    var approveSettingsObservable: Observable<CoinWithSettings> {
+    var approveSettingsObservable: Observable<TokenWithSettings> {
         approveSettingsRelay.asObservable()
     }
 
-    var rejectApproveSettingsObservable: Observable<PlatformCoin> {
+    var rejectApproveSettingsObservable: Observable<Token> {
         rejectApproveSettingsRelay.asObservable()
     }
 
@@ -23,14 +23,14 @@ extension CoinSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(platformCoin: PlatformCoin, settingsArray: [CoinSettings]) {
-        let coinType = platformCoin.coinType
+    func approveSettings(token: Token, settingsArray: [CoinSettings]) {
+        let blockchainType = token.blockchainType
 
-        if coinType.coinSettingTypes.contains(.derivation) {
+        if blockchainType.coinSettingTypes.contains(.derivation) {
             let currentDerivations = settingsArray.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
 
             let request = Request(
-                    platformCoin: platformCoin,
+                    token: token,
                     type: .derivation(allDerivations: MnemonicDerivation.allCases, current: currentDerivations)
             )
 
@@ -38,11 +38,11 @@ extension CoinSettingsService {
             return
         }
 
-        if coinType.coinSettingTypes.contains(.bitcoinCashCoinType) {
+        if blockchainType.coinSettingTypes.contains(.bitcoinCashCoinType) {
             let currentTypes = settingsArray.compactMap { $0[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) } }
 
             let request = Request(
-                    platformCoin: platformCoin,
+                    token: token,
                     type: .bitcoinCashCoinType(allTypes: BitcoinCashCoinType.allCases, current: currentTypes)
             )
 
@@ -50,41 +50,41 @@ extension CoinSettingsService {
             return
         }
 
-        approveSettingsRelay.accept(CoinWithSettings(platformCoin: platformCoin))
+        approveSettingsRelay.accept(TokenWithSettings(token: token))
     }
 
-    func select(derivations: [MnemonicDerivation], platformCoin: PlatformCoin) {
+    func select(derivations: [MnemonicDerivation], token: Token) {
         let settingsArray: [CoinSettings] = derivations.map { [.derivation: $0.rawValue] }
-        let coinWithSettings = CoinWithSettings(platformCoin: platformCoin, settingsArray: settingsArray)
+        let coinWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
         approveSettingsRelay.accept(coinWithSettings)
     }
 
-    func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], platformCoin: PlatformCoin) {
+    func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], token: Token) {
         let settingsArray: [CoinSettings] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
-        let coinWithSettings = CoinWithSettings(platformCoin: platformCoin, settingsArray: settingsArray)
+        let coinWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
         approveSettingsRelay.accept(coinWithSettings)
     }
 
-    func cancel(platformCoin: PlatformCoin) {
-        rejectApproveSettingsRelay.accept(platformCoin)
+    func cancel(token: Token) {
+        rejectApproveSettingsRelay.accept(token)
     }
 
 }
 
 extension CoinSettingsService {
 
-    struct CoinWithSettings {
-        let platformCoin: PlatformCoin
+    struct TokenWithSettings {
+        let token: Token
         let settingsArray: [CoinSettings]
 
-        init(platformCoin: PlatformCoin, settingsArray: [CoinSettings] = []) {
-            self.platformCoin = platformCoin
+        init(token: Token, settingsArray: [CoinSettings] = []) {
+            self.token = token
             self.settingsArray = settingsArray
         }
     }
 
     struct Request {
-        let platformCoin: PlatformCoin
+        let token: Token
         let type: RequestType
     }
 

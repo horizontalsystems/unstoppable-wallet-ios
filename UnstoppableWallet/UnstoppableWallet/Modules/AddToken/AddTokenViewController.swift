@@ -93,7 +93,7 @@ class AddTokenViewController: ThemeViewController {
             self?.inputCell.set(isLoading: loading)
         }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
-            self?.coinTypeCell.value = viewItem?.coinType ?? "..."
+            self?.coinTypeCell.value = viewItem?.protocolTypes ?? "..."
             self?.coinNameCell.value = viewItem?.coinName ?? "..."
             self?.coinCodeCell.value = viewItem?.coinCode ?? "..."
             self?.decimalsCell.value = viewItem?.decimals.map { "\($0)" } ?? "..."

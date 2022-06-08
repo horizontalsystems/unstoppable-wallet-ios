@@ -4,7 +4,7 @@ import EthereumKit
 import MarketKit
 
 protocol ISendBaseService {
-    var platformCoin: PlatformCoin { get }
+    var token: Token { get }
     var state: SendBaseService.State { get }
     var stateObservable: Observable<SendBaseService.State> { get }
 }
@@ -52,8 +52,8 @@ extension SendViewModel {
         proceedRelay.asSignal()
     }
 
-    var platformCoin: PlatformCoin {
-        service.platformCoin
+    var token: Token {
+        service.token
     }
 
     func didTapProceed() {

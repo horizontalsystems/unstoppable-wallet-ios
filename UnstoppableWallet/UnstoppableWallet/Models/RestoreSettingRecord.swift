@@ -2,13 +2,13 @@ import GRDB
 
 class RestoreSettingRecord: Record {
     let accountId: String
-    let coinId: String
+    let blockchainUid: String
     let key: String
     let value: String
 
-    init(accountId: String, coinId: String, key: String, value: String) {
+    init(accountId: String, blockchainUid: String, key: String, value: String) {
         self.accountId = accountId
-        self.coinId = coinId
+        self.blockchainUid = blockchainUid
         self.key = key
         self.value = value
 
@@ -20,12 +20,12 @@ class RestoreSettingRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case accountId, coinId, key, value
+        case accountId, blockchainUid, key, value
     }
 
     required init(row: Row) {
         accountId = row[Columns.accountId]
-        coinId = row[Columns.coinId]
+        blockchainUid = row[Columns.blockchainUid]
         key = row[Columns.key]
         value = row[Columns.value]
 
@@ -34,7 +34,7 @@ class RestoreSettingRecord: Record {
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.accountId] = accountId
-        container[Columns.coinId] = coinId
+        container[Columns.blockchainUid] = blockchainUid
         container[Columns.key] = key
         container[Columns.value] = value
     }

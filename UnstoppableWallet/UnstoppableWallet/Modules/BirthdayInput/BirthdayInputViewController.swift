@@ -10,15 +10,15 @@ protocol IBirthdayInputDelegate: AnyObject {
 }
 
 class BirthdayInputViewController: ThemeActionSheetController {
-    private let platformCoin: PlatformCoin
+    private let token: Token
     private weak var delegate: IBirthdayInputDelegate?
 
     private let heightInputView = InputView()
 
     private var didTapDone = false
 
-    init(platformCoin: PlatformCoin, delegate: IBirthdayInputDelegate) {
-        self.platformCoin = platformCoin
+    init(token: Token, delegate: IBirthdayInputDelegate) {
+        self.token = token
         self.delegate = delegate
 
         super.init()
@@ -40,8 +40,8 @@ class BirthdayInputViewController: ThemeActionSheetController {
 
         titleView.bind(
                 title: "birthday_input.title".localized,
-                subtitle: platformCoin.coin.name,
-                image: .image(coinType: platformCoin.platform.coinType)
+                subtitle: token.coin.name,
+                image: nil // todo: show zcash icon
         )
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)

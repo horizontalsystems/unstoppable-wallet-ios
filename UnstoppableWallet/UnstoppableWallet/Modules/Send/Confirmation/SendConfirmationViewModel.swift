@@ -34,7 +34,7 @@ class SendConfirmationViewModel {
                 .subhead(
                         iconName: "arrow_medium_2_up_right_24",
                         title: "send.confirmation.you_send".localized,
-                        value: service.platformCoin.name
+                        value: service.token.coin.name
                 )
         )
 
@@ -43,8 +43,8 @@ class SendConfirmationViewModel {
             case let item as SendConfirmationAmountViewItem:
                 primaryViewItems.append(
                         .amount(
-                                iconUrl: service.platformCoin.coin.imageUrl,
-                                iconPlaceholderImageName: service.platformCoin.coinType.placeholderImageName,
+                                iconUrl: service.token.coin.imageUrl,
+                                iconPlaceholderImageName: service.token.placeholderImageName,
                                 coinAmount: ValueFormatter.instance.formatFull(coinValue: item.coinValue) ?? "n/a".localized,
                                 currencyAmount: item.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                                 type: .neutral
