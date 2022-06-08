@@ -2434,6 +2434,7 @@
 		ABC9A3888C67D113B269F2F9 /* MarketCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2B7FBA735A76083990C /* MarketCardCell.swift */; };
 		ABC9A3899A227B8FEC089EA7 /* ChartPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A56202347AC47682FFB4 /* ChartPreviewView.swift */; };
 		ABC9A395A96C1F7C30F21940 /* WalletConnectV2PendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD3F677671FB57CCD886 /* WalletConnectV2PendingRequestsService.swift */; };
+		ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
 		ABC9A3BB295249AF7DACA742 /* WalletConnectScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB68CEA6F8AD05C5C893 /* WalletConnectScanQrViewController.swift */; };
 		ABC9A3C3FC55AB33A9896382 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB69D8053840476C26FA /* UIViewController.swift */; };
 		ABC9A3D48A3E0E1733F70686 /* SendBinanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3F41BDCD5F4146E6E06 /* SendBinanceService.swift */; };
@@ -2541,6 +2542,7 @@
 		ABC9A892DE309C0E62CCB2B3 /* DiffLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A916C64B5EA9D96B8FDA /* DiffLabel.swift */; };
 		ABC9A89AC0862911B648C3AA /* SendZcashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B3C65C9F0285483160 /* SendZcashViewController.swift */; };
 		ABC9A8ADE19E035D61AE24AF /* WalletConnectV2SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC0B5943DF3B61B20BF6 /* WalletConnectV2SessionManager.swift */; };
+		ABC9A8CD642351BD809536E2 /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
 		ABC9A8D215CC5D6A70736E84 /* SendBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */; };
 		ABC9A8E32AD5F54C98E3E9E7 /* WalletConnectV2RequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA31438063F7AB7BDDC8 /* WalletConnectV2RequestMapper.swift */; };
 		ABC9A91C73E7C64100820C0C /* SendFeePriorityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A57C031378331C205A9D /* SendFeePriorityService.swift */; };
@@ -2607,6 +2609,7 @@
 		ABC9AC9EF87BD7F8319AC627 /* WalletConnectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5FD79ECC4AC85B86FA /* WalletConnectListViewController.swift */; };
 		ABC9ACADCCE9CEB2588D91D5 /* SendMemoInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A099941AA53B68270D55 /* SendMemoInputViewModel.swift */; };
 		ABC9ACB877440215AADD13BB /* SendFeeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A281C0AE74836096178A /* SendFeeSettingsViewController.swift */; };
+		ABC9ACC51D6B2D4E04C8019E /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
 		ABC9ACDD64F14C0D65A5CFBC /* SendZcashFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F55A2C6777D25F57D5 /* SendZcashFactory.swift */; };
 		ABC9ACEE45E455BA098231EE /* SendMemoInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3C103C1DE359184D944 /* SendMemoInputCell.swift */; };
 		ABC9ACFEA2A1BFC97A863C28 /* ProFeaturesAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */; };
@@ -3806,6 +3809,7 @@
 		ABC9A2C589F6B04B96BE2ADB /* SendTimeLockViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTimeLockViewModel.swift; sourceTree = "<group>"; };
 		ABC9A2F6EDC8BB83ED7B75BA /* WalletConnectV2PendingRequestsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PendingRequestsModule.swift; sourceTree = "<group>"; };
 		ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationService.swift; sourceTree = "<group>"; };
+		ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudHelper.swift; sourceTree = "<group>"; };
 		ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectMainViewController.swift; sourceTree = "<group>"; };
 		ABC9A3AB799024C8FC2C7DD8 /* SendConfirmationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewModel.swift; sourceTree = "<group>"; };
 		ABC9A3BEB33F6DBE2395FD11 /* WalletConnectListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListService.swift; sourceTree = "<group>"; };
@@ -4255,6 +4259,7 @@
 				ABC9AB69D8053840476C26FA /* UIViewController.swift */,
 				11B35332D245CFF50A68F8CA /* SectionsTableView.swift */,
 				ABC9A06A64AB5B2A12C38D91 /* Array.swift */,
+				ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -8060,6 +8065,7 @@
 				11B3599A9E806689173CA98A /* RestoreSettingRecord_v_0_25.swift in Sources */,
 				11B35CA21AE2551CC68781CB /* EnabledWallet_v_0_25.swift in Sources */,
 				11B353F8A1B3C2BF24A772E8 /* CoinType.swift in Sources */,
+				ABC9A8CD642351BD809536E2 /* HudHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9035,6 +9041,7 @@
 				11B359C5A1F97662FDD57259 /* RestoreSettingRecord_v_0_25.swift in Sources */,
 				11B35F45249FDF026B27F06F /* EnabledWallet_v_0_25.swift in Sources */,
 				11B355B5E78279B792F102BB /* CoinType.swift in Sources */,
+				ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10002,6 +10009,7 @@
 				11B357355C6AC09A7B6F8AF3 /* RestoreSettingRecord_v_0_25.swift in Sources */,
 				11B3516E6F489646368A4DDE /* EnabledWallet_v_0_25.swift in Sources */,
 				11B35531B3F80D06EF040301 /* CoinType.swift in Sources */,
+				ABC9ACC51D6B2D4E04C8019E /* HudHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

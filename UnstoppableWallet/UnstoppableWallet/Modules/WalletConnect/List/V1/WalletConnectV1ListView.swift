@@ -20,8 +20,8 @@ class WalletConnectV1ListView {
 
     func viewDidLoad() {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
+        subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.show(banner: .disconnectingWalletConnect) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.show(banner: .disconnectedWalletConnect) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
