@@ -155,7 +155,7 @@ class App {
 
         let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
-        btcBlockchainManager = BtcBlockchainManager(storage: blockchainSettingsStorage)
+        btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
         evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
 
@@ -257,20 +257,6 @@ class App {
         proFeaturesAuthorizationAdapter = ProFeaturesAuthorizationAdapter(networkManager: networkManager, appConfigProvider: appConfigProvider)
         proFeaturesAuthorizationManager = ProFeaturesAuthorizationManager(storage: proFeaturesStorage, accountManager: accountManager, evmSyncSourceManager: evmSyncSourceManager)
 
-        let restoreFavoriteCoinWorker = RestoreFavoriteCoinWorker(
-                marketKit: marketKit,
-                favoritesManager: favoritesManager,
-                localStorage: StorageKit.LocalStorage.default,
-                storage: favoriteCoinRecordStorage
-        )
-
-        let fillWalletInfoWorker = FillWalletInfoWorker(
-                marketKit: marketKit,
-                walletManager: walletManager,
-                storage: enabledWalletStorage,
-                localStorage: StorageKit.LocalStorage.default
-        )
-
         appManager = AppManager(
                 accountManager: accountManager,
                 walletManager: walletManager,
@@ -284,9 +270,7 @@ class App {
                 rateAppManager: rateAppManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
-                evmLabelManager: evmLabelManager,
-                restoreFavoriteCoinWorker: restoreFavoriteCoinWorker,
-                fillWalletInfoWorker: fillWalletInfoWorker
+                evmLabelManager: evmLabelManager
         )
     }
 

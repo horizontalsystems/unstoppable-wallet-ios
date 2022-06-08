@@ -1,77 +1,123 @@
 import UIKit
 import MarketKit
 
-extension MarketKit.CoinType {
+extension MarketKit.Token {
 
-    var blockchainType: String? {
-        switch self {
-        case .erc20: return "ERC20"
-        case .bep20: return "BEP20"
-        case .polygon, .mrc20: return "POLYGON"
-        case .ethereumOptimism, .optimismErc20: return "OPTIMISM"
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return "ARBITRUM"
-        case .bep2: return "BEP2"
-        default: return nil
+    var protocolType: String? {
+        tokenQuery.protocolType
+    }
+
+    var isCustom: Bool {
+        coin.uid == tokenQuery.customCoinUid
+    }
+
+    var isSupported: Bool {
+        tokenQuery.isSupported
+    }
+
+    var placeholderImageName: String {
+        protocolType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+    }
+
+    var swappable: Bool {
+        switch blockchainType {
+        case .ethereum: return true
+        case .binanceSmartChain: return true
+        case .polygon: return true
+        case .optimism: return true
+        case .arbitrumOne: return true
+        default: return false
         }
     }
 
-    var platformType: String {
-        switch self {
-        case .ethereum: return "Ethereum"
-        case .erc20: return "ERC20"
-        case .binanceSmartChain: return "Binance Smart Chain"
-        case .bep20: return "BEP20"
-        case .polygon, .mrc20: return "Polygon"
-        case .ethereumOptimism, .optimismErc20: return "Optimism"
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return "Arbitrum One"
-        case .bep2: return "BEP2"
+    var protocolInfo: String {
+        switch type {
+        case .native: return blockchain.name
+        case .eip20, .bep2: return protocolType ?? ""
         default: return ""
         }
     }
 
-    var platformCoinType: String {
-        switch self {
-        case .ethereum, .binanceSmartChain, .polygon, .ethereumOptimism, .ethereumArbitrumOne: return "coin_platforms.native".localized
-        case .erc20(let address): return address.shortenedAddress
-        case .bep20(let address): return address.shortenedAddress
-        case .mrc20(let address): return address.shortenedAddress
-        case .optimismErc20(let address): return address.shortenedAddress
-        case .arbitrumOneErc20(let address): return address.shortenedAddress
+    var typeInfo: String {
+        switch type {
+        case .native: return "coin_platforms.native".localized
+        case .eip20(let address): return address.shortenedAddress
         case .bep2(let symbol): return symbol
         default: return ""
         }
     }
 
-    var platformIcon: String? {
-        switch self {
-        case .ethereum, .erc20: return "ethereum_24"
-        case .binanceSmartChain, .bep20: return "binance_smart_chain_24"
-        case .polygon, .mrc20: return "polygon_24"
-        case .ethereumOptimism, .optimismErc20: return "optimism_24"
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return "arbitrum_one_24"
-        case .bep2: return "binance_chain_24"
-        default: return nil
+}
+
+extension MarketKit.TokenQuery {
+
+    var protocolType: String? {
+        switch tokenType {
+        case .eip20:
+            switch blockchainType {
+            case .ethereum: return "ERC20"
+            case .binanceSmartChain: return "BEP20"
+            case .polygon: return "POLYGON"
+            case .optimism: return "OPTIMISM"
+            case .arbitrumOne: return "ARBITRUM"
+            default: return nil
+            }
+        case .bep2:
+            return "BEP2"
+        default:
+            return nil
         }
     }
 
-    var swappable: Bool {
-        switch self {
-        case .ethereum, .erc20: return true
-        case .binanceSmartChain, .bep20: return true
-        case .polygon, .mrc20: return true
-        case .ethereumOptimism, .optimismErc20: return true
-        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
+    var customCoinUid: String {
+        "custom-\(id)"
+    }
+
+    var isSupported: Bool {
+        switch (blockchainType, tokenType) {
+        case (.bitcoin, .native): return true
+        case (.bitcoinCash, .native): return true
+        case (.litecoin, .native): return true
+        case (.dash, .native): return true
+        case (.zcash, .native): return true
+        case (.ethereum, .native), (.ethereum, .eip20): return true
+        case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
+        case (.polygon, .native), (.polygon, .eip20): return true
+        case (.binanceChain, .native), (.binanceChain, .bep2): return true
         default: return false
         }
     }
 
-    var title: String {
-        switch self {
-        case .bitcoin: return "Bitcoin"
-        case .litecoin: return "Litecoin"
-        case .bitcoinCash: return "Bitcoin Cash"
+}
+
+extension MarketKit.Blockchain {
+
+    var shortName: String {
+        switch type {
+        case .binanceSmartChain: return "BSC"
+        default: return name
+        }
+    }
+
+    var description: String {
+        switch type {
+        case .ethereum: return "ETH, ERC20 tokens"
+        case .binanceSmartChain: return "BNB, BEP20 tokens"
+        case .polygon: return "MATIC, MRC20 tokens"
+        case .optimism: return "L2 chain"
+        case .arbitrumOne: return "L2 chain"
         default: return ""
         }
+    }
+
+}
+
+extension MarketKit.BlockchainType {
+
+    var imageUrl: String {
+        let scale = Int(UIScreen.main.scale)
+//        return "https://markets.nyc3.digitaloceanspaces.com/blockchain-icons/\(uid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/platform-icons/\(uid)@\(scale)x.png"
     }
 
     var coinSettingTypes: [CoinSettingType] {
@@ -97,23 +143,6 @@ extension MarketKit.CoinType {
         }
     }
 
-    var isSupported: Bool {
-        switch self {
-        case .bitcoin, .litecoin, .bitcoinCash, .dash, .zcash: return true
-        case .ethereum, .erc20: return true
-        case .binanceSmartChain, .bep20: return true
-        case .polygon, .mrc20: return true
-//        case .ethereumOptimism, .optimismErc20: return true
-//        case .ethereumArbitrumOne, .arbitrumOneErc20: return true
-        case .bep2: return true
-        default: return false
-        }
-    }
-
-    var placeholderImageName: String {
-        blockchainType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
-    }
-
     var order: Int {
         switch self {
         case .bitcoin: return 1
@@ -124,39 +153,10 @@ extension MarketKit.CoinType {
         case .ethereum: return 6
         case .binanceSmartChain: return 7
         case .polygon: return 8
-        case .ethereumOptimism: return 9
-        case .ethereumArbitrumOne: return 10
-        case .erc20: return 11
-        case .bep20: return 12
-        case .mrc20: return 13
-        case .optimismErc20: return 14
-        case .arbitrumOneErc20: return 15
-        case .bep2: return 16
-        case .solana: return 17
-        case .avalanche: return 18
-        case .fantom: return 19
-        case .huobiToken: return 20
-        case .harmonyShard0: return 21
-        case .xdai: return 22
-        case .moonriver: return 23
-        case .okexChain: return 24
-        case .sora: return 25
-        case .tomochain: return 26
-        case .iotex: return 27
+        case .optimism: return 9
+        case .arbitrumOne: return 10
         default: return Int.max
         }
-    }
-
-    var customCoinUid: String {
-        "custom-\(id)"
-    }
-
-}
-
-extension MarketKit.PlatformCoin {
-
-    var isCustom: Bool {
-        coin.uid == coinType.customCoinUid
     }
 
 }
@@ -181,8 +181,8 @@ extension MarketKit.TopPlatform {
 
 extension MarketKit.FullCoin {
 
-    var supportedPlatforms: [Platform] {
-        platforms.filter { $0.coinType.isSupported }
+    var supportedTokens: [Token] {
+        tokens.filter { $0.isSupported }
     }
 
 }
@@ -272,18 +272,10 @@ extension Array where Element == FullCoin {
 
 }
 
-extension Array where Element == CoinType {
+extension Array where Element == Token {
 
-    var sorted: [CoinType] {
-        sorted { $0.order < $1.order }
-    }
-
-}
-
-extension Array where Element == Platform {
-
-    var sorted: [Platform] {
-        sorted { $0.coinType.order < $1.coinType.order }
+    var sorted: [Token] {
+        sorted { $0.blockchainType.order < $1.blockchainType.order }
     }
 
 }

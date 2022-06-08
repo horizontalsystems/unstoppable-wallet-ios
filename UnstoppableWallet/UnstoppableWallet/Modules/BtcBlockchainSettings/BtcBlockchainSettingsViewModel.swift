@@ -55,8 +55,8 @@ extension BtcBlockchainSettingsViewModel {
         service.blockchain.name
     }
 
-    var icon: String {
-        service.blockchain.icon24
+    var iconUrl: String {
+        service.blockchain.type.imageUrl
     }
 
     func onSelectRestoreMode(index: Int) {

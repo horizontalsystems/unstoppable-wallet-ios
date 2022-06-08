@@ -6,11 +6,11 @@ import MarketKit
 
 protocol IAmountInputService {
     var amount: Decimal { get }
-    var platformCoin: PlatformCoin? { get }
+    var token: Token? { get }
     var balance: Decimal? { get }
 
     var amountObservable: Observable<Decimal> { get }
-    var platformCoinObservable: Observable<PlatformCoin?> { get }
+    var tokenObservable: Observable<Token?> { get }
     var balanceObservable: Observable<Decimal?> { get }
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> { get }
 
@@ -69,14 +69,14 @@ class AmountInputViewModel {
         subscribe(disposeBag, service.amountObservable) { [weak self] in self?.sync(amount: $0) }
         subscribe(disposeBag, service.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, service.amountWarningObservable) { [weak self] in self?.sync(amountWarning: $0) }
-        subscribe(disposeBag, service.platformCoinObservable) { [weak self] in self?.sync(platformCoin: $0) }
+        subscribe(disposeBag, service.tokenObservable) { [weak self] in self?.sync(token: $0) }
         subscribe(disposeBag, fiatService.coinAmountObservable) { [weak self] in self?.syncCoin(amount: $0) }
         subscribe(disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
         subscribe(disposeBag, fiatService.secondaryAmountInfoObservable) { [weak self] in self?.syncSecondary(amountInfo: $0) }
         subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.switchEnabledRelay.accept($0) }
 
         sync(amount: service.amount)
-        sync(platformCoin: service.platformCoin)
+        sync(token: service.token)
     }
 
     private func sync(amountWarning: AmountWarning?) {
@@ -99,11 +99,11 @@ class AmountInputViewModel {
         }
     }
 
-    private func sync(platformCoin: PlatformCoin?) {
+    private func sync(token: Token?) {
         queue.async { [weak self] in
-            self?.coinDecimals = platformCoin?.decimals ?? AmountInputViewModel.fallbackCoinDecimals
+            self?.coinDecimals = token?.decimals ?? AmountInputViewModel.fallbackCoinDecimals
 
-            self?.fiatService.set(platformCoin: platformCoin)
+            self?.fiatService.set(token: token)
             self?.updateMaxEnabled()
         }
     }

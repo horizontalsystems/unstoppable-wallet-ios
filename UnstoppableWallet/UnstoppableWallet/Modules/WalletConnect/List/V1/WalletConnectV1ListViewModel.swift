@@ -27,7 +27,7 @@ class WalletConnectV1ListViewModel {
             ViewItem(
                 id: $0.id,
                 title: $0.appName,
-                description: $0.chains.map { $0.shortName }.joined(separator: ", "),
+                description: $0.blockchains.map { $0.shortName }.joined(separator: ", "),
                 imageUrl: $0.appIcons.last
             )
         }

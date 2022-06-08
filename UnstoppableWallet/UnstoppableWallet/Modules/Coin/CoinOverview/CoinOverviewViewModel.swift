@@ -104,9 +104,9 @@ extension CoinOverviewViewModel {
     }
 
     struct ContractViewItem {
-        let iconName: String
+        let iconUrl: String
         let reference: String
-        let explorerUrl: String
+        let explorerUrl: String?
     }
 
     enum PerformanceViewItem {

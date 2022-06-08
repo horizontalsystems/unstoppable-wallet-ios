@@ -4,34 +4,38 @@ import MarketKit
 import EthereumKit
 
 class EvmCoinServiceFactory {
-    private let evmBlockchain: EvmBlockchain
+    private let blockchainType: BlockchainType
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     let baseCoinService: CoinService
 
-    init?(evmBlockchain: EvmBlockchain, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
-        self.evmBlockchain = evmBlockchain
+    init?(blockchainType: BlockchainType, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+        self.blockchainType = blockchainType
         self.marketKit = marketKit
         self.currencyKit = currencyKit
 
-        guard let basePlatformCoin = try? marketKit.platformCoin(coinType: evmBlockchain.baseCoinType) else {
+        let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
+
+        guard let baseToken = try? marketKit.token(query: query) else {
             return nil
         }
 
-        baseCoinService = CoinService(platformCoin: basePlatformCoin, currencyKit: currencyKit, marketKit: marketKit)
+        baseCoinService = CoinService(token: baseToken, currencyKit: currencyKit, marketKit: marketKit)
     }
 
     func coinService(contractAddress: EthereumKit.Address) -> CoinService? {
-        guard let platformCoin = try? marketKit.platformCoin(coinType: evmBlockchain.evm20CoinType(address: contractAddress.hex)) else {
+        let query = TokenQuery(blockchainType: blockchainType, tokenType: .eip20(address: contractAddress.hex))
+
+        guard let token = try? marketKit.token(query: query) else {
             return nil
         }
 
-        return coinService(platformCoin: platformCoin)
+        return coinService(token: token)
     }
 
-    func coinService(platformCoin: PlatformCoin) -> CoinService {
-        CoinService(platformCoin: platformCoin, currencyKit: currencyKit, marketKit: marketKit)
+    func coinService(token: Token) -> CoinService {
+        CoinService(token: token, currencyKit: currencyKit, marketKit: marketKit)
     }
 
 }

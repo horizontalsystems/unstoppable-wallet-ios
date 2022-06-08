@@ -37,7 +37,7 @@ class NftManager {
             switch account.type {
             case let .mnemonic(words, salt):
                 let seed = Mnemonic.seed(mnemonic: words, passphrase: salt)
-                let chain = evmBlockchainManager.chain(blockchain: .ethereum)
+                let chain = evmBlockchainManager.chain(blockchainType: .ethereum)
                 address = try Signer.address(seed: seed, chain: chain)
             case let .address(value):
                 address = value

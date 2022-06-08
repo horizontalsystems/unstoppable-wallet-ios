@@ -4,6 +4,7 @@ import SnapKit
 import MessageUI
 import ComponentKit
 import RxSwift
+import MarketKit
 
 class BalanceErrorViewController: ThemeActionSheetController {
     private let viewModel: BalanceErrorViewModel
@@ -109,13 +110,13 @@ class BalanceErrorViewController: ThemeActionSheetController {
         viewModel.onTapChangeSource()
     }
 
-    private func openBtc(blockchain: BtcBlockchain) {
+    private func openBtc(blockchain: Blockchain) {
         dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
         }
     }
 
-    private func openEvm(blockchain: EvmBlockchain) {
+    private func openEvm(blockchain: Blockchain) {
         dismiss(animated: true) { [weak self] in
             self?.sourceViewController?.present(EvmNetworkModule.viewController(blockchain: blockchain), animated: true)
         }

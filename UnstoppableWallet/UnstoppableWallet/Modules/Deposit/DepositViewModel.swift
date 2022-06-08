@@ -16,8 +16,8 @@ extension DepositViewModel {
         service.coin
     }
 
-    var coinType: CoinType {
-        service.coinType
+    var placeholderImageName: String {
+        service.token.placeholderImageName
     }
 
     var address: String {

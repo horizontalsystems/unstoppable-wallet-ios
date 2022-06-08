@@ -33,8 +33,8 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .alreadyExists(let platformCoins):
-            viewItemRelay.accept(viewItem(platformCoins: platformCoins))
+        case .alreadyExists(let tokens):
+            viewItemRelay.accept(viewItem(tokens: tokens))
         case .fetched(let customCoins):
             viewItemRelay.accept(viewItem(customCoins: customCoins))
         default:
@@ -56,18 +56,18 @@ class AddTokenViewModel {
         }
     }
 
-    private func viewItem(platformCoins: [PlatformCoin]) -> ViewItem {
+    private func viewItem(tokens: [Token]) -> ViewItem {
         ViewItem(
-                coinType: platformCoins.compactMap { $0.coinType.blockchainType }.joined(separator: " / "),
-                coinName: platformCoins.first?.name,
-                coinCode: platformCoins.first?.code,
-                decimals: platformCoins.first?.decimals
+                protocolTypes: tokens.compactMap { $0.protocolType }.joined(separator: " / "),
+                coinName: tokens.first?.coin.name,
+                coinCode: tokens.first?.coin.code,
+                decimals: tokens.first?.decimals
         )
     }
 
     private func viewItem(customCoins: [AddTokenModule.CustomCoin]) -> ViewItem {
         ViewItem(
-                coinType: customCoins.compactMap { $0.type.blockchainType }.joined(separator: " / "),
+                protocolTypes: customCoins.compactMap { $0.tokenQuery.protocolType }.joined(separator: " / "),
                 coinName: customCoins.first?.name,
                 coinCode: customCoins.first?.code,
                 decimals: customCoins.first?.decimals
@@ -103,8 +103,12 @@ extension AddTokenViewModel {
     }
 
     func onTapButton() {
-        service.save()
-        finishRelay.accept(())
+        do {
+            try service.save()
+            finishRelay.accept(())
+        } catch {
+            // todo
+        }
     }
 
 }
@@ -112,7 +116,7 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let coinType: String
+        let protocolTypes: String
         let coinName: String?
         let coinCode: String?
         let decimals: Int?

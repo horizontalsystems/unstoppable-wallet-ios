@@ -8,7 +8,7 @@ class SwapAllowanceService {
     private let spenderAddress: EthereumKit.Address
     private let adapterManager: AdapterManager
 
-    private var platformCoin: PlatformCoin?
+    private var token: Token?
 
     private let disposeBag = DisposeBag()
     private var allowanceDisposeBag = DisposeBag()
@@ -37,7 +37,7 @@ class SwapAllowanceService {
     private func sync() {
         allowanceDisposeBag = DisposeBag()
 
-        guard let platformCoin = platformCoin, let adapter = adapterManager.adapter(for: platformCoin) as? IErc20Adapter else {
+        guard let token = token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
             state = nil
             return
         }
@@ -52,7 +52,7 @@ class SwapAllowanceService {
                 .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] allowance in
-                    self?.state = .ready(allowance: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: allowance))
+                    self?.state = .ready(allowance: CoinValue(kind: .token(token: token), value: allowance))
                 }, onError: { [weak self] error in
                     self?.state = .notReady(error: error)
                 })
@@ -67,8 +67,8 @@ extension SwapAllowanceService {
         stateRelay.asObservable()
     }
 
-    func set(platformCoin: PlatformCoin?) {
-        self.platformCoin = platformCoin
+    func set(token: Token?) {
+        self.token = token
         sync()
     }
 
@@ -77,13 +77,13 @@ extension SwapAllowanceService {
             return nil
         }
 
-        guard let platformCoin = platformCoin else {
+        guard let token = token else {
             return nil
         }
 
         return ApproveData(
                 dex: dex,
-                platformCoin: platformCoin,
+                token: token,
                 spenderAddress: spenderAddress,
                 amount: amount,
                 allowance: allowance.value
@@ -110,7 +110,7 @@ extension SwapAllowanceService {
 
     struct ApproveData {
         let dex: SwapModule.Dex
-        let platformCoin: PlatformCoin
+        let token: Token
         let spenderAddress: EthereumKit.Address
         let amount: Decimal
         let allowance: Decimal

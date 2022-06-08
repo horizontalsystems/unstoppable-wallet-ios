@@ -7,14 +7,14 @@ class EvmTransactionRecord: TransactionRecord {
     let ownTransaction: Bool
     let fee: TransactionValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin, ownTransaction: Bool, spam: Bool = false) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
         let txHash = transaction.hash.toHexString()
         self.ownTransaction = ownTransaction
 
         if let feeAmount = transaction.gasUsed ?? transaction.gasLimit, let gasPrice = transaction.gasPrice {
-            let feeDecimal = Decimal(sign: .plus, exponent: -baseCoin.decimals, significand: Decimal(feeAmount) * Decimal(gasPrice))
-            fee = .coinValue(platformCoin: baseCoin, value: feeDecimal)
+            let feeDecimal = Decimal(sign: .plus, exponent: -baseToken.decimals, significand: Decimal(feeAmount) * Decimal(gasPrice))
+            fee = .coinValue(token: baseToken, value: feeDecimal)
         } else {
             fee = nil
         }
@@ -34,8 +34,8 @@ class EvmTransactionRecord: TransactionRecord {
 
     private func sameType(_ value: TransactionValue, _ value2: TransactionValue) -> Bool {
         switch (value, value2) {
-        case let (.coinValue(platformCoin, _), .coinValue(platformCoin2, _)): return platformCoin == platformCoin2
-        case let (.tokenValue(tokenName, tokenCode, tokenDecimals, _), .tokenValue(tokenName2, tokenCode2, tokenDecimals2, _)): return tokenName == tokenName2 && tokenCode == tokenCode2 && tokenDecimals == tokenDecimals2
+        case let (.coinValue(lhsToken, _), .coinValue(rhsToken, _)): return lhsToken == rhsToken
+        case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, _), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, _)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals
         default: return false
         }
     }
@@ -55,7 +55,7 @@ class EvmTransactionRecord: TransactionRecord {
             let resultValue: TransactionValue
 
             switch value {
-            case let .coinValue(platformCoin, _): resultValue = .coinValue(platformCoin: platformCoin, value: totalValue)
+            case let .coinValue(token, _): resultValue = .coinValue(token: token, value: totalValue)
             case let .tokenValue(tokenName, tokenCode, tokenDecimals, _): resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
             case let .rawValue(value): resultValue = .rawValue(value: value)
             }

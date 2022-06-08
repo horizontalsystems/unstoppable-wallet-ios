@@ -5,6 +5,7 @@ import Erc20Kit
 import UniswapKit
 import OneInchKit
 import HdWalletKit
+import MarketKit
 
 class EvmKitManager {
     let chain: Chain
@@ -23,18 +24,18 @@ class EvmKitManager {
         self.chain = chain
         self.syncSourceManager = syncSourceManager
 
-        subscribe(disposeBag, syncSourceManager.syncSourceObservable) { [weak self] blockchain in
-            self?.handleUpdatedSyncSource(blockchain: blockchain)
+        subscribe(disposeBag, syncSourceManager.syncSourceObservable) { [weak self] blockchainType in
+            self?.handleUpdatedSyncSource(blockchainType: blockchainType)
         }
     }
 
-    private func handleUpdatedSyncSource(blockchain: EvmBlockchain) {
+    private func handleUpdatedSyncSource(blockchainType: BlockchainType) {
         queue.sync {
             guard let _evmKitWrapper = _evmKitWrapper else {
                 return
             }
 
-            guard _evmKitWrapper.blockchain == blockchain else {
+            guard _evmKitWrapper.blockchainType == blockchainType else {
                 return
             }
 
@@ -43,12 +44,12 @@ class EvmKitManager {
         }
     }
 
-    private func _evmKitWrapper(account: Account, blockchain: EvmBlockchain) throws -> EvmKitWrapper {
+    private func _evmKitWrapper(account: Account, blockchainType: BlockchainType) throws -> EvmKitWrapper {
         if let _evmKitWrapper = _evmKitWrapper, let currentAccount = currentAccount, currentAccount == account {
             return _evmKitWrapper
         }
 
-        let syncSource = syncSourceManager.syncSource(blockchain: blockchain)
+        let syncSource = syncSourceManager.syncSource(blockchainType: blockchainType)
 
         let address: EthereumKit.Address
         var signer: Signer?
@@ -82,7 +83,7 @@ class EvmKitManager {
 
         evmKit.start()
 
-        let wrapper = EvmKitWrapper(blockchain: blockchain, evmKit: evmKit, signer: signer)
+        let wrapper = EvmKitWrapper(blockchainType: blockchainType, evmKit: evmKit, signer: signer)
 
         _evmKitWrapper = wrapper
         currentAccount = account
@@ -110,21 +111,21 @@ extension EvmKitManager {
         }
     }
 
-    func evmKitWrapper(account: Account, blockchain: EvmBlockchain) throws -> EvmKitWrapper {
+    func evmKitWrapper(account: Account, blockchainType: BlockchainType) throws -> EvmKitWrapper {
         try queue.sync {
-            try _evmKitWrapper(account: account, blockchain: blockchain)
+            try _evmKitWrapper(account: account, blockchainType: blockchainType)
         }
     }
 
 }
 
 class EvmKitWrapper {
-    let blockchain: EvmBlockchain
+    let blockchainType: BlockchainType
     let evmKit: EthereumKit.Kit
     let signer: Signer?
 
-    init(blockchain: EvmBlockchain, evmKit: EthereumKit.Kit, signer: Signer?) {
-        self.blockchain = blockchain
+    init(blockchainType: BlockchainType, evmKit: EthereumKit.Kit, signer: Signer?) {
+        self.blockchainType = blockchainType
         self.evmKit = evmKit
         self.signer = signer
     }

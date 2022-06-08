@@ -1,8 +1,9 @@
 import RxSwift
 import RxRelay
+import MarketKit
 
 class BtcBlockchainSettingsService {
-    let blockchain: BtcBlockchain
+    let blockchain: Blockchain
     private let btcBlockchainManager: BtcBlockchainManager
     private let disposeBag = DisposeBag()
 
@@ -20,17 +21,17 @@ class BtcBlockchainSettingsService {
 
     private let hasChangesRelay = BehaviorRelay<Bool>(value: false)
 
-    init(blockchain: BtcBlockchain, btcBlockchainManager: BtcBlockchainManager) {
+    init(blockchain: Blockchain, btcBlockchainManager: BtcBlockchainManager) {
         self.blockchain = blockchain
         self.btcBlockchainManager = btcBlockchainManager
 
-        restoreMode = btcBlockchainManager.restoreMode(blockchain: blockchain)
-        transactionMode = btcBlockchainManager.transactionSortMode(blockchain: blockchain)
+        restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
+        transactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
     }
 
     private func syncHasChanges() {
-        let initialRestoreMode = btcBlockchainManager.restoreMode(blockchain: blockchain)
-        let initialTransactionMode = btcBlockchainManager.transactionSortMode(blockchain: blockchain)
+        let initialRestoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
+        let initialTransactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
 
         hasChangesRelay.accept(restoreMode != initialRestoreMode || transactionMode != initialTransactionMode)
     }
@@ -44,12 +45,12 @@ extension BtcBlockchainSettingsService {
     }
 
     func save() {
-        if restoreMode != btcBlockchainManager.restoreMode(blockchain: blockchain) {
-            btcBlockchainManager.save(restoreMode: restoreMode, blockchain: blockchain)
+        if restoreMode != btcBlockchainManager.restoreMode(blockchainType: blockchain.type) {
+            btcBlockchainManager.save(restoreMode: restoreMode, blockchainType: blockchain.type)
         }
 
-        if transactionMode != btcBlockchainManager.transactionSortMode(blockchain: blockchain) {
-            btcBlockchainManager.save(transactionSortMode: transactionMode, blockchain: blockchain)
+        if transactionMode != btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type) {
+            btcBlockchainManager.save(transactionSortMode: transactionMode, blockchainType: blockchain.type)
         }
     }
 

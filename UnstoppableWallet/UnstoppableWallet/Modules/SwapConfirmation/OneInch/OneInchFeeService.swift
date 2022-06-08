@@ -7,16 +7,16 @@ import OneInchKit
 import BigInt
 
 struct OneInchSwapParameters: Equatable {
-    let platformCoinFrom: PlatformCoin
-    let platformCoinTo: PlatformCoin
+    let tokenFrom: MarketKit.Token
+    let tokenTo: MarketKit.Token
     let amountFrom: Decimal
     var amountTo: Decimal
     let slippage: Decimal
     let recipient: Address?
 
     static func ==(lhs: OneInchSwapParameters, rhs: OneInchSwapParameters) -> Bool {
-        lhs.platformCoinFrom == rhs.platformCoinFrom &&
-        lhs.platformCoinTo == rhs.platformCoinTo &&
+        lhs.tokenFrom == rhs.tokenFrom &&
+        lhs.tokenTo == rhs.tokenTo &&
         lhs.amountFrom == rhs.amountFrom &&
         lhs.amountTo == rhs.amountTo &&
         lhs.slippage == rhs.slippage &&
@@ -74,8 +74,9 @@ class OneInchFeeService {
 
         let recipient: EthereumKit.Address? = parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }
 
-        provider.swapSingle(platformCoinFrom: parameters.platformCoinFrom,
-                        platformCoinTo: parameters.platformCoinTo,
+        provider.swapSingle(
+                        tokenFrom: parameters.tokenFrom,
+                        tokenTo: parameters.tokenTo,
                         amount: parameters.amountFrom,
                         recipient: recipient,
                         slippage: parameters.slippage,

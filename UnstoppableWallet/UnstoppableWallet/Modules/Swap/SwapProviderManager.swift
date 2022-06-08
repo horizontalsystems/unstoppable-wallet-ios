@@ -24,35 +24,35 @@ class SwapProviderManager {
         }
     }
 
-    init(localStorage: LocalStorage, evmBlockchainManager: EvmBlockchainManager, platformCoinFrom: PlatformCoin?) {
+    init(localStorage: LocalStorage, evmBlockchainManager: EvmBlockchainManager, tokenFrom: MarketKit.Token?) {
         self.localStorage = localStorage
         self.evmBlockchainManager = evmBlockchainManager
 
-        initSectionsDataSource(platformCoinFrom: platformCoinFrom)
+        initSectionsDataSource(tokenFrom: tokenFrom)
     }
 
-    private func initSectionsDataSource(platformCoinFrom: PlatformCoin?) {
-        let blockchain: EvmBlockchain
+    private func initSectionsDataSource(tokenFrom: MarketKit.Token?) {
+        let blockchainType: BlockchainType
 
-        if let platformCoinFrom = platformCoinFrom {
-            if let evmBlockchain = evmBlockchainManager.blockchain(coinType: platformCoinFrom.coinType) {
-                blockchain = evmBlockchain
+        if let tokenFrom = tokenFrom {
+            if let type = evmBlockchainManager.blockchain(token: tokenFrom)?.type {
+                blockchainType = type
             } else {
                 return
             }
         } else {
-            blockchain = .ethereum
+            blockchainType = .ethereum
         }
 
-        let dexProvider = localStorage.defaultProvider(blockchain: blockchain)
-        let dex = SwapModule.Dex(blockchain: blockchain, provider: dexProvider)
+        let dexProvider = localStorage.defaultProvider(blockchainType: blockchainType)
+        let dex = SwapModule.Dex(blockchainType: blockchainType, provider: dexProvider)
 
-        dataSourceProvider = provider(dex: dex, platformCoinFrom: platformCoinFrom)
+        dataSourceProvider = provider(dex: dex, tokenFrom: tokenFrom)
         self.dex = dex
     }
 
-    private func provider(dex: SwapModule.Dex, platformCoinFrom: PlatformCoin? = nil) -> ISwapProvider? {
-        let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(platformCoinFrom: platformCoinFrom)
+    private func provider(dex: SwapModule.Dex, tokenFrom: MarketKit.Token? = nil) -> ISwapProvider? {
+        let state = dataSourceProvider?.swapState ?? SwapModule.DataSourceState(tokenFrom: tokenFrom)
 
         switch dex.provider {
         case .uniswap, .pancake, .quickSwap:
@@ -76,12 +76,12 @@ extension SwapProviderManager: ISwapDexManager {
             oldDex.provider = provider
             dex = oldDex
         } else {
-            let blockchain = provider.allowedBlockchains[0]
-            dex = SwapModule.Dex(blockchain: blockchain, provider: provider)
+            let blockchainType = provider.allowedBlockchainTypes[0]
+            dex = SwapModule.Dex(blockchainType: blockchainType, provider: provider)
         }
 
         self.dex = dex
-        localStorage.setDefaultProvider(blockchain: dex.blockchain, provider: dex.provider)
+        localStorage.setDefaultProvider(blockchainType: dex.blockchainType, provider: dex.provider)
 
         dataSourceProvider = self.provider(dex: dex)
     }

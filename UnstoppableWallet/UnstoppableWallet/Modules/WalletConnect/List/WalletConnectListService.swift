@@ -3,6 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnect
 import WalletConnectUtils
+import MarketKit
 
 class WalletConnectListService {
     private var disposeBag = DisposeBag()
@@ -54,7 +55,7 @@ class WalletConnectListService {
             }
             return Item(
                     id: $0.id,
-                    chains: [blockchain],
+                    blockchains: [blockchain],
                     version: 1,
                     appName: $0.peerMeta.name,
                     appUrl: $0.peerMeta.url,
@@ -74,7 +75,7 @@ class WalletConnectListService {
             }
             return Item(
                     id: session.id,
-                    chains: blockchains,
+                    blockchains: blockchains,
                     version: 2,
                     appName: session.peer.name ?? "",
                     appUrl: session.peer.url ?? "",
@@ -197,7 +198,7 @@ extension WalletConnectListService {
 
     struct Item {
         let id: Int
-        let chains: [EvmBlockchain]
+        let blockchains: [Blockchain]
         let version: Int
 
         let appName: String

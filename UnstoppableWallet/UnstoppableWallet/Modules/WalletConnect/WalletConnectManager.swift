@@ -14,11 +14,11 @@ class WalletConnectManager {
     }
 
     func evmKitWrapper(chainId: Int, account: Account) -> EvmKitWrapper? {
-        guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+        guard let blockchainType = evmBlockchainManager.blockchain(chainId: chainId)?.type else {
             return nil
         }
 
-        return try? evmBlockchainManager.evmKitManager(blockchain: blockchain).evmKitWrapper(account: account, blockchain: blockchain)
+        return try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType)
     }
 
 }

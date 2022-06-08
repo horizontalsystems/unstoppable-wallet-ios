@@ -3,7 +3,7 @@ import ThemeKit
 import MarketKit
 
 protocol ICoinSelectDelegate: AnyObject {
-    func didSelect(platformCoin: PlatformCoin)
+    func didSelect(token: Token)
 }
 
 struct CoinSelectModule {

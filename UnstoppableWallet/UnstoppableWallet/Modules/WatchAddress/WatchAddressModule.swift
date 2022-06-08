@@ -1,16 +1,19 @@
 import UIKit
 import ThemeKit
+import MarketKit
 
 struct WatchAddressModule {
 
     static func viewController() -> UIViewController {
+        let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native))
+
         let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: "ETH", coinType: .ethereum)
+        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: "ETH", token: ethereumToken)
         let addressParserChain = AddressParserChain()
                 .append(handler: evmAddressParserItem)
                 .append(handler: udnAddressParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(coinType: .ethereum)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         let service = WatchAddressService(

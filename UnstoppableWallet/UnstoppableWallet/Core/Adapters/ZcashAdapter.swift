@@ -16,7 +16,7 @@ class ZcashAdapter {
     private static let coinRate = Decimal(ZcashSDK.zatoshiPerZEC)
     var fee: Decimal { defaultFee() }
 
-    private let coin: PlatformCoin
+    private let token: Token
     private let transactionSource: TransactionSource
     private let localStorage = App.shared.localStorage       //temporary decision. Will move to init
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
@@ -61,7 +61,7 @@ class ZcashAdapter {
         network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
-        coin = wallet.platformCoin
+        token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
         switch wallet.account.origin {
@@ -229,7 +229,7 @@ class ZcashAdapter {
         // TODO: Should have it's own transactions with memo
         if transaction.sentTo(address: receiveAddress) {
             return BitcoinIncomingTransactionRecord(
-                    coin: coin,
+                    token: token,
                     source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
@@ -248,7 +248,7 @@ class ZcashAdapter {
             )
         } else {
             return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
+                    token: token,
                     source: transactionSource,
                     uid: transaction.transactionHash,
                     transactionHash: transaction.transactionHash,
@@ -473,7 +473,7 @@ extension ZcashAdapter: ITransactionsAdapter {
         network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
     }
 
-    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
                 .map { transactions in
                     transactions.compactMap { transaction -> TransactionRecord? in
@@ -488,7 +488,7 @@ extension ZcashAdapter: ITransactionsAdapter {
                 .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         transactionPool.transactionsSingle(from: from, filter: filter, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         }

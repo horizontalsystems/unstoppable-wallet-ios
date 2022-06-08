@@ -84,7 +84,7 @@ extension SwapApproveViewModel {
         }
 
         // TODO: Decimal count check must be implemented in coinService and used in other places too
-        return amount.decimalCount <= min(coinService.platformCoin.decimals, maxCoinDecimals)
+        return amount.decimalCount <= min(coinService.token.decimals, maxCoinDecimals)
     }
 
     func onChange(amount: String?) {

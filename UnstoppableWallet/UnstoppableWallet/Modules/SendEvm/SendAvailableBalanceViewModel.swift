@@ -61,7 +61,7 @@ class SendAvailableBalanceViewModel {
             let currencyValue = CurrencyValue(currency: rate.currency, value: availableBalance * rate.value)
             value = ValueFormatter.instance.formatFull(currencyValue: currencyValue)
         } else {
-            let coinValue = CoinValue(kind: .platformCoin(platformCoin: coinService.platformCoin), value: availableBalance)
+            let coinValue = CoinValue(kind: .token(token: coinService.token), value: availableBalance)
             value = ValueFormatter.instance.formatFull(coinValue: coinValue)
         }
 

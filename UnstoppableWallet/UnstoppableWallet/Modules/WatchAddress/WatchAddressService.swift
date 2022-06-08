@@ -85,14 +85,14 @@ extension WatchAddressService {
         accountManager.save(account: account)
 
         do {
-            let evmBlockchains = evmBlockchainManager.allBlockchains
+            let blockchains = evmBlockchainManager.allBlockchains
 
-            for evmBlockchain in evmBlockchains {
-                evmBlockchainManager.evmAccountManager(blockchain: evmBlockchain).markAutoEnable(account: account)
+            for blockchain in blockchains {
+                evmBlockchainManager.evmAccountManager(blockchainType: blockchain.type).markAutoEnable(account: account)
             }
 
-            let platformCoins = try marketKit.platformCoins(coinTypes: evmBlockchains.map { $0.baseCoinType })
-            let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
+            let tokens = try marketKit.tokens(queries: blockchains.map { TokenQuery(blockchainType: $0.type, tokenType: .native) })
+            let wallets = tokens.map { Wallet(token: $0, account: account) }
 
             walletManager.save(wallets: wallets)
         } catch {

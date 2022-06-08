@@ -13,7 +13,14 @@ class NftDatabaseStorage {
     var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
 
-        migrator.registerMigration("Create NftCollectionRecord and NftAssetRecord") { db in
+        migrator.registerMigration("Recreate NftCollectionRecord and NftAssetRecord") { db in
+            if try db.tableExists("nftCollectionRecord") {
+                try db.drop(table: "nftCollectionRecord")
+            }
+            if try db.tableExists("nftAssetRecord") {
+                try db.drop(table: "nftAssetRecord")
+            }
+
             try db.create(table: NftCollectionRecord.databaseTableName) { t in
                 t.column(NftCollectionRecord.Columns.accountId.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.contracts.name, .text).notNull()
@@ -25,9 +32,9 @@ class NftDatabaseStorage {
                 t.column(NftCollectionRecord.Columns.externalUrl.name, .text)
                 t.column(NftCollectionRecord.Columns.discordUrl.name, .text)
                 t.column(NftCollectionRecord.Columns.twitterUsername.name, .text)
-                t.column(NftCollectionRecord.Columns.averagePrice7dCoinTypeId.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice7dTokenQueryId.name, .text)
                 t.column(NftCollectionRecord.Columns.averagePrice7dValue.name, .text)
-                t.column(NftCollectionRecord.Columns.averagePrice30dCoinTypeId.name, .text)
+                t.column(NftCollectionRecord.Columns.averagePrice30dTokenQueryId.name, .text)
                 t.column(NftCollectionRecord.Columns.averagePrice30dValue.name, .text)
                 t.column(NftCollectionRecord.Columns.totalSupply.name, .integer).notNull()
 
@@ -47,7 +54,7 @@ class NftDatabaseStorage {
                 t.column(NftAssetRecord.Columns.externalLink.name, .text)
                 t.column(NftAssetRecord.Columns.permalink.name, .text)
                 t.column(NftAssetRecord.Columns.traits.name, .text).notNull()
-                t.column(NftAssetRecord.Columns.lastSalePriceCoinTypeId.name, .text)
+                t.column(NftAssetRecord.Columns.lastSalePriceTokenQueryId.name, .text)
                 t.column(NftAssetRecord.Columns.lastSalePriceValue.name, .text)
                 t.column(NftAssetRecord.Columns.onSale.name, .boolean)
 

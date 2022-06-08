@@ -302,11 +302,11 @@ class TransactionsViewItemFactory {
     }
 
     func coinFilter(wallet: TransactionWallet) -> MarketDiscoveryFilterHeaderView.ViewItem? {
-        guard let platformCoin = wallet.coin else {
+        guard let token = wallet.token else {
             return nil
         }
 
-        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: platformCoin.coin.imageUrl, iconPlaceholder: platformCoin.coinType.placeholderImageName, title: platformCoin.coin.code, blockchainBadge: wallet.badge)
+        return MarketDiscoveryFilterHeaderView.ViewItem(iconUrl: token.coin.imageUrl, iconPlaceholder: token.placeholderImageName, title: token.coin.code, blockchainBadge: wallet.badge)
     }
 
 }

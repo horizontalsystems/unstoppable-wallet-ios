@@ -12,8 +12,8 @@ class RestoreSettingsManager {
 
 extension RestoreSettingsManager {
 
-    func settings(account: Account, coinType: CoinType) -> RestoreSettings {
-        let records = storage.restoreSettings(accountId: account.id, coinId: coinType.id)
+    func settings(account: Account, blockchainType: BlockchainType) -> RestoreSettings {
+        let records = storage.restoreSettings(accountId: account.id, blockchainUid: blockchainType.uid)
 
         var settings = RestoreSettings()
 
@@ -26,22 +26,22 @@ extension RestoreSettingsManager {
         return settings
     }
 
-    func accountSettingsInfo(account: Account) -> [(CoinType, RestoreSettingType, String)] {
+    func accountSettingsInfo(account: Account) -> [(BlockchainType, RestoreSettingType, String)] {
         let records = storage.restoreSettings(accountId: account.id)
 
         return records.compactMap { record in
             guard let settingType = RestoreSettingType(rawValue: record.key) else {
                 return nil
             }
-            let coinType = CoinType(id: record.coinId)
+            let blockchainType = BlockchainType(uid: record.blockchainUid)
 
-            return (coinType, settingType, record.value)
+            return (blockchainType, settingType, record.value)
         }
     }
 
-    func save(settings: RestoreSettings, account: Account, coinType: CoinType) {
+    func save(settings: RestoreSettings, account: Account, blockchainType: BlockchainType) {
         let records = settings.map { type, value in
-            RestoreSettingRecord(accountId: account.id, coinId: coinType.id, key: type.rawValue, value: value)
+            RestoreSettingRecord(accountId: account.id, blockchainUid: blockchainType.uid, key: type.rawValue, value: value)
         }
 
         storage.save(restoreSettingRecords: records)
@@ -52,10 +52,10 @@ extension RestoreSettingsManager {
 enum RestoreSettingType: String {
     case birthdayHeight
 
-    func createdAccountValue(coinType: CoinType) -> String? {
+    func createdAccountValue(blockchainType: BlockchainType) -> String? {
         switch self {
         case .birthdayHeight:
-            switch coinType {
+            switch blockchainType {
             case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: .mainnet)))"
             default: return nil
             }

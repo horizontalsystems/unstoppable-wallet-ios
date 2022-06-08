@@ -25,8 +25,8 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         return regex.firstMatch(in: reference, range: NSRange(location: 0, length: reference.count)) != nil
     }
 
-    func coinType(reference: String) -> CoinType {
-        .bep2(symbol: reference.uppercased())
+    func tokenQuery(reference: String) -> TokenQuery {
+        TokenQuery(blockchainType: .binanceChain, tokenType: .bep2(symbol: reference.uppercased()))
     }
 
     func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin> {
@@ -38,10 +38,11 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
         let url = "\(apiUrl)/v1/token_info/bep2"
         let request = networkManager.session.request(url, parameters: parameters)
+        let tokenQuery = tokenQuery(reference: reference)
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
             AddTokenModule.CustomCoin(
-                    type: .bep2(symbol: reference),
+                    tokenQuery: tokenQuery,
                     name: tokenInfo.name,
                     code: tokenInfo.originalSymbol,
                     decimals: tokenInfo.decimals

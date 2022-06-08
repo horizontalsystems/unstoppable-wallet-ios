@@ -1,9 +1,10 @@
 import BitcoinCashKit
 import BitcoinCore
 import RxSwift
+import MarketKit
 
 class BitcoinCashAdapter: BitcoinBaseAdapter {
-    private let bitcoinCashKit: Kit
+    private let bitcoinCashKit: BitcoinCashKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
@@ -21,10 +22,10 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
         case .type145: kitCoinType = .type145
         }
 
-        let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet(coinType: kitCoinType)
+        let networkType: BitcoinCashKit.Kit.NetworkType = testMode ? .testNet : .mainNet(coinType: kitCoinType)
         let logger = App.shared.logger.scoped(with: "BitcoinCashKit")
 
-        bitcoinCashKit = try Kit(seed: seed, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        bitcoinCashKit = try BitcoinCashKit.Kit(seed: seed, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: bitcoinCashKit, wallet: wallet, testMode: testMode)
 
@@ -43,7 +44,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
 
 extension BitcoinCashAdapter: ISendBitcoinAdapter {
 
-    var blockchain: BtcBlockchain {
+    var blockchainType: BlockchainType {
         .bitcoinCash
     }
 

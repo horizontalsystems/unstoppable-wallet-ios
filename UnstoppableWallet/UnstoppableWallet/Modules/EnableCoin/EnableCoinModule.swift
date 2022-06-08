@@ -1,9 +1,9 @@
 struct EnableCoinModule {
 
     static func module() -> (EnableCoinService, EnableCoinView) {
-        let coinPlatformsService = CoinPlatformsService()
-        let coinPlatformsViewModel = CoinPlatformsViewModel(service: coinPlatformsService)
-        let coinPlatformsView = CoinPlatformsView(viewModel: coinPlatformsViewModel)
+        let coinTokensService = CoinTokensService()
+        let coinTokensViewModel = CoinTokensViewModel(service: coinTokensService)
+        let coinTokensView = CoinTokensView(viewModel: coinTokensViewModel)
 
         let restoreSettingsService = RestoreSettingsService(manager: App.shared.restoreSettingsManager)
         let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
@@ -14,13 +14,13 @@ struct EnableCoinModule {
         let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
 
         let service = EnableCoinService(
-                coinPlatformsService: coinPlatformsService,
+                coinTokensService: coinTokensService,
                 restoreSettingsService: restoreSettingsService,
                 coinSettingsService: coinSettingsService
         )
 
         let view = EnableCoinView(
-                coinPlatformsView: coinPlatformsView,
+                coinTokensView: coinTokensView,
                 restoreSettingsView: restoreSettingsView,
                 coinSettingsView: coinSettingsView
         )

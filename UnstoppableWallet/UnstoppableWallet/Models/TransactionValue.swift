@@ -3,13 +3,13 @@ import MarketKit
 import BigInt
 
 enum TransactionValue {
-    case coinValue(platformCoin: PlatformCoin, value: Decimal)
+    case coinValue(token: Token, value: Decimal)
     case tokenValue(tokenName: String, tokenCode: String, tokenDecimals: Int, value: Decimal)
     case rawValue(value: BigUInt)
 
     var coinName: String {
         switch self {
-        case .coinValue(let platformCoin, _): return platformCoin.name
+        case .coinValue(let token, _): return token.coin.name
         case .tokenValue(let tokenName, _, _, _): return tokenName
         case .rawValue: return ""
         }
@@ -17,7 +17,7 @@ enum TransactionValue {
 
     var coinCode: String {
         switch self {
-        case .coinValue(let platformCoin, _): return platformCoin.code
+        case .coinValue(let token, _): return token.coin.code
         case .tokenValue(_, let tokenCode, _, _): return tokenCode
         case .rawValue: return ""
         }
@@ -25,7 +25,7 @@ enum TransactionValue {
 
     var coin: Coin? {
         switch self {
-        case .coinValue(let platformCoin, _): return platformCoin.coin
+        case .coinValue(let token, _): return token.coin
         case .tokenValue: return nil
         case .rawValue: return nil
         }
@@ -49,7 +49,7 @@ enum TransactionValue {
 
     public var isMaxValue: Bool {
         switch self {
-        case .coinValue(let platformCoin, let value): return value.isMaxValue(decimals: platformCoin.decimals)
+        case .coinValue(let token, let value): return value.isMaxValue(decimals: token.decimals)
         case .tokenValue(_, _, let tokenDecimals, let value): return value.isMaxValue(decimals: tokenDecimals)
         case .rawValue: return false
         }
@@ -57,8 +57,8 @@ enum TransactionValue {
 
     func formattedFull(showSign: Bool = false) -> String? {
         switch self {
-        case let .coinValue(platformCoin, value):
-            return ValueFormatter.instance.formatFull(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code, showSign: showSign)
+        case let .coinValue(token, value):
+            return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: token.coin.code, showSign: showSign)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
             return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: tokenCode, showSign: showSign)
         case .rawValue:
@@ -68,8 +68,8 @@ enum TransactionValue {
 
     func formattedShort(showSign: Bool = false) -> String? {
         switch self {
-        case let .coinValue(platformCoin, value):
-            return ValueFormatter.instance.formatShort(value: value, decimalCount: platformCoin.decimals, symbol: platformCoin.coin.code, showSign: showSign)
+        case let .coinValue(token, value):
+            return ValueFormatter.instance.formatShort(value: value, decimalCount: token.decimals, symbol: token.coin.code, showSign: showSign)
         case let .tokenValue(_, tokenCode, tokenDecimals, value):
             return ValueFormatter.instance.formatShort(value: value, decimalCount: tokenDecimals, symbol: tokenCode, showSign: showSign)
         case .rawValue:
@@ -83,7 +83,7 @@ extension TransactionValue: Equatable {
 
     static func ==(lhs: TransactionValue, rhs: TransactionValue) -> Bool {
         switch (lhs, rhs) {
-        case (.coinValue(let lhsPlatformCoin, let lhsValue), .coinValue(let rhsPlatformCoin, let rhsValue)): return lhsPlatformCoin == rhsPlatformCoin && lhsValue == rhsValue
+        case (.coinValue(let lhsToken, let lhsValue), .coinValue(let rhsToken, let rhsValue)): return lhsToken == rhsToken && lhsValue == rhsValue
         case (.tokenValue(let lhsTokenName, let lhsTokenCode, let lhsTokenDecimals, let lhsValue), .tokenValue(let rhsTokenName, let rhsTokenCode, let rhsTokenDecimals, let rhsValue)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals && lhsValue == rhsValue
         case (.rawValue(let lhsValue), .rawValue(let rhsValue)): return lhsValue == rhsValue
         default: return false

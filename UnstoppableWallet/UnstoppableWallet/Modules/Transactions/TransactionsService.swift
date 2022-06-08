@@ -46,7 +46,7 @@ class TransactionsService {
             case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash, .bep2: groupedWallets.append(wallet)
             case .evm:
                 if !groupedWallets.contains(where: { wallet.source == $0.source }) {
-                    groupedWallets.append(TransactionWallet(coin: nil, source: wallet.source, badge: wallet.badge))
+                    groupedWallets.append(TransactionWallet(token: nil, source: wallet.source, badge: wallet.badge))
                 }
             }
         }
@@ -152,8 +152,8 @@ class TransactionsService {
         let lastBlockInfo = syncStateService.lastBlockInfo(source: record.source)
 
         var currencyValue: CurrencyValue? = nil
-        if let transactionValue = record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
-            currencyValue = _currencyValue(transactionValue: transactionValue, rate: rateService.rate(key: RateKey(coin: platformCoin.coin, date: record.date)))
+        if let transactionValue = record.mainValue, case .coinValue(let token, _) = transactionValue {
+            currencyValue = _currencyValue(transactionValue: transactionValue, rate: rateService.rate(key: RateKey(coin: token.coin, date: record.date)))
         }
 
         return Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
@@ -234,8 +234,8 @@ extension TransactionsService {
     func fetchRate(for uid: String) {
         queue.async {
             if let item = self.items.first(where: { $0.record.uid == uid }), item.currencyValue == nil,
-               let transactionValue = item.record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
-                self.rateService.fetchRate(key: RateKey(coin: platformCoin.coin, date: item.record.date))
+               let transactionValue = item.record.mainValue, case .coinValue(let token, _) = transactionValue {
+                self.rateService.fetchRate(key: RateKey(coin: token.coin, date: item.record.date))
             }
         }
     }

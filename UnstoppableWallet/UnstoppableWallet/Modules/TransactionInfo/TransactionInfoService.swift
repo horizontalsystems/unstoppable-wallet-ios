@@ -21,7 +21,7 @@ class TransactionInfoService {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
 
-        subscribe(disposeBag, adapter.transactionsObservable(coin: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
+        subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncLastBlockUpdated() }
 
         fetchRates()

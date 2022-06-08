@@ -4,6 +4,7 @@ import RxSwift
 import ThemeKit
 import ComponentKit
 import PinKit
+import MarketKit
 
 class SecuritySettingsViewController: ThemeViewController {
     private let viewModel: SecuritySettingsViewModel
@@ -89,11 +90,11 @@ class SecuritySettingsViewController: ThemeViewController {
         present(App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .disabled, insets: .zero, cancellable: true, autoDismiss: true), animated: true)
     }
 
-    private func openBtc(blockchain: BtcBlockchain) {
+    private func openBtc(blockchain: Blockchain) {
         present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
     }
 
-    private func openEvm(blockchain: EvmBlockchain) {
+    private func openEvm(blockchain: Blockchain) {
         present(EvmNetworkModule.viewController(blockchain: blockchain), animated: true)
     }
 
@@ -215,7 +216,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.icon)
+                        component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                     })
 
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in

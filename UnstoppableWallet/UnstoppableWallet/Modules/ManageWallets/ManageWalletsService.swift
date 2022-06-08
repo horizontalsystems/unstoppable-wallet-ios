@@ -37,8 +37,8 @@ class ManageWalletsService {
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
             self?.handleUpdated(wallets: wallets)
         }
-        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredPlatformsCoins, restoreSettings in
-            self?.handleEnableCoin(configuredPlatformCoins: configuredPlatformsCoins, restoreSettings: restoreSettings)
+        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
+            self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
         }
         subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
             self?.handleCancelEnable(fullCoin: fullCoin)
@@ -53,12 +53,12 @@ class ManageWalletsService {
     private func fetchFullCoins() -> [FullCoin] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { !$0.supportedPlatforms.isEmpty }
+                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { !$0.supportedTokens.isEmpty }
 
                 let featuredCoins = featuredFullCoins.map { $0.coin }
                 let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })
 
-                let customFullCoins = wallets.map { $0.platformCoin }.filter { $0.isCustom }.map { $0.fullCoin }
+                let customFullCoins = wallets.map { $0.token }.filter { $0.isCustom }.map { $0.fullCoin }
 
                 return featuredFullCoins + enabledFullCoins + customFullCoins
             } else {
@@ -85,26 +85,26 @@ class ManageWalletsService {
         self.wallets = Set(wallets)
     }
 
-    private func hasSettingsOrPlatforms(supportedPlatforms: [Platform]) -> Bool {
-        if supportedPlatforms.count == 1 {
-            let platform = supportedPlatforms[0]
-            return !platform.coinType.coinSettingTypes.isEmpty
+    private func hasSettingsOrTokens(supportedTokens: [Token]) -> Bool {
+        if supportedTokens.count == 1 {
+            let token = supportedTokens[0]
+            return !token.blockchainType.coinSettingTypes.isEmpty
         } else {
             return true
         }
     }
 
     private func item(fullCoin: FullCoin) -> Item {
-        let supportedPlatforms = fullCoin.supportedPlatforms
-        let fullCoin = FullCoin(coin: fullCoin.coin, platforms: supportedPlatforms)
+        let supportedTokens = fullCoin.supportedTokens
+        let fullCoin = FullCoin(coin: fullCoin.coin, tokens: supportedTokens)
 
         let itemState: ItemState
 
-        if supportedPlatforms.isEmpty {
+        if supportedTokens.isEmpty {
             itemState = .unsupported
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrPlatforms(supportedPlatforms: supportedPlatforms))
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(supportedTokens: supportedTokens))
         }
 
         return Item(fullCoin: fullCoin, state: itemState)
@@ -127,22 +127,22 @@ class ManageWalletsService {
         syncState()
     }
 
-    private func handleEnableCoin(configuredPlatformCoins: [ConfiguredPlatformCoin], restoreSettings: RestoreSettings) {
-        guard let coin = configuredPlatformCoins.first?.platformCoin.coin else {
+    private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
+        guard let coin = configuredTokens.first?.token.coin else {
             return
         }
 
-        if !restoreSettings.isEmpty && configuredPlatformCoins.count == 1 {
-            enableCoinService.save(restoreSettings: restoreSettings, account: account, coinType: configuredPlatformCoins[0].platformCoin.coinType)
+        if !restoreSettings.isEmpty && configuredTokens.count == 1 {
+            enableCoinService.save(restoreSettings: restoreSettings, account: account, blockchainType: configuredTokens[0].token.blockchainType)
         }
 
         let existingWallets = wallets.filter { $0.coin == coin }
-        let existingConfiguredPlatformCoins = existingWallets.map { $0.configuredPlatformCoin }
+        let existingConfiguredTokens = existingWallets.map { $0.configuredToken }
 
-        let newConfiguredCoins = configuredPlatformCoins.filter { !existingConfiguredPlatformCoins.contains($0) }
-        let removedWallets = existingWallets.filter { !configuredPlatformCoins.contains($0.configuredPlatformCoin) }
+        let newConfiguredTokens = configuredTokens.filter { !existingConfiguredTokens.contains($0) }
+        let removedWallets = existingWallets.filter { !configuredTokens.contains($0.configuredToken) }
 
-        let newWallets = newConfiguredCoins.map { Wallet(configuredPlatformCoin: $0, account: account) }
+        let newWallets = newConfiguredTokens.map { Wallet(configuredToken: $0, account: account) }
 
         if !newWallets.isEmpty || !removedWallets.isEmpty {
             walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))
@@ -194,7 +194,7 @@ extension ManageWalletsService {
         }
 
         let coinWallets = wallets.filter { $0.coin.uid == uid }
-        enableCoinService.configure(fullCoin: fullCoin, configuredPlatformCoins: coinWallets.map { $0.configuredPlatformCoin })
+        enableCoinService.configure(fullCoin: fullCoin, configuredTokens: coinWallets.map { $0.configuredToken })
     }
 
 }

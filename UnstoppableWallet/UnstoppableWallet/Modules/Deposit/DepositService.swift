@@ -19,8 +19,8 @@ extension DepositService {
         wallet.coin
     }
 
-    var coinType: CoinType {
-        wallet.coinType
+    var token: Token {
+        wallet.token
     }
 
     var isMainNet: Bool {

@@ -6,11 +6,11 @@ import OneInchKit
 struct SwapConfirmationModule {
 
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper else {
+        guard let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(evmBlockchain: dex.blockchain, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: dex.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
             return nil
         }
 
@@ -25,7 +25,7 @@ struct SwapConfirmationModule {
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchain: dex.blockchain).evmKitWrapper else {
+        guard let evmKitWrapper =  App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
@@ -35,7 +35,7 @@ struct SwapConfirmationModule {
 
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(evmBlockchain: dex.blockchain, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: dex.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
             return nil
         }
 
