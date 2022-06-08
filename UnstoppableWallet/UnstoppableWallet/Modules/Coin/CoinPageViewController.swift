@@ -82,11 +82,8 @@ class CoinPageViewController: ThemeViewController {
             self?.addWalletState = $0
             self?.syncButtons()
         }
-        subscribe(disposeBag, viewModel.successHudSignal) {
-            HudHelper.instance.showSuccess(title: $0)
-        }
-        subscribe(disposeBag, viewModel.attentionHudSignal) {
-            HudHelper.instance.showAttention(title: $0)
+        subscribe(disposeBag, viewModel.hudSignal) {
+            HudHelper.instance.show(banner: $0)
         }
 
         onSelectTab(index: 0)
