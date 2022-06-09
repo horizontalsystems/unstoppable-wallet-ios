@@ -58,15 +58,28 @@ extension RestoreMnemonicService {
     }
 
     func accountType(words: [String]) throws -> AccountType {
+        var errors = [Error]()
         if passphraseEnabled, passphrase.isEmpty {
-            throw RestoreError.emptyPassphrase
+            errors.append(RestoreError.emptyPassphrase)
         }
 
-        guard words.count == 12 || words.count == 24 else {
-            throw ValidationError.invalidWordsCount(count: words.count)
+        if ![12, 24].contains(words.count) {
+            errors.append(ValidationError.invalidWordsCount(count: words.count))
         }
 
-        try Mnemonic.validate(words: words)
+        do {
+            try Mnemonic.validate(words: words)
+        } catch {
+            if case Mnemonic.ValidationError.invalidWordsCount = error {
+                // ignore already added error
+            } else {
+                errors.append(error)
+            }
+        }
+
+        guard errors.isEmpty else {
+            throw ErrorList.errors(errors)
+        }
 
         return .mnemonic(words: words, salt: passphrase)
     }
@@ -89,6 +102,10 @@ extension RestoreMnemonicService {
             }
         }
 
+    }
+
+    enum ErrorList: Error {
+        case errors([Error])
     }
 
 }
