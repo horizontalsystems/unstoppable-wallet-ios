@@ -11,6 +11,7 @@ class RestoreMnemonicViewModel {
     private let proceedRelay = PublishRelay<(String, AccountType)>()
     private let showErrorRelay = PublishRelay<String>()
 
+    private let mnemonicCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
 
@@ -81,6 +82,10 @@ extension RestoreMnemonicViewModel {
         service.passphraseEnabledObservable.asDriver(onErrorJustReturn: false)
     }
 
+    var mnemonicCautionDriver: Driver<Caution?> {
+        mnemonicCautionRelay.asDriver()
+    }
+
     var passphraseCautionDriver: Driver<Caution?> {
         passphraseCautionRelay.asDriver()
     }
@@ -99,6 +104,7 @@ extension RestoreMnemonicViewModel {
 
     func onChange(text: String, cursorOffset: Int) {
         syncState(text: text)
+        mnemonicCautionRelay.accept(nil)
 
         let nonCursorInvalidItems = state.invalidItems.filter { item in
             let hasCursor = cursorOffset >= item.range.lowerBound && cursorOffset <= item.range.upperBound
@@ -120,6 +126,7 @@ extension RestoreMnemonicViewModel {
     }
 
     func onTapProceed() {
+        mnemonicCautionRelay.accept(nil)
         passphraseCautionRelay.accept(nil)
 
         guard state.invalidItems.isEmpty else {
@@ -132,10 +139,17 @@ extension RestoreMnemonicViewModel {
 
             proceedRelay.accept((service.resolvedName, accountType))
         } catch {
-            if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
-                passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
+            if case RestoreMnemonicService.ErrorList.errors(let errors) = error {
+                errors.forEach { error in
+                    if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
+                        passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
+                    } else {
+                        mnemonicCautionRelay.accept(Caution(text: error.convertedError.smartDescription, type: .error))
+                    }
+                }
             } else {
                 showErrorRelay.accept(error.convertedError.smartDescription)
+
             }
         }
     }

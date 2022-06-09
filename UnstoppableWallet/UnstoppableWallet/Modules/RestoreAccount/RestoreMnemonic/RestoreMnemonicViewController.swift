@@ -14,6 +14,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let nameCell = TextFieldCell()
 
     private let mnemonicInputCell = MnemonicInputCell()
+    private let mnemonicCautionCell = FormCautionCell()
 
     private let passphraseToggleCell = A11Cell()
     private let passphraseCell = TextFieldCell()
@@ -61,6 +62,8 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         mnemonicInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(text: $0, cursorOffset: $1) }
         mnemonicInputCell.onChangeTextViewCaret = { [weak self] in self?.syncContentOffsetIfRequired(textView: $0) }
 
+        mnemonicCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         passphraseToggleCell.titleImage = UIImage(named: "key_phrase_20")
         passphraseToggleCell.title = "restore.passphrase".localized
@@ -79,6 +82,10 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
             self?.passphraseCautionCell.set(caution: caution)
+        }
+        subscribe(disposeBag, viewModel.mnemonicCautionDriver) { [weak self] caution in
+            self?.mnemonicInputCell.set(cautionType: caution?.type)
+            self?.mnemonicCautionCell.set(caution: caution)
         }
         subscribe(disposeBag, viewModel.clearInputsSignal) { [weak self] in self?.passphraseCell.inputText = nil }
 
@@ -183,6 +190,13 @@ extension RestoreMnemonicViewController: SectionsDataSource {
                                 id: "mnemonic-input",
                                 dynamicHeight: { [weak self] width in
                                     self?.mnemonicInputCell.cellHeight(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: mnemonicCautionCell,
+                                id: "mnemonic-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.mnemonicCautionCell.height(containerWidth: width) ?? 0
                                 }
                         )
                     ]
