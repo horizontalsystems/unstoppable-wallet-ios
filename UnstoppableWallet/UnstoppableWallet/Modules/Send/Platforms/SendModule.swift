@@ -111,6 +111,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
@@ -209,6 +211,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
@@ -298,6 +302,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
