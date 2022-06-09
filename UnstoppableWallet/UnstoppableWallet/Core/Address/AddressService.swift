@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 
 protocol IAmountPublishService: AnyObject {
-    var amountRelay: PublishRelay<Decimal> { get }
+    var publishAmountRelay: PublishRelay<Decimal> { get }
 }
 
 class AddressService {
@@ -115,10 +115,10 @@ extension AddressService {
     }
 
     func handleFetched(text: String) -> String {
-        let addressData = addressUriParser.parse(paymentAddress: text)
+        let addressData = addressUriParser.parse(paymentAddress: text.trimmingCharacters(in: .whitespaces))
 
         if let amount = addressData.amount {
-            amountPublishService?.amountRelay.accept(Decimal(amount))
+            amountPublishService?.publishAmountRelay.accept(Decimal(amount))
         }
 
         set(text: addressData.address)

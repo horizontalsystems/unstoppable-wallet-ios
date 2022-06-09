@@ -34,6 +34,7 @@ class SendEvmModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountViewModel
 
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
