@@ -23,7 +23,7 @@ class RestoreMnemonicViewModel {
     }
 
     private func wordItems(text: String) -> [WordItem] {
-        let matches = regex.matches(in: text, range: NSRange(location: 0, length: text.count))
+        let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))
 
         return matches.compactMap { match in
             guard let range = Range(match.range, in: text) else {
