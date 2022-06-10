@@ -565,7 +565,7 @@ CHECKOUT OPTIONS:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
     :git: https://github.com/horizontalsystems/blockchain-fee-rate-kit-ios
   HdWalletKit.swift:
-    :commit: f317b18445a4a2b2bf1eb99e45f63ca2143ae465
+    :commit: 35f6e0272d74699610df1583759d909148f24a12
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
     :commit: c3e55cf6635d4451010feb4e4a7291443cdd8aeb

@@ -6,7 +6,7 @@ import RxRelay
 class RestoreMnemonicService {
     private let wordsManager: WordsManager
 
-    private let wordList = Mnemonic.wordList(for: .english).map(String.init)
+    private let wordList: [String]
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let passphraseValidator: PassphraseValidator
 
@@ -17,6 +17,12 @@ class RestoreMnemonicService {
     init(accountFactory: AccountFactory, wordsManager: WordsManager, passphraseValidator: PassphraseValidator) {
         self.wordsManager = wordsManager
         self.passphraseValidator = passphraseValidator
+
+        wordList = Mnemonic.Language.allCases.reduce([String]()) { array, language in
+            var array = array
+            array.append(contentsOf: Mnemonic.wordList(for: language).map(String.init))
+            return array
+        }
 
         defaultName = accountFactory.nextAccountName
     }
@@ -63,18 +69,10 @@ extension RestoreMnemonicService {
             errors.append(RestoreError.emptyPassphrase)
         }
 
-        if ![12, 24].contains(words.count) {
-            errors.append(ValidationError.invalidWordsCount(count: words.count))
-        }
-
         do {
             try Mnemonic.validate(words: words)
         } catch {
-            if case Mnemonic.ValidationError.invalidWordsCount = error {
-                // ignore already added error
-            } else {
-                errors.append(error)
-            }
+            errors.append(error)
         }
 
         guard errors.isEmpty else {
@@ -90,18 +88,6 @@ extension RestoreMnemonicService {
 
     enum RestoreError: Error {
         case emptyPassphrase
-    }
-
-    enum ValidationError: LocalizedError {
-        case invalidWordsCount(count: Int)
-
-        public var errorDescription: String? {
-            switch self {
-            case .invalidWordsCount(let count):
-                return "restore_error.mnemonic_word_count".localized("\(count)")
-            }
-        }
-
     }
 
     enum ErrorList: Error {
