@@ -34,7 +34,7 @@ extension RestoreSettingsViewModel {
         openBirthdayAlertRelay.asSignal()
     }
 
-    func onEnter(birthdayHeight: Int) {
+    func onEnter(birthdayHeight: Int?) {
         guard let request = currentRequest else {
             return
         }

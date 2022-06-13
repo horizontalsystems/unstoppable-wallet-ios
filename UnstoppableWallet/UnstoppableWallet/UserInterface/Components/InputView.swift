@@ -10,6 +10,13 @@ class InputView: UIView {
 
     var onChangeText: ((String?) -> ())?
 
+    var isEnabled: Bool = true {
+        didSet {
+            inputStackView.editable = isEnabled
+            deleteView.button.isEnabled = isEnabled
+        }
+    }
+
     init(singleLine: Bool = false) {
         inputStackView = InputStackView(singleLine: singleLine)
         formValidatedView = FormValidatedView(contentView: inputStackView)
@@ -76,6 +83,11 @@ extension InputView {
             inputStackView.text = newValue
             syncButtonStates()
         }
+    }
+
+    var textColor: UIColor? {
+        get { inputStackView.textColor }
+        set { inputStackView.textColor = newValue }
     }
 
     var font: UIFont? {
