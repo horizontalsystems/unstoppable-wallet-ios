@@ -2425,6 +2425,7 @@
 		ABC9A30459A3D9922CCF2E26 /* WalletConnectV1ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA2DC16F947607B1794E /* WalletConnectV1ListView.swift */; };
 		ABC9A3114AEA853305A33586 /* WalletConnectListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC09A586D88BAB3B9C67 /* WalletConnectListModule.swift */; };
 		ABC9A3187D032F44CD4E8986 /* MarketCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */; };
+		ABC9A31AE27FED8A239261A6 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */; };
 		ABC9A32176DC914BBB4E9BFF /* WalletConnectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A52AC277ED7563F2707F /* WalletConnectListViewModel.swift */; };
 		ABC9A32D8EFFA6779886A27A /* ProChartFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAB6BA03FFE92F247FF6 /* ProChartFetcher.swift */; };
 		ABC9A33065F9EB39D8DBF227 /* SendFeePriorityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6698C9FE22A5E4BA8FA /* SendFeePriorityViewModel.swift */; };
@@ -2601,6 +2602,7 @@
 		ABC9AC2506BAB7F736219EE7 /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */; };
 		ABC9AC26853BD29F34AC6859 /* WalletConnectModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0F966294A4E629CCB65 /* WalletConnectModule.swift */; };
 		ABC9AC275CAC4FA2BD49037C /* ProFeaturesPassesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD300C58D1E75104DC38 /* ProFeaturesPassesCell.swift */; };
+		ABC9AC50E2E966F009D78FD5 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */; };
 		ABC9AC5552508D091D622027 /* SendZcashFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F55A2C6777D25F57D5 /* SendZcashFactory.swift */; };
 		ABC9AC5BF6EFBF9A94293BED /* SendBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */; };
 		ABC9AC61865C5DDDD92965BD /* SendTimeLockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2C589F6B04B96BE2ADB /* SendTimeLockViewModel.swift */; };
@@ -2657,6 +2659,7 @@
 		ABC9AED51AEDD5AD80AD167A /* WalletConnectEvmChainParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF99E1669B374FF256E /* WalletConnectEvmChainParser.swift */; };
 		ABC9AEDCDECE827D610F025A /* ProFeaturesAuthorizationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8D3446ABE98F4D1C0CC /* ProFeaturesAuthorizationAdapter.swift */; };
 		ABC9AEDFDA6554EE7937D69D /* ChartMarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4F7ED678A7A4F377CF0 /* ChartMarketCardView.swift */; };
+		ABC9AEE0716153FBCA28A7F4 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */; };
 		ABC9AEE8286B8E03C5172781 /* WalletConnectV2PendingRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAD79FD756DA69A52578 /* WalletConnectV2PendingRequestsViewController.swift */; };
 		ABC9AEEA99AAACDA5A813C6C /* NftDetailsChartPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6755779FC6F08510CE3 /* NftDetailsChartPreviewView.swift */; };
 		ABC9AF0460ECEF48358C3E1A /* ChartMarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4F7ED678A7A4F377CF0 /* ChartMarketCardView.swift */; };
@@ -3833,6 +3836,7 @@
 		ABC9A6698C9FE22A5E4BA8FA /* SendFeePriorityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeePriorityViewModel.swift; sourceTree = "<group>"; };
 		ABC9A6755779FC6F08510CE3 /* NftDetailsChartPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftDetailsChartPreviewView.swift; sourceTree = "<group>"; };
 		ABC9A696DCBBE4761E77311C /* SendBitcoinService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinService.swift; sourceTree = "<group>"; };
+		ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		ABC9A6CFF0208D48FE778028 /* WalletConnectV1MainRequestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV1MainRequestViewModel.swift; sourceTree = "<group>"; };
 		ABC9A6F55A2C6777D25F57D5 /* SendZcashFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendZcashFactory.swift; sourceTree = "<group>"; };
 		ABC9A76EF84398C3288CD4B9 /* ProFeaturesActivateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesActivateViewController.swift; sourceTree = "<group>"; };
@@ -4650,6 +4654,7 @@
 				58AAA6FB0AF97333CD9D007F /* InfoSeparatorHeaderView.swift */,
 				58AAA9E19A578FD13792D2B7 /* AdditionalDataView.swift */,
 				58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */,
+				ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -8066,6 +8071,7 @@
 				11B35CA21AE2551CC68781CB /* EnabledWallet_v_0_25.swift in Sources */,
 				11B353F8A1B3C2BF24A772E8 /* CoinType.swift in Sources */,
 				ABC9A8CD642351BD809536E2 /* HudHelper.swift in Sources */,
+				ABC9A31AE27FED8A239261A6 /* CheckboxView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9042,6 +9048,7 @@
 				11B35F45249FDF026B27F06F /* EnabledWallet_v_0_25.swift in Sources */,
 				11B355B5E78279B792F102BB /* CoinType.swift in Sources */,
 				ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */,
+				ABC9AEE0716153FBCA28A7F4 /* CheckboxView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10010,6 +10017,7 @@
 				11B3516E6F489646368A4DDE /* EnabledWallet_v_0_25.swift in Sources */,
 				11B35531B3F80D06EF040301 /* CoinType.swift in Sources */,
 				ABC9ACC51D6B2D4E04C8019E /* HudHelper.swift in Sources */,
+				ABC9AC50E2E966F009D78FD5 /* CheckboxView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

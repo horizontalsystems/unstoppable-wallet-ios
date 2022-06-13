@@ -26,7 +26,7 @@ class RestoreSettingsView {
 
 extension RestoreSettingsView: IBirthdayInputDelegate {
 
-    func didEnter(birthdayHeight: Int) {
+    func didEnter(birthdayHeight: Int?) {
         viewModel.onEnter(birthdayHeight: birthdayHeight)
     }
 

@@ -1089,6 +1089,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
 
