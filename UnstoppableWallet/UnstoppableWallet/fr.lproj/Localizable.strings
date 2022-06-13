@@ -28,6 +28,23 @@
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Terminé";
 
+"alert.added_to_watchlist" = "Added to Watchlist";
+"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_wallet" = "Added to Wallet";
+"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.not_supported_yet" = "Not Supported Yet";
+"alert.copied" = "Copied";
+"alert.created" = "Created";
+"alert.deleted" = "Deleted";
+"alert.disconnecting" = "Disconnecting";
+"alert.disconnected" = "Disconnected";
+"alert.enabling" = "Enabling";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "Sending";
+"alert.swapping" = "Swapping";
+"alert.approving" = "Approving";
+
+
 "action.loading" = "chargement en cours...";
 "placeholder.search" = "Chercher";
 
