@@ -90,4 +90,12 @@ extension EvmBlockchainManager {
         evmManagers(blockchainType: blockchainType).1
     }
 
+    func markAutoEnable(blockchainType: BlockchainType, account: Account) {
+        guard blockchainTypes.contains(blockchainType) else {
+            return
+        }
+
+        evmAccountManager(blockchainType: blockchainType).markAutoEnable(account: account)
+    }
+
 }

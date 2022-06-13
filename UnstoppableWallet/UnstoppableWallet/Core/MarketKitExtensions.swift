@@ -99,25 +99,13 @@ extension MarketKit.Blockchain {
         }
     }
 
-    var description: String {
-        switch type {
-        case .ethereum: return "ETH, ERC20 tokens"
-        case .binanceSmartChain: return "BNB, BEP20 tokens"
-        case .polygon: return "MATIC, MRC20 tokens"
-        case .optimism: return "L2 chain"
-        case .arbitrumOne: return "L2 chain"
-        default: return ""
-        }
-    }
-
 }
 
 extension MarketKit.BlockchainType {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-//        return "https://markets.nyc3.digitaloceanspaces.com/blockchain-icons/\(uid)@\(scale)x.png"
-        return "https://markets.nyc3.digitaloceanspaces.com/platform-icons/\(uid)@\(scale)x.png"
+        return "https://markets.nyc3.digitaloceanspaces.com/blockchain-icons/\(uid)@\(scale)x.png"
     }
 
     var coinSettingTypes: [CoinSettingType] {

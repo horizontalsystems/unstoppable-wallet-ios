@@ -3,6 +3,18 @@ import RxRelay
 import MarketKit
 
 class RestoreSelectService {
+    private let blockchainTypes: [BlockchainType] = [
+        .bitcoin,
+        .ethereum,
+        .binanceSmartChain,
+        .polygon,
+        .zcash,
+        .dash,
+        .bitcoinCash,
+        .litecoin,
+        .binanceChain,
+    ]
+
     private let accountName: String
     private let accountType: AccountType
     private let accountFactory: AccountFactory
@@ -13,12 +25,12 @@ class RestoreSelectService {
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
-    private var internalItems = [InternalItem]()
-    private(set) var enabledCoins = Set<ConfiguredToken>()
+    private var tokens = [Token]()
+    private(set) var enabledConfiguredTokens = Set<ConfiguredToken>()
 
     private var restoreSettingsMap = [Token: RestoreSettings]()
 
-    private let cancelEnableBlockchainRelay = PublishRelay<RestoreSelectModule.Blockchain>()
+    private let cancelEnableBlockchainRelay = PublishRelay<BlockchainType>()
     private let canRestoreRelay = BehaviorRelay<Bool>(value: false)
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -51,44 +63,40 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let tokens = try marketKit.tokens(queries: RestoreSelectModule.Blockchain.all.map { $0.tokenQuery })
+            let tokens = try marketKit.tokens(queries: blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
 
-            internalItems = RestoreSelectModule.Blockchain.all.compactMap { blockchain in
-                guard let token = tokens.first(where: { $0.tokenQuery == blockchain.tokenQuery }) else {
-                    return nil
-                }
-
-                return InternalItem(blockchain: blockchain, token: token)
+            self.tokens = blockchainTypes.compactMap { type in
+                tokens.first { $0.blockchainType == type }
             }
         } catch {
             // todo
         }
     }
 
-    private func isEnabled(internalItem: InternalItem) -> Bool {
-        enabledCoins.contains { $0.token == internalItem.token }
+    private func isEnabled(token: Token) -> Bool {
+        enabledConfiguredTokens.contains { $0.token == token }
     }
 
     private func hasSettings(token: Token) -> Bool {
         !token.blockchainType.coinSettingTypes.isEmpty
     }
 
-    private func item(internalItem: InternalItem) -> Item {
-        let enabled = isEnabled(internalItem: internalItem)
+    private func item(token: Token) -> Item {
+        let enabled = isEnabled(token: token)
 
         return Item(
-                blockchain: internalItem.blockchain,
+                blockchain: token.blockchain,
                 enabled: enabled,
-                hasSettings: enabled && hasSettings(token: internalItem.token)
+                hasSettings: enabled && hasSettings(token: token)
         )
     }
 
     private func syncState() {
-        items = internalItems.map { item(internalItem: $0) }
+        items = tokens.map { item(token: $0) }
     }
 
     private func syncCanRestore() {
-        canRestoreRelay.accept(!enabledCoins.isEmpty)
+        canRestoreRelay.accept(!enabledConfiguredTokens.isEmpty)
     }
 
     private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
@@ -100,17 +108,17 @@ class RestoreSelectService {
             restoreSettingsMap[token] = restoreSettings
         }
 
-        let existingConfiguredTokens = enabledCoins.filter { $0.token == token }
+        let existingConfiguredTokens = enabledConfiguredTokens.filter { $0.token == token }
 
         let newConfiguredTokens = configuredTokens.filter { !existingConfiguredTokens.contains($0) }
         let removedConfiguredTokens = existingConfiguredTokens.filter { !configuredTokens.contains($0) }
 
         for configuredToken in newConfiguredTokens {
-            enabledCoins.insert(configuredToken)
+            enabledConfiguredTokens.insert(configuredToken)
         }
 
         for configuredToken in removedConfiguredTokens {
-            enabledCoins.remove(configuredToken)
+            enabledConfiguredTokens.remove(configuredToken)
         }
 
         syncCanRestore()
@@ -118,12 +126,12 @@ class RestoreSelectService {
     }
 
     private func handleCancelEnable(fullCoin: FullCoin) {
-        guard let internalItem = internalItems.first(where: { fullCoin.supportedTokens.contains($0.token) }) else {
+        guard let token = tokens.first(where: { fullCoin.supportedTokens.contains($0) }) else {
             return
         }
 
-        if !isEnabled(internalItem: internalItem) {
-            cancelEnableBlockchainRelay.accept(internalItem.blockchain)
+        if !isEnabled(token: token) {
+            cancelEnableBlockchainRelay.accept(token.blockchainType)
         }
     }
 
@@ -135,7 +143,7 @@ extension RestoreSelectService {
         itemsRelay.asObservable()
     }
 
-    var cancelEnableBlockchainObservable: Observable<RestoreSelectModule.Blockchain> {
+    var cancelEnableBlockchainObservable: Observable<BlockchainType> {
         cancelEnableBlockchainRelay.asObservable()
     }
 
@@ -144,30 +152,30 @@ extension RestoreSelectService {
     }
 
     func enable(blockchainUid: String) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
+        guard let token = tokens.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 
-        enableCoinService.enable(fullCoin: internalItem.token.fullCoin)
+        enableCoinService.enable(fullCoin: token.fullCoin)
     }
 
     func disable(blockchainUid: String) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
+        guard let token = tokens.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 
-        enabledCoins = enabledCoins.filter { $0.token != internalItem.token }
+        enabledConfiguredTokens = enabledConfiguredTokens.filter { $0.token != token }
 
         syncState()
         syncCanRestore()
     }
 
     func configure(blockchainUid: String) {
-        guard let internalItem = internalItems.first(where: { $0.blockchain.uid == blockchainUid }) else {
+        guard let token = tokens.first(where: { $0.blockchain.uid == blockchainUid }) else {
             return
         }
 
-        enableCoinService.configure(fullCoin: internalItem.token.fullCoin, configuredTokens: enabledCoins.filter { $0.token == internalItem.token })
+        enableCoinService.configure(fullCoin: token.fullCoin, configuredTokens: enabledConfiguredTokens.filter { $0.token == token })
     }
 
     func restore() {
@@ -183,18 +191,14 @@ extension RestoreSelectService {
                 continue
             }
 
-            switch item.blockchain {
-            case .evm(let blockchainType):
-                evmBlockchainManager.evmAccountManager(blockchainType: blockchainType).markAutoEnable(account: account)
-            default: ()
-            }
+            evmBlockchainManager.markAutoEnable(blockchainType: item.blockchain.type, account: account)
         }
 
-        guard !enabledCoins.isEmpty else {
+        guard !enabledConfiguredTokens.isEmpty else {
             return
         }
 
-        let wallets = enabledCoins.map { Wallet(configuredToken: $0, account: account) }
+        let wallets = enabledConfiguredTokens.map { Wallet(configuredToken: $0, account: account) }
         walletManager.save(wallets: wallets)
     }
 
@@ -202,13 +206,8 @@ extension RestoreSelectService {
 
 extension RestoreSelectService {
 
-    struct InternalItem {
-        let blockchain: RestoreSelectModule.Blockchain
-        let token: Token
-    }
-
     struct Item {
-        let blockchain: RestoreSelectModule.Blockchain
+        let blockchain: Blockchain
         let enabled: Bool
         let hasSettings: Bool
     }
