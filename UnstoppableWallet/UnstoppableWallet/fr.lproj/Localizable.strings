@@ -1087,6 +1087,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
 "birthday_input.description" = "Si vous connaissez la hauteur anniversaire de votre portefeuille, saisissez-la pour accélérer la synchronisation.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
 
