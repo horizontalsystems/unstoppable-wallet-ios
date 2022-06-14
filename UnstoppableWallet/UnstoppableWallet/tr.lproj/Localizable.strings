@@ -834,6 +834,14 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 "settings.about_app.email_copied" = "E-posta adresi kopyalandı";
 
+// Settings -> Privacy
+
+"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
+"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
+"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
+"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+
 // Settings -> Theme
 
 "settings_theme.title" = "Tema";
