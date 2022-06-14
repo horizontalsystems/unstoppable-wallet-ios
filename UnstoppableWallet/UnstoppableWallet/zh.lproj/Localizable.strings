@@ -1089,6 +1089,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "birthday_input.title" = "生日高度";
 "birthday_input.description" = "如果您知道钱包的出生日期高度，输入它即可快速同步。";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
 
