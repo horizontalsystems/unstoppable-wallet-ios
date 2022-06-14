@@ -1090,6 +1090,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
 "birthday_input.description" = "Cüzdanınızın ilk gün boyunu biliyorsanız hızlı senkronizasyon için bunu girin.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
 "restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
 
