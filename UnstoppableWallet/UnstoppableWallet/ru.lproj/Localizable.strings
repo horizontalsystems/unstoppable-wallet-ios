@@ -1089,6 +1089,7 @@
 
 "birthday_input.title" = "Блок Создания";
 "birthday_input.description" = "Если вы знаете дату создания вашего кошелька, укажите ее для быстрой синхронизации.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 "restore_setting.birthday_height" = "%@ Блок Создания";
 
