@@ -1088,6 +1088,7 @@ poner en peligro la seguridad de mis fondos.";
 
 "birthday_input.title" = "Altura de Cumpleaños";
 "birthday_input.description" = "Si conoces la altura de tu cumpleaños de la billetera introdúzcala para una rápida sincronización.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 "restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
 
