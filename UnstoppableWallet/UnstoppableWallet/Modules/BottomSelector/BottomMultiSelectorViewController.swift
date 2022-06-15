@@ -43,10 +43,10 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
 
         titleView.bind(title: config.title, subtitle: config.subtitle)
         switch config.icon {
-        case .local(let icon, let tintColor):
-            titleView.bind(image: icon, tintColor: tintColor)
-        case .remote(let iconUrl, let iconPlaceholder):
-            titleView.bind(imageUrl: iconUrl, placeholder: UIImage(named: iconPlaceholder))
+        case .local(let name):
+            titleView.bind(image: UIImage(named: name))
+        case .remote(let url, let placeholder):
+            titleView.bind(imageUrl: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
         }
 
         titleView.onTapClose = { [weak self] in
@@ -156,8 +156,13 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: ImageComponent) in
-                                        if let iconName = viewItem.iconName {
-                                            component.imageView.image = UIImage(named: iconName)
+                                        if let icon = viewItem.icon {
+                                            switch icon {
+                                            case .local(let name):
+                                                component.imageView.image = UIImage(named: name)
+                                            case .remote(let url, let placeholder):
+                                                component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+                                            }
                                             component.isHidden = false
                                         } else {
                                             component.isHidden = true
@@ -196,23 +201,23 @@ extension BottomMultiSelectorViewController {
         let description: String?
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
-
-        enum IconStyle {
-            case local(icon: UIImage?, iconTint: UIColor?)
-            case remote(iconUrl: String, placeholder: String)
-        }
     }
 
     struct ViewItem {
-        let iconName: String?
+        let icon: IconStyle?
         let title: String
         let subtitle: String
 
-        init(iconName: String? = nil, title: String, subtitle: String) {
-            self.iconName = iconName
+        init(icon: IconStyle? = nil, title: String, subtitle: String) {
+            self.icon = icon
             self.title  = title
             self.subtitle = subtitle
         }
+    }
+
+    enum IconStyle {
+        case local(name: String)
+        case remote(url: String, placeholder: String?)
     }
 
 }

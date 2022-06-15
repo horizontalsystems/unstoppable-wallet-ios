@@ -58,7 +58,7 @@ extension Wallet {
         case .bitcoinCash:
             return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
         default:
-            return token.protocolType
+            return token.protocolType?.uppercased()
         }
     }
 
