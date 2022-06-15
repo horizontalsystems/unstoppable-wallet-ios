@@ -192,6 +192,7 @@ class App {
         )
         transactionAdapterManager = TransactionAdapterManager(
                 adapterManager: adapterManager,
+                evmBlockchainManager: evmBlockchainManager,
                 adapterFactory: adapterFactory
         )
 

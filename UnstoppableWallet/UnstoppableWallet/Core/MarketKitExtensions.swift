@@ -53,6 +53,11 @@ extension MarketKit.TokenQuery {
 
     var protocolType: String? {
         switch tokenType {
+        case .native:
+            switch blockchainType {
+            case .binanceChain: return "BEP2"
+            default: return nil
+            }
         case .eip20:
             switch blockchainType {
             case .ethereum: return "ERC20"
@@ -102,6 +107,18 @@ extension MarketKit.Blockchain {
 }
 
 extension MarketKit.BlockchainType {
+
+    var iconPlain24: String? {
+        switch self {
+        case .ethereum: return "ethereum_trx_24"
+        case .binanceSmartChain: return "binance_smart_chain_trx_24"
+        case .polygon: return "polygon_trx_24"
+        case .optimism: return "optimism_trx_24"
+        case .arbitrumOne: return "arbitrum_one_trx_24"
+        case .binanceChain: return "binance_chain_trx_24"
+        default: return nil
+        }
+    }
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)

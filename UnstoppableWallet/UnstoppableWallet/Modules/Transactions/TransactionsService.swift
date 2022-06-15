@@ -3,6 +3,7 @@ import RxSwift
 import CurrencyKit
 
 class TransactionsService {
+    private let evmBlockchainManager: EvmBlockchainManager
     private var disposeBag = DisposeBag()
     private let recordsService: TransactionRecordsService
     private let syncStateService: TransactionSyncStateService
@@ -20,7 +21,9 @@ class TransactionsService {
     private var items = [Item]()
     private var loadingMore = false
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, evmBlockchainManager: EvmBlockchainManager) {
+        self.evmBlockchainManager = evmBlockchainManager
+
         recordsService = TransactionRecordsService(adapterManager: adapterManager)
         syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
         rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
@@ -42,12 +45,12 @@ class TransactionsService {
         var groupedWallets = [TransactionWallet]()
 
         for wallet in transactionWallets {
-            switch wallet.source.blockchain {
-            case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash, .bep2: groupedWallets.append(wallet)
-            case .evm:
+            if evmBlockchainManager.allBlockchains.contains(wallet.source.blockchain) {
                 if !groupedWallets.contains(where: { wallet.source == $0.source }) {
                     groupedWallets.append(TransactionWallet(token: nil, source: wallet.source, badge: wallet.badge))
                 }
+            } else {
+                groupedWallets.append(wallet)
             }
         }
 
