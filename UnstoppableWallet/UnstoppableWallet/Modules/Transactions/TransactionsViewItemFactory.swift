@@ -79,7 +79,7 @@ class TransactionsViewItemFactory {
         case let record as EvmIncomingTransactionRecord:
             iconType = .icon(
                     imageUrl: record.value.coin?.imageUrl,
-                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                    placeholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
@@ -93,7 +93,7 @@ class TransactionsViewItemFactory {
         case let record as EvmOutgoingTransactionRecord:
             iconType = .icon(
                     imageUrl: record.value.coin?.imageUrl,
-                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                    placeholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
@@ -109,9 +109,9 @@ class TransactionsViewItemFactory {
         case let record as SwapTransactionRecord:
             iconType = .doubleIcon(
                     frontImageUrl: record.valueOut?.coin?.imageUrl,
-                    frontPlaceholderImageName: record.source.blockchain.coinPlaceholderImage,
+                    frontPlaceholderImageName: record.source.token.placeholderImageName,
                     backImageUrl: record.valueIn.coin?.imageUrl,
-                    backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
+                    backPlaceholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.swap".localized
             subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
@@ -125,9 +125,9 @@ class TransactionsViewItemFactory {
         case let record as UnknownSwapTransactionRecord:
             iconType = .doubleIcon(
                     frontImageUrl: record.valueOut?.coin?.imageUrl,
-                    frontPlaceholderImageName: record.source.blockchain.coinPlaceholderImage,
+                    frontPlaceholderImageName: record.source.token.placeholderImageName,
                     backImageUrl: record.valueIn?.coin?.imageUrl,
-                    backPlaceholderImageName: record.source.blockchain.coinPlaceholderImage
+                    backPlaceholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.swap".localized
             subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
@@ -142,7 +142,7 @@ class TransactionsViewItemFactory {
         case let record as ApproveTransactionRecord:
             iconType = .icon(
                     imageUrl: record.value.coin?.imageUrl,
-                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                    placeholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.approve".localized
             subTitle = evmLabelManager.mapped(address: record.spender)
@@ -159,7 +159,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as ContractCallTransactionRecord:
-            iconType = .localIcon(imageName: record.source.blockchain.image)
+            iconType = .localIcon(imageName: record.source.blockchain.type.iconPlain24)
             title = record.method ?? "transactions.contract_call".localized
             subTitle = evmLabelManager.mapped(address: record.contractAddress)
 
@@ -172,10 +172,10 @@ class TransactionsViewItemFactory {
             if outgoingValues.isEmpty && incomingValues.count == 1 {
                 iconType = .icon(
                         imageUrl: incomingValues[0].coin?.imageUrl,
-                        placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                        placeholderImageName: record.source.token.placeholderImageName
                 )
             } else {
-                iconType = .localIcon(imageName: record.source.blockchain.image)
+                iconType = .localIcon(imageName: record.source.blockchain.type.iconPlain24)
             }
 
             if record.outgoingEvents.isEmpty {
@@ -194,7 +194,7 @@ class TransactionsViewItemFactory {
             (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
 
         case let record as ContractCreationTransactionRecord:
-            iconType = .localIcon(imageName: record.source.blockchain.image)
+            iconType = .localIcon(imageName: record.source.blockchain.type.iconPlain24)
             title = "transactions.contract_creation".localized
             subTitle = "---"
 
@@ -237,7 +237,7 @@ class TransactionsViewItemFactory {
         case let record as BinanceChainIncomingTransactionRecord:
             iconType = .icon(
                     imageUrl: record.value.coin?.imageUrl,
-                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                    placeholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
@@ -250,7 +250,7 @@ class TransactionsViewItemFactory {
         case let record as BinanceChainOutgoingTransactionRecord:
             iconType = .icon(
                     imageUrl: record.value.coin?.imageUrl,
-                    placeholderImageName: record.source.blockchain.coinPlaceholderImage
+                    placeholderImageName: record.source.token.placeholderImageName
             )
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
@@ -264,7 +264,7 @@ class TransactionsViewItemFactory {
             sentToSelf = record.sentToSelf
 
         default:
-            iconType = .localIcon(imageName: item.record.source.blockchain.image)
+            iconType = .localIcon(imageName: item.record.source.blockchain.type.iconPlain24)
             title = "transactions.unknown_transaction.title".localized
             subTitle = "transactions.unknown_transaction.description".localized()
         }

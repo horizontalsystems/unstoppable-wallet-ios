@@ -54,7 +54,9 @@ class AdapterFactory {
 
 extension AdapterFactory {
 
-    func evmTransactionsAdapter(transactionSource: TransactionSource, blockchainType: BlockchainType) -> ITransactionsAdapter? {
+    func evmTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+        let blockchainType = transactionSource.blockchain.type
+
         if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: transactionSource.account, blockchainType: blockchainType),
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType) {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
