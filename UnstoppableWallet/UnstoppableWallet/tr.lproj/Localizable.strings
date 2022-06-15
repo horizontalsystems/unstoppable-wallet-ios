@@ -408,7 +408,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "En İyi Blok Zinciri Platformları";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Üzerine kurulmuş projelerin oluşturduğu kümülatif pazarla lider blok zinciri platformları.";
 
 "market_discovery.title" = "Discovery";
