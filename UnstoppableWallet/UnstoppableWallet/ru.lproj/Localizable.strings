@@ -407,7 +407,7 @@
 "market.top.top_platforms" = "Лучшие Платформы";
 "market.top.protocols" = "Протоколы";
 
-"top_platforms.title" = "Лучшие блокчейн-платформы";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов.";
 
 "market_discovery.title" = "Токены";
