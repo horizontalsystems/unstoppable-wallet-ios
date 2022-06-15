@@ -532,13 +532,13 @@ CHECKOUT OPTIONS:
     :commit: 234a76b599b6474a1a4057602b8418a5c42228b8
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: 6d74eefb0fc6b0dbd9744c198836358eebdf9c02
+    :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: c3e55cf6635d4451010feb4e4a7291443cdd8aeb
+    :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: 6d74eefb0fc6b0dbd9744c198836358eebdf9c02
+    :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 84ebaa5b76cb5522eeb17f109e16f9b25c18cb2b
@@ -550,7 +550,7 @@ CHECKOUT OPTIONS:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 6d74eefb0fc6b0dbd9744c198836358eebdf9c02
+    :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: 3dc83cfa5f8209c7010d40939c2f4b8c197ba159
@@ -571,7 +571,7 @@ CHECKOUT OPTIONS:
     :commit: c3e55cf6635d4451010feb4e4a7291443cdd8aeb
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: c8d68eb8d8f48f7430efaa7dc628f29137a1c9b3
+    :commit: 285e753a39b90a3b639e4ad1349d365d2187fd7c
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: bb4f7adaa7d0b341a3c535a28e2e8368fb0a32b2
@@ -580,7 +580,7 @@ CHECKOUT OPTIONS:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: 6d74eefb0fc6b0dbd9744c198836358eebdf9c02
+    :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
     :commit: 514d1bc4e4339996aefc3fb5aee4375e03080892
