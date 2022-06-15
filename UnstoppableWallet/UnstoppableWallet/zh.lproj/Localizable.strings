@@ -407,7 +407,7 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
-"top_platforms.title" = "顶级区块链平台";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "通过建立在顶部的项目的累积市场来领导区块链平台。";
 
 "market_discovery.title" = "Discovery";
