@@ -62,9 +62,9 @@ extension MarketKit.TokenQuery {
             switch blockchainType {
             case .ethereum: return "ERC20"
             case .binanceSmartChain: return "BEP20"
-            case .polygon: return "POLYGON"
-            case .optimism: return "OPTIMISM"
-            case .arbitrumOne: return "ARBITRUM"
+            case .polygon: return "Polygon"
+            case .optimism: return "Optimism"
+            case .arbitrumOne: return "Arbitrum"
             default: return nil
             }
         case .bep2:
