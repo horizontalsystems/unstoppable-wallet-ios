@@ -4,6 +4,26 @@ import CurrencyKit
 import MarketKit
 
 class MarketAdvancedSearchService {
+    private let blockchainTypes: [BlockchainType] = [
+        .ethereum,
+        .binanceSmartChain,
+        .binanceChain,
+        .arbitrumOne,
+        .unsupported(uid: "avalanche"),
+        .unsupported(uid: "fantom"),
+        .unsupported(uid: "harmony"),
+        .unsupported(uid: "huobi-token"),
+        .unsupported(uid: "iotex"),
+        .unsupported(uid: "moonriver"),
+        .unsupported(uid: "okex-chain"),
+        .optimism,
+        .polygon,
+        .unsupported(uid: "solana"),
+        .unsupported(uid: "sora"),
+        .unsupported(uid: "tomochain"),
+        .unsupported(uid: "xdai"),
+    ]
+
     private var disposeBag = DisposeBag()
     private let allTimeDeltaPercent: Decimal = 10
 
@@ -59,8 +79,8 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var blockchainsRelay = PublishRelay<[MarketAdvancedSearchModule.Blockchain]>()
-    var blockchains: [MarketAdvancedSearchModule.Blockchain] = [] {
+    private var blockchainsRelay = PublishRelay<[Blockchain]>()
+    var blockchains: [Blockchain] = [] {
         didSet {
             guard blockchains != oldValue else {
                 return
@@ -159,9 +179,18 @@ class MarketAdvancedSearchService {
         currencyKit.baseCurrency.code
     }
 
+    let allBlockchains: [Blockchain]
+
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+
+        do {
+            let blockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            allBlockchains = blockchainTypes.compactMap { type in blockchains.first(where: { $0.type == type }) }
+        } catch {
+            allBlockchains = []
+        }
 
         syncMarketInfos()
     }
@@ -236,28 +265,8 @@ class MarketAdvancedSearchService {
         }
 
         for token in tokens {
-            for blockchain in blockchains {
-                switch (blockchain, token.blockchainType) {
-                case (.ethereum, .ethereum),
-                     (.binanceSmartChain, .binanceSmartChain),
-                     (.polygon, .polygon),
-                     (.optimism, .optimism),
-                     (.arbitrumOne, .arbitrumOne),
-                     (.binance, .binanceChain):
-//                     (.avalanche, .avalanche),
-//                     (.fantom, .fantom),
-//                     (.harmony, .harmonyShard0),
-//                     (.huobi, .huobiToken),
-//                     (.iotex, .iotex),
-//                     (.moonriver, .moonriver),
-//                     (.okex, .okexChain),
-//                     (.solana, .solana),
-//                     (.sora, .sora),
-//                     (.tomochain, .tomochain),
-//                     (.xdai, .xdai):
-                    return true
-                default: ()
-                }
+            if blockchains.contains(token.blockchain) {
+                return true
             }
         }
 
@@ -300,7 +309,7 @@ extension MarketAdvancedSearchService {
         volumeRelay.asObservable()
     }
 
-    var blockchainsObservable: Observable<[MarketAdvancedSearchModule.Blockchain]> {
+    var blockchainsObservable: Observable<[Blockchain]> {
         blockchainsRelay.asObservable()
     }
 
