@@ -405,7 +405,7 @@
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Meilleures plateformes blockchain";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Les meilleures plateformes blockchain en fonction du marché cumulé des projets bâtis sur celles-ci.";
 
 "market_discovery.title" = "Découverte";
