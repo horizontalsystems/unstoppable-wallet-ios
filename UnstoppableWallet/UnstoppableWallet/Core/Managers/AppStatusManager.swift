@@ -9,9 +9,12 @@ class AppStatusManager {
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
     private let restoreSettingsManager: RestoreSettingsManager
+    private let evmBlockchainManager: EvmBlockchainManager
+    private let binanceKitManager: BinanceKitManager
 
     init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage, accountManager: AccountManager,
-         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager, restoreSettingsManager: RestoreSettingsManager) {
+         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager, restoreSettingsManager: RestoreSettingsManager,
+         evmBlockchainManager: EvmBlockchainManager, binanceKitManager: BinanceKitManager) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
@@ -19,6 +22,8 @@ class AppStatusManager {
         self.adapterManager = adapterManager
         self.logRecordManager = logRecordManager
         self.restoreSettingsManager = restoreSettingsManager
+        self.evmBlockchainManager = evmBlockchainManager
+        self.binanceKitManager = binanceKitManager
     }
 
     private var accountStatus: [(String, Any)] {
@@ -53,41 +58,27 @@ class AppStatusManager {
     private var blockchainStatus: [(String, Any)] {
         var status = [(String, Any)]()
 
-        var ethereumStatus: [(String, Any)]?
-        var binanceSmartChainStatus: [(String, Any)]?
-        var binanceStatus: [(String, Any)]?
-
         for wallet in walletManager.activeWallets {
-            guard let adapter = adapterManager.adapter(for: wallet) else {
-                continue
-            }
+            let blockchain = wallet.token.blockchain
 
-            switch wallet.token.blockchainType {
-            case .ethereum:
-                if ethereumStatus == nil {
-                    ethereumStatus = adapter.statusInfo
-                }
-            case .binanceSmartChain:
-                if binanceSmartChainStatus == nil {
-                    binanceSmartChainStatus = adapter.statusInfo
-                }
-            case .binanceChain:
-                if binanceStatus == nil {
-                    binanceStatus = adapter.statusInfo
+            switch blockchain.type {
+            case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash:
+                if let adapter = adapterManager.adapter(for: wallet) {
+                    status.append((blockchain.name, adapter.statusInfo))
                 }
             default:
-                status.append((wallet.coin.name, adapter.statusInfo))
+                ()
             }
         }
 
-        if let ethereumStatus = ethereumStatus {
-            status.append(("Ethereum", ethereumStatus))
+        for blockchain in evmBlockchainManager.allBlockchains {
+            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper {
+                status.append((blockchain.name, evmKitWrapper.evmKit.statusInfo()))
+            }
         }
-        if let binanceSmartChainStatus = binanceSmartChainStatus {
-            status.append(("Binance Smart Chain", binanceSmartChainStatus))
-        }
-        if let binanceStatus = binanceStatus {
-            status.append(("Binance", binanceStatus))
+
+        if let binanceKit = binanceKitManager.binanceKit {
+            status.append(("Binance Chain", binanceKit.statusInfo))
         }
 
         return status

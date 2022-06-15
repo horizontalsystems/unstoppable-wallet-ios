@@ -211,7 +211,19 @@ class App {
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
+
+        appStatusManager = AppStatusManager(
+                systemInfoManager: systemInfoManager,
+                storage: appVersionStorage,
+                accountManager: accountManager,
+                walletManager: walletManager,
+                adapterManager: adapterManager,
+                logRecordManager: logRecordManager,
+                restoreSettingsManager: restoreSettingsManager,
+                evmBlockchainManager: evmBlockchainManager,
+                binanceKitManager: binanceKitManager
+        )
+
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
