@@ -988,11 +988,10 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_types" = "Тип(-ы) токенов";
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Код Монеты";
 "add_token.decimals" = "Десятичные знаки";
-"add_token.already_exists" = "Этот токен уже есть в списке поддерживаемых токенов.";
+"add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
 "add_token.token_not_found" = "Токен не найден";
 "add_token.success_add" = "Добавлен";
