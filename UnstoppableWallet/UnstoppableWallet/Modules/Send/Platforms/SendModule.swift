@@ -45,12 +45,12 @@ class SendModule {
 
         // Address
         let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
-        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
+        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
                 .append(handler: bitcoinParserItem)
                 .append(handler: udnAddressParserItem)
 
-        if let ensAddressParserItem = ENSAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: bitcoinParserItem) {
+        if let ensAddressParserItem = EnsAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: bitcoinParserItem) {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 

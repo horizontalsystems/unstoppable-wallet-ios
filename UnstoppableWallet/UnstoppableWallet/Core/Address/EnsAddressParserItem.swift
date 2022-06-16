@@ -2,7 +2,7 @@ import RxSwift
 import MarketKit
 import EthereumKit
 
-class ENSAddressParserItem {
+class EnsAddressParserItem {
     static let registrars = ["eth", "xyz", "luxe", "kred", "art"]
 
     private let provider: ENSProvider
@@ -27,13 +27,12 @@ class ENSAddressParserItem {
 
 }
 
-extension ENSAddressParserItem: IAddressParserItem {
+extension EnsAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
         provider.address(domain: address)
                 .flatMap { [weak self] resolvedAddress in
                     let address = Address(raw: resolvedAddress.hex, domain: address)
-                    print("PARSED BY ENS")
                     return self?.rawAddressHandle(address: address) ?? Single.just(address)
                 }.catchError { _ in
                     .error(AddressService.AddressError.invalidAddress)

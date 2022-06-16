@@ -1,7 +1,7 @@
 import RxSwift
 import MarketKit
 
-class UDNAddressParserItem {
+class UdnAddressParserItem {
 
     private let provider = AddressResolutionProvider()
     private let coinCode: String
@@ -45,7 +45,7 @@ class UDNAddressParserItem {
 
 }
 
-extension UDNAddressParserItem: IAddressParserItem {
+extension UdnAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
         var singles = [Single<Result<String, Error>>]()
@@ -61,7 +61,6 @@ extension UDNAddressParserItem: IAddressParserItem {
                 .flatMap { [weak self] result in
                     switch result {
                     case .success(let resolvedAddress):
-                        print("PARSED BY UDN")
                         let address = Address(raw: resolvedAddress, domain: address)
                         return self?.rawAddressHandle(address: address) ?? Single.just(address)
                     case .failure(let error):
@@ -84,7 +83,7 @@ extension UDNAddressParserItem: IAddressParserItem {
 
 }
 
-extension UDNAddressParserItem {
+extension UdnAddressParserItem {
 
     static func chainCoinCode(blockchainType: BlockchainType) -> String? {
         switch blockchainType {
@@ -108,17 +107,17 @@ extension UDNAddressParserItem {
 
 }
 
-extension UDNAddressParserItem {
+extension UdnAddressParserItem {
 
-    static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, token: Token?) -> UDNAddressParserItem {
-        let item = UDNAddressParserItem(
+    static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, token: Token?) -> UdnAddressParserItem {
+        let item = UdnAddressParserItem(
                 rawAddressParserItem: rawAddressParserItem,
                 coinCode: coinCode,
                 platformCoinCode: token.flatMap { chainCoinCode(blockchainType: $0.blockchainType) },
                 chain: token.flatMap { chain(token: $0) }
         )
 
-        item.exceptionRegistrars = ENSAddressParserItem.registrars
+        item.exceptionRegistrars = EnsAddressParserItem.registrars
         return item
     }
 
