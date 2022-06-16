@@ -14,14 +14,11 @@ class AddTokenViewController: ThemeViewController {
 
     private let inputCell = AddressInputCell()
     private let inputCautionCell = FormCautionCell()
-    private let coinTypeCell = D7Cell()
-    private let coinNameCell = D7Cell()
-    private let coinCodeCell = D7Cell()
-    private let decimalsCell = D7Cell()
 
     private let addButtonHolder = BottomGradientHolder()
     private let addButton = ThemeButton()
 
+    private var viewItem: AddTokenViewModel.ViewItem?
     private var isLoaded = false
 
     init(viewModel: AddTokenViewModel) {
@@ -48,10 +45,11 @@ class AddTokenViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         inputCell.isEditable = false
         inputCell.inputPlaceholder = "add_token.input_placeholder".localized
-        inputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        inputCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
         inputCell.onChangeText = { [weak self] in self?.viewModel.onEnter(reference: $0) }
         inputCell.onFetchText = { [weak self] in
             self?.viewModel.onEnter(reference: $0)
@@ -59,19 +57,7 @@ class AddTokenViewController: ThemeViewController {
         }
         inputCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
-        inputCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-
-        coinTypeCell.set(backgroundStyle: .lawrence, isFirst: true)
-        coinTypeCell.title = "add_token.coin_types".localized
-
-        coinNameCell.set(backgroundStyle: .lawrence)
-        coinNameCell.title = "add_token.coin_name".localized
-
-        coinCodeCell.set(backgroundStyle: .lawrence)
-        coinCodeCell.title = "add_token.coin_code".localized
-
-        decimalsCell.set(backgroundStyle: .lawrence, isLast: true)
-        decimalsCell.title = "add_token.decimals".localized
+        inputCautionCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
 
         view.addSubview(addButtonHolder)
         addButtonHolder.snp.makeConstraints { maker in
@@ -93,10 +79,8 @@ class AddTokenViewController: ThemeViewController {
             self?.inputCell.set(isLoading: loading)
         }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
-            self?.coinTypeCell.value = viewItem?.protocolTypes ?? "..."
-            self?.coinNameCell.value = viewItem?.coinName ?? "..."
-            self?.coinCodeCell.value = viewItem?.coinCode ?? "..."
-            self?.decimalsCell.value = viewItem?.decimals.map { "\($0)" } ?? "..."
+            self?.viewItem = viewItem
+            self?.reloadTable()
         }
         subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
             self?.addButton.isEnabled = enabled
@@ -104,7 +88,7 @@ class AddTokenViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] caution in
             self?.inputCell.set(cautionType: caution?.type)
             self?.inputCautionCell.set(caution: caution)
-            self?.reloadTable()
+            self?.reloadHeights()
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             HudHelper.instance.showSuccess(title: "add_token.success_add".localized)
@@ -124,7 +108,7 @@ class AddTokenViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func reloadTable() {
+    private func reloadHeights() {
         guard isLoaded else {
             return
         }
@@ -135,12 +119,80 @@ class AddTokenViewController: ThemeViewController {
         }
     }
 
+    private func reloadTable() {
+        guard isLoaded else {
+            return
+        }
+
+        tableView.reload(animated: true)
+    }
+
 }
 
 extension AddTokenViewController: SectionsDataSource {
 
+    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        .cellType(
+                hash: text,
+                binder: { $0.bind(text: text)},
+                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+        )
+    }
+
+    private func infoRow(id: String, title: String, value: String?, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.text, .text],
+                tableView: tableView,
+                id: id,
+                hash: value,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.text = title
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .c2)
+                        component.text = value ?? "---"
+                    }
+                }
+        )
+    }
+
+    private func tokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image24, .text, .switch],
+                tableView: tableView,
+                id: "token-\(index)",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = viewItem.title
+                    }
+
+                    cell.bind(index: 2) { (component: SwitchComponent) in
+                        component.switchView.isEnabled = viewItem.enabled
+                        component.switchView.isOn = viewItem.isOn
+                        component.onSwitch = { [weak self] in
+                            self?.viewModel.onToggleToken(index: index, isOn: $0)
+                        }
+                    }
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections: [SectionProtocol] = [
             Section(
                     id: "input",
                     headerState: .margin(height: .margin12),
@@ -164,40 +216,35 @@ extension AddTokenViewController: SectionsDataSource {
             ),
 
             Section(
-                    id: "main",
+                    id: "coin-info",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        StaticRow(
-                                cell: coinTypeCell,
-                                id: "coin-type",
-                                dynamicHeight: { [weak self] width in
-                                    self?.coinTypeCell.cellHeight ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: coinNameCell,
-                                id: "coin-name",
-                                dynamicHeight: { [weak self] width in
-                                    self?.coinNameCell.cellHeight ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: coinCodeCell,
-                                id: "coin-code",
-                                dynamicHeight: { [weak self] width in
-                                    self?.coinCodeCell.cellHeight ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: decimalsCell,
-                                id: "decimal",
-                                dynamicHeight: { [weak self] width in
-                                    self?.decimalsCell.cellHeight ?? 0
-                                }
-                        )
+                        infoRow(id: "coin-name", title: "add_token.coin_name".localized, value: viewItem?.coinName, isFirst: true),
+                        infoRow(id: "coin-code", title: "add_token.coin_code".localized, value: viewItem?.coinCode),
+                        infoRow(id: "decimals", title: "add_token.decimals".localized, value: viewItem?.decimals, isLast: true)
                     ]
             )
         ]
+
+        if let tokenViewItems = viewItem?.tokenViewItems {
+            let section = Section(
+                    id: "tokens",
+                    headerState: header(text: "add_token.coin_types".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: tokenViewItems.enumerated().map { index, tokenViewItem in
+                        tokenRow(
+                                viewItem: tokenViewItem,
+                                index: index,
+                                isFirst: index == 0,
+                                isLast: index == tokenViewItems.count - 1
+                        )
+                    }
+            )
+
+            sections.append(section)
+        }
+
+        return sections
     }
 
 }

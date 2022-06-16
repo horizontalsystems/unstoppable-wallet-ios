@@ -63,7 +63,9 @@ class CoinOverviewViewItemFactory {
     }
 
     private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let tokens = info.fullCoin.tokens
+        let tokens = info.fullCoin.tokens.sorted { lhsToken, rhsToken in
+            lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
+        }
 
         let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
             switch token.type {
