@@ -987,11 +987,10 @@ poner en peligro la seguridad de mis fondos.";
 // Add Token
 
 "add_token.title" = "Añadir Token";
-"add_token.coin_types" = "Tipos de monedas";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.coin_code" = "Código de moneda";
 "add_token.decimals" = "Decimales";
-"add_token.already_exists" = "Este token ya está en la lista del gestor de monedas.";
+"add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
 "add_token.success_add" = "Añadido";
