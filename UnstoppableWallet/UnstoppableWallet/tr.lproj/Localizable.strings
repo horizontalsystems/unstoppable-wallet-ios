@@ -989,11 +989,10 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.coin_types" = "Kripto Para Tipi/Tipleri";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
 "add_token.decimals" = "Ondalıklar";
-"add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
+"add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.success_add" = "Eklendi";
