@@ -93,7 +93,7 @@ def appPods
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
   pod 'EthereumABI', git: 'https://github.com/horizontalsystems/EthereumABI'
-  pod 'UnstoppableDomainsResolution', '~> 3.0.0'
+  pod 'UnstoppableDomainsResolution', '~> 4.0.0'
 end
 
 target 'Unstoppable Dev T' do
