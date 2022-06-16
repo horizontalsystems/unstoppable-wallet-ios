@@ -33,44 +33,61 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .alreadyExists(let tokens):
-            viewItemRelay.accept(viewItem(tokens: tokens))
-        case .fetched(let customCoins):
-            viewItemRelay.accept(viewItem(customCoins: customCoins))
+        case .fetched(let items):
+            viewItemRelay.accept(viewItem(items: items))
+
+            let hasEnabledItem = items.contains(where: {
+                switch $0.state {
+                case .enabled: return true
+                default: return false
+                }
+            })
+
+            buttonEnabledRelay.accept(hasEnabledItem)
         default:
             viewItemRelay.accept(nil)
-        }
-
-        if case .fetched = state {
-            buttonEnabledRelay.accept(true)
-        } else {
             buttonEnabledRelay.accept(false)
         }
 
         if case .failed(let error) = state {
             cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
-        } else if case .alreadyExists = state {
-            cautionRelay.accept(Caution(text: "add_token.already_exists".localized, type: .warning))
         } else {
             cautionRelay.accept(nil)
         }
     }
 
-    private func viewItem(tokens: [Token]) -> ViewItem {
+    private func viewItem(items: [AddTokenService.Item]) -> ViewItem {
         ViewItem(
-                protocolTypes: tokens.compactMap { $0.protocolType }.joined(separator: " / "),
-                coinName: tokens.first?.coin.name,
-                coinCode: tokens.first?.coin.code,
-                decimals: tokens.first?.decimals
+                coinName: items.first?.token.coin.name,
+                coinCode: items.first?.token.coin.code,
+                decimals: items.first.map { String($0.token.decimals) },
+                tokenViewItems: items.map {
+                    tokenViewItem(item: $0)
+                }
         )
     }
 
-    private func viewItem(customCoins: [AddTokenModule.CustomCoin]) -> ViewItem {
-        ViewItem(
-                protocolTypes: customCoins.compactMap { $0.tokenQuery.protocolType }.joined(separator: " / "),
-                coinName: customCoins.first?.name,
-                coinCode: customCoins.first?.code,
-                decimals: customCoins.first?.decimals
+    private func tokenViewItem(item: AddTokenService.Item) -> TokenViewItem {
+        let enabled: Bool
+        let isOn: Bool
+
+        switch item.state {
+        case .alreadyEnabled:
+            enabled = false
+            isOn = true
+        case .enabled:
+            enabled = true
+            isOn = true
+        case .disabled:
+            enabled = true
+            isOn = false
+        }
+
+        return TokenViewItem(
+                imageUrl: item.token.blockchain.type.imageUrl,
+                title: item.token.protocolType,
+                enabled: enabled,
+                isOn: isOn
         )
     }
 
@@ -102,6 +119,10 @@ extension AddTokenViewModel {
         service.set(reference: reference)
     }
 
+    func onToggleToken(index: Int, isOn: Bool) {
+        service.toggleToken(index: index, isOn: isOn)
+    }
+
     func onTapButton() {
         do {
             try service.save()
@@ -116,10 +137,17 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let protocolTypes: String
         let coinName: String?
         let coinCode: String?
-        let decimals: Int?
+        let decimals: String?
+        let tokenViewItems: [TokenViewItem]
+    }
+
+    struct TokenViewItem {
+        let imageUrl: String
+        let title: String?
+        let enabled: Bool
+        let isOn: Bool
     }
 
 }
