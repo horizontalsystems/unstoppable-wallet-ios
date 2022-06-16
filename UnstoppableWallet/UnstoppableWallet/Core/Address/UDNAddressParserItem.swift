@@ -9,6 +9,8 @@ class UDNAddressParserItem {
     private let chain: String?
     private let rawAddressParserItem: IAddressParserItem
 
+    var exceptionRegistrars: [String] = []
+
     init(rawAddressParserItem: IAddressParserItem, coinCode: String, platformCoinCode: String?, chain: String?) {
         self.rawAddressParserItem = rawAddressParserItem
         self.coinCode = coinCode
@@ -59,6 +61,7 @@ extension UDNAddressParserItem: IAddressParserItem {
                 .flatMap { [weak self] result in
                     switch result {
                     case .success(let resolvedAddress):
+                        print("PARSED BY UDN")
                         let address = Address(raw: resolvedAddress, domain: address)
                         return self?.rawAddressHandle(address: address) ?? Single.just(address)
                     case .failure(let error):
@@ -68,11 +71,15 @@ extension UDNAddressParserItem: IAddressParserItem {
     }
 
     func isValid(address: String) -> Single<Bool> {
-        if !address.contains(".") {
-            return Single.just(false)
+        let parts = address.components(separatedBy: ".")
+        if parts.count > 1,
+           let last = parts.last?.lowercased(),
+           !exceptionRegistrars.contains(last) {
+
+            return provider.isValid(domain: address)
         }
 
-        return provider.isValid(domain: address)
+        return .just(false)
     }
 
 }
@@ -104,12 +111,15 @@ extension UDNAddressParserItem {
 extension UDNAddressParserItem {
 
     static func item(rawAddressParserItem: IAddressParserItem, coinCode: String, token: Token?) -> UDNAddressParserItem {
-        UDNAddressParserItem(
+        let item = UDNAddressParserItem(
                 rawAddressParserItem: rawAddressParserItem,
                 coinCode: coinCode,
                 platformCoinCode: token.flatMap { chainCoinCode(blockchainType: $0.blockchainType) },
                 chain: token.flatMap { chain(token: $0) }
         )
+
+        item.exceptionRegistrars = ENSAddressParserItem.registrars
+        return item
     }
 
 }

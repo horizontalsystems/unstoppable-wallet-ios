@@ -13,6 +13,10 @@ struct WatchAddressModule {
                 .append(handler: evmAddressParserItem)
                 .append(handler: udnAddressParserItem)
 
+        if let ensAddressParserItem = ENSAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: evmAddressParserItem) {
+            addressParserChain.append(handler: ensAddressParserItem)
+        }
+
         let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 

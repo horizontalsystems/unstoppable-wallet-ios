@@ -14,9 +14,14 @@ struct OneInchSettingsModule {
 
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, token: token)
+
         let addressParserChain = AddressParserChain()
-                    .append(handler: evmAddressParserItem)
-                    .append(handler: udnAddressParserItem)
+                .append(handler: evmAddressParserItem)
+                .append(handler: udnAddressParserItem)
+
+        if let ensAddressParserItem = ENSAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: evmAddressParserItem) {
+            addressParserChain.append(handler: ensAddressParserItem)
+        }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain, initialAddress: tradeService.settings.recipient)
