@@ -249,7 +249,7 @@ class App {
                 relayHost: "relay.walletconnect.com",
                 clientName: "io.horizontalsystems.bank.dev",
                 name: "Unstoppable Wallet",
-                description: nil,
+                description: "Wallet App",
                 url: appConfigProvider.companyWebPageLink,
                 icons: []
         )

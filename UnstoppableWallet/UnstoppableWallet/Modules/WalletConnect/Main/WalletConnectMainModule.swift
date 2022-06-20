@@ -2,6 +2,8 @@ import UIKit
 import ThemeKit
 import RxSwift
 import WalletConnect
+import WalletConnectSign
+import WalletConnectUtils
 import MarketKit
 
 protocol IWalletConnectMainService {
@@ -43,7 +45,7 @@ struct WalletConnectMainModule {
         return viewController(service: service, sourceViewController: sourceViewController)
     }
 
-    static func viewController(session: Session, sourceViewController: UIViewController?) -> UIViewController? {
+    static func viewController(session: WalletConnectSign.Session, sourceViewController: UIViewController?) -> UIViewController? {
         let service = App.shared.walletConnectV2SessionManager.service
         let pingService = WalletConnectV2PingService(service: service)
 
@@ -92,7 +94,7 @@ extension WalletConnectMainModule {
 
     struct BlockchainItem: Hashable {
         let chainId: Int
-        let blockchain: Blockchain
+        let blockchain: MarketKit.Blockchain
         let address: String
         let selected: Bool
 

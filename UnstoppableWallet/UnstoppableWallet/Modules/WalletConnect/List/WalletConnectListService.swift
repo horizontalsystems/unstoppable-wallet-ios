@@ -3,6 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnect
 import WalletConnectUtils
+import WalletConnectSign
 import MarketKit
 
 class WalletConnectListService {
@@ -18,7 +19,7 @@ class WalletConnectListService {
 
     private var sessionKiller: WalletConnectSessionKiller?
     private let showSessionV1Relay = PublishRelay<WalletConnectSession>()
-    private let showSessionV2Relay = PublishRelay<Session>()
+    private let showSessionV2Relay = PublishRelay<WalletConnectSign.Session>()
     private let sessionKillingRelay = PublishRelay<SessionKillingState>()
 
 
@@ -65,24 +66,25 @@ class WalletConnectListService {
         }
     }
 
-    private func items(sessions: [Session]) -> [Item] {
-        sessions.map { session in
-            let chainIds = Array(session.permissions.blockchains).compactMap {
-                evmChainParser.parse(string: $0)?.chainId
-            }
-            let blockchains = chainIds.compactMap {
-                evmBlockchainManager.blockchain(chainId: $0)
-            }
-            return Item(
-                    id: session.id,
-                    blockchains: blockchains,
-                    version: 2,
-                    appName: session.peer.name ?? "",
-                    appUrl: session.peer.url ?? "",
-                    appDescription: session.peer.description ?? "",
-                    appIcons: session.peer.icons ?? []
-            )
-        }
+    private func items(sessions: [WalletConnectSign.Session]) -> [Item] {
+        []
+//        sessions.map { session in
+//            let chainIds = Array(session.permissions.blockchains).compactMap {
+//                evmChainParser.parse(string: $0)?.chainId
+//            }
+//            let blockchains = chainIds.compactMap {
+//                evmBlockchainManager.blockchain(chainId: $0)
+//            }
+//            return Item(
+//                    id: session.id,
+//                    blockchains: blockchains,
+//                    version: 2,
+//                    appName: session.peer.name ?? "",
+//                    appUrl: session.peer.url ?? "",
+//                    appDescription: session.peer.description ?? "",
+//                    appIcons: session.peer.icons ?? []
+//            )
+//        }
     }
 
 }
@@ -113,11 +115,11 @@ extension WalletConnectListService {
         }
     }
 
-    var pendingRequestsV2: [Request] {
+    var pendingRequestsV2: [WalletConnectSign.Request] {
         sessionManagerV2.pendingRequests()
     }
 
-    var pendingRequestsV2Observable: Observable<[Request]> {
+    var pendingRequestsV2Observable: Observable<[WalletConnectSign.Request]> {
         sessionManagerV2.pendingRequestsObservable
     }
 
@@ -125,7 +127,7 @@ extension WalletConnectListService {
         showSessionV1Relay.asObservable()
     }
 
-    var showSessionV2Observable: Observable<Session> {
+    var showSessionV2Observable: Observable<WalletConnectSign.Session> {
         showSessionV2Relay.asObservable()
     }
 
@@ -198,7 +200,7 @@ extension WalletConnectListService {
 
     struct Item {
         let id: Int
-        let blockchains: [Blockchain]
+        let blockchains: [MarketKit.Blockchain]
         let version: Int
 
         let appName: String
