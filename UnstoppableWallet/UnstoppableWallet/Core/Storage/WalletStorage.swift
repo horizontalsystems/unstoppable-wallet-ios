@@ -28,7 +28,7 @@ extension WalletStorage {
     func wallets(account: Account) throws -> [Wallet] {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
 
-        let queries = enabledWallets.flatMap { TokenQuery(id: $0.tokenQueryId) }
+        let queries = enabledWallets.compactMap { TokenQuery(id: $0.tokenQueryId) }
         let tokens = try marketKit.tokens(queries: queries)
 
         let blockchainUids = queries.map { $0.blockchainType.uid }

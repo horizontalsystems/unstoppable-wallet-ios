@@ -2,12 +2,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 import WalletConnect
+import WalletConnectSign
 
 class WalletConnectV2ListViewModel {
     private let service: WalletConnectListService
     private let disposeBag = DisposeBag()
 
-    private let showWalletConnectSessionRelay = PublishRelay<Session>()
+    private let showWalletConnectSessionRelay = PublishRelay<WalletConnectSign.Session>()
 
     private let viewItemsRelay = BehaviorRelay<[WalletConnectListViewModel.ViewItem]>(value: [])
     private let pendingRequestCountRelay = BehaviorRelay<Int>(value: 0)
@@ -38,11 +39,11 @@ class WalletConnectV2ListViewModel {
         viewItemsRelay.accept(viewItems)
     }
 
-    private func sync(pendingRequests: [Request]) {
+    private func sync(pendingRequests: [WalletConnectSign.Request]) {
         pendingRequestCountRelay.accept(pendingRequests.count)
     }
 
-    private func show(session: Session) {
+    private func show(session: WalletConnectSign.Session) {
         showWalletConnectSessionRelay.accept(session)
     }
 
@@ -52,7 +53,7 @@ extension WalletConnectV2ListViewModel {
 
     //Connections section
 
-    var showWalletConnectSessionSignal: Signal<Session> {
+    var showWalletConnectSessionSignal: Signal<WalletConnectSign.Session> {
         showWalletConnectSessionRelay.asSignal()
     }
 

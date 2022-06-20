@@ -5,6 +5,7 @@ import ComponentKit
 import RxSwift
 import RxCocoa
 import WalletConnect
+import WalletConnectSign
 
 class WalletConnectV2ListView {
     private let disposeBag = DisposeBag()
@@ -40,7 +41,7 @@ class WalletConnectV2ListView {
         reloadTableRelay.accept(())
     }
 
-    private func show(session: Session) {
+    private func show(session: WalletConnectSign.Session) {
         guard let viewController = WalletConnectMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }

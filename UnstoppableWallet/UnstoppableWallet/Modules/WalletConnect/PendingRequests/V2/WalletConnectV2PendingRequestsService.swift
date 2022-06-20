@@ -66,7 +66,7 @@ class WalletConnectV2PendingRequestsService {
                                 id: request.id,
                                 sessionName: allSessions.first(where: { $0.topic == request.topic })?.peer.name ?? "",
                                 method: request.method,
-                                chainId: request.chainId
+                                chainId: request.chainId.description
                         )
                     }
             ))
