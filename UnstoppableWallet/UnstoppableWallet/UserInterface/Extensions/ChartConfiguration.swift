@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import Chart
 import LanguageKit
 import CurrencyKit
@@ -61,13 +61,14 @@ extension ChartConfiguration {
         pressedColor = .themeNina
         outdatedColor = .themeNina
 
-        trendUpGradient = [UIColor(hex: 0x416BFF), UIColor(hex: 0x13D670)]
-        trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
-        pressedGradient = [UIColor.themeOz, UIColor.themeOz]
-        neutralGradient = [UIColor.themeGray50, UIColor.themeGray50]
-        gradientAlphas = [0.05, 0.3]
+        trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
+        trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
+        pressedGradient = [UIColor](repeatElement(.themeOz, count: 3))
+        neutralGradient = [UIColor](repeatElement(.themeGray50, count: 3))
+        gradientLocations = [0, 0.05, 1]
+        gradientAlphas = [0, 0, 0.3]
 
-        limitLinesColor = .themeNina
+        limitLinesColor = .themeSteel20
         limitTextColor = .themeNina
         limitTextFont = .caption
         verticalLinesColor = .themeSteel10
