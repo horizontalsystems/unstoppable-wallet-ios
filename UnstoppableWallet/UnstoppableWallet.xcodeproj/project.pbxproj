@@ -2373,6 +2373,7 @@
 		ABC9A05F721E9CFABF06EF89 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
 		ABC9A06616429B8BA46D262C /* WalletConnectV1MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A857395F2521BA0A2602 /* WalletConnectV1MainService.swift */; };
 		ABC9A074A8F480B53C173806 /* EnsAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A896A83640B618328FE1 /* EnsAddressParserItem.swift */; };
+		ABC9A07A1D93791D09BEA9AF /* PredefinedBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */; };
 		ABC9A08340695A0AFCE9C2F2 /* SendBitcoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7D6C9D12C1F1F3A1218 /* SendBitcoinViewController.swift */; };
 		ABC9A08E14B61C478C342548 /* WalletConnectEvmChainParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF99E1669B374FF256E /* WalletConnectEvmChainParser.swift */; };
 		ABC9A0A3A52AD41643D67D3D /* SingleLineFormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A03401172C4C65D66764 /* SingleLineFormTextView.swift */; };
@@ -2605,6 +2606,7 @@
 		ABC9AC2506BAB7F736219EE7 /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */; };
 		ABC9AC26853BD29F34AC6859 /* WalletConnectModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0F966294A4E629CCB65 /* WalletConnectModule.swift */; };
 		ABC9AC275CAC4FA2BD49037C /* ProFeaturesPassesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD300C58D1E75104DC38 /* ProFeaturesPassesCell.swift */; };
+		ABC9AC27E19C7F709AF3B73C /* PredefinedBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */; };
 		ABC9AC50E2E966F009D78FD5 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */; };
 		ABC9AC5552508D091D622027 /* SendZcashFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F55A2C6777D25F57D5 /* SendZcashFactory.swift */; };
 		ABC9AC5BF6EFBF9A94293BED /* SendBaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */; };
@@ -2645,6 +2647,7 @@
 		ABC9AE41881C626F8EA0DB78 /* SendTimeLockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE598363348C0A973C98 /* SendTimeLockCell.swift */; };
 		ABC9AE4F60142E9E63CE1C6D /* SendConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */; };
 		ABC9AE4FBE95C870F2198D68 /* WalletConnectEvmChainParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAF99E1669B374FF256E /* WalletConnectEvmChainParser.swift */; };
+		ABC9AE4FD599490B0A23003D /* PredefinedBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */; };
 		ABC9AE50CB44A21D0274384F /* WalletConnectV1MainRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A413A1015882E90F7675 /* WalletConnectV1MainRequestView.swift */; };
 		ABC9AE553D422A163A09E5F8 /* MarketCardValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4FCDC5085002DF35C17 /* MarketCardValueView.swift */; };
 		ABC9AE59D7CEE92A0B295A16 /* ChartPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A56202347AC47682FFB4 /* ChartPreviewView.swift */; };
@@ -3801,6 +3804,7 @@
 		ABC9A07A33870908ED1BA338 /* SendAmountCautionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAmountCautionViewModel.swift; sourceTree = "<group>"; };
 		ABC9A099941AA53B68270D55 /* SendMemoInputViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMemoInputViewModel.swift; sourceTree = "<group>"; };
 		ABC9A0F966294A4E629CCB65 /* WalletConnectModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectModule.swift; sourceTree = "<group>"; };
+		ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredefinedBlockchainService.swift; sourceTree = "<group>"; };
 		ABC9A1136889E6976E17B347 /* WalletConnectV2Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2Service.swift; sourceTree = "<group>"; };
 		ABC9A145789ED6E74B2FF1A5 /* SendFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		ABC9A1667330B8DBC1A8FE52 /* WalletConnectSessionKiller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectSessionKiller.swift; sourceTree = "<group>"; };
@@ -4793,6 +4797,7 @@
 				11B359D88585F2BBFA56CB77 /* FeeRateProviderFactory.swift */,
 				11B3583932F270503C1DF3F0 /* AdapterFactory.swift */,
 				11B35F980B34E005B9F02B8F /* EvmAccountManagerFactory.swift */,
+				ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -8078,6 +8083,7 @@
 				ABC9A8CD642351BD809536E2 /* HudHelper.swift in Sources */,
 				ABC9A31AE27FED8A239261A6 /* CheckboxView.swift in Sources */,
 				ABC9A074A8F480B53C173806 /* EnsAddressParserItem.swift in Sources */,
+				ABC9AC27E19C7F709AF3B73C /* PredefinedBlockchainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9056,6 +9062,7 @@
 				ABC9A3B155B3F6E7E0F2CB07 /* HudHelper.swift in Sources */,
 				ABC9AEE0716153FBCA28A7F4 /* CheckboxView.swift in Sources */,
 				ABC9A467DBB7FA0778225969 /* EnsAddressParserItem.swift in Sources */,
+				ABC9AE4FD599490B0A23003D /* PredefinedBlockchainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10026,6 +10033,7 @@
 				ABC9ACC51D6B2D4E04C8019E /* HudHelper.swift in Sources */,
 				ABC9AC50E2E966F009D78FD5 /* CheckboxView.swift in Sources */,
 				ABC9A860DBA4615581451967 /* EnsAddressParserItem.swift in Sources */,
+				ABC9A07A1D93791D09BEA9AF /* PredefinedBlockchainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

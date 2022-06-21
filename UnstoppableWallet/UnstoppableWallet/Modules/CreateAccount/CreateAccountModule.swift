@@ -6,6 +6,7 @@ struct CreateAccountModule {
     static func viewController() -> UIViewController {
         let service = CreateAccountService(
                 accountFactory: App.shared.accountFactory,
+                predefinedBlockchainService: App.shared.predefinedBlockchainService,
                 wordsManager: App.shared.wordsManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
