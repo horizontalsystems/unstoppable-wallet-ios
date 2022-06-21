@@ -220,7 +220,7 @@ class ChartCell: UITableViewCell {
             return
         }
 
-        setVolumes(hidden: selectedIndicator.hideVolumes, limitHidden: selectedIndicator.hideVolumes)
+        setVolumes(hidden: selectedIndicator.hideVolumes, limitHidden: false)
 
         ChartIndicatorSet.all.forEach { indicator in
             let show = selectedIndicator.contains(indicator)
