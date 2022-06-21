@@ -4,6 +4,7 @@ import MarketKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
+    private let predefinedBlockchainService: PredefinedBlockchainService
     private let wordsManager: WordsManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -16,8 +17,9 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: WordsManager, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
+    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, wordsManager: WordsManager, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
+        self.predefinedBlockchainService = predefinedBlockchainService
         self.wordsManager = wordsManager
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -48,6 +50,8 @@ class CreateAccountService {
             guard let token = try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)) else {
                 continue
             }
+
+            predefinedBlockchainService.prepareNew(account: account, blockchainType: blockchainType)
 
             let defaultSettingsArray = blockchainType.defaultSettingsArray
 

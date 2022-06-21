@@ -53,6 +53,7 @@ class App {
     let evmBlockchainManager: EvmBlockchainManager
 
     let restoreSettingsManager: RestoreSettingsManager
+    let predefinedBlockchainService: PredefinedBlockchainService
 
     private let testModeIndicator: TestModeIndicator
 
@@ -168,6 +169,7 @@ class App {
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
+        predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
