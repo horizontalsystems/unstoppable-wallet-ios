@@ -22,6 +22,7 @@
 
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
+"alert.saved" = "Saved";
 "alert.no_internet" = "Kein Internet";
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
@@ -846,7 +847,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings.about_app.contact" = "Kontakt";
 "settings.about_app.rate_us" = "Bewerten Sie uns";
 "settings.about_app.tell_friends" = "Freunden erzählen";
-"settings.about_app.email_copied" = "E-Mail-Adresse kopiert";
 
 // Settings -> Privacy
 
@@ -945,7 +945,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 "create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
-"create_wallet.success" = "Erstellt";
 
 // Restore Select
 
@@ -992,7 +991,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.token_not_found" = "Token nicht gefunden";
-"add_token.success_add" = "Hinzugefügt";
 "add_token.input_placeholder" = "Vertragsadresse";
 
 // Wallet Connect
@@ -1163,7 +1161,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "nft_asset.links.website" = "Webseite";
 "nft_asset.options.save_to_photos" = "In Fotos speichern";
 "nft_asset.options.set_as_watch_face" = "Als Watch-Face festlegen";
-"nft_asset.save_to_photos.success" = "NFT-Bild wird in Ihrer Fotobibliothek gespeichert";
 "nft_asset.save_to_photos.failed" = "NFT-Bild konnte nicht gespeichert werden";
 
 // Nft Collection
