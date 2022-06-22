@@ -746,7 +746,7 @@
 
 "manage_wallets.title" = "Portefeuilles";
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement si vous connaissez son adresse de contrat intelligent.";
-"manage_wallets.search_placeholder" = "Code ou nom du jeton";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
