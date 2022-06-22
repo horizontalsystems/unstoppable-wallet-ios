@@ -133,7 +133,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
 
             navigationController?.pushViewController(viewController, animated: true)
         } catch {
-            HudHelper.instance.showError(title: error.smartDescription)
+            HudHelper.instance.show(banner: .error(string: error.smartDescription))
         }
     }
 

@@ -58,7 +58,7 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
     @objc private func onTapCopy() {
         UIPasteboard.general.setValue(privateKey, forPasteboardType: "public.plain-text")
         dismiss(animated: true) {
-            HudHelper.instance.showSuccess(title: "alert.copied".localized)
+            HudHelper.instance.show(banner: .copied)
         }
     }
 

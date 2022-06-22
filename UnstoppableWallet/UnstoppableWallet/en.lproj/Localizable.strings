@@ -22,6 +22,7 @@
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
+"alert.saved" = "Saved";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
@@ -848,7 +849,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Tell Friends";
-"settings.about_app.email_copied" = "Email address copied";
 
 // Settings -> Privacy
 
@@ -947,7 +947,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
-"create_wallet.success" = "Created";
 
 // Restore Select
 
@@ -995,7 +994,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "add_token.already_exists" = "This token is already in the coin manager list.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
-"add_token.success_add" = "Added";
 "add_token.input_placeholder" = "Contract Address";
 
 // Wallet Connect
@@ -1166,7 +1164,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Save to Photos";
 "nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
 "nft_asset.save_to_photos.failed" = "Failed to save NFT image";
 
 // Nft Collection

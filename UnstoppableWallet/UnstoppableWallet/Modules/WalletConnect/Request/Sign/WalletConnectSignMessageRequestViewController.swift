@@ -120,7 +120,7 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     }
 
     private func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.show(banner: .error(string: error.localizedDescription))
     }
 
     private func dismiss() {

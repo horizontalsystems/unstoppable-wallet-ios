@@ -166,8 +166,7 @@ class DepositViewController: ThemeViewController {
     }
 
     @objc private func onTapCopy() {
-        UIPasteboard.general.setValue(viewModel.address, forPasteboardType: "public.plain-text")
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+        CopyHelper.copyAndNotify(value: viewModel.address)
     }
 
     @objc private func onTapShare() {

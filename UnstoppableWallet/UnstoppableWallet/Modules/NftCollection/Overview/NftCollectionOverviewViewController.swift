@@ -314,8 +314,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
                                     component.button.set(image: UIImage(named: "copy_20"))
                                     component.onTap = {
-                                        UIPasteboard.general.setValue(viewItem.reference, forPasteboardType: "public.plain-text")
-                                        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+                                        CopyHelper.copyAndNotify(value: viewItem.reference)
                                     }
                                 }
 
