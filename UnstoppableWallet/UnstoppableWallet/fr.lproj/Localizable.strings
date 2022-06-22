@@ -22,6 +22,7 @@
 
 "alert" = "Alerte";
 "alert.copied" = "Copié";
+"alert.saved" = "Saved";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
@@ -846,7 +847,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
-"settings.about_app.email_copied" = "Adresse email copiée";
 
 // Settings -> Privacy
 
@@ -945,7 +945,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement des lettres et des chiffres latins pour la phrase d'authentification";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
-"create_wallet.success" = "Établi";
 
 // Restore Select
 
@@ -992,7 +991,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
 "add_token.token_not_found" = "Token non trouvé";
-"add_token.success_add" = "Ajouté";
 "add_token.input_placeholder" = "Adresse du contrat";
 
 // Wallet Connect
@@ -1163,7 +1161,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_asset.links.website" = "Site Web";
 "nft_asset.options.save_to_photos" = "Enregistrer dans Photos";
 "nft_asset.options.set_as_watch_face" = "Créer un cadran";
-"nft_asset.save_to_photos.success" = "L'image NFT est enregistrée dans Photos";
 "nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
 
 // Nft Collection
