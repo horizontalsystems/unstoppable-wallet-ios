@@ -748,7 +748,7 @@
 
 "manage_wallets.title" = "Токены";
 "manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную, если вы знаете его адрес смарт-контракта.";
-"manage_wallets.search_placeholder" = "Код или название токена";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
