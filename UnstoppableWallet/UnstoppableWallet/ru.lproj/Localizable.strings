@@ -22,6 +22,7 @@
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
+"alert.saved" = "Saved";
 "alert.no_internet" = "Нет Интернета";
 "alert.wrong_amount" = "Неверная Сумма";
 "alert.no_fee" = "Неверная Комиссия";
@@ -848,7 +849,6 @@
 "settings.about_app.contact" = "Kонтакты";
 "settings.about_app.rate_us" = "Оцените наше приложение";
 "settings.about_app.tell_friends" = "Рассказать Друзьям";
-"settings.about_app.email_copied" = "Адрес электронной почты скопирован";
 
 // Settings -> Privacy
 
@@ -947,7 +947,6 @@
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только латинские буквы и цифры для кодовой фразы";
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
-"create_wallet.success" = "Создан";
 
 // Restore Select
 
@@ -994,7 +993,6 @@
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
 "add_token.token_not_found" = "Токен не найден";
-"add_token.success_add" = "Добавлен";
 "add_token.input_placeholder" = "Адрес Контракта";
 
 // Wallet Connect
@@ -1165,7 +1163,6 @@
 "nft_asset.links.website" = "Веб-сайт";
 "nft_asset.options.save_to_photos" = "Сохранить в Фото";
 "nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
-"nft_asset.save_to_photos.success" = "NFT-изображение сохранено в ваш фотоальбом";
 "nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
 
 // Nft Collection
