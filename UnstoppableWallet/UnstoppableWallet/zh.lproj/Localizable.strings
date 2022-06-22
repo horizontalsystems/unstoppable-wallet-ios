@@ -22,6 +22,7 @@
 
 "alert" = "警报";
 "alert.copied" = "已复制";
+"alert.saved" = "Saved";
 "alert.no_internet" = "没有网络";
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
@@ -848,7 +849,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
-"settings.about_app.email_copied" = "电子邮件地址已复制";
 
 // Settings -> Privacy
 
@@ -947,7 +947,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
-"create_wallet.success" = "已创建";
 
 // Restore Select
 
@@ -994,7 +993,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "找不到代币";
-"add_token.success_add" = "已添加";
 "add_token.input_placeholder" = "智能合约地址";
 
 // Wallet Connect
@@ -1165,7 +1163,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.links.website" = "网站";
 "nft_asset.options.save_to_photos" = "保存到照片";
 "nft_asset.options.set_as_watch_face" = "设为表盘";
-"nft_asset.save_to_photos.success" = "NFT 图像已保存到您的照片库";
 "nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
 
 // Nft Collection
