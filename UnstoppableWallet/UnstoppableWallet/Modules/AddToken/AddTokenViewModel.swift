@@ -85,7 +85,7 @@ class AddTokenViewModel {
 
         return TokenViewItem(
                 imageUrl: item.token.blockchain.type.imageUrl,
-                title: item.token.protocolType,
+                title: item.token.protocolName,
                 enabled: enabled,
                 isOn: isOn
         )

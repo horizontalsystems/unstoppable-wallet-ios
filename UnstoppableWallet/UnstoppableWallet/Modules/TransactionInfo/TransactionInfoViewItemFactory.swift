@@ -11,7 +11,7 @@ class TransactionInfoViewItemFactory {
 
     private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
-        let iconPlaceholderImageName = source.token.placeholderImageName
+        let iconPlaceholderImageName = source.blockchain.type.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
 
         if transactionValue.isMaxValue {
             return .amount(
