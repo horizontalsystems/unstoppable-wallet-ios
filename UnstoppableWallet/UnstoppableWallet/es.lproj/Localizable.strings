@@ -746,7 +746,7 @@
 
 "manage_wallets.title" = "Monederos";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir un token manualmente si conoce su dirección de contrato inteligente.";
-"manage_wallets.search_placeholder" = "Código o nombre del token";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
