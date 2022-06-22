@@ -53,22 +53,20 @@ struct TransactionWallet: Hashable {
 }
 
 struct TransactionSource: Hashable {
-    let token: Token
+    let blockchain: Blockchain
     let account: Account
     let coinSettings: CoinSettings
-
-    var blockchain: Blockchain {
-        token.blockchain
-    }
+    let symbol: String
 
     func hash(into hasher: inout Hasher) {
-        token.hash(into: &hasher)
+        blockchain.hash(into: &hasher)
         account.hash(into: &hasher)
         coinSettings.hash(into: &hasher)
+        symbol.hash(into: &hasher)
     }
 
     static func ==(lhs: TransactionSource, rhs: TransactionSource) -> Bool {
-        lhs.token == rhs.token && lhs.account == rhs.account && lhs.coinSettings == rhs.coinSettings
+        lhs.blockchain == rhs.blockchain && lhs.account == rhs.account && lhs.coinSettings == rhs.coinSettings && lhs.symbol == rhs.symbol
     }
 
 }

@@ -31,7 +31,14 @@ struct Wallet {
     }
 
     var transactionSource: TransactionSource {
-        TransactionSource(token: token, account: account, coinSettings: coinSettings)
+        let symbol: String
+
+        switch token.type {
+        case .bep2(let value): symbol = value
+        default: symbol = ""
+        }
+
+        return TransactionSource(blockchain: token.blockchain, account: account, coinSettings: coinSettings, symbol: symbol)
     }
 
 }
@@ -58,7 +65,7 @@ extension Wallet {
         case .bitcoinCash:
             return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
         default:
-            return token.protocolType?.uppercased()
+            return token.protocolName?.uppercased()
         }
     }
 

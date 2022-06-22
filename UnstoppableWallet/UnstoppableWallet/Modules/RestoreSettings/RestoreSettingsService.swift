@@ -69,8 +69,6 @@ extension RestoreSettingsService {
             settings[.birthdayHeight] = String(birthdayHeight)
         }
 
-        print(settings[.birthdayHeight])
-
         let tokenWithSettings = TokenWithSettings(token: token, settings: settings)
         approveSettingsRelay.accept(tokenWithSettings)
     }

@@ -31,6 +31,14 @@ enum TransactionValue {
         }
     }
 
+    var tokenProtocol: TokenProtocol? {
+        switch self {
+        case .coinValue(let token, _): return token.type.tokenProtocol
+        case .tokenValue: return .eip20
+        case .rawValue: return nil
+        }
+    }
+
     var decimalValue: Decimal? {
         switch self {
         case .coinValue(_, let value): return value

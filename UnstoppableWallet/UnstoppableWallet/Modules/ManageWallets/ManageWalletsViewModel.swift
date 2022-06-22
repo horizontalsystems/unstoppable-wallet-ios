@@ -29,7 +29,7 @@ class ManageWalletsViewModel {
         }
 
         let supportedTokens = item.fullCoin.supportedTokens
-        let blockchainBadge = supportedTokens.count == 1 ? item.fullCoin.supportedTokens.first?.protocolType?.uppercased() : nil
+        let blockchainBadge = supportedTokens.count == 1 ? item.fullCoin.supportedTokens.first?.protocolName?.uppercased() : nil
 
         return CoinToggleViewModel.ViewItem(
                 uid: item.fullCoin.coin.uid,

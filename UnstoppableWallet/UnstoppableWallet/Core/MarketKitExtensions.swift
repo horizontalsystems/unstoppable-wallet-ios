@@ -1,10 +1,17 @@
 import UIKit
 import MarketKit
 
+enum TokenProtocol {
+    case native
+    case eip20
+    case bep2
+    case unsupported
+}
+
 extension MarketKit.Token {
 
-    var protocolType: String? {
-        tokenQuery.protocolType
+    var protocolName: String? {
+        tokenQuery.protocolName
     }
 
     var isCustom: Bool {
@@ -16,7 +23,7 @@ extension MarketKit.Token {
     }
 
     var placeholderImageName: String {
-        protocolType.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+        protocolName.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
     }
 
     var swappable: Bool {
@@ -33,7 +40,7 @@ extension MarketKit.Token {
     var protocolInfo: String {
         switch type {
         case .native: return blockchain.name
-        case .eip20, .bep2: return protocolType ?? ""
+        case .eip20, .bep2: return protocolName ?? ""
         default: return ""
         }
     }
@@ -49,29 +56,23 @@ extension MarketKit.Token {
 
 }
 
+extension MarketKit.TokenType {
+
+    var tokenProtocol: TokenProtocol {
+        switch self {
+        case .native: return .native
+        case .eip20: return .eip20
+        case .bep2: return .bep2
+        case .unsupported: return .unsupported
+        }
+    }
+
+}
+
 extension MarketKit.TokenQuery {
 
-    var protocolType: String? {
-        switch tokenType {
-        case .native:
-            switch blockchainType {
-            case .binanceChain: return "BEP2"
-            default: return nil
-            }
-        case .eip20:
-            switch blockchainType {
-            case .ethereum: return "ERC20"
-            case .binanceSmartChain: return "BEP20"
-            case .polygon: return "Polygon"
-            case .optimism: return "Optimism"
-            case .arbitrumOne: return "Arbitrum"
-            default: return nil
-            }
-        case .bep2:
-            return "BEP2"
-        default:
-            return nil
-        }
+    var protocolName: String? {
+        blockchainType.protocolName(tokenProtocol: tokenType.tokenProtocol)
     }
 
     var customCoinUid: String {
@@ -107,6 +108,33 @@ extension MarketKit.Blockchain {
 }
 
 extension MarketKit.BlockchainType {
+
+    func protocolName(tokenProtocol: TokenProtocol) -> String? {
+        switch tokenProtocol {
+        case .native:
+            switch self {
+            case .binanceChain: return "BEP2"
+            default: return nil
+            }
+        case .eip20:
+            switch self {
+            case .ethereum: return "ERC20"
+            case .binanceSmartChain: return "BEP20"
+            case .polygon: return "Polygon"
+            case .optimism: return "Optimism"
+            case .arbitrumOne: return "Arbitrum"
+            default: return nil
+            }
+        case .bep2:
+            return "BEP2"
+        default:
+            return nil
+        }
+    }
+
+    func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
+        tokenProtocol.flatMap { protocolName(tokenProtocol: $0) }.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+    }
 
     var iconPlain24: String? {
         switch self {
