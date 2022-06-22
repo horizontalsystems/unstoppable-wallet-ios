@@ -746,7 +746,7 @@
 
 "manage_wallets.title" = "지갑";
 "manage_wallets.not_found" = "검색 결과가 없습니다. 스마트 계약 주소를 알고 있는 경우 토큰을 수동으로 추가해 보십시오.";
-"manage_wallets.search_placeholder" = "토큰 코드 또는 이름";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
