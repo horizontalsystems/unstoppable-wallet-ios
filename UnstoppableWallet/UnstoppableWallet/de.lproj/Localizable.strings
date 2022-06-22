@@ -746,7 +746,7 @@
 
 "manage_wallets.title" = "Kryptowährung";
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, den Token manuell hinzuzufügen, wenn Sie die Adresse des Smart Contracts kennen.";
-"manage_wallets.search_placeholder" = "Token-Code oder Name";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
