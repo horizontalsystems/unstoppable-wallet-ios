@@ -95,7 +95,7 @@ class TransactionInfoViewItemFactory {
 
         var viewItems: [TransactionInfoModule.ViewItem] = [
             .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: "transactions.send".localized, subTitle: transactionValue.coinName),
-            amount(source: source, transactionValue: transactionValue, rate: rate, type: sentToSelf ? .neutral : .outgoing)
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing))
         ]
 
         if let to = to {
@@ -109,12 +109,20 @@ class TransactionInfoViewItemFactory {
         return viewItems
     }
 
+    private func type(value: TransactionValue, condition: Bool = true, _ trueType: AmountType, _ falseType: AmountType? = nil) -> AmountType {
+        guard !value.zeroValue else {
+            return .neutral
+        }
+
+        return condition ? trueType : (falseType ?? trueType)
+    }
+
     private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue]) -> [TransactionInfoModule.ViewItem] {
         let rate = transactionValue.coin.flatMap { rates[$0] }
 
         var viewItems: [TransactionInfoModule.ViewItem] = [
             .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: "transactions.receive".localized, subTitle: transactionValue.coinName),
-            amount(source: source, transactionValue: transactionValue, rate: rate, type: .incoming)
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, .incoming))
         ]
 
         if let from = from {
@@ -193,13 +201,13 @@ class TransactionInfoViewItemFactory {
         case let record as SwapTransactionRecord:
             sections.append([
                 .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: record.valueIn.coinName),
-                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: .outgoing)
+                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing))
             ])
 
             if let valueOut = record.valueOut {
                 var viewItems: [TransactionInfoModule.ViewItem] = [
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: record.recipient == nil ? .incoming : .neutral)
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing))
                 ]
 
                 if let recipient = record.recipient {
@@ -233,14 +241,14 @@ class TransactionInfoViewItemFactory {
             if let valueIn = record.valueIn {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: valueIn.coinName),
-                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: .outgoing)
+                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing))
                 ])
             }
 
             if let valueOut = record.valueOut {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: .incoming)
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming))
                 ])
             }
 
