@@ -17,7 +17,7 @@ class CopyHelper {
 
     static func copyAndNotify(value: String) {
         UIPasteboard.general.setValue(value, forPasteboardType: "public.plain-text")
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+        HudHelper.instance.show(banner: .copied)
     }
 
 }

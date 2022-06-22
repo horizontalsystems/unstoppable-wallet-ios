@@ -217,9 +217,9 @@ class NftAssetViewController: ThemeViewController {
 
     @objc private func onSaveToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if error == nil {
-            HudHelper.instance.showSuccess(title: "nft_asset.save_to_photos.success".localized)
+            HudHelper.instance.show(banner: .saved)
         } else {
-            HudHelper.instance.showError(title: "nft_asset.save_to_photos.failed".localized)
+            HudHelper.instance.show(banner: .error(string: "nft_asset.save_to_photos.failed".localized))
         }
     }
 

@@ -91,7 +91,7 @@ class AddTokenViewController: ThemeViewController {
             self?.reloadHeights()
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            HudHelper.instance.showSuccess(title: "add_token.success_add".localized)
+            HudHelper.instance.show(banner: .addedToWallet)
             self?.dismiss(animated: true)
         }
 

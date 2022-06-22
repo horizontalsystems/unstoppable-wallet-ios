@@ -544,7 +544,7 @@ CHECKOUT OPTIONS:
     :commit: efb7a23c861f8e48c9008095b299fd2d427b3824
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 07ce8de052c442c9971516add4732f82c087fcc6
+    :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
@@ -574,7 +574,7 @@ CHECKOUT OPTIONS:
     :commit: 285e753a39b90a3b639e4ad1349d365d2187fd7c
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: bb4f7adaa7d0b341a3c535a28e2e8368fb0a32b2
+    :commit: 171d306c246a8c670f3407e8147e440e0dad9e1f
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
@@ -595,7 +595,7 @@ CHECKOUT OPTIONS:
     :commit: c912734ed3a89af24a6779c6cd1f694075af55fd
     :git: https://github.com/horizontalsystems/open-ssl-kit-ios
   PinKit.swift:
-    :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca
+    :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ScanQrKit.swift:
     :commit: 0c25d05f1774755d88ffba1f7e239af15f97d5ca

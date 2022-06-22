@@ -76,7 +76,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         subscribe(disposeBag, viewModel.invalidRangesDriver) { [weak self] in self?.mnemonicInputCell.set(invalidRanges: $0) }
-        subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.showError(title: $0) }
+        subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.show(banner: .error(string: $0)) }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in

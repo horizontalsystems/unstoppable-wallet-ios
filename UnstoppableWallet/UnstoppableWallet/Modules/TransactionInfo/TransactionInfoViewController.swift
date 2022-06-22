@@ -70,7 +70,7 @@ class TransactionInfoViewController: ThemeViewController {
             let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: viewModel.transactionHash)
             present(ThemeNavigationController(rootViewController: viewController), animated: true)
         } catch {
-            HudHelper.instance.showError(title: error.localizedDescription)
+            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
         }
     }
 

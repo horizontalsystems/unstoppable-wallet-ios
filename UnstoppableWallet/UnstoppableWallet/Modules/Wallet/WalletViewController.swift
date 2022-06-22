@@ -305,7 +305,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func show(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func openManageWallets() {

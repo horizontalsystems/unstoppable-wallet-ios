@@ -85,7 +85,7 @@ class AboutViewController: ThemeViewController {
             present(controller, animated: true)
         } else {
             UIPasteboard.general.setValue(email, forPasteboardType: "public.plain-text")
-            HudHelper.instance.showSuccess(title: "settings.about_app.email_copied".localized)
+            HudHelper.instance.show(banner: .copied)
         }
     }
 

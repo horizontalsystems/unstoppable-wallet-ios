@@ -90,14 +90,6 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         ]
     }
 
-    func onTapHash() {
-        delegate.onTapHash()
-    }
-
-    func onConflictingTapHash() {
-        delegate.onTapConflictingHash()
-    }
-
     @objc func onClose() {
         dismiss(animated: true)
     }
@@ -113,7 +105,7 @@ extension DoubleSpendInfoViewController: IDoubleSpendInfoView {
     }
 
     func showCopied() {
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+        HudHelper.instance.show(banner: .copied)
     }
 
 }

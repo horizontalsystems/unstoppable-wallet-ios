@@ -101,8 +101,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
 
             present(controller, animated: true)
         } else {
-            UIPasteboard.general.setValue(viewModel.email, forPasteboardType: "public.plain-text")
-            HudHelper.instance.showSuccess(title: "settings.about_app.email_copied".localized)
+            CopyHelper.copyAndNotify(value: viewModel.email)
         }
     }
 

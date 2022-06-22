@@ -139,7 +139,7 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.show(error: $0)
         }
         subscribe(disposeBag, viewModel.showSuccessSignal) {
-            HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+            HudHelper.instance.show(banner: .success)
         }
         subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in
             self?.sync(connecting: $0)
@@ -192,7 +192,7 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func show(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func sync(connecting: Bool) {

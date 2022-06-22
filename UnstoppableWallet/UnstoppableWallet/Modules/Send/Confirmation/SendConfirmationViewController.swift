@@ -63,7 +63,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         subscribe(disposeBag, viewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItems: $0) }
 
-        subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.showSpinner() }
+        subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.show(banner: .sending) }
         subscribe(disposeBag, viewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess() }
         subscribe(disposeBag, viewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
@@ -83,13 +83,13 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     }
 
     func handleSendSuccess() {
-        HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+        HudHelper.instance.show(banner: .sent)
 
         dismiss(animated: true)
     }
 
     private func handleSendFailed(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func row(viewItem: SendConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {

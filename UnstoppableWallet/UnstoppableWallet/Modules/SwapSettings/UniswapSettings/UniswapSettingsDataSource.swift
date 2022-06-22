@@ -88,7 +88,7 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         if viewModel.doneDidTap() {
             onClose?()
         } else {
-            HudHelper.instance.showError(title: "alert.unknown_error".localized)
+            HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized))
         }
     }
 
