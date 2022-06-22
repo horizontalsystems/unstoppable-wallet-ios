@@ -22,6 +22,7 @@
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
+"alert.saved" = "Saved";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
@@ -847,7 +848,6 @@ poner en peligro la seguridad de mis fondos.";
 "settings.about_app.contact" = "Contacto";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
-"settings.about_app.email_copied" = "Dirección de correo electrónico copiada";
 
 // Settings -> Privacy
 
@@ -946,7 +946,6 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
-"create_wallet.success" = "Creado";
 
 // Restore Select
 
@@ -993,7 +992,6 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
-"add_token.success_add" = "Añadido";
 "add_token.input_placeholder" = "Dirección del contrato";
 
 // Wallet Connect
@@ -1164,7 +1162,6 @@ poner en peligro la seguridad de mis fondos.";
 "nft_asset.links.website" = "Sitio Web";
 "nft_asset.options.save_to_photos" = "Guardar a Fotos";
 "nft_asset.options.set_as_watch_face" = "Establecer como Watch Face";
-"nft_asset.save_to_photos.success" = "La imagen NFT se guardó en tu galería de fotos";
 "nft_asset.save_to_photos.failed" = "Error al guardar la imagen NFT";
 
 // Nft Collection
