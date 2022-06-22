@@ -22,6 +22,7 @@
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
+"alert.saved" = "Saved";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
@@ -849,7 +850,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.about_app.contact" = "Iletişim";
 "settings.about_app.rate_us" = "Bizi Değerlendirin";
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
-"settings.about_app.email_copied" = "E-posta adresi kopyalandı";
 
 // Settings -> Privacy
 
@@ -948,7 +948,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
 "create_wallet.error.forbidden_symbols" = "Parola için lütfen yalnızca latin harfleri ve rakamları kullanın";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
-"create_wallet.success" = "Oluşturuldu";
 
 // Restore Select
 
@@ -995,7 +994,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
-"add_token.success_add" = "Eklendi";
 "add_token.input_placeholder" = "Sözleşme Adresi";
 
 // Wallet Connect
@@ -1166,7 +1164,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_asset.links.website" = "Web sitesi";
 "nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
 "nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
-"nft_asset.save_to_photos.success" = "NFT resmi fotoğraf kitaplığınıza kaydedildi";
 "nft_asset.save_to_photos.failed" = "NFT resmi kaydedilemedi";
 
 // Nft Collection
