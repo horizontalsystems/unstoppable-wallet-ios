@@ -22,6 +22,7 @@
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
+"alert.saved" = "Saved";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
@@ -846,7 +847,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings.about_app.contact" = "연락처";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
-"settings.about_app.email_copied" = "이메일 주소 복사됨";
 
 // Settings -> Privacy
 
@@ -945,7 +945,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "암호에는 라틴 문자 및 숫자만 사용하십시오";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
-"create_wallet.success" = "생성됨";
 
 // Restore Select
 
@@ -992,7 +991,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "add_token.coin_types" = "Coin Types";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
-"add_token.success_add" = "추가됨";
 "add_token.input_placeholder" = "계약 주소";
 
 // Wallet Connect
@@ -1163,7 +1161,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_asset.links.website" = "웹사이트";
 "nft_asset.options.save_to_photos" = "사진 저장하기";
 "nft_asset.options.set_as_watch_face" = "시계 모드로 설정";
-"nft_asset.save_to_photos.success" = "NFT 이미지가 사진 라이브러리에 저장됩니다";
 "nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
 
 // Nft Collection
