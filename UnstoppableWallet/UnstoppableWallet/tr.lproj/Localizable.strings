@@ -749,7 +749,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "manage_wallets.title" = "Cüzdanlar";
 "manage_wallets.not_found" = "Hiçbir sonuç bulunamadı. Akıllı sözleşme adresini biliyorsanız tokeni manüel olarak eklemeyi deneyin.";
-"manage_wallets.search_placeholder" = "Jeton kodu veya adı";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
