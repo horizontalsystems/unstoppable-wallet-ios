@@ -31,23 +31,31 @@ class TransactionsViewItemFactory {
         ValueFormatter.instance.formatShort(currencyValue: currencyValue) ?? ""
     }
 
+    private func type(value: TransactionValue, condition: Bool = true, _ trueType: TransactionsViewModel.ValueType, _ falseType: TransactionsViewModel.ValueType? = nil) -> TransactionsViewModel.ValueType {
+        guard !value.zeroValue else {
+            return .neutral
+        }
+
+        return condition ? trueType : (falseType ?? trueType)
+    }
+
     private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
         var primaryValue: TransactionsViewModel.Value?
         var secondaryValue: TransactionsViewModel.Value?
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: .incoming)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
             if let currencyValue = currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: type(value: outgoingValues[0], .outgoing))
             if let currencyValue = currencyValue {
                 secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
             }
         } else if incomingValues.count == 1, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: .incoming)
-            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: .outgoing)
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
+            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type:  type(value: outgoingValues[0], .outgoing))
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
             let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
             primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
@@ -64,14 +72,6 @@ class TransactionsViewItemFactory {
         }
 
         return (primaryValue, secondaryValue)
-    }
-
-    private func type(value: TransactionValue, condition: Bool = true, _ trueType: TransactionsViewModel.ValueType, _ falseType: TransactionsViewModel.ValueType? = nil) -> TransactionsViewModel.ValueType {
-        guard !value.zeroValue else {
-            return .neutral
-        }
-
-        return condition ? trueType : (falseType ?? trueType)
     }
 
     func viewItem(item: TransactionsService.Item) -> TransactionsViewModel.ViewItem {
