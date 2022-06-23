@@ -746,7 +746,7 @@
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Portefeuilles";
-"manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement si vous connaissez son adresse de contrat intelligent.";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
@@ -988,7 +988,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "add_token.coin_name" = "Nom de la pièce";
 "add_token.coin_code" = "Code de la pièce";
 "add_token.decimals" = "Decimales";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
 "add_token.token_not_found" = "Token non trouvé";
 "add_token.input_placeholder" = "Adresse du contrat";
