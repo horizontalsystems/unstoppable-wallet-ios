@@ -55,7 +55,7 @@ extension MarketListWatchViewModel: IMarketListWatchViewModel {
     }
 
     var failDriver: Driver<String> {
-        failRelay.asDriver(onErrorJustReturn: ())
+        failRelay.asDriver(onErrorJustReturn: "")
     }
 
     func isFavorite(index: Int) -> Bool? {
