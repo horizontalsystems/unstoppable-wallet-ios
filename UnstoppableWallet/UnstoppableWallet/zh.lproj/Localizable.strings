@@ -748,7 +748,7 @@
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "钱包";
-"manage_wallets.not_found" = "找不到结果。如果您知道智能合同地址，请尝试手动添加代币。";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "添加%@ ";
@@ -990,7 +990,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "add_token.coin_name" = "代币图片";
 "add_token.coin_code" = "代币代码";
 "add_token.decimals" = "小数";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "找不到代币";
 "add_token.input_placeholder" = "智能合约地址";
