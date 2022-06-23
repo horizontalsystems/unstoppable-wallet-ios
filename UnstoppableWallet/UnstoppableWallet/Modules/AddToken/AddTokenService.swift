@@ -45,26 +45,28 @@ class AddTokenService {
         }
     }
 
-    private func initialItems(tokens: [Token]) -> [Item] {
+    private func initialItems(tokens: [Token]) -> ([Item], [Item]) {
         let activeTokens = walletManager.activeWallets.map { $0.token }
 
         let sortedTokens = tokens.sorted { lhsToken, rhsToken in
             lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
         }
 
-        return sortedTokens.map { token in
-            Item(
-                    token: token,
-                    state: activeTokens.contains(token) ? .alreadyEnabled : .enabled
-            )
-        }
+        let addedTokens = sortedTokens.filter { activeTokens.contains($0) }
+        let tokens = sortedTokens.filter { !activeTokens.contains($0) }
+
+        let addedItems = addedTokens.map { Item(token: $0, enabled: true) }
+        let items = tokens.map { Item(token: $0, enabled: true) }
+
+        return (addedItems, items)
     }
 
     private func handleInitialState(tokens: [Token]) {
         if tokens.isEmpty {
             state = .failed(error: TokenError.notFound)
         } else {
-            state = .fetched(items: initialItems(tokens: tokens))
+            let (addedItems, items) = initialItems(tokens: tokens)
+            state = .fetched(addedItems: addedItems, items: items)
         }
     }
 
@@ -119,8 +121,8 @@ extension AddTokenService {
                 .disposed(by: disposeBag)
     }
 
-    func toggleToken(index: Int, isOn: Bool) {
-        guard case .fetched(let items) = state else {
+    func toggleToken(index: Int) {
+        guard case .fetched(let addedItems, let items) = state else {
             return
         }
 
@@ -128,22 +130,17 @@ extension AddTokenService {
             return
         }
 
-        items[index].state = isOn ? .enabled : .disabled
+        items[index].enabled = !items[index].enabled
 
-        state = .fetched(items: items)
+        state = .fetched(addedItems: addedItems, items: items)
     }
 
     func save() throws {
-        guard case .fetched(let items) = state else {
+        guard case .fetched(_, let items) = state else {
             return
         }
 
-        let enabledItems = items.filter { item in
-            switch item.state {
-            case .enabled: return true
-            default: return false
-            }
-        }
+        let enabledItems = items.filter { $0.enabled }
 
         guard !enabledItems.isEmpty else {
             return
@@ -160,24 +157,18 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case fetched(items: [Item])
+        case fetched(addedItems: [Item], items: [Item])
         case failed(error: Error)
     }
 
     class Item {
         let token: Token
-        var state: ItemState
+        var enabled: Bool
 
-        init(token: Token, state: ItemState) {
+        init(token: Token, enabled: Bool) {
             self.token = token
-            self.state = state
+            self.enabled = enabled
         }
-    }
-
-    enum ItemState {
-        case alreadyEnabled
-        case enabled
-        case disabled
     }
 
     enum TokenError: LocalizedError {
