@@ -9,6 +9,7 @@ class AddTokenViewModel {
 
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let buttonTitleRelay = BehaviorRelay<String?>(value: nil)
     private let buttonEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let finishRelay = PublishRelay<Void>()
@@ -33,19 +34,20 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .fetched(let items):
-            viewItemRelay.accept(viewItem(items: items))
+        case .fetched(let addedItems, let items):
+            viewItemRelay.accept(viewItem(addedItems: addedItems, items: items))
 
-            let hasEnabledItem = items.contains(where: {
-                switch $0.state {
-                case .enabled: return true
-                default: return false
-                }
-            })
-
-            buttonEnabledRelay.accept(hasEnabledItem)
+            if items.isEmpty {
+                buttonTitleRelay.accept("add_token.already_added".localized)
+                buttonEnabledRelay.accept(false)
+            } else {
+                let hasEnabledItem = items.contains { $0.enabled }
+                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_type".localized)
+                buttonEnabledRelay.accept(hasEnabledItem)
+            }
         default:
             viewItemRelay.accept(nil)
+            buttonTitleRelay.accept("button.add".localized)
             buttonEnabledRelay.accept(false)
         }
 
@@ -56,38 +58,23 @@ class AddTokenViewModel {
         }
     }
 
-    private func viewItem(items: [AddTokenService.Item]) -> ViewItem {
-        ViewItem(
-                coinName: items.first?.token.coin.name,
-                coinCode: items.first?.token.coin.code,
-                decimals: items.first.map { String($0.token.decimals) },
-                tokenViewItems: items.map {
-                    tokenViewItem(item: $0)
-                }
+    private func viewItem(addedItems: [AddTokenService.Item], items: [AddTokenService.Item]) -> ViewItem {
+        let item = addedItems.first ?? items.first
+
+        return ViewItem(
+                coinName: item?.token.coin.name,
+                coinCode: item?.token.coin.code,
+                decimals: item.map { String($0.token.decimals) },
+                addedTokenViewItems: addedItems.map { tokenViewItem(item: $0) },
+                tokenViewItems: items.map { tokenViewItem(item: $0) }
         )
     }
 
     private func tokenViewItem(item: AddTokenService.Item) -> TokenViewItem {
-        let enabled: Bool
-        let isOn: Bool
-
-        switch item.state {
-        case .alreadyEnabled:
-            enabled = false
-            isOn = true
-        case .enabled:
-            enabled = true
-            isOn = true
-        case .disabled:
-            enabled = true
-            isOn = false
-        }
-
-        return TokenViewItem(
+        TokenViewItem(
                 imageUrl: item.token.blockchain.type.imageUrl,
                 title: item.token.protocolName,
-                enabled: enabled,
-                isOn: isOn
+                isOn: item.enabled
         )
     }
 
@@ -101,6 +88,10 @@ extension AddTokenViewModel {
 
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
+    }
+
+    var buttonTitleDriver: Driver<String?> {
+        buttonTitleRelay.asDriver()
     }
 
     var buttonEnabledDriver: Driver<Bool> {
@@ -119,8 +110,8 @@ extension AddTokenViewModel {
         service.set(reference: reference)
     }
 
-    func onToggleToken(index: Int, isOn: Bool) {
-        service.toggleToken(index: index, isOn: isOn)
+    func onToggleToken(index: Int) {
+        service.toggleToken(index: index)
     }
 
     func onTapButton() {
@@ -140,13 +131,13 @@ extension AddTokenViewModel {
         let coinName: String?
         let coinCode: String?
         let decimals: String?
+        let addedTokenViewItems: [TokenViewItem]
         let tokenViewItems: [TokenViewItem]
     }
 
     struct TokenViewItem {
         let imageUrl: String
         let title: String?
-        let enabled: Bool
         let isOn: Bool
     }
 

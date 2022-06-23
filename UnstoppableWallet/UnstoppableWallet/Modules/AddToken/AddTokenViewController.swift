@@ -72,7 +72,6 @@ class AddTokenViewController: ThemeViewController {
         }
 
         addButton.apply(style: .primaryYellow)
-        addButton.setTitle("button.add".localized, for: .normal)
         addButton.addTarget(self, action: #selector(onTapAddButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -81,6 +80,9 @@ class AddTokenViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] viewItem in
             self?.viewItem = viewItem
             self?.reloadTable()
+        }
+        subscribe(disposeBag, viewModel.buttonTitleDriver) { [weak self] title in
+            self?.addButton.setTitle(title, for: .normal)
         }
         subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
             self?.addButton.isEnabled = enabled
@@ -162,11 +164,11 @@ extension AddTokenViewController: SectionsDataSource {
         )
     }
 
-    private func tokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func addedTokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.row(
-                elements: [.image24, .text, .switch],
+                elements: [.image24, .text, .image20],
                 tableView: tableView,
-                id: "token-\(index)",
+                id: "added-token-\(index)",
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
@@ -180,13 +182,39 @@ extension AddTokenViewController: SectionsDataSource {
                         component.text = viewItem.title
                     }
 
-                    cell.bind(index: 2) { (component: SwitchComponent) in
-                        component.switchView.isEnabled = viewItem.enabled
-                        component.switchView.isOn = viewItem.isOn
-                        component.onSwitch = { [weak self] in
-                            self?.viewModel.onToggleToken(index: index, isOn: $0)
-                        }
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "check_1_20")
                     }
+                }
+        )
+    }
+
+    private func tokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilder.selectableRow(
+                elements: [.image24, .text, .image24],
+                tableView: tableView,
+                id: "token-\(index)",
+                hash: "\(viewItem.isOn)",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+
+                    cell.bind(index: 0) { (component: ImageComponent) in
+                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                    }
+
+                    cell.bind(index: 1) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.text = viewItem.title
+                    }
+
+                    cell.bind(index: 2) { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: viewItem.isOn ? "checkbox_active_24" : "checkbox_diactive_24")
+                    }
+                },
+                action: { [weak self] in
+                    self?.viewModel.onToggleToken(index: index)
                 }
         )
     }
@@ -217,7 +245,7 @@ extension AddTokenViewController: SectionsDataSource {
 
             Section(
                     id: "coin-info",
-                    footerState: .margin(height: .margin32),
+                    footerState: .margin(height: .margin24),
                     rows: [
                         infoRow(id: "coin-name", title: "add_token.coin_name".localized, value: viewItem?.coinName, isFirst: true),
                         infoRow(id: "coin-code", title: "add_token.coin_code".localized, value: viewItem?.coinCode),
@@ -226,7 +254,25 @@ extension AddTokenViewController: SectionsDataSource {
             )
         ]
 
-        if let tokenViewItems = viewItem?.tokenViewItems {
+        if let tokenViewItems = viewItem?.addedTokenViewItems, !tokenViewItems.isEmpty {
+            let section = Section(
+                    id: "added-tokens",
+                    headerState: header(text: "add_token.already_added".localized),
+                    footerState: .margin(height: .margin24),
+                    rows: tokenViewItems.enumerated().map { index, tokenViewItem in
+                        addedTokenRow(
+                                viewItem: tokenViewItem,
+                                index: index,
+                                isFirst: index == 0,
+                                isLast: index == tokenViewItems.count - 1
+                        )
+                    }
+            )
+
+            sections.append(section)
+        }
+
+        if let tokenViewItems = viewItem?.tokenViewItems, !tokenViewItems.isEmpty {
             let section = Section(
                     id: "tokens",
                     headerState: header(text: "add_token.coin_types".localized),
