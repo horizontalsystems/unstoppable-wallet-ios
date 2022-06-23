@@ -69,7 +69,7 @@ extension CoinPageViewModel {
         switch service.walletState {
         case .supported(let added):
             if added {
-                hudRelay.accept(.alreadyAddedToWatchlist)
+                hudRelay.accept(.alreadyAddedToWallet)
             } else {
                 service.addWallet()
             }

@@ -35,6 +35,12 @@ class MarketListViewController: ThemeViewController {
         self.listViewModel = listViewModel
 
         super.init()
+
+        if let watchViewModel = listViewModel as? IMarketListWatchViewModel {
+            subscribe(disposeBag, watchViewModel.favoriteDriver) { HudHelper.instance.show(banner: .addedToWatchlist) }
+            subscribe(disposeBag, watchViewModel.unfavoriteDriver) { HudHelper.instance.show(banner: .removedFromWatchlist) }
+            subscribe(disposeBag, watchViewModel.failDriver) { error in HudHelper.instance.show(banner: .error(string: error.localized)) }
+        }
     }
 
     required init?(coder: NSCoder) {
