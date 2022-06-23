@@ -746,7 +746,7 @@
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Monederos";
-"manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir un token manualmente si conoce su dirección de contrato inteligente.";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Añadir %@ ";
@@ -989,7 +989,9 @@ poner en peligro la seguridad de mis fondos.";
 "add_token.coin_name" = "Nombre de moneda";
 "add_token.coin_code" = "Código de moneda";
 "add_token.decimals" = "Decimales";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
 "add_token.input_placeholder" = "Dirección del contrato";
