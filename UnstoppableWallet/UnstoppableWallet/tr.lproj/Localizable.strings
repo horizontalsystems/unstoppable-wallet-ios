@@ -749,7 +749,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Cüzdanlar";
-"manage_wallets.not_found" = "Hiçbir sonuç bulunamadı. Akıllı sözleşme adresini biliyorsanız tokeni manüel olarak eklemeyi deneyin.";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
@@ -991,7 +991,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
 "add_token.decimals" = "Ondalıklar";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.input_placeholder" = "Sözleşme Adresi";
