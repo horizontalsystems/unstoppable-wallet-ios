@@ -23,7 +23,7 @@ extension MarketKit.Token {
     }
 
     var placeholderImageName: String {
-        protocolName.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+        protocolName.map { "Coin Icon Placeholder - \($0.uppercased())" } ?? "icon_placeholder_24"
     }
 
     var swappable: Bool {
@@ -133,7 +133,7 @@ extension MarketKit.BlockchainType {
     }
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
-        tokenProtocol.flatMap { protocolName(tokenProtocol: $0) }.map { "Coin Icon Placeholder - \($0)" } ?? "icon_placeholder_24"
+        tokenProtocol.flatMap { protocolName(tokenProtocol: $0) }.map { "Coin Icon Placeholder - \($0.uppercased())" } ?? "icon_placeholder_24"
     }
 
     var iconPlain24: String? {
