@@ -95,7 +95,7 @@ class BackupConfirmKeyViewController: KeyboardAwareViewController {
             self?.passphraseCell.inputText = nil
         }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.show(banner: .addedToWallet)
+            HudHelper.instance.show(banner: .success)
             self?.dismiss(animated: true)
         }
 
