@@ -1,6 +1,5 @@
 import RxSwift
 import RxRelay
-import WalletConnect
 import WalletConnectUtils
 import WalletConnectSign
 import HsToolKit

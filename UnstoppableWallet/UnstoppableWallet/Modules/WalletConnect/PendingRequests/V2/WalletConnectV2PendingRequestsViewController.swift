@@ -3,7 +3,6 @@ import SectionsTableView
 import ThemeKit
 import RxSwift
 import ComponentKit
-import WalletConnect
 
 class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     private let viewModel: WalletConnectV2PendingRequestsViewModel

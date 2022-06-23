@@ -4,7 +4,6 @@ import SectionsTableView
 import ComponentKit
 import RxSwift
 import RxCocoa
-import WalletConnect
 import WalletConnectSign
 
 class WalletConnectV2ListView {
