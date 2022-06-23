@@ -2,7 +2,6 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import WalletConnect
 
 class WalletConnectV2PingService {
     private static let timeOut: RxTimeInterval = .seconds(10)

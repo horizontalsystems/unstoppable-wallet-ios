@@ -1,7 +1,6 @@
 import UIKit
 import ThemeKit
 import RxSwift
-import WalletConnect
 import WalletConnectSign
 import WalletConnectUtils
 import MarketKit

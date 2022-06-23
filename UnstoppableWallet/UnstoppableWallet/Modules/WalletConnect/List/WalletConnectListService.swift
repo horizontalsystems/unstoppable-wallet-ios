@@ -1,7 +1,6 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import WalletConnect
 import WalletConnectUtils
 import WalletConnectSign
 import MarketKit
