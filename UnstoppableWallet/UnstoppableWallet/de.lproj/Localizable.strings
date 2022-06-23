@@ -746,7 +746,7 @@
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Kryptowährung";
-"manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, den Token manuell hinzuzufügen, wenn Sie die Adresse des Smart Contracts kennen.";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
@@ -988,7 +988,9 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "add_token.coin_name" = "Name der Coin";
 "add_token.coin_code" = "Münzcode";
 "add_token.decimals" = "Dezimalen";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.token_not_found" = "Token nicht gefunden";
 "add_token.input_placeholder" = "Vertragsadresse";
