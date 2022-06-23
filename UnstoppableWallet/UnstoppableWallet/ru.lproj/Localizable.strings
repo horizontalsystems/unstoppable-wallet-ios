@@ -748,7 +748,7 @@
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Токены";
-"manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную, если вы знаете его адрес смарт-контракта.";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Добавить %@";
@@ -990,7 +990,9 @@
 "add_token.coin_name" = "Название Токена";
 "add_token.coin_code" = "Код Монеты";
 "add_token.decimals" = "Десятичные знаки";
+"add_token.already_added" = "Already Added";
 "add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
 "add_token.token_not_found" = "Токен не найден";
 "add_token.input_placeholder" = "Адрес Контракта";
