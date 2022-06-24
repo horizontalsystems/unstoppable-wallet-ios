@@ -73,7 +73,7 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.show(banner: .success)
+            HudHelper.instance.show(banner: .deleted)
             self?.dismiss(animated: true)
         }
     }

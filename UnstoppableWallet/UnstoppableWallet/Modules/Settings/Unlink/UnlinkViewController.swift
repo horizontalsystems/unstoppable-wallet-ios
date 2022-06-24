@@ -73,7 +73,7 @@ class UnlinkViewController: ThemeActionSheetController {
         }
         subscribe(disposeBag, viewModel.deleteEnabledDriver) { [weak self] in self?.deleteButton.isEnabled = $0 }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.show(banner: .success)
+            HudHelper.instance.show(banner: .deleted)
             self?.dismiss(animated: true)
         }
 

@@ -233,6 +233,11 @@ extension WalletViewModel {
     }
 
     func onTapFailedIcon(wallet: Wallet) {
+        guard service.isReachable else {
+            showErrorRelay.accept(AppError.noConnection.smartDescription)
+            return
+        }
+
         guard let item = service.item(wallet: wallet) else {
             return
         }
@@ -241,11 +246,7 @@ extension WalletViewModel {
             return
         }
 
-        if let appError = error as? AppError, case .noConnection = appError {
-            showErrorRelay.accept(appError.smartDescription)
-        } else {
-            openSyncErrorRelay.accept((wallet, error))
-        }
+        openSyncErrorRelay.accept((wallet, error))
     }
 
     func onAppear() {

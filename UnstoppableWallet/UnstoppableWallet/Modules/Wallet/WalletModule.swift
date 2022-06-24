@@ -25,7 +25,8 @@ struct WalletModule {
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
                 balanceConversionManager: App.shared.balanceConversionManager,
                 appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider
+                feeCoinProvider: App.shared.feeCoinProvider,
+                reachabilityManager: App.shared.reachabilityManager
         )
 
         adapterService.delegate = service
