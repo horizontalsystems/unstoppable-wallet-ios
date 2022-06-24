@@ -2,8 +2,14 @@ import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
+import RxSwift
 
 class PlaceholderView: UIView {
+    private let disposeBag = DisposeBag()
+
+    private let reachabilityViewModel: ReachabilityViewModel?
+    private var retryAction: (() -> ())?
+
     private let stackView = UIStackView()
     private let topSpacer = UIView()
     private let bottomSpacer = UIView()
@@ -12,10 +18,10 @@ class PlaceholderView: UIView {
     private let imageView = UIImageView()
     private let label = UILabel()
 
-    init(layoutType: LayoutType = .upperMiddle) {
-        super.init(frame: .zero)
+    init(layoutType: LayoutType = .upperMiddle, reachabilityViewModel: ReachabilityViewModel? = nil) {
+        self.reachabilityViewModel = reachabilityViewModel
 
-//        backgroundColor = .red
+        super.init(frame: .zero)
 
         addSubview(stackView)
         stackView.snp.makeConstraints { maker in
@@ -23,7 +29,6 @@ class PlaceholderView: UIView {
             maker.width.equalTo(264)
         }
 
-//        stackView.backgroundColor = .green
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -93,16 +98,33 @@ class PlaceholderView: UIView {
         stackView.setCustomSpacing(.margin16, after: button)
     }
 
-    func configureSyncError(target: Any, action: Selector) {
+    func configureSyncError(action: (() -> ())? = nil) {
+        retryAction = action
+
+        if let driver = reachabilityViewModel?.retryDriver {
+            subscribe(disposeBag, driver) {
+                action?()
+            }
+        }
+
         image = UIImage(named: "sync_error_48")
         text = "sync_error".localized
 
         addButton(
                 style: .primaryYellow,
                 title: "button.retry".localized,
-                target: target,
-                action: action
+                target: self,
+                action: #selector(retry)
         )
+    }
+
+    @objc private func retry() {
+        if reachabilityViewModel?.isReachable ?? false {
+            retryAction?()
+        } else {
+            HudHelper.instance.show(banner: .noInternet)
+        }
+
     }
 
 }

@@ -13,7 +13,7 @@ class CoinInvestorsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     private var viewItems: [CoinInvestorsViewModel.ViewItem]?
 
@@ -55,7 +55,7 @@ class CoinInvestorsViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in

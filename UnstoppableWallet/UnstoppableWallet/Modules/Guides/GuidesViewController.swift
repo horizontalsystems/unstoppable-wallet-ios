@@ -13,7 +13,7 @@ class GuidesViewController: ThemeViewController {
 
     private let spinner = HUDActivityView.create(with: .large48)
 
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     private var viewItems = [GuideViewItem]()
 

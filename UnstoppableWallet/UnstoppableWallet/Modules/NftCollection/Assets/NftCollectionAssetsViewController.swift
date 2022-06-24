@@ -13,7 +13,7 @@ class NftCollectionAssetsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     weak var parentNavigationController: UINavigationController?
 
@@ -52,7 +52,7 @@ class NftCollectionAssetsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
