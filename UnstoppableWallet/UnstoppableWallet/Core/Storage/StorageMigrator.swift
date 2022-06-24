@@ -652,6 +652,16 @@ class StorageMigrator {
                 try record.insert(db)
             }
 
+            // BlockchainSettingRecord
+
+            try BlockchainSettingRecord
+                    .filter(BlockchainSettingRecord.Columns.blockchainUid == "bitcoinCash")
+                    .updateAll(db, BlockchainSettingRecord.Columns.blockchainUid.set(to: "bitcoin-cash"))
+
+            try BlockchainSettingRecord
+                    .filter(BlockchainSettingRecord.Columns.blockchainUid == "binanceSmartChain")
+                    .updateAll(db, BlockchainSettingRecord.Columns.blockchainUid.set(to: "binance-smart-chain"))
+
             // EnabledWallet
 
             let oldWallets = try EnabledWallet_v_0_25.fetchAll(db)
