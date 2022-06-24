@@ -12,7 +12,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
     private let headerView: MarketSingleSortHeaderView
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -73,7 +73,7 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

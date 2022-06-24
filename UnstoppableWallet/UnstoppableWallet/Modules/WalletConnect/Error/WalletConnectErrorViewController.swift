@@ -8,7 +8,7 @@ protocol IWalletConnectErrorDelegate: AnyObject {
 class WalletConnectErrorViewController: ThemeViewController {
     private let error: String
 
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let closeButton = ThemeButton()
 
     weak var delegate: IWalletConnectErrorDelegate?

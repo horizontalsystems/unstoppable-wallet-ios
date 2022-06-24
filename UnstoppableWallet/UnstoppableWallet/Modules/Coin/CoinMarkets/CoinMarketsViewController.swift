@@ -13,7 +13,7 @@ class CoinMarketsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let infoView = PlaceholderView()
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let headerView: MarketSingleSortHeaderView
 
     private var viewItems: [CoinMarketsViewModel.ViewItem]?
@@ -53,7 +53,7 @@ class CoinMarketsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

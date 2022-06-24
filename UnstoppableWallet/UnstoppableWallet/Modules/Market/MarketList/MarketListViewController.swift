@@ -20,7 +20,7 @@ class MarketListViewController: ThemeViewController {
 
     let tableView = SectionsTableView(style: .plain)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let refreshControl = UIRefreshControl()
 
     private var viewItems: [MarketModule.ListViewItem]?
@@ -86,7 +86,7 @@ class MarketListViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, listViewModel.viewItemDataDriver) { [weak self] in self?.sync(viewItemData: $0) }
         subscribe(disposeBag, listViewModel.loadingDriver) { [weak self] loading in

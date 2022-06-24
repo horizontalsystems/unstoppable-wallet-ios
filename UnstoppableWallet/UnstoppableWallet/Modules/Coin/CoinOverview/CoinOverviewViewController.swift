@@ -20,7 +20,7 @@ class CoinOverviewViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let coinInfoCell = A7Cell()
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     /* Chart section */
     private let chartCell: ChartCell
@@ -92,7 +92,7 @@ class CoinOverviewViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

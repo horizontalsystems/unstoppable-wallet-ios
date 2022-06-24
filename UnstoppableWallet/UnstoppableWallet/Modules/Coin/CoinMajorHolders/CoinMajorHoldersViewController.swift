@@ -13,7 +13,7 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private var chartCell = CoinMajorHolderChartCell()
 
     private var stateViewItem: CoinMajorHoldersViewModel.StateViewItem?
@@ -59,7 +59,7 @@ class CoinMajorHoldersViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in self?.sync(stateViewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in

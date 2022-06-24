@@ -14,7 +14,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let descriptionTextCell = ReadMoreTextCell()
 
     private var viewItem: NftCollectionOverviewViewModel.ViewItem?
@@ -55,7 +55,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
