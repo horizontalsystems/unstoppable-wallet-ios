@@ -4,6 +4,7 @@ import MarketKit
 import CurrencyKit
 import StorageKit
 import EthereumKit
+import HsToolKit
 
 class WalletService {
     private let keyBalanceHidden = "wallet-balance-hidden"
@@ -20,6 +21,7 @@ class WalletService {
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceConversionManager: BalanceConversionManager
     private let feeCoinProvider: FeeCoinProvider
+    private let reachabilityManager: IReachabilityManager
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
     private var walletDisposeBag = DisposeBag()
@@ -72,7 +74,7 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
@@ -84,6 +86,7 @@ class WalletService {
         self.balancePrimaryValueManager = balancePrimaryValueManager
         self.balanceConversionManager = balanceConversionManager
         self.feeCoinProvider = feeCoinProvider
+        self.reachabilityManager = reachabilityManager
 
         if let rawValue: String = localStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
             self.sortType = sortType
@@ -387,6 +390,10 @@ extension WalletService {
 
     var activeAccount: Account? {
         accountManager.activeAccount
+    }
+
+    var isReachable: Bool {
+        reachabilityManager.isReachable
     }
 
     func item(wallet: Wallet) -> Item? {
