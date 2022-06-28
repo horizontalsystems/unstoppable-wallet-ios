@@ -8,7 +8,7 @@ import HsToolKit
 
 class WalletConnectV2Service {
     private let logger: Logger?
-    let connectionService: WalletConnectV2SocketConnectionService
+    private let connectionService: WalletConnectV2SocketConnectionService
 
     private let receiveProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()

@@ -46,7 +46,7 @@ struct WalletConnectMainModule {
 
     static func viewController(session: WalletConnectSign.Session, sourceViewController: UIViewController?) -> UIViewController? {
         let service = App.shared.walletConnectV2SessionManager.service
-        let pingService = WalletConnectV2PingService(service: service)
+        let pingService = WalletConnectV2PingService(service: service, socketConnectionService: App.shared.walletConnectV2SocketConnectionService, logger: App.shared.logger)
 
         let mainService = WalletConnectV2MainService(
                 session: session,
