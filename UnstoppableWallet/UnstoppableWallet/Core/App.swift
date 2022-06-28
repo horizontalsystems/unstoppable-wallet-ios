@@ -77,6 +77,7 @@ class App {
     let termsManager: TermsManager
 
     let walletConnectSessionManager: WalletConnectSessionManager
+    let walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
     let walletConnectV2SessionManager: WalletConnectV2SessionManager
     let walletConnectManager: WalletConnectManager
 
@@ -254,12 +255,11 @@ class App {
                 icons: []
         )
 
-        let walletConnectLogger = Logger(minLogLevel: .debug)
-        let walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: walletConnectLogger)
+        walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
         let walletConnectV2Service = WalletConnectV2Service(
                 connectionService: walletConnectV2SocketConnectionService,
                 info: walletClientInfo,
-                logger: walletConnectLogger
+                logger: logger
         )
         let walletConnectV2SessionStorage = WalletConnectV2SessionStorage(dbPool: dbPool)
         walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())

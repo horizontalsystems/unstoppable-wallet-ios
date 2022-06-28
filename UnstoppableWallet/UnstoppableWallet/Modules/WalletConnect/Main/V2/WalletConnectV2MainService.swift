@@ -60,9 +60,7 @@ class WalletConnectV2MainService {
         }
         subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
             if reachable {
-                if let topic = self?.session?.topic {
-                    self?.pingService.ping(topic: topic)
-                }
+                self?.pingService.ping()
             } else {
                 if self?.session != nil {
                     self?.pingService.disconnect()
@@ -75,7 +73,8 @@ class WalletConnectV2MainService {
             blockchains = initialBlockchains
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
-            pingService.ping(topic: session.topic)
+            self.pingService.topic = session.topic
+            pingService.ping()
         }
     }
 
@@ -99,6 +98,7 @@ class WalletConnectV2MainService {
         allowedBlockchainsRelay.accept(allowedBlockchains)
 
         state = .ready
+        pingService.topic = session.topic
         pingService.receiveResponse()
     }
 
@@ -107,6 +107,7 @@ class WalletConnectV2MainService {
             return
         }
 
+        pingService.topic = nil
         pingService.disconnect()
         state = .killed
     }
@@ -269,7 +270,8 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        pingService.ping(topic: session.topic)
+        pingService.topic = session.topic
+        pingService.ping()
     }
 
     func approveSession() {

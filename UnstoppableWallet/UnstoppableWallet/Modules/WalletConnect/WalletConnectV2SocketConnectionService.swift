@@ -95,6 +95,10 @@ extension WalletConnectV2SocketConnectionService {
         }
     }
 
+    var statusObservable: Observable<Status> {
+        statusRelay.asObservable()
+    }
+
 }
 
 extension WalletConnectV2SocketConnectionService {
