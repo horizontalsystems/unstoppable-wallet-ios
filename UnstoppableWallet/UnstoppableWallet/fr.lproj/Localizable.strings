@@ -371,7 +371,7 @@
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
-"market.coin_not_supported_yet" = "Cette pièce n'est pas encore supportée par Unstoppable";
+"market.coin_not_supported_yet" = "Not supported yet";
 
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
