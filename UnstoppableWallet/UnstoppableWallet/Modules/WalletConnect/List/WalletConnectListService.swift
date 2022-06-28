@@ -66,24 +66,20 @@ class WalletConnectListService {
     }
 
     private func items(sessions: [WalletConnectSign.Session]) -> [Item] {
-        []
-//        sessions.map { session in
-//            let chainIds = Array(session.permissions.blockchains).compactMap {
-//                evmChainParser.parse(string: $0)?.chainId
-//            }
-//            let blockchains = chainIds.compactMap {
-//                evmBlockchainManager.blockchain(chainId: $0)
-//            }
-//            return Item(
-//                    id: session.id,
-//                    blockchains: blockchains,
-//                    version: 2,
-//                    appName: session.peer.name ?? "",
-//                    appUrl: session.peer.url ?? "",
-//                    appDescription: session.peer.description ?? "",
-//                    appIcons: session.peer.icons ?? []
-//            )
-//        }
+        sessions.map { session in
+            let blockchains = session.chainIds.compactMap {
+                evmBlockchainManager.blockchain(chainId: $0)
+            }
+            return Item(
+                    id: session.id,
+                    blockchains: blockchains,
+                    version: 2,
+                    appName: session.peer.name,
+                    appUrl: session.peer.url,
+                    appDescription: session.peer.description,
+                    appIcons: session.peer.icons
+            )
+        }
     }
 
 }
@@ -223,6 +219,20 @@ extension WalletConnectSession: Hashable {
 
     public static func ==(lhs: WalletConnectSession, rhs: WalletConnectSession) -> Bool {
         lhs.accountId == rhs.accountId && lhs.peerId == rhs.peerId
+    }
+
+}
+
+extension WalletConnectSign.Session {
+
+    var chainIds: [Int] {
+        var result = Set<Int>()
+
+        for blockchain in self.namespaces.values {
+            result.formUnion(Set(blockchain.accounts.compactMap { Int($0.reference) }))
+        }
+
+        return Array(result)
     }
 
 }

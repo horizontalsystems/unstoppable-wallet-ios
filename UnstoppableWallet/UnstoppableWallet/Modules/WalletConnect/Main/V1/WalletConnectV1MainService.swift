@@ -102,7 +102,7 @@ class WalletConnectV1MainService {
             throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
 
-        blockchains.insert(WalletConnectMainModule.BlockchainItem(chainId: chainId, blockchain: blockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
+        blockchains.insert(WalletConnectMainModule.BlockchainItem(namespace: "eip155", chainId: chainId, blockchain: blockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
         sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
