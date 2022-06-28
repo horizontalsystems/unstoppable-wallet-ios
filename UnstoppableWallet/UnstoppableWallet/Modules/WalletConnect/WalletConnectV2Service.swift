@@ -1,10 +1,15 @@
-import WalletConnectUtils
 import CryptoSwift
 import RxSwift
 import RxRelay
+import Combine
 import WalletConnectSign
+import WalletConnectUtils
+import HsToolKit
 
 class WalletConnectV2Service {
+    private let logger: Logger?
+    let connectionService: WalletConnectV2SocketConnectionService
+
     private let receiveProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()
     private let deleteSessionRelay = PublishRelay<(String, WalletConnectSign.Reason)>()
@@ -13,16 +18,20 @@ class WalletConnectV2Service {
     private let pendingRequestsUpdatedRelay = PublishRelay<()>()
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
 
-    init(info: WalletConnectClientInfo) {
+    private var cancellables = Set<AnyCancellable>()
+
+    init(connectionService: WalletConnectV2SocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
+        self.connectionService = connectionService
         let metadata = WalletConnectSign.AppMetadata(
                 name: info.name,
                 description: info.description,
                 url: info.url,
                 icons: info.icons
         )
+        self.logger = logger
+        Sign.configure(Sign.Config(metadata: metadata, projectId: info.projectId, socketConnectionType: .manual))
 
-        Sign.configure(Sign.Config(metadata: metadata, projectId: "Unstoppable-Id"))
-
+        connectionService.start()
         updateSessions()
         subscribeSign()
     }
@@ -32,19 +41,33 @@ class WalletConnectV2Service {
     }
 
     private func subscribeSign() {
-        Sign.instance.sessionProposalPublisher.sink { [weak self] in self?.receiveProposalRelay.accept($0) }
-        Sign.instance.sessionRequestPublisher.sink { [weak self] in
-            self?.sessionRequestReceivedRelay.accept($0)
-            self?.pendingRequestsUpdatedRelay.accept(())
-        }
-        Sign.instance.sessionDeletePublisher.sink { [weak self] in
-            self?.deleteSessionRelay.accept(($0, $1))
-            self?.updateSessions()
-        }
-        Sign.instance.sessionSettlePublisher.sink { [weak self] in
-            self?.receiveSessionRelay.accept($0)
-            self?.updateSessions()
-        }
+        Sign.instance
+                .sessionProposalPublisher
+                .sink { [weak self] in
+                    self?.receiveProposalRelay.accept($0)
+                }
+                .store(in: &cancellables)
+        Sign.instance
+                .sessionRequestPublisher
+                .sink { [weak self] in
+                    self?.sessionRequestReceivedRelay.accept($0)
+                    self?.pendingRequestsUpdatedRelay.accept(())
+                }
+                .store(in: &cancellables)
+        Sign.instance
+                .sessionDeletePublisher
+                .sink { [weak self] in
+                    self?.deleteSessionRelay.accept(($0, $1))
+                    self?.updateSessions()
+                }
+                .store(in: &cancellables)
+        Sign.instance
+                .sessionSettlePublisher
+                .sink { [weak self] in
+                    self?.receiveSessionRelay.accept($0)
+                    self?.updateSessions()
+                }
+                .store(in: &cancellables)
     }
 
 }
@@ -99,9 +122,15 @@ extension WalletConnectV2Service {
         }
     }
 
-    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<String>) {
+    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) {
         do {
-            try Sign.instance.approve(proposalId: proposal.id, namespaces: [:]) //todo: catch error state
+            let eip155 = WalletConnectSign.SessionNamespace(
+                    accounts: accounts,
+                    methods: methods,
+                    events: events,
+                    extensions: []
+            )
+            try Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155]) //todo: catch error state
         } catch {
             print(error)
         }

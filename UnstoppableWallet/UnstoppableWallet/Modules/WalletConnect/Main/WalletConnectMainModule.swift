@@ -91,7 +91,16 @@ extension WalletConnectMainModule {
         let icons: [String]
     }
 
+    struct BlockchainSet {
+        static var empty: BlockchainSet = BlockchainSet(items: Set(), methods: Set(), events: Set())
+
+        var items: Set<BlockchainItem>
+        let methods: Set<String>
+        let events: Set<String>
+    }
+
     struct BlockchainItem: Hashable {
+        let namespace: String
         let chainId: Int
         let blockchain: MarketKit.Blockchain
         let address: String

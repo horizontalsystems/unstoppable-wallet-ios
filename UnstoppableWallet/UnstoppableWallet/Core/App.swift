@@ -254,7 +254,13 @@ class App {
                 icons: []
         )
 
-        let walletConnectV2Service = WalletConnectV2Service(info: walletClientInfo)
+        let walletConnectLogger = Logger(minLogLevel: .debug)
+        let walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: walletConnectLogger)
+        let walletConnectV2Service = WalletConnectV2Service(
+                connectionService: walletConnectV2SocketConnectionService,
+                info: walletClientInfo,
+                logger: walletConnectLogger
+        )
         let walletConnectV2SessionStorage = WalletConnectV2SessionStorage(dbPool: dbPool)
         walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
 
@@ -285,7 +291,8 @@ class App {
                 rateAppManager: rateAppManager,
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
-                evmLabelManager: evmLabelManager
+                evmLabelManager: evmLabelManager,
+                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService
         )
     }
 
