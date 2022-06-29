@@ -14,11 +14,20 @@ class MarketOverviewHeaderCell: BaseThemeCell {
         }
     }
     var onSeeAll: (() -> ())?
+    var onTapTitle: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         layout(leftView: leftView, rightView: buttonWrapper)
+
+        let leftButton = UIButton()
+        wrapperView.addSubview(leftButton)
+        leftButton.snp.makeConstraints { maker in
+            maker.edges.equalTo(leftView)
+        }
+
+        leftButton.addTarget(self, action: #selector(onTapLeftView), for: .touchUpInside)
 
         buttonWrapper.addSubview(rightButton)
         rightButton.snp.makeConstraints { maker in
@@ -42,6 +51,10 @@ class MarketOverviewHeaderCell: BaseThemeCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func onTapLeftView() {
+        onTapTitle?()
     }
 
     var title: String? {
