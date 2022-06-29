@@ -100,6 +100,7 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
         cell.onSelect = { [weak self] index in
             self?.topListViewModel.onSelect(selectorIndex: index)
         }
+        cell.onTapTitle = { [weak self] in self?.didTapSeeAll() }
 
         cell.titleImage = UIImage(named: imageName)
         cell.title = title
