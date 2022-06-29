@@ -122,7 +122,7 @@ extension WalletConnectV2Service {
         }
     }
 
-    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) {
+    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) throws {
         do {
             let eip155 = WalletConnectSign.SessionNamespace(
                     accounts: accounts,
@@ -130,17 +130,19 @@ extension WalletConnectV2Service {
                     events: events,
                     extensions: []
             )
-            try Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155]) //todo: catch error state
+            try Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
         } catch {
-            print(error)
+            logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
+            throw error
         }
     }
 
-    public func reject(proposal: WalletConnectSign.Session.Proposal) {
+    public func reject(proposal: WalletConnectSign.Session.Proposal) throws {
         do {
-            try Sign.instance.reject(proposalId: proposal.id, reason: .disapprovedChains) //todo: catch error state
+            try Sign.instance.reject(proposalId: proposal.id, reason: .disapprovedChains)
         } catch {
-            print(error)
+            logger?.error("WC v2 can't reject proposal, cause: \(error.localizedDescription)")
+            throw error
         }
     }
 
@@ -154,7 +156,7 @@ extension WalletConnectV2Service {
                 try await Sign.instance.disconnect(topic: topic, reason: reason) //todo: handle async behaviour
                 updateSessions()
             } catch {
-                print(error)
+                logger?.error("WC v2 can't disconnect topic, cause: \(error.localizedDescription)")
             }
         }
     }
@@ -182,8 +184,6 @@ extension WalletConnectV2Service {
 
 struct WalletConnectClientInfo {
     let projectId: String
-    let relayHost: String
-    let clientName: String
     let name: String
     let description: String
     let url: String

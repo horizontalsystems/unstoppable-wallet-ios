@@ -117,24 +117,24 @@ class WalletConnectV2MainService {
             return .empty
         }
 
-//        if let session = session {
-//            let sessionAccountData = session.accounts.compactMap {
-//                evmChainParser.parse(string: $0)
-//            }
-//
-//            var blockchains = Set<WalletConnectMainModule.BlockchainItem>()
-//            sessionAccountData.forEach { account in
-//                guard let blockchain = evmBlockchainManager.blockchain(chainId: account.chainId),
-//                      let address = account.address else {
-//                    return
-//                }
-//
-//                blockchains.insert(WalletConnectMainModule.BlockchainItem(chainId: account.chainId, blockchain: blockchain, address: address, selected: true))
-//            }
-//            return blockchains
-//        }
-//
         let supportedNamespace = "eip155" // Support only EVM blockchains yet
+
+        if let session = session,
+            let eip155 = session.namespaces[supportedNamespace] {
+            let accounts = Array(eip155.accounts)
+            var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
+            accounts.forEach { account in
+                guard let chainId = Int(account.reference),
+                        let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+                    return
+                }
+
+                blockchainItems.insert(WalletConnectMainModule.BlockchainItem(namespace: supportedNamespace, chainId: chainId, blockchain: blockchain, address: account.address, selected: true))
+            }
+
+            return WalletConnectMainModule.BlockchainSet(items: blockchainItems, methods: eip155.methods, events: eip155.events)
+        }
+
         if let proposal = proposal,
            let eip155 = proposal.requiredNamespaces[supportedNamespace] {
             // get chainIds
@@ -308,7 +308,11 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        service.approve(proposal: proposal, accounts: Set(accounts), methods: blockchains.methods, events: blockchains.events)
+        do {
+            try service.approve(proposal: proposal, accounts: Set(accounts), methods: blockchains.methods, events: blockchains.events)
+        } catch {
+            errorRelay.accept(error)
+        }
     }
 
     func rejectSession() {
@@ -318,9 +322,13 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         if let proposal = proposal {
-            service.reject(proposal: proposal)
-            pingService.disconnect()
-            state = .killed
+            do {
+                try service.reject(proposal: proposal)
+                pingService.disconnect()
+                state = .killed
+            } catch {
+                errorRelay.accept(error)
+            }
         }
     }
 
