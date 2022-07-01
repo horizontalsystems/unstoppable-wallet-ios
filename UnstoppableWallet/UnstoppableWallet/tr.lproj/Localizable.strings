@@ -1004,7 +1004,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
-"wallet_connect.main.unsupported_chains" = "Desteklenen zincir yok!";
+"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
 "wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
