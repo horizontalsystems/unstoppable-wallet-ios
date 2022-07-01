@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import Combine
 import WalletConnectSign
+import WalletConnectRelay
 import WalletConnectUtils
 import HsToolKit
 
@@ -17,57 +18,74 @@ class WalletConnectV2Service {
     private let sessionsItemUpdatedRelay = PublishRelay<()>()
     private let pendingRequestsUpdatedRelay = PublishRelay<()>()
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
+    private let socketConnectionStatusRelay = PublishRelay<WalletConnectSign.SocketConnectionStatus>()
 
-    private var cancellables = Set<AnyCancellable>()
+    private let signClient: SignClient
 
     init(connectionService: WalletConnectV2SocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
         self.connectionService = connectionService
+        self.logger = logger
         let metadata = WalletConnectSign.AppMetadata(
                 name: info.name,
                 description: info.description,
                 url: info.url,
                 icons: info.icons
         )
-        self.logger = logger
-        Sign.configure(Sign.Config(metadata: metadata, projectId: info.projectId, socketConnectionType: .manual))
+        let relayClient = RelayClient(relayHost: info.relayHost, projectId: info.projectId, socketConnectionType: .manual)
+        signClient = SignClient(metadata: metadata, relayClient: relayClient)
+        signClient.delegate = self
 
-        connectionService.start()
+        connectionService.relayClient = relayClient
+
         updateSessions()
-        subscribeSign()
     }
 
     private func updateSessions() {
         sessionsItemUpdatedRelay.accept(())
     }
 
-    private func subscribeSign() {
-        Sign.instance
-                .sessionProposalPublisher
-                .sink { [weak self] in
-                    self?.receiveProposalRelay.accept($0)
-                }
-                .store(in: &cancellables)
-        Sign.instance
-                .sessionRequestPublisher
-                .sink { [weak self] in
-                    self?.sessionRequestReceivedRelay.accept($0)
-                    self?.pendingRequestsUpdatedRelay.accept(())
-                }
-                .store(in: &cancellables)
-        Sign.instance
-                .sessionDeletePublisher
-                .sink { [weak self] in
-                    self?.deleteSessionRelay.accept(($0, $1))
-                    self?.updateSessions()
-                }
-                .store(in: &cancellables)
-        Sign.instance
-                .sessionSettlePublisher
-                .sink { [weak self] in
-                    self?.receiveSessionRelay.accept($0)
-                    self?.updateSessions()
-                }
-                .store(in: &cancellables)
+}
+
+extension WalletConnectV2Service: SignClientDelegate {
+
+    public func didReceive(sessionProposal: Session.Proposal) {
+        logger?.debug("WC v2 SignClient did receive session proposal: \(sessionProposal.id) : proposer: \(sessionProposal.proposer.name)")
+        receiveProposalRelay.accept(sessionProposal)
+    }
+
+    public func didReceive(sessionRequest: Request) {
+        logger?.debug("WC v2 SignClient did receive session request: \(sessionRequest.method) : session: \(sessionRequest.topic)")
+        sessionRequestReceivedRelay.accept(sessionRequest)
+        pendingRequestsUpdatedRelay.accept(())
+    }
+
+    public func didReceive(sessionResponse: Response) {
+        logger?.debug("WC v2 SignClient did receive session response: \(sessionResponse.topic) : chainId: \(sessionResponse.chainId ?? "")")
+    }
+
+    public func didReceive(event: Session.Event, sessionTopic: String, chainId: WalletConnectSign.Blockchain?) {
+        logger?.debug("WC v2 SignClient did receive session event: \(event.name) : session: \(sessionTopic)")
+    }
+
+    public func didDelete(sessionTopic: String, reason: Reason) {
+        logger?.debug("WC v2 SignClient did delete session: \(sessionTopic)")
+        deleteSessionRelay.accept((sessionTopic, reason))
+        updateSessions()
+    }
+
+    public func didUpdate(sessionTopic: String, namespaces: [String: SessionNamespace]) {
+        logger?.debug("WC v2 SignClient did update session: \(sessionTopic)")
+    }
+
+    public func didSettle(session: Session) {
+        logger?.debug("WC v2 SignClient did settle session: \(session.topic)")
+        receiveSessionRelay.accept(session)
+        updateSessions()
+    }
+
+    public func didChangeSocketConnectionStatus(_ status: WalletConnectSign.SocketConnectionStatus) {
+        logger?.debug("WC v2 SignClient change socketStatus: \(status)")
+        socketConnectionStatusRelay.accept(status)
     }
 
 }
@@ -76,12 +94,12 @@ extension WalletConnectV2Service {
 
     // helpers
     public func ping(topic: String, completion: @escaping (Result<Void, Error>) -> ()) {
-        Sign.instance.ping(topic: topic, completion: completion)
+        signClient.ping(topic: topic, completion: completion)
     }
 
     // works with sessions
     public var activeSessions: [WalletConnectSign.Session] {
-        Sign.instance.getSessions()
+        signClient.getSessions()
     }
 
     public var sessionsUpdatedObservable: Observable<()> {
@@ -90,7 +108,7 @@ extension WalletConnectV2Service {
 
     // works with pending requests
     public var pendingRequests: [WalletConnectSign.Request] {
-        Sign.instance.getPendingRequests()
+        signClient.getPendingRequests()
     }
 
     public var pendingRequestsUpdatedObservable: Observable<()> {
@@ -110,11 +128,15 @@ extension WalletConnectV2Service {
         deleteSessionRelay.asObservable()
     }
 
+    public var socketConnectionStatusObservable: Observable<WalletConnectSign.SocketConnectionStatus> {
+        socketConnectionStatusRelay.asObservable()
+    }
+
     // works with dApp
     public func pair(uri: String) throws {
         Task.init {
             do {
-                try await Sign.instance.pair(uri: uri) //fix async behaviour
+                try await signClient.pair(uri: uri) //fix async behaviour
             } catch {
                 //can't pair with dApp, duplicate pairing or can't parse uri
                 throw error
@@ -130,7 +152,7 @@ extension WalletConnectV2Service {
                     events: events,
                     extensions: []
             )
-            try Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
+            try signClient.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
         } catch {
             logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
             throw error
@@ -139,7 +161,7 @@ extension WalletConnectV2Service {
 
     public func reject(proposal: WalletConnectSign.Session.Proposal) throws {
         do {
-            try Sign.instance.reject(proposalId: proposal.id, reason: .disapprovedChains)
+            try signClient.reject(proposalId: proposal.id, reason: .disapprovedChains)
         } catch {
             logger?.error("WC v2 can't reject proposal, cause: \(error.localizedDescription)")
             throw error
@@ -153,7 +175,7 @@ extension WalletConnectV2Service {
     public func disconnect(topic: String, reason: WalletConnectSign.Reason) {
         Task.init {
             do {
-                try await Sign.instance.disconnect(topic: topic, reason: reason) //todo: handle async behaviour
+                try await signClient.disconnect(topic: topic, reason: reason) //todo: handle async behaviour
                 updateSessions()
             } catch {
                 logger?.error("WC v2 can't disconnect topic, cause: \(error.localizedDescription)")
@@ -169,13 +191,13 @@ extension WalletConnectV2Service {
     public func sign(request: WalletConnectSign.Request, result: Data) {
         let result = AnyCodable(result)// Signer.signEth(request: request)
         let response = JSONRPCResponse<AnyCodable>(id: request.id, result: result)
-        Sign.instance.respond(topic: request.topic, response: .response(response))
+        signClient.respond(topic: request.topic, response: .response(response))
 
         pendingRequestsUpdatedRelay.accept(())
     }
 
     public func reject(request: WalletConnectSign.Request) {
-        Sign.instance.respond(topic: request.topic, response: .error(JSONRPCErrorResponse(id: request.id, error: JSONRPCErrorResponse.Error(code: 0, message: "reject by User"))))
+        signClient.respond(topic: request.topic, response: .error(JSONRPCErrorResponse(id: request.id, error: JSONRPCErrorResponse.Error(code: 0, message: "reject by User"))))
 
         pendingRequestsUpdatedRelay.accept(())
     }
@@ -184,6 +206,7 @@ extension WalletConnectV2Service {
 
 struct WalletConnectClientInfo {
     let projectId: String
+    let relayHost: String
     let name: String
     let description: String
     let url: String

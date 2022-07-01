@@ -26,9 +26,23 @@ class WalletConnectV2SocketConnectionService {
         }
     }
 
+    weak var relayClient: RelayClient? {
+        didSet {
+            updateClient()
+        }
+    }
+
     init(reachabilityManager: IReachabilityManager, logger: Logger? = nil) {
         self.reachabilityManager = reachabilityManager
         self.logger = logger
+
+        subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
+            if isReachable {
+                self?.retry()
+            } else {
+                self?.status = .disconnected
+            }
+        }
     }
 
     private func sync(status: WalletConnectRelay.SocketConnectionStatus) {
@@ -51,19 +65,16 @@ class WalletConnectV2SocketConnectionService {
             }
         }
     }
-}
-extension WalletConnectV2SocketConnectionService {
 
-    func start() {
-        subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
-            if isReachable {
-                self?.retry()
-            } else {
-                self?.status = .disconnected
-            }
+    private func updateClient() {
+        cancellables.forEach { cancellable in cancellable.cancel() }
+        cancellables.removeAll()
+
+        guard let relayClient = relayClient else {
+            return
         }
-        Sign.instance
-                .socketConnectionStatusPublisher
+
+        relayClient.socketConnectionStatusPublisher
                 .sink { [weak self] status in
                     self?.sync(status: status)
                 }
@@ -71,9 +82,13 @@ extension WalletConnectV2SocketConnectionService {
         retry()
     }
 
+}
+
+extension WalletConnectV2SocketConnectionService {
+
     func retry() {
         do {
-            try Sign.instance.connect()
+            try relayClient?.connect()
             status = .connecting
         } catch {
             logger?.error("WC v2 can't connect: \(error.localizedDescription)")
