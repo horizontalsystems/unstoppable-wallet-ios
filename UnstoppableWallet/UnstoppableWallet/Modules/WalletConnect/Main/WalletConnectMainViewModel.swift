@@ -263,6 +263,7 @@ extension WalletConnectMainModule.SessionError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
+        case .noAnySupportedChainId: return "wallet_connect.main.no_any_supported_chains".localized
         case .unsupportedChainId: return "wallet_connect.main.unsupported_chains".localized
         default: return nil
         }

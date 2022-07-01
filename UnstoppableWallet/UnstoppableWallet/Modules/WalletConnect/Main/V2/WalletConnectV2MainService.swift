@@ -77,7 +77,7 @@ class WalletConnectV2MainService {
                 self.pingService.topic = session.topic
                 pingService.ping()
             } catch {
-                state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+                state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
                 return
             }
         }
@@ -90,14 +90,14 @@ class WalletConnectV2MainService {
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
             guard !blockchains.items.isEmpty else {
-                state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+                state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
                 return
             }
 
             state = .waitingForApproveSession
             pingService.receiveResponse()
         } catch {
-            state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+            state = .invalid(error: error)
             return
         }
     }
@@ -112,7 +112,7 @@ class WalletConnectV2MainService {
             pingService.topic = session.topic
             pingService.receiveResponse()
         } catch {
-            state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+            state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
             return
         }
     }
@@ -164,7 +164,6 @@ class WalletConnectV2MainService {
 
         // get addresses
         var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
-        var hasUnsupportedChainId = false
         try chainIds.forEach { chainId in
             guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
                   let chain = evmBlockchainManager.chain(chainId: chainId),
@@ -324,7 +323,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         guard !accounts.isEmpty else {
-            state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+            state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
             return
         }
 

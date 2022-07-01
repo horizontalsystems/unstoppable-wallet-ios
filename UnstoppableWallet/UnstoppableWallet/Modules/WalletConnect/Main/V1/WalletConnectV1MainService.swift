@@ -99,7 +99,7 @@ class WalletConnectV1MainService {
 
         guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
               let evmKitWrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
-            throw WalletConnectMainModule.SessionError.unsupportedChainId
+            throw WalletConnectMainModule.SessionError.noAnySupportedChainId
         }
 
         blockchains.insert(WalletConnectMainModule.BlockchainItem(namespace: "eip155", chainId: chainId, blockchain: blockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
