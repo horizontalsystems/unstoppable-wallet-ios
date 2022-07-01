@@ -142,6 +142,7 @@ extension WalletConnectMainModule {
     }
 
     enum SessionError: Error {
+        case noAnySupportedChainId
         case unsupportedChainId
         case noSuitableAccount
     }
