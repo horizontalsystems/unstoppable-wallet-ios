@@ -38,24 +38,13 @@ class HsTokenBalanceProvider {
         return EvmAccountManager.AddressInfo(blockNumber: response.blockNumber, addresses: addresses)
     }
 
-    private func chain(blockchainType: BlockchainType) -> String {
-        switch blockchainType {
-        case .ethereum: return "ethereum"
-        case .binanceSmartChain: return "bsc"
-        case .polygon: return "matic"
-        case .optimism: return "optimism"
-        case .arbitrumOne: return "arbitrum-one"
-        default: return blockchainType.uid
-        }
-    }
-
 }
 
 extension HsTokenBalanceProvider {
 
     func addressInfoSingle(blockchainType: BlockchainType, address: String) -> Single<EvmAccountManager.AddressInfo> {
         let parameters: Parameters = [
-            "chain": chain(blockchainType: blockchainType)
+            "chain": blockchainType.uid
         ]
 
         let request = networkManager.session.request("\(apiUrl)/v1/addresses/\(address)/coins", parameters: parameters, headers: headers)
@@ -65,7 +54,7 @@ extension HsTokenBalanceProvider {
     }
 
     func blockNumberSingle(blockchainType: BlockchainType) -> Single<Int> {
-        let request = networkManager.session.request("\(apiUrl)/v1/chain/\(chain(blockchainType: blockchainType))", headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/chain/\(blockchainType.uid)", headers: headers)
         return networkManager.single(request: request).map { (response: ChainResponse) in
             response.blockNumber
         }

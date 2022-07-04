@@ -30,15 +30,16 @@ struct Wallet {
         token.decimals
     }
 
+    var badge: String? {
+        configuredToken.badge
+    }
+
     var transactionSource: TransactionSource {
-        let symbol: String
-
-        switch token.type {
-        case .bep2(let value): symbol = value
-        default: symbol = ""
-        }
-
-        return TransactionSource(blockchain: token.blockchain, account: account, coinSettings: coinSettings, symbol: symbol)
+        TransactionSource(
+                blockchainType: token.blockchainType,
+                coinSettings: coinSettings,
+                bep2Symbol: token.type.bep2Symbol
+        )
     }
 
 }
@@ -52,21 +53,6 @@ extension Wallet: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(configuredToken)
         hasher.combine(account)
-    }
-
-}
-
-extension Wallet {
-
-    public var badge: String? {
-        switch token.blockchain.type {
-        case .bitcoin, .litecoin:
-            return coinSettings.derivation?.rawValue.uppercased()
-        case .bitcoinCash:
-            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
-        default:
-            return token.protocolName?.uppercased()
-        }
     }
 
 }

@@ -40,12 +40,12 @@ class TransactionRecord {
         return .pending
     }
 
-    open var mainValue: TransactionValue? {
+    func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
         nil
     }
 
-    open func changedBy(oldBlockInfo: LastBlockInfo?, newBlockInfo: LastBlockInfo?) -> Bool {
-        status(lastBlockHeight: oldBlockInfo?.height) != status(lastBlockHeight: newBlockInfo?.height)
+    open var mainValue: TransactionValue? {
+        nil
     }
 
 }
@@ -54,14 +54,14 @@ extension TransactionRecord: Comparable {
 
     public static func <(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
         guard lhs.date == rhs.date else {
-            return lhs.date < rhs.date
+            return lhs.date > rhs.date
         }
 
         guard lhs.transactionIndex == rhs.transactionIndex else {
-            return lhs.transactionIndex < rhs.transactionIndex
+            return lhs.transactionIndex > rhs.transactionIndex
         }
 
-        return lhs.uid < rhs.uid
+        return lhs.uid > rhs.uid
     }
 
     public static func ==(lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
@@ -75,6 +75,13 @@ enum TransactionStatus {
     case pending
     case processing(progress: Double)
     case completed
+
+    var isPendingOrProcessing: Bool {
+        switch self {
+        case .pending, .processing: return true
+        default: return false
+        }
+    }
 }
 
 extension TransactionStatus: Equatable {

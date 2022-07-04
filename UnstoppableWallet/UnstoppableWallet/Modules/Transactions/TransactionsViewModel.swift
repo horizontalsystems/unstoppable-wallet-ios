@@ -1,20 +1,20 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import MarketKit
 
 class TransactionsViewModel {
-    private let disposeBag = DisposeBag()
-
     private let service: TransactionsService
     private let factory: TransactionsViewItemFactory
+    private let disposeBag = DisposeBag()
+
+    private let blockchainTitleRelay = BehaviorRelay<String?>(value: nil)
+    private let tokenTitleRelay = BehaviorRelay<String?>(value: nil)
+
+    private let viewDataRelay = BehaviorRelay<ViewData>(value: ViewData(sectionViewItems: [], updateInfo: nil))
+    private var viewStatusRelay = BehaviorRelay<ViewStatus>(value: ViewStatus(showProgress: false, messageType: nil))
 
     private var sectionViewItems = [SectionViewItem]()
-
-    private var typeFiltersRelay = BehaviorRelay<(filters: [FilterHeaderView.ViewItem], selected: Int)>(value: (filters: [], selected: 0))
-    private var coinFiltersRelay = BehaviorRelay<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)>(value: (filters: [], selected: nil))
-    private var sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
-    private var updatedViewItemRelay = PublishRelay<(sectionIndex: Int, rowIndex: Int, item: ViewItem)>()
-    private var viewStatusRelay = BehaviorRelay<TransactionsModule.ViewStatus>(value: TransactionsModule.ViewStatus(showProgress: false, messageType: nil))
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
 
@@ -22,62 +22,94 @@ class TransactionsViewModel {
         self.service = service
         self.factory = factory
 
-        subscribe(disposeBag, service.typeFiltersObservable) { [weak self] typeFilters in self?.handle(typesFilters: typeFilters) }
-        subscribe(disposeBag, service.walletFiltersObservable) { [weak self] walletFilters in self?.handle(walletFilters: walletFilters) }
-        subscribe(disposeBag, service.itemsObservable) { [weak self] items in
-            self?.queue.async { [weak self] in
-                self?.handle(items: items)
-            }
+        subscribe(disposeBag, service.blockchainObservable) { [weak self] in self?.syncBlockchainTitle(blockchain: $0) }
+        subscribe(disposeBag, service.configuredTokenObservable) { [weak self] in self?.syncTokenTitle(configuredToken: $0) }
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
+        subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
+
+        syncBlockchainTitle(blockchain: service.blockchain)
+        syncTokenTitle(configuredToken: service.configuredToken)
+        _sync(items: service.items)
+        _syncViewStatus(syncing: service.syncing)
+    }
+
+    private func syncBlockchainTitle(blockchain: Blockchain?) {
+        let title: String
+
+        if let blockchain = blockchain {
+            title = blockchain.name
+        } else {
+            title = "transactions.all_blockchains".localized
         }
-        subscribe(disposeBag, service.updatedItemObservable) { [weak self] item in
-            self?.queue.async { [weak self] in
-                self?.handle(updatedItem: item)
+
+        blockchainTitleRelay.accept(title)
+    }
+
+    private func syncTokenTitle(configuredToken: ConfiguredToken?) {
+        var title: String
+
+        if let configuredToken = configuredToken {
+            title = configuredToken.token.coin.name
+
+            if let badge = configuredToken.badge {
+                title += " (\(badge))"
             }
+        } else {
+            title = "transactions.all_coins".localized
         }
-        subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.handle(syncing: $0) }
 
-        handle(typesFilters: service.typeFilters)
-        handle(walletFilters: service.walletFilters)
-        handle(items: service.allItems)
-        handle(syncing: service.syncing)
+        tokenTitleRelay.accept(title)
     }
 
-    private func handle(typesFilters: (types: [TransactionTypeFilter], selected: Int)) {
-        let filterItems = factory.typeFilterItems(types: typesFilters.types)
-        typeFiltersRelay.accept((filters: filterItems, selected: typesFilters.selected))
+    private func sync(items: [TransactionsService.Item]) {
+        queue.async {
+            self._sync(items: items)
+        }
     }
 
-    private func handle(walletFilters: (wallets: [TransactionWallet], selected: Int?)) {
-        let coinFilters = walletFilters.wallets.compactMap { factory.coinFilter(wallet: $0) }
-        coinFiltersRelay.accept((filters: coinFilters, selected: walletFilters.selected))
-    }
-
-    private func handle(items: [TransactionsService.Item]) {
+    private func _sync(items: [TransactionsService.Item]) {
         let viewItems = items.map { factory.viewItem(item: $0) }
-        let sectionViewItems = sectionViewItems(viewItems: viewItems)
-        let showEmptyMessage = sectionViewItems.isEmpty != self.sectionViewItems.isEmpty
+        sectionViewItems = sectionViewItems(viewItems: viewItems)
 
-        self.sectionViewItems = sectionViewItems
-        sectionViewItemsRelay.accept(sectionViewItems)
+        _reportViewData()
+        _syncViewStatus(syncing: service.syncing)
+    }
 
-        if showEmptyMessage {
-            handle(syncing: service.syncing)
+    private func syncUpdated(item: TransactionsService.Item) {
+        queue.async {
+            self._syncUpdated(item: item)
         }
     }
 
-    private func handle(updatedItem: TransactionsService.Item) {
+    private func _syncUpdated(item: TransactionsService.Item) {
         for (sectionIndex, section) in sectionViewItems.enumerated() {
-            if let rowIndex = section.viewItems.firstIndex(where: { item in item.uid == updatedItem.record.uid }) {
-                let viewItem = factory.viewItem(item: updatedItem)
-
+            if let rowIndex = section.viewItems.firstIndex(where: { $0.uid == item.record.uid }) {
+                let viewItem = factory.viewItem(item: item)
                 sectionViewItems[sectionIndex].viewItems[rowIndex] = viewItem
-                updatedViewItemRelay.accept((sectionIndex: sectionIndex, rowIndex: rowIndex, item: viewItem))
+                _reportViewData(updateInfo: UpdateInfo(sectionIndex: sectionIndex, index: rowIndex))
             }
         }
     }
 
-    private func handle(syncing: Bool) {
-        viewStatusRelay.accept(TransactionsModule.ViewStatus(showProgress: syncing, messageType: sectionViewItems.isEmpty ? (syncing ? .syncing : .empty) : nil))
+    private func _reportViewData(updateInfo: UpdateInfo? = nil) {
+        let viewData = ViewData(sectionViewItems: sectionViewItems, updateInfo: updateInfo)
+        viewDataRelay.accept(viewData)
+    }
+
+    private func syncViewStatus(syncing: Bool) {
+        queue.async {
+            self._syncViewStatus(syncing: syncing)
+        }
+    }
+
+    private func _syncViewStatus(syncing: Bool) {
+        let viewStatus = ViewStatus(
+                showProgress: syncing,
+                messageType: sectionViewItems.isEmpty ? (syncing ? .syncing : .empty) : nil
+        )
+
+        viewStatusRelay.accept(viewStatus)
     }
 
     private func sectionViewItems(viewItems: [ViewItem]) -> [SectionViewItem] {
@@ -123,53 +155,88 @@ class TransactionsViewModel {
 
 extension TransactionsViewModel {
 
-    var typeFiltersDriver: Driver<(filters: [FilterHeaderView.ViewItem], selected: Int)> {
-        typeFiltersRelay.asDriver()
+    var blockchainTitleDriver: Driver<String?> {
+        blockchainTitleRelay.asDriver()
     }
 
-    var coinFiltersDriver: Driver<(filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)> {
-        coinFiltersRelay.asDriver()
+    var tokenTitleDriver: Driver<String?> {
+        tokenTitleRelay.asDriver()
     }
 
-    var sectionViewItemsDriver: Driver<[SectionViewItem]> {
-        sectionViewItemsRelay.asDriver()
+    var viewDataDriver: Driver<ViewData> {
+        viewDataRelay.asDriver()
     }
 
-    var updatedViewItemSignal: Signal<(sectionIndex: Int, rowIndex: Int, item: TransactionsViewModel.ViewItem)> {
-        updatedViewItemRelay.asSignal()
-    }
-
-    var viewStatusDriver: Driver<TransactionsModule.ViewStatus> {
+    var viewStatusDriver: Driver<ViewStatus> {
         viewStatusRelay.asDriver()
     }
 
-    func willShow(uid: String) {
-        service.fetchRate(for: uid)
+    var typeFilterViewItems: [FilterHeaderView.ViewItem] {
+        factory.typeFilterViewItems(typeFilters: TransactionTypeFilter.allCases)
     }
 
-    func coinFilterSelected(index: Int?) {
-        service.set(selectedWalletIndex: index)
+    var blockchainViewItems: [BlockchainViewItem] {
+        [BlockchainViewItem(uid: nil, title: "transactions.all_blockchains".localized, selected: service.blockchain == nil)] +
+                service.allBlockchains.map { blockchain in
+                    BlockchainViewItem(uid: blockchain.uid, title: blockchain.name, selected: service.blockchain == blockchain)
+                }
     }
 
-    func typeFilterSelected(index: Int) {
-        service.set(selectedTypeIndex: index)
+    var configuredToken: ConfiguredToken? {
+        service.configuredToken
     }
 
-    func bottomReached() {
-        service.loadMore()
+    func onSelectTypeFilter(index: Int) {
+        let typeFilters = TransactionTypeFilter.allCases
+
+        guard index < typeFilters.count else {
+            return
+        }
+
+        service.set(typeFilter: typeFilters[index])
     }
 
-    func transactionItem(uid: String) -> TransactionsService.Item? {
-        service.item(uid: uid)
+    func onSelectBlockchain(uid: String?) {
+        service.set(blockchain: service.allBlockchains.first(where: { $0.uid == uid }))
+    }
+
+    func onSelect(configuredToken: ConfiguredToken?) {
+        service.set(configuredToken: configuredToken)
+    }
+
+    func record(uid: String) -> TransactionRecord? {
+        service.record(uid: uid)
+    }
+
+    func onDisplay(sectionIndex: Int, index: Int) {
+        queue.async {
+            guard sectionIndex < self.sectionViewItems.count, index < self.sectionViewItems[sectionIndex].viewItems.count else {
+                return
+            }
+
+            var itemIndex = index
+
+            for i in 0..<sectionIndex {
+                itemIndex += self.sectionViewItems[i].viewItems.count
+            }
+
+            self.service.loadMoreIfRequired(index: itemIndex)
+            self.service.fetchRate(index: itemIndex)
+        }
     }
 
 }
 
 extension TransactionsViewModel {
 
-    struct SectionViewItem {
+    class SectionViewItem {
         let title: String
         var viewItems: [ViewItem]
+
+        init(title: String, viewItems: [ViewItem]) {
+            self.title = title
+            self.viewItems = viewItems
+        }
     }
 
     struct ViewItem {
@@ -203,6 +270,37 @@ extension TransactionsViewModel {
         case outgoing
         case neutral
         case secondary
+    }
+
+    struct BlockchainViewItem {
+        let uid: String?
+        let title: String
+        let selected: Bool
+    }
+
+    class ViewData {
+        let sectionViewItems: [SectionViewItem]
+        let updateInfo: UpdateInfo?
+
+        init(sectionViewItems: [SectionViewItem], updateInfo: UpdateInfo?) {
+            self.sectionViewItems = sectionViewItems
+            self.updateInfo = updateInfo
+        }
+    }
+
+    struct UpdateInfo {
+        let sectionIndex: Int
+        let index: Int
+    }
+
+    struct ViewStatus {
+        let showProgress: Bool
+        let messageType: MessageType?
+    }
+
+    enum MessageType {
+        case syncing
+        case empty
     }
 
 }

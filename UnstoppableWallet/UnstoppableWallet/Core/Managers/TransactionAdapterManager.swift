@@ -38,7 +38,7 @@ class TransactionAdapterManager {
 
             let transactionsAdapter: ITransactionsAdapter?
 
-            if evmBlockchainManager.allBlockchains.contains(source.blockchain) {
+            if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
                 transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
