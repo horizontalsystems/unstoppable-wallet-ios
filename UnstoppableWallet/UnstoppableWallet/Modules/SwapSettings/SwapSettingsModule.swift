@@ -6,10 +6,12 @@ import ThemeKit
 protocol ISwapSettingsDataSource: AnyObject {
     func viewDidLoad()
     func buildSections() -> [SectionProtocol]
+    func didTapApply()
 
     var onOpen: ((UIViewController) -> ())? { get set }
     var onClose: (() -> ())? { get set }
     var onReload: (() -> ())? { get set }
+    var onChangeButtonState: ((Bool, String) -> ())? { get set }
 }
 
 class SwapSettingsModule {

@@ -1,15 +1,20 @@
+import UIKit
 import ThemeKit
 import SnapKit
 import SectionsTableView
 import ComponentKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class WatchAddressViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin8
     private let viewModel: WatchAddressViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
     private let watchButton = ThemeButton()
 
     private let nameCell = TextFieldCell()
@@ -25,7 +30,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
         addressCell = RecipientAddressInputCell(viewModel: addressViewModel)
         addressCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
 
-        super.init(scrollViews: [tableView])
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,11 +55,18 @@ class WatchAddressViewController: KeyboardAwareViewController {
         tableView.sectionDataSource = self
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
-        view.addSubview(watchButton)
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        gradientWrapperView.addSubview(watchButton)
         watchButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
+            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
         }
 
         watchButton.apply(style: .primaryYellow)
@@ -79,6 +91,8 @@ class WatchAddressViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             self?.dismiss(animated: true)
         }
+
+        setInitialState(bottomPadding: wrapperViewHeight)
 
         tableView.buildSections()
         isLoaded = true

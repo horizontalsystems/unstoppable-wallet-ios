@@ -2413,6 +2413,7 @@
 		ABC9A01D9D338CE31C268600 /* MarketCategoryMetricChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1CC859DA6EB0E8E6B05 /* MarketCategoryMetricChartViewModel.swift */; };
 		ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
 		ABC9A040EA0B56AF76D01855 /* WalletConnectV2PendingRequestsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2F6EDC8BB83ED7B75BA /* WalletConnectV2PendingRequestsModule.swift */; };
+		ABC9A043F82D9F5945C5FAFA /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9A05F721E9CFABF06EF89 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
 		ABC9A06616429B8BA46D262C /* WalletConnectV1MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A857395F2521BA0A2602 /* WalletConnectV1MainService.swift */; };
 		ABC9A074A8F480B53C173806 /* EnsAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A896A83640B618328FE1 /* EnsAddressParserItem.swift */; };
@@ -2508,6 +2509,7 @@
 		ABC9A50A13F425EA403C81D8 /* SendBitcoinFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8A4A879501AA5582E8 /* SendBitcoinFeeService.swift */; };
 		ABC9A5195773607BCEF5E5F8 /* WalletConnectV2MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */; };
 		ABC9A51F2E7EB0B477EBE708 /* SendZcashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE6D2CD14194802E7976 /* SendZcashService.swift */; };
+		ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9A52F96160DF8073A7FE1 /* ProFeaturesActivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A76EF84398C3288CD4B9 /* ProFeaturesActivateViewController.swift */; };
 		ABC9A554E076F588ADA2C309 /* SendFeeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE095F52237073F1D8C6 /* SendFeeRateService.swift */; };
 		ABC9A556361B2644555659D8 /* SendConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA7F2ECF212EF8B70470 /* SendConfirmationViewController.swift */; };
@@ -2695,6 +2697,7 @@
 		ABC9AE4FD599490B0A23003D /* PredefinedBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */; };
 		ABC9AE50CB44A21D0274384F /* WalletConnectV1MainRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A413A1015882E90F7675 /* WalletConnectV1MainRequestView.swift */; };
 		ABC9AE553D422A163A09E5F8 /* MarketCardValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4FCDC5085002DF35C17 /* MarketCardValueView.swift */; };
+		ABC9AE57B3F629D6021D4770 /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9AE59D7CEE92A0B295A16 /* ChartPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A56202347AC47682FFB4 /* ChartPreviewView.swift */; };
 		ABC9AE66F6D18A152EC7FD15 /* WalletConnectV1MainRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6CFF0208D48FE778028 /* WalletConnectV1MainRequestViewModel.swift */; };
 		ABC9AE6D877341985A6F651F /* SendBitcoinAmountInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1F55164BDFD049793 /* SendBitcoinAmountInputService.swift */; };
@@ -3950,6 +3953,7 @@
 		ABC9AE8A193F58021C411311 /* WalletConnectMainModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectMainModule.swift; sourceTree = "<group>"; };
 		ABC9AE8A4A879501AA5582E8 /* SendBitcoinFeeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinFeeService.swift; sourceTree = "<group>"; };
 		ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectMainViewModel.swift; sourceTree = "<group>"; };
+		ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoAccessoryView.swift; sourceTree = "<group>"; };
 		ABC9AF15BD67548E6D755CA0 /* SendBinanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBinanceViewController.swift; sourceTree = "<group>"; };
 		ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2MainService.swift; sourceTree = "<group>"; };
 		ABC9AF68C8C40699DD58F7A6 /* SendFeeWarningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeWarningViewModel.swift; sourceTree = "<group>"; };
@@ -4405,6 +4409,7 @@
 				1A564C4B0D13BC7214419A3E /* GradientClippingView.swift */,
 				11B35D96CF03878016FC38FD /* Caution.swift */,
 				11B355436F62829DBE3C92B4 /* CellComponent.swift */,
+				ABC9A4C18F27446916AD53E0 /* KeyboardTracker */,
 			);
 			path = UserInterface;
 			sourceTree = "<group>";
@@ -6328,6 +6333,14 @@
 			path = V2;
 			sourceTree = "<group>";
 		};
+		ABC9A4C18F27446916AD53E0 /* KeyboardTracker */ = {
+			isa = PBXGroup;
+			children = (
+				ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */,
+			);
+			path = KeyboardTracker;
+			sourceTree = "<group>";
+		};
 		ABC9A4FE6BE86F9163319A4A /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -6946,7 +6959,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
@@ -8169,6 +8182,7 @@
 				11B35F0E865F6999BE017603 /* PoolGroupFactory.swift in Sources */,
 				11B35BC82C2B5707192CAB6D /* TransactionsHeaderView.swift in Sources */,
 				11B356094C0A6F7943FEEC02 /* PoolSource.swift in Sources */,
+				ABC9AE57B3F629D6021D4770 /* PseudoAccessoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9159,6 +9173,7 @@
 				11B35AB989198F423D880695 /* PoolGroupFactory.swift in Sources */,
 				11B3521C81ACF7BFC8875A61 /* TransactionsHeaderView.swift in Sources */,
 				11B358A1409FB729B1C3013E /* PoolSource.swift in Sources */,
+				ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10141,6 +10156,7 @@
 				11B35AC389ACC3E4096EC645 /* PoolGroupFactory.swift in Sources */,
 				11B354F0312E419C959C603F /* TransactionsHeaderView.swift in Sources */,
 				11B3595D3E150BF50856A746 /* PoolSource.swift in Sources */,
+				ABC9A043F82D9F5945C5FAFA /* PseudoAccessoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10549,7 +10565,7 @@
 				kind = branch;
 			};
 		};
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -10608,32 +10624,32 @@
 		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {
