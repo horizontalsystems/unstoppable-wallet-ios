@@ -1,3 +1,4 @@
+import UIKit
 import ThemeKit
 import RxSwift
 import RxCocoa
@@ -21,6 +22,7 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
     var onOpen: ((UIViewController) -> ())?
     var onClose: (() -> ())?
     var onReload: (() -> ())?
+    var onChangeButtonState: ((Bool, String) -> ())?
 
     init(viewModel: OneInchSettingsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel) {
         self.viewModel = viewModel
@@ -28,8 +30,6 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
 
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
-
-        viewDidLoad()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -52,10 +52,6 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
 
         slippageCautionCell.onChangeHeight = { [weak self] in self?.onReload?() }
 
-        buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
-            self?.didTapApply()
-        }
-
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
             self?.slippageCell.set(cautionType: $0?.type)
             self?.slippageCautionCell.set(caution: $0)
@@ -64,16 +60,14 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
         subscribe(disposeBag, viewModel.actionDriver) { [weak self] actionState in
             switch actionState {
             case .enabled:
-                self?.buttonCell.isEnabled = true
-                self?.buttonCell.title = "button.apply".localized
+                self?.onChangeButtonState?(true, "button.apply".localized)
             case .disabled(let title):
-                self?.buttonCell.isEnabled = false
-                self?.buttonCell.title = title
+                self?.onChangeButtonState?(false, title)
             }
         }
     }
 
-    @objc private func didTapApply() {
+    @objc func didTapApply() {
         if viewModel.doneDidTap() {
             onClose?()
         } else {
@@ -159,16 +153,6 @@ extension OneInchSettingsDataSource: SectionsDataSource {
                         )
                     ]
             ),
-            Section(
-                    id: "button",
-                    rows: [
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "button",
-                                height: ButtonCell.height(style: .primaryYellow)
-                        )
-                    ]
-            )
         ]
     }
 
