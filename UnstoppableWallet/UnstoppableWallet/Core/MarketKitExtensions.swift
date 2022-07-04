@@ -67,6 +67,13 @@ extension MarketKit.TokenType {
         }
     }
 
+    var bep2Symbol: String? {
+        switch self {
+        case .bep2(let symbol): return symbol
+        default: return nil
+        }
+    }
+
 }
 
 extension MarketKit.TokenQuery {

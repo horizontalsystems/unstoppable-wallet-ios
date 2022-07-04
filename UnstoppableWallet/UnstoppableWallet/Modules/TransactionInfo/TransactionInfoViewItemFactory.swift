@@ -11,7 +11,7 @@ class TransactionInfoViewItemFactory {
 
     private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
-        let iconPlaceholderImageName = source.blockchain.type.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
+        let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
 
         if transactionValue.isMaxValue {
             return .amount(
@@ -169,7 +169,7 @@ class TransactionInfoViewItemFactory {
         switch record {
         case let record as ContractCreationTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchain.type.iconPlain24, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
+                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
             ])
 
         case let record as EvmOutgoingTransactionRecord:
@@ -270,7 +270,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ContractCallTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchain.type.iconPlain24, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
+                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
             ])
 
             for event in record.outgoingEvents {

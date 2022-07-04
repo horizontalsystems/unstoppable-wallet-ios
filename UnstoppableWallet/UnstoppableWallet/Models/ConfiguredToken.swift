@@ -18,6 +18,22 @@ extension ConfiguredToken: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(token)
+        hasher.combine(coinSettings)
+    }
+
+}
+
+extension ConfiguredToken {
+
+    public var badge: String? {
+        switch token.blockchain.type {
+        case .bitcoin, .litecoin:
+            return coinSettings.derivation?.rawValue.uppercased()
+        case .bitcoinCash:
+            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
+        default:
+            return token.protocolName?.uppercased()
+        }
     }
 
 }

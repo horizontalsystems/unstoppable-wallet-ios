@@ -652,6 +652,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.clear" = "Clear";
 "transactions.filter_all" = "All";
 "transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
