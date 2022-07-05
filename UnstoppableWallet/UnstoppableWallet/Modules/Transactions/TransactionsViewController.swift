@@ -40,6 +40,7 @@ class TransactionsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "transactions.title".localized
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(onTapReset))
 
         view.addSubview(tableView)
 
@@ -100,8 +101,15 @@ class TransactionsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.viewDataDriver) { [weak self] in self?.handle(viewData: $0) }
         subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] in self?.sync(viewStatus: $0) }
+        subscribe(disposeBag, viewModel.resetEnabledDriver) { [weak self] in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = $0
+        }
 
         loaded = true
+    }
+
+    @objc private func onTapReset() {
+        viewModel.onTapReset()
     }
 
     private func itemClicked(item: TransactionsViewModel.ViewItem) {

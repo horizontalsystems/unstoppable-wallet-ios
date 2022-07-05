@@ -13,6 +13,7 @@ class TransactionsViewModel {
 
     private let viewDataRelay = BehaviorRelay<ViewData>(value: ViewData(sectionViewItems: [], allLoaded: true, updateInfo: nil))
     private var viewStatusRelay = BehaviorRelay<ViewStatus>(value: ViewStatus(showProgress: false, messageType: nil))
+    private var resetEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private var sectionViewItems = [SectionViewItem]()
 
@@ -27,11 +28,17 @@ class TransactionsViewModel {
         subscribe(disposeBag, service.itemDataObservable) { [weak self] in self?.sync(itemData: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
+        subscribe(disposeBag, service.canResetObservable) { [weak self] in self?.sync(canReset: $0) }
 
         syncBlockchainTitle(blockchain: service.blockchain)
         syncTokenTitle(configuredToken: service.configuredToken)
         _sync(itemData: service.itemData)
         _syncViewStatus(syncing: service.syncing)
+        sync(canReset: service.canReset)
+    }
+
+    private func sync(canReset: Bool) {
+        resetEnabledRelay.accept(canReset)
     }
 
     private func syncBlockchainTitle(blockchain: Blockchain?) {
@@ -171,6 +178,10 @@ extension TransactionsViewModel {
         viewStatusRelay.asDriver()
     }
 
+    var resetEnabledDriver: Driver<Bool> {
+        resetEnabledRelay.asDriver()
+    }
+
     var typeFilterViewItems: [FilterHeaderView.ViewItem] {
         factory.typeFilterViewItems(typeFilters: TransactionTypeFilter.allCases)
     }
@@ -223,6 +234,10 @@ extension TransactionsViewModel {
             self.service.loadMoreIfRequired(index: itemIndex)
             self.service.fetchRate(index: itemIndex)
         }
+    }
+
+    func onTapReset() {
+        service.reset()
     }
 
 }
