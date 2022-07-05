@@ -103,7 +103,7 @@ extension WalletConnectV2SocketConnectionService {
 
     func didEnterBackground() {
         do {
-            try Sign.instance.disconnect(closeCode: .normalClosure)
+            try relayClient?.disconnect(closeCode: .normalClosure)
             status = .disconnected
         } catch {
             logger?.error("WC v2 can't disconnect socket! \(error.localizedDescription)")
