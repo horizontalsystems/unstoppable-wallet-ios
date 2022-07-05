@@ -50,7 +50,16 @@ class TransactionsService {
     private(set) var allBlockchains = [Blockchain]()
 
     private var lastRequestedCount = TransactionsService.pageLimit
-    private var loading = false
+    private var loading = false {
+        didSet {
+            _syncSyncing()
+        }
+    }
+    private var poolGroupSyncing = false {
+        didSet {
+            _syncSyncing()
+        }
+    }
     private var loadMoreRequested = false
     private var poolUpdateRequested = false
 
@@ -125,7 +134,7 @@ class TransactionsService {
 //        print("LOAD: init pool group")
         _load()
 
-        syncing = poolGroup.syncing
+        poolGroupSyncing = poolGroup.syncing
 
         poolGroup.invalidatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
@@ -144,7 +153,7 @@ class TransactionsService {
         poolGroup.syncingObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] syncing in
-                    self?.handleUpdated(syncing: syncing)
+                    self?.handleUpdated(poolGroupSyncing: syncing)
                 })
                 .disposed(by: poolGroupDisposeBag)
     }
@@ -210,9 +219,9 @@ class TransactionsService {
         }
     }
 
-    private func handleUpdated(syncing: Bool) {
+    private func handleUpdated(poolGroupSyncing: Bool) {
         queue.async {
-            self.syncing = syncing
+            self.poolGroupSyncing = poolGroupSyncing
         }
     }
 
@@ -276,6 +285,10 @@ class TransactionsService {
 
     private func _syncCanReset() {
         canResetRelay.accept(_canReset)
+    }
+
+    private func _syncSyncing() {
+        syncing = loading || poolGroupSyncing
     }
 
 }
