@@ -16,7 +16,7 @@ class TransactionsService {
 
     private var poolGroup = PoolGroup(pools: [])
 
-    private let itemsRelay = PublishRelay<[Item]>()
+    private let itemDataRelay = PublishRelay<ItemData>()
     private let itemUpdatedRelay = PublishRelay<Item>()
     private(set) var items: [Item] = []
 
@@ -173,7 +173,7 @@ class TransactionsService {
                         currencyValue: self.currencyValue(record: transactionItem.record, rate: self.rate(record: transactionItem.record))
                 )
             }
-            self.itemsRelay.accept(self.items)
+            self._reportItemData()
 
             if loadedMore {
                 self.loadMoreRequested = false
@@ -221,7 +221,7 @@ class TransactionsService {
                 item.currencyValue = self.currencyValue(record: item.record, rate: self.rate(record: item.record))
             }
 
-            self.itemsRelay.accept(self.items)
+            self._reportItemData()
         }
     }
 
@@ -261,6 +261,10 @@ class TransactionsService {
         return CurrencyValue(currency: rate.currency, value: decimalValue * rate.value)
     }
 
+    private func _reportItemData() {
+        itemDataRelay.accept(itemData)
+    }
+
 }
 
 extension TransactionsService {
@@ -273,8 +277,8 @@ extension TransactionsService {
         configuredTokenRelay.asObservable()
     }
 
-    var itemsObservable: Observable<[Item]> {
-        itemsRelay.asObservable()
+    var itemDataObservable: Observable<ItemData> {
+        itemDataRelay.asObservable()
     }
 
     var itemUpdatedObservable: Observable<Item> {
@@ -283,6 +287,10 @@ extension TransactionsService {
 
     var syncingObservable: Observable<Bool> {
         syncingRelay.asObservable()
+    }
+
+    var itemData: ItemData {
+        ItemData(items: items, allLoaded: lastRequestedCount > items.count)
     }
 
     func set(typeFilter: TransactionTypeFilter) {
@@ -370,6 +378,11 @@ extension TransactionsService {
 }
 
 extension TransactionsService {
+
+    struct ItemData {
+        let items: [Item]
+        let allLoaded: Bool
+    }
 
     class Item {
         var transactionItem: TransactionItem
