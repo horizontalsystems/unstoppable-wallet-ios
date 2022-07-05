@@ -45,6 +45,8 @@ class TransactionsService {
         }
     }
 
+    private let canResetRelay = PublishRelay<Bool>()
+
     private(set) var allBlockchains = [Blockchain]()
 
     private var lastRequestedCount = TransactionsService.pageLimit
@@ -65,6 +67,10 @@ class TransactionsService {
         _syncWallets()
     }
 
+    private var _canReset: Bool {
+        blockchain != nil || configuredToken != nil
+    }
+
     private func syncWallets() {
         queue.async {
             self._syncWallets()
@@ -80,7 +86,10 @@ class TransactionsService {
 
         if let configuredToken = configuredToken, !walletManager.activeWallets.contains(where: { $0.configuredToken == configuredToken }) {
             self.configuredToken = nil
+            blockchain = nil
         }
+
+        _syncCanReset()
 
 //        print("SYNC POOL GROUP: sync wallets: \(walletManager.activeWallets.count)")
         _syncPoolGroup()
@@ -265,6 +274,10 @@ class TransactionsService {
         itemDataRelay.accept(itemData)
     }
 
+    private func _syncCanReset() {
+        canResetRelay.accept(_canReset)
+    }
+
 }
 
 extension TransactionsService {
@@ -289,8 +302,18 @@ extension TransactionsService {
         syncingRelay.asObservable()
     }
 
+    var canResetObservable: Observable<Bool> {
+        canResetRelay.asObservable()
+    }
+
     var itemData: ItemData {
         ItemData(items: items, allLoaded: lastRequestedCount > items.count)
+    }
+
+    var canReset: Bool {
+        queue.sync {
+            _canReset
+        }
     }
 
     func set(typeFilter: TransactionTypeFilter) {
@@ -311,6 +334,8 @@ extension TransactionsService {
             self.blockchain = blockchain
             self.configuredToken = nil
 
+            self._syncCanReset()
+
 //            print("SYNC POOL GROUP: set blockchain")
             self._syncPoolGroup()
         }
@@ -325,7 +350,25 @@ extension TransactionsService {
             self.configuredToken = configuredToken
             self.blockchain = configuredToken?.token.blockchain
 
+            self._syncCanReset()
+
 //            print("SYNC POOL GROUP: set token")
+            self._syncPoolGroup()
+        }
+    }
+
+    func reset() {
+        queue.async {
+            guard self.blockchain != nil || self.configuredToken != nil else {
+                return
+            }
+
+            self.blockchain = nil
+            self.configuredToken = nil
+
+            self._syncCanReset()
+
+//            print("SYNC POOL GROUP: reset")
             self._syncPoolGroup()
         }
     }
