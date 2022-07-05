@@ -169,7 +169,7 @@ extension WalletConnectV2Service {
     }
 
     public func respond(topic: String, response: JsonRpcResult) {
-        Sign.instance.respond(topic: topic, response: response)
+        signClient.respond(topic: topic, response: response)
     }
 
     public func disconnect(topic: String, reason: WalletConnectSign.Reason) {
