@@ -249,7 +249,6 @@ class TransactionsService {
                 if let rateKey = self.rateKey(record: item.record), rateKey == rate.0 {
                     item.currencyValue = self.currencyValue(record: item.record, rate: rate.1)
                     self.itemUpdatedRelay.accept(item)
-                    break
                 }
             }
         }
