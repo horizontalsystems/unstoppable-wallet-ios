@@ -18,6 +18,7 @@ class TransactionsViewController: ThemeViewController {
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sectionViewItems = [TransactionsViewModel.SectionViewItem]()
+    private var allLoaded = true
     private var loaded = false
 
     init(viewModel: TransactionsViewModel) {
@@ -56,6 +57,7 @@ class TransactionsViewController: ThemeViewController {
 
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
 
         view.addSubview(typeFiltersView)
@@ -193,6 +195,10 @@ class TransactionsViewController: ThemeViewController {
     private func handle(viewData: TransactionsViewModel.ViewData) {
         sectionViewItems = viewData.sectionViewItems
 
+        if let allLoaded = viewData.allLoaded {
+            self.allLoaded = allLoaded
+        }
+
         guard loaded else {
             return
         }
@@ -240,31 +246,43 @@ class TransactionsViewController: ThemeViewController {
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionViewItems.count
+        sectionViewItems.count + (allLoaded ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sectionViewItems[section].viewItems.count
+        if section < sectionViewItems.count {
+            return sectionViewItems[section].viewItems.count
+        } else {
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        CellBuilder.preparedSelectableCell(tableView: tableView, indexPath: indexPath, elements: [.transactionImage, .margin8, .multiText, .multiText], layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16))
+        if indexPath.section < sectionViewItems.count {
+            return CellBuilder.preparedSelectableCell(tableView: tableView, indexPath: indexPath, elements: [.transactionImage, .margin8, .multiText, .multiText], layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16))
+        } else {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: SpinnerCell.self), for: indexPath)
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let viewItem = sectionViewItems[indexPath.section].viewItems[indexPath.row]
+        if indexPath.section < sectionViewItems.count {
+            let viewItem = sectionViewItems[indexPath.section].viewItems[indexPath.row]
 
-        if let cell = cell as? BaseThemeCell {
-            cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
-            bind(viewItem: viewItem, cell: cell)
+            if let cell = cell as? BaseThemeCell {
+                cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
+                bind(viewItem: viewItem, cell: cell)
+            }
+
+            viewModel.onDisplay(sectionIndex: indexPath.section, index: indexPath.row)
         }
-
-        viewModel.onDisplay(sectionIndex: indexPath.section, index: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        itemClicked(item: sectionViewItems[indexPath.section].viewItems[indexPath.row])
+        if indexPath.section < sectionViewItems.count {
+            tableView.deselectRow(at: indexPath, animated: true)
+            itemClicked(item: sectionViewItems[indexPath.section].viewItems[indexPath.row])
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -272,11 +290,15 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        .heightSingleLineCell
+        section < sectionViewItems.count ? .heightSingleLineCell : 0
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransactionDateHeaderView.self))
+        if section < sectionViewItems.count {
+            return tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransactionDateHeaderView.self))
+        } else {
+            return nil
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

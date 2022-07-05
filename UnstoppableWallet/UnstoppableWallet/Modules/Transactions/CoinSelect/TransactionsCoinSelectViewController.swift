@@ -68,14 +68,14 @@ class TransactionsCoinSelectViewController: ThemeSearchViewController {
 
 extension TransactionsCoinSelectViewController: SectionsDataSource {
 
-    private func allRow(selected: Bool, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func allRow(selected: Bool, index: Int, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image24, .text, .image20],
                 tableView: tableView,
                 id: "all-row",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .claude, isFirst: isFirst, isLast: isLast)
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.imageView.image = UIImage(named: "circle_coin_24")?.withTintColor(.themeGray)
@@ -97,14 +97,14 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
         )
     }
 
-    private func row(viewItem: TransactionsCoinSelectViewModel.TokenViewItem, selected: Bool, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func row(viewItem: TransactionsCoinSelectViewModel.TokenViewItem, selected: Bool, index: Int, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image24, .multiText, .image20],
                 tableView: tableView,
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .claude, isFirst: isFirst, isLast: isLast)
+                    cell.set(backgroundStyle: .claude, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
@@ -139,14 +139,13 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
                     id: "coins",
                     footerState: .margin(height: .margin32),
                     rows: viewItems.enumerated().map { index, viewItem in
-                        let isFirst = index == 0
                         let isLast = index == viewItems.count - 1
 
                         switch viewItem.type {
                         case .all:
-                            return allRow(selected: viewItem.selected, index: index, isFirst: isFirst, isLast: isLast)
+                            return allRow(selected: viewItem.selected, index: index, isLast: isLast)
                         case .token(let tokenViewItem):
-                            return row(viewItem: tokenViewItem, selected: viewItem.selected, index: index, isFirst: isFirst, isLast: isLast)
+                            return row(viewItem: tokenViewItem, selected: viewItem.selected, index: index, isLast: isLast)
                         }
                     }
             )

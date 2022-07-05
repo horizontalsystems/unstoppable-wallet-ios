@@ -11,7 +11,7 @@ class TransactionsViewModel {
     private let blockchainTitleRelay = BehaviorRelay<String?>(value: nil)
     private let tokenTitleRelay = BehaviorRelay<String?>(value: nil)
 
-    private let viewDataRelay = BehaviorRelay<ViewData>(value: ViewData(sectionViewItems: [], updateInfo: nil))
+    private let viewDataRelay = BehaviorRelay<ViewData>(value: ViewData(sectionViewItems: [], allLoaded: true, updateInfo: nil))
     private var viewStatusRelay = BehaviorRelay<ViewStatus>(value: ViewStatus(showProgress: false, messageType: nil))
 
     private var sectionViewItems = [SectionViewItem]()
@@ -24,13 +24,13 @@ class TransactionsViewModel {
 
         subscribe(disposeBag, service.blockchainObservable) { [weak self] in self?.syncBlockchainTitle(blockchain: $0) }
         subscribe(disposeBag, service.configuredTokenObservable) { [weak self] in self?.syncTokenTitle(configuredToken: $0) }
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.itemDataObservable) { [weak self] in self?.sync(itemData: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
 
         syncBlockchainTitle(blockchain: service.blockchain)
         syncTokenTitle(configuredToken: service.configuredToken)
-        _sync(items: service.items)
+        _sync(itemData: service.itemData)
         _syncViewStatus(syncing: service.syncing)
     }
 
@@ -62,17 +62,17 @@ class TransactionsViewModel {
         tokenTitleRelay.accept(title)
     }
 
-    private func sync(items: [TransactionsService.Item]) {
+    private func sync(itemData: TransactionsService.ItemData) {
         queue.async {
-            self._sync(items: items)
+            self._sync(itemData: itemData)
         }
     }
 
-    private func _sync(items: [TransactionsService.Item]) {
-        let viewItems = items.map { factory.viewItem(item: $0) }
+    private func _sync(itemData: TransactionsService.ItemData) {
+        let viewItems = itemData.items.map { factory.viewItem(item: $0) }
         sectionViewItems = sectionViewItems(viewItems: viewItems)
 
-        _reportViewData()
+        _reportViewData(allLoaded: itemData.allLoaded)
         _syncViewStatus(syncing: service.syncing)
     }
 
@@ -92,8 +92,8 @@ class TransactionsViewModel {
         }
     }
 
-    private func _reportViewData(updateInfo: UpdateInfo? = nil) {
-        let viewData = ViewData(sectionViewItems: sectionViewItems, updateInfo: updateInfo)
+    private func _reportViewData(allLoaded: Bool? = nil, updateInfo: UpdateInfo? = nil) {
+        let viewData = ViewData(sectionViewItems: sectionViewItems, allLoaded: allLoaded, updateInfo: updateInfo)
         viewDataRelay.accept(viewData)
     }
 
@@ -278,14 +278,10 @@ extension TransactionsViewModel {
         let selected: Bool
     }
 
-    class ViewData {
+    struct ViewData {
         let sectionViewItems: [SectionViewItem]
+        let allLoaded: Bool?
         let updateInfo: UpdateInfo?
-
-        init(sectionViewItems: [SectionViewItem], updateInfo: UpdateInfo?) {
-            self.sectionViewItems = sectionViewItems
-            self.updateInfo = updateInfo
-        }
     }
 
     struct UpdateInfo {
