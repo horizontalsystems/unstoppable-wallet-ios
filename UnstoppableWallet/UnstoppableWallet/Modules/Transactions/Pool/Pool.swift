@@ -19,14 +19,14 @@ class Pool {
         self.provider = provider
 
         provider.recordsObservable()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] records in
                     self?.handleUpdated(records: records)
                 })
                 .disposed(by: disposeBag)
 
         provider.lastBlockUpdatedObservable()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.handleUpdatedLastBlock()
                 })

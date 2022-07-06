@@ -19,7 +19,7 @@ class PoolGroup {
         self.pools = pools
 
         Observable.merge(pools.map { $0.syncingObservable })
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] _ in
                     self?.syncState()
                 })

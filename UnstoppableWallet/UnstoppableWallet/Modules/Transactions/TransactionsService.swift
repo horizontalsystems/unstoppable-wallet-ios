@@ -137,21 +137,21 @@ class TransactionsService {
         poolGroupSyncing = poolGroup.syncing
 
         poolGroup.invalidatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.onPoolGroupInvalidated()
                 })
                 .disposed(by: poolGroupDisposeBag)
 
         poolGroup.itemsUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] transactionItems in
                     self?.handleUpdated(transactionItems: transactionItems)
                 })
                 .disposed(by: poolGroupDisposeBag)
 
         poolGroup.syncingObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] syncing in
                     self?.handleUpdated(poolGroupSyncing: syncing)
                 })
@@ -174,6 +174,7 @@ class TransactionsService {
 
         poolGroup.itemsSingle(count: lastRequestedCount)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] transactionItems in
                     self?.handle(transactionItems: transactionItems, loadedMore: loadingMore)
                 })
