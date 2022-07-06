@@ -22,7 +22,7 @@ class PoolProvider {
         self.source = source
 
         adapter.transactionStateUpdatedObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
                     self?.syncState()
                 })
