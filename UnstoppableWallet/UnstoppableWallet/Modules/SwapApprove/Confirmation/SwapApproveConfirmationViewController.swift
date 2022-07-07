@@ -48,8 +48,13 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
         transactionViewModel.send()
     }
 
+    override func handleSending() {
+        HudHelper.instance.show(banner: .approving)
+    }
+
     override func handleSendSuccess(transactionHash: Data) {
         delegate?.didApprove()
+        HudHelper.instance.show(banner: .approved)
 
         super.handleSendSuccess(transactionHash: transactionHash)
     }

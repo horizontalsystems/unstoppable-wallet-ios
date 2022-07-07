@@ -37,4 +37,13 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
         transactionViewModel.send()
     }
 
+    override func handleSending() {
+        HudHelper.instance.show(banner: .swapping)
+    }
+
+    override func handleSendSuccess(transactionHash: Data) {
+        HudHelper.instance.show(banner: .swapped)
+    }
+
+
 }

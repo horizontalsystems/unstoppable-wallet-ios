@@ -60,7 +60,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, transactionViewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
-        subscribe(disposeBag, transactionViewModel.sendingSignal) { HudHelper.instance.show(banner: .sending) }
+        subscribe(disposeBag, transactionViewModel.sendingSignal) { [weak self] in self?.handleSending() }
         subscribe(disposeBag, transactionViewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess(transactionHash: $0) }
         subscribe(disposeBag, transactionViewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
@@ -92,9 +92,10 @@ class SendEvmTransactionViewController: ThemeViewController {
         reloadTable()
     }
 
-    func handleSendSuccess(transactionHash: Data) {
-        HudHelper.instance.show(banner: .sent)
+    func handleSending() {
+    }
 
+    func handleSendSuccess(transactionHash: Data) {
         dismiss(animated: true)
     }
 

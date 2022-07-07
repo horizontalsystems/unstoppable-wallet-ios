@@ -40,4 +40,12 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         transactionViewModel.send()
     }
 
+    override func handleSending() {
+        HudHelper.instance.show(banner: .sending)
+    }
+
+    override func handleSendSuccess(transactionHash: Data) {
+        HudHelper.instance.show(banner: .sent)
+    }
+
 }

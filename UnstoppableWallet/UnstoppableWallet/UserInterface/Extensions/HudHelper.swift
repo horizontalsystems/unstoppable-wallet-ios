@@ -130,7 +130,7 @@ extension HudHelper {
 
         config.coverBlurEffectStyle = nil
         config.coverBlurEffectIntensity = nil
-        config.coverBackgroundColor = .themeBlack50
+        config.coverBackgroundColor = .themeBlackTenTwenty
 
         config.blurEffectStyle = .themeHud
         config.backgroundColor = .themeAndy
@@ -146,7 +146,8 @@ extension HudHelper {
                 isLoading: banner.isLoading
         )
 
-        HUD.instance.show(config: config, viewItem: viewItem, forced: banner.forced)
+        let statusBarStyle = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarStyle
+        HUD.instance.show(config: config, viewItem: viewItem, statusBarStyle: statusBarStyle, forced: banner.forced)
     }
 
 }
