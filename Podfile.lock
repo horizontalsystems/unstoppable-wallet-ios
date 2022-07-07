@@ -594,7 +594,7 @@ CHECKOUT OPTIONS:
     :commit: 69ce38519921b392862f46800aebe2003e0127fe
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
+    :commit: be559cd6280e129987b09e3e6a74e19146da51ec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
@@ -624,7 +624,7 @@ CHECKOUT OPTIONS:
     :commit: 285e753a39b90a3b639e4ad1349d365d2187fd7c
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
-    :commit: 69ce38519921b392862f46800aebe2003e0127fe
+    :commit: 0fdbc9f47fb302a3be147a955d2f20218c766b95
     :git: https://github.com/horizontalsystems/gui-kit/
   LanguageKit.swift:
     :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
@@ -657,7 +657,7 @@ CHECKOUT OPTIONS:
     :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
     :git: https://github.com/horizontalsystems/component-kit-ios/
   ThemeKit.swift:
-    :commit: cf1a5c514eb7001f371086edbb4c810e130ac0fd
+    :commit: be559cd6280e129987b09e3e6a74e19146da51ec
     :git: https://github.com/horizontalsystems/component-kit-ios/
   UIExtensions.swift:
     :commit: 69ce38519921b392862f46800aebe2003e0127fe

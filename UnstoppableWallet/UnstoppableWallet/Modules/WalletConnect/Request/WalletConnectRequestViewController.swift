@@ -60,9 +60,13 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
 
         dismiss(animated: true)
     }
+    override func handleSending() {
+        HudHelper.instance.show(banner: .approving)
+    }
 
     override func handleSendSuccess(transactionHash: Data) {
         viewModel.approve(transactionHash: transactionHash)
+        HudHelper.instance.show(banner: .approved)
 
         super.handleSendSuccess(transactionHash: transactionHash)
     }
