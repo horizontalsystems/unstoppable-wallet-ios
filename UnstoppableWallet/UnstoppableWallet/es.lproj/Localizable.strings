@@ -82,8 +82,8 @@
 "restore.enter_key" = "Introduzca la clave";
 "restore.mnemonic.name" = "Nombre (opcional)";
 "restore.mnemonic.key" = "Clave";
-"restore.mnemonic.description" = "Introduzca su clave mnemotécnica para el monedero, la cual está compuesta por 12 o 24 palabras. Las palabras deben ser introducidas en el orden correcto y separadas por espacios.";
-"restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
@@ -650,6 +650,11 @@
 
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.clear" = "Clear";
 "transactions.filter_all" = "Todo";
 "transactions.syncing_text" = "Por favor, espere a que termine la sincronización";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
