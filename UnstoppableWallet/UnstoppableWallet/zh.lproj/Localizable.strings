@@ -84,8 +84,8 @@
 "restore.enter_key" = "输入密钥";
 "restore.mnemonic.name" = "名称 (可选)";
 "restore.mnemonic.key" = "密钥";
-"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
-"restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
@@ -652,6 +652,11 @@
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.clear" = "Clear";
 "transactions.filter_all" = "全部";
 "transactions.syncing_text" = "请等待同步结束";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
