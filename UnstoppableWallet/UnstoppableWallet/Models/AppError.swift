@@ -7,7 +7,7 @@ enum AppError: Error {
     case zcash(reason: ZcashError)
     case ethereum(reason: EthereumError)
     case oneInch(reason: OneInchError)
-    case invalidWordsCount(count: Int)
+    case invalidWords(count: Int)
     case wordsChecksum
     case addressInvalid
     case notSupportedByHodler
@@ -66,7 +66,7 @@ extension AppError: LocalizedError {
             case .cannotEstimate: return "" // localized in modules
             case .insufficientLiquidity: return "swap.one_inch.error.insufficient_liquidity".localized
             }
-        case .invalidWordsCount(let count):
+        case .invalidWords(let count):
             return "restore_error.mnemonic_word_count".localized("\(count)")
         case .wordsChecksum:
             return "restore.checksum_error".localized
