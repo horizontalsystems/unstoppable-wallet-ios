@@ -82,8 +82,8 @@
 "restore.enter_key" = "암호를 입력하세요";
 "restore.mnemonic.name" = "이름 (선택 사항)";
 "restore.mnemonic.key" = "키";
-"restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다.";
-"restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
+"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
@@ -650,6 +650,11 @@
 
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.clear" = "Clear";
 "transactions.filter_all" = "모든";
 "transactions.syncing_text" = "동기화가 끝날 때까지 기다려 주십시오";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
