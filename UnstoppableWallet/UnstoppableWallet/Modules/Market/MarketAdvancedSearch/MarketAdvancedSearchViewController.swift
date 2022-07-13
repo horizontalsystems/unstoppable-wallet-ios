@@ -52,7 +52,6 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
@@ -388,7 +387,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "coin_list",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: coinListCell, id: "coin_list") { [weak self] in self?.onTapCoinListCell() }
                 ])
@@ -397,7 +396,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "market_filters",
                 headerState: header(text: "market.advanced_search.market_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
                     row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
@@ -407,7 +406,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "network_filters",
                 headerState: header(text: "market.advanced_search.network_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: blockchainsCell, id: "blockchains") { [weak self] in self?.onTapBlockchainsCell() }
                 ])

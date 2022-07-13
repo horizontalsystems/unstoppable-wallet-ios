@@ -38,7 +38,7 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         }
 
         tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
@@ -47,15 +47,14 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         tableView.buildSections()
     }
 
-    private var header: ViewState<TopDescriptionHeaderFooterView> {
-        let descriptionText = "double_spend_info.header".localized
-
-        return .cellType(
-                hash: "top_description",
-                binder: { view in
-                    view.bind(text: descriptionText)
-                }, dynamicHeight: { containerWidth in
-                    TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
+    private func highlightedDescriptionRow(text: String) -> RowProtocol {
+        Row<HighlightedDescriptionCell>(
+                id: "alert",
+                dynamicHeight: { width in
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
+                },
+                bind: { cell, _ in
+                    cell.descriptionText = text
                 }
         )
     }
@@ -63,8 +62,14 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
+                    id: "alert",
+                    rows: [
+                        highlightedDescriptionRow(text: "double_spend_info.header".localized)
+                    ]
+            ),
+            Section(
                     id: "hashes",
-                    headerState: header,
+                    headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin6x),
                     rows: [
                         Row<D9Cell>(

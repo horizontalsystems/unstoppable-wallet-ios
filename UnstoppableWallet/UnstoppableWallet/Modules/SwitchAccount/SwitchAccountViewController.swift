@@ -46,7 +46,9 @@ class SwitchAccountViewController: ThemeActionSheetController {
 
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.automaticallyAdjustsScrollIndicatorInsets = false
+
         tableView.sectionDataSource = self
+        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         tableView.buildSections()
 
@@ -57,14 +59,22 @@ class SwitchAccountViewController: ThemeActionSheetController {
 
 extension SwitchAccountViewController: SectionsDataSource {
 
+    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        .cellType(
+                hash: text,
+                binder: { $0.bind(text: text)},
+                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+        )
+    }
+
     private func row(viewItem: SwitchAccountViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .image20],
+                elements: [.image24, .multiText],
                 tableView: tableView,
                 id: "item_\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
                         component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
@@ -78,11 +88,6 @@ extension SwitchAccountViewController: SectionsDataSource {
                         component.subtitle.text = viewItem.subtitle
                         component.subtitle.lineBreakMode = .byTruncatingMiddle
                     })
-
-                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.isHidden = !viewItem.watchAccount
-                        component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeGray)
-                    })
                 },
                 action: { [weak self] in
                     self?.viewModel.onSelect(accountId: viewItem.accountId)
@@ -91,15 +96,34 @@ extension SwitchAccountViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                    id: "main",
-                    footerState: .margin(height: .margin16),
-                    rows: viewModel.viewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.viewItems.count - 1)
+        var sections = [SectionProtocol]()
+
+        if !viewModel.regularViewItems.isEmpty {
+            let section = Section(
+                    id: "regular",
+                    headerState: header(text: "Wallets"),
+                    footerState: .margin(height: viewModel.watchViewItems.isEmpty ? 0 : .margin24),
+                    rows: viewModel.regularViewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.regularViewItems.count - 1)
                     }
             )
-        ]
+
+            sections.append(section)
+        }
+
+        if !viewModel.watchViewItems.isEmpty {
+            let section = Section(
+                    id: "watch",
+                    headerState: header(text: "Watch Addresses"),
+                    rows: viewModel.watchViewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
+                    }
+            )
+
+            sections.append(section)
+        }
+
+        return sections
     }
 
 }

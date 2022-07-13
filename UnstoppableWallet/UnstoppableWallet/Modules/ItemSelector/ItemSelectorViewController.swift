@@ -144,7 +144,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
+                        cell.set(backgroundStyle: .bordered, isFirst: rowIndex == 0, isLast: isLast)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
                             component.set(style: viewItem.titleStyle)

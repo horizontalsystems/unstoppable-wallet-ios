@@ -51,7 +51,6 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: A4Cell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] viewItems in
@@ -92,7 +91,7 @@ extension SwapSelectProviderViewController: SectionsDataSource {
                             height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
                                 cell.title = viewItem.title
                                 cell.titleImage = UIImage(named: viewItem.icon)
                                 cell.titleImageTintColor = .themeGray

@@ -168,10 +168,11 @@ extension RestoreMnemonicViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             Section(
                     id: "name",
                     headerState: header(text: "restore.mnemonic.name".localized),
-                    footerState: .margin(height: .margin32),
+                    footerState: .margin(height: .margin24),
                     rows: [
                         StaticRow(
                                 cell: nameCell,

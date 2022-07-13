@@ -145,7 +145,7 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                 hash: "\(selected)",
                                 height: .heightDoubleLineCell,
                                 bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: ImageComponent) in
                                         if let icon = viewItem.icon {

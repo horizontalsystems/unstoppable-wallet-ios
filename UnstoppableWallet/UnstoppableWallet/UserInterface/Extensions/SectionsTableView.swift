@@ -7,9 +7,10 @@ extension SectionsTableView {
     func subtitleWithInfoButtonRow(text: String, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.text, .image20],
+                layoutMargins: UIEdgeInsets(top: 0, left: .margin32, bottom: 0, right: .margin32),
                 tableView: self,
                 id: "subtitle-\(text)",
-                height: .heightSingleLineCell,
+                height: .margin32,
                 autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: true)

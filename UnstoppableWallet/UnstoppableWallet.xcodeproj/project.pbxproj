@@ -2116,7 +2116,6 @@
 		58AAA4F255D60AFBA0158056 /* MarketPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA263DAB58FD63E6A9351 /* MarketPostViewController.swift */; };
 		58AAA4F6DE67EE385EA955C6 /* CoinOverviewViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0B8ECE5854FAB9362AC /* CoinOverviewViewItemFactory.swift */; };
 		58AAA500CF271961FF2144E3 /* CoinOverviewViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0B8ECE5854FAB9362AC /* CoinOverviewViewItemFactory.swift */; };
-		58AAA502A454C2E557D63EAD /* PriceIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B022C9B3CFE6FA1EFF /* PriceIndicatorCell.swift */; };
 		58AAA50988D38546451F38BD /* MarketGlobalTvlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAEA0582FFB81EB6C6263 /* MarketGlobalTvlFetcher.swift */; };
 		58AAA50BFCE894B7650F28B0 /* OneInchSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0D499D632E44F7BE172 /* OneInchSettingsDataSource.swift */; };
 		58AAA50C2D93E909A98CFCFF /* DataStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9F2F3A6F483B0D67E18 /* DataStatus.swift */; };
@@ -2249,7 +2248,6 @@
 		58AAAA097567E0DF18B8A80B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA83833C970A2DC467715 /* InfoViewController.swift */; };
 		58AAAA19D6C7812306A164EA /* SwapCoinCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFB203A455CB53996F97 /* SwapCoinCardCell.swift */; };
 		58AAAA2323F7CFCAB96FCF04 /* CoinPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA353DAC061C2123948FC /* CoinPageViewController.swift */; };
-		58AAAA29B3FC03C30CC23ED9 /* PriceIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B022C9B3CFE6FA1EFF /* PriceIndicatorCell.swift */; };
 		58AAAA3E05FEB10822DFC8EE /* SwapStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA024EB2E850DD3277419 /* SwapStepCell.swift */; };
 		58AAAA3F2EF03D83A5500228 /* SwapConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B35D17E82D59F7183 /* SwapConfirmationViewController.swift */; };
 		58AAAA534E94A3276B7F7EF2 /* FeeSliderValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3C555FBFB5423CCF8E0 /* FeeSliderValueView.swift */; };
@@ -2373,7 +2371,6 @@
 		58AAAEC89733E2BC5B6D08FF /* MetricChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB934A3F1B6490245F1D /* MetricChartModule.swift */; };
 		58AAAEDB596694C9127E2441 /* RecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA19E66FCA0575AE33FAA /* RecipientAddressViewModel.swift */; };
 		58AAAEDDF791C28174360A15 /* MetricChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC7C8A0B2AECDD436A14 /* MetricChartFactory.swift */; };
-		58AAAEE1506A4F54B02505E5 /* PriceIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8B022C9B3CFE6FA1EFF /* PriceIndicatorCell.swift */; };
 		58AAAEEA99ACF936862312B2 /* SwapSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9828D8742CD3D9995D9 /* SwapSwitchCell.swift */; };
 		58AAAEF20C684F912ED5D7AE /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0ED0FCFACF791EC865C /* FavoritesManager.swift */; };
 		58AAAF011B2E9CDF8455CA7B /* BaseEvmAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA656A81B2C12F618FB44 /* BaseEvmAdapter.swift */; };
@@ -3778,7 +3775,6 @@
 		58AAA8863BBC80245F217F37 /* CoinTvlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTvlFetcher.swift; sourceTree = "<group>"; };
 		58AAA892221B1283EFC14B9E /* SwapAllowanceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapAllowanceService.swift; sourceTree = "<group>"; };
 		58AAA8AD6794AD2AAF462B7B /* CoinCardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinCardModule.swift; sourceTree = "<group>"; };
-		58AAA8B022C9B3CFE6FA1EFF /* PriceIndicatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceIndicatorCell.swift; sourceTree = "<group>"; };
 		58AAA8B7E47FF3B010851E58 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		58AAA8CB22CEF84A71CF044F /* MetricChartService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricChartService.swift; sourceTree = "<group>"; };
 		58AAA8CCC7252ECFFDC51578 /* ChartIntervalConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIntervalConverter.swift; sourceTree = "<group>"; };
@@ -5939,7 +5935,6 @@
 				58AAA14EEB72DD2E21F72E30 /* MacdPointView.swift */,
 				58AAA5C4402819E4BC4CCE13 /* ChartPointInfoView.swift */,
 				58AAA8F8D0BE10313B4CA1A4 /* ChartDoubleLineView.swift */,
-				58AAA8B022C9B3CFE6FA1EFF /* PriceIndicatorCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -7590,7 +7585,6 @@
 				58AAAA7A959E27CD023348F2 /* ChartPointInfoView.swift in Sources */,
 				D003297826CD2C67002EC21D /* TransactionLockInfo.swift in Sources */,
 				58AAAFEE292730843426107D /* ChartDoubleLineView.swift in Sources */,
-				58AAAEE1506A4F54B02505E5 /* PriceIndicatorCell.swift in Sources */,
 				58AAAAF2FE5F24087AB50777 /* ChartModule.swift in Sources */,
 				11B35A658BC5E180FFDAB778 /* CreateAccountViewModel.swift in Sources */,
 				11B35C4352FA1199E46800F8 /* CreateAccountModule.swift in Sources */,
@@ -8579,7 +8573,6 @@
 				58AAA7616DD593DA78C49091 /* MacdPointView.swift in Sources */,
 				58AAA172231172B0CC1B9C9E /* ChartPointInfoView.swift in Sources */,
 				58AAA1BA2BFE802C1447BA64 /* ChartDoubleLineView.swift in Sources */,
-				58AAA502A454C2E557D63EAD /* PriceIndicatorCell.swift in Sources */,
 				58AAA1EC97682F9347B8CA32 /* ChartModule.swift in Sources */,
 				11B35E001107369BB1153649 /* CreateAccountViewModel.swift in Sources */,
 				11B351E31777084419C3B2C0 /* CreateAccountModule.swift in Sources */,
@@ -9561,7 +9554,6 @@
 				58AAA348E6AC987A6A837936 /* MacdPointView.swift in Sources */,
 				58AAA67204EA6E2E07C9F75C /* ChartPointInfoView.swift in Sources */,
 				58AAA0A88112E829EEAFD88C /* ChartDoubleLineView.swift in Sources */,
-				58AAAA29B3FC03C30CC23ED9 /* PriceIndicatorCell.swift in Sources */,
 				58AAAB04DD6CB4DBEE62526C /* ChartModule.swift in Sources */,
 				11B35AA67F08317C748062D3 /* CreateAccountViewModel.swift in Sources */,
 				11B35DA1A83CE7E402309FE7 /* CreateAccountModule.swift in Sources */,
