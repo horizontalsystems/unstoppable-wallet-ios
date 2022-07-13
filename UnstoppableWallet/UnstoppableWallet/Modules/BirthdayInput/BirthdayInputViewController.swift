@@ -40,11 +40,8 @@ class BirthdayInputViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "birthday_input.title".localized,
-                subtitle: token.coin.name,
-                image: UIImage(named: "zcash_24")?.withTintColor(.themeJacob)
-        )
+        titleView.title = "birthday_input.title".localized
+        titleView.image = UIImage(named: "zcash_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }

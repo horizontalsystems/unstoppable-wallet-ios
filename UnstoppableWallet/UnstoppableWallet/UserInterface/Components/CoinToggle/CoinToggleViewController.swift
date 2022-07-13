@@ -57,7 +57,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func bind(cell: BaseThemeCell, viewItem: CoinToggleViewModel.ViewItem, isLast: Bool) {
-        cell.set(backgroundStyle: .claude, isLast: isLast)
+        cell.set(backgroundStyle: .transparent, isLast: isLast)
 
         cell.bind(index: 0, block: { (component: ImageComponent) in
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })

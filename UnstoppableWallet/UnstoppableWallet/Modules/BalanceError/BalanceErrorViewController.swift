@@ -36,20 +36,15 @@ class BalanceErrorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "balance_error.sync_error".localized,
-                subtitle: viewModel.coinTitle,
-                image: UIImage(named: "warning_2_24"),
-                tintColor: .themeLucian
-        )
-
+        titleView.title = "balance_error.sync_error".localized
+        titleView.image = UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
 
         view.addSubview(retryButton)
         retryButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
             maker.height.equalTo(CGFloat.heightButton)
         }
@@ -62,8 +57,8 @@ class BalanceErrorViewController: ThemeActionSheetController {
 
         view.addSubview(changeSourceButton)
         changeSourceButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(retryButton.snp.bottom).offset(changeSourceVisible ? CGFloat.margin16 : 0)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(retryButton.snp.bottom).offset(changeSourceVisible ? CGFloat.margin12 : 0)
             maker.height.equalTo(changeSourceVisible ? CGFloat.heightButton : 0)
         }
 
@@ -73,14 +68,14 @@ class BalanceErrorViewController: ThemeActionSheetController {
 
         view.addSubview(reportButton)
         reportButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin12)
             maker.height.equalTo(CGFloat.heightButton)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
-        reportButton.apply(style: .primaryGray)
+        reportButton.apply(style: .primaryTransparent)
         reportButton.setTitle("button.report".localized, for: .normal)
 
         subscribe(disposeBag, viewModel.openBtcBlockchainSignal) { [weak self] in self?.openBtc(blockchain: $0) }

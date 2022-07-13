@@ -22,12 +22,8 @@ class BackupRequiredViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "backup.backup_required".localized,
-                subtitle: account.name,
-                image: UIImage(named: "warning_2_24"),
-                tintColor: .themeLucian
-        )
+        titleView.title = "backup.backup_required".localized
+        titleView.image = UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -35,16 +31,16 @@ class BackupRequiredViewController: ThemeActionSheetController {
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            maker.top.equalTo(titleView.snp.bottom)
         }
 
         descriptionView.text = text
 
         view.addSubview(backupButton)
         backupButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
         }
 

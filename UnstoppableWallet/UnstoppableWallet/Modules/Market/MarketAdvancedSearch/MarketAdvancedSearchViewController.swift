@@ -184,9 +184,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapCoinListCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.choose_set".localized,
-                subtitle: "---------",
-                image: UIImage(named: "circle_coin_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "circle_coin_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.coinListViewItems), action: { [weak self] index in
@@ -197,9 +195,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapMarketCapCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.market_cap".localized,
-                subtitle: "---------",
-                image: UIImage(named: "usd_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "usd_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.marketCapViewItems), action: { [weak self] index in
@@ -210,9 +206,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapVolumeCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.volume".localized,
-                subtitle: "market.advanced_search.24h".localized,
-                image: UIImage(named: "chart_2_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.volumeViewItems), action: { [weak self] index in
@@ -235,9 +229,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapPeriodCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.price_period".localized,
-                subtitle: "---------",
-                image: UIImage(named: "circle_clock_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "circle_clock_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeTypeViewItems), action: { [weak self] index in
@@ -248,9 +240,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapPriceChangeCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.price_change".localized,
-                subtitle: "---------",
-                image: UIImage(named: "markets_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "markets_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeViewItems), action: { [weak self] index in

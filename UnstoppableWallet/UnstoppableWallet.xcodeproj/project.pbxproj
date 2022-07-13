@@ -564,7 +564,6 @@
 		11B3564C09AB663A2F146BE8 /* BtcBlockchainSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359CAE8509E2408CCE422 /* BtcBlockchainSettingsViewController.swift */; };
 		11B3564C551C6C76ECCE387D /* SendEvmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F6B511DA5E0C60ED156 /* SendEvmViewModel.swift */; };
 		11B3564FBC180A0E6D30BCFA /* TransactionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35828C8D50D0A5B915B2A /* TransactionsModule.swift */; };
-		11B3565011CB40864C5CAC98 /* BottomSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B051008127B14C2C093 /* BottomSelectorViewController.swift */; };
 		11B3565070D890657E004402 /* ManageWalletsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CBBFEC11CAE6FDBCFFA /* ManageWalletsModule.swift */; };
 		11B356559BE65EE0756909E7 /* AboutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3593037C8B33C1C307D85 /* AboutService.swift */; };
 		11B35659FCF3FB3579A206AD /* BitcoinHodlingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E4ABC64519982B2B9C1 /* BitcoinHodlingPresenter.swift */; };
@@ -727,7 +726,6 @@
 		11B3581F4D975FC21B9A25F2 /* BtcBlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3589893A8995F86F08B1C /* BtcBlockchainSettingsModule.swift */; };
 		11B3581F7CCCEE9F956266E8 /* InputStateWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B18D0C02E331540538B /* InputStateWrapperView.swift */; };
 		11B3582157E4A026F6903E6A /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359DAB464176D8EBFC8A0 /* MarkdownTextView.swift */; };
-		11B358271EF5AB7FF02931D0 /* BottomSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B051008127B14C2C093 /* BottomSelectorViewController.swift */; };
 		11B35828C42630241AE8D0E0 /* BackupConfirmKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FA70D9570CB2708E1CA /* BackupConfirmKeyService.swift */; };
 		11B3582D3298B7C072FBAD86 /* WalletConnectRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355DBB08BD360380F7EAF /* WalletConnectRequestViewController.swift */; };
 		11B35831AF48B09CE3349E5C /* BalanceCoinIconHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3560C1FC3F73833FA4439 /* BalanceCoinIconHolder.swift */; };
@@ -976,7 +974,6 @@
 		11B35AC60BE4DC210C3C2312 /* NftCollectionActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351E034126F57DB7B4263 /* NftCollectionActivityService.swift */; };
 		11B35ACE4B859EB33BF93371 /* WalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D547F1BB38D2AD6AD5 /* WalletManager.swift */; };
 		11B35AD1BD3E71EC4C29051F /* NftCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35396831B92AAC156DF1D /* NftCollectionViewModel.swift */; };
-		11B35AD62D25CB60BC17683E /* BottomSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B051008127B14C2C093 /* BottomSelectorViewController.swift */; };
 		11B35ADD392077085FDBE236 /* ExternalContractCallTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F42A8CA942DF400A928 /* ExternalContractCallTransactionRecord.swift */; };
 		11B35AE0661AD6EA5844D50B /* ManageAccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A8342513D5834B2145A /* ManageAccountsViewModel.swift */; };
 		11B35AE1D3AA1FF93B6081D5 /* TransactionsViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D89546EBA13B01A1ED /* TransactionsViewItemFactory.swift */; };
@@ -3334,7 +3331,6 @@
 		11B35ADD30196056A9C6407C /* WordsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsManager.swift; sourceTree = "<group>"; };
 		11B35ADF518A2F98FF673B4B /* CoinAuditsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAuditsViewModel.swift; sourceTree = "<group>"; };
 		11B35AE5785634316A1A5DA8 /* WalletService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletService.swift; sourceTree = "<group>"; };
-		11B35B051008127B14C2C093 /* BottomSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSelectorViewController.swift; sourceTree = "<group>"; };
 		11B35B0E0CD408C71ACC2E20 /* AppearanceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
 		11B35B131175D6CB960076EA /* RateListHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateListHeaderFooterView.swift; sourceTree = "<group>"; };
 		11B35B176A5FDEBBE94D307E /* BitcoinCashCoinType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinCashCoinType.swift; sourceTree = "<group>"; };
@@ -4676,7 +4672,6 @@
 		11B355234843FBD9FE46C9BC /* BottomSelector */ = {
 			isa = PBXGroup;
 			children = (
-				11B35B051008127B14C2C093 /* BottomSelectorViewController.swift */,
 				11B351AF16B02C80A859D535 /* BottomMultiSelectorViewController.swift */,
 				11B355B6EFCAB40DC5ACEA3D /* MultiSelectorViewController.swift */,
 			);
@@ -7376,7 +7371,6 @@
 				1A56488FAFECA1247BC4E9B8 /* HighlightedDescriptionView.swift in Sources */,
 				1A5648202A8A90263ED276F3 /* TransactionDataSortMode.swift in Sources */,
 				3AB682A425BADC20002197A5 /* MarketDiscoveryViewModel.swift in Sources */,
-				11B3565011CB40864C5CAC98 /* BottomSelectorViewController.swift in Sources */,
 				11B35230F3FE3A8600DBE26A /* BarPageControl.swift in Sources */,
 				11B3520B19D0BC639C7B1678 /* BackupRequiredViewController.swift in Sources */,
 				11B355D8B2BB18A84FBF1AF0 /* CheckboxCell.swift in Sources */,
@@ -8366,7 +8360,6 @@
 				1A56498C73C42F16A2D96A8D /* HighlightedDescriptionView.swift in Sources */,
 				1A564FFA4566A5019E744E8E /* TransactionDataSortMode.swift in Sources */,
 				3AB682A325BADC20002197A5 /* MarketDiscoveryViewModel.swift in Sources */,
-				11B358271EF5AB7FF02931D0 /* BottomSelectorViewController.swift in Sources */,
 				11B35D11809FB5D34D8D6D3F /* BarPageControl.swift in Sources */,
 				11B35034BEFAE3C508122BEB /* BackupRequiredViewController.swift in Sources */,
 				11B3598A03285D980219B256 /* CheckboxCell.swift in Sources */,
@@ -9346,7 +9339,6 @@
 				D02A67CE272A7460009B2C1C /* Tweet.swift in Sources */,
 				1A564AB50152BF82514BAC3C /* HighlightedDescriptionView.swift in Sources */,
 				1A5641C097AAD5FC9D35F9EE /* TransactionDataSortMode.swift in Sources */,
-				11B35AD62D25CB60BC17683E /* BottomSelectorViewController.swift in Sources */,
 				3AB682A225BADC20002197A5 /* MarketDiscoveryViewModel.swift in Sources */,
 				11B3531F75BB6113B49DC088 /* BarPageControl.swift in Sources */,
 				11B350CD8FC4151DF10C983C /* BackupRequiredViewController.swift in Sources */,

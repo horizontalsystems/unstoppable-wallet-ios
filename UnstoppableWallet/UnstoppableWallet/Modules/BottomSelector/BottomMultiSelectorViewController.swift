@@ -41,12 +41,13 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: config.title, subtitle: config.subtitle)
+        titleView.title = config.title
+
         switch config.icon {
         case .local(let name):
-            titleView.bind(image: UIImage(named: name))
+            titleView.image = UIImage(named: name)
         case .remote(let url, let placeholder):
-            titleView.bind(imageUrl: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+            titleView.set(imageUrl: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
         }
 
         titleView.onTapClose = { [weak self] in
@@ -54,6 +55,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         }
 
         var lastView: UIView = titleView
+        var lastMargin: CGFloat = 0
 
         if let description = config.description {
             let descriptionView = HighlightedDescriptionView()
@@ -61,38 +63,28 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             view.addSubview(descriptionView)
             descriptionView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+                maker.top.equalTo(titleView.snp.bottom)
             }
 
             descriptionView.text = description
 
-            let separatorView = UIView()
-
-            view.addSubview(separatorView)
-            separatorView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview()
-                maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
-                maker.height.equalTo(CGFloat.heightOneDp)
-            }
-
-            separatorView.backgroundColor = .themeSteel10
-
-            lastView = separatorView
+            lastView = descriptionView
+            lastMargin = .margin12
         }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(lastView.snp.bottom)
+            maker.top.equalTo(lastView.snp.bottom).offset(lastMargin)
         }
 
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
             maker.height.equalTo(CGFloat.heightButton)
         }
 
@@ -153,7 +145,7 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                 hash: "\(selected)",
                                 height: .heightDoubleLineCell,
                                 bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: ImageComponent) in
                                         if let icon = viewItem.icon {
@@ -197,7 +189,6 @@ extension BottomMultiSelectorViewController {
     struct Config {
         let icon: IconStyle
         let title: String
-        let subtitle: String
         let description: String?
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]

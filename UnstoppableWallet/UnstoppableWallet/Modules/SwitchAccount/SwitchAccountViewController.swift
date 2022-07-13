@@ -31,12 +31,8 @@ class SwitchAccountViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "switch_account.title".localized,
-                subtitle: "switch_account.subtitle".localized,
-                image: UIImage(named: "switch_wallet_24"),
-                tintColor: .themeGray
-        )
+        titleView.title = "switch_account.title".localized
+        titleView.image = UIImage(named: "switch_wallet_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -45,7 +41,7 @@ class SwitchAccountViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom)
-            maker.bottom.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         tableView.contentInsetAdjustmentBehavior = .never
@@ -68,7 +64,7 @@ extension SwitchAccountViewController: SectionsDataSource {
                 id: "item_\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
                         component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)

@@ -85,7 +85,7 @@ extension CoinSelectViewController: SectionsDataSource {
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
                                     cell.topText = viewItem.token.coin.name
                                     cell.bottomText = viewItem.token.coin.code
                                     cell.valueTopText = viewItem.balance
