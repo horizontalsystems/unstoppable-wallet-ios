@@ -11,9 +11,9 @@ class HighlightedDescriptionBaseView: UIView {
         super.init(frame: .zero)
 
         backgroundColor = .themeYellow20
-        borderColor = .themeJacob
+        borderColor = .themeYellowD
         borderWidth = 1
-        cornerRadius = .cornerRadius2x
+        cornerRadius = .cornerRadius12
     }
 
     required public init?(coder aDecoder: NSCoder) {

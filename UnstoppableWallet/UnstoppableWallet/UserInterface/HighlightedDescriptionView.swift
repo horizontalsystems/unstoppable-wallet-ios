@@ -14,7 +14,7 @@ class HighlightedDescriptionView: HighlightedDescriptionBaseView {
 
         label.numberOfLines = 0
         label.font = HighlightedDescriptionBaseView.font
-        label.textColor = .themeOz
+        label.textColor = .themeLeah
     }
 
     required public init?(coder aDecoder: NSCoder) {

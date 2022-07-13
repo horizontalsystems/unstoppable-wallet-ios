@@ -23,7 +23,6 @@ class CoinTokensViewModel {
         let config = BottomMultiSelectorViewController.Config(
                 icon: .remote(url: fullCoin.coin.imageUrl, placeholder: fullCoin.placeholderImageName),
                 title: "coin_platforms.title".localized,
-                subtitle: fullCoin.coin.name,
                 description: "coin_platforms.description".localized,
                 selectedIndexes: request.currentTokens.compactMap { tokens.firstIndex(of: $0) },
                 viewItems: tokens.map { token in

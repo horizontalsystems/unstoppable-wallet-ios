@@ -45,12 +45,8 @@ class MetricChartViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: viewModel.title,
-                subtitle: "market.global.subtitle".localized,
-                image: UIImage(named: "chart_2_24"),
-                tintColor: .themeJacob
-        )
+        titleView.title = viewModel.title
+        titleView.image = UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -78,7 +74,7 @@ class MetricChartViewController: ThemeActionSheetController {
         poweredByLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin12 + CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         poweredByLabel.textAlignment = .center

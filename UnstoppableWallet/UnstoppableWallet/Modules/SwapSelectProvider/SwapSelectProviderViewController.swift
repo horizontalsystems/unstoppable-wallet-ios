@@ -34,14 +34,17 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: "swap.switch_provider.title".localized, subtitle: viewModel.blockchainTitle, image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob))
-        titleView.onTapClose = { [weak self] in self?.dismiss(animated: true) }
+        titleView.title = "swap.switch_provider.title".localized
+        titleView.image = UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob)
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(titleView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         tableView.backgroundColor = .clear
@@ -89,7 +92,7 @@ extension SwapSelectProviderViewController: SectionsDataSource {
                             height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell, _ in
-                                cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                 cell.title = viewItem.title
                                 cell.titleImage = UIImage(named: viewItem.icon)
                                 cell.titleImageTintColor = .themeGray

@@ -54,7 +54,8 @@ class ItemSelectorViewController: ThemeActionSheetController {
             } else {
                 maker.top.equalToSuperview()
             }
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
 //        tableView.allowsSelection = false
@@ -93,7 +94,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                        cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
                         cell.title = viewItem.title
                         cell.titleColor = viewItem.titleColor
                         cell.isSelected = viewItem.selected
@@ -112,7 +113,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
                         bind: { cell in
-                            cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                            cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
 
                             cell.bind(index: 0, block: { (component: MultiTextComponent) in
                                 component.set(style: .m1)
@@ -143,7 +144,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell in
-                        cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                        cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
                             component.set(style: viewItem.titleStyle)
@@ -176,10 +177,11 @@ class ItemSelectorViewController: ThemeActionSheetController {
             return
         }
 
-        titleView.bind(title: viewItem.title, subtitle: viewItem.subtitle, image: viewItem.image, tintColor: viewItem.tintColor)
-        titleView.titleColor = viewItem.titleColor
-        titleView.subtitleColor = viewItem.subtitleColor
-        titleView.onTapClose = { [weak self] in self?.onTapClose() }
+        titleView.title = viewItem.title
+        titleView.image = viewItem.image
+        titleView.onTapClose = { [weak self] in
+            self?.onTapClose()
+        }
     }
 
 }

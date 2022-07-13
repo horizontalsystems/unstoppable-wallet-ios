@@ -75,7 +75,7 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
                 id: "all-row",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                    cell.set(backgroundStyle: .transparent, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.imageView.image = UIImage(named: "circle_coin_24")?.withTintColor(.themeGray)
@@ -104,7 +104,7 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
-                    cell.set(backgroundStyle: .claude, isLast: isLast)
+                    cell.set(backgroundStyle: .transparent, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))

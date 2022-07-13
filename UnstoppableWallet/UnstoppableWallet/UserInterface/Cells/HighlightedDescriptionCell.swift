@@ -4,8 +4,8 @@ import RxRelay
 import RxCocoa
 
 class HighlightedDescriptionCell: UITableViewCell {
-    private static let horizontalMargin: CGFloat = .margin4x
-    private static let verticalMargin: CGFloat = .margin3x
+    private static let horizontalMargin: CGFloat = .margin16
+    private static let verticalMargin: CGFloat = .margin12
 
     private let disposeBag = DisposeBag()
     private let descriptionView = HighlightedDescriptionView()
