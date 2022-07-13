@@ -111,7 +111,10 @@ extension WalletConnectV1ListView {
             return []
         }
 
-        return [section(viewItems: viewItems)]
+        return [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
+            section(viewItems: viewItems)
+        ]
     }
 
     var reloadTableSignal: Signal<()> {

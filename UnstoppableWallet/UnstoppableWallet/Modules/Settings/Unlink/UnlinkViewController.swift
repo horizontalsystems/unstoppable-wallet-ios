@@ -104,7 +104,7 @@ extension UnlinkViewController: SectionsDataSource {
                     cell.bind(
                             text: viewItem.text,
                             checked: viewItem.checked,
-                            backgroundStyle: .lawrence,
+                            backgroundStyle: .bordered,
                             isFirst: isFirst,
                             isLast: isLast
                     )

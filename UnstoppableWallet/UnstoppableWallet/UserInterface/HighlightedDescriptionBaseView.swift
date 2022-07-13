@@ -2,7 +2,7 @@ import UIKit
 
 class HighlightedDescriptionBaseView: UIView {
     internal static let font: UIFont = .subhead2
-    internal static let sidePadding: CGFloat = .margin12
+    internal static let sidePadding: CGFloat = .margin16
     internal static let verticalPadding: CGFloat = .margin12
 
     internal let label = UILabel()

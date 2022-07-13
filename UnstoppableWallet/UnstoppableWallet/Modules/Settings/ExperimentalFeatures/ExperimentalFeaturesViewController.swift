@@ -31,7 +31,7 @@ class ExperimentalFeaturesViewController: ThemeViewController {
         }
 
         tableView.registerCell(forClass: B1Cell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
+        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -48,19 +48,29 @@ class ExperimentalFeaturesViewController: ThemeViewController {
 
 extension ExperimentalFeaturesViewController: SectionsDataSource {
 
+    private func highlightedDescriptionRow(text: String) -> RowProtocol {
+        Row<HighlightedDescriptionCell>(
+                id: "alert",
+                dynamicHeight: { width in
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
+                },
+                bind: { cell, _ in
+                    cell.descriptionText = text
+                }
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings.experimental_features.description".localized
-
-        let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
-
-        return [
+        [
+            Section(
+                    id: "alert",
+                    rows: [
+                        highlightedDescriptionRow(text: "settings.experimental_features.description".localized)
+                    ]
+            ),
             Section(
                     id: "bitcoin_hodling_section",
-                    headerState: headerState,
+                    headerState: .margin(height: .margin12),
                     rows: [
                         Row<B1Cell>(
                                 id: "bitcoin_hodling",

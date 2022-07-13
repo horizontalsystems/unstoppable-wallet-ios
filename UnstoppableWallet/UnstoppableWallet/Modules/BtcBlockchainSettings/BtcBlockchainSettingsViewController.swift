@@ -175,6 +175,7 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
             ),
             Section(
                     id: "restore-mode",
+                    headerState: .margin(height: .margin12),
                     footerState: footer(text: "btc_blockchain_settings.restore_source.description".localized),
                     rows: [
                         tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.restore_source".localized) { [weak self] in

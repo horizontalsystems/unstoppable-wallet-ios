@@ -65,7 +65,7 @@ class SwapConfirmationAmountCell: BaseThemeCell {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     func bind(payTitle: String?, payValue: String?, getTitle: String?, getValue: String?) {

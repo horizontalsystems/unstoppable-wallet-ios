@@ -130,10 +130,11 @@ extension WatchAddressViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             Section(
                     id: "name",
                     headerState: header(text: "watch_address.name".localized),
-                    footerState: .margin(height: .margin32),
+                    footerState: .margin(height: .margin24),
                     rows: [
                         StaticRow(
                                 cell: nameCell,
@@ -145,6 +146,7 @@ extension WatchAddressViewController: SectionsDataSource {
             Section(
                     id: "address",
                     headerState: header(text: "watch_address.address".localized),
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: addressCell,

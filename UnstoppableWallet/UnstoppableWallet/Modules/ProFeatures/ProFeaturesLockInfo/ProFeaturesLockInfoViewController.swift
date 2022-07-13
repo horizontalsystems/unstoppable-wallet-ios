@@ -99,7 +99,7 @@ extension ProFeaturesLockInfoViewController: SectionsDataSource {
                                 id: "item_\(index)",
                                 height: .heightCell48,
                                 bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: TextComponent) in
                                         component.set(style: .d1)

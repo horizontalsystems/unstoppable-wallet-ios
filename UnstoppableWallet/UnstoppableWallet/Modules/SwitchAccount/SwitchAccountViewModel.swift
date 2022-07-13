@@ -5,7 +5,8 @@ import RxCocoa
 class SwitchAccountViewModel {
     private let service: SwitchAccountService
 
-    private(set) var viewItems = [ViewItem]()
+    private(set) var regularViewItems = [ViewItem]()
+    private(set) var watchViewItems = [ViewItem]()
     private let finishRelay = PublishRelay<()>()
 
     init(service: SwitchAccountService) {
@@ -13,10 +14,8 @@ class SwitchAccountViewModel {
 
         let sortedItems = service.items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
 
-        let regularViewItems = sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) }
-        let watchViewItems = sortedItems.filter { $0.account.watchAccount }.map { viewItem(item: $0) }
-
-        viewItems = regularViewItems + watchViewItems
+        regularViewItems = sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) }
+        watchViewItems = sortedItems.filter { $0.account.watchAccount }.map { viewItem(item: $0) }
     }
 
     private func viewItem(item: SwitchAccountService.Item) -> ViewItem {
@@ -24,8 +23,7 @@ class SwitchAccountViewModel {
                 accountId: item.account.id,
                 title: item.account.name,
                 subtitle: item.account.type.description,
-                selected: item.isActive,
-                watchAccount: item.account.watchAccount
+                selected: item.isActive
         )
     }
 
@@ -51,7 +49,6 @@ extension SwitchAccountViewModel {
         let title: String
         let subtitle: String
         let selected: Bool
-        let watchAccount: Bool
     }
 
 }

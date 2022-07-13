@@ -99,7 +99,7 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
             Section(
                     id: "popular",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
                     rows: rows(viewItems: viewModel.popularViewItems)
             ),
             Section(

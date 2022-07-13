@@ -266,6 +266,7 @@ extension AppearanceViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             themeModeSection(viewItems: themeModeViewItems),
             launchScreenSection(viewItems: launchScreenViewItems),
             appIconSection(viewItems: appIconViewItems),

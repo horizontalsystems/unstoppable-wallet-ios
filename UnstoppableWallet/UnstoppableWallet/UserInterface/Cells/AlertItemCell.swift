@@ -13,8 +13,8 @@ class AlertItemCell: BaseThemeCell {
         addSubview(button)
         button.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(topSeparatorView.snp.bottom)
-            maker.bottom.equalTo(bottomSeparatorView.snp.top).priority(.high)
+            maker.top.equalToSuperview()
+            maker.bottom.equalToSuperview().priority(.high)
         }
 
         button.titleLabel?.font = .body

@@ -244,7 +244,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
         let passcodeSection = Section(
                 id: "passcode",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: passcodeRows(viewItem: pinViewItem)
         )
         sections.append(passcodeSection)
