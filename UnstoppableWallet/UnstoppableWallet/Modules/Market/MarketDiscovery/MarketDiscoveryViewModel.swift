@@ -16,6 +16,9 @@ class MarketDiscoveryViewModel {
     private let discoveryLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let discoveryErrorRelay = BehaviorRelay<String?>(value: nil)
     private let searchViewItemsRelay = BehaviorRelay<[SearchViewItem]?>(value: nil)
+    private let favoritedRelay = PublishRelay<()>()
+    private let unfavoritedRelay = PublishRelay<()>()
+    private let failRelay = PublishRelay<()>()
 
     init(categoryService: MarketDiscoveryCategoryService, filterService: MarketDiscoveryFilterService) {
         self.categoryService = categoryService
@@ -23,6 +26,7 @@ class MarketDiscoveryViewModel {
 
         subscribe(disposeBag, categoryService.stateObservable) { [weak self] in self?.sync(categoryState: $0) }
         subscribe(disposeBag, filterService.stateObservable) { [weak self] in self?.sync(filterState: $0) }
+        subscribe(disposeBag, filterService.successObservable) { [weak self] in self?.sync(successState: $0) }
 
         serialSync()
     }
@@ -30,6 +34,14 @@ class MarketDiscoveryViewModel {
     private func sync(categoryState: MarketDiscoveryCategoryService.State? = nil, filterState: MarketDiscoveryFilterService.State? = nil) {
         queue.async { [weak self] in
             self?.serialSync(categoryState: categoryState, filterState: filterState)
+        }
+    }
+
+    private func sync(successState: MarketDiscoveryFilterService.FavoriteState) {
+        switch successState {
+        case .favorited: favoritedRelay.accept(())
+        case .unfavorited: unfavoritedRelay.accept(())
+        case .fail: failRelay.accept(())
         }
     }
 
@@ -118,6 +130,18 @@ extension MarketDiscoveryViewModel {
 
     var searchViewItemsDriver: Driver<[SearchViewItem]?> {
         searchViewItemsRelay.asDriver()
+    }
+
+    var favoritedDriver: Driver<()> {
+        favoritedRelay.asDriver(onErrorJustReturn: ())
+    }
+
+    var unfavoritedDriver: Driver<()> {
+        unfavoritedRelay.asDriver(onErrorJustReturn: ())
+    }
+
+    var failDriver: Driver<()> {
+        failRelay.asDriver(onErrorJustReturn: ())
     }
 
     func refresh() {

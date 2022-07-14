@@ -107,6 +107,10 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         }
         subscribe(disposeBag, viewModel.discoveryErrorDriver) { [weak self] in self?.errorView.isHidden = $0 == nil }
 
+        subscribe(disposeBag, viewModel.favoritedDriver) { HudHelper.instance.show(banner: .addedToWatchlist) }
+        subscribe(disposeBag, viewModel.unfavoritedDriver) { HudHelper.instance.show(banner: .removedFromWatchlist) }
+        subscribe(disposeBag, viewModel.failDriver) { HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized)) }
+
         isLoaded = true
     }
 

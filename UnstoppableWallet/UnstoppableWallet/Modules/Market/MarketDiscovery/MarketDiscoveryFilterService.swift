@@ -15,6 +15,8 @@ class MarketDiscoveryFilterService {
         }
     }
 
+    private let successRelay = PublishRelay<FavoriteState>()
+
     init(marketKit: MarketKit.Kit, favoritesManager: FavoritesManager) {
         self.marketKit = marketKit
         self.favoritesManager = favoritesManager
@@ -34,6 +36,10 @@ extension MarketDiscoveryFilterService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+    var successObservable: Observable<FavoriteState> {
+        successRelay.asObservable()
     }
 
     func set(filter: String) {
@@ -58,18 +64,22 @@ extension MarketDiscoveryFilterService {
 
     func favorite(index: Int) {
         guard let coinUid = coinUid(index: index) else {
+            successRelay.accept(.fail)
             return
         }
 
         favoritesManager.add(coinUid: coinUid)
+        successRelay.accept(.favorited)
     }
 
     func unfavorite(index: Int) {
         guard let coinUid = coinUid(index: index) else {
+            successRelay.accept(.fail)
             return
         }
 
         favoritesManager.remove(coinUid: coinUid)
+        successRelay.accept(.unfavorited)
     }
 
 }
@@ -79,6 +89,12 @@ extension MarketDiscoveryFilterService {
     enum State {
         case idle
         case searchResults(fullCoins: [FullCoin])
+    }
+
+    enum FavoriteState {
+        case favorited
+        case unfavorited
+        case fail
     }
 
 }
