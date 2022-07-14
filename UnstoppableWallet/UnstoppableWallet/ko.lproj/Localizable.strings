@@ -121,9 +121,8 @@
 "show_key.private_key.description" = "이 키는 모든 EVM 호환 블록체인용입니다.";
 
 "private_key_copying.title" = "경고";
-"private_key_copying.subtitle" = "개인 키 복사의 위험";
 "private_key_copying.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
-"private_key_copying.copy_button" = "위험을 감수하겠습니다";
+"private_key_copying.i_will_risk_it" = "I will risk it";
 
 // Backup Key
 
@@ -184,7 +183,7 @@
 //Account switcher
 
 "switch_account.title" = "지갑 변경";
-"switch_account.subtitle" = "빠른 전환을 위한 지갑 선택";
+
 //Release notes
 
 "release_notes.title" = "새로운 기능";
@@ -486,7 +485,6 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -631,7 +629,6 @@
 "pro_features.lock_info.go_to_mint" = "추후 공개";
 
 "pro_features.lock_info.title" = "Unstoppable 패스";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "이 데이터를 활성화하려면 잔액에 Unstoppable 패스 NFT가 있어야 합니다\n\n또한 아래 데이터에 액세스할 수 있습니다:";
 "pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
@@ -745,8 +742,7 @@
 "settings.base_currency.other" = "기타";
 "settings.base_currency.disclaimer" = "면책";
 "settings.base_currency.disclaimer.description" = "제3자 서비스 Coingecko.com\n\nUnstoppable 지갑 앱에서 제공하는 환율 데이터는 이러한 가치가 항상 올바르고 시장 데이터와 일치함을 보장하지는 않습니다. %@ 이외의 기준 통화를 선택할 경우 불일치가 발생할 가능성이 더 높습니다.";
-"settings.base_currency.disclaimer.i_understand" = "이해합니다";
-
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
