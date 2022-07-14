@@ -123,9 +123,8 @@
 "show_key.private_key.description" = "Этот ключ для всех EVM-совместимых блокчейнов.";
 
 "private_key_copying.title" = "Внимание";
-"private_key_copying.subtitle" = "Риск копирования Секретного ключа";
 "private_key_copying.description" = "В целях безопасности мы не рекомендуем копировать секретный ключ.";
-"private_key_copying.copy_button" = "Я рискну";
+"private_key_copying.i_will_risk_it" = "I will risk it";
 
 // Backup Key
 
@@ -186,7 +185,7 @@
 //Account switcher
 
 "switch_account.title" = "Сменить Кошелек";
-"switch_account.subtitle" = "Выберите кошелек для быстрого переключения";
+
 //Release notes
 
 "release_notes.title" = "Что Нового";
@@ -488,7 +487,6 @@
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
-"market.global.subtitle" = "График";
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -633,7 +631,6 @@
 "pro_features.lock_info.go_to_mint" = "Скоро в доступе";
 
 "pro_features.lock_info.title" = "Кодовая фраза для Unstoppable";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "Для активации этих данных на балансе вашего кошелька Unstoppable должны быть токены NFT \n\n. Вы также получите доступ к данным ниже:";
 "pro_features.lock_info.coin_details.volume" = "Объем торгов DEX";
 "pro_features.lock_info.coin_details.liquidity" = "Ликвидность DEX";
@@ -747,8 +744,7 @@
 "settings.base_currency.other" = "Другое";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
 "settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение Unstoppable Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
-"settings.base_currency.disclaimer.i_understand" = "Я Понимаю";
-
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
