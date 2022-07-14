@@ -26,7 +26,7 @@ class MarketDiscoveryViewModel {
 
         subscribe(disposeBag, categoryService.stateObservable) { [weak self] in self?.sync(categoryState: $0) }
         subscribe(disposeBag, filterService.stateObservable) { [weak self] in self?.sync(filterState: $0) }
-        subscribe(disposeBag, filterService.successObservable) { [weak self] in self?.sync(successState: $0) }
+        subscribe(disposeBag, filterService.resultObservable) { [weak self] in self?.sync(result: $0) }
 
         serialSync()
     }
@@ -37,8 +37,8 @@ class MarketDiscoveryViewModel {
         }
     }
 
-    private func sync(successState: MarketDiscoveryFilterService.FavoriteState) {
-        switch successState {
+    private func sync(result: MarketDiscoveryFilterService.Result) {
+        switch result {
         case .favorited: favoritedRelay.accept(())
         case .unfavorited: unfavoritedRelay.accept(())
         case .fail: failRelay.accept(())
