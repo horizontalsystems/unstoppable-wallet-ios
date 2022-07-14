@@ -44,7 +44,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: CoinMajorHolderCell.self)
 
         view.addSubview(spinner)
@@ -95,18 +94,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
 extension CoinMajorHoldersViewController: SectionsDataSource {
 
-    private var headerRow: RowProtocol {
-        Row<BCell>(
-                id: "header",
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.selectionStyle = .none
-                    cell.title = "coin_page.major_holders.top_ethereum_wallets".localized
-                }
-        )
-    }
-
     private func row(viewItem: CoinMajorHoldersViewModel.ViewItem, isLast: Bool) -> RowProtocol {
         Row<CoinMajorHolderCell>(
                 id: viewItem.order,
@@ -144,7 +131,8 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
             Section(
                     id: "holders",
                     footerState: .margin(height: .margin32),
-                    rows: [headerRow] + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
+                    rows: [tableView.subtitleRow(text: "coin_page.major_holders.top_ethereum_wallets".localized)]
+                            + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
             )
         ]
     }

@@ -50,7 +50,6 @@ class BackupKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -160,14 +159,28 @@ extension BackupKeyViewController: SectionsDataSource {
                     id: "passphrase",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<C9Cell>(
+                        CellBuilder.row(
+                                elements: [.image20, .text, .secondaryButton],
+                                tableView: tableView,
                                 id: "passphrase",
                                 height: .heightCell48,
-                                bind: { cell, _ in
+                                bind: { cell in
                                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.title = "backup_key.passphrase".localized
-                                    cell.titleImage = UIImage(named: "key_phrase_20")
-                                    cell.viewItem = .init(type: .raw, value: { passphrase })
+
+                                    cell.bind(index: 0) { (component: ImageComponent) in
+                                        component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
+                                    }
+                                    cell.bind(index: 1) { (component: TextComponent) in
+                                        component.set(style: .d1)
+                                        component.text = "backup_key.passphrase".localized
+                                    }
+                                    cell.bind(index: 2) { (component: SecondaryButtonComponent) in
+                                        component.button.set(style: .default)
+                                        component.button.setTitle(passphrase, for: .normal)
+                                        component.onTap = {
+                                            CopyHelper.copyAndNotify(value: passphrase)
+                                        }
+                                    }
                                 }
                         )
                     ]

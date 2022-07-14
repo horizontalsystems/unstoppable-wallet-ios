@@ -12,8 +12,8 @@ class CreateAccountViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let mnemonicCell = A5Cell()
-    private let passphraseToggleCell = A11Cell()
+    private let mnemonicCell = BaseSelectableThemeCell()
+    private let passphraseToggleCell = BaseSelectableThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
     private let passphraseConfirmationCell = TextFieldCell()
@@ -51,13 +51,35 @@ class CreateAccountViewController: KeyboardAwareViewController {
         tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        mnemonicCell.titleImage = UIImage(named: "key_20")
-        mnemonicCell.title = "create_wallet.mnemonic".localized
+        CellBuilder.build(cell: mnemonicCell, elements: [.image20, .text, .text, .image20])
+        mnemonicCell.bind(index: 0) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_20")
+        }
+        mnemonicCell.bind(index: 1) { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = "create_wallet.mnemonic".localized
+        }
+        mnemonicCell.bind(index: 2) { (component: TextComponent) in
+            component.set(style: .c2)
+        }
+        mnemonicCell.bind(index: 3) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "arrow_small_down_20")
+        }
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        passphraseToggleCell.titleImage = UIImage(named: "key_phrase_20")
-        passphraseToggleCell.title = "create_wallet.passphrase".localized
-        passphraseToggleCell.onToggle = { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
+        CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
+        passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_phrase_20")
+        }
+        passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = "create_wallet.passphrase".localized
+        }
+        passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in
+            component.onSwitch = { [weak self] in
+                self?.viewModel.onTogglePassphrase(isOn: $0)
+            }
+        }
 
         passphraseCell.inputPlaceholder = "create_wallet.input.passphrase".localized
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
@@ -71,7 +93,11 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
         passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        subscribe(disposeBag, viewModel.kindDriver) { [weak self] in self?.mnemonicCell.value = $0 }
+        subscribe(disposeBag, viewModel.kindDriver) { [weak self] kind in
+            self?.mnemonicCell.bind(index: 2) { (component: TextComponent) in
+                component.text = kind
+            }
+        }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)

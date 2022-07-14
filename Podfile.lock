@@ -594,7 +594,7 @@ CHECKOUT OPTIONS:
     :commit: 69ce38519921b392862f46800aebe2003e0127fe
     :git: https://github.com/horizontalsystems/gui-kit/
   ComponentKit.swift:
-    :commit: 9c0233c4fe69f2ba01352b71eb6310fa558360ac
+    :commit: 68691f4dac4a25da15d4b2b17de5bb98ee90dbd3
     :git: https://github.com/horizontalsystems/component-kit-ios/
   CurrencyKit.swift:
     :commit: 9c0233c4fe69f2ba01352b71eb6310fa558360ac

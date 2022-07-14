@@ -55,17 +55,6 @@ extension CoinOverviewViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var coinViewItem: CoinViewItem {
-        let fullCoin = service.fullCoin
-
-        return CoinViewItem(
-                name: fullCoin.coin.name,
-                marketCapRank: fullCoin.coin.marketCapRank.map { "#\($0)" },
-                imageUrl: fullCoin.coin.imageUrl,
-                imagePlaceholderName: fullCoin.placeholderImageName
-        )
-    }
-
     func onLoad() {
         service.sync()
     }
@@ -86,6 +75,8 @@ extension CoinOverviewViewModel {
     }
 
     struct ViewItem {
+        let coinViewItem: CoinViewItem
+
         let marketCapRank: String?
         let marketCap: String?
         let totalSupply: String?
