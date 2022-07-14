@@ -43,7 +43,7 @@ class MarketDiscoveryCell: UICollectionViewCell {
 
         nameLabel.numberOfLines = 0
         nameLabel.font = .subhead1
-        nameLabel.textColor = .themeOz
+        nameLabel.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {

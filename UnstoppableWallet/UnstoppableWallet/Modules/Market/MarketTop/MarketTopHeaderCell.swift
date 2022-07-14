@@ -20,7 +20,7 @@ class MarketTopHeaderCell: UITableViewCell {
         }
 
         nameLabel.font = .headline1
-        nameLabel.textColor = .themeOz
+        nameLabel.textColor = .themeLeah
         nameLabel.text = "market.top.title".localized
 
         contentView.addSubview(descriptionLabel)

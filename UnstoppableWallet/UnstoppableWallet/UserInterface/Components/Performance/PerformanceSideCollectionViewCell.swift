@@ -28,7 +28,7 @@ class PerformanceSideCollectionViewCell: BasePerformanceCollectionViewCell {
 
     private func color(viewItem: CoinOverviewViewModel.PerformanceViewItem) -> UIColor? {
         switch viewItem {
-        case .title: return .themeOz
+        case .title: return .themeLeah
         case .subtitle: return .themeBran
         case .content: return .themeGray
         case .value: return nil

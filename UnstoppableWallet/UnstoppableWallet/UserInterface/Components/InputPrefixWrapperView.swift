@@ -18,7 +18,7 @@ class InputPrefixWrapperView: UIView, ISizeAwareView {
         }
 
         label.font = .body
-        label.textColor = .themeOz
+        label.textColor = .themeLeah
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 

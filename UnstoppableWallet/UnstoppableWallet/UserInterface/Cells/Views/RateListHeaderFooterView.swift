@@ -34,7 +34,7 @@ class RateListHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         titleLabel.font = .headline2
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
 
         addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in

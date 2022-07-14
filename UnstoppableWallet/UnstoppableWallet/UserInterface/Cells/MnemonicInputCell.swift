@@ -8,7 +8,7 @@ class MnemonicInputCell: UITableViewCell {
     private let horizontalMargin: CGFloat = .margin16
     private let textViewInset: CGFloat = .margin12
     private let textViewFont: UIFont = .body
-    private let textViewTextColor: UIColor = .themeOz
+    private let textViewTextColor: UIColor = .themeLeah
 
     private let borderView = UIView()
     private let textView = UITextView()

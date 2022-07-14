@@ -20,7 +20,7 @@ class MarketCategoryHeaderCell: UITableViewCell {
         }
 
         nameLabel.font = .headline1
-        nameLabel.textColor = .themeOz
+        nameLabel.textColor = .themeLeah
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { maker in

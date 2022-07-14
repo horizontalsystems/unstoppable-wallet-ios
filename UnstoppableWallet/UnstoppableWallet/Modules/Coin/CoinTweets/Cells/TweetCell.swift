@@ -53,7 +53,7 @@ class TweetCell: BaseSelectableThemeCell {
         }
 
         titleLabel.font = .body
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
 
         headerView.addSubview(subTitleLabel)
         subTitleLabel.snp.makeConstraints { maker in

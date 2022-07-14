@@ -32,7 +32,7 @@ class ThemeSearchViewController: KeyboardAwareViewController {
         super.viewWillLayoutSubviews()
 
         if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textField.textColor = .themeOz
+            textField.textColor = .themeLeah
 
             if let leftView = textField.leftView as? UIImageView {
                 leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)

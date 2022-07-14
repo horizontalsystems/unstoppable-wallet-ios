@@ -455,7 +455,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio)
                         cell.title = "coin_page.tvl_rank".localized
                         cell.value = tvlRank
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openTvlRank()
@@ -507,7 +507,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested && !hasReports)
                         cell.title = "coin_page.treasuries".localized
                         cell.value = treasuries
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openTreasuries()
@@ -525,7 +525,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: !hasReports)
                         cell.title = "coin_page.funds_invested".localized
                         cell.value = fundsInvested
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openFundsInvested()
@@ -543,7 +543,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries && !hasFundsInvested, isLast: true)
                         cell.title = "coin_page.reports".localized
                         cell.value = reportsCount
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openReports()
