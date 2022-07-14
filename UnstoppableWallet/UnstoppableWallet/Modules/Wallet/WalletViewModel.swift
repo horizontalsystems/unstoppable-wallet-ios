@@ -16,7 +16,7 @@ class WalletViewModel {
     private let openReceiveRelay = PublishRelay<Wallet>()
     private let openBackupRequiredRelay = PublishRelay<Wallet>()
     private let openCoinPageRelay = PublishRelay<Coin>()
-    private let showErrorRelay = PublishRelay<String>()
+    private let noConnectionErrorRelay = PublishRelay<()>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<()>()
     private let scrollToTopRelay = PublishRelay<()>()
@@ -146,8 +146,8 @@ extension WalletViewModel {
         openCoinPageRelay.asSignal()
     }
 
-    var showErrorSignal: Signal<String> {
-        showErrorRelay.asSignal()
+    var noConnectionErrorSignal: Signal<()> {
+        noConnectionErrorRelay.asSignal()
     }
 
     var openSyncErrorSignal: Signal<(Wallet, Error)> {
@@ -234,7 +234,7 @@ extension WalletViewModel {
 
     func onTapFailedIcon(wallet: Wallet) {
         guard service.isReachable else {
-            showErrorRelay.accept(AppError.noConnection.smartDescription)
+            noConnectionErrorRelay.accept(())
             return
         }
 
