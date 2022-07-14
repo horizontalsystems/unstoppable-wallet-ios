@@ -24,7 +24,7 @@ class SwapConfirmationAmountCell: BaseThemeCell {
         }
 
         payTitleLabel.font = .headline2
-        payTitleLabel.textColor = .themeOz
+        payTitleLabel.textColor = .themeLeah
 
         wrapperView.addSubview(payValueLabel)
         payValueLabel.snp.makeConstraints { maker in
@@ -34,7 +34,7 @@ class SwapConfirmationAmountCell: BaseThemeCell {
         }
 
         payValueLabel.font = .subhead1
-        payValueLabel.textColor = .themeOz
+        payValueLabel.textColor = .themeLeah
         payValueLabel.textAlignment = .right
 
         payTitleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)

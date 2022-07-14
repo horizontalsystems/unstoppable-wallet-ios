@@ -42,7 +42,7 @@ class BalanceTopView: UIView {
         }
 
         nameLabel.font = .headline2
-        nameLabel.textColor = .themeOz
+        nameLabel.textColor = .themeLeah
         nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 

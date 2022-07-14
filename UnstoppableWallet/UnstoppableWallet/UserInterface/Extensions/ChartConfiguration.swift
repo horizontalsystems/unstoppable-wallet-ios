@@ -63,7 +63,7 @@ extension ChartConfiguration {
 
         trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
-        pressedGradient = [UIColor](repeatElement(.themeOz, count: 3))
+        pressedGradient = [UIColor](repeatElement(.themeLeah, count: 3))
         neutralGradient = [UIColor](repeatElement(.themeGray50, count: 3))
         gradientLocations = [0, 0.05, 1]
         gradientAlphas = [0, 0, 0.3]

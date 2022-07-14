@@ -15,7 +15,7 @@ class ChartPointInfoView: UIView {
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        leftView.titleColor = .themeOz
+        leftView.titleColor = .themeLeah
         leftView.subtitleColor = .themeGray
 
         addSubview(rightView)

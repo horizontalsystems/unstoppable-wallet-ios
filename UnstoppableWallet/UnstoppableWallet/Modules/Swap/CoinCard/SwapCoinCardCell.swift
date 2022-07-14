@@ -58,7 +58,7 @@ class SwapCoinCardCell: UITableViewCell {
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         titleLabel.font = .body
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
         titleLabel.text = title
 
         cardView.contentView.addSubview(paddingView)

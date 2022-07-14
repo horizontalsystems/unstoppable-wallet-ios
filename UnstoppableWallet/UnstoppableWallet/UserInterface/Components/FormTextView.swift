@@ -45,7 +45,7 @@ class FormTextView: UIView, IFormTextView {
         textView.tintColor = .themeInputFieldTintColor
         textView.keyboardAppearance = .themeDefault
         textView.autocapitalizationType = .none
-        textView.textColor = .themeOz
+        textView.textColor = .themeLeah
         textView.font = textViewFont
         textView.textContainer.lineFragmentPadding = 0
         textView.backgroundColor = .clear

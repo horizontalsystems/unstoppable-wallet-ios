@@ -33,7 +33,7 @@ class SendAvailableBalanceCell: UITableViewCell {
         contentView.addSubview(availableAmountValueLabel)
         availableAmountValueLabel.font = .subhead1
 
-        availableAmountValueLabel.textColor = .themeOz
+        availableAmountValueLabel.textColor = .themeLeah
         availableAmountValueLabel.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)

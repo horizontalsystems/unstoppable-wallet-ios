@@ -14,7 +14,7 @@ class MarketDiscoveryTitleCell: UICollectionViewCell {
         }
 
         label.font = .body
-        label.textColor = .themeOz
+        label.textColor = .themeLeah
         label.text = "market_discovery.browse_categories".localized
 
         contentView.addSubview(topSeparatorView)

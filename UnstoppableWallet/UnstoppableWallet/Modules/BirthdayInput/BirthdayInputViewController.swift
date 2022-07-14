@@ -145,7 +145,7 @@ class BirthdayInputViewController: ThemeActionSheetController {
         checkboxView.checked = !checkboxView.checked
 
         heightInputView.isEnabled = !checkboxView.checked
-        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeOz
+        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeLeah
     }
 
     @objc private func onTapDoneButton() {

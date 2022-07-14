@@ -5,7 +5,7 @@ class ChartDoubleLineView: UIView {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
-    init(titleColor: UIColor = .themeOz, titleFont: UIFont = .captionSB, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .caption, textAlignment: NSTextAlignment = .left) {
+    init(titleColor: UIColor = .themeLeah, titleFont: UIFont = .captionSB, subtitleColor: UIColor = .themeGray, subtitleFont: UIFont = .caption, textAlignment: NSTextAlignment = .left) {
         super.init(frame: .zero)
 
         addSubview(titleLabel)

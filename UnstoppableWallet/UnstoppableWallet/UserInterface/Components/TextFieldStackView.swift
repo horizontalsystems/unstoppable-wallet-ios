@@ -20,7 +20,7 @@ class TextFieldStackView: UIView {
         textField.keyboardAppearance = .themeDefault
         textField.tintColor = .themeInputFieldTintColor
         textField.font = .body
-        textField.textColor = .themeOz
+        textField.textColor = .themeLeah
         textField.clearButtonMode = .whileEditing
 
         textField.delegate = self

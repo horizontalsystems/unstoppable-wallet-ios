@@ -24,7 +24,7 @@ class FormField: UIView {
 
         label.lineBreakMode = .byTruncatingMiddle
         label.font = .body
-        label.textColor = .themeOz
+        label.textColor = .themeLeah
 
         addSubview(copyButton)
         copyButton.snp.makeConstraints { maker in

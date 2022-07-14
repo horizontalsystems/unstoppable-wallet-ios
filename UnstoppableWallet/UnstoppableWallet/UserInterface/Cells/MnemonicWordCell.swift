@@ -24,7 +24,7 @@ class MnemonicWordCell: UICollectionViewCell {
         }
 
         wordLabel.font = .headline2
-        wordLabel.textColor = .themeOz
+        wordLabel.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {

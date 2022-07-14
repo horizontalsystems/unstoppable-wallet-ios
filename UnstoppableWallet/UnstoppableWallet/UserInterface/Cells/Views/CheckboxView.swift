@@ -47,7 +47,7 @@ class CheckboxView: UIView {
 
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = CheckboxView.textFont
-        descriptionLabel.textColor = .themeOz
+        descriptionLabel.textColor = .themeLeah
     }
 
     required init?(coder: NSCoder) {
