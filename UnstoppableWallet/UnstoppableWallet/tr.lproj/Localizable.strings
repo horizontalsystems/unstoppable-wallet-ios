@@ -124,9 +124,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "show_key.private_key.description" = "Bu anahtar, tüm EVM uyumlu blok zincirleri içindir.";
 
 "private_key_copying.title" = "Uyarı";
-"private_key_copying.subtitle" = "Özel Anahtar kopyalama riski";
 "private_key_copying.description" = "Bir güvenlik önlemi olarak, özel anahtar için kopyalama eylemi kullanılmamasını öneririz.";
-"private_key_copying.copy_button" = "Riski alıyorum";
+"private_key_copying.i_will_risk_it" = "I will risk it";
 
 // Backup Key
 
@@ -187,7 +186,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 //Account switcher
 
 "switch_account.title" = "Cüzdan Değiştir";
-"switch_account.subtitle" = "Hızlı değiştirme için cüzdan seçin";
+
 //Release notes
 
 "release_notes.title" = "Yenilikler";
@@ -489,7 +488,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -634,7 +632,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "pro_features.lock_info.go_to_mint" = "Çok Yakında";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "Bu verileri etkinleştirmek için bakiyenizde Unstoppable Pass NFT'si olması gerekir\n\nAyrıca aşağıdaki verilere de erişebilirsiniz:";
 "pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
@@ -748,8 +745,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.base_currency.other" = "Diğer";
 "settings.base_currency.disclaimer" = "Uyarı";
 "settings.base_currency.disclaimer.description" = "Üçüncü taraf bir hizmet olan Coingecko.com tarafından sağlanan döviz kuru verileri.\n\nDurdurulamaz cüzdan uygulaması, bu değerlerin her zaman doğru olduğunu ve piyasa verileriyle eşleştiğini garanti etmez. %@ Dışında herhangi bir temel para birimi seçerseniz tutarsızlık olasılığı daha yüksektir.";
-"settings.base_currency.disclaimer.i_understand" = "Anlıyorum";
-
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
