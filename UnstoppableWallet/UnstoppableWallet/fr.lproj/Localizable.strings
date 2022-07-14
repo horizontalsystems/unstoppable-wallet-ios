@@ -121,9 +121,8 @@
 "show_key.private_key.description" = "Cette clé est pour toutes les blockchains compatibles EVM.";
 
 "private_key_copying.title" = "Attention";
-"private_key_copying.subtitle" = "Risque de copie de clé privée";
 "private_key_copying.description" = "Pour des raisons de sécurité, nous recommandons de ne pas utiliser l'action de copie sur la clé privée.";
-"private_key_copying.copy_button" = "Je prends le risque";
+"private_key_copying.i_will_risk_it" = "I will risk it";
 
 // Backup Key
 
@@ -184,7 +183,7 @@
 //Account switcher
 
 "switch_account.title" = "Changer de portefeuille";
-"switch_account.subtitle" = "Sélectionnez le portefeuille pour un changement rapide";
+
 //Release notes
 
 "release_notes.title" = "Nouveautés";
@@ -486,7 +485,6 @@
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
-"market.global.subtitle" = "Graphique";
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -631,7 +629,6 @@
 "pro_features.lock_info.go_to_mint" = "Bientôt disponible";
 
 "pro_features.lock_info.title" = "Passe Unstoppable";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Passe Unstoppable NFT sur votre balance.\n\nVous aurez également accès aux données ci-dessous :";
 "pro_features.lock_info.coin_details.volume" = "Volume DEX";
 "pro_features.lock_info.coin_details.liquidity" = "Liquidité DEX";
@@ -745,8 +742,7 @@
 "settings.base_currency.other" = "Autre";
 "settings.base_currency.disclaimer" = "Avertissement";
 "settings.base_currency.disclaimer.description" = "Les données relatives aux taux de change fournies par un service tiers Coingecko.com\n\nUnstoppable wallet app ne garantit pas que ces valeurs sont toujours correctes et correspondent aux données du marché. Le risque de divergence est plus élevé si vous sélectionnez une devise de base autre que %@.";
-"settings.base_currency.disclaimer.i_understand" = "J’ai Compris";
-
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
