@@ -159,9 +159,17 @@ extension CoinOverviewViewItemFactory {
     func viewItem(item: CoinOverviewService.Item, currency: Currency, fullCoin: FullCoin) -> CoinOverviewViewModel.ViewItem {
         let info = item.info
         let coinCode = fullCoin.coin.code
+        let marketCapRank = info.marketCapRank.map { "#\($0)" }
 
         return CoinOverviewViewModel.ViewItem(
-                marketCapRank: info.marketCapRank.map { "#\($0)" },
+                coinViewItem: CoinOverviewViewModel.CoinViewItem(
+                        name: fullCoin.coin.name,
+                        marketCapRank: marketCapRank,
+                        imageUrl: fullCoin.coin.imageUrl,
+                        imagePlaceholderName: fullCoin.placeholderImageName
+                ),
+
+                marketCapRank: marketCapRank,
                 marketCap: info.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 totalSupply: roundedFormat(coinCode: coinCode, value: info.totalSupply),
                 circulatingSupply: roundedFormat(coinCode: coinCode, value: info.circulatingSupply),

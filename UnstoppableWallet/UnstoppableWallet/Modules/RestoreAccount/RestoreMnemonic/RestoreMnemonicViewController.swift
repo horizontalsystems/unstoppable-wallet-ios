@@ -16,7 +16,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
 
-    private let passphraseToggleCell = A11Cell()
+    private let passphraseToggleCell = BaseSelectableThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
 
@@ -65,9 +65,19 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         mnemonicCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        passphraseToggleCell.titleImage = UIImage(named: "key_phrase_20")
-        passphraseToggleCell.title = "restore.passphrase".localized
-        passphraseToggleCell.onToggle = { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
+        CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
+        passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_phrase_20")
+        }
+        passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
+            component.set(style: .b2)
+            component.text = "restore.passphrase".localized
+        }
+        passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in
+            component.onSwitch = { [weak self] in
+                self?.viewModel.onTogglePassphrase(isOn: $0)
+            }
+        }
 
         passphraseCell.inputPlaceholder = "restore.input.passphrase".localized
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }

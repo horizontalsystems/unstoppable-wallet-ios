@@ -58,7 +58,6 @@ class ShowKeyViewController: ThemeViewController {
         tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
-        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -267,14 +266,28 @@ extension ShowKeyViewController: SectionsDataSource {
             rows.append(phraseRow)
 
             if let passphrase = viewModel.passphrase {
-                let passphraseRow = Row<C9Cell>(
+                let passphraseRow = CellBuilder.row(
+                        elements: [.image20, .text, .secondaryButton],
+                        tableView: tableView,
                         id: "passphrase",
                         height: .heightCell48,
-                        bind: { cell, _ in
+                        bind: { cell in
                             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                            cell.title = "show_key.passphrase".localized
-                            cell.titleImage = UIImage(named: "key_phrase_20")
-                            cell.viewItem = .init(type: .raw, value: { passphrase })
+
+                            cell.bind(index: 0) { (component: ImageComponent) in
+                                component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
+                            }
+                            cell.bind(index: 1) { (component: TextComponent) in
+                                component.set(style: .d1)
+                                component.text = "show_key.passphrase".localized
+                            }
+                            cell.bind(index: 2) { (component: SecondaryButtonComponent) in
+                                component.button.set(style: .default)
+                                component.button.setTitle(passphrase, for: .normal)
+                                component.onTap = {
+                                    CopyHelper.copyAndNotify(value: passphrase)
+                                }
+                            }
                         }
                 )
 
