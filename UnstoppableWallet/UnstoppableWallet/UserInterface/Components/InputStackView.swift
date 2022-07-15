@@ -25,7 +25,7 @@ class InputStackView: UIView {
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin8)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin12, bottom: 0, right: .margin12)
         stackView.isLayoutMarginsRelativeArrangement = true
 
         stackView.addArrangedSubview(formTextView)
