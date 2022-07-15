@@ -12,6 +12,7 @@ class WalletConnectMainViewModel {
 
     private let showErrorRelay = PublishRelay<String>()
     private let showSuccessRelay = PublishRelay<()>()
+    private let showDisconnectRelay = PublishRelay<()>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
@@ -62,8 +63,13 @@ class WalletConnectMainViewModel {
         let connectionState = connectionState ?? service.connectionState
         let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
 
-        guard state != .killed else {
-            showSuccessRelay.accept(())
+        if case let .killed(reason) = state {
+//            showSuccessRelay.accept(())
+            switch reason {
+            case .rejectProposal: ()
+            case .killSession, .rejectSession: showDisconnectRelay.accept(())
+            }
+
             finishRelay.accept(())
             return
         }
@@ -127,6 +133,10 @@ extension WalletConnectMainViewModel {
 
     var showSuccessSignal: Signal<()> {
         showSuccessRelay.asSignal()
+    }
+
+    var showDisconnectSignal: Signal<()> {
+        showDisconnectRelay.asSignal()
     }
 
     var connectingDriver: Driver<Bool> {

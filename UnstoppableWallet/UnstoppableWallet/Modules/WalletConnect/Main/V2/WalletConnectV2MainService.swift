@@ -124,7 +124,7 @@ class WalletConnectV2MainService {
 
         pingService.topic = nil
         pingService.disconnect()
-        state = .killed
+        state = .killed(reason: .killSession) // todo: ???
     }
 
     private func initialBlockchains() throws -> WalletConnectMainModule.BlockchainSet {
@@ -344,7 +344,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             do {
                 try service.reject(proposal: proposal)
                 pingService.disconnect()
-                state = .killed
+                state = .killed(reason: .rejectProposal)
             } catch {
                 errorRelay.accept(error)
             }
@@ -363,7 +363,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
         service.disconnect(topic: session.topic, reason: Reason(code: 1, message: "Session Killed by User"))
         pingService.disconnect()
-        state = .killed
+        state = .killed(reason: .killSession) //todo: ???
     }
 
 }
