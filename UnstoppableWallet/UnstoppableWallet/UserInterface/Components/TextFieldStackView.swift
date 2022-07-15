@@ -33,7 +33,7 @@ class TextFieldStackView: UIView {
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin12, bottom: 0, right: .margin8)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         stackView.isLayoutMarginsRelativeArrangement = true
 
         stackView.addArrangedSubview(textField)
