@@ -37,7 +37,9 @@ class WalletConnectV1MainService {
 
     private(set) var state: WalletConnectMainModule.State = .idle {
         didSet {
-            stateRelay.accept(state)
+            if oldValue != state {
+                stateRelay.accept(state)
+            }
         }
     }
 
@@ -270,7 +272,7 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
 
         interactor.rejectSession(message: "Session Rejected by User")
 
-        state = .killed
+        state = .killed(reason: .rejectProposal)
     }
 
     func approveRequest(id: Int, anyResult: Any) {
@@ -339,7 +341,7 @@ extension WalletConnectV1MainService: IWalletConnectInteractorDelegate {
             sessionManager.deleteSession(peerId: sessionData.peerId)
         }
 
-        state = .killed
+        state = .killed(reason: .killSession)
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {

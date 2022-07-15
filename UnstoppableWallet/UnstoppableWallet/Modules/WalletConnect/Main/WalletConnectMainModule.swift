@@ -121,7 +121,7 @@ extension WalletConnectMainModule {
         case invalid(error: Error)
         case waitingForApproveSession
         case ready
-        case killed
+        case killed(reason: KilledReason)
 
         static func ==(lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
@@ -129,10 +129,16 @@ extension WalletConnectMainModule {
             case (.invalid(let lhsError), .invalid(let rhsError)): return "\(lhsError)" == "\(rhsError)"
             case (.waitingForApproveSession, .waitingForApproveSession): return true
             case (.ready, .ready): return true
-            case (.killed, .killed): return true
+            case (.killed(let reason), .killed(let reason2)): return reason == reason2
             default: return false
             }
         }
+    }
+
+    enum KilledReason: String {
+        case rejectProposal = "reject proposal"
+        case rejectSession = "reject session"
+        case killSession = "kill session"
     }
 
     enum ConnectionState {
