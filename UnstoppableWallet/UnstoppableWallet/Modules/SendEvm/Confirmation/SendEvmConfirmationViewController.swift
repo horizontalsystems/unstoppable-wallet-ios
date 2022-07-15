@@ -46,6 +46,8 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
     override func handleSendSuccess(transactionHash: Data) {
         HudHelper.instance.show(banner: .sent)
+
+        super.handleSendSuccess(transactionHash: transactionHash)
     }
 
 }
