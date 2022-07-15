@@ -42,6 +42,7 @@
 "alert.enabling" = "Enabling";
 "alert.enabled_coins" = "Enabled %@ more coins";
 "alert.sending" = "Sending";
+"alert.sent" = "Sent";
 "alert.swapping" = "Swapping";
 "alert.approving" = "Approving";
 
