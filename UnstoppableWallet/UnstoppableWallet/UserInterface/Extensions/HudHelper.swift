@@ -82,7 +82,8 @@ extension HudHelper {
             case .disconnectedWalletConnect: return "alert.disconnected".localized
             case .enabling: return "alert.enabling".localized
             case .enabled(let count): return "alert.enabled_coins".localized(count)
-            case .sending, .sent: return "alert.sending".localized
+            case .sending: return "alert.sending".localized
+            case .sent: return "alert.sent".localized
             case .swapping, .swapped: return "alert.swapping".localized
             case .approving, .approved: return "alert.approving".localized
             case .attention(let description): return description
@@ -106,7 +107,7 @@ extension HudHelper {
 
         var isUserInteractionEnabled: Bool {
             switch self {
-            case .disconnectingWalletConnect, .enabling: return false
+            case .disconnectingWalletConnect, .enabling, .sending: return false
             default: return true
             }
         }
