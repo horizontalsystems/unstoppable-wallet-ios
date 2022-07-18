@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 
 class FormCautionView: UIView {
-    private let padding = UIEdgeInsets(top: .margin8, left: .margin24, bottom: 0, right: .margin24)
+    private let padding = UIEdgeInsets(top: .margin8, left: .margin32, bottom: 0, right: .margin32)
     private let font: UIFont = .caption
 
     private let label = UILabel()

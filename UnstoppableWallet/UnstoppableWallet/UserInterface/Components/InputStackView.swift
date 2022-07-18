@@ -16,7 +16,7 @@ class InputStackView: UIView {
         }
         super.init(frame: .zero)
 
-        formTextView.textViewInset = UIEdgeInsets(top: .margin12, left: .margin4, bottom: .margin12, right: .margin4)
+        formTextView.textViewInset = UIEdgeInsets(top: .margin12, left: 0, bottom: .margin12, right: 0)
 
         addSubview(stackView)
         stackView.snp.makeConstraints { maker in
@@ -25,7 +25,7 @@ class InputStackView: UIView {
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin12, bottom: 0, right: .margin12)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         stackView.isLayoutMarginsRelativeArrangement = true
 
         stackView.addArrangedSubview(formTextView)
