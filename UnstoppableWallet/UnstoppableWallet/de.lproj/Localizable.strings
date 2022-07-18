@@ -102,13 +102,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Üblich vor 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Üblich nach 2018";
 "sync_mode.from_blockchain" = "Von Blockchain";
-"blockchain_settings.title" = "Adressformatierung";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für die Coin. Fahren Sie mit der empfohlenen Option fort, wenn Sie unsicher sind. Wenn Sie ein bestehendes Wallet wiederherstellen, sollten Sie das richtige Format wählen.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Cointyp";
-"coin_platforms.description" = "Dieser Token existiert auf mehreren Blockchains. Wählen Sie die Version(en), die Sie verwenden möchten.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Nativ";
 
 // Show Key
