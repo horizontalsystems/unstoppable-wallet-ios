@@ -83,7 +83,7 @@
 "restore.enter_key" = "암호를 입력하세요";
 "restore.mnemonic.name" = "이름 (선택 사항)";
 "restore.mnemonic.key" = "키";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
@@ -181,11 +181,13 @@
 "lost_accounts.warning_title" = "iOS 키체인 오류";
 "lost_accounts.warning_message" = "iOS 잠금 화면이 변경되어 지갑이 보관된 암호화된 데이터가 최근에 무효화되었습니다";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "지갑 변경";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "새로운 기능";
 "release_notes.follow_us" = "팔로우";
@@ -1130,6 +1132,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "watch_address.watch" = "관찰";
 "watch_address.name" = "이름 (선택 사항)";
 "watch_address.address" = "주소";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
