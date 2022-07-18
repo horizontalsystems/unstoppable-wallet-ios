@@ -49,8 +49,6 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: G1Cell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(emptyView)
@@ -131,7 +129,7 @@ class WalletConnectListViewController: ThemeViewController {
 extension WalletConnectListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        (listViewV2.sections + listViewV1.sections).compactMap { $0 }
+        (listViewV2.sections(tableView: tableView) + listViewV1.sections(tableView: tableView)).compactMap { $0 }
     }
 
 }

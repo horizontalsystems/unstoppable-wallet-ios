@@ -45,7 +45,6 @@ class AddTokenViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         inputCell.isEditable = false
         inputCell.inputPlaceholder = "add_token.input_placeholder".localized
@@ -132,14 +131,6 @@ class AddTokenViewController: ThemeViewController {
 }
 
 extension AddTokenViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func infoRow(id: String, title: String, value: String?, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
         CellBuilder.row(
@@ -257,7 +248,7 @@ extension AddTokenViewController: SectionsDataSource {
         if let tokenViewItems = viewItem?.addedTokenViewItems, !tokenViewItems.isEmpty {
             let section = Section(
                     id: "added-tokens",
-                    headerState: header(text: "add_token.already_added".localized),
+                    headerState: tableView.sectionHeader(text: "add_token.already_added".localized),
                     footerState: .margin(height: .margin24),
                     rows: tokenViewItems.enumerated().map { index, tokenViewItem in
                         addedTokenRow(
@@ -275,7 +266,7 @@ extension AddTokenViewController: SectionsDataSource {
         if let tokenViewItems = viewItem?.tokenViewItems, !tokenViewItems.isEmpty {
             let section = Section(
                     id: "tokens",
-                    headerState: header(text: "add_token.coin_types".localized),
+                    headerState: tableView.sectionHeader(text: "add_token.coin_types".localized),
                     footerState: .margin(height: .margin32),
                     rows: tokenViewItems.enumerated().map { index, tokenViewItem in
                         tokenRow(

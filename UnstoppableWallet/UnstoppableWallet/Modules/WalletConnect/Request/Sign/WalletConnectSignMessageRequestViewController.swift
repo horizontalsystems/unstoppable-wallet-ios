@@ -45,8 +45,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
 
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D1Cell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(bottomWrapper)
@@ -156,24 +154,14 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
             ))
         }
 
-        return [Section(
-                id: "sign_section",
-                headerState: .margin(height: .margin12),
-                footerState: footer(text: "wallet_connect.sign.description".localized),
-                rows: rows
-        )]
-    }
-
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
+        return [
+            Section(
+                    id: "sign_section",
+                    headerState: .margin(height: .margin12),
+                    footerState: tableView.sectionFooter(text: "wallet_connect.sign.description".localized),
+                    rows: rows
+            )
+        ]
     }
 
 }

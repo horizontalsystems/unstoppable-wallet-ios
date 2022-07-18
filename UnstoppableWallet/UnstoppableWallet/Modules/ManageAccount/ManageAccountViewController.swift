@@ -47,7 +47,6 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
@@ -152,14 +151,6 @@ class ManageAccountViewController: ThemeViewController {
 
 extension ManageAccountViewController: SectionsDataSource {
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
-
     private var keyActionSection: SectionProtocol {
         var rows = [RowProtocol]()
 
@@ -237,7 +228,7 @@ extension ManageAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "name",
-                    headerState: header(text: "manage_account.name".localized),
+                    headerState: tableView.sectionHeader(text: "manage_account.name".localized),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(

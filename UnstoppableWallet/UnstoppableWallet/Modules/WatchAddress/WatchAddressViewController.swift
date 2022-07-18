@@ -17,10 +17,10 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
     private let watchButton = ThemeButton()
 
-    private let nameCell = TextFieldCell()
-
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
+
+    private let nameCell = TextFieldCell()
 
     private var isLoaded = false
 
@@ -51,9 +51,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         view.addSubview(gradientWrapperView)
         gradientWrapperView.snp.makeConstraints { maker in
@@ -73,13 +71,13 @@ class WatchAddressViewController: KeyboardAwareViewController {
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
         watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
 
-        nameCell.inputPlaceholder = viewModel.namePlaceholder
-        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-
         addressCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         addressCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         addressCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
+        nameCell.inputPlaceholder = viewModel.namePlaceholder
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         subscribe(disposeBag, viewModel.nameDriver) { [weak self] name in
             self?.nameCell.inputText = name
@@ -120,33 +118,13 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
 extension WatchAddressViewController: SectionsDataSource {
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(id: "top-margin", headerState: .margin(height: .margin12)),
             Section(
-                    id: "name",
-                    headerState: header(text: "watch_address.name".localized),
-                    footerState: .margin(height: .margin24),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            ),
-            Section(
                     id: "address",
-                    headerState: header(text: "watch_address.address".localized),
-                    footerState: .margin(height: .margin32),
+                    headerState: tableView.sectionHeader(text: "watch_address.address".localized),
+                    footerState: tableView.sectionFooter(text: "watch_address.description".localized),
                     rows: [
                         StaticRow(
                                 cell: addressCell,
@@ -161,6 +139,18 @@ extension WatchAddressViewController: SectionsDataSource {
                                 dynamicHeight: { [weak self] width in
                                     self?.addressCautionCell.height(containerWidth: width) ?? 0
                                 }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "name",
+                    headerState: tableView.sectionHeader(text: "watch_address.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
                         )
                     ]
             ),

@@ -48,7 +48,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         CellBuilder.build(cell: mnemonicCell, elements: [.image20, .text, .text, .image20])
@@ -165,18 +164,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
 extension CreateAccountViewController: SectionsDataSource {
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -226,7 +213,7 @@ extension CreateAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "passphrase-confirmation",
-                    footerState: inputsVisible ? footer(text: "create_wallet.passphrase_description".localized) : .margin(height: .margin32),
+                    footerState: inputsVisible ? tableView.sectionFooter(text: "create_wallet.passphrase_description".localized) : .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: passphraseConfirmationCell,

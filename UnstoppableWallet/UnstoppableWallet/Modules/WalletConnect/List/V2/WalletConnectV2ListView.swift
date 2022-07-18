@@ -63,30 +63,6 @@ class WalletConnectV2ListView {
         })
     }
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { containerWidth in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
-                }
-        )
-    }
-
     private func cell(viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
         guard let tableView = sourceViewController?.tableView else {
             return nil
@@ -160,11 +136,11 @@ class WalletConnectV2ListView {
         )
     }
 
-    private func pendingRequestSection() -> SectionProtocol {
+    private func pendingRequestSection(tableView: SectionsTableView) -> SectionProtocol {
         let cell = pendingRequestCountCell(pendingRequestCount: pendingRequestCount)
         return Section(
                 id: "section_pending_requests",
-                headerState: header(text: "wallet_connect.list.version_text".localized("2.0")),
+                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
                 footerState: .margin(height: cell == nil ? 0 : .margin12),
                 rows: [cell].compactMap { $0 }
         )
@@ -189,12 +165,12 @@ class WalletConnectV2ListView {
 
 extension WalletConnectV2ListView {
 
-    var sections: [SectionProtocol] {
+    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
         guard !viewItems.isEmpty else {
             return []
         }
 
-        return [pendingRequestSection(), section(viewItems: viewItems)].compactMap { $0 }
+        return [pendingRequestSection(tableView: tableView), section(viewItems: viewItems)].compactMap { $0 }
     }
 
     var reloadTableSignal: Signal<()> {

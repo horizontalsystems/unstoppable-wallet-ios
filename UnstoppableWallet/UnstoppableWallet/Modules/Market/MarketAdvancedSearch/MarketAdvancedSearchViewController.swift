@@ -52,7 +52,6 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -365,18 +364,6 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         )
     }
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
 }
 
 extension MarketAdvancedSearchViewController: SectionsDataSource {
@@ -395,7 +382,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "market_filters",
-                headerState: header(text: "market.advanced_search.market_parameters".localized.uppercased()),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
@@ -405,7 +392,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "network_filters",
-                headerState: header(text: "market.advanced_search.network_parameters".localized.uppercased()),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: blockchainsCell, id: "blockchains") { [weak self] in self?.onTapBlockchainsCell() }
@@ -414,7 +401,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "price_filters",
-                headerState: header(text: "market.advanced_search.price_parameters".localized.uppercased()),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin32),
                 rows: [
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },

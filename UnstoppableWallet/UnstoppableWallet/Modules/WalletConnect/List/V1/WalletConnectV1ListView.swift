@@ -48,35 +48,11 @@ class WalletConnectV1ListView {
         })
     }
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { containerWidth in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
-                }
-        )
-    }
-
-    private func section(viewItems: [WalletConnectV1ListViewModel.ViewItem]) -> SectionProtocol {
+    private func section(tableView: SectionsTableView, viewItems: [WalletConnectV1ListViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section_1",
-                headerState: header(text: "wallet_connect.list.version_text".localized("1.0")),
-                footerState: footer(hash: "section_v1_footer", text: "wallet_connect.list.v1_bottom_text".localized),
+                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("1.0")),
+                footerState: tableView.sectionFooter(text: "wallet_connect.list.v1_bottom_text".localized),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
@@ -106,14 +82,14 @@ class WalletConnectV1ListView {
 
 extension WalletConnectV1ListView {
 
-    var sections: [SectionProtocol] {
+    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
         guard !viewItems.isEmpty else {
             return []
         }
 
         return [
             Section(id: "top-margin", headerState: .margin(height: .margin12)),
-            section(viewItems: viewItems)
+            section(tableView: tableView, viewItems: viewItems)
         ]
     }
 

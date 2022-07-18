@@ -85,35 +85,11 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         }
     }
 
-    private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
 }
 
-extension UniswapSettingsDataSource: SectionsDataSource {
+extension UniswapSettingsDataSource {
 
-    func buildSections() -> [SectionProtocol] {
+    func buildSections(tableView: SectionsTableView) -> [SectionProtocol] {
         [
             Section(
                     id: "top-margin",
@@ -122,8 +98,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "recipient",
-                    headerState: header(hash: "recipient_header", text: "swap.advanced_settings.recipient_address".localized),
-                    footerState: footer(hash: "recipient_footer", text: "swap.advanced_settings.recipient.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.recipient_address".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.recipient.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: recipientCell,
@@ -144,8 +120,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "slippage",
-                    headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage".localized),
-                    footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.slippage".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.slippage.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: slippageCell,
@@ -166,8 +142,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "deadline",
-                    headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline".localized),
-                    footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.deadline.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: deadlineCell,

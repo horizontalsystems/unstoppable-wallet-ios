@@ -48,7 +48,6 @@ class SwitchAccountViewController: ThemeActionSheetController {
         tableView.automaticallyAdjustsScrollIndicatorInsets = false
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         tableView.buildSections()
 
@@ -58,14 +57,6 @@ class SwitchAccountViewController: ThemeActionSheetController {
 }
 
 extension SwitchAccountViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func row(viewItem: SwitchAccountViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
@@ -101,7 +92,7 @@ extension SwitchAccountViewController: SectionsDataSource {
         if !viewModel.regularViewItems.isEmpty {
             let section = Section(
                     id: "regular",
-                    headerState: header(text: "Wallets"),
+                    headerState: tableView.sectionHeader(text: "switch_account.wallets".localized),
                     footerState: .margin(height: viewModel.watchViewItems.isEmpty ? 0 : .margin24),
                     rows: viewModel.regularViewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.regularViewItems.count - 1)
@@ -114,7 +105,7 @@ extension SwitchAccountViewController: SectionsDataSource {
         if !viewModel.watchViewItems.isEmpty {
             let section = Section(
                     id: "watch",
-                    headerState: header(text: "Watch Addresses"),
+                    headerState: tableView.sectionHeader(text: "switch_account.watch_addresses".localized),
                     rows: viewModel.watchViewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
                     }

@@ -71,7 +71,6 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: LogoHeaderCell.self)
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -250,16 +249,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private var footer: RowProtocol? {
         hint.map { hint -> RowProtocol in
-            Row<HighlightedDescriptionCell>(
-                    id: "hint_footer",
-                    hash: hint,
-                    dynamicHeight: { width in
-                        HighlightedDescriptionCell.height(containerWidth: width, text: hint)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = hint
-                    }
-            )
+            tableView.highlightedDescriptionRow(id: "hint_footer", text: hint)
         }
     }
 

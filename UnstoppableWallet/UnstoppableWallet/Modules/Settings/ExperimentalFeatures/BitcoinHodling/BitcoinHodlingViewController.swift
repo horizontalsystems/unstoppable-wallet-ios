@@ -29,7 +29,6 @@ class BitcoinHodlingViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -45,19 +44,11 @@ class BitcoinHodlingViewController: ThemeViewController {
 extension BitcoinHodlingViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings.bitcoin_hodling.description".localized
-
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
-
-        return [
+        [
             Section(
                     id: "lock_time_section",
                     headerState: .margin(height: .margin3x),
-                    footerState: footerState,
+                    footerState: tableView.sectionFooter(text: "settings.bitcoin_hodling.description".localized),
                     rows: [
                         CellBuilder.row(
                                 elements: [.text, .switch],

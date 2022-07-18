@@ -55,7 +55,6 @@ class ShowKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
 
@@ -151,22 +150,10 @@ class ShowKeyViewController: ThemeViewController {
 
     private func rows(privateKey: String) -> [RowProtocol] {
         let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: { privateKey })
-        let text = "show_key.private_key.description".localized
 
         return [
-            Row<HighlightedDescriptionCell>(
-                    id: "private-key-description",
-                    dynamicHeight: { containerWidth in
-                        HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = text
-                    }
-            ),
-            marginRow(
-                    id: "private-key-margin",
-                    height: .margin4
-            ),
+            tableView.highlightedDescriptionRow(id: "private-key-description", text: "show_key.private_key.description".localized),
+            marginRow(id: "private-key-margin", height: .margin4),
             Row<Cell9>(
                     id: "private-key-value",
                     dynamicHeight: { width in

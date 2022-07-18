@@ -5,7 +5,7 @@ import ThemeKit
 
 protocol ISwapSettingsDataSource: AnyObject {
     func viewDidLoad()
-    func buildSections() -> [SectionProtocol]
+    func buildSections(tableView: SectionsTableView) -> [SectionProtocol]
     func didTapApply()
 
     var onOpen: ((UIViewController) -> ())? { get set }

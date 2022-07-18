@@ -41,8 +41,8 @@ extension TransactionInfoModule {
 
         var description: String {
             switch self {
-            case .speedUp: return "send.confirmation.resend_description"
-            case .cancel: return "send.confirmation.cancel_description"
+            case .speedUp: return "send.confirmation.resend_description".localized
+            case .cancel: return "send.confirmation.cancel_description".localized
             }
         }
     }

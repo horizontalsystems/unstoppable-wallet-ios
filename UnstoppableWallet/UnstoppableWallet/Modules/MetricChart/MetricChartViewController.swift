@@ -68,7 +68,6 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         view.addSubview(poweredByLabel)
         poweredByLabel.snp.makeConstraints { maker in
@@ -100,16 +99,9 @@ class MetricChartViewController: ThemeActionSheetController {
 extension MetricChartViewController {
 
     private var chartSection: SectionProtocol {
-        let description = viewModel.description
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
-            view.bind(text: description)
-        }, dynamicHeight: { [unowned self] _ in
-            BottomDescriptionHeaderFooterView.height(containerWidth: tableView.bounds.width, text: description ?? "")
-        })
-
-        return Section(
+        Section(
                 id: "chart",
-                footerState: footerState,
+                footerState: tableView.sectionFooter(text: viewModel.description ?? ""),
                 rows: [chartRow]
         )
     }

@@ -40,8 +40,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
         title = "swap.approve.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
 
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -107,15 +105,7 @@ extension SwapApproveViewController: SectionsDataSource {
             Section(
                     id: "main",
                     rows: [
-                        Row<HighlightedDescriptionCell>(
-                                id: "description",
-                                dynamicHeight: { width in
-                                    HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
-                                },
-                                bind: { cell, _ in
-                                    cell.descriptionText = "swap.approve.description".localized
-                                }
-                        )
+                        tableView.highlightedDescriptionRow(id: "description", text: "swap.approve.description".localized)
                     ]
             ),
             Section(
