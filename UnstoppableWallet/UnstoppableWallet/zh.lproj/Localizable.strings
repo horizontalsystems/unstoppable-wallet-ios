@@ -104,13 +104,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.title" = "地址格式";
 "blockchain_settings.description" = "选择代币的地址格式。如果不确定，请使用建议选项继续。应在恢复现有钱包时选择正确的格式。";
 
 // Coin Platforms
 
-"coin_platforms.title" = "代币类型";
-"coin_platforms.description" = "此令牌存在于多个区块链上。请选择您想要使用的版本。";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "原生";
 
 // Show Key
