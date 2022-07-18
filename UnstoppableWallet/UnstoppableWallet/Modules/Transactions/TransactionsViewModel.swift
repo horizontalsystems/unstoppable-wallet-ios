@@ -57,7 +57,7 @@ class TransactionsViewModel {
         var title: String
 
         if let configuredToken = configuredToken {
-            title = configuredToken.token.coin.name
+            title = configuredToken.token.coin.code
 
             if let badge = configuredToken.badge {
                 title += " (\(badge))"
