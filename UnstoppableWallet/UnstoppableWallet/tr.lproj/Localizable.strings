@@ -86,7 +86,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.enter_key" = "Anahtarı girin";
 "restore.mnemonic.name" = "İsim(İsteğe bağlı)";
 "restore.mnemonic.key" = "Anahtar";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
@@ -184,11 +184,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";
 "lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Cüzdan Değiştir";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "Yenilikler";
 "release_notes.follow_us" = "Bizi Takip Et";
@@ -1133,6 +1135,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "watch_address.watch" = "İzle";
 "watch_address.name" = "İsim(İsteğe bağlı)";
 "watch_address.address" = "Adres";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
