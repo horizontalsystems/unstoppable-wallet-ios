@@ -48,7 +48,6 @@ class BackupConfirmKeyViewController: KeyboardAwareViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         firstWordCell.returnKeyType = .next
         firstWordCell.onChangeText = { [weak self] in self?.viewModel.onChange(firstWord: $0 ?? "") }
@@ -146,18 +145,6 @@ class BackupConfirmKeyViewController: KeyboardAwareViewController {
 
 extension BackupConfirmKeyViewController: SectionsDataSource {
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
@@ -181,7 +168,7 @@ extension BackupConfirmKeyViewController: SectionsDataSource {
             ),
             Section(
                     id: "second-word",
-                    footerState: footer(text: "backup_key.confirmation.description".localized),
+                    footerState: tableView.sectionFooter(text: "backup_key.confirmation.description".localized),
                     rows: [
                         StaticRow(
                                 cell: secondWordCell,
@@ -202,7 +189,7 @@ extension BackupConfirmKeyViewController: SectionsDataSource {
         if viewModel.passphraseVisible {
             let passphraseSection = Section(
                     id: "passphrase",
-                    footerState: footer(text: "backup_key.confirmation.passphrase_description".localized),
+                    footerState: tableView.sectionFooter(text: "backup_key.confirmation.passphrase_description".localized),
                     rows: [
                         StaticRow(
                                 cell: passphraseCell,

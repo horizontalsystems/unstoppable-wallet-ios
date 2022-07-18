@@ -85,7 +85,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.enter_key" = "Enter Key";
 "restore.mnemonic.name" = "Name (optional)";
 "restore.mnemonic.key" = "Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
 "restore.passphrase" = "Passphrase";
@@ -183,11 +183,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "lost_accounts.warning_title" = "iOS Keychain Error";
 "lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Switch Wallet";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "What's New";
 "release_notes.follow_us" = "Follow Us";
@@ -1132,6 +1134,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "watch_address.watch" = "Watch";
 "watch_address.name" = "Name (optional)";
 "watch_address.address" = "Address";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 

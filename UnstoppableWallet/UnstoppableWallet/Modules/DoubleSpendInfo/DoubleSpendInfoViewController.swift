@@ -38,7 +38,6 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         }
 
         tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
@@ -47,24 +46,12 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         tableView.buildSections()
     }
 
-    private func highlightedDescriptionRow(text: String) -> RowProtocol {
-        Row<HighlightedDescriptionCell>(
-                id: "alert",
-                dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
-                },
-                bind: { cell, _ in
-                    cell.descriptionText = text
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "alert",
                     rows: [
-                        highlightedDescriptionRow(text: "double_spend_info.header".localized)
+                        tableView.highlightedDescriptionRow(id: "alert", text: "double_spend_info.header".localized)
                     ]
             ),
             Section(

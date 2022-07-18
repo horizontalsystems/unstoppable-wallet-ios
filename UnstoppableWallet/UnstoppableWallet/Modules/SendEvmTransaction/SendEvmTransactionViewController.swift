@@ -49,7 +49,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(bottomWrapper)
@@ -142,19 +141,15 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
-        var headerState: ViewState<BottomDescriptionHeaderFooterView>?
+        var headerText: String?
 
-        if index == 0, let topDescription = topDescription?.localized {
-            headerState = .cellType(hash: "top_description", binder: { view in
-                view.bind(text: topDescription)
-            }, dynamicHeight: { [weak self] containerWidth in
-                BottomDescriptionHeaderFooterView.height(containerWidth: self?.view.width ?? 0, text: topDescription)
-            })
+        if index == 0, let topDescription = topDescription {
+            headerText = topDescription
         }
 
         return Section(
                 id: "section_\(index)",
-                headerState: headerState ?? .margin(height: .margin12),
+                headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin12),
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
                 }

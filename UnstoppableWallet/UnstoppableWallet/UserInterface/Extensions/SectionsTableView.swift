@@ -4,6 +4,40 @@ import ThemeKit
 
 extension SectionsTableView {
 
+    func sectionHeader(text: String) -> ViewState<SubtitleHeaderFooterView> {
+        registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
+
+        return .cellType(
+                hash: text,
+                binder: { $0.bind(text: text) },
+                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+        )
+    }
+
+    func sectionFooter(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
+        registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+
+        return .cellType(
+                hash: text,
+                binder: { $0.bind(text: text) },
+                dynamicHeight: { BottomDescriptionHeaderFooterView.height(containerWidth: $0, text: text) }
+        )
+    }
+
+    func highlightedDescriptionRow(id: String, text: String) -> RowProtocol {
+        registerCell(forClass: HighlightedDescriptionCell.self)
+
+        return Row<HighlightedDescriptionCell>(
+                id: id,
+                dynamicHeight: { width in
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
+                },
+                bind: { cell, _ in
+                    cell.descriptionText = text
+                }
+        )
+    }
+
     func subtitleRow(text: String) -> RowProtocol {
         CellBuilder.row(
                 elements: [.text],

@@ -43,7 +43,6 @@ class SecuritySettingsViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         subscribe(disposeBag, viewModel.pinViewItemDriver) { [weak self] in self?.sync(pinViewItem: $0) }
         subscribe(disposeBag, viewModel.blockchainViewItemsDriver) { [weak self] in self?.sync(blockchainViewItems: $0) }
@@ -101,14 +100,6 @@ class SecuritySettingsViewController: ThemeViewController {
 }
 
 extension SecuritySettingsViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func passcodeRows(viewItem: SecuritySettingsViewModel.PinViewItem) -> [RowProtocol] {
         let passcodeRow = CellBuilder.row(
@@ -262,7 +253,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
         let blockchainSection = Section(
                 id: "blockchains",
-                headerState: header(text: "settings_security.blockchain_settings".localized),
+                headerState: tableView.sectionHeader(text: "settings_security.blockchain_settings".localized),
                 footerState: .margin(height: .margin32),
                 rows: blockchainViewItems.enumerated().map { index, viewItem in
                     blockchainRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == blockchainViewItems.count - 1)

@@ -30,7 +30,6 @@ class ExperimentalFeaturesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -47,24 +46,12 @@ class ExperimentalFeaturesViewController: ThemeViewController {
 
 extension ExperimentalFeaturesViewController: SectionsDataSource {
 
-    private func highlightedDescriptionRow(text: String) -> RowProtocol {
-        Row<HighlightedDescriptionCell>(
-                id: "alert",
-                dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
-                },
-                bind: { cell, _ in
-                    cell.descriptionText = text
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "alert",
                     rows: [
-                        highlightedDescriptionRow(text: "settings.experimental_features.description".localized)
+                        tableView.highlightedDescriptionRow(id: "alert", text: "settings.experimental_features.description".localized)
                     ]
             ),
             Section(

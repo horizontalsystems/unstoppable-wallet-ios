@@ -60,7 +60,6 @@ class ItemSelectorViewController: ThemeActionSheetController {
 
 //        tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: ItemSelectorSimpleCell.self)
         tableView.sectionDataSource = self
 
@@ -78,15 +77,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
     private func row(viewItem: ItemSelectorModule.Item, rowIndex: Int, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case .description(let text):
-            return Row<HighlightedDescriptionCell>(
-                    id: "description_\(text)",
-                    dynamicHeight: { width in
-                        HighlightedDescriptionCell.height(containerWidth: width, text: text)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = text
-                    }
-            )
+            return tableView.highlightedDescriptionRow(id: "description_\(text)", text: text)
         case .simple(let viewItem):
             return Row<ItemSelectorSimpleCell>(
                     id: "item_\(viewItem.title)",

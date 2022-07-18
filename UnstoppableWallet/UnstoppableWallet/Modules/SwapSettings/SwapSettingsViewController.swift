@@ -52,9 +52,6 @@ class SwapSettingsViewController: KeyboardAwareViewController {
 //        tableView.allowsSelection = false
         tableView.sectionDataSource = self
 
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-
         view.addSubview(gradientWrapperView)
         gradientWrapperView.snp.makeConstraints { maker in
             maker.height.equalTo(wrapperViewHeight).priority(.high)
@@ -129,7 +126,7 @@ extension SwapSettingsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let dataSource = dataSource {
-            sections.append(contentsOf: dataSource.buildSections())
+            sections.append(contentsOf: dataSource.buildSections(tableView: tableView))
         }
 
         return sections

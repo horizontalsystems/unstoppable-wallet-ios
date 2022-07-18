@@ -49,7 +49,6 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
         CellBuilder.build(cell: createCell, elements: [.image20, .text])
@@ -186,14 +185,7 @@ extension ManageAccountsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        let hint = "onboarding.balance.password_hint".localized
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "hint_footer", binder: { view in
-            view.bind(text: hint)
-        }, dynamicHeight: { containerWidth in
-            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: hint)
-        })
-
-        return [
+        [
             Section(
                     id: "regular-view-items",
                     headerState: .margin(height: .margin12),
@@ -211,7 +203,7 @@ extension ManageAccountsViewController: SectionsDataSource {
             ),
             Section(
                     id: "actions",
-                    footerState: footerState,
+                    footerState: tableView.sectionFooter(text: "onboarding.balance.password_hint".localized),
                     rows: [
                         StaticRow(
                                 cell: createCell,
