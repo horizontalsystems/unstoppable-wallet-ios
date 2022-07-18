@@ -64,12 +64,7 @@ class CoinToggleViewController: ThemeSearchViewController {
         })
 
         cell.bind(index: 1, block: { (component: MultiTextComponent) in
-            if let badge = viewItem.blockchainBadge {
-                component.set(style: .m7)
-                component.titleBadge.text = badge
-            } else {
-                component.set(style: .m1)
-            }
+            component.set(style: .m1)
             component.title.set(style: .b2)
             component.subtitle.set(style: .d1)
 

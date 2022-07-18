@@ -22,14 +22,15 @@ class CoinTokensViewModel {
 
         let config = BottomMultiSelectorViewController.Config(
                 icon: .remote(url: fullCoin.coin.imageUrl, placeholder: fullCoin.placeholderImageName),
-                title: "coin_platforms.title".localized,
-                description: "coin_platforms.description".localized,
+                title: fullCoin.coin.code,
+                description: tokens.count == 1 ? nil : "coin_platforms.description".localized,
                 selectedIndexes: request.currentTokens.compactMap { tokens.firstIndex(of: $0) },
                 viewItems: tokens.map { token in
                     BottomMultiSelectorViewController.ViewItem(
                             icon: .remote(url: token.blockchain.type.imageUrl, placeholder: nil),
                             title: token.protocolInfo,
-                            subtitle: token.typeInfo
+                            subtitle: token.typeInfo,
+                            copyableString: token.copyableTypeInfo
                     )
                 }
         )

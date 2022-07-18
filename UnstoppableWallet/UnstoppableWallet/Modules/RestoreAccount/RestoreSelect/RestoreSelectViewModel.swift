@@ -27,8 +27,7 @@ class RestoreSelectViewModel {
                 placeholderImageName: nil,
                 title: item.blockchain.name,
                 subtitle: description(blockchainType: item.blockchain.type),
-                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings),
-                blockchainBadge: nil
+                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings)
         )
     }
 

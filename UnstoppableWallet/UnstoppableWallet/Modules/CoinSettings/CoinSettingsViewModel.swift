@@ -34,7 +34,7 @@ class CoinSettingsViewModel {
     private func derivationConfig(token: Token, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
-                title: "blockchain_settings.title".localized,
+                title: token.coin.code,
                 description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
@@ -49,7 +49,7 @@ class CoinSettingsViewModel {
     private func bitcoinCashCoinTypeConfig(token: Token, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
-                title: "blockchain_settings.title".localized,
+                title: token.coin.code,
                 description: "blockchain_settings.description".localized,
                 selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
