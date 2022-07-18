@@ -102,13 +102,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.title" = "주소 형식";
 "blockchain_settings.description" = "코인의 주소 형식을 선택합니다. 확실하지 않은 경우 권장 옵션을 진행합니다. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "코인 유형";
-"coin_platforms.description" = "이 토큰은 여러 블록체인에 존재합니다. 사용하려는 버전을 선택하십시오.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "네이티브";
 
 // Show Key
