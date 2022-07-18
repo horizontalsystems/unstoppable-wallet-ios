@@ -35,8 +35,8 @@ class ManageWalletsViewModel {
                 uid: item.fullCoin.coin.uid,
                 imageUrl: item.fullCoin.coin.imageUrl,
                 placeholderImageName: item.fullCoin.placeholderImageName,
-                title: item.fullCoin.coin.name,
-                subtitle: item.fullCoin.coin.code,
+                title: item.fullCoin.coin.code,
+                subtitle: item.fullCoin.coin.name,
                 state: viewItemState,
                 blockchainBadge: blockchainBadge
         )

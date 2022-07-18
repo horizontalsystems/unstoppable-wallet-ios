@@ -115,8 +115,8 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
                         component.title.set(style: .b2)
                         component.subtitle.set(style: .d1)
 
-                        component.title.text = viewItem.name
-                        component.subtitle.text = viewItem.code
+                        component.title.text = viewItem.code
+                        component.subtitle.text = viewItem.name
 
                         component.titleBadge.isHidden = viewItem.badge == nil
                         component.titleBadge.text = viewItem.badge
