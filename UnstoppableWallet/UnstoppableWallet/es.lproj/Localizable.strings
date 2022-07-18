@@ -83,7 +83,7 @@
 "restore.enter_key" = "Introduzca la clave";
 "restore.mnemonic.name" = "Nombre (opcional)";
 "restore.mnemonic.key" = "Clave";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
@@ -181,11 +181,13 @@
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
 "lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Cambiar monedero";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "Qué novedades hay";
 "release_notes.follow_us" = "Síguenos";
@@ -1131,6 +1133,7 @@ poner en peligro la seguridad de mis fondos.";
 "watch_address.watch" = "Ver";
 "watch_address.name" = "Nombre (opcional)";
 "watch_address.address" = "Dirección";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
