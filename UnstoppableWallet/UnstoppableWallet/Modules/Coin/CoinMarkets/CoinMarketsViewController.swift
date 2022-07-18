@@ -154,9 +154,11 @@ extension CoinMarketsViewController: SectionsDataSource {
                         component.title.textAlignment = .right
                         component.title.text = viewItem.rate
 
+                        component.subtitleLeft.setContentHuggingPriority(.defaultLow, for: .horizontal)
                         component.subtitleLeft.textAlignment = .right
                         component.subtitleLeft.text = "market.market_field.vol".localized
 
+                        component.subtitleRight.setContentHuggingPriority(.required, for: .horizontal)
                         component.subtitleRight.textAlignment = .right
                         component.subtitleRight.text = viewItem.volume
                     }
