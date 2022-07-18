@@ -85,7 +85,7 @@
 "restore.enter_key" = "输入密钥";
 "restore.mnemonic.name" = "名称 (可选)";
 "restore.mnemonic.key" = "密钥";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
@@ -183,11 +183,13 @@
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "切换钱包";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "新增内容";
 "release_notes.follow_us" = "关注我们";
@@ -1132,6 +1134,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "watch_address.watch" = "观察";
 "watch_address.name" = "名称 (可选)";
 "watch_address.address" = "地址";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
