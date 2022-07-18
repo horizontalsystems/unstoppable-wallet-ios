@@ -104,13 +104,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
-"blockchain_settings.title" = "Формат Адреса";
 "blockchain_settings.description" = "Выберите формат адреса для токена. Если вы сомневаетесь в правильности выбранного формата, выберите рекомендуемую опцию. При восстановлении существующего кошелька должен быть выбран правильный формат.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Тип Монеты";
-"coin_platforms.description" = "Этот токен существует в нескольких блокчейнах. Выберите версию (-и), которую (-ые) вы хотите использовать.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Нативный";
 
 // Show Key
