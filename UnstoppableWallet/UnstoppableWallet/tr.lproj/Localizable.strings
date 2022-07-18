@@ -105,13 +105,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018 öncesinde yaygın";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018 sonrasında yaygın";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
-"blockchain_settings.title" = "Adres Formatı";
 "blockchain_settings.description" = "Koin için adres formatını seçin. Emin değilseniz önerilen seçenekle devam edin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Kripto Para Tipi";
-"coin_platforms.description" = "Bu token birden fazla blok zincirinde mevcuttur. Kullanmak istediğiniz sürümü/sürümleri seçin.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Yerel";
 
 // Show Key
