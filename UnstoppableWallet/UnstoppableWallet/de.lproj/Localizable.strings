@@ -83,7 +83,7 @@
 "restore.enter_key" = "Schlüssel Eingeben";
 "restore.mnemonic.name" = "Name (optional)";
 "restore.mnemonic.key" = "Schlüssel";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12, 15, 18, 21 or 24 words. The words need to be entered in the correct order and separated by spaces.";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passphrase";
@@ -181,11 +181,13 @@
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";
 "lost_accounts.warning_message" = "Die verschlüsselten Daten Ihres Wallets wurden kürzlich ungültig, weil Ihr iOS-Sperrbildschirm geändert wurde";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Wallet wechseln";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
 
-//Release notes
+// Release notes
 
 "release_notes.title" = "Das ist neu";
 "release_notes.follow_us" = "Folgen Sie uns";
@@ -1130,6 +1132,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "watch_address.watch" = "Beobachten";
 "watch_address.name" = "Name (optional)";
 "watch_address.address" = "Adresse";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
