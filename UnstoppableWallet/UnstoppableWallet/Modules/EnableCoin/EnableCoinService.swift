@@ -6,15 +6,17 @@ class EnableCoinService {
     private let coinTokensService: CoinTokensService
     private let restoreSettingsService: RestoreSettingsService
     private let coinSettingsService: CoinSettingsService
+    private let evmBlockchainManager: EvmBlockchainManager
     private let disposeBag = DisposeBag()
 
     private let enableCoinRelay = PublishRelay<([ConfiguredToken], RestoreSettings)>()
     private let cancelEnableCoinRelay = PublishRelay<FullCoin>()
 
-    init(coinTokensService: CoinTokensService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init(coinTokensService: CoinTokensService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService, evmBlockchainManager: EvmBlockchainManager) {
         self.coinTokensService = coinTokensService
         self.restoreSettingsService = restoreSettingsService
         self.coinSettingsService = coinSettingsService
+        self.evmBlockchainManager = evmBlockchainManager
 
         subscribe(disposeBag, coinTokensService.approveTokensObservable) { [weak self] coinWithTokens in
             self?.handleApproveCoinTokens(coin: coinWithTokens.coin, tokens: coinWithTokens.tokens)
@@ -84,11 +86,13 @@ extension EnableCoinService {
                 restoreSettingsService.approveSettings(token: token, account: account)
             } else if !token.blockchainType.coinSettingTypes.isEmpty {
                 coinSettingsService.approveSettings(token: token, settingsArray: token.blockchainType.defaultSettingsArray)
+            } else if evmBlockchainManager.allBlockchains.contains(token.blockchain) || token.blockchain.type == .binanceChain {
+                coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: supportedTokens)
             } else {
                 enableCoinRelay.accept(([ConfiguredToken(token: token)], [:]))
             }
         } else {
-            coinTokensService.approveTokens(fullCoin: fullCoin)
+            coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: supportedTokens.isEmpty ? [] : [supportedTokens.sorted[0]])
         }
     }
 
@@ -101,11 +105,12 @@ extension EnableCoinService {
             if !token.blockchainType.coinSettingTypes.isEmpty {
                 let settingsArray = configuredTokens.map { $0.coinSettings }
                 coinSettingsService.approveSettings(token: token, settingsArray: settingsArray)
+                return
             }
-        } else {
-            let currentTokens = configuredTokens.map { $0.token }
-            coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: currentTokens)
         }
+
+        let currentTokens = configuredTokens.map { $0.token }
+        coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: currentTokens)
     }
 
     func save(restoreSettings: RestoreSettings, account: Account, blockchainType: BlockchainType) {

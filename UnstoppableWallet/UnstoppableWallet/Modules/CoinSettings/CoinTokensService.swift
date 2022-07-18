@@ -24,13 +24,6 @@ extension CoinTokensService {
     }
 
     func approveTokens(fullCoin: FullCoin, currentTokens: [Token] = []) {
-        let supportedTokens = fullCoin.supportedTokens
-
-        guard supportedTokens.count > 1 else {
-            approveTokensRelay.accept(CoinWithTokens(coin: fullCoin.coin, tokens: supportedTokens))
-            return
-        }
-
         let request = Request(fullCoin: fullCoin, currentTokens: currentTokens)
         requestRelay.accept(request)
     }

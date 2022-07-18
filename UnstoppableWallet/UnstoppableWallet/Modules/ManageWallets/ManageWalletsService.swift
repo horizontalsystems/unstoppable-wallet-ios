@@ -7,6 +7,7 @@ class ManageWalletsService {
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -25,7 +26,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -33,6 +34,7 @@ class ManageWalletsService {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
@@ -94,7 +96,7 @@ class ManageWalletsService {
     private func hasSettingsOrTokens(supportedTokens: [Token]) -> Bool {
         if supportedTokens.count == 1 {
             let token = supportedTokens[0]
-            return !token.blockchainType.coinSettingTypes.isEmpty
+            return !token.blockchainType.coinSettingTypes.isEmpty || evmBlockchainManager.allBlockchains.contains(token.blockchain) || token.blockchain.type == .binanceChain
         } else {
             return true
         }

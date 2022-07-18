@@ -48,9 +48,17 @@ extension MarketKit.Token {
     var typeInfo: String {
         switch type {
         case .native: return "coin_platforms.native".localized
-        case .eip20(let address): return address.shortenedAddress
+        case .eip20(let address): return address
         case .bep2(let symbol): return symbol
         default: return ""
+        }
+    }
+
+    var copyableTypeInfo: String? {
+        switch type {
+        case .eip20(let address): return address
+        case .bep2(let symbol): return symbol
+        default: return nil
         }
     }
 
@@ -71,6 +79,13 @@ extension MarketKit.TokenType {
         switch self {
         case .bep2(let symbol): return symbol
         default: return nil
+        }
+    }
+
+    var order: Int {
+        switch self {
+        case .native: return 0
+        default: return 1
         }
     }
 
@@ -315,7 +330,16 @@ extension Array where Element == FullCoin {
 extension Array where Element == Token {
 
     var sorted: [Token] {
-        sorted { $0.blockchainType.order < $1.blockchainType.order }
+        sorted {
+            let lhsTypeOrder = $0.type.order
+            let rhsTypeOrder = $1.type.order
+
+            guard lhsTypeOrder == rhsTypeOrder else {
+                return lhsTypeOrder < rhsTypeOrder
+            }
+
+            return $0.blockchainType.order < $1.blockchainType.order
+        }
     }
 
 }
