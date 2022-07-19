@@ -23,7 +23,7 @@ extension CoinSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(token: Token, settingsArray: [CoinSettings]) {
+    func approveSettings(token: Token, settingsArray: [CoinSettings], allowEmpty: Bool = false) {
         let blockchainType = token.blockchainType
 
         if blockchainType.coinSettingTypes.contains(.derivation) {
@@ -31,7 +31,8 @@ extension CoinSettingsService {
 
             let request = Request(
                     token: token,
-                    type: .derivation(allDerivations: MnemonicDerivation.allCases, current: currentDerivations)
+                    type: .derivation(allDerivations: MnemonicDerivation.allCases, current: currentDerivations),
+                    allowEmpty: allowEmpty
             )
 
             requestRelay.accept(request)
@@ -43,7 +44,8 @@ extension CoinSettingsService {
 
             let request = Request(
                     token: token,
-                    type: .bitcoinCashCoinType(allTypes: BitcoinCashCoinType.allCases, current: currentTypes)
+                    type: .bitcoinCashCoinType(allTypes: BitcoinCashCoinType.allCases, current: currentTypes),
+                    allowEmpty: allowEmpty
             )
 
             requestRelay.accept(request)
@@ -55,14 +57,14 @@ extension CoinSettingsService {
 
     func select(derivations: [MnemonicDerivation], token: Token) {
         let settingsArray: [CoinSettings] = derivations.map { [.derivation: $0.rawValue] }
-        let coinWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
-        approveSettingsRelay.accept(coinWithSettings)
+        let tokenWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
+        approveSettingsRelay.accept(tokenWithSettings)
     }
 
     func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], token: Token) {
         let settingsArray: [CoinSettings] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
-        let coinWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
-        approveSettingsRelay.accept(coinWithSettings)
+        let tokenWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
+        approveSettingsRelay.accept(tokenWithSettings)
     }
 
     func cancel(token: Token) {
@@ -86,6 +88,7 @@ extension CoinSettingsService {
     struct Request {
         let token: Token
         let type: RequestType
+        let allowEmpty: Bool
     }
 
     enum RequestType {

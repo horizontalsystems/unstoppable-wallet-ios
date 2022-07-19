@@ -23,8 +23,8 @@ extension CoinTokensService {
         requestRelay.asObservable()
     }
 
-    func approveTokens(fullCoin: FullCoin, currentTokens: [Token] = []) {
-        let request = Request(fullCoin: fullCoin, currentTokens: currentTokens)
+    func approveTokens(fullCoin: FullCoin, currentTokens: [Token] = [], allowEmpty: Bool = false) {
+        let request = Request(fullCoin: fullCoin, currentTokens: currentTokens, allowEmpty: allowEmpty)
         requestRelay.accept(request)
     }
 
@@ -54,6 +54,7 @@ extension CoinTokensService {
     struct Request {
         let fullCoin: FullCoin
         let currentTokens: [Token]
+        let allowEmpty: Bool
     }
 
 }

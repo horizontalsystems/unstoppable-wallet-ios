@@ -25,7 +25,7 @@ class EvmGasDataInfoViewController: ThemeActionSheetController {
 
         view.addSubview(label)
         label.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin32)
             maker.top.equalTo(titleView.snp.bottom)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
         }
