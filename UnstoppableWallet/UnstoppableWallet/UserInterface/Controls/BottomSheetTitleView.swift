@@ -20,7 +20,7 @@ class BottomSheetTitleView: UIView {
 
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin24)
+            maker.leading.equalToSuperview().offset(CGFloat.margin32)
             maker.centerY.equalToSuperview()
             maker.size.equalTo(CGFloat.iconSize24)
         }
@@ -37,7 +37,7 @@ class BottomSheetTitleView: UIView {
         addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin16)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.centerY.equalToSuperview()
             maker.size.equalTo(CGFloat.iconSize24 + 2 * CGFloat.margin8)
         }
