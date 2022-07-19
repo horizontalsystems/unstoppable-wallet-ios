@@ -102,7 +102,7 @@ extension ProFeaturesLockInfoViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: TextComponent) in
-                                        component.set(style: .d1)
+                                        component.set(style: .d2)
                                         component.text = viewItem
                                     }
 
