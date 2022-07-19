@@ -364,11 +364,14 @@ extension CoinOverviewViewController {
                     }
 
                     cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
-                        component.button.set(image: UIImage(named: "globe_20"))
-                        component.onTap = { [weak self] in
-                            if let explorerUrl = viewItem.explorerUrl {
+                        if let explorerUrl = viewItem.explorerUrl {
+                            component.isHidden = false
+                            component.button.set(image: UIImage(named: "globe_20"))
+                            component.onTap = { [weak self] in
                                 self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
                             }
+                        } else {
+                            component.isHidden = true
                         }
                     }
                 }
