@@ -16,8 +16,7 @@ struct EnableCoinModule {
         let service = EnableCoinService(
                 coinTokensService: coinTokensService,
                 restoreSettingsService: restoreSettingsService,
-                coinSettingsService: coinSettingsService,
-                evmBlockchainManager: App.shared.evmBlockchainManager
+                coinSettingsService: coinSettingsService
         )
 
         let view = EnableCoinView(

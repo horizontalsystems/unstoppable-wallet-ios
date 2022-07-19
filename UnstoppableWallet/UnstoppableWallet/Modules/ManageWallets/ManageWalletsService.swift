@@ -7,7 +7,6 @@ class ManageWalletsService {
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
-    private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -26,7 +25,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -34,7 +33,6 @@ class ManageWalletsService {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager
-        self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
@@ -42,6 +40,9 @@ class ManageWalletsService {
         }
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
             self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
+        }
+        subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
+            self?.handleDisable(coin: coin)
         }
         subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
             self?.handleCancelEnable(fullCoin: fullCoin)
@@ -96,7 +97,7 @@ class ManageWalletsService {
     private func hasSettingsOrTokens(supportedTokens: [Token]) -> Bool {
         if supportedTokens.count == 1 {
             let token = supportedTokens[0]
-            return !token.blockchainType.coinSettingTypes.isEmpty || evmBlockchainManager.allBlockchains.contains(token.blockchain) || token.blockchain.type == .binanceChain
+            return !token.blockchainType.coinSettingTypes.isEmpty || token.type != .native
         } else {
             return true
         }
@@ -155,6 +156,13 @@ class ManageWalletsService {
         if !newWallets.isEmpty || !removedWallets.isEmpty {
             walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))
         }
+    }
+
+    private func handleDisable(coin: Coin) {
+        let walletsToDelete = wallets.filter { $0.coin == coin }
+        walletManager.delete(wallets: Array(walletsToDelete))
+
+        cancelEnableCoinRelay.accept(coin)
     }
 
     private func handleCancelEnable(fullCoin: FullCoin) {

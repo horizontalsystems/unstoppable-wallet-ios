@@ -24,6 +24,7 @@ class CoinTokensViewModel {
                 icon: .remote(url: fullCoin.coin.imageUrl, placeholder: fullCoin.placeholderImageName),
                 title: fullCoin.coin.code,
                 description: tokens.count == 1 ? nil : "coin_platforms.description".localized,
+                allowEmpty: request.allowEmpty,
                 selectedIndexes: request.currentTokens.compactMap { tokens.firstIndex(of: $0) },
                 viewItems: tokens.map { token in
                     BottomMultiSelectorViewController.ViewItem(

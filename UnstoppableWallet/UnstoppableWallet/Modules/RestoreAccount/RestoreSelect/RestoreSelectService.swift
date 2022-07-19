@@ -53,6 +53,9 @@ class RestoreSelectService {
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
             self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
         }
+        subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
+            self?.handleDisable(coin: coin)
+        }
         subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
             self?.handleCancelEnable(fullCoin: fullCoin)
         }
@@ -119,6 +122,23 @@ class RestoreSelectService {
 
         for configuredToken in removedConfiguredTokens {
             enabledConfiguredTokens.remove(configuredToken)
+        }
+
+        syncCanRestore()
+        syncState()
+    }
+
+    private func handleDisable(coin: Coin) {
+        for token in restoreSettingsMap.keys {
+            if token.coin == coin {
+                restoreSettingsMap.removeValue(forKey: token)
+            }
+        }
+
+        for configuredToken in enabledConfiguredTokens {
+            if configuredToken.token.coin == coin {
+                enabledConfiguredTokens.remove(configuredToken)
+            }
         }
 
         syncCanRestore()

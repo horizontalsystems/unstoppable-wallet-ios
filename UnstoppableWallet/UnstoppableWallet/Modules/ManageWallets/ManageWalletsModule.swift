@@ -10,7 +10,6 @@ struct ManageWalletsModule {
                 marketKit: App.shared.marketKit,
                 walletManager: App.shared.walletManager,
                 accountManager: App.shared.accountManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
                 enableCoinService: enableCoinService
         ) else {
             return nil

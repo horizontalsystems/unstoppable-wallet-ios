@@ -22,20 +22,21 @@ class CoinSettingsViewModel {
 
         switch request.type {
         case let .derivation(allDerivations, current):
-            config = derivationConfig(token: request.token, allDerivations: allDerivations, current: current)
+            config = derivationConfig(token: request.token, allowEmpty: request.allowEmpty, allDerivations: allDerivations, current: current)
         case let .bitcoinCashCoinType(allTypes, current):
-            config = bitcoinCashCoinTypeConfig(token: request.token, allTypes: allTypes, current: current)
+            config = bitcoinCashCoinTypeConfig(token: request.token, allowEmpty: request.allowEmpty, allTypes: allTypes, current: current)
         }
 
         currentRequest = request
         openBottomSelectorRelay.accept(config)
     }
 
-    private func derivationConfig(token: Token, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
+    private func derivationConfig(token: Token, allowEmpty: Bool, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
                 title: token.coin.code,
                 description: "blockchain_settings.description".localized,
+                allowEmpty: allowEmpty,
                 selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
                     BottomMultiSelectorViewController.ViewItem(
@@ -46,11 +47,12 @@ class CoinSettingsViewModel {
         )
     }
 
-    private func bitcoinCashCoinTypeConfig(token: Token, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
+    private func bitcoinCashCoinTypeConfig(token: Token, allowEmpty: Bool, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
         BottomMultiSelectorViewController.Config(
                 icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
                 title: token.coin.code,
                 description: "blockchain_settings.description".localized,
+                allowEmpty: allowEmpty,
                 selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
                     BottomMultiSelectorViewController.ViewItem(

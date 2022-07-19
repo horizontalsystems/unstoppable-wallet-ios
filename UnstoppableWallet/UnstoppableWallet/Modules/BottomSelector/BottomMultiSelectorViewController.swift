@@ -122,7 +122,11 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
     }
 
     private func syncDoneButton() {
-        doneButton.isEnabled = !currentIndexes.isEmpty
+        if config.allowEmpty {
+            doneButton.isEnabled = true
+        } else {
+            doneButton.isEnabled = !currentIndexes.isEmpty
+        }
     }
 
 }
@@ -211,6 +215,7 @@ extension BottomMultiSelectorViewController {
         let icon: IconStyle
         let title: String
         let description: String?
+        let allowEmpty: Bool
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
     }
