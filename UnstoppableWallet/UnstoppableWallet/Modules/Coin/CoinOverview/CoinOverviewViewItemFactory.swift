@@ -62,6 +62,14 @@ class CoinOverviewViewItemFactory {
         return categories.isEmpty ? nil : categories.map { $0.name }
     }
 
+    private func explorerUrl(token: Token, reference: String) -> String? {
+        guard let explorerUrl = token.blockchain.explorerUrl else {
+            return nil
+        }
+
+        return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
+    }
+
     private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
         let tokens = info.fullCoin.tokens.sorted { lhsToken, rhsToken in
             lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
@@ -70,12 +78,12 @@ class CoinOverviewViewItemFactory {
         let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
             switch token.type {
             case .eip20(let address):
-                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: address, explorerUrl: nil)
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: address, explorerUrl: explorerUrl(token: token, reference: address))
             case .bep2(let symbol):
-                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: symbol, explorerUrl: nil)
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: symbol, explorerUrl: explorerUrl(token: token, reference: symbol))
             case let .unsupported(_, reference):
                 if let reference = reference {
-                    return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: reference, explorerUrl: nil)
+                    return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: reference, explorerUrl: explorerUrl(token: token, reference: reference))
                 } else {
                     return nil
                 }
