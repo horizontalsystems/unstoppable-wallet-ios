@@ -133,39 +133,6 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
 
 extension BottomMultiSelectorViewController: SectionsDataSource {
 
-    private func bind(cell: BaseThemeCell, viewItem: ViewItem, selected: Bool, index: Int, isFirst: Bool, isLast: Bool) {
-        cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
-
-        cell.bind(index: 0) { (component: ImageComponent) in
-            if let icon = viewItem.icon {
-                switch icon {
-                case .local(let name):
-                    component.imageView.image = UIImage(named: name)
-                case .remote(let url, let placeholder):
-                    component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
-                }
-                component.isHidden = false
-            } else {
-                component.isHidden = true
-            }
-        }
-
-        cell.bind(index: 1) { (component: MultiTextComponent) in
-            component.set(style: .m1)
-            component.title.set(style: .b2)
-            component.subtitle.set(style: .d1)
-
-            component.title.text = viewItem.title
-            component.subtitle.text = viewItem.subtitle
-            component.subtitle.lineBreakMode = .byTruncatingMiddle
-        }
-
-        cell.bind(index: 2) { (component: SwitchComponent) in
-            component.switchView.isOn = selected
-            component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
-        }
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -175,33 +142,57 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                         let isFirst = index == 0
                         let isLast = index == config.viewItems.count - 1
 
-                        if let copyableString = viewItem.copyableString {
-                            return CellBuilder.selectableRow(
-                                    elements: [.image24, .multiText, .switch],
-                                    tableView: tableView,
-                                    id: "item_\(index)",
-                                    hash: "\(selected)",
-                                    height: .heightDoubleLineCell,
-                                    autoDeselect: true,
-                                    bind: { [weak self] cell in
-                                        self?.bind(cell: cell, viewItem: viewItem, selected: selected, index: index, isFirst: isFirst, isLast: isLast)
-                                    },
-                                    action: {
-                                        CopyHelper.copyAndNotify(value: copyableString)
+                        return CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .image24,
+                                    .vStackCentered([.text, .margin(3), .text]),
+                                    .switch
+                                ]),
+                                tableView: tableView,
+                                id: "item_\(index)",
+                                hash: "\(selected)",
+                                height: .heightDoubleLineCell,
+                                autoDeselect: true,
+                                bind: { cell in
+                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
+
+                                    cell.bindRoot { (stack: StackComponent) in
+                                        stack.bind(index: 0) { (component: ImageComponent) in
+                                            if let icon = viewItem.icon {
+                                                switch icon {
+                                                case .local(let name):
+                                                    component.imageView.image = UIImage(named: name)
+                                                case .remote(let url, let placeholder):
+                                                    component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+                                                }
+                                                component.isHidden = false
+                                            } else {
+                                                component.isHidden = true
+                                            }
+                                        }
+
+                                        stack.bind(index: 1) { (stack: StackComponent) in
+                                            stack.bind(index: 0) { (component: TextComponent) in
+                                                component.set(style: .b2)
+                                                component.text = viewItem.title
+                                            }
+                                            stack.bind(index: 1) { (component: TextComponent) in
+                                                component.set(style: .d1)
+                                                component.lineBreakMode = .byTruncatingMiddle
+                                                component.text = viewItem.subtitle
+                                            }
+                                        }
+
+                                        stack.bind(index: 2) { (component: SwitchComponent) in
+                                            component.switchView.isOn = selected
+                                            component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+                                        }
                                     }
-                            )
-                        } else {
-                            return CellBuilder.row(
-                                    elements: [.image24, .multiText, .switch],
-                                    tableView: tableView,
-                                    id: "item_\(index)",
-                                    hash: "\(selected)",
-                                    height: .heightDoubleLineCell,
-                                    bind: { [weak self] cell in
-                                        self?.bind(cell: cell, viewItem: viewItem, selected: selected, index: index, isFirst: isFirst, isLast: isLast)
-                                    }
-                            )
-                        }
+                                },
+                                action: viewItem.copyableString.map { string in
+                                    { CopyHelper.copyAndNotify(value: string) }
+                                }
+                        )
                     }
             )
         ]

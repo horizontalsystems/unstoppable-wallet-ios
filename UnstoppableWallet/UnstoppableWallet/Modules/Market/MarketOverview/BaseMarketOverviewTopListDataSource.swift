@@ -43,7 +43,7 @@ class BaseMarketOverviewTopListDataSource {
                     isFirst: index == 0,
                     isLast: false,
                     rowActionProvider: nil,
-                    action:  {[weak self] in
+                    action:  { [weak self] in
                         self?.onSelect(listViewItem: listViewItem)
                     })
         }

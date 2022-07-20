@@ -35,7 +35,7 @@ struct MarketModule {
     }
 
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
-        CellBuilderNew.selectableRow(
+        CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24,
                     .vStackCentered([
@@ -51,7 +51,6 @@ struct MarketModule {
                 rowActionProvider: rowActionProvider,
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-                    cell.selectionStyle = listViewItem.clickable ? .default : .none
 
                     cell.bindRoot { (stack: StackComponent) in
                         stack.bind(index: 0) { (component: ImageComponent) in
@@ -101,9 +100,7 @@ struct MarketModule {
                         }
                     }
                 },
-                action: {
-                    action?()
-                }
+                action: action
         )
     }
 
@@ -333,7 +330,6 @@ extension MarketModule {  // ViewModel Items
         let badgeSecondaryValue: BadgeView.Change?
         let rightPrimaryValue: String
         let rightSecondaryValue: MarketDataValue
-        var clickable: Bool = true
     }
 
     struct ListViewItemData {
