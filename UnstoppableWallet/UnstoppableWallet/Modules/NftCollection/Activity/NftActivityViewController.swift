@@ -7,22 +7,29 @@ import ComponentKit
 import SectionsTableView
 import HUD
 
-class NftCollectionActivityViewController: ThemeViewController {
-    private let viewModel: NftCollectionActivityViewModel
+class NftActivityViewController: ThemeViewController {
+    private let viewModel: NftActivityViewModel
+    private let cellFactory: INftActivityCellFactory
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
     private let headerView: DropdownFilterHeaderView
     private let wrapperView = UIView()
     private let spinner = HUDActivityView.create(with: .medium24)
+    private let emptyView = PlaceholderView()
     private let errorView = PlaceholderViewModule.reachabilityView()
 
-    weak var parentNavigationController: UINavigationController?
+    weak var parentNavigationController: UINavigationController? {
+        didSet {
+            cellFactory.parentNavigationController = parentNavigationController
+        }
+    }
 
-    private var viewItem: NftCollectionActivityViewModel.ViewItem?
+    private var viewItem: NftActivityViewModel.ViewItem?
 
-    init(viewModel: NftCollectionActivityViewModel) {
+    init(viewModel: NftActivityViewModel, cellFactory: INftActivityCellFactory) {
         self.viewModel = viewModel
+        self.cellFactory = cellFactory
         headerView = DropdownFilterHeaderView(viewModel: viewModel, hasTopSeparator: false)
 
         super.init()
@@ -36,6 +43,12 @@ class NftCollectionActivityViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.addSubview(headerView)
+        headerView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
+        }
 
         view.addSubview(tableView)
         view.addSubview(wrapperView)
@@ -59,8 +72,19 @@ class NftCollectionActivityViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        emptyView.isHidden = true
+        emptyView.image = UIImage(named: "outgoing_raw_48")
+        emptyView.text = "nft.activity.empty_list".localized
+
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
         if #available(iOS 15.0, *) {
@@ -85,68 +109,19 @@ class NftCollectionActivityViewController: ThemeViewController {
         viewModel.onTapRetry()
     }
 
-    private func sync(viewItem: NftCollectionActivityViewModel.ViewItem?) {
+    private func sync(viewItem: NftActivityViewModel.ViewItem?) {
         self.viewItem = viewItem
         tableView.reload()
         wrapperView.isHidden = viewItem != nil
-    }
-
-    private func openAsset(viewItem: NftCollectionActivityViewModel.EventViewItem, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
-        parentNavigationController?.pushViewController(module, animated: true)
+        emptyView.isHidden = !(viewItem.map { $0.eventViewItems.isEmpty && $0.allLoaded } ?? false)
     }
 
 }
 
-extension NftCollectionActivityViewController: SectionsDataSource {
+extension NftActivityViewController: SectionsDataSource {
 
-    private func row(eventViewItem viewItem: NftCollectionActivityViewModel.EventViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .multiText],
-                tableView: tableView,
-                id: "event-\(index)",
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                bind: { [weak self] cell in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
-                        component.imageView.cornerRadius = .cornerRadius4
-                        component.imageView.backgroundColor = .themeSteel20
-                        component.imageView.contentMode = .scaleAspectFill
-                    }
-
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = viewItem.type
-                        component.subtitle.text = viewItem.date
-                    }
-
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = viewItem.coinPrice
-                        component.title.textAlignment = .right
-                        component.subtitle.text = viewItem.fiatPrice
-                        component.subtitle.textAlignment = .right
-                    }
-
-                    if isLast {
-                        self?.viewModel.onReachBottom()
-                    }
-                },
-                actionWithCell: { [weak self] cell in
-                    let component: ImageComponent? = cell.component(index: 0)
-                    self?.openAsset(viewItem: viewItem, imageRatio: component?.imageRatio ?? 1)
-                }
-        )
+    private func row(eventViewItem viewItem: NftActivityViewModel.EventViewItem, index: Int, isLast: Bool) -> RowProtocol {
+        cellFactory.row(tableView: tableView, viewItem: viewItem, index: index, onReachBottom: isLast ? { [weak self] in self?.viewModel.onReachBottom() } : nil)
     }
 
     private func spinnerRow() -> RowProtocol {
@@ -168,7 +143,6 @@ extension NftCollectionActivityViewController: SectionsDataSource {
 
         let mainSection = Section(
                 id: "main",
-                headerState: .static(view: headerView, height: .heightSingleLineCell),
                 footerState: .marginColor(height: .margin12, color: .clear),
                 rows: rows
         )

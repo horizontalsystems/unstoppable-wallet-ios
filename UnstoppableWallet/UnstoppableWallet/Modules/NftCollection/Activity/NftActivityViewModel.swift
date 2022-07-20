@@ -4,8 +4,8 @@ import RxCocoa
 import CurrencyKit
 import MarketKit
 
-class NftCollectionActivityViewModel {
-    private let service: NftCollectionActivityService
+class NftActivityViewModel {
+    private let service: NftActivityService
     private let disposeBag = DisposeBag()
 
     private let eventTypeRelay = BehaviorRelay<String>(value: "")
@@ -14,7 +14,7 @@ class NftCollectionActivityViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: NftCollectionActivityService) {
+    init(service: NftActivityService) {
         self.service = service
 
         subscribe(disposeBag, service.eventTypeObservable) { [weak self] in self?.sync(eventType: $0) }
@@ -28,7 +28,7 @@ class NftCollectionActivityViewModel {
         eventTypeRelay.accept(title(eventType: eventType))
     }
 
-    private func sync(state: NftCollectionActivityService.State) {
+    private func sync(state: NftActivityService.State) {
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
@@ -50,7 +50,7 @@ class NftCollectionActivityViewModel {
         }
     }
 
-    private func eventViewItem(item: NftCollectionActivityService.Item) -> EventViewItem {
+    private func eventViewItem(item: NftActivityService.Item) -> EventViewItem {
         let event = item.event
 
         var coinPrice = ""
@@ -70,9 +70,9 @@ class NftCollectionActivityViewModel {
         let type: String
 
         if let eventType = event.type {
-            type = "nft_collection.activity.event_type.\(eventType.rawValue)".localized
+            type = "nft.activity.event_type.\(eventType.rawValue)".localized
         } else {
-            type = "nft_collection.activity.event_type.unknown".localized
+            type = "nft.activity.event_type.unknown".localized
         }
 
         return EventViewItem(
@@ -89,18 +89,18 @@ class NftCollectionActivityViewModel {
 
     private func title(eventType: NftEvent.EventType?) -> String {
         guard let eventType = eventType else {
-            return "nft_collection.activity.event_type.all".localized
+            return "nft.activity.event_type.all".localized
         }
 
-        return "nft_collection.activity.event_type.\(eventType.rawValue)".localized
+        return "nft.activity.event_type.\(eventType.rawValue)".localized
     }
 
 }
 
-extension NftCollectionActivityViewModel: IDropdownFilterHeaderViewModel {
+extension NftActivityViewModel: IDropdownFilterHeaderViewModel {
 
     var dropdownTitle: String {
-        "nft_collection.activity.event_types".localized
+        "nft.activity.event_types".localized
     }
 
     var dropdownViewItems: [AlertViewItem] {
@@ -129,7 +129,7 @@ extension NftCollectionActivityViewModel: IDropdownFilterHeaderViewModel {
 
 }
 
-extension NftCollectionActivityViewModel {
+extension NftActivityViewModel {
 
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
@@ -143,10 +143,6 @@ extension NftCollectionActivityViewModel {
         syncErrorRelay.asDriver()
     }
 
-    func asset(tokenId: String) -> NftAsset? {
-        service.asset(tokenId: tokenId)
-    }
-
     func onTapRetry() {
         service.reload()
     }
@@ -157,7 +153,7 @@ extension NftCollectionActivityViewModel {
 
 }
 
-extension NftCollectionActivityViewModel {
+extension NftActivityViewModel {
 
     struct ViewItem {
         let eventViewItems: [EventViewItem]

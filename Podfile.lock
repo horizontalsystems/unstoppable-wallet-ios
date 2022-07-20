@@ -398,8 +398,8 @@ PODS:
     - HsToolKit.swift
     - PromiseKit
   - X11Kit.swift (1.0)
-  - ZcashLightClientKit (0.14.0-beta):
-    - gRPC-Swift (~> 1.0)
+  - ZcashLightClientKit (0.15.0-beta):
+    - gRPC-Swift (~> 1.8)
     - libzcashlc (= 0.0.3)
     - SQLite.swift (~> 0.12.2)
 
@@ -449,7 +449,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 4.0.0)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.14.0-beta`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.15.0-beta`)
 
 SPEC REPOS:
   trunk:
@@ -572,7 +572,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.14.0-beta
+    :tag: 0.15.0-beta
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -633,7 +633,7 @@ CHECKOUT OPTIONS:
     :commit: e2c4815a9830305a86c1cc3cd5ac92b6ba2518a6
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: c66e161f4e2e68c7b74ab84130a64fa80c08ae96
+    :commit: 12c89a9387d6dd4f4af7a6cfd979ab0333126e6b
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 48256d6812535ad439edc141104292c0ef06c9fb
@@ -670,7 +670,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.14.0-beta
+    :tag: 0.15.0-beta
 
 SPEC CHECKSUMS:
   _NIODataStructures: 3d45d8e70a1d17a15b1dc59d102c63dbc0525ffd
@@ -757,8 +757,8 @@ SPEC CHECKSUMS:
   UnstoppableDomainsResolution: c3c67f4d0a5e2437cb00d4bd50c2e00d6e743841
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  ZcashLightClientKit: 82bfa46e9cf6667261912b0cf99510a61645131b
+  ZcashLightClientKit: 09dab174f05e695a2109b6d310cd2229295f9261
 
-PODFILE CHECKSUM: 12966095ffc15d92ddbea99d913ae7ffcc3fd6c5
+PODFILE CHECKSUM: 5a8946b46a4c65468c359b95070c5a9577532c93
 
 COCOAPODS: 1.11.2

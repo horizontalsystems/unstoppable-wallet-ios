@@ -2,8 +2,8 @@ import RxSwift
 import RxRelay
 import MarketKit
 
-class NftCollectionActivityService {
-    private let collectionUid: String
+class NftActivityService {
+    private let eventListType: NftActivityModule.NftEventListType
     private let marketKit: MarketKit.Kit
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
@@ -32,12 +32,20 @@ class NftCollectionActivityService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-activity-service", qos: .userInitiated)
 
-    init(collectionUid: String, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
-        self.collectionUid = collectionUid
+    init(eventListType: NftActivityModule.NftEventListType, defaultEventType: NftEvent.EventType?, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
+        self.eventListType = eventListType
+        eventType = defaultEventType
         self.marketKit = marketKit
         self.coinPriceService = coinPriceService
 
         _loadInitial()
+    }
+
+    private func single(cursor: String? = nil) -> Single<PagedNftEvents> {
+        switch eventListType {
+        case .collection(let uid): return marketKit.nftCollectionEventsSingle(collectionUid: uid, eventType: eventType, cursor: cursor)
+        case .asset(let contractAddress, let tokenId): return marketKit.nftAssetEventsSingle(contractAddress: contractAddress, tokenId: tokenId, eventType: eventType, cursor: cursor)
+        }
     }
 
     private func _loadInitial() {
@@ -45,7 +53,7 @@ class NftCollectionActivityService {
 
         state = .loading
 
-        marketKit.nftEventsSingle(collectionUid: collectionUid, eventType: eventType)
+        single()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedEvents in
                     self?.handle(pagedEvents: pagedEvents)
@@ -66,7 +74,7 @@ class NftCollectionActivityService {
 
         loadingMore = true
 
-        marketKit.nftEventsSingle(collectionUid: collectionUid, eventType: eventType, cursor: cursor)
+        single(cursor: cursor)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] pagedEvents in
                     self?.handleMore(pagedEvents: pagedEvents)
@@ -131,7 +139,7 @@ class NftCollectionActivityService {
 
 }
 
-extension NftCollectionActivityService: IWalletRateServiceDelegate {
+extension NftActivityService: IWalletRateServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
@@ -157,7 +165,7 @@ extension NftCollectionActivityService: IWalletRateServiceDelegate {
 
 }
 
-extension NftCollectionActivityService {
+extension NftActivityService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
@@ -179,17 +187,9 @@ extension NftCollectionActivityService {
         }
     }
 
-    func asset(tokenId: String) -> NftAsset? {
-        guard case .loaded(let items, _) = state else {
-            return nil
-        }
-
-        return items.first { $0.event.asset.tokenId == tokenId }?.event.asset
-    }
-
 }
 
-extension NftCollectionActivityService {
+extension NftActivityService {
 
     enum State {
         case loading

@@ -4,7 +4,7 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 
-class NftAssetService {
+class NftAssetOverviewService {
     private let collectionUid: String
     private let contractAddress: String
     private let tokenId: String
@@ -81,11 +81,9 @@ class NftAssetService {
 
         priceItem?.coinPrice = map[coinUid]
     }
-
 }
 
-extension NftAssetService: IWalletRateServiceDelegate {
-
+extension NftAssetOverviewService: IWalletRateServiceDelegate {
     func didUpdateBaseCurrency() {
         queue.async {
             guard case .completed(let item) = self.state else {
@@ -107,11 +105,9 @@ extension NftAssetService: IWalletRateServiceDelegate {
             self.state = .completed(item)
         }
     }
-
 }
 
-extension NftAssetService {
-
+extension NftAssetOverviewService {
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
@@ -119,11 +115,9 @@ extension NftAssetService {
     func resync() {
         sync()
     }
-
 }
 
-extension NftAssetService {
-
+extension NftAssetOverviewService {
     class Item {
         let collection: NftCollection
         let asset: NftAsset
@@ -209,5 +203,4 @@ extension NftAssetService {
         case topBid
         case minimumBid
     }
-
 }
