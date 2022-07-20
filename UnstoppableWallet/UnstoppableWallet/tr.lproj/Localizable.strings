@@ -1149,6 +1149,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 // Nft Asset
 
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
+
 "nft_asset.last_sale" = "Son İndirim";
 "nft_asset.average_7d" = "7 Günlük Ortalama";
 "nft_asset.average_30d" = "30 Günlük Ortalama";
@@ -1191,17 +1194,18 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 
-"nft_collection.activity.event_types" = "Etkinlik Türleri";
-"nft_collection.activity.event_type.all" = "Tüm Etkinlikler";
-"nft_collection.activity.event_type.list" = "Liste";
-"nft_collection.activity.event_type.sale" = "İndirim";
-"nft_collection.activity.event_type.offer" = "Son Teklif Girildi";
-"nft_collection.activity.event_type.bid" = "Teklif Girildi";
-"nft_collection.activity.event_type.bid_cancel" = "Teklif Geri Çekildi";
-"nft_collection.activity.event_type.transfer" = "Aktar";
-"nft_collection.activity.event_type.approve" = "Onayla";
-"nft_collection.activity.event_type.custom" = "Özel";
-"nft_collection.activity.event_type.payout" = "Ödeme";
-"nft_collection.activity.event_type.cancel" = "İptal";
-"nft_collection.activity.event_type.bulkCancel" = "Toplu İptal";
-"nft_collection.activity.event_type.unknown" = "Bilinmeyen";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";
