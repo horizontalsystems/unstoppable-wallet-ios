@@ -1148,6 +1148,9 @@
 
 // Nft Asset
 
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
+
 "nft_asset.last_sale" = "Последняя Продажа";
 "nft_asset.average_7d" = "Среднее за 7 дней";
 "nft_asset.average_30d" = "Среднее за 30 дней";
@@ -1190,17 +1193,18 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 
-"nft_collection.activity.event_types" = "Типы событий";
-"nft_collection.activity.event_type.all" = "Все события";
-"nft_collection.activity.event_type.list" = "Список";
-"nft_collection.activity.event_type.sale" = "Продажа";
-"nft_collection.activity.event_type.offer" = "Предложение сделано";
-"nft_collection.activity.event_type.bid" = "Ставка сделана";
-"nft_collection.activity.event_type.bid_cancel" = "Ставка отозвана";
-"nft_collection.activity.event_type.transfer" = "Перевод";
-"nft_collection.activity.event_type.approve" = "Разрешить";
-"nft_collection.activity.event_type.custom" = "Индивидуальная";
-"nft_collection.activity.event_type.payout" = "Выплата";
-"nft_collection.activity.event_type.cancel" = "Отмена";
-"nft_collection.activity.event_type.bulkCancel" = "Массовая отмена";
-"nft_collection.activity.event_type.unknown" = "Неизвестная";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";
