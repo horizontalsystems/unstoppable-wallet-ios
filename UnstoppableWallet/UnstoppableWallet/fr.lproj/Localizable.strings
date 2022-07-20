@@ -1146,6 +1146,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Nft Asset
 
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
+
 "nft_asset.last_sale" = "Dernière vente";
 "nft_asset.average_7d" = "Moyenne sur 7 jours";
 "nft_asset.average_30d" = "Moyenne sur 30 jours";
@@ -1188,17 +1191,18 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.overview.floor_price" = "Prix plancher";
 "nft_collection.overview.all_time_average" = "Moyenne du temps";
 
-"nft_collection.activity.event_types" = "Types d'évènement";
-"nft_collection.activity.event_type.all" = "Tous les événements";
-"nft_collection.activity.event_type.list" = "Liste";
-"nft_collection.activity.event_type.sale" = "Vente";
-"nft_collection.activity.event_type.offer" = "Offre saisie";
-"nft_collection.activity.event_type.bid" = "Enchère saisie";
-"nft_collection.activity.event_type.bid_cancel" = "Enchère retirée";
-"nft_collection.activity.event_type.transfer" = "Transfert";
-"nft_collection.activity.event_type.approve" = "Approuver";
-"nft_collection.activity.event_type.custom" = "Personnalisé";
-"nft_collection.activity.event_type.payout" = "Versement";
-"nft_collection.activity.event_type.cancel" = "Annuler";
-"nft_collection.activity.event_type.bulkCancel" = "Annuler en bloc";
-"nft_collection.activity.event_type.unknown" = "Inconnu";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";
