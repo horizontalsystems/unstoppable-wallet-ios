@@ -1146,6 +1146,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 // Nft Asset
 
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
+
 "nft_asset.last_sale" = "마지막 판매";
 "nft_asset.average_7d" = "7일 평균";
 "nft_asset.average_30d" = "30일 평균";
@@ -1188,17 +1191,18 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collection.overview.floor_price" = "바닥 가격";
 "nft_collection.overview.all_time_average" = "모든 시간 평균";
 
-"nft_collection.activity.event_types" = "이벤트 유형";
-"nft_collection.activity.event_type.all" = "모든 이벤트";
-"nft_collection.activity.event_type.list" = "목록";
-"nft_collection.activity.event_type.sale" = "판매";
-"nft_collection.activity.event_type.offer" = "입력된 제안";
-"nft_collection.activity.event_type.bid" = "입력된 입찰가";
-"nft_collection.activity.event_type.bid_cancel" = "입찰 철회";
-"nft_collection.activity.event_type.transfer" = "전송";
-"nft_collection.activity.event_type.approve" = "승인";
-"nft_collection.activity.event_type.custom" = "사용자 지정";
-"nft_collection.activity.event_type.payout" = "지불";
-"nft_collection.activity.event_type.cancel" = "취소";
-"nft_collection.activity.event_type.bulkCancel" = "대량 취소";
-"nft_collection.activity.event_type.unknown" = "알 수 없음";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";
