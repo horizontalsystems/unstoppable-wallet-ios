@@ -35,8 +35,15 @@ struct MarketModule {
     }
 
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .multiText],
+        CellBuilderNew.selectableRow(
+                rootElement: .hStack([
+                    .image24,
+                    .vStackCentered([
+                        .hStack([.text, .text]),
+                        .margin(3),
+                        .hStack([.badge, .margin8, .text, .text])
+                    ])
+                ]),
                 tableView: tableView,
                 id: "\(listViewItem.uid ?? "")-\(listViewItem.leftPrimaryValue)",
                 height: .heightDoubleLineCell,
@@ -46,34 +53,52 @@ struct MarketModule {
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
                     cell.selectionStyle = listViewItem.clickable ? .default : .none
 
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.clipsToBounds = true
-                        component.imageView.cornerRadius = listViewItem.iconShape.radius
-                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
-                    }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m3)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                    cell.bindRoot { (stack: StackComponent) in
+                        stack.bind(index: 0) { (component: ImageComponent) in
+                            component.imageView.clipsToBounds = true
+                            component.imageView.cornerRadius = listViewItem.iconShape.radius
+                            component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
+                        }
 
-                        component.title.text = listViewItem.leftPrimaryValue
-                        component.subtitle.text = listViewItem.leftSecondaryValue
-                        component.subtitleBadge.text = listViewItem.badge
-                        component.subtitleBadge.change = listViewItem.badgeSecondaryValue
-                    }
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        stack.bind(index: 1) { (stack: StackComponent) in
+                            stack.bind(index: 0) { (stack: StackComponent) in
+                                stack.bind(index: 0) { (component: TextComponent) in
+                                    component.set(style: .b2)
+                                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                    component.text = listViewItem.leftPrimaryValue
+                                }
+                                stack.bind(index: 1) { (component: TextComponent) in
+                                    component.set(style: .b2)
+                                    component.textAlignment = .right
+                                    component.text = listViewItem.rightPrimaryValue
+                                }
+                            }
 
-                        component.title.textAlignment = .right
-                        component.title.text = listViewItem.rightPrimaryValue
-
-                        let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
-                        component.subtitle.textAlignment = .right
-                        component.subtitle.textColor = marketFieldData.color
-                        component.subtitle.text = marketFieldData.value
+                            stack.bind(index: 1) { (stack: StackComponent) in
+                                stack.bind(index: 0) { (component: BadgeComponent) in
+                                    if let badge = listViewItem.badge {
+                                        component.isHidden = false
+                                        component.badgeView.set(style: .small)
+                                        component.badgeView.text = badge
+                                        component.badgeView.change = listViewItem.badgeSecondaryValue
+                                    } else {
+                                        component.isHidden = true
+                                    }
+                                }
+                                stack.bind(index: 1) { (component: TextComponent) in
+                                    component.set(style: .d1)
+                                    component.text = listViewItem.leftSecondaryValue
+                                }
+                                stack.bind(index: 2) { (component: TextComponent) in
+                                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                    component.setContentHuggingPriority(.required, for: .horizontal)
+                                    component.textAlignment = .right
+                                    let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
+                                    component.set(style: marketFieldData.style)
+                                    component.text = marketFieldData.value
+                                }
+                            }
+                        }
                     }
                 },
                 action: {
@@ -82,10 +107,10 @@ struct MarketModule {
         )
     }
 
-    static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
+    static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, style: TextComponent.Style) {
         let title: String?
         let value: String?
-        let color: UIColor
+        let style: TextComponent.Style
 
         switch dataValue {
         case .valueDiff(let currencyValue, let diff):
@@ -94,30 +119,30 @@ struct MarketModule {
             if let currencyValue = currencyValue, let diff = diff {
                 let valueDiff = diff * currencyValue.value / 100
                 value = ValueFormatter.instance.formatShort(currency: currencyValue.currency, value: valueDiff, showSign: true) ?? "----"
-                color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
+                style = valueDiff.isSignMinus ? .d5 : .d4
             } else {
                 value = "----"
-                color = .themeGray50
+                style = .d7
             }
         case .diff(let diff):
             title = nil
             value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
             if let diff = diff {
-                color = diff.isSignMinus ? .themeLucian : .themeRemus
+                style = diff.isSignMinus ? .d5 : .d4
             } else {
-                color = .themeGray50
+                style = .d7
             }
         case .volume(let volume):
             title = "market.top.volume.title".localized
             value = volume
-            color = .themeGray
+            style = .d1
         case .marketCap(let marketCap):
             title = "market.top.market_cap.title".localized
             value = marketCap
-            color = .themeGray
+            style = .d1
         }
 
-        return (title: title, value: value, color: color)
+        return (title: title, value: value, style: style)
     }
 
 }
