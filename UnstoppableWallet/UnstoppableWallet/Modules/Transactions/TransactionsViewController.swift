@@ -141,61 +141,80 @@ class TransactionsViewController: ThemeViewController {
     }
 
     private func bind(viewItem: TransactionsViewModel.ViewItem, cell: BaseThemeCell) {
-        cell.bind(index: 0) { (component: TransactionImageComponent) in
-            component.set(progress: viewItem.progress)
+        cell.bindRoot { (stack: StackComponent) in
+            stack.bind(index: 0) { (component: TransactionImageComponent) in
+                component.set(progress: viewItem.progress)
 
-            switch viewItem.iconType {
-            case .icon(let imageUrl, let placeholderImageName):
-                component.setImage(
-                        urlString: imageUrl,
-                        placeholder: UIImage(named: placeholderImageName)
-                )
-            case .localIcon(let imageName):
-                component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
-            case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
-                component.setDoubleImage(
-                        frontUrlString: frontImageUrl,
-                        frontPlaceholder: UIImage(named: frontPlaceholderImageName),
-                        backUrlString: backImageUrl,
-                        backPlaceholder: UIImage(named: backPlaceholderImageName)
-                )
-            case .failedIcon:
-                component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
-            }
-        }
-
-        cell.bind(index: 1) { (component: MultiTextComponent) in
-            component.set(style: .m1)
-            component.title.set(style: .b2)
-            component.subtitle.set(style: .d1)
-
-            component.title.text = viewItem.title
-            component.subtitle.text = viewItem.subTitle
-        }
-
-        cell.bind(index: 2) { (component: MultiTextComponent) in
-            component.titleSpacingView.isHidden = true
-            component.set(style: .m6)
-            component.title.set(style: viewItem.primaryValue.map { primaryStyle(valueType: $0.type) } ?? .b2)
-            component.subtitle.set(style: viewItem.secondaryValue.map { secondaryStyle(valueType: $0.type) } ?? .d1)
-
-            component.title.text = viewItem.primaryValue?.text ?? " "
-            component.title.textAlignment = .right
-            component.subtitle.text = viewItem.secondaryValue?.text ?? " "
-            component.subtitle.textAlignment = .right
-
-            if viewItem.sentToSelf {
-                component.titleImageLeft.imageView.image = UIImage(named: "arrow_return_20")?.withTintColor(.themeGray)
-                component.titleImageLeft.isHidden = false
-            } else {
-                component.titleImageLeft.isHidden = true
+                switch viewItem.iconType {
+                case .icon(let imageUrl, let placeholderImageName):
+                    component.setImage(
+                            urlString: imageUrl,
+                            placeholder: UIImage(named: placeholderImageName)
+                    )
+                case .localIcon(let imageName):
+                    component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
+                case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
+                    component.setDoubleImage(
+                            frontUrlString: frontImageUrl,
+                            frontPlaceholder: UIImage(named: frontPlaceholderImageName),
+                            backUrlString: backImageUrl,
+                            backPlaceholder: UIImage(named: backPlaceholderImageName)
+                    )
+                case .failedIcon:
+                    component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
+                }
             }
 
-            if let locked = viewItem.locked {
-                component.titleImageRight.imageView.image = locked ? UIImage(named: "lock_20")?.withTintColor(.themeGray) : UIImage(named: "unlock_20")?.withTintColor(.themeGray)
-                component.titleImageRight.isHidden = false
-            } else {
-                component.titleImageRight.isHidden = true
+            stack.bind(index: 1) { (stack: StackComponent) in
+                stack.bind(index: 0) { (stack: StackComponent) in
+                    stack.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .b2)
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        component.text = viewItem.title
+                    }
+                    stack.bind(index: 1) { (component: TextComponent) in
+                        if let primaryValue = viewItem.primaryValue, !primaryValue.text.isEmpty {
+                            component.isHidden = false
+                            component.set(style: primaryStyle(valueType: primaryValue.type))
+                            component.textAlignment = .right
+                            component.lineBreakMode = .byTruncatingMiddle
+                            component.text = primaryValue.text
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                    stack.bind(index: 2) { (component: ImageComponent) in
+                        component.isHidden = !viewItem.sentToSelf
+                        component.imageView.image = UIImage(named: "arrow_return_20")?.withTintColor(.themeGray)
+                    }
+                    stack.bind(index: 3) { (component: ImageComponent) in
+                        if let locked = viewItem.locked {
+                            component.imageView.image = locked ? UIImage(named: "lock_20")?.withTintColor(.themeGray) : UIImage(named: "unlock_20")?.withTintColor(.themeGray)
+                            component.isHidden = false
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                }
+
+                stack.bind(index: 1) { (stack: StackComponent) in
+                    stack.bind(index: 0) { (component: TextComponent) in
+                        component.set(style: .d1)
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        component.text = viewItem.subTitle
+                    }
+                    stack.bind(index: 1) { (component: TextComponent) in
+                        if let secondaryValue = viewItem.secondaryValue, !secondaryValue.text.isEmpty {
+                            component.isHidden = false
+                            component.set(style: secondaryStyle(valueType: secondaryValue.type))
+                            component.textAlignment = .right
+                            component.lineBreakMode = .byTruncatingMiddle
+                            component.text = secondaryValue.text
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                }
             }
         }
     }
@@ -267,7 +286,19 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section < sectionViewItems.count {
-            return CellBuilder.preparedSelectableCell(tableView: tableView, indexPath: indexPath, elements: [.transactionImage, .margin8, .multiText, .multiText], layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16))
+            return CellBuilderNew.preparedSelectableCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    rootElement: .hStack([
+                        .transactionImage, .margin8,
+                        .vStackCentered([
+                            .hStack([.text, .text, .margin8, .image20, .margin(6), .image20]),
+                            .margin(3),
+                            .hStack([.text, .text])
+                        ])
+                    ]),
+                    layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16)
+            )
         } else {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: SpinnerCell.self), for: indexPath)
         }

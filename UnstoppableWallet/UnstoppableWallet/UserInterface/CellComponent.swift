@@ -53,11 +53,13 @@ struct CellComponent {
 
                     cell.bind(index: 1) { (component: TextComponent) in
                         component.set(style: type.textStyle)
+                        component.lineBreakMode = .byTruncatingMiddle
                         component.text = coinAmount
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
                         component.set(style: .d1)
+                        component.lineBreakMode = .byTruncatingMiddle
                         component.text = currencyAmount
                     }
                 }
