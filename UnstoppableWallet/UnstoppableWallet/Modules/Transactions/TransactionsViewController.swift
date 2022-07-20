@@ -286,9 +286,10 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section < sectionViewItems.count {
-            return CellBuilderNew.preparedSelectableCell(
+            return CellBuilderNew.preparedCell(
                     tableView: tableView,
                     indexPath: indexPath,
+                    selectable: true,
                     rootElement: .hStack([
                         .transactionImage, .margin8,
                         .vStackCentered([

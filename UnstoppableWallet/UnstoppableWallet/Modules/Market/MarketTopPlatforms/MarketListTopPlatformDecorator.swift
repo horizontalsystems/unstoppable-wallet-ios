@@ -50,8 +50,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
                 badge: rank.map { "\($0)" },
                 badgeSecondaryValue: rankChange,
                 rightPrimaryValue: marketCap,
-                rightSecondaryValue: dataValue,
-                clickable: false
+                rightSecondaryValue: dataValue
         )
     }
 
