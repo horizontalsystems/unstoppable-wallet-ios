@@ -4,8 +4,8 @@ import RxCocoa
 import CurrencyKit
 import MarketKit
 
-class NftAssetViewModel {
-    private let service: NftAssetService
+class NftAssetOverviewViewModel {
+    private let service: NftAssetOverviewService
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
@@ -14,7 +14,7 @@ class NftAssetViewModel {
 
     private let openTraitRelay = PublishRelay<String>()
 
-    init(service: NftAssetService) {
+    init(service: NftAssetOverviewService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -22,7 +22,7 @@ class NftAssetViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<NftAssetService.Item>) {
+    private func sync(state: DataStatus<NftAssetOverviewService.Item>) {
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
@@ -39,7 +39,7 @@ class NftAssetViewModel {
         }
     }
 
-    private func viewItem(item: NftAssetService.Item) -> ViewItem {
+    private func viewItem(item: NftAssetOverviewService.Item) -> ViewItem {
         let asset = item.asset
         let collection = item.collection
 
@@ -64,7 +64,7 @@ class NftAssetViewModel {
         )
     }
 
-    private func saleViewItem(saleItem: NftAssetService.SaleItem?) -> SaleViewItem? {
+    private func saleViewItem(saleItem: NftAssetOverviewService.SaleItem?) -> SaleViewItem? {
         guard let saleItem = saleItem else {
             return nil
         }
@@ -79,7 +79,7 @@ class NftAssetViewModel {
         )
     }
 
-    private func priceViewItem(priceItem: NftAssetService.PriceItem?) -> PriceViewItem? {
+    private func priceViewItem(priceItem: NftAssetOverviewService.PriceItem?) -> PriceViewItem? {
         guard let priceItem = priceItem else {
             return nil
         }
@@ -90,13 +90,13 @@ class NftAssetViewModel {
         )
     }
 
-    private func coinValue(priceItem: NftAssetService.PriceItem) -> String {
+    private func coinValue(priceItem: NftAssetOverviewService.PriceItem) -> String {
         let price = priceItem.nftPrice
         let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
         return ValueFormatter.instance.formatShort(coinValue: coinValue) ?? "---"
     }
 
-    private func fiatValue(priceItem: NftAssetService.PriceItem) -> String {
+    private func fiatValue(priceItem: NftAssetOverviewService.PriceItem) -> String {
         guard let coinPrice = priceItem.coinPrice else {
             return "---"
         }
@@ -151,8 +151,7 @@ class NftAssetViewModel {
 
 }
 
-extension NftAssetViewModel {
-
+extension NftAssetOverviewViewModel {
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
@@ -196,7 +195,7 @@ extension NftAssetViewModel {
 
 }
 
-extension NftAssetViewModel {
+extension NftAssetOverviewViewModel {
 
     struct ViewItem {
         let imageUrl: String?
@@ -220,7 +219,7 @@ extension NftAssetViewModel {
 
     struct SaleViewItem {
         let untilDate: String
-        let type: NftAssetService.SalePriceType
+        let type: NftAssetOverviewService.SalePriceType
         let price: PriceViewItem
     }
 

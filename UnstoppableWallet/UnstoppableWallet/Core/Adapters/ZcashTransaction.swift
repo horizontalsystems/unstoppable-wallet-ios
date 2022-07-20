@@ -27,7 +27,7 @@ class ZcashTransaction {
         minedHeight = confirmedTransaction.minedHeight
         expiryHeight = confirmedTransaction.expiryHeight
         timestamp = confirmedTransaction.blockTimeInSeconds
-        value = confirmedTransaction.value
+        value = Int(confirmedTransaction.value.amount)
         memo = confirmedTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
         failed = false
     }
@@ -45,7 +45,7 @@ class ZcashTransaction {
         minedHeight = nil
         expiryHeight = pendingTransaction.expiryHeight
         timestamp = pendingTransaction.createTime
-        value = pendingTransaction.value
+        value = Int(pendingTransaction.value.amount)
         memo = pendingTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
         failed = pendingTransaction.isFailure
     }

@@ -10,7 +10,7 @@ class TraitsCell: UITableViewCell {
 
     private let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
     private let collectionView: UICollectionView
-    private var viewItems: [NftAssetViewModel.TraitViewItem] = []
+    private var viewItems: [NftAssetOverviewViewModel.TraitViewItem] = []
 
     private var onSelect: ((Int) -> ())?
 
@@ -45,7 +45,7 @@ class TraitsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(viewItems: [NftAssetViewModel.TraitViewItem], onSelect: @escaping (Int) -> ()) {
+    func bind(viewItems: [NftAssetOverviewViewModel.TraitViewItem], onSelect: @escaping (Int) -> ()) {
         self.viewItems = viewItems
         self.onSelect = onSelect
 
