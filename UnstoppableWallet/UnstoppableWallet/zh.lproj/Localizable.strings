@@ -1148,6 +1148,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 // Nft Asset
 
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
+
 "nft_asset.last_sale" = "收盘价";
 "nft_asset.average_7d" = "7天平均";
 "nft_asset.average_30d" = "30天平均";
@@ -1190,17 +1193,18 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collection.overview.floor_price" = "底价";
 "nft_collection.overview.all_time_average" = "全部时间平均值";
 
-"nft_collection.activity.event_types" = "事件类型";
-"nft_collection.activity.event_type.all" = "全部事件";
-"nft_collection.activity.event_type.list" = "列表";
-"nft_collection.activity.event_type.sale" = "出售";
-"nft_collection.activity.event_type.offer" = "已输入报价";
-"nft_collection.activity.event_type.bid" = "已输入出价";
-"nft_collection.activity.event_type.bid_cancel" = "已撤回出价";
-"nft_collection.activity.event_type.transfer" = "转帐";
-"nft_collection.activity.event_type.approve" = "批准";
-"nft_collection.activity.event_type.custom" = "自定义";
-"nft_collection.activity.event_type.payout" = "支出";
-"nft_collection.activity.event_type.cancel" = "取消";
-"nft_collection.activity.event_type.bulkCancel" = "批量取消";
-"nft_collection.activity.event_type.unknown" = "未知";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";
