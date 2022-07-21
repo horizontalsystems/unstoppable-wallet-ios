@@ -8,6 +8,7 @@ class RestoreSelectService {
         .ethereum,
         .binanceSmartChain,
         .polygon,
+        .avalanche,
         .zcash,
         .dash,
         .bitcoinCash,

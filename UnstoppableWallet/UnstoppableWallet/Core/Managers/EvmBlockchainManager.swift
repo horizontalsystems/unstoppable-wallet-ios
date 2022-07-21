@@ -7,6 +7,7 @@ class EvmBlockchainManager {
         .ethereum,
         .binanceSmartChain,
         .polygon,
+        .avalanche,
 //        .optimism,
 //        .arbitrumOne,
     ]
@@ -71,6 +72,7 @@ extension EvmBlockchainManager {
         case .ethereum: return .ethereum
         case .binanceSmartChain: return .binanceSmartChain
         case .polygon: return .polygon
+        case .avalanche: return .avalanche
         case .optimism: return .optimism
         case .arbitrumOne: return .arbitrumOne
         default: fatalError("Unsupported blockchain type")

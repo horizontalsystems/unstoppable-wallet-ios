@@ -90,6 +90,7 @@ extension UdnAddressParserItem {
         case .ethereum: return "ETH"
         case .binanceSmartChain: return "ETH"
         case .polygon: return "ETH"
+        case .avalanche: return "ETH"
         case .optimism: return "ETH"
         case .arbitrumOne: return "ETH"
         default: return nil
@@ -101,6 +102,7 @@ extension UdnAddressParserItem {
         case (.ethereum, .eip20): return "ERC20"
         case (.binanceSmartChain, .eip20): return "BEP20"
         case (.polygon, .native), (.polygon, .eip20): return "MATIC"
+        case (.avalanche, .native), (.avalanche, .eip20): return "AVAX"
         default: return nil
         }
     }

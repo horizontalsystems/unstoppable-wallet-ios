@@ -31,6 +31,7 @@ extension MarketKit.Token {
         case .ethereum: return true
         case .binanceSmartChain: return true
         case .polygon: return true
+        case .avalanche: return true
         case .optimism: return true
         case .arbitrumOne: return true
         default: return false
@@ -111,6 +112,7 @@ extension MarketKit.TokenQuery {
         case (.ethereum, .native), (.ethereum, .eip20): return true
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
         case (.polygon, .native), (.polygon, .eip20): return true
+        case (.avalanche, .native), (.avalanche, .eip20): return true
         case (.binanceChain, .native), (.binanceChain, .bep2): return true
         default: return false
         }
@@ -143,6 +145,7 @@ extension MarketKit.BlockchainType {
             case .ethereum: return "ERC20"
             case .binanceSmartChain: return "BEP20"
             case .polygon: return "Polygon"
+            case .avalanche: return "Avalanche"
             case .optimism: return "Optimism"
             case .arbitrumOne: return "Arbitrum"
             default: return nil
@@ -163,6 +166,7 @@ extension MarketKit.BlockchainType {
         case .ethereum: return "ethereum_trx_24"
         case .binanceSmartChain: return "binance_smart_chain_trx_24"
         case .polygon: return "polygon_trx_24"
+        case .avalanche: return "avalanche_trx_24"
         case .optimism: return "optimism_trx_24"
         case .arbitrumOne: return "arbitrum_one_trx_24"
         case .binanceChain: return "binance_chain_trx_24"
@@ -208,8 +212,9 @@ extension MarketKit.BlockchainType {
         case .ethereum: return 6
         case .binanceSmartChain: return 7
         case .polygon: return 8
-        case .optimism: return 9
-        case .arbitrumOne: return 10
+        case .avalanche: return 9
+        case .optimism: return 10
+        case .arbitrumOne: return 11
         default: return Int.max
         }
     }

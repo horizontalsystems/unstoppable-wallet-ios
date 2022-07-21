@@ -9,7 +9,7 @@ class MarketAdvancedSearchService {
         .binanceSmartChain,
         .binanceChain,
         .arbitrumOne,
-        .unsupported(uid: "avalanche"),
+        .avalanche,
         .unsupported(uid: "fantom"),
         .unsupported(uid: "harmony"),
         .unsupported(uid: "huobi-token"),

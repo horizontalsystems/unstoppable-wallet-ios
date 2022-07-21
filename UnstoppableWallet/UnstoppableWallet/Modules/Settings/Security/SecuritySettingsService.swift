@@ -108,8 +108,9 @@ extension SecuritySettingsService {
                 case .ethereum: return 2
                 case .binanceSmartChain: return 3
                 case .polygon: return 4
-                case .optimism: return 5
-                case .arbitrumOne: return 6
+                case .avalanche: return 5
+                case .optimism: return 6
+                case .arbitrumOne: return 7
                 default: return Int.max
                 }
             }
