@@ -37,11 +37,50 @@ struct MarketModule {
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image24,
+                    .image24 { component in
+                        component.imageView.clipsToBounds = true
+                        component.imageView.cornerRadius = listViewItem.iconShape.radius
+                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
+                    },
                     .vStackCentered([
-                        .hStack([.text, .text]),
+                        .hStack([
+                            .text { component in
+                                component.set(style: .b2)
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.text = listViewItem.leftPrimaryValue
+                            },
+                            .text { component in
+                                component.set(style: .b2)
+                                component.textAlignment = .right
+                                component.text = listViewItem.rightPrimaryValue
+                            }
+                        ]),
                         .margin(3),
-                        .hStack([.badge, .margin8, .text, .text])
+                        .hStack([
+                            .badge { component in
+                                if let badge = listViewItem.badge {
+                                    component.isHidden = false
+                                    component.badgeView.set(style: .small)
+                                    component.badgeView.text = badge
+                                    component.badgeView.change = listViewItem.badgeSecondaryValue
+                                } else {
+                                    component.isHidden = true
+                                }
+                            },
+                            .margin8,
+                            .text { component in
+                                component.set(style: .d1)
+                                component.text = listViewItem.leftSecondaryValue
+                            },
+                            .text { component in
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.setContentHuggingPriority(.required, for: .horizontal)
+                                component.textAlignment = .right
+                                let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
+                                component.set(style: marketFieldData.style)
+                                component.text = marketFieldData.value
+                            }
+                        ])
                     ])
                 ]),
                 tableView: tableView,
@@ -51,54 +90,6 @@ struct MarketModule {
                 rowActionProvider: rowActionProvider,
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-
-                    cell.bindRoot { (stack: StackComponent) in
-                        stack.bind(index: 0) { (component: ImageComponent) in
-                            component.imageView.clipsToBounds = true
-                            component.imageView.cornerRadius = listViewItem.iconShape.radius
-                            component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
-                        }
-
-                        stack.bind(index: 1) { (stack: StackComponent) in
-                            stack.bind(index: 0) { (stack: StackComponent) in
-                                stack.bind(index: 0) { (component: TextComponent) in
-                                    component.set(style: .b2)
-                                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                                    component.text = listViewItem.leftPrimaryValue
-                                }
-                                stack.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .b2)
-                                    component.textAlignment = .right
-                                    component.text = listViewItem.rightPrimaryValue
-                                }
-                            }
-
-                            stack.bind(index: 1) { (stack: StackComponent) in
-                                stack.bind(index: 0) { (component: BadgeComponent) in
-                                    if let badge = listViewItem.badge {
-                                        component.isHidden = false
-                                        component.badgeView.set(style: .small)
-                                        component.badgeView.text = badge
-                                        component.badgeView.change = listViewItem.badgeSecondaryValue
-                                    } else {
-                                        component.isHidden = true
-                                    }
-                                }
-                                stack.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .d1)
-                                    component.text = listViewItem.leftSecondaryValue
-                                }
-                                stack.bind(index: 2) { (component: TextComponent) in
-                                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                                    component.setContentHuggingPriority(.required, for: .horizontal)
-                                    component.textAlignment = .right
-                                    let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
-                                    component.set(style: marketFieldData.style)
-                                    component.text = marketFieldData.value
-                                }
-                            }
-                        }
-                    }
                 },
                 action: action
         )

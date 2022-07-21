@@ -144,9 +144,35 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
 
                         return CellBuilderNew.row(
                                 rootElement: .hStack([
-                                    .image24,
-                                    .vStackCentered([.text, .margin(3), .text]),
-                                    .switch
+                                    .image24 { component in
+                                        if let icon = viewItem.icon {
+                                            switch icon {
+                                            case .local(let name):
+                                                component.imageView.image = UIImage(named: name)
+                                            case .remote(let url, let placeholder):
+                                                component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+                                            }
+                                            component.isHidden = false
+                                        } else {
+                                            component.isHidden = true
+                                        }
+                                    },
+                                    .vStackCentered([
+                                        .text { component in
+                                            component.set(style: .b2)
+                                            component.text = viewItem.title
+                                        },
+                                        .margin(3),
+                                        .text { component in
+                                            component.set(style: .d1)
+                                            component.lineBreakMode = .byTruncatingMiddle
+                                            component.text = viewItem.subtitle
+                                        }
+                                    ]),
+                                    .switch { component in
+                                        component.switchView.isOn = selected
+                                        component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+                                    }
                                 ]),
                                 tableView: tableView,
                                 id: "item_\(index)",
@@ -155,39 +181,6 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 bind: { cell in
                                     cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
-
-                                    cell.bindRoot { (stack: StackComponent) in
-                                        stack.bind(index: 0) { (component: ImageComponent) in
-                                            if let icon = viewItem.icon {
-                                                switch icon {
-                                                case .local(let name):
-                                                    component.imageView.image = UIImage(named: name)
-                                                case .remote(let url, let placeholder):
-                                                    component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
-                                                }
-                                                component.isHidden = false
-                                            } else {
-                                                component.isHidden = true
-                                            }
-                                        }
-
-                                        stack.bind(index: 1) { (stack: StackComponent) in
-                                            stack.bind(index: 0) { (component: TextComponent) in
-                                                component.set(style: .b2)
-                                                component.text = viewItem.title
-                                            }
-                                            stack.bind(index: 1) { (component: TextComponent) in
-                                                component.set(style: .d1)
-                                                component.lineBreakMode = .byTruncatingMiddle
-                                                component.text = viewItem.subtitle
-                                            }
-                                        }
-
-                                        stack.bind(index: 2) { (component: SwitchComponent) in
-                                            component.switchView.isOn = selected
-                                            component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
-                                        }
-                                    }
                                 },
                                 action: viewItem.copyableString.map { string in
                                     { CopyHelper.copyAndNotify(value: string) }
