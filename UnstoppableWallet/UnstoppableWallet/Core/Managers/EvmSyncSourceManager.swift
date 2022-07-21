@@ -58,6 +58,14 @@ class EvmSyncSourceManager {
                         transactionSource: .polygonscan(apiKey: appConfigProvider.polygonscanKey)
                 )
             ]
+        case .avalanche:
+            return [
+                EvmSyncSource(
+                        name: "Avax.network HTTP",
+                        rpcSource: .avaxNetworkHttp(),
+                        transactionSource: .snowtrace(apiKey: appConfigProvider.snowtraceKey)
+                )
+            ]
         case .optimism:
             return [
                 EvmSyncSource(

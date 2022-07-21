@@ -39,6 +39,10 @@ class AppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "PolygonscanApiKey") as? String) ?? ""
     }
 
+    var snowtraceKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "SnowtraceApiKey") as? String) ?? ""
+    }
+
     var cryptoCompareApiKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "CryptoCompareApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
