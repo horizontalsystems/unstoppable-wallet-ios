@@ -37,4 +37,10 @@ class MarketWatchlistViewController: MarketListViewController {
         viewModel.onLoad()
     }
 
+    override func showAddedToWatchlist() {
+    }
+
+    override func showRemovedFromWatchlist() {
+    }
+
 }
