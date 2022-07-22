@@ -8,7 +8,7 @@ import RxCocoa
 import UIExtensions
 
 class WatchAddressViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin8
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
     private let viewModel: WatchAddressViewModel
     private let disposeBag = DisposeBag()
 
