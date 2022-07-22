@@ -1,44 +1,49 @@
-import UIKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
+import UIKit
 
 class NftAssetCellFactory {
     weak var parentNavigationController: UINavigationController?
+
+    func actionWithCell(viewItem: NftActivityViewModel.EventViewItem) -> ((BaseThemeCell) -> Void)? { nil }
+
+    func cellElement(viewItem: NftActivityViewModel.EventViewItem) -> CellBuilderNew.CellElement {
+        .vStackCentered([
+            line(style: .b2, title: viewItem.type, subtitle: viewItem.coinPrice),
+            .margin(1),
+            line(style: .d1, title: viewItem.date, subtitle: viewItem.fiatPrice),
+        ])
+    }
+
+    private func line(style: TextComponent.Style, title: String?, subtitle: String?) -> CellBuilderNew.CellElement {
+        .hStack([
+            .text { component in
+                component.set(style: style)
+                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                component.text = title
+            },
+            .text { component in
+                component.set(style: style)
+                component.textAlignment = .right
+                component.text = subtitle
+            },
+        ])
+    }
 }
 
 extension NftAssetCellFactory: INftActivityCellFactory {
-    func row(tableView: UIKit.UITableView, viewItem: NftActivityViewModel.EventViewItem, index: Int, onReachBottom: (() -> ())? = nil) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.multiText, .multiText],
-                tableView: tableView,
-                id: "event-\(index)",
-                height: .heightDoubleLineCell,
-                bind: { [weak self] cell in
-                    cell.set(backgroundStyle: .transparent, isLast: onReachBottom != nil)
-
-                    cell.bind(index: 0) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = viewItem.type
-                        component.subtitle.text = viewItem.date
-                    }
-
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = viewItem.coinPrice
-                        component.title.textAlignment = .right
-                        component.subtitle.text = viewItem.fiatPrice
-                        component.subtitle.textAlignment = .right
-                    }
-
-                    onReachBottom?()
-                }
+    func row(tableView: UIKit.UITableView, viewItem: NftActivityViewModel.EventViewItem, index: Int, onReachBottom: (() -> Void)? = nil) -> RowProtocol {
+        CellBuilderNew.row(
+            rootElement: cellElement(viewItem: viewItem),
+            tableView: tableView,
+            id: "event-\(index)",
+            height: .heightDoubleLineCell,
+            autoDeselect: actionWithCell != nil,
+            bind: { [weak self] cell in
+                cell.set(backgroundStyle: .transparent, isLast: onReachBottom != nil)
+                onReachBottom?()
+            },
+            actionWithCell: actionWithCell(viewItem: viewItem)
         )
     }
 }
