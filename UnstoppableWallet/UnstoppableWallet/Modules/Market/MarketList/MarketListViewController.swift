@@ -37,8 +37,8 @@ class MarketListViewController: ThemeViewController {
         super.init()
 
         if let watchViewModel = listViewModel as? IMarketListWatchViewModel {
-            subscribe(disposeBag, watchViewModel.favoriteDriver) { HudHelper.instance.show(banner: .addedToWatchlist) }
-            subscribe(disposeBag, watchViewModel.unfavoriteDriver) { HudHelper.instance.show(banner: .removedFromWatchlist) }
+            subscribe(disposeBag, watchViewModel.favoriteDriver) { [weak self] in self?.showAddedToWatchlist() }
+            subscribe(disposeBag, watchViewModel.unfavoriteDriver) { [weak self] in self?.showRemovedFromWatchlist() }
             subscribe(disposeBag, watchViewModel.failDriver) { error in HudHelper.instance.show(banner: .error(string: error.localized)) }
         }
     }
@@ -190,6 +190,14 @@ class MarketListViewController: ThemeViewController {
 
     private func scrollToTop() {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+    }
+
+    func showAddedToWatchlist() {
+        HudHelper.instance.show(banner: .addedToWatchlist)
+    }
+
+    func showRemovedFromWatchlist() {
+        HudHelper.instance.show(banner: .removedFromWatchlist)
     }
 
 }
