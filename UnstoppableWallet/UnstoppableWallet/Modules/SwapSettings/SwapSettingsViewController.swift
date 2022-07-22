@@ -9,7 +9,7 @@ import ComponentKit
 import UIExtensions
 
 class SwapSettingsViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin8
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
