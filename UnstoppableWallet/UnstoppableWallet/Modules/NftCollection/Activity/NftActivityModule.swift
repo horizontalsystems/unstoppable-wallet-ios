@@ -3,7 +3,7 @@ import SectionsTableView
 import UIKit
 
 struct NftActivityModule {
-    static func viewController(eventListType: NftEventListType, defaultEventType: NftEvent.EventType = .sale) -> NftActivityViewController {
+    static func viewController(eventListType: NftEventListType, defaultEventType: NftEvent.EventType? = .sale) -> NftActivityViewController {
         let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, marketKit: App.shared.marketKit, coinPriceService: coinPriceService)
         let viewModel = NftActivityViewModel(service: service)

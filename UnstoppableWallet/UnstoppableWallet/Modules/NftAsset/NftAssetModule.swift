@@ -6,7 +6,7 @@ struct NftAssetModule {
 
     static func viewController(collectionUid: String, contractAddress: String, tokenId: String, imageRatio: CGFloat) -> UIViewController {
         let overviewController = NftAssetOverviewModule.viewController(collectionUid: collectionUid, contractAddress: contractAddress, tokenId: tokenId, imageRatio: imageRatio)
-        let activityController = NftActivityModule.viewController(eventListType: .asset(contractAddress: contractAddress, tokenId: tokenId))
+        let activityController = NftActivityModule.viewController(eventListType: .asset(contractAddress: contractAddress, tokenId: tokenId), defaultEventType: nil)
 
         return NftAssetViewController(
                 overviewController: overviewController,
