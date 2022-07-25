@@ -25,7 +25,8 @@ class SendFeePriorityCell: BaseSelectableThemeCell {
         })
 
         bind(index: 1) { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "send.tx_speed".localized
         }
 

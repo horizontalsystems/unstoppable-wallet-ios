@@ -106,7 +106,8 @@ extension AppearanceViewController: SectionsDataSource {
                         component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = viewItem.title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in
@@ -199,7 +200,8 @@ extension AppearanceViewController: SectionsDataSource {
                                     component.setImage(urlString: viewItem.urlString, placeholder: nil)
                                 }
                                 cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .b2)
+                                    component.font = .body
+                                    component.textColor = .themeLeah
                                     component.text = viewItem.title
                                 }
                                 cell.bind(index: 2) { (component: ImageComponent) in
@@ -236,8 +238,10 @@ extension AppearanceViewController: SectionsDataSource {
 
                                 cell.bind(index: 0) { (component: MultiTextComponent) in
                                     component.set(style: .m1)
-                                    component.title.set(style: .b2)
-                                    component.subtitle.set(style: .d1)
+                                    component.title.font = .body
+                                    component.title.textColor = .themeLeah
+                                    component.subtitle.font = .subhead2
+                                    component.subtitle.textColor = .themeGray
 
                                     component.title.text = viewItem.title
                                     component.subtitle.text = viewItem.subtitle

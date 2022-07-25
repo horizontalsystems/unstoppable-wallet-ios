@@ -42,7 +42,8 @@ class SendBitcoinViewController: BaseSendViewController {
             timeLockCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
             timeLockCell.bind(index: 0) { (component: TextComponent) in
-                component.set(style: .d1)
+                component.font = .subhead2
+                component.textColor = .themeGray
                 component.text = "send.hodler_locktime".localized
             }
             timeLockCell.bind(index: 2) { (component: ImageComponent) in
@@ -76,7 +77,8 @@ class SendBitcoinViewController: BaseSendViewController {
         if let timeLockViewModel = timeLockViewModel {
             subscribe(disposeBag, timeLockViewModel.lockTimeDriver) { [weak self] priority in
                 self?.timeLockCell?.bind(index: 1) { (component: TextComponent) in
-                    component.set(style: .c2)
+                    component.font = .subhead1
+                    component.textColor = .themeLeah
                     component.text = priority
                 }
             }

@@ -60,7 +60,8 @@ class BaseMarketOverviewTopListDataSource {
                     cell.set(backgroundStyle: .lawrence, isLast: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "market.top.section.header.see_all".localized
                     }
                     cell.bind(index: 1) { (component: ImageComponent) in

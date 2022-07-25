@@ -125,12 +125,14 @@ class TransactionInfoViewController: ThemeViewController {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = "status".localized
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: .c2)
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
                         component.text = value
                     }
 
@@ -174,7 +176,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = "tx_info.options".localized
                     }
 
@@ -219,7 +222,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = "tx_info.transaction_id".localized
                     }
 
@@ -245,8 +249,8 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func multiLineValueRow(rowInfo: RowInfo, id: String, title: String, value: String) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
-        let titleStyle: TextComponent.Style = .d1
-        let valueStyle: TextComponent.Style = .g2
+        let titleFont: UIFont = .subhead2
+        let valueFont: UIFont = .subhead1I
 
         return CellBuilder.row(
                 elements: [.text, .text],
@@ -257,21 +261,23 @@ class TransactionInfoViewController: ThemeViewController {
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
                             text: value,
-                            textStyle: valueStyle,
-                            elements: [.fixed(width: TextComponent.width(style: titleStyle, text: title)), .multiline]
+                            font: valueFont,
+                            elements: [.fixed(width: TextComponent.width(font: titleFont, text: title)), .multiline]
                     )
                 },
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: titleStyle)
+                        component.font = titleFont
+                        component.textColor = .themeGray
                         component.text = title
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: valueStyle)
+                        component.font = valueFont
+                        component.textColor = .themeLeah
                         component.text = value
                         component.textAlignment = .right
                         component.numberOfLines = 0
@@ -282,7 +288,7 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func warningRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String, onTap: @escaping () -> ()) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
-        let textStyle: TextComponent.Style = .d1
+        let textFont: UIFont = .subhead2
 
         return CellBuilder.selectableRow(
                 elements: [.image20, .text, .image20],
@@ -294,7 +300,7 @@ class TransactionInfoViewController: ThemeViewController {
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
                             text: text,
-                            textStyle: textStyle,
+                            font: textFont,
                             elements: [.fixed(width: .iconSize20), .multiline, .fixed(width: .iconSize20)]
                     )
                 },
@@ -306,7 +312,8 @@ class TransactionInfoViewController: ThemeViewController {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: textStyle)
+                        component.font = textFont
+                        component.textColor = .themeGray
                         component.text = text
                         component.numberOfLines = 0
                     }
@@ -349,7 +356,7 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func noteRow(rowInfo: RowInfo, id: String, image: UIImage?, text: String) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
-        let textStyle: TextComponent.Style = .d1
+        let textFont: UIFont = .subhead2
 
         return CellBuilder.row(
                 elements: [.image20, .text],
@@ -360,7 +367,7 @@ class TransactionInfoViewController: ThemeViewController {
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
                             text: text,
-                            textStyle: textStyle,
+                            font: textFont,
                             elements: [.fixed(width: .iconSize20), .multiline]
                     )
                 },
@@ -372,7 +379,8 @@ class TransactionInfoViewController: ThemeViewController {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: textStyle)
+                        component.font = textFont
+                        component.textColor = .themeGray
                         component.text = text
                         component.numberOfLines = 0
                     }
@@ -399,7 +407,8 @@ class TransactionInfoViewController: ThemeViewController {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = "tx_info.raw_transaction".localized
                     }
 
@@ -429,7 +438,8 @@ class TransactionInfoViewController: ThemeViewController {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
 

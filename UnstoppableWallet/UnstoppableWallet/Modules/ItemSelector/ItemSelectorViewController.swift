@@ -109,10 +109,12 @@ class ItemSelectorViewController: ThemeActionSheetController {
                             cell.bind(index: 0, block: { (component: MultiTextComponent) in
                                 component.set(style: .m1)
 
-                                component.title.set(style: viewItem.titleStyle)
+                                component.title.font = .body
+                                component.title.textColor = viewItem.titleColor
                                 component.title.text = viewItem.title
 
-                                component.subtitle.set(style: viewItem.subtitleStyle)
+                                component.subtitle.font = .subhead2
+                                component.subtitle.textColor = viewItem.subtitleColor
                                 component.subtitle.text = subtitle
                             })
 
@@ -138,7 +140,8 @@ class ItemSelectorViewController: ThemeActionSheetController {
                         cell.set(backgroundStyle: .bordered, isFirst: rowIndex == 0, isLast: isLast)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
-                            component.set(style: viewItem.titleStyle)
+                            component.font = .body
+                            component.textColor = viewItem.titleColor
                             component.text = viewItem.title
                         })
 

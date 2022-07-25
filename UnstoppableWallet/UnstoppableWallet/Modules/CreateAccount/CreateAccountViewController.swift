@@ -55,11 +55,13 @@ class CreateAccountViewController: KeyboardAwareViewController {
             component.imageView.image = UIImage(named: "key_20")
         }
         mnemonicCell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "create_wallet.mnemonic".localized
         }
         mnemonicCell.bind(index: 2) { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         }
         mnemonicCell.bind(index: 3) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_small_down_20")
@@ -71,7 +73,8 @@ class CreateAccountViewController: KeyboardAwareViewController {
             component.imageView.image = UIImage(named: "key_phrase_20")
         }
         passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "create_wallet.passphrase".localized
         }
         passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in

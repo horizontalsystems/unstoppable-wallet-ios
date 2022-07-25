@@ -143,7 +143,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func buildSelector(cell: BaseThemeCell, title: String) {
         CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image20])
         cell.bind(index: 0) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 2) { (component: ImageComponent) in
@@ -154,7 +155,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func buildToggle(cell: BaseThemeCell, title: String, onToggle: @escaping (Bool) -> ()) {
         CellBuilder.build(cell: cell, elements: [.text, .switch])
         cell.bind(index: 0) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 1) { (component: SwitchComponent) in
@@ -164,7 +166,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
         viewItems.map {
-            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleStyle: $0.style.filterTextStyle, selected: $0.selected))
+            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleColor: $0.style.filterTextColor, selected: $0.selected))
         }
     }
 
@@ -277,7 +279,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem, cell: BaseThemeCell) {
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: viewItem.valueStyle.valueTextStyle)
+            component.font = .subhead1
+            component.textColor = viewItem.valueStyle.valueTextColor
             component.text = viewItem.value
         }
     }
@@ -421,21 +424,21 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
 extension MarketAdvancedSearchViewModel.ValueStyle {
 
-    var valueTextStyle: TextComponent.Style {
+    var valueTextColor: UIColor {
         switch self {
-        case .none: return .c1
-        case .positive: return .c4
-        case .negative: return .c5
-        case .normal: return .c2
+        case .none: return .themeGray
+        case .positive: return .themeRemus
+        case .negative: return .themeLucian
+        case .normal: return .themeLeah
         }
     }
 
-    var filterTextStyle: TextComponent.Style {
+    var filterTextColor: UIColor {
         switch self {
-        case .none: return .b1
-        case .positive: return .b4
-        case .negative: return .b5
-        case .normal: return .b2
+        case .none: return .themeGray
+        case .positive: return .themeRemus
+        case .negative: return .themeLucian
+        case .normal: return .themeLeah
         }
     }
 

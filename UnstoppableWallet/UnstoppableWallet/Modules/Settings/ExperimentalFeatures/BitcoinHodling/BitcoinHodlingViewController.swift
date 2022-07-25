@@ -59,7 +59,8 @@ extension BitcoinHodlingViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
                                     cell.bind(index: 0) { (component: TextComponent) in
-                                        component.set(style: .b2)
+                                        component.font = .body
+                                        component.textColor = .themeLeah
                                         component.text = "settings.bitcoin_hodling.lock_time".localized
                                     }
                                     cell.bind(index: 1) { (component: SwitchComponent) in

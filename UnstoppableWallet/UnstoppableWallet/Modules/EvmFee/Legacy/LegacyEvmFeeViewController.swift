@@ -82,11 +82,13 @@ class LegacyEvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         gasLimitCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.gas_limit".localized
         })
         gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         gasPriceCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
@@ -95,11 +97,13 @@ class LegacyEvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         gasPriceCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.gas_price".localized
         })
         gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         gasPriceSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)

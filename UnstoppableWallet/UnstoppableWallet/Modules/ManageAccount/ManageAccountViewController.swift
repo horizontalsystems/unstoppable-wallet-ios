@@ -58,7 +58,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
         showRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "manage_account.show_recovery_phrase".localized
         })
         showRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
@@ -71,7 +72,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
         backupRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "manage_account.backup_recovery_phrase".localized
         })
         backupRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
@@ -87,7 +89,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
         })
         unlinkCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b5)
+            component.font = .body
+            component.textColor = .themeLucian
             component.text = "manage_account.unlink".localized
         })
 
@@ -197,7 +200,8 @@ extension ManageAccountViewController: SectionsDataSource {
                             component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
                         })
                         cell.bind(index: 1, block: { (component: TextComponent) in
-                            component.set(style: .b2)
+                            component.font = .body
+                            component.textColor = .themeLeah
                             component.text = viewItem.title
                         })
                         cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in

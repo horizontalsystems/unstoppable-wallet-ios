@@ -182,7 +182,8 @@ extension ShowKeyViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = text.uppercased()
                     }
                 }
@@ -199,7 +200,8 @@ extension ShowKeyViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
 
@@ -265,7 +267,8 @@ extension ShowKeyViewController: SectionsDataSource {
                                 component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
                             }
                             cell.bind(index: 1) { (component: TextComponent) in
-                                component.set(style: .d1)
+                                component.font = .subhead2
+                                component.textColor = .themeGray
                                 component.text = "show_key.passphrase".localized
                             }
                             cell.bind(index: 2) { (component: SecondaryButtonComponent) in

@@ -71,7 +71,7 @@ class MultiSelectorViewController: ThemeViewController {
 
 extension MultiSelectorViewController: SectionsDataSource {
 
-    private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueStyle: TextComponent.Style, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueColor: UIColor, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.text, .image20],
                 tableView: tableView,
@@ -83,7 +83,8 @@ extension MultiSelectorViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.set(style: valueStyle)
+                        component.font = .body
+                        component.textColor = valueColor
                         component.text = value
                     })
 
@@ -108,7 +109,7 @@ extension MultiSelectorViewController: SectionsDataSource {
                                 isFirst: true,
                                 isLast: false,
                                 value: "market.advanced_search.any".localized,
-                                valueStyle: .b1,
+                                valueColor: .themeGray,
                                 selected: currentIndexes.isEmpty,
                                 action: { [weak self] in
                                     self?.onTapAny()
@@ -120,7 +121,7 @@ extension MultiSelectorViewController: SectionsDataSource {
                                 isFirst: false,
                                 isLast: index == values.count - 1,
                                 value: value,
-                                valueStyle: .b2,
+                                valueColor: .themeLeah,
                                 selected: currentIndexes.contains(index),
                                 action: { [weak self] in
                                     self?.onTap(index: index)

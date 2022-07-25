@@ -72,8 +72,10 @@ extension SwitchAccountViewController: SectionsDataSource {
                     })
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.title
                         component.subtitle.text = viewItem.subtitle

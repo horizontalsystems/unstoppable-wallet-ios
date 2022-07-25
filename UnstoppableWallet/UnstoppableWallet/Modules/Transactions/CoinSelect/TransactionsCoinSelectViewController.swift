@@ -82,7 +82,8 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "transactions.all_coins".localized
                     }
 
@@ -112,8 +113,10 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
 
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.set(style: .m7)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.code
                         component.subtitle.text = viewItem.name

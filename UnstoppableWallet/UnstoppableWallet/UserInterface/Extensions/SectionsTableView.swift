@@ -50,7 +50,8 @@ extension SectionsTableView {
                     cell.selectionStyle = .none
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = text
                     }
                 }
@@ -68,7 +69,8 @@ extension SectionsTableView {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 1) { (component: ImageComponent) in
@@ -93,7 +95,8 @@ extension SectionsTableView {
                         component.imageView.image = UIImage(named: image)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in
@@ -119,7 +122,8 @@ extension SectionsTableView {
                         component.imageView.image = UIImage(named: image)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in
@@ -143,7 +147,8 @@ extension SectionsTableView {
                     cell.set(backgroundStyle: .transparent, isFirst: true)
 
                     cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = text.uppercased()
                     })
 

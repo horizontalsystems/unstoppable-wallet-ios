@@ -101,12 +101,14 @@ extension CoinInvestorsViewController: SectionsDataSource {
                                 cell.set(backgroundStyle: .transparent)
 
                                 cell.bind(index: 0) { (component: TextComponent) in
-                                    component.set(style: .b3)
+                                    component.font = .body
+                                    component.textColor = .themeJacob
                                     component.text = title
                                 }
 
                                 cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .d1)
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
                                     component.text = value
                                 }
                             }
@@ -121,13 +123,15 @@ extension CoinInvestorsViewController: SectionsDataSource {
         }
 
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = fundViewItem.name
         }
 
         cell.bind(index: 2) { (component: TextComponent) in
             component.isHidden = !fundViewItem.isLead
-            component.set(style: .c4)
+            component.font = .subhead1
+            component.textColor = .themeRemus
             component.text = "coin_page.funds_invested.lead".localized
         }
     }

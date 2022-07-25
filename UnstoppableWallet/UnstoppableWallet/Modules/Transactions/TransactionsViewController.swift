@@ -122,21 +122,12 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
-    private func primaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
+    private func color(valueType: TransactionsViewModel.ValueType) -> UIColor {
         switch valueType {
-        case .incoming: return .b4
-        case .outgoing: return .b5
-        case .neutral: return .b2
-        case .secondary: return .b1
-        }
-    }
-
-    private func secondaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
-        switch valueType {
-        case .incoming: return .d4
-        case .outgoing: return .d5
-        case .neutral: return .d2
-        case .secondary: return .d1
+        case .incoming: return .themeRemus
+        case .outgoing: return .themeLucian
+        case .neutral: return .themeLeah
+        case .secondary: return .themeGray
         }
     }
 
@@ -217,14 +208,16 @@ class TransactionsViewController: ThemeViewController {
             .vStackCentered([
                 .hStack([
                     .text { component in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                         component.text = viewItem.title
                     },
                     .text { [unowned self] component in
                         if let primaryValue = viewItem.primaryValue, !primaryValue.text.isEmpty {
                             component.isHidden = false
-                            component.set(style: primaryStyle(valueType: primaryValue.type))
+                            component.font = .body
+                            component.textColor = color(valueType: primaryValue.type)
                             component.textAlignment = .right
                             component.lineBreakMode = .byTruncatingMiddle
                             component.text = primaryValue.text
@@ -250,14 +243,16 @@ class TransactionsViewController: ThemeViewController {
                 .margin(3),
                 .hStack([
                     .text { component in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                         component.text = viewItem.subTitle
                     },
                     .text { [unowned self] component in
                         if let secondaryValue = viewItem.secondaryValue, !secondaryValue.text.isEmpty {
                             component.isHidden = false
-                            component.set(style: secondaryStyle(valueType: secondaryValue.type))
+                            component.font = .subhead2
+                            component.textColor = color(valueType: secondaryValue.type)
                             component.textAlignment = .right
                             component.lineBreakMode = .byTruncatingMiddle
                             component.text = secondaryValue.text

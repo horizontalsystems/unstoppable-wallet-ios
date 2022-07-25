@@ -166,7 +166,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                 }
@@ -307,7 +308,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 }
 
                                 cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .d1)
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
                                     component.text = viewItem.reference
                                 }
 
@@ -369,7 +371,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                         component.imageView.image = iconImage?.withTintColor(.themeGray)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in
