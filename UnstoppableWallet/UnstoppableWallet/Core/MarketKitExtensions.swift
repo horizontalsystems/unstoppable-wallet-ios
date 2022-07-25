@@ -48,7 +48,16 @@ extension MarketKit.Token {
 
     var typeInfo: String {
         switch type {
-        case .native: return "coin_platforms.native".localized
+        case .native:
+            var parts = ["coin_platforms.native".localized]
+
+            switch blockchainType {
+            case .binanceSmartChain: parts.append("(BEP20)")
+            case .binanceChain: parts.append("(BEP2)")
+            default: ()
+            }
+
+            return parts.joined(separator: " ")
         case .eip20(let address): return address
         case .bep2(let symbol): return symbol
         default: return ""
