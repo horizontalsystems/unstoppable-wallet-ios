@@ -116,7 +116,8 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "settings_security.passcode".localized
                     })
 
@@ -147,7 +148,8 @@ extension SecuritySettingsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isLast: true)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
-                            component.set(style: .b2)
+                            component.font = .body
+                            component.textColor = .themeLeah
                             component.text = "settings_security.change_pin".localized
                         })
 
@@ -181,7 +183,8 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = viewItem.title
                     })
 
@@ -212,8 +215,10 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.name
                         component.subtitle.text = viewItem.value

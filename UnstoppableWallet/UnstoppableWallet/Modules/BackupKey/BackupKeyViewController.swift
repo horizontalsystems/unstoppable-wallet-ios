@@ -171,7 +171,8 @@ extension BackupKeyViewController: SectionsDataSource {
                                         component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
                                     }
                                     cell.bind(index: 1) { (component: TextComponent) in
-                                        component.set(style: .d1)
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
                                         component.text = "backup_key.passphrase".localized
                                     }
                                     cell.bind(index: 2) { (component: SecondaryButtonComponent) in

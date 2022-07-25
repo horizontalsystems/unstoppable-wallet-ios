@@ -275,11 +275,13 @@ class WalletConnectMainViewController: ThemeViewController {
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .c2)
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
                         component.text = value
                         if let color = valueColor {
                             component.textColor = color
@@ -303,11 +305,13 @@ class WalletConnectMainViewController: ThemeViewController {
                         component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     })
                     cell.bind(index: 2, block: { (component: TextComponent) in
-                        component.set(style: .c2)
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
                         component.text = value
                         if let color = valueColor {
                             component.textColor = color

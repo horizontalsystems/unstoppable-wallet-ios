@@ -127,11 +127,13 @@ extension NftCollectionsViewController: SectionsDataSource {
                         component.imageView.backgroundColor = .themeSteel20
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .a2)
+                        component.font = .headline2
+                        component.textColor = .themeLeah
                         component.text = viewItem.name
                     })
                     cell.bind(index: 2, block: { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = viewItem.count
                         component.setContentHuggingPriority(.required, for: .horizontal)
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)

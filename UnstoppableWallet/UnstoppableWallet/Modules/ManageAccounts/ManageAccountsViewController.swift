@@ -56,7 +56,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "plus_20")?.withTintColor(.themeJacob)
         })
         createCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.create".localized
         })
 
@@ -66,7 +67,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
         })
         restoreCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.restore".localized
         })
 
@@ -76,7 +78,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
         })
         watchCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.watch".localized
         })
 
@@ -153,8 +156,10 @@ extension ManageAccountsViewController: SectionsDataSource {
                     })
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.title
                         component.subtitle.text = viewItem.subtitle

@@ -74,11 +74,13 @@ class SendFeeSettingsViewController: ThemeViewController {
         feeRateCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         CellBuilder.build(cell: feeRateCell, elements: [.text, .text])
         feeRateCell.bind(index: 0, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.fee_rate".localized
         })
         feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         feePriorityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)

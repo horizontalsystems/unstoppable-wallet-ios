@@ -60,16 +60,16 @@ extension ItemSelectorModule {
 
     struct ComplexViewItem {
         let title: String
-        let titleStyle: TextComponent.Style
+        let titleColor: UIColor
         let subtitle: String?
-        let subtitleStyle: TextComponent.Style
+        let subtitleColor: UIColor
         let selected: Bool
 
-        init(title: String, titleStyle: TextComponent.Style = .b2, subtitle: String? = nil, subtitleStyle: TextComponent.Style = .d1, selected: Bool) {
+        init(title: String, titleColor: UIColor = .themeLeah, subtitle: String? = nil, subtitleColor: UIColor = .themeGray, selected: Bool) {
             self.title = title
-            self.titleStyle = titleStyle
+            self.titleColor = titleColor
             self.subtitle = subtitle
-            self.subtitleStyle = subtitleStyle
+            self.subtitleColor = subtitleColor
             self.selected = selected
         }
     }

@@ -245,7 +245,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                 }
@@ -294,7 +295,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                                 cell.set(backgroundStyle: .transparent, isFirst: true)
 
                                 cell.bind(index: 0) { (component: TextComponent) in
-                                    component.set(style: .c3)
+                                    component.font = .subhead1
+                                    component.textColor = .themeJacob
                                     component.text = collectionName
                                 }
 
@@ -346,14 +348,17 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.titleSpacingView.isHidden = true
                         component.set(style: .m1)
-                        component.title.set(style: .b3)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeJacob
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.coinValue
                         component.title.textAlignment = .right
@@ -413,8 +418,10 @@ extension NftAssetOverviewViewController: SectionsDataSource {
 
                     cell.bind(index: 0) { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = "nft_asset.on_sale".localized
                         component.subtitle.text = untilDate
@@ -551,7 +558,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "nft_asset.details.contract_address".localized
                     }
                     cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
@@ -580,12 +588,14 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isLast: isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = value
                         component.setContentHuggingPriority(.required, for: .horizontal)
                         component.lineBreakMode = .byTruncatingMiddle
@@ -630,7 +640,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                         component.imageView.image = iconImage?.withTintColor(.themeGray)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in

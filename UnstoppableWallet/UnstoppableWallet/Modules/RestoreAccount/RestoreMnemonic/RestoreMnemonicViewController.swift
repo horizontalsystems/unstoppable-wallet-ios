@@ -64,7 +64,8 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
             component.imageView.image = UIImage(named: "key_phrase_20")
         }
         passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "restore.passphrase".localized
         }
         passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in

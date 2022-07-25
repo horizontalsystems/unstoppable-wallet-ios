@@ -27,8 +27,6 @@ class MainSettingsViewController: ThemeViewController {
     private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
 
-    private let titleStyle: TextComponent.Style = .b2
-
     init(viewModel: MainSettingsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
@@ -134,7 +132,8 @@ class MainSettingsViewController: ThemeViewController {
             component.imageView.image = image
         }
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: titleStyle)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 3) { (component: ImageComponent) in
@@ -148,11 +147,13 @@ class MainSettingsViewController: ThemeViewController {
             component.imageView.image = image
         }
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: titleStyle)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 2) { (component: TextComponent) in
-            component.set(style: .c1)
+            component.font = .subhead1
+            component.textColor = .themeGray
         }
         cell.bind(index: 3) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_big_forward_20")

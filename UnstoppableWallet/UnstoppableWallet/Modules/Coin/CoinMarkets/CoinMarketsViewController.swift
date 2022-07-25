@@ -138,8 +138,10 @@ extension CoinMarketsViewController: SectionsDataSource {
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.market
                         component.subtitle.text = viewItem.pair
@@ -147,9 +149,12 @@ extension CoinMarketsViewController: SectionsDataSource {
                     cell.bind(index: 2) { (component: MultiTextComponent) in
                         component.titleSpacingView.isHidden = true
                         component.set(style: .m2)
-                        component.title.set(style: .b2)
-                        component.subtitleLeft.set(style: .d3)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitleLeft.font = .subhead2
+                        component.subtitleLeft.textColor = .themeJacob
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.textAlignment = .right
                         component.title.text = viewItem.rate

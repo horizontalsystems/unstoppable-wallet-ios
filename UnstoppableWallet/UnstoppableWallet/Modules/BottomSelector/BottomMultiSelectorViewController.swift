@@ -159,12 +159,14 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                     },
                                     .vStackCentered([
                                         .text { component in
-                                            component.set(style: .b2)
+                                            component.font = .body
+                                            component.textColor = .themeLeah
                                             component.text = viewItem.title
                                         },
                                         .margin(3),
                                         .text { component in
-                                            component.set(style: .d1)
+                                            component.font = .subhead2
+                                            component.textColor = .themeGray
                                             component.lineBreakMode = .byTruncatingMiddle
                                             component.text = viewItem.subtitle
                                         }

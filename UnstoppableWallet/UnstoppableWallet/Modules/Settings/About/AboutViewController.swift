@@ -101,7 +101,8 @@ class AboutViewController: ThemeViewController {
                         component.imageView.image = UIImage(named: image)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in

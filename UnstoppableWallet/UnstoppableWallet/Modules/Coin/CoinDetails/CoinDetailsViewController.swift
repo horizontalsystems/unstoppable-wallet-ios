@@ -185,7 +185,8 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 1) { (component: ImageComponent) in
@@ -206,7 +207,8 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                 }
@@ -592,11 +594,13 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == securityViewItems.count - 1 && !hasAudits)
 
                         cell.bind(index: 0) { (component: TextComponent) in
-                            component.set(style: .d1)
+                            component.font = .subhead2
+                            component.textColor = .themeGray
                             component.text = viewItem.type.title
                         }
                         cell.bind(index: 1) { (component: TextComponent) in
-                            component.set(style: viewItem.valueGrade.textStyle)
+                            component.font = .subhead1
+                            component.textColor = viewItem.valueGrade.textColor
                             component.text = viewItem.value
                             component.setContentCompressionResistancePriority(.required, for: .horizontal)
                             component.setContentHuggingPriority(.required, for: .horizontal)
@@ -681,11 +685,11 @@ extension CoinDetailsViewController: SectionsDataSource {
 
 extension CoinDetailsViewModel.SecurityGrade {
 
-    var textStyle: TextComponent.Style {
+    var textColor: UIColor {
         switch self {
-        case .low: return .c5
-        case .medium: return .c6
-        case .high: return .c4
+        case .low: return .themeLucian
+        case .medium: return .themeIssykBlue
+        case .high: return .themeRemus
         }
     }
 

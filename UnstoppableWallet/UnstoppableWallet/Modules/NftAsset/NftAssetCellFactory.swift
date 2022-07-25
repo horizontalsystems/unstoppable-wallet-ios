@@ -9,21 +9,23 @@ class NftAssetCellFactory {
 
     func cellElement(viewItem: NftActivityViewModel.EventViewItem) -> CellBuilderNew.CellElement {
         .vStackCentered([
-            line(style: .b2, title: viewItem.type, subtitle: viewItem.coinPrice),
+            line(font: .body, textColor: .themeLeah, title: viewItem.type, subtitle: viewItem.coinPrice),
             .margin(1),
-            line(style: .d1, title: viewItem.date, subtitle: viewItem.fiatPrice),
+            line(font: .subhead2, textColor: .themeGray, title: viewItem.date, subtitle: viewItem.fiatPrice),
         ])
     }
 
-    private func line(style: TextComponent.Style, title: String?, subtitle: String?) -> CellBuilderNew.CellElement {
+    private func line(font: UIFont, textColor: UIColor, title: String?, subtitle: String?) -> CellBuilderNew.CellElement {
         .hStack([
             .text { component in
-                component.set(style: style)
+                component.font = font
+                component.textColor = textColor
                 component.setContentCompressionResistancePriority(.required, for: .horizontal)
                 component.text = title
             },
             .text { component in
-                component.set(style: style)
+                component.font = font
+                component.textColor = textColor
                 component.textAlignment = .right
                 component.text = subtitle
             },

@@ -45,12 +45,14 @@ struct MarketModule {
                     .vStackCentered([
                         .hStack([
                             .text { component in
-                                component.set(style: .b2)
+                                component.font = .body
+                                component.textColor = .themeLeah
                                 component.setContentCompressionResistancePriority(.required, for: .horizontal)
                                 component.text = listViewItem.leftPrimaryValue
                             },
                             .text { component in
-                                component.set(style: .b2)
+                                component.font = .body
+                                component.textColor = .themeLeah
                                 component.textAlignment = .right
                                 component.text = listViewItem.rightPrimaryValue
                             }
@@ -69,7 +71,8 @@ struct MarketModule {
                             },
                             .margin8,
                             .text { component in
-                                component.set(style: .d1)
+                                component.font = .subhead2
+                                component.textColor = .themeGray
                                 component.text = listViewItem.leftSecondaryValue
                             },
                             .text { component in
@@ -77,7 +80,8 @@ struct MarketModule {
                                 component.setContentHuggingPriority(.required, for: .horizontal)
                                 component.textAlignment = .right
                                 let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
-                                component.set(style: marketFieldData.style)
+                                component.font = .subhead2
+                                component.textColor = marketFieldData.color
                                 component.text = marketFieldData.value
                             }
                         ])
@@ -95,10 +99,10 @@ struct MarketModule {
         )
     }
 
-    static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, style: TextComponent.Style) {
+    static func marketFieldPreference(dataValue: MarketDataValue) -> (title: String?, value: String?, color: UIColor) {
         let title: String?
         let value: String?
-        let style: TextComponent.Style
+        let color: UIColor
 
         switch dataValue {
         case .valueDiff(let currencyValue, let diff):
@@ -107,30 +111,30 @@ struct MarketModule {
             if let currencyValue = currencyValue, let diff = diff {
                 let valueDiff = diff * currencyValue.value / 100
                 value = ValueFormatter.instance.formatShort(currency: currencyValue.currency, value: valueDiff, showSign: true) ?? "----"
-                style = valueDiff.isSignMinus ? .d5 : .d4
+                color = valueDiff.isSignMinus ? .themeLucian : .themeRemus
             } else {
                 value = "----"
-                style = .d7
+                color = .themeGray50
             }
         case .diff(let diff):
             title = nil
             value = diff.flatMap { ValueFormatter.instance.format(percentValue: $0) } ?? "----"
             if let diff = diff {
-                style = diff.isSignMinus ? .d5 : .d4
+                color = diff.isSignMinus ? .themeLucian : .themeRemus
             } else {
-                style = .d7
+                color = .themeGray50
             }
         case .volume(let volume):
             title = "market.top.volume.title".localized
             value = volume
-            style = .d1
+            color = .themeGray
         case .marketCap(let marketCap):
             title = "market.top.market_cap.title".localized
             value = marketCap
-            style = .d1
+            color = .themeGray
         }
 
-        return (title: title, value: value, style: style)
+        return (title: title, value: value, color: color)
     }
 
 }
