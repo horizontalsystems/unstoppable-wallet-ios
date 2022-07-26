@@ -1136,6 +1136,7 @@ poner en peligro la seguridad de mis fondos.";
 // Nft Collections
 
 "nft_collections.title" = "NFTS";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "Última venta";
 "nft_collections.average_7d" = "Promedio 7D";
 "nft_collections.average_30d" = "Promedio 30D";
