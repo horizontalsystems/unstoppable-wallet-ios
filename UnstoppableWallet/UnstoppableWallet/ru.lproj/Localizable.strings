@@ -1137,6 +1137,7 @@
 // Nft Collections
 
 "nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "Последняя продажа";
 "nft_collections.average_7d" = "Средн. 7Д";
 "nft_collections.average_30d" = "Средн. 30Д";
