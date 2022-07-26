@@ -1138,6 +1138,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Nft Collections
 
 "nft_collections.title" = "NFT'ler";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "Son İndirim";
 "nft_collections.average_7d" = "Ortalama 7G";
 "nft_collections.average_30d" = "Ortalama 30G";
