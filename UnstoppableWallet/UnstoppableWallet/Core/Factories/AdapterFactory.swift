@@ -29,9 +29,11 @@ class AdapterFactory {
         guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type else {
             return nil
         }
+        print("EVMAdapter: \(blockchainType.uid)")
         guard let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: wallet.account, blockchainType: blockchainType) else {
             return nil
         }
+        print("EVMAdapter: evmKitWrapper created!")
 
         return EvmAdapter(evmKitWrapper: evmKitWrapper)
     }

@@ -14,6 +14,8 @@ class RestoreSelectService {
         .bitcoinCash,
         .litecoin,
         .binanceChain,
+        .optimism,
+        .arbitrumOne,
     ]
 
     private let accountName: String
