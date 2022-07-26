@@ -8,8 +8,8 @@ class EvmBlockchainManager {
         .binanceSmartChain,
         .polygon,
         .avalanche,
-//        .optimism,
-//        .arbitrumOne,
+        .optimism,
+        .arbitrumOne,
     ]
 
     private let syncSourceManager: EvmSyncSourceManager

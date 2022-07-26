@@ -49,7 +49,7 @@ class EvmFeeService {
         if let gasLimit = gasLimit {
             let transaction = EvmFeeModule.Transaction(
                     transactionData: transactionData,
-                    gasData: EvmFeeModule.GasData(gasLimit: gasLimit, gasPrice: fallibleGasPrice.data)
+                    gasData: EvmFeeModule.GasData.l1(gasLimit: gasLimit, gasPrice: fallibleGasPrice.data)
             )
 
             sync(transaction: transaction, fallibleGasPrice: fallibleGasPrice)
@@ -96,7 +96,7 @@ class EvmFeeService {
 
                 return EvmFeeModule.Transaction(
                         transactionData: transactionData,
-                        gasData: EvmFeeModule.GasData(gasLimit: gasLimit, gasPrice: gasPrice)
+                        gasData: EvmFeeModule.GasData.l1(gasLimit: gasLimit, gasPrice: gasPrice)
                 )
             }
         }

@@ -73,12 +73,29 @@ extension EvmFeeModule {
         case overpricing
     }
 
-    struct GasData {
-        let gasLimit: Int
-        let gasPrice: GasPrice
+    enum GasData {
+        case l1(gasLimit: Int, gasPrice: GasPrice)
+        case rollupL2(gasLimit: Int, gasPrice: GasPrice, l1Fee: BigUInt)
+
+        var gasLimit: Int {
+            switch self {
+            case .l1(let gasLimit, _): return gasLimit
+            case .rollupL2(let gasLimit, _, _): return gasLimit
+            }
+        }
+
+        var gasPrice: GasPrice {
+            switch self {
+            case .l1(_, let gasPrice): return gasPrice
+            case .rollupL2(_, let gasPrice, _): return gasPrice
+            }
+        }
 
         var fee: BigUInt {
-            BigUInt(gasLimit * gasPrice.max)
+            switch self {
+            case .l1(let gasLimit, let gasPrice): return BigUInt(gasLimit * gasPrice.max)
+            case .rollupL2(let gasLimit, let gasPrice, let l1Fee): return BigUInt(gasLimit * gasPrice.max) + l1Fee
+            }
         }
     }
 
