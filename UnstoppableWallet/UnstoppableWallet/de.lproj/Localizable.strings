@@ -1135,6 +1135,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "Letzter Verkauf";
 "nft_collections.average_7d" = "Durchschnitt 7D";
 "nft_collections.average_30d" = "Durchschnitt 30D";
