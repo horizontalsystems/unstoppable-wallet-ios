@@ -1137,6 +1137,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Nft Collections
 
 "nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "收盘价";
 "nft_collections.average_7d" = "平均7天";
 "nft_collections.average_30d" = "平均30天";
