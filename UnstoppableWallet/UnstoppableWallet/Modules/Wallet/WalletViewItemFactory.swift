@@ -173,8 +173,7 @@ extension WalletViewItemFactory {
     }
 
     func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, watchAccount: Bool, watchAccountAddress: EthereumKit.Address?) -> WalletViewModel.HeaderViewItem {
-        let currencyValue = CurrencyValue(currency: totalItem.currency, value: totalItem.amount)
-        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: currencyValue)
+        let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
         let convertedValue: String
         if balanceHidden {

@@ -7,7 +7,6 @@ import EthereumKit
 import HsToolKit
 
 class WalletService {
-    private let keyBalanceHidden = "wallet-balance-hidden"
     private let keySortType = "wallet-sort-type"
 
     private let adapterService: WalletAdapterService
@@ -19,6 +18,7 @@ class WalletService {
     private let localStorage: StorageKit.ILocalStorage
     private let rateAppManager: RateAppManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let balanceHiddenManager: BalanceHiddenManager
     private let balanceConversionManager: BalanceConversionManager
     private let feeCoinProvider: FeeCoinProvider
     private let reachabilityManager: IReachabilityManager
@@ -64,17 +64,9 @@ class WalletService {
         }
     }
 
-    private let balanceHiddenRelay = PublishRelay<Bool>()
-    var balanceHidden: Bool {
-        didSet {
-            balanceHiddenRelay.accept(balanceHidden)
-            localStorage.set(value: balanceHidden, for: keyBalanceHidden)
-        }
-    }
-
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
@@ -84,6 +76,7 @@ class WalletService {
         self.localStorage = localStorage
         self.rateAppManager = rateAppManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.balanceHiddenManager = balanceHiddenManager
         self.balanceConversionManager = balanceConversionManager
         self.feeCoinProvider = feeCoinProvider
         self.reachabilityManager = reachabilityManager
@@ -95,15 +88,6 @@ class WalletService {
             sortType = WalletModule.SortType.allCases[rawValue]
         } else {
             sortType = .balance
-        }
-
-        if let balanceHidden: Bool = localStorage.value(for: keyBalanceHidden) {
-            self.balanceHidden = balanceHidden
-        } else if let balanceHidden: Bool = localStorage.value(for: "balance_hidden") {
-            // todo: temp solution for restoring from version 0.22
-            self.balanceHidden = balanceHidden
-        } else {
-            balanceHidden = false
         }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
@@ -200,14 +184,13 @@ class WalletService {
         var convertedValue: CoinValue?
         var convertedValueExpired = false
 
-        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.itemMap(coinUids: [conversionToken.coin.uid])[conversionToken.coin.uid] {
+        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(coinUid: conversionToken.coin.uid) {
             convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
             convertedValueExpired = priceItem.expired
         }
 
         totalItem = TotalItem(
-                amount: total,
-                currency: coinPriceService.currency,
+                currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
                 expired: expired,
                 convertedValue: convertedValue,
                 convertedValueExpired: expired || convertedValueExpired
@@ -310,7 +293,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
 }
 
-extension WalletService: IWalletRateServiceDelegate {
+extension WalletService: IWalletCoinPriceServiceDelegate {
 
     private func handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
         for item in allItems {
@@ -342,7 +325,7 @@ extension WalletService {
     }
 
     var balanceHiddenObservable: Observable<Bool> {
-        balanceHiddenRelay.asObservable()
+        balanceHiddenManager.balanceHiddenObservable
     }
 
     var accountsLostObservable: Observable<()> {
@@ -371,6 +354,10 @@ extension WalletService {
 
     var balancePrimaryValue: BalancePrimaryValue {
         balancePrimaryValueManager.balancePrimaryValue
+    }
+
+    var balanceHidden: Bool {
+        balanceHiddenManager.balanceHidden
     }
 
     var watchAccount: Bool {
@@ -417,6 +404,10 @@ extension WalletService {
         walletManager.delete(wallets: [wallet])
     }
 
+    func toggleBalanceHidden() {
+        balanceHiddenManager.toggleBalanceHidden()
+    }
+
     func toggleConversionCoin() {
         balanceConversionManager.toggleConversionToken()
     }
@@ -442,8 +433,7 @@ extension WalletService {
     }
 
     struct TotalItem {
-        let amount: Decimal
-        let currency: Currency
+        let currencyValue: CurrencyValue
         let expired: Bool
         let convertedValue: CoinValue?
         let convertedValueExpired: Bool

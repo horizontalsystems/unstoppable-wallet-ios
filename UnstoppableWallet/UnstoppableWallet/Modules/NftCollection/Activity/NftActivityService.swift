@@ -139,7 +139,7 @@ class NftActivityService {
 
 }
 
-extension NftActivityService: IWalletRateServiceDelegate {
+extension NftActivityService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {

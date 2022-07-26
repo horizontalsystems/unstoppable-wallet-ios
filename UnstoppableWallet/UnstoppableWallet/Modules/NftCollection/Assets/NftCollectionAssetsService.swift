@@ -119,7 +119,7 @@ class NftCollectionAssetsService {
 
 }
 
-extension NftCollectionAssetsService: IWalletRateServiceDelegate {
+extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {

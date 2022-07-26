@@ -6,19 +6,46 @@ class NftCollectionsHeaderViewModel {
     private let service: NftCollectionsService
     private let disposeBag = DisposeBag()
 
-    private let amountRelay = BehaviorRelay<String?>(value: nil)
+    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
+    private let playHapticRelay = PublishRelay<()>()
 
     init(service: NftCollectionsService) {
         self.service = service
 
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
+        subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
 
         sync(totalItem: service.totalItem)
     }
 
     private func sync(totalItem: NftCollectionsService.TotalItem?) {
-        let formattedValue = totalItem.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0.currencyValue) }
-        amountRelay.accept(formattedValue)
+        let viewItem: ViewItem? = totalItem.flatMap { totalItem in
+            let balanceHidden = service.balanceHidden
+
+            let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
+
+            let convertedValue: String
+            if balanceHidden {
+                convertedValue = "*****"
+            } else if let value = totalItem.convertedValue, let formattedValue = ValueFormatter.instance.formatShort(coinValue: value) {
+                convertedValue = "≈ \(formattedValue)"
+            } else {
+                convertedValue = "---"
+            }
+
+            return ViewItem(
+                    amount: amount,
+                    amountExpired: balanceHidden ? false : totalItem.expired,
+                    convertedValue: convertedValue,
+                    convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired
+            )
+        }
+
+        viewItemRelay.accept(viewItem)
+    }
+
+    private func onUpdateBalanceHidden() {
+        sync(totalItem: service.totalItem)
     }
 
     private func title(mode: NftCollectionsService.Mode) -> String {
@@ -33,8 +60,12 @@ class NftCollectionsHeaderViewModel {
 
 extension NftCollectionsHeaderViewModel {
 
-    var amountDriver: Driver<String?> {
-        amountRelay.asDriver()
+    var viewItemDriver: Driver<ViewItem?> {
+        viewItemRelay.asDriver()
+    }
+
+    var playHapticSignal: Signal<()> {
+        playHapticRelay.asSignal()
     }
 
     var priceTypeItems: [String] {
@@ -45,8 +76,29 @@ extension NftCollectionsHeaderViewModel {
         NftCollectionsService.Mode.allCases.firstIndex(of: service.mode) ?? 0
     }
 
+    func onTapTotalAmount() {
+        service.toggleBalanceHidden()
+        playHapticRelay.accept(())
+    }
+
+    func onTapConvertedTotalAmount() {
+        service.toggleConversionCoin()
+        playHapticRelay.accept(())
+    }
+
     func onSelectPriceType(index: Int) {
         service.mode = NftCollectionsService.Mode.allCases[index]
+    }
+
+}
+
+extension NftCollectionsHeaderViewModel {
+
+    struct ViewItem {
+        let amount: String?
+        let amountExpired: Bool
+        let convertedValue: String?
+        let convertedValueExpired: Bool
     }
 
 }

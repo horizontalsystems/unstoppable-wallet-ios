@@ -83,7 +83,7 @@ class NftAssetOverviewService {
     }
 }
 
-extension NftAssetOverviewService: IWalletRateServiceDelegate {
+extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
     func didUpdateBaseCurrency() {
         queue.async {
             guard case .completed(let item) = self.state else {
