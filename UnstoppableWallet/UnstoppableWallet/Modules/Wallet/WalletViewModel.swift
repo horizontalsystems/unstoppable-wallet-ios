@@ -184,7 +184,7 @@ extension WalletViewModel {
     }
 
     func onTapTotalAmount() {
-        service.balanceHidden = !service.balanceHidden
+        service.toggleBalanceHidden()
         playHapticRelay.accept(())
     }
 

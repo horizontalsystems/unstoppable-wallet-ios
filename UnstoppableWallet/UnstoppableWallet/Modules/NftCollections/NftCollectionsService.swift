@@ -6,6 +6,8 @@ import CurrencyKit
 
 class NftCollectionsService {
     private let nftManager: NftManager
+    private let balanceHiddenManager: BalanceHiddenManager
+    private let balanceConversionManager: BalanceConversionManager
     private let coinPriceService: WalletCoinPriceService
     private let disposeBag = DisposeBag()
 
@@ -35,11 +37,14 @@ class NftCollectionsService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collections-service", qos: .userInitiated)
 
-    init(nftManager: NftManager, coinPriceService: WalletCoinPriceService) {
+    init(nftManager: NftManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
         self.nftManager = nftManager
+        self.balanceHiddenManager = balanceHiddenManager
+        self.balanceConversionManager = balanceConversionManager
         self.coinPriceService = coinPriceService
 
         subscribe(disposeBag, nftManager.assetCollectionObservable) { [weak self] in self?.sync(assetCollection: $0) }
+        subscribe(disposeBag, balanceConversionManager.conversionTokenObservable) { [weak self] _ in self?.syncTotalItem() }
 
         _sync(assetCollection: nftManager.assetCollection())
     }
@@ -68,7 +73,7 @@ class NftCollectionsService {
 
     private func sync(assetCollection: NftAssetCollection) {
         queue.async {
-            self.sync(assetCollection: assetCollection)
+            self._sync(assetCollection: assetCollection)
         }
     }
 
@@ -76,7 +81,9 @@ class NftCollectionsService {
         self.assetCollection = assetCollection
         _syncItems()
 
-        coinPriceService.set(coinUids: allCoinUids(items: items))
+        let conversionCoinUids = balanceConversionManager.conversionTokens.map { $0.coin.uid }
+
+        coinPriceService.set(coinUids: allCoinUids(items: items).union(conversionCoinUids))
     }
 
     private func syncItems() {
@@ -132,7 +139,20 @@ class NftCollectionsService {
             }
         }
 
-        totalItem = TotalItem(currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total))
+        var convertedValue: CoinValue?
+        var convertedValueExpired = false
+
+        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(coinUid: conversionToken.coin.uid) {
+            convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
+            convertedValueExpired = priceItem.expired
+        }
+
+        totalItem = TotalItem(
+                currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
+                expired: false,
+                convertedValue: convertedValue,
+                convertedValueExpired: convertedValueExpired
+        )
     }
 
     func sort(items: [Item]) -> [Item] {
@@ -143,7 +163,7 @@ class NftCollectionsService {
 
 }
 
-extension NftCollectionsService: IWalletRateServiceDelegate {
+extension NftCollectionsService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
@@ -169,8 +189,24 @@ extension NftCollectionsService {
         itemsRelay.asObservable()
     }
 
+    var balanceHiddenObservable: Observable<Bool> {
+        balanceHiddenManager.balanceHiddenObservable
+    }
+
     var totalItemObservable: Observable<TotalItem?> {
         totalItemRelay.asObservable()
+    }
+
+    var balanceHidden: Bool {
+        balanceHiddenManager.balanceHidden
+    }
+
+    func toggleBalanceHidden() {
+        balanceHiddenManager.toggleBalanceHidden()
+    }
+
+    func toggleConversionCoin() {
+        balanceConversionManager.toggleConversionToken()
     }
 
 }
@@ -215,6 +251,9 @@ extension NftCollectionsService {
 
     struct TotalItem {
         let currencyValue: CurrencyValue
+        let expired: Bool
+        let convertedValue: CoinValue?
+        let convertedValueExpired: Bool
     }
 
     enum Mode: CaseIterable {

@@ -187,7 +187,7 @@ extension NftCollectionsViewController: SectionsDataSource {
         [
             Section(
                     id: "main",
-                    headerState: viewItems.isEmpty ? .margin(height: 0) : .static(view: headerView, height: .heightCell48),
+                    headerState: viewItems.isEmpty ? .margin(height: 0) : .static(view: headerView, height: NftCollectionsHeaderView.height),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: rows(viewItems: viewItems)
             )

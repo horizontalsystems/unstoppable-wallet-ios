@@ -4,12 +4,15 @@ import RxCocoa
 import ThemeKit
 import SnapKit
 import ComponentKit
+import HUD
 
 class NftCollectionsHeaderView: UITableViewHeaderFooterView {
+    static var height: CGFloat = HeaderAmountView.height + .heightCell48
+
     private let viewModel: NftCollectionsHeaderViewModel
     private let disposeBag = DisposeBag()
 
-    private let label = UILabel()
+    private let amountView = HeaderAmountView()
 
     init(viewModel: NftCollectionsHeaderViewModel) {
         self.viewModel = viewModel
@@ -19,22 +22,57 @@ class NftCollectionsHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        contentView.addSubview(label)
-        label.snp.makeConstraints { maker in
+        contentView.addSubview(amountView)
+        amountView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+        }
+
+        amountView.onTapAmount = { [weak self] in
+            self?.viewModel.onTapTotalAmount()
+        }
+        amountView.onTapConvertedAmount = { [weak self] in
+            self?.viewModel.onTapConvertedTotalAmount()
+        }
+
+        let separatorView = UIView()
+
+        contentView.addSubview(separatorView)
+        separatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(amountView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        separatorView.backgroundColor = .themeSteel10
+
+        let selectorWrapperView = UIView()
+
+        contentView.addSubview(selectorWrapperView)
+        selectorWrapperView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(amountView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightCell48)
+        }
+
+        let titleText = TextComponent()
+
+        selectorWrapperView.addSubview(titleText)
+        titleText.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
         }
 
-        label.font = .headline2
-        label.textColor = .themeJacob
+        titleText.font = .subhead1
+        titleText.textColor = .themeGray
+        titleText.text = "nft_collections.price_mode".localized
 
         let selector = SelectorButton()
 
-        contentView.addSubview(selector)
+        selectorWrapperView.addSubview(selector)
         selector.snp.makeConstraints { maker in
+            maker.leading.equalTo(titleText.snp.trailing).offset(CGFloat.margin16)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
-            maker.height.equalTo(28)
         }
 
         selector.set(items: viewModel.priceTypeItems)
@@ -43,15 +81,25 @@ class NftCollectionsHeaderView: UITableViewHeaderFooterView {
             self?.viewModel.onSelectPriceType(index: index)
         }
 
-        subscribe(disposeBag, viewModel.amountDriver) { [weak self] in self?.sync(amount: $0) }
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
+        subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func sync(amount: String?) {
-        label.text = amount
+    private func sync(viewItem: NftCollectionsHeaderViewModel.ViewItem?) {
+        guard let viewItem = viewItem else {
+            return
+        }
+
+        amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
+        amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
+    }
+
+    private func playHaptic() {
+        HapticGenerator.instance.notification(.feedback(.soft))
     }
 
 }
