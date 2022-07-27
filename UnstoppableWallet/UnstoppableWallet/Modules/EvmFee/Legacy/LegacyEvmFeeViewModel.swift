@@ -40,8 +40,9 @@ class LegacyEvmFeeViewModel {
             gasPriceRelay.accept("\(gweiGasPrice) gwei")
             gasPriceSliderRelay.accept(
                     FeeSliderViewItem(
-                            initialValue: gweiGasPrice,
-                            range: gwei(range: gasPriceService.gasPriceRange),
+                            initialValue: gasPrice,
+                            range: gasPriceService.gasPriceRange,
+                            step: wei(gwei: 1),
                             description: "gwei"
                     )
             )
@@ -125,7 +126,7 @@ extension LegacyEvmFeeViewModel {
     }
 
     func set(value: Int) {
-        gasPriceService.set(gasPrice: wei(gwei: value))
+        gasPriceService.set(gasPrice: value)
     }
 
     func reset() {

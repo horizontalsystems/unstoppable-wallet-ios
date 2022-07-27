@@ -2461,6 +2461,7 @@
 		ABC9A348E1ADBF5EE7E62B06 /* SendBinanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0DD32AB4B9BAB79F11 /* SendBinanceFactory.swift */; };
 		ABC9A3613C5477C07F37F48C /* WalletConnectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5FD79ECC4AC85B86FA /* WalletConnectListViewController.swift */; };
 		ABC9A37C5F436EB205AC7DFE /* NftAssetOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */; };
+		ABC9A37D9AB7026B2330DC00 /* EvmL1GasDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF64F60DCFD836B62B8B /* EvmL1GasDataService.swift */; };
 		ABC9A3888C67D113B269F2F9 /* MarketCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2B7FBA735A76083990C /* MarketCardCell.swift */; };
 		ABC9A3899A227B8FEC089EA7 /* ChartPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A56202347AC47682FFB4 /* ChartPreviewView.swift */; };
 		ABC9A395A96C1F7C30F21940 /* WalletConnectV2PendingRequestsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD3F677671FB57CCD886 /* WalletConnectV2PendingRequestsService.swift */; };
@@ -2493,6 +2494,7 @@
 		ABC9A50A13F425EA403C81D8 /* SendBitcoinFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE8A4A879501AA5582E8 /* SendBitcoinFeeService.swift */; };
 		ABC9A5195773607BCEF5E5F8 /* WalletConnectV2MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */; };
 		ABC9A51F2E7EB0B477EBE708 /* SendZcashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE6D2CD14194802E7976 /* SendZcashService.swift */; };
+		ABC9A523607D5354B94FF7DE /* EvmL1GasDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF64F60DCFD836B62B8B /* EvmL1GasDataService.swift */; };
 		ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9A52F96160DF8073A7FE1 /* ProFeaturesActivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A76EF84398C3288CD4B9 /* ProFeaturesActivateViewController.swift */; };
 		ABC9A554E076F588ADA2C309 /* SendFeeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE095F52237073F1D8C6 /* SendFeeRateService.swift */; };
@@ -2543,6 +2545,7 @@
 		ABC9A7219A4F94D981558DC2 /* WalletConnectV2ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFE16BDDA2ECBE8729CA /* WalletConnectV2ListView.swift */; };
 		ABC9A727EC8A3C74C9C1A31A /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */; };
 		ABC9A736DDFBF98473C065F7 /* WalletConnectV2RequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA31438063F7AB7BDDC8 /* WalletConnectV2RequestMapper.swift */; };
+		ABC9A739135A7D5CE5F83E54 /* EvmL1GasDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF64F60DCFD836B62B8B /* EvmL1GasDataService.swift */; };
 		ABC9A73CAC5C6F0DEC0DAF8E /* NftChartMarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B7E314FFB0FE66DA01 /* NftChartMarketCardView.swift */; };
 		ABC9A75BA1E463FFF69D72CE /* WalletConnectListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC09A586D88BAB3B9C67 /* WalletConnectListModule.swift */; };
 		ABC9A75F9EF2FF02C334A23F /* NftChartMarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8B7E314FFB0FE66DA01 /* NftChartMarketCardView.swift */; };
@@ -3947,6 +3950,7 @@
 		ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoAccessoryView.swift; sourceTree = "<group>"; };
 		ABC9AF15BD67548E6D755CA0 /* SendBinanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBinanceViewController.swift; sourceTree = "<group>"; };
 		ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2MainService.swift; sourceTree = "<group>"; };
+		ABC9AF64F60DCFD836B62B8B /* EvmL1GasDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmL1GasDataService.swift; sourceTree = "<group>"; };
 		ABC9AF68C8C40699DD58F7A6 /* SendFeeWarningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeWarningViewModel.swift; sourceTree = "<group>"; };
 		ABC9AF9C0D0174A5B6A91F13 /* NftAssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetViewController.swift; sourceTree = "<group>"; };
 		ABC9AFE16BDDA2ECBE8729CA /* WalletConnectV2ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2ListView.swift; sourceTree = "<group>"; };
@@ -5674,6 +5678,7 @@
 				2FA5D5C517642B0D41C31032 /* EvmFeeService.swift */,
 				2FA5DD6BA841ACBF6C2C0AC1 /* EvmFeeViewModel.swift */,
 				2FA5D27CD004E9E01B8CE8A6 /* EvmGasDataInfoViewController.swift */,
+				ABC9AF64F60DCFD836B62B8B /* EvmL1GasDataService.swift */,
 			);
 			path = EvmFee;
 			sourceTree = "<group>";
@@ -8179,6 +8184,7 @@
 				ABC9ACDEB22DC3C9DEDF6521 /* NftAssetCellFactory.swift in Sources */,
 				11B354951804A40FA7B37E6F /* BalanceHiddenManager.swift in Sources */,
 				11B358AF9F6E3A9353DD69D5 /* HeaderAmountView.swift in Sources */,
+				ABC9A37D9AB7026B2330DC00 /* EvmL1GasDataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9168,6 +9174,7 @@
 				ABC9AC73C488F8B1F54929B5 /* NftAssetCellFactory.swift in Sources */,
 				11B3582D43032F1F2DAEE0E8 /* BalanceHiddenManager.swift in Sources */,
 				11B3544E1538F4326C10A735 /* HeaderAmountView.swift in Sources */,
+				ABC9A739135A7D5CE5F83E54 /* EvmL1GasDataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10149,6 +10156,7 @@
 				ABC9A819DDAEE683FCCA02EF /* NftAssetCellFactory.swift in Sources */,
 				11B35D10BB1FC795924ED987 /* BalanceHiddenManager.swift in Sources */,
 				11B356FF5E5CC9AA34B89C86 /* HeaderAmountView.swift in Sources */,
+				ABC9A523607D5354B94FF7DE /* EvmL1GasDataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

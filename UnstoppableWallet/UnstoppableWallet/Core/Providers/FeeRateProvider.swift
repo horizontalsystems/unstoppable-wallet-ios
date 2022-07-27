@@ -47,6 +47,7 @@ class FeeRateProvider {
 class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     static let defaultFeeRange: ClosedRange<Int> = 1...200
     let customFeeRange: ClosedRange<Int> = BitcoinFeeRateProvider.defaultFeeRange
+    let step = 1
 
     private let feeRateProvider: FeeRateProvider
     private let lowPriorityBlockCount = 40
@@ -114,6 +115,7 @@ class EthereumFeeRateProvider: ICustomRangedFeeRateProvider {
     private static let customRange = 1_000_000_000...400_000_000_000
 
     let customFeeRange: ClosedRange<Int>
+    let step = 1_000_000_000
 
     private let feeRateProvider: FeeRateProvider
     private let multiply: Double?
@@ -143,6 +145,7 @@ class BinanceSmartChainFeeRateProvider: ICustomRangedFeeRateProvider {
     private static let customRange = 1_000_000_000...400_000_000_000
 
     let customFeeRange: ClosedRange<Int>
+    let step = 1_000_000_000
 
     private let feeRateProvider: FeeRateProvider
     private let multiply: Double?
