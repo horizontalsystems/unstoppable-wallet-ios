@@ -20,16 +20,14 @@ class SendFeeSliderService {
         self.service = service
         self.feeRateService = feeRateService
         self.customRangedFeeRateProvider = customRangedFeeRateProvider
-        item = Item(value: 1, range: customRangedFeeRateProvider.customFeeRange)
+        item = Item(value: customRangedFeeRateProvider.customFeeRange.lowerBound, range: customRangedFeeRateProvider.customFeeRange, step: customRangedFeeRateProvider.step)
 
         subscribe(disposeBag, feeRateService.feeRateObservable) { [weak self] _ in self?.sync() }
     }
 
     private func sync() {
-        let range = customRangedFeeRateProvider.customFeeRange
-
         let feeRate = feeRateService.feeRate.data ?? item.value
-        item = Item(value: feeRate, range: range)
+        item = Item(value: feeRate, range: customRangedFeeRateProvider.customFeeRange, step: customRangedFeeRateProvider.step)
     }
 
 }
@@ -51,6 +49,7 @@ extension SendFeeSliderService {
     struct Item {
         let value: Int
         let range: ClosedRange<Int>
+        let step: Int
     }
 
 }

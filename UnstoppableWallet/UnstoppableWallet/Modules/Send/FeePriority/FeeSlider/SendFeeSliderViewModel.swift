@@ -21,7 +21,7 @@ class SendFeeSliderViewModel {
     }
 
     private func sync(item: SendFeeSliderService.Item) {
-        slider = FeeSliderViewItem(initialValue: item.value, range: item.range, description: "sat/byte")
+        slider = FeeSliderViewItem(initialValue: item.value, range: item.range, step: item.step, description: "sat/byte")
     }
 
 }

@@ -7,6 +7,7 @@ import ComponentKit
 struct FeeSliderViewItem {
     let initialValue: Int
     let range: ClosedRange<Int>
+    let step: Int
     let description: String?
 }
 
@@ -39,7 +40,7 @@ class FeeSliderCell: BaseThemeCell {
 
         subscribe(disposeBag, sliderDriver) { [weak self] viewItem in
                     if let viewItem = viewItem {
-                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, description: viewItem.description)
+                        self?.feeSliderWrapper.set(value: viewItem.initialValue, range: viewItem.range, step: viewItem.step, description: viewItem.description)
                         self?.feeSliderWrapper.isHidden = false
                     } else {
                         self?.feeSliderWrapper.isHidden = true

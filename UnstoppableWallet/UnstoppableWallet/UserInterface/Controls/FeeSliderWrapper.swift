@@ -9,6 +9,7 @@ class FeeSliderWrapper: UIView {
 
     private let feeRateView = FeeSliderValueView()
     private var sliderLastValue: Int?
+    private var step: Int = 1
 
     var finishTracking: ((Int) -> ())?
 
@@ -63,7 +64,7 @@ class FeeSliderWrapper: UIView {
         guard Int(slider.value) > Int(slider.minimumValue) else {
             return
         }
-        slider.value = slider.value - 1
+        slider.value = max(slider.value - Float(step), slider.minimumValue)
 
         finishTracking?(Int(slider.value))
     }
@@ -72,15 +73,16 @@ class FeeSliderWrapper: UIView {
         guard Int(slider.value) < Int(slider.maximumValue) else {
             return
         }
-        slider.value = slider.value + 1
+        slider.value = min(slider.value + Float(step), slider.maximumValue)
 
         finishTracking?(Int(slider.value))
     }
 
-    func set(value: Int, range: ClosedRange<Int>, description: String?) {
+    func set(value: Int, range: ClosedRange<Int>, step: Int, description: String?) {
         slider.minimumValue = Float(range.lowerBound)
         slider.maximumValue = Float(range.upperBound)
         slider.value = Float(value)
+        self.step = step
 
         feeRateView.set(descriptionText: description)
         sliderLastValue = value
@@ -115,7 +117,7 @@ class FeeSliderWrapper: UIView {
     private func onTracking(_ value: Int, position: CGPoint) {
         HUD.instance.config = hudConfig(position: position)
 
-        feeRateView.set(value: "\(value)")
+        feeRateView.set(value: "\(Decimal(value) / 1_000_000_000)")
         HUD.instance.showHUD(feeRateView)
     }
 

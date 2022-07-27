@@ -15,7 +15,8 @@ struct SwapConfirmationModule {
         }
 
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimitSurchargePercent: 20)
+        let gasDataService = EvmL1GasDataService(evmKit: evmKitWrapper.evmKit, gasLimitSurchargePercent: 20)
+        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)

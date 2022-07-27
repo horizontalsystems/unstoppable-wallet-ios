@@ -72,7 +72,8 @@ struct SendEvmConfirmationModule {
         }
 
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
-        let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
+        let gasDataService = EvmL1GasDataService(evmKit: evmKit, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
+        let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
@@ -114,7 +115,8 @@ struct SendEvmConfirmationModule {
         }
 
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: transaction)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, transactionData: sendData.transactionData, gasLimit: transaction.gasLimit)
+        let gasDataService = EvmL1GasDataService(evmKit: evmKitWrapper.evmKit, gasLimit: transaction.gasLimit)
+        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)

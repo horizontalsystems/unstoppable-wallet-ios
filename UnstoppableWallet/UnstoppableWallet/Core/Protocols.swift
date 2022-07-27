@@ -108,6 +108,7 @@ extension IFeeRateProvider {
 
 protocol ICustomRangedFeeRateProvider: IFeeRateProvider {
     var customFeeRange: ClosedRange<Int> { get }
+    var step: Int { get }
 }
 
 protocol IAppManager {

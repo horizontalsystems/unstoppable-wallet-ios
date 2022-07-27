@@ -101,8 +101,9 @@ class Eip1559EvmFeeViewModel {
         baseFeeRelay.accept("\(gweiBaseFee) gwei")
         baseFeeSliderRelay.accept(
                 FeeSliderViewItem(
-                        initialValue: gweiBaseFee,
-                        range: gwei(range: gasPriceService.baseFeeRange),
+                        initialValue: gasPriceService.baseFee,
+                        range: gasPriceService.baseFeeRange,
+                        step: wei(gwei: 1),
                         description: "gwei"
                 )
         )
@@ -111,8 +112,9 @@ class Eip1559EvmFeeViewModel {
         tipsRelay.accept("\(gweiTips) gwei")
         tipsSliderRelay.accept(
                 FeeSliderViewItem(
-                        initialValue: gweiTips,
-                        range: gwei(range: gasPriceService.tipsRange),
+                        initialValue: gasPriceService.tips,
+                        range: gasPriceService.tipsRange,
+                        step: wei(gwei: 1),
                         description: "gwei"
                 )
         )
@@ -175,11 +177,11 @@ extension Eip1559EvmFeeViewModel {
     }
 
     func set(baseFee: Int) {
-        gasPriceService.set(baseFee: wei(gwei: baseFee))
+        gasPriceService.set(baseFee: baseFee)
     }
 
     func set(tips: Int) {
-        gasPriceService.set(tips: wei(gwei: tips))
+        gasPriceService.set(tips: tips)
     }
 
     func reset() {

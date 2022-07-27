@@ -7,10 +7,9 @@ import RxRelay
 class EvmFeeService {
     private let evmKit: EthereumKit.Kit
     private let gasPriceService: IGasPriceService
+    private let gasDataService: IEvmGasDataService
 
     private var transactionData: TransactionData
-    private let gasLimit: Int?
-    let gasLimitSurchargePercent: Int
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
     private(set) var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> = .loading {
@@ -22,19 +21,14 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, transactionData: TransactionData, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, gasDataService: IEvmGasDataService, transactionData: TransactionData) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
+        self.gasDataService = gasDataService
         self.transactionData = transactionData
-        self.gasLimit = gasLimit
-        self.gasLimitSurchargePercent = gasLimitSurchargePercent
 
         sync(gasPriceStatus: gasPriceService.status)
         subscribe(gasPriceDisposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
-    }
-
-    private func gasLimitSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<Int> {
-        evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice)
     }
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
@@ -46,12 +40,7 @@ class EvmFeeService {
     }
 
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
-        if let gasLimit = gasLimit {
-            let transaction = EvmFeeModule.Transaction(
-                    transactionData: transactionData,
-                    gasData: EvmFeeModule.GasData.l1(gasLimit: gasLimit, gasPrice: fallibleGasPrice.data)
-            )
-
+        if let transaction = gasDataService.transaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
             sync(transaction: transaction, fallibleGasPrice: fallibleGasPrice)
             return
         }
@@ -85,18 +74,12 @@ class EvmFeeService {
         ))
     }
 
-    private func surchargedGasLimit(estimatedGasLimit: Int) -> Int {
-        estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
-    }
-
     private func transactionSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction> {
         adjustedTransactionDataSingle(gasPrice: gasPrice, transactionData: transactionData).flatMap { [unowned self] transactionData in
-            gasLimitSingle(gasPrice: gasPrice, transactionData: transactionData).map { [unowned self] estimatedGasLimit in
-                let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
-
-                return EvmFeeModule.Transaction(
+            gasDataService.gasDataSingle(gasPrice: gasPrice, transactionData: transactionData).map { [unowned self] estimatedGasData in
+                EvmFeeModule.Transaction(
                         transactionData: transactionData,
-                        gasData: EvmFeeModule.GasData.l1(gasLimit: gasLimit, gasPrice: gasPrice)
+                        gasData: estimatedGasData
                 )
             }
         }
@@ -106,14 +89,13 @@ class EvmFeeService {
         if transactionData.input.isEmpty && transactionData.value == evmBalance {
             let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: Data())
 
-            return gasLimitSingle(gasPrice: gasPrice, transactionData: stubTransactionData).flatMap { [unowned self] estimatedGasLimit in
-                let gasLimit = surchargedGasLimit(estimatedGasLimit: estimatedGasLimit)
-                let adjustedValue = transactionData.value - BigUInt(gasLimit) * BigUInt(gasPrice.max)
+            return gasDataService.gasDataSingle(gasPrice: gasPrice, transactionData: stubTransactionData).flatMap { [unowned self] estimatedGasData in
+                let adjustedValue = transactionData.value - estimatedGasData.fee
 
                 if adjustedValue <= 0 {
                     return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
                 } else {
-                    let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: Data())
+                    let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
                     return Single.just(adjustedTransactionData)
                 }
             }
