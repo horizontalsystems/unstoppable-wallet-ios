@@ -222,9 +222,9 @@ PODS:
     - UIExtensions.swift (~> 1.1.1)
   - SkeletonView (1.29.2)
   - SnapKit (5.6.0)
-  - SQLite.swift (0.12.2):
-    - SQLite.swift/standard (= 0.12.2)
-  - SQLite.swift/standard (0.12.2)
+  - SQLite.swift (0.13.3):
+    - SQLite.swift/standard (= 0.13.3)
+  - SQLite.swift/standard (0.13.3)
   - StorageKit.swift (1.0):
     - ComponentKit.swift (~> 1.0)
     - KeychainAccess (~> 4.1)
@@ -398,10 +398,10 @@ PODS:
     - HsToolKit.swift
     - PromiseKit
   - X11Kit.swift (1.0)
-  - ZcashLightClientKit (0.15.0-beta):
-    - gRPC-Swift (~> 1.8)
+  - ZcashLightClientKit (0.16.3-beta):
+    - gRPC-Swift (~> 1.8.0)
     - libzcashlc (= 0.0.3)
-    - SQLite.swift (~> 0.12.2)
+    - SQLite.swift (~> 0.13)
 
 DEPENDENCIES:
   - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
@@ -449,7 +449,7 @@ DEPENDENCIES:
   - UniswapKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - UnstoppableDomainsResolution (~> 4.0.0)
   - WalletConnect (from `https://github.com/horizontalsystems/wallet-connect-swift`)
-  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.15.0-beta`)
+  - ZcashLightClientKit (from `https://github.com/zcash/ZcashLightClientKit`, tag `0.16.3-beta`)
 
 SPEC REPOS:
   trunk:
@@ -572,7 +572,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.15.0-beta
+    :tag: 0.16.3-beta
 
 CHECKOUT OPTIONS:
   ActionSheet.swift:
@@ -670,7 +670,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/horizontalsystems/wallet-connect-swift
   ZcashLightClientKit:
     :git: https://github.com/zcash/ZcashLightClientKit
-    :tag: 0.15.0-beta
+    :tag: 0.16.3-beta
 
 SPEC CHECKSUMS:
   _NIODataStructures: 3d45d8e70a1d17a15b1dc59d102c63dbc0525ffd
@@ -733,7 +733,7 @@ SPEC CHECKSUMS:
   SectionsTableView.swift: 1541226d2cff974a131cfc2df3b8908d4902d703
   SkeletonView: 915a80ecc2b6421ab7ac0f0212321c0cc1406472
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
-  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  SQLite.swift: 903bfa3bc9ab06345fdfbb578e34f47cfcf417da
   StorageKit.swift: 1a041c9f9a80c3388373e4ba105aadd09339ff7a
   SwiftNIO: 829958aab300642625091f82fc2f49cb7cf4ef24
   SwiftNIOConcurrencyHelpers: 697370136789b1074e4535eaae75cbd7f900370e
@@ -757,8 +757,8 @@ SPEC CHECKSUMS:
   UnstoppableDomainsResolution: c3c67f4d0a5e2437cb00d4bd50c2e00d6e743841
   WalletConnect: 27a0e8453528bd045ad26af7fc3d13905038757a
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
-  ZcashLightClientKit: 09dab174f05e695a2109b6d310cd2229295f9261
+  ZcashLightClientKit: ca6f8383f964a6840b840eeb1c86bb9ba85c44a3
 
-PODFILE CHECKSUM: 5a8946b46a4c65468c359b95070c5a9577532c93
+PODFILE CHECKSUM: 68884a5d48564b62a62b49072826d1d52c374657
 
 COCOAPODS: 1.11.2
