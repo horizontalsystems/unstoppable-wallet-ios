@@ -68,7 +68,7 @@ class ZcashAdapter {
         case .created: birthday = Self.newBirthdayHeight(network: network)
         case .restored:
             if let height = restoreSettings.birthdayHeight {
-                birthday = WalletBirthday.birthday(with: max(height, network.constants.saplingActivationHeight),network: network).height
+                birthday = max(height, network.constants.saplingActivationHeight)
             } else {
                 birthday = network.constants.saplingActivationHeight
             }
@@ -110,7 +110,7 @@ class ZcashAdapter {
 
         balanceState = .syncing(progress: 0, lastBlockDate: nil)
         transactionState = balanceState
-        lastBlockHeight = try? synchronizer.latestHeight()
+//        lastBlockHeight = try? synchronizer.latestHeight()
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
@@ -349,7 +349,7 @@ class ZcashAdapter {
 extension ZcashAdapter {
 
     public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
-        WalletBirthday.birthday(with: BlockHeight.max, network: network).height
+        BlockHeight.ofLatestCheckpoint(network: network)
     }
 
     private static func dataDirectoryUrl() throws -> URL {
