@@ -145,6 +145,7 @@ extension SectionsTableView {
                 autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: true)
+                    cell.selectionStyle = .none
 
                     cell.bind(index: 0, block: { (component: TextComponent) in
                         component.font = .subhead1

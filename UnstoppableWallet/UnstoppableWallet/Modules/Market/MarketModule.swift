@@ -6,6 +6,7 @@ import MarketKit
 import ComponentKit
 import StorageKit
 import SectionsTableView
+import Kingfisher
 
 enum RowActionType {
     case additive
@@ -38,22 +39,27 @@ struct MarketModule {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24 { component in
+                        component.imageView.contentMode = .scaleAspectFill
                         component.imageView.clipsToBounds = true
                         component.imageView.cornerRadius = listViewItem.iconShape.radius
-                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
+                        component.imageView.kf.setImage(
+                                with: URL(string: listViewItem.iconUrl),
+                                placeholder: UIImage(named: listViewItem.iconPlaceholderName),
+                                options: [.onlyLoadFirstFrame]
+                        )
                     },
                     .vStackCentered([
                         .hStack([
                             .text { component in
                                 component.font = .body
                                 component.textColor = .themeLeah
-                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
                                 component.text = listViewItem.leftPrimaryValue
                             },
                             .text { component in
                                 component.font = .body
                                 component.textColor = .themeLeah
                                 component.textAlignment = .right
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
                                 component.text = listViewItem.rightPrimaryValue
                             }
                         ]),
