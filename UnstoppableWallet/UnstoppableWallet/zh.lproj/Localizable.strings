@@ -245,7 +245,7 @@
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
-"send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "发送​​";
 "send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend_button" = "重新发送";
@@ -408,7 +408,7 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
-"top_platforms.title" = "Platforms Rank";
+"top_platforms.title" = "平台排名";
 "top_platforms.description" = "通过建立在顶部的项目的累积市场来领导区块链平台。";
 
 "market_discovery.title" = "Discovery";
@@ -1005,7 +1005,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
-"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
