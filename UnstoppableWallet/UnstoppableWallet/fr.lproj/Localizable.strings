@@ -29,22 +29,22 @@
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Terminé";
 
-"alert.added_to_watchlist" = "Added to Watchlist";
-"alert.removed_from_watchlist" = "Removed from Watchlist";
-"alert.added_to_wallet" = "Added to Wallet";
-"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.added_to_watchlist" = "Ajouter à la liste de suivi";
+"alert.removed_from_watchlist" = "Retirer de la liste de suivi";
+"alert.added_to_wallet" = "Ajouté au portefeuille";
+"alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Not Supported Yet";
-"alert.copied" = "Copied";
-"alert.created" = "Created";
-"alert.deleted" = "Deleted";
-"alert.disconnecting" = "Disconnecting";
-"alert.disconnected" = "Disconnected";
-"alert.enabling" = "Enabling";
-"alert.enabled_coins" = "Enabled %@ more coins";
-"alert.sending" = "Sending";
-"alert.sent" = "Sent";
+"alert.copied" = "Copié";
+"alert.created" = "Établi";
+"alert.deleted" = "Supprimer";
+"alert.disconnecting" = "Déconnexion";
+"alert.disconnected" = "Déconnecté";
+"alert.enabling" = "Activation";
+"alert.enabled_coins" = "%@ pièces supplémentaires activées";
+"alert.sending" = "En attente";
+"alert.sent" = "Envoyée";
 "alert.swapping" = "Swapping";
-"alert.approving" = "Approving";
+"alert.approving" = "En cours d'approbation";
 
 
 "action.loading" = "chargement en cours...";
@@ -182,8 +182,8 @@
 // Account switcher
 
 "switch_account.title" = "Changer de portefeuille";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_addresses" = "Watch Addresses";
+"switch_account.wallets" = "Portefeuilles";
+"switch_account.watch_addresses" = "Adresse à suivre";
 
 // Release notes
 
@@ -487,7 +487,7 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
+"market.global.volume_24h.title" = "Volume 24h";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
@@ -862,16 +862,16 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "appearance.title" = "Appearance";
 
-"appearance.theme" = "Theme";
-"appearance.theme.system" = "System";
-"appearance.theme.dark" = "Dark";
-"appearance.theme.light" = "Light";
+"appearance.theme" = "Thème";
+"appearance.theme.system" = "Système";
+"appearance.theme.dark" = "Sombre";
+"appearance.theme.light" = "Classique";
 
-"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen" = "Écran de démarrage";
 "appearance.launch_screen.auto" = "Auto";
-"appearance.launch_screen.balance" = "Balance";
-"appearance.launch_screen.market_overview" = "Market Overview";
-"appearance.launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen.balance" = "Solde";
+"appearance.launch_screen.market_overview" = "Vue d'ensemble du marché";
+"appearance.launch_screen.watchlist" = "Liste de suivi";
 
 "appearance.app_icon" = "App Icon";
 
@@ -1003,7 +1003,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
-"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "wallet_connect.usage_description" = "Vous pouvez aller sur le navigateur. Ne fermez pas cette page pendant que vous interagissez dans le navigateur.";
@@ -1147,8 +1147,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
-"nft_asset.tab.activity" = "Activity";
+"nft_asset.tab.overview" = "Synthèse";
+"nft_asset.tab.activity" = "Activité";
 
 "nft_asset.last_sale" = "Dernière vente";
 "nft_asset.average_7d" = "Moyenne sur 7 jours";
@@ -1202,8 +1202,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft.activity.event_type.transfer" = "Transfer";
 "nft.activity.event_type.approve" = "Approve";
-"nft.activity.event_type.custom" = "Custom";
-"nft.activity.event_type.payout" = "Payout";
-"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.custom" = "Personnalisé";
+"nft.activity.event_type.payout" = "Versement";
+"nft.activity.event_type.cancel" = "Annuler";
 "nft.activity.event_type.bulkCancel" = "Bulk Cancel";
 "nft.activity.event_type.unknown" = "Unknown";
