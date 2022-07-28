@@ -28,8 +28,6 @@ class App {
     let reachabilityManager: IReachabilityManager
     let networkManager: NetworkManager
 
-    let wordsManager: WordsManager
-
     let accountManager: AccountManager
     let accountFactory: AccountFactory
     let backupManager: BackupManager
@@ -137,8 +135,6 @@ class App {
 
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
-
-        wordsManager = WordsManager()
 
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)

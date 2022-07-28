@@ -1,44 +1,35 @@
 import RxSwift
 import RxRelay
 import MarketKit
+import HdWalletKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
     private let predefinedBlockchainService: PredefinedBlockchainService
-    private let wordsManager: WordsManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let passphraseValidator: PassphraseValidator
     private let marketKit: Kit
 
-    private let kindRelay = BehaviorRelay<CreateAccountModule.Kind>(value: .mnemonic12)
+    private let wordCountRelay = PublishRelay<Mnemonic.WordCount>()
+    private(set) var wordCount: Mnemonic.WordCount = .twelve {
+        didSet {
+            wordCountRelay.accept(wordCount)
+        }
+    }
+
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, wordsManager: WordsManager, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
+    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
         self.predefinedBlockchainService = predefinedBlockchainService
-        self.wordsManager = wordsManager
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.passphraseValidator = passphraseValidator
         self.marketKit = marketKit
-    }
-
-    private func resolveAccountType() throws -> AccountType {
-        switch kind {
-        case .mnemonic12:
-            return try mnemonicAccountType(wordCount: 12)
-        case .mnemonic24:
-            return try mnemonicAccountType(wordCount: 24)
-        }
-    }
-
-    private func mnemonicAccountType(wordCount: Int) throws -> AccountType {
-        let words = try wordsManager.generateWords(count: wordCount)
-        return .mnemonic(words: words, salt: passphrase)
     }
 
     private func activateDefaultWallets(account: Account) {
@@ -72,12 +63,8 @@ class CreateAccountService {
 
 extension CreateAccountService {
 
-    var kind: CreateAccountModule.Kind {
-        kindRelay.value
-    }
-
-    var kindObservable: Observable<CreateAccountModule.Kind> {
-        kindRelay.asObservable()
+    var wordCountObservable: Observable<Mnemonic.WordCount> {
+        wordCountRelay.asObservable()
     }
 
     var passphraseEnabled: Bool {
@@ -88,12 +75,8 @@ extension CreateAccountService {
         passphraseEnabledRelay.asObservable()
     }
 
-    var allKinds: [CreateAccountModule.Kind] {
-        CreateAccountModule.Kind.allCases
-    }
-
-    func setKind(index: Int) {
-        kindRelay.accept(allKinds[index])
+    func set(wordCount: Mnemonic.WordCount) {
+        self.wordCount = wordCount
     }
 
     func set(passphraseEnabled: Bool) {
@@ -115,7 +98,8 @@ extension CreateAccountService {
             }
         }
 
-        let accountType = try resolveAccountType()
+        let words = try Mnemonic.generate(wordCount: wordCount)
+        let accountType: AccountType = .mnemonic(words: words, salt: passphrase)
         let account = accountFactory.account(name: accountFactory.nextAccountName, type: accountType, origin: .created)
 
         accountManager.save(account: account)

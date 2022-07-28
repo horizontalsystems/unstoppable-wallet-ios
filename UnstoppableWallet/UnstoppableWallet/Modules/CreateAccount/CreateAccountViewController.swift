@@ -95,7 +95,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
         passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        subscribe(disposeBag, viewModel.kindDriver) { [weak self] kind in
+        subscribe(disposeBag, viewModel.wordCountDriver) { [weak self] kind in
             self?.mnemonicCell.bind(index: 2) { (component: TextComponent) in
                 component.text = kind
             }
@@ -113,7 +113,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
             self?.passphraseCell.inputText = nil
             self?.passphraseConfirmationCell.inputText = nil
         }
-        subscribe(disposeBag, viewModel.openSelectKindSignal) { [weak self] in self?.openSelectKind(viewItems: $0) }
+        subscribe(disposeBag, viewModel.openSelectWordCountSignal) { [weak self] in self?.openSelectKind(viewItems: $0) }
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.finish() }
 
@@ -138,7 +138,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
     private func openSelectKind(viewItems: [AlertViewItem]) {
         let alertController = AlertRouter.module(title: "create_wallet.mnemonic".localized, viewItems: viewItems) { [weak self] index in
-            self?.viewModel.onSelectKind(index: index)
+            self?.viewModel.onSelectWordCount(index: index)
         }
 
         present(alertController, animated: true)
@@ -179,7 +179,7 @@ extension CreateAccountViewController: SectionsDataSource {
                                 height: .heightCell48,
                                 autoDeselect: true,
                                 action: { [weak self] in
-                                    self?.viewModel.onTapKind()
+                                    self?.viewModel.onTapWordCount()
                                 }
                         )
                     ]
