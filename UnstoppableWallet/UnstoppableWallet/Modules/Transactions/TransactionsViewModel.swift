@@ -8,6 +8,7 @@ class TransactionsViewModel {
     private let factory: TransactionsViewItemFactory
     private let disposeBag = DisposeBag()
 
+    private let typeFilterIndexRelay = BehaviorRelay<Int>(value: 0)
     private let blockchainTitleRelay = BehaviorRelay<String?>(value: nil)
     private let tokenTitleRelay = BehaviorRelay<String?>(value: nil)
 
@@ -23,6 +24,7 @@ class TransactionsViewModel {
         self.service = service
         self.factory = factory
 
+        subscribe(disposeBag, service.typeFilterObservable) { [weak self] in self?.sync(typeFilter: $0) }
         subscribe(disposeBag, service.blockchainObservable) { [weak self] in self?.syncBlockchainTitle(blockchain: $0) }
         subscribe(disposeBag, service.configuredTokenObservable) { [weak self] in self?.syncTokenTitle(configuredToken: $0) }
         subscribe(disposeBag, service.itemDataObservable) { [weak self] in self?.sync(itemData: $0) }
@@ -39,6 +41,14 @@ class TransactionsViewModel {
 
     private func sync(canReset: Bool) {
         resetEnabledRelay.accept(canReset)
+    }
+
+    private func sync(typeFilter: TransactionTypeFilter) {
+        guard let index = TransactionTypeFilter.allCases.firstIndex(of: typeFilter) else {
+            return
+        }
+
+        typeFilterIndexRelay.accept(index)
     }
 
     private func syncBlockchainTitle(blockchain: Blockchain?) {
@@ -161,6 +171,10 @@ class TransactionsViewModel {
 }
 
 extension TransactionsViewModel {
+
+    var typeFilterIndexDriver: Driver<Int> {
+        typeFilterIndexRelay.asDriver()
+    }
 
     var blockchainTitleDriver: Driver<String?> {
         blockchainTitleRelay.asDriver()

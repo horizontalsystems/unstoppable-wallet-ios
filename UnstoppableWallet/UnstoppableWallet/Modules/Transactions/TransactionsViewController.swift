@@ -99,6 +99,9 @@ class TransactionsViewController: ThemeViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
+        subscribe(disposeBag, viewModel.typeFilterIndexDriver) { [weak self] index in
+            self?.typeFiltersView.select(index: index)
+        }
         subscribe(disposeBag, viewModel.viewDataDriver) { [weak self] in self?.handle(viewData: $0) }
         subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] in self?.sync(viewStatus: $0) }
         subscribe(disposeBag, viewModel.resetEnabledDriver) { [weak self] in
