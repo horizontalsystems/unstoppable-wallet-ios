@@ -22,29 +22,29 @@
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
-"alert.saved" = "Saved";
+"alert.saved" = "Сохранено";
 "alert.no_internet" = "Нет Интернета";
 "alert.wrong_amount" = "Неверная Сумма";
 "alert.no_fee" = "Неверная Комиссия";
 "alert.unknown_error" = "Неизвестная Ошибка";
 "alert.success_action" = "Готово!";
 
-"alert.added_to_watchlist" = "Added to Watchlist";
-"alert.removed_from_watchlist" = "Removed from Watchlist";
-"alert.added_to_wallet" = "Added to Wallet";
-"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.added_to_watchlist" = "Добавлено в Избранное";
+"alert.removed_from_watchlist" = "Удалить из Избранного";
+"alert.added_to_wallet" = "Добавлено в Кошелек";
+"alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Not Supported Yet";
-"alert.copied" = "Copied";
-"alert.created" = "Created";
-"alert.deleted" = "Deleted";
+"alert.copied" = "Скопировано";
+"alert.created" = "Создан";
+"alert.deleted" = "Удалено";
 "alert.disconnecting" = "Disconnecting";
 "alert.disconnected" = "Disconnected";
 "alert.enabling" = "Enabling";
 "alert.enabled_coins" = "Enabled %@ more coins";
-"alert.sending" = "Sending";
-"alert.sent" = "Sent";
-"alert.swapping" = "Swapping";
-"alert.approving" = "Approving";
+"alert.sending" = "Отправка";
+"alert.sent" = "Отправлено";
+"alert.swapping" = "Обмен";
+"alert.approving" = "Подтверждение";
 
 
 "action.loading" = "загрузка...";
@@ -184,8 +184,8 @@
 // Account switcher
 
 "switch_account.title" = "Сменить Кошелек";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_addresses" = "Watch Addresses";
+"switch_account.wallets" = "Кошельки";
+"switch_account.watch_addresses" = "Посмотреть Адрес";
 
 // Release notes
 
@@ -373,7 +373,7 @@
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
 
-"market.coin_not_supported_yet" = "Not supported yet";
+"market.coin_not_supported_yet" = "Ещё не поддерживается";
 
 "market.top.section.header.see_all" = "Посмотреть Всё";
 "market.top.section.header.top_gainers" = "Взлеты";
@@ -489,9 +489,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -864,14 +864,14 @@
 
 "appearance.title" = "Appearance";
 
-"appearance.theme" = "Theme";
+"appearance.theme" = "Тема";
 "appearance.theme.system" = "System";
 "appearance.theme.dark" = "Dark";
 "appearance.theme.light" = "Light";
 
 "appearance.launch_screen" = "Launch Screen";
 "appearance.launch_screen.auto" = "Auto";
-"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Watchlist";
 
@@ -1149,8 +1149,8 @@
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
-"nft_asset.tab.activity" = "Activity";
+"nft_asset.tab.overview" = "Обзор";
+"nft_asset.tab.activity" = "Активность";
 
 "nft_asset.last_sale" = "Последняя Продажа";
 "nft_asset.average_7d" = "Среднее за 7 дней";
@@ -1194,7 +1194,7 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 
-"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Event Types";
 "nft.activity.event_type.all" = "All Events";
 "nft.activity.event_type.list" = "List";
@@ -1206,6 +1206,6 @@
 "nft.activity.event_type.approve" = "Approve";
 "nft.activity.event_type.custom" = "Custom";
 "nft.activity.event_type.payout" = "Payout";
-"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.cancel" = "Отменить";
 "nft.activity.event_type.bulkCancel" = "Bulk Cancel";
-"nft.activity.event_type.unknown" = "Unknown";
+"nft.activity.event_type.unknown" = "Неизвестная";
