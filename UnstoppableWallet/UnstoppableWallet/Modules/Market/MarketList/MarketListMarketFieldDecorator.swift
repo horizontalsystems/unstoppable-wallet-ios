@@ -57,7 +57,7 @@ extension MarketListMarketFieldDecorator: IMarketListDecorator {
                 iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
                 leftPrimaryValue: marketInfo.fullCoin.coin.code,
                 leftSecondaryValue: marketInfo.fullCoin.coin.name,
-                badge: marketInfo.fullCoin.coin.marketCapRank.map { "\($0)" },
+                badge: marketInfo.marketCapRank.map { "\($0)" },
                 badgeSecondaryValue: nil,
                 rightPrimaryValue: price,
                 rightSecondaryValue: dataValue
