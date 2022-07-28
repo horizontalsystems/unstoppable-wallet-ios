@@ -4,8 +4,6 @@ import RxSwift
 import RxRelay
 
 class RestoreMnemonicService {
-    private let wordsManager: WordsManager
-
     private let wordList: [String]
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let passphraseValidator: PassphraseValidator
@@ -14,8 +12,7 @@ class RestoreMnemonicService {
     let defaultName: String
     private var name: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: WordsManager, passphraseValidator: PassphraseValidator) {
-        self.wordsManager = wordsManager
+    init(accountFactory: AccountFactory, passphraseValidator: PassphraseValidator) {
         self.passphraseValidator = passphraseValidator
 
         wordList = Mnemonic.Language.allCases.reduce([String]()) { array, language in
