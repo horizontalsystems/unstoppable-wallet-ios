@@ -29,7 +29,12 @@ class TransactionsService {
         }
     }
 
-    private(set) var typeFilter: TransactionTypeFilter = .all
+    private let typeFilterRelay = PublishRelay<TransactionTypeFilter>()
+    private(set) var typeFilter: TransactionTypeFilter = .all {
+        didSet {
+            typeFilterRelay.accept(typeFilter)
+        }
+    }
 
     private let blockchainRelay = PublishRelay<Blockchain?>()
     private(set) var blockchain: Blockchain? {
@@ -77,7 +82,7 @@ class TransactionsService {
     }
 
     private var _canReset: Bool {
-        blockchain != nil || configuredToken != nil
+        typeFilter != .all || blockchain != nil || configuredToken != nil
     }
 
     private func syncWallets() {
@@ -295,6 +300,10 @@ class TransactionsService {
 
 extension TransactionsService {
 
+    var typeFilterObservable: Observable<TransactionTypeFilter> {
+        typeFilterRelay.asObservable()
+    }
+
     var blockchainObservable: Observable<Blockchain?> {
         blockchainRelay.asObservable()
     }
@@ -331,7 +340,13 @@ extension TransactionsService {
 
     func set(typeFilter: TransactionTypeFilter) {
         queue.async {
+            guard self.typeFilter != typeFilter else {
+                return
+            }
+
             self.typeFilter = typeFilter
+
+            self._syncCanReset()
 
 //            print("SYNC POOL GROUP: set type filter")
             self._syncPoolGroup()
@@ -372,10 +387,11 @@ extension TransactionsService {
 
     func reset() {
         queue.async {
-            guard self.blockchain != nil || self.configuredToken != nil else {
+            guard self._canReset else {
                 return
             }
 
+            self.typeFilter = .all
             self.blockchain = nil
             self.configuredToken = nil
 
