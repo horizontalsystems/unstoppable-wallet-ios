@@ -87,7 +87,8 @@ class EvmFeeService {
     private func transactionSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction> {
         adjustedTransactionDataSingle(gasPrice: gasPrice, transactionData: transactionData).flatMap { [unowned self] transactionData in
             gasDataService.gasDataSingle(gasPrice: gasPrice, transactionData: transactionData).map { [unowned self] estimatedGasData in
-                EvmFeeModule.Transaction(
+                print(estimatedGasData.description)
+                return EvmFeeModule.Transaction(
                         transactionData: transactionData,
                         gasData: estimatedGasData
                 )

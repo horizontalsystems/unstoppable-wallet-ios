@@ -71,7 +71,7 @@ class EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Optimism.io HTTP",
                         rpcSource: .optimismRpcHttp(),
-                        transactionSource: .optimisticEtherscan(apiKey: "")
+                        transactionSource: .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
                 )
             ]
         case .arbitrumOne:
@@ -79,7 +79,7 @@ class EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Arbitrum.io HTTP",
                         rpcSource: .arbitrumOneRpcHttp(),
-                        transactionSource: .arbiscan(apiKey: "")
+                        transactionSource: .arbiscan(apiKey: appConfigProvider.arbiscanKey)
                 )
             ]
         default:

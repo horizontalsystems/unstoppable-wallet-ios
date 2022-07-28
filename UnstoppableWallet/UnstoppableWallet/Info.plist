@@ -41,6 +41,10 @@
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
+	<key>OptimismEtherscanApiKey</key>
+	<string>${optimism_etherscan_api_key}</string>
+	<key>ArbiscanApiKey</key>
+	<string>${arbiscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

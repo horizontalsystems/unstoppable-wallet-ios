@@ -1,6 +1,8 @@
 infura_project_id =
 infura_project_secret =
 etherscan_api_key =
+arbiscan_api_key =
+optimism_etherscan_api_key =
 bscscan_api_key =
 polygonscan_api_key =
 snowtrace_api_key =
