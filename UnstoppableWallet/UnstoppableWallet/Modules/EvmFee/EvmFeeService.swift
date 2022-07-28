@@ -40,7 +40,17 @@ class EvmFeeService {
     }
 
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
-        if let transaction = gasDataService.transaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
+        disposeBag = DisposeBag()
+        gasDataService.transaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] transaction in
+                    self?.sync(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func sync(fallibleGasPrice: FallibleData<GasPrice>, transaction: EvmFeeModule.Transaction?) {
+        if let transaction = transaction {
             sync(transaction: transaction, fallibleGasPrice: fallibleGasPrice)
             return
         }

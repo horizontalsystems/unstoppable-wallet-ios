@@ -25,7 +25,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, gasPrice: service.gasPrice)
 
-        let gasDataService = EvmL1GasDataService(evmKit: evmKitWrapper.evmKit, gasLimitSurchargePercent: 10)
+        let gasDataService = EvmGasDataService.instance(evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimitSurchargePercent: 10)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: service.transactionData)
         let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: SendEvmData.DAppInfo(name: request.dAppName))
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: additionalInfo, warnings: [])

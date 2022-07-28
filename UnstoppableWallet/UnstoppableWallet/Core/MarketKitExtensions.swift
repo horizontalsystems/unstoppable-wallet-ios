@@ -1,5 +1,6 @@
 import UIKit
 import MarketKit
+import EthereumKit
 
 enum TokenProtocol {
     case native
@@ -229,6 +230,13 @@ extension MarketKit.BlockchainType {
         case .optimism: return 10
         case .arbitrumOne: return 11
         default: return Int.max
+        }
+    }
+
+    var rollupFeeContractAddress: EthereumKit.Address? {
+        switch self {
+        case .optimism: return try? EthereumKit.Address(hex: "0x420000000000000000000000000000000000000F")
+        default: return nil
         }
     }
 
