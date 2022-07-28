@@ -97,6 +97,13 @@ extension EvmFeeModule {
             case .rollupL2(let gasLimit, let gasPrice, let l1Fee): return BigUInt(gasLimit * gasPrice.max) + l1Fee
             }
         }
+
+        var description: String {
+            switch self {
+            case .l1(let gasLimit, let gasPrice): return "L1 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description)"
+            case .rollupL2(let gasLimit, let gasPrice, let l1Fee): return "L2 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description) - l1fee:\(l1Fee.description)"
+            }
+        }
     }
 
     struct Transaction {
