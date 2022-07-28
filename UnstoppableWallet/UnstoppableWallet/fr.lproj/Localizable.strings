@@ -406,7 +406,7 @@
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Platforms Rank";
+"top_platforms.title" = "Classement des plateformes";
 "top_platforms.description" = "Les meilleures plateformes blockchain en fonction du marché cumulé des projets bâtis sur celles-ci.";
 
 "market_discovery.title" = "Découverte";
@@ -489,7 +489,7 @@
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
 "market.global.volume_24h.title" = "Volume 24h";
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -651,7 +651,7 @@
 "transactions.blockchain" = "Blockchain";
 "transactions.all_blockchains" = "All Blockchains";
 "transactions.all_coins" = "All Coins";
-"transactions.choose_coin" = "Choose Coin";
+"transactions.choose_coin" = "Choisir la pièce";
 "transactions.clear" = "Clear";
 "transactions.filter_all" = "Tout";
 "transactions.syncing_text" = "Veuillez attendre la fin de la synchronisation";
@@ -1201,9 +1201,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft.activity.event_type.bid" = "Bid Entered";
 "nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
 "nft.activity.event_type.transfer" = "Transfer";
-"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.approve" = "Approuver";
 "nft.activity.event_type.custom" = "Personnalisé";
 "nft.activity.event_type.payout" = "Versement";
 "nft.activity.event_type.cancel" = "Annuler";
 "nft.activity.event_type.bulkCancel" = "Bulk Cancel";
-"nft.activity.event_type.unknown" = "Unknown";
+"nft.activity.event_type.unknown" = "Inconnu";
