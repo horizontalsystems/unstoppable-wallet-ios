@@ -145,7 +145,9 @@ extension BackupKeyViewController: SectionsDataSource {
                         StaticRow(
                                 cell: mnemonicPhraseCell,
                                 id: "mnemonic-phrase",
-                                height: MnemonicPhraseCell.height(wordCount: words.count),
+                                dynamicHeight: { width in
+                                    MnemonicPhraseCell.height(containerWidth: width, words: words)
+                                },
                                 onReady: { [weak self] in
                                     self?.mnemonicPhraseCell.set(words: words)
                                 }
