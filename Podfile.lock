@@ -61,6 +61,7 @@ PODS:
   - CNIOLinux (2.40.0)
   - CNIOSHA1 (2.40.0)
   - CNIOWindows (2.40.0)
+  - CollectionViewCenteredFlowLayout (1.0.1)
   - ComponentKit.swift (1.0):
     - HUD.swift (~> 1.2)
     - Kingfisher (~> 7.0)
@@ -412,6 +413,7 @@ DEPENDENCIES:
   - BitcoinCore.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - BitcoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - Chart.swift (from `https://github.com/horizontalsystems/gui-kit/`)
+  - CollectionViewCenteredFlowLayout
   - ComponentKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
   - Cuckoo
   - CurrencyKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
@@ -467,6 +469,7 @@ SPEC REPOS:
     - CNIOLinux
     - CNIOSHA1
     - CNIOWindows
+    - CollectionViewCenteredFlowLayout
     - CryptoSwift
     - Cuckoo
     - EthereumAddress
@@ -693,6 +696,7 @@ SPEC CHECKSUMS:
   CNIOLinux: 62e3505f50de558c393dc2f273dde71dcce518da
   CNIOSHA1: 6df39ae8db5922d6fcdd94e15bc57118cbd6b104
   CNIOWindows: 3047f2d8165848a3936a0a755fee27c6b5ee479b
+  CollectionViewCenteredFlowLayout: 339b935be4d8578c59e448c8906117a07c657d85
   ComponentKit.swift: b6e182474eece1ba52f6f7755a72a4c734648de1
   CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
   Cuckoo: 33cc15762a936352265c30396069f1cb160d9596
@@ -759,6 +763,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ca6f8383f964a6840b840eeb1c86bb9ba85c44a3
 
-PODFILE CHECKSUM: 68884a5d48564b62a62b49072826d1d52c374657
+PODFILE CHECKSUM: e4a3220283973fb4e33d1ec9faac164727d6ef4c
 
 COCOAPODS: 1.11.2
