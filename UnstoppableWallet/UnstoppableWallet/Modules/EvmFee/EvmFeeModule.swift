@@ -11,15 +11,16 @@ struct EvmFeeModule {
         let feeService = feeViewModel.service
         let coinService = feeViewModel.coinService
         let gasPriceService = feeViewModel.gasPriceService
+        let feeViewItemFactory = FeeViewItemFactory(scale: .gwei)
         let cautionsFactory = SendEvmCautionsFactory()
 
         switch gasPriceService {
         case let legacyService as LegacyGasPriceService:
-            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, cautionsFactory: cautionsFactory)
+            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
             return ThemeNavigationController(rootViewController: LegacyEvmFeeViewController(viewModel: viewModel))
 
         case let eip1559Service as Eip1559GasPriceService:
-            let viewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, cautionsFactory: cautionsFactory)
+            let viewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
             return ThemeNavigationController(rootViewController: Eip1559EvmFeeViewController(viewModel: viewModel))
 
         default: return nil

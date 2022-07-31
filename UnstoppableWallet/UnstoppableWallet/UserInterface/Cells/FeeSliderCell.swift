@@ -4,13 +4,6 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-struct FeeSliderViewItem {
-    let initialValue: Int
-    let range: ClosedRange<Int>
-    let step: Int
-    let description: String?
-}
-
 protocol IDynamicHeightCellDelegate: AnyObject {
     func onChangeHeight()
 }
@@ -20,9 +13,9 @@ class FeeSliderCell: BaseThemeCell {
 
     private let disposeBag = DisposeBag()
 
-    var onFinishTracking: ((Int) -> ())?
+    var onFinishTracking: ((Float) -> ())?
 
-    init(sliderDriver: Driver<FeeSliderViewItem?>) {
+    init(sliderDriver: Driver<FeeViewItem?>) {
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -58,6 +51,10 @@ extension FeeSliderCell {
 
     func height(containerWidth: CGFloat) -> CGFloat {
         feeSliderWrapper.isHidden ? 0 : 29
+    }
+
+    func set(scale: FeePriceScale) {
+        feeSliderWrapper.scale = scale
     }
 
 }

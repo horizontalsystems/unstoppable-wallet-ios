@@ -9,6 +9,7 @@ class LegacyEvmFeeViewModel {
     private let gasPriceService: LegacyGasPriceService
     private let feeService: IEvmFeeService
     private let coinService: CoinService
+    private let feeViewItemFactory: FeeViewItemFactory
     private let cautionsFactory: SendEvmCautionsFactory
 
     private let resetButtonActiveRelay = BehaviorRelay<Bool>(value: false)
@@ -16,13 +17,14 @@ class LegacyEvmFeeViewModel {
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let gasPriceRelay = BehaviorRelay<String>(value: "n/a")
-    private let gasPriceSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
+    private let gasPriceSliderRelay = BehaviorRelay<FeeViewItem?>(value: nil)
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
+    init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory, cautionsFactory: SendEvmCautionsFactory) {
         self.gasPriceService = gasPriceService
         self.feeService = feeService
         self.coinService = coinService
+        self.feeViewItemFactory = feeViewItemFactory
         self.cautionsFactory = cautionsFactory
 
         sync(transactionStatus: feeService.status)
@@ -36,16 +38,10 @@ class LegacyEvmFeeViewModel {
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
         if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data {
-            let gweiGasPrice = gwei(wei: gasPrice)
-            gasPriceRelay.accept("\(gweiGasPrice) gwei")
-            gasPriceSliderRelay.accept(
-                    FeeSliderViewItem(
-                            initialValue: gasPrice,
-                            range: gasPriceService.gasPriceRange,
-                            step: wei(gwei: 1),
-                            description: "gwei"
-                    )
-            )
+            let feeStep = gasPriceService.recommendedGasPrice.significant(depth: FeeViewItemFactory.stepDepth)
+            let viewItem = feeViewItemFactory.viewItem(value: gasPrice, step: feeStep, range: gasPriceService.gasPriceRange)
+            gasPriceRelay.accept(viewItem.description)
+            gasPriceSliderRelay.accept(viewItem)
         } else {
             gasPriceRelay.accept("n/a".localized)
             gasPriceSliderRelay.accept(nil)
@@ -89,18 +85,6 @@ class LegacyEvmFeeViewModel {
         resetButtonActiveRelay.accept(!usingRecommended)
     }
 
-    private func gwei(wei: Int) -> Int {
-        wei / 1_000_000_000
-    }
-
-    private func gwei(range: ClosedRange<Int>) -> ClosedRange<Int> {
-        gwei(wei: range.lowerBound)...gwei(wei: range.upperBound)
-    }
-
-    private func wei(gwei: Int) -> Int {
-        gwei * 1_000_000_000
-    }
-
 }
 
 extension LegacyEvmFeeViewModel {
@@ -113,7 +97,7 @@ extension LegacyEvmFeeViewModel {
         gasPriceRelay.asDriver()
     }
 
-    var gasPriceSliderDriver: Driver<FeeSliderViewItem?> {
+    var gasPriceSliderDriver: Driver<FeeViewItem?> {
         gasPriceSliderRelay.asDriver()
     }
 
@@ -125,8 +109,8 @@ extension LegacyEvmFeeViewModel {
         resetButtonActiveRelay.asDriver()
     }
 
-    func set(value: Int) {
-        gasPriceService.set(gasPrice: value)
+    func set(value: Float) {
+        gasPriceService.set(gasPrice: feeViewItemFactory.intValue(value: value))
     }
 
     func reset() {

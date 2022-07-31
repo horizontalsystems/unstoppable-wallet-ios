@@ -1,7 +1,8 @@
-import RxSwift
-import RxRelay
-import RxCocoa
 import EthereumKit
+import Foundation
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class Eip1559EvmFeeViewModel {
     private let disposeBag = DisposeBag()
@@ -9,6 +10,7 @@ class Eip1559EvmFeeViewModel {
     private let gasPriceService: Eip1559GasPriceService
     private let feeService: IEvmFeeService
     private let coinService: CoinService
+    private let feeViewItemFactory: FeeViewItemFactory
     private let cautionsFactory: SendEvmCautionsFactory
 
     private let resetButtonActiveRelay = BehaviorRelay<Bool>(value: false)
@@ -18,14 +20,15 @@ class Eip1559EvmFeeViewModel {
     private let currentBaseFeeRelay = BehaviorRelay<String>(value: "n/a")
     private let baseFeeRelay = BehaviorRelay<String>(value: "n/a")
     private let tipsRelay = BehaviorRelay<String>(value: "n/a")
-    private let baseFeeSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
-    private let tipsSliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
+    private let baseFeeSliderRelay = BehaviorRelay<FeeViewItem?>(value: nil)
+    private let tipsSliderRelay = BehaviorRelay<FeeViewItem?>(value: nil)
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(gasPriceService: Eip1559GasPriceService, feeService: IEvmFeeService, coinService: CoinService, cautionsFactory: SendEvmCautionsFactory) {
+    init(gasPriceService: Eip1559GasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory, cautionsFactory: SendEvmCautionsFactory) {
         self.gasPriceService = gasPriceService
         self.feeService = feeService
         self.coinService = coinService
+        self.feeViewItemFactory = feeViewItemFactory
         self.cautionsFactory = cautionsFactory
 
         sync(transactionStatus: feeService.status)
@@ -65,12 +68,12 @@ class Eip1559EvmFeeViewModel {
             maxFeeValue = nil
             gasLimit = "n/a".localized
             cautions = []
-        case .failed(let error):
+        case let .failed(error):
             spinnerVisible = false
             maxFeeValue = FeeCell.Value(text: "n/a".localized, type: .error)
             gasLimit = "n/a".localized
             cautions = cautionsFactory.items(errors: [error], warnings: [], baseCoinService: coinService)
-        case .completed(let fallibleTransaction):
+        case let .completed(fallibleTransaction):
             spinnerVisible = false
 
             let gasData = fallibleTransaction.data.gasData
@@ -97,53 +100,30 @@ class Eip1559EvmFeeViewModel {
             return
         }
 
-        let gweiBaseFee = gwei(wei: gasPriceService.baseFee)
-        baseFeeRelay.accept("\(gweiBaseFee) gwei")
-        baseFeeSliderRelay.accept(
-                FeeSliderViewItem(
-                        initialValue: gasPriceService.baseFee,
-                        range: gasPriceService.baseFeeRange,
-                        step: wei(gwei: 1),
-                        description: "gwei"
-                )
-        )
+        let baseStep = gasPriceService.recommendedBaseFee.significant(depth: FeeViewItemFactory.stepDepth)
+        let baseFeeViewItem = feeViewItemFactory.viewItem(value: gasPriceService.baseFee, step: baseStep, range: gasPriceService.baseFeeRange)
+        baseFeeRelay.accept(baseFeeViewItem.description)
+        baseFeeSliderRelay.accept(baseFeeViewItem)
 
-        let gweiTips = gwei(wei: gasPriceService.tips)
-        tipsRelay.accept("\(gweiTips) gwei")
-        tipsSliderRelay.accept(
-                FeeSliderViewItem(
-                        initialValue: gasPriceService.tips,
-                        range: gasPriceService.tipsRange,
-                        step: wei(gwei: 1),
-                        description: "gwei"
-                )
-        )
+        let tipsStep = gasPriceService.recommendedTips.significant(depth: FeeViewItemFactory.stepDepth)
+        let tipsViewItem = feeViewItemFactory.viewItem(value: gasPriceService.tips, step: tipsStep, range: gasPriceService.tipsRange)
+        tipsRelay.accept(tipsViewItem.description)
+        tipsSliderRelay.accept(tipsViewItem)
     }
 
     private func sync(recommendedBaseFee: Int) {
-        currentBaseFeeRelay.accept("\(gwei(wei: recommendedBaseFee)) gwei")
+        let baseStep = recommendedBaseFee.significant(depth: FeeViewItemFactory.stepDepth)
+        let baseFeeViewItem = feeViewItemFactory.viewItem(value: recommendedBaseFee, step: baseStep, range: gasPriceService.baseFeeRange)
+        currentBaseFeeRelay.accept(baseFeeViewItem.description)
     }
 
     private func sync(usingRecommended: Bool) {
         resetButtonActiveRelay.accept(!usingRecommended)
     }
 
-    private func gwei(wei: Int) -> Int {
-        wei / 1_000_000_000
-    }
-
-    private func gwei(range: ClosedRange<Int>) -> ClosedRange<Int> {
-        gwei(wei: range.lowerBound)...gwei(wei: range.upperBound)
-    }
-
-    private func wei(gwei: Int) -> Int {
-        gwei * 1_000_000_000
-    }
-
 }
 
 extension Eip1559EvmFeeViewModel {
-
     var gasLimitDriver: Driver<String> {
         gasLimitRelay.asDriver()
     }
@@ -160,11 +140,11 @@ extension Eip1559EvmFeeViewModel {
         tipsRelay.asDriver()
     }
 
-    var baseFeeSliderDriver: Driver<FeeSliderViewItem?> {
+    var baseFeeSliderDriver: Driver<FeeViewItem?> {
         baseFeeSliderRelay.asDriver()
     }
 
-    var tipsSliderDriver: Driver<FeeSliderViewItem?> {
+    var tipsSliderDriver: Driver<FeeViewItem?> {
         tipsSliderRelay.asDriver()
     }
 
@@ -176,22 +156,20 @@ extension Eip1559EvmFeeViewModel {
         resetButtonActiveRelay.asDriver()
     }
 
-    func set(baseFee: Int) {
-        gasPriceService.set(baseFee: baseFee)
+    func set(baseFee: Float) {
+        gasPriceService.set(baseFee: feeViewItemFactory.intValue(value: baseFee))
     }
 
-    func set(tips: Int) {
-        gasPriceService.set(tips: tips)
+    func set(tips: Float) {
+        gasPriceService.set(tips: feeViewItemFactory.intValue(value: tips))
     }
 
     func reset() {
         gasPriceService.setRecommendedGasPrice()
     }
-
 }
 
 extension Eip1559EvmFeeViewModel: IFeeViewModel {
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
@@ -199,5 +177,4 @@ extension Eip1559EvmFeeViewModel: IFeeViewModel {
     var spinnerVisibleDriver: Driver<Bool> {
         spinnerVisibleRelay.asDriver()
     }
-
 }

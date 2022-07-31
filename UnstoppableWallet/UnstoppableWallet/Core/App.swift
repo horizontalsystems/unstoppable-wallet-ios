@@ -121,7 +121,7 @@ class App {
         )
         marketKit.sync()
 
-        logger = Logger(minLogLevel: .debug, storage: logRecordManager)
+        logger = Logger(minLogLevel: .error, storage: logRecordManager)
         networkManager = NetworkManager(logger: logger)
 
         keychainKit = KeychainKit(service: "io.horizontalsystems.bank.dev")

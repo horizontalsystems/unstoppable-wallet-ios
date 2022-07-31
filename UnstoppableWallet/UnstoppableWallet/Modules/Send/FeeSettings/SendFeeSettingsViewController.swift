@@ -42,6 +42,7 @@ class SendFeeSettingsViewController: ThemeViewController {
 
         feePriorityCell = SendFeePriorityCell(viewModel: feePriorityViewModel)
         feeSliderCell = FeeSliderCell(sliderDriver: feeSliderViewModel.sliderDriver)
+        feeSliderCell.set(scale: .satoshi)
 
         super.init()
 
@@ -152,11 +153,9 @@ class SendFeeSettingsViewController: ThemeViewController {
         }
     }
 
-    private func sync(feeSliderViewItem: FeeSliderViewItem?) {
+    private func sync(feeSliderViewItem: FeeViewItem?) {
         feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.text = feeSliderViewItem.map {
-                "\($0.initialValue) \($0.description ?? "")"
-            }
+            component.text = feeSliderViewItem?.description
         })
     }
 

@@ -141,7 +141,8 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
                 feeRateService: feeRateService,
                 customRangedFeeRateProvider: customRangedFeeRateProvider
         )
-        let feeSliderViewModel = SendFeeSliderViewModel(service: feeSliderService)
+        let feeViewItemFactory = FeeViewItemFactory(scale: .satoshi)
+        let feeSliderViewModel = SendFeeSliderViewModel(feeViewItemFactory: feeViewItemFactory, service: feeSliderService)
         let feePriorityViewModel = SendFeePriorityViewModel(service: feePriorityService)
         let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
