@@ -47,7 +47,7 @@ class FeeRateProvider {
 class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     static let defaultFeeRange: ClosedRange<Int> = 1...200
     let customFeeRange: ClosedRange<Int> = BitcoinFeeRateProvider.defaultFeeRange
-    let step = 1
+    let step: Int = 1
 
     private let feeRateProvider: FeeRateProvider
     private let lowPriorityBlockCount = 40
@@ -108,66 +108,6 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
 
     var recommendedFeeRate: Single<Int> { feeRateProvider.bitcoinCashFeeRate }
     var feeRatePriorityList: [FeeRatePriority] = []
-
-}
-
-class EthereumFeeRateProvider: ICustomRangedFeeRateProvider {
-    private static let customRange = 1_000_000_000...400_000_000_000
-
-    let customFeeRange: ClosedRange<Int>
-    let step = 1_000_000_000
-
-    private let feeRateProvider: FeeRateProvider
-    private let multiply: Double?
-
-    init(feeRateProvider: FeeRateProvider, customFeeRange: ClosedRange<Int> = EthereumFeeRateProvider.customRange, multiply: Double? = nil) {
-        self.feeRateProvider = feeRateProvider
-        self.multiply = multiply
-        self.customFeeRange = customFeeRange
-    }
-
-    var recommendedFeeRate: Single<Int> {
-        let lowerRange = customFeeRange.lowerBound
-
-        return feeRateProvider.ethereumGasPrice.map { [weak self] in
-            ceil(max(lowerRange, $0), multiply: self?.multiply)
-        }
-    }
-
-    var feeRatePriorityList: [FeeRatePriority] {
-        let lower = ceil(customFeeRange.lowerBound, multiply: multiply)
-        return [.recommended, .custom(value: lower, range: lower...customFeeRange.upperBound)]
-    }
-
-}
-
-class BinanceSmartChainFeeRateProvider: ICustomRangedFeeRateProvider {
-    private static let customRange = 1_000_000_000...400_000_000_000
-
-    let customFeeRange: ClosedRange<Int>
-    let step = 1_000_000_000
-
-    private let feeRateProvider: FeeRateProvider
-    private let multiply: Double?
-
-    init(feeRateProvider: FeeRateProvider, customFeeRange: ClosedRange<Int> = BinanceSmartChainFeeRateProvider.customRange, multiply: Double? = nil) {
-        self.feeRateProvider = feeRateProvider
-        self.multiply = multiply
-        self.customFeeRange = customFeeRange
-    }
-
-    var recommendedFeeRate: Single<Int> {
-        let lowerRange = customFeeRange.lowerBound
-
-        return feeRateProvider.binanceSmartChainGasPrice.map { [weak self] in
-            ceil(max(lowerRange, $0), multiply: self?.multiply)
-        }
-    }
-
-    var feeRatePriorityList: [FeeRatePriority] {
-        let lower = ceil(customFeeRange.lowerBound, multiply: multiply)
-        return [.recommended, .custom(value: lower, range: lower...customFeeRange.upperBound)]
-    }
 
 }
 

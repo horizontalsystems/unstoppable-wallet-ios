@@ -1,19 +1,21 @@
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class SendFeeSliderViewModel {
     private let disposeBag = DisposeBag()
+    private let feeViewItemFactory: FeeViewItemFactory
     private let service: SendFeeSliderService
 
-    private let sliderRelay = BehaviorRelay<FeeSliderViewItem?>(value: nil)
-    private var slider: FeeSliderViewItem? {
+    private let sliderRelay = BehaviorRelay<FeeViewItem?>(value: nil)
+    private var slider: FeeViewItem? {
         didSet {
             sliderRelay.accept(slider)
         }
     }
 
-    init(service: SendFeeSliderService) {
+    init(feeViewItemFactory: FeeViewItemFactory, service: SendFeeSliderService) {
+        self.feeViewItemFactory = feeViewItemFactory
         self.service = service
 
         subscribe(disposeBag, service.itemObservable) { [weak self] in self?.sync(item: $0) }
@@ -21,21 +23,18 @@ class SendFeeSliderViewModel {
     }
 
     private func sync(item: SendFeeSliderService.Item) {
-        slider = FeeSliderViewItem(initialValue: item.value, range: item.range, step: item.step, description: "sat/byte")
+        slider = feeViewItemFactory.viewItem(value: item.value, step: item.step, range: item.range)
     }
-
 }
 
 extension SendFeeSliderViewModel {
-
-    var sliderDriver: Driver<FeeSliderViewItem?> {
+    var sliderDriver: Driver<FeeViewItem?> {
         sliderRelay.asDriver()
     }
 
     func subscribeTracking(cell: FeeSliderCell) {
         cell.onFinishTracking = { [weak self] feeRate in
-            self?.service.set(feeRate: feeRate)
+            self?.service.set(feeRate: Int(feeRate))
         }
     }
-
 }
