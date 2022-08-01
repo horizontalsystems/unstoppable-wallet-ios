@@ -35,8 +35,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>CryptoCompareApiKey</key>
-	<string>$(cryptocompare_com_api_key)</string>
 	<key>DefaultWords</key>
 	<string>${default_words}</string>
 	<key>DefiYieldApiKey</key>
