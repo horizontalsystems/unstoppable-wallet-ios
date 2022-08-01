@@ -89,7 +89,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
         if let address = viewItem.address {
             addressButton.isHidden = false
-            addressButton.setTitle(address.shortenedAddress, for: .normal)
+            addressButton.setTitle(address.shortened, for: .normal)
             currentAddress = address
         } else {
             addressButton.isHidden = true

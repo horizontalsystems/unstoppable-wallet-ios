@@ -229,7 +229,7 @@ class TransactionInfoViewController: ThemeViewController {
 
                     cell.bind(index: 1) { (component: SecondaryButtonComponent) in
                         component.button.set(style: .default)
-                        component.button.setTitle(value, for: .normal)
+                        component.button.setTitle(value.shortened, for: .normal)
                         component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: value)

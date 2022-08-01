@@ -59,7 +59,7 @@ extension MarketKit.Token {
             }
 
             return parts.joined(separator: " ")
-        case .eip20(let address): return address
+        case .eip20(let address): return address.shortened
         case .bep2(let symbol): return symbol
         default: return ""
         }

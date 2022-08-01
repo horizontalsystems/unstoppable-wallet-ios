@@ -8,9 +8,19 @@ extension String {
         return self
     }
 
-    var shortenedAddress: String {
-        let prefixCount = hasPrefix("0x") ? 7 : 5
-        return String(prefix(prefixCount)) + "..." + String(suffix(5))
+    var shortened: String {
+        let excludedPrefixes = ["0x", "bc", "bnb", "ltc", "bitcoincash:"]
+
+        var extraPrefix = 0
+
+        for excludedPrefix in excludedPrefixes {
+            if hasPrefix(excludedPrefix) {
+                extraPrefix = excludedPrefix.count
+                break
+            }
+        }
+
+        return String(prefix(extraPrefix + 4)) + "..." + String(suffix(4))
     }
 
 }
