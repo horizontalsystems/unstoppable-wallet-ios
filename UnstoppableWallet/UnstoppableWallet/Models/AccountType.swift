@@ -20,7 +20,7 @@ enum AccountType {
             let count = "\(words.count)"
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         case .address(let address):
-            return address.eip55
+            return address.eip55.shortened
         default:
             return ""
         }

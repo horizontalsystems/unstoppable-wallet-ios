@@ -97,7 +97,7 @@ class WalletConnectMainViewModel {
                             BlockchainViewItem(
                                     chainId: item.chainId,
                                     chainTitle: item.blockchain.name,
-                                    address: item.address.shortenedAddress,
+                                    address: item.address.shortened,
                                     selected: item.selected
                             )
                         }

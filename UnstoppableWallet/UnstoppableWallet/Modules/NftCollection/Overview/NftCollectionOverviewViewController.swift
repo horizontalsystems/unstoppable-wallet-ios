@@ -310,7 +310,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 cell.bind(index: 1) { (component: TextComponent) in
                                     component.font = .subhead2
                                     component.textColor = .themeGray
-                                    component.text = viewItem.reference
+                                    component.text = viewItem.reference.shortened
                                 }
 
                                 cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in

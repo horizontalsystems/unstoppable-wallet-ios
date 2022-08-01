@@ -357,7 +357,7 @@ extension CoinOverviewViewController {
                         component.font = .subhead2
                         component.textColor = .themeGray
                         component.lineBreakMode = .byTruncatingMiddle
-                        component.text = viewItem.reference
+                        component.text = viewItem.reference.shortened
                     }
 
                     cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
