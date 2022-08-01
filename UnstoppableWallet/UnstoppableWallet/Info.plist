@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ArbiscanApiKey</key>
+	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -41,10 +43,6 @@
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
-	<key>OptimismEtherscanApiKey</key>
-	<string>${optimism_etherscan_api_key}</string>
-	<key>ArbiscanApiKey</key>
-	<string>${arbiscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -73,6 +71,8 @@
 	<string>We need access to photo library to save NFT images</string>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+	<key>OptimismEtherscanApiKey</key>
+	<string>${optimism_etherscan_api_key}</string>
 	<key>PolygonscanApiKey</key>
 	<string>${polygonscan_api_key}</string>
 	<key>ShowBuildNumber</key>

@@ -53,6 +53,6 @@ struct EvmGasDataService {
             return EvmL1GasDataService(evmKit: evmKit, gasLimitSurchargePercent: gasLimitSurchargePercent)
         }
 
-        return EvmRollupL2GasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress) //do not use gasLimitSurchargePercent, because l2 layers don't have mempool
+        return EvmRollupL2GasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress) //do not use gasLimitSurchargePercent, because l2 layers don't have mempool (can't be forced by big fee)
     }
 }
