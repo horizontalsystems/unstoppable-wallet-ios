@@ -68,7 +68,11 @@ class TransactionInfoViewItemFactory {
         return "\(valueOutToken.coin.code) = \(price)\(rateFormatted)"
     }
 
-    private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {
+    private func rateString(currencyValue: CurrencyValue?, coinCode: String?) -> String {
+        guard let currencyValue = currencyValue, let coinCode = coinCode else {
+            return "---"
+        }
+
         let formattedValue = ValueFormatter.instance.formatFull(currencyValue: currencyValue) ?? ""
 
         return "balance.rate_per_coin".localized(formattedValue, coinCode)
@@ -102,9 +106,7 @@ class TransactionInfoViewItemFactory {
             viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
         }
 
-        if let rate = rate, let coin = transactionValue.coin {
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-        }
+        viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
         return viewItems
     }
@@ -129,9 +131,7 @@ class TransactionInfoViewItemFactory {
             viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
         }
 
-        if let rate = rate, let coin = transactionValue.coin {
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-        }
+        viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
         return viewItems
     }
@@ -192,9 +192,7 @@ class TransactionInfoViewItemFactory {
                 .spender(value: record.spender, valueTitle: evmLabelManager.addressLabel(address: record.spender))
             ]
 
-            if let rate = rate, let coin = transactionValue.coin {
-                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-            }
+            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
             sections.append(viewItems)
 
