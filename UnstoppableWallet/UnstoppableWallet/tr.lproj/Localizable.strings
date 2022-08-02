@@ -412,6 +412,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Üzerine kurulmuş projelerin oluşturduğu kümülatif pazarla lider blok zinciri platformları.";
 
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
