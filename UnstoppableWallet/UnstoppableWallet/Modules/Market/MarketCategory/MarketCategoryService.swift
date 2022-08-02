@@ -4,13 +4,19 @@ import MarketKit
 import CurrencyKit
 import LanguageKit
 
+protocol IMarketMetricsServiceConfigProvider {
+    var marketInfoSingle: Single<[MarketInfo]> { get }
+    var name: String { get }
+    var categoryDescription: String? { get }
+    var imageUrl: String { get }
+    var imageMode: MarketCategoryViewModel.ViewItem.ImageMode { get }
+}
+
 class MarketCategoryService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
 
-    let category: CoinCategory
-    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let languageManager: LanguageManager
+    private let configProvider: IMarketMetricsServiceConfigProvider
     private let disposeBag = DisposeBag()
     private var syncDisposeBag = DisposeBag()
 
@@ -27,11 +33,9 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
         }
     }
 
-    init(category: CoinCategory, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager) {
-        self.category = category
-        self.marketKit = marketKit
+    init(currencyKit: CurrencyKit.Kit, configProvider: IMarketMetricsServiceConfigProvider) {
         self.currencyKit = currencyKit
-        self.languageManager = languageManager
+        self.configProvider = configProvider
 
         syncMarketInfos()
     }
@@ -43,7 +47,7 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(categoryUid: category.uid, currencyCode: currency.code)
+        configProvider.marketInfoSingle
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] marketInfos in
                     self?.sync(marketInfos: marketInfos)
@@ -67,14 +71,30 @@ class MarketCategoryService: IMarketMultiSortHeaderService {
 
 }
 
+extension MarketCategoryService {
+
+    var name: String {
+         configProvider.name
+    }
+
+    var categoryDescription: String? {
+        configProvider.categoryDescription
+    }
+
+    var imageUrl: String {
+        configProvider.imageUrl
+    }
+
+    var imageMode: MarketCategoryViewModel.ViewItem.ImageMode {
+        configProvider.imageMode
+    }
+
+}
+
 extension MarketCategoryService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
         stateRelay.asObservable()
-    }
-
-    var categoryDescription: String? {
-        category.descriptions[languageManager.currentLanguage] ?? category.descriptions.first?.value
     }
 
     func refresh() {

@@ -8,9 +8,10 @@ class MarketCategoryViewModel {
         self.service = service
 
         viewItem = ViewItem(
-                name: service.category.name,
+                name: service.name,
                 description: service.categoryDescription,
-                imageUrl: service.category.imageUrl
+                imageUrl: service.imageUrl,
+                imageMode: service.imageMode
         )
     }
 
@@ -22,6 +23,12 @@ extension MarketCategoryViewModel {
         let name: String
         let description: String?
         let imageUrl: String
+        let imageMode: ImageMode
+
+        enum ImageMode {
+            case large
+            case small
+        }
     }
 
 }

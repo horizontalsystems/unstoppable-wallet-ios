@@ -411,6 +411,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
+
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
 "market_discovery.browse_categories" = "Browse Categories";
