@@ -409,6 +409,9 @@
 "top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Líder de plataformas blockchain por mercado acumulado de proyectos construidos arriba.";
 
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
+
 "market_discovery.title" = "Descubrimiento";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar Categorías";
