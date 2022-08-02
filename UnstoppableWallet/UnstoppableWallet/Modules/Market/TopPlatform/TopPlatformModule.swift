@@ -7,21 +7,10 @@ import LanguageKit
 struct TopPlatformModule {
 
     static func viewController(topPlatform: TopPlatform) -> UIViewController {
-        let serviceConfigProvider = TopPlatformConfigProvider(
-                topPlatform: topPlatform,
-                marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit
-        )
+        let serviceConfigProvider = TopPlatformConfigProvider(topPlatform: topPlatform, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let service = MarketCategoryService(currencyKit: App.shared.currencyKit, configProvider: serviceConfigProvider)
 
-        let service = MarketCategoryService(
-                currencyKit: App.shared.currencyKit,
-                configProvider: serviceConfigProvider
-        )
-
-        let watchlistToggleService = MarketWatchlistToggleService(
-                coinUidService: service,
-                favoritesManager: App.shared.favoritesManager
-        )
+        let watchlistToggleService = MarketWatchlistToggleService(coinUidService: service, favoritesManager: App.shared.favoritesManager)
 
         let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, topPlatform: topPlatform)
         let chartService = MetricChartService(currencyKit: App.shared.currencyKit, chartFetcher: marketCapFetcher, interval: .day1)
