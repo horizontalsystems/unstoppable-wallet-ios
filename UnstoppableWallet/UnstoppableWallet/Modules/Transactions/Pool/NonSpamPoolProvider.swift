@@ -14,14 +14,14 @@ class NonSpamPoolProvider {
         let extendedLimit = limit
 
         return poolProvider.recordsSingle(from: from, limit: extendedLimit)
-                .flatMap { [unowned self] newTransactions in
+                .flatMap { [weak self] newTransactions in
                     let allTransactions = transactions + newTransactions
                     let nonSpamTransactions = allTransactions.filter { !$0.spam }
 
                     if nonSpamTransactions.count >= limit || newTransactions.count < extendedLimit {
                         return Single.just(Array(nonSpamTransactions.prefix(limit)))
                     } else {
-                        return single(from: allTransactions.last, limit: limit, transactions: allTransactions)
+                        return self?.single(from: allTransactions.last, limit: limit, transactions: allTransactions) ?? Single.just([])
                     }
                 }
     }

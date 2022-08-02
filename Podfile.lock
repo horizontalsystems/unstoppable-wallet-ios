@@ -624,7 +624,7 @@ CHECKOUT OPTIONS:
     :commit: 231ad9cff83cd252757244ea6a5031c6adcd0cf2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
-    :commit: 285e753a39b90a3b639e4ad1349d365d2187fd7c
+    :commit: d4b2dc9d705251e032ccfee569de385b67ea45ae
     :git: https://github.com/horizontalsystems/hs-tool-kit-ios
   HUD.swift:
     :commit: 0fdbc9f47fb302a3be147a955d2f20218c766b95
