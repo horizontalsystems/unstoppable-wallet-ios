@@ -56,7 +56,7 @@ class SecuritySettingsService {
             return BlockchainItem.evm(blockchain: blockchain, syncSource: syncSource)
         }
 
-        blockchainItems = (btcBlockchainItems + evmBlockchainItems).sorted { $0.order < $1.order }
+        blockchainItems = (btcBlockchainItems + evmBlockchainItems).sorted { $0.blockchainType.order < $1.blockchainType.order }
     }
 
 }
@@ -93,26 +93,10 @@ extension SecuritySettingsService {
         case btc(blockchain: Blockchain, restoreMode: BtcRestoreMode, transactionMode: TransactionDataSortMode)
         case evm(blockchain: Blockchain, syncSource: EvmSyncSource)
 
-        var order: Int {
+        var blockchainType: BlockchainType {
             switch self {
-            case .btc(let blockchain, _, _):
-                switch blockchain.type {
-                case .bitcoin: return 0
-                case .bitcoinCash: return 100
-                case .litecoin: return 101
-                case .dash: return 102
-                default: return Int.max
-                }
-            case .evm(let blockchain, _):
-                switch blockchain.type {
-                case .ethereum: return 2
-                case .binanceSmartChain: return 3
-                case .polygon: return 4
-                case .avalanche: return 5
-                case .optimism: return 6
-                case .arbitrumOne: return 7
-                default: return Int.max
-                }
+            case .btc(let blockchain, _, _): return blockchain.type
+            case .evm(let blockchain, _): return blockchain.type
             }
         }
     }

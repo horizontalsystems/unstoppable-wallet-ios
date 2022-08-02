@@ -13,7 +13,6 @@ class ZcashAdapter {
 
     private let disposeBag = DisposeBag()
 
-    private static let coinRate = Decimal(ZcashSDK.zatoshiPerZEC)
     var fee: Decimal { defaultFee() }
 
     private let token: Token
@@ -45,13 +44,13 @@ class ZcashAdapter {
     private(set) var transactionState: AdapterState
 
     private func defaultFee(height: Int? = nil) -> Decimal {
-        let fee: Int64
+        let fee: Zatoshi
         if let lastBlockHeight = height {
             fee = network.constants.defaultFee(for: lastBlockHeight)
         } else {
             fee = network.constants.defaultFee()
         }
-        return Decimal(fee) / Self.coinRate
+        return fee.decimalValue.decimalValue
     }
 
     init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
@@ -242,7 +241,7 @@ class ZcashAdapter {
                     lockInfo: nil,
                     conflictingHash: nil,
                     showRawTransaction: showRawTransaction,
-                    amount: Decimal(transaction.value) / Self.coinRate,
+                    amount: transaction.value.decimalValue.decimalValue,
                     from: nil,
                     memo: transaction.memo
             )
@@ -261,7 +260,7 @@ class ZcashAdapter {
                     lockInfo: nil,
                     conflictingHash: nil,
                     showRawTransaction: showRawTransaction,
-                    amount: Decimal(transaction.value) / Self.coinRate,
+                    amount: transaction.value.decimalValue.decimalValue,
                     to: transaction.toAddress,
                     sentToSelf: false,
                     memo: transaction.memo
@@ -328,13 +327,13 @@ class ZcashAdapter {
     }
 
     private var _balanceData: BalanceData {
-        let verifiedBalance = Decimal(synchronizer.initializer.getVerifiedBalance())
-        let balance = Decimal(synchronizer.initializer.getBalance())
+        let verifiedBalance: Zatoshi = synchronizer.initializer.getVerifiedBalance()
+        let balance: Zatoshi = synchronizer.initializer.getBalance()
         let diff = balance - verifiedBalance
 
         return BalanceData(
-                balance: verifiedBalance / Self.coinRate,
-                balanceLocked: diff / Self.coinRate
+                balance: verifiedBalance.decimalValue.decimalValue,
+                balanceLocked: diff.decimalValue.decimalValue
         )
     }
 
@@ -441,8 +440,8 @@ extension ZcashAdapter: IAdapter {
         t-address: \(String(describing: taddress ))
         spendingKeys: \(keys.description)
         shielded balance
-                  total:  \(synchronizer.initializer.getBalance())
-               verified:  \(synchronizer.initializer.getVerifiedBalance())
+                  total:  \(synchronizer.initializer.getBalance().decimalValue.decimalValue)
+               verified:  \(synchronizer.initializer.getVerifiedBalance().decimalValue.decimalValue)
         transparent balance
                      total: \(tBalance == nil ? "failed" : String(describing: tBalance?.total))
                   verified: \(tBalance == nil ? "failed" : String(describing: tBalance?.verified))
@@ -533,7 +532,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     var availableBalance: Decimal {
-        max(0, Decimal(synchronizer.initializer.getVerifiedBalance()) / Self.coinRate - fee)
+        max(0, synchronizer.initializer.getVerifiedBalance().decimalValue.decimalValue - fee)
     }
 
     func validate(address: String) throws -> AddressType {
@@ -564,10 +563,9 @@ extension ZcashAdapter: ISendZcashAdapter {
             return Single.error(AdapterError.unsupportedAccount)
         }
 
-        let handler = NSDecimalNumberHandler(roundingMode: .down, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        let zatoshi = NSDecimalNumber(decimal: amount * Self.coinRate).rounding(accordingToBehavior: handler).int64Value
+        let zatoshi = Zatoshi.from(decimal: amount)
 
-        let synchronizer = self.synchronizer
+        let synchronizer = synchronizer
 
         return Single<()>.create { [weak self] single in
             synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: zatoshi, toAddress: address, memo: memo, from: 0) { result in

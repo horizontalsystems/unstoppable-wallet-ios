@@ -1,6 +1,6 @@
 import UIKit
 
-protocol PseudoAccessoryViewDelegate: class {
+protocol PseudoAccessoryViewDelegate: AnyObject {
     func pseudoAccessoryView(_ pseudoAccessoryView: PseudoAccessoryView, keyboardFrameDidChange frame: CGRect)
 }
 

@@ -219,16 +219,17 @@ extension MarketKit.BlockchainType {
     var order: Int {
         switch self {
         case .bitcoin: return 1
-        case .bitcoinCash: return 2
-        case .litecoin: return 3
-        case .dash: return 4
-        case .zcash: return 5
-        case .ethereum: return 6
-        case .binanceSmartChain: return 7
-        case .polygon: return 8
-        case .avalanche: return 9
-        case .optimism: return 10
-        case .arbitrumOne: return 11
+        case .ethereum: return 2
+        case .binanceSmartChain: return 3
+        case .polygon: return 4
+        case .avalanche: return 5
+        case .zcash: return 6
+        case .dash: return 7
+        case .bitcoinCash: return 8
+        case .litecoin: return 9
+        case .binanceChain: return 10
+        case .optimism: return 11
+        case .arbitrumOne: return 12
         default: return Int.max
         }
     }
