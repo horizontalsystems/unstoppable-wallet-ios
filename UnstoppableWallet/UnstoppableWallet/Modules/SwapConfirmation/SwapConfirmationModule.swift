@@ -30,7 +30,7 @@ struct SwapConfirmationModule {
             return nil
         }
 
-        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKitWrapper.evmKit) else {
+        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKitWrapper.evmKit, minLogLevel: .debug) else {
             return nil
         }
 

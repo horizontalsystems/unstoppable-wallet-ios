@@ -28,7 +28,9 @@ class EvmFeeService {
         self.transactionData = transactionData
 
         sync(gasPriceStatus: gasPriceService.status)
-        subscribe(gasPriceDisposeBag, gasPriceService.statusObservable) { [weak self] in self?.sync(gasPriceStatus: $0) }
+        subscribe(gasPriceDisposeBag, gasPriceService.statusObservable) { [weak self] in
+            self?.sync(gasPriceStatus: $0)
+        }
     }
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
@@ -40,29 +42,43 @@ class EvmFeeService {
     }
 
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
-        disposeBag = DisposeBag()
-        gasDataService.transaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] transaction in
-                self?.sync(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
-            })
-            .disposed(by: disposeBag)
-    }
+        let single: Single<EvmFeeModule.Transaction>
+        let transactionData = transactionData
 
-    private func sync(fallibleGasPrice: FallibleData<GasPrice>, transaction: EvmFeeModule.Transaction?) {
-        if let transaction = transaction {
-            syncStatus(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
-            return
+        if let transactionSingle = gasDataService.predefinedTransaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
+            // transaction comes with predefined gasLimit
+            single = transactionSingle
+                .map {
+                    EvmFeeModule.Transaction(transactionData: transactionData, gasData: $0)
+                }
+        } else if transactionData.input.isEmpty, transactionData.value == evmBalance {
+            // If try to send native token (input is empty) and max value, we must calculate fee and decrease maximum value by that fee
+            single = gasDataService
+                .stubGasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
+                .flatMap { adjustedGasData in
+                    let adjustedValue = transactionData.value - adjustedGasData.fee
+
+                    if adjustedValue <= 0 {
+                        return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
+                    } else {
+                        let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
+                        return Single.just(EvmFeeModule.Transaction(transactionData: adjustedTransactionData, gasData: adjustedGasData))
+                    }
+                }
+        } else {
+            // transaction for tokens
+            single = gasDataService
+                .gasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
+                .map {
+                    EvmFeeModule.Transaction(transactionData: transactionData, gasData: $0)
+                }
         }
 
         disposeBag = DisposeBag()
-
-        transactionSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
+        single
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] transaction in
                 self?.syncStatus(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
-            }, onError: { [weak self] error in
-                self?.status = .failed(error)
             })
             .disposed(by: disposeBag)
     }
@@ -82,36 +98,6 @@ class EvmFeeService {
         status = .completed(FallibleData<EvmFeeModule.Transaction>(
             data: transaction, errors: errors, warnings: fallibleGasPrice.warnings
         ))
-    }
-
-    private func transactionSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction> {
-        adjustedTransactionDataSingle(gasPrice: gasPrice, transactionData: transactionData).flatMap { [unowned self] transactionData in
-            gasDataService.gasDataSingle(gasPrice: gasPrice, transactionData: transactionData).map { estimatedGasData in
-                EvmFeeModule.Transaction(
-                    transactionData: transactionData,
-                    gasData: estimatedGasData
-                )
-            }
-        }
-    }
-
-    private func adjustedTransactionDataSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<TransactionData> {
-        if transactionData.input.isEmpty, transactionData.value == evmBalance {
-            let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: Data())
-
-            return gasDataService.gasDataSingle(gasPrice: gasPrice, transactionData: stubTransactionData).flatMap { estimatedGasData in
-                let adjustedValue = transactionData.value - estimatedGasData.fee
-
-                if adjustedValue <= 0 {
-                    return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
-                } else {
-                    let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
-                    return Single.just(adjustedTransactionData)
-                }
-            }
-        } else {
-            return Single.just(transactionData)
-        }
     }
 }
 
