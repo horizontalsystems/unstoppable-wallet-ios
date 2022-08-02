@@ -18,6 +18,7 @@ class FeeSliderValueView: UIView {
         feeRateLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)
             maker.centerX.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin4)
         }
         feeRateLabel.textAlignment = .center
         feeRateLabel.textColor = .themeLeah

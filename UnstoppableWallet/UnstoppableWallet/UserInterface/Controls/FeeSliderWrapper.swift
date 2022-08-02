@@ -102,7 +102,7 @@ class FeeSliderWrapper: UIView {
         feeConfig.blurEffectIntensity = nil
         feeConfig.borderColor = .themeSteel20
         feeConfig.borderWidth = .heightOnePixel
-        feeConfig.exactSize = true
+        feeConfig.exactSize = false
         feeConfig.preferredSize = CGSize(width: hudWidth, height: 48)
         feeConfig.cornerRadius = CGFloat.cornerRadius2x
         feeConfig.handleKeyboard = .none
