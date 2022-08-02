@@ -50,9 +50,9 @@ class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     let step: Int = 1
 
     private let feeRateProvider: FeeRateProvider
-    private let lowPriorityBlockCount = 40
-    private let mediumPriorityBlockCount = 8
-    private let highPriorityBlockCount = 2
+    private let lowPriorityBlockCount = 6
+    private let mediumPriorityBlockCount = 2
+    private let highPriorityBlockCount = 1
 
     init(feeRateProvider: FeeRateProvider) {
         self.feeRateProvider = feeRateProvider
