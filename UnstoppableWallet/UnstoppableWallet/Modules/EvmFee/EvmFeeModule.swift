@@ -74,36 +74,38 @@ extension EvmFeeModule {
         case overpricing
     }
 
-    enum GasData {
-        case common(gasLimit: Int, gasPrice: GasPrice)
-        case rollup(gasLimit: Int, gasPrice: GasPrice, l1Fee: BigUInt)
+    class GasData {
+        let limit: Int
+        let price: GasPrice
 
-        var gasLimit: Int {
-            switch self {
-            case .common(let gasLimit, _): return gasLimit
-            case .rollup(let gasLimit, _, _): return gasLimit
-            }
-        }
-
-        var gasPrice: GasPrice {
-            switch self {
-            case .common(_, let gasPrice): return gasPrice
-            case .rollup(_, let gasPrice, _): return gasPrice
-            }
+        init(limit: Int, price: GasPrice) {
+            self.limit = limit
+            self.price = price
         }
 
         var fee: BigUInt {
-            switch self {
-            case .common(let gasLimit, let gasPrice): return BigUInt(gasLimit * gasPrice.max)
-            case .rollup(let gasLimit, let gasPrice, let l1Fee): return BigUInt(gasLimit * gasPrice.max) + l1Fee
-            }
+            BigUInt(limit * price.max)
         }
 
         var description: String {
-            switch self {
-            case .common(let gasLimit, let gasPrice): return "L1 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description)"
-            case .rollup(let gasLimit, let gasPrice, let l1Fee): return "L2 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description) - l1fee:\(l1Fee.description)"
-            }
+            "L1 transaction: gasLimit:\(limit) - gasPrice:\(price.description)"
+        }
+    }
+
+    class RollupGasData: GasData {
+        let additionalFee: BigUInt
+
+        init(additionalFee: BigUInt, limit: Int, price: GasPrice) {
+            self.additionalFee = additionalFee
+            super.init(limit: limit, price: price)
+        }
+
+        override var fee: BigUInt {
+            super.fee + additionalFee
+        }
+
+        override var description: String {
+            "L2 transaction: gasLimit:\(limit) - gasPrice:\(price.description) - l1fee:\(additionalFee.description)"
         }
     }
 

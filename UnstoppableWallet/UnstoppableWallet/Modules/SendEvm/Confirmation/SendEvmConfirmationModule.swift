@@ -72,7 +72,7 @@ struct SendEvmConfirmationModule {
         }
 
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
-        let gasDataService = EvmGasDataService.instance(evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
+        let gasDataService = EvmCommonGasDataService.instance(evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
         let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 
@@ -115,7 +115,7 @@ struct SendEvmConfirmationModule {
         }
 
         let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: transaction)
-        let gasDataService = EvmL1GasDataService(evmKit: evmKitWrapper.evmKit, gasLimit: transaction.gasLimit)
+        let gasDataService = EvmCommonGasDataService.instance(evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimit: transaction.gasLimit)
         let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 

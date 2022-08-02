@@ -4,9 +4,11 @@ import EthereumKit
 
 class TransactionInfoViewItemFactory {
     private let evmLabelManager: EvmLabelManager
+    private let actionEnabled: Bool
 
-    init(evmLabelManager: EvmLabelManager) {
+    init(evmLabelManager: EvmLabelManager, actionEnabled: Bool) {
         self.evmLabelManager = evmLabelManager
+        self.actionEnabled = actionEnabled
     }
 
     private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
@@ -347,7 +349,7 @@ class TransactionInfoViewItemFactory {
             .status(status: status)
         ]
 
-        if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
+        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
             switch status {
             case .pending:
                 transactionViewItems.append(.options(actions: [
