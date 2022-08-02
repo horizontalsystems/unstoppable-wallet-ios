@@ -10,7 +10,7 @@ class ZcashTransaction {
     let expiryHeight: Int?
     let minedHeight: Int?
     let timestamp: TimeInterval
-    let value: Int
+    let value: Zatoshi
     let memo: String?
     let failed: Bool
 
@@ -27,7 +27,7 @@ class ZcashTransaction {
         minedHeight = confirmedTransaction.minedHeight
         expiryHeight = confirmedTransaction.expiryHeight
         timestamp = confirmedTransaction.blockTimeInSeconds
-        value = Int(confirmedTransaction.value.amount)
+        value = confirmedTransaction.value
         memo = confirmedTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
         failed = false
     }
@@ -45,7 +45,7 @@ class ZcashTransaction {
         minedHeight = nil
         expiryHeight = pendingTransaction.expiryHeight
         timestamp = pendingTransaction.createTime
-        value = Int(pendingTransaction.value.amount)
+        value = pendingTransaction.value
         memo = pendingTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
         failed = pendingTransaction.isFailure
     }

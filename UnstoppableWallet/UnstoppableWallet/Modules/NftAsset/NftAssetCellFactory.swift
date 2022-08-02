@@ -34,14 +34,15 @@ class NftAssetCellFactory {
 }
 
 extension NftAssetCellFactory: INftActivityCellFactory {
+
     func row(tableView: UIKit.UITableView, viewItem: NftActivityViewModel.EventViewItem, index: Int, onReachBottom: (() -> Void)? = nil) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: cellElement(viewItem: viewItem),
             tableView: tableView,
             id: "event-\(index)",
             height: .heightDoubleLineCell,
-            autoDeselect: actionWithCell != nil,
-            bind: { [weak self] cell in
+            autoDeselect: true,
+            bind: { cell in
                 cell.set(backgroundStyle: .transparent, isLast: onReachBottom != nil)
                 onReachBottom?()
             },

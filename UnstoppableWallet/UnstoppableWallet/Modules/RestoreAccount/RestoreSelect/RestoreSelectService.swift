@@ -5,17 +5,17 @@ import MarketKit
 class RestoreSelectService {
     private let blockchainTypes: [BlockchainType] = [
         .bitcoin,
-        .ethereum,
-        .binanceSmartChain,
-        .polygon,
-        .avalanche,
-        .zcash,
-        .dash,
         .bitcoinCash,
         .litecoin,
-        .binanceChain,
+        .dash,
+        .zcash,
+        .ethereum,
+        .polygon,
+        .avalanche,
         .optimism,
         .arbitrumOne,
+        .binanceSmartChain,
+        .binanceChain,
     ]
 
     private let accountName: String
@@ -71,7 +71,7 @@ class RestoreSelectService {
         do {
             let tokens = try marketKit.tokens(queries: blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
 
-            self.tokens = blockchainTypes.compactMap { type in
+            self.tokens = blockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
                 tokens.first { $0.blockchainType == type }
             }
         } catch {

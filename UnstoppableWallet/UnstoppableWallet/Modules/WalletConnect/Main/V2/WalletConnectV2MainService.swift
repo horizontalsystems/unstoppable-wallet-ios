@@ -155,7 +155,7 @@ class WalletConnectV2MainService {
         }
 
 
-        guard proposal.requiredNamespaces.filter { key, _ in key != supportedNamespace }.isEmpty else {
+        guard proposal.requiredNamespaces.filter({ key, _ in key != supportedNamespace }).isEmpty else {
             throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
 
