@@ -55,24 +55,24 @@ class MarketCategoryViewController: MarketListViewController {
     }
 
     override func topSections(loaded: Bool) -> [SectionProtocol] {
-        [
-            Section(
-                    id: "header",
-                    rows: [
-                        Row<MarketCategoryHeaderCell>(
-                                id: "header",
-                                height: MarketCategoryHeaderCell.height,
-                                bind: { [weak self] cell, _ in
-                                    self?.bind(cell: cell)
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "chart",
-                    rows: [chartRow]
-            )
-        ]
+        var sections = [Section(
+                id: "header",
+                rows: [
+                    Row<MarketCategoryHeaderCell>(
+                            id: "header",
+                            height: MarketCategoryHeaderCell.height,
+                            bind: { [weak self] cell, _ in
+                                self?.bind(cell: cell)
+                            }
+                    )
+                ]
+        )]
+
+        if loaded {
+            sections.append(Section(id: "chart", rows: [chartRow]))
+        }
+
+        return sections
     }
 
     private func bind(cell: MarketCategoryHeaderCell) {
