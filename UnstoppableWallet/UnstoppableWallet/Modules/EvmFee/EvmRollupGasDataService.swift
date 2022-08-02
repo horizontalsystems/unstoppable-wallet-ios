@@ -5,11 +5,9 @@ import RxRelay
 import RxSwift
 
 class EvmRollupGasDataService: EvmCommonGasDataService {
-    private let l1GasFeeContractAddress: EthereumKit.Address
     private let l1FeeProvider: L1FeeProvider
 
     init(evmKit: EthereumKit.Kit, l1GasFeeContractAddress: EthereumKit.Address, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
-        self.l1GasFeeContractAddress = l1GasFeeContractAddress
         l1FeeProvider = L1FeeProvider.instance(evmKit: evmKit, contractAddress: l1GasFeeContractAddress, minLogLevel: .error)
 
         super.init(evmKit: evmKit, gasLimit: gasLimit, gasLimitSurchargePercent: gasLimitSurchargePercent)
