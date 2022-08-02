@@ -7,7 +7,7 @@ import RxSwift
 class EvmFeeService {
     private let evmKit: EthereumKit.Kit
     private let gasPriceService: IGasPriceService
-    private let gasDataService: IEvmGasDataService
+    private let gasDataService: EvmCommonGasDataService
 
     private var transactionData: TransactionData
 
@@ -21,7 +21,7 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, gasDataService: IEvmGasDataService, transactionData: TransactionData) {
+    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, gasDataService: EvmCommonGasDataService, transactionData: TransactionData) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
         self.gasDataService = gasDataService
@@ -45,7 +45,7 @@ class EvmFeeService {
         let single: Single<EvmFeeModule.Transaction>
         let transactionData = transactionData
 
-        if let transactionSingle = gasDataService.predefinedTransaction(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
+        if let transactionSingle = gasDataService.predefinedGasData(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
             // transaction comes with predefined gasLimit
             single = transactionSingle
                 .map {
@@ -54,7 +54,7 @@ class EvmFeeService {
         } else if transactionData.input.isEmpty, transactionData.value == evmBalance {
             // If try to send native token (input is empty) and max value, we must calculate fee and decrease maximum value by that fee
             single = gasDataService
-                .stubGasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
+                .gasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData, stubAmount: 1)
                 .flatMap { adjustedGasData in
                     let adjustedValue = transactionData.value - adjustedGasData.fee
 

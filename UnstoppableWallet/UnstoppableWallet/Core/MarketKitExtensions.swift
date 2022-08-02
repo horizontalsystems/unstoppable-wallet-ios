@@ -228,9 +228,16 @@ extension MarketKit.BlockchainType {
         case .bitcoinCash: return 8
         case .litecoin: return 9
         case .binanceChain: return 10
-        case .optimism: return 11
-        case .arbitrumOne: return 12
+        case .arbitrumOne: return 11
+        case .optimism: return 12
         default: return Int.max
+        }
+    }
+
+    var resendable: Bool {
+        switch self {
+        case .optimism, .arbitrumOne: return false
+        default: return true
         }
     }
 

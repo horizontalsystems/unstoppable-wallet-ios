@@ -109,9 +109,9 @@ class OneInchFeeService {
 
     private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<GasPrice>) {
         let tx = swap.transaction
-        let gasData = EvmFeeModule.GasData.common(
-                gasLimit: surchargedGasLimit(gasLimit: surchargedGasLimit(gasLimit: tx.gasLimit)),
-                gasPrice: fallibleGasPrice.data
+        let gasData = EvmFeeModule.GasData(
+                limit: surchargedGasLimit(gasLimit: surchargedGasLimit(gasLimit: tx.gasLimit)),
+                price: fallibleGasPrice.data
         )
 
         parameters.amountTo = swap.amountOut ?? 0

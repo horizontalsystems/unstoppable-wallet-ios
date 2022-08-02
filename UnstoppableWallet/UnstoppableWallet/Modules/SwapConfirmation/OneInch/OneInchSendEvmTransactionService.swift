@@ -115,8 +115,8 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
 
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.gasPrice,
-                        gasLimit: transaction.gasData.gasLimit
+                        gasPrice: transaction.gasData.price,
+                        gasLimit: transaction.gasData.limit
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in
