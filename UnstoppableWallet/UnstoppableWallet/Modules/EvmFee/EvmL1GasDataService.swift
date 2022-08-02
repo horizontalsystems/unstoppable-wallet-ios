@@ -3,10 +3,12 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import MarketKit
+import BigInt
 
 protocol IEvmGasDataService {
     func gasDataSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData>
-    func transaction(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction?>
+    func stubGasDataSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData>
+    func predefinedTransaction(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData>?
 }
 
 class EvmL1GasDataService {
@@ -31,19 +33,21 @@ extension EvmL1GasDataService: IEvmGasDataService {
         evmKit.estimateGas(transactionData: transactionData, gasPrice: gasPrice).map { [weak self] estimatedGasLimit in
             let gasLimit = self?.surchargedGasLimit(estimatedGasLimit: estimatedGasLimit) ?? estimatedGasLimit
 
-            return EvmFeeModule.GasData.l1(gasLimit: estimatedGasLimit, gasPrice: gasPrice)
+            return EvmFeeModule.GasData.common(gasLimit: estimatedGasLimit, gasPrice: gasPrice)
         }
     }
 
-    func transaction(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.Transaction?> {
+    func stubGasDataSingle(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData> {
+        let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: Data())
+        return gasDataSingle(gasPrice: gasPrice, transactionData: stubTransactionData)
+    }
+
+    func predefinedTransaction(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData>? {
         guard let gasLimit = gasLimit else {
-            return .just(nil)
+            return nil
         }
 
-        return .just(EvmFeeModule.Transaction(
-            transactionData: transactionData,
-            gasData: EvmFeeModule.GasData.l1(gasLimit: gasLimit, gasPrice: gasPrice)
-        ))
+        return .just(EvmFeeModule.GasData.common(gasLimit: gasLimit, gasPrice: gasPrice))
     }
 }
 
@@ -53,6 +57,6 @@ struct EvmGasDataService {
             return EvmL1GasDataService(evmKit: evmKit, gasLimitSurchargePercent: gasLimitSurchargePercent)
         }
 
-        return EvmRollupL2GasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress) //do not use gasLimitSurchargePercent, because l2 layers don't have mempool (can't be forced by big fee)
+        return EvmRollupL2GasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress, gasLimitSurchargePercent: gasLimitSurchargePercent) //do not use gasLimitSurchargePercent, because l2 layers don't have mempool (can't be forced by big fee)
     }
 }

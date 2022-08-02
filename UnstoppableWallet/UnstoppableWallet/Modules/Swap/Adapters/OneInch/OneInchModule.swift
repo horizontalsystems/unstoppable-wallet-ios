@@ -13,7 +13,7 @@ class OneInchModule {
             return nil
         }
 
-        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit) else {
+        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit, minLogLevel: .debug) else {
             return nil
         }
 

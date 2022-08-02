@@ -75,34 +75,34 @@ extension EvmFeeModule {
     }
 
     enum GasData {
-        case l1(gasLimit: Int, gasPrice: GasPrice)
-        case rollupL2(gasLimit: Int, gasPrice: GasPrice, l1Fee: BigUInt)
+        case common(gasLimit: Int, gasPrice: GasPrice)
+        case rollup(gasLimit: Int, gasPrice: GasPrice, l1Fee: BigUInt)
 
         var gasLimit: Int {
             switch self {
-            case .l1(let gasLimit, _): return gasLimit
-            case .rollupL2(let gasLimit, _, _): return gasLimit
+            case .common(let gasLimit, _): return gasLimit
+            case .rollup(let gasLimit, _, _): return gasLimit
             }
         }
 
         var gasPrice: GasPrice {
             switch self {
-            case .l1(_, let gasPrice): return gasPrice
-            case .rollupL2(_, let gasPrice, _): return gasPrice
+            case .common(_, let gasPrice): return gasPrice
+            case .rollup(_, let gasPrice, _): return gasPrice
             }
         }
 
         var fee: BigUInt {
             switch self {
-            case .l1(let gasLimit, let gasPrice): return BigUInt(gasLimit * gasPrice.max)
-            case .rollupL2(let gasLimit, let gasPrice, let l1Fee): return BigUInt(gasLimit * gasPrice.max) + l1Fee
+            case .common(let gasLimit, let gasPrice): return BigUInt(gasLimit * gasPrice.max)
+            case .rollup(let gasLimit, let gasPrice, let l1Fee): return BigUInt(gasLimit * gasPrice.max) + l1Fee
             }
         }
 
         var description: String {
             switch self {
-            case .l1(let gasLimit, let gasPrice): return "L1 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description)"
-            case .rollupL2(let gasLimit, let gasPrice, let l1Fee): return "L2 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description) - l1fee:\(l1Fee.description)"
+            case .common(let gasLimit, let gasPrice): return "L1 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description)"
+            case .rollup(let gasLimit, let gasPrice, let l1Fee): return "L2 transaction: gasLimit:\(gasLimit) - gasPrice:\(gasPrice.description) - l1fee:\(l1Fee.description)"
             }
         }
     }
