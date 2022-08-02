@@ -1,23 +1,30 @@
 import RxSwift
-import Foundation
 import MarketKit
-import Chart
 
-class MarketCategoryMarketCapFetcher {
+class TopPlatformMarketCapFetcher {
     private let marketKit: MarketKit.Kit
-    private let category: String
+    private let topPlatform: TopPlatform
 
-    init(marketKit: MarketKit.Kit, category: String) {
+    init(marketKit: MarketKit.Kit, topPlatform: TopPlatform) {
         self.marketKit = marketKit
-        self.category = category
+        self.topPlatform = topPlatform
     }
 
 }
 
-extension MarketCategoryMarketCapFetcher: IMetricChartConfiguration {
-    var title: String { category }
-    var description: String? { nil }
-    var poweredBy: String { "HorizontalSystems API" }
+extension TopPlatformMarketCapFetcher: IMetricChartConfiguration {
+
+    var title: String {
+        topPlatform.blockchain.name
+    }
+
+    var description: String? {
+        "some description"
+    }
+
+    var poweredBy: String {
+        "HorizontalSystems API"
+    }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue
@@ -25,7 +32,7 @@ extension MarketCategoryMarketCapFetcher: IMetricChartConfiguration {
 
 }
 
-extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
+extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
 
     var intervals: [HsTimePeriod] {
         [.day1, .week1, .month1]
@@ -33,7 +40,7 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .coinCategoryMarketCapChartSingle(category: category, currencyCode: currencyCode, timePeriod: interval)
+                .topPlatformMarketCapChartSingle(platform: topPlatform.blockchain.uid, currencyCode: currencyCode, timePeriod: interval)
                 .map { points in
                     points.map { point -> MetricChartModule.Item in
                         MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)

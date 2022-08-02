@@ -8,7 +8,7 @@ struct MarketTopPlatformsModule {
         let service = MarketTopPlatformsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, appManager: App.shared.appManager, timePeriod: timePeriod)
 
         let decorator = MarketListTopPlatformDecorator(service: service)
-        let viewModel = MarketTopPlatformsViewModel()
+        let viewModel = MarketTopPlatformsViewModel(service: service)
         let listViewModel = MarketListViewModel(service: service, decorator: decorator)
         let headerViewModel = TopPlatformsMultiSortHeaderViewModel(service: service, decorator: decorator)
 

@@ -70,6 +70,18 @@ class MarketTopPlatformsService {
 
 }
 
+extension MarketTopPlatformsService {
+
+    var topPlatforms: [TopPlatform]? {
+        if case let .loaded(data, _, _) = state {
+            return data
+        }
+
+        return nil
+    }
+
+}
+
 extension MarketTopPlatformsService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState<TopPlatform>> {

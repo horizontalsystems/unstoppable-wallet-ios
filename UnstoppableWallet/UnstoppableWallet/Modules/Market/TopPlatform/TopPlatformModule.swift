@@ -1,17 +1,16 @@
 import UIKit
 import ThemeKit
-import LanguageKit
-import Chart
 import MarketKit
+import Chart
+import LanguageKit
 
-struct MarketCategoryModule {
+struct TopPlatformModule {
 
-    static func viewController(category: CoinCategory) -> UIViewController {
-        let serviceConfigProvider = MarketCategoryConfigProvider(
-                category: category,
+    static func viewController(topPlatform: TopPlatform) -> UIViewController {
+        let serviceConfigProvider = TopPlatformConfigProvider(
+                topPlatform: topPlatform,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
-                languageManager: LanguageManager.shared
+                currencyKit: App.shared.currencyKit
         )
 
         let service = MarketCategoryService(
@@ -24,7 +23,7 @@ struct MarketCategoryModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let marketCapFetcher = MarketCategoryMarketCapFetcher(marketKit: App.shared.marketKit, category: category.uid)
+        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, topPlatform: topPlatform)
         let chartService = MetricChartService(currencyKit: App.shared.currencyKit, chartFetcher: marketCapFetcher, interval: .day1)
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MarketCategoryMetricChartViewModel(service: chartService, chartConfiguration: marketCapFetcher, factory: factory)

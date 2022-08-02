@@ -33,11 +33,6 @@ class MarketCategoryHeaderCell: UITableViewCell {
         descriptionLabel.textColor = .themeGray
 
         contentView.addSubview(categoryImageView)
-        categoryImageView.snp.makeConstraints { maker in
-            maker.leading.equalTo(descriptionLabel.snp.trailing).offset(CGFloat.margin16)
-            maker.top.trailing.equalToSuperview()
-            maker.width.equalTo(76)
-        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -45,6 +40,20 @@ class MarketCategoryHeaderCell: UITableViewCell {
     }
 
     func set(viewItem: MarketCategoryViewModel.ViewItem) {
+        categoryImageView.snp.remakeConstraints { maker in
+            maker.leading.equalTo(descriptionLabel.snp.trailing).offset(CGFloat.margin16)
+
+            switch viewItem.imageMode {
+            case .large:
+                maker.top.trailing.equalToSuperview()
+                maker.width.equalTo(76)
+            case .small:
+                maker.centerY.equalToSuperview()
+                maker.size.equalTo(CGFloat.iconSize48)
+                maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            }
+        }
+
         nameLabel.text = viewItem.name
         descriptionLabel.text = viewItem.description
         categoryImageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
