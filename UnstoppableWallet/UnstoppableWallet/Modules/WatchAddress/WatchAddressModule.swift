@@ -23,9 +23,6 @@ struct WatchAddressModule {
         let service = WatchAddressService(
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
-                marketKit: App.shared.marketKit,
-                walletManager: App.shared.walletManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
                 addressService: addressService
         )
         let viewModel = WatchAddressViewModel(service: service)

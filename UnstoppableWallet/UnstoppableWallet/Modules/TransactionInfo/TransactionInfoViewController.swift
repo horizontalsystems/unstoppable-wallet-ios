@@ -108,7 +108,7 @@ class TransactionInfoViewController: ThemeViewController {
                 id: "status",
                 hash: hash,
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TransparentIconButtonComponent) in
@@ -116,7 +116,7 @@ class TransactionInfoViewController: ThemeViewController {
                             component.isHidden = false
                             component.button.isSelected = true
                             component.button.set(image: UIImage(named: "circle_information_20"))
-                            component.onTap = { [weak self] in
+                            component.onTap = {
                                 self?.openStatusInfo()
                             }
                         } else {
@@ -172,7 +172,7 @@ class TransactionInfoViewController: ThemeViewController {
                 tableView: tableView,
                 id: "options",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
@@ -186,7 +186,7 @@ class TransactionInfoViewController: ThemeViewController {
                             component.button.set(style: .default)
                             component.button.setTitle(viewItem.title, for: .normal)
                             component.button.isEnabled = viewItem.active
-                            component.onTap = { [weak self] in
+                            component.onTap = {
                                 self?.openResend(action: viewItem.option)
                             }
                         }
@@ -218,7 +218,7 @@ class TransactionInfoViewController: ThemeViewController {
                 id: "transaction_id",
                 hash: value,
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
@@ -238,7 +238,7 @@ class TransactionInfoViewController: ThemeViewController {
 
                     cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
                         component.button.set(image: UIImage(named: "share_1_20"))
-                        component.onTap = { [weak self] in
+                        component.onTap = {
                             let activityViewController = UIActivityViewController(activityItems: [value], applicationActivities: [])
                             self?.present(activityViewController, animated: true)
                         }
@@ -403,7 +403,7 @@ class TransactionInfoViewController: ThemeViewController {
                 tableView: tableView,
                 id: "raw_transaction",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
@@ -414,7 +414,7 @@ class TransactionInfoViewController: ThemeViewController {
 
                     cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
                         component.button.set(image: UIImage(named: "copy_20"))
-                        component.onTap = { [weak self] in
+                        component.onTap = {
                             if let value = self?.viewModel.rawTransaction {
                                 CopyHelper.copyAndNotify(value: value)
                             }
