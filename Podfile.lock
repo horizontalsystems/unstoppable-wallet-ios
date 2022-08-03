@@ -612,7 +612,7 @@ CHECKOUT OPTIONS:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: f366f4dee72de089994cdba5625deb288db30535
+    :commit: 1992047b9c360f63d48d1236bca410d7d590f0cc
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
@@ -636,7 +636,7 @@ CHECKOUT OPTIONS:
     :commit: 231ad9cff83cd252757244ea6a5031c6adcd0cf2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: 65021eb051a5e1eeb0675805a7b557ad5722e330
+    :commit: 9951eb0402bfd2ad88fb1069b9ccb90c30587171
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: 48256d6812535ad439edc141104292c0ef06c9fb

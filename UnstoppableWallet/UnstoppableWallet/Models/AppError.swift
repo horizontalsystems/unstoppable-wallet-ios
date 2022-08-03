@@ -11,6 +11,7 @@ enum AppError: Error {
     case wordsChecksum
     case addressInvalid
     case notSupportedByHodler
+    case weakReference
     case unknownError
 
     enum BinanceError: Error {
@@ -72,6 +73,7 @@ extension AppError: LocalizedError {
             return "restore.checksum_error".localized
         case .addressInvalid: return "send.error.invalid_address".localized
         case .notSupportedByHodler: return "send.hodler_error.unsupported_address".localized
+        case .weakReference: return "Weak Reference"
         case .unknownError: return "Unknown Error"
         }
 

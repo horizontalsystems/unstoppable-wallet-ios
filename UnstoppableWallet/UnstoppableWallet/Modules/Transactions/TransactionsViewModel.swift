@@ -202,7 +202,7 @@ extension TransactionsViewModel {
 
     var blockchainViewItems: [BlockchainViewItem] {
         [BlockchainViewItem(uid: nil, title: "transactions.all_blockchains".localized, selected: service.blockchain == nil)] +
-                service.allBlockchains.map { blockchain in
+                service.allBlockchains.sorted { $0.type.order < $1.type.order }.map { blockchain in
                     BlockchainViewItem(uid: blockchain.uid, title: blockchain.name, selected: service.blockchain == blockchain)
                 }
     }

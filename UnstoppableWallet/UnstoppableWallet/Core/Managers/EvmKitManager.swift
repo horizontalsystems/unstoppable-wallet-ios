@@ -136,10 +136,14 @@ class EvmKitWrapper {
         }
 
         return evmKit.rawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
-                .flatMap { [unowned self] rawTransaction in
+                .flatMap { [weak self] rawTransaction in
+                    guard let strongSelf = self else {
+                        return Single.error(AppError.weakReference)
+                    }
+
                     do {
                         let signature = try signer.signature(rawTransaction: rawTransaction)
-                        return evmKit.sendSingle(rawTransaction: rawTransaction, signature: signature)
+                        return strongSelf.evmKit.sendSingle(rawTransaction: rawTransaction, signature: signature)
                     } catch {
                         return Single.error(error)
                     }
