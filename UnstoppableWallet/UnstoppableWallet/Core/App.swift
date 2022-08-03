@@ -39,6 +39,7 @@ class App {
     let walletManager: WalletManager
     let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
+    let watchAddressBlockchainManager: WatchAddressBlockchainManager
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
@@ -194,6 +195,12 @@ class App {
                 adapterManager: adapterManager,
                 evmBlockchainManager: evmBlockchainManager,
                 adapterFactory: adapterFactory
+        )
+        watchAddressBlockchainManager = WatchAddressBlockchainManager(
+                marketKit: marketKit,
+                walletManager: walletManager,
+                accountManager: accountManager,
+                evmBlockchainManager: evmBlockchainManager
         )
 
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)

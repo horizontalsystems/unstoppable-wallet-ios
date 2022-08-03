@@ -7,10 +7,6 @@ import MarketKit
 class WatchAddressService {
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
-    private let marketKit: MarketKit.Kit
-    private let walletManager: WalletManager
-    private let evmBlockchainManager: EvmBlockchainManager
-    private let addressService: AddressService
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
@@ -29,13 +25,9 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: AccountManager, marketKit: MarketKit.Kit, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, addressService: AddressService) {
+    init(accountFactory: AccountFactory, accountManager: AccountManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
-        self.marketKit = marketKit
-        self.walletManager = walletManager
-        self.evmBlockchainManager = evmBlockchainManager
-        self.addressService = addressService
 
         defaultName = accountFactory.nextWatchAccountName
 
@@ -83,21 +75,6 @@ extension WatchAddressService {
         let name = name.trimmingCharacters(in: .whitespaces).isEmpty ? defaultName : name
         let account = accountFactory.watchAccount(name: name, address: address, domain: domain)
         accountManager.save(account: account)
-
-        do {
-            let blockchains = evmBlockchainManager.allBlockchains
-
-            for blockchain in blockchains {
-                evmBlockchainManager.evmAccountManager(blockchainType: blockchain.type).markAutoEnable(account: account)
-            }
-
-            let tokens = try marketKit.tokens(queries: blockchains.map { TokenQuery(blockchainType: $0.type, tokenType: .native) })
-            let wallets = tokens.map { Wallet(token: $0, account: account) }
-
-            walletManager.save(wallets: wallets)
-        } catch {
-            // do nothing
-        }
     }
 
 }
