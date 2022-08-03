@@ -45,8 +45,9 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
         let url = "\(apiUrl)/v1/token_info/eip20"
         let request = networkManager.session.request(url, parameters: parameters)
         let tokenQuery = tokenQuery(reference: reference)
+        let blockchain = blockchain
 
-        return networkManager.single(request: request).map { [unowned self] (tokenInfo: TokenInfo) in
+        return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
             Token(
                     coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.symbol),
                     blockchain: blockchain,

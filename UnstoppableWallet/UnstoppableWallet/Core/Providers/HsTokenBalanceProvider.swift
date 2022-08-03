@@ -44,17 +44,23 @@ extension HsTokenBalanceProvider {
 
     func addressInfoSingle(blockchainType: BlockchainType, address: String) -> Single<EvmAccountManager.AddressInfo> {
         let parameters: Parameters = [
-            "chain": blockchainType.uid
+            "blockchain": blockchainType.uid
         ]
 
         let request = networkManager.session.request("\(apiUrl)/v1/addresses/\(address)/coins", parameters: parameters, headers: headers)
-        return networkManager.single(request: request).map { [unowned self] response in
-            addressInfo(response: response)
-        }
+
+        return networkManager.single(request: request)
+                .flatMap { [weak self] (response: AddressResponse) in
+                    guard let strongSelf = self else {
+                        throw AppError.weakReference
+                    }
+
+                    return Single.just(strongSelf.addressInfo(response: response))
+                }
     }
 
     func blockNumberSingle(blockchainType: BlockchainType) -> Single<Int> {
-        let request = networkManager.session.request("\(apiUrl)/v1/chain/\(blockchainType.uid)", headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/blockchains/\(blockchainType.uid)", headers: headers)
         return networkManager.single(request: request).map { (response: ChainResponse) in
             response.blockNumber
         }

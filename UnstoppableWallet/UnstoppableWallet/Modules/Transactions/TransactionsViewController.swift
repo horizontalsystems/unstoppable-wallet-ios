@@ -216,11 +216,11 @@ class TransactionsViewController: ThemeViewController {
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                         component.text = viewItem.title
                     },
-                    .text { [unowned self] component in
+                    .text { [weak self] component in
                         if let primaryValue = viewItem.primaryValue, !primaryValue.text.isEmpty {
                             component.isHidden = false
                             component.font = .body
-                            component.textColor = color(valueType: primaryValue.type)
+                            component.textColor = self?.color(valueType: primaryValue.type) ?? .themeLeah
                             component.textAlignment = .right
                             component.lineBreakMode = .byTruncatingMiddle
                             component.text = primaryValue.text
@@ -251,11 +251,11 @@ class TransactionsViewController: ThemeViewController {
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
                         component.text = viewItem.subTitle
                     },
-                    .text { [unowned self] component in
+                    .text { [weak self] component in
                         if let secondaryValue = viewItem.secondaryValue, !secondaryValue.text.isEmpty {
                             component.isHidden = false
                             component.font = .subhead2
-                            component.textColor = color(valueType: secondaryValue.type)
+                            component.textColor = self?.color(valueType: secondaryValue.type) ?? .themeLeah
                             component.textAlignment = .right
                             component.lineBreakMode = .byTruncatingMiddle
                             component.text = secondaryValue.text

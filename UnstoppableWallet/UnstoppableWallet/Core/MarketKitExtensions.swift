@@ -24,7 +24,7 @@ extension MarketKit.Token {
     }
 
     var placeholderImageName: String {
-        protocolName.map { "Coin Icon Placeholder - \($0.uppercased())" } ?? "icon_placeholder_24"
+        "\(blockchainType.uid)_\(type.tokenProtocol)"
     }
 
     var swappable: Bool {
@@ -172,20 +172,11 @@ extension MarketKit.BlockchainType {
     }
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
-        tokenProtocol.flatMap { protocolName(tokenProtocol: $0) }.map { "Coin Icon Placeholder - \($0.uppercased())" } ?? "icon_placeholder_24"
+        tokenProtocol.map { "\(uid)_\($0)" } ?? "icon_placeholder_24"
     }
 
-    var iconPlain24: String? {
-        switch self {
-        case .ethereum: return "ethereum_trx_24"
-        case .binanceSmartChain: return "binance_smart_chain_trx_24"
-        case .polygon: return "polygon_trx_24"
-        case .avalanche: return "avalanche_trx_24"
-        case .optimism: return "optimism_trx_24"
-        case .arbitrumOne: return "arbitrum_one_trx_24"
-        case .binanceChain: return "binance_chain_trx_24"
-        default: return nil
-        }
+    var iconPlain24: String {
+        "\(uid)_trx_24"
     }
 
     var imageUrl: String {

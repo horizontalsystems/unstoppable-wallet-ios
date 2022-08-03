@@ -102,7 +102,9 @@ extension BinanceAdapter: IBalanceAdapter {
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        binanceKit.syncStateObservable.map { [unowned self] in self.adapterState(syncState: $0) }
+        binanceKit.syncStateObservable.map { [weak self] in
+            self?.adapterState(syncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+        }
     }
 
     var balanceData: BalanceData {
@@ -110,7 +112,9 @@ extension BinanceAdapter: IBalanceAdapter {
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        asset.balanceObservable.map { [unowned self] in self.balanceInfo(balance: $0) }
+        asset.balanceObservable.map { [weak self] in
+            self?.balanceInfo(balance: $0) ?? BalanceData(balance: 0)
+        }
     }
 
 }
