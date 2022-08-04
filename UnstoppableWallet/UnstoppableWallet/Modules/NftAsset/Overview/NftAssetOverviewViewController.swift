@@ -320,14 +320,14 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     Row<NftAssetButtonCell>(
                             id: "buttons",
                             height: .heightButton,
-                            bind: { cell, _ in
+                            bind: { [weak self] cell, _ in
                                 cell.bind(
-                                        onTapOpenSea: { [weak self] in
+                                        onTapOpenSea: {
                                             if let url = self?.openSeaUrl {
                                                 self?.openLink(url: url)
                                             }
                                         },
-                                        onTapMore: { [weak self] in
+                                        onTapMore: {
                                             self?.openOptionsMenu()
                                         }
                                 )
@@ -516,8 +516,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                         Row<TraitsCell>(
                                 id: "traits",
                                 height: TraitsCell.height(lines: lines),
-                                bind: { cell, _ in
-                                    cell.bind(viewItems: sortedTraits, onSelect: { [weak self] index in
+                                bind: { [weak self] cell, _ in
+                                    cell.bind(viewItems: sortedTraits, onSelect: { index in
                                         self?.viewModel.onSelectTrait(index: index)
                                     })
                                 }
@@ -554,7 +554,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 tableView: tableView,
                 id: "contract-address",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
@@ -570,7 +570,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     }
                     cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
                         component.button.set(image: UIImage(named: "share_1_20"))
-                        component.onTap = { [weak self] in
+                        component.onTap = {
                             self?.openShare(text: value)
                         }
                     }

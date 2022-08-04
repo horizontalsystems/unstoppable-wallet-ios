@@ -165,10 +165,10 @@ extension AppearanceViewController: SectionsDataSource {
                             id: "app-icon",
                             hash: "\(viewItems.map { "\($0.selected)" }.joined(separator: "-"))",
                             height: AppearanceAppIconsCell.height(viewItemsCount: viewItems.count),
-                            bind: { cell, _ in
+                            bind: { [weak self] cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-                                cell.bind(viewItems: viewItems) { [weak self] index in
+                                cell.bind(viewItems: viewItems) { index in
                                     self?.viewModel.onSelectAppIcon(index: index)
                                 }
                             }

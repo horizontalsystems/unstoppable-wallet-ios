@@ -300,7 +300,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                             tableView: tableView,
                             id: "contract-\(index)",
                             height: .heightCell48,
-                            bind: { cell in
+                            bind: { [weak self] cell in
                                 cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == viewItems.count - 1)
 
                                 cell.bind(index: 0) { (component: ImageComponent) in
@@ -322,7 +322,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
 
                                 cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
                                     component.button.set(image: UIImage(named: "globe_20"))
-                                    component.onTap = { [weak self] in
+                                    component.onTap = {
                                         self?.urlManager.open(url: viewItem.explorerUrl, from: self?.parentNavigationController)
                                     }
                                 }
