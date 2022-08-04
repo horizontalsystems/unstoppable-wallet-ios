@@ -81,8 +81,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "Name (optional)";
 "restore.mnemonic.key" = "Key";
 "restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
