@@ -14,14 +14,14 @@ class ShowKeyViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let descriptionView = HighlightedDescriptionView()
-    private let showButton = ThemeButton()
+    private let showButton = PrimaryButton()
 
     private let tableView = SectionsTableView(style: .plain)
     private let filterHeaderView = FilterHeaderView(buttonStyle: .tab)
     private let mnemonicPhraseCell = MnemonicPhraseCell()
 
     private let closeButtonHolder = BottomGradientHolder()
-    private let closeButton = ThemeButton()
+    private let closeButton = PrimaryButton()
 
     private var currentTab: Tab = .mnemonicPhrase
 
@@ -70,10 +70,9 @@ class ShowKeyViewController: ThemeViewController {
         showButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        showButton.apply(style: .primaryYellow)
+        showButton.set(style: .yellow)
         showButton.setTitle("show_key.button_show".localized, for: .normal)
         showButton.addTarget(self, action: #selector(onTapShowButton), for: .touchUpInside)
 
@@ -96,10 +95,9 @@ class ShowKeyViewController: ThemeViewController {
         closeButtonHolder.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        closeButton.apply(style: .primaryYellow)
+        closeButton.set(style: .yellow)
         closeButton.setTitle("button.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(onTapCloseButton), for: .touchUpInside)
 

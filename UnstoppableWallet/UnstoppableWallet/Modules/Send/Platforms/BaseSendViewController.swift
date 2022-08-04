@@ -25,7 +25,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let buttonCell = ButtonCell()
+    private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
     private var keyboardShown = false
@@ -93,7 +93,9 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
             self?.reloadTable()
         }
 
-        buttonCell.bind(style: .primaryYellow, title: "send.next_button".localized) { [weak self] in
+        buttonCell.set(style: .yellow)
+        buttonCell.title = "send.next_button".localized
+        buttonCell.onTap = { [weak self] in
             self?.didTapProceed()
         }
 
@@ -227,7 +229,7 @@ extension BaseSendViewController {
                     StaticRow(
                             cell: buttonCell,
                             id: "button",
-                            height: ButtonCell.height(style: .primaryYellow)
+                            height: PrimaryButtonCell.height
                     )
                 ]
         )

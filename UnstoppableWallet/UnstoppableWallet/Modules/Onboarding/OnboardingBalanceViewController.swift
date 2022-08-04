@@ -28,22 +28,22 @@ class OnboardingBalanceViewController: ThemeViewController {
         placeholderView.image = UIImage(named: "wallet_48")
         placeholderView.text = "onboarding.balance.description".localized
 
-        placeholderView.addButton(
-                style: .primaryYellow,
+        placeholderView.addPrimaryButton(
+                style: .yellow,
                 title: "onboarding.balance.create".localized,
                 target: self,
                 action: #selector(didTapCreate)
         )
 
-        placeholderView.addButton(
-                style: .primaryGray,
+        placeholderView.addPrimaryButton(
+                style: .gray,
                 title: "onboarding.balance.restore".localized,
                 target: self,
                 action: #selector(didTapRestore)
         )
 
-        placeholderView.addButton(
-                style: .primaryTransparent,
+        placeholderView.addPrimaryButton(
+                style: .transparent,
                 title: "onboarding.balance.watch".localized,
                 target: self,
                 action: #selector(didTapWatch)

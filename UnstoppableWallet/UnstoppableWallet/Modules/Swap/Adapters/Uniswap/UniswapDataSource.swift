@@ -30,8 +30,8 @@ class UniswapDataSource {
 
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
-    private let approveButton = ThemeButton()
-    private let proceedButton = ThemeButton()
+    private let approveButton = PrimaryButton()
+    private let proceedButton = PrimaryButton()
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
@@ -78,11 +78,11 @@ class UniswapDataSource {
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
-        approveButton.apply(style: .primaryGray)
+        approveButton.set(style: .gray)
         approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
         buttonStackCell.add(view: approveButton)
 
-        proceedButton.apply(style: .primaryYellow)
+        proceedButton.set(style: .yellow)
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
@@ -184,7 +184,7 @@ class UniswapDataSource {
         handle(actionState: approveActionState, button: approveButton)
     }
 
-    private func handle(actionState: UniswapViewModel.ActionState, button: ThemeButton) {
+    private func handle(actionState: UniswapViewModel.ActionState, button: PrimaryButton) {
         switch actionState {
         case .hidden:
             button.isHidden = true
@@ -345,7 +345,7 @@ extension UniswapDataSource: ISwapDataSource {
                     StaticRow(
                             cell: buttonStackCell,
                             id: "button",
-                            height: ThemeButton.height(style: .primaryYellow)
+                            height: .heightButton
                     )
                 ]
         ))

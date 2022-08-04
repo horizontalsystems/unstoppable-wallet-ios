@@ -10,7 +10,7 @@ class MarketCardView: UIView {
     let stackView = UIStackView()
     private let titleView = MarketCardTitleView()
     private let valueView = MarketCardValueView()
-    private let button = ThemeButton()
+    private let button = UIButton()
 
     var onTap: (() -> ())? {
         didSet {
@@ -25,6 +25,14 @@ class MarketCardView: UIView {
         layer.cornerRadius = .cornerRadius12
         clipsToBounds = true
 
+        addSubview(button)
+        button.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        button.isUserInteractionEnabled = false
+
         addSubview(stackView)
         stackView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview().inset(CGFloat.margin12)
@@ -33,17 +41,10 @@ class MarketCardView: UIView {
         stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = .margin8
+        stackView.isUserInteractionEnabled = false
 
         stackView.addArrangedSubview(titleView)
         stackView.addArrangedSubview(valueView)
-
-        addSubview(button)
-        button.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.isUserInteractionEnabled = false
 
         updateUI()
     }
@@ -53,7 +54,7 @@ class MarketCardView: UIView {
     }
 
     private func updateUI() {
-        button.setBackgroundColor(color: UIColor.themeLawrencePressed, forState: .highlighted)
+        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

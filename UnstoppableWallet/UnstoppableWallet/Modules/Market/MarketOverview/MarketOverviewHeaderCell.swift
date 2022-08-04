@@ -6,7 +6,7 @@ class MarketOverviewHeaderCell: BaseThemeCell {
     private let leftView = LeftAView()
     private let buttonWrapper = UIView()
     private let rightButton = SelectorButton()
-    private let seeAllButton = ThemeButton()
+    private let seeAllButton = SecondaryButton()
 
     var onSelect: ((Int) -> ())? {
         didSet {
@@ -44,7 +44,7 @@ class MarketOverviewHeaderCell: BaseThemeCell {
         }
 
         seeAllButton.isHidden = true
-        seeAllButton.apply(style: .secondaryDefault)
+        seeAllButton.set(style: .default)
         seeAllButton.setTitle("market.top.section.header.see_all".localized, for: .normal)
         seeAllButton.addTarget(self, action: #selector(onTapSeeAll), for: .touchUpInside)
     }

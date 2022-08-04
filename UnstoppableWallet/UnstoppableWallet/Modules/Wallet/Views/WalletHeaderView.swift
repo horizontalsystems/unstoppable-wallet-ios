@@ -10,7 +10,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
     private let amountView = HeaderAmountView()
     private let sortAddCoinView = TextDropDownAndSettingsView()
-    private let addressButton = ThemeButton()
+    private let addressButton = SecondaryButton()
 
     private var currentAddress: String?
 
@@ -55,7 +55,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalTo(sortAddCoinView)
         }
 
-        addressButton.apply(style: .secondaryDefault)
+        addressButton.set(style: .default)
         addressButton.addTarget(self, action: #selector(onTapAddressButton), for: .touchUpInside)
     }
 

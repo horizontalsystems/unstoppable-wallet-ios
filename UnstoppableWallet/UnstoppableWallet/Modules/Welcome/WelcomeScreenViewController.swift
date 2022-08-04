@@ -134,7 +134,7 @@ class WelcomeScreenViewController: ThemeViewController {
 
         scrollViewDidScroll(scrollView)
 
-        let startButton = ThemeButton()
+        let startButton = PrimaryButton()
 
         view.addSubview(startButton)
         startButton.snp.makeConstraints { maker in
@@ -143,7 +143,7 @@ class WelcomeScreenViewController: ThemeViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
         }
 
-        startButton.apply(style: .primaryYellow)
+        startButton.set(style: .yellow)
         startButton.setTitle("intro.start".localized, for: .normal)
         startButton.addTarget(self, action: #selector(onTapStart), for: .touchUpInside)
 

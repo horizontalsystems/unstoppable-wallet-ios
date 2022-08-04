@@ -15,7 +15,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
-    private let watchButton = ThemeButton()
+    private let watchButton = PrimaryButton()
 
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
@@ -61,13 +61,12 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         gradientWrapperView.addSubview(watchButton)
         watchButton.snp.makeConstraints { maker in
-            maker.height.equalTo(CGFloat.heightButton)
             maker.top.equalToSuperview().inset(CGFloat.margin16)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
         }
 
-        watchButton.apply(style: .primaryYellow)
+        watchButton.set(style: .yellow)
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
         watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
 

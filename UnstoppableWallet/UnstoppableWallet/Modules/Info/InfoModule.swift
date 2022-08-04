@@ -18,7 +18,6 @@ extension InfoModule {
         case header(text: String)
         case header2(text: String)
         case text(text: String)
-        case button(text: String, url: String)
     }
 
     static var feeInfo: UIViewController {

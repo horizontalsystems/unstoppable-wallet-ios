@@ -14,7 +14,7 @@ class WalletConnectListViewController: ThemeViewController {
 
     private let emptyView = PlaceholderView()
     private let bottomButtonHolder = BottomGradientHolder()
-    private let bottomButton = ThemeButton()
+    private let bottomButton = PrimaryButton()
 
     let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectScanQrViewController?
@@ -68,10 +68,9 @@ class WalletConnectListViewController: ThemeViewController {
         bottomButtonHolder.addSubview(bottomButton)
         bottomButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        bottomButton.apply(style: .primaryYellow)
+        bottomButton.set(style: .yellow)
         bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)
         bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 

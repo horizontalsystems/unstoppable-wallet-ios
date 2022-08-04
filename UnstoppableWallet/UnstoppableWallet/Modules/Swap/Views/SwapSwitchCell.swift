@@ -8,7 +8,7 @@ class SwapSwitchCell: UITableViewCell {
     let cellHeight: CGFloat = 24
 
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let switchButton = ThemeButton()
+    private let switchButton = UIButton()
 
     var onSwitch: (() -> ())?
 

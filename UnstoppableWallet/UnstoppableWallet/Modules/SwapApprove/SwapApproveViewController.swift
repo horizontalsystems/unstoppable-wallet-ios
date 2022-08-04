@@ -16,7 +16,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
     private let amountCell = InputCell()
     private let amountCautionCell = FormCautionCell()
-    private let buttonCell: ButtonCell
+    private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
 
@@ -24,8 +24,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
         self.viewModel = viewModel
         self.delegate = delegate
         self.dex = dex
-
-        buttonCell = ButtonCell()
 
         super.init(scrollViews: [tableView])
     }
@@ -59,7 +57,11 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         amountCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
-        buttonCell.bind(style: .primaryYellow, title: "swap.proceed_button".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
+        buttonCell.set(style: .yellow)
+        buttonCell.title = "swap.proceed_button".localized
+        buttonCell.onTap = { [weak self] in
+            self?.onTapApprove()
+        }
 
         subscribeToViewModel()
         tableView.buildSections()
@@ -68,7 +70,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.set(enabled: approveAllowed) }
+        subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.isEnabled = approveAllowed }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(transactionData: $0) }
 
         subscribe(disposeBag, viewModel.amountCautionDriver) { [weak self] caution in
@@ -136,7 +138,7 @@ extension SwapApproveViewController: SectionsDataSource {
                         StaticRow(
                                 cell: buttonCell,
                                 id: "approve-button",
-                                height: ButtonCell.height(style: .primaryYellow)
+                                height: PrimaryButtonCell.height
                         )
                     ]
             )

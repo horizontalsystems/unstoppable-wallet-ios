@@ -34,30 +34,28 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
 
         descriptionView.text = "private_key_copying.description".localized
 
-        let okButton = ThemeButton()
+        let okButton = PrimaryButton()
 
         view.addSubview(okButton)
         okButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        okButton.apply(style: .primaryYellow)
+        okButton.set(style: .yellow)
         okButton.setTitle("button.ok".localized, for: .normal)
         okButton.addTarget(self, action: #selector(onTapOk), for: .touchUpInside)
 
-        let riskButton = ThemeButton()
+        let riskButton = PrimaryButton()
 
         view.addSubview(riskButton)
         riskButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(okButton.snp.bottom).offset(CGFloat.margin12)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        riskButton.apply(style: .primaryTransparent)
+        riskButton.set(style: .transparent)
         riskButton.setTitle("private_key_copying.i_will_risk_it".localized, for: .normal)
         riskButton.addTarget(self, action: #selector(onTapRisk), for: .touchUpInside)
     }

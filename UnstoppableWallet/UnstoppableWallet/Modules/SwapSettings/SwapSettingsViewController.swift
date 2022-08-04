@@ -19,7 +19,7 @@ class SwapSettingsViewController: KeyboardAwareViewController {
     private var dataSource: ISwapSettingsDataSource?
 
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
-    private let applyButton = ThemeButton()
+    private let applyButton = PrimaryButton()
 
     private var isLoaded: Bool = false
     override var accessoryViewHeight: CGFloat {
@@ -60,12 +60,11 @@ class SwapSettingsViewController: KeyboardAwareViewController {
 
         gradientWrapperView.addSubview(applyButton)
         applyButton.snp.makeConstraints { maker in
-            maker.height.equalTo(CGFloat.heightButton)
             maker.top.equalToSuperview().inset(CGFloat.margin16)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
         }
-        applyButton.apply(style: .primaryYellow)
+        applyButton.set(style: .yellow)
         applyButton.setTitle("button.apply".localized, for: .normal)
         applyButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
 

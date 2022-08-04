@@ -12,8 +12,8 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
 
-    private let signButton = ThemeButton()
-    private let rejectButton = ThemeButton()
+    private let signButton = PrimaryButton()
+    private let rejectButton = PrimaryButton()
 
     private var domainCell: D7Cell?
     private let messageCell = D1Cell()
@@ -58,10 +58,9 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         signButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        signButton.apply(style: .primaryYellow)
+        signButton.set(style: .yellow)
         signButton.setTitle("button.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
@@ -70,10 +69,9 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(signButton.snp.bottom).offset(CGFloat.margin16)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        rejectButton.apply(style: .primaryGray)
+        rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 

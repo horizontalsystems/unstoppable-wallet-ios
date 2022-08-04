@@ -6,7 +6,7 @@ import ComponentKit
 class BackupRequiredViewController: ThemeActionSheetController {
     private let titleView = BottomSheetTitleView()
     private let descriptionView = HighlightedDescriptionView()
-    private let backupButton = ThemeButton()
+    private let backupButton = PrimaryButton()
 
     private let account: Account
     private weak var sourceViewController: UIViewController?
@@ -41,10 +41,9 @@ class BackupRequiredViewController: ThemeActionSheetController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        backupButton.apply(style: .primaryYellow)
+        backupButton.set(style: .yellow)
         backupButton.setTitle("settings_manage_keys.backup".localized, for: .normal)
         backupButton.addTarget(self, action: #selector(onTapBackupButton), for: .touchUpInside)
     }

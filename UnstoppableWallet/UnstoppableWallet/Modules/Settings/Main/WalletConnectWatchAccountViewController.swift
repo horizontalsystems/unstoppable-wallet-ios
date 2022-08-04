@@ -41,17 +41,16 @@ class WalletConnectWatchAccountViewController: ThemeActionSheetController {
 
         descriptionView.text = "wallet_connect.watch_account.description".localized
 
-        let switchButton = ThemeButton()
+        let switchButton = PrimaryButton()
 
         view.addSubview(switchButton)
         switchButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        switchButton.apply(style: .primaryYellow)
+        switchButton.set(style: .yellow)
         switchButton.setTitle("wallet_connect.watch_account.switch".localized, for: .normal)
         switchButton.addTarget(self, action: #selector(onTapSwitchButton), for: .touchUpInside)
     }

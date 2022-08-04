@@ -9,7 +9,7 @@ class WalletConnectErrorViewController: ThemeViewController {
     private let error: String
 
     private let errorView = PlaceholderViewModule.reachabilityView()
-    private let closeButton = ThemeButton()
+    private let closeButton = PrimaryButton()
 
     weak var delegate: IWalletConnectErrorDelegate?
 
@@ -41,10 +41,9 @@ class WalletConnectErrorViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(errorView.snp.bottom)
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        closeButton.apply(style: .primaryGray)
+        closeButton.set(style: .gray)
         closeButton.setTitle("button.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(onClose), for: .touchUpInside)
     }

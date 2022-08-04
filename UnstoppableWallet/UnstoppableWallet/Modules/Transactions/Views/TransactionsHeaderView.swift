@@ -12,8 +12,8 @@ class TransactionsHeaderView: UITableViewHeaderFooterView {
     private let disposeBag = DisposeBag()
     weak var viewController: UIViewController?
 
-    private let blockchainButton = ThemeButton()
-    private let tokenButton = ThemeButton()
+    private let blockchainButton = SecondaryButton()
+    private let tokenButton = SecondaryButton()
 
     init(viewModel: TransactionsViewModel) {
         self.viewModel = viewModel
@@ -25,28 +25,22 @@ class TransactionsHeaderView: UITableViewHeaderFooterView {
 
         contentView.addSubview(blockchainButton)
         blockchainButton.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
+            maker.leading.centerY.equalToSuperview()
         }
 
-        blockchainButton.apply(style: .secondaryTransparentIcon)
+        blockchainButton.set(style: .transparent)
+        blockchainButton.set(image: UIImage(named: "arrow_small_down_20"))
         blockchainButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        blockchainButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        blockchainButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
         blockchainButton.addTarget(self, action: #selector(onTapBlockchainButton), for: .touchUpInside)
 
         contentView.addSubview(tokenButton)
         tokenButton.snp.makeConstraints { maker in
-            maker.top.trailing.bottom.equalToSuperview()
+            maker.trailing.centerY.equalToSuperview()
         }
 
-        tokenButton.apply(style: .secondaryTransparentIcon)
+        tokenButton.set(style: .transparent)
+        tokenButton.set(image: UIImage(named: "arrow_small_down_20"))
         tokenButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        tokenButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        tokenButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
         tokenButton.addTarget(self, action: #selector(onTapTokenButton), for: .touchUpInside)
 
         let separatorView = UIView()

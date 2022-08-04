@@ -56,7 +56,7 @@ class NftCollectionOverviewViewModel {
 
     private func contractViewItem(contract: NftCollection.Contract) -> ContractViewItem {
         ContractViewItem(
-                iconName: "ethereum_24",
+                iconUrl: BlockchainType.ethereum.imageUrl,
                 reference: contract.address,
                 explorerUrl: "https://etherscan.io/token/\(contract.address)"
         )
@@ -197,7 +197,7 @@ extension NftCollectionOverviewViewModel {
     }
 
     struct ContractViewItem {
-        let iconName: String
+        let iconUrl: String
         let reference: String
         let explorerUrl: String
     }

@@ -45,17 +45,16 @@ class UnlinkWatchViewController: ThemeActionSheetController {
 
         descriptionView.text = "settings_manage_keys.delete.confirmation_watch".localized
 
-        let deleteButton = ThemeButton()
+        let deleteButton = PrimaryButton()
 
         view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        deleteButton.apply(style: .primaryRed)
+        deleteButton.set(style: .red)
         deleteButton.setTitle("settings_manage_keys.delete.confirmation_watch.button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 

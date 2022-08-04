@@ -113,16 +113,15 @@ class BirthdayInputViewController: ThemeActionSheetController {
 
         secondSeparatorView.backgroundColor = .themeSteel10
 
-        let doneButton = ThemeButton()
+        let doneButton = PrimaryButton()
 
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
             maker.top.equalTo(secondSeparatorView.snp.bottom).offset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
     }

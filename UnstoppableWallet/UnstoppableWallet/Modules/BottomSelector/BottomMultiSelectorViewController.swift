@@ -15,7 +15,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var currentIndexes: Set<Int>
     private var didTapDone = false
@@ -85,10 +85,9 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 

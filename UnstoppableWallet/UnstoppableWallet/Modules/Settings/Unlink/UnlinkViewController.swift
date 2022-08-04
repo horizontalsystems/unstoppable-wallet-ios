@@ -12,7 +12,7 @@ class UnlinkViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
-    private let deleteButton = ThemeButton()
+    private let deleteButton = PrimaryButton()
 
     private var viewItems = [UnlinkViewModel.ViewItem]()
     private var isLoaded = false
@@ -55,10 +55,9 @@ class UnlinkViewController: ThemeActionSheetController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        deleteButton.apply(style: .primaryRed)
+        deleteButton.set(style: .red)
         deleteButton.setTitle("security_settings.delete_alert_button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 
