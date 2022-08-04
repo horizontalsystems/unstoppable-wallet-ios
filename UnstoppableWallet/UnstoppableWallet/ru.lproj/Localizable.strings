@@ -81,8 +81,7 @@
 
 // Restore
 
-"restore.title" = "Выберите Кошелек";
-"restore.enter_key" = "Введите Ключ";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "Имя (опционально)";
 "restore.mnemonic.key" = "Ключ";
 "restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
