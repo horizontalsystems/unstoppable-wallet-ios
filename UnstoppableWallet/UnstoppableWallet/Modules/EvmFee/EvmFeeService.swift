@@ -79,6 +79,8 @@ class EvmFeeService {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] transaction in
                 self?.syncStatus(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
+            }, onError: { error in
+                self.status = .failed(error)
             })
             .disposed(by: disposeBag)
     }
