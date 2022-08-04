@@ -79,8 +79,7 @@
 
 // Restore
 
-"restore.title" = "지갑 선택";
-"restore.enter_key" = "암호를 입력하세요";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "이름 (선택 사항)";
 "restore.mnemonic.key" = "키";
 "restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
