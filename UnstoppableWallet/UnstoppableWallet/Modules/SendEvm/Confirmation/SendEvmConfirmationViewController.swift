@@ -6,7 +6,7 @@ import RxCocoa
 import ComponentKit
 
 class SendEvmConfirmationViewController: SendEvmTransactionViewController {
-    private let sendButton = ThemeButton()
+    private let sendButton = PrimaryButton()
 
     var confirmationTitle = "confirm"
     var confirmationButtonTitle = "send.confirmation.send_button"
@@ -22,10 +22,9 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        sendButton.apply(style: .primaryYellow)
+        sendButton.set(style: .yellow)
         sendButton.setTitle(confirmationButtonTitle.localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
 

@@ -6,7 +6,7 @@ import RxCocoa
 import ComponentKit
 
 class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
-    private let approveButton = ThemeButton()
+    private let approveButton = PrimaryButton()
     private weak var delegate: ISwapApproveDelegate?
 
     init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
@@ -30,10 +30,9 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        approveButton.apply(style: .primaryYellow)
+        approveButton.set(style: .yellow)
         approveButton.setTitle("button.approve".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 

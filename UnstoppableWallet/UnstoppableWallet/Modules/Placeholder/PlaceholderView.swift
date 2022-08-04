@@ -83,14 +83,10 @@ class PlaceholderView: UIView {
         set { label.text = newValue }
     }
 
-    func addButton(style: ThemeButtonStyle, title: String, target: Any, action: Selector) {
-        let button = ThemeButton()
+    func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) {
+        let button = PrimaryButton()
 
-        button.snp.makeConstraints { make in
-            make.height.equalTo(CGFloat.heightButton)
-        }
-
-        button.apply(style: style)
+        button.set(style: style)
         button.setTitle(title, for: .normal)
         button.addTarget(target, action: action, for: .touchUpInside)
 
@@ -110,8 +106,8 @@ class PlaceholderView: UIView {
         image = UIImage(named: "sync_error_48")
         text = "sync_error".localized
 
-        addButton(
-                style: .primaryYellow,
+        addPrimaryButton(
+                style: .yellow,
                 title: "button.retry".localized,
                 target: self,
                 action: #selector(retry)

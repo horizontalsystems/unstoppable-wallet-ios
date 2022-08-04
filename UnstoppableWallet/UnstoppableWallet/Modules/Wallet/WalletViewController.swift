@@ -77,8 +77,8 @@ class WalletViewController: ThemeViewController {
 
         emptyView.image = UIImage(named: "add_to_wallet_2_48")
         emptyView.text = "balance.empty.description".localized
-        emptyView.addButton(
-                style: .primaryYellow,
+        emptyView.addPrimaryButton(
+                style: .yellow,
                 title: "balance.empty.add_coins".localized,
                 target: self,
                 action: #selector(onTapAddCoin)

@@ -26,7 +26,7 @@ class SendFeeSettingsViewController: ThemeViewController {
     private let feeWarningCell = TitledHighlightedDescriptionCell()
     private let feeAmountErrorCell = TitledHighlightedDescriptionCell()
 
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var loaded = false
 
@@ -99,10 +99,9 @@ class SendFeeSettingsViewController: ThemeViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 

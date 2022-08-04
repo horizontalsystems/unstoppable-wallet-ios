@@ -13,7 +13,7 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
     private let iconImageView = UIImageView()
 
     private let saveButtonHolder = BottomGradientHolder()
-    private let saveButton = ThemeButton()
+    private let saveButton = PrimaryButton()
 
     private var restoreModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
     private var transactionModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
@@ -58,10 +58,9 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         saveButtonHolder.addSubview(saveButton)
         saveButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        saveButton.apply(style: .primaryYellow)
+        saveButton.set(style: .yellow)
         saveButton.setTitle("button.save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(onTapSave), for: .touchUpInside)
 

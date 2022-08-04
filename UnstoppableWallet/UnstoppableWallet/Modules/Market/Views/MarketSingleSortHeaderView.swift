@@ -12,7 +12,7 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
     private let viewModel: MarketSingleSortHeaderViewModel
     private let disposeBag = DisposeBag()
 
-    private let sortButton = ThemeButton()
+    private let sortButton = SecondaryCircleButton()
 
     init(viewModel: MarketSingleSortHeaderViewModel, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
@@ -40,9 +40,7 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        sortButton.apply(style: .secondaryIcon)
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
 
         let fieldSelector = SelectorButton()
@@ -72,7 +70,7 @@ class MarketSingleSortHeaderView: UITableViewHeaderFooterView {
     }
 
     private func syncSortButton(ascending: Bool) {
-        sortButton.setImage(UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"), for: .normal)
+        sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
     }
 
 }

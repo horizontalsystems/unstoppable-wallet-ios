@@ -11,7 +11,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
-    private let sendButton = ThemeButton()
+    private let sendButton = PrimaryButton()
 
     private var viewItems = [[SendConfirmationViewModel.ViewItem]]()
 
@@ -53,10 +53,9 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        sendButton.apply(style: .primaryYellow)
+        sendButton.set(style: .yellow)
         sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
 

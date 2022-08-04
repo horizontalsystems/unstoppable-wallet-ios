@@ -59,17 +59,16 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
 
         tableView.sectionDataSource = self
 
-        let goToMintButton = ThemeButton()
+        let goToMintButton = PrimaryButton()
 
         view.addSubview(goToMintButton)
         goToMintButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        goToMintButton.apply(style: .primaryYellow)
+        goToMintButton.set(style: .yellow)
         goToMintButton.setTitle("pro_features.lock_info.go_to_mint".localized, for: .normal)
         goToMintButton.isEnabled = false
         goToMintButton.addTarget(self, action: #selector(onTapGoToMint), for: .touchUpInside)

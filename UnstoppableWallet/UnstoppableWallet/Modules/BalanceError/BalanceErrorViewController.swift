@@ -13,9 +13,6 @@ class BalanceErrorViewController: ThemeActionSheetController {
     private weak var sourceViewController: UIViewController?
 
     private let titleView = BottomSheetTitleView()
-    private let retryButton = ThemeButton()
-    private let changeSourceButton = ThemeButton()
-    private let reportButton = ThemeButton()
 
     init(viewModel: BalanceErrorViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
@@ -42,40 +39,47 @@ class BalanceErrorViewController: ThemeActionSheetController {
             self?.dismiss(animated: true)
         }
 
+        let retryButton = PrimaryButton()
+
         view.addSubview(retryButton)
         retryButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
         retryButton.addTarget(self, action: #selector(onTapRetry), for: .touchUpInside)
-        retryButton.apply(style: .primaryYellow)
+        retryButton.set(style: .yellow)
         retryButton.setTitle("button.retry".localized, for: .normal)
 
-        let changeSourceVisible = viewModel.changeSourceVisible
+        var lastView: UIView = retryButton
 
-        view.addSubview(changeSourceButton)
-        changeSourceButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(retryButton.snp.bottom).offset(changeSourceVisible ? CGFloat.margin12 : 0)
-            maker.height.equalTo(changeSourceVisible ? CGFloat.heightButton : 0)
+        if viewModel.changeSourceVisible {
+            let changeSourceButton = PrimaryButton()
+
+            view.addSubview(changeSourceButton)
+            changeSourceButton.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+                maker.top.equalTo(retryButton.snp.bottom).offset(CGFloat.margin12)
+            }
+
+            changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
+            changeSourceButton.set(style: .gray)
+            changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
+
+            lastView = changeSourceButton
         }
 
-        changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
-        changeSourceButton.apply(style: .primaryGray)
-        changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
+        let reportButton = PrimaryButton()
 
         view.addSubview(reportButton)
         reportButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(changeSourceButton.snp.bottom).offset(CGFloat.margin12)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.top.equalTo(lastView.snp.bottom).offset(CGFloat.margin12)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
-        reportButton.apply(style: .primaryTransparent)
+        reportButton.set(style: .transparent)
         reportButton.setTitle("button.report".localized, for: .normal)
 
         subscribe(disposeBag, viewModel.openBtcBlockchainSignal) { [weak self] in self?.openBtc(blockchain: $0) }

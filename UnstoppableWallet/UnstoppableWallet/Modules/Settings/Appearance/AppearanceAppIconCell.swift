@@ -19,6 +19,7 @@ class AppearanceAppIconCell: UICollectionViewCell {
         }
 
         imageView.cornerRadius = .cornerRadius12
+        imageView.layer.cornerCurve = .continuous
 
         contentView.addSubview(label)
         label.snp.makeConstraints { maker in

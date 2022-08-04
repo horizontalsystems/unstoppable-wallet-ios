@@ -14,7 +14,8 @@ class IndicatorSelectorView: UIView {
 
         backgroundColor = .clear
 
-        let emaIndicatorView = ThemeButton().apply(style: .secondaryDefault)
+        let emaIndicatorView = SecondaryButton()
+
         addSubview(emaIndicatorView)
         emaIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -22,12 +23,14 @@ class IndicatorSelectorView: UIView {
             maker.height.equalTo(28)
         }
 
+        emaIndicatorView.set(style: .default)
         emaIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
         emaIndicatorView.setTitle("EMA", for: .normal)
         emaIndicatorView.tag = Int(ChartIndicatorSet.ema.rawValue)
         indicatorViews[.ema] = emaIndicatorView
 
-        let macdIndicatorView = ThemeButton().apply(style: .secondaryDefault)
+        let macdIndicatorView = SecondaryButton()
+
         addSubview(macdIndicatorView)
         macdIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -35,12 +38,14 @@ class IndicatorSelectorView: UIView {
             maker.height.equalTo(28)
         }
 
+        macdIndicatorView.set(style: .default)
         macdIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
         macdIndicatorView.setTitle("MACD", for: .normal)
         macdIndicatorView.tag = Int(ChartIndicatorSet.macd.rawValue)
         indicatorViews[.macd] = macdIndicatorView
 
-        let rsiIndicatorView = ThemeButton().apply(style: .secondaryDefault)
+        let rsiIndicatorView = SecondaryButton()
+
         addSubview(rsiIndicatorView)
         rsiIndicatorView.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
@@ -48,6 +53,7 @@ class IndicatorSelectorView: UIView {
             maker.height.equalTo(28)
         }
 
+        rsiIndicatorView.set(style: .default)
         rsiIndicatorView.addTarget(self, action: #selector(tapIndicator), for: .touchUpInside)
         rsiIndicatorView.setTitle("RSI", for: .normal)
         rsiIndicatorView.tag = Int(ChartIndicatorSet.rsi.rawValue)

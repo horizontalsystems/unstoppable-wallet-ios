@@ -18,7 +18,7 @@ class DropdownFilterHeaderView: UITableViewHeaderFooterView {
 
     weak var viewController: UIViewController?
 
-    private let dropdownButton = ThemeButton()
+    private let dropdownButton = SecondaryButton()
 
     init(viewModel: IDropdownFilterHeaderViewModel, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
@@ -43,15 +43,12 @@ class DropdownFilterHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(dropdownButton)
         dropdownButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.centerY.equalToSuperview()
         }
 
-        dropdownButton.apply(style: .secondaryTransparentIcon)
+        dropdownButton.set(style: .transparent)
+        dropdownButton.set(image: UIImage(named: "arrow_small_down_20"))
         dropdownButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
         dropdownButton.addTarget(self, action: #selector(onTapDropdownButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.dropdownValueDriver) { [weak self] in self?.syncDropdownButton(title: $0) }

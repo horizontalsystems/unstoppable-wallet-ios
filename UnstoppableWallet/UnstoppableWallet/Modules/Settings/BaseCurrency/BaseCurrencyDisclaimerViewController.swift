@@ -34,30 +34,28 @@ class BaseCurrencyDisclaimerViewController: ThemeActionSheetController {
 
         descriptionView.text = "settings.base_currency.disclaimer.description".localized(codes)
 
-        let setButton = ThemeButton()
+        let setButton = PrimaryButton()
 
         view.addSubview(setButton)
         setButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        setButton.apply(style: .primaryYellow)
+        setButton.set(style: .yellow)
         setButton.setTitle("settings.base_currency.disclaimer.set".localized, for: .normal)
         setButton.addTarget(self, action: #selector(onTapSet), for: .touchUpInside)
 
-        let cancelButton = ThemeButton()
+        let cancelButton = PrimaryButton()
 
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(setButton.snp.bottom).offset(CGFloat.margin12)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        cancelButton.apply(style: .primaryTransparent)
+        cancelButton.set(style: .transparent)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
     }

@@ -17,8 +17,6 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
     private let slippageCell = ShortcutInputCell()
     private let slippageCautionCell = FormCautionCell()
 
-    private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
-
     var onOpen: ((UIViewController) -> ())?
     var onClose: (() -> ())?
     var onReload: (() -> ())?

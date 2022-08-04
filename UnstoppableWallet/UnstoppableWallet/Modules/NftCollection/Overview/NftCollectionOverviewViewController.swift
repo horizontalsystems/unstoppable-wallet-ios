@@ -304,7 +304,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == viewItems.count - 1)
 
                                 cell.bind(index: 0) { (component: ImageComponent) in
-                                    component.imageView.image = UIImage(named: viewItem.iconName)
+                                    component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                                 }
 
                                 cell.bind(index: 1) { (component: TextComponent) in

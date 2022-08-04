@@ -16,7 +16,7 @@ class AddTokenViewController: ThemeViewController {
     private let inputCautionCell = FormCautionCell()
 
     private let addButtonHolder = BottomGradientHolder()
-    private let addButton = ThemeButton()
+    private let addButton = PrimaryButton()
 
     private var viewItem: AddTokenViewModel.ViewItem?
     private var isLoaded = false
@@ -67,10 +67,9 @@ class AddTokenViewController: ThemeViewController {
         addButtonHolder.addSubview(addButton)
         addButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        addButton.apply(style: .primaryYellow)
+        addButton.set(style: .yellow)
         addButton.addTarget(self, action: #selector(onTapAddButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in

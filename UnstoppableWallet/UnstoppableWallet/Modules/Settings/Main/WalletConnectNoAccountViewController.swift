@@ -30,17 +30,16 @@ class WalletConnectNoAccountViewController: ThemeActionSheetController {
 
         descriptionView.text = "wallet_connect.no_account.description".localized
 
-        let button = ThemeButton()
+        let button = PrimaryButton()
 
         view.addSubview(button)
         button.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        button.apply(style: .primaryYellow)
+        button.set(style: .yellow)
         button.setTitle("wallet_connect.no_account.i_understand".localized, for: .normal)
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }

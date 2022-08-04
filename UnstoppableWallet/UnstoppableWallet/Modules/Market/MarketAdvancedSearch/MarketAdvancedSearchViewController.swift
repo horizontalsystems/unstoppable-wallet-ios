@@ -26,7 +26,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let priceCloseToAtlCell = BaseThemeCell()
 
     private let showResultButtonHolder = BottomGradientHolder()
-    private let showResultButton = ThemeButton()
+    private let showResultButton = PrimaryButton()
 
     private let spinner = HUDActivityView.create(with: .small20)
 
@@ -111,10 +111,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         showResultButtonHolder.addSubview(showResultButton)
         showResultButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        showResultButton.apply(style: .primaryYellow)
+        showResultButton.set(style: .yellow)
         showResultButton.addTarget(self, action: #selector(onTapShowResult), for: .touchUpInside)
 
         view.addSubview(spinner)

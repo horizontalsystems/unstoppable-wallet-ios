@@ -12,7 +12,7 @@ class ScanQrViewController: ThemeViewController {
     weak var delegate: IScanQrViewControllerDelegate?
 
     private let scanView = ScanQrView()
-    private let cancelButton = ThemeButton()
+    private let cancelButton = PrimaryButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +28,9 @@ class ScanQrViewController: ThemeViewController {
         cancelButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        cancelButton.apply(style: .primaryGray)
+        cancelButton.set(style: .gray)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onCancel), for: .touchUpInside)
 

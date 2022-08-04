@@ -6,8 +6,8 @@ import ComponentKit
 class TextDropDownAndSettingsView: UITableViewHeaderFooterView {
     static let height: CGFloat = .heightSingleLineCell
 
-    private let dropdownButton = ThemeButton()
-    private let settingsButton = ThemeButton()
+    private let dropdownButton = SecondaryButton()
+    private let settingsButton = SecondaryCircleButton()
 
     var onTapDropDown: (() -> ())?
     var onTapSettings: (() -> ())?
@@ -25,15 +25,12 @@ class TextDropDownAndSettingsView: UITableViewHeaderFooterView {
     private func commonInit() {
         addSubview(dropdownButton)
         dropdownButton.snp.makeConstraints { maker in
-            maker.leading.top.bottom.equalToSuperview()
+            maker.leading.centerY.equalToSuperview()
         }
 
-        dropdownButton.apply(style: .secondaryTransparentIcon)
+        dropdownButton.set(style: .transparent)
+        dropdownButton.set(image: UIImage(named: "arrow_small_down_20"))
         dropdownButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
         dropdownButton.addTarget(self, action: #selector(onTapDropDownButton), for: .touchUpInside)
 
         addSubview(settingsButton)
@@ -42,8 +39,7 @@ class TextDropDownAndSettingsView: UITableViewHeaderFooterView {
             maker.centerY.equalTo(dropdownButton)
         }
 
-        settingsButton.apply(style: .secondaryIcon)
-        settingsButton.setImage(UIImage(named: "manage_2_20"), for: .normal)
+        settingsButton.set(image: UIImage(named: "manage_2_20"))
         settingsButton.addTarget(self, action: #selector(onTapSettingsButton), for: .touchUpInside)
     }
 

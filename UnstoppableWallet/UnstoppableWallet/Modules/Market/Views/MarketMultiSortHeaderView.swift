@@ -25,7 +25,7 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
     private let viewModel: IMarketMultiSortHeaderViewModel
     weak var viewController: UIViewController?
 
-    private let sortButton = ThemeButton()
+    private let sortButton = SecondaryButton()
 
     init(viewModel: IMarketMultiSortHeaderViewModel, hasLeftSelector: Bool = false, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
@@ -50,14 +50,12 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(sortButton)
         sortButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.centerY.equalToSuperview()
         }
 
-        sortButton.apply(style: .secondaryTransparentIcon)
+        sortButton.set(style: .transparent)
+        sortButton.set(image: UIImage(named: "arrow_small_down_20"))
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        sortButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
 
         syncSortButtonTitle()
         sortButton.addTarget(self, action: #selector(tapSortButton), for: .touchUpInside)

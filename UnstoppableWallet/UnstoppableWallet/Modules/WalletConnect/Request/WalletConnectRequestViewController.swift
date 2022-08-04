@@ -6,8 +6,8 @@ import ComponentKit
 class WalletConnectRequestViewController: SendEvmTransactionViewController {
     private let viewModel: WalletConnectSendEthereumTransactionRequestViewModel
 
-    private let approveButton = ThemeButton()
-    private let rejectButton = ThemeButton()
+    private let approveButton = PrimaryButton()
+    private let rejectButton = PrimaryButton()
 
     init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
         self.viewModel = viewModel
@@ -29,10 +29,9 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
         approveButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        approveButton.apply(style: .primaryYellow)
+        approveButton.set(style: .yellow)
         approveButton.setTitle("wallet_connect.button.confirm".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
@@ -41,10 +40,9 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(approveButton.snp.bottom).offset(CGFloat.margin16)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        rejectButton.apply(style: .primaryGray)
+        rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
