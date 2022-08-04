@@ -82,8 +82,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Restore
 
-"restore.title" = "Cüzdan Seçin";
-"restore.enter_key" = "Anahtarı girin";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "İsim(İsteğe bağlı)";
 "restore.mnemonic.key" = "Anahtar";
 "restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
