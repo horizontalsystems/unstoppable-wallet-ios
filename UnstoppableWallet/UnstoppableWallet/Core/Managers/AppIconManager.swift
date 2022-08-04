@@ -12,7 +12,7 @@ class AppIconManager {
         .alternate(name: "AppIconMustang", title: "Mustang"),
         .alternate(name: "AppIconYak", title: "Yak"),
         .alternate(name: "AppIconPunk", title: "Punk"),
-        .alternate(name: "AppIconApe", title: "Ape"),
+        .alternate(name: "AppIcon1874", title: "#1874"),
         .alternate(name: "AppIcon1009", title: "#1009")
     ]
 
