@@ -79,8 +79,7 @@
 
 // Restore
 
-"restore.title" = "Elegir Monedero";
-"restore.enter_key" = "Introduzca la clave";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "Nombre (opcional)";
 "restore.mnemonic.key" = "Clave";
 "restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
