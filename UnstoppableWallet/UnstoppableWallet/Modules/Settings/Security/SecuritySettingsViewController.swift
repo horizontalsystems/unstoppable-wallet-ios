@@ -108,7 +108,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 id: "passcode",
                 hash: "\(viewItem.enabled)",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !viewItem.editVisible)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
@@ -128,7 +128,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 3, block: { (component: SwitchComponent) in
                         component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { [weak self] isOn in
+                        component.onSwitch = { isOn in
                             self?.viewModel.onTogglePin(isOn: isOn)
                         }
                     })
@@ -175,7 +175,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 id: "biometry",
                 hash: "\(viewItem.enabled)",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
@@ -190,7 +190,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 2, block: { (component: SwitchComponent) in
                         component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { [weak self] isOn in
+                        component.onSwitch = { isOn in
                             self?.viewModel.onToggleBiometry(isOn: isOn)
                         }
                     })

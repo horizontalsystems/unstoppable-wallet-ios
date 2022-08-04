@@ -170,9 +170,9 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                                             component.text = viewItem.subtitle
                                         }
                                     ]),
-                                    .switch { component in
+                                    .switch { [weak self] component in
                                         component.switchView.isOn = selected
-                                        component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+                                        component.onSwitch = { self?.onToggle(index: index, isOn: $0) }
                                     }
                                 ]),
                                 tableView: tableView,
