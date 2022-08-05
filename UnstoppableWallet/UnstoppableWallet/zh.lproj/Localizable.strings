@@ -22,11 +22,30 @@
 
 "alert" = "警报";
 "alert.copied" = "已复制";
+"alert.saved" = "已保存";
 "alert.no_internet" = "没有网络";
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.unknown_error" = "未知错误";
 "alert.success_action" = "完成";
+
+"alert.added_to_watchlist" = "添加到观察名单";
+"alert.removed_from_watchlist" = "从观察名单中删除";
+"alert.added_to_wallet" = "添加到钱包";
+"alert.already_added_to_wallet" = "已添加到钱包";
+"alert.not_supported_yet" = "目前不支持";
+"alert.copied" = "已复制";
+"alert.created" = "已创建";
+"alert.deleted" = "已删除";
+"alert.disconnecting" = "正在断开连接";
+"alert.disconnected" = "已断开连接";
+"alert.enabling" = "正在启用";
+"alert.enabled_coins" = "启用了 %@ 多硬币";
+"alert.sending" = "发送中";
+"alert.sent" = "已发送";
+"alert.swapping" = "交易";
+"alert.approving" = "审批中";
+
 
 "action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
@@ -62,12 +81,11 @@
 
 // Restore
 
-"restore.title" = "选择钱包";
-"restore.enter_key" = "输入密钥";
+"restore.title" = "恢复";
 "restore.mnemonic.name" = "名称 (可选)";
 "restore.mnemonic.key" = "密钥";
-"restore.mnemonic.description" = "输入助记词，其中应包含12到24个单词。这些单词必须以正确的顺序输入并用空格分隔。";
-"restore_error.mnemonic_word_count" = "个数有误。必须为12到24个单词。您输入了：%@";
+"restore.mnemonic.description" = "输入包含12、15、18、21或24个字的钱包恢复短语(又名mnemonic)，可能包含额外的字母和数字密码。";
+"restore_error.mnemonic_word_count" = "错误的单词数。它必须介于12到24个单词之间。您输入了： %@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
@@ -76,22 +94,20 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
+"coin_settings.derivation.title.bip44" = "遗留问题";
 "coin_settings.derivation.title.bip49" = "较新（推荐）";
 "coin_settings.derivation.title.bip84" = "最新";
 "coin_settings.title" = "区块链设置";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.title" = "地址格式";
 "blockchain_settings.description" = "选择代币的地址格式。如果不确定，请使用建议选项继续。应在恢复现有钱包时选择正确的格式。";
 
 // Coin Platforms
 
-"coin_platforms.title" = "代币类型";
-"coin_platforms.description" = "此令牌存在于多个区块链上。请选择您想要使用的版本。";
+"coin_platforms.description" = "此令牌存在于多个区块链中。";
 "coin_platforms.native" = "原生";
 
 // Show Key
@@ -105,9 +121,8 @@
 "show_key.private_key.description" = "此密鑰適用於所有與 EVM 兼容的區塊鏈。";
 
 "private_key_copying.title" = "警告";
-"private_key_copying.subtitle" = "私钥复制风险";
 "private_key_copying.description" = "作为一项安全措施，我们建议不要在私钥上使用复制操作。";
-"private_key_copying.copy_button" = "我将冒险使用此操作";
+"private_key_copying.i_will_risk_it" = "我会冒险！";
 
 // Backup Key
 
@@ -165,11 +180,13 @@
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "切换钱包";
-"switch_account.subtitle" = "选择钱包以快速切换";
-//Release notes
+"switch_account.wallets" = "钱包";
+"switch_account.watch_addresses" = "观察地址";
+
+// Release notes
 
 "release_notes.title" = "新增内容";
 "release_notes.follow_us" = "关注我们";
@@ -227,7 +244,7 @@
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
-"send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "发送​​";
 "send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.resend_button" = "重新发送";
@@ -355,7 +372,7 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
-"market.coin_not_supported_yet" = "Unstoppable尚不支持此代币";
+"market.coin_not_supported_yet" = "目前不支持";
 
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
@@ -390,13 +407,16 @@
 "market.top.top_platforms" = "前列平台";
 "market.top.protocols" = "协议";
 
-"top_platforms.title" = "顶级区块链平台";
+"top_platforms.title" = "平台排名";
 "top_platforms.description" = "通过建立在顶部的项目的累积市场来领导区块链平台。";
 
-"market_discovery.title" = "Discovery";
+"top_platform.title" = "%@ 星系";
+"top_platform.description" = "%@ 链上所有协议的市场上限";
+
+"market_discovery.title" = "发现";
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
-"market_discovery.top_coins" = "TOP Coins";
+"market_discovery.top_coins" = "TOP 硬币";
 "market_discovery.not_found" = "未发现结果";
 "market_discovery.category.chart.title" = "总市值";
 
@@ -470,7 +490,6 @@
 "market.global.defi_cap.title" = "DeFi市值";
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
-"market.global.subtitle" = "图表";
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
 "market.global.volume_24h.title" = "24h成交量";
 "market.global.defi_cap.title" = "DeFi市值";
@@ -615,7 +634,6 @@
 "pro_features.lock_info.go_to_mint" = "即将推出";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "要启用此数据，您必须在您的余额上拥有Unstoppable Pass NFT\n\n同时您将能获得对以下数据的访问权：";
 "pro_features.lock_info.coin_details.volume" = "DEX交易量";
 "pro_features.lock_info.coin_details.liquidity" = "DEX流动性";
@@ -634,6 +652,11 @@
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
+"transactions.blockchain" = "区块链";
+"transactions.all_blockchains" = "所有Blockchains";
+"transactions.all_coins" = "所有硬币";
+"transactions.choose_coin" = "选择代币";
+"transactions.clear" = "清空";
 "transactions.filter_all" = "全部";
 "transactions.syncing_text" = "请等待同步结束";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
@@ -724,14 +747,13 @@
 "settings.base_currency.other" = "其他";
 "settings.base_currency.disclaimer" = "声明";
 "settings.base_currency.disclaimer.description" = "汇率数据由第三方服务Coingecko.com提供\n\nUnstoppable钱包应用不保证这是数值总是准确以及和市场数据匹配。如果您选择任何基础货币而不是%@，那么出现不一致的机会将较高。";
-"settings.base_currency.disclaimer.i_understand" = "我理解";
-
+"settings.base_currency.disclaimer.set" = "设置";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "钱包";
-"manage_wallets.not_found" = "找不到结果。如果您知道智能合同地址，请尝试手动添加代币。";
-"manage_wallets.search_placeholder" = "代币代码或名称";
+"manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
+"manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
@@ -831,31 +853,37 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
-"settings.about_app.email_copied" = "电子邮件地址已复制";
 
 // Settings -> Privacy
 
-"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.description" = "不可阻挡不会收集任何数据，也不会使用可能会暴露任何用户数据的分析工具。 钱包的设计是为了确保用户高度的隐私。";
+"settings.privacy.statement.user_data_storage" = "用户数据总是保留在用户的设备上。";
+"settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
+"settings.privacy.statement.data_privacy" = "钱包没有收集任何有关用户的数据。";
+"settings.privacy.statement.user_account" = "没有用户帐户或数据库存放其他地方的用户数据。";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "主题";
-"settings_theme.system" = "系统";
-"settings_theme.dark" = "深色";
-"settings_theme.light" = "浅色";
+"appearance.title" = "外观";
 
-// Settings -> Launch Screen
+"appearance.theme" = "主题样式";
+"appearance.theme.system" = "系统";
+"appearance.theme.dark" = "深色";
+"appearance.theme.light" = "浅色";
 
-"settings.launch_screen.title" = "启动屏幕";
+"appearance.launch_screen" = "启动屏幕";
+"appearance.launch_screen.auto" = "自动";
+"appearance.launch_screen.balance" = "余额";
+"appearance.launch_screen.market_overview" = "行情";
+"appearance.launch_screen.watchlist" = "关注";
 
-"launch_screen.auto" = "自动";
-"launch_screen.balance" = "余额";
-"launch_screen.market_overview" = "行情";
-"launch_screen.watchlist" = "观看列表";
+"appearance.app_icon" = "应用图标";
+
+"appearance.balance_conversion" = "余额转换";
+
+"appearance.balance_value" = "余额值";
+"appearance.balance_value.coin_value" = "币值";
+"appearance.balance_value.fiat_value" = "纤维值";
 
 // Set PIN
 
@@ -923,7 +951,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
-"create_wallet.success" = "已创建";
 
 // Restore Select
 
@@ -964,14 +991,14 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Add Token
 
 "add_token.title" = "添加代币";
-"add_token.coin_types" = "代币类型";
 "add_token.coin_name" = "代币图片";
 "add_token.coin_code" = "代币代码";
 "add_token.decimals" = "小数";
-"add_token.already_exists" = "该代币已在代币管理器列表中。";
+"add_token.already_added" = "已添加";
+"add_token.coin_types" = "代币平台选择";
+"add_token.choose_type" = "选择类型";
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "找不到代币";
-"add_token.success_add" = "已添加";
 "add_token.input_placeholder" = "智能合约地址";
 
 // Wallet Connect
@@ -980,7 +1007,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
-"wallet_connect.main.unsupported_chains" = "没有任何支持的链！";
+"wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
+"wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
@@ -1065,6 +1093,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 
 "birthday_input.title" = "生日高度";
 "birthday_input.description" = "如果您知道钱包的出生日期高度，输入它即可快速同步。";
+"birthday_input.new_wallet" = "这是一个新钱包";
 "birthday_input.input_placeholder" = "%@ （可选）";
 "restore_setting.birthday_height" = "%@ 生日高度";
 
@@ -1105,10 +1134,12 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "watch_address.watch" = "观察";
 "watch_address.name" = "名称 (可选)";
 "watch_address.address" = "地址";
+"watch_address.description" = "仅供以太坊和其他支持 EVM 区块链使用。";
 
 // Nft Collections
 
 "nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "价格模式";
 "nft_collections.last_sale" = "收盘价";
 "nft_collections.average_7d" = "平均7天";
 "nft_collections.average_30d" = "平均30天";
@@ -1119,6 +1150,9 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "top_nft_collections.description" = "按交易量排列的主要NFT收藏。";
 
 // Nft Asset
+
+"nft_asset.tab.overview" = "行情";
+"nft_asset.tab.activity" = "活动";
 
 "nft_asset.last_sale" = "收盘价";
 "nft_asset.average_7d" = "7天平均";
@@ -1141,7 +1175,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_asset.links.website" = "网站";
 "nft_asset.options.save_to_photos" = "保存到照片";
 "nft_asset.options.set_as_watch_face" = "设为表盘";
-"nft_asset.save_to_photos.success" = "NFT 图像已保存到您的照片库";
 "nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
 
 // Nft Collection
@@ -1163,6 +1196,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft_collection.overview.floor_price" = "底价";
 "nft_collection.overview.all_time_average" = "全部时间平均值";
 
+"nft.activity.empty_list" = "还没有项目活动";
 "nft.activity.event_types" = "事件类型";
 "nft.activity.event_type.all" = "全部事件";
 "nft.activity.event_type.list" = "列表";
@@ -1171,6 +1205,7 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft.activity.event_type.bid" = "已输入出价";
 "nft.activity.event_type.bid_cancel" = "已撤回出价";
 "nft.activity.event_type.transfer" = "转帐";
+
 "nft.activity.event_type.approve" = "批准";
 "nft.activity.event_type.custom" = "自定义";
 "nft.activity.event_type.payout" = "支出";

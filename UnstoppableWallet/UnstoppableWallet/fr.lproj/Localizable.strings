@@ -22,11 +22,30 @@
 
 "alert" = "Alerte";
 "alert.copied" = "Copié";
+"alert.saved" = "Sauvegardé";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Terminé";
+
+"alert.added_to_watchlist" = "Ajouter à la liste de suivi";
+"alert.removed_from_watchlist" = "Retirer de la liste de suivi";
+"alert.added_to_wallet" = "Ajouté au portefeuille";
+"alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
+"alert.not_supported_yet" = "Pas pris en charge pour le moment";
+"alert.copied" = "Copié";
+"alert.created" = "Établi";
+"alert.deleted" = "Supprimer";
+"alert.disconnecting" = "Déconnexion";
+"alert.disconnected" = "Déconnecté";
+"alert.enabling" = "Activation";
+"alert.enabled_coins" = "%@ pièces supplémentaires activées";
+"alert.sending" = "En attente";
+"alert.sent" = "Envoyée";
+"alert.swapping" = "Swapping";
+"alert.approving" = "En cours d'approbation";
+
 
 "action.loading" = "chargement en cours...";
 "placeholder.search" = "Chercher";
@@ -60,12 +79,11 @@
 
 // Restore
 
-"restore.title" = "Choisissez le portefeuille";
-"restore.enter_key" = "Entrez la clé";
+"restore.title" = "Restaurer";
 "restore.mnemonic.name" = "Nom (optionnel)";
 "restore.mnemonic.key" = "Clé";
-"restore.mnemonic.description" = "Saisissez votre mnémonique qui consiste en 12 ou 24 mots. Les mots doivent être saisis dans l'ordre correct et séparés par des espaces.";
-"restore_error.mnemonic_word_count" = "Le nombre de mots est incorrect. Il doit être compris entre 12 et 24 mots. Vous avez saisi : %@";
+"restore.mnemonic.description" = "Saisissez la phrase de récupération de votre portefeuille (mnémonique) qui se compose de 12, 15, 18, 21 ou 24 mots et peut inclure un mot de passe alphanumérique supplémentaire.";
+"restore_error.mnemonic_word_count" = "Nombre de mots incorrect. Il doit être compris entre 12 et 24 mots. Vous en avez saisi : %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
@@ -83,13 +101,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Commun avant 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Commun après 2018";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.title" = "Format de l'adresse";
 "blockchain_settings.description" = "Sélectionnez le format d'adresse de la pièce. Procédez avec l'option recommandée si vous n'êtes pas sur de vous. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Type de pièce";
-"coin_platforms.description" = "Ce token existe sur plusieurs blockchains. Sélectionnez la (les) version(s) que vous souhaitez utiliser.";
+"coin_platforms.description" = "Ce token existe sur plusieurs blockchains.";
 "coin_platforms.native" = "Natif";
 
 // Show Key
@@ -103,9 +119,8 @@
 "show_key.private_key.description" = "Cette clé est pour toutes les blockchains compatibles EVM.";
 
 "private_key_copying.title" = "Attention";
-"private_key_copying.subtitle" = "Risque de copie de clé privée";
 "private_key_copying.description" = "Pour des raisons de sécurité, nous recommandons de ne pas utiliser l'action de copie sur la clé privée.";
-"private_key_copying.copy_button" = "Je prends le risque";
+"private_key_copying.i_will_risk_it" = "Je prends le risque";
 
 // Backup Key
 
@@ -163,11 +178,13 @@
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Changer de portefeuille";
-"switch_account.subtitle" = "Sélectionnez le portefeuille pour un changement rapide";
-//Release notes
+"switch_account.wallets" = "Portefeuilles";
+"switch_account.watch_addresses" = "Adresse à suivre";
+
+// Release notes
 
 "release_notes.title" = "Nouveautés";
 "release_notes.follow_us" = "Suivez-nous";
@@ -353,7 +370,7 @@
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
-"market.coin_not_supported_yet" = "Cette pièce n'est pas encore supportée par Unstoppable";
+"market.coin_not_supported_yet" = "Pas encore pris en charge";
 
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
@@ -388,8 +405,11 @@
 "market.top.top_platforms" = "Meilleures plateformes";
 "market.top.protocols" = "Protocoles";
 
-"top_platforms.title" = "Meilleures plateformes blockchain";
+"top_platforms.title" = "Classement des plateformes";
 "top_platforms.description" = "Les meilleures plateformes blockchain en fonction du marché cumulé des projets bâtis sur celles-ci.";
+
+"top_platform.title" = "Écosystème %@";
+"top_platform.description" = "Capitalisation boursière de tous les protocoles de la chaîne %@";
 
 "market_discovery.title" = "Découverte";
 "market_discovery.filters" = "Filtres";
@@ -468,10 +488,9 @@
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
-"market.global.subtitle" = "Graphique";
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
+"market.global.volume_24h.title" = "Volume 24h";
+"market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
@@ -613,7 +632,6 @@
 "pro_features.lock_info.go_to_mint" = "Bientôt disponible";
 
 "pro_features.lock_info.title" = "Passe Unstoppable";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "Pour activer ces données, vous devez avoir le Passe Unstoppable NFT sur votre balance.\n\nVous aurez également accès aux données ci-dessous :";
 "pro_features.lock_info.coin_details.volume" = "Volume DEX";
 "pro_features.lock_info.coin_details.liquidity" = "Liquidité DEX";
@@ -632,6 +650,11 @@
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "Toutes les blockchains";
+"transactions.all_coins" = "Toutes les pièces";
+"transactions.choose_coin" = "Choisir la pièce";
+"transactions.clear" = "Effacer";
 "transactions.filter_all" = "Tout";
 "transactions.syncing_text" = "Veuillez attendre la fin de la synchronisation";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
@@ -722,14 +745,13 @@
 "settings.base_currency.other" = "Autre";
 "settings.base_currency.disclaimer" = "Avertissement";
 "settings.base_currency.disclaimer.description" = "Les données relatives aux taux de change fournies par un service tiers Coingecko.com\n\nUnstoppable wallet app ne garantit pas que ces valeurs sont toujours correctes et correspondent aux données du marché. Le risque de divergence est plus élevé si vous sélectionnez une devise de base autre que %@.";
-"settings.base_currency.disclaimer.i_understand" = "J’ai Compris";
-
+"settings.base_currency.disclaimer.set" = "Appliquer";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Portefeuilles";
-"manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement si vous connaissez son adresse de contrat intelligent.";
-"manage_wallets.search_placeholder" = "Code ou nom du jeton";
+"manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
+"manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
@@ -829,31 +851,37 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
-"settings.about_app.email_copied" = "Adresse email copiée";
 
 // Settings -> Privacy
 
-"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.description" = "Unstoppable ne collecte aucune donnée et n'utilise aucun outil d'analyse susceptible d'exposer des données sur ses utilisateurs. Le portefeuille est conçu pour assurer un haut niveau de confidentialité à ses utilisateurs.";
+"settings.privacy.statement.user_data_storage" = "Les données de l'utilisateur restent toujours sur l'appareil de l'utilisateur.";
+"settings.privacy.statement.data_usage" = "Le portefeuille ne collecte aucune donnée sur les utilisateurs.";
+"settings.privacy.statement.data_privacy" = "Le portefeuille ne partage aucune donnée sur les utilisateurs.";
+"settings.privacy.statement.user_account" = "Aucun compte utilisateur ni aucune base de données ne conserve les données des utilisateurs à un autre endroit.";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Thème";
-"settings_theme.system" = "Système";
-"settings_theme.dark" = "Sombre";
-"settings_theme.light" = "Classique";
+"appearance.title" = "Apparence";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Thème";
+"appearance.theme.system" = "Système";
+"appearance.theme.dark" = "Sombre";
+"appearance.theme.light" = "Classique";
 
-"settings.launch_screen.title" = "Écran de démarrage";
+"appearance.launch_screen" = "Écran de démarrage";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Solde";
+"appearance.launch_screen.market_overview" = "Vue d'ensemble du marché";
+"appearance.launch_screen.watchlist" = "Liste de suivi";
 
-"launch_screen.auto" = "Auto";
-"launch_screen.balance" = "Solde";
-"launch_screen.market_overview" = "Vue d'ensemble du marché";
-"launch_screen.watchlist" = "Liste de suivi";
+"appearance.app_icon" = "Icône de l’app";
+
+"appearance.balance_conversion" = "Conversion du solde";
+
+"appearance.balance_value" = "Valeur du solde";
+"appearance.balance_value.coin_value" = "Valeur de la pièce";
+"appearance.balance_value.fiat_value" = "Valeur Fiat";
 
 // Set PIN
 
@@ -882,7 +910,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "chart.time_duration.week2" = "2S";
 "chart.time_duration.month" = "1 M";
 "chart.time_duration.month3" = "3 M";
-"chart.time_duration.halfyear" = "6M";
+"chart.time_duration.halfyear" = "6 m.";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2A";
 
@@ -921,7 +949,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement des lettres et des chiffres latins pour la phrase d'authentification";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
-"create_wallet.success" = "Établi";
 
 // Restore Select
 
@@ -962,14 +989,14 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Add Token
 
 "add_token.title" = "Ajouter le token";
-"add_token.coin_types" = "Type(s) de pièce";
 "add_token.coin_name" = "Nom de la pièce";
 "add_token.coin_code" = "Code de la pièce";
 "add_token.decimals" = "Decimales";
-"add_token.already_exists" = "Ce token figure déjà sur la liste du gestionnaire des pièces.";
+"add_token.already_added" = "Déjà ajouté";
+"add_token.coin_types" = "Types de pièces";
+"add_token.choose_type" = "Choisir le type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
 "add_token.token_not_found" = "Token non trouvé";
-"add_token.success_add" = "Ajouté";
 "add_token.input_placeholder" = "Adresse du contrat";
 
 // Wallet Connect
@@ -978,7 +1005,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
-"wallet_connect.main.unsupported_chains" = "Aucune chaîne prise en charge !";
+"wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
+"wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "wallet_connect.usage_description" = "Vous pouvez aller sur le navigateur. Ne fermez pas cette page pendant que vous interagissez dans le navigateur.";
 "wallet_connect.no_connection" = "Échec de connexion. Essayez de vous reconnecter à nouveau.";
@@ -1063,6 +1091,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
 "birthday_input.description" = "Si vous connaissez la hauteur anniversaire de votre portefeuille, saisissez-la pour accélérer la synchronisation.";
+"birthday_input.new_wallet" = "C'est un nouveau portefeuille";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
 
@@ -1103,10 +1132,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "watch_address.watch" = "Suivi";
 "watch_address.name" = "Nom (optionnel)";
 "watch_address.address" = "Adresse";
+"watch_address.description" = "Disponible uniquement pour Ethereum et autres blockchains EVM prises en charge.";
 
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
+"nft_collections.price_mode" = "Mode prix";
 "nft_collections.last_sale" = "Dernière vente";
 "nft_collections.average_7d" = "Moyenne sur 7 j";
 "nft_collections.average_30d" = "Moyenne sur 30 j";
@@ -1117,6 +1148,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "top_nft_collections.description" = "Meilleures collections NFT en termes de volume de trading.";
 
 // Nft Asset
+
+"nft_asset.tab.overview" = "Synthèse";
+"nft_asset.tab.activity" = "Activité";
 
 "nft_asset.last_sale" = "Dernière vente";
 "nft_asset.average_7d" = "Moyenne sur 7 jours";
@@ -1139,7 +1173,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_asset.links.website" = "Site Web";
 "nft_asset.options.save_to_photos" = "Enregistrer dans Photos";
 "nft_asset.options.set_as_watch_face" = "Créer un cadran";
-"nft_asset.save_to_photos.success" = "L'image NFT est enregistrée dans Photos";
 "nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
 
 // Nft Collection
@@ -1161,6 +1194,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.overview.floor_price" = "Prix plancher";
 "nft_collection.overview.all_time_average" = "Moyenne du temps";
 
+"nft.activity.empty_list" = "Aucune activité pour l'instant";
 "nft.activity.event_types" = "Types d'évènement";
 "nft.activity.event_type.all" = "Tous les événements";
 "nft.activity.event_type.list" = "Liste";

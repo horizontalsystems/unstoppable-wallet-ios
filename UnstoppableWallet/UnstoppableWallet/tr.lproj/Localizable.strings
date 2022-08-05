@@ -22,12 +22,31 @@
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
+"alert.saved" = "Kaydet";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.unknown_error" = "Bilinmeyen Hata";
 "alert.success_action" = "tamamlandı
 ";
+
+"alert.added_to_watchlist" = "Added To Watchlist";
+"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_wallet" = "Cüzdana Eklendi";
+"alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
+"alert.not_supported_yet" = "Henüz Desteklenmiyor";
+"alert.copied" = "Kopyalandı";
+"alert.created" = "Oluşturuldu";
+"alert.deleted" = "Sil";
+"alert.disconnecting" = "Bağlantı kesiliyor";
+"alert.disconnected" = "Bağlantı kesildi";
+"alert.enabling" = "Etkinleştiriliyor";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "Gönderiliyor";
+"alert.sent" = "Gönderildi";
+"alert.swapping" = "Takas";
+"alert.approving" = "Onaylayan";
+
 
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
@@ -63,11 +82,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Restore
 
-"restore.title" = "Cüzdan Seçin";
-"restore.enter_key" = "Anahtarı girin";
+"restore.title" = "Geri Yükle";
 "restore.mnemonic.name" = "İsim(İsteğe bağlı)";
 "restore.mnemonic.key" = "Anahtar";
-"restore.mnemonic.description" = "12 veya 24 kelimeden oluşan anımsatıcı ifadenizi girin. Kelimelerin doğru sırayla girilmesi ve boşluklarla ayrılması gerekir.";
+"restore.mnemonic.description" = "12, 15, 18, 21 veya 24 kelimeden oluşan ve ek bir alfasayısal şifre içerebilen cüzdan kurtarma ifadenizi (aka anımsatıcı) girin.";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
@@ -86,13 +104,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018 öncesinde yaygın";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018 sonrasında yaygın";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
-"blockchain_settings.title" = "Adres Formatı";
 "blockchain_settings.description" = "Koin için adres formatını seçin. Emin değilseniz önerilen seçenekle devam edin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Kripto Para Tipi";
-"coin_platforms.description" = "Bu token birden fazla blok zincirinde mevcuttur. Kullanmak istediğiniz sürümü/sürümleri seçin.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Yerel";
 
 // Show Key
@@ -106,9 +122,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "show_key.private_key.description" = "Bu anahtar, tüm EVM uyumlu blok zincirleri içindir.";
 
 "private_key_copying.title" = "Uyarı";
-"private_key_copying.subtitle" = "Özel Anahtar kopyalama riski";
 "private_key_copying.description" = "Bir güvenlik önlemi olarak, özel anahtar için kopyalama eylemi kullanılmamasını öneririz.";
-"private_key_copying.copy_button" = "Riski alıyorum";
+"private_key_copying.i_will_risk_it" = "Riski alıyorum";
 
 // Backup Key
 
@@ -166,11 +181,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";
 "lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Cüzdan Değiştir";
-"switch_account.subtitle" = "Hızlı değiştirme için cüzdan seçin";
-//Release notes
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Adresi İzle";
+
+// Release notes
 
 "release_notes.title" = "Yenilikler";
 "release_notes.follow_us" = "Bizi Takip Et";
@@ -356,7 +373,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
+"market.coin_not_supported_yet" = "Not supported yet";
 
 "market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
@@ -391,8 +408,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "En İyi Blok Zinciri Platformları";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Üzerine kurulmuş projelerin oluşturduğu kümülatif pazarla lider blok zinciri platformları.";
+
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -471,7 +491,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -616,7 +635,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "pro_features.lock_info.go_to_mint" = "Çok Yakında";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "Bu verileri etkinleştirmek için bakiyenizde Unstoppable Pass NFT'si olması gerekir\n\nAyrıca aşağıdaki verilere de erişebilirsiniz:";
 "pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
@@ -635,8 +653,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
+"transactions.blockchain" = "Blockchains";
+"transactions.all_blockchains" = "Tüm Blok Zincirleri";
+"transactions.all_coins" = "Tüm paralar";
+"transactions.choose_coin" = "Kripto Parayı Seç";
+"transactions.clear" = "Temizle";
 "transactions.filter_all" = "Hepsi";
-"transactions.syncing_text" = "Please wait for the sync to finish";
+"transactions.syncing_text" = "Lütfen güncellemenin bitmesini bekleyin";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
 "transactions.processing" = "İşleniyor";
@@ -646,7 +669,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.receive" = "Al";
 "transactions.send" = "Gönder";
 "transactions.approve" = "Onayla";
-"transactions.swap" = "Swap";
+"transactions.swap" = "Takas";
 "transactions.contract_call" = "Sözleşme Çağrısı";
 "transactions.contract_creation" = "Sözleşme Oluşturma";
 "transactions.external_call" = "Harici Çağrı";
@@ -725,14 +748,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.base_currency.other" = "Diğer";
 "settings.base_currency.disclaimer" = "Uyarı";
 "settings.base_currency.disclaimer.description" = "Üçüncü taraf bir hizmet olan Coingecko.com tarafından sağlanan döviz kuru verileri.\n\nDurdurulamaz cüzdan uygulaması, bu değerlerin her zaman doğru olduğunu ve piyasa verileriyle eşleştiğini garanti etmez. %@ Dışında herhangi bir temel para birimi seçerseniz tutarsızlık olasılığı daha yüksektir.";
-"settings.base_currency.disclaimer.i_understand" = "Anlıyorum";
-
+"settings.base_currency.disclaimer.set" = "Ayarla";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Cüzdanlar";
-"manage_wallets.not_found" = "Hiçbir sonuç bulunamadı. Akıllı sözleşme adresini biliyorsanız tokeni manüel olarak eklemeyi deneyin.";
-"manage_wallets.search_placeholder" = "Jeton kodu veya adı";
+"manage_wallets.not_found" = "Sonuç bulunamadı. Belirteci manuel olarak eklemeyi deneyin.";
+"manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
@@ -832,9 +854,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.about_app.contact" = "Iletişim";
 "settings.about_app.rate_us" = "Bizi Değerlendirin";
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
-"settings.about_app.email_copied" = "E-posta adresi kopyalandı";
 
 // Settings -> Privacy
+
 
 "settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
 "settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
@@ -842,21 +864,28 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
 "settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
 
-// Settings -> Theme
+// Settings -> Appearance
 
-"settings_theme.title" = "Tema";
-"settings_theme.system" = "Sistem";
-"settings_theme.dark" = "Karanlık";
-"settings_theme.light" = "Açık";
+"appearance.title" = "Görünüm";
 
-// Settings -> Launch Screen
+"appearance.theme" = "Tema";
+"appearance.theme.system" = "Sistem";
+"appearance.theme.dark" = "Karanlık";
+"appearance.theme.light" = "Açık";
 
-"settings.launch_screen.title" = "Başlangıç Ekranı";
+"appearance.launch_screen" = "Başlangıç Ekranı";
+"appearance.launch_screen.auto" = "Oto";
+"appearance.launch_screen.balance" = "Bakiye";
+"appearance.launch_screen.market_overview" = "Piyasaya Genel Bakış";
+"appearance.launch_screen.watchlist" = "İzleme Listesi";
 
-"launch_screen.auto" = "Oto";
-"launch_screen.balance" = "Bakiye";
-"launch_screen.market_overview" = "Piyasaya Genel Bakış";
-"launch_screen.watchlist" = "İzleme Listesi";
+"appearance.app_icon" = "Uygulama İkonları";
+
+"appearance.balance_conversion" = "Bakiye çevrimi";
+
+"appearance.balance_value" = "Bakiye değeri";
+"appearance.balance_value.coin_value" = "Para değeri";
+"appearance.balance_value.fiat_value" = "Fiat Değeri";
 
 // Set PIN
 
@@ -924,7 +953,6 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
 "create_wallet.error.forbidden_symbols" = "Parola için lütfen yalnızca latin harfleri ve rakamları kullanın";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
-"create_wallet.success" = "Oluşturuldu";
 
 // Restore Select
 
@@ -965,14 +993,14 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.coin_types" = "Kripto Para Tipi/Tipleri";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
 "add_token.decimals" = "Ondalıklar";
-"add_token.already_exists" = "Bu token zaten kripto para yöneticisi listesindedir.";
+"add_token.already_added" = "Zaten ekli";
+"add_token.coin_types" = "Coin Tipi";
+"add_token.choose_type" = "Türü Seç";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
-"add_token.success_add" = "Eklendi";
 "add_token.input_placeholder" = "Sözleşme Adresi";
 
 // Wallet Connect
@@ -981,7 +1009,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
-"wallet_connect.main.unsupported_chains" = "Desteklenen zincir yok!";
+"wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
+"wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
 "wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
@@ -1066,6 +1095,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 
 "birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
 "birthday_input.description" = "Cüzdanınızın ilk gün boyunu biliyorsanız hızlı senkronizasyon için bunu girin.";
+"birthday_input.new_wallet" = "Bu yeni bir Cüzdan";
 "birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
 "restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
 
@@ -1106,10 +1136,12 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "watch_address.watch" = "İzle";
 "watch_address.name" = "İsim(İsteğe bağlı)";
 "watch_address.address" = "Adres";
+"watch_address.description" = "Yalnızca Ethereum ve diğer desteklenen EVM blok zincirleri için kullanılabilir.";
 
 // Nft Collections
 
 "nft_collections.title" = "NFT'ler";
+"nft_collections.price_mode" = "Fiyat Modu";
 "nft_collections.last_sale" = "Son İndirim";
 "nft_collections.average_7d" = "Ortalama 7G";
 "nft_collections.average_30d" = "Ortalama 30G";
@@ -1120,6 +1152,9 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "top_nft_collections.description" = "İşlem hacmine göre önde gelen NFT koleksiyonları.";
 
 // Nft Asset
+
+"nft_asset.tab.overview" = "İzleme";
+"nft_asset.tab.activity" = "Aktivite";
 
 "nft_asset.last_sale" = "Son İndirim";
 "nft_asset.average_7d" = "7 Günlük Ortalama";
@@ -1142,18 +1177,17 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_asset.links.website" = "Web sitesi";
 "nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
 "nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
-"nft_asset.save_to_photos.success" = "NFT resmi fotoğraf kitaplığınıza kaydedildi";
 "nft_asset.save_to_photos.failed" = "NFT resmi kaydedilemedi";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "İzleme";
 "nft_collection.tab.assets" = "Ögeler";
 "nft_collection.tab.activity" = "Aktivite";
 
 "nft_collection.overview.description" = "Açıklama";
 "nft_collection.overview.contracts" = "Kişiler";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "Bağlantılar";
 "nft_collection.overview.links.website" = "Web sitesi";
 
 
@@ -1164,6 +1198,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 
+"nft.activity.empty_list" = "Henüz öğe etkinliği yok";
 "nft.activity.event_types" = "Etkinlik Türleri";
 "nft.activity.event_type.all" = "Tüm Etkinlikler";
 "nft.activity.event_type.list" = "Liste";

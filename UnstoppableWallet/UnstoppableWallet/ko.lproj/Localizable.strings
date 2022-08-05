@@ -22,11 +22,30 @@
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
+"alert.saved" = "저장";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
+
+"alert.added_to_watchlist" = "관심목록에 추가되었습니다";
+"alert.removed_from_watchlist" = "관심목록에서 제거";
+"alert.added_to_wallet" = "지갑에 추가됨";
+"alert.already_added_to_wallet" = "이미 지갑에 추가됨";
+"alert.not_supported_yet" = "아직 지원하지 않음";
+"alert.copied" = "복사됨";
+"alert.created" = "생성됨";
+"alert.deleted" = "삭제";
+"alert.disconnecting" = "연결을 끊는 중...";
+"alert.disconnected" = "연결 해제";
+"alert.enabling" = "활성화 중";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "전송중";
+"alert.sent" = "전송됨";
+"alert.swapping" = "스와핑";
+"alert.approving" = "승인 중";
+
 
 "action.loading" = "로딩중";
 "placeholder.search" = "검색";
@@ -60,11 +79,10 @@
 
 // Restore
 
-"restore.title" = "지갑 선택";
-"restore.enter_key" = "암호를 입력하세요";
+"restore.title" = "복구";
 "restore.mnemonic.name" = "이름 (선택 사항)";
 "restore.mnemonic.key" = "키";
-"restore.mnemonic.description" = "12 또는 24개의 단어로 구성된 연상 기호를 입력합니다. 단어는 올바른 순서로 입력하고 공백으로 구분해야 합니다.";
+"restore.mnemonic.description" = "12, 15, 18, 21 또는 24단어로 구성되고 추가 영숫자 비밀번호가 포함될 수 있는 지갑 복구 문구(니모닉이라고도 함)를 입력하십시오.";
 "restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
@@ -83,13 +101,11 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.title" = "주소 형식";
 "blockchain_settings.description" = "코인의 주소 형식을 선택합니다. 확실하지 않은 경우 권장 옵션을 진행합니다. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "코인 유형";
-"coin_platforms.description" = "이 토큰은 여러 블록체인에 존재합니다. 사용하려는 버전을 선택하십시오.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "네이티브";
 
 // Show Key
@@ -103,9 +119,8 @@
 "show_key.private_key.description" = "이 키는 모든 EVM 호환 블록체인용입니다.";
 
 "private_key_copying.title" = "경고";
-"private_key_copying.subtitle" = "개인 키 복사의 위험";
 "private_key_copying.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
-"private_key_copying.copy_button" = "위험을 감수하겠습니다";
+"private_key_copying.i_will_risk_it" = "위험을 감수하겠습니다";
 
 // Backup Key
 
@@ -163,11 +178,13 @@
 "lost_accounts.warning_title" = "iOS 키체인 오류";
 "lost_accounts.warning_message" = "iOS 잠금 화면이 변경되어 지갑이 보관된 암호화된 데이터가 최근에 무효화되었습니다";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "지갑 변경";
-"switch_account.subtitle" = "빠른 전환을 위한 지갑 선택";
-//Release notes
+"switch_account.wallets" = "지갑";
+"switch_account.watch_addresses" = "관찰 주소";
+
+// Release notes
 
 "release_notes.title" = "새로운 기능";
 "release_notes.follow_us" = "팔로우";
@@ -353,7 +370,7 @@
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
+"market.coin_not_supported_yet" = "Not supported yet";
 
 "market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
@@ -388,8 +405,11 @@
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.title" = "플랫폼 순위";
 "top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -468,7 +488,6 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -613,7 +632,6 @@
 "pro_features.lock_info.go_to_mint" = "추후 공개";
 
 "pro_features.lock_info.title" = "Unstoppable 패스";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "이 데이터를 활성화하려면 잔액에 Unstoppable 패스 NFT가 있어야 합니다\n\n또한 아래 데이터에 액세스할 수 있습니다:";
 "pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
@@ -632,6 +650,11 @@
 
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
+"transactions.blockchain" = "블록 체인";
+"transactions.all_blockchains" = "모든 블록체인";
+"transactions.all_coins" = "모든코인";
+"transactions.choose_coin" = "코인 선택";
+"transactions.clear" = "지우기";
 "transactions.filter_all" = "모든";
 "transactions.syncing_text" = "동기화가 끝날 때까지 기다려 주십시오";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
@@ -658,7 +681,7 @@
 "transactions.today" = "오늘";
 "transactions.yesterday" = "어제";
 
-"transactions.types.all" = "All";
+"transactions.types.all" = "모든";
 "transactions.types.incoming" = "수령됨";
 "transactions.types.outgoing" = "전송됨";
 "transactions.types.swap" = "스왑";
@@ -678,7 +701,7 @@
 "tx_info.from_hash" = "로 부터";
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "스펜더";
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.options.speed_up" = "가속";
@@ -722,14 +745,13 @@
 "settings.base_currency.other" = "기타";
 "settings.base_currency.disclaimer" = "면책";
 "settings.base_currency.disclaimer.description" = "제3자 서비스 Coingecko.com\n\nUnstoppable 지갑 앱에서 제공하는 환율 데이터는 이러한 가치가 항상 올바르고 시장 데이터와 일치함을 보장하지는 않습니다. %@ 이외의 기준 통화를 선택할 경우 불일치가 발생할 가능성이 더 높습니다.";
-"settings.base_currency.disclaimer.i_understand" = "이해합니다";
-
+"settings.base_currency.disclaimer.set" = "확인";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "지갑";
-"manage_wallets.not_found" = "검색 결과가 없습니다. 스마트 계약 주소를 알고 있는 경우 토큰을 수동으로 추가해 보십시오.";
-"manage_wallets.search_placeholder" = "토큰 코드 또는 이름";
+"manage_wallets.not_found" = "검색 결과가 없습니다. 토큰을 수동으로 추가해 보십시오.";
+"manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
@@ -829,31 +851,38 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings.about_app.contact" = "연락처";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
-"settings.about_app.email_copied" = "이메일 주소 복사됨";
 
 // Settings -> Privacy
 
-"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.description" = "Unstoppable은 사용자에 대한 데이터를 노출할 수 있는 데이터를 수집하거나 분석 도구를 사용하지 않습니다. 지갑은 사용자에게 높은 수준의 개인 정보를 보장하도록 설계되었습니다.";
+"settings.privacy.statement.user_data_storage" = "사용자 데이터는 항상 사용자의 장치에 남아 있습니다.";
+"settings.privacy.statement.data_usage" = "지갑은 사용자에 대한 데이터를 수집하지 않습니다.";
+"settings.privacy.statement.data_privacy" = "지갑은 사용자에 대한 데이터를 공유하지 않습니다.";
+"settings.privacy.statement.user_account" = "사용자 데이터를 다른 곳에 보관하는 사용자 계정이나 데이터베이스가 없습니다.";
 
-// Settings -> Theme
 
-"settings_theme.title" = "테마";
-"settings_theme.system" = "시스템";
-"settings_theme.dark" = "어두운";
-"settings_theme.light" = "밝은";
+// Settings -> Appearance
 
-// Settings -> Launch Screen
+"appearance.title" = "모양";
 
-"settings.launch_screen.title" = "시작 화면";
+"appearance.theme" = "테마";
+"appearance.theme.system" = "시스템";
+"appearance.theme.dark" = "어두운";
+"appearance.theme.light" = "밝은";
 
-"launch_screen.auto" = "자동";
-"launch_screen.balance" = "잔액";
-"launch_screen.market_overview" = "시장 개요";
-"launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen" = "시작 화면";
+"appearance.launch_screen.auto" = "자동";
+"appearance.launch_screen.balance" = "잔액";
+"appearance.launch_screen.market_overview" = "시장 개요";
+"appearance.launch_screen.watchlist" = "관심목록";
+
+"appearance.app_icon" = "앱 아이콘";
+
+"appearance.balance_conversion" = "잔액 변환";
+
+"appearance.balance_value" = "균형 가치";
+"appearance.balance_value.coin_value" = "코인 가치";
+"appearance.balance_value.fiat_value" = "법정 가치";
 
 // Set PIN
 
@@ -921,7 +950,6 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "암호에는 라틴 문자 및 숫자만 사용하십시오";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
-"create_wallet.success" = "생성됨";
 
 // Restore Select
 
@@ -962,14 +990,14 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Add Token
 
 "add_token.title" = "토큰 추가";
-"add_token.coin_types" = "코인 유형";
 "add_token.coin_name" = "코인 이름";
 "add_token.coin_code" = "코인 코드";
 "add_token.decimals" = "소수점";
-"add_token.already_exists" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
+"add_token.already_added" = "이미 추가됨";
+"add_token.coin_types" = "코인 유형";
+"add_token.choose_type" = "유형 선택";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
-"add_token.success_add" = "추가됨";
 "add_token.input_placeholder" = "계약 주소";
 
 // Wallet Connect
@@ -978,7 +1006,8 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "wallet_connect.error.invalid_url" = "잘못된 주소";
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.active_account" = "지갑 활성화";
-"wallet_connect.main.unsupported_chains" = "지원되는 체인이 없습니다!";
+"wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
+"wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
 "wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
 "wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
 "wallet_connect.no_connection" = "연결을 설정하지 못했습니다. 다시 연결해 보세요.";
@@ -1063,6 +1092,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 
 "birthday_input.title" = "생일 신장";
 "birthday_input.description" = "지갑의 생일 높이를 알고 있다면 빠른 동기화를 위해 입력하십시오.";
+"birthday_input.new_wallet" = "새로운 지갑입니다";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 "restore_setting.birthday_height" = "생일 높이 %@";
 
@@ -1103,10 +1133,12 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "watch_address.watch" = "관찰";
 "watch_address.name" = "이름 (선택 사항)";
 "watch_address.address" = "주소";
+"watch_address.description" = "Ethereum 및 기타 지원되는 EVM 블록체인에만 사용할 수 있습니다.";
 
 // Nft Collections
 
 "nft_collections.title" = "NFT";
+"nft_collections.price_mode" = "가격 모드";
 "nft_collections.last_sale" = "마지막 판매";
 "nft_collections.average_7d" = "평균 7일";
 "nft_collections.average_30d" = "평균 30일";
@@ -1117,6 +1149,9 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
+
+"nft_asset.tab.overview" = "개요";
+"nft_asset.tab.activity" = "활동";
 
 "nft_asset.last_sale" = "마지막 판매";
 "nft_asset.average_7d" = "7일 평균";
@@ -1139,12 +1174,11 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_asset.links.website" = "웹사이트";
 "nft_asset.options.save_to_photos" = "사진 저장하기";
 "nft_asset.options.set_as_watch_face" = "시계 모드로 설정";
-"nft_asset.save_to_photos.success" = "NFT 이미지가 사진 라이브러리에 저장됩니다";
 "nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "개요";
 "nft_collection.tab.assets" = "항목";
 "nft_collection.tab.activity" = "활동";
 
@@ -1161,6 +1195,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "nft_collection.overview.floor_price" = "바닥 가격";
 "nft_collection.overview.all_time_average" = "모든 시간 평균";
 
+"nft.activity.empty_list" = "아직 항목 활동이 없습니다";
 "nft.activity.event_types" = "이벤트 유형";
 "nft.activity.event_type.all" = "모든 이벤트";
 "nft.activity.event_type.list" = "목록";
