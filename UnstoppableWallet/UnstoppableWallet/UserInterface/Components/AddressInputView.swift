@@ -9,9 +9,9 @@ class AddressInputView: UIView {
 
     private let stateView = InputStateWrapperView()
 
-    private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
-    private let scanView = InputButtonWrapperView(style: .secondaryIcon)
-    private let pasteView = InputButtonWrapperView(style: .secondaryDefault)
+    private let deleteView = InputSecondaryCircleButtonWrapperView()
+    private let scanView = InputSecondaryCircleButtonWrapperView()
+    private let pasteView = InputSecondaryButtonWrapperView(style: .default)
 
     var onChangeText: ((String?) -> ())?
     var onFetchText: ((String?) -> ())?
@@ -32,10 +32,10 @@ class AddressInputView: UIView {
         stateView.isSpinnerVisible = false
         stateView.isSuccessVisible = false
 
-        deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
+        deleteView.button.set(image: UIImage(named: "trash_20"))
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
-        scanView.button.setImage(UIImage(named: "qr_scan_20"), for: .normal)
+        scanView.button.set(image: UIImage(named: "qr_scan_20"))
         scanView.onTapButton = { [weak self] in self?.onTapScan() }
 
         pasteView.button.setTitle("button.paste".localized, for: .normal)

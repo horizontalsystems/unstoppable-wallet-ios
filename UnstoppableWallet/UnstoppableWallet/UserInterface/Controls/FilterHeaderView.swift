@@ -21,7 +21,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
             layoutSelectedView(indexPath: collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0))
         }
     }
-    private var buttonStyle: ThemeButtonStyle
+    private var buttonStyle: SecondaryButton.Style
 
     private let selectedView = UIView()
     private let animationDuration: TimeInterval
@@ -32,7 +32,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         filters.isEmpty ? 0 : Self.height
     }
 
-    init(buttonStyle: ThemeButtonStyle) {
+    init(buttonStyle: SecondaryButton.Style) {
         self.buttonStyle = buttonStyle
 
         layout.scrollDirection = .horizontal
@@ -118,7 +118,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right - interitemSpacing
 
         var items = Array(0..<filters.count)
-                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(for: title(index: $0), buttonStyle: buttonStyle)) }
+                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(title: title(index: $0))) }
 
         let initialItemWidth = items.reduce(0) { $0 + $1.width }
         if initialItemWidth >= width {     // elements can't fit into screen
@@ -202,7 +202,7 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         calculateItemWidths()
-        return CGSize(width: itemWidths[indexPath.item], height: FilterHeaderCell.height(buttonStyle: buttonStyle))
+        return CGSize(width: itemWidths[indexPath.item], height: .heightSingleLineCell)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -6,7 +6,7 @@ class InputView: UIView {
     private let formValidatedView: FormValidatedView
     private let inputStackView: InputStackView
 
-    private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
+    private let deleteView = InputSecondaryCircleButtonWrapperView()
 
     var onChangeText: ((String?) -> ())?
 
@@ -30,7 +30,7 @@ class InputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
+        deleteView.button.set(image: UIImage(named: "trash_20"))
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
         inputStackView.appendSubview(deleteView)

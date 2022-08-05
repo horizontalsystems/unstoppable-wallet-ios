@@ -6,8 +6,8 @@ class ShortcutInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView(singleLine: true)
 
-    private var shortcutViews = [InputButtonWrapperView]()
-    private let deleteView = InputButtonWrapperView(style: .secondaryIcon)
+    private var shortcutViews = [InputSecondaryButtonWrapperView]()
+    private let deleteView = InputSecondaryCircleButtonWrapperView()
 
     var onChangeText: ((String?) -> ())?
 
@@ -24,7 +24,7 @@ class ShortcutInputCell: UITableViewCell {
             maker.edges.equalToSuperview()
         }
 
-        deleteView.button.setImage(UIImage(named: "trash_20"), for: .normal)
+        deleteView.button.set(image: UIImage(named: "trash_20"))
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
         inputStackView.appendSubview(deleteView)
@@ -93,7 +93,7 @@ extension ShortcutInputCell {
 
     func set(shortcuts: [InputShortcut]) {
         shortcutViews = shortcuts.map { shortcut in
-            let view = InputButtonWrapperView(style: .secondaryDefault)
+            let view = InputSecondaryButtonWrapperView(style: .default)
 
             view.button.setTitle(shortcut.title, for: .normal)
             view.onTapButton = { [weak self] in

@@ -3,15 +3,12 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class InputButtonWrapperView: UIView, ISizeAwareView {
-    private let style: ThemeButtonStyle
-    let button = ThemeButton()
+class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
+    let button = SecondaryButton()
 
     var onTapButton: (() -> ())?
 
-    init(style: ThemeButtonStyle) {
-        self.style = style
-
+    init(style: SecondaryButton.Style) {
         super.init(frame: .zero)
 
         addSubview(button)
@@ -20,7 +17,7 @@ class InputButtonWrapperView: UIView, ISizeAwareView {
             maker.centerY.equalToSuperview()
         }
 
-        button.apply(style: style)
+        button.set(style: style)
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
@@ -34,7 +31,7 @@ class InputButtonWrapperView: UIView, ISizeAwareView {
     }
 
     func width(containerWidth: CGFloat) -> CGFloat {
-        ThemeButton.size(containerWidth: containerWidth, text: button.title(for: .normal), icon: button.image(for: .normal), style: style).width
+        SecondaryButton.width(title: button.title(for: .normal) ?? "")
     }
 
 }

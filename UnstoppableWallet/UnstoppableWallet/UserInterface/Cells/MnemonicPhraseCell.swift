@@ -18,7 +18,7 @@ class MnemonicPhraseCell: BaseThemeCell {
     init() {
         super.init(style: .default, reuseIdentifier: nil)
 
-        set(backgroundStyle: Self.backgroundStyle, cornerRadius: 24, isFirst: true, isLast: true)
+        set(backgroundStyle: Self.backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
 
         wrapperView.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in

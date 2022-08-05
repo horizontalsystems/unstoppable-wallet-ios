@@ -34,7 +34,7 @@ class ChartCell: UITableViewCell {
             currentValueView = ChartCurrentValueView()
         }
         if viewOptions.contains(.timePeriodAndSelectedValue) {
-            intervalSelectView = FilterHeaderView(buttonStyle: .secondaryTransparent)
+            intervalSelectView = FilterHeaderView(buttonStyle: .transparent)
             selectedValueView = ChartPointInfoView()
         }
         if viewOptions.contains(.indicatorSelector) {

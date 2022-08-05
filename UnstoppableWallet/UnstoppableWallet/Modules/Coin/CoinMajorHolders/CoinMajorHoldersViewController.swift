@@ -44,8 +44,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: CoinMajorHolderCell.self)
-
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
@@ -95,17 +93,47 @@ class CoinMajorHoldersViewController: ThemeViewController {
 extension CoinMajorHoldersViewController: SectionsDataSource {
 
     private func row(viewItem: CoinMajorHoldersViewModel.ViewItem, isLast: Bool) -> RowProtocol {
-        Row<CoinMajorHolderCell>(
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .captionSB
+                        component.textColor = .themeGray
+                        component.text = viewItem.order
+                        component.textAlignment = .center
+
+                        component.snp.remakeConstraints { maker in
+                            maker.width.equalTo(24)
+                        }
+                    },
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeJacob
+                        component.text = viewItem.percent
+                    },
+                    .secondaryButton { component in
+                        component.button.set(style: .default)
+                        component.button.setTitle(viewItem.address.shortened, for: .normal)
+                        component.onTap = {
+                            CopyHelper.copyAndNotify(value: viewItem.address)
+                        }
+
+                        component.snp.remakeConstraints { maker in
+                            maker.width.equalTo(140)
+                        }
+                    },
+                    .margin8,
+                    .secondaryCircleButton { [weak self] component in
+                        component.button.set(image: UIImage(named: "globe_20"))
+                        component.onTap = {
+                            self?.open(address: viewItem.address)
+                        }
+                    }
+                ]),
+                tableView: tableView,
                 id: viewItem.order,
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                    cell.numberText = viewItem.order
-                    cell.title = viewItem.percent
-                    cell.set(address: viewItem.address)
-                    cell.onTapIcon = { [weak self] in
-                        self?.open(address: viewItem.address)
-                    }
                 }
         )
     }
