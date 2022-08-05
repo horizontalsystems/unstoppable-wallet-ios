@@ -852,11 +852,7 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "settings.about_app.rate_us" = "Bewerten Sie uns";
 "settings.about_app.tell_friends" = "Freunden erzählen";
 
-"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+// Settings -> Privacy
 
 "settings.privacy.description" = "Unaufhaltsam sammelt keine Daten oder verwendet Analysewerkzeuge, die möglicherweise Daten über ihre Nutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
 "settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
