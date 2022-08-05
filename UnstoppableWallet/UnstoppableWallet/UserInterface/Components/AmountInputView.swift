@@ -12,8 +12,8 @@ class AmountInputView: UIView {
 
     private let prefixView = InputPrefixWrapperView()
     private let estimatedView = InputBadgeWrapperView()
-    private let maxView = InputButtonWrapperView(style: .secondaryDefault)
-    private let clearView = InputButtonWrapperView(style: .secondaryIcon)
+    private let maxView = InputSecondaryButtonWrapperView(style: .default)
+    private let clearView = InputSecondaryCircleButtonWrapperView()
     private let warningView = UILabel()
 
     var maxButtonVisible = false {
@@ -82,7 +82,7 @@ class AmountInputView: UIView {
         maxView.button.setTitle("send.max_button".localized, for: .normal)
         maxView.onTapButton = { [weak self] in self?.onTapMax?() }
 
-        clearView.button.setImage(UIImage(named: "trash_20"), for: .normal)
+        clearView.button.set(image: UIImage(named: "trash_20"))
         clearView.onTapButton = { [weak self] in
             self?.inputStackView.text = nil
             self?.handleChange(text: nil)

@@ -55,7 +55,6 @@ class ShowKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
 
         view.addSubview(descriptionView)
@@ -136,9 +135,8 @@ class ShowKeyViewController: ThemeViewController {
         closeButtonHolder.set(hidden: false, animated: true, duration: animationDuration)
     }
 
-    private func handleTap(viewItem: CopyableSecondaryButton.ViewItem) {
-        let viewController = PrivateKeyCopyConfirmationViewController(privateKey: viewItem.value())
-
+    private func handleTap(privateKey: String) {
+        let viewController = PrivateKeyCopyConfirmationViewController(privateKey: privateKey)
         present(viewController.toBottomSheet, animated: true)
     }
 
@@ -147,20 +145,45 @@ class ShowKeyViewController: ThemeViewController {
     }
 
     private func rows(privateKey: String) -> [RowProtocol] {
-        let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: { privateKey })
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .bordered
+        let textFont: UIFont = .subhead1
 
         return [
             tableView.highlightedDescriptionRow(id: "private-key-description", text: "show_key.private_key.description".localized),
-            marginRow(id: "private-key-margin", height: .margin4),
-            Row<Cell9>(
+            marginRow(id: "private-key-margin", height: .margin12),
+            CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .text { component in
+                            component.font = textFont
+                            component.textColor = .themeLeah
+                            component.text = privateKey
+                            component.numberOfLines = 0
+                        },
+                        .secondaryCircleButton { [weak self] component in
+                            component.button.set(image: UIImage(named: "copy_20"))
+                            component.onTap = {
+                                self?.handleTap(privateKey: privateKey)
+                            }
+                        },
+                    ]),
+                    layoutMargins: UIEdgeInsets(top: 0, left: .margin24, bottom: 0, right: .margin24),
+                    tableView: tableView,
                     id: "private-key-value",
                     dynamicHeight: { width in
-                        Cell9.height(containerWidth: width, backgroundStyle: .transparent, viewItem: viewItem)
+                        CellBuilderNew.height(
+                                containerWidth: width,
+                                backgroundStyle: backgroundStyle,
+                                text: privateKey,
+                                font: textFont,
+                                verticalPadding: .margin24,
+                                elements: [
+                                    .multiline,
+                                    .fixed(width: SecondaryCircleButton.size)
+                                ]
+                        )
                     },
-                    bind: { [weak self] cell, _ in
-                        cell.set(backgroundStyle: .transparent, isFirst: true)
-                        cell.viewItem = viewItem
-                        cell.handler = { self?.handleTap(viewItem: $0) }
+                    bind: { cell in
+                        cell.set(backgroundStyle: backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
                     }
             )
         ]

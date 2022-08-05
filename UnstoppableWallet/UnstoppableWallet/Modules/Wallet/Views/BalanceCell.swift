@@ -50,7 +50,7 @@ class BalanceCell: UITableViewCell {
         buttonsView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(lockedAmountView.snp.bottom)
-            maker.height.equalTo(DoubleRowButtonView.height)
+            maker.height.equalTo(BalanceButtonsView.height)
         }
     }
 

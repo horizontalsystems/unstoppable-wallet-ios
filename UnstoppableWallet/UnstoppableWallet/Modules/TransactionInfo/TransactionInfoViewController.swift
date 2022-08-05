@@ -335,8 +335,8 @@ class TransactionInfoViewController: ThemeViewController {
                 image: UIImage(named: "double_send_20"),
                 text: "tx_info.double_spent_note".localized
         ) { [weak self] in
-            let module = DoubleSpendInfoRouter.module(txHash: txHash, conflictingTxHash: conflictingTxHash)
-            self?.present(module, animated: true)
+            let viewController = DoubleSpendInfoViewController(transactionHash: txHash, conflictingTransactionHash: conflictingTxHash)
+            self?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
         }
     }
 
