@@ -1,3 +1,3 @@
-"NSCameraUsageDescription" = "The app needs to access camera in order to scan QR codes.";
-"NSFaceIDUsageDescription" = "FaceID will be used to unlock the wallet.";
-"NSPhotoLibraryAddUsageDescription" = "We need access to photo library to save NFT images";
+"NSCameraUsageDescription" = "QR 코드를 스캔하려면 앱에서 카메라를 허용해야 합니다.";
+"NSFaceIDUsageDescription" = "지갑을 잠금 해제하기 위해 페이스ID가 사용됩니다.";
+"NSPhotoLibraryAddUsageDescription" = "NFT 이미지를 저장하려면 사진 라이브러리에 액세스해야 합니다";
